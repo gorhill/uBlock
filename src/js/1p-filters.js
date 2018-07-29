@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-(function() {
+(() => {
 
 /******************************************************************************/
 
@@ -48,7 +48,7 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 
 // This is to give a visual hint that the content of user blacklist has changed.
 
-function userFiltersChanged(changed) {
+const userFiltersChanged = (changed) => {
     if ( typeof changed !== 'boolean' ) {
         changed = cmEditor.getValue().trim() !== cachedUserFilters;
     }
@@ -58,8 +58,8 @@ function userFiltersChanged(changed) {
 
 /******************************************************************************/
 
-function renderUserFilters(first) {
-    var onRead = function(details) {
+const renderUserFilters = (first) => {
+    const onRead = (details) => {
         if ( details.error ) { return; }
         var content = details.content.trim();
         cachedUserFilters = content;
@@ -77,17 +77,17 @@ function renderUserFilters(first) {
 
 /******************************************************************************/
 
-function allFiltersApplyHandler() {
+const allFiltersApplyHandler = () => {
     messaging.send('dashboard', { what: 'reloadAllFilters' });
     uDom('#userFiltersApply').prop('disabled', true );
 }
 
 /******************************************************************************/
 
-var handleImportFilePicker = function() {
+const handleImportFilePicker = () => {
     // https://github.com/chrisaljoudi/uBlock/issues/1004
     // Support extraction of filters from ABP backup file
-    var abpImporter = function(s) {
+    let abpImporter = (s) => {
         var reAbpSubscriptionExtractor = /\n\[Subscription\]\n+url=~[^\n]+([\x08-\x7E]*?)(?:\[Subscription\]|$)/ig;
         var reAbpFilterExtractor = /\[Subscription filters\]([\x08-\x7E]*?)(?:\[Subscription\]|$)/i;
         var matches = reAbpSubscriptionExtractor.exec(s);
@@ -95,7 +95,7 @@ var handleImportFilePicker = function() {
         if ( matches === null ) {
             return s;
         }
-        // 
+        //
         var out = [];
         var filterMatch;
         while ( matches !== null ) {
@@ -110,7 +110,7 @@ var handleImportFilePicker = function() {
         return out.join('\n');
     };
 
-    var fileReaderOnLoadHandler = function() {
+    var fileReaderOnLoadHandler = () => {
         var sanitized = abpImporter(this.result);
         cmEditor.setValue(cmEditor.getValue().trim() + '\n' + sanitized);
     };
@@ -128,7 +128,7 @@ var handleImportFilePicker = function() {
 
 /******************************************************************************/
 
-var startImportFilePicker = function() {
+const startImportFilePicker = () => {
     var input = document.getElementById('importFilePicker');
     // Reset to empty string, this will ensure an change event is properly
     // triggered if the user pick a file, even if it is the same as the last
@@ -139,7 +139,7 @@ var startImportFilePicker = function() {
 
 /******************************************************************************/
 
-var exportUserFiltersToFile = function() {
+const exportUserFiltersToFile = () => {
     var val = cmEditor.getValue().trim();
     if ( val === '' ) { return; }
     var filename = vAPI.i18n('1pExportFilename')
@@ -153,8 +153,8 @@ var exportUserFiltersToFile = function() {
 
 /******************************************************************************/
 
-var applyChanges = function() {
-    var onWritten = function(details) {
+var applyChanges = () => {
+    var onWritten = (details) => {
         if ( details.error ) { return; }
         cachedUserFilters = details.content.trim();
         allFiltersApplyHandler();
@@ -169,7 +169,7 @@ var applyChanges = function() {
     );
 };
 
-var revertChanges = function() {
+var revertChanges = () => {
     var content = cachedUserFilters;
     if ( content.length !== 0 ) {
         content += '\n';
@@ -179,9 +179,7 @@ var revertChanges = function() {
 
 /******************************************************************************/
 
-var getCloudData = function() {
-    return cmEditor.getValue();
-};
+var getCloudData = () => {return cmEditor.getValue();};
 
 var setCloudData = function(data, append) {
     if ( typeof data !== 'string' ) { return; }

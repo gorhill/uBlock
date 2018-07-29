@@ -114,7 +114,7 @@
 /******************************************************************************/
 /******************************************************************************/
 
-(function() {
+(() => {
 
 /******************************************************************************/
 
@@ -176,7 +176,7 @@ var safeQuerySelectorAll = function(node, selector) {
 
 /******************************************************************************/
 
-var rawFilterFromTextarea = function() {
+var rawFilterFromTextarea = () => {
     var s = taCandidate.value,
         pos = s.indexOf('\n');
     return pos === -1 ? s.trim() : s.slice(0, pos).trim();
@@ -305,7 +305,7 @@ var resourceURLFromElement = function(elem) {
 
 /******************************************************************************/
 
-var netFilterFromUnion = (function() {
+var netFilterFromUnion = (() => {
     var reTokenizer = /[^0-9a-z%*]+|[0-9a-z%]+|\*/gi;
     var a = document.createElement('a');
 
@@ -666,7 +666,7 @@ var filtersFrom = function(x, y) {
     TODO: need to be revised once I implement chained cosmetic operators.
 
 */
-var filterToDOMInterface = (function() {
+var filterToDOMInterface = (() => {
     // Net filters: we need to lookup manually -- translating into a foolproof
     // CSS selector is just not possible.
     var fromNetworkFilter = function(filter) {
@@ -839,7 +839,7 @@ var filterToDOMInterface = (function() {
         );
     };
 
-    var applyHide = function() {
+    var applyHide = () => {
         var htmlElem = document.documentElement,
             items = lastResultset,
             item, elem, style;
@@ -867,7 +867,7 @@ var filterToDOMInterface = (function() {
         }
     };
 
-    var unapplyHide = function() {
+    var unapplyHide = () => {
         var items = lastResultset, item;
         for ( var i = 0, n = items.length; i < n; i++ ) {
             item = items[i];
@@ -890,14 +890,14 @@ var filterToDOMInterface = (function() {
         }
     };
 
-    var unapplyStyle = function() {
+    var unapplyStyle = () => {
         if ( !appliedStyleTag || appliedStyleTag.parentNode === null ) {
             return;
         }
         appliedStyleTag.parentNode.removeChild(appliedStyleTag);
     };
 
-    var applyStyle = function() {
+    var applyStyle = () => {
         if ( !appliedStyleTag ) {
             appliedStyleTag = document.createElement('style');
             appliedStyleTag.setAttribute('type', 'text/css');
@@ -908,7 +908,7 @@ var filterToDOMInterface = (function() {
         }
     };
 
-    var apply = function() {
+    var apply = () => {
         if ( applied ) {
             unapply();
         }
@@ -923,7 +923,7 @@ var filterToDOMInterface = (function() {
         applied = true;
     };
 
-    var unapply = function() {
+    var unapply = () => {
         if ( !applied ) {
             return;
         }
@@ -950,7 +950,7 @@ var filterToDOMInterface = (function() {
     };
 
     return {
-        previewing: function() { return previewing; },
+        previewing: () => { return previewing; },
         preview: preview,
         set: queryAll
     };
@@ -1002,7 +1002,7 @@ var userFilterFromCandidate = function(callback) {
 
 /******************************************************************************/
 
-var onCandidateChanged = (function() {
+var onCandidateChanged = (() => {
     var process = function(items) {
         var elems = [], valid = items !== undefined;
         if ( valid ) {
@@ -1018,7 +1018,7 @@ var onCandidateChanged = (function() {
         highlightElements(elems, true);
     };
 
-    return function() {
+    return () => {
         filterToDOMInterface.set(rawFilterFromTextarea(), process);
     };
 })();
@@ -1225,7 +1225,7 @@ var showDialog = function(options) {
 
 /******************************************************************************/
 
-var zap = function() {
+var zap = () => {
     if ( targetElements.length === 0 ) { return; }
     var elem = targetElements[0],
         style = window.getComputedStyle(elem);
@@ -1241,7 +1241,7 @@ var zap = function() {
 
 /******************************************************************************/
 
-var elementFromPoint = (function() {
+var elementFromPoint = (() => {
     var lastX, lastY;
 
     return function(x, y) {
@@ -1265,11 +1265,11 @@ var elementFromPoint = (function() {
 
 /******************************************************************************/
 
-var onSvgHovered = (function() {
+var onSvgHovered = (() => {
     var timer = null;
     var mx = 0, my = 0;
 
-    var onTimer = function() {
+    var onTimer = () => {
         timer = null;
         var elem = elementFromPoint(mx, my);
         highlightElements(elem ? [elem] : []);
@@ -1296,7 +1296,7 @@ var onSvgHovered = (function() {
 
 */
 
-var onSvgTouchStartStop = (function() {
+var onSvgTouchStartStop = (() => {
     var startX,
         startY;
     return function onTouch(ev) {
@@ -1425,20 +1425,20 @@ var onKeyPressed = function(ev) {
 // May need to dynamically adjust the height of the overlay + new position
 // of highlighted elements.
 
-var onScrolled = function() {
+var onScrolled = () => {
     highlightElements(targetElements, true);
 };
 
 /******************************************************************************/
 
-var pausePicker = function() {
+var pausePicker = () => {
     pickerBody.classList.add('paused');
     svgListening(false);
 };
 
 /******************************************************************************/
 
-var unpausePicker = function() {
+var unpausePicker = () => {
     filterToDOMInterface.preview(false);
     pickerBody.classList.remove('paused');
     svgListening(true);
@@ -1449,7 +1449,7 @@ var unpausePicker = function() {
 // Let's have the element picker code flushed from memory when no longer
 // in use: to ensure this, release all local references.
 
-var stopPicker = function() {
+var stopPicker = () => {
     vAPI.shutdown.remove(stopPicker);
 
     targetElements = [];
@@ -1593,7 +1593,7 @@ var startPicker = function(details) {
 
 /******************************************************************************/
 
-var bootstrapPicker = function() {
+var bootstrapPicker = () => {
     pickerRoot.removeEventListener('load', bootstrapPicker);
     vAPI.shutdown.add(stopPicker);
     vAPI.messaging.send(

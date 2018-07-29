@@ -26,7 +26,7 @@
 
 /******************************************************************************/
 
-µBlock.staticNetFilteringEngine = (function(){
+µBlock.staticNetFilteringEngine = (() =>{
 
 /******************************************************************************/
 
@@ -128,7 +128,7 @@ var pageHostnameRegister = '',
 
 /******************************************************************************/
 
-var histogram = function() {};
+var histogram = () => {};
 /*
 histogram = function(label, categories) {
     var h = [],
@@ -312,14 +312,14 @@ var filterFromCompiledData = function(args) {
 
 /******************************************************************************/
 
-var FilterTrue = function() {
+var FilterTrue = () => {
 };
 
-FilterTrue.prototype.match = function() {
+FilterTrue.prototype.match = () => {
     return true;
 };
 
-FilterTrue.prototype.logData = function() {
+FilterTrue.prototype.logData = () => {
     return {
         raw: '*',
         regex: '^',
@@ -327,15 +327,15 @@ FilterTrue.prototype.logData = function() {
     };
 };
 
-FilterTrue.prototype.compile = function() {
+FilterTrue.prototype.compile = () => {
     return [ this.fid ];
 };
 
-FilterTrue.compile = function() {
+FilterTrue.compile = () => {
     return [ FilterTrue.fid ];
 };
 
-FilterTrue.load = function() {
+FilterTrue.load = () => {
     return new FilterTrue();
 };
 
@@ -352,7 +352,7 @@ FilterPlain.prototype.match = function(url, tokenBeg) {
     return url.startsWith(this.s, tokenBeg - this.tokenBeg);
 };
 
-FilterPlain.prototype.logData = function() {
+FilterPlain.prototype.logData = () => {
     return {
         raw: this.s,
         regex: rawToRegexStr(this.s),
@@ -360,7 +360,7 @@ FilterPlain.prototype.logData = function() {
     };
 };
 
-FilterPlain.prototype.compile = function() {
+FilterPlain.prototype.compile = () => {
     return [ this.fid, this.s, this.tokenBeg ];
 };
 
@@ -384,7 +384,7 @@ FilterPlainPrefix0.prototype.match = function(url, tokenBeg) {
     return url.startsWith(this.s, tokenBeg);
 };
 
-FilterPlainPrefix0.prototype.logData = function() {
+FilterPlainPrefix0.prototype.logData = () => {
     return {
         raw: this.s,
         regex: rawToRegexStr(this.s),
@@ -392,7 +392,7 @@ FilterPlainPrefix0.prototype.logData = function() {
     };
 };
 
-FilterPlainPrefix0.prototype.compile = function() {
+FilterPlainPrefix0.prototype.compile = () => {
     return [ this.fid, this.s ];
 };
 
@@ -416,7 +416,7 @@ FilterPlainPrefix1.prototype.match = function(url, tokenBeg) {
     return url.startsWith(this.s, tokenBeg - 1);
 };
 
-FilterPlainPrefix1.prototype.logData = function() {
+FilterPlainPrefix1.prototype.logData = () => {
     return {
         raw: this.s,
         regex: rawToRegexStr(this.s),
@@ -424,7 +424,7 @@ FilterPlainPrefix1.prototype.logData = function() {
     };
 };
 
-FilterPlainPrefix1.prototype.compile = function() {
+FilterPlainPrefix1.prototype.compile = () => {
     return [ this.fid, this.s ];
 };
 
@@ -444,14 +444,14 @@ var FilterPlainHostname = function(s) {
     this.s = s;
 };
 
-FilterPlainHostname.prototype.match = function() {
+FilterPlainHostname.prototype.match = () => {
     var haystack = requestHostnameRegister, needle = this.s;
     if ( haystack.endsWith(needle) === false ) { return false; }
     var offset = haystack.length - needle.length;
     return offset === 0 || haystack.charCodeAt(offset - 1) === 0x2E /* '.' */;
 };
 
-FilterPlainHostname.prototype.logData = function() {
+FilterPlainHostname.prototype.logData = () => {
     return {
         raw: '||' + this.s + '^',
         regex: rawToRegexStr(this.s + '^'),
@@ -459,7 +459,7 @@ FilterPlainHostname.prototype.logData = function() {
     };
 };
 
-FilterPlainHostname.prototype.compile = function() {
+FilterPlainHostname.prototype.compile = () => {
     return [ this.fid, this.s ];
 };
 
@@ -483,7 +483,7 @@ FilterPlainLeftAnchored.prototype.match = function(url) {
     return url.startsWith(this.s);
 };
 
-FilterPlainLeftAnchored.prototype.logData = function() {
+FilterPlainLeftAnchored.prototype.logData = () => {
     return {
         raw: '|' + this.s,
         regex: rawToRegexStr(this.s, 0x2),
@@ -491,7 +491,7 @@ FilterPlainLeftAnchored.prototype.logData = function() {
     };
 };
 
-FilterPlainLeftAnchored.prototype.compile = function() {
+FilterPlainLeftAnchored.prototype.compile = () => {
     return [ this.fid, this.s ];
 };
 
@@ -515,7 +515,7 @@ FilterPlainRightAnchored.prototype.match = function(url) {
     return url.endsWith(this.s);
 };
 
-FilterPlainRightAnchored.prototype.logData = function() {
+FilterPlainRightAnchored.prototype.logData = () => {
     return {
         raw: this.s + '|',
         regex: rawToRegexStr(this.s, 0x1),
@@ -523,7 +523,7 @@ FilterPlainRightAnchored.prototype.logData = function() {
     };
 };
 
-FilterPlainRightAnchored.prototype.compile = function() {
+FilterPlainRightAnchored.prototype.compile = () => {
     return [ this.fid, this.s ];
 };
 
@@ -547,7 +547,7 @@ FilterExactMatch.prototype.match = function(url) {
     return url === this.s;
 };
 
-FilterExactMatch.prototype.logData = function() {
+FilterExactMatch.prototype.logData = () => {
     return {
         raw: '|' + this.s + '|',
         regex: rawToRegexStr(this.s, 0x3),
@@ -555,7 +555,7 @@ FilterExactMatch.prototype.logData = function() {
     };
 };
 
-FilterExactMatch.prototype.compile = function() {
+FilterExactMatch.prototype.compile = () => {
     return [ this.fid, this.s ];
 };
 
@@ -580,7 +580,7 @@ FilterPlainHnAnchored.prototype.match = function(url, tokenBeg) {
            isHnAnchored(url, tokenBeg);
 };
 
-FilterPlainHnAnchored.prototype.logData = function() {
+FilterPlainHnAnchored.prototype.logData = () => {
     return {
         raw: '||' + this.s,
         regex: rawToRegexStr(this.s),
@@ -588,7 +588,7 @@ FilterPlainHnAnchored.prototype.logData = function() {
     };
 };
 
-FilterPlainHnAnchored.prototype.compile = function() {
+FilterPlainHnAnchored.prototype.compile = () => {
     return [ this.fid, this.s ];
 };
 
@@ -618,7 +618,7 @@ FilterGeneric.prototype.match = function(url) {
     return this.re.test(url);
 };
 
-FilterGeneric.prototype.logData = function() {
+FilterGeneric.prototype.logData = () => {
     var out = {
         raw: this.s,
         regex: this.re.source,
@@ -633,7 +633,7 @@ FilterGeneric.prototype.logData = function() {
     return out;
 };
 
-FilterGeneric.prototype.compile = function() {
+FilterGeneric.prototype.compile = () => {
     return [ this.fid, this.s, this.anchor ];
 };
 
@@ -663,7 +663,7 @@ FilterGenericHnAnchored.prototype.match = function(url) {
     return this.re.test(url);
 };
 
-FilterGenericHnAnchored.prototype.logData = function() {
+FilterGenericHnAnchored.prototype.logData = () => {
     var out = {
         raw: '||' + this.s,
         regex: rawToRegexStr(this.s, this.anchor & ~0x4),
@@ -672,7 +672,7 @@ FilterGenericHnAnchored.prototype.logData = function() {
     return out;
 };
 
-FilterGenericHnAnchored.prototype.compile = function() {
+FilterGenericHnAnchored.prototype.compile = () => {
     return [ this.fid, this.s ];
 };
 
@@ -702,14 +702,14 @@ FilterGenericHnAndRightAnchored.prototype = Object.create(
             value: 0x5
         },
         logData: {
-            value: function() {
+            value: () => {
                 var out = FilterGenericHnAnchored.prototype.logData.call(this);
                 out.raw += '|';
                 return out;
             }
         },
         compile: {
-            value: function() {
+            value: () => {
                 return [ this.fid, this.s ];
             }
         }
@@ -739,7 +739,7 @@ FilterRegex.prototype.match = function(url) {
     return this.re.test(url);
 };
 
-FilterRegex.prototype.logData = function() {
+FilterRegex.prototype.logData = () => {
     var s = typeof this.re === 'string' ? this.re : this.re.source;
     return {
         raw: '/' + s + '/',
@@ -748,7 +748,7 @@ FilterRegex.prototype.logData = function() {
     };
 };
 
-FilterRegex.prototype.compile = function() {
+FilterRegex.prototype.compile = () => {
     return [
         this.fid,
         typeof this.re === 'string' ? this.re : this.re.source
@@ -769,24 +769,24 @@ registerFilterClass(FilterRegex);
 
 // Filtering according to the origin.
 
-var FilterOrigin = function() {
+var FilterOrigin = () => {
 };
 
 FilterOrigin.prototype.wrapped = {
-    compile: function() {
+    compile: () => {
         return '';
     },
-    logData: function() {
+    logData: () => {
         return {
             compiled: ''
         };
     },
-    match: function() {
+    match: () => {
         return true;
     }
 };
 
-FilterOrigin.prototype.matchOrigin = function() {
+FilterOrigin.prototype.matchOrigin = () => {
     return true;
 };
 
@@ -794,7 +794,7 @@ FilterOrigin.prototype.match = function(url, tokenBeg) {
     return this.matchOrigin() && this.wrapped.match(url, tokenBeg);
 };
 
-FilterOrigin.prototype.logData = function() {
+FilterOrigin.prototype.logData = () => {
     var out = this.wrapped.logData(),
         domainOpt = this.toDomainOpt();
     out.compiled = [ this.fid, domainOpt, out.compiled ];
@@ -806,7 +806,7 @@ FilterOrigin.prototype.logData = function() {
     return out;
 };
 
-FilterOrigin.prototype.compile = function() {
+FilterOrigin.prototype.compile = () => {
     return [ this.fid, this.toDomainOpt(), this.wrapped.compile() ];
 };
 
@@ -822,12 +822,12 @@ FilterOriginHit.prototype = Object.create(FilterOrigin.prototype, {
         value: FilterOriginHit
     },
     toDomainOpt: {
-        value: function() {
+        value: () => {
             return this.hostname;
         }
     },
     matchOrigin: {
-        value: function() {
+        value: () => {
             var needle = this.hostname, haystack = pageHostnameRegister;
             if ( haystack.endsWith(needle) === false ) { return false; }
             var offset = haystack.length - needle.length;
@@ -848,12 +848,12 @@ FilterOriginMiss.prototype = Object.create(FilterOrigin.prototype, {
         value: FilterOriginMiss
     },
     toDomainOpt: {
-        value: function() {
+        value: () => {
             return '~' + this.hostname;
         }
     },
     matchOrigin: {
-        value: function() {
+        value: () => {
             var needle = this.hostname, haystack = pageHostnameRegister;
             if ( haystack.endsWith(needle) === false ) { return true; }
             var offset = haystack.length - needle.length;
@@ -880,12 +880,12 @@ FilterOriginHitSet.prototype = Object.create(FilterOrigin.prototype, {
         writable: true
     },
     toDomainOpt: {
-        value: function() {
+        value: () => {
             return this.domainOpt;
         }
     },
     matchOrigin: {
-        value: function() {
+        value: () => {
             if ( this.oneOf === null ) {
                 this.oneOf = HNTrieBuilder.fromDomainOpt(this.domainOpt);
             }
@@ -912,12 +912,12 @@ FilterOriginMissSet.prototype = Object.create(FilterOrigin.prototype, {
         writable: true
     },
     toDomainOpt: {
-        value: function() {
+        value: () => {
             return this.domainOpt;
         }
     },
     matchOrigin: {
-        value: function() {
+        value: () => {
             if ( this.noneOf === null ) {
                 this.noneOf = HNTrieBuilder.fromDomainOpt(this.domainOpt.replace(/~/g, ''));
             }
@@ -948,7 +948,7 @@ FilterOriginMixedSet.prototype = Object.create(FilterOrigin.prototype, {
         writable: true
     },
     init: {
-        value: function() {
+        value: () => {
             var oneOf = [], noneOf = [],
                 hostnames = this.domainOpt.split('|'),
                 i = hostnames.length,
@@ -966,12 +966,12 @@ FilterOriginMixedSet.prototype = Object.create(FilterOrigin.prototype, {
         }
     },
     toDomainOpt: {
-        value: function() {
+        value: () => {
             return this.domainOpt;
         }
     },
     matchOrigin: {
-        value: function() {
+        value: () => {
             if ( this.oneOf === null ) { this.init(); }
             var needle = pageHostnameRegister;
             return this.oneOf.matches(needle) &&
@@ -1037,7 +1037,7 @@ FilterDataHolder.prototype.match = function(url, tokenBeg) {
     return this.wrapped.match(url, tokenBeg);
 };
 
-FilterDataHolder.prototype.logData = function() {
+FilterDataHolder.prototype.logData = () => {
     var out = this.wrapped.logData();
     out.compiled = [ this.fid, this.dataType, this.dataStr, out.compiled ];
     var opt = this.dataType;
@@ -1052,7 +1052,7 @@ FilterDataHolder.prototype.logData = function() {
     return out;
 };
 
-FilterDataHolder.prototype.compile = function() {
+FilterDataHolder.prototype.compile = () => {
     return [ this.fid, this.dataType, this.dataStr, this.wrapped.compile() ];
 };
 
@@ -1077,11 +1077,11 @@ var FilterDataHolderEntry = function(categoryBits, tokenHash, fdata) {
     this.next = undefined;
 };
 
-FilterDataHolderEntry.prototype.logData = function() {
+FilterDataHolderEntry.prototype.logData = () => {
     return toLogDataInternal(this.categoryBits, this.tokenHash, this.filter);
 };
 
-FilterDataHolderEntry.prototype.compile = function() {
+FilterDataHolderEntry.prototype.compile = () => {
     return [ this.categoryBits, this.tokenHash, this.filter.compile() ];
 };
 
@@ -1093,13 +1093,13 @@ FilterDataHolderEntry.load = function(data) {
 
 // Dictionary of hostnames
 //
-var FilterHostnameDict = function() {
+var FilterHostnameDict = () => {
     this.h = ''; // short-lived register
     this.dict = new Set();
 };
 
 Object.defineProperty(FilterHostnameDict.prototype, 'size', {
-    get: function() {
+    get: () => {
         return this.dict.size;
     }
 });
@@ -1114,7 +1114,7 @@ FilterHostnameDict.prototype.remove = function(hn) {
     return this.dict.delete(hn);
 };
 
-FilterHostnameDict.prototype.match = function() {
+FilterHostnameDict.prototype.match = () => {
     // TODO: mind IP addresses
     var pos,
         hostname = requestHostnameRegister;
@@ -1130,7 +1130,7 @@ FilterHostnameDict.prototype.match = function() {
     return true;
 };
 
-FilterHostnameDict.prototype.logData = function() {
+FilterHostnameDict.prototype.logData = () => {
     return {
         raw: '||' + this.h + '^',
         regex: rawToRegexStr(this.h) + '(?:[^%.0-9a-z_-]|$)',
@@ -1138,7 +1138,7 @@ FilterHostnameDict.prototype.logData = function() {
     };
 };
 
-FilterHostnameDict.prototype.compile = function() {
+FilterHostnameDict.prototype.compile = () => {
     return [ this.fid, Array.from(this.dict) ];
 };
 
@@ -1191,7 +1191,7 @@ var FilterPair = function(a, b) {
 };
 
 Object.defineProperty(FilterPair.prototype, 'size', {
-    get: function() {
+    get: () => {
         if ( this.f1 === undefined && this.f2 === undefined ) { return 0; }
         if ( this.f1 === undefined || this.f2 === undefined ) { return 1; }
         return 2;
@@ -1223,11 +1223,11 @@ FilterPair.prototype.match = function(url, tokenBeg) {
     return false;
 };
 
-FilterPair.prototype.logData = function() {
+FilterPair.prototype.logData = () => {
     return this.f.logData();
 };
 
-FilterPair.prototype.compile = function() {
+FilterPair.prototype.compile = () => {
     return [ this.fid, this.f1.compile(), this.f2.compile() ];
 };
 
@@ -1239,7 +1239,7 @@ FilterPair.prototype.upgrade = function(a) {
     return bucket;
 };
 
-FilterPair.prototype.downgrade = function() {
+FilterPair.prototype.downgrade = () => {
     if ( this.f2 !== undefined ) { return this; }
     if ( this.f1 !== undefined ) { return this.f1; }
 };
@@ -1274,7 +1274,7 @@ var FilterBucket = function(a, b, c) {
 };
 
 Object.defineProperty(FilterBucket.prototype, 'size', {
-    get: function() {
+    get: () => {
         return this.filters.length;
     }
 });
@@ -1325,11 +1325,11 @@ FilterBucket.prototype.match = function(url, tokenBeg) {
     return false;
 };
 
-FilterBucket.prototype.logData = function() {
+FilterBucket.prototype.logData = () => {
     return this.f.logData();
 };
 
-FilterBucket.prototype.compile = function() {
+FilterBucket.prototype.compile = () => {
     var compiled = [],
         filters = this.filters;
     for ( var i = 0, n = filters.length; i < n; i++ ) {
@@ -1338,7 +1338,7 @@ FilterBucket.prototype.compile = function() {
     return [ this.fid, compiled ];
 };
 
-FilterBucket.prototype.downgrade = function() {
+FilterBucket.prototype.downgrade = () => {
     if ( this.filters.length > 2 ) { return this; }
     if ( this.filters.length === 2 ) {
         return new FilterPair(this.filters[0], this.filters[1]);
@@ -1361,7 +1361,7 @@ registerFilterClass(FilterBucket);
 /******************************************************************************/
 /******************************************************************************/
 
-var FilterParser = function() {
+var FilterParser = () => {
     this.cantWebsocket = vAPI.cantWebsocket;
     this.reBadDomainOptChars = /[*+?^${}()[\]\\]/;
     this.reHostnameRule1 = /^[0-9a-z][0-9a-z.-]*[0-9a-z]$/i;
@@ -1421,7 +1421,7 @@ FilterParser.prototype.toNormalizedType = {
 
 /******************************************************************************/
 
-FilterParser.prototype.reset = function() {
+FilterParser.prototype.reset = () => {
     this.action = BlockAction;
     this.anchor = 0;
     this.badFilter = 0;
@@ -1609,7 +1609,7 @@ FilterParser.prototype.parseOptions = function(s) {
 //   Convert websocket-related filter where possible to a format which
 //   can be handled using CSP injection.
 
-FilterParser.prototype.translate = function() {
+FilterParser.prototype.translate = () => {
     var dataTypeBit = this.bitFromType('data');
 
     if ( this.cantWebsocket && this.reWebsocketAny.test(this.f) ) {
@@ -1900,7 +1900,7 @@ var badTokens = new Set([
     'www'
 ]);
 
-FilterParser.prototype.findFirstGoodToken = function() {
+FilterParser.prototype.findFirstGoodToken = () => {
     reGoodToken.lastIndex = 0;
     var s = this.f,
         matches, lpos,
@@ -1926,7 +1926,7 @@ FilterParser.prototype.findFirstGoodToken = function() {
     return badTokenMatch;
 };
 
-FilterParser.prototype.extractTokenFromRegex = function() {
+FilterParser.prototype.extractTokenFromRegex = () => {
     reRegexToken.lastIndex = 0;
     var s = this.f,
         matches, prefix;
@@ -1954,7 +1954,7 @@ FilterParser.prototype.extractTokenFromRegex = function() {
 // https://github.com/gorhill/uBlock/issues/2781
 //   For efficiency purpose, try to extract a token from a regex-based filter.
 
-FilterParser.prototype.makeToken = function() {
+FilterParser.prototype.makeToken = () => {
     if ( this.isRegex ) {
         this.extractTokenFromRegex();
         return;
@@ -1979,7 +1979,7 @@ FilterParser.prototype.makeToken = function() {
 /******************************************************************************/
 /******************************************************************************/
 
-var FilterContainer = function() {
+var FilterContainer = () => {
     this.reIsGeneric = /[\^\*]/;
     this.filterParser = new FilterParser();
     this.urlTokenizer = µb.urlTokenizer;
@@ -1992,7 +1992,7 @@ var FilterContainer = function() {
 
 // Reset all, thus reducing to a minimum memory footprint of the context.
 
-FilterContainer.prototype.reset = function() {
+FilterContainer.prototype.reset = () => {
     this.frozen = false;
     this.processedFilterCount = 0;
     this.acceptedCount = 0;
@@ -2019,7 +2019,7 @@ FilterContainer.prototype.reset = function() {
 
 /******************************************************************************/
 
-FilterContainer.prototype.freeze = function() {
+FilterContainer.prototype.freeze = () => {
     histogram('allFilters', this.categories);
     this.removeBadFilters();
     this.duplicateBuster = new Set();
@@ -2036,7 +2036,7 @@ FilterContainer.prototype.freeze = function() {
 
 /******************************************************************************/
 
-FilterContainer.prototype.toSelfie = function() {
+FilterContainer.prototype.toSelfie = () => {
     let categoriesToSelfie = function(categoryMap) {
         let selfie = [];
         for ( let categoryEntry of categoryMap ) {
@@ -2344,7 +2344,7 @@ FilterContainer.prototype.fromCompiledContent = function(reader) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.removeBadFilters = function() {
+FilterContainer.prototype.removeBadFilters = () => {
     var filterPairId = FilterPair.fid,
         filterBucketId = FilterBucket.fid,
         filterHostnameDictId = FilterHostnameDict.fid,
@@ -2789,7 +2789,7 @@ FilterContainer.prototype.matchString = function(context) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.toLogData = function() {
+FilterContainer.prototype.toLogData = () => {
     if ( this.fRegister === null ) { return; }
     var logData = toLogDataInternal(this.cbRegister, this.thRegister, this.fRegister);
     logData.source = 'static';
@@ -2800,7 +2800,7 @@ FilterContainer.prototype.toLogData = function() {
 
 /******************************************************************************/
 
-FilterContainer.prototype.getFilterCount = function() {
+FilterContainer.prototype.getFilterCount = () => {
     return this.acceptedCount - this.discardedCount;
 };
 

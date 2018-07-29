@@ -104,7 +104,7 @@ self.uBlockDashboard.mergeNewLines = function(text, newText) {
 
 /******************************************************************************/
 
-self.uBlockDashboard.dateNowToSensibleString = function() {
+self.uBlockDashboard.dateNowToSensibleString = () => {
     var now = new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000);
     return now.toISOString().replace(/\.\d+Z$/, '')
                             .replace(/:/g, '.')
@@ -113,10 +113,10 @@ self.uBlockDashboard.dateNowToSensibleString = function() {
 
 /******************************************************************************/
 
-self.uBlockDashboard.patchCodeMirrorEditor = (function() {
+self.uBlockDashboard.patchCodeMirrorEditor = (() => {
     var grabFocusTimer;
     var grabFocusTarget;
-    var grabFocus = function() {
+    var grabFocus = () => {
         grabFocusTarget.focus();
         grabFocusTimer = grabFocusTarget = undefined;
     };
@@ -216,7 +216,7 @@ self.uBlockDashboard.patchCodeMirrorEditor = (function() {
 // Open links in the proper window
 uDom('a').attr('target', '_blank');
 uDom('a[href*="dashboard.html"]').attr('target', '_parent');
-uDom('.whatisthis').on('click', function() {
+uDom('.whatisthis').on('click', () => {
     uDom(this)
         .parent()
         .descendants('.whatisthis-expandable')

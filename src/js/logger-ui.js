@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-(function() {
+(() => {
 
 /******************************************************************************/
 
@@ -53,7 +53,7 @@ var tabIdFromClassName = function(className) {
     return parseInt(matches[1], 10);
 };
 
-var tabIdFromPageSelector = logger.tabIdFromPageSelector = function() {
+var tabIdFromPageSelector = logger.tabIdFromPageSelector = () => {
     var tabClass = uDom.nodeFromId('pageSelector').value;
     if ( tabClass === 'tab_active' && activeTabId !== undefined ) {
         return activeTabId;
@@ -66,7 +66,7 @@ var tabIdFromPageSelector = logger.tabIdFromPageSelector = function() {
 
 // Adjust top padding of content table, to match that of toolbar height.
 
-(function() {
+(() => {
     var toolbar = uDom.nodeFromSelector('body > .permatoolbar');
     var size = toolbar.clientHeight + 'px';
     uDom('#inspectors').css('top', size);
@@ -257,7 +257,7 @@ var renderNetLogEntry = function(tr, entry) {
     trcl.add('canMtx');
 
     // If the request is that of a root frame, insert a gap in the table
-    // in order to visually separate entries for different documents. 
+    // in order to visually separate entries for different documents.
     if ( type === 'main_frame' ) {
         createGap(entry.tab, url);
     }
@@ -410,10 +410,10 @@ var renderLogEntries = function(response) {
 
 /******************************************************************************/
 
-let updateCurrentTabTitle = (function() {
+let updateCurrentTabTitle = (() => {
     let i18nCurrentTab = vAPI.i18n('loggerCurrentTab');
 
-    return function() {
+    return () => {
         let select = uDom.nodeFromId('pageSelector');
         if ( select.value !== 'tab_active' ) { return; }
         let opt0 = select.querySelector('[value="tab_active"]');
@@ -566,7 +566,7 @@ var onLogBufferRead = function(response) {
 // automatically. If called after init time, this will be messy, and this would
 // require a bit more code to ensure no multi time out events.
 
-var readLogBuffer = function() {
+var readLogBuffer = () => {
     if ( logger.ownerId === undefined ) { return; }
     vAPI.messaging.send(
         'loggerUI',
@@ -579,20 +579,20 @@ var readLogBuffer = function() {
     );
 };
 
-var readLogBufferAsync = function() {
+var readLogBufferAsync = () => {
     if ( logger.ownerId === undefined ) { return; }
     vAPI.setTimeout(readLogBuffer, 1200);
 };
- 
+
 /******************************************************************************/
 
-let pageSelectorChanged = function() {
+let pageSelectorChanged = () => {
     let select = uDom.nodeFromId('pageSelector');
     window.location.replace('#' + select.value);
     pageSelectorFromURLHash();
 };
 
-let pageSelectorFromURLHash = (function() {
+let pageSelectorFromURLHash = (() => {
     let lastTabClass = '';
     let lastEffectiveTabClass = '';
     let reActiveTabId = /^(tab_[^+]+)\+(.+)$/;
@@ -623,7 +623,7 @@ let pageSelectorFromURLHash = (function() {
         updateCurrentTabTitle();
     };
 
-    return function() {
+    return () => {
         let tabClass = window.location.hash.slice(1);
         let match = reActiveTabId.exec(tabClass);
         if ( match !== null ) {
@@ -667,7 +667,7 @@ var reloadTab = function(ev) {
 
 /******************************************************************************/
 
-var onMaxEntriesChanged = function() {
+var onMaxEntriesChanged = () => {
     var input = this;
     try {
         maxEntries = parseInt(input.value, 10);
@@ -698,7 +698,7 @@ var onMaxEntriesChanged = function() {
 /******************************************************************************/
 /******************************************************************************/
 
-var netFilteringManager = (function() {
+var netFilteringManager = (() => {
     var targetRow = null;
     var dialog = null;
     var createdStaticFilters = {};
@@ -728,7 +728,7 @@ var netFilteringManager = (function() {
         return selectNode(selector).value || '';
     };
 
-    var staticFilterNode = function() {
+    var staticFilterNode = () => {
         return dialog.querySelector('div.containers > div.static textarea');
     };
 
@@ -752,7 +752,7 @@ var netFilteringManager = (function() {
         }
     };
 
-    var colorize = function() {
+    var colorize = () => {
         messaging.send(
             'loggerUI',
             {
@@ -765,7 +765,7 @@ var netFilteringManager = (function() {
         );
     };
 
-    var parseStaticInputs = function() {
+    var parseStaticInputs = () => {
         var filter = '',
             options = [],
             block = selectValue('select.static.action') === '';
@@ -804,7 +804,7 @@ var netFilteringManager = (function() {
         updateWidgets();
     };
 
-    var updateWidgets = function() {
+    var updateWidgets = () => {
         var value = staticFilterNode().value;
         dialog.querySelector('#createStaticFilter').classList.toggle(
             'disabled',
@@ -989,7 +989,7 @@ var netFilteringManager = (function() {
         }
     };
 
-    var onInputChange = function() {
+    var onInputChange = () => {
         updateWidgets();
     };
 
@@ -1055,7 +1055,7 @@ var netFilteringManager = (function() {
     };
 
     // Fill dynamic URL filtering pane
-    var fillDynamicPane = function() {
+    var fillDynamicPane = () => {
         var select;
         // Fill context selector
         select = selectNode('select.dynamic.origin');
@@ -1108,7 +1108,7 @@ var netFilteringManager = (function() {
     };
 
     // Fill static filtering pane
-    var fillStaticPane = function() {
+    var fillStaticPane = () => {
         var template = vAPI.i18n('loggerStaticFilteringSentence');
         var rePlaceholder = /\{\{[^}]+?\}\}/g;
         var nodes = [];
@@ -1243,7 +1243,7 @@ var netFilteringManager = (function() {
         );
     };
 
-    var toggleOff = function() {
+    var toggleOff = () => {
         removeAllChildren(dialog.querySelector('div.preview'));
         removeAllChildren(dialog.querySelector('div.dynamic table.entries tbody'));
         dialog = null;
@@ -1265,7 +1265,7 @@ var netFilteringManager = (function() {
 /******************************************************************************/
 /******************************************************************************/
 
-var reverseLookupManager = (function() {
+var reverseLookupManager = (() => {
     let filterFinderDialog = uDom.nodeFromId('filterFinderDialog');
     let rawFilter = '';
 
@@ -1371,7 +1371,7 @@ var reverseLookupManager = (function() {
         }
     };
 
-    let toggleOff = function() {
+    let toggleOff = () => {
         filterFinderDialog.removeEventListener('click', onClick, true);
         document.body.removeChild(filterFinderDialog);
         rawFilter = '';
@@ -1385,10 +1385,10 @@ var reverseLookupManager = (function() {
 /******************************************************************************/
 /******************************************************************************/
 
-var rowFilterer = (function() {
+var rowFilterer = (() => {
     var filters = [];
 
-    var parseInput = function() {
+    var parseInput = () => {
         filters = [];
 
         var rawPart, hardBeg, hardEnd;
@@ -1478,7 +1478,7 @@ var rowFilterer = (function() {
         cl.remove('f');
     };
 
-    var filterAll = function() {
+    var filterAll = () => {
         // Special case: no filter
         if ( filters.length === 0 ) {
             uDom('#netInspector tr').removeClass('f');
@@ -1492,14 +1492,14 @@ var rowFilterer = (function() {
         }
     };
 
-    var onFilterChangedAsync = (function() {
+    var onFilterChangedAsync = (() => {
         var timer = null;
-        var commit = function() {
+        var commit = () => {
             timer = null;
             parseInput();
             filterAll();
         };
-        return function() {
+        return () => {
             if ( timer !== null ) {
                 clearTimeout(timer);
             }
@@ -1507,7 +1507,7 @@ var rowFilterer = (function() {
         };
     })();
 
-    var onFilterButton = function() {
+    var onFilterButton = () => {
         uDom.nodeFromId('netInspector').classList.toggle('f');
     };
 
@@ -1537,7 +1537,7 @@ var toJunkyard = function(trs) {
 
 /******************************************************************************/
 
-var clearBuffer = function() {
+var clearBuffer = () => {
     var tabClass = uDom.nodeFromId('pageSelector').value;
     var btsAlso = tabClass === '' || tabClass === 'tab_bts';
     var tbody = document.querySelector('#netInspector tbody');
@@ -1565,7 +1565,7 @@ var clearBuffer = function() {
 
 /******************************************************************************/
 
-var cleanBuffer = function() {
+var cleanBuffer = () => {
     var rows = uDom('#netInspector tr.tab:not(.canMtx)').remove();
     var i = rows.length;
     while ( i-- ) {
@@ -1576,7 +1576,7 @@ var cleanBuffer = function() {
 
 /******************************************************************************/
 
-var toggleVCompactView = function() {
+var toggleVCompactView = () => {
     uDom.nodeFromId('netInspector').classList.toggle('vCompact');
     uDom('#netInspector .vExpanded').toggleClass('vExpanded');
 };
@@ -1587,13 +1587,13 @@ var toggleVCompactRow = function(ev) {
 
 /******************************************************************************/
 
-var toggleInspectors = function() {
+var toggleInspectors = () => {
     uDom.nodeFromId('inspectors').classList.toggle('dom');
 };
 
 /******************************************************************************/
 
-var popupManager = (function() {
+var popupManager = (() => {
     var realTabId = null;
     var localTabId = null;
     var container = null;
@@ -1607,7 +1607,7 @@ var popupManager = (function() {
         '}'
     ].join('\n');
 
-    var resizePopup = function() {
+    var resizePopup = () => {
         if ( popup === null ) {
             return;
         }
@@ -1620,11 +1620,11 @@ var popupManager = (function() {
         }
     };
 
-    var toggleSize = function() {
+    var toggleSize = () => {
         container.classList.toggle('hide');
     };
 
-    var onLoad = function() {
+    var onLoad = () => {
         resizePopup();
         popupObserver.observe(popup.contentDocument.body, {
             subtree: true,
@@ -1658,7 +1658,7 @@ var popupManager = (function() {
         parent.classList.add('popupOn');
     };
 
-    var toggleOff = function() {
+    var toggleOff = () => {
         uDom.nodeFromId('netInspector').classList.remove('popupOn');
 
         container.querySelector('div > span:nth-of-type(1)').removeEventListener('click', toggleSize);
@@ -1685,7 +1685,7 @@ var popupManager = (function() {
                 toggleOn(ev.target);
             }
         },
-        toggleOff: function() {
+        toggleOff: () => {
             if ( realTabId !== null ) {
                 toggleOff();
             }
@@ -1693,7 +1693,7 @@ var popupManager = (function() {
     };
 
     Object.defineProperty(exports, 'tabId', {
-        get: function() { return realTabId || 0; }
+        get: () => { return realTabId || 0; }
     });
 
     return exports;
@@ -1701,14 +1701,14 @@ var popupManager = (function() {
 
 /******************************************************************************/
 
-var grabView = function() {
+var grabView = () => {
     if ( logger.ownerId === undefined ) {
         logger.ownerId = Date.now();
     }
     readLogBufferAsync();
 };
 
-var releaseView = function() {
+var releaseView = () => {
     if ( logger.ownerId === undefined ) { return; }
     vAPI.messaging.send(
         'loggerUI',

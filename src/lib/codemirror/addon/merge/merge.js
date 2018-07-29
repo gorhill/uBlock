@@ -139,17 +139,17 @@
       CodeMirror.on(dv.edit.state.trackAlignable, "realign", setDealign)
       CodeMirror.on(dv.orig.state.trackAlignable, "realign", setDealign)
     }
-    dv.edit.on("viewportChange", function() { set(false); });
-    dv.orig.on("viewportChange", function() { set(false); });
+    dv.edit.on("viewportChange", () => { set(false); });
+    dv.orig.on("viewportChange", () => { set(false); });
     update();
     return update;
   }
 
   function registerScroll(dv, otherDv) {
-    dv.edit.on("scroll", function() {
+    dv.edit.on("scroll", () => {
       syncScroll(dv, true) && makeConnections(dv);
     });
-    dv.orig.on("scroll", function() {
+    dv.orig.on("scroll", () => {
       syncScroll(dv, false) && makeConnections(dv);
       if (otherDv) syncScroll(otherDv, true) && makeConnections(otherDv);
     });
@@ -239,7 +239,7 @@
   // FIXME maybe add a margin around viewport to prevent too many updates
   function updateMarks(editor, diff, state, type, classes) {
     var vp = editor.getViewport();
-    editor.operation(function() {
+    editor.operation(() => {
       if (state.from == state.to || vp.from - state.to > 20 || state.from - vp.to > 20) {
         clearMarks(editor, state.marked, classes);
         markChanges(editor, diff, type, state.marked, vp.from, vp.to, classes);
@@ -424,7 +424,7 @@
 
   function alignChunks(dv, force) {
     if (!dv.dealigned && !force) return;
-    if (!dv.orig.curOp) return dv.orig.operation(function() {
+    if (!dv.orig.curOp) return dv.orig.operation(() => {
       alignChunks(dv, force);
     });
 
@@ -570,7 +570,7 @@
     if (left) left.init(leftPane, origLeft, options);
     if (right) right.init(rightPane, origRight, options);
     if (options.collapseIdentical)
-      this.editor().operation(function() {
+      this.editor().operation(() => {
         collapseIdenticalStretches(self, options.collapseIdentical);
       });
     if (options.connect == "align") {
@@ -581,12 +581,12 @@
     if (right) right.registerEvents(left)
 
 
-    var onResize = function() {
+    var onResize = () => {
       if (left) makeConnections(left);
       if (right) makeConnections(right);
     };
     CodeMirror.on(window, "resize", onResize);
-    var resizeInterval = setInterval(function() {
+    var resizeInterval = setInterval(() => {
       for (var p = wrapElt.parentNode; p && p != document.body; p = p.parentNode) {}
       if (!p) { clearInterval(resizeInterval); CodeMirror.off(window, "resize", onResize); }
     }, 5000);
@@ -596,7 +596,7 @@
     var lock = dv.lockButton = elt("div", null, "CodeMirror-merge-scrolllock");
     lock.title = "Toggle locked scrolling";
     var lockWrap = elt("div", [lock], "CodeMirror-merge-scrolllock-wrap");
-    CodeMirror.on(lock, "click", function() { setScrollLock(dv, !dv.lockScroll); });
+    CodeMirror.on(lock, "click", () => { setScrollLock(dv, !dv.lockScroll); });
     var gapElts = [lockWrap];
     if (dv.mv.options.revertButtons !== false) {
       dv.copyButtons = elt("div", null, "CodeMirror-merge-copybuttons-" + dv.type);
@@ -623,17 +623,17 @@
 
   MergeView.prototype = {
     constructor: MergeView,
-    editor: function() { return this.edit; },
-    rightOriginal: function() { return this.right && this.right.orig; },
-    leftOriginal: function() { return this.left && this.left.orig; },
+    editor: () => { return this.edit; },
+    rightOriginal: () => { return this.right && this.right.orig; },
+    leftOriginal: () => { return this.left && this.left.orig; },
     setShowDifferences: function(val) {
       if (this.right) this.right.setShowDifferences(val);
       if (this.left) this.left.setShowDifferences(val);
     },
-    rightChunks: function() {
+    rightChunks: () => {
       if (this.right) { ensureDiff(this.right); return this.right.chunks; }
     },
-    leftChunks: function() {
+    leftChunks: () => {
       if (this.left) { ensureDiff(this.left); return this.left.chunks; }
     }
   };
@@ -871,13 +871,13 @@
       self.check(end, F_MARKER, self.hasMarker)
       if (nBefore || nAfter) self.check(change.from.line, F_MARKER, self.hasMarker)
     })
-    cm.on("viewportChange", function() {
+    cm.on("viewportChange", () => {
       if (self.cm.doc.height != self.height) self.signal()
     })
   }
 
   TrackAlignable.prototype = {
-    signal: function() {
+    signal: () => {
       CodeMirror.signal(this, "realign")
       this.height = this.cm.doc.height
     },

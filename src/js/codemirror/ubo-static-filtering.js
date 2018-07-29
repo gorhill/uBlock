@@ -23,7 +23,7 @@
 
 'use strict';
 
-CodeMirror.defineMode("ubo-static-filtering", function() {
+CodeMirror.defineMode("ubo-static-filtering", () => {
     var reComment1 = /^\s*!/;
     var reComment2 = /^\s*#/;
     var reExt = /^(\s*[^#]*)(#(?:#|@#|\$#|@\$#|\?#|@\?#))(.+)$/;

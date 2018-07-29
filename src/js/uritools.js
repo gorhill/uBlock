@@ -33,7 +33,7 @@ Naming convention from https://en.wikipedia.org/wiki/URI_scheme#Examples
 
 /******************************************************************************/
 
-µBlock.URI = (function() {
+µBlock.URI = (() => {
 
 /******************************************************************************/
 
@@ -301,7 +301,7 @@ URI.domainFromHostnameNoCache = function(hostname) {
     return reIPAddressNaive.test(hostname) ? hostname : psl.getDomain(hostname);
 };
 
-URI.domain = function() {
+URI.domain = () => {
     return this.domainFromHostname(this.hostname);
 };
 
@@ -346,7 +346,7 @@ DomainCacheEntry.prototype.init = function(domain) {
     return this;
 };
 
-DomainCacheEntry.prototype.dispose = function() {
+DomainCacheEntry.prototype.dispose = () => {
     this.domain = '';
     if ( domainCacheEntryJunkyard.length < domainCacheEntryJunkyardMax ) {
         domainCacheEntryJunkyard.push(this);
@@ -378,7 +378,7 @@ var domainCacheEntrySort = function(a, b) {
     return domainCache.get(b).tstamp - domainCache.get(a).tstamp;
 };
 
-var domainCachePrune = function() {
+var domainCachePrune = () => {
     var hostnames = Array.from(domainCache.keys())
                          .sort(domainCacheEntrySort)
                          .slice(domainCacheCountLowWaterMark);
@@ -390,7 +390,7 @@ var domainCachePrune = function() {
     }
 };
 
-window.addEventListener('publicSuffixList', function() {
+window.addEventListener('publicSuffixList', () => {
     domainCache.clear();
 });
 
@@ -423,7 +423,7 @@ var reNetworkScheme = /^(?:ftps?|https?|wss?)$/;
 
 // Normalize the way µBlock expects it
 
-URI.normalizedURI = function() {
+URI.normalizedURI = () => {
     // Will be removed:
     // - port
     // - user id/password
@@ -433,7 +433,7 @@ URI.normalizedURI = function() {
 
 /******************************************************************************/
 
-URI.rootURL = function() {
+URI.rootURL = () => {
     if ( !this.hostname ) {
         return '';
     }
@@ -519,7 +519,7 @@ URI.allHostnamesFromHostname = function(hostname) {
 
 /******************************************************************************/
 
-URI.toString = function() {
+URI.toString = () => {
     return this.assemble();
 };
 
@@ -534,4 +534,3 @@ return URI;
 })();
 
 /******************************************************************************/
-

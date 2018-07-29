@@ -30,7 +30,7 @@
 
 /******************************************************************************/
 
-(function() {
+(() => {
 
 /******************************************************************************/
 
@@ -79,7 +79,7 @@ var onMaybeAbpLinkClicked = function(ev) {
     ev.stopPropagation();
     ev.preventDefault();
 
-    var onListsSelectionDone = function() {
+    var onListsSelectionDone = () => {
         messaging.send('scriptlets', { what: 'reloadAllFilters' });
     };
 
@@ -109,7 +109,7 @@ var onMaybeAbpLinkClicked = function(ev) {
 
 // Only if at least one subscribe link exists on the page.
 
-setTimeout(function() {
+setTimeout(() => {
     if (
         document.querySelector('link[rel="canonical"][href="https://filterlists.com/"]') !== null ||
         document.querySelector('a[href^="abp:"],a[href^="ubo:"],a[href^="https://subscribe.adblockplus.org/?"]') !== null

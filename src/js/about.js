@@ -23,13 +23,13 @@
 
 /******************************************************************************/
 
-uDom.onLoad(function() {
+uDom.onLoad(() => {
 
 'use strict';
 
 /******************************************************************************/
 
-var onAppDataReady = function(appData) {
+var onAppDataReady = (appData) => {
     uDom('#aboutNameVer').text(appData.name + ' v' + appData.version);
 };
 

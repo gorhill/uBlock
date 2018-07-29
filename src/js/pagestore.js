@@ -33,7 +33,7 @@ To create a log of net requests
 /******************************************************************************/
 /******************************************************************************/
 
-µBlock.PageStore = (function() {
+µBlock.PageStore = (() => {
 
 /******************************************************************************/
 
@@ -48,7 +48,7 @@ var netFilteringCacheJunkyard = [],
 
 /******************************************************************************/
 
-var NetFilteringResultCache = function() {
+var NetFilteringResultCache = () => {
     this.boundPruneAsyncCallback = this.pruneAsyncCallback.bind(this);
     this.init();
 };
@@ -59,7 +59,7 @@ NetFilteringResultCache.prototype.shelfLife = 15 * 1000;
 
 /******************************************************************************/
 
-NetFilteringResultCache.factory = function() {
+NetFilteringResultCache.factory = () => {
     var entry = netFilteringCacheJunkyard.pop();
     if ( entry === undefined ) {
         entry = new NetFilteringResultCache();
@@ -71,7 +71,7 @@ NetFilteringResultCache.factory = function() {
 
 /******************************************************************************/
 
-NetFilteringResultCache.prototype.init = function() {
+NetFilteringResultCache.prototype.init = () => {
     this.blocked = new Map();
     this.results = new Map();
     this.hash = 0;
@@ -80,7 +80,7 @@ NetFilteringResultCache.prototype.init = function() {
 
 /******************************************************************************/
 
-NetFilteringResultCache.prototype.dispose = function() {
+NetFilteringResultCache.prototype.dispose = () => {
     this.empty();
     if ( netFilteringCacheJunkyard.length < netFilteringCacheJunkyardMax ) {
         netFilteringCacheJunkyard.push(this);
@@ -122,7 +122,7 @@ NetFilteringResultCache.prototype.rememberBlock = function(details) {
 
 /******************************************************************************/
 
-NetFilteringResultCache.prototype.empty = function() {
+NetFilteringResultCache.prototype.empty = () => {
     this.blocked.clear();
     this.results.clear();
     this.hash = 0;
@@ -134,13 +134,13 @@ NetFilteringResultCache.prototype.empty = function() {
 
 /******************************************************************************/
 
-NetFilteringResultCache.prototype.pruneAsync = function() {
+NetFilteringResultCache.prototype.pruneAsync = () => {
     if ( this.timer === null ) {
         this.timer = vAPI.setTimeout(this.boundPruneAsyncCallback, this.shelfLife * 2);
     }
 };
 
-NetFilteringResultCache.prototype.pruneAsyncCallback = function() {
+NetFilteringResultCache.prototype.pruneAsyncCallback = () => {
     this.timer = null;
     var obsolete = Date.now() - this.shelfLife,
         entry;
@@ -223,7 +223,7 @@ FrameStore.prototype.init = function(frameURL) {
 
 /******************************************************************************/
 
-FrameStore.prototype.dispose = function() {
+FrameStore.prototype.dispose = () => {
     this.pageHostname = this.pageDomain = '';
     if ( frameStoreJunkyard.length < frameStoreJunkyardMax ) {
         frameStoreJunkyard.push(this);
@@ -381,7 +381,7 @@ PageStore.prototype.reuse = function(context) {
 
 /******************************************************************************/
 
-PageStore.prototype.dispose = function() {
+PageStore.prototype.dispose = () => {
     this.tabHostname = '';
     this.title = '';
     this.rawURL = '';
@@ -407,7 +407,7 @@ PageStore.prototype.dispose = function() {
 
 /******************************************************************************/
 
-PageStore.prototype.disposeFrameStores = function() {
+PageStore.prototype.disposeFrameStores = () => {
     for ( var frameStore of this.frames.values() ) {
         frameStore.dispose();
     }
@@ -433,7 +433,7 @@ PageStore.prototype.setFrame = function(frameId, frameURL) {
 
 /******************************************************************************/
 
-PageStore.prototype.createContextFromPage = function() {
+PageStore.prototype.createContextFromPage = () => {
     var context = µb.tabContextManager.createContext(this.tabId);
     context.pageHostname = context.rootHostname;
     context.pageDomain = context.rootDomain;
@@ -462,19 +462,19 @@ PageStore.prototype.createContextFromFrameHostname = function(frameHostname) {
 
 /******************************************************************************/
 
-PageStore.prototype.getNetFilteringSwitch = function() {
+PageStore.prototype.getNetFilteringSwitch = () => {
     return µb.tabContextManager.mustLookup(this.tabId).getNetFilteringSwitch();
 };
 
 /******************************************************************************/
 
-PageStore.prototype.getSpecificCosmeticFilteringSwitch = function() {
+PageStore.prototype.getSpecificCosmeticFilteringSwitch = () => {
     return this.noCosmeticFiltering !== true;
 };
 
 /******************************************************************************/
 
-PageStore.prototype.getGenericCosmeticFilteringSwitch = function() {
+PageStore.prototype.getGenericCosmeticFilteringSwitch = () => {
     return this.noGenericCosmeticFiltering !== true &&
            this.noCosmeticFiltering !== true;
 };
@@ -488,7 +488,7 @@ PageStore.prototype.toggleNetFilteringSwitch = function(url, scope, state) {
 
 /******************************************************************************/
 
-PageStore.prototype.injectLargeMediaElementScriptlet = function() {
+PageStore.prototype.injectLargeMediaElementScriptlet = () => {
     this.largeMediaTimer = null;
     µb.scriptlets.injectDeep(
         this.tabId,

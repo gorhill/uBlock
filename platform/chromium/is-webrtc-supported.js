@@ -29,7 +29,7 @@
 // way the closed and forgottetn WebRTC connections are properly garbage
 // collected.
 
-(function() {
+(() => {
     'use strict';
 
     var pc = null;
@@ -47,6 +47,6 @@
 
     window.top.postMessage(
         pc !== null ? 'webRTCSupported' : 'webRTCNotSupported',
-        window.location.origin        
+        window.location.origin
     );
 })();

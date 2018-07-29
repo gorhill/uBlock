@@ -50,7 +50,7 @@
 
 **/
 
-µBlock.staticExtFilteringEngine = (function() {
+µBlock.staticExtFilteringEngine = (() => {
     var µb = µBlock,
         reHostnameSeparator = /\s*,\s*/,
         reHasUnicode = /[^\x00-\x7F]/,
@@ -64,12 +64,12 @@
 
     // To be called to ensure no big parent string of a string slice is
     // left into memory after parsing filter lists is over.
-    var resetParsed = function() {
+    var resetParsed = () => {
         parsed.hostnames = [];
         parsed.suffix = '';
     };
 
-    var isValidCSSSelector = (function() {
+    var isValidCSSSelector = (() => {
         var div = document.createElement('div'),
             matchesFn;
         // Keep in mind:
@@ -135,7 +135,7 @@
         }
     };
 
-    var compileProceduralSelector = (function() {
+    var compileProceduralSelector = (() => {
         var reProceduralOperator = new RegExp([
             '^(?:',
                 [
@@ -247,7 +247,7 @@
                 return compiled.selector;
             }
             var raw = [ compiled.selector ],
-                value;                
+                value;
             for ( var i = 0, n = tasks.length, task; i < n; i++ ) {
                 task = tasks[i];
                 switch ( task[0] ) {
@@ -370,7 +370,7 @@
             return compiled;
         };
 
-        entryPoint.reset = function() {
+        entryPoint.reset = () => {
             regexToRawValue = new Map();
             lastProceduralSelector = '';
             lastProceduralSelectorCompiled = undefined;
@@ -411,7 +411,7 @@
             }
             this.size += 1;
         },
-        clear: function() {
+        clear: () => {
             this.db.clear();
             this.size = 0;
         },
@@ -428,7 +428,7 @@
                 if ( hostname.endsWith(entry.hostname) ) { out.push(entry); }
             }
         },
-        toSelfie: function() {
+        toSelfie: () => {
             return {
                 map: Array.from(this.db),
                 size: this.size
@@ -436,12 +436,12 @@
         }
     };
 
-    api.HostnameBasedDB.prototype[Symbol.iterator] = (function() {
+    api.HostnameBasedDB.prototype[Symbol.iterator] = (() => {
         var Iter = function(db) {
             this.mapIter = db.values();
             this.arrayIter = undefined;
         };
-        Iter.prototype.next = function() {
+        Iter.prototype.next = () => {
             var result;
             if ( this.arrayIter !== undefined ) {
                 result = this.arrayIter.next();
@@ -455,7 +455,7 @@
             this.arrayIter = result.value[Symbol.iterator]();
             return this.arrayIter.next(); // array should never be empty
         };
-        return function() {
+        return () => {
             return new Iter(this.db);
         };
     })();
@@ -464,7 +464,7 @@
     // Public methods
     //--------------------------------------------------------------------------
 
-    api.reset = function() {
+    api.reset = () => {
         compileProceduralSelector.reset();
         µb.cosmeticFilteringEngine.reset();
         µb.scriptletFilteringEngine.reset();
@@ -472,7 +472,7 @@
         resetParsed(parsed);
     };
 
-    api.freeze = function() {
+    api.freeze = () => {
         compileProceduralSelector.reset();
         µb.cosmeticFilteringEngine.freeze();
         µb.scriptletFilteringEngine.freeze();
@@ -493,7 +493,7 @@
     // https://github.com/uBlockOrigin/uBlock-issues/issues/89
     //   Do not discard unknown pseudo-elements.
 
-    api.compileSelector = (function() {
+    api.compileSelector = (() => {
         var reAfterBeforeSelector = /^(.+?)(::?after|::?before|::[a-z-]+)$/,
             reStyleSelector = /^(.+?):style\((.+?)\)$/,
             reStyleBad = /url\([^)]+\)/,
@@ -702,7 +702,7 @@
         µb.htmlFilteringEngine.fromCompiledContent(reader, options);
     };
 
-    api.toSelfie = function() {
+    api.toSelfie = () => {
         return {
             cosmetic: µb.cosmeticFilteringEngine.toSelfie(),
             scriptlets: µb.scriptletFilteringEngine.toSelfie(),
@@ -712,14 +712,14 @@
 
     Object.defineProperties(api, {
         acceptedCount: {
-            get: function() {
+            get: () => {
                 return µb.cosmeticFilteringEngine.acceptedCount +
                        µb.scriptletFilteringEngine.acceptedCount +
                        µb.htmlFilteringEngine.acceptedCount;
             }
         },
         discardedCount: {
-            get: function() {
+            get: () => {
                 return µb.cosmeticFilteringEngine.discardedCount +
                        µb.scriptletFilteringEngine.discardedCount +
                        µb.htmlFilteringEngine.discardedCount;

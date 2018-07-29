@@ -23,7 +23,7 @@
 
 /******************************************************************************/
 
-µBlock.cosmeticFilteringEngine = (function(){
+µBlock.cosmeticFilteringEngine = (() =>{
 
 /******************************************************************************/
 
@@ -34,7 +34,7 @@ let cosmeticSurveyingMissCountMax =
 
 let supportsUserStylesheets = vAPI.webextFlavor.soup.has('user_stylesheet');
 // https://www.reddit.com/r/uBlockOrigin/comments/8dkvqn/116_broken_loading_custom_filters_from_my_filters/
-window.addEventListener('webextFlavor', function() {
+window.addEventListener('webextFlavor', () => {
     supportsUserStylesheets = vAPI.webextFlavor.soup.has('user_stylesheet');
 }, { once: true });
 
@@ -92,7 +92,7 @@ FilterOneOne.prototype = {
         out.add(this.selector);
     },
 
-    compile: function() {
+    compile: () => {
         return [ this.fid, this.hostname, this.selector ];
     }
 };
@@ -138,7 +138,7 @@ FilterOneMany.prototype = {
         }
     },
 
-    compile: function() {
+    compile: () => {
         return [ this.fid, this.hostname, this.selectors ];
     }
 };
@@ -190,7 +190,7 @@ FilterManyAny.prototype = {
         }
     },
 
-    compile: function() {
+    compile: () => {
         return [ this.fid, Array.from(this.entries) ];
     }
 };
@@ -204,7 +204,7 @@ registerFilterClass(FilterManyAny);
 /******************************************************************************/
 /******************************************************************************/
 
-let SelectorCacheEntry = function() {
+let SelectorCacheEntry = () => {
     this.reset();
 };
 
@@ -212,7 +212,7 @@ let SelectorCacheEntry = function() {
 
 SelectorCacheEntry.junkyard = [];
 
-SelectorCacheEntry.factory = function() {
+SelectorCacheEntry.factory = () => {
     let entry = SelectorCacheEntry.junkyard.pop();
     if ( entry ) {
         return entry.reset();
@@ -228,7 +228,7 @@ let netSelectorCacheHighWaterMark = 30;
 /******************************************************************************/
 
 SelectorCacheEntry.prototype = {
-    reset: function() {
+    reset: () => {
         this.cosmetic = new Set();
         this.cosmeticSurveyingMissCount = 0;
         this.net = new Map();
@@ -236,7 +236,7 @@ SelectorCacheEntry.prototype = {
         return this;
     },
 
-    dispose: function() {
+    dispose: () => {
         this.cosmetic = this.net = null;
         if ( SelectorCacheEntry.junkyard.length < 25 ) {
             SelectorCacheEntry.junkyard.push(this);
@@ -398,7 +398,7 @@ let makeHash = function(token) {
 // Generic filters can only be enforced once the main document is loaded.
 // Specific filers can be enforced before the main document is loaded.
 
-let FilterContainer = function() {
+let FilterContainer = () => {
     this.reHasUnicode = /[^\x00-\x7F]/;
     this.rePlainSelector = /^[#.][\w\\-]+/;
     this.rePlainSelectorEscaped = /^[#.](?:\\[0-9A-Fa-f]+ |\\.|\w|-)+/;
@@ -488,7 +488,7 @@ let FilterContainer = function() {
 
 // Reset all, thus reducing to a minimum memory footprint of the context.
 
-FilterContainer.prototype.reset = function() {
+FilterContainer.prototype.reset = () => {
     this.µburi = µb.URI;
     this.frozen = false;
     this.acceptedCount = 0;
@@ -527,7 +527,7 @@ FilterContainer.prototype.reset = function() {
 
 /******************************************************************************/
 
-FilterContainer.prototype.freeze = function() {
+FilterContainer.prototype.freeze = () => {
     this.duplicateBuster = new Set();
 
     this.hasGenericHide =
@@ -965,7 +965,7 @@ FilterContainer.prototype.skipCompiledContent = function(reader) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.toSelfie = function() {
+FilterContainer.prototype.toSelfie = () => {
     let selfieFromMap = function(map) {
         let entries = [];
         for ( let entry of map ) {
@@ -1018,7 +1018,7 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.triggerSelectorCachePruner = function() {
+FilterContainer.prototype.triggerSelectorCachePruner = () => {
     // Of interest: http://fitzgeraldnick.com/weblog/40/
     // http://googlecode.blogspot.ca/2009/07/gmail-for-mobile-html5-series-using.html
     if ( this.selectorCacheTimer === null ) {
@@ -1085,7 +1085,7 @@ FilterContainer.prototype.retrieveFromSelectorCache = function(
 
 /******************************************************************************/
 
-FilterContainer.prototype.pruneSelectorCacheAsync = function() {
+FilterContainer.prototype.pruneSelectorCacheAsync = () => {
     this.selectorCacheTimer = null;
     if ( this.selectorCache.size <= this.selectorCacheCountMin ) { return; }
     let cache = this.selectorCache;
@@ -1116,7 +1116,7 @@ FilterContainer.prototype.pruneSelectorCacheAsync = function() {
 
 /******************************************************************************/
 
-FilterContainer.prototype.randomAlphaToken = function() {
+FilterContainer.prototype.randomAlphaToken = () => {
     return String.fromCharCode(Date.now() % 26 + 97) +
            Math.floor(Math.random() * 982451653 + 982451653).toString(36);
 };
@@ -1472,7 +1472,7 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
 
 /******************************************************************************/
 
-FilterContainer.prototype.getFilterCount = function() {
+FilterContainer.prototype.getFilterCount = () => {
     return this.acceptedCount - this.discardedCount;
 };
 

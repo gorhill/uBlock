@@ -41,11 +41,11 @@ vAPI.webextFlavor = {
     soup: new Set()
 };
 
-(function() {
+(() => {
     var ua = navigator.userAgent,
         flavor = vAPI.webextFlavor,
         soup = flavor.soup;
-    var dispatch = function() {
+    var dispatch = () => {
         window.dispatchEvent(new CustomEvent('webextFlavor'));
     };
 
@@ -154,9 +154,9 @@ setScriptDirection(vAPI.i18n('@@ui_locale'));
 // https://github.com/gorhill/uBlock/issues/3057
 // - webNavigation.onCreatedNavigationTarget become broken on Firefox when we
 //   try to make the popup panel close itself using the original
-//   `window.open('', '_self').close()`. 
+//   `window.open('', '_self').close()`.
 
-vAPI.closePopup = function() {
+vAPI.closePopup = () => {
     if ( vAPI.webextFlavor.soup.has('firefox') ) {
         window.close();
         return;
@@ -181,7 +181,7 @@ vAPI.closePopup = function() {
 //   Always use a wrapper to seamlessly handle exceptions
 
 vAPI.localStorage = {
-    clear: function() {
+    clear: () => {
         try {
             window.localStorage.clear();
         } catch(ex) {

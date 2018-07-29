@@ -52,7 +52,7 @@
     },
 
     // Tokenize on demand.
-    getTokens: function() {
+    getTokens: () => {
         if ( this._tokenized === false ) {
             this._tokenize();
             this._tokenized = true;
@@ -78,7 +78,7 @@
     // https://github.com/chrisaljoudi/uBlock/issues/1118
     // We limit to a maximum number of tokens.
 
-    _tokenize: function() {
+    _tokenize: () => {
         var tokens = this._tokens,
             url = this._urlOut,
             l = url.length;
@@ -113,7 +113,7 @@
     _urlOut: '',
     _tokenized: false,
     _tokens: [ 0 ],
-    _validTokenChars: (function() {
+    _validTokenChars: (() => {
         var vtc = new Uint8Array(128),
             chars = '0123456789%abcdefghijklmnopqrstuvwxyz',
             i = chars.length;
@@ -151,7 +151,7 @@
 
 /******************************************************************************/
 
-µBlock.dateNowToSensibleString = function() {
+µBlock.dateNowToSensibleString = () => {
     var now = new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000);
     return now.toISOString().replace(/\.\d+Z$/, '')
                             .replace(/:/g, '.')
@@ -186,7 +186,7 @@
     return this.text.charCodeAt(this.offset + offset);
 };
 
-µBlock.LineIterator.prototype.eot = function() {
+µBlock.LineIterator.prototype.eot = () => {
     return this.offset >= this.textLen;
 };
 
@@ -208,7 +208,7 @@
     return this.next();
 };
 
-µBlock.FieldIterator.prototype.next = function() {
+µBlock.FieldIterator.prototype.next = () => {
     var end = this.text.indexOf(this.sep, this.offset);
     if ( end === -1 ) {
         end = this.text.length;
@@ -218,13 +218,13 @@
     return field;
 };
 
-µBlock.FieldIterator.prototype.remainder = function() {
+µBlock.FieldIterator.prototype.remainder = () => {
     return this.text.slice(this.offset);
 };
 
 /******************************************************************************/
 
-µBlock.CompiledLineWriter = function() {
+µBlock.CompiledLineWriter = () => {
     this.blockId = undefined;
     this.block = undefined;
     this.blocks = new Map();
@@ -247,7 +247,7 @@
             this.blocks.set(blockId, (this.block = []));
         }
     },
-    toString: function() {
+    toString: () => {
         var result = [];
         for ( var entry of this.blocks ) {
             if ( entry[1].length === 0 ) { continue; }
@@ -286,7 +286,7 @@
 };
 
 µBlock.CompiledLineReader.prototype = {
-    next: function() {
+    next: () => {
         if ( this.offset === this.len ) {
             this.line = '';
             return false;
@@ -307,10 +307,10 @@
         this.offset = 0;
         return this;
     },
-    fingerprint: function() {
+    fingerprint: () => {
         return this.line;
     },
-    args: function() {
+    args: () => {
         return this.parser(this.line);
     }
 };
@@ -339,7 +339,7 @@
         return t;
     },
 
-    cleanup: function() {
+    cleanup: () => {
         if ( (Date.now() - this.last) < 10000 ) {
             this.timer = vAPI.setTimeout(() => { this.cleanup(); }, 10000);
         } else {
@@ -400,7 +400,7 @@
         }
         return value;
     },
-    reset: function() {
+    reset: () => {
         this.array = [];
         this.map.clear();
         this.resetTime = Date.now();
@@ -417,7 +417,7 @@
 
 /******************************************************************************/
 
-µBlock.decomposeHostname = (function() {
+µBlock.decomposeHostname = (() => {
     // For performance purpose, as simple tests as possible
     let reHostnameVeryCoarse = /[g-z_-]/;
     let reIPv4VeryCoarse = /\.\d+$/;

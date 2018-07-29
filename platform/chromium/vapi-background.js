@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-(function() {
+(() => {
 
 /******************************************************************************/
 /******************************************************************************/
@@ -37,21 +37,21 @@ vAPI.cantWebsocket =
     chrome.webRequest.ResourceType instanceof Object === false  ||
     chrome.webRequest.ResourceType.WEBSOCKET !== 'websocket';
 
-vAPI.lastError = function() {
+vAPI.lastError = () => {
     return chrome.runtime.lastError;
 };
 
 // https://github.com/gorhill/uBlock/issues/875
 // https://code.google.com/p/chromium/issues/detail?id=410868#c8
 //   Must not leave `lastError` unchecked.
-vAPI.resetLastError = function() {
+vAPI.resetLastError = () => {
     void chrome.runtime.lastError;
 };
 
 vAPI.supportsUserStylesheets = vAPI.webextFlavor.soup.has('user_stylesheet');
 // The real actual webextFlavor value may not be set in stone, so listen
 // for possible future changes.
-window.addEventListener('webextFlavor', function() {
+window.addEventListener('webextFlavor', () => {
     vAPI.supportsUserStylesheets =
         vAPI.webextFlavor.soup.has('user_stylesheet');
 }, { once: true });
@@ -60,11 +60,11 @@ vAPI.insertCSS = function(tabId, details) {
     return chrome.tabs.insertCSS(tabId, details, vAPI.resetLastError);
 };
 
-var noopFunc = function(){};
+var noopFunc = () =>{};
 
 /******************************************************************************/
 
-vAPI.app = (function() {
+vAPI.app = (() => {
     let version = manifest.version;
     let match = /(\d+\.\d+\.\d+)(?:\.(\d+))?/.exec(version);
     if ( match && match[2] ) {
@@ -80,7 +80,7 @@ vAPI.app = (function() {
 
 /******************************************************************************/
 
-vAPI.app.restart = function() {
+vAPI.app.restart = () => {
     chrome.runtime.reload();
 };
 
@@ -109,7 +109,7 @@ vAPI.cacheStorage = chrome.storage.local;
 //   Do not mess up with existing settings if not assigning them stricter
 //   values.
 
-vAPI.browserSettings = (function() {
+vAPI.browserSettings = (() => {
     // Not all platforms support `chrome.privacy`.
     if ( chrome.privacy instanceof Object === false ) {
         return;
@@ -122,7 +122,7 @@ vAPI.browserSettings = (function() {
         // an iframe) for platforms where it's a non-issue.
         // https://github.com/uBlockOrigin/uBlock-issues/issues/9
         //   Some Chromium builds are made to look like a Chrome build.
-        webRTCSupported: (function() {
+        webRTCSupported: (() => {
             if ( vAPI.webextFlavor.soup.has('chromium') === false ) {
                 return true;
             }
@@ -309,7 +309,7 @@ var toChromiumTabId = function(tabId) {
 
 /******************************************************************************/
 
-vAPI.tabs.registerListeners = function() {
+vAPI.tabs.registerListeners = () => {
     var onNavigationClient = this.onNavigation || noopFunc;
     var onUpdatedClient = this.onUpdated || noopFunc;
 
@@ -450,12 +450,12 @@ vAPI.tabs.open = function(details) {
     }
 
     // dealing with Chrome's asynchronous API
-    var wrapper = function() {
+    var wrapper = () => {
         if ( details.active === undefined ) {
             details.active = true;
         }
 
-        var subWrapper = function() {
+        var subWrapper = () => {
             var _details = {
                 url: targetURL,
                 active: !!details.active
@@ -611,7 +611,7 @@ vAPI.tabs.select = function(tabId) {
 /******************************************************************************/
 
 vAPI.tabs.injectScript = function(tabId, details, callback) {
-    var onScriptExecuted = function() {
+    var onScriptExecuted = () => {
         // https://code.google.com/p/chromium/issues/detail?id=410868#c8
         void chrome.runtime.lastError;
         if ( typeof callback === 'function' ) {
@@ -642,7 +642,7 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 // https://github.com/uBlockOrigin/uBlock-issues/issues/32
 //   Ensure ImageData for toolbar icon is valid before use.
 
-vAPI.setIcon = (function() {
+vAPI.setIcon = (() => {
     let browserAction = chrome.browserAction,
         titleTemplate =
             chrome.runtime.getManifest().browser_action.default_title +
@@ -656,7 +656,7 @@ vAPI.setIcon = (function() {
         }
     ];
 
-    (function() {
+    (() => {
         if ( browserAction.setIcon === undefined ) { return; }
 
         // The global badge background color.
@@ -685,7 +685,7 @@ vAPI.setIcon = (function() {
                 imgs.push({ i: i, p: key });
             }
         }
-        let onLoaded = function() {
+        let onLoaded = () => {
             for ( let img of imgs ) {
                 if ( img.r.complete === false ) { return; }
             }
@@ -789,7 +789,7 @@ vAPI.messaging.listen = function(listenerName, callback) {
 
 /******************************************************************************/
 
-vAPI.messaging.onPortMessage = (function() {
+vAPI.messaging.onPortMessage = (() => {
     var messaging = vAPI.messaging;
 
     // Use a wrapper to avoid closure and to allow reuse.
@@ -882,7 +882,7 @@ vAPI.messaging.onPortMessage = (function() {
             }
             var cssText;
             var countdown = 0;
-            var countdownHandler = function() {
+            var countdownHandler = () => {
                 void chrome.runtime.lastError;
                 countdown -= 1;
                 if ( countdown === 0 && typeof callback === 'function' ) {
@@ -982,7 +982,7 @@ vAPI.messaging.setup = function(defaultHandler) {
     }
 
     if ( typeof defaultHandler !== 'function' ) {
-        defaultHandler = function(){ return vAPI.messaging.UNHANDLED; };
+        defaultHandler = () =>{ return vAPI.messaging.UNHANDLED; };
     }
     this.defaultHandler = defaultHandler;
 
@@ -1011,7 +1011,7 @@ vAPI.messaging.broadcast = function(message) {
 // https://github.com/gorhill/uBlock/issues/3497
 // - prevent web pages from interfering with uBO's element picker
 
-(function() {
+(() => {
     vAPI.warSecret =
         Math.floor(Math.random() * 982451653 + 982451653).toString(36) +
         Math.floor(Math.random() * 982451653 + 982451653).toString(36);
@@ -1048,7 +1048,7 @@ vAPI.contextMenu = chrome.contextMenus && {
             vAPI.resetLastError
         );
     },
-    onMustUpdate: function() {},
+    onMustUpdate: () => {},
     setEntries: function(entries, callback) {
         entries = entries || [];
         var n = Math.max(this._entries.length, entries.length),
@@ -1097,11 +1097,11 @@ vAPI.commands = chrome.commands;
 // in already opened web pages, to remove whatever nuisance could make it to
 // the web pages before uBlock was ready.
 
-vAPI.onLoadAllCompleted = function() {
+vAPI.onLoadAllCompleted = () => {
     // http://code.google.com/p/chromium/issues/detail?id=410868#c11
     // Need to be sure to access `vAPI.lastError()` to prevent
     // spurious warnings in the console.
-    var onScriptInjected = function() {
+    var onScriptInjected = () => {
         vAPI.lastError();
     };
     var scriptStart = function(tabId) {
@@ -1184,7 +1184,7 @@ vAPI.adminStorage = chrome.storage.managed && {
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.cloud = (function() {
+vAPI.cloud = (() => {
     // Not all platforms support `chrome.storage.sync`.
     if ( chrome.storage.sync instanceof Object === false ) {
         return;
@@ -1201,7 +1201,7 @@ vAPI.cloud = (function() {
     //  the infrastructure. Unfortunately this leads to less usable space for
     //  actual data, but all of this is provided for free by browser vendors,
     //  so we need to accept and deal with these limitations.
-    var evalMaxChunkSize = function() {
+    var evalMaxChunkSize = () => {
         return Math.floor(
             (chrome.storage.sync.QUOTA_BYTES_PER_ITEM || 8192) *
             (vAPI.webextFlavor.soup.has('firefox') ? 0.6 : 0.75)
@@ -1212,7 +1212,7 @@ vAPI.cloud = (function() {
 
     // The real actual webextFlavor value may not be set in stone, so listen
     // for possible future changes.
-    window.addEventListener('webextFlavor', function() {
+    window.addEventListener('webextFlavor', () => {
         maxChunkSize = evalMaxChunkSize();
     }, { once: true });
 
@@ -1302,7 +1302,7 @@ vAPI.cloud = (function() {
         }
         bin[dataKey + i.toString()] = ''; // Sentinel
 
-        chrome.storage.sync.set(bin, function() {
+        chrome.storage.sync.set(bin, () => {
             var errorStr;
             if ( chrome.runtime.lastError ) {
                 errorStr = chrome.runtime.lastError.message;

@@ -51,7 +51,7 @@
 
 */
 
-var HNTrieBuilder = function() {
+var HNTrieBuilder = () => {
     this.reset();
 };
 
@@ -64,7 +64,7 @@ var HNTrieBuilder = function() {
 
 */
 
-HNTrieBuilder.prototype.reset = function() {
+HNTrieBuilder.prototype.reset = () => {
     this.buf = [];
     this.bufsz = 0;
     this.buf[0] = 0;
@@ -313,7 +313,7 @@ HNTrieBuilder.prototype.matches = function(needle) {
 
 */
 
-HNTrieBuilder.prototype.vacuum = function() {
+HNTrieBuilder.prototype.vacuum = () => {
     if ( this.bufsz === 0 ) { return null; }
     var input = this.buf,
         output = [], outsz = 0,
@@ -526,7 +526,7 @@ HNTrieBuilder.prototype.HNTrie32.prototype.matches = function(needle) {
     - Call overhead: https://github.com/WebAssembly/design/issues/1120
     - Having to copy whole input string in buffer before call.
 
-var HNTrie16wasm = (function() {
+var HNTrie16wasm = (() => {
     var module;
     var instance;
     var memory;
@@ -537,7 +537,7 @@ var HNTrie16wasm = (function() {
     var tbufferSize = 0;
     var matchesFn;
 
-    var init = function() {
+    var init = () => {
         module = new WebAssembly.Module(new Uint8Array([0,97,115,109,1,0,0,0,1,139,128,128,128,0,2,96,2,127,127,1,127,96,0,1,127,3,131,128,128,128,0,2,0,1,4,132,128,128,128,0,1,112,0,0,5,131,128,128,128,0,1,0,1,6,129,128,128,128,0,0,7,172,128,128,128,0,3,6,109,101,109,111,114,121,2,0,7,109,97,116,99,104,101,115,0,0,21,103,101,116,76,105,110,101,97,114,77,101,109,111,114,121,79,102,102,115,101,116,0,1,10,217,130,128,128,0,2,202,130,128,128,0,1,5,127,32,1,65,1,116,65,12,106,33,3,32,0,65,1,116,65,140,8,106,34,2,33,0,2,64,2,64,2,64,2,64,2,64,2,64,3,64,65,0,33,5,2,64,32,3,65,12,77,13,0,32,3,65,126,106,34,3,47,1,0,33,5,11,2,64,32,5,32,0,47,1,4,34,1,70,13,0,2,64,32,5,65,46,71,13,0,3,64,32,1,65,255,255,3,113,69,13,5,32,0,47,1,0,34,1,69,13,6,32,2,32,1,65,1,116,106,34,0,47,1,4,34,1,65,46,71,13,0,12,2,11,11,3,64,32,0,47,1,0,34,1,69,13,3,32,5,32,2,32,1,65,1,116,106,34,0,47,1,4,71,13,0,11,11,65,1,33,6,32,5,69,13,5,2,64,2,64,32,0,47,1,6,34,1,69,13,0,32,3,32,1,65,1,116,107,65,12,73,13,8,32,1,65,127,115,33,5,32,0,65,8,106,33,1,3,64,32,5,65,1,106,34,5,69,13,1,32,1,47,1,0,33,4,32,1,65,2,106,33,1,32,4,32,3,65,126,106,34,3,47,1,0,70,13,0,12,2,11,11,32,0,47,1,2,34,1,69,13,5,32,2,32,1,65,1,116,106,33,0,12,1,11,11,65,0,15,11,65,0,15,11,65,1,15,11,65,0,15,11,32,3,65,12,70,13,0,32,3,65,126,106,47,1,0,65,46,70,33,6,11,32,6,15,11,65,0,11,132,128,128,128,0,0,65,12,11]));
         instance = new WebAssembly.Instance(module);
         memory = instance.exports.memory;
@@ -566,7 +566,7 @@ var HNTrie16wasm = (function() {
             memoryUsed += tbufferSize * 2;
             return id;
         },
-        reset: function() {
+        reset: () => {
             module = undefined;
             instance = undefined;
             memory = undefined;

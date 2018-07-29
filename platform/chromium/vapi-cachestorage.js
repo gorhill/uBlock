@@ -38,7 +38,7 @@
 // has been added, for seamless migration of cache-related entries into
 // indexedDB.
 
-vAPI.cacheStorage = (function() {
+vAPI.cacheStorage = (() => {
 
     // Firefox-specific: we use indexedDB because chrome.storage.local() has
     // poor performance in Firefox. See:
@@ -152,7 +152,7 @@ vAPI.cacheStorage = (function() {
             db.onerror = db.onabort = genericErrorHandler;
             processPendings();
         };
-        req.onerror = req.onblocked = function() {
+        req.onerror = req.onblocked = () => {
             req = undefined;
             console.log(this.error);
             processPendings();
@@ -163,7 +163,7 @@ vAPI.cacheStorage = (function() {
     function getFromDb(keys, store, callback) {
         if ( typeof callback !== 'function' ) { return; }
         if ( keys.length === 0 ) { return callback(store); }
-        var gotOne = function() {
+        var gotOne = () => {
             if ( typeof this.result === 'object' ) {
                 store[this.result.key] = this.result.value;
             }
@@ -173,7 +173,7 @@ vAPI.cacheStorage = (function() {
             var transaction = db.transaction(STORAGE_NAME);
             transaction.oncomplete =
             transaction.onerror =
-            transaction.onabort = function() {
+            transaction.onabort = () => {
                 return callback(store);
             };
             var table = transaction.objectStore(STORAGE_NAME);
@@ -196,7 +196,7 @@ vAPI.cacheStorage = (function() {
             var transaction = db.transaction(STORAGE_NAME);
             transaction.oncomplete =
             transaction.onerror =
-            transaction.onabort = function() {
+            transaction.onabort = () => {
                 callback(output);
             };
             var table = transaction.objectStore(STORAGE_NAME),

@@ -26,11 +26,11 @@
 
 /******************************************************************************/
 
-µBlock.Firewall = (function() {
+µBlock.Firewall = (() => {
 
 /******************************************************************************/
 
-var Matrix = function() {
+var Matrix = () => {
     this.reset();
 };
 
@@ -75,7 +75,7 @@ var reNotASCII = /[^\x20-\x7F]/;
 
 /******************************************************************************/
 
-Matrix.prototype.reset = function() {
+Matrix.prototype.reset = () => {
     this.r = 0;
     this.type = '';
     this.y = '';
@@ -228,7 +228,7 @@ Matrix.prototype.evaluateCell = function(srcHostname, desHostname, type) {
 
 /******************************************************************************/
 
-Matrix.prototype.clearRegisters = function() {
+Matrix.prototype.clearRegisters = () => {
     this.r = 0;
     this.type = this.y = this.z = '';
     return this;
@@ -356,19 +356,19 @@ Matrix.prototype.mustAllowCellZY = function(srcHostname, desHostname, type) {
 
 /******************************************************************************/
 
-Matrix.prototype.mustBlockOrAllow = function() {
+Matrix.prototype.mustBlockOrAllow = () => {
     return this.r === 1 || this.r === 2;
 };
 
 /******************************************************************************/
 
-Matrix.prototype.mustBlock = function() {
+Matrix.prototype.mustBlock = () => {
     return this.r === 1;
 };
 
 /******************************************************************************/
 
-Matrix.prototype.mustAbort = function() {
+Matrix.prototype.mustAbort = () => {
     return this.r === 3;
 };
 
@@ -389,7 +389,7 @@ Matrix.prototype.lookupRuleData = function(src, des, type) {
 
 /******************************************************************************/
 
-Matrix.prototype.toLogData = function() {
+Matrix.prototype.toLogData = () => {
     if ( this.r === 0  || this.type === '' ) {
         return;
     }
@@ -424,7 +424,7 @@ Matrix.prototype.desHostnameFromRule = function(rule) {
 
 /******************************************************************************/
 
-Matrix.prototype.toArray = function() {
+Matrix.prototype.toArray = () => {
     var out = [],
         toUnicode = punycode.toUnicode;
     for ( var key of this.rules.keys() ) {
@@ -451,7 +451,7 @@ Matrix.prototype.toArray = function() {
     return out;
 };
 
-Matrix.prototype.toString = function() {
+Matrix.prototype.toString = () => {
     return this.toArray().join('\n');
 };
 
@@ -522,7 +522,7 @@ Matrix.prototype.removeFromRuleParts = function(parts) {
 
 var magicId = 1;
 
-Matrix.prototype.toSelfie = function() {
+Matrix.prototype.toSelfie = () => {
     return {
         magicId: magicId,
         rules: Array.from(this.rules)

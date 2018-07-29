@@ -23,7 +23,7 @@
 
 /******************************************************************************/
 
-µBlock.scriptletFilteringEngine = (function() {
+µBlock.scriptletFilteringEngine = (() => {
     let api = {};
 
     let µb = µBlock,
@@ -58,7 +58,7 @@
     // Consequently, the programmatic-injection code path is taken only with
     // Chromium-based browsers.
 
-    let contentscriptCode = (function() {
+    let contentscriptCode = (() => {
         let parts = [
             '(',
             function(hostname, scriptlets) {
@@ -94,7 +94,7 @@
                 };
                 let observerTimer,
                     observerLists = [];
-                let observerAsync = function() {
+                let observerAsync = () => {
                     for ( let nodelist of observerLists ) {
                         for ( let node of nodelist ) {
                             if ( node.nodeType !== 1 ) { continue; }
@@ -162,7 +162,7 @@
             }
         };
     })();
-    
+
     let lookupScriptlet = function(raw, reng, toInject) {
         if ( toInject.has(raw) ) { return; }
         if ( scriptletCache.resetTime < reng.modifyTime ) {
@@ -225,14 +225,14 @@
         );
     };
 
-    api.reset = function() {
+    api.reset = () => {
         scriptletDB.clear();
         duplicates.clear();
         acceptedCount = 0;
         discardedCount = 0;
     };
 
-    api.freeze = function() {
+    api.freeze = () => {
         duplicates.clear();
     };
 
@@ -356,7 +356,7 @@
             exceptionsRegister.add(entry.token);
         }
 
-        // Return an array of scriptlets, and log results if needed. 
+        // Return an array of scriptlets, and log results if needed.
         let out = [],
             logger = µb.logger.isEnabled() ? µb.logger : null,
             isException;
@@ -407,7 +407,7 @@
         );
     };
 
-    api.toSelfie = function() {
+    api.toSelfie = () => {
         return scriptletDB.toSelfie();
     };
 
@@ -417,12 +417,12 @@
 
     Object.defineProperties(api, {
         acceptedCount: {
-            get: function() {
+            get: () => {
                 return acceptedCount;
             }
         },
         discardedCount: {
-            get: function() {
+            get: () => {
                 return discardedCount;
             }
         }

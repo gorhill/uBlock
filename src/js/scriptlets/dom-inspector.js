@@ -22,7 +22,7 @@
 /******************************************************************************/
 /******************************************************************************/
 
-(function() {
+(() => {
 
 'use strict';
 
@@ -155,7 +155,7 @@ var reHasCSSCombinators = /[ >+~]/;
 
 /******************************************************************************/
 
-var domLayout = (function() {
+var domLayout = (() => {
     var skipTagNames = new Set([
         'br', 'head', 'link', 'meta', 'script', 'style', 'title'
     ]);
@@ -217,7 +217,7 @@ var domLayout = (function() {
         return selector;
     };
 
-    var DomRoot = function() {
+    var DomRoot = () => {
         this.nid = newNodeId(document.body);
         this.lvl = 0;
         this.sel = 'body';
@@ -246,7 +246,7 @@ var domLayout = (function() {
 
     // Collect layout data.
 
-    var getLayoutData = function() {
+    var getLayoutData = () => {
         var layout = [];
         var stack = [];
         var node = document.documentElement;
@@ -361,7 +361,7 @@ var domLayout = (function() {
         }
     };
 
-    var journalFromMutations = function() {
+    var journalFromMutations = () => {
         var nodelist, node, domNode, nid;
         mutationTimer = undefined;
 
@@ -433,7 +433,7 @@ var domLayout = (function() {
 
     // API
 
-    var getLayout = function() {
+    var getLayout = () => {
         cosmeticFilterMapper.reset();
         mutationObserver = new MutationObserver(onMutationObserved);
         mutationObserver.observe(document.body, {
@@ -449,11 +449,11 @@ var domLayout = (function() {
         };
     };
 
-    var reset = function() {
+    var reset = () => {
         shutdown();
     };
 
-    var shutdown = function() {
+    var shutdown = () => {
         if ( mutationTimer !== undefined ) {
             clearTimeout(mutationTimer);
             mutationTimer = undefined;
@@ -491,7 +491,7 @@ try {
 
 /******************************************************************************/
 
-var cosmeticFilterMapper = (function() {
+var cosmeticFilterMapper = (() => {
     // https://github.com/gorhill/uBlock/issues/546
     var matchesFnName;
     if ( typeof document.body.matches === 'function' ) {
@@ -548,12 +548,12 @@ var cosmeticFilterMapper = (function() {
         nodesFromStyleTag(rootNode);
     };
 
-    var reset = function() {
+    var reset = () => {
         roRedNodes = new Map();
         incremental(document.documentElement);
     };
 
-    var shutdown = function() {
+    var shutdown = () => {
         vAPI.domFilterer.toggle(true);
     };
 
@@ -624,7 +624,7 @@ var elementsFromSpecialSelector = function(selector) {
 
 /******************************************************************************/
 
-var getSvgRootChildren = function() {
+var getSvgRootChildren = () => {
     if ( svgRoot.children ) {
         return svgRoot.children;
     } else {
@@ -635,7 +635,7 @@ var getSvgRootChildren = function() {
     }
 };
 
-var highlightElements = function() {
+var highlightElements = () => {
     var islands;
     var elem, rect, poly;
     var xl, xr, yt, yb, w, h, ws;
@@ -729,13 +729,13 @@ var highlightElements = function() {
 
 /******************************************************************************/
 
-var onScrolled = (function() {
+var onScrolled = (() => {
     var buffered = false;
-    var timerHandler = function() {
+    var timerHandler = () => {
         buffered = false;
         highlightElements();
     };
-    return function() {
+    return () => {
         if ( buffered === false ) {
             window.requestAnimationFrame(timerHandler);
             buffered = true;
@@ -790,7 +790,7 @@ var toggleFilter = function(nodes, targetState) {
     }
 };
 
-var resetToggledNodes = function() {
+var resetToggledNodes = () => {
     rwGreenNodes.clear();
     rwRedNodes.clear();
 };
@@ -799,7 +799,7 @@ var resetToggledNodes = function() {
 
 /******************************************************************************/
 
-var start = function() {
+var start = () => {
     var onReady = function(ev) {
         if ( ev ) {
             document.removeEventListener(ev.type, onReady);
@@ -816,7 +816,7 @@ var start = function() {
 
 /******************************************************************************/
 
-var shutdown = function() {
+var shutdown = () => {
     cosmeticFilterMapper.shutdown();
     domLayout.shutdown();
     vAPI.messaging.disconnectFrom(loggerConnectionId);

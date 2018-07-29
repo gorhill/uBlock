@@ -26,7 +26,7 @@
 // The purpose of log filtering is to create ad hoc filtering rules, to
 // diagnose and assist in the creation of custom filters.
 
-µBlock.URLNetFiltering = (function() {
+µBlock.URLNetFiltering = (() => {
 
 /*******************************************************************************
 
@@ -123,13 +123,13 @@ var addRuleEntry = function(entries, url, action) {
 
 /******************************************************************************/
 
-var URLNetFiltering = function() {
+var URLNetFiltering = () => {
     this.reset();
 };
 
 /******************************************************************************/
 
-URLNetFiltering.prototype.reset = function() {
+URLNetFiltering.prototype.reset = () => {
     this.rules = new Map();
     // registers, filled with result of last evaluation
     this.context = '';
@@ -245,13 +245,13 @@ URLNetFiltering.prototype.mustAllowCellZ = function(context, target, type) {
 
 /******************************************************************************/
 
-URLNetFiltering.prototype.mustBlockOrAllow = function() {
+URLNetFiltering.prototype.mustBlockOrAllow = () => {
     return this.r === 1 || this.r === 2;
 };
 
 /******************************************************************************/
 
-URLNetFiltering.prototype.toLogData = function() {
+URLNetFiltering.prototype.toLogData = () => {
     if ( this.r === 0 ) { return; }
     return {
         source: 'dynamicUrl',
@@ -302,7 +302,7 @@ URLNetFiltering.prototype.copyRules = function(other, context, urls, type) {
 
 // "url-filtering:" hostname url type action
 
-URLNetFiltering.prototype.toArray = function() {
+URLNetFiltering.prototype.toArray = () => {
     var out = [],
         key, pos, hn, type, entries, i, entry;
     for ( var item of this.rules ) {
@@ -325,7 +325,7 @@ URLNetFiltering.prototype.toArray = function() {
     return out;
 };
 
-URLNetFiltering.prototype.toString = function() {
+URLNetFiltering.prototype.toString = () => {
     return this.toArray().sort().join('\n');
 };
 

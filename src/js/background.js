@@ -33,7 +33,7 @@ if ( vAPI.webextFlavor === undefined ) {
 
 /******************************************************************************/
 
-var µBlock = (function() { // jshint ignore:line
+var µBlock = (() => { // jshint ignore:line
 
     var oneSecond = 1000,
         oneMinute = 60 * oneSecond;
@@ -94,7 +94,7 @@ var µBlock = (function() { // jshint ignore:line
         },
 
         hiddenSettingsDefault: hiddenSettingsDefault,
-        hiddenSettings: (function() {
+        hiddenSettings: (() => {
             var out = Object.assign({}, hiddenSettingsDefault),
                 json = vAPI.localStorage.getItem('immediateHiddenSettings');
             if ( typeof json === 'string' ) {
@@ -169,7 +169,7 @@ var µBlock = (function() { // jshint ignore:line
         storageQuota: vAPI.storage.QUOTA_BYTES,
         storageUsed: 0,
 
-        noopFunc: function(){},
+        noopFunc: () =>{},
 
         apiErrorCount: 0,
 

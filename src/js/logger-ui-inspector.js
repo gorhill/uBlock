@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-(function() {
+(() => {
 
 /******************************************************************************/
 
@@ -340,15 +340,15 @@ var nidFromNode = function(node) {
 
 /******************************************************************************/
 
-var startDialog = (function() {
+var startDialog = (() => {
     var dialog = uDom.nodeFromId('cosmeticFilteringDialog');
     var textarea = dialog.querySelector('textarea');
     var hideSelectors = [];
     var unhideSelectors = [];
     var inputTimer = null;
 
-    var onInputChanged = (function() {
-        var parse = function() {
+    var onInputChanged = (() => {
+        var parse = () => {
             inputTimer = null;
             hideSelectors = [];
             unhideSelectors = [];
@@ -402,7 +402,7 @@ var startDialog = (function() {
         }
     };
 
-    var showCommitted = function() {
+    var showCommitted = () => {
         messaging.sendTo(inspectorConnectionId, {
             what: 'showCommitted',
             hide: hideSelectors.join(',\n'),
@@ -410,7 +410,7 @@ var startDialog = (function() {
         });
     };
 
-    var showInteractive = function() {
+    var showInteractive = () => {
         messaging.sendTo(inspectorConnectionId, {
             what: 'showInteractive',
             hide: hideSelectors.join(',\n'),
@@ -418,7 +418,7 @@ var startDialog = (function() {
         });
     };
 
-    var start = function() {
+    var start = () => {
         hideSelectors = [];
         textarea.addEventListener('input', onInputChanged);
         var node;
@@ -447,7 +447,7 @@ var startDialog = (function() {
         showCommitted();
     };
 
-    var stop = function() {
+    var stop = () => {
         if ( inputTimer !== null ) {
             clearTimeout(inputTimer);
             inputTimer = null;
@@ -489,7 +489,7 @@ var onClicked = function(ev) {
         return;
     }
 
-    // Not a node or filter 
+    // Not a node or filter
     if ( target.localName !== 'code' ) { return; }
 
     // Toggle cosmetic filter
@@ -525,11 +525,11 @@ var onClicked = function(ev) {
 
 /******************************************************************************/
 
-var onMouseOver = (function() {
+var onMouseOver = (() => {
     var mouseoverTarget = null;
     var mouseoverTimer = null;
 
-    var timerHandler = function() {
+    var timerHandler = () => {
         mouseoverTimer = null;
         messaging.sendTo(inspectorConnectionId, {
             what: 'highlightOne',
@@ -559,14 +559,14 @@ var onMouseOver = (function() {
 
 /******************************************************************************/
 
-var currentTabId = function() {
+var currentTabId = () => {
     if ( showdomButton.classList.contains('active') === false ) { return 0; }
     return logger.tabIdFromPageSelector();
 };
 
 /******************************************************************************/
 
-var injectInspector = function() {
+var injectInspector = () => {
     var tabId = currentTabId();
     if ( tabId === 0 ) { return; }
     inspectedTabId = tabId;
@@ -579,7 +579,7 @@ var injectInspector = function() {
 
 /******************************************************************************/
 
-var shutdownInspector = function() {
+var shutdownInspector = () => {
     if ( inspectorConnectionId !== undefined ) {
         messaging.disconnectFrom(inspectorConnectionId);
         inspectorConnectionId = undefined;
@@ -591,7 +591,7 @@ var shutdownInspector = function() {
 
 /******************************************************************************/
 
-var onTabIdChanged = function() {
+var onTabIdChanged = () => {
     if ( inspectedTabId !== currentTabId() ) {
         shutdownInspector();
         injectInspector();
@@ -600,7 +600,7 @@ var onTabIdChanged = function() {
 
 /******************************************************************************/
 
-var toggleVCompactView = function() {
+var toggleVCompactView = () => {
     var state = !inspector.classList.toggle('vCompact');
     var branches = document.querySelectorAll('#domInspector li.branch');
     for ( var branch of branches ) {
@@ -608,13 +608,13 @@ var toggleVCompactView = function() {
     }
 };
 
-var toggleHCompactView = function() {
+var toggleHCompactView = () => {
     inspector.classList.toggle('hCompact');
 };
 
 /******************************************************************************/
 
-var toggleHighlightMode = function() {
+var toggleHighlightMode = () => {
     messaging.sendTo(inspectorConnectionId, {
         what: 'highlightMode',
         invert: uDom.nodeFromSelector('#domInspector .permatoolbar .highlightMode').classList.toggle('invert')
@@ -623,7 +623,7 @@ var toggleHighlightMode = function() {
 
 /******************************************************************************/
 
-var revert = function() {
+var revert = () => {
     uDom('#domTree .off').removeClass('off');
     messaging.sendTo(inspectorConnectionId, { what: 'resetToggledNodes' });
     inspector.querySelector('.permatoolbar .revert').classList.add('disabled');
@@ -632,7 +632,7 @@ var revert = function() {
 
 /******************************************************************************/
 
-var toggleOn = function() {
+var toggleOn = () => {
     window.addEventListener('beforeunload', toggleOff);
     document.addEventListener('tabIdChanged', onTabIdChanged);
     domTree.addEventListener('click', onClicked, true);
@@ -647,7 +647,7 @@ var toggleOn = function() {
 
 /******************************************************************************/
 
-var toggleOff = function() {
+var toggleOff = () => {
     shutdownInspector();
     window.removeEventListener('beforeunload', toggleOff);
     document.removeEventListener('tabIdChanged', onTabIdChanged);
@@ -663,7 +663,7 @@ var toggleOff = function() {
 
 /******************************************************************************/
 
-var toggle = function() {
+var toggle = () => {
     if ( showdomButton.classList.toggle('active') ) {
         toggleOn();
     } else {

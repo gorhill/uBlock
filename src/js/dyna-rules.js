@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-(function() {
+(() => {
 
 /******************************************************************************/
 
@@ -66,7 +66,7 @@ var differ;
 // https://github.com/codemirror/CodeMirror/blob/3e1bb5fff682f8f6cbfaef0e56c61d62403d4798/addon/search/search.js#L22
 // ... and modified as needed.
 
-var updateOverlay = (function() {
+var updateOverlay = (() => {
     var reFilter;
     var mode = {
         token: function(stream) {
@@ -159,7 +159,7 @@ var filterRules = function(key) {
 
 /******************************************************************************/
 
-var renderRules = (function() {
+var renderRules = (() => {
     var firstVisit = true;
 
     return function(details) {
@@ -229,7 +229,7 @@ mergeView.options.revertChunk = function(
 /******************************************************************************/
 
 function handleImportFilePicker() {
-    var fileReaderOnLoadHandler = function() {
+    var fileReaderOnLoadHandler = () => {
         if ( typeof this.result !== 'string' || this.result === '' ) { return; }
         // https://github.com/chrisaljoudi/uBlock/issues/757
         // Support RequestPolicy rule syntax
@@ -252,7 +252,7 @@ function handleImportFilePicker() {
 
 /******************************************************************************/
 
-var startImportFilePicker = function() {
+var startImportFilePicker = () => {
     var input = document.getElementById('importFilePicker');
     // Reset to empty string, this will ensure an change event is properly
     // triggered if the user pick a file, even if it is the same as the last
@@ -278,12 +278,12 @@ function exportUserRulesToFile() {
 
 /******************************************************************************/
 
-var onFilterChanged = (function() {
+var onFilterChanged = (() => {
     var timer,
         overlay = null,
         last = '';
 
-    var process = function() {
+    var process = () => {
         timer = undefined;
         if ( mergeView.editor().isClean(cleanEditToken) === false ) { return; }
         var filter = uDom('#ruleFilter input').val();
@@ -302,7 +302,7 @@ var onFilterChanged = (function() {
         rulesToDoc(true);
     };
 
-    return function() {
+    return () => {
         if ( timer !== undefined ) { clearTimeout(timer); }
         timer = vAPI.setTimeout(process, 773);
     };
@@ -310,7 +310,7 @@ var onFilterChanged = (function() {
 
 /******************************************************************************/
 
-var onTextChanged = (function() {
+var onTextChanged = (() => {
     var timer;
 
     var process = function(now) {
@@ -349,7 +349,7 @@ var onTextChanged = (function() {
 
 /******************************************************************************/
 
-var revertAllHandler = function() {
+var revertAllHandler = () => {
     var toAdd = [], toRemove = [];
     var left = mergeView.leftOriginal(),
         edit = mergeView.editor();
@@ -370,7 +370,7 @@ var revertAllHandler = function() {
 
 /******************************************************************************/
 
-var commitAllHandler = function() {
+var commitAllHandler = () => {
     var toAdd = [], toRemove = [];
     var left = mergeView.leftOriginal(),
         edit = mergeView.editor();
@@ -391,7 +391,7 @@ var commitAllHandler = function() {
 
 /******************************************************************************/
 
-var editSaveHandler = function() {
+var editSaveHandler = () => {
     var editor = mergeView.editor();
     var editText = editor.getValue().trim();
     if ( editText === cleanEditText ) {
@@ -413,7 +413,7 @@ var editSaveHandler = function() {
 
 /******************************************************************************/
 
-self.cloud.onPush = function() {
+self.cloud.onPush = () => {
     return mergeView.leftOriginal().getValue().trim();
 };
 
@@ -440,9 +440,8 @@ uDom('#editSaveButton').on('click', editSaveHandler);
 uDom('#ruleFilter input').on('input', onFilterChanged);
 
 // https://groups.google.com/forum/#!topic/codemirror/UQkTrt078Vs
-mergeView.editor().on('updateDiff', function() { onTextChanged(); });
+mergeView.editor().on('updateDiff', () => { onTextChanged(); });
 
 /******************************************************************************/
 
 })();
-

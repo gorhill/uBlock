@@ -23,7 +23,7 @@
 
 /******************************************************************************/
 
-(function() {
+(() => {
 
 /******************************************************************************/
 
@@ -50,7 +50,7 @@ let reHasCSSCombinators = /[ >+~]/,
 
 /******************************************************************************/
 
-let shouldProcess = function() {
+let shouldProcess = () => {
     return nodesToProcess.size !== 0 ||
            shouldProcessDeclarativeComplex ||
            shouldProcessProcedural;
@@ -233,7 +233,7 @@ let handlers = {
         //console.timeEnd('dom logger/filterset changed');
     },
 
-    onDOMCreated: function() {
+    onDOMCreated: () => {
         handlers.onFiltersetChanged(vAPI.domFilterer.getAllSelectors());
         vAPI.domFilterer.addListener(handlers);
         attributeObserver.observe(document.body, {
@@ -301,4 +301,3 @@ vAPI.domWatcher.addListener(handlers);
 **/
 
 void 0;
-

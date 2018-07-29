@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-(function() {
+(() => {
 
 /******************************************************************************/
 
@@ -37,7 +37,7 @@ var listDetails = {},
 
 /******************************************************************************/
 
-var onMessage = function(msg) {
+var onMessage = (msg) => {
     switch ( msg.what ) {
     case 'assetUpdated':
         updateAssetStatus(msg);
@@ -59,13 +59,13 @@ messaging.addChannelListener('dashboard', onMessage);
 
 /******************************************************************************/
 
-var renderNumber = function(value) {
+var renderNumber = (value) => {
     return value.toLocaleString();
 };
 
 /******************************************************************************/
 
-var renderFilterLists = function(soft) {
+var renderFilterLists = (soft) => {
     var listGroupTemplate = uDom('#templates .groupEntry'),
         listEntryTemplate = uDom('#templates .listEntry'),
         listStatsTemplate = vAPI.i18n('3pListsOfBlockedHostsPerListStats'),
@@ -73,14 +73,14 @@ var renderFilterLists = function(soft) {
         groupNames = new Map();
 
     // Assemble a pretty list name if possible
-    var listNameFromListKey = function(listKey) {
+    var listNameFromListKey = (listKey) => {
         var list = listDetails.current[listKey] || listDetails.available[listKey];
         var listTitle = list ? list.title : '';
         if ( listTitle === '' ) { return listKey; }
         return listTitle;
     };
 
-    var liFromListEntry = function(listKey, li, hideUnused) {
+    var liFromListEntry = (listKey, li, hideUnused) => {
         var entry = listDetails.available[listKey],
             elem;
         if ( !li ) {
@@ -155,7 +155,7 @@ var renderFilterLists = function(soft) {
         return li;
     };
 
-    var listEntryCountFromGroup = function(listKeys) {
+    var listEntryCountFromGroup = (listKeys) => {
         if ( Array.isArray(listKeys) === false ) { return ''; }
         var count = 0,
             total = 0;
@@ -171,7 +171,7 @@ var renderFilterLists = function(soft) {
             '';
     };
 
-    var liFromListGroup = function(groupKey, listKeys) {
+    var liFromListGroup = (groupKey, listKeys) => {
         var liGroup = document.querySelector('#lists > .groupEntry[data-groupkey="' + groupKey + '"]');
         if ( liGroup === null ) {
             liGroup = listGroupTemplate.clone().nodeAt(0);
@@ -197,7 +197,7 @@ var renderFilterLists = function(soft) {
         liGroup.classList.toggle('hideUnused', hideUnused);
         var ulGroup = liGroup.querySelector('.listEntries');
         if ( !listKeys ) { return liGroup; }
-        listKeys.sort(function(a, b) {
+        listKeys.sort((a, b) => {
             return (listDetails.available[a].title || '').localeCompare(listDetails.available[b].title || '');
         });
         for ( var i = 0; i < listKeys.length; i++ ) {
@@ -213,7 +213,7 @@ var renderFilterLists = function(soft) {
         return liGroup;
     };
 
-    var groupsFromLists = function(lists) {
+    var groupsFromLists = (lists) => {
         var groups = {};
         var listKeys = Object.keys(lists);
         var i = listKeys.length;
@@ -230,7 +230,7 @@ var renderFilterLists = function(soft) {
         return groups;
     };
 
-    var onListsReceived = function(details) {
+    var onListsReceived = (details) => {
         // Before all, set context vars
         listDetails = details;
 
@@ -315,7 +315,7 @@ var renderFilterLists = function(soft) {
 
 /******************************************************************************/
 
-var renderWidgets = function() {
+var renderWidgets = () => {
     uDom('#buttonApply').toggleClass(
         'disabled',
         filteringSettingsHash === hashFromCurrentFromSettings()
@@ -332,7 +332,7 @@ var renderWidgets = function() {
 
 /******************************************************************************/
 
-var updateAssetStatus = function(details) {
+var updateAssetStatus = (details) => {
     var li = document.querySelector('#lists .listEntry[data-listkey="' + details.key + '"]');
     if ( li === null ) { return; }
     li.classList.toggle('failed', !!details.failed);
@@ -357,7 +357,7 @@ var updateAssetStatus = function(details) {
 
 **/
 
-var hashFromCurrentFromSettings = function() {
+var hashFromCurrentFromSettings = () => {
     var hash = [
         uDom.nodeFromId('parseCosmeticFilters').checked,
         uDom.nodeFromId('ignoreGenericCosmeticFilters').checked
@@ -383,13 +383,13 @@ var hashFromCurrentFromSettings = function() {
 
 /******************************************************************************/
 
-var onFilteringSettingsChanged = function() {
+var onFilteringSettingsChanged = () => {
     renderWidgets();
 };
 
 /******************************************************************************/
 
-var onRemoveExternalList = function(ev) {
+var onRemoveExternalList = (ev) => {
     var liEntry = uDom(this).ancestors('[data-listkey]'),
         listKey = liEntry.attr('data-listkey');
     if ( listKey ) {
@@ -401,7 +401,7 @@ var onRemoveExternalList = function(ev) {
 
 /******************************************************************************/
 
-var onPurgeClicked = function() {
+var onPurgeClicked = () => {
     var button = uDom(this),
         liEntry = button.ancestors('[data-listkey]'),
         listKey = liEntry.attr('data-listkey');
@@ -424,7 +424,7 @@ var onPurgeClicked = function() {
 
 /******************************************************************************/
 
-var selectFilterLists = function(callback) {
+var selectFilterLists = (callback) => {
     // Cosmetic filtering switch
     messaging.send('dashboard', {
         what: 'userSettings',
@@ -478,9 +478,9 @@ var selectFilterLists = function(callback) {
 
 /******************************************************************************/
 
-var buttonApplyHandler = function() {
+var buttonApplyHandler = () => {
     uDom('#buttonApply').removeClass('enabled');
-    var onSelectionDone = function() {
+    var onSelectionDone = () => {
         messaging.send('dashboard', { what: 'reloadAllFilters' });
     };
     selectFilterLists(onSelectionDone);
@@ -489,8 +489,8 @@ var buttonApplyHandler = function() {
 
 /******************************************************************************/
 
-var buttonUpdateHandler = function() {
-    var onSelectionDone = function() {
+var buttonUpdateHandler = () => {
+    var onSelectionDone = () => {
         document.body.classList.add('updating');
         messaging.send('dashboard', { what: 'forceUpdateAssets' });
         renderWidgets();
@@ -501,7 +501,7 @@ var buttonUpdateHandler = function() {
 
 /******************************************************************************/
 
-var buttonPurgeAllHandler = function(ev) {
+var buttonPurgeAllHandler = (ev) => {
     uDom('#buttonPurgeAll').removeClass('enabled');
     messaging.send(
         'dashboard',
@@ -509,13 +509,13 @@ var buttonPurgeAllHandler = function(ev) {
             what: 'purgeAllCaches',
             hard: ev.ctrlKey && ev.shiftKey
         },
-        function() { renderFilterLists(true); }
+        () => { renderFilterLists(true); }
     );
 };
 
 /******************************************************************************/
 
-var autoUpdateCheckboxChanged = function() {
+var autoUpdateCheckboxChanged = () => {
     messaging.send(
         'dashboard',
         {
@@ -530,13 +530,13 @@ var autoUpdateCheckboxChanged = function() {
 
 // Collapsing of unused lists.
 
-var mustHideUnusedLists = function(which) {
+var mustHideUnusedLists = (which) => {
     var hideAll = hideUnusedSet.has('*');
     if ( which === '*' ) { return hideAll; }
     return hideUnusedSet.has(which) !== hideAll;
 };
 
-var toggleHideUnusedLists = function(which) {
+var toggleHideUnusedLists = (which) => {
     var groupSelector,
         doesHideAll = hideUnusedSet.has('*'),
         mustHide;
@@ -569,17 +569,17 @@ var toggleHideUnusedLists = function(which) {
     );
 };
 
-var revealHiddenUsedLists = function() {
+var revealHiddenUsedLists = () => {
     uDom('#lists .listEntry.unused > input[type="checkbox"]:checked')
         .ancestors('.listEntry[data-listkey]')
         .removeClass('unused');
 };
 
-uDom('#listsOfBlockedHostsPrompt').on('click', function() {
+uDom('#listsOfBlockedHostsPrompt').on('click', () => {
     toggleHideUnusedLists('*');
 });
 
-uDom('#lists').on('click', '.groupEntry[data-groupkey] > .geDetails', function(ev) {
+uDom('#lists').on('click', '.groupEntry[data-groupkey] > .geDetails', (ev) => {
     toggleHideUnusedLists(
         uDom(ev.target)
             .ancestors('.groupEntry[data-groupkey]')
@@ -587,7 +587,7 @@ uDom('#lists').on('click', '.groupEntry[data-groupkey] > .geDetails', function(e
     );
 });
 
-(function() {
+(() => {
     var aa;
     try {
         var json = vAPI.localStorage.getItem('hideUnusedFilterLists');
@@ -606,7 +606,7 @@ uDom('#lists').on('click', '.groupEntry[data-groupkey] > .geDetails', function(e
 
 // Cloud-related.
 
-var toCloudData = function() {
+var toCloudData = () => {
     var bin = {
         parseCosmeticFilters: uDom.nodeFromId('parseCosmeticFilters').checked,
         ignoreGenericCosmeticFilters: uDom.nodeFromId('ignoreGenericCosmeticFilters').checked,
@@ -625,7 +625,7 @@ var toCloudData = function() {
     return bin;
 };
 
-var fromCloudData = function(data, append) {
+var fromCloudData = (data, append) => {
     if ( typeof data !== 'object' || data === null ) { return; }
 
     var elem, checked;
@@ -695,4 +695,3 @@ renderFilterLists();
 /******************************************************************************/
 
 })();
-

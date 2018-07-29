@@ -23,7 +23,7 @@
 
 /******************************************************************************/
 
-µBlock.textEncode = (function() {
+µBlock.textEncode = (() => {
 
     if ( µBlock.canFilterResponseBody !== true ) { return; }
 

@@ -25,7 +25,7 @@
 
 // Load all: executed once.
 
-µBlock.restart = (function() {
+µBlock.restart = (() => {
 
 /******************************************************************************/
 
@@ -33,7 +33,7 @@ var µb = µBlock;
 
 /******************************************************************************/
 
-vAPI.app.onShutdown = function() {
+vAPI.app.onShutdown = () => {
     µb.staticFilteringReverseLookup.shutdown();
     µb.assets.updateStop();
     µb.staticNetFilteringEngine.reset();
@@ -48,7 +48,7 @@ vAPI.app.onShutdown = function() {
 /******************************************************************************/
 
 var processCallbackQueue = function(queue, callback) {
-    var processOne = function() {
+    var processOne = () => {
         var fn = queue.pop();
         if ( fn ) {
             fn(processOne);
@@ -65,7 +65,7 @@ var processCallbackQueue = function(queue, callback) {
 // - Initialize internal state with maybe already existing tabs.
 // - Schedule next update operation.
 
-var onAllReady = function() {
+var onAllReady = () => {
     // https://github.com/chrisaljoudi/uBlock/issues/184
     // Check for updates not too far in the future.
     µb.assets.addObserver(µb.assetObserver.bind(µb));
@@ -92,7 +92,7 @@ var onAllReady = function() {
 // Filtering engines dependencies:
 // - PSL
 
-var onPSLReady = function() {
+var onPSLReady = () => {
     µb.selfieManager.load(function(valid) {
         if ( valid === true ) {
             return onAllReady();
@@ -280,7 +280,7 @@ var fromFetch = function(to, fetched) {
 
 /******************************************************************************/
 
-var onSelectedFilterListsLoaded = function() {
+var onSelectedFilterListsLoaded = () => {
     var fetchableProps = {
         'commandShortcuts': [],
         'compiledMagic': '',
@@ -321,14 +321,14 @@ var onSelectedFilterListsLoaded = function() {
 // compatibility, this means a special asynchronous call to load selected
 // filter lists.
 
-var onAdminSettingsRestored = function() {
+var onAdminSettingsRestored = () => {
     µb.loadSelectedFilterLists(onSelectedFilterListsLoaded);
 };
 
 /******************************************************************************/
 
-return function() {
-    processCallbackQueue(µb.onBeforeStartQueue, function() {
+return () => {
+    processCallbackQueue(µb.onBeforeStartQueue, () => {
         // https://github.com/gorhill/uBlock/issues/531
         µb.restoreAdminSettings(onAdminSettingsRestored);
     });

@@ -36,7 +36,7 @@ if ( typeof vAPI === 'object' && !vAPI.clientScript ) {
 
 vAPI.clientScript = true;
 
-vAPI.randomToken = function() {
+vAPI.randomToken = () => {
     return String.fromCharCode(Date.now() % 26 + 97) +
            Math.floor(Math.random() * 982451653 + 982451653).toString(36);
 };
@@ -52,7 +52,7 @@ vAPI.shutdown = {
     add: function(job) {
         this.jobs.push(job);
     },
-    exec: function() {
+    exec: () => {
         var job;
         while ( (job = this.jobs.pop()) ) {
             job();
@@ -92,7 +92,7 @@ vAPI.messaging = {
         // On Firefox it appears ports are not automatically disconnected when
         // navigating to another page.
         if ( messaging.Connection.pagehide !== undefined ) { return; }
-        messaging.Connection.pagehide = function() {
+        messaging.Connection.pagehide = () => {
             for ( var connection of this.connections.values() ) {
                 connection.disconnect();
                 connection.handler(connection.toDetails('connectionBroken'));
@@ -101,12 +101,12 @@ vAPI.messaging = {
         window.addEventListener('pagehide', messaging.Connection.pagehide);
     },
 
-    shutdown: function() {
+    shutdown: () => {
         this.shuttingDown = true;
         this.destroyPort();
     },
 
-    disconnectListener: function() {
+    disconnectListener: () => {
         this.port = null;
         vAPI.shutdown.exec();
     },
@@ -173,7 +173,7 @@ vAPI.messaging = {
     },
     messageListenerCallback: null,
 
-    portPoller: function() {
+    portPoller: () => {
         this.portTimer = null;
         if (
             this.port !== null &&
@@ -188,7 +188,7 @@ vAPI.messaging = {
     },
     portPollerBound: null,
 
-    destroyPort: function() {
+    destroyPort: () => {
         if ( this.portTimer !== null ) {
             clearTimeout(this.portTimer);
             this.portTimer = null;
@@ -219,7 +219,7 @@ vAPI.messaging = {
         }
     },
 
-    createPort: function() {
+    createPort: () => {
         if ( this.shuttingDown ) { return null; }
         if ( this.messageListenerCallback === null ) {
             this.messageListenerCallback = this.messageListener.bind(this);
@@ -245,7 +245,7 @@ vAPI.messaging = {
         return this.port;
     },
 
-    getPort: function() {
+    getPort: () => {
         return this.port !== null ? this.port : this.createPort();
     },
 
@@ -361,7 +361,7 @@ vAPI.messaging.Connection.prototype = {
             payload: payload
         };
     },
-    disconnect: function() {
+    disconnect: () => {
         if ( this.checkTimer !== undefined ) {
             clearTimeout(this.checkTimer);
             this.checkTimer = undefined;
@@ -374,13 +374,13 @@ vAPI.messaging.Connection.prototype = {
             msg:  this.toDetails('connectionBroken')
         });
     },
-    checkAsync: function() {
+    checkAsync: () => {
         if ( this.checkTimer !== undefined ) {
             clearTimeout(this.checkTimer);
         }
         this.checkTimer = vAPI.setTimeout(this.checkBound, 499);
     },
-    check: function() {
+    check: () => {
         this.checkTimer = undefined;
         if ( this.messaging.connections.has(this.id) === false ) { return; }
         var port = this.messaging.getPort();
@@ -434,7 +434,7 @@ vAPI.messaging.Connection.prototype = {
 
 /******************************************************************************/
 
-vAPI.shutdown.add(function() {
+vAPI.shutdown.add(() => {
     vAPI.messaging.shutdown();
     window.vAPI = undefined;
 });

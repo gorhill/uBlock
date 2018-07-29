@@ -25,11 +25,11 @@
 
 /******************************************************************************/
 
-(function() {
+(() => {
 
 /******************************************************************************/
 
-CodeMirror.defineMode("ubo-whitelist-directives", function() {
+CodeMirror.defineMode("ubo-whitelist-directives", () => {
     var reComment = /^\s*#/,
         reRegex = /^\/.+\/$/;
 
@@ -66,7 +66,7 @@ var reBadHostname,
 
 var messaging = vAPI.messaging,
     cachedWhitelist = '',
-    noopFunc = function(){};
+    noopFunc = () =>{};
 
 var cmEditor = new CodeMirror(
     document.getElementById('whitelist'),
@@ -82,7 +82,7 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 
 /******************************************************************************/
 
-var whitelistChanged = function() {
+var whitelistChanged = () => {
     var whitelistElem = uDom.nodeFromId('whitelist');
     var bad = whitelistElem.querySelector('.cm-error') !== null;
     var changedWhitelist = cmEditor.getValue().trim();
@@ -96,7 +96,7 @@ cmEditor.on('changes', whitelistChanged);
 
 /******************************************************************************/
 
-var renderWhitelist = function() {
+var renderWhitelist = () => {
     var onRead = function(details) {
         var first = reBadHostname === undefined;
         if ( first ) {
@@ -114,8 +114,8 @@ var renderWhitelist = function() {
 
 /******************************************************************************/
 
-var handleImportFilePicker = function() {
-    var fileReaderOnLoadHandler = function() {
+var handleImportFilePicker = () => {
+    var fileReaderOnLoadHandler = () => {
         cmEditor.setValue(
             [
                 cmEditor.getValue().trim(),
@@ -133,7 +133,7 @@ var handleImportFilePicker = function() {
 
 /******************************************************************************/
 
-var startImportFilePicker = function() {
+var startImportFilePicker = () => {
     var input = document.getElementById('importFilePicker');
     // Reset to empty string, this will ensure an change event is properly
     // triggered if the user pick a file, even if it is the same as the last
@@ -144,7 +144,7 @@ var startImportFilePicker = function() {
 
 /******************************************************************************/
 
-var exportWhitelistToFile = function() {
+var exportWhitelistToFile = () => {
     var val = cmEditor.getValue().trim();
     if ( val === '' ) { return; }
     var filename = vAPI.i18n('whitelistExportFilename')
@@ -158,7 +158,7 @@ var exportWhitelistToFile = function() {
 
 /******************************************************************************/
 
-var applyChanges = function() {
+var applyChanges = () => {
     cachedWhitelist = cmEditor.getValue().trim();
     messaging.send(
         'dashboard',
@@ -170,7 +170,7 @@ var applyChanges = function() {
     );
 };
 
-var revertChanges = function() {
+var revertChanges = () => {
     var content = cachedWhitelist;
     if ( content !== '' ) { content += '\n'; }
     cmEditor.setValue(content);
@@ -178,7 +178,7 @@ var revertChanges = function() {
 
 /******************************************************************************/
 
-var getCloudData = function() {
+var getCloudData = () => {
     return cmEditor.getValue();
 };
 

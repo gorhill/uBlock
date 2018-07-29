@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-(function() {
+(() => {
 
     var q = window.location.search;
     var matches = q.match(/^\?url=([^&]+)/);
@@ -37,9 +37,9 @@
             what : 'getAssetContent',
             url: decodeURIComponent(matches[1])
         },
-        function(details) {
+        (details) => {
             cmEditor.setValue(details && details.content || '');
-        }   
+        }
     );
 
     var cmEditor = new CodeMirror(

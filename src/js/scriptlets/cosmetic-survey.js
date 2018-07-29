@@ -23,7 +23,7 @@
 
 /******************************************************************************/
 
-(function() {
+(() => {
     if ( typeof vAPI !== 'object' || !vAPI.domFilterer ) { return; }
 
     vAPI.messaging.send(

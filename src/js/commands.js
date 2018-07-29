@@ -32,23 +32,23 @@
 
 /******************************************************************************/
 
-(function() {
+(() => {
     if ( µBlock.canUseShortcuts === false ) { return; }
 
-    vAPI.commands.onCommand.addListener(function(command) {
+    vAPI.commands.onCommand.addListener((command) => {
         var µb = µBlock;
 
         switch ( command ) {
         case 'launch-element-zapper':
         case 'launch-element-picker':
-            vAPI.tabs.get(null, function(tab) {
+            vAPI.tabs.get(null, (tab) => {
                 if ( tab instanceof Object === false ) { return; }
                 µb.mouseEventRegister.x = µb.mouseEventRegister.y = -1;
                 µb.elementPickerExec(tab.id, undefined, command === 'launch-element-zapper');
             });
             break;
         case 'launch-logger':
-            vAPI.tabs.get(null, function(tab) {
+            vAPI.tabs.get(null, (tab) => {
                 let hash = tab.url.startsWith(vAPI.getURL('')) ?
                     '' :
                     '#tab_active+' + tab.id;

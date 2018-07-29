@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-(function() {
+(() => {
 
 /******************************************************************************/
 
@@ -35,7 +35,7 @@ var rawAdvancedSettings = uDom.nodeFromId('advancedSettings');
 
 /******************************************************************************/
 
-var hashFromAdvancedSettings = function(raw) {
+var hashFromAdvancedSettings = (raw) => {
     return raw.trim().replace(/\s+/g, '|');
 };
 
@@ -43,16 +43,16 @@ var hashFromAdvancedSettings = function(raw) {
 
 // This is to give a visual hint that the content of user blacklist has changed.
 
-var advancedSettingsChanged = (function () {
+var advancedSettingsChanged = (() => {
     var timer = null;
 
-    var handler = function() {
+    var handler = () => {
         timer = null;
         var changed = hashFromAdvancedSettings(rawAdvancedSettings.value) !== cachedData;
         uDom.nodeFromId('advancedSettingsApply').disabled = !changed;
     };
 
-    return function() {
+    return () => {
         if ( timer !== null ) {
             clearTimeout(timer);
         }
@@ -62,8 +62,8 @@ var advancedSettingsChanged = (function () {
 
 /******************************************************************************/
 
-function renderAdvancedSettings() {
-    var onRead = function(raw) {
+const renderAdvancedSettings = () => {
+    var onRead = (raw) => {
         cachedData = hashFromAdvancedSettings(raw);
         var pretty = [],
             whitespaces = '                                ',
@@ -90,7 +90,7 @@ function renderAdvancedSettings() {
 
 /******************************************************************************/
 
-var applyChanges = function() {
+var applyChanges = () => {
     messaging.send(
         'dashboard',
         {
