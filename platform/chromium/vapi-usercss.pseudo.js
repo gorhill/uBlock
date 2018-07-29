@@ -35,15 +35,15 @@ vAPI.userStylesheet = {
     styleFixCount: 0,
     css: new Map(),
     disabled: false,
-    apply: function() {
+    apply: () => {
     },
-    inject: function() {
+    inject: () => {
         this.style = document.createElement('style');
         this.style.disabled = this.disabled;
         var parent = document.head || document.documentElement;
         if ( parent === null ) { return; }
         parent.appendChild(this.style);
-        var observer = new MutationObserver(function() {
+        var observer = new MutationObserver(() => {
             if ( this.style === null ) { return; }
             if ( this.style.sheet !== null ) { return; }
             this.styleFixCount += 1;
@@ -99,7 +99,7 @@ vAPI.userStylesheet = {
 
 /******************************************************************************/
 
-vAPI.DOMFilterer = function() {
+vAPI.DOMFilterer = () => {
     this.commitTimer = new vAPI.SafeAnimationFrame(this.commitNow.bind(this));
     this.domIsReady = document.readyState !== 'loading';
     this.listeners = [];
@@ -132,7 +132,7 @@ vAPI.DOMFilterer.prototype = {
     // https://www.w3.org/community/webed/wiki/CSS/Selectors#Combinators
     reCSSCombinators: /[ >+~]/,
 
-    commitNow: function() {
+    commitNow: () => {
         this.commitTimer.clear();
 
         if ( this.domIsReady !== true || vAPI.userStylesheet.disabled ) {
@@ -299,7 +299,7 @@ vAPI.DOMFilterer.prototype = {
         }
     },
 
-    onDOMCreated: function() {
+    onDOMCreated: () => {
         this.domIsReady = true;
         this.addedNodes.clear();
         this.removedNodes = false;
@@ -325,7 +325,7 @@ vAPI.DOMFilterer.prototype = {
         this.listeners.splice(pos, 1);
     },
 
-    hasListeners: function() {
+    hasListeners: () => {
         return this.listeners.length !== 0;
     },
 
@@ -351,7 +351,7 @@ vAPI.DOMFilterer.prototype = {
     //   However, toggling off/on cosmetic filtering repeatedly is not
     //   a real use case, but this shows this will help performance
     //   on sites which try to use inline styles to bypass blockers.
-    hideNodeBatchProcess: function() {
+    hideNodeBatchProcess: () => {
         this.hideNodeBatchProcessTimer.clear();
         var expando = this.hideNodeExpando;
         for ( var node of this.hiddenNodesetToProcess ) {
@@ -391,7 +391,7 @@ vAPI.DOMFilterer.prototype = {
         attributeFilter: [ 'style' ]
     },
 
-    hideNodeInit: function() {
+    hideNodeInit: () => {
         this.hideNodeExpando = vAPI.randomToken();
         this.hideNodeBatchProcessTimer =
             new vAPI.SafeAnimationFrame(this.hideNodeBatchProcess.bind(this));
@@ -522,7 +522,7 @@ vAPI.DOMFilterer.prototype = {
         return out;
     },
 
-    getFilteredElementCount: function() {
+    getFilteredElementCount: () => {
         var details = this.getAllSelectors_(true);
         if ( Array.isArray(details.declarative) === false ) { return 0; }
         var selectors = details.declarative.reduce(function(acc, entry) {
@@ -533,7 +533,7 @@ vAPI.DOMFilterer.prototype = {
         return document.querySelectorAll(selectors.join(',\n')).length;
     },
 
-    getAllSelectors: function() {
+    getAllSelectors: () => {
         return this.getAllSelectors_(false);
     }
 };

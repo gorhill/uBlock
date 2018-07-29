@@ -23,7 +23,7 @@
 
 /******************************************************************************/
 
-(function() {
+(() => {
 
 'use strict';
 
@@ -82,7 +82,7 @@ var onCloudDataReceived = function(entry) {
 
 /******************************************************************************/
 
-var fetchCloudData = function() {
+var fetchCloudData = () => {
     messaging.send(
         'cloudWidget',
         {
@@ -95,7 +95,7 @@ var fetchCloudData = function() {
 
 /******************************************************************************/
 
-var pushData = function() {
+var pushData = () => {
     if ( typeof self.cloud.onPush !== 'function' ) {
         return;
     }
@@ -120,7 +120,7 @@ var pushData = function() {
 
 /******************************************************************************/
 
-var pullData = function() {
+var pullData = () => {
     if ( typeof self.cloud.onPull === 'function' ) {
         self.cloud.onPull(self.cloud.data, false);
     }
@@ -128,7 +128,7 @@ var pullData = function() {
 
 /******************************************************************************/
 
-var pullAndMergeData = function() {
+var pullAndMergeData = () => {
     if ( typeof self.cloud.onPull === 'function' ) {
         self.cloud.onPull(self.cloud.data, true);
     }
@@ -136,7 +136,7 @@ var pullAndMergeData = function() {
 
 /******************************************************************************/
 
-var openOptions = function() {
+var openOptions = () => {
     var input = uDom.nodeFromId('cloudDeviceName');
     input.value = self.cloud.options.deviceName;
     input.setAttribute('placeholder', self.cloud.options.defaultDeviceName);
@@ -155,7 +155,7 @@ var closeOptions = function(ev) {
 
 /******************************************************************************/
 
-var submitOptions = function() {
+var submitOptions = () => {
     var onOptions = function(options) {
         if ( options instanceof Object === false ) {
             return;
@@ -192,7 +192,7 @@ var onInitialize = function(options) {
     xhr.open('GET', 'cloud-ui.html', true);
     xhr.overrideMimeType('text/html;charset=utf-8');
     xhr.responseType = 'text';
-    xhr.onload = function() {
+    xhr.onload = () => {
         this.onload = null;
         var parser = new DOMParser(),
             parsed = parser.parseFromString(this.responseText, 'text/html'),
@@ -212,7 +212,7 @@ var onInitialize = function(options) {
         uDom('#cloudCog').on('click', openOptions);
         uDom('#cloudOptions').on('click', closeOptions);
         uDom('#cloudOptionsSubmit').on('click', submitOptions);
-        
+
         // Patch 2018-01-05: Must not assume this XHR will always be faster
         // than messaging
         fetchCloudData();

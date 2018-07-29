@@ -23,7 +23,7 @@
 
 /******************************************************************************/
 
-(function() {
+(() => {
 
 /******************************************************************************/
 
@@ -33,7 +33,7 @@ if ( typeof vAPI.rpcReceiver !== 'object' ) {
 
 /******************************************************************************/
 
-vAPI.rpcReceiver.getScriptTagHostnames = function() {
+vAPI.rpcReceiver.getScriptTagHostnames = () => {
     var µb = µBlock;
     if ( µb.htmlFilteringEngine ) {
         return µb.htmlFilteringEngine.retrieveScriptTagHostnames();

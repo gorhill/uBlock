@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-(function() {
+(() => {
 
     var q = window.location.search;
     var matches = q.match(/^\?url=([^&]+)/);
@@ -39,7 +39,7 @@
         },
         function(details) {
             cmEditor.setValue(details && details.content || '');
-        }   
+        }
     );
 
     var cmEditor = new CodeMirror(

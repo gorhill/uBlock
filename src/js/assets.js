@@ -23,14 +23,14 @@
 
 /******************************************************************************/
 
-µBlock.assets = (function() {
+µBlock.assets = (() => {
 
 /******************************************************************************/
 
 var reIsExternalPath = /^(?:[a-z-]+):\/\//,
     reIsUserAsset = /^user-/,
     errorCantConnectTo = vAPI.i18n('errorCantConnectTo'),
-    noopfunc = function(){};
+    noopfunc = () =>{};
 
 var api = {
 };
@@ -89,7 +89,7 @@ api.fetchText = function(url, onLoad, onError) {
         timeoutTimer,
         xhr = new XMLHttpRequest();
 
-    var cleanup = function() {
+    var cleanup = () => {
         xhr.removeEventListener('load', onLoadEvent);
         xhr.removeEventListener('error', onErrorEvent);
         xhr.removeEventListener('abort', onErrorEvent);
@@ -101,7 +101,7 @@ api.fetchText = function(url, onLoad, onError) {
     };
 
     // https://github.com/gorhill/uMatrix/issues/15
-    var onLoadEvent = function() {
+    var onLoadEvent = () => {
         cleanup();
         // xhr for local files gives status 0, but actually succeeds
         var details = {
@@ -128,13 +128,13 @@ api.fetchText = function(url, onLoad, onError) {
         onLoad(details);
     };
 
-    var onErrorEvent = function() {
+    var onErrorEvent = () => {
         cleanup();
         µBlock.logger.writeOne('', 'error', errorCantConnectTo.replace('{{msg}}', actualUrl));
         onError({ url: url, content: '' });
     };
 
-    var onTimeout = function() {
+    var onTimeout = () => {
         xhr.abort();
     };
 
@@ -144,7 +144,7 @@ api.fetchText = function(url, onLoad, onError) {
         if ( ev.loaded === contentLoaded ) { return; }
         contentLoaded = ev.loaded;
         if ( timeoutTimer !== undefined ) {
-            clearTimeout(timeoutTimer); 
+            clearTimeout(timeoutTimer);
         }
         timeoutTimer = vAPI.setTimeout(onTimeout, timeoutAfter);
     };
@@ -298,9 +298,9 @@ var unregisterAssetSource = function(assetKey) {
     delete assetSourceRegistry[assetKey];
 };
 
-var saveAssetSourceRegistry = (function() {
+var saveAssetSourceRegistry = (() => {
     var timer;
-    var save = function() {
+    var save = () => {
         timer = undefined;
         vAPI.cacheStorage.set({ assetSourceRegistry: assetSourceRegistry });
     };
@@ -365,7 +365,7 @@ var getAssetSourceRegistry = function(callback) {
     // Not loaded: load it.
     assetSourceRegistryStatus = [ callback ];
 
-    var registryReady = function() {
+    var registryReady = () => {
         var callers = assetSourceRegistryStatus;
         assetSourceRegistryStatus = 'ready';
         var fn;
@@ -375,7 +375,7 @@ var getAssetSourceRegistry = function(callback) {
     };
 
     // First-install case.
-    var createRegistry = function() {
+    var createRegistry = () => {
         api.fetchText(
             µBlock.assetsBootstrapLocation || 'assets/assets.json',
             function(details) {
@@ -396,14 +396,14 @@ var getAssetSourceRegistry = function(callback) {
 };
 
 api.registerAssetSource = function(assetKey, details) {
-    getAssetSourceRegistry(function() {
+    getAssetSourceRegistry(() => {
         registerAssetSource(assetKey, details);
         saveAssetSourceRegistry(true);
     });
 };
 
 api.unregisterAssetSource = function(assetKey) {
-    getAssetSourceRegistry(function() {
+    getAssetSourceRegistry(() => {
         unregisterAssetSource(assetKey);
         saveAssetSourceRegistry(true);
     });
@@ -436,7 +436,7 @@ var getAssetCacheRegistry = function(callback) {
     // Not loaded: load it.
     assetCacheRegistryStatus = [ callback ];
 
-    var registryReady = function() {
+    var registryReady = () => {
         var callers = assetCacheRegistryStatus;
         assetCacheRegistryStatus = 'ready';
         var fn;
@@ -453,9 +453,9 @@ var getAssetCacheRegistry = function(callback) {
     });
 };
 
-var saveAssetCacheRegistry = (function() {
+var saveAssetCacheRegistry = (() => {
     var timer;
-    var save = function() {
+    var save = () => {
         timer = undefined;
         vAPI.cacheStorage.set({ assetCacheRegistry: assetCacheRegistry });
     };
@@ -494,7 +494,7 @@ var assetCacheRead = function(assetKey, callback) {
         reportBack(bin[internalKey]);
     };
 
-    let onReady = function() {
+    let onReady = () => {
         vAPI.cacheStorage.get(internalKey, onAssetRead);
     };
 
@@ -522,7 +522,7 @@ var assetCacheWrite = function(assetKey, details, callback) {
         fireNotification('after-asset-updated', details);
     };
 
-    var onReady = function() {
+    var onReady = () => {
         var entry = assetCacheRegistry[assetKey];
         if ( entry === undefined ) {
             entry = assetCacheRegistry[assetKey] = {};
@@ -540,7 +540,7 @@ var assetCacheWrite = function(assetKey, details, callback) {
 };
 
 var assetCacheRemove = function(pattern, callback) {
-    var onReady = function() {
+    var onReady = () => {
         var cacheDict = assetCacheRegistry,
             removedEntries = [],
             removedContent = [];
@@ -572,7 +572,7 @@ var assetCacheRemove = function(pattern, callback) {
 };
 
 var assetCacheMarkAsDirty = function(pattern, exclude, callback) {
-    var onReady = function() {
+    var onReady = () => {
         var cacheDict = assetCacheRegistry,
             cacheEntry,
             mustSave = false;
@@ -679,7 +679,7 @@ var saveUserAsset = function(assetKey, content, callback) {
         bin['assets/user/filters.txt'] = content;
     }
     // <<<<<<<<
-    var onSaved = function() {
+    var onSaved = () => {
         if ( callback instanceof Function ) {
             callback({ assetKey: assetKey, content: content });
         }
@@ -716,7 +716,7 @@ api.get = function(assetKey, options, callback) {
         callback(details);
     };
 
-    var onContentNotLoaded = function() {
+    var onContentNotLoaded = () => {
         var isExternal;
         while ( (contentURL = contentURLs.shift()) ) {
             isExternal = reIsExternalPath.test(contentURL);
@@ -808,7 +808,7 @@ var getRemote = function(assetKey, callback) {
         tryLoading();
     };
 
-    var tryLoading = function() {
+    var tryLoading = () => {
         while ( (contentURL = contentURLs.shift()) ) {
             if ( reIsExternalPath.test(contentURL) ) { break; }
         }
@@ -850,7 +850,7 @@ api.metadata = function(callback) {
     var assetRegistryReady = false,
         cacheRegistryReady = false;
 
-    var onReady = function() {
+    var onReady = () => {
         var assetDict = JSON.parse(JSON.stringify(assetSourceRegistry)),
             cacheDict = assetCacheRegistry,
             assetEntry, cacheEntry,
@@ -876,12 +876,12 @@ api.metadata = function(callback) {
         callback(assetDict);
     };
 
-    getAssetSourceRegistry(function() {
+    getAssetSourceRegistry(() => {
         assetRegistryReady = true;
         if ( cacheRegistryReady ) { onReady(); }
     });
 
-    getAssetCacheRegistry(function() {
+    getAssetCacheRegistry(() => {
         cacheRegistryReady = true;
         if ( assetRegistryReady ) { onReady(); }
     });
@@ -895,7 +895,7 @@ api.remove = function(pattern, callback) {
     assetCacheRemove(pattern, callback);
 };
 
-api.rmrf = function() {
+api.rmrf = () => {
     assetCacheRemove(/./);
 };
 
@@ -910,7 +910,7 @@ var updaterStatus,
     updaterFetched = new Set(),
     noRemoteResources;
 
-var updateFirst = function() {
+var updateFirst = () => {
     // https://github.com/gorhill/uBlock/commit/126110c9a0a0630cd556f5cb215422296a961029
     //   Firefox extension reviewers do not want uBO/webext to fetch its own
     //   scriptlets/resources asset from the project's own repo (github.com).
@@ -930,7 +930,7 @@ var updateFirst = function() {
     updateNext();
 };
 
-var updateNext = function() {
+var updateNext = () => {
     var assetDict, cacheDict;
 
     // This will remove a cached asset when it's no longer in use.
@@ -941,7 +941,7 @@ var updateNext = function() {
         }
     };
 
-    var findOne = function() {
+    var findOne = () => {
         var now = Date.now(),
             assetEntry, cacheEntry;
         for ( var assetKey in assetDict ) {
@@ -984,7 +984,7 @@ var updateNext = function() {
         }
     };
 
-    var updateOne = function() {
+    var updateOne = () => {
         var assetKey = findOne();
         if ( assetKey === undefined ) {
             return updateDone();
@@ -1006,7 +1006,7 @@ var updateNext = function() {
     });
 };
 
-var updateDone = function() {
+var updateDone = () => {
     var assetKeys = updaterUpdated.slice(0);
     updaterFetched.clear();
     updaterUpdated = [];
@@ -1031,7 +1031,7 @@ api.updateStart = function(details) {
     updateFirst();
 };
 
-api.updateStop = function() {
+api.updateStop = () => {
     if ( updaterTimer ) {
         clearTimeout(updaterTimer);
         updaterTimer = undefined;

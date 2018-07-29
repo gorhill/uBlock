@@ -26,11 +26,11 @@
 
 /******************************************************************************/
 
-µBlock.HnSwitches = (function() {
+µBlock.HnSwitches = (() => {
 
 /******************************************************************************/
 
-var HnSwitches = function() {
+var HnSwitches = () => {
     this.reset();
 };
 
@@ -68,7 +68,7 @@ var reNotASCII = /[^\x20-\x7F]/;
 
 /******************************************************************************/
 
-HnSwitches.prototype.reset = function() {
+HnSwitches.prototype.reset = () => {
     this.switches = new Map();
     this.n = '';
     this.z = '';
@@ -211,7 +211,7 @@ HnSwitches.prototype.evaluateZ = function(switchName, hostname) {
 
 /******************************************************************************/
 
-HnSwitches.prototype.toLogData = function() {
+HnSwitches.prototype.toLogData = () => {
     return {
         source: 'switch',
         result: this.r,
@@ -221,7 +221,7 @@ HnSwitches.prototype.toLogData = function() {
 
 /******************************************************************************/
 
-HnSwitches.prototype.toArray = function() {
+HnSwitches.prototype.toArray = () => {
     var out = [],
         toUnicode = punycode.toUnicode;
     for ( var hostname of this.switches.keys() ) {
@@ -240,7 +240,7 @@ HnSwitches.prototype.toArray = function() {
     return out;
 };
 
-HnSwitches.prototype.toString = function() {
+HnSwitches.prototype.toString = () => {
     return this.toArray().join('\n');
 };
 

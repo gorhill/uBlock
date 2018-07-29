@@ -51,7 +51,7 @@
 
 /******************************************************************************/
 
-µBlock.saveLocalSettings = (function() {
+µBlock.saveLocalSettings = (() => {
     let saveAfter = 4 * 60 * 1000;
 
     let onTimeout = ( ) => {
@@ -72,13 +72,13 @@
 
 /******************************************************************************/
 
-µBlock.saveUserSettings = function() {
+µBlock.saveUserSettings = () => {
     vAPI.storage.set(this.userSettings);
 };
 
 /******************************************************************************/
 
-µBlock.loadHiddenSettings = function() {
+µBlock.loadHiddenSettings = () => {
     var onLoaded = function(bin) {
         if ( bin instanceof Object === false ) { return; }
         var µb = µBlock,
@@ -178,7 +178,7 @@
     return out;
 };
 
-µBlock.stringFromHiddenSettings = function() {
+µBlock.stringFromHiddenSettings = () => {
     var out = [],
         keys = Object.keys(this.hiddenSettings).sort();
     for ( var key of keys ) {
@@ -192,7 +192,7 @@
 // These settings must be available immediately on startup, without delay
 // through the vAPI.localStorage. Add/remove settings as needed.
 
-µBlock.saveImmediateHiddenSettings = function() {
+µBlock.saveImmediateHiddenSettings = () => {
     vAPI.localStorage.setItem(
         'immediateHiddenSettings',
         JSON.stringify({
@@ -207,25 +207,25 @@
 
 /******************************************************************************/
 
-µBlock.savePermanentFirewallRules = function() {
+µBlock.savePermanentFirewallRules = () => {
     this.keyvalSetOne('dynamicFilteringString', this.permanentFirewall.toString());
 };
 
 /******************************************************************************/
 
-µBlock.savePermanentURLFilteringRules = function() {
+µBlock.savePermanentURLFilteringRules = () => {
     this.keyvalSetOne('urlFilteringString', this.permanentURLFiltering.toString());
 };
 
 /******************************************************************************/
 
-µBlock.saveHostnameSwitches = function() {
+µBlock.saveHostnameSwitches = () => {
     this.keyvalSetOne('hostnameSwitchesString', this.hnSwitches.toString());
 };
 
 /******************************************************************************/
 
-µBlock.saveWhitelist = function() {
+µBlock.saveWhitelist = () => {
     this.keyvalSetOne('netWhitelist', this.stringFromWhitelist(this.netWhitelist));
     this.netWhitelistModifyTime = Date.now();
 };
@@ -410,7 +410,7 @@
 
     var µb = this;
 
-    var onSaved = function() {
+    var onSaved = () => {
         var compiledFilters = µb.compileFilters(filters),
             snfe = µb.staticNetFilteringEngine,
             cfe = µb.cosmeticFilteringEngine,
@@ -519,7 +519,7 @@
     // Final steps:
     // - reuse existing list metadata if any;
     // - unregister unreferenced imported filter lists if any.
-    var finalize = function() {
+    var finalize = () => {
         var assetKey, newEntry, oldEntry;
 
         // Reuse existing metadata.
@@ -619,7 +619,7 @@
         callback = this.noopFunc;
     }
 
-    var onDone = function() {
+    var onDone = () => {
         µb.staticNetFilteringEngine.freeze();
         µb.staticExtFilteringEngine.freeze();
         µb.redirectEngine.freeze();
@@ -929,7 +929,7 @@
     var µb = this,
         content = '';
 
-    var onDone = function() {
+    var onDone = () => {
         µb.redirectEngine.resourcesFromString(content);
     };
 
@@ -1015,7 +1015,7 @@
 // be generated if the user doesn't change his filter lists selection for
 // some set time.
 
-µBlock.selfieManager = (function() {
+µBlock.selfieManager = (() => {
     let µb = µBlock;
     let timer = null;
 
@@ -1023,7 +1023,7 @@
     // JSON.stringify-ing ourselves results in a better baseline
     // memory usage at selfie-load time. For some reasons.
 
-    let create = function() {
+    let create = () => {
         timer = null;
         let selfie = {
             magic: µb.systemSettings.selfieMagic,
@@ -1053,7 +1053,7 @@
         });
     };
 
-    let destroy = function() {
+    let destroy = () => {
         if ( timer !== null ) {
             clearTimeout(timer);
             timer = null;
@@ -1193,7 +1193,7 @@
 
 /******************************************************************************/
 
-µBlock.scheduleAssetUpdater = (function() {
+µBlock.scheduleAssetUpdater = (() => {
     var timer, next = 0;
     return function(updateDelay) {
         if ( timer ) {
@@ -1211,7 +1211,7 @@
             updateDelay = Math.min(updateDelay, Math.max(next - now, 0));
         }
         next = now + updateDelay;
-        timer = vAPI.setTimeout(function() {
+        timer = vAPI.setTimeout(() => {
             timer = undefined;
             next = 0;
             var µb = µBlock;
@@ -1279,7 +1279,7 @@
             what: 'assetUpdated',
             key: details.assetKey,
             cached: cached
-            
+
         });
         // https://github.com/gorhill/uBlock/issues/2585
         // Whenever an asset is overwritten, the current selfie is quite

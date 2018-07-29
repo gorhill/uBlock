@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-(function() {
+(() => {
 
 /******************************************************************************/
 
@@ -46,13 +46,13 @@ var hashFromAdvancedSettings = function(raw) {
 var advancedSettingsChanged = (function () {
     var timer = null;
 
-    var handler = function() {
+    var handler = () => {
         timer = null;
         var changed = hashFromAdvancedSettings(rawAdvancedSettings.value) !== cachedData;
         uDom.nodeFromId('advancedSettingsApply').disabled = !changed;
     };
 
-    return function() {
+    return () => {
         if ( timer !== null ) {
             clearTimeout(timer);
         }
@@ -90,7 +90,7 @@ function renderAdvancedSettings() {
 
 /******************************************************************************/
 
-var applyChanges = function() {
+var applyChanges = () => {
     messaging.send(
         'dashboard',
         {

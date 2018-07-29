@@ -21,7 +21,7 @@
 
 /******************************************************************************/
 
-(function() {
+(() => {
 
 'use strict';
 
@@ -74,7 +74,7 @@ var mediaNotLoaded = function(elem) {
 // https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement
 // https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement
 
-var surveyMissingMediaElements = function() {
+var surveyMissingMediaElements = () => {
     var largeMediaElementCount = 0;
     var elems = document.querySelectorAll('audio,img,video');
     var i = elems.length, elem;
@@ -114,13 +114,13 @@ document.head.appendChild(styleTag);
 
 /******************************************************************************/
 
-var stayOrLeave = (function() {
+var stayOrLeave = (() => {
     var timer = null;
 
     var timeoutHandler = function(leaveNow) {
         timer = null;
         if ( leaveNow !== true ) {
-            if ( 
+            if (
                 document.querySelector(largeMediaElementSelector) !== null ||
                 surveyMissingMediaElements() !== 0
             ) {
@@ -170,7 +170,7 @@ var onMouseClick = function(ev) {
     var src = elem.getAttribute('src');
     elem.removeAttribute('src');
 
-    var onLargeMediaElementAllowed = function() {
+    var onLargeMediaElementAllowed = () => {
         elem.setAttribute('src', src);
         elem.removeAttribute(largeMediaElementAttribute);
         stayOrLeave();
@@ -213,7 +213,7 @@ document.addEventListener('error', onLoadError, true);
 
 /******************************************************************************/
 
-vAPI.shutdown.add(function() {
+vAPI.shutdown.add(() => {
     stayOrLeave(true);
 });
 

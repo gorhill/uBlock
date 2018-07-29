@@ -25,7 +25,7 @@
 
 // Start isolation from global scope
 
-µBlock.webRequest = (function() {
+µBlock.webRequest = (() => {
 
 /******************************************************************************/
 
@@ -49,7 +49,7 @@ let cantMergeCSPHeaders =
 
 // The real actual webextFlavor value may not be set in stone, so listen
 // for possible future changes.
-window.addEventListener('webextFlavor', function() {
+window.addEventListener('webextFlavor', () => {
     dontCacheResponseHeaders =
         vAPI.webextFlavor.soup.has('firefox');
     cantMergeCSPHeaders =
@@ -77,7 +77,7 @@ var onBeforeReady = null;
 });
 
 if ( µBlock.hiddenSettings.suspendTabsUntilReady ) {
-    onBeforeReady = (function() {
+    onBeforeReady = (() => {
         var suspendedTabs = new Set();
         µBlock.onStartCompletedQueue.push(function(callback) {
             onBeforeReady = null;
@@ -644,7 +644,7 @@ var reMediaContentTypes = /^(?:audio|image|video)\//;
 
 **/
 
-var filterDocument = (function() {
+var filterDocument = (() => {
     var µb = µBlock,
         filterers = new Map(),
         domParser, xmlSerializer,
@@ -741,7 +741,7 @@ var filterDocument = (function() {
         filterer.buffer = buffer;
     };
 
-    var onStreamStop = function() {
+    var onStreamStop = () => {
         var filterer = filterers.get(this);
         filterers.delete(this);
         if ( filterer === undefined || filterer.buffer === null ) {
@@ -831,7 +831,7 @@ var filterDocument = (function() {
         streamClose(filterer, encodedStream);
     };
 
-    var onStreamError = function() {
+    var onStreamError = () => {
         filterers.delete(this);
     };
 

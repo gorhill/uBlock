@@ -220,7 +220,7 @@
     }
 
     function findNext(cm, dir, callback) {
-        cm.operation(function() {
+        cm.operation(() => {
             var state = getSearchState(cm);
             if ( !state.query ) { return; }
             var cursor = getSearchCursor(
@@ -244,7 +244,7 @@
     }
 
     function clearSearch(cm, hard) {
-        cm.operation(function() {
+        cm.operation(() => {
             var state = getSearchState(cm);
             if ( state.query ) {
                 state.query = state.queryText = null;
@@ -279,7 +279,7 @@
         if ( state.queryText === '' ) {
             clearSearch(cm);
         } else {
-            cm.operation(function() {
+            cm.operation(() => {
                 startSearch(cm, state);
                 findNext(cm, dir);
             });

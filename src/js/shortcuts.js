@@ -21,7 +21,7 @@
 
 'use strict';
 
-(function() {
+(() => {
 
     // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/manifest.json/commands#Shortcut_values
     let validStatus0Keys = new Map([
@@ -110,11 +110,11 @@
         let after = new Set();
         let status = 0;
 
-        let updateCapturedShortcut = function() {
+        let updateCapturedShortcut = () => {
             return (input.value = Array.from(after).join('+'));
         };
 
-        let blurHandler = function() {
+        let blurHandler = () => {
             input.removeEventListener('blur', blurHandler, true);
             input.removeEventListener('keydown', keydownHandler, true);
             input.removeEventListener('keyup', keyupHandler, true);

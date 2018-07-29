@@ -23,7 +23,7 @@
 
 /******************************************************************************/
 
-(function() {
+(() => {
 
 'use strict';
 
@@ -33,7 +33,7 @@ var messaging = vAPI.messaging;
 
 /******************************************************************************/
 
-var handleImportFilePicker = function() {
+var handleImportFilePicker = () => {
     var file = this.files[0];
     if ( file === undefined || file.name === '' ) {
         return;
@@ -43,7 +43,7 @@ var handleImportFilePicker = function() {
     }
     var filename = file.name;
 
-    var fileReaderOnLoadHandler = function() {
+    var fileReaderOnLoadHandler = () => {
         var userData;
         try {
             userData = JSON.parse(this.result);
@@ -93,7 +93,7 @@ var handleImportFilePicker = function() {
 
 /******************************************************************************/
 
-var startImportFilePicker = function() {
+var startImportFilePicker = () => {
     var input = document.getElementById('restoreFilePicker');
     // Reset to empty string, this will ensure an change event is properly
     // triggered if the user pick a file, even if it is the same as the last
@@ -104,7 +104,7 @@ var startImportFilePicker = function() {
 
 /******************************************************************************/
 
-var exportToFile = function() {
+var exportToFile = () => {
     messaging.send('dashboard', { what: 'backupUserData' }, function(response) {
         if (
             response instanceof Object === false ||
@@ -171,7 +171,7 @@ var onLocalDataReceived = function(details) {
 
 /******************************************************************************/
 
-var resetUserData = function() {
+var resetUserData = () => {
     var msg = vAPI.i18n('aboutResetDataConfirm');
     var proceed = window.confirm(msg);
     if ( proceed ) {
@@ -181,7 +181,7 @@ var resetUserData = function() {
 
 /******************************************************************************/
 
-var synchronizeDOM = function() {
+var synchronizeDOM = () => {
     document.body.classList.toggle(
         'advancedUser',
         uDom.nodeFromId('advanced-user-enabled').checked === true
@@ -233,7 +233,7 @@ var onPreventDefault = function(ev) {
 var onUserSettingsReceived = function(details) {
     uDom('[data-setting-type="bool"]').forEach(function(uNode) {
         uNode.prop('checked', details[uNode.attr('data-setting-name')] === true)
-             .on('change', function() {
+             .on('change', () => {
                     changeUserSettings(
                         this.getAttribute('data-setting-name'),
                         this.checked
@@ -262,7 +262,7 @@ var onUserSettingsReceived = function(details) {
 
 /******************************************************************************/
 
-uDom.onLoad(function() {
+uDom.onLoad(() => {
     messaging.send('dashboard', { what: 'userSettings' }, onUserSettingsReceived);
     messaging.send('dashboard', { what: 'getLocalData' }, onLocalDataReceived);
 });

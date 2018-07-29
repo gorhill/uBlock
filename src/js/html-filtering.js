@@ -23,7 +23,7 @@
 
 /******************************************************************************/
 
-µBlock.htmlFilteringEngine = (function() {
+µBlock.htmlFilteringEngine = (() => {
     var api = {};
 
     var µb = µBlock,
@@ -56,7 +56,7 @@
     };
     PSelectorIfTask.prototype.target = true;
     Object.defineProperty(PSelectorIfTask.prototype, 'invalid', {
-        get: function() {
+        get: () => {
             return this.pselector.invalid;
         }
     });
@@ -213,7 +213,7 @@
         return modified;
     };
 
-    api.reset = function() {
+    api.reset = () => {
         filterDB.clear();
         pselectors.clear();
         duplicates.clear();
@@ -221,7 +221,7 @@
         discardedCount = 0;
     };
 
-    api.freeze = function() {
+    api.freeze = () => {
         duplicates.clear();
     };
 
@@ -317,7 +317,7 @@
         return modified;
     };
 
-    api.toSelfie = function() {
+    api.toSelfie = () => {
         return filterDB.toSelfie();
     };
 
@@ -331,7 +331,7 @@
     //       at this point is for the code to work, not to be efficient.
     //       Only `script:has-text` selectors are considered.
 
-    api.retrieveScriptTagHostnames = function() {
+    api.retrieveScriptTagHostnames = () => {
         var out = new Set();
         for ( var entry of filterDB ) {
             if ( entry.type !== 65 ) { continue; }
@@ -375,12 +375,12 @@
 
     Object.defineProperties(api, {
         acceptedCount: {
-            get: function() {
+            get: () => {
                 return acceptedCount;
             }
         },
         discardedCount: {
-            get: function() {
+            get: () => {
                 return discardedCount;
             }
         }

@@ -23,15 +23,15 @@
 
 /******************************************************************************/
 
-µBlock.redirectEngine = (function(){
+µBlock.redirectEngine = (() =>{
 
 /******************************************************************************/
 /******************************************************************************/
 
-var warResolve = (function() {
+var warResolve = (() => {
     var warPairs = [];
 
-    var onPairsReady = function() {
+    var onPairsReady = () => {
         var reng = µBlock.redirectEngine;
         for ( var i = 0; i < warPairs.length; i += 2 ) {
             var resource = reng.resources.get(warPairs[i+0]);
@@ -43,7 +43,7 @@ var warResolve = (function() {
         reng.selfieFromResources();
     };
 
-    return function() {
+    return () => {
         if ( vAPI.warSecret === undefined || warPairs.length !== 0 ) {
             return onPairsReady();
         }
@@ -81,7 +81,7 @@ var suffersSpuriousRedirectConflicts = vAPI.webextFlavor.soup.has('chromium');
 /******************************************************************************/
 /******************************************************************************/
 
-var RedirectEntry = function() {
+var RedirectEntry = () => {
     this.mime = '';
     this.data = '';
     this.warURL = undefined;
@@ -119,7 +119,7 @@ RedirectEntry.prototype.toURL = function(details) {
 
 /******************************************************************************/
 
-RedirectEntry.prototype.toContent = function() {
+RedirectEntry.prototype.toContent = () => {
     if ( this.data.startsWith('data:') ) {
         var pos = this.data.indexOf(',');
         var base64 = this.data.endsWith(';base64', pos);
@@ -153,7 +153,7 @@ RedirectEntry.fromSelfie = function(selfie) {
 /******************************************************************************/
 /******************************************************************************/
 
-var RedirectEngine = function() {
+var RedirectEngine = () => {
     this.resources = new Map();
     this.reset();
     this.resourceNameRegister = '';
@@ -162,7 +162,7 @@ var RedirectEngine = function() {
 
 /******************************************************************************/
 
-RedirectEngine.prototype.reset = function() {
+RedirectEngine.prototype.reset = () => {
     this.rules = new Map();
     this.ruleTypes = new Set();
     this.ruleSources = new Set();
@@ -172,7 +172,7 @@ RedirectEngine.prototype.reset = function() {
 
 /******************************************************************************/
 
-RedirectEngine.prototype.freeze = function() {
+RedirectEngine.prototype.freeze = () => {
 };
 
 /******************************************************************************/
@@ -374,7 +374,7 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
 
 RedirectEngine.prototype.reFilterParser = /^(?:\|\|([^\/:?#^*]+)|\*)([^$]+)\$([^$]+)$/;
 
-RedirectEngine.prototype.supportedTypes = (function() {
+RedirectEngine.prototype.supportedTypes = (() => {
     var types = Object.create(null);
     types.font = 'font';
     types.image = 'image';
@@ -389,7 +389,7 @@ RedirectEngine.prototype.supportedTypes = (function() {
 
 /******************************************************************************/
 
-RedirectEngine.prototype.toSelfie = function() {
+RedirectEngine.prototype.toSelfie = () => {
     // Because rules may contains RegExp instances, we need to manually
     // convert it to a serializable format. The serialized format must be
     // suitable to be used as an argument to the Map() constructor.
@@ -503,7 +503,7 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
 
 var resourcesSelfieVersion = 3;
 
-RedirectEngine.prototype.selfieFromResources = function() {
+RedirectEngine.prototype.selfieFromResources = () => {
     vAPI.cacheStorage.set({
         resourcesSelfie: {
             version: resourcesSelfieVersion,
@@ -537,7 +537,7 @@ RedirectEngine.prototype.resourcesFromSelfie = function(callback) {
     vAPI.cacheStorage.get('resourcesSelfie', onSelfieReady);
 };
 
-RedirectEngine.prototype.invalidateResourcesSelfie = function() {
+RedirectEngine.prototype.invalidateResourcesSelfie = () => {
     vAPI.cacheStorage.remove('resourcesSelfie');
 };
 

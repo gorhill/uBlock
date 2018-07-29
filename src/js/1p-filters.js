@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-(function() {
+(() => {
 
 /******************************************************************************/
 
@@ -84,7 +84,7 @@ function allFiltersApplyHandler() {
 
 /******************************************************************************/
 
-var handleImportFilePicker = function() {
+var handleImportFilePicker = () => {
     // https://github.com/chrisaljoudi/uBlock/issues/1004
     // Support extraction of filters from ABP backup file
     var abpImporter = function(s) {
@@ -95,7 +95,7 @@ var handleImportFilePicker = function() {
         if ( matches === null ) {
             return s;
         }
-        // 
+        //
         var out = [];
         var filterMatch;
         while ( matches !== null ) {
@@ -110,7 +110,7 @@ var handleImportFilePicker = function() {
         return out.join('\n');
     };
 
-    var fileReaderOnLoadHandler = function() {
+    var fileReaderOnLoadHandler = () => {
         var sanitized = abpImporter(this.result);
         cmEditor.setValue(cmEditor.getValue().trim() + '\n' + sanitized);
     };
@@ -128,7 +128,7 @@ var handleImportFilePicker = function() {
 
 /******************************************************************************/
 
-var startImportFilePicker = function() {
+var startImportFilePicker = () => {
     var input = document.getElementById('importFilePicker');
     // Reset to empty string, this will ensure an change event is properly
     // triggered if the user pick a file, even if it is the same as the last
@@ -139,7 +139,7 @@ var startImportFilePicker = function() {
 
 /******************************************************************************/
 
-var exportUserFiltersToFile = function() {
+var exportUserFiltersToFile = () => {
     var val = cmEditor.getValue().trim();
     if ( val === '' ) { return; }
     var filename = vAPI.i18n('1pExportFilename')
@@ -153,7 +153,7 @@ var exportUserFiltersToFile = function() {
 
 /******************************************************************************/
 
-var applyChanges = function() {
+var applyChanges = () => {
     var onWritten = function(details) {
         if ( details.error ) { return; }
         cachedUserFilters = details.content.trim();
@@ -169,7 +169,7 @@ var applyChanges = function() {
     );
 };
 
-var revertChanges = function() {
+var revertChanges = () => {
     var content = cachedUserFilters;
     if ( content.length !== 0 ) {
         content += '\n';
@@ -179,7 +179,7 @@ var revertChanges = function() {
 
 /******************************************************************************/
 
-var getCloudData = function() {
+var getCloudData = () => {
     return cmEditor.getValue();
 };
 

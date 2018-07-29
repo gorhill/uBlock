@@ -161,12 +161,12 @@ vAPI.SafeAnimationFrame.prototype = {
             this.tid = vAPI.setTimeout(this.boundMacroToMicro, delay);
         }
     },
-    clear: function() {
+    clear: () => {
         if ( this.fid !== null ) { cancelAnimationFrame(this.fid); }
         if ( this.tid !== null ) { clearTimeout(this.tid); }
         this.fid = this.tid = null;
     },
-    macroToMicro: function() {
+    macroToMicro: () => {
         this.tid = null;
         this.start();
     }
@@ -176,7 +176,7 @@ vAPI.SafeAnimationFrame.prototype = {
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.domWatcher = (function() {
+vAPI.domWatcher = (() => {
 
     var addedNodeLists = [],
         addedNodes = [],
@@ -189,7 +189,7 @@ vAPI.domWatcher = (function() {
         removedNodes = false,
         safeObserverHandlerTimer;
 
-    var safeObserverHandler = function() {
+    var safeObserverHandler = () => {
         //console.time('dom watcher/safe observer handler');
         safeObserverHandlerTimer.clear();
         var i = addedNodeLists.length,
@@ -253,7 +253,7 @@ vAPI.domWatcher = (function() {
         //console.timeEnd('dom watcher/observer handler');
     };
 
-    var startMutationObserver = function() {
+    var startMutationObserver = () => {
         if ( domLayoutObserver !== undefined || !domIsReady ) { return; }
         domLayoutObserver = new MutationObserver(observerHandler);
         domLayoutObserver.observe(document.documentElement, {
@@ -266,13 +266,13 @@ vAPI.domWatcher = (function() {
         vAPI.shutdown.add(cleanup);
     };
 
-    var stopMutationObserver = function() {
+    var stopMutationObserver = () => {
         if ( domLayoutObserver === undefined ) { return; }
         cleanup();
         vAPI.shutdown.remove(cleanup);
     };
 
-    var getListenerIterator = function() {
+    var getListenerIterator = () => {
         if ( listenerIteratorDirty ) {
             listenerIterator = listeners.slice();
             listenerIteratorDirty = false;
@@ -299,7 +299,7 @@ vAPI.domWatcher = (function() {
         }
     };
 
-    var cleanup = function() {
+    var cleanup = () => {
         if ( domLayoutObserver !== undefined ) {
             domLayoutObserver.disconnect();
             domLayoutObserver = null;
@@ -310,7 +310,7 @@ vAPI.domWatcher = (function() {
         }
     };
 
-    var start = function() {
+    var start = () => {
         domIsReady = true;
         for ( var listener of getListenerIterator() ) {
             listener.onDOMCreated();
@@ -329,7 +329,7 @@ vAPI.domWatcher = (function() {
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.matchesProp = (function() {
+vAPI.matchesProp = (() => {
     var docElem = document.documentElement;
     if ( typeof docElem.matches !== 'function' ) {
         if ( typeof docElem.mozMatchesSelector === 'function' ) {
@@ -377,7 +377,7 @@ vAPI.injectScriptlet = function(doc, text) {
 
 */
 
-vAPI.DOMFilterer = (function() {
+vAPI.DOMFilterer = (() => {
 
     // 'P' stands for 'Procedural'
 
@@ -581,7 +581,7 @@ vAPI.DOMFilterer = (function() {
             }
         },
 
-        commitNow: function() {
+        commitNow: () => {
             if ( this.selectors.size === 0 || this.domIsReady === false ) {
                 return;
             }
@@ -643,7 +643,7 @@ vAPI.DOMFilterer = (function() {
             return new PSelector(o);
         },
 
-        onDOMCreated: function() {
+        onDOMCreated: () => {
             this.domIsReady = true;
             this.domFilterer.commitNow();
         },
@@ -658,7 +658,7 @@ vAPI.DOMFilterer = (function() {
 
     var DOMFiltererBase = vAPI.DOMFilterer;
 
-    var domFilterer = function() {
+    var domFilterer = () => {
         DOMFiltererBase.call(this);
         this.exceptions = [];
         this.proceduralFilterer = new DOMProceduralFilterer(this);
@@ -675,7 +675,7 @@ vAPI.DOMFilterer = (function() {
     domFilterer.prototype = Object.create(DOMFiltererBase.prototype);
     domFilterer.prototype.constructor = domFilterer;
 
-    domFilterer.prototype.commitNow = function() {
+    domFilterer.prototype.commitNow = () => {
         DOMFiltererBase.prototype.commitNow.call(this);
         this.proceduralFilterer.commitNow();
     };
@@ -688,24 +688,24 @@ vAPI.DOMFilterer = (function() {
         return this.proceduralFilterer.createProceduralFilter(o);
     };
 
-    domFilterer.prototype.getAllSelectors = function() {
+    domFilterer.prototype.getAllSelectors = () => {
         var out = DOMFiltererBase.prototype.getAllSelectors.call(this);
         out.procedural = Array.from(this.proceduralFilterer.selectors.values());
         return out;
     };
 
-    domFilterer.prototype.getAllExceptionSelectors = function() {
+    domFilterer.prototype.getAllExceptionSelectors = () => {
         return this.exceptions.join(',\n');
     };
 
-    domFilterer.prototype.onDOMCreated = function() {
+    domFilterer.prototype.onDOMCreated = () => {
         if ( DOMFiltererBase.prototype.onDOMCreated !== undefined ) {
             DOMFiltererBase.prototype.onDOMCreated.call(this);
         }
         this.proceduralFilterer.onDOMCreated();
     };
 
-    domFilterer.prototype.onDOMChanged = function() {
+    domFilterer.prototype.onDOMChanged = () => {
         if ( this.baseOnDOMChanged !== undefined ) {
             this.baseOnDOMChanged.apply(this, arguments);
         }
@@ -724,7 +724,7 @@ vAPI.domFilterer = new vAPI.DOMFilterer();
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.domCollapser = (function() {
+vAPI.domCollapser = (() => {
     var resquestIdGenerator = 1,
         processTimer,
         toProcess = [],
@@ -751,7 +751,7 @@ vAPI.domCollapser = (function() {
     var netSelectorCacheCount = 0,
         messaging = vAPI.messaging;
 
-    var cachedBlockedSetClear = function() {
+    var cachedBlockedSetClear = () => {
         cachedBlockedSet =
         cachedBlockedSetHash =
         cachedBlockedSetTimer = undefined;
@@ -829,7 +829,7 @@ vAPI.domCollapser = (function() {
         }
     };
 
-    var send = function() {
+    var send = () => {
         processTimer = undefined;
         toCollapse.set(resquestIdGenerator, toProcess);
         var msg = {
@@ -925,7 +925,7 @@ vAPI.domCollapser = (function() {
     };
 
     var domWatcherInterface = {
-        onDOMCreated: function() {
+        onDOMCreated: () => {
             if ( vAPI instanceof Object === false ) { return; }
             if ( vAPI.domCollapser instanceof Object === false ) {
                 if ( vAPI.domWatcher instanceof Object ) {
@@ -955,7 +955,7 @@ vAPI.domCollapser = (function() {
 
             document.addEventListener('error', onResourceFailed, true);
 
-            vAPI.shutdown.add(function() {
+            vAPI.shutdown.add(() => {
                 document.removeEventListener('error', onResourceFailed, true);
                 if ( processTimer !== undefined ) {
                     clearTimeout(processTimer);
@@ -997,7 +997,7 @@ vAPI.domCollapser = (function() {
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.domSurveyor = (function() {
+vAPI.domSurveyor = (() => {
     var messaging = vAPI.messaging,
         domFilterer,
         hostname = '',
@@ -1073,7 +1073,7 @@ vAPI.domSurveyor = (function() {
         vAPI.domSurveyor = null;
     };
 
-    var surveyTimer = new vAPI.SafeAnimationFrame(function() {
+    var surveyTimer = new vAPI.SafeAnimationFrame(() => {
         surveyPhase1();
     });
 
@@ -1131,7 +1131,7 @@ vAPI.domSurveyor = (function() {
     // http://www.w3.org/TR/2014/REC-html5-20141028/infrastructure.html#space-separated-tokens
     // http://jsperf.com/enumerate-classes/6
 
-    var surveyPhase1 = function() {
+    var surveyPhase1 = () => {
         //console.time('dom surveyor/surveying');
         surveyTimer.clear();
         var t0 = window.performance.now();
@@ -1198,7 +1198,7 @@ vAPI.domSurveyor = (function() {
     var reWhitespace = /\s/;
 
     var domWatcherInterface = {
-        onDOMCreated: function() {
+        onDOMCreated: () => {
             if (
                 vAPI instanceof Object === false ||
                 vAPI.domSurveyor instanceof Object === false ||
@@ -1322,7 +1322,7 @@ vAPI.domSurveyor = (function() {
         document.addEventListener('mousedown', onMouseClick, true);
 
         // https://github.com/gorhill/uMatrix/issues/144
-        vAPI.shutdown.add(function() {
+        vAPI.shutdown.add(() => {
             document.removeEventListener('mousedown', onMouseClick, true);
         });
     };

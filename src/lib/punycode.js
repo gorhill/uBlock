@@ -512,7 +512,7 @@
 		typeof define.amd == 'object' &&
 		define.amd
 	) {
-		define('punycode', function() {
+		define('punycode', () => {
 			return punycode;
 		});
 	} else if (freeExports && freeModule) {

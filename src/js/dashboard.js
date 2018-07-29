@@ -25,11 +25,11 @@
 
 /******************************************************************************/
 
-(function() {
+(() => {
 
 /******************************************************************************/
 
-let resizeFrame = function() {
+let resizeFrame = () => {
     let navRect = document.getElementById('dashboard-nav').getBoundingClientRect();
     let viewRect = document.documentElement.getBoundingClientRect();
     document.getElementById('iframe').style.setProperty(
@@ -38,7 +38,7 @@ let resizeFrame = function() {
     );
 };
 
-let loadDashboardPanel = function() {
+let loadDashboardPanel = () => {
     let pane = window.location.hash.slice(1);
     if ( pane === '' ) {
         pane = vAPI.localStorage.getItem('dashboardLastVisitedPane');

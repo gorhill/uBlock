@@ -32,11 +32,11 @@
 // the code here does *only* what I need, and nothing more, and with a lot
 // of assumption on passed parameters, etc. I grow it on a per-need-basis only.
 
-var uDom = (function() {
+var uDom = (() => {
 
 /******************************************************************************/
 
-var DOMList = function() {
+var DOMList = () => {
     this.nodes = [];
 };
 
@@ -46,7 +46,7 @@ Object.defineProperty(
     DOMList.prototype,
     'length',
     {
-        get: function() {
+        get: () => {
             return this.nodes.length;
         }
     }
@@ -154,13 +154,13 @@ DOMList.prototype.at = function(i) {
 
 /******************************************************************************/
 
-DOMList.prototype.toArray = function() {
+DOMList.prototype.toArray = () => {
     return this.nodes.slice();
 };
 
 /******************************************************************************/
 
-DOMList.prototype.pop = function() {
+DOMList.prototype.pop = () => {
     return addNodeToList(new DOMList(), this.nodes.pop());
 };
 
@@ -188,7 +188,7 @@ DOMList.prototype.subset = function(i, l) {
 
 /******************************************************************************/
 
-DOMList.prototype.first = function() {
+DOMList.prototype.first = () => {
     return this.subset(0, 1);
 };
 
@@ -213,7 +213,7 @@ DOMList.prototype.next = function(selector) {
 
 /******************************************************************************/
 
-DOMList.prototype.parent = function() {
+DOMList.prototype.parent = () => {
     var r = new DOMList();
     if ( this.nodes.length ) {
         addNodeToList(r, this.nodes[0].parentNode);
@@ -227,13 +227,13 @@ DOMList.prototype.filter = function(filter) {
     var r = new DOMList();
     var filterFunc;
     if ( typeof filter === 'string' ) {
-        filterFunc = function() {
+        filterFunc = () => {
             return this.matches(filter);
         };
     } else if ( typeof filter === 'function' ) {
         filterFunc = filter;
     } else {
-        filterFunc = function(){
+        filterFunc = () =>{
             return true;
         };
     }
@@ -284,7 +284,7 @@ DOMList.prototype.descendants = function(selector) {
 
 /******************************************************************************/
 
-DOMList.prototype.contents = function() {
+DOMList.prototype.contents = () => {
     var r = new DOMList();
     var cnodes, cn, ci;
     var n = this.nodes.length;
@@ -300,7 +300,7 @@ DOMList.prototype.contents = function() {
 
 /******************************************************************************/
 
-DOMList.prototype.remove = function() {
+DOMList.prototype.remove = () => {
     var cn, p;
     var i = this.nodes.length;
     while ( i-- ) {
@@ -316,7 +316,7 @@ DOMList.prototype.detach = DOMList.prototype.remove;
 
 /******************************************************************************/
 
-DOMList.prototype.empty = function() {
+DOMList.prototype.empty = () => {
     var node;
     var i = this.nodes.length;
     while ( i-- ) {
@@ -420,7 +420,7 @@ DOMList.prototype.clone = function(notDeep) {
 
 /******************************************************************************/
 
-DOMList.prototype.nthOfType = function() {
+DOMList.prototype.nthOfType = () => {
     if ( this.nodes.length === 0 ) {
         return 0;
     }
@@ -613,7 +613,7 @@ var ListenerEntry = function(target, type, capture, callback) {
     target.addEventListener(type, callback, capture);
 };
 
-ListenerEntry.prototype.dispose = function() {
+ListenerEntry.prototype.dispose = () => {
     this.target.removeEventListener(this.type, this.callback, this.capture);
     this.target = null;
     this.callback = null;
@@ -677,7 +677,7 @@ DOMList.prototype.trigger = function(etype) {
 
 // Cleanup
 
-var onBeforeUnload = function() {
+var onBeforeUnload = () => {
     var entry;
     while ( (entry = listenerEntries.pop()) ) {
         entry.dispose();

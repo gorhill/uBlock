@@ -32,7 +32,7 @@ vAPI.net = {
     nativeCSPReportFiltering: false
 };
 
-vAPI.net.registerListeners = function() {
+vAPI.net.registerListeners = () => {
 
     var µb = µBlock,
         µburi = µb.URI,
@@ -56,7 +56,7 @@ vAPI.net.registerListeners = function() {
     };
     // modern Chromium/WebExtensions: more types available.
     if ( wrApi.ResourceType ) {
-        (function() {
+        (() => {
             for ( var typeKey in wrApi.ResourceType ) {
                 if ( wrApi.ResourceType.hasOwnProperty(typeKey) ) {
                     validTypes[wrApi.ResourceType[typeKey]] = true;

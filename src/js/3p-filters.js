@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-(function() {
+(() => {
 
 /******************************************************************************/
 
@@ -315,7 +315,7 @@ var renderFilterLists = function(soft) {
 
 /******************************************************************************/
 
-var renderWidgets = function() {
+var renderWidgets = () => {
     uDom('#buttonApply').toggleClass(
         'disabled',
         filteringSettingsHash === hashFromCurrentFromSettings()
@@ -357,7 +357,7 @@ var updateAssetStatus = function(details) {
 
 **/
 
-var hashFromCurrentFromSettings = function() {
+var hashFromCurrentFromSettings = () => {
     var hash = [
         uDom.nodeFromId('parseCosmeticFilters').checked,
         uDom.nodeFromId('ignoreGenericCosmeticFilters').checked
@@ -383,7 +383,7 @@ var hashFromCurrentFromSettings = function() {
 
 /******************************************************************************/
 
-var onFilteringSettingsChanged = function() {
+var onFilteringSettingsChanged = () => {
     renderWidgets();
 };
 
@@ -401,7 +401,7 @@ var onRemoveExternalList = function(ev) {
 
 /******************************************************************************/
 
-var onPurgeClicked = function() {
+var onPurgeClicked = () => {
     var button = uDom(this),
         liEntry = button.ancestors('[data-listkey]'),
         listKey = liEntry.attr('data-listkey');
@@ -478,9 +478,9 @@ var selectFilterLists = function(callback) {
 
 /******************************************************************************/
 
-var buttonApplyHandler = function() {
+var buttonApplyHandler = () => {
     uDom('#buttonApply').removeClass('enabled');
-    var onSelectionDone = function() {
+    var onSelectionDone = () => {
         messaging.send('dashboard', { what: 'reloadAllFilters' });
     };
     selectFilterLists(onSelectionDone);
@@ -489,8 +489,8 @@ var buttonApplyHandler = function() {
 
 /******************************************************************************/
 
-var buttonUpdateHandler = function() {
-    var onSelectionDone = function() {
+var buttonUpdateHandler = () => {
+    var onSelectionDone = () => {
         document.body.classList.add('updating');
         messaging.send('dashboard', { what: 'forceUpdateAssets' });
         renderWidgets();
@@ -509,13 +509,13 @@ var buttonPurgeAllHandler = function(ev) {
             what: 'purgeAllCaches',
             hard: ev.ctrlKey && ev.shiftKey
         },
-        function() { renderFilterLists(true); }
+        () => { renderFilterLists(true); }
     );
 };
 
 /******************************************************************************/
 
-var autoUpdateCheckboxChanged = function() {
+var autoUpdateCheckboxChanged = () => {
     messaging.send(
         'dashboard',
         {
@@ -569,13 +569,13 @@ var toggleHideUnusedLists = function(which) {
     );
 };
 
-var revealHiddenUsedLists = function() {
+var revealHiddenUsedLists = () => {
     uDom('#lists .listEntry.unused > input[type="checkbox"]:checked')
         .ancestors('.listEntry[data-listkey]')
         .removeClass('unused');
 };
 
-uDom('#listsOfBlockedHostsPrompt').on('click', function() {
+uDom('#listsOfBlockedHostsPrompt').on('click', () => {
     toggleHideUnusedLists('*');
 });
 
@@ -587,7 +587,7 @@ uDom('#lists').on('click', '.groupEntry[data-groupkey] > .geDetails', function(e
     );
 });
 
-(function() {
+(() => {
     var aa;
     try {
         var json = vAPI.localStorage.getItem('hideUnusedFilterLists');
@@ -606,7 +606,7 @@ uDom('#lists').on('click', '.groupEntry[data-groupkey] > .geDetails', function(e
 
 // Cloud-related.
 
-var toCloudData = function() {
+var toCloudData = () => {
     var bin = {
         parseCosmeticFilters: uDom.nodeFromId('parseCosmeticFilters').checked,
         ignoreGenericCosmeticFilters: uDom.nodeFromId('ignoreGenericCosmeticFilters').checked,
@@ -695,4 +695,3 @@ renderFilterLists();
 /******************************************************************************/
 
 })();
-

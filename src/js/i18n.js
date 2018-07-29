@@ -26,7 +26,7 @@
 // This file should always be included at the end of the `body` tag, so as
 // to ensure all i18n targets are already loaded.
 
-(function() {
+(() => {
 
 /******************************************************************************/
 

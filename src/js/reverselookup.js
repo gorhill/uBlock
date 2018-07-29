@@ -23,7 +23,7 @@
 
 /******************************************************************************/
 
-µBlock.staticFilteringReverseLookup = (function() {
+µBlock.staticFilteringReverseLookup = (() => {
 
 /******************************************************************************/
 
@@ -45,7 +45,7 @@ var onWorkerMessage = function(e) {
 
 /******************************************************************************/
 
-var stopWorker = function() {
+var stopWorker = () => {
     workerTTLTimer = null;
     if ( worker === null ) {
         return;
@@ -141,7 +141,7 @@ var fromNetFilter = function(compiledFilter, rawFilter, callback) {
         workerTTLTimer = null;
     }
 
-    var onWorkerReady = function() {
+    var onWorkerReady = () => {
         var id = messageId++;
         var message = {
             what: 'fromNetFilter',
@@ -174,7 +174,7 @@ var fromCosmeticFilter = function(details, callback) {
         workerTTLTimer = null;
     }
 
-    let onWorkerReady = function() {
+    let onWorkerReady = () => {
         let id = messageId++;
         let hostname = µBlock.URI.hostnameFromURI(details.url);
         pendingResponses[id] = callback;
@@ -199,7 +199,7 @@ var fromCosmeticFilter = function(details, callback) {
 
 // This tells the worker that filter lists may have changed.
 
-var resetLists = function() {
+var resetLists = () => {
     needLists = true;
     if ( worker === null ) {
         return;

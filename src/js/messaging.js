@@ -26,7 +26,7 @@
 
 // Default handler
 
-(function() {
+(() => {
 
 /******************************************************************************/
 
@@ -198,7 +198,7 @@ vAPI.messaging.setup(onMessage);
 
 // channel: popupPanel
 
-(function() {
+(() => {
 
 /******************************************************************************/
 
@@ -451,7 +451,7 @@ vAPI.messaging.listen('popupPanel', onMessage);
 
 // channel: contentscript
 
-(function() {
+(() => {
 
 /******************************************************************************/
 
@@ -549,7 +549,7 @@ vAPI.messaging.listen('contentscript', onMessage);
 
 // channel: elementPicker
 
-(function() {
+(() => {
 
 /******************************************************************************/
 
@@ -565,7 +565,7 @@ var onMessage = function(request, sender, callback) {
         xhr.open('GET', 'epicker.html', true);
         xhr.overrideMimeType('text/html;charset=utf-8');
         xhr.responseType = 'text';
-        xhr.onload = function() {
+        xhr.onload = () => {
             this.onload = null;
             var i18n = {
                 bidi_dir: document.body.getAttribute('dir'),
@@ -627,7 +627,7 @@ vAPI.messaging.listen('elementPicker', onMessage);
 
 // channel: cloudWidget
 
-(function() {
+(() => {
 
 /******************************************************************************/
 
@@ -689,7 +689,7 @@ vAPI.messaging.listen('cloudWidget', onMessage);
 
 // channel: dashboard
 
-(function() {
+(() => {
 
 /******************************************************************************/
 
@@ -749,11 +749,11 @@ var backupUserData = function(callback) {
 var restoreUserData = function(request) {
     var userData = request.userData;
 
-    var restart = function() {
+    var restart = () => {
         vAPI.app.restart();
     };
 
-    var onAllRemoved = function() {
+    var onAllRemoved = () => {
         µBlock.saveLocalSettings();
         vAPI.storage.set(userData.userSettings);
         var hiddenSettings = userData.hiddenSettings;
@@ -795,7 +795,7 @@ var restoreUserData = function(request) {
 // Remove all stored data but keep global counts, people can become
 // quite attached to numbers
 
-var resetUserData = function() {
+var resetUserData = () => {
     let count = 3;
     let countdown = ( ) => {
         count -= 1;
@@ -859,7 +859,7 @@ var getLists = function(callback) {
 
 // My rules
 
-var getRules = function() {
+var getRules = () => {
     return {
         permanentRules: µb.permanentFirewall.toArray().concat(
                             µb.permanentURLFiltering.toArray()
@@ -1053,7 +1053,7 @@ vAPI.messaging.listen('dashboard', onMessage);
 
 // channel: loggerUI
 
-(function() {
+(() => {
 
 /******************************************************************************/
 
@@ -1192,7 +1192,7 @@ vAPI.messaging.listen('loggerUI', onMessage);
 
 // channel: documentBlocked
 
-(function() {
+(() => {
 
 /******************************************************************************/
 
@@ -1229,7 +1229,7 @@ vAPI.messaging.listen('documentBlocked', onMessage);
 
 // channel: scriptlets
 
-(function() {
+(() => {
 
 /******************************************************************************/
 

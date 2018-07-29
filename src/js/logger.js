@@ -24,7 +24,7 @@
 /******************************************************************************/
 /******************************************************************************/
 
-µBlock.logger = (function() {
+µBlock.logger = (() => {
 
     var LogEntry = function(args) {
         this.init(args);
@@ -49,7 +49,7 @@
     // unused, and thus removed from memory.
     var logBufferObsoleteAfter = 30 * 1000;
 
-    var janitor = function() {
+    var janitor = () => {
         if (
             buffer !== null &&
             lastReadTime < (Date.now() - logBufferObsoleteAfter)
@@ -66,7 +66,7 @@
 
     var api = {
         ownerId: undefined,
-        writeOne: function() {
+        writeOne: () => {
             if ( buffer === null ) { return; }
             if ( writePtr === buffer.length ) {
                 buffer.push(new LogEntry(arguments));
@@ -86,7 +86,7 @@
             lastReadTime = Date.now();
             return out;
         },
-        isEnabled: function() {
+        isEnabled: () => {
             return buffer !== null;
         }
     };

@@ -57,7 +57,7 @@ vAPI.userStylesheet = {
 
 /******************************************************************************/
 
-vAPI.DOMFilterer = function() {
+vAPI.DOMFilterer = () => {
     this.commitTimer = new vAPI.SafeAnimationFrame(this.commitNow.bind(this));
     this.domIsReady = document.readyState !== 'loading';
     this.disabled = false;
@@ -80,7 +80,7 @@ vAPI.DOMFilterer.prototype = {
     // Here we will deal with:
     // - Injecting low priority user styles;
     // - Notifying listeners about changed filterset.
-    commitNow: function() {
+    commitNow: () => {
         this.commitTimer.clear();
         var userStylesheet = vAPI.userStylesheet;
         for ( var entry of this.addedCSSRules ) {
@@ -148,7 +148,7 @@ vAPI.DOMFilterer.prototype = {
         this.listeners.splice(pos, 1);
     },
 
-    hasListeners: function() {
+    hasListeners: () => {
         return this.listeners.length !== 0;
     },
 
@@ -220,7 +220,7 @@ vAPI.DOMFilterer.prototype = {
         return out;
     },
 
-    getFilteredElementCount: function() {
+    getFilteredElementCount: () => {
         let details = this.getAllSelectors_(true);
         if ( Array.isArray(details.declarative) === false ) { return 0; }
         let selectors = details.declarative.reduce(function(acc, entry) {
@@ -231,7 +231,7 @@ vAPI.DOMFilterer.prototype = {
         return document.querySelectorAll(selectors.join(',\n')).length;
     },
 
-    getAllSelectors: function() {
+    getAllSelectors: () => {
         return this.getAllSelectors_(false);
     }
 };

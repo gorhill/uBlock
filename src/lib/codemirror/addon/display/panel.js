@@ -52,7 +52,7 @@
     this.cleared = false;
   }
 
-  Panel.prototype.clear = function() {
+  Panel.prototype.clear = () => {
     if (this.cleared) return;
     this.cleared = true;
     var info = this.cm.state.panels;

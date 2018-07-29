@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-(function() {
+(() => {
 
 /******************************************************************************/
 
@@ -94,7 +94,7 @@ var reCyrillicAmbiguous = /[\u042c\u0430\u0433\u0435\u043e\u043f\u0440\u0441\u04
 // - Its vertical position depends on the height of the popup title bar
 // - Its horizontal position depends on whether there is a vertical scrollbar.
 
-var positionRulesetTools = function() {
+var positionRulesetTools = () => {
     var vpos = document.getElementById('appinfo')
                        .getBoundingClientRect()
                        .bottom + window.scrollY + 3;
@@ -296,7 +296,7 @@ var updateFirewallCell = function(scope, des, type, rule) {
 
 /******************************************************************************/
 
-var updateAllFirewallCells = function() {
+var updateAllFirewallCells = () => {
     var rules = popupData.firewallRules;
     for ( var key in rules ) {
         if ( rules.hasOwnProperty(key) === false ) {
@@ -319,7 +319,7 @@ var updateAllFirewallCells = function() {
 
 /******************************************************************************/
 
-var buildAllFirewallRows = function() {
+var buildAllFirewallRows = () => {
     // Do this before removing the rows
     if ( dfHotspots === null ) {
         dfHotspots = uDom('#actionSelector')
@@ -350,7 +350,7 @@ var buildAllFirewallRows = function() {
 
 /******************************************************************************/
 
-var renderPrivacyExposure = function() {
+var renderPrivacyExposure = () => {
     allDomains = {};
     allDomainCount = touchedDomainCount = 0;
     allHostnameRows = [];
@@ -392,7 +392,7 @@ var renderPrivacyExposure = function() {
 
 // Assume everything has to be done incrementally.
 
-var renderPopup = function() {
+var renderPopup = () => {
     var elem, text;
 
     if ( popupData.tabTitle ) {
@@ -546,8 +546,8 @@ var tooltipTargetSelectors = new Map([
 
 // All rendering code which need to be executed only once.
 
-var renderOnce = function() {
-    renderOnce = function(){};
+var renderOnce = () => {
+    renderOnce = () =>{};
 
     if ( popupData.fontSize !== popupFontSize ) {
         popupFontSize = popupData.fontSize;
@@ -587,7 +587,7 @@ var renderOnce = function() {
     // viewport is not a perfect match for the popup panel.
 
     let resizeTimer;
-    let resize = function() {
+    let resize = () => {
         resizeTimer = undefined;
         // Do not use equality, fractional pixel dimension occurs and must
         // be ignored.
@@ -603,7 +603,7 @@ var renderOnce = function() {
         lpane.style.removeProperty('height');
         window.removeEventListener('resize', resizeAsync);
     };
-    let resizeAsync = function() {
+    let resizeAsync = () => {
         if ( resizeTimer !== undefined ) {
             clearTimeout(resizeTimer);
         }
@@ -615,7 +615,7 @@ var renderOnce = function() {
 
 /******************************************************************************/
 
-var renderPopupLazy = function() {
+var renderPopupLazy = () => {
     messaging.send(
         'popupPanel',
         { what: 'getPopupLazyData', tabId: popupData.tabId }
@@ -657,7 +657,7 @@ var toggleNetFilteringSwitch = function(ev) {
 
 /******************************************************************************/
 
-var gotoZap = function() {
+var gotoZap = () => {
     messaging.send(
         'popupPanel',
         {
@@ -672,7 +672,7 @@ var gotoZap = function() {
 
 /******************************************************************************/
 
-var gotoPick = function() {
+var gotoPick = () => {
     messaging.send(
         'popupPanel',
         {
@@ -717,7 +717,7 @@ var gotoURL = function(ev) {
 
 /******************************************************************************/
 
-var toggleFirewallPane = function() {
+var toggleFirewallPane = () => {
     popupData.dfEnabled = !popupData.dfEnabled;
 
     messaging.send(
@@ -745,13 +745,13 @@ var toggleFirewallPane = function() {
 
 /******************************************************************************/
 
-var mouseenterCellHandler = function() {
+var mouseenterCellHandler = () => {
     if ( uDom(this).hasClass('ownRule') === false ) {
         dfHotspots.appendTo(this);
     }
 };
 
-var mouseleaveCellHandler = function() {
+var mouseleaveCellHandler = () => {
     dfHotspots.detach();
 };
 
@@ -886,7 +886,7 @@ var toggleMinimize = function(ev) {
 
 /******************************************************************************/
 
-var saveFirewallRules = function() {
+var saveFirewallRules = () => {
     messaging.send(
         'popupPanel',
         {
@@ -900,7 +900,7 @@ var saveFirewallRules = function() {
 
 /******************************************************************************/
 
-var revertFirewallRules = function() {
+var revertFirewallRules = () => {
     var onFirewallRuleChanged = function(response) {
         cachePopupData(response);
         updateAllFirewallCells();
@@ -960,10 +960,10 @@ var toggleHostnameSwitch = function(ev) {
 // on demand rather than forcing the main process to assume a client may need
 // it and thus having to push it all the time unconditionally.
 
-var pollForContentChange = (function() {
+var pollForContentChange = (() => {
     var pollTimer = null;
 
-    var pollCallback = function() {
+    var pollCallback = () => {
         pollTimer = null;
         messaging.send(
             'popupPanel',
@@ -984,7 +984,7 @@ var pollForContentChange = (function() {
         poll();
     };
 
-    var poll = function() {
+    var poll = () => {
         if ( pollTimer !== null ) {
             return;
         }
@@ -1014,7 +1014,7 @@ var getPopupData = function(tabId) {
 
 /******************************************************************************/
 
-var onShowTooltip = function() {
+var onShowTooltip = () => {
     if ( popupData.tooltipsDisabled ) {
         return;
     }
@@ -1050,7 +1050,7 @@ var onShowTooltip = function() {
     tip.classList.add('show');
 };
 
-var onHideTooltip = function() {
+var onHideTooltip = () => {
     uDom.nodeFromId('tooltip').classList.remove('show');
 };
 
@@ -1059,7 +1059,7 @@ var onHideTooltip = function() {
 // Popup DOM is assumed to be loaded at this point -- because this script
 // is loaded after everything else..
 
-(function() {
+(() => {
     // If there's no tab id specified in the query string,
     // it will default to current tab.
     let tabId = null;

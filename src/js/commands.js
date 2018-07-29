@@ -32,7 +32,7 @@
 
 /******************************************************************************/
 
-(function() {
+(() => {
     if ( µBlock.canUseShortcuts === false ) { return; }
 
     vAPI.commands.onCommand.addListener(function(command) {

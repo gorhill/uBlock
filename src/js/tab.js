@@ -24,7 +24,7 @@
 /******************************************************************************/
 /******************************************************************************/
 
-(function() {
+(() => {
 
 'use strict';
 
@@ -119,7 +119,7 @@ master switch and dynamic filtering rules can be evaluated now properly even
 in the absence of a PageStore object, this was not the case before.
 
 Also, the TabContext object will try its best to find a good candidate root
-document URL for when none exists. This takes care of 
+document URL for when none exists. This takes care of
 <https://github.com/chrisaljoudi/uBlock/issues/1001>.
 
 The TabContext manager is self-contained, and it takes care to properly
@@ -127,7 +127,7 @@ housekeep itself.
 
 */
 
-µb.tabContextManager = (function() {
+µb.tabContextManager = (() => {
     var tabContexts = new Map();
 
     // https://github.com/chrisaljoudi/uBlock/issues/1001
@@ -151,14 +151,14 @@ housekeep itself.
         this.launchSelfDestruction();
     };
 
-    PopupCandidate.prototype.destroy = function() {
+    PopupCandidate.prototype.destroy = () => {
         if ( this.selfDestructionTimer !== null ) {
             clearTimeout(this.selfDestructionTimer);
         }
         popupCandidates.delete(this.targetTabId);
     };
 
-    PopupCandidate.prototype.launchSelfDestruction = function() {
+    PopupCandidate.prototype.launchSelfDestruction = () => {
         if ( this.selfDestructionTimer !== null ) {
             clearTimeout(this.selfDestructionTimer);
         }
@@ -226,7 +226,7 @@ housekeep itself.
         tabContexts.set(tabId, this);
     };
 
-    TabContext.prototype.destroy = function() {
+    TabContext.prototype.destroy = () => {
         if ( vAPI.isBehindTheSceneTabId(this.tabId) ) { return; }
         if ( this.gcTimer !== null ) {
             clearTimeout(this.gcTimer);
@@ -243,7 +243,7 @@ housekeep itself.
         }
     };
 
-    TabContext.prototype.onGC = function() {
+    TabContext.prototype.onGC = () => {
         if ( vAPI.isBehindTheSceneTabId(this.tabId) ) {
             return;
         }
@@ -264,7 +264,7 @@ housekeep itself.
     // https://github.com/gorhill/uBlock/issues/248
     // Stack entries have to be committed to stick. Non-committed stack
     // entries are removed after a set delay.
-    TabContext.prototype.onCommit = function() {
+    TabContext.prototype.onCommit = () => {
         if ( vAPI.isBehindTheSceneTabId(this.tabId) ) {
             return;
         }
@@ -293,7 +293,7 @@ housekeep itself.
     // This takes care of orphanized tab contexts. Can't be started for all
     // contexts, as the behind-the-scene context is permanent -- so we do not
     // want to flush it.
-    TabContext.prototype.autodestroy = function() {
+    TabContext.prototype.autodestroy = () => {
         if ( vAPI.isBehindTheSceneTabId(this.tabId) ) {
             return;
         }
@@ -302,7 +302,7 @@ housekeep itself.
 
     // Update just force all properties to be updated to match the most recent
     // root URL.
-    TabContext.prototype.update = function() {
+    TabContext.prototype.update = () => {
         this.netFilteringReadTime = 0;
         if ( this.stack.length === 0 ) {
             this.rawURL = this.normalURL = this.rootHostname = this.rootDomain = '';
@@ -349,7 +349,7 @@ housekeep itself.
         return true;
     };
 
-    TabContext.prototype.getNetFilteringSwitch = function() {
+    TabContext.prototype.getNetFilteringSwitch = () => {
         if ( this.netFilteringReadTime > µb.netWhitelistModifyTime ) {
             return this.netFiltering;
         }
@@ -430,7 +430,7 @@ housekeep itself.
     };
 
     // Behind-the-scene tab context
-    (function() {
+    (() => {
         var entry = new TabContext(vAPI.noTabId);
         entry.stack.push(new StackEntry('', true));
         entry.rawURL = '';
@@ -458,7 +458,7 @@ housekeep itself.
         this.requestDomain = '';
         return this;
     };
-    Context.prototype.dispose = function() {
+    Context.prototype.dispose = () => {
         contextJunkyard.push(this);
     };
 
@@ -527,7 +527,7 @@ vAPI.tabs.onClosed = function(tabId) {
 
 // https://github.com/gorhill/uBlock/issues/99
 // https://github.com/gorhill/uBlock/issues/991
-// 
+//
 // popup:
 //   Test/close target URL
 // popunder:
@@ -547,7 +547,7 @@ vAPI.tabs.onClosed = function(tabId) {
 // c: close opener
 // d: close target
 
-vAPI.tabs.onPopupUpdated = (function() {
+vAPI.tabs.onPopupUpdated = (() => {
     // The same context object will be reused everytime. This also allows to
     // remember whether a popup or popunder was matched.
     var context = {},
@@ -909,7 +909,7 @@ vAPI.tabs.registerListeners();
 
 // Permanent page store for behind-the-scene requests. Must never be removed.
 
-(function() {
+(() => {
     var pageStore = µb.PageStore.factory(vAPI.noTabId);
     µb.pageStores.set(pageStore.tabId, pageStore);
     pageStore.title = vAPI.i18n('logBehindTheScene');
@@ -923,7 +923,7 @@ vAPI.tabs.registerListeners();
 
 // Update visual of extension icon.
 
-µb.updateToolbarIcon = (function() {
+µb.updateToolbarIcon = (() => {
     let tabIdToDetails = new Map();
 
     let updateBadge = function(tabId) {
@@ -967,7 +967,7 @@ vAPI.tabs.registerListeners();
 
 /******************************************************************************/
 
-µb.updateTitle = (function() {
+µb.updateTitle = (() => {
     var tabIdToTimer = new Map();
     var delay = 499;
 
@@ -1032,7 +1032,7 @@ var pageStoreJanitorPeriod = 15 * 60 * 1000;
 var pageStoreJanitorSampleAt = 0;
 var pageStoreJanitorSampleSize = 10;
 
-var pageStoreJanitor = function() {
+var pageStoreJanitor = () => {
     var vapiTabs = vAPI.tabs;
     var tabIds = Array.from(µb.pageStores.keys()).sort();
     var checkTab = function(tabId) {

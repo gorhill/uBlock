@@ -25,14 +25,14 @@
 
 /******************************************************************************/
 
-(function() {
+(() => {
 
 /******************************************************************************/
 
 var messaging = vAPI.messaging;
 var details = {};
 
-(function() {
+(() => {
     var matches = /details=([^&]+)/.exec(window.location.search);
     if ( matches === null ) {
         return;
@@ -42,7 +42,7 @@ var details = {};
 
 /******************************************************************************/
 
-(function() {
+(() => {
     var onReponseReady = function(response) {
         if ( response instanceof Object === false ) { return; }
 
@@ -52,7 +52,7 @@ var details = {};
             lists = response[rawFilter];
             break;
         }
-        
+
         if ( Array.isArray(lists) === false || lists.length === 0 ) {
             return;
         }
@@ -89,7 +89,7 @@ var details = {};
 
 /******************************************************************************/
 
-var getTargetHostname = function() {
+var getTargetHostname = () => {
     var hostname = details.hn;
     var elem = document.querySelector('#proceed select');
     if ( elem !== null ) {
@@ -100,13 +100,13 @@ var getTargetHostname = function() {
 
 /******************************************************************************/
 
-var proceedToURL = function() {
+var proceedToURL = () => {
     window.location.replace(details.url);
 };
 
 /******************************************************************************/
 
-var proceedTemporary = function() {
+var proceedTemporary = () => {
     messaging.send(
         'documentBlocked',
         {
@@ -119,7 +119,7 @@ var proceedTemporary = function() {
 
 /******************************************************************************/
 
-var proceedPermanent = function() {
+var proceedPermanent = () => {
     messaging.send(
         'documentBlocked',
         {
@@ -135,7 +135,7 @@ var proceedPermanent = function() {
 
 /******************************************************************************/
 
-(function() {
+(() => {
     var matches = /^(.*)\{\{hostname\}\}(.*)$/.exec(vAPI.i18n('docblockedProceed'));
     if ( matches === null ) {
         return;
@@ -167,7 +167,7 @@ uDom.nodeFromId('why').textContent = details.fs;
 // Parse URL to extract as much useful information as possible. This is useful
 // to assist the user in deciding whether to navigate to the web page.
 
-(function() {
+(() => {
     if ( typeof URL !== 'function' ) {
         return;
     }
@@ -249,7 +249,7 @@ uDom.nodeFromId('why').textContent = details.fs;
     toggler.className = 'fa';
     uDom('#theURL > p').append(toggler);
 
-    uDom(toggler).on('click', function() {
+    uDom(toggler).on('click', () => {
         var cl = uDom.nodeFromId('theURL').classList;
         cl.toggle('collapsed');
         vAPI.localStorage.setItem(
@@ -267,10 +267,10 @@ uDom.nodeFromId('why').textContent = details.fs;
 /******************************************************************************/
 
 if ( window.history.length > 1 ) {
-    uDom('#back').on('click', function() { window.history.back(); });
+    uDom('#back').on('click', () => { window.history.back(); });
     uDom('#bye').css('display', 'none');
 } else {
-    uDom('#bye').on('click', function() { window.close(); });
+    uDom('#bye').on('click', () => { window.close(); });
     uDom('#back').css('display', 'none');
 }
 
