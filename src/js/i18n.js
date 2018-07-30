@@ -79,16 +79,27 @@ var safeTextToTagNode = function(text) {
     }
 };
 
-var safeTextToTextNode = function(text) {
-    // TODO: remove once no more HTML entities in translation files.
-    if ( text.indexOf('&') !== -1 ) {
-        text = text.replace(/&ldquo;/g, '“')
-                   .replace(/&rdquo;/g, '”')
-                   .replace(/&lsquo;/g, '‘')
-                   .replace(/&rsquo;/g, '’');
-    }
-    return document.createTextNode(text);
-};
+var safeTextToTextNode = (function() {
+    let entities = new Map([
+        // TODO: Remove quote entities once no longer present in translation
+        // files. Other entities must stay.
+        [ '&ldquo;', '“' ],
+        [ '&rdquo;', '”' ],
+        [ '&lsquo;', '‘' ],
+        [ '&rsquo;', '’' ],
+        [ '&lt;', '<' ],
+        [ '&gt;', '>' ],
+    ]);
+    let decodeEntities = match => {
+        return entities.get(match) || match;
+    };
+    return function(text) {
+        if ( text.indexOf('&') !== -1 ) {
+            text = text.replace(/&[a-z]+;/g, decodeEntities);
+        }
+        return document.createTextNode(text);
+    };
+})();
 
 var safeTextToDOM = function(text, parent) {
     if ( text === '' ) { return; }
