@@ -286,13 +286,11 @@ URI.hostnameFromURI = function(uri) {
 /******************************************************************************/
 
 URI.domainFromHostname = function(hostname) {
-    // Try to skip looking up the PSL database
-    var entry = domainCache[hostname];
+    let entry = domainCache.get(hostname);
     if ( entry !== undefined ) {
         entry.tstamp = Date.now();
         return entry.domain;
     }
-    // Meh.. will have to search it
     if ( reIPAddressNaive.test(hostname) === false ) {
         return domainCacheAdd(hostname, psl.getDomain(hostname));
     }

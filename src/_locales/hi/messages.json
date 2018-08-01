@@ -31,6 +31,10 @@
     "message": "सफेद सूची",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "शॉर्टकट",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "यूब्लॉक  —  नेटवर्क रिक्वेस्ट लॉग",
     "description": "Title for the logger window"
@@ -120,11 +124,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Click to disable cosmetic filtering on this site",
+    "message": "इस साइट पर कॉस्मेटिक फ़िल्टरिंग अक्षम करने के लिए क्लिक करें",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Click to enable cosmetic filtering on this site",
+    "message": "इस साइट पर कॉस्मेटिक फ़िल्टरिंग सक्षम करने के लिए क्लिक करें",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -132,7 +136,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Click to block remote fonts on this site",
+    "message": "इस साइट पर रिमोट फोंट को अवरुद्ध करने के लिए क्लिक करें",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
@@ -584,8 +588,12 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Static filter {{filter}} found in:",
-    "description": "Below this sentence, the filter lists in which the filter was found"
+    "message": "Static filter <code>{{filter}}<\/code> found in:",
+    "description": "Below this sentence, the filter list(s) in which the filter was found"
+  },
+  "loggerStaticFilteringFinderSentence2": {
+    "message": "Static filter <code>{{filter}}<\/code> could not be found in any of the currently enabled filter lists",
+    "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
     "message": "परिवर्तन सूची",
@@ -724,7 +732,7 @@
     "description": "tooltip"
   },
   "cloudPull": {
-    "message": "Import from cloud storage",
+    "message": "क्लाउड स्टोरेज से आयात करें",
     "description": "tooltip"
   },
   "cloudPullAndMerge": {
@@ -762,6 +770,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "कुछ समय के लिए विशाल तत्वोंको चलने की अनुमति दे",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Type a shortcut",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "This entry must be the last one",

@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2015-2017 Raymond Hill
+    Copyright (C) 2015-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -51,21 +51,20 @@ var extractBlocks = function(content, begId, endId) {
 
 var fromNetFilter = function(details) {
     var lists = [],
-        compiledFilter = details.compiledFilter,
-        entry, content, pos, notFound;
+        compiledFilter = details.compiledFilter;
 
-    for ( var assetKey in listEntries ) {
-        entry = listEntries[assetKey];
+    for ( let assetKey in listEntries ) {
+        let entry = listEntries[assetKey];
         if ( entry === undefined ) { continue; }
-        content = extractBlocks(entry.content, 0, 1000);
-        pos = 0;
+        let content = extractBlocks(entry.content, 0, 1000);
+        let pos = 0;
         for (;;) {
             pos = content.indexOf(compiledFilter, pos);
             if ( pos === -1 ) { break; }
             // We need an exact match.
             // https://github.com/gorhill/uBlock/issues/1392
             // https://github.com/gorhill/uBlock/issues/835
-            notFound = pos !== 0 && content.charCodeAt(pos - 1) !== 0x0A;
+            let notFound = pos !== 0 && content.charCodeAt(pos - 1) !== 0x0A;
             pos += compiledFilter.length;
             if (
                 notFound ||
@@ -74,6 +73,7 @@ var fromNetFilter = function(details) {
                 continue;
             }
             lists.push({
+                assetKey: assetKey,
                 title: entry.title,
                 supportURL: entry.supportURL
             });
@@ -81,7 +81,7 @@ var fromNetFilter = function(details) {
         }
     }
 
-    var response = {};
+    let response = {};
     response[details.rawFilter] = lists;
 
     postMessage({
@@ -172,6 +172,12 @@ var fromCosmeticFilter = function(details) {
             if ( end === -1 ) { end = content.length; }
             pos = end;
             fargs = JSON.parse(content.slice(beg, end));
+
+            // https://github.com/gorhill/uBlock/issues/2763
+            if ( fargs[0] >= 0 && fargs[0] <= 5 && details.ignoreGeneric ) {
+                continue;
+            }
+
             switch ( fargs[0] ) {
             case 0: // id-based
                 if (
@@ -203,14 +209,8 @@ var fromCosmeticFilter = function(details) {
                 }
                 break;
             case 8:
-            case 9:
-            case 32:
-            case 64:
-            case 65:
-                if ( exception !== (fargs[1].charAt(0) === '!') ) {
-                    break;
-                }
-                isProcedural = fargs[3].charCodeAt(0) === 0x7B;
+                if ( exception !== ((fargs[1] & 0b01) !== 0) ) { break; }
+                isProcedural = (fargs[1] & 0b10) !== 0;
                 if (
                     isProcedural === false && fargs[3] !== selector ||
                     isProcedural && JSON.parse(fargs[3]).raw !== selector
@@ -225,12 +225,26 @@ var fromCosmeticFilter = function(details) {
                     found = fargs[2] + prefix + selector;
                 }
                 break;
+            case 32:
+            case 64:
+            case 65:
+                if ( exception !== (fargs[1].charAt(0) === '!') ) { break; }
+                if ( fargs[3] !== selector ) { break; }
+                if (
+                    fargs[2] === '' ||
+                    reHostname.test(fargs[2]) === true ||
+                    reEntity !== undefined && reEntity.test(fargs[2]) === true
+                ) {
+                    found = fargs[2] + prefix + selector;
+                }
+                break;
             }
             if ( found !== undefined  ) {
                 if ( response[found] === undefined ) {
                     response[found] = [];
                 }
                 response[found].push({
+                    assetKey: assetKey,
                     title: entry.title,
                     supportURL: entry.supportURL
                 });

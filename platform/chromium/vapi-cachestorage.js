@@ -210,25 +210,42 @@ vAPI.cacheStorage = (function() {
         });
     }
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/141
+    //   Mind that IDBDatabase.transaction() and IDBObjectStore.put()
+    //   can throw:
+    //   https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/transaction
+    //   https://developer.mozilla.org/en-US/docs/Web/API/IDBObjectStore/put
+
     function putToDb(input, callback) {
         if ( typeof callback !== 'function' ) {
             callback = noopfn;
         }
-        var keys = Object.keys(input);
+        let keys = Object.keys(input);
         if ( keys.length === 0 ) { return callback(); }
         getDb(function(db) {
             if ( !db ) { return callback(); }
-            var transaction = db.transaction(STORAGE_NAME, 'readwrite');
-            transaction.oncomplete =
-            transaction.onerror =
-            transaction.onabort = callback;
-            var table = transaction.objectStore(STORAGE_NAME);
-            for ( var key of keys ) {
-                var entry = {};
-                entry.key = key;
-                entry.value = input[key];
-                table.put(entry);
-                entry = undefined;
+            let finish = () => {
+                if ( callback !== undefined ) {
+                    let cb = callback;
+                    callback = undefined;
+                    cb();
+                }
+            };
+            try {
+                let transaction = db.transaction(STORAGE_NAME, 'readwrite');
+                transaction.oncomplete =
+                transaction.onerror =
+                transaction.onabort = finish;
+                let table = transaction.objectStore(STORAGE_NAME);
+                for ( let key of keys ) {
+                    let entry = {};
+                    entry.key = key;
+                    entry.value = input[key];
+                    table.put(entry);
+                    entry = undefined;
+                }
+            } catch (ex) {
+                finish();
             }
         });
     }

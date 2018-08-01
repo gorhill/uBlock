@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2017 Raymond Hill
+    Copyright (C) 2014-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -349,11 +349,18 @@ vAPI.matchesProp = (function() {
 
 vAPI.injectScriptlet = function(doc, text) {
     if ( !doc ) { return; }
+    let script;
     try {
-        var script = doc.createElement('script');
+        script = doc.createElement('script');
         script.appendChild(doc.createTextNode(text));
         (doc.head || doc.documentElement).appendChild(script);
     } catch (ex) {
+    }
+    if ( script ) {
+        if ( script.parentNode ) {
+            script.parentNode.removeChild(script);
+        }
+        script.textContent = '';
     }
 };
 
@@ -874,30 +881,28 @@ vAPI.domCollapser = (function() {
         attributeFilter: [ 'src' ]
     };
 
+    // The injected scriptlets are those which were injected in the current
+    // document, from within `bootstrapPhase1`, and which scriptlets are
+    // selectively looked-up from:
+    // https://github.com/uBlockOrigin/uAssets/blob/master/filters/resources.txt
     var primeLocalIFrame = function(iframe) {
-        // Should probably also copy injected styles.
-        // The injected scripts are those which were injected in the current
-        // document, from within the `contentscript-start.js / injectScripts`,
-        // and which scripts are selectively looked-up from:
-        // https://github.com/gorhill/uBlock/blob/master/assets/ublock/resources.txt
         if ( vAPI.injectedScripts ) {
             vAPI.injectScriptlet(iframe.contentDocument, vAPI.injectedScripts);
         }
     };
 
+    // https://github.com/gorhill/uBlock/issues/162
+    // Be prepared to deal with possible change of src attribute.
     var addIFrame = function(iframe, dontObserve) {
-        // https://github.com/gorhill/uBlock/issues/162
-        // Be prepared to deal with possible change of src attribute.
         if ( dontObserve !== true ) {
             iframeSourceObserver.observe(iframe, iframeSourceObserverOptions);
         }
-
         var src = iframe.src;
         if ( src === '' || typeof src !== 'string' ) {
             primeLocalIFrame(iframe);
             return;
         }
-        if ( src.lastIndexOf('http', 0) !== 0 ) { return; }
+        if ( src.startsWith('http') === false ) { return; }
         toFilter[toFilter.length] = {
             type: 'sub_frame',
             url: iframe.src

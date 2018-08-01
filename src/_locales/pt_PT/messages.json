@@ -31,6 +31,10 @@
     "message": "Lista branca",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Atalhos",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — Registador",
     "description": "Title for the logger window"
@@ -584,8 +588,12 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Filtro estático {{filter}} encontrado em:",
-    "description": "Below this sentence, the filter lists in which the filter was found"
+    "message": "Filtro estático <code>{{filter}}<\/code> encontrado em:",
+    "description": "Below this sentence, the filter list(s) in which the filter was found"
+  },
+  "loggerStaticFilteringFinderSentence2": {
+    "message": "O filtro estático <code>{{filter}}<\/code> não pôde ser encontrado em quaisquer das listas de filtros ativadas atualmente",
+    "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
     "message": "Registo de alterações",
@@ -762,6 +770,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Permitir temporariamente elementos multimédia grandes",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Digite um atalho",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "Esta entrada deve ser a última",

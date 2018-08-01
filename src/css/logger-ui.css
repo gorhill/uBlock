@@ -595,9 +595,22 @@ body.colorBlind  #netFilteringDialog .dialog > div.containers > div.dynamic tr.e
     background: #eee;
     font-size: 85%;
     padding: 3px;
+    unicode-bidi: plaintext;
     }
 #filterFinderDialog .dialog ul {
     font-size: larger;
+    }
+#filterFinderDialog .filterFinderListEntry a {
+    text-decoration: none;
+    }
+#filterFinderDialog .filterFinderListEntry a.fa {
+    opacity: 0.8;
+    }
+#filterFinderDialog .filterFinderListEntry a.fa:hover {
+    opacity: 1;
+    }
+#filterFinderDialog .filterFinderListEntry a[href=""]:nth-of-type(2) {
+    display: none;
     }
 #filterFinderDialog .dialog > *:first-child {
     margin-top: 0;

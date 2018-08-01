@@ -31,6 +31,10 @@
     "message": "Lista blanca",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Atajos",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — Registro de peticiones de red",
     "description": "Title for the logger window"
@@ -252,7 +256,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Soy usuario avanzado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'> Lectura Obligatoria - Inglés<\/a>)",
+    "message": "Soy usuario avanzado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>lectura obligatoria en inglés<\/a>)",
     "description": ""
   },
   "settingsAdvancedUserSettings": {
@@ -584,8 +588,12 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Filtro estático {{filter}} encontrado en:",
-    "description": "Below this sentence, the filter lists in which the filter was found"
+    "message": "Filtro estático <code>{{filter}}<\/code> encontrado en:",
+    "description": "Below this sentence, the filter list(s) in which the filter was found"
+  },
+  "loggerStaticFilteringFinderSentence2": {
+    "message": "No se pudo encontrar el filtro estático <code>{{filter}}<\/code> en ninguna de las listas de filtros actualmente habilitadas",
+    "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
     "message": "Registro de cambios",
@@ -616,7 +624,7 @@
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
-    "message": "ublock-respaldo_{{datetime}}.txt",
+    "message": "ublock-mi-respaldo_{{datetime}}.txt",
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
@@ -762,6 +770,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Permitir temporalmente elementos multimedia grandes",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Escriba un atajo",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "Esta entrada debe ser la última",

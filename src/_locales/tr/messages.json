@@ -31,6 +31,10 @@
     "message": "Beyaz liste",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Kısayollar",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — Günlükçü",
     "description": "Title for the logger window"
@@ -584,8 +588,12 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Statik süzgecin {{filter}} bulunduğu listeler:",
-    "description": "Below this sentence, the filter lists in which the filter was found"
+    "message": "Statik süzgecin <code>{{filter}}<\/code> bulunduğu listeler:",
+    "description": "Below this sentence, the filter list(s) in which the filter was found"
+  },
+  "loggerStaticFilteringFinderSentence2": {
+    "message": "Statik süzgeç <code>{{filter}}<\/code> şu anda etkin olan süzgeç listelerinin hiçbirinde bulunamadı",
+    "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
     "message": "Değişiklikler",
@@ -762,6 +770,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Geçici olarak büyük medya ögelerine izin ver",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Bir kısayol girin",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "Bu girdi en sonda olmalıdır",

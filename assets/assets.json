@@ -172,7 +172,11 @@
 		"group": "malware",
 		"title": "Malware Domain List",
 		"contentURL": [
+			"https://cdn.rawgit.com/NanoMeow/MDLMirror/master/hosts.txt",
+			"https://raw.githubusercontent.com/NanoMeow/MDLMirror/master/hosts.txt",
 			"https://www.malwaredomainlist.com/hostslist/hosts.txt",
+			"https://cdn.rawgit.com/NanoMeow/MDLMirror/master/filter.txt",
+			"https://raw.githubusercontent.com/NanoMeow/MDLMirror/master/filter.txt",
 			"assets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt"
 		]
 	},
@@ -525,7 +529,7 @@
 		"off": true,
 		"title": "NOR: Dandelion Sprouts norske filtre",
 		"lang": "nb",
-		"contentURL": "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/ExperimentalNorwegianList.txt",
+		"contentURL": "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianList.txt",
 		"supportURL": "https://github.com/DandelionSprout/adfilt"
 	},
 	"POL-0": {

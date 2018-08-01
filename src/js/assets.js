@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2018 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -217,7 +217,13 @@ api.fetchFilterList = function(mainlistURL, onLoad, onError) {
         onLoad(details);
     };
 
+    // https://github.com/AdguardTeam/FiltersRegistry/issues/82
+    //   Not checking for `errored` status was causing repeated notifications
+    //   to the caller. This can happen when more than one out of multiple
+    //   sublists can't be fetched.
     var onLocalLoadError = function(details) {
+        if ( errored ) { return; }
+
         errored = true;
         details.url = mainlistURL;
         details.content = '';
@@ -464,19 +470,22 @@ var saveAssetCacheRegistry = (function() {
 })();
 
 var assetCacheRead = function(assetKey, callback) {
-    var internalKey = 'cache/' + assetKey;
+    let internalKey = 'cache/' + assetKey;
 
-    var reportBack = function(content, err) {
-        var details = { assetKey: assetKey, content: content };
+    let reportBack = function(content, err) {
+        let details = { assetKey: assetKey, content: content };
         if ( err ) { details.error = err; }
         callback(details);
     };
 
-    var onAssetRead = function(bin) {
-        if ( !bin || !bin[internalKey] ) {
+    let onAssetRead = function(bin) {
+        if (
+            bin instanceof Object === false ||
+            stringIsNotEmpty(bin[internalKey]) === false
+        ) {
             return reportBack('', 'E_NOTFOUND');
         }
-        var entry = assetCacheRegistry[assetKey];
+        let entry = assetCacheRegistry[assetKey];
         if ( entry === undefined ) {
             return reportBack('', 'E_NOTFOUND');
         }
@@ -485,7 +494,7 @@ var assetCacheRead = function(assetKey, callback) {
         reportBack(bin[internalKey]);
     };
 
-    var onReady = function() {
+    let onReady = function() {
         vAPI.cacheStorage.get(internalKey, onAssetRead);
     };
 

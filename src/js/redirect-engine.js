@@ -307,7 +307,7 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
     var µburi = µBlock.URI,
         des = matches[1] || '',
         pattern = (des + matches[2]).replace(/[.+?{}()|[\]\/\\]/g, '\\$&')
-                                    .replace(/\^/g, '[^\\w\\d%-]')
+                                    .replace(/\^/g, '[^\\w.%-]')
                                     .replace(/\*/g, '.*?'),
         type,
         redirect = '',
@@ -408,12 +408,11 @@ RedirectEngine.prototype.toSelfie = function() {
         }
         rules.push(rule);
     }
-    var µb = µBlock;
     return {
         rules: rules,
-        ruleTypes: µb.arrayFrom(this.ruleTypes),
-        ruleSources: µb.arrayFrom(this.ruleSources),
-        ruleDestinations: µb.arrayFrom(this.ruleDestinations)
+        ruleTypes: Array.from(this.ruleTypes),
+        ruleSources: Array.from(this.ruleSources),
+        ruleDestinations: Array.from(this.ruleDestinations)
     };
 };
 
@@ -508,7 +507,7 @@ RedirectEngine.prototype.selfieFromResources = function() {
     vAPI.cacheStorage.set({
         resourcesSelfie: {
             version: resourcesSelfieVersion,
-            resources: µBlock.arrayFrom(this.resources)
+            resources: Array.from(this.resources)
         }
     });
 };

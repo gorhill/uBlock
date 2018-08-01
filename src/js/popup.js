@@ -72,7 +72,7 @@ var scopeToSrcHostnameMap = {
     [LOCAL_SCOPE_KEY]: ''
 };
 var dfHotspots = null;
-var hostnameToSortableTokenMap = {};
+var hostnameToSortableTokenMap = new Map();
 var allDomains = {};
 var allDomainCount = 0;
 var allHostnameRows = [];
@@ -116,30 +116,30 @@ var positionRulesetTools = function() {
 var cachePopupData = function(data) {
     popupData = {};
     scopeToSrcHostnameMap[LOCAL_SCOPE_KEY] = '';
-    hostnameToSortableTokenMap = {};
+    hostnameToSortableTokenMap.clear();
 
     if ( typeof data !== 'object' ) {
         return popupData;
     }
     popupData = data;
     scopeToSrcHostnameMap[LOCAL_SCOPE_KEY] = popupData.srcHostname || '';
-    var hostnameDict = popupData.hostnameDict;
+    let hostnameDict = popupData.hostnameDict;
     if ( typeof hostnameDict !== 'object' ) {
         return popupData;
     }
-    var domain, prefix;
-    for ( var hostname in hostnameDict ) {
-        if ( hostnameDict.hasOwnProperty(hostname) === false ) {
-            continue;
-        }
-        domain = hostnameDict[hostname].domain;
-        prefix = hostname.slice(0, 0 - domain.length);
+    for ( let hostname in hostnameDict ) {
+        if ( hostnameDict.hasOwnProperty(hostname) === false ) { continue; }
+        let domain = hostnameDict[hostname].domain;
+        let prefix = hostname.slice(0, 0 - domain.length - 1);
         // Prefix with space char for 1st-party hostnames: this ensure these
         // will come first in list.
         if ( domain === popupData.pageDomain ) {
             domain = '\u0020';
         }
-        hostnameToSortableTokenMap[hostname] = domain + prefix.split('.').reverse().join('.');
+        hostnameToSortableTokenMap.set(
+            hostname,
+            domain + ' ' + prefix.split('.').reverse().join('.')
+        );
     }
     return popupData;
 };
@@ -185,11 +185,11 @@ var formatNumber = function(count) {
 var rulekeyCompare = function(a, b) {
     var ha = a.slice(2, a.indexOf(' ', 2));
     if ( !reIP.test(ha) ) {
-        ha = hostnameToSortableTokenMap[ha] || ' ';
+        ha = hostnameToSortableTokenMap.get(ha) || ' ';
     }
     var hb = b.slice(2, b.indexOf(' ', 2));
     if ( !reIP.test(hb) ) {
-        hb = hostnameToSortableTokenMap[hb] || ' ';
+        hb = hostnameToSortableTokenMap.get(hb) || ' ';
     }
     var ca = ha.charCodeAt(0),
         cb = hb.charCodeAt(0);
@@ -435,15 +435,6 @@ var renderPopup = function() {
     }
     uDom.nodeFromId('total-blocked').textContent = text;
 
-    // https://github.com/gorhill/uBlock/issues/507
-    // Convenience: open the logger with current tab automatically selected
-    if ( popupData.tabId ) {
-        uDom.nodeFromSelector('#basicTools > a[href^="logger-ui.html"]').setAttribute(
-            'href',
-            'logger-ui.html#tab_' + popupData.tabId
-        );
-    }
-
     // This will collate all domains, touched or not
     renderPrivacyExposure();
 
@@ -605,9 +596,11 @@ var renderOnce = function() {
         resizeTimer = undefined;
         // Do not use equality, fractional pixel dimension occurs and must
         // be ignored.
+        // https://www.reddit.com/r/uBlockOrigin/comments/8qodpw/how_to_hide_the_info_shown_of_what_is_currently/e0lglrr/
+        //   Tolerance of 2px fixes the issue.
         if (
-            Math.abs(document.body.offsetWidth - window.innerWidth) < 2 &&
-            Math.abs(document.body.offsetHeight - window.innerHeight) < 2
+            Math.abs(document.body.offsetWidth - window.innerWidth) <= 2 &&
+            Math.abs(document.body.offsetHeight - window.innerHeight) <= 2
         ) {
             return;
         }
@@ -699,18 +692,24 @@ var gotoPick = function() {
 /******************************************************************************/
 
 var gotoURL = function(ev) {
-    if ( this.hasAttribute('href') === false ) {
-        return;
-    }
+    if ( this.hasAttribute('href') === false ) { return; }
 
     ev.preventDefault();
+
+    let url = this.getAttribute('href');
+    if (
+        url === 'logger-ui.html#tab_active' &&
+        typeof popupData.tabId === 'number'
+    ) {
+        url += '+' + popupData.tabId;
+    }
 
     messaging.send(
         'popupPanel',
         {
             what: 'gotoURL',
             details: {
-                url: this.getAttribute('href'),
+                url: url,
                 select: true,
                 index: -1,
                 shiftKey: ev.shiftKey

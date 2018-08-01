@@ -31,6 +31,10 @@
     "message": "გამონაკლისები",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "მალსახმობები",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — აღმრიცხავი",
     "description": "Title for the logger window"
@@ -268,7 +272,7 @@
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
-    "message": "WebRTC-სთვის ხელის შეშლა ლოკალური IP მისამართის გაჟონვაში",
+    "message": "WebRTC-სთვის ხელის შეშლა შიდა IP მისამართის გაჟონვაში",
     "description": "English: "
   },
   "settingPerSiteSwitchGroup": {
@@ -352,7 +356,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "ლოკალური",
+    "message": "ჩაშენებული",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -388,7 +392,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "თითოეული URL ცალკეულ ხაზზე. ხაზები &lsquo;!&rsquo; თავსართით უგულებელყოფილი იქნება. არამართებული URL ბმულები, უგულებელყოფილი იქნება გაფრთხილების გარეშე.",
+    "message": "თითოეული URL ცალკეულ ხაზზე. არამართებული URL ბმულები, უგულებელყოფილი იქნება გაფრთხილების გარეშე.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -584,8 +588,12 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "მუდმივი ფილტრი {{filter}} ნაპოვნია სიაში:",
-    "description": "Below this sentence, the filter lists in which the filter was found"
+    "message": "მუდმივი ფილტრი <code>{{filter}}<\/code> ნაპოვნია სიაში:",
+    "description": "Below this sentence, the filter list(s) in which the filter was found"
+  },
+  "loggerStaticFilteringFinderSentence2": {
+    "message": "მუდმივი ფილტრი <code>{{filter}}<\/code> ვერ მოიძებნა ამჟამად გამოყენებულ ფილტრებს შორის",
+    "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
     "message": "ცვლილებათა ჟურნალი",
@@ -608,7 +616,7 @@
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "დამხმარეები",
+    "message": "მოხალისეები",
     "description": "English: Contributors"
   },
   "aboutBackupDataButton": {
@@ -740,7 +748,7 @@
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
-    "message": "გაფრთხილება! დამატებითი პარამეტრებს ცვლილების შედეგებზე, თავად ხართ პასუხისმგებელი.",
+    "message": "გაფრთხილება! დამატებითი პარამეტრების ცვლილების შედეგებზე, თავად იქნებით პასუხისმგებელი.",
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {
@@ -762,6 +770,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "დიდი მედია-ელემენტების დროებით დაშვება",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "მალსახმობის მითითება",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "This entry must be the last one",

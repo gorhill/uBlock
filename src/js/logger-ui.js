@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2015-2018 Raymond Hill
+    Copyright (C) 2015-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,11 +21,11 @@
 
 /* global uDom */
 
+'use strict';
+
 /******************************************************************************/
 
 (function() {
-
-'use strict';
 
 /******************************************************************************/
 
@@ -376,20 +376,16 @@ var logDate = new Date(),
 var renderLogEntries = function(response) {
     document.body.classList.toggle('colorBlind', response.colorBlind);
 
-    var entries = response.entries;
-    if ( entries.length === 0 ) {
-        return;
-    }
+    let entries = response.entries;
+    if ( entries.length === 0 ) { return; }
 
     // Preserve scroll position
-    var height = tbody.offsetHeight;
+    let height = tbody.offsetHeight;
 
-    var tabIds = response.tabIds;
-    var n = entries.length;
-    var entry, tr;
-    for ( var i = 0; i < n; i++ ) {
-        entry = entries[i];
-        tr = renderLogEntry(entries[i]);
+    let tabIds = allTabIds;
+    for ( let i = 0, n = entries.length; i < n; i++ ) {
+        let entry = entries[i];
+        let tr = renderLogEntry(entries[i]);
         // https://github.com/gorhill/uBlock/issues/1613#issuecomment-217637122
         // Unlikely, but it may happen: mark as void if associated tab no
         // longer exist.
@@ -404,15 +400,31 @@ var renderLogEntries = function(response) {
     truncateLog(maxEntries);
 
     // Follow waterfall if not observing top of waterfall.
-    var yDelta = tbody.offsetHeight - height;
-    if ( yDelta === 0 ) {
-        return;
-    }
-    var container = uDom.nodeFromSelector('#netInspector .vscrollable');
+    let yDelta = tbody.offsetHeight - height;
+    if ( yDelta === 0 ) { return; }
+    let container = uDom.nodeFromSelector('#netInspector .vscrollable');
     if ( container.scrollTop !== 0 ) {
         container.scrollTop += yDelta;
     }
 };
+
+/******************************************************************************/
+
+let updateCurrentTabTitle = (function() {
+    let i18nCurrentTab = vAPI.i18n('loggerCurrentTab');
+
+    return function() {
+        let select = uDom.nodeFromId('pageSelector');
+        if ( select.value !== 'tab_active' ) { return; }
+        let opt0 = select.querySelector('[value="tab_active"]');
+        let opt1 = select.querySelector('[value="tab_' + activeTabId + '"]');
+        let text = i18nCurrentTab;
+        if ( opt1 !== null ) {
+            text += ' / ' + opt1.textContent;
+        }
+        opt0.textContent = text;
+    };
+})();
 
 /******************************************************************************/
 
@@ -474,6 +486,8 @@ var synchronizeTabIds = function(newTabIds) {
 
     allTabIds = newTabIds;
 
+    updateCurrentTabTitle();
+
     return rowVoided;
 };
 
@@ -501,12 +515,10 @@ var onLogBufferRead = function(response) {
     }
 
     // Tab id of currently active tab
+    let activeTabIdChanged = false;
     if ( response.activeTabId ) {
+        activeTabIdChanged = response.activeTabId !== activeTabId;
         activeTabId = response.activeTabId;
-    }
-
-    if ( Array.isArray(response.tabIds) ) {
-        response.tabIds = new Map(response.tabIds);
     }
 
     // This may have changed meanwhile
@@ -515,16 +527,20 @@ var onLogBufferRead = function(response) {
         uDom('#maxEntries').val(maxEntries || '');
     }
 
+    if ( Array.isArray(response.tabIds) ) {
+        response.tabIds = new Map(response.tabIds);
+    }
+
     // Neuter rows for which a tab does not exist anymore
-    var rowVoided = false;
-    if ( response.tabIdsToken !== allTabIdsToken ) {
+    let rowVoided = false;
+    if ( response.tabIds !== undefined ) {
         rowVoided = synchronizeTabIds(response.tabIds);
         allTabIdsToken = response.tabIdsToken;
     }
 
-    // https://github.com/gorhill/uBlock/issues/507
-    // Ensure tab selector is in sync with URL hash
-    pageSelectorFromURLHash();
+    if ( activeTabIdChanged ) {
+        pageSelectorFromURLHash();
+    }
 
     renderLogEntries(response);
 
@@ -554,7 +570,11 @@ var readLogBuffer = function() {
     if ( logger.ownerId === undefined ) { return; }
     vAPI.messaging.send(
         'loggerUI',
-        { what: 'readAll', ownerId: logger.ownerId },
+        {
+            what: 'readAll',
+            ownerId: logger.ownerId,
+            tabIdsToken: allTabIdsToken
+        },
         onLogBufferRead
     );
 };
@@ -566,47 +586,57 @@ var readLogBufferAsync = function() {
  
 /******************************************************************************/
 
-var pageSelectorChanged = function() {
-    var select = uDom.nodeFromId('pageSelector');
+let pageSelectorChanged = function() {
+    let select = uDom.nodeFromId('pageSelector');
     window.location.replace('#' + select.value);
     pageSelectorFromURLHash();
 };
 
-var pageSelectorFromURLHash = (function() {
-    var lastTabClass = '';
-    var lastEffectiveTabClass = '';
+let pageSelectorFromURLHash = (function() {
+    let lastTabClass = '';
+    let lastEffectiveTabClass = '';
+    let reActiveTabId = /^(tab_[^+]+)\+(.+)$/;
 
-    var selectRows = function(tabClass) {
+    let selectRows = function(tabClass) {
+        let effectiveTabClass = tabClass;
         if ( tabClass === 'tab_active' ) {
             if ( activeTabId === undefined ) { return; }
-            tabClass = 'tab_' + activeTabId;
+            effectiveTabClass = 'tab_' + activeTabId;
         }
-        if ( tabClass === lastEffectiveTabClass ) { return; }
-        lastEffectiveTabClass = tabClass;
+        if ( effectiveTabClass === lastEffectiveTabClass ) { return; }
+        lastEffectiveTabClass = effectiveTabClass;
 
         document.dispatchEvent(new Event('tabIdChanged'));
 
-        var style = uDom.nodeFromId('tabFilterer');
-        var sheet = style.sheet;
+        let style = uDom.nodeFromId('tabFilterer');
+        let sheet = style.sheet;
         while ( sheet.cssRules.length !== 0 )  {
             sheet.deleteRule(0);
         }
-        if ( tabClass === '' ) { return; }
+        if ( effectiveTabClass === '' ) { return; }
         sheet.insertRule(
-            '#netInspector tr:not(.' + tabClass + '):not(.tab_bts) ' +
+            '#netInspector tr:not(.' + effectiveTabClass + '):not(.tab_bts) ' +
             '{display:none;}',
             0
         );
+
+        updateCurrentTabTitle();
     };
 
     return function() {
-        var tabClass = window.location.hash.slice(1);
+        let tabClass = window.location.hash.slice(1);
+        let match = reActiveTabId.exec(tabClass);
+        if ( match !== null ) {
+            tabClass = match[1];
+            activeTabId = parseInt(match[2], 10) || undefined;
+            window.location.hash = '#' + match[1];
+        }
         selectRows(tabClass);
         if ( tabClass === lastTabClass ) { return; }
         lastTabClass = tabClass;
 
-        var select = uDom.nodeFromId('pageSelector');
-        var option = select.querySelector('option[value="' + tabClass + '"]');
+        let select = uDom.nodeFromId('pageSelector');
+        let option = select.querySelector('option[value="' + tabClass + '"]');
         if ( option === null ) {
             window.location.hash = '';
             tabClass = '';
@@ -1236,21 +1266,18 @@ var netFilteringManager = (function() {
 /******************************************************************************/
 
 var reverseLookupManager = (function() {
-    var reSentence1 = /\{\{filter\}\}/g;
-    var sentence1Template = vAPI.i18n('loggerStaticFilteringFinderSentence1');
-    var filterFinderDialog = uDom.nodeFromId('filterFinderDialog');
+    let filterFinderDialog = uDom.nodeFromId('filterFinderDialog');
+    let rawFilter = '';
 
-    var removeAllChildren = function(node) {
+    let removeAllChildren = function(node) {
         while ( node.firstChild ) {
             node.removeChild(node.firstChild);
         }
     };
 
-    var onClick = function(ev) {
-        var target = ev.target;
-
-        // click outside the dialog proper
-        if ( target.classList.contains('modalDialog') ) {
+    // Clicking outside the dialog will close the dialog
+    let onClick = function(ev) {
+        if ( ev.target.classList.contains('modalDialog') ) {
             toggleOff();
             return;
         }
@@ -1258,42 +1285,30 @@ var reverseLookupManager = (function() {
         ev.stopPropagation();
     };
 
-    var nodeFromFilter = function(filter, lists) {
+    let nodeFromFilter = function(filter, lists) {
         if ( Array.isArray(lists) === false || lists.length === 0 ) {
-            return null;
+            return;
         }
-        var node,
-            p = document.createElement('p');
 
-        reSentence1.lastIndex = 0;
-        var matches = reSentence1.exec(sentence1Template);
-        if ( matches === null ) {
-            node = document.createTextNode(sentence1Template);
-        } else {
-            node = uDom.nodeFromSelector('#filterFinderDialogSentence1 > span').cloneNode(true);
-            node.childNodes[0].textContent = sentence1Template.slice(0, matches.index);
-            // https://github.com/gorhill/uBlock/issues/2753
-            node.childNodes[1].textContent = filter.length <= 1024
-                ? filter
-                : filter.slice(0, 1023) + '…';
-            node.childNodes[2].textContent = sentence1Template.slice(reSentence1.lastIndex);
-        }
-        p.appendChild(node);
+        let p = document.createElement('p');
 
-        var ul = document.createElement('ul');
-        var list, li;
-        for ( var i = 0; i < lists.length; i++ ) {
-            list = lists[i];
-            li = document.createElement('li');
+        vAPI.i18n.safeTemplateToDOM(
+            'loggerStaticFilteringFinderSentence1',
+            { filter: filter },
+            p
+        );
+
+        let ul = document.createElement('ul');
+        for ( let list of lists ) {
+            let li = document.querySelector('#filterFinderListEntry > li')
+                             .cloneNode(true);
+            let a = li.querySelector('a:nth-of-type(1)');
+            a.href += encodeURIComponent(list.assetKey);
+            a.textContent = list.title;
             if ( list.supportURL ) {
-                node = document.createElement('a');
-                node.textContent = list.title;
-                node.setAttribute('href', list.supportURL);
-                node.setAttribute('target', '_blank');
-            } else {
-                node = document.createTextNode(list.title);
+                a = li.querySelector('a:nth-of-type(2)');
+                a.setAttribute('href', list.supportURL);
             }
-            li.appendChild(node);
             ul.appendChild(li);
         }
         p.appendChild(ul);
@@ -1301,30 +1316,37 @@ var reverseLookupManager = (function() {
         return p;
     };
 
-    var reverseLookupDone = function(response) {
-        if ( typeof response !== 'object' ) {
-            return;
+    let reverseLookupDone = function(response) {
+        if ( response instanceof Object === false ) {
+            response = {};
         }
 
-        var dialog = filterFinderDialog.querySelector('.dialog');
+        let dialog = filterFinderDialog.querySelector('.dialog');
         removeAllChildren(dialog);
 
-        for ( var filter in response ) {
-            var p = nodeFromFilter(filter, response[filter]);
-            if ( p === null ) { continue; }
+        for ( let filter in response ) {
+            let p = nodeFromFilter(filter, response[filter]);
+            if ( p === undefined ) { continue; }
             dialog.appendChild(p);
+        }
+
+        // https://github.com/gorhill/uBlock/issues/2179
+        if ( dialog.childElementCount === 0 ) {
+            vAPI.i18n.safeTemplateToDOM(
+                'loggerStaticFilteringFinderSentence2',
+                { filter: rawFilter },
+                dialog
+            );
         }
 
         document.body.appendChild(filterFinderDialog);
         filterFinderDialog.addEventListener('click', onClick, true);
     };
 
-    var toggleOn = function(ev) {
-        var row = ev.target.parentElement;
-        var rawFilter = row.cells[2].textContent;
-        if ( rawFilter === '' ) {
-            return;
-        }
+    let toggleOn = function(ev) {
+        let row = ev.target.parentElement;
+        rawFilter = row.cells[2].textContent;
+        if ( rawFilter === '' ) { return; }
 
         if ( row.classList.contains('cat_net') ) {
             messaging.send(
@@ -1341,7 +1363,7 @@ var reverseLookupManager = (function() {
                 'loggerUI',
                 {
                     what: 'listsFromCosmeticFilter',
-                    hostname: row.getAttribute('data-hn-frame') || '',
+                    url: row.cells[5].textContent,
                     rawFilter: rawFilter,
                 },
                 reverseLookupDone
@@ -1349,9 +1371,10 @@ var reverseLookupManager = (function() {
         }
     };
 
-    var toggleOff = function() {
+    let toggleOff = function() {
         filterFinderDialog.removeEventListener('click', onClick, true);
         document.body.removeChild(filterFinderDialog);
+        rawFilter = '';
     };
 
     return {
@@ -1716,6 +1739,9 @@ uDom('#netInspector table').on('click', 'tr.canMtx > td:nth-of-type(2)', popupMa
 uDom('#netInspector').on('click', 'tr.canLookup > td:nth-of-type(3)', reverseLookupManager.toggleOn);
 uDom('#netInspector').on('click', 'tr.cat_net > td:nth-of-type(4)', netFilteringManager.toggleOn);
 
+// https://github.com/gorhill/uBlock/issues/507
+// Ensure tab selector is in sync with URL hash
+pageSelectorFromURLHash();
 window.addEventListener('hashchange', pageSelectorFromURLHash);
 
 /******************************************************************************/

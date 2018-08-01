@@ -10,6 +10,7 @@ unzip -q ~/Downloads/ublock.zip -d $SRC
 
 DES=./src/_locales
 cp $SRC/ar/messages.json    $DES/ar/messages.json
+cp $SRC/az/messages.json    $DES/az/messages.json
 cp $SRC/bg/messages.json    $DES/bg/messages.json
 cp $SRC/bn/messages.json    $DES/bn/messages.json
 cp $SRC/ca/messages.json    $DES/ca/messages.json
@@ -58,11 +59,19 @@ cp $SRC/sr/messages.json    $DES/sr/messages.json
 cp $SRC/sv-SE/messages.json $DES/sv/messages.json
 cp $SRC/ta/messages.json    $DES/ta/messages.json
 cp $SRC/te/messages.json    $DES/te/messages.json
+cp $SRC/th/messages.json    $DES/th/messages.json
 cp $SRC/tr/messages.json    $DES/tr/messages.json
 cp $SRC/uk/messages.json    $DES/uk/messages.json
 cp $SRC/vi/messages.json    $DES/vi/messages.json
 cp $SRC/zh-CN/messages.json $DES/zh_CN/messages.json
 cp $SRC/zh-TW/messages.json $DES/zh_TW/messages.json
+
+# Output files with possible misuse of `$`, as this can lead to severe
+# consequences, such as not being able to run the extension at all.
+# uBO does not use `$`, so any instance of `$` must be investigated.
+# See https://issues.adblockplus.org/ticket/6666
+echo "*** uBlock: Instances of '\$':"
+grep -FR "$" $DES/
 
 #
 

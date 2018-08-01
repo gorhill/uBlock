@@ -481,17 +481,20 @@
     };
 
     // https://github.com/chrisaljoudi/uBlock/issues/1004
-    // Detect and report invalid CSS selectors.
+    //   Detect and report invalid CSS selectors.
 
     // Discard new ABP's `-abp-properties` directive until it is
     // implemented (if ever). Unlikely, see:
     // https://github.com/gorhill/uBlock/issues/1752
 
     // https://github.com/gorhill/uBlock/issues/2624
-    // Convert Adguard's `-ext-has='...'` into uBO's `:has(...)`.
+    //   Convert Adguard's `-ext-has='...'` into uBO's `:has(...)`.
+
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/89
+    //   Do not discard unknown pseudo-elements.
 
     api.compileSelector = (function() {
-        var reAfterBeforeSelector = /^(.+?)(::?after|::?before)$/,
+        var reAfterBeforeSelector = /^(.+?)(::?after|::?before|::[a-z-]+)$/,
             reStyleSelector = /^(.+?):style\((.+?)\)$/,
             reStyleBad = /url\([^)]+\)/,
             reExtendedSyntax = /\[-(?:abp|ext)-[a-z-]+=(['"])(?:.+?)(?:\1)\]/,

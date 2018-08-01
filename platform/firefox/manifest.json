@@ -12,8 +12,8 @@
   "browser_action": {
     "browser_style": false,
     "default_icon": {
-      "19": "img/browsericons/icon19.png",
-      "38": "img/browsericons/icon38.png"
+      "16": "img/icon_16.png",
+      "32": "img/icon_32.png"
     },
     "default_title": "uBlock Origin",
     "default_popup": "popup.html"
@@ -83,10 +83,8 @@
   "sidebar_action": {
     "default_title": "__MSG_statsPageName__",
     "default_panel": "logger-ui.html",
-    "default_icon": {
-      "16": "img/ublock.svg",
-      "48": "img/ublock.svg"
-    }
+    "default_icon": "img/ublock.svg",
+    "open_at_install": false
   },
   "version": "1.9.15.101",
   "web_accessible_resources": [

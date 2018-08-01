@@ -4,126 +4,7 @@
 <meta charset="utf-8">
 <title></title>
 <link rel="stylesheet" href="css/common.css" type="text/css">
-<style>
-body {
-    font-size: large;
-    text-align: center;
-    }
-body > div {
-    margin: 1.5em 0;
-    }
-body > div > p,
-body > div > div {
-    margin: 4px 0;
-    }
-body > div > p:first-child {
-    margin: 1.5em 0 0 0;
-    }
-a {
-    text-decoration: none;
-    }
-button {
-    cursor: pointer;
-    margin: 0 1em 0.25em 1em;
-    padding: 0.25em 0.5em;
-    font-size: inherit;
-    }
-select {
-    font: inherit;
-    padding: 2px;
-    }
-.code {
-    background-color: rgba(0, 0, 0, 0.1);
-    font-family: monospace;
-    font-size: large;
-    line-height: 1;
-    padding: 4px;
-    word-break: break-all;
-    }
-#warningSign {
-    opacity: 1;
-    pointer-events: none;
-    width: 100%;
-    }
-#warningSign > span {
-    color: #f2a500;
-    font-size: 10em;
-    }
-#theURL {
-    padding: 0;
-    }
-#theURL > * {
-    margin: 0;
-    }
-#theURL > p {
-    position: relative;
-    z-index: 10;
-    }
-#theURL > p > span {
-    background-color: transparent;
-    top: 100%;
-    box-sizing: border-box;
-    cursor: pointer;
-    opacity: 0.5;
-    padding: 0.2em;
-    position: absolute;
-    transform: translate(0, -50%);
-    }
-body[dir="ltr"] #theURL > p > span {
-    right: 0;
-    }
-body[dir="rtl"] #theURL > p > span {
-    left: 0;
-    }
-#theURL > p:hover > span {
-    opacity: 1;
-    }
-#theURL > p > span:before {
-    content: '\f010';
-    }
-#theURL.collapsed > p > span:before {
-    content: '\f00e';
-    }
-#parsed {
-    background-color: #f8f8f8;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-top: none;
-    color: gray;
-    font-size: small;
-    overflow-x: hidden;
-    padding: 4px;
-    text-align: initial;
-    text-overflow: ellipsis; 
-    }
-#theURL.collapsed > #parsed {
-    display: none;
-    }
-#parsed ul, #parsed li {
-    list-style-type: none;
-    }
-#parsed li {
-    white-space: nowrap;
-    }
-#parsed span {
-    display: inline-block;
-    }
-#parsed span:first-of-type {
-    font-weight: bold;
-    }
-#whyex {
-    font-size: smaller;
-    opacity: 0.6;
-    }
-#whyex:hover {
-    opacity: 1;
-    }
-#whyex a {
-    white-space: nowrap;
-}
-.proceedChoice {
-    text-align: left;
-    }
-</style>
+<link rel="stylesheet" type="text/css" href="css/document-blocked.css">
 </head>
 <body>
 <a href="https://github.com/gorhill/uBlock/wiki/Strict-blocking" target="_blank"><div id="warningSign"><span class="fa">&#xf071;</span></div></a>
@@ -152,8 +33,8 @@ body[dir="rtl"] #theURL > p > span {
     <button id="proceedPermanent" data-i18n="docblockedDisablePermanent" type="button"></button></p>
     </div>
 
-<div style="display: none;">
-    <span id="proceedTemplate">
+<div id="templates" style="display: none;">
+    <span class="proceed">
         <span></span>
         <span class="proceedChoice">
             <select>
@@ -164,7 +45,12 @@ body[dir="rtl"] #theURL > p > span {
         <span class="proceedChoice code hn"></span>
         <span></span>
     </span>
-    </div>
+    <span class="filterList">
+        <span class="filterListSeparator">&#x2022;</span>
+        <a class="filterListSource" href="asset-viewer.html?url=" target="_blank"></a>&nbsp;<!--
+     --><a class="fa filterListSupport" href="" target="_blank">&#xf015;</a>
+    </span>
+</div>
 
 <script src="js/vapi.js"></script>
 <script src="js/vapi-common.js"></script>

@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2017 Raymond Hill
+    Copyright (C) 2017-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,9 +24,9 @@
 /******************************************************************************/
 
 µBlock.scriptletFilteringEngine = (function() {
-    var api = {};
+    let api = {};
 
-    var µb = µBlock,
+    let µb = µBlock,
         scriptletDB = new µb.staticExtFilteringEngine.HostnameBasedDB(),
         duplicates = new Set(),
         acceptedCount = 0,
@@ -36,15 +36,134 @@
         scriptletsRegister = new Map(),
         reEscapeScriptArg = /[\\'"]/g;
 
-    var scriptletRemover = [
-        '(function() {',
-        '  var c = document.currentScript, p = c && c.parentNode;',
-        '  if ( p ) { p.removeChild(c); }',
-        '})();'
-    ].join('\n');
+    // Purpose of `contentscriptCode` below is too programmatically inject
+    // content script code which only purpose is to inject scriptlets. This
+    // essentially does the same as what uBO's declarative content script does,
+    // except that this allows to inject the scriptlets earlier than it is
+    // possible through the declarative content script.
+    //
+    // Declaratively:
+    //  1. Browser injects generic content script =>
+    //      2. Content script queries scriptlets =>
+    //          3. Main process sends scriptlets =>
+    //              4. Content script injects scriptlets
+    //
+    // Programmatically:
+    //  1. uBO injects specific scriptlets-aware content script =>
+    //      2. Content script injects scriptlets
+    //
+    // However currently this programmatic injection works well only on
+    // Chromium-based browsers, it does not work properly with Firefox. More
+    // investigations is needed to find out why this fails with Firefox.
+    // Consequently, the programmatic-injection code path is taken only with
+    // Chromium-based browsers.
 
-
-    var lookupScriptlet = function(raw, reng, toInject) {
+    let contentscriptCode = (function() {
+        let parts = [
+            '(',
+            function(hostname, scriptlets) {
+                if (
+                    document.location === null ||
+                    hostname !== document.location.hostname
+                ) {
+                    return;
+                }
+                let injectScriptlets = function(d) {
+                    let script;
+                    try {
+                        script = d.createElement('script');
+                        script.appendChild(d.createTextNode(
+                            decodeURIComponent(scriptlets))
+                        );
+                        (d.head || d.documentElement).appendChild(script);
+                    } catch (ex) {
+                    }
+                    if ( script ) {
+                        if ( script.parentNode ) {
+                            script.parentNode.removeChild(script);
+                        }
+                        script.textContent = '';
+                    }
+                };
+                injectScriptlets(document);
+                let processIFrame = function(iframe) {
+                    let src = iframe.src;
+                    if ( /^https?:\/\//.test(src) === false ) {
+                        injectScriptlets(iframe.contentDocument);
+                    }
+                };
+                let observerTimer,
+                    observerLists = [];
+                let observerAsync = function() {
+                    for ( let nodelist of observerLists ) {
+                        for ( let node of nodelist ) {
+                            if ( node.nodeType !== 1 ) { continue; }
+                            if ( node.parentElement === null ) { continue; }
+                            if ( node.localName === 'iframe' ) {
+                                processIFrame(node);
+                            }
+                            if ( node.childElementCount === 0 ) { continue; }
+                            let iframes = node.querySelectorAll('iframe');
+                            for ( let iframe of iframes ) {
+                                processIFrame(iframe);
+                            }
+                        }
+                    }
+                    observerLists = [];
+                    observerTimer = undefined;
+                };
+                let ready = function(ev) {
+                    if ( ev !== undefined ) {
+                        window.removeEventListener(ev.type, ready);
+                    }
+                    let iframes = document.getElementsByTagName('iframe');
+                    if ( iframes.length !== 0 ) {
+                        observerLists.push(iframes);
+                        observerTimer = setTimeout(observerAsync, 1);
+                    }
+                    let observer = new MutationObserver(function(mutations) {
+                        for ( let mutation of mutations ) {
+                            if ( mutation.addedNodes.length !== 0 ) {
+                                observerLists.push(mutation.addedNodes);
+                            }
+                        }
+                        if (
+                            observerLists.length !== 0 &&
+                            observerTimer === undefined
+                        ) {
+                            observerTimer = setTimeout(observerAsync, 1);
+                        }
+                    });
+                    observer.observe(
+                        document.documentElement,
+                        { childList: true, subtree: true }
+                    );
+                };
+                if ( document.readyState === 'loading' ) {
+                    window.addEventListener('DOMContentLoaded', ready);
+                } else {
+                    ready();
+                }
+            }.toString(),
+            ')(',
+                '"', 'hostname-slot', '", ',
+                '"', 'scriptlets-slot', '"',
+            '); void 0;',
+        ];
+        return {
+            parts: parts,
+            hostnameSlot: parts.indexOf('hostname-slot'),
+            scriptletsSlot: parts.indexOf('scriptlets-slot'),
+            assemble: function(hostname, scriptlets) {
+                this.parts[this.hostnameSlot] = hostname;
+                this.parts[this.scriptletsSlot] =
+                    encodeURIComponent(scriptlets);
+                return this.parts.join('');
+            }
+        };
+    })();
+    
+    let lookupScriptlet = function(raw, reng, toInject) {
         if ( toInject.has(raw) ) { return; }
         if ( scriptletCache.resetTime < reng.modifyTime ) {
             scriptletCache.reset();
@@ -77,7 +196,7 @@
     // Fill template placeholders. Return falsy if:
     // - At least one argument contains anything else than /\w/ and `.`
 
-    var patchScriptlet = function(content, args) {
+    let patchScriptlet = function(content, args) {
         var i = 1,
             pos, arg;
         while ( args !== '' ) {
@@ -91,7 +210,7 @@
         return content;
     };
 
-    var logOne = function(isException, token, details) {
+    let logOne = function(isException, token, details) {
         µb.logger.writeOne(
             details.tabId,
             'cosmetic',
@@ -196,9 +315,8 @@
             return;
         }
 
-        var domain = request.domain,
-            entity = request.entity,
-            entries, entry;
+        let domain = request.domain,
+            entity = request.entity;
 
         // https://github.com/gorhill/uBlock/issues/1954
         // Implicit
@@ -215,13 +333,13 @@
         }
 
         // Explicit
-        entries = [];
+        let entries = [];
         if ( domain !== '' ) {
             scriptletDB.retrieve(domain, hostname, entries);
             scriptletDB.retrieve(entity, entity, entries);
         }
         scriptletDB.retrieve('', hostname, entries);
-        for ( entry of entries ) {
+        for ( let entry of entries ) {
             lookupScriptlet(entry.token, reng, scriptletsRegister);
         }
 
@@ -234,15 +352,15 @@
             scriptletDB.retrieve('!' + entity, entity, entries);
         }
         scriptletDB.retrieve('!', hostname, entries);
-        for ( entry of entries ) {
+        for ( let entry of entries ) {
             exceptionsRegister.add(entry.token);
         }
 
         // Return an array of scriptlets, and log results if needed. 
-        var out = [],
+        let out = [],
             logger = µb.logger.isEnabled() ? µb.logger : null,
             isException;
-        for ( entry of scriptletsRegister ) {
+        for ( let entry of scriptletsRegister ) {
             if ( (isException = exceptionsRegister.has(entry[0])) === false ) {
                 out.push(entry[1]);
             }
@@ -256,16 +374,37 @@
 
         if ( out.length === 0 ) { return; }
 
-        out.push(scriptletRemover);
-
         return out.join('\n');
     };
 
-    api.apply = function(doc, details) {
-        var script = doc.createElement('script');
-        script.textContent = details.scriptlets;
-        doc.head.insertBefore(script, doc.head.firstChild);
-        return true;
+    api.injectNow = function(details) {
+        if ( typeof details.frameId !== 'number' ) { return; }
+        if ( µb.URI.isNetworkURI(details.url) === false ) { return; }
+        let request = {
+            tabId: details.tabId,
+            frameId: details.frameId,
+            url: details.url,
+            hostname: µb.URI.hostnameFromURI(details.url),
+            domain: undefined,
+            entity: undefined
+        };
+        request.domain = µb.URI.domainFromHostname(request.hostname);
+        request.entity = µb.URI.entityFromDomain(request.domain);
+        let scriptlets = µb.scriptletFilteringEngine.retrieve(request);
+        if ( scriptlets === undefined ) { return; }
+        let code = contentscriptCode.assemble(request.hostname, scriptlets);
+        if ( µb.hiddenSettings.debugScriptlets ) {
+            code = 'debugger;\n' + code;
+        }
+        vAPI.tabs.injectScript(
+            details.tabId,
+            {
+                code: code,
+                frameId: details.frameId,
+                matchAboutBlank: false,
+                runAt: 'document_start'
+            }
+        );
     };
 
     api.toSelfie = function() {

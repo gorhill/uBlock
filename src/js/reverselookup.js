@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2015-2017 Raymond Hill
+    Copyright (C) 2015-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -161,12 +161,10 @@ var fromNetFilter = function(compiledFilter, rawFilter, callback) {
 
 /******************************************************************************/
 
-var fromCosmeticFilter = function(hostname, rawFilter, callback) {
-    if ( typeof callback !== 'function' ) {
-        return;
-    }
+var fromCosmeticFilter = function(details, callback) {
+    if ( typeof callback !== 'function' ) { return; }
 
-    if ( rawFilter === '' ) {
+    if ( details.rawFilter === '' ) {
         callback();
         return;
     }
@@ -176,17 +174,19 @@ var fromCosmeticFilter = function(hostname, rawFilter, callback) {
         workerTTLTimer = null;
     }
 
-    var onWorkerReady = function() {
-        var id = messageId++;
-        var message = {
+    let onWorkerReady = function() {
+        let id = messageId++;
+        let hostname = µBlock.URI.hostnameFromURI(details.url);
+        pendingResponses[id] = callback;
+        worker.postMessage({
             what: 'fromCosmeticFilter',
             id: id,
             domain: µBlock.URI.domainFromHostname(hostname),
             hostname: hostname,
-            rawFilter: rawFilter
-        };
-        pendingResponses[id] = callback;
-        worker.postMessage(message);
+            ignoreGeneric: µBlock.staticNetFilteringEngine
+                                 .matchStringGenericHide(details.url) === 2,
+            rawFilter: details.rawFilter
+        });
 
         // The worker will be shutdown after n minutes without being used.
         workerTTLTimer = vAPI.setTimeout(stopWorker, workerTTL);
