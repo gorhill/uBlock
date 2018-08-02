@@ -36,7 +36,7 @@
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
-    "message": "uBlock₀ — Võrgutaotluste logi",
+    "message": "uBlock₀ — Logija",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
@@ -92,7 +92,7 @@
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "Avage logija",
+    "message": "Ava logija",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {

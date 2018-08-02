@@ -6,12 +6,12 @@ Uso: El botón grande de apagado/encendido en la ventana de la aplicación, es p
 
 ***
 
-Flexible, es más que un "ad blocker": también puede leer y crear filtros desde archivos hosts.
+Flexible, es más que un "bloqueador de anuncios": también puede leer y crear filtros desde archivos hosts.
 
 Por defecto ya trae configuradas las siguientes listas de filtros:
 
 - EasyList
-- Lista de servidores de anuncios de Peter Lowe
+- Peter Lowe’s Ad server list
 - EasyPrivacy
 - Malware domains
 
@@ -22,7 +22,7 @@ Otras listas disponibles pueden ser seleccionadas, si se desea:
 - hpHosts’s Ad and tracking servers
 - MVPS HOSTS
 - Spam404
-- Etc.
+- Y muchas más
 
 Por supuesto, mientras más filtros se activen, mayor será el consumo de memoria. No obstante, incluso después de agregar las dos listas adicionales de Fanboy y la 'hpHosts’s Ad and tracking servers', uBlock₀ consume menos memoria que otros bloqueadores similares.
 

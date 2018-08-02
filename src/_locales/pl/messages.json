@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
@@ -36,7 +36,7 @@
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
-    "message": "uBlock — Dziennik żądań sieciowych",
+    "message": "uBlock₀ – Dziennik żądań sieciowych",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
@@ -240,7 +240,7 @@
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "Nie wyświetlaj podpowiedzi",
+    "message": "Nie wyświetlaj dymków podpowiedzi",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
@@ -268,7 +268,7 @@
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
-    "message": "Nie śledź kliknięć odnośników",
+    "message": "Wyłącz śledzenie kliknięć odnośników",
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
@@ -692,7 +692,7 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1": {
-    "message": "uBlock₀ zablokował wczytywanie następującej strony:",
+    "message": "uBlock Origin zablokował wczytywanie następującej strony:",
     "description": "English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2": {
@@ -716,7 +716,7 @@
     "description": "English: Close this window"
   },
   "docblockedProceed": {
-    "message": "Wyłącz skrupulatne blokowanie na {{hostname}}",
+    "message": "Wyłącz rygorystyczne blokowanie dla {{hostname}}",
     "description": "English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary": {

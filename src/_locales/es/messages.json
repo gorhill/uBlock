@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
@@ -28,7 +28,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Lista blanca",
+    "message": "Lista de permitidos",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -44,11 +44,11 @@
     "description": "appears as tab name in dashboard"
   },
   "advancedSettingsPageName": {
-    "message": "Ajustes avanzados",
+    "message": "Configuración avanzada",
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Clic: desactivar\/activar uBlock₀ para este sitio.\n\nCtrl + clic: deshabilitar uBlock₀ sólo en esta página.",
+    "message": "Clic: deshabilitar\/habilitar uBlock₀ para este sitio.\n\nCtrl + clic: deshabilitar uBlock₀ sólo en esta página.",
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
@@ -96,7 +96,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Alternar bloqueo de todos los pop-ups para este sitio",
+    "message": "Alternar bloqueo de ventanas emergentes en este sitio",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
@@ -260,7 +260,7 @@
     "description": ""
   },
   "settingsAdvancedUserSettings": {
-    "message": "ajustes avanzados",
+    "message": "configuración avanzada",
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt": {
@@ -476,11 +476,11 @@
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
-    "message": "Sintaxis de las reglas: <code>origen destino tipo acción<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'> documentación completa<\/a>).",
+    "message": "Sintaxis de las reglas: <code>origen destino tipo acción<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>documentación completa<\/a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Lista de servidores para los cuales se deshabilitará uBlock₀. Una entrada por línea. Se omitirán nombres de servidores inválidos.",
+    "message": "Lista de permitidos de páginas web para los cuales se deshabilitará uBlock₀. Una entrada por línea. Se omitirán nombres de páginas web inválidos.",
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
@@ -516,7 +516,7 @@
     "description": "English: Filter"
   },
   "logAll": {
-    "message": "Todas",
+    "message": "Todo",
     "description": "Appears in the logger's tab selector"
   },
   "logBehindTheScene": {
@@ -716,7 +716,7 @@
     "description": "English: Close this window"
   },
   "docblockedProceed": {
-    "message": "Deshabilitar bloqueo estricto para  {{hostname}}",
+    "message": "Deshabilitar bloqueo estricto para {{hostname}}",
     "description": "English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary": {
@@ -748,7 +748,7 @@
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
-    "message": "¡Alerta! Cambie estos ajustes avanzados bajo su propio riesgo.",
+    "message": "¡Alerta! Cambie estas configuraciones avanzadas bajo su propio riesgo.",
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {

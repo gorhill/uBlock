@@ -772,7 +772,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Digite um atalho",
+    "message": "Digitar um atalho",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
