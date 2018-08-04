@@ -368,8 +368,7 @@ var getAssetSourceRegistry = function(callback) {
     var registryReady = function() {
         var callers = assetSourceRegistryStatus;
         assetSourceRegistryStatus = 'ready';
-        var fn;
-        while ( (fn = callers.shift()) ) {
+        for ( var fn of callers ) {
             fn(assetSourceRegistry);
         }
     };

@@ -341,8 +341,8 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
         return;
     }
 
-    // Need one single type -- not negated.
-    if ( type === undefined || type.startsWith('~') ) {
+    // Need one single type -- validated before.
+    if ( type === undefined ) {
         return;
     }
 
