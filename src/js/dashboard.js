@@ -65,7 +65,7 @@ let onTabClickHandler = function(e) {
     if (
         url !== window.location.href &&
         ( !checkUnsavedChanges() || confirm(checkUnsavedChanges.msg) )
-    ) { 
+    ) {
         window.location.replace(url);
         loadDashboardPanel();
     }
