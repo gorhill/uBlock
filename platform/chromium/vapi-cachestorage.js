@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2016-2018 The uBlock Origin authors
+    Copyright (C) 2016-present The uBlock Origin authors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global indexedDB, IDBDatabase */
+/* global IDBDatabase, indexedDB */
 
 'use strict';
 
@@ -48,15 +48,10 @@ vAPI.cacheStorage = (function() {
     }
 
     const STORAGE_NAME = 'uBlock0CacheStorage';
-    var db;
-    var pending = [];
+    let db;
+    let pendingInitialization;
 
-    // prime the db so that it's ready asap for next access.
-    getDb(noopfn);
-
-    return { get, set, remove, clear, getBytesInUse };
-
-    function get(input, callback) {
+    let get = function get(input, callback) {
         if ( typeof callback !== 'function' ) { return; }
         if ( input === null ) {
             return getAllFromDb(callback);
@@ -71,51 +66,48 @@ vAPI.cacheStorage = (function() {
             output = input;
         }
         return getFromDb(toRead, output, callback);
-    }
+    };
 
-    function set(input, callback) {
+    let set = function set(input, callback) {
         putToDb(input, callback);
-    }
+    };
 
-    function remove(key, callback) {
+    let remove = function remove(key, callback) {
         deleteFromDb(key, callback);
-    }
+    };
 
-    function clear(callback) {
+    let clear = function clear(callback) {
         clearDb(callback);
-    }
+    };
 
-    function getBytesInUse(keys, callback) {
+    let getBytesInUse = function getBytesInUse(keys, callback) {
         // TODO: implement this
         callback(0);
-    }
+    };
 
-    function genericErrorHandler(error) {
-        console.error('[%s]', STORAGE_NAME, error);
-    }
+    let api = { get, set, remove, clear, getBytesInUse, error: undefined };
+
+    let genericErrorHandler = function(ev) {
+        let error = ev.target && ev.target.error;
+        if ( error && error.name === 'QuotaExceededError' ) {
+            api.error = error.name;
+        }
+        console.error('[%s]', STORAGE_NAME, error && error.name);
+    };
 
     function noopfn() {
     }
 
-    function processPendings() {
-        var cb;
-        while ( (cb = pending.shift()) ) {
-            cb(db);
-        }
-    }
-
-    function getDb(callback) {
-        if ( pending === undefined ) {
-            return callback();
-        }
-        if ( pending.length !== 0 ) {
-            return pending.push(callback);
-        }
+    let getDb = function getDb() {
         if ( db instanceof IDBDatabase ) {
-            return callback(db);
+            return Promise.resolve(db);
         }
-        pending.push(callback);
-        if ( pending.length !== 1 ) { return; }
+        if ( db === null ) {
+            return Promise.resolve(null);
+        }
+        if ( pendingInitialization !== undefined ) {
+            return pendingInitialization;
+        }
         // https://github.com/gorhill/uBlock/issues/3156
         //   I have observed that no event was fired in Tor Browser 7.0.7 +
         //   medium security level after the request to open the database was
@@ -125,90 +117,92 @@ vAPI.cacheStorage = (function() {
         //   necessary when reading the `error` property because we are not
         //   allowed to read this propery outside of event handlers in newer
         //   implementation of IDBRequest (my understanding).
-        var req;
-        try {
-            req = indexedDB.open(STORAGE_NAME, 1);
-            if ( req.error ) {
-                console.log(req.error);
+        pendingInitialization = new Promise(resolve => {
+            let req;
+            try {
+                req = indexedDB.open(STORAGE_NAME, 1);
+                if ( req.error ) {
+                    console.log(req.error);
+                    req = undefined;
+                }
+            } catch(ex) {
+            }
+            if ( req === undefined ) {
+                pendingInitialization = undefined;
+                db = null;
+                resolve(null);
+                return;
+            }
+            req.onupgradeneeded = function(ev) {
                 req = undefined;
-            }
-        } catch(ex) {
-        }
-        if ( req === undefined ) {
-            processPendings();
-            pending = undefined;
-            return;
-        }
-        req.onupgradeneeded = function(ev) {
-            req = undefined;
-            db = ev.target.result;
-            db.onerror = db.onabort = genericErrorHandler;
-            var table = db.createObjectStore(STORAGE_NAME, { keyPath: 'key' });
-            table.createIndex('value', 'value', { unique: false });
-        };
-        req.onsuccess = function(ev) {
-            req = undefined;
-            db = ev.target.result;
-            db.onerror = db.onabort = genericErrorHandler;
-            processPendings();
-        };
-        req.onerror = req.onblocked = function() {
-            req = undefined;
-            console.log(this.error);
-            processPendings();
-            pending = undefined;
-        };
-    }
+                let db = ev.target.result;
+                db.onerror = db.onabort = genericErrorHandler;
+                let table = db.createObjectStore(STORAGE_NAME, { keyPath: 'key' });
+                table.createIndex('value', 'value', { unique: false });
+            };
+            req.onsuccess = function(ev) {
+                pendingInitialization = undefined;
+                req = undefined;
+                db = ev.target.result;
+                db.onerror = db.onabort = genericErrorHandler;
+                resolve(db);
+            };
+            req.onerror = req.onblocked = function() {
+                pendingInitialization = undefined;
+                req = undefined;
+                db = null;
+                console.log(this.error);
+                resolve(null);
+            };
+        });
+        return pendingInitialization;
+    };
 
-    function getFromDb(keys, store, callback) {
+    let getFromDb = function(keys, keystore, callback) {
         if ( typeof callback !== 'function' ) { return; }
-        if ( keys.length === 0 ) { return callback(store); }
-        var gotOne = function() {
+        if ( keys.length === 0 ) { return callback(keystore); }
+        let gotOne = function() {
             if ( typeof this.result === 'object' ) {
-                store[this.result.key] = this.result.value;
+                keystore[this.result.key] = this.result.value;
             }
         };
-        getDb(function(db) {
+        getDb().then(( ) => {
             if ( !db ) { return callback(); }
-            var transaction = db.transaction(STORAGE_NAME);
+            let transaction = db.transaction(STORAGE_NAME);
             transaction.oncomplete =
             transaction.onerror =
-            transaction.onabort = function() {
-                return callback(store);
-            };
-            var table = transaction.objectStore(STORAGE_NAME);
-            for ( var key of keys ) {
-                var req = table.get(key);
+            transaction.onabort = ( ) => callback(keystore);
+            let table = transaction.objectStore(STORAGE_NAME);
+            for ( let key of keys ) {
+                let req = table.get(key);
                 req.onsuccess = gotOne;
                 req.onerror = noopfn;
                 req = undefined;
             }
         });
-    }
+    };
 
-    function getAllFromDb(callback) {
+    let getAllFromDb = function(callback) {
         if ( typeof callback !== 'function' ) {
             callback = noopfn;
         }
-        getDb(function(db) {
+        getDb().then(( ) => {
             if ( !db ) { return callback(); }
-            var output = {};
-            var transaction = db.transaction(STORAGE_NAME);
+            let keystore = {};
+            let transaction = db.transaction(STORAGE_NAME);
             transaction.oncomplete =
             transaction.onerror =
-            transaction.onabort = function() {
-                callback(output);
-            };
-            var table = transaction.objectStore(STORAGE_NAME),
+            transaction.onabort = ( ) => callback(keystore);
+            let table = transaction.objectStore(STORAGE_NAME),
                 req = table.openCursor();
             req.onsuccess = function(ev) {
-                var cursor = ev.target.result;
+                let cursor = ev.target.result;
                 if ( !cursor ) { return; }
-                output[cursor.key] = cursor.value;
+                keystore[cursor.key] = cursor.value;
                 cursor.continue();
             };
         });
-    }
+    };
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/141
     //   Mind that IDBDatabase.transaction() and IDBObjectStore.put()
@@ -216,20 +210,19 @@ vAPI.cacheStorage = (function() {
     //   https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/transaction
     //   https://developer.mozilla.org/en-US/docs/Web/API/IDBObjectStore/put
 
-    function putToDb(input, callback) {
+    let putToDb = function(keystore, callback) {
         if ( typeof callback !== 'function' ) {
             callback = noopfn;
         }
-        let keys = Object.keys(input);
+        let keys = Object.keys(keystore);
         if ( keys.length === 0 ) { return callback(); }
-        getDb(function(db) {
+        getDb().then(( ) => {
             if ( !db ) { return callback(); }
-            let finish = () => {
-                if ( callback !== undefined ) {
-                    let cb = callback;
-                    callback = undefined;
-                    cb();
-                }
+            let finish = ( ) => {
+                if ( callback === undefined ) { return; }
+                let cb = callback;
+                callback = undefined;
+                cb();
             };
             try {
                 let transaction = db.transaction(STORAGE_NAME, 'readwrite');
@@ -240,7 +233,7 @@ vAPI.cacheStorage = (function() {
                 for ( let key of keys ) {
                     let entry = {};
                     entry.key = key;
-                    entry.value = input[key];
+                    entry.value = keystore[key];
                     table.put(entry);
                     entry = undefined;
                 }
@@ -248,39 +241,64 @@ vAPI.cacheStorage = (function() {
                 finish();
             }
         });
-    }
+    };
 
-    function deleteFromDb(input, callback) {
+    let deleteFromDb = function(input, callback) {
         if ( typeof callback !== 'function' ) {
             callback = noopfn;
         }
-        var keys = Array.isArray(input) ? input.slice() : [ input ];
+        let keys = Array.isArray(input) ? input.slice() : [ input ];
         if ( keys.length === 0 ) { return callback(); }
-        getDb(function(db) {
+        getDb().then(db => {
             if ( !db ) { return callback(); }
-            var transaction = db.transaction(STORAGE_NAME, 'readwrite');
-            transaction.oncomplete =
-            transaction.onerror =
-            transaction.onabort = callback;
-            var table = transaction.objectStore(STORAGE_NAME);
-            for ( var key of keys ) {
-                table.delete(key);
+            let finish = ( ) => {
+                if ( callback === undefined ) { return; }
+                let cb = callback;
+                callback = undefined;
+                cb();
+            };
+            try {
+                let transaction = db.transaction(STORAGE_NAME, 'readwrite');
+                transaction.oncomplete =
+                transaction.onerror =
+                transaction.onabort = finish;
+                let table = transaction.objectStore(STORAGE_NAME);
+                for ( let key of keys ) {
+                    table.delete(key);
+                }
+            } catch (ex) {
+                finish();
             }
         });
-    }
+    };
 
-    function clearDb(callback) {
+    let clearDb = function(callback) {
         if ( typeof callback !== 'function' ) {
             callback = noopfn;
         }
-        getDb(function(db) {
+        getDb().then(db => {
             if ( !db ) { return callback(); }
-            var req = db.transaction(STORAGE_NAME, 'readwrite')
-                        .objectStore(STORAGE_NAME)
-                        .clear();
-            req.onsuccess = req.onerror = callback;
+            let finish = ( ) => {
+                if ( callback === undefined ) { return; }
+                let cb = callback;
+                callback = undefined;
+                cb();
+            };
+            try {
+                let req = db.transaction(STORAGE_NAME, 'readwrite')
+                            .objectStore(STORAGE_NAME)
+                            .clear();
+                req.onsuccess = req.onerror = finish;
+            } catch (ex) {
+                finish();
+            }
         });
-    }
+    };
+
+    // prime the db so that it's ready asap for next access.
+    getDb(noopfn);
+
+    return api;
 }());
 
 /******************************************************************************/
