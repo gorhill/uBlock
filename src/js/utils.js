@@ -422,16 +422,6 @@
     let reHostnameVeryCoarse = /[g-z_-]/;
     let reIPv4VeryCoarse = /\.\d+$/;
 
-    let isIPAddress = function(hostname) {
-        if ( reHostnameVeryCoarse.test(hostname) ) {
-            return false;
-        }
-        if ( reIPv4VeryCoarse.test(hostname) ) {
-            return true;
-        }
-        return hostname.startsWith('[');
-    };
-
     let toBroaderHostname = function(hostname) {
         let pos = hostname.indexOf('.');
         if ( pos !== -1 ) {
@@ -440,15 +430,30 @@
         return hostname !== '*' && hostname !== '' ? '*' : '';
     };
 
-    let toBroaderIPAddress = function(ipaddress) {
+    let toBroaderIPv4Address = function(ipaddress) {
+        if ( ipaddress === '*' || ipaddress === '' ) { return ''; }
+        let pos = ipaddress.lastIndexOf('.');
+        if ( pos === -1 ) { return '*'; }
+        return ipaddress.slice(0, pos);
+    };
+
+    let toBroaderIPv6Address = function(ipaddress) {
         return ipaddress !== '*' && ipaddress !== '' ? '*' : '';
     };
 
     return function decomposeHostname(hostname, decomposed) {
         if ( decomposed.length === 0 || decomposed[0] !== hostname ) {
-            let broaden = isIPAddress(hostname) ?
-                toBroaderIPAddress :
-                toBroaderHostname;
+            let broaden;
+            if ( reHostnameVeryCoarse.test(hostname) === false ) {
+                if ( reIPv4VeryCoarse ) {
+                    broaden = toBroaderIPv4Address;
+                } else if ( hostname.startsWith('[') ) {
+                    broaden = toBroaderIPv6Address;
+                }
+            }
+            if ( broaden === undefined ) {
+                broaden = toBroaderHostname;
+            }
             decomposed[0] = hostname;
             let i = 1;
             for (;;) {
