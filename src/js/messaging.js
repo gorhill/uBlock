@@ -787,7 +787,7 @@ var restoreUserData = function(request) {
 
     // If we are going to restore all, might as well wipe out clean local
     // storage
-    vAPI.cacheStorage.clear();
+    µb.cacheStorage.clear();
     vAPI.storage.clear(onAllRemoved);
     vAPI.localStorage.removeItem('immediateHiddenSettings');
 };
@@ -803,9 +803,9 @@ var resetUserData = function() {
             vAPI.app.restart();
         }
     };
-    vAPI.cacheStorage.clear(countdown); // 1
-    vAPI.storage.clear(countdown);      // 2
-    µb.saveLocalSettings(countdown);    // 3
+    µb.cacheStorage.clear(countdown); // 1
+    vAPI.storage.clear(countdown);    // 2
+    µb.saveLocalSettings(countdown);  // 3
     vAPI.localStorage.removeItem('immediateHiddenSettings');
 };
 

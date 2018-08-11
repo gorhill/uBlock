@@ -58,7 +58,7 @@
   },
   "incognito": "split",
   "manifest_version": 2,
-  "minimum_chrome_version": "45.0",
+  "minimum_chrome_version": "47.0",
   "name": "uBlock Origin",
   "optional_permissions": [
     "file:///*"

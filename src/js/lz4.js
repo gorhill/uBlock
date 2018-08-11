@@ -1,0 +1,193 @@
+/*******************************************************************************
+
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2018-present Raymond Hill
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see {http://www.gnu.org/licenses/}.
+
+    Home: https://github.com/gorhill/uBlock
+*/
+
+/* global lz4BlockCodec */
+
+'use strict';
+
+/*******************************************************************************
+
+    Experimental support for storage compression.
+
+    For background information on the topic, see:
+    https://github.com/uBlockOrigin/uBlock-issues/issues/141#issuecomment-407737186
+
+**/
+
+µBlock.lz4Codec = (function() {         // >>>> Start of private namespace
+
+/******************************************************************************/
+
+let lz4CodecInstance;
+let pendingInitialization;
+let textEncoder, textDecoder;
+let ttlCount = 0;
+let ttlTimer;
+
+const ttlDelay = 60 * 1000;
+
+let init = function() {
+    if ( lz4CodecInstance === null ) {
+        return Promise.resolve(null);
+    }
+    if ( lz4CodecInstance !== undefined ) {
+        return Promise.resolve(lz4CodecInstance);
+    }
+    if ( pendingInitialization === undefined ) {
+        pendingInitialization = lz4BlockCodec.createInstance()
+            .then(instance => {
+                lz4CodecInstance = instance;
+                pendingInitialization = undefined;
+            });
+    }
+    return pendingInitialization;
+};
+
+// We can't shrink memory usage of lz4 codec instances, and in the
+// current case memory usage can grow to a significant amount given
+// that a single contiguous memory buffer is required to accommodate
+// both input and output data. Thus a time-to-live implementation
+// which will cause the wasm instance to be forgotten after enough
+// time elapse without the instance being used.
+
+let destroy = function() {
+    console.info('uBO: freeing lz4-block-codec instance');
+    lz4CodecInstance = undefined;
+    textEncoder = textDecoder = undefined;
+    ttlCount = 0;
+    ttlTimer = undefined;
+};
+
+let ttlManage = function(count) {
+    if ( ttlTimer !== undefined ) {
+        clearTimeout(ttlTimer);
+        ttlTimer = undefined;
+    }
+    ttlCount += count;
+    if ( ttlCount > 0 ) { return; }
+    if ( lz4CodecInstance === null ) { return; }
+    ttlTimer = vAPI.setTimeout(destroy, ttlDelay);
+};
+
+let uint8ArrayFromBlob = function(key, data) {
+    if ( data instanceof Blob === false ) {
+        return Promise.resolve({ key, data });
+    }
+    return new Promise(resolve => {
+        let blobReader = new FileReader();
+        blobReader.onloadend = ev => {
+            resolve({ key, data: new Uint8Array(ev.target.result) });
+        };
+        blobReader.readAsArrayBuffer(data);
+    });
+};
+
+let encodeValue = function(key, value) {
+    if ( !lz4CodecInstance ) { return; }
+    let t0 = window.performance.now();
+    if ( textEncoder === undefined ) {
+        textEncoder = new TextEncoder();
+    }
+    let inputArray = textEncoder.encode(value);
+    let inputSize = inputArray.byteLength;
+    let outputArray = lz4CodecInstance.encodeBlock(inputArray, 8);
+    outputArray[0] = 0x18;
+    outputArray[1] = 0x4D;
+    outputArray[2] = 0x22;
+    outputArray[3] = 0x04;
+    outputArray[4] = (inputSize >>>  0) & 0xFF;
+    outputArray[5] = (inputSize >>>  8) & 0xFF;
+    outputArray[6] = (inputSize >>> 16) & 0xFF;
+    outputArray[7] = (inputSize >>> 24) & 0xFF;
+    console.info(
+        'uBO: [%s] compressed %d bytes into %d bytes in %s ms',
+        key,
+        inputArray.byteLength,
+        outputArray.byteLength,
+        (window.performance.now() - t0).toFixed(2)
+    );
+    return outputArray;
+};
+
+let decodeValue = function(key, inputArray) {
+    if ( !lz4CodecInstance ) { return; }
+    let t0 = window.performance.now();
+    if (
+        inputArray[0] !== 0x18 || inputArray[1] !== 0x4D ||
+        inputArray[2] !== 0x22 || inputArray[3] !== 0x04
+    ) {
+        return;
+    }
+    let outputSize = 
+        (inputArray[4] <<  0) | (inputArray[5] <<  8) |
+        (inputArray[6] << 16) | (inputArray[7] << 24);
+    let outputArray = lz4CodecInstance.decodeBlock(inputArray, 8, outputSize);
+    if ( textDecoder === undefined ) {
+        textDecoder = new TextDecoder();
+    }
+    let value = textDecoder.decode(outputArray);
+    console.info(
+        'uBO: [%s] decompressed %d bytes into %d bytes in %s ms',
+        key,
+        inputArray.byteLength,
+        outputSize,
+        (window.performance.now() - t0).toFixed(2)
+    );
+    return value;
+};
+
+return {
+    encode: function(key, data) {
+        if ( typeof data !== 'string' || data.length < 4096 ) {
+            return Promise.resolve({ key, data });
+        }
+        ttlManage(1);
+        return init().then(( ) => {
+            ttlManage(-1);
+            let encoded = encodeValue(key, data) || data;
+            if ( encoded instanceof Uint8Array ) {
+                encoded = new Blob([ encoded ]);
+            }
+            return { key, data: encoded };
+        });
+    },
+    decode: function(key, data) {
+        if ( data instanceof Blob === false ) {
+            return Promise.resolve({ key, data });
+        }
+        ttlManage(1);
+        return Promise.all([
+            init(),
+            uint8ArrayFromBlob(key, data)
+        ]).then(results => {
+            ttlManage(-1);
+            let result = results[1];
+            return {
+                key: result.key,
+                data: decodeValue(result.key, result.data) || result.data
+            };
+        });
+    }
+};
+
+/******************************************************************************/
+
+})();                                   // <<<< End of private namespace

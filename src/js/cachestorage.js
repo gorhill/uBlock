@@ -38,7 +38,7 @@
 // has been added, for seamless migration of cache-related entries into
 // indexedDB.
 
-vAPI.cacheStorage = (function() {
+µBlock.cacheStorage = (function() {
 
     // Firefox-specific: we use indexedDB because chrome.storage.local() has
     // poor performance in Firefox. See:
@@ -50,6 +50,7 @@ vAPI.cacheStorage = (function() {
     const STORAGE_NAME = 'uBlock0CacheStorage';
     let db;
     let pendingInitialization;
+    let dbByteLength;
 
     let get = function get(input, callback) {
         if ( typeof callback !== 'function' ) { return; }
@@ -81,11 +82,17 @@ vAPI.cacheStorage = (function() {
     };
 
     let getBytesInUse = function getBytesInUse(keys, callback) {
-        // TODO: implement this
-        callback(0);
+        getDbSize(callback);
     };
 
-    let api = { get, set, remove, clear, getBytesInUse, error: undefined };
+    let api = {
+        get,
+        set,
+        remove,
+        clear,
+        getBytesInUse,
+        error: undefined
+    };
 
     let genericErrorHandler = function(ev) {
         let error = ev.target && ev.target.error;
@@ -158,20 +165,33 @@ vAPI.cacheStorage = (function() {
         return pendingInitialization;
     };
 
-    let getFromDb = function(keys, keystore, callback) {
+    let getFromDb = function(keys, keyvalStore, callback) {
         if ( typeof callback !== 'function' ) { return; }
-        if ( keys.length === 0 ) { return callback(keystore); }
+        if ( keys.length === 0 ) { return callback(keyvalStore); }
+        let promises = [];
         let gotOne = function() {
-            if ( typeof this.result === 'object' ) {
-                keystore[this.result.key] = this.result.value;
-            }
+            if ( typeof this.result !== 'object' ) { return; }
+            keyvalStore[this.result.key] = this.result.value;
+            if ( this.result.value instanceof Blob === false ) { return; }
+            promises.push(
+                µBlock.lz4Codec.decode(
+                    this.result.key,
+                    this.result.value
+                ).then(result => {
+                    keyvalStore[result.key] = result.data;
+                })
+            );
         };
         getDb().then(( ) => {
             if ( !db ) { return callback(); }
             let transaction = db.transaction(STORAGE_NAME);
             transaction.oncomplete =
             transaction.onerror =
-            transaction.onabort = ( ) => callback(keystore);
+            transaction.onabort = ( ) => {
+                Promise.all(promises).then(( ) => {
+                    callback(keyvalStore);
+                });
+            };
             let table = transaction.objectStore(STORAGE_NAME);
             for ( let key of keys ) {
                 let req = table.get(key);
@@ -182,27 +202,77 @@ vAPI.cacheStorage = (function() {
         });
     };
 
-    let getAllFromDb = function(callback) {
-        if ( typeof callback !== 'function' ) {
-            callback = noopfn;
-        }
+    let visitAllFromDb = function(visitFn) {
         getDb().then(( ) => {
-            if ( !db ) { return callback(); }
-            let keystore = {};
+            if ( !db ) { return visitFn(); }
             let transaction = db.transaction(STORAGE_NAME);
             transaction.oncomplete =
             transaction.onerror =
-            transaction.onabort = ( ) => callback(keystore);
-            let table = transaction.objectStore(STORAGE_NAME),
-                req = table.openCursor();
+            transaction.onabort = ( ) => visitFn();
+            let table = transaction.objectStore(STORAGE_NAME);
+            let req = table.openCursor();
             req.onsuccess = function(ev) {
-                let cursor = ev.target.result;
+                let cursor = ev.target && ev.target.result;
                 if ( !cursor ) { return; }
-                keystore[cursor.key] = cursor.value;
+                let entry = cursor.value;
+                visitFn(entry);
                 cursor.continue();
             };
         });
     };
+
+    let getAllFromDb = function(callback) {
+        if ( typeof callback !== 'function' ) { return; }
+        let promises = [];
+        let keyvalStore = {};
+        visitAllFromDb(entry => {
+            if ( entry === undefined ) {
+                Promise.all(promises).then(( ) => {
+                    callback(keyvalStore);
+                });
+                return;
+            }
+            keyvalStore[entry.key] = entry.value;
+            if ( entry.value instanceof Blob === false ) { return; }
+            promises.push(
+                µBlock.lz4Codec.decode(
+                    entry.key,
+                    entry.value
+                ).then(result => {
+                    keyvalStore[result.key] = result.value;
+                })
+            );
+        });
+    };
+
+    let getDbSize = function(callback) {
+        if ( typeof callback !== 'function' ) { return; }
+        if ( typeof dbByteLength === 'number' ) {
+            return Promise.resolve().then(( ) => {
+                callback(dbByteLength);
+            });
+        }
+        let textEncoder = new TextEncoder();
+        let totalByteLength = 0;
+        visitAllFromDb(entry => {
+            if ( entry === undefined ) {
+                dbByteLength = totalByteLength;
+                return callback(totalByteLength);
+            }
+            let value = entry.value;
+            if ( typeof value === 'string' ) {
+                totalByteLength += textEncoder.encode(value).byteLength;
+            } else if ( value instanceof Blob ) {
+                totalByteLength += value.size;
+            } else {
+                totalByteLength += textEncoder.encode(JSON.stringify(value)).byteLength;
+            }
+            if ( typeof entry.key === 'string' ) {
+                totalByteLength += textEncoder.encode(entry.key).byteLength;
+            }
+        });
+    };
+
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/141
     //   Mind that IDBDatabase.transaction() and IDBObjectStore.put()
@@ -210,15 +280,32 @@ vAPI.cacheStorage = (function() {
     //   https://developer.mozilla.org/en-US/docs/Web/API/IDBDatabase/transaction
     //   https://developer.mozilla.org/en-US/docs/Web/API/IDBObjectStore/put
 
-    let putToDb = function(keystore, callback) {
+    let putToDb = function(keyvalStore, callback) {
         if ( typeof callback !== 'function' ) {
             callback = noopfn;
         }
-        let keys = Object.keys(keystore);
+        let keys = Object.keys(keyvalStore);
         if ( keys.length === 0 ) { return callback(); }
-        getDb().then(( ) => {
+        let promises = [ getDb() ];
+        let entries = [];
+        let dontCompress = µBlock.hiddenSettings.cacheStorageCompression !== true;
+        let handleEncodingResult = result => {
+            entries.push({ key: result.key, value: result.data });
+        };
+        for ( let key of keys ) {
+            let data = keyvalStore[key];
+            if ( typeof data !== 'string' || dontCompress ) {
+                entries.push({ key, value: data });
+                continue;
+            }
+            promises.push(
+                µBlock.lz4Codec.encode(key, data).then(handleEncodingResult)
+            );
+        }
+        Promise.all(promises).then(( ) => {
             if ( !db ) { return callback(); }
             let finish = ( ) => {
+                dbByteLength = undefined;
                 if ( callback === undefined ) { return; }
                 let cb = callback;
                 callback = undefined;
@@ -230,12 +317,8 @@ vAPI.cacheStorage = (function() {
                 transaction.onerror =
                 transaction.onabort = finish;
                 let table = transaction.objectStore(STORAGE_NAME);
-                for ( let key of keys ) {
-                    let entry = {};
-                    entry.key = key;
-                    entry.value = keystore[key];
+                for ( let entry of entries ) {
                     table.put(entry);
-                    entry = undefined;
                 }
             } catch (ex) {
                 finish();
@@ -252,6 +335,7 @@ vAPI.cacheStorage = (function() {
         getDb().then(db => {
             if ( !db ) { return callback(); }
             let finish = ( ) => {
+                dbByteLength = undefined;
                 if ( callback === undefined ) { return; }
                 let cb = callback;
                 callback = undefined;
@@ -279,6 +363,7 @@ vAPI.cacheStorage = (function() {
         getDb().then(db => {
             if ( !db ) { return callback(); }
             let finish = ( ) => {
+                dbByteLength = undefined;
                 if ( callback === undefined ) { return; }
                 let cb = callback;
                 callback = undefined;

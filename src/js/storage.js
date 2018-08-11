@@ -29,14 +29,35 @@
     if ( typeof callback !== 'function' ) {
         callback = this.noopFunc;
     }
-    var getBytesInUseHandler = function(bytesInUse) {
+    let bytesInUse;
+    let countdown = 0;
+
+    let process = count => {
+        if ( typeof count === 'number' ) {
+            if ( bytesInUse === undefined ) {
+                bytesInUse = 0;
+            }
+            bytesInUse += count;
+        }
+        countdown -= 1;
+        if ( countdown > 0 ) { return; }
         µBlock.storageUsed = bytesInUse;
         callback(bytesInUse);
     };
+
     // Not all platforms implement this method.
     if ( vAPI.storage.getBytesInUse instanceof Function ) {
-        vAPI.storage.getBytesInUse(null, getBytesInUseHandler);
-    } else {
+        countdown += 1;
+        vAPI.storage.getBytesInUse(null, process);
+    }
+    if (
+        this.cacheStorage !== vAPI.storage &&
+        this.cacheStorage.getBytesInUse instanceof Function
+    ) {
+        countdown += 1;
+        this.cacheStorage.getBytesInUse(null, process);
+    }
+    if ( countdown === 0 ) {
         callback();
     }
 };
@@ -1032,11 +1053,11 @@
             redirectEngine: µb.redirectEngine.toSelfie(),
             staticExtFilteringEngine: µb.staticExtFilteringEngine.toSelfie()
         });
-        vAPI.cacheStorage.set({ selfie: selfie });
+        µb.cacheStorage.set({ selfie: selfie });
     };
 
     let load = function(callback) {
-        vAPI.cacheStorage.get('selfie', function(bin) {
+        µb.cacheStorage.get('selfie', function(bin) {
             if (
                 bin instanceof Object === false ||
                 typeof bin.selfie !== 'string'
@@ -1067,7 +1088,7 @@
             clearTimeout(timer);
             timer = null;
         }
-        vAPI.cacheStorage.remove('selfie');
+        µb.cacheStorage.remove('selfie');
         timer = vAPI.setTimeout(create, µb.selfieAfter);
     };
 

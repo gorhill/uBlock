@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global WebAssembly */
-
 'use strict';
 
 /******************************************************************************/
@@ -304,7 +302,7 @@ var saveAssetSourceRegistry = (function() {
     var timer;
     var save = function() {
         timer = undefined;
-        vAPI.cacheStorage.set({ assetSourceRegistry: assetSourceRegistry });
+        µBlock.cacheStorage.set({ assetSourceRegistry: assetSourceRegistry });
     };
     return function(lazily) {
         if ( timer !== undefined ) {
@@ -387,7 +385,7 @@ var getAssetSourceRegistry = function(callback) {
         );
     };
 
-    vAPI.cacheStorage.get('assetSourceRegistry', function(bin) {
+    µBlock.cacheStorage.get('assetSourceRegistry', function(bin) {
         if ( !bin || !bin.assetSourceRegistry ) {
             createRegistry();
             return;
@@ -410,247 +408,6 @@ api.unregisterAssetSource = function(assetKey) {
         saveAssetSourceRegistry(true);
     });
 };
-
-/*******************************************************************************
-
-    Experimental support for cache storage compression.
-
-    For background information on the topic, see:
-    https://github.com/uBlockOrigin/uBlock-issues/issues/141#issuecomment-407737186
-
-**/
-
-let lz4Codec = (function() {
-    let lz4wasmInstance;
-    let pendingInitialization;
-    let textEncoder, textDecoder;
-    let ttlCount = 0;
-    let ttlTimer;
-
-    const ttlDelay = 60 * 1000;
-
-    let init = function() {
-        if (
-            lz4wasmInstance === null ||
-            WebAssembly instanceof Object === false ||
-            typeof WebAssembly.instantiateStreaming !== 'function'
-        ) {
-            lz4wasmInstance = null;
-            return Promise.resolve(null);
-        }
-        if ( lz4wasmInstance instanceof WebAssembly.Instance ) {
-            return Promise.resolve(lz4wasmInstance);
-        }
-        if ( pendingInitialization === undefined ) {
-            pendingInitialization = WebAssembly.instantiateStreaming(
-                fetch('lib/lz4-block-codec.wasm', { mode: 'same-origin' })
-            ).then(result => {
-                pendingInitialization = undefined;
-                lz4wasmInstance = result && result.instance || null;
-            });
-            pendingInitialization.catch(( ) => {
-                lz4wasmInstance = null;
-            });
-        }
-        return pendingInitialization;
-    };
-
-    // We can't shrink memory usage of wasm instances, and in the current
-    // case memory usage can grow to a significant amount given that
-    // a single contiguous memory buffer is required to accommodate both
-    // input and output data. Thus a time-to-live implementation which
-    // will cause the wasm instance to be forgotten after enough time
-    // elapse without the instance being used.
-
-    let destroy = function() {
-        console.info(
-            'uBO: freeing lz4-block-codec.wasm instance (memory.buffer = %d kB)',
-            lz4wasmInstance.exports.memory.buffer.byteLength >>> 10
-        );
-        lz4wasmInstance = undefined;
-        textEncoder = textDecoder = undefined;
-        ttlCount = 0;
-        ttlTimer = undefined;
-    };
-
-    let ttlManage = function(count) {
-        if ( ttlTimer !== undefined ) {
-            clearTimeout(ttlTimer);
-            ttlTimer = undefined;
-        }
-        ttlCount += count;
-        if ( ttlCount > 0 ) { return; }
-        if ( lz4wasmInstance === null ) { return; }
-        ttlTimer = vAPI.setTimeout(destroy, ttlDelay);
-    };
-
-    let growMemoryTo = function(byteLength) {
-        let lz4api = lz4wasmInstance.exports;
-        let neededByteLength = lz4api.getLinearMemoryOffset() + byteLength;
-        let pageCountBefore = lz4api.memory.buffer.byteLength >>> 16;
-        let pageCountAfter = (neededByteLength + 65535) >>> 16;
-        if ( pageCountAfter > pageCountBefore ) {
-            lz4api.memory.grow(pageCountAfter - pageCountBefore);
-        }
-        return lz4api.memory;
-    };
-
-    let resolveEncodedValue = function(resolve, key, value) {
-        let t0 = window.performance.now();
-        let lz4api = lz4wasmInstance.exports;
-        let mem0 = lz4api.getLinearMemoryOffset();
-        let memory = growMemoryTo(mem0 + 65536 * 4);
-        let hashTable = new Int32Array(memory.buffer, mem0, 65536);
-        hashTable.fill(-65536, 0, 65536);
-        let hashTableSize = hashTable.byteLength;
-        if ( textEncoder === undefined ) {
-            textEncoder = new TextEncoder();
-        }
-        let inputArray = textEncoder.encode(value);
-        let inputSize = inputArray.byteLength;
-        let memSize =
-            hashTableSize +
-            inputSize +
-            8 + lz4api.lz4BlockEncodeBound(inputSize);
-        memory = growMemoryTo(memSize);
-        let inputMem = new Uint8Array(
-            memory.buffer,
-            mem0 + hashTableSize,
-            inputSize
-        );
-        inputMem.set(inputArray);
-        let outputSize = lz4api.lz4BlockEncode(
-            mem0 + hashTableSize,
-            inputSize,
-            mem0 + hashTableSize + inputSize + 8
-        );
-        if ( outputSize === 0 ) { resolve(value); }
-        let outputMem = new Uint8Array(
-            memory.buffer,
-            mem0 + hashTableSize + inputSize,
-            8 + outputSize
-        );
-        outputMem[0] = 0x18;
-        outputMem[1] = 0x4D;
-        outputMem[2] = 0x22;
-        outputMem[3] = 0x04;
-        outputMem[4] = (inputSize >>>  0) & 0xFF;
-        outputMem[5] = (inputSize >>>  8) & 0xFF;
-        outputMem[6] = (inputSize >>> 16) & 0xFF;
-        outputMem[7] = (inputSize >>> 24) & 0xFF;
-        console.info(
-            'uBO: [%s] compressed %d bytes into %d bytes in %s ms',
-            key,
-            inputSize,
-            outputSize,
-            (window.performance.now() - t0).toFixed(2)
-        );
-        resolve(new Blob([ outputMem ]));
-    };
-
-    let resolveDecodedValue = function(resolve, ev, key, value) {
-        let inputBuffer = ev.target.result;
-        if ( inputBuffer instanceof ArrayBuffer === false ) {
-            return resolve(value);
-        }
-        let t0 = window.performance.now();
-        let metadata = new Uint8Array(inputBuffer, 0, 8);
-        if (
-            metadata[0] !== 0x18 ||
-            metadata[1] !== 0x4D ||
-            metadata[2] !== 0x22 ||
-            metadata[3] !== 0x04
-        ) {
-            return resolve(value);
-        }
-        let inputSize = inputBuffer.byteLength - 8;
-        let outputSize = 
-            (metadata[4] <<  0) |
-            (metadata[5] <<  8) |
-            (metadata[6] << 16) |
-            (metadata[7] << 24);
-        let lz4api = lz4wasmInstance.exports;
-        let mem0 = lz4api.getLinearMemoryOffset();
-        let memSize = inputSize + outputSize;
-        let memory = growMemoryTo(memSize);
-        let inputArea = new Uint8Array(
-            memory.buffer,
-            mem0,
-            inputSize
-        );
-        inputArea.set(new Uint8Array(inputBuffer, 8, inputSize));
-        outputSize = lz4api.lz4BlockDecode(inputSize);
-        if ( outputSize === 0 ) {
-            return resolve(value);
-        }
-        let outputArea = new Uint8Array(
-            memory.buffer,
-            mem0 + inputSize,
-            outputSize
-        );
-        if ( textDecoder === undefined ) {
-            textDecoder = new TextDecoder();
-        }
-        value = textDecoder.decode(outputArea);
-        console.info(
-            'uBO: [%s] decompressed %d bytes into %d bytes in %s ms',
-            key,
-            inputSize,
-            outputSize,
-            (window.performance.now() - t0).toFixed(2)
-        );
-        resolve(value);
-    };
-
-    let encodeValue = function(key, value) {
-        if ( !lz4wasmInstance ) {
-            return Promise.resolve(value);
-        }
-        return new Promise(resolve => {
-            resolveEncodedValue(resolve, key, value);
-        });
-    };
-
-    let decodeValue = function(key, value) {
-        if ( !lz4wasmInstance ) {
-            return Promise.resolve(value);
-        }
-        return new Promise(resolve => {
-            let blobReader = new FileReader();
-            blobReader.onloadend = ev => {
-                resolveDecodedValue(resolve, ev, key, value);
-            };
-            blobReader.readAsArrayBuffer(value);
-        });
-    };
-
-    return {
-        encode: function(key, value) {
-            if ( typeof value !== 'string' || value.length < 4096 ) {
-                return Promise.resolve(value);
-            }
-            ttlManage(1);
-            return init().then(( ) => {
-                return encodeValue(key, value);
-            }).then(result => {
-                ttlManage(-1);
-                return result;
-            });
-        },
-        decode: function(key, value) {
-            if ( value instanceof Blob === false ) {
-                return Promise.resolve(value);
-            }
-            ttlManage(1);
-            return init().then(( ) => {
-                return decodeValue(key, value);
-            }).then(result => {
-                ttlManage(-1);
-                return result;
-            });
-        }
-    };
-})();
 
 /*******************************************************************************
 
@@ -688,7 +445,7 @@ var getAssetCacheRegistry = function(callback) {
         }
     };
 
-    vAPI.cacheStorage.get('assetCacheRegistry', function(bin) {
+    µBlock.cacheStorage.get('assetCacheRegistry', function(bin) {
         if ( bin && bin.assetCacheRegistry ) {
             assetCacheRegistry = bin.assetCacheRegistry;
         }
@@ -700,7 +457,7 @@ var saveAssetCacheRegistry = (function() {
     var timer;
     var save = function() {
         timer = undefined;
-        vAPI.cacheStorage.set({ assetCacheRegistry: assetCacheRegistry });
+        µBlock.cacheStorage.set({ assetCacheRegistry: assetCacheRegistry });
     };
     return function(lazily) {
         if ( timer !== undefined ) { clearTimeout(timer); }
@@ -735,16 +492,11 @@ var assetCacheRead = function(assetKey, callback) {
         }
         entry.readTime = Date.now();
         saveAssetCacheRegistry(true);
-        if ( µBlock.hiddenSettings.cacheStorageCompression !== true ) {
-            return reportBack(bin[internalKey]);
-        }
-        lz4Codec.decode(internalKey, bin[internalKey]).then(result => {
-            reportBack(result);
-        });
+        reportBack(bin[internalKey]);
     };
 
     let onReady = function() {
-        vAPI.cacheStorage.get(internalKey, onAssetRead);
+        µBlock.cacheStorage.get(internalKey, onAssetRead);
     };
 
     getAssetCacheRegistry(onReady);
@@ -763,10 +515,7 @@ var assetCacheWrite = function(assetKey, details, callback) {
         return assetCacheRemove(assetKey, callback);
     }
 
-    let reportBack = function(content) {
-        let bin = { assetCacheRegistry: assetCacheRegistry };
-        bin[internalKey] = content;
-        vAPI.cacheStorage.set(bin);
+    let reportBack = function() {
         let details = { assetKey: assetKey, content: content };
         if ( typeof callback === 'function' ) {
             callback(details);
@@ -783,12 +532,9 @@ var assetCacheWrite = function(assetKey, details, callback) {
         if ( details instanceof Object && typeof details.url === 'string' ) {
             entry.remoteURL = details.url;
         }
-        if ( µBlock.hiddenSettings.cacheStorageCompression !== true ) {
-            return reportBack(content);
-        }
-        lz4Codec.encode(internalKey, content).then(result => {
-            reportBack(result);
-        });
+        let bin = { assetCacheRegistry: assetCacheRegistry };
+        bin[internalKey] = content;
+        µBlock.cacheStorage.set(bin, reportBack);
     };
     getAssetCacheRegistry(onReady);
 };
@@ -810,9 +556,9 @@ var assetCacheRemove = function(pattern, callback) {
             delete cacheDict[assetKey];
         }
         if ( removedContent.length !== 0 ) {
-            vAPI.cacheStorage.remove(removedContent);
+            µBlock.cacheStorage.remove(removedContent);
             var bin = { assetCacheRegistry: assetCacheRegistry };
-            vAPI.cacheStorage.set(bin);
+            µBlock.cacheStorage.set(bin);
         }
         if ( typeof callback === 'function' ) {
             callback();
@@ -852,7 +598,7 @@ var assetCacheMarkAsDirty = function(pattern, exclude, callback) {
         }
         if ( mustSave ) {
             var bin = { assetCacheRegistry: assetCacheRegistry };
-            vAPI.cacheStorage.set(bin);
+            µBlock.cacheStorage.set(bin);
         }
         if ( typeof callback === 'function' ) {
             callback();
@@ -892,7 +638,7 @@ var readUserAsset = function(assetKey, callback) {
         var content = '';
         if ( typeof bin['cached_asset_content://assets/user/filters.txt'] === 'string' ) {
             content = bin['cached_asset_content://assets/user/filters.txt'];
-            vAPI.cacheStorage.remove('cached_asset_content://assets/user/filters.txt');
+            µBlock.cacheStorage.remove('cached_asset_content://assets/user/filters.txt');
         }
         if ( typeof bin['assets/user/filters.txt'] === 'string' ) {
             content = bin['assets/user/filters.txt'];
