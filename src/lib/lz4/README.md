@@ -29,7 +29,7 @@ This contains the code to instanciate WebAssembly-based LZ4 block codec. Note
 that the WebAssembly module is loaded using a `same-origin` fetch, hence
 ensuring that no code outside the package is loaded.
 
-### `lz4-block-codec-wasm.js`
+### `lz4-block-codec-js.js`
 
 This contains the code to instanciate pure javascript-based LZ4 block codec.
 
