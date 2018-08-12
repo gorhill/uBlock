@@ -1044,9 +1044,12 @@ var candidateFromFilterChoice = function(filterChoice) {
     //   TODO: should remove tag name too? ¯\_(ツ)_/¯
     if ( filterChoice.modifier ) {
         filter = filter.replace(/:nth-of-type\(\d+\)/, '');
-        if ( filter.indexOf('.') !== -1 ) {
-            if ( filter.charAt(2) === '#' ) {
-                filter = filter.replace(/#[^#.]+/, '');
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/162
+        //   Mind escaped periods: they do not denote a class identifier.
+        if ( filter.charAt(2) === '#' ) {
+            let pos = filter.search(/[^\\]\./);
+            if ( pos !== -1 ) {
+                filter = '##' + filter.slice(pos + 1);
             }
         }
         return filter;
@@ -1057,8 +1060,10 @@ var candidateFromFilterChoice = function(filterChoice) {
     for ( ; slot < filters.length; slot++ ) {
         filter = filters[slot];
         // Remove all classes when an id exists.
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/162
+        //   Mind escaped periods: they do not denote a class identifier.
         if ( filter.charAt(2) === '#' ) {
-            filter = filter.replace(/\..+$/, '');
+            filter = filter.replace(/([^\\])\..+$/, '$1');
         }
         selector = filter.slice(2) + joiner + selector;
         // Stop at any element with an id: these are unique in a web page
