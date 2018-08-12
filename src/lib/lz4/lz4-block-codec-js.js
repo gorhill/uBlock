@@ -59,7 +59,7 @@ let growOutputBuffer = function(instance, size) {
 let encodeBound = function(size) {
     return size > 0x7E000000 ?
         0 :
-        size + size / 255 + 16;
+        size + (size / 255 | 0) + 16;
 };
 
 let encodeBlock = function(instance, iBuf, oOffset) {
@@ -81,9 +81,8 @@ let encodeBlock = function(instance, iBuf, oOffset) {
         iBuf = new Uint8Array(iBuf);
     }
 
-    let oBuf = new Uint8Array(
-        growOutputBuffer(instance, oOffset + encodeBound(iLen))
-    );
+    let oLen = oOffset + encodeBound(iLen);
+    let oBuf = new Uint8Array(growOutputBuffer(instance, oLen), 0, oLen);
     let iPos = 0;
     let oPos = oOffset;
     let anchorPos = 0;
@@ -186,7 +185,7 @@ let encodeBlock = function(instance, iBuf, oOffset) {
 
 let decodeBlock = function(instance, iBuf, iOffset, oLen) {
     let iLen = iBuf.byteLength;
-    let oBuf = new Uint8Array(growOutputBuffer(instance, oLen));
+    let oBuf = new Uint8Array(growOutputBuffer(instance, oLen), 0, oLen);
     let iPos = iOffset, oPos = 0;
 
     while ( iPos < iLen ) {
