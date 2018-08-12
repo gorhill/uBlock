@@ -69,7 +69,12 @@ let init = function() {
 // time elapse without the instance being used.
 
 let destroy = function() {
-    console.info('uBO: freeing lz4-block-codec instance');
+    if ( lz4CodecInstance !== undefined ) {
+        console.info(
+            'uBO: freeing lz4-block-codec instance (%s KB)',
+            lz4CodecInstance.bytesInUse() >>> 10
+        );
+    }
     lz4CodecInstance = undefined;
     textEncoder = textDecoder = undefined;
     ttlCount = 0;
@@ -118,11 +123,12 @@ let encodeValue = function(key, value) {
     outputArray[6] = (inputSize >>> 16) & 0xFF;
     outputArray[7] = (inputSize >>> 24) & 0xFF;
     console.info(
-        'uBO: [%s] compressed %d bytes into %d bytes in %s ms',
+        'uBO: [%s] compressed %d KB => %d KB (%s%%) in %s ms',
         key,
-        inputArray.byteLength,
-        outputArray.byteLength,
-        (window.performance.now() - t0).toFixed(2)
+        inputArray.byteLength >> 10,
+        outputArray.byteLength >> 10,
+        (outputArray.byteLength / inputArray.byteLength * 100).toFixed(0),
+        (window.performance.now() - t0).toFixed(1)
     );
     return outputArray;
 };
@@ -145,38 +151,39 @@ let decodeValue = function(key, inputArray) {
     }
     let value = textDecoder.decode(outputArray);
     console.info(
-        'uBO: [%s] decompressed %d bytes into %d bytes in %s ms',
+        'uBO: [%s] decompressed %d KB => %d KB (%s%%) in %s ms',
         key,
-        inputArray.byteLength,
-        outputSize,
-        (window.performance.now() - t0).toFixed(2)
+        inputArray.byteLength >>> 10,
+        outputSize >>> 10,
+        (inputArray.byteLength / outputSize * 100).toFixed(0),
+        (window.performance.now() - t0).toFixed(1)
     );
     return value;
 };
 
 return {
-    encode: function(key, data) {
-        if ( typeof data !== 'string' || data.length < 4096 ) {
-            return Promise.resolve({ key, data });
+    encode: function(key, dataIn) {
+        if ( typeof dataIn !== 'string' || dataIn.length < 4096 ) {
+            return Promise.resolve({ key, dataIn });
         }
         ttlManage(1);
         return init().then(( ) => {
             ttlManage(-1);
-            let encoded = encodeValue(key, data) || data;
-            if ( encoded instanceof Uint8Array ) {
-                encoded = new Blob([ encoded ]);
+            let dataOut = encodeValue(key, dataIn) || dataIn;
+            if ( dataOut instanceof Uint8Array ) {
+                dataOut = new Blob([ dataOut ]);
             }
-            return { key, data: encoded };
+            return { key, data: dataOut };
         });
     },
-    decode: function(key, data) {
-        if ( data instanceof Blob === false ) {
-            return Promise.resolve({ key, data });
+    decode: function(key, dataIn) {
+        if ( dataIn instanceof Blob === false ) {
+            return Promise.resolve({ key, dataIn });
         }
         ttlManage(1);
         return Promise.all([
             init(),
-            uint8ArrayFromBlob(key, data)
+            uint8ArrayFromBlob(key, dataIn)
         ]).then(results => {
             ttlManage(-1);
             let result = results[1];

@@ -125,6 +125,7 @@ context.LZ4BlockWASM = function() {
 
 context.LZ4BlockWASM.prototype = {
     flavor: 'wasm',
+
     init: function() {
         if ( this.lz4wasmInstance instanceof WebAssembly.Instance ) {
             return Promise.resolve(this.lz4wasmInstance);
@@ -156,6 +157,12 @@ context.LZ4BlockWASM.prototype = {
 
     reset: function() {
         this.lz4wasmInstance = undefined;
+    },
+
+    bytesInUse: function() {
+        return this.lz4wasmInstance instanceof WebAssembly.Instance ?
+            this.lz4wasmInstance.exports.memory.buffer.byteLength :
+            0;
     },
 
     encodeBlock: function(input, outputOffset) {

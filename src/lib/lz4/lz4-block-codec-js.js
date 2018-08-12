@@ -46,13 +46,23 @@
 
 /******************************************************************************/
 
+let growOutputBuffer = function(instance, size) {
+    if (
+        instance.outputBuffer === undefined ||
+        instance.outputBuffer.byteLength < size
+    ) {
+        instance.outputBuffer = new ArrayBuffer(size + 0xFFFF & 0x7FFF0000);
+    }
+    return instance.outputBuffer;
+};
+
 let encodeBound = function(size) {
     return size > 0x7E000000 ?
         0 :
         size + size / 255 + 16;
 };
 
-let encodeBlock = function(instance, iBuf, outOffset) {
+let encodeBlock = function(instance, iBuf, oOffset) {
     let iLen = iBuf.byteLength;
     if ( iLen >= 0x7E000000 ) { throw new TypeError(); }
 
@@ -71,9 +81,11 @@ let encodeBlock = function(instance, iBuf, outOffset) {
         iBuf = new Uint8Array(iBuf);
     }
 
-    let oBuf = new Uint8Array(outOffset + encodeBound(iLen));
+    let oBuf = new Uint8Array(
+        growOutputBuffer(instance, oOffset + encodeBound(iLen))
+    );
     let iPos = 0;
-    let oPos = outOffset;
+    let oPos = oOffset;
     let anchorPos = 0;
 
     // sequence-finding loop
@@ -174,13 +186,7 @@ let encodeBlock = function(instance, iBuf, outOffset) {
 
 let decodeBlock = function(instance, iBuf, iOffset, oLen) {
     let iLen = iBuf.byteLength;
-    if (
-        instance.outputBuffer === undefined ||
-        instance.outputBuffer.byteLength < oLen
-    ) {
-        instance.outputBuffer = new ArrayBuffer(oLen + 0xFFFF & 0x7FFF0000);
-    }
-    let oBuf = new Uint8Array(instance.outputBuffer, 0, oLen);
+    let oBuf = new Uint8Array(growOutputBuffer(instance, oLen));
     let iPos = iOffset, oPos = 0;
 
     while ( iPos < iLen ) {
@@ -253,6 +259,17 @@ context.LZ4BlockJS.prototype = {
     reset: function() {
         this.hashTable = undefined;
         this.outputBuffer = undefined;
+    },
+
+    bytesInUse: function() {
+        let bytesInUse = 0;
+        if ( this.hashTable !== undefined ) {
+            bytesInUse += this.hashTable.byteLength;
+        }
+        if ( this.outputBuffer !== undefined ) {
+            bytesInUse += this.outputBuffer.byteLength;
+        }
+        return bytesInUse;
     },
 
     encodeBlock: function(input, outputOffset) {
