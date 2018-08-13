@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2016 Raymond Hill
+    Copyright (C) 2016-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,23 +19,36 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global uDom */
+/* global CodeMirror, uDom, uBlockDashboard */
 
 'use strict';
 
 /******************************************************************************/
 
-(function() {
+(function() {                           // >>>> Start of private namespace
 
 /******************************************************************************/
 
-var messaging = vAPI.messaging;
-var cachedData = '';
-var rawAdvancedSettings = uDom.nodeFromId('advancedSettings');
+let messaging = vAPI.messaging;
+let noopFunc = function(){};
+
+let beforeHash = '';
+
+let cmEditor = new CodeMirror(
+    document.getElementById('advancedSettings'),
+    {
+        autofocus: true,
+        lineNumbers: true,
+        lineWrapping: true,
+        styleActiveLine: true
+    }
+);
+
+uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 
 /******************************************************************************/
 
-var hashFromAdvancedSettings = function(raw) {
+let hashFromAdvancedSettings = function(raw) {
     return raw.trim().replace(/\s+/g, '|');
 };
 
@@ -43,59 +56,59 @@ var hashFromAdvancedSettings = function(raw) {
 
 // This is to give a visual hint that the content of user blacklist has changed.
 
-var advancedSettingsChanged = (function () {
-    var timer = null;
+let advancedSettingsChanged = (function () {
+    let timer = null;
 
-    var handler = function() {
+    let handler = ( ) => {
         timer = null;
-        var changed = hashFromAdvancedSettings(rawAdvancedSettings.value) !== cachedData;
+        let changed = hashFromAdvancedSettings(cmEditor.getValue()) !== beforeHash;
         uDom.nodeFromId('advancedSettingsApply').disabled = !changed;
+        CodeMirror.commands.save = changed ? applyChanges : noopFunc;
     };
 
     return function() {
-        if ( timer !== null ) {
-            clearTimeout(timer);
-        }
+        if ( timer !== null ) { clearTimeout(timer); }
         timer = vAPI.setTimeout(handler, 100);
     };
 })();
 
+cmEditor.on('changes', advancedSettingsChanged);
+
 /******************************************************************************/
 
-function renderAdvancedSettings() {
-    var onRead = function(raw) {
-        cachedData = hashFromAdvancedSettings(raw);
-        var pretty = [],
+let renderAdvancedSettings = function(first) {
+    let onRead = function(raw) {
+        beforeHash = hashFromAdvancedSettings(raw);
+        let pretty = [],
             whitespaces = '                                ',
             lines = raw.split('\n'),
-            max = 0,
-            pos,
-            i, n = lines.length;
-        for ( i = 0; i < n; i++ ) {
-            pos = lines[i].indexOf(' ');
-            if ( pos > max ) {
-                max = pos;
-            }
+            max = 0;
+        for ( let line of lines ) {
+            let pos = line.indexOf(' ');
+            if ( pos > max ) { max = pos; }
         }
-        for ( i = 0; i < n; i++ ) {
-            pos = lines[i].indexOf(' ');
-            pretty.push(whitespaces.slice(0, max - pos) + lines[i]);
+        for ( let line of lines ) {
+            let pos = line.indexOf(' ');
+            pretty.push(whitespaces.slice(0, max - pos) + line);
         }
-        rawAdvancedSettings.value = pretty.join('\n') + '\n';
+        cmEditor.setValue(pretty.join('\n') + '\n');
+        if ( first ) {
+            cmEditor.clearHistory();
+        }
         advancedSettingsChanged();
-        rawAdvancedSettings.focus();
+        cmEditor.focus();
     };
     messaging.send('dashboard', { what: 'readHiddenSettings' }, onRead);
-}
+};
 
 /******************************************************************************/
 
-var applyChanges = function() {
+let applyChanges = function() {
     messaging.send(
         'dashboard',
         {
             what: 'writeHiddenSettings',
-            content: rawAdvancedSettings.value
+            content: cmEditor.getValue()
         },
         renderAdvancedSettings
     );
@@ -103,12 +116,17 @@ var applyChanges = function() {
 
 /******************************************************************************/
 
-// Handle user interaction
-uDom('#advancedSettings').on('input', advancedSettingsChanged);
-uDom('#advancedSettingsApply').on('click', applyChanges);
+uDom.nodeFromId('advancedSettings').addEventListener(
+    'input',
+    advancedSettingsChanged
+);
+uDom.nodeFromId('advancedSettingsApply').addEventListener(
+    'click',
+    applyChanges
+);
 
-renderAdvancedSettings();
+renderAdvancedSettings(true);
 
 /******************************************************************************/
 
-})();
+})();                                   // <<<< End of private namespace
