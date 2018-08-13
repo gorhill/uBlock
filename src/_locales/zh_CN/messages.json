@@ -112,7 +112,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "单击屏蔽此网站大型媒体元素",
+    "message": "单击以屏蔽此网站上较大的媒体元素",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
@@ -124,7 +124,7 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "单击禁用此网站上的元素过滤",
+    "message": "单击禁用针对此网站的元素过滤规则",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {

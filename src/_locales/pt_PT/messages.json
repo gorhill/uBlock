@@ -308,7 +308,7 @@
     "description": "English: Last restore:"
   },
   "settingsLastBackupPrompt": {
-    "message": "Último backup:",
+    "message": "Última cópia de segurança:",
     "description": "English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt": {
