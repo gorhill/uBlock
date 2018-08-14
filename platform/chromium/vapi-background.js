@@ -464,7 +464,7 @@ vAPI.tabs.open = function(details) {
             // Opening a tab from incognito window won't focus the window
             // in which the tab was opened
             var focusWindow = function(tab) {
-                if ( tab.active ) {
+                if ( tab.active && chrome.windows instanceof Object ) {
                     chrome.windows.update(tab.windowId, { focused: true });
                 }
             };
@@ -490,7 +490,9 @@ vAPI.tabs.open = function(details) {
         };
 
         // Open in a standalone window
-        if ( details.popup === true ) {
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/168#issuecomment-413038191
+        //   Not all platforms support browser.windows API.
+        if ( details.popup === true && chrome.windows instanceof Object ) {
             chrome.windows.create({ url: details.url, type: 'popup' });
             return;
         }
@@ -548,6 +550,7 @@ vAPI.tabs.open = function(details) {
             _details.url = targetURL;
         }
         chrome.tabs.update(tab.id, _details, function(tab) {
+            if ( chrome.windows instanceof Object === false ) { return; }
             chrome.windows.update(tab.windowId, { focused: true });
         });
     });
@@ -604,6 +607,7 @@ vAPI.tabs.select = function(tabId) {
     chrome.tabs.update(tabId, { active: true }, function(tab) {
         void chrome.runtime.lastError;
         if ( !tab ) { return; }
+        if ( chrome.windows instanceof Object === false ) { return; }
         chrome.windows.update(tab.windowId, { focused: true });
     });
 };
