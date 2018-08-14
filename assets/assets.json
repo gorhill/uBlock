@@ -500,7 +500,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "LTU: Adblock Plus Lithuania",
+		"title": "LTU: EasyList Lithuania",
 		"lang": "lt",
 		"contentURL": "https://margevicius.lt/easylistlithuania.txt",
 		"supportURL": "https://margevicius.lt/2014/06/26/easylist_lithuania/"
