@@ -18,10 +18,10 @@ LZ4 block codec.
 
 If the choosen implementation is not specified, there will be an attempt to
 create a WebAssembly-based instance. If for whatever reason this fails, a
-pure javascript-based instanced will be created.
+pure javascript-based instance will be created.
 
-The script for either instances are dynamically loaded, such that no resources
-is wasted by keeping in memory code which won't be used.
+The script for either instance are dynamically loaded, such that no resources
+are wasted by keeping in memory code which won't be used.
 
 ### `lz4-block-codec-wasm.js`
 
@@ -38,4 +38,5 @@ for whatever reason.
 
 ### `lz4-block-codec.wasm`
 
-This is the WebAssembly module, loaded by `lz4-block-codec-wasm.js`.
+This is the WebAssembly module, loaded by `lz4-block-codec-wasm.js` using a
+`same-origin` fetch.
