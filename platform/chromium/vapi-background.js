@@ -490,7 +490,9 @@ vAPI.tabs.open = function(details) {
         };
 
         // Open in a standalone window
-        if ( details.popup === true ) {
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/168#issuecomment-413038191
+        //   Not all platforms support browser.windows API.
+        if ( details.popup === true && chrome.windows instanceof Object ) {
             chrome.windows.create({ url: details.url, type: 'popup' });
             return;
         }
