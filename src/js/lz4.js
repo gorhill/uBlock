@@ -164,7 +164,7 @@ let decodeValue = function(key, inputArray) {
 return {
     encode: function(key, dataIn) {
         if ( typeof dataIn !== 'string' || dataIn.length < 4096 ) {
-            return Promise.resolve({ key, dataIn });
+            return Promise.resolve({ key, data: dataIn });
         }
         ttlManage(1);
         return init().then(( ) => {
@@ -178,7 +178,7 @@ return {
     },
     decode: function(key, dataIn) {
         if ( dataIn instanceof Blob === false ) {
-            return Promise.resolve({ key, dataIn });
+            return Promise.resolve({ key, data: dataIn });
         }
         ttlManage(1);
         return Promise.all([
