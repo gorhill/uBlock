@@ -400,10 +400,20 @@ var matchBucket = function(url, hostname, bucket, start) {
 
     this.epickerTarget = targetElement || '';
     this.epickerZap = zap || false;
-    vAPI.tabs.injectScript(tabId, {
-        file: '/js/scriptlets/element-picker.js',
-        runAt: 'document_end'
-    });
+
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/168
+    //   Force activate the target tab once the element picker has been
+    //   injected.
+    vAPI.tabs.injectScript(
+        tabId,
+        {
+            file: '/js/scriptlets/element-picker.js',
+            runAt: 'document_end'
+        },
+        ( ) => {
+            vAPI.tabs.select(tabId);
+        }
+    );
 };
 
 /******************************************************************************/
