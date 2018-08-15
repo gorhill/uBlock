@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2018 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -1495,8 +1495,8 @@ var stopPicker = function() {
 var startPicker = function(details) {
     pickerRoot.addEventListener('load', stopPicker);
 
-    var frameDoc = pickerRoot.contentDocument;
-    var parsedDom = (new DOMParser()).parseFromString(
+    let frameDoc = pickerRoot.contentDocument;
+    let parsedDom = (new DOMParser()).parseFromString(
         details.frameContent,
         'text/html'
     );
@@ -1504,6 +1504,17 @@ var startPicker = function(details) {
     // Provide an id users can use as anchor to personalize uBO's element
     // picker style properties.
     parsedDom.documentElement.id = 'ublock0-epicker';
+
+    // https://github.com/gorhill/uBlock/issues/2240
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/170
+    //   Remove the already declared inline style tag: we will create a new
+    //   one based on the removed one, and replace the old one.
+    let style = parsedDom.querySelector('style');
+    let styleText = style.textContent;
+    style.parentNode.removeChild(style);
+    style = frameDoc.createElement('style');
+    style.textContent = styleText;
+    parsedDom.head.appendChild(style);
 
     frameDoc.replaceChild(
         frameDoc.adoptNode(parsedDom.documentElement),
@@ -1533,7 +1544,7 @@ var startPicker = function(details) {
     pickerRoot.contentWindow.focus();
 
     // Restore net filter union data if it originate from the same URL.
-    var eprom = details.eprom || null;
+    let eprom = details.eprom || null;
     if ( eprom !== null && eprom.lastNetFilterSession === lastNetFilterSession ) {
         lastNetFilterHostname = eprom.lastNetFilterHostname || '';
         lastNetFilterUnion = eprom.lastNetFilterUnion || '';
@@ -1552,12 +1563,11 @@ var startPicker = function(details) {
     }
 
     // No mouse position available, use suggested target
-    var target = details.target || '';
-    var pos = target.indexOf('\t');
-    if ( pos === -1 ) {
-        return;
-    }
-    var srcAttrMap = {
+    let target = details.target || '';
+    let pos = target.indexOf('\t');
+    if ( pos === -1 ) { return; }
+
+    let srcAttrMap = {
         'a': 'href',
         'audio': 'src',
         'embed': 'src',
@@ -1565,24 +1575,20 @@ var startPicker = function(details) {
         'img': 'src',
         'video': 'src',
     };
-    var tagName = target.slice(0, pos);
-    var url = target.slice(pos + 1);
-    var attr = srcAttrMap[tagName];
+    let tagName = target.slice(0, pos);
+    let url = target.slice(pos + 1);
+    let attr = srcAttrMap[tagName];
     if ( attr === undefined ) {
         return;
     }
-    var elems = document.querySelectorAll(tagName + '[' + attr + ']');
-    var i = elems.length;
-    var elem, src;
+    let elems = document.querySelectorAll(tagName + '[' + attr + ']');
+    let i = elems.length;
+    let elem, src;
     while ( i-- ) {
         elem = elems[i];
         src = elem[attr];
-        if ( typeof src !== 'string' || src === '' ) {
-            continue;
-        }
-        if ( src !== url ) {
-            continue;
-        }
+        if ( typeof src !== 'string' || src === '' ) { continue; }
+        if ( src !== url ) { continue; }
         elem.scrollIntoView({
             behavior: 'smooth',
             block: 'start'
