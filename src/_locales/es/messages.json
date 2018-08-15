@@ -28,7 +28,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Lista de permitidos",
+    "message": "Lista blanca",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -480,7 +480,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Lista de permitidos de páginas web para los cuales se deshabilitará uBlock Origin. Una entrada por línea. Se omitirán nombres de páginas web no válidos.",
+    "message": "Lista blanca de páginas web para los cuales se deshabilitará uBlock Origin. Una entrada por línea. Se omitirán nombres de páginas web no válidos.",
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
@@ -492,7 +492,7 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "ublock-mi-lista-de-permitidos_{{datetime}}.txt",
+    "message": "ublock-mi-lista-blanca_{{datetime}}.txt",
     "description": "English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply": {
@@ -620,7 +620,7 @@
     "description": "English: Contributors"
   },
   "aboutBackupDataButton": {
-    "message": "Respaldar en archivo...",
+    "message": "Respaldar en archivo",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
