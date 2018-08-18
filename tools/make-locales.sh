@@ -11,8 +11,8 @@ hash jq 2>/dev/null || { echo; echo >&2 "Error: this script requires jq (https:/
 
 printf "*** Generating locale files in $DES... "
 
-LANGS=(en zh_TW zh_CN de fr ru it sk pt_PT pt_BR es cs 'fi' el 'id' lt pl sr sl, sv-SE, 'en-tr' uk)
-# cs Czech, el Greek, id Indonesian, lt Lithuanian, pl Polish, sr Serbian(Cyrillic), sl Slovenian, sv-SE Swedish, en-tr Turkish
+LANGS=(en zh_TW zh_CN de fr ru it sk pt_PT pt_BR es cs 'fi' el 'id' lt pl sr sl sv tr uk)
+# cs Czech, el Greek, id Indonesian, lt Lithuanian, pl Polish, sr Serbian(Cyrillic), sl Slovenian, sv Swedish, tr Turkish
 # uk Ukrainian
 
 FILES=src/_locales/**/adnauseam.json
