@@ -114,6 +114,7 @@ let encodeValue = function(key, value) {
     let inputArray = textEncoder.encode(value);
     let inputSize = inputArray.byteLength;
     let outputArray = lz4CodecInstance.encodeBlock(inputArray, 8);
+    if ( outputArray instanceof Uint8Array === false ) { return; }
     outputArray[0] = 0x18;
     outputArray[1] = 0x4D;
     outputArray[2] = 0x22;
@@ -146,6 +147,7 @@ let decodeValue = function(key, inputArray) {
         (inputArray[4] <<  0) | (inputArray[5] <<  8) |
         (inputArray[6] << 16) | (inputArray[7] << 24);
     let outputArray = lz4CodecInstance.decodeBlock(inputArray, 8, outputSize);
+    if ( outputArray instanceof Uint8Array === false ) { return; }
     if ( textDecoder === undefined ) {
         textDecoder = new TextDecoder();
     }
@@ -173,7 +175,7 @@ return {
             if ( dataOut instanceof Uint8Array ) {
                 dataOut = new Blob([ dataOut ]);
             }
-            return { key, data: dataOut };
+            return { key, data: dataOut || dataIn };
         });
     },
     decode: function(key, dataIn) {

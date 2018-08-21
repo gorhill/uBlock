@@ -64,7 +64,7 @@ let encodeBound = function(size) {
 
 let encodeBlock = function(instance, iBuf, oOffset) {
     let iLen = iBuf.byteLength;
-    if ( iLen >= 0x7E000000 ) { throw new TypeError(); }
+    if ( iLen >= 0x7E000000 ) { throw new RangeError(); }
 
     // "The last match must start at least 12 bytes before end of block"
     let lastMatchPos = iLen - 12;
@@ -216,7 +216,7 @@ let decodeBlock = function(instance, iBuf, iOffset, oLen) {
 
         // match
         let mOffset = iBuf[iPos+0] | (iBuf[iPos+1] << 8);
-        if ( mOffset === 0 || mOffset > oPos ) { return 0; }
+        if ( mOffset === 0 || mOffset > oPos ) { return; }
         iPos += 2;
 
         // length of match

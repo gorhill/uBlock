@@ -20,9 +20,10 @@ If the choosen implementation is not specified, there will be an attempt to
 create a WebAssembly-based instance. If for whatever reason this fails, a
 pure javascript-based instance will be created.
 
-The script for either instance are dynamically loaded, such that no resources
-are wasted by keeping in memory code which won't be used.
-
+The script for either instance are dynamically loaded and only when needed,
+such that no resources are wasted by keeping in memory code which won't be
+used.
+ 
 ### `lz4-block-codec-wasm.js`
 
 This contains the code to instanciate WebAssembly-based LZ4 block codec. Note

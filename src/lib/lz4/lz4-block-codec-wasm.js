@@ -72,7 +72,7 @@ let encodeBlock = function(wasmInstance, inputArray, outputOffset) {
     let mem0 = lz4api.getLinearMemoryOffset();
     let hashTableSize = 65536 * 4;
     let inputSize = inputArray.byteLength;
-    if ( inputSize >= 0x7E000000 ) { throw new TypeError(); }
+    if ( inputSize >= 0x7E000000 ) { throw new RangeError(); }
     let memSize =
         hashTableSize +
         inputSize +
@@ -87,9 +87,7 @@ let encodeBlock = function(wasmInstance, inputArray, outputOffset) {
         inputSize,
         mem0 + hashTableSize + inputSize + outputOffset
     );
-    if ( outputSize === 0 ) {
-        inputSize = 0 - inputSize;
-    }
+    if ( outputSize === 0 ) { return; }
     let outputArray = new Uint8Array(
         memBuffer,
         mem0 + hashTableSize + inputSize,
@@ -111,9 +109,7 @@ let decodeBlock = function(wasmInstance, inputArray, inputOffset, outputSize) {
         inputSize - inputOffset,
         mem0 + inputSize
     );
-    if ( outputSize === 0 ) {
-        throw new Error('LZ4BlockWASM: block-level compression failed');
-    }
+    if ( outputSize === 0 ) { return; }
     return new Uint8Array(memBuffer, mem0 + inputSize, outputSize);
 };
 
