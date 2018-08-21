@@ -36,7 +36,7 @@
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
-    "message": "uBlock₀ — Registro de peticiones de red",
+    "message": "uBlock₀ — Registro de peticiones",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
@@ -256,7 +256,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Soy usuario avanzado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>lectura obligatoria en inglés<\/a>)",
+    "message": "Soy usuario avanzado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>lectura necesaria<\/a>)",
     "description": ""
   },
   "settingsAdvancedUserSettings": {

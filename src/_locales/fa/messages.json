@@ -32,7 +32,7 @@
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "Shortcuts",
+    "message": "میانبرها",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -772,7 +772,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Type a shortcut",
+    "message": "یک میانبر وارد کنید",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {

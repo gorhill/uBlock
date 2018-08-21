@@ -132,15 +132,15 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Bllokoj sistemin e shkronjave në linjë",
+    "message": "Bllokoj sistemin e shkronjave jashtë faqes",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Bllokoj sistemin e shkronjave në linjë",
+    "message": "Bllokoj sistemin e shkronjave jashtë faqes",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Zhbllokoj sistemin e shkronjave në linjë",
+    "message": "Zhbllokoj sistemin e shkronjave jashtë faqes",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules": {
@@ -244,7 +244,7 @@
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
-    "message": "Përdor menynë kontekstuale kur duhet",
+    "message": "Përdor menynë kontekstuale sipas rrethanave",
     "description": "English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt": {
@@ -264,11 +264,11 @@
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Çaktivizoj kërkesat e parakohshme (për të evituar çdo lidhje me kërkesat e refuzuara)",
+    "message": "Çaktivizoj kërkesat paraprake (për të evituar çdo lidhje me kërkesat e refuzuara)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
-    "message": "Çaktivizoj shqyrtimin e tejlidhjeve",
+    "message": "Çaktivizoj analizën e lidhjeve hipertekstuale",
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
@@ -292,7 +292,7 @@
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
-    "message": "Bllokoj sistemin e shkronjave në linjë",
+    "message": "Bllokoj sistemin e shkronjave jashtë faqes",
     "description": ""
   },
   "settingsNoCSPReportsPrompt": {
@@ -600,7 +600,7 @@
     "description": "English: Change log"
   },
   "aboutWiki": {
-    "message": "Dokumentimi",
+    "message": "Wiki",
     "description": "English: project' wiki on Github"
   },
   "aboutSupport": {
@@ -608,7 +608,7 @@
     "description": "A link for where to get support"
   },
   "aboutIssues": {
-    "message": "Treguesi i problemeve",
+    "message": "Lista e problemeve",
     "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {

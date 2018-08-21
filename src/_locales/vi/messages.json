@@ -32,7 +32,7 @@
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "Shortcuts",
+    "message": "Phím tắt",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -84,7 +84,7 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Chuyển sang chế độ chọn phần tử",
+    "message": "Chuyển sang chế độ chặn phần tử tạm thời",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
@@ -124,11 +124,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Nhấn để tắt bộ lọc phần tử trên trang này",
+    "message": "Nhấn để tắt bộ lọc phần tử ẩn trên trang này",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Nhấn để bật bộ lọc phần tử trên trang này",
+    "message": "Nhấn để bật bộ lọc phần tử ẩn trên trang này",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -356,7 +356,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Trên máy",
+    "message": "Dựng sẵn",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -392,7 +392,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "Một URL cho mỗi dòng. Dòng bắt đầu với &lsquo;!&rsquo;sẽ bị bỏ qua. Các URL không hợp lệ sẽ được bỏ qua âm thầm.",
+    "message": "Một URL cho mỗi dòng. Các URL không hợp lệ sẽ được bỏ qua âm thầm.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -400,7 +400,7 @@
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "Cập nhật mới: {{ago}}.\nClick để cập nhập.",
+    "message": "Cập nhật lần cuối: {{ago}}.\nNhấn để cập nhật ngay.",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
@@ -412,7 +412,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Một bộ lọc trên mỗi dòng. Một bộ lọc có thể là một tên máy chủ đơn giản, hoặc một bộ lọc Adblock Plus tương thích. Những dòng bắt đầu với &lsquo;!&rsquo; sẽ bị bỏ qua.",
+    "message": "Một bộ lọc trên mỗi dòng. Một bộ lọc có thể là một tên máy chủ đơn thuần, hoặc một bộ lọc tương thích với Adblock Plus. Những dòng bắt đầu với <code>!<\/code> sẽ bị bỏ qua.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -480,7 +480,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Danh sách tên các máy chủ mà uBlock₀ sẽ bị chặn. Một mục nhập trên mỗi dòng. Tên máy chủ không hợp lệ sẽ được tự động bỏ qua.",
+    "message": "Danh sách tên các máy chủ mà uBlock Origin sẽ bị chặn. Một mục nhập trên mỗi dòng. Tên máy chủ không hợp lệ sẽ được tự động bỏ qua.",
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
@@ -592,7 +592,7 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Static filter <code>{{filter}}<\/code> could not be found in any of the currently enabled filter lists",
+    "message": "Bộ lọc tĩnh <code>{{filter}}<\/code> không thể tìm thấy trong bất kỳ danh sách bộ lọc hiện được bật nào",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
@@ -756,7 +756,7 @@
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Lưu thay đổi",
+    "message": "Áp dụng các thay đổi",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
@@ -772,7 +772,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Type a shortcut",
+    "message": "Nhập phím tắt",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
