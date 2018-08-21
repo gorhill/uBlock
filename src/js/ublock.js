@@ -515,11 +515,17 @@ var matchBucket = function(url, hostname, bucket, start) {
 
 /******************************************************************************/
 
+// https://github.com/NanoMeow/QuickReports/issues/6#issuecomment-414516623
+//   Inject as early as possible to make the cosmetic logger code less
+//   sensitive to the removal of DOM nodes which may match injected
+//   cosmetic filters.
+
 µBlock.logCosmeticFilters = function(tabId, frameId) {
     if ( this.logger.isEnabled() ) {
         vAPI.tabs.injectScript(tabId, {
             file: '/js/scriptlets/cosmetic-logger.js',
-            frameId: frameId
+            frameId: frameId,
+            runAt: 'document_start'
         });
     }
 };
