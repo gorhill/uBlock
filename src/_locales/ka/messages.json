@@ -356,11 +356,11 @@
     "description": "English: Ads"
   },
   "3pGroupPrivacy": {
-    "message": "კონფიდენციალურობა",
+    "message": "პირადულობა",
     "description": "English: Privacy"
   },
   "3pGroupMalware": {
-    "message": "მავნე დომეინები",
+    "message": "მავნე დომენები",
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {
@@ -408,7 +408,7 @@
     "description": "English: Import and append"
   },
   "1pExport": {
-    "message": "გამოტანა",
+    "message": "შენახვა",
     "description": "English: Export"
   },
   "1pExportFilename": {
@@ -436,7 +436,7 @@
     "description": "This will persist temporary rules"
   },
   "rulesEdit": {
-    "message": "რედაქტირება",
+    "message": "შეცვლა",
     "description": "Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave": {
@@ -444,7 +444,7 @@
     "description": "Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard": {
-    "message": "უკუგდება",
+    "message": "გაუქმება",
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
@@ -508,7 +508,7 @@
     "description": "Appears in the logger's tab selector"
   },
   "logBehindTheScene": {
-    "message": "სცენის უკან",
+    "message": "ფარული მოთხოვნები",
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
@@ -636,87 +636,87 @@
     "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo": {
-    "message": "a minute ago",
+    "message": "ერთი წუთის წინ",
     "description": "English: a minute ago"
   },
   "elapsedManyMinutesAgo": {
-    "message": "{{value}} minutes ago",
+    "message": "{{value}} წუთის წინ",
     "description": "English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo": {
-    "message": "an hour ago",
+    "message": "ერთი საათის წინ",
     "description": "English: an hour ago"
   },
   "elapsedManyHoursAgo": {
-    "message": "{{value}} hours ago",
+    "message": "{{value}} საათის წინ",
     "description": "English: {{value}} hours ago"
   },
   "elapsedOneDayAgo": {
-    "message": "a day ago",
+    "message": "ერთი დღის წინ",
     "description": "English: a day ago"
   },
   "elapsedManyDaysAgo": {
-    "message": "{{value}} days ago",
+    "message": "{{value}} დღის წინ",
     "description": "English: {{value}} days ago"
   },
   "showDashboardButton": {
-    "message": "Show Dashboard",
+    "message": "ხელსაწყოების გვერდის ჩვენება",
     "description": "Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
-    "message": "Show Logger",
+    "message": "აღრიცხვის ჩვენება",
     "description": "Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
-    "message": "off",
+    "message": "გამორთული",
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1": {
-    "message": "uBlock Origin has prevented the following page from loading:",
+    "message": "uBlock Origin-მა შეზღუდა მოცემული გვერდის ჩატვირთვა:",
     "description": "English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2": {
-    "message": "Because of the following filter",
+    "message": "მოცემული ფილტრიდან გამომდინარე",
     "description": "English: Because of the following filter"
   },
   "docblockedNoParamsPrompt": {
-    "message": "without parameters",
+    "message": "პარამეტრების გარეშე",
     "description": "label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {
-    "message": "Found in:",
+    "message": "პოვნა:",
     "description": "English: List of filter list names follows"
   },
   "docblockedBack": {
-    "message": "Go back",
+    "message": "უკან დაბრუნება",
     "description": "English: Go back"
   },
   "docblockedClose": {
-    "message": "Close this window",
+    "message": "ფანჯრის დახურვა",
     "description": "English: Close this window"
   },
   "docblockedProceed": {
-    "message": "Disable strict blocking for {{hostname}}",
+    "message": "მკაცრი შეზღუდვის მოხსნა საიტისთვის: {{hostname}}",
     "description": "English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary": {
-    "message": "Temporarily",
+    "message": "დროებით",
     "description": "English: Temporarily"
   },
   "docblockedDisablePermanent": {
-    "message": "Permanently",
+    "message": "მუდმივად",
     "description": "English: Permanently"
   },
   "cloudPush": {
-    "message": "Export to cloud storage",
+    "message": "ღრუბლოვან საცავში შენახვა",
     "description": "tooltip"
   },
   "cloudPull": {
-    "message": "Import from cloud storage",
+    "message": "ღრუბლოვანი საცავიდან გადმოტანა",
     "description": "tooltip"
   },
   "cloudPullAndMerge": {
-    "message": "Import from cloud storage and merge with current settings",
+    "message": "ღრუბლოვანი საცავიდან გადმოტანა და არსებულ პარამეტრებთან მისადაგება",
     "description": "tooltip"
   },
   "cloudNoData": {
@@ -724,31 +724,31 @@
     "description": ""
   },
   "cloudDeviceNamePrompt": {
-    "message": "This device name:",
+    "message": "ამ მოწყობილობის დასახელება:",
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
-    "message": "Warning! Change these advanced settings at your own risk.",
+    "message": "გაფრთხილება! დამატებითი პარამეტრებს ცვლილების შედეგებზე, თავად ხართ პასუხისმგებელი.",
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {
-    "message": "Submit",
+    "message": "მიღება",
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Apply changes",
+    "message": "ცვლილებების მისადაგება",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
-    "message": "Revert",
+    "message": "დაბრუნება",
     "description": "for generic 'Revert' buttons"
   },
   "genericBytes": {
-    "message": "bytes",
+    "message": "ბაიტი",
     "description": ""
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
-    "message": "Temporarily allow large media elements",
+    "message": "დიდი მედია-ელემენტების დროებით დაშვება",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "dummy": {

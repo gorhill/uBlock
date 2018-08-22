@@ -935,7 +935,10 @@ var filterDocument = (function() {
         //   confirmed, there is nothing which can be done uBO-side to reduce
         //   overhead.
         if ( filterer.buffer === null ) {
-            if ( streamJobDone(filterer, ev.data) ) { return; }
+            if ( streamJobDone(filterer, ev.data) ) {
+                filterers.delete(this);
+                return;
+            }
             filterer.buffer = new Uint8Array(ev.data);
             return;
         }
@@ -973,7 +976,7 @@ var filterDocument = (function() {
                 utf8TextDecoder = new TextDecoder();
             }
             doc = domParser.parseFromString(
-                utf8TextDecoder.decode(filterer.buffer.slice(0, 1024)),
+                utf8TextDecoder.decode(filterer.buffer.slice(0, 4096)),
                 'text/html'
             );
             filterer.charset = µb.textEncode.normalizeCharset(charsetFromDoc(doc));
@@ -1040,6 +1043,12 @@ var filterDocument = (function() {
     };
 
     return function(pageStore, details) {
+        // https://github.com/gorhill/uBlock/issues/3478
+        var statusCode = details.statusCode || 0;
+        if ( statusCode !== 0 && (statusCode < 200 || statusCode >= 300) ) {
+            return;
+        }
+
         var hostname = µb.URI.hostnameFromURI(details.url);
         if ( hostname === '' ) { return; }
 
@@ -1058,7 +1067,16 @@ var filterDocument = (function() {
             charset: undefined
         };
         request.selectors = µb.htmlFilteringEngine.retrieve(request);
-        request.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
+
+        // https://github.com/gorhill/uBlock/issues/3526
+        // https://github.com/uBlockOrigin/uAssets/issues/1492
+        //   Two distinct issues, but both are arising as a result of
+        //   injecting scriptlets through stream filtering. So falling back
+        //   to "slow" scriplet injection for the time being. Stream filtering
+        //   (`##^`) should be used for when scriptlets are defeated by early
+        //   script tags on a page.
+        //
+        //request.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
 
         if (
             request.selectors === undefined &&

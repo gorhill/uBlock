@@ -276,7 +276,7 @@
     "description": ""
   },
   "settingPerSiteSwitchGroupSynopsis": {
-    "message": "Këto vlera bëhen të panevojshme, sipas rastit",
+    "message": "Këto vlera mund të ndryshohen në bazë të faqeve",
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
@@ -440,7 +440,7 @@
     "description": "Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave": {
-    "message": "Ruaj",
+    "message": "Regjistroj",
     "description": "Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard": {
@@ -460,7 +460,7 @@
     "description": "default file name to use"
   },
   "rulesHint": {
-    "message": "Lista e rregullave tuaja për filtrimin dinamik.",
+    "message": "Lista e rregullave për filtrimin dinamik.",
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
@@ -612,11 +612,11 @@
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Kthej parametrat e mëparshëm...",
+    "message": "Kthej parametrat fillestarë...",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
-    "message": "Të gjithë parametrat do të mbishkruhen me të dhënat e kopjuara më {{time}}, dhe uBlock₀ do të hapet përsëri.\n\nDo i mbishkruani parametrat aktualë?",
+    "message": "Të gjithë parametrat do të mbishkruhen me të dhënat e kopjuara më {{time}}, dhe uBlock₀ do të hapet përsëri.\n\nTë mbishkruhen parametrat aktualë?",
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {
@@ -624,7 +624,7 @@
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
-    "message": "Të gjithë parametrat do të fshihen dhe uBlock₀ do të hapet përsëri.\n\nDo i ktheni parametrat origjinalë?",
+    "message": "Të gjithë parametrat do të fshihen dhe uBlock₀ do të hapet përsëri.\n\nTë kthehen parametrat origjinalë?",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
@@ -632,7 +632,7 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: Do e shtoni këtë adresën në listën e filtrave tuaj?\n\nTitulli: \"{{title}}\"\nURL: {{url}}",
+    "message": "uBlock₀: Të shtohet adresa në listën e filtrave tuaj?\n\nTitulli: \"{{title}}\"\nURL: {{url}}",
     "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo": {
