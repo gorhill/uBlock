@@ -670,8 +670,8 @@ onBeforeMaybeSpuriousCSPReport.textDecoder = undefined;
 
 var onHeadersReceived = function(details) {
     // Do not interfere with behind-the-scene requests.
-    var ad, dbug = 0; //ADN
-    
+    var ad, result, dbug = 0; //ADN
+
     var tabId = details.tabId,
         µb = µBlock,
         requestType = details.type,
@@ -722,7 +722,8 @@ var onHeadersReceived = function(details) {
     if ( pageStore.getNetFilteringSwitch() === false ) { return; }
 
     if ( requestType === 'image' || requestType === 'media' ) {
-        return foilLargeMediaElement(pageStore, details);
+        result = foilLargeMediaElement(pageStore, details);
+        return result
     }
 
     if ( isDoc && µb.canFilterResponseBody ) {
