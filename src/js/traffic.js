@@ -668,53 +668,53 @@ onBeforeMaybeSpuriousCSPReport.textDecoder = undefined;
 // - HTML filtering (requires ability to modify response body)
 // - CSP injection
 
-// var onHeadersReceived = function (details) {
-//
-//     var µb = µBlock, ad, result, tabId = details.tabId, requestType = details.type, dbug = 0;
-//
-//     //ADN
-//     if (vAPI.isBehindTheSceneTabId(tabId)) {
-//
-//       // ADN: handle incoming cookies for our visits (ignore in ff for now)
-//       if (vAPI.chrome && µBlock.userSettings.noIncomingCookies) {
-//
-//           dbug && console.log('onHeadersReceived: ', requestType, details.url);
-//
-//           // ADN
-//           ad = µBlock.adnauseam.lookupAd(details.url, details.requestId);
-//           if (ad) {
-//
-//             // this is an ADN request
-//             µBlock.adnauseam.blockIncomingCookies(details.responseHeaders, details.url, ad.targetUrl);
-//           }
-//           else if (dbug && vAPI.chrome) {
-//
-//             console.log('Ignoring non-ADN response', requestType, details.url);
-//           }
-//       }
-//
-//       // don't return an empty headers array
-//       return details.responseHeaders.length ?
-//         { 'responseHeaders': details.responseHeaders } : null;
-//     }
-//
-//     // ADN: check if this was an allowed exception and, if so, block cookies
-//     var  modified = pageStore && µBlock.adnauseam.checkAllowedException
-//         (details.responseHeaders, details.url, pageStore.rawURL);
-//
-//     if (requestType === 'main_frame') {
-//       µb.tabContextManager.push(tabId, details.url);
-
-    var µb = µBlock,
+var onHeadersReceived = function(details) {
+    // Do not interfere with behind-the-scene requests.
+    var ad, dbug = 0; //ADN
+    
+    var tabId = details.tabId,
+        µb = µBlock,
         requestType = details.type,
         isRootDoc = requestType === 'main_frame',
         isDoc = isRootDoc || requestType === 'sub_frame';
+
+     //ADN
+    if (vAPI.isBehindTheSceneTabId(tabId)) {
+
+      // ADN: handle incoming cookies for our visits (ignore in ff for now)
+      if (vAPI.chrome && µb.userSettings.noIncomingCookies) {
+
+          dbug && console.log('onHeadersReceived: ', requestType, details.url);
+
+          // ADN
+          ad = µb.adnauseam.lookupAd(details.url, details.requestId);
+          if (ad) {
+
+            // this is an ADN request
+            µb.adnauseam.blockIncomingCookies(details.responseHeaders, details.url, ad.targetUrl);
+          }
+          else if (dbug && vAPI.chrome) {
+
+            console.log('Ignoring non-ADN response', requestType, details.url);
+          }
+      }
+
+      // don't return an empty headers array
+      return details.responseHeaders.length ?
+        { 'responseHeaders': details.responseHeaders } : null;
+    }
+  
 
     if ( isRootDoc ) {
         µb.tabContextManager.push(tabId, details.url);
     }
 
-     var pageStore = µb.pageStoreFromTabId(tabId);
+    var pageStore = µb.pageStoreFromTabId(tabId);
+
+    // ADN: check if this was an allowed exception and, if so, block cookies
+    var  modified = pageStore && µBlock.adnauseam.checkAllowedException
+        (details.responseHeaders, details.url, pageStore.rawURL);
+
     if ( pageStore === null ) {
         if ( isRootDoc === false ) { return; }
         pageStore = µb.bindTabToPageStats(tabId, 'beforeRequest');
@@ -722,7 +722,7 @@ onBeforeMaybeSpuriousCSPReport.textDecoder = undefined;
     if ( pageStore.getNetFilteringSwitch() === false ) { return; }
 
     if ( requestType === 'image' || requestType === 'media' ) {
-        result = foilLargeMediaElement(pageStore, details);
+        return foilLargeMediaElement(pageStore, details);
     }
 
     if ( isDoc && µb.canFilterResponseBody ) {
@@ -743,8 +743,8 @@ onBeforeMaybeSpuriousCSPReport.textDecoder = undefined;
     if ( isDoc ) {
         return injectCSP(pageStore, details);
     }
-
-    if (!result) { // ADN
+    // ADN
+    if (!result) { 
 
       // ADN: if this was an allowed exception block cookies
       var pageStore = µBlock.pageStoreFromTabId(details.tabId),
@@ -755,8 +755,6 @@ onBeforeMaybeSpuriousCSPReport.textDecoder = undefined;
           result = { 'responseHeaders': details.responseHeaders };
       }
     }
-
-    return result;
 };
 
 var reMediaContentTypes = /^(?:audio|image|video)\//;
