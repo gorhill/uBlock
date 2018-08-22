@@ -1076,6 +1076,7 @@ var getLoggerData = function(ownerId, activeTabId, callback) {
         noTabId: vAPI.noTabId,
         activeTabId: activeTabId,
         tabIds: tabIds,
+        dntDomains: µb.userSettings.dntDomains, // ADN
         tabIdsToken: µb.pageStoresToken
     });
 };
@@ -1132,39 +1133,6 @@ var onMessage = function(request, sender, callback) {
             );
         });
         return;
-
-    default:
-        break;
-    }
-
-    // Sync
-    var response;
-
-    switch ( request.what ) {
-    case 'readAll':
-
-        var tabIds = {}, pageStore;
-        var loggerURL = vAPI.getURL('logger-ui.html');
-        for ( var tabId in µb.pageStores ) {
-            pageStore = µb.pageStoreFromTabId(tabId);
-            if ( pageStore === null ) {
-                continue;
-            }
-            if ( pageStore.rawURL.startsWith(loggerURL) ) {
-                continue;
-            }
-            tabIds[tabId] = pageStore.title;
-        }
-        response = {
-            colorBlind: µb.userSettings.colorBlindFriendly,
-            entries: µb.logger.readAll(),
-            maxEntries: µb.userSettings.requestLogMaxEntries,
-            noTabId: vAPI.noTabId,
-            tabIds: tabIds,
-            tabIdsToken: µb.pageStoresToken,
-            dntDomains: µb.userSettings.dntDomains // ADN
-        };
-        break;
 
     case 'releaseView':
             if ( request.ownerId === µb.logger.ownerId ) {
