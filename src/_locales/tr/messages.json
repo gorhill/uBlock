@@ -44,7 +44,7 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Tıklama: uBlock₀'i bu site için devre dışı bırak\/etkinleştir.\n\nCtrl+tıklama: uBlock₀'i sadece bu sayfa için devre dışı bırak.",
+    "message": "Tıklama: uBlock₀'i bu site için devre dışı bırak\/etkinleştir.\n\nCtrl+tıklama: uBlock₀'i yalnızca bu sayfada devre dışı bırak.",
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
@@ -68,7 +68,7 @@
     "description": "Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt": {
-    "message": "yüklendiğinden beri",
+    "message": "kurulumdan bu yana",
     "description": "English: since install"
   },
   "popupOr": {
@@ -228,11 +228,11 @@
     "description": "English: Block element"
   },
   "settingsCollapseBlockedPrompt": {
-    "message": "Engellenen reklamların yerlerini gizle",
+    "message": "Engellenmiş ögelerin yertutucularını gizle",
     "description": "English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt": {
-    "message": "Engellenmiş reklam sayısını simge üzerinde göster",
+    "message": "Engellenen istek sayısını simge üstünde göster",
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
@@ -252,7 +252,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Deneyimli kullanıcıyım (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Okunması gerekir<\/a>)",
+    "message": "Deneyimli kullanıcıyım (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>okunması gerekir<\/a>)",
     "description": ""
   },
   "settingsAdvancedUserSettings": {
@@ -284,7 +284,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Belirlenenden büyük medya ögelerini engelle {{input:number}} kB",
+    "message": "{{input:number}} kB'tan büyük medya ögelerini engelle",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -328,7 +328,7 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
-    "message": "Kozmetik süzgeçleri incele ve uygula.",
+    "message": "Kozmetik süzgeçleri incele ve uygula",
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
@@ -448,7 +448,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Dosyadan içe aktar...",
+    "message": "Dosyadan al...",
     "description": ""
   },
   "rulesExport": {
@@ -468,7 +468,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Hangi alan adları için uBlock₀'in devre dışı olacağını belirten listeniz. Satır başına bir girdi. Geçersiz alan adları sessizce yok sayılır.",
+    "message": "Beyaz liste yönergeleri, uBlock₀'in devre dışı bırakılması gerektiği web sayfalarını belirler. Satır başına bir girdi. Geçersiz yönergeler sessizce yok sayılır ve yoruma dönüştürülür.",
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
@@ -511,12 +511,16 @@
     "message": "Perde arkası",
     "description": "Pretty name for behind-the-scene network requests"
   },
+  "loggerCurrentTab": {
+    "message": "Geçerli sekme",
+    "description": "Appears in the logger's tab selector"
+  },
   "logFilterPrompt": {
-    "message": "günlük girişlerini süz",
+    "message": "günlük girdilerini süz",
     "description": "English: filter log entries"
   },
   "logMaxEntriesTip": {
-    "message": "Maksimum günlük giriş sayısı",
+    "message": "En fazla günlük girdi sayısı",
     "description": "Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "loggerURLFilteringContextLabel": {
@@ -620,7 +624,7 @@
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
-    "message": "Tüm ayarlarınızı silinecek, ve uBlock₀ yeniden başlayacak.\n\nuBlock₀ fabrika ayarlarına geri dönsün mü?",
+    "message": "Tüm ayarlarınızı silinecek, ve uBlock₀ yeniden başlayacak.\n\nuBlock₀ fabrika ayarlarına sıfırlansın mı?",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
@@ -724,7 +728,7 @@
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
-    "message": "Uyarı! Bu ayarları değiştirme sorumluluğu size aittir.",
+    "message": "Uyarı! Bu gelişmiş ayarları değiştirmenin sorumluluğu size aittir.",
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {

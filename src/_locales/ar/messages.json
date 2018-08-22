@@ -48,7 +48,7 @@
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "اضغط: لتعطيل\/تشغيل uBlock₀ لهذا الموقع.\n\nCtrl+click لتعطيل uBlock₀ لهذه الصفحة فقط.",
+    "message": "اضغط لتعطيل uBlock₀ لهذا الموقع.\n\nCtrl+click لتعطيل uBlock₀ لهذه الصفحة فقط.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
@@ -76,7 +76,7 @@
     "description": "English: or"
   },
   "popupTipDashboard": {
-    "message": "إضغط لفتح قائمة التحكم",
+    "message": "إضغط لفتح لوحة التحكم",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
@@ -100,7 +100,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "اضغط للسماح لجميع النوافذ المنبثقة لهذا الموقع",
+    "message": "أضغط للوقف منع جميع النوافذ المنبثقة لهذا الموقع",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -112,7 +112,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "اضغط للسماح لعناصر الوسائط الكبيرة لهذا الموقع",
+    "message": "أضغط للوقف منع عناصر الوسائط الكبيرة لهذا الموقع",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -120,11 +120,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "اضغط لتعطيل الترشيح الجمالي لهذا الموقع",
+    "message": "اضغط لتعطيل الفلترة التجميلية لهذا الموقع",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "اضغط لتشغيل الترشيح الجمالي لهذا الموقع",
+    "message": "اضغط لتشغيل الفلترة التجميلية لهذا الموقع",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -132,7 +132,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "أضغط للسماح للخطوط الخارجية لهذا الموقع",
+    "message": "أضغط لحجب الخطوط الخارجية لهذا الموقع",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
@@ -384,7 +384,7 @@
     "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
   },
   "3pExternalListObsolete": {
-    "message": "إنتهت صلاحيته.",
+    "message": "متقادم.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate": {
@@ -510,6 +510,10 @@
   "logBehindTheScene": {
     "message": "خلف الكواليس",
     "description": "Pretty name for behind-the-scene network requests"
+  },
+  "loggerCurrentTab": {
+    "message": "علامة التبويب الحالية",
+    "description": "Appears in the logger's tab selector"
   },
   "logFilterPrompt": {
     "message": "فلتر سجل الإدخالات",

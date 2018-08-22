@@ -34,13 +34,7 @@ If you are a coder or designer, just press *Fork* at the top of this github page
 
 If you're not sure where to start, look at the issues labeled [HELP US CODE](https://github.com/dhowe/AdNauseam/labels/HELP-US-CODE). Thanks!
 
-
-
-
-
 #### How to install the development environment
-
-##### Developing on Firefox
 
 1. [Fork and clone](https://help.github.com/articles/fork-a-repo) this repository:
 

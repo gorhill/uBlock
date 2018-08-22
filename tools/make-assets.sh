@@ -14,7 +14,7 @@ printf "*** Packaging assets in $DES... "
 
 if [ -n "${TRAVIS_TAG}" ]; then
   pushd .. > /dev/null
-  git clone https://github.com/uBlockOrigin/uAssets.git
+  git clone --depth 1 https://github.com/uBlockOrigin/uAssets.git
   popd > /dev/null
 fi
 
@@ -32,6 +32,7 @@ cp -R ../uAssets/thirdparties/www.eff.org                        $DES/thirdparti
 
 mkdir $DES/ublock
 cp -R ../uAssets/filters/*                                       $DES/ublock/
-# cp -R ./assets/ublock/filter-lists.json                          $DES/ublock/
+# Optional filter lists: do not include in package
+rm    $DES/ublock/annoyances.txt
 
 echo "done."

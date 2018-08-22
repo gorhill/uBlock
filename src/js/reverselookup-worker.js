@@ -26,7 +26,26 @@
 /******************************************************************************/
 
 var listEntries = Object.create(null),
-    filterClassSeparator = '\n/* end of network - start of cosmetic */\n';
+    reBlockStart = /^#block-start-(\d+)\n/gm;
+
+/******************************************************************************/
+
+var extractBlocks = function(content, begId, endId) {
+    reBlockStart.lastIndex = 0;
+    var out = [];
+    var match = reBlockStart.exec(content);
+    while ( match !== null ) {
+        var beg = match.index + match[0].length;
+        var blockId = parseInt(match[1], 10);
+        if ( blockId >= begId && blockId < endId ) {
+            var end = content.indexOf('#block-end-' + match[1], beg);
+            out.push(content.slice(beg, end));
+            reBlockStart.lastIndex = end;
+        }
+        match = reBlockStart.exec(content);
+    }
+    return out.join('\n');
+};
 
 /******************************************************************************/
 
@@ -34,13 +53,11 @@ var fromNetFilter = function(details) {
     var lists = [],
         compiledFilter = details.compiledFilter,
         entry, content, pos, notFound;
+
     for ( var assetKey in listEntries ) {
         entry = listEntries[assetKey];
         if ( entry === undefined ) { continue; }
-        content = entry.content.slice(
-            0,
-            entry.content.indexOf(filterClassSeparator)
-        );
+        content = extractBlocks(entry.content, 0, 1000);
         pos = 0;
         for (;;) {
             pos = content.indexOf(compiledFilter, pos);
@@ -96,7 +113,7 @@ var fromNetFilter = function(details) {
 // the various compiled versions.
 
 var fromCosmeticFilter = function(details) {
-    var match = /^#@?#/.exec(details.rawFilter),
+    var match = /^#@?#\^?/.exec(details.rawFilter),
         prefix = match[0],
         selector = details.rawFilter.slice(prefix.length);
 
@@ -138,15 +155,14 @@ var fromCosmeticFilter = function(details) {
     }
         
     var response = Object.create(null),
-        assetKey, entry, content, found, beg, end, fargs;
+        assetKey, entry, content,
+        found, beg, end,
+        fargs, isProcedural;
 
     for ( assetKey in listEntries ) {
         entry = listEntries[assetKey];
         if ( entry === undefined ) { continue; }
-        content = entry.content.slice(
-            entry.content.indexOf(filterClassSeparator) +
-            filterClassSeparator.length
-        );
+        content = extractBlocks(entry.content, 1000, 2000);
         found = undefined;
         while ( (match = reNeedle.exec(content)) !== null ) {
             beg = content.lastIndexOf('\n', match.index);
@@ -194,12 +210,15 @@ var fromCosmeticFilter = function(details) {
                     found = prefix + selector;
                 }
                 break;
-            case 6:
             case 8:
             case 9:
+            case 32:
+            case 64:
+            case 65:
+                isProcedural = fargs[3].charCodeAt(0) === 0x7B;
                 if (
-                    fargs[0] === 8 && fargs[3] !== selector ||
-                    fargs[0] === 9 && JSON.parse(fargs[3]).raw !== selector
+                    isProcedural === false && fargs[3] !== selector ||
+                    isProcedural && JSON.parse(fargs[3]).raw !== selector
                 ) {
                     break;
                 }

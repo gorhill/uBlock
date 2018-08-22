@@ -53,11 +53,10 @@ api.removeObserver = function(observer) {
 };
 
 var fireNotification = function(topic, details) {
-    var result;
+    var result, r;
     for ( var i = 0; i < observers.length; i++ ) {
-        if ( observers[i](topic, details) === false ) {
-            result = false;
-        }
+        r = observers[i](topic, details);
+        if ( r !== undefined ) { result = r; }
     }
     return result;
 };
@@ -173,23 +172,21 @@ api.fetchText = function(url, onLoad, onError) {
     }
 };
 
-/*******************************************************************************
+/******************************************************************************/
 
-    TODO(seamless migration):
-    This block of code will be removed when I am confident all users have
-    moved to a version of uBO which does not require the old way of caching
-    assets.
+// https://github.com/gorhill/uBlock/issues/3331
+//   Support the seamless loading of sublists.
 
-    api.listKeyAliases: a map of old asset keys to new asset keys.
+api.fetchFilterList = function(mainlistURL, onLoad, onError) {
+    var content = [],
+        errored = false,
+        pendingSublistURLs = new Set([ mainlistURL ]),
+        loadedSublistURLs = new Set(),
+        toParsedURL = api.fetchFilterList.toParsedURL,
+        parsedMainURL = toParsedURL(mainlistURL);
 
-    migrate(): to seamlessly migrate the old cache manager to the new one:
-    - attempt to preserve and move content of cached assets to new locations;
-    - removes all traces of now obsolete cache manager entries in cacheStorage.
-
-    This code will typically execute only once, when the newer version of uBO
-    is first installed and executed.
-
-**/
+    var onLocalLoadSuccess = function(details) {
+        if ( errored ) { return; }
 
 api.listKeyAliases = {
     "assets/ublock/adnauseam.txt": "adnauseam-filters",
@@ -277,53 +274,60 @@ var migrate = function(callback) {
         callback();
     };
 
-    var onContentRead = function(oldKey, newKey, bin) {
-        var content = bin && bin['cached_asset_content://' + oldKey] || undefined;
-        if ( content ) {
-            assetCacheRegistry[newKey] = {
-                readTime: Date.now(),
-                writeTime: entries[oldKey]
-            };
-            if ( reIsExternalPath.test(oldKey) ) {
-                assetCacheRegistry[newKey].remoteURL = oldKey;
+    var isSublist = details.url !== mainlistURL,
+        sublistURL;
+
+        pendingSublistURLs.delete(details.url);
+        loadedSublistURLs.add(details.url);
+        if ( isSublist ) { content.push('\n! ' + '>>>>>>>> ' + details.url); }
+        content.push(details.content.trim());
+        if ( isSublist ) { content.push('! <<<<<<<< ' + details.url); }
+        if (
+            parsedMainURL !== undefined &&
+            parsedMainURL.pathname.length > 0
+        ) {
+            var reInclude = /^!#include +(\S+)/gm,
+                match, subURL;
+            for (;;) {
+                match = reInclude.exec(details.content);
+                if ( match === null ) { break; }
+                if ( toParsedURL(match[1]) !== undefined ) { continue; }
+                if ( match[1].indexOf('..') !== -1 ) { continue; }
+                subURL =
+                    parsedMainURL.origin +
+                    parsedMainURL.pathname.replace(/[^/]+$/, match[1]);
+                if ( loadedSublistURLs.has(subURL) ) { continue; }
+                pendingSublistURLs.add(subURL);
             }
-            bin = {};
-            bin['cache/' + newKey] = content;
-            vAPI.cacheStorage.set(bin);
         }
-        countdown(1);
+
+        if ( pendingSublistURLs.size !== 0 ) {
+            for ( sublistURL of pendingSublistURLs ) {
+                api.fetchText(sublistURL, onLocalLoadSuccess, onLocalLoadError);
+            }
+            return;
+        }
+
+        details.url = mainlistURL;
+        details.content = content.join('\n').trim();
+        onLoad(details);
     };
 
-    var onEntries = function(bin) {
-        entries = bin && bin['cached_asset_entries'];
-        if ( !entries ) { return callback(); }
-        if ( bin && bin['assetCacheRegistry'] ) {
-            assetCacheRegistry = bin['assetCacheRegistry'];
-        }
-        var aliases = api.listKeyAliases;
-        for ( var oldKey in entries ) {
-            if ( oldKey.endsWith('assets/user/filters.txt') ) { continue; }
-            var newKey = aliases[oldKey];
-            if ( !newKey && /^https?:\/\//.test(oldKey) ) {
-                newKey = oldKey;
-            }
-            if ( newKey ) {
-                vAPI.cacheStorage.get(
-                    'cached_asset_content://' + oldKey,
-                    onContentRead.bind(null, oldKey, newKey)
-                );
-                moveCount += 1;
-            }
-            toRemove.push('cached_asset_content://' + oldKey);
-        }
-        toRemove.push('cached_asset_entries', 'extensionLastVersion');
-        countdown();
+    var onLocalLoadError = function(details) {
+        errored = true;
+        details.url = mainlistURL;
+        details.content = '';
+        onError(details);
     };
 
-    vAPI.cacheStorage.get(
-        [ 'cached_asset_entries', 'assetCacheRegistry' ],
-        onEntries
-    );
+    this.fetchText(mainlistURL, onLocalLoadSuccess, onLocalLoadError);
+};
+
+api.fetchFilterList.toParsedURL = function(url) {
+    try {
+        return new URL(url);
+    } catch (ex) {
+    }
 };
 
 /*******************************************************************************
@@ -531,16 +535,12 @@ var getAssetCacheRegistry = function(callback) {
         }
     };
 
-    var migrationDone = function() {
-        vAPI.cacheStorage.get('assetCacheRegistry', function(bin) {
-            if ( bin && bin.assetCacheRegistry ) {
-                assetCacheRegistry = bin.assetCacheRegistry;
-            }
-            registryReady();
-        });
-    };
-
-    migrate(migrationDone);
+    vAPI.cacheStorage.get('assetCacheRegistry', function(bin) {
+        if ( bin && bin.assetCacheRegistry ) {
+            assetCacheRegistry = bin.assetCacheRegistry;
+        }
+        registryReady();
+    });
 };
 
 var saveAssetCacheRegistry = (function() {
@@ -813,7 +813,11 @@ api.get = function(assetKey, options, callback) {
             return reportBack('', 'E_NOTFOUND');
 
         }
-        api.fetchText(contentURL, onContentLoaded, onContentNotLoaded);
+        if ( assetDetails.content === 'filters' ) {
+            api.fetchFilterList(contentURL, onContentLoaded, onContentNotLoaded);
+        } else {
+            api.fetchText(contentURL, onContentLoaded, onContentNotLoaded);
+        }
     };
 
     var onContentLoaded = function(details) {
@@ -904,7 +908,11 @@ var getRemote = function(assetKey, callback) {
         if ( !contentURL ) {
             return reportBack('', 'E_NOTFOUND');
         }
-        api.fetchText(contentURL, onRemoteContentLoaded, onRemoteContentError);
+        if ( assetDetails.content === 'filters' ) {
+            api.fetchFilterList(contentURL, onRemoteContentLoaded, onRemoteContentError);
+        } else {
+            api.fetchText(contentURL, onRemoteContentLoaded, onRemoteContentError);
+        }
     };
 
     getAssetSourceRegistry(function(registry) {
@@ -1044,7 +1052,7 @@ var updateNext = function() {
                 fireNotification(
                     'before-asset-updated',
                     { assetKey: assetKey,  type: assetEntry.content }
-                ) !== false
+                ) === true
             ) {
                 return assetKey;
             }
@@ -1101,7 +1109,9 @@ var updateDone = function() {
 
 api.updateStart = function(details) {
     var oldUpdateDelay = updaterAssetDelay,
-        newUpdateDelay = details.delay || updaterAssetDelayDefault;
+        newUpdateDelay = typeof details.delay === 'number' ?
+            details.delay :
+            updaterAssetDelayDefault;
     updaterAssetDelay = Math.min(oldUpdateDelay, newUpdateDelay);
     if ( updaterStatus !== undefined ) {
         if ( newUpdateDelay < oldUpdateDelay ) {

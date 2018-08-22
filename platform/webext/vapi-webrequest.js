@@ -29,7 +29,11 @@ vAPI.net = {
     onBeforeRequest: {},
     onBeforeMaybeSpuriousCSPReport: {},
     onHeadersReceived: {},
-    nativeCSPReportFiltering: true
+    nativeCSPReportFiltering: true,
+    webRequest: browser.webRequest,
+    canFilterResponseBody:
+        typeof browser.webRequest === 'object' &&
+        typeof browser.webRequest.filterResponseData === 'function'
 };
 
 /******************************************************************************/
@@ -57,46 +61,41 @@ vAPI.net.registerListeners = function() {
     var wrApi = browser.webRequest;
 
     // legacy Chromium understands only these network request types.
-    var validTypes = {
-        main_frame: true,
-        sub_frame: true,
-        stylesheet: true,
-        script: true,
-        image: true,
-        object: true,
-        xmlhttprequest: true,
-        other: true
-    };
+    var validTypes = new Set([
+        'image',
+        'main_frame',
+        'object',
+        'other',
+        'script',
+        'stylesheet',
+        'sub_frame',
+        'xmlhttprequest',
+    ]);
     // modern Chromium/WebExtensions: more types available.
     if ( wrApi.ResourceType ) {
         for ( let typeKey in wrApi.ResourceType ) {
             if ( wrApi.ResourceType.hasOwnProperty(typeKey) ) {
-                validTypes[wrApi.ResourceType[typeKey]] = true;
+                validTypes.add(wrApi.ResourceType[typeKey]);
             }
         }
     }
 
     var denormalizeTypes = function(aa) {
         if ( aa.length === 0 ) {
-            return Object.keys(validTypes);
+            return Array.from(validTypes);
         }
-        var out = [];
-        var i = aa.length,
-            type,
-            needOther = true;
+        var out = new Set(),
+            i = aa.length;
         while ( i-- ) {
-            type = aa[i];
-            if ( validTypes[type] ) {
-                out.push(type);
+            var type = aa[i];
+            if ( validTypes.has(type) ) {
+                out.add(type);
             }
-            if ( type === 'other' ) {
-                needOther = false;
+            if ( type === 'image' && validTypes.has('imageset') ) {
+                out.add('imageset');
             }
         }
-        if ( needOther ) {
-            out.push('other');
-        }
-        return out;
+        return Array.from(out);
     };
 
     var punycode = self.punycode;
@@ -164,7 +163,7 @@ vAPI.net.registerListeners = function() {
         let urls = this.onBeforeRequest.urls || ['<all_urls>'];
         let types = this.onBeforeRequest.types || undefined;
         if (
-            (validTypes.websocket) &&
+            (validTypes.has('websocket')) &&
             (types === undefined || types.indexOf('websocket') !== -1) &&
             (urls.indexOf('<all_urls>') === -1)
         ) {

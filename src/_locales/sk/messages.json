@@ -511,6 +511,10 @@
     "message": "Za oponou",
     "description": "Pretty name for behind-the-scene network requests"
   },
+  "loggerCurrentTab": {
+    "message": "Aktívna karta",
+    "description": "Appears in the logger's tab selector"
+  },
   "logFilterPrompt": {
     "message": "filtrovať položky v zázname",
     "description": "English: filter log entries"

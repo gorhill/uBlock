@@ -188,8 +188,6 @@ var onInitialize = function(options) {
     }
     self.cloud.options = options;
 
-    fetchCloudData();
-
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'cloud-ui.html', true);
     xhr.overrideMimeType('text/html;charset=utf-8');
@@ -214,6 +212,10 @@ var onInitialize = function(options) {
         uDom('#cloudCog').on('click', openOptions);
         uDom('#cloudOptions').on('click', closeOptions);
         uDom('#cloudOptionsSubmit').on('click', submitOptions);
+        
+        // Patch 2018-01-05: Must not assume this XHR will always be faster
+        // than messaging
+        fetchCloudData();
     };
     xhr.send();
 };

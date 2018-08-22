@@ -432,7 +432,7 @@
     "description": "This will remove all temporary rules"
   },
   "rulesCommit": {
-    "message": "Confirmar",
+    "message": "Aplicar",
     "description": "This will persist temporary rules"
   },
   "rulesEdit": {
@@ -510,6 +510,10 @@
   "logBehindTheScene": {
     "message": "Por trás da cena",
     "description": "Pretty name for behind-the-scene network requests"
+  },
+  "loggerCurrentTab": {
+    "message": "Aba atual",
+    "description": "Appears in the logger's tab selector"
   },
   "logFilterPrompt": {
     "message": "filtrar entradas de registro",

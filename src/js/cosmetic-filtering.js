@@ -19,9 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* jshint bitwise: false */
-/* global punycode */
-
 'use strict';
 
 /******************************************************************************/
@@ -31,56 +28,6 @@
 /******************************************************************************/
 
 var µb = µBlock;
-
-/******************************************************************************/
-
-var isValidCSSSelector = (function() {
-    var div = document.createElement('div'),
-        matchesFn;
-    // Keep in mind:
-    //   https://github.com/gorhill/uBlock/issues/693
-    //   https://github.com/gorhill/uBlock/issues/1955
-    if ( div.matches instanceof Function ) {
-        matchesFn = div.matches.bind(div);
-    } else if ( div.mozMatchesSelector instanceof Function ) {
-        matchesFn = div.mozMatchesSelector.bind(div);
-    } else if ( div.webkitMatchesSelector instanceof Function ) {
-        matchesFn = div.webkitMatchesSelector.bind(div);
-    } else if ( div.msMatchesSelector instanceof Function ) {
-        matchesFn = div.msMatchesSelector.bind(div);
-    } else {
-        matchesFn = div.querySelector.bind(div);
-    }
-    // https://github.com/gorhill/uBlock/issues/3111
-    //   Workaround until https://bugzilla.mozilla.org/show_bug.cgi?id=1406817
-    //   is fixed.
-    try {
-        matchesFn(':scope');
-    } catch (ex) {
-        matchesFn = div.querySelector.bind(div);
-    }
-    return function(s) {
-        try {
-            matchesFn(s + ', ' + s + ':not(#foo)');
-        } catch (ex) {
-            return false;
-        }
-        return true;
-    };
-})();
-
-var reIsRegexLiteral = /^\/.+\/$/;
-
-var isBadRegex = function(s) {
-    try {
-        void new RegExp(s);
-    } catch (ex) {
-        isBadRegex.message = ex.toString();
-        return true;
-    }
-    return false;
-};
-
 var cosmeticSurveyingMissCountMax = parseInt(vAPI.localStorage.getItem('cosmeticSurveyingMissCountMax'), 10) || 15;
 
 /******************************************************************************/
@@ -160,7 +107,9 @@ var FilterHostname = function(s, hostname) {
 FilterHostname.prototype.fid = 8;
 
 FilterHostname.prototype.retrieve = function(hostname, out) {
-    if ( hostname.endsWith(this.hostname) ) {
+    if ( hostname.endsWith(this.hostname) === false ) { return; }
+    var i = hostname.length - this.hostname.length;
+    if ( i === 0 || hostname.charCodeAt(i-1) === 0x2E /* '.' */ ) {
         out.add(this.s);
     }
 };
@@ -218,174 +167,6 @@ FilterBucket.load = function(data) {
 };
 
 registerFilterClass(FilterBucket);
-
-/******************************************************************************/
-/******************************************************************************/
-
-var FilterParser = function() {
-    this.prefix =  this.suffix = '';
-    this.unhide = 0;
-    this.hostnames = [];
-    this.invalid = false;
-    this.cosmetic = true;
-    this.reNeedHostname = /^(?:script:contains|script:inject|.+?:-abp-contains|.+?:-abp-has|.+?:contains|.+?:has|.+?:has-text|.+?:if|.+?:if-not|.+?:matches-css(?:-before|-after)?|.*?:xpath)\(.+\)$/;
-};
-
-/******************************************************************************/
-
-FilterParser.prototype.reset = function() {
-    this.raw = '';
-    this.prefix = this.suffix = '';
-    this.unhide = 0;
-    this.hostnames.length = 0;
-    this.invalid = false;
-    this.cosmetic = true;
-    return this;
-};
-
-/******************************************************************************/
-
-FilterParser.prototype.parse = function(raw) {
-    // important!
-    this.reset();
-
-    this.raw = raw;
-
-    // Find the bounds of the anchor.
-    var lpos = raw.indexOf('#');
-    if ( lpos === -1 ) {
-        this.cosmetic = false;
-        return this;
-    }
-    var rpos = raw.indexOf('#', lpos + 1);
-    if ( rpos === -1 ) {
-        this.cosmetic = false;
-        return this;
-    }
-
-    // Coarse-check that the anchor is valid.
-    // `##`: l = 1
-    // `#@#`, `#$#`, `#%#`, `#?#`: l = 2
-    // `#@$#`, `#@%#`, `#@?#`: l = 3
-    if ( (rpos - lpos) > 3 ) {
-        this.cosmetic = false;
-        return this;
-    }
-
-    // Find out type of cosmetic filter.
-    // Exception filter?
-    if ( raw.charCodeAt(lpos + 1) === 0x40 /* '@' */ ) {
-        this.unhide = 1;
-    }
-
-    // https://github.com/gorhill/uBlock/issues/952
-    // Find out whether we are dealing with an Adguard-specific cosmetic
-    // filter, and if so, translate it if supported, or discard it if not
-    // supported.
-    var cCode = raw.charCodeAt(rpos - 1);
-    if ( cCode !== 0x23 /* '#' */ && cCode !== 0x40 /* '@' */ ) {
-        // We have an Adguard/ABP cosmetic filter if and only if the character
-        //  is `$`, `%` or `?`, otherwise it's not a cosmetic filter.
-        if (
-            cCode !== 0x24 /* '$' */ &&
-            cCode !== 0x25 /* '%' */ &&
-            cCode !== 0x3F /* '?' */
-        ) {
-            this.cosmetic = false;
-            return this;
-        }
-        // Adguard's scriptlet injection: not supported.
-        if ( cCode === 0x25 /* '%' */ ) {
-            this.invalid = true;
-            return this;
-        }
-        // Adguard's style injection: supported, but translate to uBO's format.
-        if ( cCode === 0x24 /* '$' */ ) {
-            raw = this.translateAdguardCSSInjectionFilter(raw);
-            if ( raw === '' ) {
-                this.invalid = true;
-                return this;
-            }
-        }
-        rpos = raw.indexOf('#', lpos + 1);
-    }
-
-    // Extract the hostname(s).
-    if ( lpos !== 0 ) {
-        this.prefix = raw.slice(0, lpos);
-    }
-
-    // Extract the selector.
-    this.suffix = raw.slice(rpos + 1).trim();
-    if ( this.suffix.length === 0 ) {
-        this.cosmetic = false;
-        return this;
-    }
-
-    // 2014-05-23:
-    // https://github.com/gorhill/httpswitchboard/issues/260
-    // Any sequence of `#` longer than one means the line is not a valid
-    // cosmetic filter.
-    if ( this.suffix.indexOf('##') !== -1 ) {
-        this.cosmetic = false;
-        return this;
-    }
-
-    // Normalize high-medium selectors: `href` is assumed to imply `a` tag. We
-    // need to do this here in order to correctly avoid duplicates. The test
-    // is designed to minimize overhead -- this is a low occurrence filter.
-    if ( this.suffix.startsWith('[href^="', 1) ) {
-        this.suffix = this.suffix.slice(1);
-    }
-
-    if ( this.prefix !== '' ) {
-        this.hostnames = this.prefix.split(/\s*,\s*/);
-    }
-
-    // For some selectors, it is mandatory to have a hostname or entity:
-    //   ##script:contains(...)
-    //   ##script:inject(...)
-    //   ##.foo:-abp-contains(...)
-    //   ##.foo:-abp-has(...)
-    //   ##.foo:contains(...)
-    //   ##.foo:has(...)
-    //   ##.foo:has-text(...)
-    //   ##.foo:if(...)
-    //   ##.foo:if-not(...)
-    //   ##.foo:matches-css(...)
-    //   ##.foo:matches-css-after(...)
-    //   ##.foo:matches-css-before(...)
-    //   ##:xpath(...)
-    if (
-        this.hostnames.length === 0 &&
-        this.unhide === 0 &&
-        this.reNeedHostname.test(this.suffix)
-    ) {
-        this.invalid = true;
-        return this;
-    }
-
-    return this;
-};
-
-/******************************************************************************/
-
-// Reference: https://adguard.com/en/filterrules.html#cssInjection
-
-FilterParser.prototype.translateAdguardCSSInjectionFilter = function(raw) {
-    var matches = /^([^#]*)#(@?)\$#([^{]+)\{([^}]+)\}$/.exec(raw);
-    if ( matches === null ) {
-        return '';
-    }
-    // For now we do not allow generic CSS injections (prolly never).
-    if ( matches[1] === '' && matches[2] !== '@' ) {
-        return '';
-    }
-    return matches[1] +
-           '#' + matches[2] + '#' +
-           matches[3].trim() +
-           ':style(' +  matches[4].trim() + ')';
-};
 
 /******************************************************************************/
 /******************************************************************************/
@@ -538,17 +319,11 @@ SelectorCacheEntry.prototype.retrieve = function(type, out) {
 /******************************************************************************/
 /******************************************************************************/
 
-// Two Unicode characters:
-// T0HHHHHHH HHHHHHHHH
-// |       |         |
-// |       |         |
-// |       |         |
-// |       |         +-- bit 8-0 of FNV
-// |       |
-// |       +-- bit 15-9 of FNV
-// |
-// +-- filter type (0=hide 1=unhide)
-//
+// 0000HHHHHHHHHHHH
+//                |
+//                |
+//                |
+//                +-- bit 11-0 of FNV
 
 var makeHash = function(token) {
     // Ref: Given a URL, returns a unique 4-character long hash string
@@ -607,7 +382,6 @@ var makeHash = function(token) {
 
 var FilterContainer = function() {
     this.noDomainHash = '-';
-    this.parser = new FilterParser();
     this.reHasUnicode = /[^\x00-\x7F]/;
     this.rePlainSelector = /^[#.][\w\\-]+/;
     this.rePlainSelectorEscaped = /^[#.](?:\\[0-9A-Fa-f]+ |\\.|\w|-)+/;
@@ -615,8 +389,26 @@ var FilterContainer = function() {
     this.reEscapeSequence = /\\([0-9A-Fa-f]+ |.)/g;
     this.reSimpleHighGeneric1 = /^[a-z]*\[[^[]+]$/;
     this.reHighMedium = /^\[href\^="https?:\/\/([^"]{8})[^"]*"\]$/;
-    this.reScriptSelector = /^script:(contains|inject)\((.+)\)$/;
-    this.punycode = punycode;
+    this.reNeedHostname = new RegExp([
+        '^',
+        '(?:',
+            [
+            'script:contains',
+            '.+?:has',
+            '.+?:has-text',
+            '.+?:if',
+            '.+?:if-not',
+            '.+?:matches-css(?:-before|-after)?',
+            '.*?:xpath',
+            '.+?:style',
+            '.+?:-abp-contains', // ABP-specific for `:has-text`
+            '.+?:-abp-has',      // ABP-specific for `:if`
+            '.+?:contains'       // Adguard-specific for `:has-text`
+            ].join('|'),
+        ')',
+        '\\(.+\\)',
+        '$'
+    ].join(''));
 
     this.selectorCache = new Map();
     this.selectorCachePruneDelay = 10 * 60 * 1000; // 10 minutes
@@ -630,6 +422,9 @@ var FilterContainer = function() {
     // generic exception filters
     this.genericDonthideSet = new Set();
 
+    // TODO: Think about reusing µb.staticExtFilteringEngine.HostnameBasedDB
+    //       for both specific and procedural filters. This would require some
+    //       refactoring.
     // hostname, entity-based filters
     this.specificFilters = new Map();
     this.proceduralFilters = new Map();
@@ -664,8 +459,6 @@ var FilterContainer = function() {
         mru: new µb.MRUCache(16)
     };
 
-    this.userScripts = new Map();
-
     // Short-lived: content is valid only during one function call. These
     // is to prevent repeated allocation/deallocation overheads -- the
     // constructors/destructors of javascript Set/Map is assumed to be costlier
@@ -673,6 +466,7 @@ var FilterContainer = function() {
     this.setRegister0 = new Set();
     this.setRegister1 = new Set();
     this.setRegister2 = new Set();
+    this.mapRegister0 = new Map();
 
     this.reset();
 };
@@ -682,7 +476,6 @@ var FilterContainer = function() {
 // Reset all, thus reducing to a minimum memory footprint of the context.
 
 FilterContainer.prototype.reset = function() {
-    this.parser.reset();
     this.µburi = µb.URI;
     this.frozen = false;
     this.acceptedCount = 0;
@@ -718,11 +511,6 @@ FilterContainer.prototype.reset = function() {
     this.highlyGeneric.complex.dict.clear();
     this.highlyGeneric.complex.str = '';
     this.highlyGeneric.complex.mru.reset();
-
-    this.scriptTagFilters = {};
-    this.scriptTagFilterCount = 0;
-    this.userScripts.clear();
-    this.userScriptCount = 0;
 };
 
 /******************************************************************************/
@@ -756,346 +544,9 @@ FilterContainer.prototype.freeze = function() {
     this.highlyGeneric.simple.str = µb.arrayFrom(this.highlyGeneric.simple.dict).join(',\n');
     this.highlyGeneric.complex.str = µb.arrayFrom(this.highlyGeneric.complex.dict).join(',\n');
 
-    this.parser.reset();
-    this.compileSelector.reset();
-    this.compileProceduralSelector.reset();
     this.frozen = true;
 };
 
-/******************************************************************************/
-
-// https://github.com/chrisaljoudi/uBlock/issues/1004
-// Detect and report invalid CSS selectors.
-
-// Discard new ABP's `-abp-properties` directive until it is
-// implemented (if ever). Unlikely, see:
-// https://github.com/gorhill/uBlock/issues/1752
-
-// https://github.com/gorhill/uBlock/issues/2624
-// Convert Adguard's `-ext-has='...'` into uBO's `:has(...)`.
-
-FilterContainer.prototype.compileSelector = (function() {
-    var reAfterBeforeSelector = /^(.+?)(::?after|::?before)$/,
-        reStyleSelector = /^(.+?):style\((.+?)\)$/,
-        reStyleBad = /url\([^)]+\)/,
-        reScriptSelector = /^script:(contains|inject)\((.+)\)$/,
-        reExtendedSyntax = /\[-(?:abp|ext)-[a-z-]+=(['"])(?:.+?)(?:\1)\]/,
-        reExtendedSyntaxParser = /\[-(?:abp|ext)-([a-z-]+)=(['"])(.+?)\2\]/,
-        div = document.createElement('div');
-
-    var normalizedExtendedSyntaxOperators = new Map([
-        [ 'contains', ':has-text' ],
-        [ 'has', ':if' ],
-        [ 'matches-css', ':matches-css' ],
-        [ 'matches-css-after', ':matches-css-after' ],
-        [ 'matches-css-before', ':matches-css-before' ],
-    ]);
-
-    var isValidStyleProperty = function(cssText) {
-        if ( reStyleBad.test(cssText) ) { return false; }
-        div.style.cssText = cssText;
-        if ( div.style.cssText === '' ) { return false; }
-        div.style.cssText = '';
-        return true;
-    };
-
-    var entryPoint = function(raw) {
-        var extendedSyntax = reExtendedSyntax.test(raw);
-        if ( isValidCSSSelector(raw) && extendedSyntax === false ) {
-            return raw;
-        }
-
-        // We  rarely reach this point -- majority of selectors are plain
-        // CSS selectors.
-
-        var matches, operator;
-
-        // Supported Adguard/ABP advanced selector syntax: will translate into
-        // uBO's syntax before further processing.
-        // Mind unsupported advanced selector syntax, such as ABP's
-        // `-abp-properties`.
-        // Note: extended selector syntax has been deprecated in ABP, in favor
-        // of the procedural one (i.e. `:operator(...)`). See
-        // https://issues.adblockplus.org/ticket/5287
-        if ( extendedSyntax ) {
-            while ( (matches = reExtendedSyntaxParser.exec(raw)) !== null ) {
-                operator = normalizedExtendedSyntaxOperators.get(matches[1]);
-                if ( operator === undefined ) { return; }
-                raw = raw.slice(0, matches.index) +
-                      operator + '(' + matches[3] + ')' +
-                      raw.slice(matches.index + matches[0].length);
-            }
-            return this.compileSelector(raw);
-        }
-
-        var selector = raw,
-            pseudoclass, style;
-
-        // `:style` selector?
-        if ( (matches = reStyleSelector.exec(selector)) !== null ) {
-            selector = matches[1];
-            style = matches[2];
-        }
-
-        // https://github.com/gorhill/uBlock/issues/2448
-        // :after- or :before-based selector?
-        if ( (matches = reAfterBeforeSelector.exec(selector)) ) {
-            selector = matches[1];
-            pseudoclass = matches[2];
-        }
-
-        if ( style !== undefined || pseudoclass !== undefined ) {
-            if ( isValidCSSSelector(selector) === false ) {
-                return;
-            }
-            if ( pseudoclass !== undefined ) {
-                selector += pseudoclass;
-            }
-            if ( style !== undefined ) {
-                if ( isValidStyleProperty(style) === false ) { return; }
-                return JSON.stringify({
-                    raw: raw,
-                    style: [ selector, style ]
-                });
-            }
-            return JSON.stringify({
-                raw: raw,
-                pseudoclass: true
-            });
-        }
-
-        // `script:` filter?
-        if ( (matches = reScriptSelector.exec(raw)) !== null ) {
-            // :inject
-            if ( matches[1] === 'inject' ) {
-                return raw;
-            }
-            // :contains
-            if (
-                reIsRegexLiteral.test(matches[2]) === false ||
-                isBadRegex(matches[2].slice(1, -1)) === false
-            ) {
-                return raw;
-            }
-        }
-
-        // Procedural selector?
-        var compiled;
-        if ( (compiled = this.compileProceduralSelector(raw)) ) {
-            return compiled;
-        }
-
-        µb.logger.writeOne('', 'error', 'Cosmetic filtering – invalid filter: ' + raw);
-    };
-
-    entryPoint.reset = function() {
-    };
-
-    return entryPoint;
-})();
-
-/******************************************************************************/
-
-FilterContainer.prototype.compileProceduralSelector = (function() {
-    var reOperatorParser = /(:(?:-abp-contains|-abp-has|contains|has|has-text|if|if-not|matches-css|matches-css-after|matches-css-before|xpath))\(.+\)$/,
-        reFirstParentheses = /^\(*/,
-        reLastParentheses = /\)*$/,
-        reEscapeRegex = /[.*+?^${}()|[\]\\]/g,
-        reNeedScope = /^\s*[+>~]/;
-
-    var lastProceduralSelector = '',
-        lastProceduralSelectorCompiled,
-        regexToRawValue = new Map();
-
-    var compileCSSSelector = function(s) {
-        // https://github.com/AdguardTeam/ExtendedCss/issues/31#issuecomment-302391277
-        // Prepend `:scope ` if needed.
-        if ( reNeedScope.test(s) ) {
-            s = ':scope ' + s;
-        }
-        if ( isValidCSSSelector(s) ) {
-            return s;
-        }
-    };
-
-    var compileText = function(s) {
-        var reText;
-        if ( reIsRegexLiteral.test(s) ) {
-            reText = s.slice(1, -1);
-            if ( isBadRegex(reText) ) { return; }
-        } else {
-            reText = s.replace(reEscapeRegex, '\\$&');
-            regexToRawValue.set(reText, s);
-        }
-        return reText;
-    };
-
-    var compileCSSDeclaration = function(s) {
-        var name, value, reText,
-            pos = s.indexOf(':');
-        if ( pos === -1 ) { return; }
-        name = s.slice(0, pos).trim();
-        value = s.slice(pos + 1).trim();
-        if ( reIsRegexLiteral.test(value) ) {
-            reText = value.slice(1, -1);
-            if ( isBadRegex(reText) ) { return; }
-        } else {
-            reText = '^' + value.replace(reEscapeRegex, '\\$&') + '$';
-            regexToRawValue.set(reText, value);
-        }
-        return { name: name, value: reText };
-    };
-
-    var compileConditionalSelector = function(s) {
-        // https://github.com/AdguardTeam/ExtendedCss/issues/31#issuecomment-302391277
-        // Prepend `:scope ` if needed.
-        if ( reNeedScope.test(s) ) {
-            s = ':scope ' + s;
-        }
-        return compile(s);
-    };
-
-    var compileXpathExpression = function(s) {
-        var dummy;
-        try {
-            dummy = document.createExpression(s, null) instanceof XPathExpression;
-        } catch (e) {
-            return;
-        }
-        return s;
-    };
-
-    // https://github.com/gorhill/uBlock/issues/2793
-    var normalizedOperators = new Map([
-        [ ':-abp-contains', ':has-text' ],
-        [ ':-abp-has', ':if' ],
-        [ ':contains', ':has-text' ]
-    ]);
-
-    var compileArgument = new Map([
-        [ ':has', compileCSSSelector ],
-        [ ':has-text', compileText ],
-        [ ':if', compileConditionalSelector ],
-        [ ':if-not', compileConditionalSelector ],
-        [ ':matches-css', compileCSSDeclaration ],
-        [ ':matches-css-after', compileCSSDeclaration ],
-        [ ':matches-css-before', compileCSSDeclaration ],
-        [ ':xpath', compileXpathExpression ]
-    ]);
-
-    // https://github.com/gorhill/uBlock/issues/2793#issuecomment-333269387
-    // - Normalize (somewhat) the stringified version of procedural cosmetic
-    //   filters -- this increase the likelihood of detecting duplicates given
-    //   that uBO is able to understand syntax specific to other blockers.
-    //   The normalized string version is what is reported in the logger, by
-    //   design.
-    var decompile = function(compiled) {
-        var raw = [ compiled.selector ],
-            tasks = compiled.tasks,
-            value;
-        if ( Array.isArray(tasks) ) {
-            for ( var i = 0, n = tasks.length, task; i < n; i++ ) {
-                task = tasks[i];
-                switch ( task[0] ) {
-                case ':has':
-                case ':xpath':
-                    raw.push(task[0], '(', task[1], ')');
-                    break;
-                case ':has-text':
-                    value = regexToRawValue.get(task[1]);
-                    if ( value === undefined ) {
-                        value = '/' + task[1] + '/';
-                    }
-                    raw.push(task[0], '(', value, ')');
-                    break;
-                case ':matches-css':
-                case ':matches-css-after':
-                case ':matches-css-before':
-                    value = regexToRawValue.get(task[1].value);
-                    if ( value === undefined ) {
-                        value = '/' + task[1].value + '/';
-                    }
-                    raw.push(task[0], '(', task[1].name, ': ', value, ')');
-                    break;
-                case ':if':
-                case ':if-not':
-                    raw.push(task[0], '(', decompile(task[1]), ')');
-                    break;
-                }
-            }
-        }
-        return raw.join('');
-    };
-
-    var compile = function(raw) {
-        var matches = reOperatorParser.exec(raw);
-        if ( matches === null ) {
-            if ( isValidCSSSelector(raw) ) { return { selector: raw }; }
-            return;
-        }
-        var tasks = [],
-            firstOperand = raw.slice(0, matches.index),
-            currentOperator = matches[1],
-            selector = raw.slice(matches.index + currentOperator.length),
-            currentArgument = '', nextOperand, nextOperator,
-            depth = 0, opening, closing;
-        if ( firstOperand !== '' && isValidCSSSelector(firstOperand) === false ) { return; }
-        for (;;) {
-            matches = reOperatorParser.exec(selector);
-            if ( matches !== null ) {
-                nextOperand = selector.slice(0, matches.index);
-                nextOperator = matches[1];
-            } else {
-                nextOperand = selector;
-                nextOperator = '';
-            }
-            opening = reFirstParentheses.exec(nextOperand)[0].length;
-            closing = reLastParentheses.exec(nextOperand)[0].length;
-            if ( opening > closing ) {
-                if ( depth === 0 ) { currentArgument = ''; }
-                depth += 1;
-            } else if ( closing > opening && depth > 0 ) {
-                depth -= 1;
-                if ( depth === 0 ) { nextOperand = currentArgument + nextOperand; }
-            }
-            if ( depth !== 0 ) {
-                currentArgument += nextOperand + nextOperator;
-            } else {
-                currentOperator = normalizedOperators.get(currentOperator) || currentOperator;
-                currentArgument = compileArgument.get(currentOperator)(nextOperand.slice(1, -1));
-                if ( currentArgument === undefined ) { return; }
-                tasks.push([ currentOperator, currentArgument ]);
-                currentOperator = nextOperator;
-            }
-            if ( nextOperator === '' ) { break; }
-            selector = selector.slice(matches.index + nextOperator.length);
-        }
-        if ( tasks.length === 0 || depth !== 0 ) { return; }
-        return { selector: firstOperand, tasks: tasks };
-    };
-
-    var entryPoint = function(raw) {
-        if ( raw === lastProceduralSelector ) {
-            return lastProceduralSelectorCompiled;
-        }
-        lastProceduralSelector = raw;
-        var compiled = compile(raw);
-        if ( compiled !== undefined ) {
-            compiled.raw = decompile(compiled);
-            compiled = JSON.stringify(compiled);
-        }
-        lastProceduralSelectorCompiled = compiled;
-        return compiled;
-    };
-
-    entryPoint.reset = function() {
-        regexToRawValue = new Map();
-        lastProceduralSelector = '';
-        lastProceduralSelectorCompiled = undefined;
-    };
-
-    return entryPoint;
-})();
 
 /******************************************************************************/
 
@@ -1133,17 +584,12 @@ FilterContainer.prototype.keyFromSelector = function(selector) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.compile = function(s, writer) {
-    var parsed = this.parser.parse(s);
-    if ( parsed.cosmetic === false ) {
-        return false;
-    }
-    if ( parsed.invalid ) {
-        return true;
-    }
+FilterContainer.prototype.compile = function(parsed, writer) {
+    // 1000 = cosmetic filtering
+    writer.select(1000);
 
-    var hostnames = parsed.hostnames;
-    var i = hostnames.length;
+    var hostnames = parsed.hostnames,
+        i = hostnames.length;
     if ( i === 0 ) {
         this.compileGenericSelector(parsed, writer);
         return true;
@@ -1153,9 +599,8 @@ FilterContainer.prototype.compile = function(s, writer) {
     // Negated hostname means the filter applies to all non-negated hostnames
     // of same filter OR globally if there is no non-negated hostnames.
     var applyGlobally = true;
-    var hostname;
     while ( i-- ) {
-        hostname = hostnames[i];
+        var hostname = hostnames[i];
         if ( hostname.startsWith('~') === false ) {
             applyGlobally = false;
         }
@@ -1171,7 +616,7 @@ FilterContainer.prototype.compile = function(s, writer) {
 /******************************************************************************/
 
 FilterContainer.prototype.compileGenericSelector = function(parsed, writer) {
-    if ( parsed.unhide === 0 ) {
+    if ( parsed.exception === false ) {
         this.compileGenericHideSelector(parsed, writer);
     } else {
         this.compileGenericUnhideSelector(parsed, writer);
@@ -1181,8 +626,31 @@ FilterContainer.prototype.compileGenericSelector = function(parsed, writer) {
 /******************************************************************************/
 
 FilterContainer.prototype.compileGenericHideSelector = function(parsed, writer) {
-    var selector = parsed.suffix,
-        type = selector.charCodeAt(0),
+    var selector = parsed.suffix;
+
+    // For some selectors, it is mandatory to have a hostname or entity:
+    //   ##.foo:-abp-contains(...)
+    //   ##.foo:-abp-has(...)
+    //   ##.foo:contains(...)
+    //   ##.foo:has(...)
+    //   ##.foo:has-text(...)
+    //   ##.foo:if(...)
+    //   ##.foo:if-not(...)
+    //   ##.foo:matches-css(...)
+    //   ##.foo:matches-css-after(...)
+    //   ##.foo:matches-css-before(...)
+    //   ##:xpath(...)
+    //   ##.foo:style(...)
+    if ( this.reNeedHostname.test(selector) ) {
+        µb.logger.writeOne(
+            '',
+            'error',
+            'Cosmetic filtering – invalid generic filter: ##' + selector
+        );
+        return;
+    }
+
+    var type = selector.charCodeAt(0),
         key;
 
     if ( type === 0x23 /* '#' */ ) {
@@ -1196,7 +664,7 @@ FilterContainer.prototype.compileGenericHideSelector = function(parsed, writer) 
             return;
         }
         // Complex selector-based CSS rule.
-        if ( this.compileSelector(selector) !== undefined ) {
+        if ( µb.staticExtFilteringEngine.compileSelector(selector) !== undefined ) {
             writer.push([ 1 /* lg+ */, key.slice(1), selector ]);
         }
         return;
@@ -1213,13 +681,13 @@ FilterContainer.prototype.compileGenericHideSelector = function(parsed, writer) 
             return;
         }
         // Complex selector-based CSS rule.
-        if ( this.compileSelector(selector) !== undefined ) {
+        if ( µb.staticExtFilteringEngine.compileSelector(selector) !== undefined ) {
             writer.push([ 3 /* lg+ */, key.slice(1), selector ]);
         }
         return;
     }
 
-    var compiled = this.compileSelector(selector);
+    var compiled = µb.staticExtFilteringEngine.compileSelector(selector);
     if ( compiled === undefined ) { return; }
     // TODO: Detect and error on procedural cosmetic filters.
 
@@ -1257,18 +725,12 @@ FilterContainer.prototype.compileGenericHideSelector = function(parsed, writer) 
 
 /******************************************************************************/
 
-FilterContainer.prototype.compileGenericUnhideSelector = function(parsed, writer) {
-    var selector = parsed.suffix;
-
-    // script:contains(...)
-    // script:inject(...)
-    if ( this.reScriptSelector.test(selector) ) {
-        writer.push([ 6 /* js */, '!', '', selector ]);
-        return;
-    }
-
+FilterContainer.prototype.compileGenericUnhideSelector = function(
+    parsed,
+    writer
+) {
     // Procedural cosmetic filters are acceptable as generic exception filters.
-    var compiled = this.compileSelector(selector);
+    var compiled = µb.staticExtFilteringEngine.compileSelector(parsed.suffix);
     if ( compiled === undefined ) { return; }
 
     // https://github.com/chrisaljoudi/uBlock/issues/497
@@ -1279,36 +741,23 @@ FilterContainer.prototype.compileGenericUnhideSelector = function(parsed, writer
 
 /******************************************************************************/
 
-FilterContainer.prototype.compileHostnameSelector = function(hostname, parsed, writer) {
+FilterContainer.prototype.compileHostnameSelector = function(
+    hostname,
+    parsed,
+    writer
+) {
     // https://github.com/chrisaljoudi/uBlock/issues/145
-    var unhide = parsed.unhide;
+    var unhide = parsed.exception ? 1 : 0;
     if ( hostname.startsWith('~') ) {
         hostname = hostname.slice(1);
         unhide ^= 1;
     }
 
-    // punycode if needed
-    if ( this.reHasUnicode.test(hostname) ) {
-        hostname = this.punycode.toASCII(hostname);
-    }
-
-    var selector = parsed.suffix,
-        domain = this.µburi.domainFromHostname(hostname),
-        hash;
-
-    // script:contains(...)
-    // script:inject(...)
-    if ( this.reScriptSelector.test(selector) ) {
-        hash = domain !== '' ? domain : this.noDomainHash;
-        if ( unhide ) {
-            hash = '!' + hash;
-        }
-        writer.push([ 6 /* js */, hash, hostname, selector ]);
-        return;
-    }
-
-    var compiled = this.compileSelector(selector);
+    var compiled = µb.staticExtFilteringEngine.compileSelector(parsed.suffix);
     if ( compiled === undefined ) { return; }
+
+    var domain = this.µburi.domainFromHostname(hostname),
+        hash;
 
     // https://github.com/chrisaljoudi/uBlock/issues/188
     // If not a real domain as per PSL, assign a synthetic one
@@ -1317,7 +766,7 @@ FilterContainer.prototype.compileHostnameSelector = function(hostname, parsed, w
     } else {
         hash = makeHash(hostname);
     }
-    if ( unhide ) {
+    if ( unhide === 1 ) {
         hash = '!' + hash;
     }
 
@@ -1334,23 +783,22 @@ FilterContainer.prototype.compileHostnameSelector = function(hostname, parsed, w
 
 /******************************************************************************/
 
-FilterContainer.prototype.fromCompiledContent = function(
-    reader,
-    skipGenericCosmetic,
-    skipCosmetic
-) {
-    if ( skipCosmetic ) {
+FilterContainer.prototype.fromCompiledContent = function(reader, options) {
+    if ( options.skipCosmetic ) {
         this.skipCompiledContent(reader);
         return;
     }
-    if ( skipGenericCosmetic ) {
+    if ( options.skipGenericCosmetic ) {
         this.skipGenericCompiledContent(reader);
         return;
     }
 
     var fingerprint, args, db, filter, bucket;
 
-    while ( reader.next() === true ) {
+    // 1000 = cosmetic filtering
+    reader.select(1000);
+
+    while ( reader.next() ) {
         this.acceptedCount += 1;
         fingerprint = reader.fingerprint();
         if ( this.duplicateBuster.has(fingerprint) ) {
@@ -1408,12 +856,6 @@ FilterContainer.prototype.fromCompiledContent = function(
             this.highlyGeneric.complex.dict.add(args[1]);
             break;
 
-        // js, hash, example.com, script:contains(...)
-        // js, hash, example.com, script:inject(...)
-        case 6:
-            this.createScriptFilter(args[1], args[2], args[3]);
-            break;
-
         // https://github.com/chrisaljoudi/uBlock/issues/497
         // Generic exception filters: expected to be a rare occurrence.
         // #@#.tweet
@@ -1449,7 +891,10 @@ FilterContainer.prototype.fromCompiledContent = function(
 FilterContainer.prototype.skipGenericCompiledContent = function(reader) {
     var fingerprint, args, db, filter, bucket;
 
-    while ( reader.next() === true ) {
+    // 1000 = cosmetic filtering
+    reader.select(1000);
+
+    while ( reader.next() ) {
         this.acceptedCount += 1;
         fingerprint = reader.fingerprint();
         if ( this.duplicateBuster.has(fingerprint) ) {
@@ -1460,13 +905,6 @@ FilterContainer.prototype.skipGenericCompiledContent = function(reader) {
         args = reader.args();
 
         switch ( args[0] ) {
-
-        // js, hash, example.com, script:contains(...)
-        // js, hash, example.com, script:inject(...)
-        case 6:
-            this.duplicateBuster.add(fingerprint);
-            this.createScriptFilter(args[1], args[2], args[3]);
-            break;
 
         // https://github.com/chrisaljoudi/uBlock/issues/497
         // Generic exception filters: expected to be a rare occurrence.
@@ -1502,238 +940,14 @@ FilterContainer.prototype.skipGenericCompiledContent = function(reader) {
 /******************************************************************************/
 
 FilterContainer.prototype.skipCompiledContent = function(reader) {
-    var fingerprint, args;
+    // 1000 = cosmetic filtering
+    reader.select(1000);
 
-    while ( reader.next() === true ) {
+    while ( reader.next() ) {
         this.acceptedCount += 1;
-
-        args = reader.args();
-
-        // js, hash, example.com, script:contains(...)
-        // js, hash, example.com, script:inject(...)
-        if ( args[0] === 6 ) {
-            fingerprint = reader.fingerprint();
-            if ( this.duplicateBuster.has(fingerprint) === false ) {
-                this.duplicateBuster.add(fingerprint);
-                this.createScriptFilter(args[1], args[2], args[3]);
-            }
-            continue;
-        }
-
         this.discardedCount += 1;
     }
 };
-
-/******************************************************************************/
-
-FilterContainer.prototype.createScriptFilter = function(hash, hostname, selector) {
-    if ( selector.startsWith('script:contains') ) {
-        return this.createScriptTagFilter(hash, hostname, selector);
-    }
-    if ( selector.startsWith('script:inject') ) {
-        return this.createUserScriptRule(hash, hostname, selector);
-    }
-};
-
-/******************************************************************************/
-
-// 0123456789012345678901
-// script:contains(token)
-//                 ^   ^
-//                16   -1
-
-FilterContainer.prototype.createScriptTagFilter = function(hash, hostname, selector) {
-    var token = selector.slice(16, -1);
-    token = token.startsWith('/') && token.endsWith('/')
-        ? token.slice(1, -1)
-        : token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-
-    if ( this.scriptTagFilters.hasOwnProperty(hostname) ) {
-        this.scriptTagFilters[hostname] += '|' + token;
-    } else {
-        this.scriptTagFilters[hostname] = token;
-    }
-
-    this.scriptTagFilterCount += 1;
-};
-
-/******************************************************************************/
-
-FilterContainer.prototype.retrieveScriptTagHostnames = function() {
-    return Object.keys(this.scriptTagFilters);
-};
-
-/******************************************************************************/
-
-FilterContainer.prototype.retrieveScriptTagRegex = function(domain, hostname) {
-    if ( this.scriptTagFilterCount === 0 ) {
-        return;
-    }
-    var out = [], hn = hostname, pos;
-
-    // Hostname-based
-    for (;;) {
-        if ( this.scriptTagFilters.hasOwnProperty(hn) ) {
-            out.push(this.scriptTagFilters[hn]);
-        }
-        if ( hn === domain ) {
-            break;
-        }
-        pos = hn.indexOf('.');
-        if ( pos === -1 ) {
-            break;
-        }
-        hn = hn.slice(pos + 1);
-    }
-
-    // Entity-based
-    pos = domain.indexOf('.');
-    if ( pos !== -1 ) {
-        hn = domain.slice(0, pos) + '.*';
-        if ( this.scriptTagFilters.hasOwnProperty(hn) ) {
-            out.push(this.scriptTagFilters[hn]);
-        }
-    }
-    if ( out.length !== 0 ) {
-        return out.join('|');
-    }
-};
-
-/******************************************************************************/
-
-// userScripts{hash} => FilterHostname | FilterBucket
-
-FilterContainer.prototype.createUserScriptRule = function(hash, hostname, selector) {
-    var filter = new FilterHostname(selector, hostname);
-    var bucket = this.userScripts.get(hash);
-    if ( bucket === undefined ) {
-        this.userScripts.set(hash, filter);
-    } else if ( bucket instanceof FilterBucket ) {
-        bucket.add(filter);
-    } else {
-        this.userScripts.set(hash, new FilterBucket(bucket, filter));
-    }
-    this.userScriptCount += 1;
-};
-
-/******************************************************************************/
-
-// https://github.com/gorhill/uBlock/issues/1954
-
-// 01234567890123456789
-// script:inject(token[, arg[, ...]])
-//               ^                 ^
-//              14                 -1
-
-FilterContainer.prototype.retrieveUserScripts = function(domain, hostname) {
-    if ( this.userScriptCount === 0 ) { return; }
-    if ( µb.hiddenSettings.ignoreScriptInjectFilters === true ) { return; }
-
-    var reng = µb.redirectEngine;
-    if ( !reng ) { return; }
-
-    var out = [],
-        scripts = new Map(),
-        pos = domain.indexOf('.'),
-        entity = pos !== -1 ? domain.slice(0, pos) + '.*' : '';
-
-    // Implicit
-    var hn = hostname;
-    for (;;) {
-        this._lookupUserScript(scripts, hn + '.js', reng, out);
-        if ( hn === domain ) { break; }
-        pos = hn.indexOf('.');
-        if ( pos === -1 ) { break; }
-        hn = hn.slice(pos + 1);
-    }
-    if ( entity !== '' ) {
-        this._lookupUserScript(scripts, entity + '.js', reng, out);
-    }
-
-    // Explicit (hash is domain).
-    var selectors = new Set(),
-        bucket;
-    if ( (bucket = this.userScripts.get(domain)) ) {
-        bucket.retrieve(hostname, selectors);
-    }
-    if ( entity !== '' && (bucket = this.userScripts.get(entity)) ) {
-        bucket.retrieve(entity, selectors);
-    }
-    for ( var selector of selectors ) {
-        this._lookupUserScript(scripts, selector.slice(14, -1).trim(), reng, out);
-    }
-
-    if ( out.length === 0 ) {
-        return;
-    }
-
-    // https://github.com/gorhill/uBlock/issues/2835
-    //   Do not inject scriptlets if the site is under an `allow` rule.
-    if (
-        µb.userSettings.advancedUserEnabled === true &&
-        µb.sessionFirewall.evaluateCellZY(hostname, hostname, '*') === 2
-    ) {
-        return;
-    }
-
-    // Exceptions should be rare, so we check for exception only if there are
-    // scriptlets returned.
-    var exceptions = new Set(),
-        j, token;
-    if ( (bucket = this.userScripts.get('!' + domain)) ) {
-        bucket.retrieve(hostname, exceptions);
-    }
-    if ( entity !== '' && (bucket = this.userScripts.get('!' + entity)) ) {
-        bucket.retrieve(hostname, exceptions);
-    }
-    for ( var exception of exceptions ) {
-        token = exception.slice(14, -1);
-        if ( (j = scripts.get(token)) !== undefined ) {
-            out[j] = '// User script "' + token + '" excepted.\n';
-        }
-    }
-
-    return out.join('\n');
-};
-
-FilterContainer.prototype._lookupUserScript = function(dict, raw, reng, out) {
-    if ( dict.has(raw) ) { return; }
-    var token, args,
-        pos = raw.indexOf(',');
-    if ( pos === -1 ) {
-        token = raw;
-    } else {
-        token = raw.slice(0, pos).trim();
-        args = raw.slice(pos + 1).trim();
-    }
-    var content = reng.resourceContentFromName(token, 'application/javascript');
-    if ( !content ) { return; }
-    if ( args ) {
-        content = this._fillupUserScript(content, args);
-        if ( !content ) { return; }
-    }
-    dict.set(raw, out.length);
-    out.push(content);
-};
-
-// Fill template placeholders. Return falsy if:
-// - At least one argument contains anything else than /\w/ and `.`
-
-FilterContainer.prototype._fillupUserScript = function(content, args) {
-    var i = 1,
-        pos, arg;
-    while ( args !== '' ) {
-        pos = args.indexOf(',');
-        if ( pos === -1 ) { pos = args.length; }
-        arg = args.slice(0, pos).trim().replace(this._reEscapeScriptArg, '\\$&');
-        content = content.replace('{{' + i + '}}', arg);
-        args = args.slice(pos + 1).trim();
-        i++;
-    }
-    return content;
-};
-
-FilterContainer.prototype._reEscapeScriptArg = /[\\'"]/g;
 
 /******************************************************************************/
 
@@ -1759,11 +973,7 @@ FilterContainer.prototype.toSelfie = function() {
         lowlyGenericCCL: µb.arrayFrom(this.lowlyGeneric.cl.complex),
         highSimpleGenericHideArray: µb.arrayFrom(this.highlyGeneric.simple.dict),
         highComplexGenericHideArray: µb.arrayFrom(this.highlyGeneric.complex.dict),
-        genericDonthideArray: µb.arrayFrom(this.genericDonthideSet),
-        scriptTagFilters: this.scriptTagFilters,
-        scriptTagFilterCount: this.scriptTagFilterCount,
-        userScripts: selfieFromMap(this.userScripts),
-        userScriptCount: this.userScriptCount
+        genericDonthideArray: µb.arrayFrom(this.genericDonthideSet)
     };
 };
 
@@ -1795,10 +1005,6 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
     this.highlyGeneric.complex.dict = new Set(selfie.highComplexGenericHideArray);
     this.highlyGeneric.complex.str = selfie.highComplexGenericHideArray.join(',\n');
     this.genericDonthideSet = new Set(selfie.genericDonthideArray);
-    this.scriptTagFilters = selfie.scriptTagFilters;
-    this.scriptTagFilterCount = selfie.scriptTagFilterCount;
-    this.userScripts = mapFromSelfie(selfie.userScripts);
-    this.userScriptCount = selfie.userScriptCount;
     this.frozen = true;
 };
 
@@ -1911,10 +1117,7 @@ FilterContainer.prototype.randomAlphaToken = function() {
 
 /******************************************************************************/
 
-FilterContainer.prototype.retrieveGenericSelectors = function(
-    request,
-    sender
-) {
+FilterContainer.prototype.retrieveGenericSelectors = function(request) {
     if ( this.acceptedCount === 0 ) { return; }
     if ( !request.ids && !request.classes ) { return; }
 
@@ -1995,9 +1198,8 @@ FilterContainer.prototype.retrieveGenericSelectors = function(
     // cosmetic filters now.
     if (
         this.supportsUserStylesheets &&
-        sender instanceof Object &&
-        sender.tab instanceof Object &&
-        typeof sender.frameId === 'number'
+        request.tabId !== undefined &&
+        request.frameId !== undefined
     ) {
         var injected = [];
         if ( out.simple.length !== 0 ) {
@@ -2009,10 +1211,10 @@ FilterContainer.prototype.retrieveGenericSelectors = function(
             out.complex = [];
         }
         out.injected = injected.join(',\n');
-        vAPI.insertCSS(sender.tab.id, {
+        vAPI.insertCSS(request.tabId, {
             code: out.injected + '\n{display:none!important;}',
             cssOrigin: 'user',
-            frameId: sender.frameId,
+            frameId: request.frameId,
             runAt: 'document_start'
         });
     }
@@ -2030,18 +1232,14 @@ FilterContainer.prototype.retrieveGenericSelectors = function(
 
 FilterContainer.prototype.retrieveDomainSelectors = function(
     request,
-    sender,
     options
 ) {
-    if ( !request.locationURL ) { return; }
-
     //console.time('cosmeticFilteringEngine.retrieveDomainSelectors');
 
-    var hostname = this.µburi.hostnameFromURI(request.locationURL),
-        domain = this.µburi.domainFromHostname(hostname) || hostname,
-        pos = domain.indexOf('.'),
-        entity = pos === -1 ? '' : domain.slice(0, pos - domain.length) + '.*',
-        cacheEntry = this.selectorCache.get(hostname);
+    var hostname = request.hostname,
+        entity = request.entity,
+        cacheEntry = this.selectorCache.get(hostname),
+        entry;
 
     // https://github.com/chrisaljoudi/uBlock/issues/587
     // out.ready will tell the content script the cosmetic filtering engine is
@@ -2053,8 +1251,7 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
     var out = {
         ready: this.frozen,
         hostname: hostname,
-        domain: domain,
-        entity: entity,
+        domain: request.domain,
         declarativeFilters: [],
         exceptionFilters: [],
         hideNodeAttr: this.randomAlphaToken(),
@@ -2064,12 +1261,11 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
         injectedHideFilters: '',
         networkFilters: '',
         noDOMSurveying: this.hasGenericHide === false,
-        proceduralFilters: [],
-        scripts: undefined
+        proceduralFilters: []
     };
 
     if ( options.noCosmeticFiltering !== true ) {
-        var domainHash = makeHash(domain),
+        var domainHash = makeHash(request.domain),
             entityHash = entity !== '' ? makeHash(entity) : undefined,
             exception, bucket;
 
@@ -2177,7 +1373,7 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
         if ( options.noGenericCosmeticFiltering !== true ) {
             var exceptionHash = out.exceptionFilters.join();
             for ( var type in this.highlyGeneric ) {
-                var entry = this.highlyGeneric[type];
+                entry = this.highlyGeneric[type];
                 var str = entry.mru.lookup(exceptionHash);
                 if ( str === undefined ) {
                     str = { s: entry.str };
@@ -2205,9 +1401,7 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
         this.setRegister2.clear();
     }
 
-    // Scriptlet injection.
-    out.scripts = this.retrieveUserScripts(domain, hostname);
-
+    // CSS selectors for collapsible blocked elements
     if ( cacheEntry ) {
         var networkFilters = [];
         cacheEntry.retrieve('net', networkFilters);
@@ -2219,9 +1413,8 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
     //   cosmetic filters now.
     if (
         this.supportsUserStylesheets &&
-        sender instanceof Object &&
-        sender.tab instanceof Object &&
-        typeof sender.frameId === 'number'
+        request.tabId !== undefined &&
+        request.frameId !== undefined
     ) {
         var injectedHideFilters = [];
         if ( out.declarativeFilters.length !== 0 ) {
@@ -2244,16 +1437,16 @@ FilterContainer.prototype.retrieveDomainSelectors = function(
         var details = {
             code: '',
             cssOrigin: 'user',
-            frameId: sender.frameId,
+            frameId: request.frameId,
             runAt: 'document_start'
         };
         if ( out.injectedHideFilters.length !== 0 ) {
             details.code = out.injectedHideFilters + '\n{display:none!important;}';
-            vAPI.insertCSS(sender.tab.id, details);
+            vAPI.insertCSS(request.tabId, details);
         }
         if ( out.networkFilters.length !== 0 ) {
             details.code = out.networkFilters + '\n{display:none!important;}';
-            vAPI.insertCSS(sender.tab.id, details);
+            vAPI.insertCSS(request.tabId, details);
             out.networkFilters = '';
         }
     }

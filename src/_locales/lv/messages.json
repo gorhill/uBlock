@@ -511,6 +511,10 @@
     "message": "Aizkulisēs",
     "description": "Pretty name for behind-the-scene network requests"
   },
+  "loggerCurrentTab": {
+    "message": "Current tab",
+    "description": "Appears in the logger's tab selector"
+  },
   "logFilterPrompt": {
     "message": "žurnāla ierakstu filtrs",
     "description": "English: filter log entries"

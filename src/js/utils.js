@@ -225,7 +225,9 @@
 /******************************************************************************/
 
 µBlock.CompiledLineWriter = function() {
-    this.output = [];
+    this.blockId = undefined;
+    this.block = undefined;
+    this.blocks = new Map();
     this.stringifier = JSON.stringify;
 };
 
@@ -235,46 +237,81 @@
 
 µBlock.CompiledLineWriter.prototype = {
     push: function(args) {
-        this.output[this.output.length] = this.stringifier(args);
+        this.block[this.block.length] = this.stringifier(args);
+    },
+    select: function(blockId) {
+        if ( blockId === this.blockId ) { return; }
+        this.blockId = blockId;
+        this.block = this.blocks.get(blockId);
+        if ( this.block === undefined ) {
+            this.blocks.set(blockId, (this.block = []));
+        }
     },
     toString: function() {
-        return this.output.join('\n');
+        var result = [];
+        for ( var entry of this.blocks ) {
+            if ( entry[1].length === 0 ) { continue; }
+            result.push(
+                '#block-start-' + entry[0],
+                entry[1].join('\n'),
+                '#block-end-' + entry[0]
+            );
+        }
+        return result.join('\n');
     }
 };
 
-µBlock.CompiledLineReader = function(raw) {
-    this.reset(raw);
+/******************************************************************************/
+
+µBlock.CompiledLineReader = function(raw, blockId) {
+    this.block = '';
+    this.len = 0;
+    this.offset = 0;
+    this.line = '';
     this.parser = JSON.parse;
+    this.blocks = new Map();
+    var reBlockStart = /^#block-start-(\d+)\n/gm,
+        match = reBlockStart.exec(raw),
+        beg, end;
+    while ( match !== null ) {
+        beg = match.index + match[0].length;
+        end = raw.indexOf('#block-end-' + match[1], beg);
+        this.blocks.set(parseInt(match[1], 10), raw.slice(beg, end));
+        reBlockStart.lastIndex = end;
+        match = reBlockStart.exec(raw);
+    }
+    if ( blockId !== undefined ) {
+        this.select(blockId);
+    }
 };
 
 µBlock.CompiledLineReader.prototype = {
-    reset: function(raw) {
-        this.input = raw;
-        this.len = raw.length;
-        this.offset = 0;
-        this.s = '';
-        return this;
-    },
     next: function() {
         if ( this.offset === this.len ) {
-            this.s = '';
+            this.line = '';
             return false;
         }
-        var pos = this.input.indexOf('\n', this.offset);
+        var pos = this.block.indexOf('\n', this.offset);
         if ( pos !== -1 ) {
-            this.s = this.input.slice(this.offset, pos);
+            this.line = this.block.slice(this.offset, pos);
             this.offset = pos + 1;
         } else {
-            this.s = this.input.slice(this.offset);
+            this.line = this.block.slice(this.offset);
             this.offset = this.len;
         }
         return true;
     },
+    select: function(blockId) {
+        this.block = this.blocks.get(blockId) || '';
+        this.len = this.block.length;
+        this.offset = 0;
+        return this;
+    },
     fingerprint: function() {
-        return this.s;
+        return this.line;
     },
     args: function() {
-        return this.parser(this.s);
+        return this.parser(this.line);
     }
 };
 
@@ -351,6 +388,7 @@
     this.size = size;
     this.array = [];
     this.map = new Map();
+    this.resetTime = Date.now();
 };
 
 µBlock.MRUCache.prototype = {
@@ -372,14 +410,18 @@
     lookup: function(key) {
         var value = this.map.get(key);
         if ( value !== undefined && this.array[0] !== key ) {
-            this.array.splice(this.array.indexOf(key), 1);
-            this.array.unshift(key);
+            var i = this.array.indexOf(key);
+            do {
+                this.array[i] = this.array[i-1];
+            } while ( --i );
+            this.array[0] = key;
         }
         return value;
     },
     reset: function() {
         this.array = [];
         this.map.clear();
+        this.resetTime = Date.now();
     }
 };
 

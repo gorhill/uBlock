@@ -344,7 +344,7 @@
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
-    "message": "Lister over blokkerte verter",
+    "message": "Lists of blocked hosts",
     "description": "English: Lists of blocked hosts"
   },
   "3pApplyChanges": {
@@ -510,6 +510,10 @@
   "logBehindTheScene": {
     "message": "Bak kulissene",
     "description": "Pretty name for behind-the-scene network requests"
+  },
+  "loggerCurrentTab": {
+    "message": "Gjeldende fane",
+    "description": "Appears in the logger's tab selector"
   },
   "logFilterPrompt": {
     "message": "filtrer loggoppføringer",

@@ -48,11 +48,11 @@
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Dați clic pentru a dezactiva uBlock₀ pentru acest sait.\n\nDați Ctrl+clic pentru a dezactiva uBlock₀ doar pe această pagină.",
+    "message": "Clic ca să dezactivezi uBo pentru acest site.\n\nCtrl+clic ca sa dezactivezi uBo doar pe această pagină.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Dați clic pentru a activa uBlock₀ pentru acest sait.",
+    "message": "Dați clic pentru a activa uBlock₀ pentru acest site.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -108,11 +108,11 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Dați clic pentru a bloca elementele media de mari dimensiuni pentru acest sait",
+    "message": "Dați clic pentru a bloca elementele media de mari dimensiuni pentru acest site",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Dați clic pentru a nu mai bloca elementele media de mari dimensiuni pentru acest sait",
+    "message": "Dați clic pentru a nu mai bloca elementele media de mari dimensiuni pentru acest site",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -120,11 +120,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Dați clic pentru a dezactiva filtrele vizuale pentru acest sait",
+    "message": "Dați clic pentru a dezactiva filtrele vizuale pentru acest site",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Dați clic pentru a activa filtrele vizuale pentru acest sait",
+    "message": "Dați clic pentru a activa filtrele vizuale pentru acest site",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -136,7 +136,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Dați clic pentru a nu mai bloca fonturile externe pentru acest sait",
+    "message": "Dați clic pentru a nu mai bloca fonturile externe pentru acest site",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules": {
@@ -510,6 +510,10 @@
   "logBehindTheScene": {
     "message": "În spatele scenei",
     "description": "Pretty name for behind-the-scene network requests"
+  },
+  "loggerCurrentTab": {
+    "message": "Tab-ul curent",
+    "description": "Appears in the logger's tab selector"
   },
   "logFilterPrompt": {
     "message": "filtrează intrările din jurnal",

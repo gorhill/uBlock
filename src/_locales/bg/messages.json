@@ -511,6 +511,10 @@
     "message": "Скрити",
     "description": "Pretty name for behind-the-scene network requests"
   },
+  "loggerCurrentTab": {
+    "message": "Последно активен раздел",
+    "description": "Appears in the logger's tab selector"
+  },
   "logFilterPrompt": {
     "message": "филтриране на записи",
     "description": "English: filter log entries"
@@ -716,7 +720,7 @@
     "description": "tooltip"
   },
   "cloudNoData": {
-    "message": "...\n...",
+    "message": "...",
     "description": ""
   },
   "cloudDeviceNamePrompt": {

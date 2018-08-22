@@ -92,15 +92,15 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "ఈ వెబ్సైట్ లో అన్ని పాప్అప్స్ ని నిషేధించు",
+    "message": "ఈ వెబ్సైట్ లో అన్ని పాప్అప్స్ ని నిషేధించు\/అనుమతించు",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "ఇకపై ఈ సైట్లో అన్ని పాపప్లు బ్లాక్ చేయుటకు క్లిక్ చేయండి",
+    "message": "ఇకపై ఈ సైట్లో అన్ని పపప్లను నిరోధించుటకు క్లిక్ చేయండి",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "ఇకపై ఈ సైట్లో అన్ని పాపప్లు బ్లాక్ చేయకుండా ఉండుటకు క్లిక్ చేయండి",
+    "message": "ఇకపై ఈ సైట్లో అన్ని పపప్లను అనుమతించుటకు క్లిక్ చేయండి",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -108,11 +108,11 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "ఈ సైట్లో పెద్ద పరిమాణం మీడియా అంశాలు బ్లాక్ చేయుటకు క్లిక్ చేయండి",
+    "message": "ఈ సైట్లో పెద్ద పరిమాణం మీడియా అంశాలను నిరోధించుటకు క్లిక్ చేయండి",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "ఇకపై ఈ సైట్లో పెద్ద పరిమాణం మీడియా అంశాలు బ్లాక్ చేయకుండా ఉండుటకు క్లిక్ చేయండి",
+    "message": "ఇకపై ఈ సైట్లో పెద్ద పరిమాణం మీడియా అంశాలను అనుమతించుటకు క్లిక్ చేయండి",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -120,11 +120,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "ఈ వెబ్ సైట్ లో కాస్మెటిక్ ఫిల్టరింగ్ ని అచేతనంచేయుటకు క్లిక్ చేయండి",
+    "message": "ఈ వెబ్ సైట్ లో కాస్మెటిక్ ఫిల్టరింగ్ ని అచేతనపరచుటకు క్లిక్ చేయండి",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "ఈ వెబ్ సైట్ లో కాస్మెటిక్ ఫిల్టరింగ్ ని చేతనంచేయుటకు క్లిక్ చేయండి",
+    "message": "ఈ వెబ్ సైట్ లో కాస్మెటిక్ ఫిల్టరింగ్ ని చేతపరచుటకు క్లిక్ చేయండి",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -132,11 +132,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "ఈ సైట్లో రిమోట్ ఫాంట్లను బ్లాక్ చేయుటకు క్లిక్ చేయండి",
+    "message": "ఈ సైట్లోని రిమోట్ ఫాంట్లను నిరోధించుటకు క్లిక్ చేయండి",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "ఇకపై ఈ సైట్లో రిమోట్ ఫాంట్లను బ్లాక్ చేయకుండా ఉండుటకు క్లిక్ చేయండి",
+    "message": "ఇకపై ఈ సైట్లో రిమోట్ ఫాంట్లను అనుమతించుటకు క్లిక్ చేయండి",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules": {
@@ -152,7 +152,7 @@
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "మీ మార్పులను తిరిగరాయుటకు క్లిక్ చేయండి.",
+    "message": "మీ మార్పులను తిరిగి పూర్వావస్థకు చేర్చుటకు క్లిక్ చేయండి.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {
@@ -292,7 +292,7 @@
     "description": ""
   },
   "settingsNoCSPReportsPrompt": {
-    "message": "CSP నివేదికలను బ్లాక్ చేయండి",
+    "message": "CSP నివేదికలను నిరోధించు",
     "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
   },
   "settingsStorageUsed": {
@@ -510,6 +510,10 @@
   "logBehindTheScene": {
     "message": "తేర వెనుక",
     "description": "Pretty name for behind-the-scene network requests"
+  },
+  "loggerCurrentTab": {
+    "message": "ప్రస్తుత ట్యాబ్",
+    "description": "Appears in the logger's tab selector"
   },
   "logFilterPrompt": {
     "message": "చిట్టాలోని నమోదులను జల్లెడపరచు",

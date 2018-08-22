@@ -228,7 +228,7 @@
     "description": "English: Block element"
   },
   "settingsCollapseBlockedPrompt": {
-    "message": "Sembunyikan tempat elemen yang diblokir",
+    "message": "Sembunyikan wadah elemen yang diblokir",
     "description": "English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt": {
@@ -510,6 +510,10 @@
   "logBehindTheScene": {
     "message": "Di balik layar",
     "description": "Pretty name for behind-the-scene network requests"
+  },
+  "loggerCurrentTab": {
+    "message": "Tab saat ini",
+    "description": "Appears in the logger's tab selector"
   },
   "logFilterPrompt": {
     "message": "saring entri catatan",

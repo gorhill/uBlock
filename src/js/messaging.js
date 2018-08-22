@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2017 Raymond Hill
+    Copyright (C) 2014-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -103,7 +103,7 @@ var onMessage = function(request, sender, callback) {
         break;
 
     case 'compileCosmeticFilterSelector':
-        response = µb.cosmeticFilteringEngine.compileSelector(request.selector);
+        response = µb.staticExtFilteringEngine.compileSelector(request.selector);
         break;
 
     case 'cosmeticFiltersInjected':
@@ -130,7 +130,9 @@ var onMessage = function(request, sender, callback) {
 
     case 'forceUpdateAssets':
         µb.scheduleAssetUpdater(0);
-        µb.assets.updateStart({ delay: µb.hiddenSettings.manualUpdateAssetFetchPeriod || 2000 });
+        µb.assets.updateStart({
+            delay: µb.hiddenSettings.manualUpdateAssetFetchPeriod
+        });
         break;
 
     case 'forceUpdateAdnauseam':
@@ -171,7 +173,7 @@ var onMessage = function(request, sender, callback) {
 
     case 'reloadTab':
         if ( vAPI.isBehindTheSceneTabId(request.tabId) === false ) {
-            vAPI.tabs.reload(request.tabId);
+            vAPI.tabs.reload(request.tabId, request.bypassCache === true);
             if ( request.select && vAPI.tabs.select ) {
                 vAPI.tabs.select(request.tabId);
             }
@@ -488,11 +490,12 @@ var onMessage = function(request, sender, callback) {
     // Sync
     var µb = µBlock,
         response,
-        tabId,
-        pageStore;
+        tabId, frameId,
+        pageStore = null;
 
     if ( sender && sender.tab ) {
         tabId = sender.tab.id;
+        frameId = sender.frameId;
         pageStore = µb.pageStoreFromTabId(tabId);
     }
 
@@ -514,30 +517,48 @@ var onMessage = function(request, sender, callback) {
         break;
 
     case 'retrieveContentScriptParameters':
-        if ( pageStore && pageStore.getNetFilteringSwitch() ) {
-            response = {
-                collapseBlocked: µb.userSettings.collapseBlocked,
-                noCosmeticFiltering: pageStore.noCosmeticFiltering === true,
-                noGenericCosmeticFiltering:
-                    pageStore.noGenericCosmeticFiltering === true
-            };
-            response.specificCosmeticFilters = µb.cosmeticFilteringEngine.retrieveDomainSelectors(
-                request,
-                sender,
-                response
-            );
-            response.prefs = µb.adnauseam.contentPrefs(pageStore.tabHostname); // ADN
-            if ( request.isRootFrame && µb.logger.isEnabled() ) {
-                µb.logCosmeticFilters(tabId);
-            }
+        if (
+            pageStore === null ||
+            pageStore.getNetFilteringSwitch() === false ||
+            !request.url
+        ) {
+            break;
+        }
+        response = {
+            collapseBlocked: µb.userSettings.collapseBlocked,
+            noCosmeticFiltering: pageStore.noCosmeticFiltering === true,
+            noGenericCosmeticFiltering:
+                pageStore.noGenericCosmeticFiltering === true
+        };
+        request.tabId = tabId;
+        request.frameId = frameId;
+        request.hostname = µb.URI.hostnameFromURI(request.url);
+        request.domain = µb.URI.domainFromHostname(request.hostname);
+        request.entity = µb.URI.entityFromDomain(request.domain);
+        response.specificCosmeticFilters =
+            µb.cosmeticFilteringEngine.retrieveDomainSelectors(request, response);
+        response.prefs = µb.adnauseam.contentPrefs(pageStore.tabHostname); // ADN
+        // If response body filtering is supported, than the scriptlets have
+        // already been injected.
+        if (
+            µb.canFilterResponseBody === false ||
+            µb.textEncode === undefined ||
+            µb.textEncode.normalizeCharset(request.charset) === undefined
+        ) {
+            response.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
+        }
+        if ( request.isRootFrame && µb.logger.isEnabled() ) {
+            µb.logCosmeticFilters(tabId);
         }
         break;
 
     case 'retrieveGenericCosmeticSelectors':
         if ( pageStore && pageStore.getGenericCosmeticFilteringSwitch() ) {
+            request.tabId = tabId;
+            request.frameId = frameId;
             response = {
                 result: µb.cosmeticFilteringEngine
-                          .retrieveGenericSelectors(request, sender)
+                          .retrieveGenericSelectors(request)
             };
         }
         break;
@@ -738,15 +759,7 @@ var backupUserData = function(callback) {
         dynamicFilteringString: µb.permanentFirewall.toString(),
         urlFilteringString: µb.permanentURLFiltering.toString(),
         hostnameSwitchesString: µb.hnSwitches.toString(),
-        userFilters: '',
-        // TODO(seamless migration):
-        // The following is strictly for convenience, to be minimally
-        // forward-compatible. This will definitely be removed in the
-        // short term, as I do not expect the need to install an older
-        // version of uBO to ever be needed beyond the short term.
-        // >>>>>>>>
-        filterLists: µb.oldDataFromNewListKeys(µb.selectedFilterLists)
-        // <<<<<<<<
+        userFilters: ''
     };
 
     var onUserFiltersReady = function(details) {
@@ -787,16 +800,8 @@ var restoreUserData = function(request) {
             lastBackupTime: 0
         });
         µb.assets.put(µb.userFiltersPath, userData.userFilters);
-        // 'filterLists' is available up to uBO v1.10.4, not beyond.
-        // 'selectedFilterLists' is available from uBO v1.11 and beyond.
-        var listKeys;
         if ( Array.isArray(userData.selectedFilterLists) ) {
-            listKeys = userData.selectedFilterLists;
-        } else if ( userData.filterLists instanceof Object ) {
-            listKeys = µb.newListKeysFromOldData(userData.filterLists);
-        }
-        if ( listKeys !== undefined ) {
-            µb.saveSelectedFilterLists(listKeys, restart);
+            µb.saveSelectedFilterLists(userData.selectedFilterLists, restart);
         } else {
             restart();
         }
@@ -854,8 +859,7 @@ var getLists = function(callback) {
         ignoreGenericCosmeticFilters: µb.userSettings.ignoreGenericCosmeticFilters,
         netFilterCount: µb.staticNetFilteringEngine.getFilterCount(),
         parseCosmeticFilters: µb.userSettings.parseAllABPHideFilters,
-        userFiltersPath: µb.userFiltersPath,
-        aliases: µb.assets.listKeyAliases
+        userFiltersPath: µb.userFiltersPath
     };
     var onMetadataReady = function(entries) {
         r.cache = entries;
@@ -1049,7 +1053,32 @@ vAPI.messaging.listen('dashboard', onMessage);
 
 /******************************************************************************/
 
-var µb = µBlock;
+var µb = µBlock,
+    extensionPageURL = vAPI.getURL('');
+
+/******************************************************************************/
+
+var getLoggerData = function(ownerId, activeTabId, callback) {
+    var tabIds = {};
+    for ( var tabId in µb.pageStores ) {
+        var pageStore = µb.pageStoreFromTabId(tabId);
+        if ( pageStore === null ) { continue; }
+        if ( pageStore.rawURL.startsWith(extensionPageURL) ) { continue; }
+        tabIds[tabId] = pageStore.title;
+    }
+    if ( activeTabId && tabIds.hasOwnProperty(activeTabId) === false ) {
+        activeTabId = undefined;
+    }
+    callback({
+        colorBlind: µb.userSettings.colorBlindFriendly,
+        entries: µb.logger.readAll(ownerId),
+        maxEntries: µb.userSettings.requestLogMaxEntries,
+        noTabId: vAPI.noTabId,
+        activeTabId: activeTabId,
+        tabIds: tabIds,
+        tabIdsToken: µb.pageStoresToken
+    });
+};
 
 /******************************************************************************/
 
@@ -1087,6 +1116,23 @@ var getURLFilteringData = function(details) {
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
+    case 'readAll':
+        if (
+            µb.logger.ownerId !== undefined &&
+            µb.logger.ownerId !== request.ownerId
+        ) {
+            callback({ unavailable: true });
+            return;
+        }
+        vAPI.tabs.get(null, function(tab) {
+            getLoggerData(
+                request.ownerId,
+                tab && tab.id.toString(),
+                callback
+            );
+        });
+        return;
+
     default:
         break;
     }
@@ -1118,6 +1164,12 @@ var onMessage = function(request, sender, callback) {
             tabIdsToken: µb.pageStoresToken,
             dntDomains: µb.userSettings.dntDomains // ADN
         };
+        break;
+
+    case 'releaseView':
+            if ( request.ownerId === µb.logger.ownerId ) {
+                µb.logger.ownerId = undefined;
+            }
         break;
 
     case 'saveURLFilteringRules':
@@ -1152,8 +1204,6 @@ vAPI.messaging.listen('loggerUI', onMessage);
 /******************************************************************************/
 
 })();
-
-// https://www.youtube.com/watch?v=3_WcygKJP1k
 
 /******************************************************************************/
 /******************************************************************************/

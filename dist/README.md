@@ -22,7 +22,7 @@ Remember that you have to update manually also. For some users, updating manuall
 
 ### Firefox webext
 
-Compatible with Firefox 52 and beyond. This works only if you set `xpinstall.signatures.required` to `false` in `about:config`.
+Compatible with Firefox 52 and beyond. This works only if you set `xpinstall.signatures.required` to `false` in `about:config`.<sup>[see "Add-on signing in Firefox"](https://support.mozilla.org/en-US/kb/add-on-signing-in-firefox)</sup>
 
 - Download `ublock0.webext.xpi` ([latest release desirable](https://github.com/gorhill/uBlock/releases)).
     - Right-click and choose _"Save As..."_.
@@ -39,7 +39,7 @@ Compatible with Firefox 24 to Firefox 56.
 - Download `ublock0.firefox.xpi` ([latest release desirable](https://github.com/gorhill/uBlock/releases)). 
 - Drag and drop the previously downloaded `ublock0.firefox.xpi` into Firefox
 
-With Firefox 43 and beyond, you may need to toggle the setting `xpinstall.signatures.required` to `false` in `about:config`.
+With Firefox 43 and beyond, you may need to toggle the setting `xpinstall.signatures.required` to `false` in `about:config`.<sup>[see "Add-on signing in Firefox"](https://support.mozilla.org/en-US/kb/add-on-signing-in-firefox)</sup>
 
 Your uBlock Origin settings are kept intact even after you uninstall the addon.
 

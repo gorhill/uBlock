@@ -954,7 +954,7 @@ FilterOriginMixedSet.prototype = Object.create(FilterOrigin.prototype, {
                 i = hostnames.length,
                 hostname;
             while ( i-- ) {
-                hostname = hostnames[i].replace(/\./g, '\\.');
+                hostname = hostnames[i];
                 if ( hostname.charCodeAt(0) === 0x7E /* '~' */ ) {
                     noneOf.push(hostname.slice(1));
                 } else {
@@ -1735,7 +1735,7 @@ FilterParser.prototype.parse = function(raw) {
             //   Abort if type is only for unsupported types, otherwise
             //   toggle off `unsupported` bit.
             if ( this.types & this.unsupportedTypeBit ) {
-                this.types &= ~(this.unsupportedTypeBit | this.allNetRequestTypeBits);
+                this.types &= ~this.unsupportedTypeBit;
                 if ( this.types === 0 ) {
                     this.unsupported = true;
                     return this;
@@ -2116,6 +2116,9 @@ FilterContainer.prototype.compile = function(raw, writer) {
         return false;
     }
 
+    // 0 = network filters
+    writer.select(0);
+
     // Pure hostnames, use more efficient dictionary lookup
     // https://github.com/chrisaljoudi/uBlock/issues/665
     // Create a dict keyed on request type etc.
@@ -2267,6 +2270,9 @@ FilterContainer.prototype.fromCompiledContent = function(reader) {
         redirectTypeValue = typeNameToTypeValue.redirect,
         args, bits, bucket, entry,
         tokenHash, fdata, fingerprint;
+
+    // 0 = network filters
+    reader.select(0);
 
     while ( reader.next() === true ) {
         args = reader.args();
