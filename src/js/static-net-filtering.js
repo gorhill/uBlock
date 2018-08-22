@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2017 Raymond Hill
+    Copyright (C) 2014-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -1378,10 +1378,12 @@ var FilterParser = function() {
 
 FilterParser.prototype.toNormalizedType = {
             'beacon': 'other',
+               'css': 'stylesheet',
               'data': 'data',
           'document': 'main_frame',
           'elemhide': 'generichide',
               'font': 'font',
+             'frame': 'sub_frame',
       'genericblock': 'unsupported',
        'generichide': 'generichide',
              'image': 'image',
@@ -1397,6 +1399,7 @@ FilterParser.prototype.toNormalizedType = {
             'script': 'script',
         'stylesheet': 'stylesheet',
        'subdocument': 'sub_frame',
+               'xhr': 'xmlhttprequest',
     'xmlhttprequest': 'xmlhttprequest',
             'webrtc': 'unsupported',
          'websocket': 'websocket'
@@ -1510,7 +1513,7 @@ FilterParser.prototype.parseOptions = function(s) {
         if ( not ) {
             opt = opt.slice(1);
         }
-        if ( opt === 'third-party' ) {
+        if ( opt === 'third-party' || opt === '3p' ) {
             this.parsePartyOption(false, not);
             continue;
         }
@@ -1553,7 +1556,7 @@ FilterParser.prototype.parseOptions = function(s) {
             this.important = Important;
             continue;
         }
-        if ( opt === 'first-party' ) {
+        if ( opt === 'first-party' || opt === '1p' ) {
             this.parsePartyOption(true, not);
             continue;
         }
@@ -1814,14 +1817,14 @@ FilterParser.prototype.parse = function(raw) {
     // https://github.com/gorhill/uBlock/issues/3034
     // - We can remove anchoring if we need to match all at the start.
     if ( s.startsWith('*') ) {
-        s = s.replace(/^\*+([^%0-9a-z])/, '$1');
+        s = s.replace(/^\*+([^%0-9a-z])/i, '$1');
         this.anchor &= ~0x6;
     }
     // remove pointless trailing *
     // https://github.com/gorhill/uBlock/issues/3034
     // - We can remove anchoring if we need to match all at the end.
     if ( s.endsWith('*') ) {
-        s = s.replace(/([^%0-9a-z])\*+$/, '$1');
+        s = s.replace(/([^%0-9a-z])\*+$/i, '$1');
         this.anchor &= ~0x1;
     }
 

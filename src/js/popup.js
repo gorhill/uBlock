@@ -624,7 +624,10 @@ var renderOnce = function() {
 /******************************************************************************/
 
 var renderPopupLazy = function() {
-    messaging.send('popupPanel', { what: 'getPopupLazyData', tabId: popupData.tabId });
+    messaging.send(
+        'popupPanel',
+        { what: 'getPopupLazyData', tabId: popupData.tabId }
+    );
 };
 
 var onPopupMessage = function(data) {
@@ -1072,7 +1075,7 @@ var onHideTooltip = function() {
     // Extract the tab id of the page this popup is for
     var matches = window.location.search.match(/[\?&]tabId=([^&]+)/);
     if ( matches && matches.length === 2 ) {
-        tabId = matches[1];
+        tabId = parseInt(matches[1], 10) || 0;
     }
     getPopupData(tabId);
 

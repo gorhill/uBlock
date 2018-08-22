@@ -4,11 +4,9 @@ div > p:first-child {
 div > p:last-child {
     margin-bottom: 0;
     }
-.userFilters {
-    box-sizing: border-box;
+#userFilters {
     height: 60vh;
     text-align: left;
-    white-space: pre;
     width: 100%;
     word-wrap: normal;
     }

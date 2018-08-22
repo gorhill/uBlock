@@ -516,8 +516,8 @@ var onBeforeBehindTheSceneRequest = function(details) {
     if (µBlock.userSettings.blockingMalware === false) return; // ADN
 
     var µb = µBlock,
-        pageStore = µb.pageStoreFromTabId(vAPI.noTabId);
-    if ( !pageStore ) { return; }
+        pageStore = µb.pageStoreFromTabId(details.tabId);
+    if ( pageStore === null ) { return; }
 
     var result = 0,
         context = pageStore.createContextFromPage(),
@@ -527,6 +527,13 @@ var onBeforeBehindTheSceneRequest = function(details) {
     context.requestURL = requestURL;
     context.requestHostname = µb.URI.hostnameFromURI(requestURL);
     context.requestType = requestType;
+
+    if ( details.tabId === vAPI.anyTabId && context.pageHostname === '' ) {
+        context.pageHostname = µb.URI.hostnameFromURI(details.documentUrl);
+        context.pageDomain = µb.URI.domainFromHostname(context.pageHostname);
+        context.rootHostname = context.pageHostname;
+        context.rootDomain = context.pageDomain;
+    }
 
     // https://bugs.chromium.org/p/chromium/issues/detail?id=637577#c15
     //   Do not filter behind-the-scene network request of type `beacon`: there
@@ -541,7 +548,11 @@ var onBeforeBehindTheSceneRequest = function(details) {
     // https://github.com/gorhill/uBlock/issues/3150
     //   Ability to globally block CSP reports MUST also apply to
     //   behind-the-scene network requests.
-    if ( µb.userSettings.advancedUserEnabled || requestType === 'csp_report' ) {
+    if (
+        details.tabId !== vAPI.noTabId ||
+        µb.userSettings.advancedUserEnabled ||
+        requestType === 'csp_report'
+    ) {
         result = pageStore.filterRequest(context);
     }
 
@@ -549,7 +560,7 @@ var onBeforeBehindTheSceneRequest = function(details) {
 
     if ( µb.logger.isEnabled() ) {
         µb.logger.writeOne(
-            vAPI.noTabId,
+            details.tabId,
             'net',
             pageStore.logData,
             requestType,
@@ -703,7 +714,7 @@ var onHeadersReceived = function(details) {
       return details.responseHeaders.length ?
         { 'responseHeaders': details.responseHeaders } : null;
     }
-  
+
 
     if ( isRootDoc ) {
         µb.tabContextManager.push(tabId, details.url);
@@ -745,7 +756,7 @@ var onHeadersReceived = function(details) {
         return injectCSP(pageStore, details);
     }
     // ADN
-    if (!result) { 
+    if (!result) {
 
       // ADN: if this was an allowed exception block cookies
       var pageStore = µBlock.pageStoreFromTabId(details.tabId),
@@ -807,8 +818,28 @@ var filterDocument = (function() {
         domParser, xmlSerializer,
         utf8TextDecoder, textDecoder, textEncoder;
 
-    var reContentTypeDocument = /^(?:text\/html|application\/xhtml+xml)/i,
+    var textDecode = function(encoding, buffer) {
+        if (
+            textDecoder !== undefined &&
+            textDecoder.encoding !== encoding
+        ) {
+            textDecoder = undefined;
+        }
+        if ( textDecoder === undefined ) {
+            textDecoder = new TextDecoder(encoding);
+        }
+        return textDecoder.decode(buffer);
+    };
+
+    var reContentTypeDocument = /^(?:text\/html|application\/xhtml\+xml)/i,
         reContentTypeCharset = /charset=['"]?([^'" ]+)/i;
+
+    var mimeFromContentType = function(contentType) {
+        var match = reContentTypeDocument.exec(contentType);
+        if ( match !== null ) {
+            return match[0].toLowerCase();
+        }
+    };
 
     var charsetFromContentType = function(contentType) {
         var match = reContentTypeCharset.exec(contentType);
@@ -867,15 +898,26 @@ var filterDocument = (function() {
         }
         // Case insensitively test for '!doctype'.
         if (
-              bb[i++]          !== 0x21 /* '!' */ ||
-            ( bb[i++] | 0x20 ) !== 0x64 /* 'd' */ ||
-            ( bb[i++] | 0x20 ) !== 0x6F /* 'o' */ ||
-            ( bb[i++] | 0x20 ) !== 0x63 /* 'c' */ ||
-            ( bb[i++] | 0x20 ) !== 0x74 /* 't' */ ||
-            ( bb[i++] | 0x20 ) !== 0x79 /* 'y' */ ||
-            ( bb[i++] | 0x20 ) !== 0x70 /* 'p' */ ||
-            ( bb[i++] | 0x20 ) !== 0x65 /* 'e' */
+              bb[i+0]          === 0x21 /* '!' */ &&
+            ( bb[i+1] | 0x20 ) === 0x64 /* 'd' */ &&
+            ( bb[i+2] | 0x20 ) === 0x6F /* 'o' */ &&
+            ( bb[i+3] | 0x20 ) === 0x63 /* 'c' */ &&
+            ( bb[i+4] | 0x20 ) === 0x74 /* 't' */ &&
+            ( bb[i+5] | 0x20 ) === 0x79 /* 'y' */ &&
+            ( bb[i+6] | 0x20 ) === 0x70 /* 'p' */ &&
+            ( bb[i+7] | 0x20 ) === 0x65 /* 'e' */
         ) {
+            i += 8;
+        }
+        // Case insensitively test for 'html'.
+        else if (
+            ( bb[i+0] | 0x20 ) === 0x68 /* 'h' */ &&
+            ( bb[i+1] | 0x20 ) === 0x74 /* 't' */ &&
+            ( bb[i+2] | 0x20 ) === 0x6D /* 'm' */ &&
+            ( bb[i+3] | 0x20 ) === 0x6C /* 'l' */
+        ) {
+            i += 4;
+        } else {
             return false;
         }
         // Scan for '>'.
@@ -895,7 +937,6 @@ var filterDocument = (function() {
             textEncoder.encode('<script>' + filterer.scriptlets + '</script>')
         );
         filterer.stream.write(new Uint8Array(responseBytes, i));
-        filterer.stream.disconnect();
         return true;
     };
 
@@ -937,6 +978,7 @@ var filterDocument = (function() {
         if ( filterer.buffer === null ) {
             if ( streamJobDone(filterer, ev.data) ) {
                 filterers.delete(this);
+                this.disconnect();
                 return;
             }
             filterer.buffer = new Uint8Array(ev.data);
@@ -971,35 +1013,42 @@ var filterDocument = (function() {
         var doc;
 
         // If stream encoding is still unknnown, try to extract from document.
-        if ( filterer.charset === undefined ) {
+        var charsetFound = filterer.charset,
+            charsetUsed = charsetFound;
+        if ( charsetFound === undefined ) {
             if ( utf8TextDecoder === undefined ) {
                 utf8TextDecoder = new TextDecoder();
             }
             doc = domParser.parseFromString(
-                utf8TextDecoder.decode(filterer.buffer.slice(0, 4096)),
-                'text/html'
             );
-            filterer.charset = µb.textEncode.normalizeCharset(charsetFromDoc(doc));
-            if ( filterer.charset === undefined ) {
-                streamClose(filterer);
-                return;
+            charsetFound = charsetFromDoc(doc);
+            charsetUsed = µb.textEncode.normalizeCharset(charsetFound);
+            if ( charsetUsed === undefined ) {
+                return streamClose(filterer);
             }
         }
 
-        if (
-            textDecoder !== undefined &&
-            textDecoder.encoding !== filterer.charset
-        ) {
-            textDecoder = undefined;
-        }
-        if ( textDecoder === undefined ) {
-            textDecoder = new TextDecoder(filterer.charset);
-        }
-
         doc = domParser.parseFromString(
-            textDecoder.decode(filterer.buffer),
-            'text/html'
+            textDecode(charsetUsed, filterer.buffer),
+            filterer.mime
         );
+
+        // https://github.com/gorhill/uBlock/issues/3507
+        //   In case of no explicit charset found, try to find one again, but
+        //   this time with the whole document parsed.
+        if ( charsetFound === undefined ) {
+            charsetFound = µb.textEncode.normalizeCharset(charsetFromDoc(doc));
+            if ( charsetFound !== charsetUsed ) {
+                if ( charsetFound === undefined ) {
+                    return streamClose(filterer);
+                }
+                charsetUsed = charsetFound;
+                doc = domParser.parseFromString(
+                    textDecode(charsetFound, filterer.buffer),
+                    filterer.mime
+                );
+            }
+        }
 
         var modified = false;
         if ( filterer.selectors !== undefined ) {
@@ -1014,8 +1063,7 @@ var filterDocument = (function() {
         }
 
         if ( modified === false ) {
-            streamClose(filterer);
-            return;
+            return streamClose(filterer);
         }
 
         // https://stackoverflow.com/questions/6088972/get-doctype-of-an-html-as-string-with-javascript/10162353#10162353
@@ -1028,9 +1076,9 @@ var filterDocument = (function() {
             doctypeStr +
             doc.documentElement.outerHTML
         );
-        if ( filterer.charset !== 'utf-8' ) {
+        if ( charsetUsed !== 'utf-8' ) {
             encodedStream = µb.textEncode.encode(
-                filterer.charset,
+                charsetUsed,
                 encodedStream
             );
         }
@@ -1064,8 +1112,10 @@ var filterDocument = (function() {
             selectors: undefined,
             scriptlets: undefined,
             buffer: null,
+            mime: undefined,
             charset: undefined
         };
+
         request.selectors = µb.htmlFilteringEngine.retrieve(request);
 
         // https://github.com/gorhill/uBlock/issues/3526
@@ -1076,7 +1126,6 @@ var filterDocument = (function() {
         //   (`##^`) should be used for when scriptlets are defeated by early
         //   script tags on a page.
         //
-        //request.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
 
         if (
             request.selectors === undefined &&
@@ -1088,7 +1137,8 @@ var filterDocument = (function() {
         var headers = details.responseHeaders,
             contentType = headerValueFromName('content-type', headers);
         if ( contentType !== '' ) {
-            if ( reContentTypeDocument.test(contentType) === false ) { return; }
+            request.mime = mimeFromContentType(contentType);
+            if ( request.mime === undefined ) { return; }
             var charset = charsetFromContentType(contentType);
             if ( charset !== undefined ) {
                 charset = µb.textEncode.normalizeCharset(charset);
@@ -1246,25 +1296,48 @@ var injectCSP = function(pageStore, details) {
 
     µb.updateBadgeAsync(tabId);
 
-    var csp,
-        headers = details.responseHeaders,
-        i = headerIndexFromName('content-security-policy', headers);
-    if ( i !== -1 ) {
-        csp = headers[i].value.trim();
-        headers.splice(i, 1);
-    }
-    cspSubsets = cspSubsets.join(', ');
-    // Use comma to add a new subset to potentially existing one(s). This new
-    // subset has its own reporting options and won't cause spurious CSP
-    // reports to outside world.
+    // Use comma to merge CSP directives.
     // Ref.: https://www.w3.org/TR/CSP2/#implementation-considerations
+    //
+    // https://github.com/gorhill/uMatrix/issues/967
+    //   Inject a new CSP header rather than modify an existing one, except
+    //   if the current environment does not support merging headers:
+    //   Firefox 58/webext and less can't merge CSP headers, so we will merge
+    //   them here.
+    var headers = details.responseHeaders;
+
+    if ( cantMergeCSPHeaders ) {
+        var i = headerIndexFromName('content-security-policy', headers);
+        if ( i !== -1 ) {
+            cspSubsets.unshift(headers[i].value.trim());
+            headers.splice(i, 1);
+        }
+    }
+
     headers.push({
         name: 'Content-Security-Policy',
-        value: csp === undefined ? cspSubsets : csp + ', ' + cspSubsets
+        value: cspSubsets.join(', ')
     });
 
     return { 'responseHeaders': headers };
 };
+
+// https://github.com/gorhill/uMatrix/issues/967#issuecomment-373002011
+//   This can be removed once Firefox 60 ESR is released.
+var cantMergeCSPHeaders = (function() {
+    if (
+        self.browser instanceof Object &&
+        typeof self.browser.runtime.getBrowserInfo === 'function'
+    ) {
+        self.browser.runtime.getBrowserInfo().then(function(info) {
+            cantMergeCSPHeaders =
+                info.vendor === 'Mozilla' &&
+                info.name === 'Firefox' &&
+                parseInt(info.version, 10) < 59;
+        });
+    }
+    return false;
+})();
 
 /******************************************************************************/
 

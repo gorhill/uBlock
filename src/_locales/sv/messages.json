@@ -96,11 +96,11 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Klicka för att blockera alla poppupp-fönster på den här webbplatsen",
+    "message": "Klicka för att blockera alla popup-fönster på den här webbplatsen",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Klicka för att inte längre blockera alla poppupp-fönster på den här webbplatsen",
+    "message": "Klicka för att inte längre blockera alla popup-fönster på den här webbplatsen",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -236,7 +236,7 @@
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "Avaktivera verktygstips",
+    "message": "Inaktivera verktygstips",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
@@ -260,11 +260,11 @@
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Avaktivera förhandshämtning (för att förhindra anslutningar av blockerade förfrågningar)",
+    "message": "Inaktivera förhandshämtning (för att förhindra anslutningar av blockerade förfrågningar)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
-    "message": "Avaktivera hyperlänksrevidering",
+    "message": "Inaktivera hyperlänksrevidering",
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
@@ -280,7 +280,7 @@
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "Avaktivera kosmetisk filtrering",
+    "message": "Stäng av kosmetisk filtrering",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
@@ -468,7 +468,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Vitlistans direktiv dikterar på vilka webbplatser uBlock Origin ska inaktiveras. En post per rad. Ogiltiga direktiv kommer tyst att ignoreras och kommenteras ut.",
+    "message": "Vitlistans direktiv dikterar på vilka webbplatser uBlock Origin ska inaktiveras. En artikel per rad. Ogiltiga direktiv kommer tyst att ignoreras och kommenteras ut.",
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {

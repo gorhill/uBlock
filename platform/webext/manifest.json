@@ -89,5 +89,8 @@
             "19": "img/browsericons/icon19.png",
             "38": "img/browsericons/icon38.png"
     }
-  }
+  },
+  "web_accessible_resources": [
+     "/web_accessible_resources/*"
+  ]
 }

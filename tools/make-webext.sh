@@ -55,6 +55,10 @@ sed -i '' "s/\"{version}\"/${VERSION}/" $DES/manifest.json
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
 
+echo "*** AdNauseam: Generating web accessible resources..."
+cp -R src/web_accessible_resources $DES/
+python3 tools/import-war.py $DES/
+
 if [ "$1" = all ]; then
     echo "*** AdNauseam::WebExt: Creating package..."
     pushd $(dirname $DES/) > /dev/null

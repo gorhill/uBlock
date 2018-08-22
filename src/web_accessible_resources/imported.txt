@@ -1,0 +1,7 @@
+# List of resources imported as "web accessible resources".
+#
+# To ensure valid filename characters on any platform OS, the filenames are
+# constructed using the md5 hash of the respective tokens.
+#
+# DO NOT REMOVE THIS LINE >>>>>
+

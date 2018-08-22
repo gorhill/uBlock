@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2017 Raymond Hill
+    Copyright (C) 2014-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -871,7 +871,10 @@ api.metadata = function(callback) {
                 obsoleteAfter = cacheEntry.writeTime + assetEntry.updateAfter * 86400000;
                 assetEntry.obsolete = obsoleteAfter < now;
                 assetEntry.remoteURL = cacheEntry.remoteURL;
-            } else {
+            } else if (
+                assetEntry.contentURL &&
+                assetEntry.contentURL.length !== 0
+            ) {
                 assetEntry.writeTime = 0;
                 obsoleteAfter = 0;
                 assetEntry.obsolete = true;
@@ -915,19 +918,23 @@ var updaterStatus,
     noRemoteResources;
 
 var updateFirst = function() {
-    // Firefox extension reviewers do not want uBO/webext to fetch its own
-    // scriptlets/resources asset from the project's own repo (github.com).
-    // See: https://github.com/gorhill/uBlock/commit/126110c9a0a0630cd556f5cb215422296a961029
+    // https://github.com/gorhill/uBlock/commit/126110c9a0a0630cd556f5cb215422296a961029
+    //   Firefox extension reviewers do not want uBO/webext to fetch its own
+    //   scriptlets/resources asset from the project's own repo (github.com).
+    // https://github.com/uBlockOrigin/uAssets/issues/1647#issuecomment-371456830
+    //   Allow self-hosted dev build to update: if update_url is present but
+    //   null, assume the extension is hosted on AMO.
     if ( noRemoteResources === undefined ) {
+        var manifest =
+            typeof browser === 'object' &&
+            browser.runtime.getManifest();
         noRemoteResources =
             typeof vAPI.webextFlavor === 'string' &&
-            vAPI.webextFlavor.startsWith('Mozilla-Firefox-');
-    }
-    // This is to ensure the packaged version will always be used (in case
-    // there is a cache remnant from a pre-stable webext era).
-    // See https://github.com/uBlockOrigin/uAssets/commit/a6c77af4afb45800d4fd7c268a2a5eab5a64daf3#commitcomment-24642912
-    if ( noRemoteResources ) {
-        api.remove('ublock-resources');
+            vAPI.webextFlavor.startsWith('Mozilla-Firefox-') &&
+            manifest instanceof Object &&
+            manifest.applications instanceof Object &&
+            manifest.applications.gecko instanceof Object &&
+            manifest.applications.gecko.update_url === null;
     }
     updaterStatus = 'updating';
     updaterFetched.clear();

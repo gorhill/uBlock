@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2017 Raymond Hill
+    Copyright (C) 2014-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -284,7 +284,7 @@ PageStore.prototype.init = function(tabId, context) {
     this.rawURL = tabContext.rawURL;
     this.hostnameToCountMap = new Map();
     this.contentLastModified = 0;
-    this.frames = Object.create(null);
+    this.frames = new Map();
     this.logData = undefined;
     this.perLoadBlockedRequestCount = 0;
     this.perLoadAllowedRequestCount = 0;
@@ -410,27 +410,26 @@ PageStore.prototype.dispose = function() {
 /******************************************************************************/
 
 PageStore.prototype.disposeFrameStores = function() {
-    var frames = this.frames;
-    for ( var k in frames ) {
-        frames[k].dispose();
+    for ( var frameStore of this.frames.values() ) {
+        frameStore.dispose();
     }
-    this.frames = Object.create(null);
+    this.frames.clear();
 };
 
 /******************************************************************************/
 
 PageStore.prototype.getFrame = function(frameId) {
-    return this.frames[frameId] || null;
+    return this.frames.get(frameId) || null;
 };
 
 /******************************************************************************/
 
 PageStore.prototype.setFrame = function(frameId, frameURL) {
-    var frameStore = this.frames[frameId];
-    if ( frameStore ) {
+    var frameStore = this.frames.get(frameId);
+    if ( frameStore !== undefined ) {
         frameStore.init(frameURL);
     } else {
-        this.frames[frameId] = FrameStore.factory(frameURL);
+        this.frames.set(frameId, FrameStore.factory(frameURL));
     }
 };
 
@@ -445,8 +444,8 @@ PageStore.prototype.createContextFromPage = function() {
 
 PageStore.prototype.createContextFromFrameId = function(frameId) {
     var context = µb.tabContextManager.createContext(this.tabId);
-    var frameStore = this.frames[frameId];
-    if ( frameStore ) {
+    var frameStore = this.frames.get(frameId);
+    if ( frameStore !== undefined ) {
         context.pageHostname = frameStore.pageHostname;
         context.pageDomain = frameStore.pageDomain;
     } else {

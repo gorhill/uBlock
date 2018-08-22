@@ -37,6 +37,7 @@
 
   - cosmetic filtering (aka "element hiding" in Adblock Plus)
   - scriptlet injection: selector starts with `script:inject`
+    - New shorter syntax (1.15.12): `example.com##+js(bab-defuser.js)`
   - html filtering: selector starts with `^`
 
   Depending on the specialized filtering engine, field 1 may or may not be
@@ -60,6 +61,13 @@
             exception: false,
             suffix: ''
         };
+
+    // To be called to ensure no big parent string of a string slice is
+    // left into memory after parsing filter lists is over.
+    var resetParsed = function() {
+        parsed.hostnames = [];
+        parsed.suffix = '';
+    };
 
     var isValidCSSSelector = (function() {
         var div = document.createElement('div'),
@@ -457,6 +465,7 @@
         µb.cosmeticFilteringEngine.reset();
         µb.scriptletFilteringEngine.reset();
         µb.htmlFilteringEngine.reset();
+        resetParsed(parsed);
     };
 
     api.freeze = function() {
@@ -464,6 +473,7 @@
         µb.cosmeticFilteringEngine.freeze();
         µb.scriptletFilteringEngine.freeze();
         µb.htmlFilteringEngine.freeze();
+        resetParsed(parsed);
     };
 
     // https://github.com/chrisaljoudi/uBlock/issues/1004
@@ -655,10 +665,21 @@
             }
         }
 
+        var c0 = suffix.charCodeAt(0);
+
+        // New shorter syntax for scriptlet injection engine.
+        if ( c0 === 0x2B /* '+' */ && suffix.startsWith('+js') ) {
+            // Convert to deprecated syntax for now. Once 1.15.12 is
+            // widespread, `+js` form will be the official syntax.
+            parsed.suffix = 'script:inject' + parsed.suffix.slice(3);
+            µb.scriptletFilteringEngine.compile(parsed, writer);
+            return true;
+        }
+
         // HTML filtering engine.
         // TODO: evaluate converting Adguard's `$$` syntax into uBO's HTML
         //       filtering syntax.
-        if ( suffix.charCodeAt(0) === 0x5E /* '^' */ ) {
+        if ( c0 === 0x5E /* '^' */ ) {
             µb.htmlFilteringEngine.compile(parsed, writer);
             return true;
         }
@@ -679,7 +700,6 @@
             cosmetic: µb.cosmeticFilteringEngine.toSelfie(),
             scriptlets: µb.scriptletFilteringEngine.toSelfie(),
             html: µb.htmlFilteringEngine.toSelfie()
-            
         };
     };
 

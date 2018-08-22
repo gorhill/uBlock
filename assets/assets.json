@@ -537,6 +537,15 @@
 		"contentURL": "https://easylist-downloads.adblockplus.org/easylistdutch.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=100"
 	},
+	"NOR-0": {
+		"content": "filters",
+		"group": "regions",
+		"off": true,
+		"title": "NOR: Dandelion Sprouts norske filtre",
+		"lang": "nb",
+		"contentURL": "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/ExperimentalNorwegianList.txt",
+		"supportURL": "https://github.com/DandelionSprout/adfilt"
+	},
 	"POL-0": {
 		"content": "filters",
 		"group": "regions",
@@ -544,16 +553,20 @@
 		"title": "POL: polskie filtry do Adblocka i uBlocka",
 		"lang": "pl",
 		"contentURL": "https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt",
-		"supportURL": "https://github.com/MajkiIT/polish-ads-filter/issues"
+		"supportURL": "https://github.com/MajkiIT/polish-ads-filter/issues",
+		"instructionURL": "https://github.com/MajkiIT/polish-ads-filter#polish-filters-for-adblock-ublock-origin--adguard"
 	},
-	"POL-1": {
+	"ROU-1": {
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "POL: polskie filtry do uBlocka uzupelnienie",
-		"lang": "pl",
-		"contentURL": "https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock_ublock.txt",
-		"supportURL": "https://github.com/MajkiIT/polish-ads-filter/issues"
+		"title": "ROU: Romanian Ad (ROad) Block List Light",
+		"lang": "ro",
+		"contentURL": [
+			"https://road.adblock.ro/lista.txt",
+			"https://raw.githubusercontent.com/tcptomato/ROad-Block/master/road-block-filters-light.txt"
+		],
+		"supportURL": "https://github.com/tcptomato/ROad-Block"
 	},
 	"RUS-0": {
 		"content": "filters",

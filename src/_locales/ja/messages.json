@@ -64,7 +64,7 @@
     "description": "English: on this page"
   },
   "popupBlockedStats": {
-    "message": "{{count}}個 か {{percent}}%",
+    "message": "{{count}}件 \/ {{percent}}%",
     "description": "Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt": {
@@ -80,7 +80,7 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "要素除去モードに移行",
+    "message": "要素隠蔽モードに移行",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
@@ -168,7 +168,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "サードパーティ CSS\/イメージ",
+    "message": "外部のCSS\/イメージ",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -252,7 +252,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "私は上級者です (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>※必ず読んでください<\/a>)",
+    "message": "私は上級者です (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>※必ずお読みください<\/a>)",
     "description": ""
   },
   "settingsAdvancedUserSettings": {
@@ -276,7 +276,7 @@
     "description": ""
   },
   "settingPerSiteSwitchGroupSynopsis": {
-    "message": "これらのデフォルトの動作は、サイトごとに上書きできます",
+    "message": "以下の設定による動作は、サイトごとに上書きできます",
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
@@ -448,7 +448,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "ファイルからインポート",
+    "message": "ファイルからインポート...",
     "description": ""
   },
   "rulesExport": {
@@ -464,7 +464,7 @@
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
-    "message": "ルールの書き方: <code>source destination type action<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>詳しい説明<\/a>).",
+    "message": "ルールの書き方: <code>source destination type action<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>詳しい説明<\/a>)",
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
@@ -540,7 +540,7 @@
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "URLアドレスが {{url}} と一致し、{{origin}} を発信源とする{{br}}ネットワークリクエストが {{type}} であれば、{{br}}要素を {{action}} する。{{br}}例外フィルターと一致する項目がある場合は {{importance}} とする。",
+    "message": "URLアドレスが {{url}} と一致し、{{origin}} を発信源とする{{br}}ネットワークリクエストが {{type}} であれば、要素を {{action}} する。{{br}}例外フィルターと一致する項目がある場合は {{importance}} とする。",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {

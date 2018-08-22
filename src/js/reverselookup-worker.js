@@ -115,13 +115,13 @@ var fromNetFilter = function(details) {
 var fromCosmeticFilter = function(details) {
     var match = /^#@?#\^?/.exec(details.rawFilter),
         prefix = match[0],
+        exception = prefix.charAt(1) === '@',
         selector = details.rawFilter.slice(prefix.length);
 
     // The longer the needle, the lower the number of false positives.
-    var needles = selector.match(/\w+/g).sort(function(a, b) {
-        return b.length - a.length;
+    var needle = selector.match(/\w+/g).reduce(function(a, b) {
+        return a.length > b.length ? a : b;
     });
-    var reNeedle = new RegExp(needles[0], 'g');
 
     var reHostname = new RegExp(
         '^' +
@@ -163,25 +163,19 @@ var fromCosmeticFilter = function(details) {
         entry = listEntries[assetKey];
         if ( entry === undefined ) { continue; }
         content = extractBlocks(entry.content, 1000, 2000);
+        pos = 0;
         found = undefined;
-        while ( (match = reNeedle.exec(content)) !== null ) {
-            beg = content.lastIndexOf('\n', match.index);
+        while ( (pos = content.indexOf(needle, pos)) !== -1 ) {
+            beg = content.lastIndexOf('\n', pos);
             if ( beg === -1 ) { beg = 0; }
-            end = content.indexOf('\n', reNeedle.lastIndex);
+            end = content.indexOf('\n', pos);
             if ( end === -1 ) { end = content.length; }
+            pos = end;
             fargs = JSON.parse(content.slice(beg, end));
             switch ( fargs[0] ) {
             case 0: // id-based
                 if (
                     fargs[1] === selector.slice(1) &&
-                    selector.charAt(0) === '#'
-                ) {
-                    found = prefix + selector;
-                }
-                break;
-            case 1: // id-based
-                if (
-                    fargs[2] === selector.slice(1) &&
                     selector.charAt(0) === '#'
                 ) {
                     found = prefix + selector;
@@ -195,11 +189,9 @@ var fromCosmeticFilter = function(details) {
                     found = prefix + selector;
                 }
                 break;
-            case 3:
-                if (
-                    fargs[2] === selector.slice(1) &&
-                    selector.charAt(0) === '.'
-                ) {
+            case 1: // id-based
+            case 3: // class-based
+                if ( fargs[2] === selector ) {
                     found = prefix + selector;
                 }
                 break;
@@ -215,6 +207,9 @@ var fromCosmeticFilter = function(details) {
             case 32:
             case 64:
             case 65:
+                if ( exception !== (fargs[1].charAt(0) === '!') ) {
+                    break;
+                }
                 isProcedural = fargs[3].charCodeAt(0) === 0x7B;
                 if (
                     isProcedural === false && fargs[3] !== selector ||

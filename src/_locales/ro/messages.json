@@ -512,7 +512,7 @@
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
-    "message": "Tab-ul curent",
+    "message": "Fila actuală",
     "description": "Appears in the logger's tab selector"
   },
   "logFilterPrompt": {
