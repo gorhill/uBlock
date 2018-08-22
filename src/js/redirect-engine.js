@@ -501,25 +501,25 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
 
 /******************************************************************************/
 
-var resourcesSelfieVersion = 3;
+let resourcesSelfieVersion = 3;
 
 RedirectEngine.prototype.selfieFromResources = function() {
-    µBlock.cacheStorage.set({
-        resourcesSelfie: {
-            version: resourcesSelfieVersion,
-            resources: Array.from(this.resources)
-        }
-    });
+    let selfie = {
+        version: resourcesSelfieVersion,
+        resources: Array.from(this.resources)
+    };
+    µBlock.cacheStorage.set({ resourcesSelfie: JSON.stringify(selfie) });
 };
 
 RedirectEngine.prototype.resourcesFromSelfie = function(callback) {
-    var me = this;
-
-    var onSelfieReady = function(bin) {
-        if ( bin instanceof Object === false ) {
-            return callback(false);
+    µBlock.cacheStorage.get('resourcesSelfie', bin => {
+        let selfie = bin && bin.resourcesSelfie;
+        if ( typeof selfie === 'string' ) {
+            try {
+                selfie = JSON.parse(selfie);
+            } catch(ex) {
+            }
         }
-        var selfie = bin.resourcesSelfie;
         if (
             selfie instanceof Object === false ||
             selfie.version !== resourcesSelfieVersion ||
@@ -527,14 +527,12 @@ RedirectEngine.prototype.resourcesFromSelfie = function(callback) {
         ) {
             return callback(false);
         }
-        me.resources = new Map();
-        for ( var entry of bin.resourcesSelfie.resources ) {
-            me.resources.set(entry[0], RedirectEntry.fromSelfie(entry[1]));
+        this.resources = new Map();
+        for ( let entry of selfie.resources ) {
+            this.resources.set(entry[0], RedirectEntry.fromSelfie(entry[1]));
         }
         callback(true);
-    };
-
-    µBlock.cacheStorage.get('resourcesSelfie', onSelfieReady);
+    });
 };
 
 RedirectEngine.prototype.invalidateResourcesSelfie = function() {

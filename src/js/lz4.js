@@ -41,10 +41,10 @@ let pendingInitialization;
 let textEncoder, textDecoder;
 let ttlCount = 0;
 let ttlTimer;
-
-const ttlDelay = 60 * 1000;
+let ttlDelay = 60000;
 
 let init = function() {
+    ttlDelay = µBlock.hiddenSettings.autoUpdateAssetFetchPeriod * 1000 + 15000;
     if ( lz4CodecInstance === null ) {
         return Promise.resolve(null);
     }
