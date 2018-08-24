@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2017-2018 Raymond Hill
+    Copyright (C) 2017-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -219,8 +219,8 @@
         // https://github.com/gorhill/uBlock/issues/2793
         var normalizedOperators = new Map([
             [ ':-abp-contains', ':has-text' ],
-            [ ':-abp-has', ':if' ],
-            [ ':contains', ':has-text' ]
+            [ ':-abp-has', ':has' ],
+            [ ':contains', ':has-text' ],
         ]);
 
         var compileArgument = new Map([
