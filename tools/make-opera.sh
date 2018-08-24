@@ -37,12 +37,14 @@ rm $DES/js/vapi-usercss.pseudo.js
 
 # Opera-specific
 cp platform/opera/manifest.json $DES/
+rm -r $DES/_locales/az
 rm -r $DES/_locales/cv
 rm -r $DES/_locales/hi
 rm -r $DES/_locales/ka
 rm -r $DES/_locales/kk
 rm -r $DES/_locales/mr
 rm -r $DES/_locales/ta
+rm -r $DES/_locales/th
 
 echo "*** uBlock0.opera: Generating web accessible resources..."
 cp -R src/web_accessible_resources $DES/
