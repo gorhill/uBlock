@@ -280,6 +280,8 @@
                     break;
                 case ':has':
                 case ':if':
+                    raw.push(':has', '(', decompile(task[1]), ')');
+                    break;
                 case ':if-not':
                     raw.push(task[0], '(', decompile(task[1]), ')');
                     break;
@@ -311,6 +313,7 @@
                 // Find end of argument: first balanced closing parenthesis.
                 // Note: unbalanced parenthesis can be used in a regex literal
                 // when they are escaped using `\`.
+                // TODO: need to handle quoted parentheses.
                 var pcnt = 1;
                 while ( i < n ) {
                     c = raw.charCodeAt(i++);
@@ -323,8 +326,9 @@
                         if ( pcnt === 0 ) { break; }
                     }
                 }
-                // Unbalanced parenthesis?
-                if ( pcnt !== 0 ) { return; }
+                // Unbalanced parenthesis? An unbalanced parenthesis is fine
+                // as long as the last character is a closing parenthesis.
+                if ( pcnt !== 0 && c !== 0x29 ) { return; }
                 // Extract and remember operator details.
                 var operator = raw.slice(opNameBeg, opNameEnd);
                 operator = normalizedOperators.get(operator) || operator;
@@ -503,7 +507,7 @@
 
         var normalizedExtendedSyntaxOperators = new Map([
             [ 'contains', ':has-text' ],
-            [ 'has', ':if' ],
+            [ 'has', ':has' ],
             [ 'matches-css', ':matches-css' ],
             [ 'matches-css-after', ':matches-css-after' ],
             [ 'matches-css-before', ':matches-css-before' ],
