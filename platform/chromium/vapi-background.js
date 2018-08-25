@@ -2,6 +2,7 @@
 
     uBlock Origin - a browser extension to block requests.
     Copyright (C) 2014-2018 The uBlock Origin authors
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -1194,10 +1195,10 @@ vAPI.cloud = (function() {
         return;
     }
 
-    var chunkCountPerFetch = 16; // Must be a power of 2
+    let chunkCountPerFetch = 16; // Must be a power of 2
 
     // Mind chrome.storage.sync.MAX_ITEMS (512 at time of writing)
-    var maxChunkCountPerItem = Math.floor(512 * 0.75) & ~(chunkCountPerFetch - 1);
+    let maxChunkCountPerItem = Math.floor(512 * 0.75) & ~(chunkCountPerFetch - 1);
 
     // Mind chrome.storage.sync.QUOTA_BYTES_PER_ITEM (8192 at time of writing)
     // https://github.com/gorhill/uBlock/issues/3006
@@ -1205,14 +1206,14 @@ vAPI.cloud = (function() {
     //  the infrastructure. Unfortunately this leads to less usable space for
     //  actual data, but all of this is provided for free by browser vendors,
     //  so we need to accept and deal with these limitations.
-    var evalMaxChunkSize = function() {
+    let evalMaxChunkSize = function() {
         return Math.floor(
             (chrome.storage.sync.QUOTA_BYTES_PER_ITEM || 8192) *
             (vAPI.webextFlavor.soup.has('firefox') ? 0.6 : 0.75)
         );
     };
 
-    var maxChunkSize = evalMaxChunkSize();
+    let maxChunkSize = evalMaxChunkSize();
 
     // The real actual webextFlavor value may not be set in stone, so listen
     // for possible future changes.
@@ -1224,9 +1225,9 @@ vAPI.cloud = (function() {
     // Firefox:
     // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/storage/sync
     // > You can store up to 100KB of data using this API/
-    var maxStorageSize = chrome.storage.sync.QUOTA_BYTES || 102400;
+    let maxStorageSize = chrome.storage.sync.QUOTA_BYTES || 102400;
 
-    var options = {
+    let options = {
         defaultDeviceName: window.navigator.platform,
         deviceName: vAPI.localStorage.getItem('deviceName') || ''
     };
@@ -1238,23 +1239,20 @@ vAPI.cloud = (function() {
     // good thing given chrome.storage.sync.MAX_WRITE_OPERATIONS_PER_MINUTE
     // and chrome.storage.sync.MAX_WRITE_OPERATIONS_PER_HOUR.
 
-    var getCoarseChunkCount = function(dataKey, callback) {
-        var bin = {};
-        for ( var i = 0; i < maxChunkCountPerItem; i += 16 ) {
+    let getCoarseChunkCount = function(dataKey, callback) {
+        let bin = {};
+        for ( let i = 0; i < maxChunkCountPerItem; i += 16 ) {
             bin[dataKey + i.toString()] = '';
         }
 
         chrome.storage.sync.get(bin, function(bin) {
             if ( chrome.runtime.lastError ) {
-                callback(0, chrome.runtime.lastError.message);
-                return;
+                return callback(0, chrome.runtime.lastError.message);
             }
 
-            var chunkCount = 0;
-            for ( var i = 0; i < maxChunkCountPerItem; i += 16 ) {
-                if ( bin[dataKey + i.toString()] === '' ) {
-                    break;
-                }
+            let chunkCount = 0;
+            for ( let i = 0; i < maxChunkCountPerItem; i += 16 ) {
+                if ( bin[dataKey + i.toString()] === '' ) { break; }
                 chunkCount = i + 16;
             }
 
@@ -1262,17 +1260,17 @@ vAPI.cloud = (function() {
         });
     };
 
-    var deleteChunks = function(dataKey, start) {
-        var keys = [];
+    let deleteChunks = function(dataKey, start) {
+        let keys = [];
 
         // No point in deleting more than:
         // - The max number of chunks per item
         // - The max number of chunks per storage limit
-        var n = Math.min(
+        let n = Math.min(
             maxChunkCountPerItem,
             Math.ceil(maxStorageSize / maxChunkSize)
         );
-        for ( var i = start; i < n; i++ ) {
+        for ( let i = start; i < n; i++ ) {
             keys.push(dataKey + i.toString());
         }
         if ( keys.length !== 0 ) {
@@ -1280,19 +1278,19 @@ vAPI.cloud = (function() {
         }
     };
 
-    var start = function(/* dataKeys */) {
+    let start = function(/* dataKeys */) {
     };
 
-    var push = function(dataKey, data, callback) {
+    let push = function(dataKey, data, callback) {
 
-        var bin = {
+        let bin = {
             'source': options.deviceName || options.defaultDeviceName,
             'tstamp': Date.now(),
             'data': data,
             'size': 0
         };
         bin.size = JSON.stringify(bin).length;
-        var item = JSON.stringify(bin);
+        let item = JSON.stringify(bin);
 
         // Chunkify taking into account QUOTA_BYTES_PER_ITEM:
         //   https://developer.chrome.com/extensions/storage#property-sync
@@ -1300,14 +1298,14 @@ vAPI.cloud = (function() {
         //   "storage, as measured by the JSON stringification of its value
         //   "plus its key length."
         bin = {};
-        var chunkCount = Math.ceil(item.length / maxChunkSize);
-        for ( var i = 0; i < chunkCount; i++ ) {
+        let chunkCount = Math.ceil(item.length / maxChunkSize);
+        for ( let i = 0; i < chunkCount; i++ ) {
             bin[dataKey + i.toString()] = item.substr(i * maxChunkSize, maxChunkSize);
         }
-        bin[dataKey + i.toString()] = ''; // Sentinel
+        bin[dataKey + chunkCount.toString()] = ''; // Sentinel
 
         chrome.storage.sync.set(bin, function() {
-            var errorStr;
+            let errorStr;
             if ( chrome.runtime.lastError ) {
                 errorStr = chrome.runtime.lastError.message;
                 // https://github.com/gorhill/uBlock/issues/3006#issuecomment-332597677
@@ -1327,27 +1325,30 @@ vAPI.cloud = (function() {
         });
     };
 
-    var pull = function(dataKey, callback) {
+    let pull = function(dataKey, callback) {
 
-        var assembleChunks = function(bin) {
+        let assembleChunks = function(bin) {
             if ( chrome.runtime.lastError ) {
                 callback(null, chrome.runtime.lastError.message);
                 return;
             }
 
             // Assemble chunks into a single string.
-            var json = [], jsonSlice;
-            var i = 0;
+            // https://www.reddit.com/r/uMatrix/comments/8lc9ia/my_rules_tab_hangs_with_cloud_storage_support/
+            //   Explicit sentinel is not necessarily present: this can
+            //   happen when the number of chunks is a multiple of
+            //   chunkCountPerFetch. Hence why we must also test against
+            //   undefined.
+            let json = [], jsonSlice;
+            let i = 0;
             for (;;) {
                 jsonSlice = bin[dataKey + i.toString()];
-                if ( jsonSlice === '' ) {
-                    break;
-                }
+                if ( jsonSlice === '' || jsonSlice === undefined ) { break; }
                 json.push(jsonSlice);
                 i += 1;
             }
 
-            var entry = null;
+            let entry = null;
             try {
                 entry = JSON.parse(json.join(''));
             } catch(ex) {
@@ -1355,14 +1356,14 @@ vAPI.cloud = (function() {
             callback(entry);
         };
 
-        var fetchChunks = function(coarseCount, errorStr) {
+        let fetchChunks = function(coarseCount, errorStr) {
             if ( coarseCount === 0 || typeof errorStr === 'string' ) {
                 callback(null, errorStr);
                 return;
             }
 
-            var bin = {};
-            for ( var i = 0; i < coarseCount; i++ ) {
+            let bin = {};
+            for ( let i = 0; i < coarseCount; i++ ) {
                 bin[dataKey + i.toString()] = '';
             }
 
@@ -1372,14 +1373,12 @@ vAPI.cloud = (function() {
         getCoarseChunkCount(dataKey, fetchChunks);
     };
 
-    var getOptions = function(callback) {
-        if ( typeof callback !== 'function' ) {
-            return;
-        }
+    let getOptions = function(callback) {
+        if ( typeof callback !== 'function' ) { return; }
         callback(options);
     };
 
-    var setOptions = function(details, callback) {
+    let setOptions = function(details, callback) {
         if ( typeof details !== 'object' || details === null ) {
             return;
         }
