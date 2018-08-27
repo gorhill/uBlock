@@ -52,7 +52,7 @@
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Kattints a uBlock₀ letiltásához ezen a webhelyen.\n\nCtrl+klikk a uBlock₀ letiltásához csak a jelenlegi oldalon.",
+    "message": "Kattints a uBlock₀ letiltásához ezen a webhelyen.\n\nCtrl+kattintás a uBlock₀ letiltásához csak a jelenlegi oldalon.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
@@ -104,7 +104,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Kattints az összes előugró ablak blokkolásának visszavonásához ezen a webhelyen",
+    "message": "Kattints, hogy ne legyen többé az összes előugró ablak blokkolva ezen a webhelyen",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -136,11 +136,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Kattints a távoli fontok blokkolásához ezen a webhelyen",
+    "message": "Kattints a távoli betűtípusok blokkolásához ezen a webhelyen",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Kattints a távoli fontok blokkolásának visszavonásához ezen a webhelyen",
+    "message": "Kattints a távoli betűtípusok blokkolásának visszavonásához ezen a webhelyen",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules": {
@@ -356,7 +356,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Helyi",
+    "message": "Beépített",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -412,7 +412,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Soronként egy szűrő. A szűrő lehet egy hostnév, vagy egy Adblock Plus kompatibilis szűrő.\nA &lsquo;!&rsquo; kezdetű sorok figyelmen kívül maradnak.",
+    "message": "Soronként egy szűrő. A szűrő lehet egy hostnév, vagy egy Adblock Plus kompatibilis szűrő.\nA <code>!<\/code> kezdetű sorok figyelmen kívül maradnak.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -608,7 +608,7 @@
     "description": "A link for where to get support"
   },
   "aboutIssues": {
-    "message": "Kiadás követő",
+    "message": "Bugok és problémák",
     "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {

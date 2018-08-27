@@ -244,7 +244,7 @@
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
-    "message": "Përdor menynë kontekstuale sipas rrethanave",
+    "message": "Përdor menunë kontekstuale sipas rrethanave",
     "description": "English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt": {

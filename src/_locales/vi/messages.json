@@ -84,7 +84,7 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Chuyển sang chế độ chặn phần tử tạm thời",
+    "message": "Chuyển sang chế độ chọn phần tử",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {

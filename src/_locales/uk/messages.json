@@ -32,7 +32,7 @@
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "Shortcuts",
+    "message": "Ярлики",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -392,7 +392,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "Одне посилання на рядок. Рядки, що починаються з &lsquo;!&rsquo;  будуть проігноровані. Невірні посилання будуть тихо проігноровані.",
+    "message": "Одне посилання на рядок. Невірні посилання будуть проігноровані без попередження.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -412,7 +412,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Один фільтр на рядок. Фільтром може бути адреса сайту або фільтр у Adblock Plus-сумісному записі. Рядки, що починаються з &lsquo;!&rsquo; ігноруються.",
+    "message": "Один фільтр на рядок. Фільтром може бути адреса сайту або фільтр у Adblock Plus-сумісному записі. Рядки, що починаються з <code>!<\/code> будуть проігноровані.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -480,7 +480,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Ваш список адрес сайтів, для яких µBlock буде неактивним. Додайте по одному запису на рядок. Невірні адреси будуть проігноровані без зауважень.",
+    "message": "Ваш список адрес сайтів, для яких µBlock буде неактивним. Додайте по одному запису на рядок. Невірні адреси будуть проігноровані без попереджень та закоментовані.",
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {

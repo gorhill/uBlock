@@ -164,11 +164,11 @@
     "description": ""
   },
   "popupImageRulePrompt": {
-    "message": "Imágenes",
+    "message": "imágenes",
     "description": ""
   },
   "popup3pAnyRulePrompt": {
-    "message": "De terceros",
+    "message": "de terceros",
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
@@ -176,19 +176,19 @@
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
-    "message": "Scripts embebidos",
+    "message": "scripts embebidos",
     "description": ""
   },
   "popup1pScriptRulePrompt": {
-    "message": "Scripts del dominio",
+    "message": "scripts del dominio",
     "description": ""
   },
   "popup3pScriptRulePrompt": {
-    "message": "Scripts de terceros",
+    "message": "scripts de terceros",
     "description": ""
   },
   "popup3pFrameRulePrompt": {
-    "message": "Frames de terceros",
+    "message": "frames de terceros",
     "description": ""
   },
   "popupHitDomainCountPrompt": {
