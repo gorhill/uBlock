@@ -45,7 +45,7 @@
         "/js/scriptlets/subscriber.js"
       ],
       "run_at": "document_idle",
-      "all_frames": false
+      "all_frames": true
     }
   ],
   "default_locale": "en",
