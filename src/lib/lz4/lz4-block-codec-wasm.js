@@ -123,16 +123,17 @@ context.LZ4BlockWASM.prototype = {
     flavor: 'wasm',
 
     init: function() {
-        if ( this.lz4wasmInstance instanceof WebAssembly.Instance ) {
-            return Promise.resolve(this.lz4wasmInstance);
-        }
         if (
-            this.lz4wasmInstance === null ||
-            WebAssembly instanceof Object === false ||
+            typeof WebAssembly !== 'object' ||
             typeof WebAssembly.instantiateStreaming !== 'function'
         ) {
             this.lz4wasmInstance = null;
-            return Promise.resolve(null);
+        }
+        if ( this.lz4wasmInstance === null ) {
+            return Promise.reject();
+        }
+        if ( this.lz4wasmInstance instanceof WebAssembly.Instance ) {
+            return Promise.resolve(this.lz4wasmInstance);
         }
         if ( this.lz4wasmInstance === undefined ) {
             this.lz4wasmInstance = WebAssembly.instantiateStreaming(
