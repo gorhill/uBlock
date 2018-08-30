@@ -100,48 +100,25 @@
 /******************************************************************************/
 
 µBlock.loadHiddenSettings = function() {
-    var onLoaded = function(bin) {
+    vAPI.storage.get('hiddenSettings', bin => {
         if ( bin instanceof Object === false ) { return; }
-        var µb = µBlock,
-            hs = bin.hiddenSettings;
-        // Remove following condition once 1.15.12+ is widespread.
-        if (
-            hs instanceof Object === false &&
-            typeof bin.hiddenSettingsString === 'string'
-        ) {
-            vAPI.storage.remove('hiddenSettingsString');
-            hs = µBlock.hiddenSettingsFromString(bin.hiddenSettingsString);
-        }
+        let hs = bin.hiddenSettings;
         if ( hs instanceof Object ) {
-            var hsDefault = µb.hiddenSettingsDefault;
-            for ( var key in hsDefault ) {
+            let hsDefault = this.hiddenSettingsDefault;
+            for ( let key in hsDefault ) {
                 if (
                     hsDefault.hasOwnProperty(key) &&
                     hs.hasOwnProperty(key) &&
                     typeof hs[key] === typeof hsDefault[key]
                 ) {
-                    µb.hiddenSettings[key] = hs[key];
+                    this.hiddenSettings[key] = hs[key];
                 }
-            }
-            // To remove once 1.15.26 is widespread. The reason is to ensure
-            // the change in the following commit is taken into account:
-            // https://github.com/gorhill/uBlock/commit/8071321e9104
-            if ( hs.manualUpdateAssetFetchPeriod === 2000 ) {
-                µb.hiddenSettings.manualUpdateAssetFetchPeriod =
-                    µb.hiddenSettingsDefault.manualUpdateAssetFetchPeriod;
-                hs.manualUpdateAssetFetchPeriod = undefined;
-                µb.saveHiddenSettings();
             }
         }
         if ( vAPI.localStorage.getItem('immediateHiddenSettings') === null ) {
-            µb.saveImmediateHiddenSettings();
+            this.saveImmediateHiddenSettings();
         }
-    };
-
-    vAPI.storage.get(
-        [ 'hiddenSettings', 'hiddenSettingsString'],
-        onLoaded
-    );
+    });
 };
 
 // Note: Save only the settings which values differ from the default ones.
@@ -149,8 +126,8 @@
 // which were not modified by the user.
 
 µBlock.saveHiddenSettings = function(callback) {
-    var bin = { hiddenSettings: {} };
-    for ( var prop in this.hiddenSettings ) {
+    let bin = { hiddenSettings: {} };
+    for ( let prop in this.hiddenSettings ) {
         if (
             this.hiddenSettings.hasOwnProperty(prop) &&
             this.hiddenSettings[prop] !== this.hiddenSettingsDefault[prop]
