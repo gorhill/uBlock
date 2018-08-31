@@ -534,8 +534,7 @@ var onLogBufferRead = function(response) {
         return;
     }
 
-    // This tells us the behind-the-scene tab id
-    noTabId = response.noTabId;
+
     dntDomains = response.dntDomains; // ADN
 
     // Tab id of currently active tab
