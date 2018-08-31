@@ -43,7 +43,7 @@ vAPI.net.registerListeners = function() {
     // https://github.com/gorhill/uBlock/issues/2950
     // Firefox 55 does not normalize URLs to ASCII, uBO must do this itself.
     // https://bugzilla.mozilla.org/show_bug.cgi?id=945240
-    var mustPunycode = false;
+    let mustPunycode = false;
     (function() {
         if (
             typeof browser === 'object' &&
@@ -58,10 +58,10 @@ vAPI.net.registerListeners = function() {
         }
     })();
 
-    var wrApi = browser.webRequest;
+    let wrApi = browser.webRequest;
 
     // legacy Chromium understands only these network request types.
-    var validTypes = new Set([
+    let validTypes = new Set([
         'image',
         'main_frame',
         'object',
@@ -80,14 +80,14 @@ vAPI.net.registerListeners = function() {
         }
     }
 
-    var denormalizeTypes = function(aa) {
+    let denormalizeTypes = function(aa) {
         if ( aa.length === 0 ) {
             return Array.from(validTypes);
         }
-        var out = new Set(),
+        let out = new Set(),
             i = aa.length;
         while ( i-- ) {
-            var type = aa[i];
+            let type = aa[i];
             if ( validTypes.has(type) ) {
                 out.add(type);
             }
@@ -98,12 +98,12 @@ vAPI.net.registerListeners = function() {
         return Array.from(out);
     };
 
-    var punycode = self.punycode;
-    var reAsciiHostname  = /^https?:\/\/[0-9a-z_.:@-]+[/?#]/;
-    var reNetworkURI = /^(?:ftps?|https?|wss?)/;
-    var parsedURL = new URL('about:blank');
+    let punycode = self.punycode;
+    let reAsciiHostname  = /^https?:\/\/[0-9a-z_.:@-]+[/?#]/;
+    let reNetworkURI = /^(?:ftps?|https?|wss?)/;
+    let parsedURL = new URL('about:blank');
 
-    var normalizeRequestDetails = function(details) {
+    let normalizeRequestDetails = function(details) {
         if (
             details.tabId === vAPI.noTabId &&
             reNetworkURI.test(details.documentUrl)
@@ -119,7 +119,7 @@ vAPI.net.registerListeners = function() {
             );
         }
 
-        var type = details.type;
+        let type = details.type;
 
         // https://github.com/gorhill/uBlock/issues/1493
         // Chromium 49+/WebExtensions support a new request type: `ping`,
@@ -135,8 +135,70 @@ vAPI.net.registerListeners = function() {
         }
     };
 
-    var onBeforeRequestClient = this.onBeforeRequest.callback;
-    var onBeforeRequest = function(details) {
+    // This is to work around Firefox's inability to redirect xmlhttprequest
+    // requests to data: URIs.
+    let pseudoRedirector = {
+        filters: new Map(),
+        reDataURI: /^data:\w+\/\w+;base64,/,
+        dec: null,
+        init: function() {
+            this.dec = new Uint8Array(128);
+            let s = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+            for ( let i = 0, n = s.length; i < n; i++ ) {
+                this.dec[s.charCodeAt(i)] = i;
+            }
+            return this.dec;
+        },
+        start: function(requestId, redirectUrl) {
+            let match = this.reDataURI.exec(redirectUrl);
+            if ( match === null ) { return redirectUrl; }
+            let s = redirectUrl.slice(match[0].length).replace(/=*$/, '');
+            let f = browser.webRequest.filterResponseData(requestId);
+            f.onstop = this.done;
+            f.onerror = this.disconnect;
+            this.filters.set(f, s);
+        },
+        done: function() {
+            let pr = pseudoRedirector;
+            let bufIn = pr.filters.get(this);
+            if ( bufIn === undefined ) { return pr.disconnect(this); }
+            let dec = pr.dec || pr.init();
+            let sizeIn = bufIn.length;
+            let iIn = 0;
+            let sizeOut = sizeIn * 6 >>> 3;
+            let bufOut = new Uint8Array(sizeOut);
+            let iOut = 0;
+            let n = sizeIn & ~3;
+            while ( iIn < n ) {
+                let b0 = dec[bufIn.charCodeAt(iIn++)];
+                let b1 = dec[bufIn.charCodeAt(iIn++)];
+                let b2 = dec[bufIn.charCodeAt(iIn++)];
+                let b3 = dec[bufIn.charCodeAt(iIn++)];
+                bufOut[iOut++] = (b0 << 2) & 0xFC | (b1 >>> 4);
+                bufOut[iOut++] = (b1 << 4) & 0xF0 | (b2 >>> 2);
+                bufOut[iOut++] = (b2 << 6) & 0xC0 |  b3;
+            }
+            if ( iIn !== sizeIn ) {
+                let b0 = dec[bufIn.charCodeAt(iIn++)];
+                let b1 = dec[bufIn.charCodeAt(iIn++)];
+                bufOut[iOut++] = (b0 << 2) & 0xFC | (b1 >>> 4);
+                if ( iIn !== sizeIn ) {
+                    let b2 = dec[bufIn.charCodeAt(iIn++)];
+                    bufOut[iOut++] = (b1 << 4) & 0xF0 | (b2 >>> 2);
+                }
+            }
+            this.write(bufOut);
+            pr.disconnect(this);
+        },
+        disconnect: function(f) {
+            let pr = pseudoRedirector;
+            pr.filters.delete(f);
+            f.disconnect();
+        }
+    };
+
+    let onBeforeRequestClient = this.onBeforeRequest.callback;
+    let onBeforeRequest = function(details) {
         normalizeRequestDetails(details);
         return onBeforeRequestClient(details);
     };
@@ -199,10 +261,10 @@ vAPI.net.registerListeners = function() {
         );
     }
 
-    var onHeadersReceivedClient = this.onHeadersReceived.callback,
-        onHeadersReceivedClientTypes = (this.onHeadersReceived.types||[]).slice(0),// ADN : fix to #1241
+    let onHeadersReceivedClient = this.onHeadersReceived.callback,
+        onHeadersReceivedClientTypes = this.onHeadersReceived.types.slice(0),
         onHeadersReceivedTypes = denormalizeTypes(onHeadersReceivedClientTypes);
-    var onHeadersReceived = function(details) {
+    let onHeadersReceived = function(details) {
         normalizeRequestDetails(details);
         if (
             onHeadersReceivedClientTypes.length !== 0 &&

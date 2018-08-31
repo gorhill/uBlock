@@ -53,9 +53,9 @@
 
     var searchWidgetHtml =
         '<div class="cm-search-widget">' +
-            '<span class="fa">&#xf002;</span>&emsp;' +
+            '<span class="fa">&#xf002;</span>&ensp;' +
             '<span>' +
-                '<input type="text" size="32">' +
+                '<input type="text" size="20">' +
                 '<span class="cm-search-widget-count">' +
                     '<span><!-- future use --></span><span>0</span>' +
                 '</span>' +

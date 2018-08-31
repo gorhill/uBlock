@@ -13,7 +13,7 @@ import tempfile
 import time
 import zipfile
 
-from distutils.version import StrictVersion
+from distutils.version import LooseVersion
 from string import Template
 
 # - Download target (raw) uBlock0.webext.xpi from GitHub
@@ -250,7 +250,7 @@ with open(updates_json_filepath) as f:
     updates_json = json.load(f)
     f.close()
     previous_version = updates_json['addons'][extension_id]['updates'][0]['version']
-    if StrictVersion(version) > StrictVersion(previous_version):
+    if LooseVersion(version) > LooseVersion(previous_version):
         with open(os.path.join(projdir, 'platform', 'webext', 'updates.template.json')) as f:
             template_json = Template(f.read())
             f.close()

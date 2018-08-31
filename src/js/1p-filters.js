@@ -36,13 +36,14 @@ var cmEditor = new CodeMirror(
     document.getElementById('userFilters'),
     {
         autofocus: true,
-        inputStyle: 'contenteditable',
         lineNumbers: true,
         lineWrapping: true,
         styleActiveLine: true,
         theme:'pastel-on-dark'
     }
 );
+
+uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 
 /******************************************************************************/
 
@@ -68,6 +69,7 @@ function renderUserFilters(first) {
         }
         cmEditor.setValue(content);
         if ( first ) {
+            cmEditor.setCursor(cmEditor.lineCount(), 0);
             cmEditor.clearHistory();
         }
         userFiltersChanged(false);

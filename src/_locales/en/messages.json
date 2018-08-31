@@ -1,6 +1,6 @@
 {
   "extName":{
-    "message":"uBlock₀",
+    "message":"uBlock Origin",
     "description":"extension name."
   },
   "extShortDesc":{
@@ -380,8 +380,8 @@
     "description":"English: Custom"
   },
   "3pExternalListsHint":{
-    "message":"One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored.",
-    "description":"English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "message":"One URL per line. Lines prefixed with <code>!</code> will be ignored. Invalid URLs will be silently ignored.",
+    "description":"Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete":{
     "message":"Out of date.",
@@ -400,8 +400,8 @@
     "description":"used as a tooltip for error icon beside a list"
   },
   "1pFormatHint":{
-    "message":"One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored.",
-    "description":"English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "message":"One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with <code>!</code> will be ignored.",
+    "description":"Short information about how to create custom filters"
   },
   "1pImport":{
     "message":"Import and append",

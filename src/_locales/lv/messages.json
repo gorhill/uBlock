@@ -512,7 +512,7 @@
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
-    "message": "Current tab",
+    "message": "Šī cilne",
     "description": "Appears in the logger's tab selector"
   },
   "logFilterPrompt": {

@@ -561,34 +561,16 @@ button.error{
 body {
     font: 14px sans-serif;
     }
+code {
+    background-color: #eee;
+    padding: 0 0.25em;
+    }
 textarea {
     font-size: 90%;
     }
 a:hover {
     color: #3B96FF;
     }
-p {
-  margin: 1em 0;
-}
-.hiddenFileInput {
-    height: 0;
-    visibility: hidden;
-    width: 0;
-    }
-textarea {
-  background: #333;
-  color: #ccc;
-  padding: 5px;
-}
-input {
-  background: #333;
-  color: #ccc;
-  border: solid 1px #999;
-  border-radius: 2px;
-}
-/* ============================================================
-  TOGGLE: COMMON
-============================================================ */
 .cmn-toggle {
   position: absolute;
   margin-left: -9999px;
@@ -921,3 +903,45 @@ body[dir=rtl] #externalListsDiv {
 .cm-staticnetBlock {
   color:white !important;
 }
+=======
+button.custom:hover {
+    opacity: 1.0;
+    }
+button.custom.important {
+    border-color: #ffcc7f #ffcc7f hsl(36, 100%, 73%);
+    background-color: hsl(36, 100%, 75%);
+    background-image: linear-gradient(#ffdca8, #ffcc7f);
+    }
+button.custom.disabled,
+button.custom[disabled],
+button.custom.important.disabled,
+button.custom.important[disabled] {
+    border-color: #ddd #ddd hsl(36, 0%, 85%);
+    background-color: hsl(36, 0%, 72%);
+    background-image: linear-gradient(#f2f2f2, #dddddd);
+    color: #666;
+    opacity: 0.6;
+    pointer-events: none;
+    }
+button.custom.iconifiable > .fa {
+    padding-right: 0.5em;
+    }
+body[dir="rtl"] button.custom.iconifiable > .fa {
+    padding-left: 0.5em;
+    }
+.hidden {
+    display: none;
+    height: 0;
+    visibility: hidden;
+    width: 0;
+    }
+
+@media (max-width: 640px) {
+    button.custom.iconifiable > .fa {
+        font-size: 150%;
+        padding: 0;
+        }
+    button.custom.iconifiable > [data-i18n] {
+        display: none;
+        }
+    }

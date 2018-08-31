@@ -1,11 +1,7 @@
 body {
-    bottom: 0;
     display: flex;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
     flex-direction: column;
+    overflow: hidden;
     }
 #diff {
     border: 0;
@@ -20,73 +16,17 @@ body {
     }
 #diff .tools .fa {
     font-size: large;
-    }
-#diff .ruleActions {
-    border: 0;
-    box-sizing: border-box;
-    display: inline-block;
-    padding: 0;
-    text-align: center;
-    vertical-align: top;
-    width: 50%;
-    }
-#diff .ruleActions h3 {
-    font-weight: normal;
-    margin: 0.5em 0;
-    }
-#diff .ruleFilter {
-    text-align: center;
-    }
-.ruleActions h2{
-    padding:.5em;
-}
-body[dir="ltr"] #revertButton:after {
-    content: '\2009\f061';
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    line-height: 1;
-    vertical-align: baseline;
-    display: inline-block;
-    }
-body[dir="rtl"] #revertButton:after {
-    content: '\2009\f060';
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    line-height: 1;
-    vertical-align: baseline;
-    display: inline-block;
-    }
-body[dir="ltr"] #commitButton:before {
-    content: '\f060\2009';
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    line-height: 1;
-    vertical-align: baseline;
-    display: inline-block;
-    }
-body[dir="rtl"] #commitButton:before {
-    content: '\f061\2009';
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    line-height: 1;
-    vertical-align: baseline;
-    display: inline-block;
-    }
+    }    }
 #revertButton,
 #commitButton,
 #diff.editing #exportButton,
-#diff.editing #importButton,
-#editSaveButton {
+#diff.editing #importButton {
     opacity: 0.25;
     pointer-events: none;
     }
 #diff.dirty:not(.editing) #revertButton,
 #diff.dirty:not(.editing) #commitButton,
-#diff.editing #editSaveButton {
+#diff.editing {
     opacity: 1;
     pointer-events: auto;
     }
@@ -108,3 +48,7 @@ body[dir="rtl"] #commitButton:before {
 #diff.editing .CodeMirror-merge-editor .CodeMirror {
     background-color: #ffe;
     }
+body[dir="rtl"] .CodeMirror-merge-pane-rightmost {
+    right: unset;
+    left: 0;
+}

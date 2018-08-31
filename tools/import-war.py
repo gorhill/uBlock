@@ -20,6 +20,9 @@ with open('./src/web_accessible_resources/to-import.txt', 'r') as f:
         if len(line) != 0 and line[0] != '#':
             to_import.add(line)
 
+# https://github.com/gorhill/uBlock/issues/3636
+safe_exts = { 'javascript': 'js' }
+
 imported = []
 
 # scan the file until a resource to import is found
@@ -40,7 +43,10 @@ def safe_filename_from_token(token, mime):
     # extract file extension from mime
     match = re.search('^[^/]+/([^\s;]+)', mime)
     if match:
-        name += '.' + match.group(1)
+        ext = match.group(1)
+        if ext in safe_exts:
+            ext = safe_exts[ext]
+        name += '.' + ext
     return name
 
 def import_resource(f, token, mime):

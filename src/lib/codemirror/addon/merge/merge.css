@@ -48,6 +48,12 @@
   color: #555;
   line-height: 1;
 }
+.CodeMirror-merge-scrolllock:after {
+  content: "\21db\00a0\00a0\21da";
+}
+.CodeMirror-merge-scrolllock.CodeMirror-merge-scrolllock-enabled:after {
+  content: "\21db\21da";
+}
 
 .CodeMirror-merge-copybuttons-left, .CodeMirror-merge-copybuttons-right {
   position: absolute;

@@ -23,6 +23,7 @@ html, body {
     z-index: 10;
     }
 #dashboard-nav-widgets {
+<<<<<<< HEAD
     border-bottom: 1px solid #444;
     padding: 4px 10px 0;
     white-space: nowrap;
@@ -38,6 +39,25 @@ html, body {
     margin: 5px 0;
     color: #fff;
 }
+=======
+    align-items: stretch;
+    background-color: white;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    margin: 0;
+    padding: 4px 0 0;
+    white-space: nowrap;
+    }
+#dashboard-nav-widgets > span {
+    align-items: center;
+    display: inline-flex;
+    padding: 0 0.5em;
+    width: 1.25em;
+    }
+#dashboard-nav-widgets > span > img {
+    width: 100%;
+    }
+>>>>>>> upstream1.15.20
 .tabButton {
     font-family: bebas_neue,sans-serif;
     background-color: #222;
@@ -49,8 +69,14 @@ html, body {
     cursor: pointer;
     display: inline-block;
     font-size: 110%;
+<<<<<<< HEAD
     margin: 0;
     padding: 2px 10px;
+=======
+    margin: 0 0.2em 0 0;
+    overflow: hidden;
+    padding: 4px;
+>>>>>>> upstream1.15.20
     position: relative;
     text-decoration: none;
     top: 1px;
@@ -80,24 +106,18 @@ iframe {
     width: 100%;
     }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
     #dashboard-nav {
         position: relative;
         }
     #dashboard-nav-widgets {
         padding: 1px 0 0 0;
-        white-space: normal;
         }
-    [data-i18n="extName"] {
-        display: none;
+    .hverbose {
+        display: none !important;
         }
     .tabButton {
-        border-radius: 0;
-        display: inline-block;
-        font-size: 100%;
-        margin-bottom: 1px;
-        margin-right: 1px;
-        top: 0;
+        font-size: 90%;
         }
     .tabButton.selected {
         border-bottom: 1px solid #ccc;

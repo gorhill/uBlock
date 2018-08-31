@@ -631,7 +631,8 @@ var pageSelectorFromURLHash = (function() {
         if ( tabClass === '' ) { return; }
         sheet.insertRule(
             '#netInspector tr:not(.' + tabClass + '):not(.tab_bts) ' +
-            '{display:none;}'
+            '{display:none;}',
+            0
         );
     };
 

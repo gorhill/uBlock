@@ -484,11 +484,13 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
     }
 
     warResolve();
+
+    this.modifyTime = Date.now();
 };
 
 /******************************************************************************/
 
-var resourcesSelfieVersion = 2;
+var resourcesSelfieVersion = 3;
 
 RedirectEngine.prototype.selfieFromResources = function() {
     vAPI.cacheStorage.set({

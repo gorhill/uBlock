@@ -4,7 +4,6 @@
     position: relative;
     }
 .CodeMirror {
-    border: 1px solid #ddd;
     box-sizing: border-box;
     flex-grow: 1;
     height: 100%;
@@ -27,6 +26,8 @@
 .cm-search-widget {
     align-items: center;
     background-color: #eee;
+    cursor: default;
+    direction: ltr;
     display: flex;
     flex-shrink: 0;
     justify-content: center;
