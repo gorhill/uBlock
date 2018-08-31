@@ -5,7 +5,7 @@
     "applications": {
         "gecko": {
            "id": "adnauseam@rednoise.org",
-           "strict_min_version":"54.0"
+           "strict_min_version":"52.0"
         }
      },
     "commands": {
@@ -81,5 +81,16 @@
         "management",
         "downloads"
     ],
-    "short_name": "AdNauseam"
+    "short_name": "AdNauseam",
+    "sidebar_action": {
+    "default_title": "__MSG_statsPageName__",
+    "default_panel": "logger-ui.html",
+    "default_icon": {
+            "19": "img/browsericons/icon19.png",
+            "38": "img/browsericons/icon38.png"
+    }
+  },
+  "web_accessible_resources": [
+     "/web_accessible_resources/*"
+  ]
 }

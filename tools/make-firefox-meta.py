@@ -20,6 +20,17 @@ def mkdirs(path):
 
 pj = os.path.join
 
+# Find path to project root
+proj_dir = os.path.split(os.path.abspath(__file__))[0]
+while not os.path.isdir(os.path.join(proj_dir, '.git')):
+    proj_dir = os.path.normpath(os.path.join(proj_dir, '..'))
+
+# Check that found project root is valid
+version_filepath = os.path.join(proj_dir, 'dist', 'version')
+if not os.path.isfile(version_filepath):
+    print('Version file not found.')
+    exit(1)
+
 build_dir = os.path.abspath(sys.argv[1])
 source_locale_dir = pj(build_dir, '_locales')
 target_locale_dir = pj(build_dir, 'locale')
@@ -51,44 +62,38 @@ for alpha2 in sorted(os.listdir(source_locale_dir)):
 chrome_manifest = pj(build_dir, 'chrome.manifest')
 
 with open(chrome_manifest, 'at', encoding='utf-8', newline='\n') as f:
-    f.write(u'\nlocale adnauseam en ./locale/en/\n')
+    f.write(u'\nlocale ublock0 en ./locale/en/\n')
     for alpha2 in language_codes:
         if alpha2 == 'en':
             continue
-        f.write(u'locale adnauseam ' + alpha2 + ' ./locale/' + alpha2 + '/\n')
+        f.write(u'locale ublock0 ' + alpha2 + ' ./locale/' + alpha2 + '/\n')
 
 rmtree(source_locale_dir)
 
 # update install.rdf
-proj_dir = pj(os.path.split(os.path.abspath(__file__))[0], '..')
-# chromium_manifest = pj(proj_dir, 'platform', 'chromium', 'manifest.json')
-chromium_manifest = pj(proj_dir, 'manifest.json') # new-manifest
 
+chromium_manifest = pj(proj_dir, 'platform', 'chromium', 'manifest.json')
 with open(chromium_manifest, encoding='utf-8') as m:
     manifest = json.load(m)
 
+# Fetch extension version
 # https://developer.mozilla.org/en-US/Add-ons/AMO/Policy/Maintenance#How_do_I_submit_a_Beta_add-on.3F
 # "To create a beta channel [...] '(a|alpha|b|beta|pre|rc)\d*$' "
 
-match = re.search('^(\d+\.\d+\.\d+)(\.\d+)$', manifest['version'])
+version = ''
+with open(version_filepath) as f:
+    version = f.read().strip()
+match = re.search('^(\d+\.\d+\.\d+)(\.\d+)$', version)
 if match:
     buildtype = int(match.group(2)[1:])
     if buildtype < 100:
         builttype = 'b' + str(buildtype)
     else:
         builttype = 'rc' + str(buildtype - 100)
-    manifest['version'] = match.group(1) + builttype
+    version = match.group(1) + builttype
+manifest['version'] = version
 
-match = re.search('^(\d+\.\d+\.\d+)(\.\d+)$', manifest['version'])
-if match:
-    buildtype = int(match.group(2)[1:])
-    if buildtype < 100:
-        builttype = 'b' + str(buildtype)
-    else:
-        builttype = 'rc' + str(buildtype - 100)
-    manifest['version'] = match.group(1) + builttype
-
-manifest['homepage'] = 'http://adnauseam.io'
+manifest['homepage'] = 'https://github.com/gorhill/uBlock'
 manifest['description'] = descriptions['en']
 del descriptions['en']
 
@@ -99,14 +104,14 @@ for alpha2 in descriptions:
     if alpha2 == 'en':
         continue
     manifest['localized'].append(
-       '\n' + t*2 + '<localized><r:Description>\n' +
-         t3 + '<locale>' + alpha2 + '</locale>\n' +
-         t3 + '<name>' + manifest['name'] + '</name>\n' +
-         t3 + '<description>' + descriptions[alpha2] + '</description>\n' +
-         t3 + '<creator>' + manifest['author'] + '</creator>\n' +
+        '\n' + t*2 + '<em:localized><Description>\n' +
+        t3 + '<em:locale>' + alpha2 + '</em:locale>\n' +
+        t3 + '<em:name>' + manifest['name'] + '</em:name>\n' +
+        t3 + '<em:description>' + descriptions[alpha2] + '</em:description>\n' +
+        t3 + '<em:creator>' + manifest['author'] + '</em:creator>\n' +
         # t3 + '<translator>' + ??? + '</translator>\n' +
-         t3 + '<homepageURL>' + manifest['homepage'] + '</homepageURL>\n' +
-         t*2 + '</r:Description></localized>'
+        t3 + '<em:homepageURL>' + manifest['homepage'] + '</em:homepageURL>\n' +
+        t*2 + '</Description></em:localized>'
     )
 manifest['localized'] = '\n'.join(manifest['localized'])
 

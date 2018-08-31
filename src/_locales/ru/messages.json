@@ -511,6 +511,10 @@
     "message": "Скрытые запросы",
     "description": "Pretty name for behind-the-scene network requests"
   },
+  "loggerCurrentTab": {
+    "message": "Текущая вкладка",
+    "description": "Appears in the logger's tab selector"
+  },
   "logFilterPrompt": {
     "message": "фильтр записей в журнале",
     "description": "English: filter log entries"

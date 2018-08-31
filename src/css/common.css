@@ -2,7 +2,7 @@
   RESET
 ============================================================ */
 html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+h1, h2, h3, h4, h5, h6, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, font, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
@@ -561,34 +561,16 @@ button.error{
 body {
     font: 14px sans-serif;
     }
+code {
+    background-color: #eee;
+    padding: 0 0.25em;
+    }
 textarea {
     font-size: 90%;
     }
 a:hover {
     color: #3B96FF;
     }
-p {
-  margin: 1em 0;
-}
-.hiddenFileInput {
-    height: 0;
-    visibility: hidden;
-    width: 0;
-    }
-textarea {
-  background: #333;
-  color: #ccc;
-  padding: 5px;
-}
-input {
-  background: #333;
-  color: #ccc;
-  border: solid 1px #999;
-  border-radius: 2px;
-}
-/* ============================================================
-  TOGGLE: COMMON
-============================================================ */
 .cmn-toggle {
   position: absolute;
   margin-left: -9999px;
@@ -896,4 +878,69 @@ span.new {
     }
 body[dir=rtl] #externalListsDiv {
     margin: 2em 2em 0;
+    }
+/* Code Mirror Override */
+.CodeMirror {
+  background: #333 !important;
+  color:#ccc !important;
+  border: 1px solid #777 !important;
+}
+.CodeMirror-gutters, .CodeMirror-merge-gap{
+  background: #222 !important;
+}
+.CodeMirror-activeline-background {
+    background: #111 !important;
+}
+.CodeMirror-merge-l-chunk {
+  background: #000 !important;
+}
+.cm-search-widget{
+  background-color: #222 !important;
+  border-top: 1px #777 solid;
+  border-left: 1px #777 solid;
+  border-right: 1px #777 solid;
+}
+.cm-staticnetBlock {
+  color:white !important;
+}
+button.custom:hover {
+    opacity: 1.0;
+    }
+button.custom.important {
+    background-color: rgba(0, 118, 255,0.2);
+}
+button.custom.important:hover {
+    background-color: rgb(0, 118, 255,1);
+}
+button.custom.disabled,
+button.custom[disabled],
+button.custom.important.disabled,
+button.custom.important[disabled] {
+    border-color: #ddd ;
+    background-color: #ddd;
+    color: #666;
+    opacity: 0.6;
+    pointer-events: none;
+    }
+button.custom.iconifiable > .fa {
+    padding-right: 0.5em;
+    }
+body[dir="rtl"] button.custom.iconifiable > .fa {
+    padding-left: 0.5em;
+    }
+.hidden {
+    display: none;
+    height: 0;
+    visibility: hidden;
+    width: 0;
+    }
+
+@media (max-width: 640px) {
+    button.custom.iconifiable > .fa {
+        font-size: 150%;
+        padding: 0;
+        }
+    button.custom.iconifiable > [data-i18n] {
+        display: none;
+        }
     }

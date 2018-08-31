@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2017 The uBlock Origin authors
+    Copyright (C) 2014-2018 The uBlock Origin authors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -265,18 +265,29 @@ vAPI.tabs = {};
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/3546
+//   Added a new flavor of behind-the-scene tab id: vAPI.anyTabId.
+//   vAPI.anyTabId will be used for network requests which can be filtered,
+//   because they comes with enough contextual information. It's just not
+//   possible to pinpoint exactly from which tab it comes from. For example,
+//   with Firefox/webext, the `documentUrl` property is available for every
+//   network requests.
+
 vAPI.isBehindTheSceneTabId = function(tabId) {
-    return tabId.toString() === '-1';
+    if ( typeof tabId === 'string' ) { debugger; }
+    return tabId < 0;
 };
 
-vAPI.noTabId = '-1';
+vAPI.unsetTabId = 0;
+vAPI.noTabId = -1;      // definitely not any existing tab
+vAPI.anyTabId = -2;     // one of the existing tab
 
 /******************************************************************************/
 
+// To remove when tabId-as-integer has been tested enough.
+
 var toChromiumTabId = function(tabId) {
-    if ( typeof tabId === 'string' ) {
-        tabId = parseInt(tabId, 10);
-    }
+    if ( typeof tabId === 'string' ) { debugger; }
     if ( typeof tabId !== 'number' || isNaN(tabId) || tabId === -1 ) {
         return 0;
     }
@@ -329,8 +340,8 @@ vAPI.tabs.registerListeners = function() {
         }
         if ( typeof vAPI.tabs.onPopupCreated === 'function' ) {
             vAPI.tabs.onPopupCreated(
-                details.tabId.toString(),
-                details.sourceTabId.toString()
+                details.tabId,
+                details.sourceTabId
             );
         }
     };
@@ -364,7 +375,7 @@ vAPI.tabs.registerListeners = function() {
         if ( changeInfo.url ) {
             changeInfo.url = sanitizeURL(changeInfo.url);
         }
-        onUpdatedClient(tabId.toString(), changeInfo, tab);
+        onUpdatedClient(tabId, changeInfo, tab);
     };
 
     chrome.webNavigation.onBeforeNavigate.addListener(onBeforeNavigate);
@@ -384,32 +395,34 @@ vAPI.tabs.registerListeners = function() {
 
 /******************************************************************************/
 
-vAPI.tabs.get = function(tabId, callback) {
-    var onTabReady = function(tab) {
-        // https://code.google.com/p/chromium/issues/detail?id=410868#c8
-        if ( chrome.runtime.lastError ) {
-            /* noop */
-        }
-        // Caller must be prepared to deal with nil tab value
-        callback(tab);
-    };
+// Caller must be prepared to deal with nil tab argument.
 
-    if ( tabId !== null ) {
-        tabId = toChromiumTabId(tabId);
-        if ( tabId === 0 ) {
-            onTabReady(null);
-        } else {
-            chrome.tabs.get(tabId, onTabReady);
-        }
+// https://code.google.com/p/chromium/issues/detail?id=410868#c8
+
+vAPI.tabs.get = function(tabId, callback) {
+    if ( tabId === null ) {
+        chrome.tabs.query(
+            { active: true, currentWindow: true },
+            function(tabs) {
+                if ( chrome.runtime.lastError ) { /* noop */ }
+                callback(
+                    Array.isArray(tabs) && tabs.length !== 0 ? tabs[0] : null
+                );
+            }
+        );
         return;
     }
 
-    var onTabReceived = function(tabs) {
-        // https://code.google.com/p/chromium/issues/detail?id=410868#c8
-        void chrome.runtime.lastError;
-        callback(tabs[0]);
-    };
-    chrome.tabs.query({ active: true, currentWindow: true }, onTabReceived);
+    tabId = toChromiumTabId(tabId);
+    if ( tabId === 0 ) {
+        callback(null);
+        return;
+    }
+
+    chrome.tabs.get(tabId, function(tab) {
+        if ( chrome.runtime.lastError ) { /* noop */ }
+        callback(tab);
+    });
 };
 
 /******************************************************************************/
@@ -540,9 +553,7 @@ vAPI.tabs.open = function(details) {
 
 vAPI.tabs.replace = function(tabId, url) {
     tabId = toChromiumTabId(tabId);
-    if ( tabId === 0 ) {
-        return;
-    }
+    if ( tabId === 0 ) { return; }
 
     var targetURL = url;
 
@@ -563,9 +574,7 @@ vAPI.tabs.replace = function(tabId, url) {
 
 vAPI.tabs.remove = function(tabId) {
     tabId = toChromiumTabId(tabId);
-    if ( tabId === 0 ) {
-        return;
-    }
+    if ( tabId === 0 ) { return; }
 
     var onTabRemoved = function() {
         // https://code.google.com/p/chromium/issues/detail?id=410868#c8
@@ -579,11 +588,9 @@ vAPI.tabs.remove = function(tabId) {
 
 /******************************************************************************/
 
-vAPI.tabs.reload = function(tabId /*, flags*/) {
+vAPI.tabs.reload = function(tabId, bypassCache) {
     tabId = toChromiumTabId(tabId);
-    if ( tabId === 0 ) {
-        return;
-    }
+    if ( tabId === 0 ) { return; }
 
     var onReloaded = function() {
         // https://code.google.com/p/chromium/issues/detail?id=410868#c8
@@ -592,7 +599,11 @@ vAPI.tabs.reload = function(tabId /*, flags*/) {
         }
     };
 
-    chrome.tabs.reload(tabId, onReloaded);
+    chrome.tabs.reload(
+        tabId,
+        { bypassCache: bypassCache === true },
+        onReloaded
+    );
 };
 
 /******************************************************************************/
@@ -601,9 +612,7 @@ vAPI.tabs.reload = function(tabId /*, flags*/) {
 
 vAPI.tabs.select = function(tabId) {
     tabId = toChromiumTabId(tabId);
-    if ( tabId === 0 ) {
-        return;
-    }
+    if ( tabId === 0 ) { return; }
 
     chrome.tabs.update(tabId, { active: true }, function(tab) {
         if ( chrome.runtime.lastError ) {
@@ -866,8 +875,7 @@ vAPI.messaging.onPortMessage = (function() {
     var toFramework = function(request, port, callback) {
         var sender = port && port.sender;
         if ( !sender ) { return; }
-        var tabId = sender.tab && sender.tab.id;
-        if ( !tabId ) { return; }
+        var tabId = sender.tab && sender.tab.id || undefined;
         var msg = request.msg,
             toPort;
         switch ( msg.what ) {
@@ -875,7 +883,7 @@ vAPI.messaging.onPortMessage = (function() {
         case 'connectionRefused':
             toPort = messaging.ports.get(msg.fromToken);
             if ( toPort !== undefined ) {
-                msg.tabId = tabId.toString();
+                msg.tabId = tabId;
                 toPort.postMessage(request);
             } else {
                 msg.what = 'connectionBroken';
@@ -883,7 +891,7 @@ vAPI.messaging.onPortMessage = (function() {
             }
             break;
         case 'connectionRequested':
-            msg.tabId = '' + tabId.toString();
+            msg.tabId = tabId;
             for ( toPort of messaging.ports.values() ) {
                 toPort.postMessage(request);
             }
@@ -895,7 +903,7 @@ vAPI.messaging.onPortMessage = (function() {
                 port.name === msg.fromToken ? msg.toToken : msg.fromToken
             );
             if ( toPort !== undefined ) {
-                msg.tabId = tabId.toString();
+                msg.tabId = tabId;
                 toPort.postMessage(request);
             } else {
                 msg.what = 'connectionBroken';
@@ -903,6 +911,7 @@ vAPI.messaging.onPortMessage = (function() {
             }
             break;
         case 'userCSS':
+            if ( tabId === undefined ) { break; }
             var details = {
                 code: undefined,
                 frameId: sender.frameId,
@@ -1035,6 +1044,38 @@ vAPI.messaging.broadcast = function(message) {
 /******************************************************************************/
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/issues/3474
+// https://github.com/gorhill/uBlock/issues/2823
+// - foil ability of web pages to identify uBO through
+//   its web accessible resources.
+// https://github.com/gorhill/uBlock/issues/3497
+// - prevent web pages from interfering with uBO's element picker
+
+(function() {
+    vAPI.warSecret =
+        Math.floor(Math.random() * 982451653 + 982451653).toString(36) +
+        Math.floor(Math.random() * 982451653 + 982451653).toString(36);
+
+    var key = 'secret=' + vAPI.warSecret;
+    var root = vAPI.getURL('/');
+    var guard = function(details) {
+        if ( details.url.indexOf(key) === -1 ) {
+            return { redirectUrl: root };
+        }
+    };
+
+    chrome.webRequest.onBeforeRequest.addListener(
+        guard,
+        {
+            urls: [ root + 'web_accessible_resources/*' ]
+        },
+        [ 'blocking' ]
+    );
+})();
+
+/******************************************************************************/
+/******************************************************************************/
+
 // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/contextMenus#Browser_compatibility
 //   Firefox for Android does no support browser.contextMenus.
 
@@ -1110,14 +1151,14 @@ vAPI.lastError = function() {
 //
 vAPI.onLoadAllCompleted = function(tabId, frameId) {
 
-  console.log('C.onLoadAllCompleted: '+tabId, frameId);
+  // console.log('C.onLoadAllCompleted: '+tabId, frameId);
 
     // http://code.google.com/p/chromium/issues/detail?id=410868#c11
     // Need to be sure to access `vAPI.lastError()` to prevent
     // spurious warnings in the console.
     var onScriptInjected = function() {
         var err = vAPI.lastError();
-        console.log('C.onScriptInjected: ',err);
+        // console.log('C.onScriptInjected: ',err);
     };
 
     var scriptStart = function(tabId) {
@@ -1153,7 +1194,7 @@ vAPI.onLoadAllCompleted = function(tabId, frameId) {
         details.frameId = frameId;
         details.matchAboutBlank = true;
       }
-console.log('injectOne: '+script, details);
+// console.log('injectOne: '+script, details);
       vAPI.tabs.injectScript(tabId, details, cb || function(){});
     };
     var bindToTabs = function(tabs) {
@@ -1164,14 +1205,14 @@ console.log('injectOne: '+script, details);
     };
 
     if (tabId)  {
-console.log('tabId: ');
+// console.log('tabId: ');
 
         chrome.tabs.get(tabId, function(tab) {
           if (tab) startInTab(tab, frameId); }
         ); // ADN
     }
     else {
-console.log('no-tab: ');
+// console.log('no-tab: ');
 
         chrome.tabs.query({ url: '<all_urls>' }, bindToTabs);
     }

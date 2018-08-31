@@ -1,0 +1,55 @@
+# This is a list of resources (by token) which will be converted to
+# "web accessible resources", such that uBO will be able to redirect
+# to these through moz-extension: or chrome-extension: URLs.
+#
+# This addresses:
+# - https://github.com/gorhill/uBlock/issues/3474
+# - https://github.com/gorhill/uBlock/issues/2823
+#
+# uBO attaches a "secret" token internally when redirecting to any
+# "web accessible resource", such that it is not possible for a web
+# page to use one of these  "web accessible resource" to directly
+# detect the presence of uBO.
+#
+# To ensure valid filename characters on any platform OS, the filenames are
+# constructed using the md5 hash of the respective tokens.
+#
+# In case uBO redirects to a resource which has not been converted into
+# a "web accessible resource", the redirection code will fall back to
+# using a data: URI.
+#
+# The list below was gathered manually from scanning the use of the
+# "redirect=" option in uBO's own filter lists. Eventually a script could
+# be written to generate the list below.
+
+1x1-transparent.gif
+2x2-transparent.png
+32x32-transparent.png
+3x2-transparent.png
+addthis.com/addthis_widget.js
+amazon-adsystem.com/aax2/amzn_ads.js
+antiAdBlock.js
+d3pkae9owd2lcf.cloudfront.net/mb105.js
+disqus.com/embed.js
+disqus.com/forums/*/embed.js
+doubleclick.net/instream/ad_status.js
+fuckadblock.js-3.2.0
+google-analytics.com/analytics.js
+google-analytics.com/cx/api.js
+google-analytics.com/ga.js
+google-analytics.com/inpage_linkid.js
+googlesyndication.com/adsbygoogle.js
+googletagmanager.com/gtm.js
+googletagservices.com/gpt.js
+hd-main.js
+ligatus.com/*/angular-tag.js
+noopframe
+noopjs
+noopmp3-0.1s
+nooptext
+popads-dummy.js
+popads.net.js
+scorecardresearch.com/beacon.js
+silent-noeval.js
+static.chartbeat.com/chartbeat.js
+widgets.outbrain.com/outbrain.js

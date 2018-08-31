@@ -511,6 +511,10 @@
     "message": "背景的網路連線請求",
     "description": "Pretty name for behind-the-scene network requests"
   },
+  "loggerCurrentTab": {
+    "message": "目前分頁",
+    "description": "Appears in the logger's tab selector"
+  },
   "logFilterPrompt": {
     "message": "過濾日誌項目",
     "description": "English: filter log entries"

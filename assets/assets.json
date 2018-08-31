@@ -82,6 +82,13 @@
 			"assets/ublock/resource-abuse.txt"
 		]
 	},
+	"ublock-annoyances": {
+		"content": "filters",
+		"group": "default",
+		"title": "uBlock filters – Annoyances",
+		"off": true,
+		"contentURL": "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/annoyances.txt"
+	},
 	"ublock-unbreak": {
 		"content": "filters",
 		"group": "default",
@@ -429,7 +436,7 @@
 		"off": true,
 		"title": "IRN: Adblock-Iran",
 		"lang": "fa",
-		"contentURL": "https://raw.githubusercontent.com/farrokhi/adblock-iran/master/filter.txt",
+		"contentURL": "https://cdn.rawgit.com/farrokhi/adblock-iran/master/filter.txt",
 		"supportURL": "https://github.com/farrokhi/adblock-iran"
 	},
 	"ISL-0": {
@@ -530,6 +537,15 @@
 		"contentURL": "https://easylist-downloads.adblockplus.org/easylistdutch.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=100"
 	},
+	"NOR-0": {
+		"content": "filters",
+		"group": "regions",
+		"off": true,
+		"title": "NOR: Dandelion Sprouts norske filtre",
+		"lang": "nb",
+		"contentURL": "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/ExperimentalNorwegianList.txt",
+		"supportURL": "https://github.com/DandelionSprout/adfilt"
+	},
 	"POL-0": {
 		"content": "filters",
 		"group": "regions",
@@ -537,16 +553,20 @@
 		"title": "POL: polskie filtry do Adblocka i uBlocka",
 		"lang": "pl",
 		"contentURL": "https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt",
-		"supportURL": "https://github.com/MajkiIT/polish-ads-filter/issues"
+		"supportURL": "https://github.com/MajkiIT/polish-ads-filter/issues",
+		"instructionURL": "https://github.com/MajkiIT/polish-ads-filter#polish-filters-for-adblock-ublock-origin--adguard"
 	},
-	"POL-1": {
+	"ROU-1": {
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "POL: polskie filtry do uBlocka uzupelnienie",
-		"lang": "pl",
-		"contentURL": "https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock_ublock.txt",
-		"supportURL": "https://github.com/MajkiIT/polish-ads-filter/issues"
+		"title": "ROU: Romanian Ad (ROad) Block List Light",
+		"lang": "ro",
+		"contentURL": [
+			"https://road.adblock.ro/lista.txt",
+			"https://raw.githubusercontent.com/tcptomato/ROad-Block/master/road-block-filters-light.txt"
+		],
+		"supportURL": "https://github.com/tcptomato/ROad-Block"
 	},
 	"RUS-0": {
 		"content": "filters",
@@ -594,14 +614,14 @@
 		"contentURL": "https://raw.githubusercontent.com/betterwebleon/slovenian-list/master/filters.txt",
 		"supportURL": "https://github.com/betterwebleon/slovenian-list"
 	},
-	"SWE-0": {
+	"SWE-1": {
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "SWE: Fanboy's Swedish",
+		"title": "SWE: Frellwit's Swedish Filter",
 		"lang": "sv",
-		"contentURL": "https://www.fanboy.co.nz/fanboy-swedish.txt",
-		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
+		"contentURL": "https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Frellwits-Swedish-Filter.txt",
+		"supportURL": "https://github.com/lassekongo83/Frellwits-filter-lists"
 	},
 	"TUR-0": {
 		"content": "filters",

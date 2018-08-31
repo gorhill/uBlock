@@ -1,49 +1,49 @@
-An efficient blocker: easy on memory and CPU footprint, and yet can load and enforce thousands more filters than other popular blockers out there.
+რეკლამების შედეგიანი შემზღუდავი: მეხსიერებისა და პროცესორის შემსუბუქებული მოხმარება, რეკლამების სხვა შემზღუდავებთან შედარებით, ათასობით მეტი ფილტრის გამოყენების პირობებშიც კი.
 
-Illustrated overview of its efficiency: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+შედეგიანობის მიმოხილვა იხილეთ ბმულზე: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Usage: The big power button in the popup is to permanently disable/enable uBlock for the current web site. It applies to the current web site only, it is not a global power button.
+გამოყენება: ჩართვის დიდი ღილაკით, ჩამოშლილ მენიუში, შესაძლებელია uBlock-ის ჩართვა/გამორთვა მიმდინარე ვებსაიტზე. ეს ღილაკი მოქმედებს მხოლოდ არსებულ საიტზე და არ გამოიყენება ზოგადად ჩართვა/გამორთვისთვის.
 
 ***
 
-Flexible, it's more than an "ad blocker": it can also read and create filters from hosts files.
+მეტად მოქნილი, ეს არაა უბრალოდ „რეკლამების შემზღუდავი“: ასევე შესაძლებელია hosts ფაილის წაკითხვა და ფილტრების შექმნა.
 
-Out of the box, these lists of filters are loaded and enforced:
+გარდა ამისა, ნაგულისხმევად ჩართულია და გამოიყენება შემდეგი გასაფილტრი სიები:
 
 - EasyList
-- Peter Lowe’s Ad server list
+- Peter Lowe-ის სარეკლამო სერვერების სია
 - EasyPrivacy
-- Malware domains
+- მავნე დომენები
 
-More lists are available for you to select if you wish:
+ასევე, ხელმისაწვდომია სიები სურვილისამებრ შესარჩევად:
 
-- Fanboy’s Enhanced Tracking List
-- Dan Pollock’s hosts file
-- hpHosts’s Ad and tracking servers
+- Fanboy-ის გაუმჯობესებული სია თვალყურისმდევნებლების
+- Dan Pollock-ის hosts ფაილი
+- hpHosts-ის სარეკლამო და თვალყურისმდევნელი სერვერები
 - MVPS HOSTS
 - Spam404
-- And many others
+- და კიდევ ბევრი
 
-Of course, the more filters enabled, the higher the memory footprint. Yet, even after adding Fanboy's two extra lists, hpHosts’s Ad and tracking servers, uBlock still has a lower memory footprint than other very popular blockers out there.
+რასაკვირველია, რაც უფრო მეტი ფილტრია ჩართული, მეხსიერების გამოყენება იზრდება. თუმცა, Fanboy-ის გაფართოებული სიების, hpHosts-ის სარეკლამო და თვალყურისმდევნელი სერვერების დამატების შემთხვევაშიც კი, uBlock მაინც ნაკლებ მეხსიერებას იყენებს, ვიდრე ყველა სხვა ცნობილი შემზღუდავი პროგრამები.
 
-Also, be aware that selecting some of these extra lists may lead to higher likelihood of web site breakage -- especially those lists which are normally used as hosts file.
-
-***
-
-Without the preset lists of filters, this extension is nothing. So if ever you really do want to contribute something, think about the people working hard to maintain the filter lists you are using, which were made available to use by all for free.
+ამასთან, გაითვალისწინეთ, რომ ზოგიერთი დამატებითი სიის შერჩევის შედეგად, შესაძლოა ვებსაიტები არ გამოჩნდეს გამართულად -- განსაკუთრებით იმ სიების შემთხვევაში, რომელიც ჩვეულებრივ, hosts ფაილად გამოიყენება.
 
 ***
 
-Free.
-Open source with public license (GPLv3)
-For users by users.
+წინასწარ შედგენილ სიებს, მნიშვნელოვანი ადგილი უჭირავს ამ გაფართოების შედეგიან მუშაობაში. ასე რომ, თუ ოდესმე გადაწყვეტთ ვინმესთვის შემოწირულობის გაღებას, იფიქრეთ იმ ადამიანებზე, რომლებიც თავდაუზოგავად შრომობენ იმ გასაფილტრი სიების მუდმივ განახლებაზე, რომლითაც სარგებლობთ და რომელიც ხელმისაწვდომია ყველასთვის უფასოდ.
 
-Contributors @ Github: https://github.com/gorhill/uBlock/graphs/contributors
-Contributors @ Crowdin: https://crowdin.net/project/ublock
+***
+
+უფასო.
+ღია წყაროს მქონე საჯარო ლიცენზიით (GPLv3)
+მომხმარებლების მიერ, მომხმარებლებისთვის.
+
+წვლილის შემტანები @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+წვლილის შემტანები @ Crowdin: https://crowdin.net/project/ublock
 
 ***
 
 It's quite an early version, keep this in mind when you review.
 
-Project change log:
+ცვლილებების ჩამონათვალი:
 https://github.com/gorhill/uBlock/releases

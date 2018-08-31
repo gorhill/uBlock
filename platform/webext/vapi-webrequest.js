@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2017 Raymond Hill
+    Copyright (C) 2017-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -29,7 +29,11 @@ vAPI.net = {
     onBeforeRequest: {},
     onBeforeMaybeSpuriousCSPReport: {},
     onHeadersReceived: {},
-    nativeCSPReportFiltering: true
+    nativeCSPReportFiltering: true,
+    webRequest: browser.webRequest,
+    canFilterResponseBody:
+        typeof browser.webRequest === 'object' &&
+        typeof browser.webRequest.filterResponseData === 'function'
 };
 
 /******************************************************************************/
@@ -39,7 +43,7 @@ vAPI.net.registerListeners = function() {
     // https://github.com/gorhill/uBlock/issues/2950
     // Firefox 55 does not normalize URLs to ASCII, uBO must do this itself.
     // https://bugzilla.mozilla.org/show_bug.cgi?id=945240
-    var mustPunycode = false;
+    let mustPunycode = false;
     (function() {
         if (
             typeof browser === 'object' &&
@@ -54,57 +58,57 @@ vAPI.net.registerListeners = function() {
         }
     })();
 
-    var wrApi = browser.webRequest;
+    let wrApi = browser.webRequest;
 
     // legacy Chromium understands only these network request types.
-    var validTypes = {
-        main_frame: true,
-        sub_frame: true,
-        stylesheet: true,
-        script: true,
-        image: true,
-        object: true,
-        xmlhttprequest: true,
-        other: true
-    };
+    let validTypes = new Set([
+        'image',
+        'main_frame',
+        'object',
+        'other',
+        'script',
+        'stylesheet',
+        'sub_frame',
+        'xmlhttprequest',
+    ]);
     // modern Chromium/WebExtensions: more types available.
     if ( wrApi.ResourceType ) {
         for ( let typeKey in wrApi.ResourceType ) {
             if ( wrApi.ResourceType.hasOwnProperty(typeKey) ) {
-                validTypes[wrApi.ResourceType[typeKey]] = true;
+                validTypes.add(wrApi.ResourceType[typeKey]);
             }
         }
     }
 
-    var denormalizeTypes = function(aa) {
+    let denormalizeTypes = function(aa) {
         if ( aa.length === 0 ) {
-            return Object.keys(validTypes);
+            return Array.from(validTypes);
         }
-        var out = [];
-        var i = aa.length,
-            type,
-            needOther = true;
+        let out = new Set(),
+            i = aa.length;
         while ( i-- ) {
-            type = aa[i];
-            if ( validTypes[type] ) {
-                out.push(type);
+            let type = aa[i];
+            if ( validTypes.has(type) ) {
+                out.add(type);
             }
-            if ( type === 'other' ) {
-                needOther = false;
+            if ( type === 'image' && validTypes.has('imageset') ) {
+                out.add('imageset');
             }
         }
-        if ( needOther ) {
-            out.push('other');
-        }
-        return out;
+        return Array.from(out);
     };
 
-    var punycode = self.punycode;
-    var reAsciiHostname  = /^https?:\/\/[0-9a-z_.:@-]+[/?#]/;
-    var parsedURL = new URL('about:blank');
+    let punycode = self.punycode;
+    let reAsciiHostname  = /^https?:\/\/[0-9a-z_.:@-]+[/?#]/;
+    let parsedURL = new URL('about:blank');
 
-    var normalizeRequestDetails = function(details) {
-        details.tabId = details.tabId.toString();
+    let normalizeRequestDetails = function(details) {
+        if (
+            details.tabId === vAPI.noTabId &&
+            typeof details.documentUrl === 'string'
+        ) {
+            details.tabId = vAPI.anyTabId;
+        }
 
         if ( mustPunycode && !reAsciiHostname.test(details.url) ) {
             parsedURL.href = details.url;
@@ -114,7 +118,7 @@ vAPI.net.registerListeners = function() {
             );
         }
 
-        var type = details.type;
+        let type = details.type;
 
         // https://github.com/gorhill/uBlock/issues/1493
         // Chromium 49+/WebExtensions support a new request type: `ping`,
@@ -130,41 +134,79 @@ vAPI.net.registerListeners = function() {
         }
     };
 
-    var onBeforeRequestClient = this.onBeforeRequest.callback;
-    var onBeforeRequest = function(details) {
+    // This is to work around Firefox's inability to redirect xmlhttprequest
+    // requests to data: URIs.
+    let pseudoRedirector = {
+        filters: new Map(),
+        reDataURI: /^data:\w+\/\w+;base64,/,
+        dec: null,
+        init: function() {
+            this.dec = new Uint8Array(128);
+            let s = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+            for ( let i = 0, n = s.length; i < n; i++ ) {
+                this.dec[s.charCodeAt(i)] = i;
+            }
+            return this.dec;
+        },
+        start: function(requestId, redirectUrl) {
+            let match = this.reDataURI.exec(redirectUrl);
+            if ( match === null ) { return redirectUrl; }
+            let s = redirectUrl.slice(match[0].length).replace(/=*$/, '');
+            let f = browser.webRequest.filterResponseData(requestId);
+            f.onstop = this.done;
+            f.onerror = this.disconnect;
+            this.filters.set(f, s);
+        },
+        done: function() {
+            let pr = pseudoRedirector;
+            let bufIn = pr.filters.get(this);
+            if ( bufIn === undefined ) { return pr.disconnect(this); }
+            let dec = pr.dec || pr.init();
+            let sizeIn = bufIn.length;
+            let iIn = 0;
+            let sizeOut = sizeIn * 6 >>> 3;
+            let bufOut = new Uint8Array(sizeOut);
+            let iOut = 0;
+            let n = sizeIn & ~3;
+            while ( iIn < n ) {
+                let b0 = dec[bufIn.charCodeAt(iIn++)];
+                let b1 = dec[bufIn.charCodeAt(iIn++)];
+                let b2 = dec[bufIn.charCodeAt(iIn++)];
+                let b3 = dec[bufIn.charCodeAt(iIn++)];
+                bufOut[iOut++] = (b0 << 2) & 0xFC | (b1 >>> 4);
+                bufOut[iOut++] = (b1 << 4) & 0xF0 | (b2 >>> 2);
+                bufOut[iOut++] = (b2 << 6) & 0xC0 |  b3;
+            }
+            if ( iIn !== sizeIn ) {
+                let b0 = dec[bufIn.charCodeAt(iIn++)];
+                let b1 = dec[bufIn.charCodeAt(iIn++)];
+                bufOut[iOut++] = (b0 << 2) & 0xFC | (b1 >>> 4);
+                if ( iIn !== sizeIn ) {
+                    let b2 = dec[bufIn.charCodeAt(iIn++)];
+                    bufOut[iOut++] = (b1 << 4) & 0xF0 | (b2 >>> 2);
+                }
+            }
+            this.write(bufOut);
+            pr.disconnect(this);
+        },
+        disconnect: function(f) {
+            let pr = pseudoRedirector;
+            pr.filters.delete(f);
+            f.disconnect();
+        }
+    };
+
+    let onBeforeRequestClient = this.onBeforeRequest.callback;
+    let onBeforeRequest = function(details) {
         normalizeRequestDetails(details);
         return onBeforeRequestClient(details);
     };
-
-    var onHeadersReceivedClient = this.onHeadersReceived.callback,
-        onHeadersReceivedClientTypes = (this.onHeadersReceived.types||[]).slice(0),
-        onHeadersReceivedTypes = denormalizeTypes(onHeadersReceivedClientTypes);
-    var onHeadersReceived = function(details) {
-        normalizeRequestDetails(details);
-        if (
-            onHeadersReceivedClientTypes.length !== 0 &&
-            onHeadersReceivedClientTypes.indexOf(details.type) === -1
-        ) {
-            return;
-        }
-        return onHeadersReceivedClient(details);
-    };
-
-    // ADN
-    var onBeforeSendHeadersClient = this.onBeforeSendHeaders.callback,
-        onBeforeSendHeadersClientTypes = (this.onBeforeSendHeaders.types||[]).slice(0), // ADN: fix to #1241
-        onBeforeSendHeadersTypes = denormalizeTypes(onBeforeSendHeadersClientTypes);
-
-    var onBeforeSendHeaders = function(details) {
-        normalizeRequestDetails(details);
-        return onBeforeSendHeadersClient(details);
-    }
 
     if ( onBeforeRequest ) {
         let urls = this.onBeforeRequest.urls || ['<all_urls>'];
         let types = this.onBeforeRequest.types || undefined;
         if (
-            (validTypes.websocket) &&
+            (validTypes.has('websocket')) &&
             (types === undefined || types.indexOf('websocket') !== -1) &&
             (urls.indexOf('<all_urls>') === -1)
         ) {
@@ -194,10 +236,11 @@ vAPI.net.registerListeners = function() {
         );
     }
 
-    var onHeadersReceivedClient = this.onHeadersReceived.callback,
+    let onHeadersReceivedClient = this.onHeadersReceived.callback,
         onHeadersReceivedClientTypes = (this.onHeadersReceived.types||[]).slice(0),// ADN : fix to #1241
         onHeadersReceivedTypes = denormalizeTypes(onHeadersReceivedClientTypes);
-    var onHeadersReceived = function(details) {
+    
+    let onHeadersReceived = function(details) {
         normalizeRequestDetails(details);
         if (
             onHeadersReceivedClientTypes.length !== 0 &&
@@ -218,7 +261,17 @@ vAPI.net.registerListeners = function() {
         );
     }
 
-     if ( onBeforeSendHeaders ) {
+    // ADN
+    let onBeforeSendHeadersClient = this.onBeforeSendHeaders.callback,
+        onBeforeSendHeadersClientTypes = (this.onBeforeSendHeaders.types||[]).slice(0), // ADN: fix to #1241
+        onBeforeSendHeadersTypes = denormalizeTypes(onBeforeSendHeadersClientTypes);
+
+    let onBeforeSendHeaders = function(details) {
+        normalizeRequestDetails(details);
+        return onBeforeSendHeadersClient(details);
+    }
+
+    if ( onBeforeSendHeaders ) {
         let urls = this.onBeforeSendHeaders.urls || ['<all_urls>'];
         let types = this.onBeforeSendHeaders.types || undefined;
         wrApi.onBeforeSendHeaders.addListener(

@@ -48,7 +48,7 @@
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "클릭: 이 사이트에서 uBlock₀을 끕니다.\n\nCtrl+클릭: 이 페이지에서 uBlock₀을 끕니다.",
+    "message": "클릭: 이 사이트에서 uBlock₀을 끕니다.\n\nCtrl+클릭: 이 페이지에서만 uBlock₀을 끕니다.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
@@ -364,7 +364,7 @@
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {
-    "message": "성가신 것",
+    "message": "골칫거리",
     "description": "The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose": {
@@ -510,6 +510,10 @@
   "logBehindTheScene": {
     "message": "숨겨진 구성 요소",
     "description": "Pretty name for behind-the-scene network requests"
+  },
+  "loggerCurrentTab": {
+    "message": "현재 탭",
+    "description": "Appears in the logger's tab selector"
   },
   "logFilterPrompt": {
     "message": "필터 로그 항목",

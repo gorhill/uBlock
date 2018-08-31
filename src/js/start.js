@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2017 Raymond Hill
+    Copyright (C) 2014-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -39,41 +39,13 @@ vAPI.app.onShutdown = function() {
     µb.staticFilteringReverseLookup.shutdown();
     µb.assets.updateStop();
     µb.staticNetFilteringEngine.reset();
-    µb.cosmeticFilteringEngine.reset();
+    µb.staticExtFilteringEngine.reset();
     µb.sessionFirewall.reset();
-    µb.permanentFirewall.reset();
     µb.permanentFirewall.reset();
     µb.sessionURLFiltering.reset();
     µb.permanentURLFiltering.reset();
+    µb.hnSwitches.reset();
     µb.adnauseam.shutdown(); // ADN
-};
-
-/******************************************************************************/
-
-var processCallbackQueue = function(queue, callback) {
-    var processOne = function() {
-        var fn = queue.pop();
-        if ( fn ) {
-            fn(processOne);
-        } else if ( typeof callback === 'function' ) {
-            callback();
-        }
-    };
-    processOne();
-};
-
-/******************************************************************************/
-
-var processCallbackQueue = function(queue, callback) {
-    var processOne = function() {
-        var fn = queue.pop();
-        if ( fn ) {
-            fn(processOne);
-        } else if ( typeof callback === 'function' ) {
-            callback();
-        }
-    };
-    processOne();
 };
 
 /******************************************************************************/
@@ -134,21 +106,60 @@ var onPSLReady = function() {
 // To bring older versions up to date
 
 var onVersionReady = function(lastVersion) {
-    // Starting with 1.9.17, non-advanced users can have access to the dynamic
-    // filtering pane in read-only mode. Still, it should not be visible by
-    // default.
-    if ( lastVersion.localeCompare('1.9.17') < 0 ) {
-        if (
-            µb.userSettings.advancedUserEnabled === false &&
-            µb.userSettings.dynamicFilteringEnabled === true
-        ) {
-            µb.userSettings.dynamicFilteringEnabled = false;
-            µb.keyvalSetOne('dynamicFilteringEnabled', false);
-        }
+    if ( lastVersion === vAPI.app.version ) { return; }
+
+    // Since AMO does not allow updating resources.txt, force a reload when a
+    // new version is detected, as resources.txt may have changed since last
+    // release. This will be done only for release versions of Firefox.
+    if (
+        /^Mozilla-Firefox-/.test(vAPI.webextFlavor) &&
+        /(b|rc)\d+$/.test(vAPI.app.version) === false
+    ) {
+        µb.redirectEngine.invalidateResourcesSelfie();
     }
-    if ( lastVersion !== vAPI.app.version ) {
-        vAPI.storage.set({ version: vAPI.app.version });
-    }
+
+    // From 1.15.19b9 and above, the `behind-the-scene` scope is no longer
+    // whitelisted by default, and network requests from that scope will be
+    // subject to filtering by default.
+    //
+    // Following code is to remove the `behind-the-scene` scope when updating
+    // from a version older than 1.15.19b9.
+    // This will apply only to webext versions of uBO, as the following would
+    // certainly cause too much breakage in Firefox legacy given that uBO can
+    // see ALL network requests.
+    // Remove when everybody is beyond 1.15.19b8.
+    (function patch1015019008(s) {
+        if ( vAPI.firefox !== undefined ) { return; }
+        var match = /^(\d+)\.(\d+)\.(\d+)(?:\D+(\d+))?/.exec(s);
+        if ( match === null ) { return; }
+        var v =
+            parseInt(match[1], 10) * 1000 * 1000 * 1000 +
+            parseInt(match[2], 10) * 1000 * 1000 +
+            parseInt(match[3], 10) * 1000 +
+            (match[4] ? parseInt(match[4], 10) : 0);
+        if ( /rc\d+$/.test(s) ) { v += 100; }
+        if ( v > 1015019008 ) { return; }
+        if ( µb.getNetFilteringSwitch('http://behind-the-scene/') ) { return; }
+        var fwRules = [
+            'behind-the-scene * * noop',
+            'behind-the-scene * image noop',
+            'behind-the-scene * 3p noop',
+            'behind-the-scene * inline-script noop',
+            'behind-the-scene * 1p-script noop',
+            'behind-the-scene * 3p-script noop',
+            'behind-the-scene * 3p-frame noop'
+        ].join('\n');
+        µb.sessionFirewall.fromString(fwRules, true);
+        µb.permanentFirewall.fromString(fwRules, true);
+        µb.savePermanentFirewallRules();
+        µb.hnSwitches.fromString([
+            'no-large-media: behind-the-scene false'
+        ].join('\n'), true);
+        µb.saveHostnameSwitches();
+        µb.toggleNetFilteringSwitch('http://behind-the-scene/', '', true);
+    })(lastVersion);
+
+    vAPI.storage.set({ version: vAPI.app.version });
 };
 
 /******************************************************************************/
@@ -170,7 +181,9 @@ var onSelfieReady = function(selfie) {
     µb.availableFilterLists = selfie.availableFilterLists;
     µb.staticNetFilteringEngine.fromSelfie(selfie.staticNetFilteringEngine);
     µb.redirectEngine.fromSelfie(selfie.redirectEngine);
-    µb.cosmeticFilteringEngine.fromSelfie(selfie.cosmeticFilteringEngine);
+    µb.staticExtFilteringEngine.fromSelfie(selfie.staticExtFilteringEngine);
+    µb.loadRedirectResources();
+
     return true;
 };
 
@@ -289,9 +302,19 @@ var fromFetch = function(to, fetched) {
 var onSelectedFilterListsLoaded = function() {
     var fetchableProps = {
         'compiledMagic': '',
-        'dynamicFilteringString': 'behind-the-scene * 3p noop\nbehind-the-scene * 3p-frame noop',
+        'dynamicFilteringString': [
+            'behind-the-scene * * noop',
+            'behind-the-scene * image noop',
+            'behind-the-scene * 3p noop',
+            'behind-the-scene * inline-script noop',
+            'behind-the-scene * 1p-script noop',
+            'behind-the-scene * 3p-script noop',
+            'behind-the-scene * 3p-frame noop'
+        ].join('\n'),
         'urlFilteringString': '',
-        'hostnameSwitchesString': '',
+        'hostnameSwitchesString': [
+            'no-large-media: behind-the-scene false'
+        ].join('\n'),
         'lastRestoreFile': '',
         'lastRestoreTime': 0,
         'lastBackupFile': '',

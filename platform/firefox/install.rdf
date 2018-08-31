@@ -41,13 +41,6 @@
         </targetApplication>
 
         <!-- Pale Moon -->
-        <targetApplication>
-            <r:Description>
-                <id>{{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4}}</id>
-                <minVersion>26.0</minVersion>
-                <maxVersion>27.*</maxVersion>
-            </r:Description>
-        </targetApplication>
 
         <!-- Thunderbird -->
         <targetApplication>

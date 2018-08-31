@@ -1,0 +1,75 @@
+.codeMirrorContainer {
+    font-size: 12px;
+    overflow: hidden;
+    position: relative;
+    }
+.CodeMirror {
+    box-sizing: border-box;
+    flex-grow: 1;
+    height: 100%;
+    width: 100%;
+    }
+
+/* For when panels are used */
+.codeMirrorContainer > div:not([class^="CodeMirror"]) {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    }
+
+.cm-s-default .cm-comment { color: #777; }
+.cm-staticext { color: #008; }
+.cm-staticnetBlock { color: #800; }
+.cm-staticnetAllow { color: #004f00; }
+.cm-staticOpt { background-color: #ddd; font-weight: bold; }
+
+.cm-search-widget {
+    align-items: center;
+    background-color: #eee;
+    cursor: default;
+    direction: ltr;
+    display: flex;
+    flex-shrink: 0;
+    justify-content: center;
+    padding: 4px 8px;
+    /* position: absolute; */
+    right: 2em;
+    top: 0;
+    user-select: none;
+      -moz-user-select: none;
+      -webkit-user-select: none;
+    z-index: 1000;
+    }
+.cm-search-widget .fa {
+    color: #888;
+    font-size: 140%;
+    }
+.cm-search-widget > span {
+    position: relative;
+    }
+.cm-search-widget .cm-search-widget-count {
+    align-items: center;
+    bottom: 0;
+    color: #888;
+    display: none;
+    margin-right: 4px;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    }
+.cm-search-widget[data-query] .cm-search-widget-count {
+    display: flex;
+    }
+.cm-search-widget .cm-search-widget-button:hover {
+    color: #000;
+    }
+
+.CodeMirror-merge-l-deleted {
+    background-image: none;
+    font-weight: bold;
+    }
+.CodeMirror-merge-l-inserted {
+    background-image: none;
+    font-weight: bold;
+    }

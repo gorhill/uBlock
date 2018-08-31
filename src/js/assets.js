@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2017 Raymond Hill
+    Copyright (C) 2014-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -53,11 +53,10 @@ api.removeObserver = function(observer) {
 };
 
 var fireNotification = function(topic, details) {
-    var result;
+    var result, r;
     for ( var i = 0; i < observers.length; i++ ) {
-        if ( observers[i](topic, details) === false ) {
-            result = false;
-        }
+        r = observers[i](topic, details);
+        if ( r !== undefined ) { result = r; }
     }
     return result;
 };
@@ -173,157 +172,71 @@ api.fetchText = function(url, onLoad, onError) {
     }
 };
 
-/*******************************************************************************
+/******************************************************************************/
 
-    TODO(seamless migration):
-    This block of code will be removed when I am confident all users have
-    moved to a version of uBO which does not require the old way of caching
-    assets.
+// https://github.com/gorhill/uBlock/issues/3331
+//   Support the seamless loading of sublists.
 
-    api.listKeyAliases: a map of old asset keys to new asset keys.
+api.fetchFilterList = function(mainlistURL, onLoad, onError) {
+    var content = [],
+        errored = false,
+        pendingSublistURLs = new Set([ mainlistURL ]),
+        loadedSublistURLs = new Set(),
+        toParsedURL = api.fetchFilterList.toParsedURL,
+        parsedMainURL = toParsedURL(mainlistURL);
 
-    migrate(): to seamlessly migrate the old cache manager to the new one:
-    - attempt to preserve and move content of cached assets to new locations;
-    - removes all traces of now obsolete cache manager entries in cacheStorage.
+    var onLocalLoadSuccess = function(details) {
+        if ( errored ) { return; }
 
-    This code will typically execute only once, when the newer version of uBO
-    is first installed and executed.
+        var isSublist = details.url !== mainlistURL;
 
-**/
+        pendingSublistURLs.delete(details.url);
+        loadedSublistURLs.add(details.url);
+        if ( isSublist ) { content.push('\n! ' + '>>>>>>>> ' + details.url); }
+        content.push(details.content.trim());
+        if ( isSublist ) { content.push('! <<<<<<<< ' + details.url); }
+        if (
+            parsedMainURL !== undefined &&
+            parsedMainURL.pathname.length > 0
+        ) {
+            var reInclude = /^!#include +(\S+)/gm;
+            for (;;) {
+                var match = reInclude.exec(details.content);
+                if ( match === null ) { break; }
+                if ( toParsedURL(match[1]) !== undefined ) { continue; }
+                if ( match[1].indexOf('..') !== -1 ) { continue; }
+                var subURL =
+                    parsedMainURL.origin +
+                    parsedMainURL.pathname.replace(/[^/]+$/, match[1]);
+                if ( pendingSublistURLs.has(subURL) ) { continue; }
+                if ( loadedSublistURLs.has(subURL) ) { continue; }
+                pendingSublistURLs.add(subURL);
+                api.fetchText(subURL, onLocalLoadSuccess, onLocalLoadError);
+            }
+        }
 
-api.listKeyAliases = {
-    "assets/ublock/adnauseam.txt": "adnauseam-filters",
-    "assets/thirdparties/www.eff.org/files/effdntlist.txt": "effdntlist",
-    "assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat": "public_suffix_list.dat",
-    "assets/user/filters.txt": "user-filters",
-    "assets/ublock/resources.txt": "ublock-resources",
-    "assets/ublock/filters.txt": "ublock-filters",
-    "assets/ublock/privacy.txt": "ublock-privacy",
-    "assets/ublock/unbreak.txt": "ublock-unbreak",
-    "assets/ublock/badware.txt": "ublock-badware",
-    "assets/ublock/experimental.txt": "ublock-experimental",
-    "https://easylist-downloads.adblockplus.org/easylistchina.txt": "CHN-0",
-    "https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt": "CHN-1",
-    "https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjx-annoyance.txt": "CHN-2",
-    "https://easylist-downloads.adblockplus.org/easylistgermany.txt": "DEU-0",
-    "https://adblock.dk/block.csv": "DNK-0",
-    "assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt": "easylist",
-    "https://easylist-downloads.adblockplus.org/easylist_noelemhide.txt": "easylist-nocosmetic",
-    "assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt": "easyprivacy",
-    "https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt": "fanboy-annoyance",
-    "https://easylist-downloads.adblockplus.org/fanboy-social.txt": "fanboy-social",
-    "https://easylist-downloads.adblockplus.org/liste_fr.txt": "FRA-0",
-    "http://adblock.gardar.net/is.abp.txt": "ISL-0",
-    "https://easylist-downloads.adblockplus.org/easylistitaly.txt": "ITA-0",
-    "https://dl.dropboxusercontent.com/u/1289327/abpxfiles/filtri.txt": "ITA-1",
-    "https://easylist-downloads.adblockplus.org/advblock.txt": "RUS-0",
-    "https://easylist-downloads.adblockplus.org/bitblock.txt": "RUS-1",
-    "https://filters.adtidy.org/extension/chromium/filters/1.txt": "RUS-2",
-    "https://adguard.com/en/filter-rules.html?id=1": "RUS-2",
-    "https://easylist-downloads.adblockplus.org/easylistdutch.txt": "NLD-0",
-    "https://notabug.org/latvian-list/adblock-latvian/raw/master/lists/latvian-list.txt": "LVA-0",
-    "http://hosts-file.net/.%5Cad_servers.txt": "hphosts",
-    "http://adblock.ee/list.php": "EST-0",
-    "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt": "disconnect-malvertising",
-    "https://s3.amazonaws.com/lists.disconnect.me/simple_malware.txt": "disconnect-malware",
-    "https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt": "disconnect-tracking",
-    "https://www.certyficate.it/adblock/adblock.txt": "POL-0",
-    "https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt": "POL-0",
-    "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt": "awrl-0",
-    "http://adb.juvander.net/Finland_adb.txt": "FIN-0",
-    "https://raw.githubusercontent.com/gfmaster/adblock-korea-contrib/master/filter.txt": "KOR-0",
-    "https://raw.githubusercontent.com/yous/YousList/master/youslist.txt": "KOR-1",
-    "https://www.fanboy.co.nz/fanboy-korean.txt": "KOR-2",
-    "https://raw.githubusercontent.com/heradhis/indonesianadblockrules/master/subscriptions/abpindo.txt": "IDN-0",
-    "https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/subscriptions/abpindo.txt": "IDN-0",
-    "https://raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abpjf.txt": "JPN-0",
-    "https://raw.githubusercontent.com/liamja/Prebake/master/obtrusive.txt": "EU-prebake",
-    "https://easylist-downloads.adblockplus.org/Liste_AR.txt": "ara-0",
-    "http://margevicius.lt/easylistlithuania.txt": "LTU-0",
-    "assets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt": "malware-0",
-    "assets/thirdparties/mirror1.malwaredomains.com/files/justdomains": "malware-1",
-    "http://malwaredomains.lehigh.edu/files/immortal_domains.txt": "malware-2",
-    "assets/thirdparties/pgl.yoyo.org/as/serverlist": "plowe-0",
-    "https://raw.githubusercontent.com/easylist/EasyListHebrew/master/EasyListHebrew.txt": "ISR-0",
-    "https://raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt": "reek-0",
-    "https://raw.githubusercontent.com/szpeter80/hufilter/master/hufilter.txt": "HUN-0",
-    "https://raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt": "CZE-0",
-    "http://someonewhocares.org/hosts/hosts": "dpollock-0",
-    "https://raw.githubusercontent.com/Dawsey21/Lists/master/adblock-list.txt": "spam404-0",
-    "http://stanev.org/abp/adblock_bg.txt": "BGR-0",
-    "http://winhelp2002.mvps.org/hosts.txt": "mvps-0",
-    "https://www.fanboy.co.nz/enhancedstats.txt": "fanboy-enhanced",
-    "https://www.fanboy.co.nz/fanboy-antifacebook.txt": "fanboy-thirdparty_social",
-    "https://easylist-downloads.adblockplus.org/easylistspanish.txt": "spa-0",
-    "https://www.fanboy.co.nz/fanboy-swedish.txt": "SWE-0",
-    "https://www.fanboy.co.nz/r/fanboy-ultimate.txt": "fanboy-ultimate",
-    "https://filters.adtidy.org/extension/chromium/filters/13.txt": "TUR-0",
-    "https://adguard.com/filter-rules.html?id=13": "TUR-0",
-    "https://www.fanboy.co.nz/fanboy-vietnam.txt": "VIE-0",
-    "https://www.void.gr/kargig/void-gr-filters.txt": "GRC-0",
-    "https://raw.githubusercontent.com/betterwebleon/slovenian-list/master/filters.txt": "SVN-0"
+        if ( pendingSublistURLs.size !== 0 ) { return; }
+
+        details.url = mainlistURL;
+        details.content = content.join('\n').trim();
+        onLoad(details);
+    };
+
+    var onLocalLoadError = function(details) {
+        errored = true;
+        details.url = mainlistURL;
+        details.content = '';
+        onError(details);
+    };
+
+    this.fetchText(mainlistURL, onLocalLoadSuccess, onLocalLoadError);
 };
 
-var migrate = function(callback) {
-    var entries,
-        moveCount = 0,
-        toRemove = [];
-
-    var countdown = function(change) {
-        moveCount -= (change || 0);
-        if ( moveCount !== 0 ) { return; }
-        vAPI.cacheStorage.remove(toRemove);
-        saveAssetCacheRegistry();
-        callback();
-    };
-
-    var onContentRead = function(oldKey, newKey, bin) {
-        var content = bin && bin['cached_asset_content://' + oldKey] || undefined;
-        if ( content ) {
-            assetCacheRegistry[newKey] = {
-                readTime: Date.now(),
-                writeTime: entries[oldKey]
-            };
-            if ( reIsExternalPath.test(oldKey) ) {
-                assetCacheRegistry[newKey].remoteURL = oldKey;
-            }
-            bin = {};
-            bin['cache/' + newKey] = content;
-            vAPI.cacheStorage.set(bin);
-        }
-        countdown(1);
-    };
-
-    var onEntries = function(bin) {
-        entries = bin && bin['cached_asset_entries'];
-        if ( !entries ) { return callback(); }
-        if ( bin && bin['assetCacheRegistry'] ) {
-            assetCacheRegistry = bin['assetCacheRegistry'];
-        }
-        var aliases = api.listKeyAliases;
-        for ( var oldKey in entries ) {
-            if ( oldKey.endsWith('assets/user/filters.txt') ) { continue; }
-            var newKey = aliases[oldKey];
-            if ( !newKey && /^https?:\/\//.test(oldKey) ) {
-                newKey = oldKey;
-            }
-            if ( newKey ) {
-                vAPI.cacheStorage.get(
-                    'cached_asset_content://' + oldKey,
-                    onContentRead.bind(null, oldKey, newKey)
-                );
-                moveCount += 1;
-            }
-            toRemove.push('cached_asset_content://' + oldKey);
-        }
-        toRemove.push('cached_asset_entries', 'extensionLastVersion');
-        countdown();
-    };
-
-    vAPI.cacheStorage.get(
-        [ 'cached_asset_entries', 'assetCacheRegistry' ],
-        onEntries
-    );
+api.fetchFilterList.toParsedURL = function(url) {
+    try {
+        return new URL(url);
+    } catch (ex) {
+    }
 };
 
 /*******************************************************************************
@@ -531,16 +444,12 @@ var getAssetCacheRegistry = function(callback) {
         }
     };
 
-    var migrationDone = function() {
-        vAPI.cacheStorage.get('assetCacheRegistry', function(bin) {
-            if ( bin && bin.assetCacheRegistry ) {
-                assetCacheRegistry = bin.assetCacheRegistry;
-            }
-            registryReady();
-        });
-    };
-
-    migrate(migrationDone);
+    vAPI.cacheStorage.get('assetCacheRegistry', function(bin) {
+        if ( bin && bin.assetCacheRegistry ) {
+            assetCacheRegistry = bin.assetCacheRegistry;
+        }
+        registryReady();
+    });
 };
 
 var saveAssetCacheRegistry = (function() {
@@ -813,7 +722,11 @@ api.get = function(assetKey, options, callback) {
             return reportBack('', 'E_NOTFOUND');
 
         }
-        api.fetchText(contentURL, onContentLoaded, onContentNotLoaded);
+        if ( assetDetails.content === 'filters' ) {
+            api.fetchFilterList(contentURL, onContentLoaded, onContentNotLoaded);
+        } else {
+            api.fetchText(contentURL, onContentLoaded, onContentNotLoaded);
+        }
     };
 
     var onContentLoaded = function(details) {
@@ -904,7 +817,11 @@ var getRemote = function(assetKey, callback) {
         if ( !contentURL ) {
             return reportBack('', 'E_NOTFOUND');
         }
-        api.fetchText(contentURL, onRemoteContentLoaded, onRemoteContentError);
+        if ( assetDetails.content === 'filters' ) {
+            api.fetchFilterList(contentURL, onRemoteContentLoaded, onRemoteContentError);
+        } else {
+            api.fetchText(contentURL, onRemoteContentLoaded, onRemoteContentError);
+        }
     };
 
     getAssetSourceRegistry(function(registry) {
@@ -949,7 +866,10 @@ api.metadata = function(callback) {
                 obsoleteAfter = cacheEntry.writeTime + assetEntry.updateAfter * 86400000;
                 assetEntry.obsolete = obsoleteAfter < now;
                 assetEntry.remoteURL = cacheEntry.remoteURL;
-            } else {
+            } else if (
+                assetEntry.contentURL &&
+                assetEntry.contentURL.length !== 0
+            ) {
                 assetEntry.writeTime = 0;
                 obsoleteAfter = 0;
                 assetEntry.obsolete = true;
@@ -993,19 +913,23 @@ var updaterStatus,
     noRemoteResources;
 
 var updateFirst = function() {
-    // Firefox extension reviewers do not want uBO/webext to fetch its own
-    // scriptlets/resources asset from the project's own repo (github.com).
-    // See: https://github.com/gorhill/uBlock/commit/126110c9a0a0630cd556f5cb215422296a961029
+    // https://github.com/gorhill/uBlock/commit/126110c9a0a0630cd556f5cb215422296a961029
+    //   Firefox extension reviewers do not want uBO/webext to fetch its own
+    //   scriptlets/resources asset from the project's own repo (github.com).
+    // https://github.com/uBlockOrigin/uAssets/issues/1647#issuecomment-371456830
+    //   Allow self-hosted dev build to update: if update_url is present but
+    //   null, assume the extension is hosted on AMO.
     if ( noRemoteResources === undefined ) {
+        var manifest =
+            typeof browser === 'object' &&
+            browser.runtime.getManifest();
         noRemoteResources =
             typeof vAPI.webextFlavor === 'string' &&
-            vAPI.webextFlavor.startsWith('Mozilla-Firefox-');
-    }
-    // This is to ensure the packaged version will always be used (in case
-    // there is a cache remnant from a pre-stable webext era).
-    // See https://github.com/uBlockOrigin/uAssets/commit/a6c77af4afb45800d4fd7c268a2a5eab5a64daf3#commitcomment-24642912
-    if ( noRemoteResources ) {
-        api.remove('ublock-resources');
+            vAPI.webextFlavor.startsWith('Mozilla-Firefox-') &&
+            manifest instanceof Object &&
+            manifest.applications instanceof Object &&
+            manifest.applications.gecko instanceof Object &&
+            manifest.applications.gecko.update_url === null;
     }
     updaterStatus = 'updating';
     updaterFetched.clear();
@@ -1044,7 +968,7 @@ var updateNext = function() {
                 fireNotification(
                     'before-asset-updated',
                     { assetKey: assetKey,  type: assetEntry.content }
-                ) !== false
+                ) === true
             ) {
                 return assetKey;
             }
@@ -1101,7 +1025,9 @@ var updateDone = function() {
 
 api.updateStart = function(details) {
     var oldUpdateDelay = updaterAssetDelay,
-        newUpdateDelay = details.delay || updaterAssetDelayDefault;
+        newUpdateDelay = typeof details.delay === 'number' ?
+            details.delay :
+            updaterAssetDelayDefault;
     updaterAssetDelay = Math.min(oldUpdateDelay, newUpdateDelay);
     if ( updaterStatus !== undefined ) {
         if ( newUpdateDelay < oldUpdateDelay ) {

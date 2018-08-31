@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2015-2016 Raymond Hill
+    Copyright (C) 2015-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -45,12 +45,11 @@ if (
 
 var logger = self.logger;
 var inspectorConnectionId;
-var inspectedTabId = '';
+var inspectedTabId = 0;
 var inspectedURL = '';
 var inspectedHostname = '';
 var inspector = uDom.nodeFromId('domInspector');
 var domTree = uDom.nodeFromId('domTree');
-var tabSelector = uDom.nodeFromId('pageSelector');
 var uidGenerator = 1;
 var filterToIdMap = new Map();
 
@@ -79,7 +78,12 @@ messaging.addChannelListener('loggerUI', function(msg) {
         break;
     case 'connectionRequested':
         if ( msg.from !== 'domInspector' ) { return false; }
-        if ( msg.tabId !== inspectedTabId ) { return false; }
+        if (
+            msg.tabId === undefined ||
+            msg.tabId !== inspectedTabId
+        ) {
+            return false;
+        }
         filterToIdMap.clear();
         logger.removeAllChildren(domTree);
         inspectorConnectionId = msg.id;
@@ -464,7 +468,7 @@ var startDialog = (function() {
 var onClicked = function(ev) {
     ev.stopPropagation();
 
-    if ( inspectedTabId === '' ) { return; }
+    if ( inspectedTabId === 0 ) { return; }
 
     var target = ev.target;
     var parent = target.parentElement;
@@ -536,7 +540,7 @@ var onMouseOver = (function() {
     };
 
     return function(ev) {
-        if ( inspectedTabId === '' ) { return; }
+        if ( inspectedTabId === 0 ) { return; }
         // Convenience: skip real-time highlighting if shift key is pressed.
         if ( ev.shiftKey ) { return; }
         // Find closest `li`
@@ -556,16 +560,15 @@ var onMouseOver = (function() {
 /******************************************************************************/
 
 var currentTabId = function() {
-    if ( showdomButton.classList.contains('active') === false ) { return ''; }
-    var tabId = logger.tabIdFromClassName(tabSelector.value) || '';
-    return tabId !== 'bts' ? tabId : '';
+    if ( showdomButton.classList.contains('active') === false ) { return 0; }
+    return logger.tabIdFromPageSelector();
 };
 
 /******************************************************************************/
 
 var injectInspector = function() {
     var tabId = currentTabId();
-    if ( tabId === '' ) { return; }
+    if ( tabId === 0 ) { return; }
     inspectedTabId = tabId;
     messaging.send('loggerUI', {
         what: 'scriptlet',
@@ -583,7 +586,7 @@ var shutdownInspector = function() {
     }
     logger.removeAllChildren(domTree);
     inspector.classList.add('vCompact');
-    inspectedTabId = '';
+    inspectedTabId = 0;
 };
 
 /******************************************************************************/
@@ -631,7 +634,7 @@ var revert = function() {
 
 var toggleOn = function() {
     window.addEventListener('beforeunload', toggleOff);
-    tabSelector.addEventListener('change', onTabIdChanged);
+    document.addEventListener('tabIdChanged', onTabIdChanged);
     domTree.addEventListener('click', onClicked, true);
     domTree.addEventListener('mouseover', onMouseOver, true);
     uDom.nodeFromSelector('#domInspector .vCompactToggler').addEventListener('click', toggleVCompactView);
@@ -647,7 +650,7 @@ var toggleOn = function() {
 var toggleOff = function() {
     shutdownInspector();
     window.removeEventListener('beforeunload', toggleOff);
-    tabSelector.removeEventListener('change', onTabIdChanged);
+    document.removeEventListener('tabIdChanged', onTabIdChanged);
     domTree.removeEventListener('click', onClicked, true);
     domTree.removeEventListener('mouseover', onMouseOver, true);
     uDom.nodeFromSelector('#domInspector .vCompactToggler').removeEventListener('click', toggleVCompactView);
@@ -655,7 +658,7 @@ var toggleOff = function() {
     uDom.nodeFromSelector('#domInspector .permatoolbar .highlightMode').removeEventListener('click', toggleHighlightMode);
     uDom.nodeFromSelector('#domInspector .permatoolbar .revert').removeEventListener('click', revert);
     uDom.nodeFromSelector('#domInspector .permatoolbar .commit').removeEventListener('click', startDialog);
-    inspectedTabId = '';
+    inspectedTabId = 0;
 };
 
 /******************************************************************************/
@@ -675,5 +678,3 @@ showdomButton.addEventListener('click', toggle);
 /******************************************************************************/
 
 })();
-
-

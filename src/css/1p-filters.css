@@ -1,14 +1,9 @@
-div > p:first-child {
-    margin-top: 0;
+body {
+    overflow: hidden;
     }
-div > p:last-child {
-    margin-bottom: 0;
-    }
-.userFilters {
-    box-sizing: border-box;
-    height: 60vh;
+#userFilters {
+    height: 75vh;
     text-align: left;
-    white-space: pre;
     width: 100%;
     word-wrap: normal;
     }

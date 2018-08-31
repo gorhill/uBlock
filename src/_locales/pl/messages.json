@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Nareszcie, skuteczny bloker, charakteryzujący się niskim użyciem procesora i pamięci.",
+    "message": "Nareszcie skuteczny bloker charakteryzujący się niskim użyciem procesora i pamięci.",
     "description": "this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
@@ -510,6 +510,10 @@
   "logBehindTheScene": {
     "message": "Ukryte żądania",
     "description": "Pretty name for behind-the-scene network requests"
+  },
+  "loggerCurrentTab": {
+    "message": "Aktywna karta",
+    "description": "Appears in the logger's tab selector"
   },
   "logFilterPrompt": {
     "message": "filtruj wpisy",

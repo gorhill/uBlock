@@ -48,11 +48,11 @@
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Kattints a uBlock₀ letiltásához ezen a webhelyen.\n\nCtrl+kattintás a uBlock₀ letiltásához csak a jelenlegi oldalon.",
+    "message": "Kattints a uBlock₀ letiltásához ezen a webhelyen.\n\nCtrl+klikk a uBlock₀ letiltásához csak a jelenlegi oldalon.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Klikk a uBlock₀ engedélyezéséhez ezen a webhelyen.",
+    "message": "Kattints az uBlock₀ engedélyezéséhez ezen a webhelyen.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -510,6 +510,10 @@
   "logBehindTheScene": {
     "message": "Hálózati lekérések a háttérben",
     "description": "Pretty name for behind-the-scene network requests"
+  },
+  "loggerCurrentTab": {
+    "message": "Jelenlegi lap",
+    "description": "Appears in the logger's tab selector"
   },
   "logFilterPrompt": {
     "message": "naplóbejegyzések szűrése",

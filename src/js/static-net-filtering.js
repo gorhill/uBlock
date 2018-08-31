@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2017 Raymond Hill
+    Copyright (C) 2014-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -954,7 +954,7 @@ FilterOriginMixedSet.prototype = Object.create(FilterOrigin.prototype, {
                 i = hostnames.length,
                 hostname;
             while ( i-- ) {
-                hostname = hostnames[i].replace(/\./g, '\\.');
+                hostname = hostnames[i];
                 if ( hostname.charCodeAt(0) === 0x7E /* '~' */ ) {
                     noneOf.push(hostname.slice(1));
                 } else {
@@ -1378,10 +1378,12 @@ var FilterParser = function() {
 
 FilterParser.prototype.toNormalizedType = {
             'beacon': 'other',
+               'css': 'stylesheet',
               'data': 'data',
           'document': 'main_frame',
           'elemhide': 'generichide',
               'font': 'font',
+             'frame': 'sub_frame',
       'genericblock': 'unsupported',
        'generichide': 'generichide',
              'image': 'image',
@@ -1397,6 +1399,7 @@ FilterParser.prototype.toNormalizedType = {
             'script': 'script',
         'stylesheet': 'stylesheet',
        'subdocument': 'sub_frame',
+               'xhr': 'xmlhttprequest',
     'xmlhttprequest': 'xmlhttprequest',
             'webrtc': 'unsupported',
          'websocket': 'websocket'
@@ -1510,7 +1513,7 @@ FilterParser.prototype.parseOptions = function(s) {
         if ( not ) {
             opt = opt.slice(1);
         }
-        if ( opt === 'third-party' ) {
+        if ( opt === 'third-party' || opt === '3p' ) {
             this.parsePartyOption(false, not);
             continue;
         }
@@ -1553,7 +1556,7 @@ FilterParser.prototype.parseOptions = function(s) {
             this.important = Important;
             continue;
         }
-        if ( opt === 'first-party' ) {
+        if ( opt === 'first-party' || opt === '1p' ) {
             this.parsePartyOption(true, not);
             continue;
         }
@@ -1735,7 +1738,7 @@ FilterParser.prototype.parse = function(raw) {
             //   Abort if type is only for unsupported types, otherwise
             //   toggle off `unsupported` bit.
             if ( this.types & this.unsupportedTypeBit ) {
-                this.types &= ~(this.unsupportedTypeBit | this.allNetRequestTypeBits);
+                this.types &= ~this.unsupportedTypeBit;
                 if ( this.types === 0 ) {
                     this.unsupported = true;
                     return this;
@@ -1814,14 +1817,14 @@ FilterParser.prototype.parse = function(raw) {
     // https://github.com/gorhill/uBlock/issues/3034
     // - We can remove anchoring if we need to match all at the start.
     if ( s.startsWith('*') ) {
-        s = s.replace(/^\*+([^%0-9a-z])/, '$1');
+        s = s.replace(/^\*+([^%0-9a-z])/i, '$1');
         this.anchor &= ~0x6;
     }
     // remove pointless trailing *
     // https://github.com/gorhill/uBlock/issues/3034
     // - We can remove anchoring if we need to match all at the end.
     if ( s.endsWith('*') ) {
-        s = s.replace(/([^%0-9a-z])\*+$/, '$1');
+        s = s.replace(/([^%0-9a-z])\*+$/i, '$1');
         this.anchor &= ~0x1;
     }
 
@@ -2116,6 +2119,9 @@ FilterContainer.prototype.compile = function(raw, writer) {
         return false;
     }
 
+    // 0 = network filters
+    writer.select(0);
+
     // Pure hostnames, use more efficient dictionary lookup
     // https://github.com/chrisaljoudi/uBlock/issues/665
     // Create a dict keyed on request type etc.
@@ -2267,6 +2273,9 @@ FilterContainer.prototype.fromCompiledContent = function(reader) {
         redirectTypeValue = typeNameToTypeValue.redirect,
         args, bits, bucket, entry,
         tokenHash, fdata, fingerprint;
+
+    // 0 = network filters
+    reader.select(0);
 
     while ( reader.next() === true ) {
         args = reader.args();

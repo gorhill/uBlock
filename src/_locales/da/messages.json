@@ -48,11 +48,11 @@
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Click to disable uBlock₀ for this site.\n\nCtrl+click to disable uBlock₀ only on this page.",
+    "message": "Klik for at deaktivere uBlock₀ på dette websted.\n\nCtrl+Klik for at deaktivere uBlock₀ kun på denne side.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Click to enable uBlock₀ for this site.",
+    "message": "Klik for at aktivere uBlock₀ på dette websted.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -96,23 +96,23 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Click to block all popups on this site",
+    "message": "Klik for at blokere alle popups på dette websted",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Click to no longer block all popups on this site",
+    "message": "Klik for at stoppe med at blokere alle popups på dette websted",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Aktiver\/Deaktiver blokering af store medie-elementer på denne side",
+    "message": "Aktiver\/deaktiver blokering af store medie-elementer på dette websted",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Click to block large media elements on this site",
+    "message": "Klik for at blokere store medie-elementer på dette websted",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Click to no longer block large media elements on this site",
+    "message": "Klik for at stoppe med at blokere store medie-elementer på dette websted",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -120,11 +120,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Click to disable cosmetic filtering on this site",
+    "message": "Klik for at deaktivere kosmetisk filtrering på dette websted",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Click to enable cosmetic filtering on this site",
+    "message": "Klik for at aktivere kosmetisk filtrering på dette websted",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -132,15 +132,15 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Click to block remote fonts on this site",
+    "message": "Klik for at blokere skrifttyper fra nettet på dette websted",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Click to no longer block remote fonts on this site",
+    "message": "Klik for at stoppe med at blokere skrifttyper på nettet på dette websted",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules": {
-    "message": "Globale regler: denne søjle viser de regler der gælder på alle sider.",
+    "message": "Globale regler: denne kolonne er til de regler der gælder på alle websteder.",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
@@ -252,7 +252,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Jeg er en erfaren bruger (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Krævet læsning<\/a>)",
+    "message": "Jeg er en erfaren bruger (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>krævet læsning<\/a>)",
     "description": ""
   },
   "settingsAdvancedUserSettings": {
@@ -276,7 +276,7 @@
     "description": ""
   },
   "settingPerSiteSwitchGroupSynopsis": {
-    "message": "Disse standardindstillinger kan tilsidesættes for hver enkelt websted",
+    "message": "Disse standardadfærde kan overstyres for hver enkelt websted",
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
@@ -292,7 +292,7 @@
     "description": ""
   },
   "settingsNoCSPReportsPrompt": {
-    "message": "Block CSP reports",
+    "message": "Blokér CSP rapporter",
     "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
   },
   "settingsStorageUsed": {
@@ -332,7 +332,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Denne indstilling gør det muligt at analysere og anvende <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Ablock Plus kompatible &ldquo;element skjuldende&rdquo; filtre<\/a>. Disse filtre er essentielt set kosmetiske og har til formål at skjule irriterende visuelle elementer på diverse websider, som det ikke er muligt at blokere på andre måder. <\/p><p>Denne indstilling øger uBlock₀'s hukommelsesforbrug.<\/p>",
+    "message": "<p>Denne indstilling gør det muligt at analysere og anvende <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus kompatible &ldquo;element skjuldende&rdquo; filtre<\/a>. Disse filtre er i det væsentlige kosmetiske og har til formål at skjule irriterende visuelle elementer websider, som det ikke er muligt at blokere på andre måder. <\/p><p>Denne indstilling øger uBlock₀'s hukommelsesforbrug.<\/p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -364,7 +364,7 @@
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {
-    "message": "Annoyances",
+    "message": "Irritationsmomenter",
     "description": "The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose": {
@@ -388,7 +388,7 @@
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "Sidste opdatering: {{ago}}",
+    "message": "Sidste opdatering: {{ago}}.\nKlik for at gennemtvinge en opdatering.",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
@@ -511,6 +511,10 @@
     "message": "Bag kulisserne",
     "description": "Pretty name for behind-the-scene network requests"
   },
+  "loggerCurrentTab": {
+    "message": "Nuværende fane",
+    "description": "Appears in the logger's tab selector"
+  },
   "logFilterPrompt": {
     "message": "Filtrér elementer i log",
     "description": "English: filter log entries"
@@ -612,7 +616,7 @@
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
-    "message": "Alle indstillinger vil blive erstattet af sikkerhedskopien fra {{time}}, hvorefter uBlock₀ vil genstarte.\n\nErstat alle indstillinger med indstillingerne fra sikkerhedskopien?",
+    "message": "Alle dine indstillinger vil blive overskrevet med sikkerhedskopierede data fra {{time}}, hvorefter uBlock₀ vil genstarte.\n\nOverskriv de nuværende indstillinger med data fra sikkerhedskopien?",
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {
@@ -624,7 +628,7 @@
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
-    "message": "Kan ikke forbinde til {{url}}",
+    "message": "Netværksfejl: {{msg}}",
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
@@ -708,7 +712,7 @@
     "description": "tooltip"
   },
   "cloudPull": {
-    "message": "Importer fra skylagring",
+    "message": "Importer fra skylager",
     "description": "tooltip"
   },
   "cloudPullAndMerge": {
@@ -724,7 +728,7 @@
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
-    "message": "Advarsel! Ændr disse avancerede indstillinger på eget ansvar.",
+    "message": "Advarsel! Disse avancerede indstillinger ændres på eget ansvar.",
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {

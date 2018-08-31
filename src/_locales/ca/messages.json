@@ -511,6 +511,10 @@
     "message": "Peticions ocultes",
     "description": "Pretty name for behind-the-scene network requests"
   },
+  "loggerCurrentTab": {
+    "message": "Pestanya actual",
+    "description": "Appears in the logger's tab selector"
+  },
   "logFilterPrompt": {
     "message": "filtrar entrades del registre",
     "description": "English: filter log entries"

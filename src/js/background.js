@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2017 Raymond Hill
+    Copyright (C) 2014-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -37,6 +37,7 @@ var µBlock = (function() { // jshint ignore:line
         autoUpdatePeriod: 7,
         ignoreRedirectFilters: false,
         ignoreScriptInjectFilters: false,
+        streamScriptInjectFilters: false,
         manualUpdateAssetFetchPeriod: 2000,
         popupFontSize: 'unset',
         suspendTabsUntilReady: false,
@@ -94,7 +95,7 @@ var µBlock = (function() { // jshint ignore:line
         hiddenSettingsDefault: hiddenSettingsDefault,
         hiddenSettings: (function() {
             var out = objectAssign({}, hiddenSettingsDefault),
-                json = vAPI.localStorage.getItem('hiddenSettings');
+                json = vAPI.localStorage.getItem('immediateHiddenSettings');
             if ( typeof json === 'string' ) {
                 try {
                     var o = JSON.parse(json);
@@ -109,12 +110,15 @@ var µBlock = (function() { // jshint ignore:line
                 catch(ex) {
                 }
             }
+            // Remove once 1.15.12+ is widespread.
+            vAPI.localStorage.removeItem('hiddenSettings');
             return out;
         })(),
 
         // Features detection.
         privacySettingsSupported: vAPI.browserSettings instanceof Object,
         cloudStorageSupported: vAPI.cloud instanceof Object,
+        canFilterResponseBody: vAPI.net.canFilterResponseBody === true,
 
         // https://github.com/chrisaljoudi/uBlock/issues/180
         // Whitelist directives need to be loaded once the PSL is available
@@ -122,7 +126,6 @@ var µBlock = (function() { // jshint ignore:line
         netWhitelistModifyTime: 0,
         netWhitelistDefault: [
             'about-scheme',
-            'behind-the-scene',
             'chrome-extension-scheme',
             'chrome-scheme',
             'moz-extension-scheme',
@@ -140,8 +143,8 @@ var µBlock = (function() { // jshint ignore:line
 
         // read-only
         systemSettings: {
-            compiledMagic: 'vrgorlgelgws',
-            selfieMagic: 'vrgorlgelgws'
+            compiledMagic: 'puuijtkfpspv',
+            selfieMagic: 'tuqilngsxkwo'
         },
 
         restoreBackupSettings: {
@@ -164,7 +167,7 @@ var µBlock = (function() { // jshint ignore:line
 
         selfieAfter: 17 * oneMinute,
 
-        pageStores: {},
+        pageStores: new Map(),
         pageStoresToken: 0,
 
         storageQuota: vAPI.storage.QUOTA_BYTES,

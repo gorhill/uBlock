@@ -511,6 +511,10 @@
     "message": "Hintergrundanfragen",
     "description": "Pretty name for behind-the-scene network requests"
   },
+  "loggerCurrentTab": {
+    "message": "Aktueller Tab",
+    "description": "Appears in the logger's tab selector"
+  },
   "logFilterPrompt": {
     "message": "Protokoll-Einträge filtern",
     "description": "English: filter log entries"

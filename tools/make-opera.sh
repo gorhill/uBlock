@@ -4,8 +4,8 @@
 
 hash jq 2>/dev/null || { echo; echo >&2 "Error: this script requires jq (https://stedolan.github.io/jq/), but it's not installed"; exit 1; }
 
-echo "*** AdNauseam::Opera: Creating opera package"
-echo "*** AdNauseam::Opera: Copying files"
+echo "*** AdNauseam.Opera: Creating opera package"
+echo "*** AdNauseam.Opera: Copying files"
 
 DES=dist/build/adnauseam.opera
 
@@ -36,7 +36,7 @@ cp platform/chromium/*.html $DES/
 cp platform/chromium/*.json $DES/
 cp LICENSE.txt              $DES/
 
-echo "*** AdNauseam.chromium: concatenating content scripts"
+echo "*** AdNauseam.Opera: concatenating content scripts"
 cat $DES/js/vapi-usercss.js > /tmp/contentscript.js
 echo >> /tmp/contentscript.js
 grep -v "^'use strict';$" $DES/js/contentscript.js >> /tmp/contentscript.js
@@ -50,7 +50,7 @@ sed -i '' "s/\"{version}\"/${VERSION}/" $DES/manifest.json
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
 
-echo "*** AdNauseam::Opera: Package Done."
+echo "*** AdNauseam.Opera: Package Done."
 echo
 # python tools/make-webext-meta.py $DES/  ADN: user our own version
 

@@ -2,8 +2,8 @@
 #
 # This script assumes an OS X environment
 
-echo "*** AdNauseam::Chromium: Creating chrome package"
-echo "*** AdNauseam::Chromium: Copying files"
+echo "*** AdNauseam.chromium: Creating chrome package"
+echo "*** AdNauseam.chromium: Copying files"
 
 if [ "$1" = experimental ]; then
     DES=dist/build/experimental/adnauseam.chromium
@@ -40,6 +40,12 @@ grep -v "^'use strict';$" $DES/js/contentscript.js >> /tmp/contentscript.js
 mv /tmp/contentscript.js $DES/js/contentscript.js
 rm $DES/js/vapi-usercss.js
 
+# Chrome store-specific
+cp -R $DES/_locales/nb $DES/_locales/no
+
+echo "*** AdNauseam.chromium: Generating web accessible resources..."
+cp -R src/web_accessible_resources $DES/
+python3 tools/import-war.py $DES/
 
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
@@ -48,11 +54,11 @@ sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
 #python tools/make-chromium-meta.py $DES/
 
 if [ "$1" = all ]; then
-    echo "*** AdNauseam::Chromium: Creating package..."
+    echo "*** AdNauseam.chromium: Creating package..."
     pushd $(dirname $DES/) > /dev/null
     zip artifacts/adnauseam.chromium.zip -qr $(basename $DES/)/*
     popd > /dev/null
 fi
 
-echo "*** AdNauseam::Chromium: Package done."
+echo "*** AdNauseam.chromium: Package done."
 echo

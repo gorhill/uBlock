@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2016 Raymond Hill
+    Copyright (C) 2014-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -109,6 +109,89 @@ self.uBlockDashboard.dateNowToSensibleString = function() {
                             .replace(/:/g, '.')
                             .replace('T', '_');
 };
+
+/******************************************************************************/
+
+self.uBlockDashboard.patchCodeMirrorEditor = (function() {
+    var grabFocusTimer;
+    var grabFocusTarget;
+    var grabFocus = function() {
+        grabFocusTarget.focus();
+        grabFocusTimer = grabFocusTarget = undefined;
+    };
+    var grabFocusAsync = function(cm) {
+        grabFocusTarget = cm;
+        if ( grabFocusTimer === undefined ) {
+            grabFocusTimer = vAPI.setTimeout(grabFocus, 1);
+        }
+    };
+
+    // https://github.com/gorhill/uBlock/issues/3646
+    var patchSelectAll = function(cm, details) {
+        var vp = cm.getViewport();
+        if ( details.ranges.length !== 1 ) { return; }
+        var range = details.ranges[0],
+            lineFrom = range.anchor.line,
+            lineTo = range.head.line;
+        if ( lineTo === lineFrom ) { return; }
+        if ( range.head.ch !== 0 ) { lineTo += 1; }
+        if ( lineFrom !== vp.from || lineTo !== vp.to ) { return; }
+        details.update([
+            {
+                anchor: { line: 0, ch: 0 },
+                head: { line: cm.lineCount(), ch: 0 }
+            }
+        ]);
+        grabFocusAsync(cm);
+    };
+
+    var lastGutterClick = 0;
+    var lastGutterLine = 0;
+
+    var onGutterClicked = function(cm, line) {
+        var delta = Date.now() - lastGutterClick;
+        if ( delta >= 500 || line !== lastGutterLine ) {
+            cm.setSelection(
+                { line: line, ch: 0 },
+                { line: line + 1, ch: 0 }
+            );
+            lastGutterClick = Date.now();
+            lastGutterLine = line;
+        } else {
+            cm.setSelection(
+                { line: 0, ch: 0 },
+                { line: cm.lineCount(), ch: 0 },
+                { scroll: false }
+            );
+            lastGutterClick = 0;
+        }
+        grabFocusAsync(cm);
+    };
+
+    var resizeTimer;
+    var resize = function() {
+        resizeTimer = undefined;
+        let prect = document.body.getBoundingClientRect();
+        let child = document.querySelector('.codeMirrorFillVertical');
+        let crect = child.getBoundingClientRect();
+        let height = Math.max(prect.bottom - crect.top, 80);
+        child.style.height = height + 'px';
+    };
+
+    return function(cm) {
+        if ( document.querySelector('.codeMirrorFillVertical') !== null ) {
+            resize();
+            window.addEventListener('resize', function() {
+                if ( resizeTimer !== undefined ) { return; }
+                resizeTimer = vAPI.setTimeout(resize, 66);
+            });
+        }
+        if ( cm.options.inputStyle === 'contenteditable' ) {
+            cm.on('beforeSelectionChange', patchSelectAll);
+        }
+        cm.on('gutterClick', onGutterClicked);
+    };
+})();
 
 /******************************************************************************/
 

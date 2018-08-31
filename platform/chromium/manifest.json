@@ -2,7 +2,7 @@
     "manifest_version": 2,
 
     "name": "uBlock Origin",
-    "version": "1.14.22",
+    "version": "1.15.24.0",
 
     "commands": {
         "launch-element-zapper": {
@@ -70,5 +70,8 @@
     "short_name": "uBlock₀",
     "storage": {
         "managed_schema": "managed_storage.json"
-    }
+    },
+    "web_accessible_resources": [
+        "/web_accessible_resources/*"
+    ]
 }

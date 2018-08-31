@@ -18,5 +18,8 @@
 - AdNauseam version:
 - Other extensions you have installed:
 
+##### Your filter lists
+<!-- Example: "Default filter lists + FRA", or "Default filter lists minus uBlock -- Badware risks" -->
+
 ### Your location/country
 (If the issue is website specific, knowing your approximate location will help us to reproduce it)
