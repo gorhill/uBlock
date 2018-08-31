@@ -203,30 +203,6 @@ vAPI.net.registerListeners = function() {
         return onBeforeRequestClient(details);
     };
 
-    var onHeadersReceivedClient = this.onHeadersReceived.callback,
-        onHeadersReceivedClientTypes = (this.onHeadersReceived.types||[]).slice(0),
-        onHeadersReceivedTypes = denormalizeTypes(onHeadersReceivedClientTypes);
-    var onHeadersReceived = function(details) {
-        normalizeRequestDetails(details);
-        if (
-            onHeadersReceivedClientTypes.length !== 0 &&
-            onHeadersReceivedClientTypes.indexOf(details.type) === -1
-        ) {
-            return;
-        }
-        return onHeadersReceivedClient(details);
-    };
-
-    // ADN
-    var onBeforeSendHeadersClient = this.onBeforeSendHeaders.callback,
-        onBeforeSendHeadersClientTypes = (this.onBeforeSendHeaders.types||[]).slice(0), // ADN: fix to #1241
-        onBeforeSendHeadersTypes = denormalizeTypes(onBeforeSendHeadersClientTypes);
-
-    var onBeforeSendHeaders = function(details) {
-        normalizeRequestDetails(details);
-        return onBeforeSendHeadersClient(details);
-    }
-
     if ( onBeforeRequest ) {
         let urls = this.onBeforeRequest.urls || ['<all_urls>'];
         let types = this.onBeforeRequest.types || undefined;
@@ -262,8 +238,9 @@ vAPI.net.registerListeners = function() {
     }
 
     let onHeadersReceivedClient = this.onHeadersReceived.callback,
-        onHeadersReceivedClientTypes = this.onHeadersReceived.types.slice(0),
+        onHeadersReceivedClientTypes = (this.onHeadersReceived.types||[]).slice(0),// ADN : fix to #1241
         onHeadersReceivedTypes = denormalizeTypes(onHeadersReceivedClientTypes);
+    
     let onHeadersReceived = function(details) {
         normalizeRequestDetails(details);
         if (
@@ -285,7 +262,17 @@ vAPI.net.registerListeners = function() {
         );
     }
 
-     if ( onBeforeSendHeaders ) {
+    // ADN
+    let onBeforeSendHeadersClient = this.onBeforeSendHeaders.callback,
+        onBeforeSendHeadersClientTypes = (this.onBeforeSendHeaders.types||[]).slice(0), // ADN: fix to #1241
+        onBeforeSendHeadersTypes = denormalizeTypes(onBeforeSendHeadersClientTypes);
+
+    let onBeforeSendHeaders = function(details) {
+        normalizeRequestDetails(details);
+        return onBeforeSendHeadersClient(details);
+    }
+
+    if ( onBeforeSendHeaders ) {
         let urls = this.onBeforeSendHeaders.urls || ['<all_urls>'];
         let types = this.onBeforeSendHeaders.types || undefined;
         wrApi.onBeforeSendHeaders.addListener(
