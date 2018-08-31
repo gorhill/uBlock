@@ -153,7 +153,7 @@
   },
   "popupTipNoScripting2":{
     "message":"Click to no longer wholly disable javascript on this site",
-    "description":"Tooltip for the no-remote-fonts per-site switch"
+    "description":"Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules":{
     "message":"Global rules: this column is for rules which apply to all sites.",
