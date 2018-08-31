@@ -343,13 +343,10 @@
   var getExtPageTabId = function (htmlPage) {
 
     var pageUrl = vAPI.getURL(htmlPage);
-
-    for (var tabId in µb.pageStores) {
-
-      var pageStore = µb.pageStoreFromTabId(tabId);
-
+    for (let e of µb.pageStores) {
+      var pageStore = e[1];
       if (pageStore !== null && pageStore.rawURL.startsWith(pageUrl))
-        return tabId;
+        return pageStore.tabId;
     }
   }
 
@@ -2061,6 +2058,7 @@
   exports.closeExtPage = function (request) {
 
     var tabId = getExtPageTabId(request.page);
+    console.log(tabId)
     tabId && vAPI.tabs.remove(tabId, true);
   }
 
