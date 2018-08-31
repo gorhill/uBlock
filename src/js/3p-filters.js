@@ -70,7 +70,7 @@ var renderFilterLists = function(soft) {
         listEntryTemplate = uDom('#templates .listEntry'),
         listStatsTemplate = vAPI.i18n('3pListsOfBlockedHostsPerListStats'),
         renderElapsedTimeToString = vAPI.i18n.renderElapsedTimeToString,
-        groupNames = new Map();
+        groupNames = new Map([ [ 'user', '' ] ]);
 
     // Assemble a pretty list name if possible
     var listNameFromListKey = function(listKey) {
@@ -172,18 +172,12 @@ var renderFilterLists = function(soft) {
     };
 
     var liFromListGroup = function(groupKey, listKeys) {
-        var liGroup = document.querySelector('#lists > .groupEntry[data-groupkey="' + groupKey + '"]');
+        let liGroup = document.querySelector('#lists > .groupEntry[data-groupkey="' + groupKey + '"]');
         if ( liGroup === null ) {
             liGroup = listGroupTemplate.clone().nodeAt(0);
-            var groupName = groupNames.get(groupKey);
+            let groupName = groupNames.get(groupKey);
             if ( groupName === undefined ) {
                 groupName = vAPI.i18n('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1));
-                // Category "Social" is being renamed "Annoyances": ensure
-                // smooth transition.
-                // TODO: remove when majority of users are post-1.14.8 uBO.
-                if ( groupName === '' && groupKey === 'social' ) {
-                    groupName = vAPI.i18n('3pGroupAnnoyances');
-                }
                 groupNames.set(groupKey, groupName);
             }
             if ( groupName !== '' ) {
@@ -193,15 +187,15 @@ var renderFilterLists = function(soft) {
         if ( liGroup.querySelector('.geName:empty') === null ) {
             liGroup.querySelector('.geCount').textContent = listEntryCountFromGroup(listKeys);
         }
-        var hideUnused = mustHideUnusedLists(groupKey);
+        let hideUnused = mustHideUnusedLists(groupKey);
         liGroup.classList.toggle('hideUnused', hideUnused);
-        var ulGroup = liGroup.querySelector('.listEntries');
+        let ulGroup = liGroup.querySelector('.listEntries');
         if ( !listKeys ) { return liGroup; }
         listKeys.sort(function(a, b) {
             return (listDetails.available[a].title || '').localeCompare(listDetails.available[b].title || '');
         });
-        for ( var i = 0; i < listKeys.length; i++ ) {
-            var liEntry = liFromListEntry(
+        for ( let i = 0; i < listKeys.length; i++ ) {
+            let liEntry = liFromListEntry(
                 listKeys[i],
                 ulGroup.children[i],
                 hideUnused
@@ -214,18 +208,19 @@ var renderFilterLists = function(soft) {
     };
 
     var groupsFromLists = function(lists) {
-        var groups = {};
-        var listKeys = Object.keys(lists);
-        var i = listKeys.length;
-        var listKey, list, groupKey;
-        while ( i-- ) {
-            listKey = listKeys[i];
-            list = lists[listKey];
-            groupKey = list.group || 'nogroup';
-            if ( groups[groupKey] === undefined ) {
-                groups[groupKey] = [];
+        let groups = new Map();
+        let listKeys = Object.keys(lists);
+        for ( let listKey of listKeys ) {
+            let list = lists[listKey];
+            let groupKey = list.group || 'nogroup';
+            if ( groupKey === 'social' ) {
+                groupKey = 'annoyances';
             }
-            groups[groupKey].push(listKey);
+            let memberKeys = groups.get(groupKey);
+            if ( memberKeys === undefined ) {
+                groups.set(groupKey, (memberKeys = []));
+            }
+            memberKeys.push(listKey);
         }
         return groups;
     };
@@ -248,22 +243,21 @@ var renderFilterLists = function(soft) {
         // Visually split the filter lists in purpose-based groups
         var ulLists = document.querySelector('#lists'),
             groups = groupsFromLists(details.available),
-            liGroup, i, groupKey,
             groupKeys = [
                 'user',
                 'default',
                 'ads',
                 'privacy',
                 'malware',
-                'social',
+                'annoyances',
                 'multipurpose',
                 'regions',
                 'custom'
             ];
         document.body.classList.toggle('hideUnused', mustHideUnusedLists('*'));
-        for ( i = 0; i < groupKeys.length; i++ ) {
-            groupKey = groupKeys[i];
-            liGroup = liFromListGroup(groupKey, groups[groupKey]);
+        for ( let i = 0; i < groupKeys.length; i++ ) {
+            let groupKey = groupKeys[i];
+            let liGroup = liFromListGroup(groupKey, groups.get(groupKey));
             liGroup.setAttribute('data-groupkey', groupKey);
             liGroup.classList.toggle(
                 'collapsed',
@@ -272,13 +266,12 @@ var renderFilterLists = function(soft) {
             if ( liGroup.parentElement === null ) {
                 ulLists.appendChild(liGroup);
             }
-            delete groups[groupKey];
+            groups.delete(groupKey);
         }
         // For all groups not covered above (if any left)
         groupKeys = Object.keys(groups);
-        for ( i = 0; i < groupKeys.length; i++ ) {
-            groupKey = groupKeys[i];
-            ulLists.appendChild(liFromListGroup(groupKey, groups[groupKey]));
+        for ( let groupKey of groupKeys.keys() ) {
+            ulLists.appendChild(liFromListGroup(groupKey, groupKey));
         }
 
         uDom('#lists .listEntries .listEntry.discard').remove();
