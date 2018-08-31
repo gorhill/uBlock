@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a Chromium browser extension to black/white list requests.
-    Copyright (C) 2015-2018 Raymond Hill
+    Copyright (C) 2015-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -42,7 +42,8 @@ var switchBitOffsets = {
     'no-cosmetic-filtering':  4,
           'no-remote-fonts':  6,
            'no-large-media':  8,
-           'no-csp-reports': 10
+           'no-csp-reports': 10,
+             'no-scripting': 12,
 };
 
 var switchStateToNameMap = {

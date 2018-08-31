@@ -290,6 +290,8 @@ PageStore.prototype.init = function(tabId, context) {
     this.perLoadAllowedRequestCount = 0;
     this.hiddenElementCount = ''; // Empty string means "unknown"
     this.remoteFontCount = 0;
+    this.scriptCount = 0;
+    this.inlineScriptCount = 0;
     this.popupBlockedCount = 0;
     this.largeMediaCount = 0;
     this.largeMediaTimer = null;
@@ -517,7 +519,10 @@ PageStore.prototype.journalAddRequest = function(hostname, result) {
         result === 1 ? 0x00000001 : 0x00010000
     );
     if ( this.journalTimer === null ) {
-        this.journalTimer = vAPI.setTimeout(this.journalProcess.bind(this, true), 1000);
+        this.journalTimer = vAPI.setTimeout(
+            ( ) => { this.journalProcess(true); },
+            µb.hiddenSettings.requestJournalProcessPeriod
+        );
     }
 };
 
@@ -539,7 +544,10 @@ PageStore.prototype.journalAddRootFrame = function(type, url) {
     if ( this.journalTimer !== null ) {
         clearTimeout(this.journalTimer);
     }
-    this.journalTimer = vAPI.setTimeout(this.journalProcess.bind(this, true), 1000);
+    this.journalTimer = vAPI.setTimeout(
+        ( ) => { this.journalProcess(true); },
+        µb.hiddenSettings.requestJournalProcessPeriod
+    );
 };
 
 PageStore.prototype.journalProcess = function(fromTimer) {
@@ -549,21 +557,20 @@ PageStore.prototype.journalProcess = function(fromTimer) {
     this.journalTimer = null;
 
     var journal = this.journal,
-        i, n = journal.length,
-        hostname, count, hostnameCounts,
+        n = journal.length,
         aggregateCounts = 0,
         now = Date.now(),
         pivot = this.journalLastCommitted || 0;
 
     // Everything after pivot originates from current page.
-    for ( i = pivot; i < n; i += 2 ) {
-        hostname = journal[i];
-        hostnameCounts = this.hostnameToCountMap.get(hostname);
+    for ( let i = pivot; i < n; i += 2 ) {
+        let hostname = journal[i];
+        let hostnameCounts = this.hostnameToCountMap.get(hostname);
         if ( hostnameCounts === undefined ) {
             hostnameCounts = 0;
             this.contentLastModified = now;
         }
-        count = journal[i+1];
+        let count = journal[i+1];
         this.hostnameToCountMap.set(hostname, hostnameCounts + count);
         aggregateCounts += count;
     }
@@ -579,7 +586,7 @@ PageStore.prototype.journalProcess = function(fromTimer) {
 
     // Everything before pivot does not originate from current page -- we still
     // need to bump global blocked/allowed counts.
-    for ( i = 0; i < pivot; i += 2 ) {
+    for ( let i = 0; i < pivot; i += 2 ) {
         aggregateCounts += journal[i+1];
     }
     if ( aggregateCounts !== 0 ) {
@@ -607,6 +614,13 @@ PageStore.prototype.filterRequest = function(context) {
 
     if ( requestType.endsWith('font') && this.filterFont(context) === 1 ) {
         return 1;
+    }
+
+    if ( requestType === 'script' ) {
+        this.scriptCount += 1;
+        if ( this.filterScripting(context.rootHostname) === 1 ) {
+            return 1;
+        }
     }
 
     var cacheableResult = this.cacheableResults[requestType] === true;
@@ -702,6 +716,21 @@ PageStore.prototype.filterFont = function(context) {
         return 1;
     }
     return 0;
+};
+
+/******************************************************************************/
+
+PageStore.prototype.filterScripting = function(rootHostname) {
+    if (
+        this.getNetFilteringSwitch() === false ||
+        µb.hnSwitches.evaluateZ('no-scripting', rootHostname) === false
+    ) {
+        return 0;
+    }
+    if ( µb.logger.isEnabled() ) {
+        this.logData = µb.hnSwitches.toLogData();
+    }
+    return 1;
 };
 
 /******************************************************************************/

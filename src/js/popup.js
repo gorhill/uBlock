@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2018 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -161,6 +161,7 @@ var hashFromPopupData = function(reset) {
     hasher.push(uDom.nodeFromId('no-large-media').classList.contains('on'));
     hasher.push(uDom.nodeFromId('no-cosmetic-filtering').classList.contains('on'));
     hasher.push(uDom.nodeFromId('no-remote-fonts').classList.contains('on'));
+    hasher.push(uDom.nodeFromId('no-scripting').classList.contains('on'));
 
     var hash = hasher.join('');
     if ( reset ) {
@@ -438,6 +439,7 @@ var renderPopup = function() {
     uDom.nodeFromId('no-large-media').classList.toggle('on', popupData.noLargeMedia === true);
     uDom.nodeFromId('no-cosmetic-filtering').classList.toggle('on', popupData.noCosmeticFiltering === true);
     uDom.nodeFromId('no-remote-fonts').classList.toggle('on', popupData.noRemoteFonts === true);
+    uDom.nodeFromId('no-scripting').classList.toggle('on', popupData.noScripting === true);
 
     // Report blocked popup count on badge
     total = popupData.popupBlockedCount;
@@ -487,14 +489,13 @@ var renderPopup = function() {
 //   Use tooltip for ARIA purpose.
 
 var renderTooltips = function(selector) {
-    var elem, text;
-    for ( var entry of tooltipTargetSelectors ) {
+    for ( let entry of tooltipTargetSelectors ) {
         if ( selector !== undefined && entry[0] !== selector ) { continue; }
-        text = vAPI.i18n(
+        let text = vAPI.i18n(
             entry[1].i18n +
             (uDom.nodeFromSelector(entry[1].state) === null ? '1' : '2')
         );
-        elem = uDom.nodeFromSelector(entry[0]);
+        let elem = uDom.nodeFromSelector(entry[0]);
         elem.setAttribute('aria-label', text);
         elem.setAttribute('data-tip', text);
         if ( selector !== undefined ) {
@@ -539,7 +540,14 @@ var tooltipTargetSelectors = new Map([
             state: '#no-remote-fonts.on',
             i18n: 'popupTipNoRemoteFonts'
         }
-    ]
+    ],
+    [
+        '#no-scripting',
+        {
+            state: '#no-scripting.on',
+            i18n: 'popupTipNoScripting'
+        }
+    ],
 ]);
 
 /******************************************************************************/
@@ -627,10 +635,17 @@ var onPopupMessage = function(data) {
     if ( data.tabId !== popupData.tabId ) { return; }
 
     switch ( data.what ) {
-    case 'cosmeticallyFilteredElementCountChanged':
-        var v = data.count || '';
+    case 'domSurveyFinalReport':
+        let count = data.affectedElementCount || '';
         uDom.nodeFromSelector('#no-cosmetic-filtering > span.badge')
-            .textContent = typeof v === 'number' ? v.toLocaleString() : v;
+            .textContent = typeof count === 'number' ?
+                count.toLocaleString() :
+                count;
+        count = data.scriptCount || '';
+        uDom.nodeFromSelector('#no-scripting > span.badge')
+            .textContent = typeof count === 'number' ?
+                count.toLocaleString() :
+                count;
         break;
     }
 };
