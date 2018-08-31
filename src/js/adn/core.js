@@ -2058,7 +2058,6 @@
   exports.closeExtPage = function (request) {
 
     var tabId = getExtPageTabId(request.page);
-    console.log(tabId)
     tabId && vAPI.tabs.remove(tabId, true);
   }
 
