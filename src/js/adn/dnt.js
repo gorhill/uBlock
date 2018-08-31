@@ -127,7 +127,7 @@
 
       firewall.fromString(firewallRules.join('\n'), false);
 
-      log('[DNT] Firewall enabled with ' + Object.keys(firewall.rules).length + ' rules');
+      log('[DNT] Firewall enabled with ' + firewall.rules.size + ' rules');
 
     } else {
 
