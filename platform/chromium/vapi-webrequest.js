@@ -104,14 +104,12 @@ vAPI.net.registerListeners = function() {
         return '';
     };
 
-    var reNetworkURI = /^(?:ftps?|https?|wss?)/;
-
     var normalizeRequestDetails = function(details) {
         // Chromium 63+ supports the `initiator` property, which contains
         // the URL of the origin from which the network request was made.
         if (
             details.tabId === vAPI.noTabId &&
-            reNetworkURI.test(details.initiator)
+            typeof details.initiator === 'string'
         ) {
             details.tabId = vAPI.anyTabId;
             details.documentUrl = details.initiator;

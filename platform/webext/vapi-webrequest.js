@@ -100,13 +100,12 @@ vAPI.net.registerListeners = function() {
 
     let punycode = self.punycode;
     let reAsciiHostname  = /^https?:\/\/[0-9a-z_.:@-]+[/?#]/;
-    let reNetworkURI = /^(?:ftps?|https?|wss?)/;
     let parsedURL = new URL('about:blank');
 
     let normalizeRequestDetails = function(details) {
         if (
             details.tabId === vAPI.noTabId &&
-            reNetworkURI.test(details.documentUrl)
+            typeof details.documentUrl === 'string'
         ) {
             details.tabId = vAPI.anyTabId;
         }

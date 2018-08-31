@@ -108,6 +108,16 @@ var onPSLReady = function() {
 var onVersionReady = function(lastVersion) {
     if ( lastVersion === vAPI.app.version ) { return; }
 
+    // Since AMO does not allow updating resources.txt, force a reload when a
+    // new version is detected, as resources.txt may have changed since last
+    // release. This will be done only for release versions of Firefox.
+    if (
+        /^Mozilla-Firefox-/.test(vAPI.webextFlavor) &&
+        /(b|rc)\d+$/.test(vAPI.app.version) === false
+    ) {
+        µb.redirectEngine.invalidateResourcesSelfie();
+    }
+
     // From 1.15.19b9 and above, the `behind-the-scene` scope is no longer
     // whitelisted by default, and network requests from that scope will be
     // subject to filtering by default.
