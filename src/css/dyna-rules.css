@@ -16,7 +16,29 @@ body {
     }
 #diff .tools .fa {
     font-size: large;
-    }    }
+}
+#diff .ruleActions {
+    border: 0;
+    box-sizing: border-box;
+    display: inline-block;
+    padding: 0;
+    text-align: center;
+    vertical-align: top;
+    width: 50%;
+    white-space: nowrap;
+    }
+#diff .ruleActions h3 {
+    font-weight: normal;
+    margin: 0.5em 0;
+    }
+#ruleFilter {
+    direction: ltr;
+    text-align: center;
+    }
+#ruleFilter .fa {
+    color: #888;
+    }
+     
 #revertButton,
 #commitButton,
 #diff.editing #exportButton,

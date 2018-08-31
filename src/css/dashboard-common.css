@@ -1,8 +1,6 @@
 body {
-<<<<<<< HEAD
     margin: 1em;
     /*padding: 0 0.5em 0.5em 0.5em;*/
-=======
     box-sizing: border-box;
     left: 0;
     height: 100vh;
@@ -13,19 +11,21 @@ body {
     right: 0;
     top: 0;
     }
+
 body > div.body {
     padding: 0 0.5em 0.5em 0.5em;
->>>>>>> upstream1.15.20
-    }
+}
+
 @media screen and (max-device-width: 960px) {
     body {
         zoom: 1.4;
         }
-    }
+}
+
 h2, h3 {
     /*margin: 1em 0;
     font-family: sans-serif;*/
-    }
+}
 h2 {
     font-size: 18px;
     /*font-weight: 700;*/
@@ -33,45 +33,42 @@ h2 {
     text-transform: uppercase;
     line-height: 1em;
     font-family: bebas_neue,sans-serif;
-    }
+}
 h3 {
     font-size: 16px;
-    }
+}
 a {
     text-decoration: none;
-    }
+}
 a.info {
     color: white;
     opacity: 0.8;
-    }
+}
 a.info:hover {
     opacity: 1
-    }
+}
 a.info.important {
     color: #9F6000;
-    }
+}
 button {
     /*padding: 0.33em;*/
-    }
-<<<<<<< HEAD
+}
 div > p:first-child {
     margin-top: 0;
-    }
-=======
->>>>>>> upstream1.15.20
+}
 input[type="number"] {
     width: 5em;
-    }
+}
 input[type="checkbox"][disabled] + label {
     opacity: 0.4;
-    }
+}
 .para {
     width: 40em;
-    }
+}
 .synopsis {
     font-size: small;
     opacity: 0.8;
-    }
+}
 .whatisthis {
     margin: 0 0 0 8px;
     border: 0;
@@ -82,37 +79,48 @@ input[type="checkbox"][disabled] + label {
     cursor: pointer;
     opacity: 0.5;
     vertical-align: middle;
-    }
+}
 button.whatisthis:hover {
     opacity: 1.0;
     background: url('../img/help16.png') no-repeat;
-    }
+}
 .whatisthis-expandable {
     margin: 0.5em 0 1em 1.25em;
     padding: 0.5em;
     display: none;
     border: 1px dotted black;
-    background-color: #F8F8F8;
+    background-color: #333;
     font-size: 13px;
     white-space: pre-line;
-    }
+}
 .whatisthis-expandable > p {
     margin-top: 1em;
     margin-bottom: 0;
-    }
+}
 .whatisthis-expandable > p:first-child {
     margin-top: 0;
-    }
+}
 .whatisthis-expandable.whatisthis-expanded {
     display: block;
-    }
+}
 .warn {
     margin: 0;
     padding: 5px;
     background-color: #FEDAE0;
-    }
-@media (max-height: 640px) {
+}
+@media (max-height: 640px), (max-height: 800px) and (max-width: 480px) {
+    .body > p,
+    .body > ul {
+        margin: 0.5em 0;
+        }
     .vverbose {
         display: none !important;
         }
-    }
+}
+@media (max-height: 400px) {
+    html {
+        min-height: 400px !important;
+        overflow: auto !important;
+        }
+}
+

@@ -2,7 +2,7 @@
   RESET
 ============================================================ */
 html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+h1, h2, h3, h4, h5, h6, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, font, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
@@ -903,22 +903,21 @@ body[dir=rtl] #externalListsDiv {
 .cm-staticnetBlock {
   color:white !important;
 }
-=======
 button.custom:hover {
     opacity: 1.0;
     }
 button.custom.important {
-    border-color: #ffcc7f #ffcc7f hsl(36, 100%, 73%);
-    background-color: hsl(36, 100%, 75%);
-    background-image: linear-gradient(#ffdca8, #ffcc7f);
-    }
+    background-color: rgba(0, 118, 255,0.2);
+}
+button.custom.important:hover {
+    background-color: rgb(0, 118, 255,1);
+}
 button.custom.disabled,
 button.custom[disabled],
 button.custom.important.disabled,
 button.custom.important[disabled] {
-    border-color: #ddd #ddd hsl(36, 0%, 85%);
-    background-color: hsl(36, 0%, 72%);
-    background-image: linear-gradient(#f2f2f2, #dddddd);
+    border-color: #ddd ;
+    background-color: #ddd;
     color: #666;
     opacity: 0.6;
     pointer-events: none;

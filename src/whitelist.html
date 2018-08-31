@@ -38,14 +38,26 @@
     </ul>
   </ul>
 
-  <div id="cloudWidget" class="hide" data-cloud-entry="whitelistPane"></div>
-<p class="vverbose">
-  <span data-i18n="whitelistPrompt"></span>
-  <a class="fa info important" href="https://github.com/gorhill/uBlock/wiki/Dashboard:-Whitelist">&#xf05a;</a>
-<p>
-    <button id="whitelistApply" class="custom important" type="button" disabled="true" data-i18n="whitelistApply"></button>&ensp;
-    <button id="whitelistRevert" class="custom" type="button" disabled="true" data-i18n="genericRevert"></button>
-<p><div id="whitelist" clacodemirror/addon/display/panel.js"></script>
+<div class="body">
+    <div id="cloudWidget" class="hide" data-cloud-entry="whitelistPane"></div>
+    <p class="vverbose"><span data-i18n="whitelistPrompt"></span> <a class="fa info important" href="https://github.com/gorhill/uBlock/wiki/Dashboard:-Whitelist">&#xf05a;</a></p>
+    <p>
+        <button id="whitelistApply" class="custom important iconifiable" type="button" disabled><span class="fa">&#xf00c;</span><span data-i18n="whitelistApply"></span></button>
+        <button id="whitelistRevert" class="custom iconifiable" type="button" disabled><span class="fa">&#xf0e2;</span><span data-i18n="genericRevert"></span></button>
+        &emsp;&emsp;
+        <button id="importWhitelistFromFile" class="custom iconifiable" type="button"><span class="fa">&#xf019;</span><span data-i18n="whitelistImport"></span></button>
+        <button id="exportWhitelistToFile" class="custom iconifiable" type="button"><span class="fa">&#xf093;</span><span data-i18n="whitelistExport"></span></button>
+    </p>
+</div>
+
+<div id="whitelist" class="codeMirrorContainer codeMirrorFillVertical"></div>
+
+<div class="hidden">
+    <input id="importFilePicker" type="file" accept="text/plain">
+</div>
+
+<script src="lib/codemirror/lib/codemirror.js"></script>
+<script src="lib/codemirror/addon/display/panel.js"></script>
 <script src="lib/codemirror/addon/scroll/annotatescrollbar.js"></script>
 <script src="lib/codemirror/addon/search/matchesonscrollbar.js"></script>
 <script src="lib/codemirror/addon/search/searchcursor.js"></script>
