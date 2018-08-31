@@ -43,6 +43,10 @@
     "message":"About",
     "description":"appears as tab name in dashboard"
   },
+  "assetViewerPageName":{
+    "message":"uBlock₀ — Asset viewer",
+    "description":"Title for the asset viewer page"
+  },
   "advancedSettingsPageName":{
     "message":"Advanced settings",
     "description":"Title for the advanced settings page"
