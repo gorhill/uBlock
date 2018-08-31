@@ -87,7 +87,7 @@ var onMessage = function(request, sender, callback) {
     // The concatenation with the empty string ensure that the resulting value
     // is a string. This is important since tab id values are assumed to be
     // of string type.
-    var tabId = sender && sender.tab ? '' + sender.tab.id : 0;
+    var tabId = sender && sender.tab ? sender.tab.id : 0;
 
     // Sync
     var response;
