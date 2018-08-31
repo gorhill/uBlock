@@ -839,7 +839,7 @@ vAPI.tabs.registerListeners();
 // Create an entry for the tab if it doesn't exist.
 
 µb.bindTabToPageStats = function(tabId, context) {
-    this.updateBadgeAsync(tabId);
+    µb.updateBadgeAsync(tabId);
 
     // Do not create a page store for URLs which are of no interests
     if ( µb.tabContextManager.exists(tabId) === false ) {
@@ -925,7 +925,7 @@ vAPI.tabs.registerListeners();
 µb.updateBadgeAsync = (function() {
     var tabIdToTimer = new Map();
 
-    var updateBadge = function(tabId) {
+    var updateBadge = function(tabId, isClick) {
         tabIdToTimer.delete(tabId);
 
         var state = false;
@@ -945,14 +945,25 @@ vAPI.tabs.registerListeners();
             }
         }
 
+
         var iconStatus = state ? (isDNT ? 'dnt' : 'on') : 'off'; // ADN
+
         if (iconStatus !== 'off') {
             iconStatus += (isClick ? 'active' : '');
         }
         vAPI.setIcon(tabId, iconStatus, badge);
     };
 
-    };
+     return function(tabId, isClick) {
+        if ( tabIdToTimer.has(tabId)) {
+            return;
+        }
+        if ( vAPI.isBehindTheSceneTabId(tabId) ) {
+            return;
+        }
+
+        tabIdToTimer[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId, isClick), 222); // ADN
+    }
 })();
 
 /******************************************************************************/

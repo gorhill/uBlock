@@ -149,7 +149,7 @@ var onMessage = function(request, sender, callback) {
 
     case 'getWhitelist':
         response = {
-            dntEnabled: µb.adnauseam.dnt.enabled()
+            dntEnabled: µb.adnauseam.dnt.enabled(),
             whitelist: µb.stringFromWhitelist(µb.netWhitelist),
             reBadHostname: µb.reWhitelistBadHostname.source,
             reHostnameExtractor: µb.reWhitelistHostnameExtractor.source

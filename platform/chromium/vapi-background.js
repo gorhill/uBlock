@@ -1151,14 +1151,14 @@ vAPI.lastError = function() {
 //
 vAPI.onLoadAllCompleted = function(tabId, frameId) {
 
-  console.log('C.onLoadAllCompleted: '+tabId, frameId);
+  // console.log('C.onLoadAllCompleted: '+tabId, frameId);
 
     // http://code.google.com/p/chromium/issues/detail?id=410868#c11
     // Need to be sure to access `vAPI.lastError()` to prevent
     // spurious warnings in the console.
     var onScriptInjected = function() {
         var err = vAPI.lastError();
-        console.log('C.onScriptInjected: ',err);
+        // console.log('C.onScriptInjected: ',err);
     };
 
     var scriptStart = function(tabId) {
@@ -1194,7 +1194,7 @@ vAPI.onLoadAllCompleted = function(tabId, frameId) {
         details.frameId = frameId;
         details.matchAboutBlank = true;
       }
-console.log('injectOne: '+script, details);
+// console.log('injectOne: '+script, details);
       vAPI.tabs.injectScript(tabId, details, cb || function(){});
     };
     var bindToTabs = function(tabs) {
@@ -1205,14 +1205,14 @@ console.log('injectOne: '+script, details);
     };
 
     if (tabId)  {
-console.log('tabId: ');
+// console.log('tabId: ');
 
         chrome.tabs.get(tabId, function(tab) {
           if (tab) startInTab(tab, frameId); }
         ); // ADN
     }
     else {
-console.log('no-tab: ');
+// console.log('no-tab: ');
 
         chrome.tabs.query({ url: '<all_urls>' }, bindToTabs);
     }
