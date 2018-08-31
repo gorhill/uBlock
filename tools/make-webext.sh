@@ -2,8 +2,8 @@
 #
 # This script assumes a linux environment
 
-echo "*** AdNauseam::WebExt: Creating web store package"
-echo "*** AdNauseam::WebExt: Copying files"
+echo "*** AdNauseam.WebExt: Creating web store package"
+echo "*** AdNauseam.WebExt: Copying files"
 
 DES=dist/build/adnauseam.webext
 rm -rf $DES
@@ -47,7 +47,7 @@ rm $DES/img/icon_128.png
 rm $DES/options_ui.html
 rm $DES/js/options_ui.js
 
-echo "*** AdNauseam::WebExt: Generating meta..."
+echo "*** AdNauseam.WebExt: Generating meta..."
 # python tools/make-webext-meta.py $DES/     ADN: use our own version
 #
 
@@ -60,11 +60,11 @@ cp -R src/web_accessible_resources $DES/
 python3 tools/import-war.py $DES/
 
 if [ "$1" = all ]; then
-    echo "*** AdNauseam::WebExt: Creating package..."
+    echo "*** AdNauseam.WebExt: Creating package..."
     pushd $(dirname $DES/) > /dev/null
     zip adnauseam.webext.zip -qr $(basename $DES/)/*
     popd > /dev/null
 fi
 
-echo "*** AdNauseam::WebExt: Package done."
+echo "*** AdNauseam.WebExt: Package done."
 echo
