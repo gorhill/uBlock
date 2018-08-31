@@ -897,3 +897,27 @@ span.new {
 body[dir=rtl] #externalListsDiv {
     margin: 2em 2em 0;
     }
+/* Code Mirror Override */
+.CodeMirror {
+  background: #333 !important;
+  color:#ccc !important;
+  border: 1px solid #777 !important;
+}
+.CodeMirror-gutters, .CodeMirror-merge-gap{
+  background: #222 !important;
+}
+.CodeMirror-activeline-background {
+    background: #111 !important;
+}
+.CodeMirror-merge-l-chunk {
+  background: #000 !important;
+}
+.cm-search-widget{
+  background-color: #222 !important;
+  border-top: 1px #777 solid;
+  border-left: 1px #777 solid;
+  border-right: 1px #777 solid;
+}
+.cm-staticnetBlock {
+  color:white !important;
+}

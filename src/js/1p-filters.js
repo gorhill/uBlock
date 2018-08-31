@@ -39,7 +39,8 @@ var cmEditor = new CodeMirror(
         inputStyle: 'contenteditable',
         lineNumbers: true,
         lineWrapping: true,
-        styleActiveLine: true
+        styleActiveLine: true,
+        theme:'pastel-on-dark'
     }
 );
 
