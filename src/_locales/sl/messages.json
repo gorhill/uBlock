@@ -43,6 +43,10 @@
     "message": "O razširitvi",
     "description": "appears as tab name in dashboard"
   },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Asset viewer",
+    "description": "Title for the asset viewer page"
+  },
   "advancedSettingsPageName": {
     "message": "Napredne nastavitve",
     "description": "Title for the advanced settings page"
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Kliknite, da onemogočite blokiranje oddaljenih pisav na tej strani",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Click to wholly disable javascript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Click to no longer wholly disable javascript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Globalna pravila: ta stolpec je za pravila, ki se uveljavljajo za vse strani.",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Blokiraj oddaljene pisave",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Disable javascript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Blokiraj CSP poročila",

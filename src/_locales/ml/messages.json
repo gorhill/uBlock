@@ -43,6 +43,10 @@
     "message": "ഇതിനെ കുറിച്ച്",
     "description": "appears as tab name in dashboard"
   },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Asset viewer",
+    "description": "Title for the asset viewer page"
+  },
   "advancedSettingsPageName": {
     "message": "Advanced settings",
     "description": "Title for the advanced settings page"
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Click to no longer block remote fonts on this site",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Click to wholly disable javascript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Click to no longer wholly disable javascript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "ആഗോള നിയമങ്ങൾ: ഈ കോളത്തിലെ നിയമങ്ങൾ എല്ലാ സൈറ്റുകളിലും പ്രയോഗിക്കുന്ന നിയമങ്ങള് ആണ്.",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "വിദൂര ഫോണ്ടുകൾ തടയുക",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Disable javascript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Block CSP reports",

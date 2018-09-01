@@ -43,6 +43,10 @@
     "message": "Om",
     "description": "appears as tab name in dashboard"
   },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Asset viewer",
+    "description": "Title for the asset viewer page"
+  },
   "advancedSettingsPageName": {
     "message": "Avancerade inställningar",
     "description": "Title for the advanced settings page"
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Klicka för att inte längre blockera externa typsnitt på den här webbplatsen",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Click to wholly disable javascript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Click to no longer wholly disable javascript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Globala regler: denna kolumn avser regler som gäller alla sidor.",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Blockera externa typsnitt",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Disable javascript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Blockera CSP-rapporter",

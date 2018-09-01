@@ -43,6 +43,10 @@
     "message": "Sobre",
     "description": "appears as tab name in dashboard"
   },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Visualizador de recursos",
+    "description": "Title for the asset viewer page"
+  },
   "advancedSettingsPageName": {
     "message": "Configurações avançadas",
     "description": "Title for the advanced settings page"
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Clique para não bloquear fontes remotas neste site",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Clique para desativar completamente o javascript neste site",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Clique para deixar de desativar completamente o javascript neste site",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Regras globais: esta coluna é para as regras que se aplicam a todos os sites.",
@@ -256,7 +268,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Eu sou um usuário avançado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>leitura necessária<\/a>)",
+    "message": "Sou um usuário avançado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>leitura necessária<\/a>)",
     "description": ""
   },
   "settingsAdvancedUserSettings": {
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Bloquear fontes remotas",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Desativar javascript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Bloquear relatórios CSP",

@@ -43,6 +43,10 @@
     "message": "Quant a",
     "description": "appears as tab name in dashboard"
   },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Visor de recursos",
+    "description": "Title for the asset viewer page"
+  },
   "advancedSettingsPageName": {
     "message": "Configuració avançada",
     "description": "Title for the advanced settings page"
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Feu clic per desblocar les fonts remotes en aquest lloc",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Feu clic per desactivar completament javascript en aquest lloc",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Feu clic per no desactivar completament javascript en aquest lloc",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Regles globals: les regles d'aquesta columna s'apliquen a tots els llocs.",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Bloca les fonts remotes",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Desactiva javascript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Bloca els informes CSP",
@@ -772,7 +788,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Escriviu una drecera",
+    "message": "Teclegeu una drecera",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {

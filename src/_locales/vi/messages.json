@@ -43,6 +43,10 @@
     "message": "Giới thiệu",
     "description": "appears as tab name in dashboard"
   },
+  "assetViewerPageName": {
+    "message": "uBlock₀ - Trình xem nội dung",
+    "description": "Title for the asset viewer page"
+  },
   "advancedSettingsPageName": {
     "message": "Cài đặt nâng cao",
     "description": "Title for the advanced settings page"
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Nhấp để hủy chặn font từ xa trên trang này",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Nhấp để hoàn toàn vô hiệu hóa javascript trên trang này",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Nhấp để không còn hoàn toàn vô hiệu hóa javascript trên trang này nữa",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Quy tắc chung: cột này dành cho quy tắc áp dụng cho mọi trang.",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Chặn font từ xa",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Vô hiệu hóa JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Chặn các báo cáo CSP",

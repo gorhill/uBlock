@@ -43,6 +43,10 @@
     "message": "Apie",
     "description": "appears as tab name in dashboard"
   },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — resursų žiūryklė",
+    "description": "Title for the asset viewer page"
+  },
   "advancedSettingsPageName": {
     "message": "Sudėtingesni nustatymai",
     "description": "Title for the advanced settings page"
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Spustelėkite nutolusių šriftų neblokavimui šioje svetainėje",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Spustelėkite, kad visai išjungtumėte javascript šioje svetainėje",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Spustelėkite, kad įjungtumėte javascript šioje svetainėje",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Globalios taisyklės: ši skiltis skirta visiems puslapiams taikomoms taisyklėms.",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Blokuoti nuotolinius šriftus",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Išjungti javascript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Blokuoti CSP ataskaitas",

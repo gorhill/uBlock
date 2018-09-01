@@ -43,6 +43,10 @@
     "message": "সম্পর্কে",
     "description": "appears as tab name in dashboard"
   },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Asset viewer",
+    "description": "Title for the asset viewer page"
+  },
   "advancedSettingsPageName": {
     "message": "উন্নত সেটিংস",
     "description": "Title for the advanced settings page"
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "এই সাইটে রিমোট ফন্ট আর অবরুদ্ধ না করতে ক্লিক করুন",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Click to wholly disable javascript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Click to no longer wholly disable javascript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "সার্বজনীন নিয়ম: এই কলামটি সেইসব নিয়মের জন্য যা সকল সাইটের উপর প্রযোজ্য।",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "রিমোট ফন্ট অবরুদ্ধ করুন",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Disable javascript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "CSP প্রতিবেদন অবরুদ্ধ করুন",

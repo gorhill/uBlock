@@ -43,6 +43,10 @@
     "message": "O doplnku",
     "description": "appears as tab name in dashboard"
   },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Asset viewer",
+    "description": "Title for the asset viewer page"
+  },
   "advancedSettingsPageName": {
     "message": "Pokročilé nastavenia",
     "description": "Title for the advanced settings page"
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Kliknutím povolíte vzdialené písma pre túto stránku",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Kliknutím úplne zakážete javascript na tejto stránke",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Kliknutím už nebude úplne zakázaný javascript na tejto stránke",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Globálne pravidlá: tento stĺpec slúži pre pravidlá, ktoré platia pre všetky weby.",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Blokovať vzdialené písma",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Zakázať javascript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Zablokovať CSP hlásenia",

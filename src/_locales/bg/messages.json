@@ -43,6 +43,10 @@
     "message": "Относно",
     "description": "appears as tab name in dashboard"
   },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Активи",
+    "description": "Title for the asset viewer page"
+  },
   "advancedSettingsPageName": {
     "message": "Разширени настройки",
     "description": "Title for the advanced settings page"
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Щракнете, за да разрешите външните шрифтове за този сайт",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Щракнете, за да забраните напълно джаваскрипт за сайта",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Щракнете, за да разрешите отново джаваскрипт за сайта",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Глобални правила: колона с правила, приложими към всички сайтове.",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Блокиране на външни шрифтове",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Забрани скрипта",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Блокиране на CSP отчетите",

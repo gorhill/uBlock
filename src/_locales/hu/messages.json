@@ -43,6 +43,10 @@
     "message": "Névjegy",
     "description": "appears as tab name in dashboard"
   },
+  "assetViewerPageName": {
+    "message": "uBlock₀ - Eszköznézet",
+    "description": "Title for the asset viewer page"
+  },
   "advancedSettingsPageName": {
     "message": "Haladó beállítások",
     "description": "Title for the advanced settings page"
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Kattints a távoli betűtípusok blokkolásának visszavonásához ezen a webhelyen",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Kattints a JavaScript teljes letiltásához ezen az oldalon",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Kattints, hogy JavaScript ne legyen teljesen letiltva ezen az oldalon",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Globális szabályok: ebben az oszlopban azok a szabályok vannak, amelyek minden weboldalra vonatkoznak.",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Távoli betűkészletek blokkolása",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "JavaScript letiltása",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "CSP jelentések blokkolása",

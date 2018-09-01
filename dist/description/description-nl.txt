@@ -26,7 +26,7 @@ Er zijn meer lijsten beschikbaar die u kunt inschakelen:
 
 Natuurlijk wordt het geheugengebruik groter naarmate er meer filters worden ingeschakeld. Maar zelfs na het inschakelen van Fanboy’s twee extra lijsten, hpHosts’s Ad en tracking servers, heeft uBlock een lager geheugengebruik dan andere populaire blockers.
 
-Houd er ook rekening mee dat het gebruik van sommige van deze extra lijsten de kans verhoogt dat websites niet goed worden weergegeven - met name de lijsten die doorgaans als hosts-bestand worden gebruikt.
+Houd er ook rekening mee dat het gebruik van sommige van deze extra lijsten de kans vergroot dat websites niet goed worden weergegeven - met name de lijsten die doorgaans als hosts-bestand worden gebruikt.
 
 ***
 
@@ -42,8 +42,6 @@ Medewerkers @ Github: https://github.com/gorhill/uBlock/graphs/contributors
 Medewerkers @ Crowdin: https://crowdin.net/project/ublock
 
 ***
-
-Onthoud dat dit een hele vroege versie is wanneer u een beoordeling geeft.
 
 Projectwijzigingenlogboek:
 https://github.com/gorhill/uBlock/releases

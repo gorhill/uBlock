@@ -43,6 +43,10 @@
     "message": "Info",
     "description": "appears as tab name in dashboard"
   },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Visualizzatore di risorse",
+    "description": "Title for the asset viewer page"
+  },
   "advancedSettingsPageName": {
     "message": "Impostazioni avanzate",
     "description": "Title for the advanced settings page"
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Clicca per sbloccare i font remoti in questo sito",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Clicca per disabilitare completamente javascript su questo sito",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Clicca per non disabilitare più javascript su questo sito",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Regole globali: questa colonna è per le regole che si applicano a tutti i siti.",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Blocca font remoti",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Disattiva javascript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Blocca i report CSP",

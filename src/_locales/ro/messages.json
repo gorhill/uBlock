@@ -43,6 +43,10 @@
     "message": "Despre",
     "description": "appears as tab name in dashboard"
   },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Vizualizator de resurse",
+    "description": "Title for the asset viewer page"
+  },
   "advancedSettingsPageName": {
     "message": "Setări avansate",
     "description": "Title for the advanced settings page"
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Clic pentru a nu mai bloca fonturile externe pe acest site",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Click pentru dezactivare completa javascript pentru acest site",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Click pentru activarea javascript pentru acest site",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Reguli globale: această coloană este pentru regulile care se aplică tuturor site-urilor.",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Blochează fonturile de la distanță",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Dezactivare javascript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Blochează rapoartele CSP",

@@ -43,6 +43,10 @@
     "message": "Info",
     "description": "appears as tab name in dashboard"
   },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Ilustruesi i aseteve",
+    "description": "Title for the asset viewer page"
+  },
   "advancedSettingsPageName": {
     "message": "Parametra të avancuar",
     "description": "Title for the advanced settings page"
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Zhbllokoj sistemin e shkronjave jashtë faqes",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Bllokoj krejtësisht JavaScript te ky uebsajti",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Zhbllokoj krejtësisht JavaScript te ky uebsajti",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Rregullat globale: rregullat në këtë shtyllë aplikohen për të gjitha faqet.",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Bllokoj sistemin e shkronjave jashtë faqes",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Çaktivizoj JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Bllokoj raportet e CSP-së",

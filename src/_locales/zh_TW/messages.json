@@ -43,6 +43,10 @@
     "message": "關於",
     "description": "appears as tab name in dashboard"
   },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — 資源檢視工具",
+    "description": "Title for the asset viewer page"
+  },
   "advancedSettingsPageName": {
     "message": "進階設定",
     "description": "Title for the advanced settings page"
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "點擊以停止封鎖此網站的遠端字體",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "點擊以禁用此網站的所有腳本",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "點擊以停止禁用此網站的所有腳本",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "全域規則：此欄位的規則會套用至所有網站。",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "封鎖遠端字體",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "禁用網頁腳本",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "封鎖 CSP 報告",

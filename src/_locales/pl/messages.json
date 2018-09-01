@@ -43,6 +43,10 @@
     "message": "Informacje",
     "description": "appears as tab name in dashboard"
   },
+  "assetViewerPageName": {
+    "message": "uBlock₀ – Podgląd zasobu",
+    "description": "Title for the asset viewer page"
+  },
   "advancedSettingsPageName": {
     "message": "Ustawienia zaawansowane",
     "description": "Title for the advanced settings page"
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Kliknij, aby nie blokować zdalnych czcionek na tej witrynie",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Kliknij by kompletnie wyłączyć JavaScript na tej stronie",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Kliknij by nie wyłączać JavaScriptu na tej stronie",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Reguły globalne. W tej kolumnie znajdują się reguły stosowane na wszystkich witrynach.",
@@ -264,7 +276,7 @@
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Wyłącz wstępne pobieranie, by uniknąć połączeń z zablokowanymi zapytaniami sieciowymi",
+    "message": "Wyłącz wstępne pobieranie (by uniknąć połączeń z zablokowanymi zapytaniami sieciowymi)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Blokuj zdalne czcionki",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Wyłącz JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Blokuj raporty CSP",
@@ -620,7 +636,7 @@
     "description": "English: Contributors"
   },
   "aboutBackupDataButton": {
-    "message": "Utwórz kopię zapasową",
+    "message": "Utwórz kopię zapasową…",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
@@ -628,7 +644,7 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Przywróć z kopii…",
+    "message": "Przywróć z pliku…",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {

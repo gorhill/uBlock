@@ -43,6 +43,10 @@
     "message": "Over",
     "description": "appears as tab name in dashboard"
   },
+  "assetViewerPageName": {
+    "message": "uBlock₀ – Middelenviewer",
+    "description": "Title for the asset viewer page"
+  },
   "advancedSettingsPageName": {
     "message": "Geavanceerde instellingen",
     "description": "Title for the advanced settings page"
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Klik om externe lettertypen op deze website niet meer te blokkeren",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Klik om JavaScript op deze website volledig uit te schakelen",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Klik om JavaScript op deze website niet meer volledig uit te schakelen",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Algemene regels: deze kolom is voor regels die op alle websites van toepassing zijn.",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Externe lettertypen blokkeren",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "JavaScript uitschakelen",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "CSP-rapporten blokkeren",

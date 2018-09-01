@@ -43,6 +43,10 @@
     "message": "О расширении",
     "description": "appears as tab name in dashboard"
   },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Активы",
+    "description": "Title for the asset viewer page"
+  },
   "advancedSettingsPageName": {
     "message": "Расширенные настройки",
     "description": "Title for the advanced settings page"
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Кликните для отключения блокировки удаленных шрифтов на этом сайте",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Кликните, чтобы полностью отключить javascript на этом сайте",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Кликните, чтобы перестать блокировать весь javascript на этом сайте",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Глобальные правила: этот столбец предназначен для правил, применяемых ко всем сайтам.",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Блокировать сторонние шрифты",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Отключить javascript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Блокировать CSP отчеты",

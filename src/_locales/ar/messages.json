@@ -43,6 +43,10 @@
     "message": "حول البرنامج",
     "description": "appears as tab name in dashboard"
   },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Asset viewer",
+    "description": "Title for the asset viewer page"
+  },
   "advancedSettingsPageName": {
     "message": "الإعدادات المتقدمة",
     "description": "Title for the advanced settings page"
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "أضغط للسماح للخطوط الخارجية لهذا الموقع",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "انقر لتعطيل الجافا سكريبت كُليًا على هذا الموقع",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Click to no longer wholly disable javascript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "القواعد العامة: هذا العمود يتعلق بالقواعد التي تنطبق على جميع الموقع.",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "منع الخطوط البعيدة",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "تعطيل الجافا سكريبت",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "حظر تقارير الـ CSP",

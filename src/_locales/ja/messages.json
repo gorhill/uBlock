@@ -43,6 +43,10 @@
     "message": "このプロジェクトについて",
     "description": "appears as tab name in dashboard"
   },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — アセットビューアー",
+    "description": "Title for the asset viewer page"
+  },
   "advancedSettingsPageName": {
     "message": "詳細設定",
     "description": "Title for the advanced settings page"
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "クリックで、このサイトでのリモートフォントがブロックされないようにします",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "クリックすると、このサイトの JavaScript を完全にブロックします",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "クリックすると、このサイトの JavaScript の完全なブロックを解除します",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "グローバルルール: この列にあるルールは、すべてのサイトに適用されます。",
@@ -295,6 +307,10 @@
     "message": "リモートフォントをブロックする",
     "description": ""
   },
+  "settingsNoScriptingPrompt": {
+    "message": "JavaScript を無効にする",
+    "description": "The default state for the per-site no-scripting switch"
+  },
   "settingsNoCSPReportsPrompt": {
     "message": "CSPレポートをブロックする",
     "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
@@ -392,7 +408,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "URL1つにつき1行です。無効なURLは無視されます。",
+    "message": "1行に1つのURLを記入します。無効なURLは無視されます。",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
