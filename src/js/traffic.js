@@ -913,8 +913,8 @@ var injectCSP = function(pageStore, details) {
     let builtinDirectives = [];
 
     context.requestType = 'script';
-    if ( pageStore.filterScripting(context.rootHostname) === 1 ) {
-        builtinDirectives.push("script-src *");
+    if ( pageStore.filterScripting(context.rootHostname, true) === 1 ) {
+        builtinDirectives.push("script-src http: https:");
         if ( loggerEnabled === true ) {
             logger.writeOne(
                 tabId,

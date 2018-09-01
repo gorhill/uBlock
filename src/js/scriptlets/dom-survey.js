@@ -47,6 +47,8 @@
         inlineScriptCount = 1;
     }
 
+    let scriptTags = document.querySelectorAll('script[src]');
+
     let filteredElementCount = 0;
     if ( vAPI.domFilterer ) {
         filteredElementCount = vAPI.domFilterer.getFilteredElementCount();
@@ -58,7 +60,7 @@
             what: 'domSurveyTransientReport',
             pageURL: window.location.href,
             filteredElementCount: filteredElementCount,
-            inlineScriptCount: inlineScriptCount,
+            scriptCount: inlineScriptCount + scriptTags.length,
         }
     );
 })();

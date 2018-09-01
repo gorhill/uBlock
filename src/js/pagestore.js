@@ -291,7 +291,6 @@ PageStore.prototype.init = function(tabId, context) {
     this.hiddenElementCount = ''; // Empty string means "unknown"
     this.remoteFontCount = 0;
     this.scriptCount = 0;
-    this.inlineScriptCount = 0;
     this.popupBlockedCount = 0;
     this.largeMediaCount = 0;
     this.largeMediaTimer = null;
@@ -616,11 +615,11 @@ PageStore.prototype.filterRequest = function(context) {
         return 1;
     }
 
-    if ( requestType === 'script' ) {
-        this.scriptCount += 1;
-        if ( this.filterScripting(context.rootHostname) === 1 ) {
-            return 1;
-        }
+    if (
+        requestType === 'script' &&
+        this.filterScripting(context.rootHostname, true) === 1
+    ) {
+        return 1;
     }
 
     var cacheableResult = this.cacheableResults[requestType] === true;
@@ -720,9 +719,12 @@ PageStore.prototype.filterFont = function(context) {
 
 /******************************************************************************/
 
-PageStore.prototype.filterScripting = function(rootHostname) {
+PageStore.prototype.filterScripting = function(rootHostname, netFiltering) {
+    if ( netFiltering === undefined ) {
+        netFiltering = this.getNetFilteringSwitch();
+    }
     if (
-        this.getNetFilteringSwitch() === false ||
+        netFiltering === false ||
         µb.hnSwitches.evaluateZ('no-scripting', rootHostname) === false
     ) {
         return 0;

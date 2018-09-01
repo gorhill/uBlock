@@ -388,8 +388,12 @@ var onMessage = function(request, sender, callback) {
         pageStore = µb.pageStoreFromTabId(request.tabId);
         if ( pageStore !== null ) {
             pageStore.hiddenElementCount = 0;
-            pageStore.inlineScriptCount = 0;
-            µb.scriptlets.injectDeep(request.tabId, 'dom-survey');
+            pageStore.scriptCount = 0;
+            vAPI.tabs.injectScript(request.tabId, {
+                allFrames: true,
+                file: '/js/scriptlets/dom-survey.js',
+                runAt: 'document_end'
+            });
         }
         break;
 
@@ -494,7 +498,7 @@ var onMessage = function(request, sender, callback) {
         if ( pageStore === null ) { break; }
         let tabContext = µb.tabContextManager.lookup(tabId);
         if ( tabContext === null ) { break; }
-        if ( pageStore.filterScripting(tabContext.rootHostname) ) {
+        if ( pageStore.filterScripting(tabContext.rootHostname, undefined) ) {
             vAPI.tabs.injectScript(
                 tabId,
                 {
@@ -1263,7 +1267,7 @@ var domSurveyFinalReport = function(tabId) {
         what: 'domSurveyFinalReport',
         tabId: tabId,
         affectedElementCount: pageStore.hiddenElementCount,
-        scriptCount: pageStore.scriptCount + pageStore.inlineScriptCount,
+        scriptCount: pageStore.scriptCount,
     });
 };
 
@@ -1312,14 +1316,14 @@ var onMessage = function(request, sender, callback) {
             if ( request.filteredElementCount ) {
                 pageStore.hiddenElementCount += request.filteredElementCount;
             }
-            if ( request.inlineScriptCount ) {
-                pageStore.inlineScriptCount += request.inlineScriptCount;
+            if ( request.scriptCount ) {
+                pageStore.scriptCount += request.scriptCount;
             }
             let broadcastKey = tabId + '-domSurveyReport';
             if ( broadcastTimers.has(broadcastKey) === false ) {
                 broadcastTimers.set(broadcastKey, vAPI.setTimeout(
                     ( ) => { domSurveyFinalReport(tabId); },
-                    250
+                    53
                 ));
             }
         }
