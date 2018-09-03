@@ -445,7 +445,7 @@
         if ( decomposed.length === 0 || decomposed[0] !== hostname ) {
             let broaden;
             if ( reHostnameVeryCoarse.test(hostname) === false ) {
-                if ( reIPv4VeryCoarse ) {
+                if ( reIPv4VeryCoarse.test(hostname) ) {
                     broaden = toBroaderIPv4Address;
                 } else if ( hostname.startsWith('[') ) {
                     broaden = toBroaderIPv6Address;
