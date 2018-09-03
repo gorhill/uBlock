@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "סוף סוף, חוסם יעיל. קל על המעבד והזיכרון.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — פאנל הקונפיגורציות",
@@ -44,7 +44,7 @@
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
-    "message": "uBlock₀ — Asset viewer",
+    "message": "uBlock₀ — מציג הנכסים",
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
@@ -148,11 +148,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Click to wholly disable javascript on this site",
+    "message": "לחץ, על מנת לחסום כל JavaScript באתר זה",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Click to no longer wholly disable javascript on this site",
+    "message": "לחץ, על מנת להסיר כל חסימה של JavaScript באתר זה",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
@@ -184,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "css\/תמונות צד-3",
+    "message": "CSS\/תמונות צד-3",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -308,7 +308,7 @@
     "description": ""
   },
   "settingsNoScriptingPrompt": {
-    "message": "Disable javascript",
+    "message": "חסום JavaScript",
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
@@ -613,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "רשימת שינויים",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "ויקי",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "תמיכה",

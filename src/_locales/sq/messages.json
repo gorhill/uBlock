@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Më në fund, një bllokues efikas që nuk e rëndon procesorin dhe memorjen.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Paneli i kontrollit",
@@ -184,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "css\/figurat nga palët e treta",
+    "message": "figurat\/css nga palët e treta",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -612,12 +612,12 @@
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
-    "message": "Ditari i ndryshimeve",
-    "description": "English: Change log"
+    "message": "Ditar i ndryshimeve",
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Mbështetja teknike",

@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Cuối cùng, đã có một công cụ chặn quảng cáo hiệu quả, tiêu tốn ít CPU và bộ nhớ.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Bảng điều khiển",
@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Bộ lọc",
+    "message": "Danh sách bộ lọc",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -613,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Thay đổi",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Hỗ trợ",

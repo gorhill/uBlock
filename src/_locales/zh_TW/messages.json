@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "終於出現了，一個高效率的阻擋器，使用不多的 CPU 及記憶體資源。",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — 控制台",
@@ -613,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "更新日誌",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "支援網站",

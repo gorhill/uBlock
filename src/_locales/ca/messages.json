@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Finalment, un blocador eficient que utilitza pocs recursos de memòria i processador.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Tauler de control",
@@ -148,11 +148,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Feu clic per desactivar completament javascript en aquest lloc",
+    "message": "Feu clic per inhabilitar completament el JavaScript en aquest lloc",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Feu clic per no desactivar completament javascript en aquest lloc",
+    "message": "Feu clic per no inhabilitar completament el JavaScript en aquest lloc",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
@@ -308,7 +308,7 @@
     "description": ""
   },
   "settingsNoScriptingPrompt": {
-    "message": "Desactiva javascript",
+    "message": "Inhabilita el JavaScript",
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
@@ -613,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Registre de canvis",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Suport",

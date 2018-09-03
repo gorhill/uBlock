@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "一款高效的网络请求过滤工具，占用极低的内存和 CPU。",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — 控制面板",
@@ -612,12 +612,12 @@
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
-    "message": "更新日志",
-    "description": "English: Change log"
+    "message": "变更日志",
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "支持网站",

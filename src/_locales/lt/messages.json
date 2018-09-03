@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Pagaliau, efektyvus blokatorius, neapkraunantis nei procesoriaus, nei darbinės atminties.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Prietaisų skydas",
@@ -613,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Pakeitimų žurnalas",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Viki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Palaikymas",

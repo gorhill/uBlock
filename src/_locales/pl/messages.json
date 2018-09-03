@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Nareszcie skuteczny bloker charakteryzujący się niskim użyciem procesora i pamięci.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ – Panel sterowania",
@@ -148,11 +148,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Kliknij by kompletnie wyłączyć JavaScript na tej stronie",
+    "message": "Kliknij, aby całkowicie wyłączyć JavaScript na tej witrynie",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Kliknij by nie wyłączać JavaScriptu na tej stronie",
+    "message": "Kliknij aby nie wyłączać całkowicie JavaScriptu na tej witrynie",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
@@ -184,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "zewnętrzne css\/obrazki",
+    "message": "zewnętrzne CSS\/obrazki",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -613,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Dziennik zmian",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Informacje",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Pomoc",

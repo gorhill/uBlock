@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Eindelijk, een efficiënte adblocker. Gebruikt weinig processorkracht en geheugen.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ – Dashboard",
@@ -184,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "css\/afbeeldingen van derden",
+    "message": "CSS\/afbeeldingen van derden",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -613,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Wijzigingenlogboek",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Ondersteuning",

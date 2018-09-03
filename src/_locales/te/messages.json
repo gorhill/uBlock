@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "మొత్తానికి RAM ఇంకా CPU పై తేలికయిన, ఒక సమర్థవంతమైన నిరోధిని.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — నియంత్రణా వేదిక",
@@ -148,11 +148,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Click to wholly disable javascript on this site",
+    "message": "Click to wholly disable JavaScript on this site",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Click to no longer wholly disable javascript on this site",
+    "message": "Click to no longer wholly disable JavaScript on this site",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
@@ -184,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "సైట్-ఏతరుల సిఎస్ఎస్\/చిత్రాలు",
+    "message": "3 వ పార్టీ CSS\/చిత్రాలు",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -308,7 +308,7 @@
     "description": ""
   },
   "settingsNoScriptingPrompt": {
-    "message": "Disable javascript",
+    "message": "Disable JavaScript",
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
@@ -613,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "మార్పుల సంచిక",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "వికి",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "సహాయము",

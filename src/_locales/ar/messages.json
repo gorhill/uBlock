@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "وأخيراً, مانع اعلانات كفوء. خفيف على المعالج و الذاكرة.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — لوحة التحكم",
@@ -152,7 +152,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Click to no longer wholly disable javascript on this site",
+    "message": "انقر لإلغاء تعطيل الجافا سكريبت كُليًا على هذا الموقع",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
@@ -613,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "سجل التغيير",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "الويكي (Wiki)",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "الدعم",

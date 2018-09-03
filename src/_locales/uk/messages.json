@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Ефективний блокувальник реклами таки з’явився. Не навантажує процесор та пам'ять.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "µBlock — Панель керування",
@@ -152,7 +152,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Натисніть, щоб повністю увімкнути javaScript на цьому сайті",
+    "message": "Натисніть, щоб повністю припинити вимкнення javaScript на цьому сайті",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
@@ -613,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Журнал змін",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Вікі",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Підтримка",

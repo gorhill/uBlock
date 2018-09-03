@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Lõpuks on valminud tõhus blokeerija. Protsessori- ja mälusõbralik.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Töölaud",
@@ -613,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Muudatuste logi",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Viki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Tugi",

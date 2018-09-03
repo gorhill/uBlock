@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Végre egy hatékony reklám- és követésblokkoló böngészőkhöz, amely kíméletes a processzorral és a memóriával.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Vezérlőpult",
@@ -184,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "3rd-party css\/képek",
+    "message": "külső féltől származó css\/képek",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -613,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Változások listája",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Támogatás",

@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Endlich ein effizienter Blocker. Prozessor-freundlich und bescheiden beim Speicherbedarf.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Dashboard",
@@ -613,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Änderungsprotokoll",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Unterstützung",

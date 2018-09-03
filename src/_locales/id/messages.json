@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Akhirnya, pemblokir iklan yang efisien. Ringan penggunaan CPU dan memori.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Dasbor",
@@ -148,11 +148,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Klik untuk sepenuhnya menonaktifkan javascript di situs ini",
+    "message": "Klik untuk menonaktifkan total JavaScript di situs ini",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Klik untuk tidak lagi menonaktifkan javascript di situs ini",
+    "message": "Klik untuk tidak lagi menonaktifkan total JavaScript di situs ini",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
@@ -184,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "css\/gambar pihak ketiga",
+    "message": "CSS\/gambar pihak ke-3",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -308,7 +308,7 @@
     "description": ""
   },
   "settingsNoScriptingPrompt": {
-    "message": "Nonaktifkan javascript",
+    "message": "Nonaktifkan JavaScript",
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
@@ -613,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Catatan perubahan",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Dukungan",

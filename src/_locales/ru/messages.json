@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Наконец-то, быстрый и эффективный блокировщик для браузеров.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Панель управления",
@@ -148,11 +148,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Кликните, чтобы полностью отключить javascript на этом сайте",
+    "message": "Кликните, чтобы полностью отключить JavaScript на этом сайте",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Кликните, чтобы перестать блокировать весь javascript на этом сайте",
+    "message": "Кликните, чтобы перестать блокировать весь JavaScript на этом сайте",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
@@ -184,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "сторонние css\/изображения",
+    "message": "сторонние CSS\/изображения",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -308,7 +308,7 @@
     "description": ""
   },
   "settingsNoScriptingPrompt": {
-    "message": "Отключить javascript",
+    "message": "Отключить JavaScript",
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
@@ -613,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Список изменений",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Вики",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Поддержка",

@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Konečne efektívny blokovač, ktorý nezaťažuje CPU a pamäť.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Ovládací panel",
@@ -613,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Zoznam zmien",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Podpora",
