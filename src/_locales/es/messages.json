@@ -148,11 +148,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Clic para deshabilitar completamente JavaScript en este sitio",
+    "message": "Clic para deshabilitar JavaScript en este sitio",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Clic para no deshabilitar más completamente JavaScript en este sitio",
+    "message": "Clic para no deshabilitar más JavaScript en este sitio",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
