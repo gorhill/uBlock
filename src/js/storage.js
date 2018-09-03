@@ -64,14 +64,6 @@
 
 /******************************************************************************/
 
-µBlock.keyvalSetOne = function(key, val, callback) {
-    var bin = {};
-    bin[key] = val;
-    vAPI.storage.set(bin, callback || this.noopFunc);
-};
-
-/******************************************************************************/
-
 µBlock.saveLocalSettings = (function() {
     let saveAfter = 4 * 60 * 1000;
 
@@ -206,25 +198,33 @@
 /******************************************************************************/
 
 µBlock.savePermanentFirewallRules = function() {
-    this.keyvalSetOne('dynamicFilteringString', this.permanentFirewall.toString());
+    vAPI.storage.set({
+        dynamicFilteringString: this.permanentFirewall.toString()
+    });
 };
 
 /******************************************************************************/
 
 µBlock.savePermanentURLFilteringRules = function() {
-    this.keyvalSetOne('urlFilteringString', this.permanentURLFiltering.toString());
+    vAPI.storage.set({
+        urlFilteringString: this.permanentURLFiltering.toString()
+    });
 };
 
 /******************************************************************************/
 
 µBlock.saveHostnameSwitches = function() {
-    this.keyvalSetOne('hostnameSwitchesString', this.hnSwitches.toString());
+    vAPI.storage.set({
+        hostnameSwitchesString: this.permanentSwitches.toString()
+    });
 };
 
 /******************************************************************************/
 
 µBlock.saveWhitelist = function() {
-    this.keyvalSetOne('netWhitelist', this.stringFromWhitelist(this.netWhitelist));
+    vAPI.storage.set({
+        netWhitelist: this.stringFromWhitelist(this.netWhitelist)
+    });
     this.netWhitelistModifyTime = Date.now();
 };
 

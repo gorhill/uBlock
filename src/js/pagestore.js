@@ -297,7 +297,7 @@ PageStore.prototype.init = function(tabId, context) {
     this.netFilteringCache = NetFilteringResultCache.factory();
     this.internalRedirectionCount = 0;
 
-    this.noCosmeticFiltering = µb.hnSwitches.evaluateZ(
+    this.noCosmeticFiltering = µb.sessionSwitches.evaluateZ(
         'no-cosmetic-filtering',
         tabContext.rootHostname
     ) === true;
@@ -309,7 +309,7 @@ PageStore.prototype.init = function(tabId, context) {
         µb.logger.writeOne(
             tabId,
             'cosmetic',
-            µb.hnSwitches.toLogData(),
+            µb.sessionSwitches.toLogData(),
             'dom',
             tabContext.rawURL,
             this.tabHostname,
@@ -677,9 +677,9 @@ PageStore.prototype.collapsibleResources = {
 /******************************************************************************/
 
 PageStore.prototype.filterCSPReport = function(context) {
-    if ( µb.hnSwitches.evaluateZ('no-csp-reports', context.requestHostname) ) {
+    if ( µb.sessionSwitches.evaluateZ('no-csp-reports', context.requestHostname) ) {
         if ( µb.logger.isEnabled() ) {
-            this.logData = µb.hnSwitches.toLogData();
+            this.logData = µb.sessionSwitches.toLogData();
         }
         return 1;
     }
@@ -708,9 +708,9 @@ PageStore.prototype.filterFont = function(context) {
     if ( context.requestType === 'font' ) {
         this.remoteFontCount += 1;
     }
-    if ( µb.hnSwitches.evaluateZ('no-remote-fonts', context.rootHostname) !== false ) {
+    if ( µb.sessionSwitches.evaluateZ('no-remote-fonts', context.rootHostname) !== false ) {
         if ( µb.logger.isEnabled() ) {
-            this.logData = µb.hnSwitches.toLogData();
+            this.logData = µb.sessionSwitches.toLogData();
         }
         return 1;
     }
@@ -725,12 +725,12 @@ PageStore.prototype.filterScripting = function(rootHostname, netFiltering) {
     }
     if (
         netFiltering === false ||
-        µb.hnSwitches.evaluateZ('no-scripting', rootHostname) === false
+        µb.sessionSwitches.evaluateZ('no-scripting', rootHostname) === false
     ) {
         return 0;
     }
     if ( µb.logger.isEnabled() ) {
-        this.logData = µb.hnSwitches.toLogData();
+        this.logData = µb.sessionSwitches.toLogData();
     }
     return 1;
 };
@@ -745,7 +745,7 @@ PageStore.prototype.filterLargeMediaElement = function(size) {
     if ( Date.now() < this.allowLargeMediaElementsUntil ) {
         return 0;
     }
-    if ( µb.hnSwitches.evaluateZ('no-large-media', this.tabHostname) !== true ) {
+    if ( µb.sessionSwitches.evaluateZ('no-large-media', this.tabHostname) !== true ) {
         return 0;
     }
     if ( (size >>> 10) < µb.userSettings.largeMediaSize ) {
@@ -761,7 +761,7 @@ PageStore.prototype.filterLargeMediaElement = function(size) {
     }
 
     if ( µb.logger.isEnabled() ) {
-        this.logData = µb.hnSwitches.toLogData();
+        this.logData = µb.sessionSwitches.toLogData();
     }
 
     return 1;

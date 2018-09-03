@@ -107,45 +107,59 @@ Matrix.prototype.assign = function(other) {
 
 /******************************************************************************/
 
-Matrix.prototype.copyRules = function(other, srcHostname, desHostnames) {
-
+Matrix.prototype.copyRules = function(from, srcHostname, desHostnames) {
     // Specific types
-    var bits = other.rules.get('* *');
-    if ( bits !== undefined ) {
-        this.rules.set('* *', bits);
-    } else {
-        this.rules.delete('* *');
+    let thisBits = this.rules.get('* *');
+    let fromBits = from.rules.get('* *');
+    if ( fromBits !== thisBits ) {
+        if ( fromBits !== undefined ) {
+            this.rules.set('* *', fromBits);
+        } else {
+            this.rules.delete('* *');
+        }
+        this.changed = true;
     }
-    var key = srcHostname + ' *';
-    bits = other.rules.get(key);
-    if ( bits !== undefined ) {
-        this.rules.set(key, bits);
-    } else {
-        this.rules.delete(key);
+
+    let key = srcHostname + ' *';
+    thisBits = this.rules.get(key);
+    fromBits = from.rules.get(key);
+    if ( fromBits !== thisBits ) {
+        if ( fromBits !== undefined ) {
+            this.rules.set(key, fromBits);
+        } else {
+            this.rules.delete(key);
+        }
+        this.changed = true;
     }
 
     // Specific destinations
-    for ( var desHostname in desHostnames ) {
+    for ( let desHostname in desHostnames ) {
         if ( desHostnames.hasOwnProperty(desHostname) === false ) { continue; }
         key = '* ' + desHostname;
-        bits = other.rules.get(key);
-        if ( bits !== undefined ) {
-            this.rules.set(key, bits);
-        } else {
-            this.rules.delete(key);
+        thisBits = this.rules.get(key);
+        fromBits = from.rules.get(key);
+        if ( fromBits !== thisBits ) {
+            if ( fromBits !== undefined ) {
+                this.rules.set(key, fromBits);
+            } else {
+                this.rules.delete(key);
+            }
+            this.changed = true;
         }
         key = srcHostname + ' ' + desHostname ;
-        bits = other.rules.get(key);
-        if ( bits !== undefined ) {
-            this.rules.set(key, bits);
-        } else {
-            this.rules.delete(key);
+        thisBits = this.rules.get(key);
+        fromBits = from.rules.get(key);
+        if ( fromBits !== thisBits ) {
+            if ( fromBits !== undefined ) {
+                this.rules.set(key, fromBits);
+            } else {
+                this.rules.delete(key);
+            }
+            this.changed = true;
         }
     }
 
-    this.changed = true;
-
-    return true;
+    return this.changed;
 };
 
 /******************************************************************************/

@@ -391,6 +391,30 @@ var renderPrivacyExposure = function() {
 
 /******************************************************************************/
 
+let updateHnSwitches = function() {
+    uDom.nodeFromId('no-popups').classList.toggle(
+        'on',
+        popupData.noPopups === true
+    );
+    uDom.nodeFromId('no-large-media').classList.toggle(
+        'on', popupData.noLargeMedia === true
+    );
+    uDom.nodeFromId('no-cosmetic-filtering').classList.toggle(
+        'on',
+        popupData.noCosmeticFiltering === true
+    );
+    uDom.nodeFromId('no-remote-fonts').classList.toggle(
+        'on',
+        popupData.noRemoteFonts === true
+    );
+    uDom.nodeFromId('no-scripting').classList.toggle(
+        'on',
+        popupData.noScripting === true
+    );
+};
+
+/******************************************************************************/
+
 // Assume everything has to be done incrementally.
 
 var renderPopup = function() {
@@ -435,11 +459,7 @@ var renderPopup = function() {
     renderPrivacyExposure();
 
     // Extra tools
-    uDom.nodeFromId('no-popups').classList.toggle('on', popupData.noPopups === true);
-    uDom.nodeFromId('no-large-media').classList.toggle('on', popupData.noLargeMedia === true);
-    uDom.nodeFromId('no-cosmetic-filtering').classList.toggle('on', popupData.noCosmeticFiltering === true);
-    uDom.nodeFromId('no-remote-fonts').classList.toggle('on', popupData.noRemoteFonts === true);
-    uDom.nodeFromId('no-scripting').classList.toggle('on', popupData.noScripting === true);
+    updateHnSwitches();
 
     // Report blocked popup count on badge
     total = popupData.popupBlockedCount;
@@ -458,7 +478,7 @@ var renderPopup = function() {
 
     // https://github.com/chrisaljoudi/uBlock/issues/470
     // This must be done here, to be sure the popup is resized properly
-    var dfPaneVisible = popupData.dfEnabled;
+    let dfPaneVisible = popupData.dfEnabled;
 
     // https://github.com/chrisaljoudi/uBlock/issues/1068
     // Remember the last state of the firewall pane. This allows to
@@ -774,14 +794,13 @@ var mouseleaveCellHandler = function() {
 
 var setFirewallRule = function(src, des, type, action, persist) {
     // This can happen on pages where uBlock does not work
-    if ( typeof popupData.pageHostname !== 'string' || popupData.pageHostname === '' ) {
+    if (
+        typeof popupData.pageHostname !== 'string' ||
+        popupData.pageHostname === ''
+    ) {
         return;
     }
-    var onFirewallRuleChanged = function(response) {
-        cachePopupData(response);
-        updateAllFirewallCells();
-        hashFromPopupData();
-    };
+
     messaging.send(
         'popupPanel',
         {
@@ -794,14 +813,18 @@ var setFirewallRule = function(src, des, type, action, persist) {
             action: action,
             persist: persist
         },
-        onFirewallRuleChanged
+        response => {
+            cachePopupData(response);
+            updateAllFirewallCells();
+            hashFromPopupData();
+        }
     );
 };
 
 /******************************************************************************/
 
 var unsetFirewallRuleHandler = function(ev) {
-    var cell = uDom(this);
+    let cell = uDom(ev.target);
     setFirewallRule(
         cell.attr('data-src') === '/' ? '*' : popupData.pageHostname,
         cell.attr('data-des'),
@@ -815,13 +838,11 @@ var unsetFirewallRuleHandler = function(ev) {
 /******************************************************************************/
 
 var setFirewallRuleHandler = function(ev) {
-    var hotspot = uDom(this);
-    var cell = hotspot.ancestors('[data-src]');
-    if ( cell.length === 0 ) {
-        return;
-    }
-    var action = 0;
-    var hotspotId = hotspot.attr('id');
+    let hotspot = uDom(ev.target);
+    let cell = hotspot.ancestors('[data-src]');
+    if ( cell.length === 0 ) { return; }
+    let action = 0;
+    let hotspotId = hotspot.attr('id');
     if ( hotspotId === 'dynaAllow' ) {
         action = 2;
     } else if ( hotspotId === 'dynaNoop' ) {
@@ -885,9 +906,9 @@ var toggleMinimize = function(ev) {
         return;
     }
 
-    popupData.firewallPaneMinimized = uDom.nodeFromId('firewallContainer')
-                                          .classList
-                                          .toggle('minimized');
+    popupData.firewallPaneMinimized =
+        uDom.nodeFromId('firewallContainer').classList.toggle('minimized');
+
     messaging.send(
         'popupPanel',
         {
@@ -916,11 +937,6 @@ var saveFirewallRules = function() {
 /******************************************************************************/
 
 var revertFirewallRules = function() {
-    var onFirewallRuleChanged = function(response) {
-        cachePopupData(response);
-        updateAllFirewallCells();
-        hashFromPopupData();
-    };
     messaging.send(
         'popupPanel',
         {
@@ -929,7 +945,12 @@ var revertFirewallRules = function() {
             desHostnames: popupData.hostnameDict,
             tabId: popupData.tabId
         },
-        onFirewallRuleChanged
+        response => {
+            cachePopupData(response);
+            updateAllFirewallCells();
+            updateHnSwitches();
+            hashFromPopupData();
+        }
     );
     uDom.nodeFromId('firewallContainer').classList.remove('dirty');
 };
@@ -937,8 +958,8 @@ var revertFirewallRules = function() {
 /******************************************************************************/
 
 var toggleHostnameSwitch = function(ev) {
-    var target = ev.currentTarget;
-    var switchName = target.getAttribute('id');
+    let target = ev.currentTarget;
+    let switchName = target.getAttribute('id');
     if ( !switchName ) { return; }
     target.classList.toggle('on');
     messaging.send(
@@ -948,11 +969,16 @@ var toggleHostnameSwitch = function(ev) {
             name: switchName,
             hostname: popupData.pageHostname,
             state: target.classList.contains('on'),
-            tabId: popupData.tabId
+            tabId: popupData.tabId,
+            persist: popupData.dfEnabled === false || ev.ctrlKey || ev.metaKey
+        },
+        response => {
+            cachePopupData(response);
+            updateAllFirewallCells();
+            hashFromPopupData();
         }
     );
     renderTooltips('#' + switchName);
-    hashFromPopupData();
 };
 
 /******************************************************************************/
