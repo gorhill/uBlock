@@ -1,4 +1,4 @@
-An efficient blocker: easy on memory and CPU footprint, and yet can load and enforce thousands more filters than other popular blockers out there.
+An efficient blocker: Fast, potent and lean, and yet can load and enforce thousands more filters than other popular blockers out there.
 
 Illustrated overview of its efficiency: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
@@ -44,7 +44,7 @@ https://github.com/gorhill/uBlock#ublock-origin
 Project change log:
 https://github.com/gorhill/uBlock/releases
 
-Contributors @ Github:
+Contributors @ GitHub:
 https://github.com/gorhill/uBlock/graphs/contributors
 
 Contributors @ Crowdin:
