@@ -184,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "CSS\/Imagens de terceiros",
+    "message": "CSS\/imagens de terceiros",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -268,7 +268,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Sou um usuário avançado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>leitura necessária<\/a>)",
+    "message": "Sou um usuário avançado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>leitura recomendada<\/a>)",
     "description": ""
   },
   "settingsAdvancedUserSettings": {

@@ -148,11 +148,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Clique para desativar completamente javascript neste site",
+    "message": "Clique para desativar JavaScript neste site",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Clique para deixar de desativar completamente javascript neste site",
+    "message": "Clique para deixar de desativar JavaScript neste site",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
@@ -184,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "css\/imagens de terceiros",
+    "message": "CSS\/imagens de terceiros",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {

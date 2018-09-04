@@ -92,7 +92,7 @@
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Activar el modo de selección de elementos",
+    "message": "Activar el modo selección de elementos",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
@@ -100,7 +100,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Alternar bloqueo de ventanas emergentes en este sitio",
+    "message": "Alternar bloqueo de todas las ventanas emergentes en este sitio",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {

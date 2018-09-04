@@ -148,11 +148,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Click pentru activarea completă JavaScript pentru acest site",
+    "message": "Apăsaţi pentru a dezactiva complet JavaScript pe acest site",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Click pentru a anula dezactivarea completă JavaScript pentru acest site",
+    "message": "Apăsaţi pentru a nu mai dezactiva JavaScript pe acest site",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
@@ -624,7 +624,7 @@
     "description": "A link for where to get support"
   },
   "aboutIssues": {
-    "message": "Detector de probleme",
+    "message": "Jurnal cu probleme",
     "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {

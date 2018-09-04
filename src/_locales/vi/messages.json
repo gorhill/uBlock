@@ -148,11 +148,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Nhấp để hoàn toàn vô hiệu hóa javascript trên trang này",
+    "message": "Nhấp để vô hiệu hóa javascript trên trang này",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Nhấp để không còn hoàn toàn vô hiệu hóa javascript trên trang này nữa",
+    "message": "Nhấp để hủy vô hiệu hóa javascript trên trang này",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
@@ -496,7 +496,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Danh sách tên các máy chủ mà uBlock Origin sẽ bị chặn. Một mục nhập trên mỗi dòng. Tên máy chủ không hợp lệ sẽ được tự động bỏ qua.",
+    "message": "Các chỉ thị trong danh sách trắng đưa ra quyết định trang web nào mà uBlock Origin sẽ bị vô hiệu hóa. Một mục trên mỗi dòng. Các chỉ thị không hợp lệ sẽ bị bỏ qua âm thầm và được chú thích.",
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {

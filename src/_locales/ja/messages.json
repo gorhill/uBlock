@@ -148,11 +148,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "クリックすると、このサイトの JavaScript を完全にブロックします",
+    "message": "クリックすると、このサイトの JavaScript をブロックします",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "クリックすると、このサイトの JavaScript の完全なブロックを解除します",
+    "message": "クリックすると、このサイトの JavaScript のブロックを解除します",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
@@ -308,7 +308,7 @@
     "description": ""
   },
   "settingsNoScriptingPrompt": {
-    "message": "JavaScript を無効にする",
+    "message": "JavaScript をブロックする",
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
@@ -752,7 +752,7 @@
     "description": "tooltip"
   },
   "cloudPullAndMerge": {
-    "message": "クラウドストレージからインポートし、現在の設定と合併させます",
+    "message": "クラウドストレージからインポートし、現在の設定と統合します",
     "description": "tooltip"
   },
   "cloudNoData": {

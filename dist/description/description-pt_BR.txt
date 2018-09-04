@@ -38,7 +38,7 @@ Gratuito
 Código aberto com licença pública (GPLv3)
 De usuários para usuários.
 
-Contribuidores no Github: https://github.com/gorhill/uBlock/graphs/contributors
+Contribuidores no GitHub: https://github.com/gorhill/uBlock/graphs/contributors
 Contribuidores no Crowdin: https://crowdin.net/project/ublock
 
 ***
