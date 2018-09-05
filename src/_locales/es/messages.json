@@ -52,11 +52,11 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Clic: deshabilitar\/habilitar uBlock₀ para este sitio.\n\nCtrl + clic: deshabilitar uBlock₀ sólo en esta página.",
+    "message": "Clic: deshabilitar\/habilitar uBlock₀ en este sitio.\n\nCtrl + clic: deshabilitar uBlock₀ solo en esta página.",
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Clic para deshabilitar uBlock₀ en este sitio. \n\nCtrl+clic para deshabilitar uBlock₀ solo en esta página.",
+    "message": "Clic para deshabilitar uBlock₀ en este sitio.\n\nCtrl+clic para deshabilitar uBlock₀ solo en esta página.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
@@ -112,7 +112,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Alternar bloqueo de elementos multimedia grandes para este sitio",
+    "message": "Alternar bloqueo de elementos multimedia grandes en este sitio",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
@@ -124,7 +124,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Alternar el filtrado cosmético para este sitio",
+    "message": "Alternar el filtrado cosmético en este sitio",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
@@ -136,7 +136,7 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Alternar bloqueo de fuentes remotas para este sitio",
+    "message": "Alternar bloqueo de fuentes remotas en este sitio",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
@@ -360,7 +360,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Los filtros cosméticos genéricos son aquellos filtros cosméticos que aplican a todas las páginas. <p>Aunque uBlock₀ los gestiona de forma eficiente, estos filtros pueden contribuir a un aumento del uso de la memoria y la CPU en algunas páginas web, especialmente si contienen gran cantidad de contenido.<p>Al habilitar esta opción se disminuirá el uso de la CPU y exceso de uso de la memoria que resulta del procesamiento de los filtros cosméticos genéricos, así como el consumo de memoria de uBlock₀.<p>Se recomienda habilitar esta opción para dispositivos poco potentes.",
+    "message": "<p>Los filtros cosméticos genéricos son aquellos filtros cosméticos que aplican a todas las páginas.<p>Aunque uBlock₀ los gestiona de forma eficiente, estos filtros pueden contribuir a un aumento del uso de la memoria y la CPU en algunas páginas web, especialmente si contienen gran cantidad de contenido.<p>Al habilitar esta opción se disminuirá el uso de la CPU y exceso de uso de la memoria que resulta del procesamiento de los filtros cosméticos genéricos, así como el consumo de memoria de uBlock₀.<p>Se recomienda habilitar esta opción para dispositivos poco potentes.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {

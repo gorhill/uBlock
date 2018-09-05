@@ -476,7 +476,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Importa des de...",
+    "message": "Importa des del fitxer...",
     "description": ""
   },
   "rulesExport": {
@@ -608,7 +608,7 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "No s'ha pogut trobar el filtre estàtic <code>{{filter}}<\/code> en cap de les llistes de filtres actualment activades",
+    "message": "No s'ha trobat el filtre estàtic <code>{{filter}}<\/code> a cap de les llistes de filtres actualment habilitades",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
@@ -788,7 +788,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Teclegeu una drecera",
+    "message": "Escriviu una drecera",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {

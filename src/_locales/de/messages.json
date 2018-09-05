@@ -152,7 +152,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Klicken, um Javascript auf dieser Seite nicht mehr zu deaktivieren",
+    "message": "Klicken, um JavaScript auf dieser Seite nicht mehr zu deaktivieren",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {

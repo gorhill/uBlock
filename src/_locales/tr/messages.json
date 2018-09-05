@@ -148,11 +148,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Bu sitede, JavaScript'i tamamen devre dışı bırakmak için tıklayın",
+    "message": "JavaScript'i bu sitede devre dışı bırakmak için tıklayın",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Bu sitede, JavaScript'i artık tamamen devre dışı bırakmamak için tıklayın",
+    "message": "JavaScript'i bu sitede artık devre dışı bırakmamak için tıklayın",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {

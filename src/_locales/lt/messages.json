@@ -148,11 +148,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Spustelėkite, kad visai išjungtumėte javascript šioje svetainėje",
+    "message": "Spustelėkite JavaScript išjungimui šioje svetainėje",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Spustelėkite, kad įjungtumėte javascript šioje svetainėje",
+    "message": "Spustelėkite JavaScript įjungimui šioje svetainėje",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
@@ -184,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "3-ios šalies css\/paveikslai",
+    "message": "3-ios šalies CSS\/paveikslai",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -308,7 +308,7 @@
     "description": ""
   },
   "settingsNoScriptingPrompt": {
-    "message": "Išjungti javascript",
+    "message": "Išjungti JavaScript",
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {

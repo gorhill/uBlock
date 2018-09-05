@@ -148,11 +148,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Klik om JavaScript op deze website volledig uit te schakelen",
+    "message": "Klik om JavaScript op deze website uit te schakelen",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Klik om JavaScript op deze website niet meer volledig uit te schakelen",
+    "message": "Klik om JavaScript op deze website niet meer uit te schakelen",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
@@ -432,11 +432,11 @@
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
-    "message": "Importeren en toevoegen",
+    "message": "Importeren en toevoegen...",
     "description": "English: Import and append"
   },
   "1pExport": {
-    "message": "Exporteren",
+    "message": "Exporteren...",
     "description": "English: Export"
   },
   "1pExportFilename": {
@@ -504,7 +504,7 @@
     "description": "English: Import and append"
   },
   "whitelistExport": {
-    "message": "Exporteren",
+    "message": "Exporteren...",
     "description": "English: Export"
   },
   "whitelistExportFilename": {

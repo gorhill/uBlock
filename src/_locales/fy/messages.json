@@ -148,11 +148,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Klik om JavaScript op dizze website folslein út te skeakeljen",
+    "message": "Klik om JavaScript op dizze website út te skeakeljen",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Klik om JavaScript op dizze website net mear folslein út te skeakeljen",
+    "message": "Klik om JavaScript op dizze website net mear út te skeakeljen",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
