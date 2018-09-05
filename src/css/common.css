@@ -572,7 +572,13 @@ code {
 }
 textarea {
     font-size: 90%;
-    }
+}
+input {
+      background: #333;
+      color: #ccc;
+      border: solid 1px #999;
+      border-radius: 2px;
+}
 a:hover {
     color: #3B96FF;
     }
