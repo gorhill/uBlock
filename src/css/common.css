@@ -565,6 +565,11 @@ code {
     background-color: #eee;
     padding: 0 0.25em;
     }
+.hiddenFileInput {
+    height: 0;
+    visibility: hidden;
+    width: 0;
+}
 textarea {
     font-size: 90%;
     }
