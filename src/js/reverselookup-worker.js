@@ -238,7 +238,7 @@ let fromCosmeticFilter = function(details) {
                 break;
             // HTML filtering
             case 64: // CSS selector
-            case 65: // procdural
+            case 65: // procedural
                 if ( exception !== (fargs[1].charAt(0) === '!') ) { break; }
                 if (
                     fargs[0] === 64 && fargs[3] !== selector ||
