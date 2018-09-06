@@ -1121,6 +1121,7 @@ var getURLFilteringData = function(details) {
 /******************************************************************************/
 
 var onMessage = function(request, sender, callback) {
+    var response;
     // Async
     switch ( request.what ) {
     case 'readAll':
