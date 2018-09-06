@@ -99,6 +99,8 @@ cmEditor.on('changes', whitelistChanged);
 
 var renderWhitelist = function() {
     var onRead = function(details) {
+        uDom.nodeFromId('effListInput').checked = details.dntEnabled; //ADN
+
         var first = reBadHostname === undefined;
         if ( first ) {
             reBadHostname = new RegExp(details.reBadHostname);
