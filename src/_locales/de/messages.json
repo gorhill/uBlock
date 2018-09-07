@@ -308,7 +308,7 @@
     "description": ""
   },
   "settingsNoScriptingPrompt": {
-    "message": "Javascript deaktivieren",
+    "message": "JavaScript deaktivieren",
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {

@@ -120,7 +120,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Nhấp để hủy chặn các thành phần đa phương tiện lớn trên trang này",
+    "message": "Nhấp để ngừng chặn các thành phần đa phương tiện kích thước lớn trên trang này",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -152,7 +152,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Nhấp để hủy vô hiệu hóa javascript trên trang này",
+    "message": "Nhấp để ngừng vô hiệu hóa JavaScript trên trang này",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {

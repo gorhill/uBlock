@@ -36,7 +36,7 @@
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
-    "message": "uBlock₀ — Дневник на мрежовите заявки",
+    "message": "uBlock₀ — Дневник",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
@@ -148,11 +148,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Щракнете, за да забраните JavaScript за този сайта",
+    "message": "Щракнете, за да забраните JavaScript за този сайт",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Щракнете, за да разрешите JavaScript за този сайта",
+    "message": "Щракнете, за да разрешите JavaScript за този сайт",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
