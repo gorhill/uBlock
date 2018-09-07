@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2017 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -33,19 +33,13 @@ if ( vAPI.contextMenu === undefined ) {
     };
 }
 
-var µb = µBlock;
-
 /******************************************************************************/
 
 var onBlockElement = function(details, tab) {
-    if ( tab === undefined ) {
-        return;
-    }
-    if ( /^https?:\/\//.test(tab.url) === false ) {
-        return;
-    }
-    var tagName = details.tagName || '';
-    var src = details.frameUrl || details.srcUrl || details.linkUrl || '';
+    if ( tab === undefined ) { return; }
+    if ( /^https?:\/\//.test(tab.url) === false ) { return; }
+    let tagName = details.tagName || '';
+    let src = details.frameUrl || details.srcUrl || details.linkUrl || '';
 
     if ( !tagName ) {
         if ( typeof details.frameUrl === 'string' ) {
@@ -63,14 +57,14 @@ var onBlockElement = function(details, tab) {
         }
     }
 
-    µb.elementPickerExec(tab.id, tagName + '\t' + src);
+    µBlock.elementPickerExec(tab.id, tagName + '\t' + src);
 };
 
 /******************************************************************************/
 
 var onTemporarilyAllowLargeMediaElements = function(details, tab) {
     if ( tab === undefined ) { return; }
-    var pageStore = µb.pageStoreFromTabId(tab.id);
+    let pageStore = µBlock.pageStoreFromTabId(tab.id);
     if ( pageStore === null ) { return; }
     pageStore.temporarilyAllowLargeMediaElements(true);
 };
@@ -106,21 +100,19 @@ var menuEntries = [
 /******************************************************************************/
 
 var update = function(tabId) {
-    var newBits = 0;
-    if ( µb.userSettings.contextMenuEnabled && tabId !== null ) {
-        var pageStore = µb.pageStoreFromTabId(tabId);
-        if ( pageStore ) {
+    let newBits = 0;
+    if ( µBlock.userSettings.contextMenuEnabled && tabId !== null ) {
+        let pageStore = µBlock.pageStoreFromTabId(tabId);
+        if ( pageStore && pageStore.getNetFilteringSwitch() ) {
             newBits |= 0x01;
             if ( pageStore.largeMediaCount !== 0 ) {
                 newBits |= 0x02;
             }
         }
     }
-    if ( newBits === currentBits ) {
-        return;
-    }
+    if ( newBits === currentBits ) { return; }
     currentBits = newBits;
-    var usedEntries = [];
+    let usedEntries = [];
     if ( newBits & 0x01 ) {
         usedEntries.push(menuEntries[0]);
     }
@@ -138,7 +130,7 @@ vAPI.contextMenu.onMustUpdate = update;
 
 return {
     update: function(tabId) {
-        if ( µb.userSettings.contextMenuEnabled && tabId === undefined ) {
+        if ( µBlock.userSettings.contextMenuEnabled && tabId === undefined ) {
             vAPI.tabs.get(null, function(tab) {
                 if ( tab ) {
                     update(tab.id);
