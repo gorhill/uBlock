@@ -603,9 +603,9 @@
     })();
 
     api.compile = function(raw, writer) {
-        var lpos = raw.indexOf('#');
+        let lpos = raw.indexOf('#');
         if ( lpos === -1 ) { return false; }
-        var rpos = lpos + 1;
+        let rpos = lpos + 1;
         if ( raw.charCodeAt(rpos) !== 0x23 /* '#' */ ) {
             rpos = raw.indexOf('#', rpos + 1);
             if ( rpos === -1 ) { return false; }
@@ -618,7 +618,7 @@
         if ( (rpos - lpos) > 3 ) { return false; }
 
         // Extract the selector.
-        var suffix = raw.slice(rpos + 1).trim();
+        let suffix = raw.slice(rpos + 1).trim();
         if ( suffix.length === 0 ) { return false; }
         parsed.suffix = suffix;
 
@@ -629,7 +629,7 @@
         //   We have an Adguard/ABP cosmetic filter if and only if the
         //   character is `$`, `%` or `?`, otherwise it's not a cosmetic
         //   filter.
-        var cCode = raw.charCodeAt(rpos - 1);
+        let cCode = raw.charCodeAt(rpos - 1);
         if ( cCode !== 0x23 /* '#' */ && cCode !== 0x40 /* '@' */ ) {
             // Adguard's scriptlet injection: not supported.
             if ( cCode === 0x25 /* '%' */ ) { return true; }
@@ -652,37 +652,26 @@
         if ( lpos === 0 ) {
             parsed.hostnames = emptyArray;
         } else {
-            var prefix = raw.slice(0, lpos);
+            let prefix = raw.slice(0, lpos);
             parsed.hostnames = prefix.split(reHostnameSeparator);
             if ( reHasUnicode.test(prefix) ) {
                 toASCIIHostnames(parsed.hostnames);
             }
         }
 
+        // Backward compatibility with deprecated syntax.
         if ( suffix.startsWith('script:') ) {
-            // Scriptlet injection engine.
             if ( suffix.startsWith('script:inject') ) {
-                µb.scriptletFilteringEngine.compile(parsed, writer);
-                return true;
-            }
-            // Script tag filtering: courtesy-conversion to HTML filtering.
-            if ( suffix.startsWith('script:contains') ) {
-                console.info(
-                    'uBO: ##script:contains(...) is deprecated, ' +
-                    'converting to ##^script:has-text(...)'
-                );
-                suffix = suffix.replace(/^script:contains/, '^script:has-text');
-                parsed.suffix = suffix;
+                suffix = parsed.suffix = '+js' + suffix.slice(13);
+            } else if ( suffix.startsWith('script:contains') ) {
+                suffix = parsed.suffix = '^script:has-text' + suffix.slice(15);
             }
         }
 
-        var c0 = suffix.charCodeAt(0);
+        let c0 = suffix.charCodeAt(0);
 
         // New shorter syntax for scriptlet injection engine.
         if ( c0 === 0x2B /* '+' */ && suffix.startsWith('+js') ) {
-            // Convert to deprecated syntax for now. Once 1.15.12 is
-            // widespread, `+js` form will be the official syntax.
-            parsed.suffix = 'script:inject' + parsed.suffix.slice(3);
             µb.scriptletFilteringEngine.compile(parsed, writer);
             return true;
         }

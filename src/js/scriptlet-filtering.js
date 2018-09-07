@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2017-2018 Raymond Hill
+    Copyright (C) 2017-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -216,7 +216,7 @@
             'cosmetic',
             {
                 source: 'cosmetic',
-                raw: (isException ? '#@#' : '##') + 'script:inject(' + token + ')'
+                raw: (isException ? '#@#' : '##') + '+js(' + token + ')'
             },
             'dom',
             details.url,
@@ -253,14 +253,14 @@
         //   Ignore instances of exception filter with negated hostnames,
         //   because there is no way to create an exception to an exception.
 
-        var µburi = µb.URI;
+        let µburi = µb.URI;
 
-        for ( var hostname of parsed.hostnames ) {
-            var negated = hostname.charCodeAt(0) === 0x7E /* '~' */;
+        for ( let hostname of parsed.hostnames ) {
+            let negated = hostname.charCodeAt(0) === 0x7E /* '~' */;
             if ( negated ) {
                 hostname = hostname.slice(1);
             }
-            var hash = µburi.domainFromHostname(hostname);
+            let hash = µburi.domainFromHostname(hostname);
             if ( parsed.exception ) {
                 if ( negated ) { continue; }
                 hash = '!' + hash;
@@ -272,9 +272,9 @@
     };
 
     // 01234567890123456789
-    // script:inject(token[, arg[, ...]])
-    //               ^                 ^
-    //              14                 -1
+    // +js(token[, arg[, ...]])
+    //     ^                 ^
+    //     4                -1
 
     api.fromCompiledContent = function(reader) {
         // 1001 = scriptlet injection
@@ -282,17 +282,17 @@
 
         while ( reader.next() ) {
             acceptedCount += 1;
-            var fingerprint = reader.fingerprint();
+            let fingerprint = reader.fingerprint();
             if ( duplicates.has(fingerprint) ) {
                 discardedCount += 1;
                 continue;
             }
             duplicates.add(fingerprint);
-            var args = reader.args();
+            let args = reader.args();
             if ( args.length < 4 ) { continue; }
             scriptletDB.add(
                 args[1],
-                { hostname: args[2], token: args[3].slice(14, -1) }
+                { hostname: args[2], token: args[3].slice(4, -1) }
             );
         }
     };
