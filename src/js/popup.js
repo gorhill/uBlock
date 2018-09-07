@@ -418,25 +418,25 @@ let updateHnSwitches = function() {
 // Assume everything has to be done incrementally.
 
 var renderPopup = function() {
-    var elem, text;
-
     if ( popupData.tabTitle ) {
         document.title = popupData.appName + ' - ' + popupData.tabTitle;
     }
 
-    elem = document.body;
+    let elem = document.body;
     elem.classList.toggle('advancedUser', popupData.advancedUserEnabled);
     elem.classList.toggle(
         'off',
         popupData.pageURL === '' || !popupData.netFilteringSwitch
     );
 
-    // If you think the `=== true` is pointless, you are mistaken
-    uDom.nodeFromId('gotoPick').classList.toggle('enabled', popupData.canElementPicker === true);
-    uDom.nodeFromId('gotoZap').classList.toggle('enabled', popupData.canElementPicker === true);
+    let canElementPicker = popupData.canElementPicker &&
+                           popupData.netFilteringSwitch;
+    uDom.nodeFromId('gotoPick').classList.toggle('enabled', canElementPicker);
+    uDom.nodeFromId('gotoZap').classList.toggle('enabled', canElementPicker);
 
-    var blocked = popupData.pageBlockedRequestCount,
-        total = popupData.pageAllowedRequestCount + blocked;
+    let blocked = popupData.pageBlockedRequestCount,
+        total = popupData.pageAllowedRequestCount + blocked,
+        text;
     if ( total === 0 ) {
         text = formatNumber(0);
     } else {
