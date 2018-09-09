@@ -226,7 +226,7 @@
     };
 
     api.compile = function(parsed, writer) {
-        var selector = parsed.suffix.slice(1).trim(),
+        let selector = parsed.suffix.slice(1).trim(),
             compiled = µb.staticExtFilteringEngine.compileSelector(selector);
         if ( compiled === undefined ) { return; }
 
@@ -235,13 +235,16 @@
 
         // TODO: Mind negated hostnames, they are currently discarded.
 
-        for ( var hostname of parsed.hostnames ) {
-            if ( hostname.charCodeAt(0) === 0x7E /* '~' */ ) { continue; }
-            var domain = µb.URI.domainFromHostname(hostname);
+        for ( let hn of parsed.hostnames ) {
+            if ( hn.charCodeAt(0) === 0x7E /* '~' */ ) { continue; }
+            let hash = µb.staticExtFilteringEngine.compileHostnameToHash(hn);
+            if ( parsed.exception ) {
+                hash |= 0b0001;
+            }
             writer.push([
                 compiled.charCodeAt(0) !== 0x7B /* '{' */ ? 64 : 65,
-                parsed.exception ? '!' + domain : domain,
-                hostname,
+                hash,
+                hn,
                 compiled
             ]);
         }
@@ -249,7 +252,7 @@
 
     api.fromCompiledContent = function(reader) {
         // Don't bother loading filters if stream filtering is not supported.
-        //if ( µb.canFilterResponseBody === false ) { return; }
+        if ( µb.canFilterResponseBody === false ) { return; }
 
         // 1002 = html filtering
         reader.select(1002);
@@ -272,7 +275,7 @@
     };
 
     api.retrieve = function(request) {
-        var hostname = request.hostname;
+        let hostname = request.hostname;
 
         // https://github.com/gorhill/uBlock/issues/2835
         //   Do not filter if the site is under an `allow` rule.
@@ -283,12 +286,16 @@
             return;
         }
 
-        var out = [];
-        if ( request.domain !== '' ) {
-            filterDB.retrieve(request.domain, hostname, out);
-            filterDB.retrieve(request.entity, request.entity, out);
+        let out = [];
+        let domainHash = µb.staticExtFilteringEngine.makeHash(request.domain);
+        if ( domainHash !== 0 ) {
+            filterDB.retrieve(domainHash, hostname, out);
         }
-        filterDB.retrieve('', hostname, out);
+        let entityHash = µb.staticExtFilteringEngine.makeHash(request.entity);
+        if ( entityHash !== 0 ) {
+            filterDB.retrieve(entityHash, request.entity, out);
+        }
+        filterDB.retrieve(0, hostname, out);
 
         // TODO: handle exceptions.
 
@@ -324,53 +331,6 @@
     api.fromSelfie = function(selfie) {
         filterDB = new µb.staticExtFilteringEngine.HostnameBasedDB(selfie);
         pselectors.clear();
-    };
-
-    // TODO: Following methods is useful only to legacy Firefox. This can be
-    //       removed once support for legacy Firefox is dropped. The only care
-    //       at this point is for the code to work, not to be efficient.
-    //       Only `script:has-text` selectors are considered.
-
-    api.retrieveScriptTagHostnames = function() {
-        var out = new Set();
-        for ( var entry of filterDB ) {
-            if ( entry.type !== 65 ) { continue; }
-            var o = JSON.parse(entry.selector);
-            if (
-                o.tasks.length === 1 &&
-                o.tasks[0].length === 2 &&
-                o.tasks[0][0] === ':has-text'
-            ) {
-                out.add(entry.hostname);
-            }
-        }
-        if ( out.size !== 0 ) {
-            return Array.from(out);
-        }
-    };
-
-    api.retrieveScriptTagRegex = function(domain, hostname) {
-        var entries = api.retrieve({
-            hostname: hostname,
-            domain: domain,
-            entity: µb.URI.entityFromDomain(domain)
-        });
-        if ( entries === undefined ) { return; }
-        var out = new Set();
-        for ( var entry of entries ) {
-            if ( entry.type !== 65 ) { continue; }
-            var o = JSON.parse(entry.selector);
-            if (
-                o.tasks.length === 1 &&
-                o.tasks[0].length === 2 &&
-                o.tasks[0][0] === ':has-text'
-            ) {
-                out.add(o.tasks[0][1]);
-            }
-        }
-        if ( out.size !== 0 ) {
-            return Array.from(out).join('|');
-        }
     };
 
     Object.defineProperties(api, {

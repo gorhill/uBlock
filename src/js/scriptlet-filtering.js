@@ -244,7 +244,7 @@
 
         if ( parsed.hostnames.length === 0 ) {
             if ( parsed.exception ) {
-                writer.push([ 32, '!', '', parsed.suffix ]);
+                writer.push([ 32, 0 | 0b0001, '', parsed.suffix ]);
             }
             return;
         }
@@ -253,21 +253,19 @@
         //   Ignore instances of exception filter with negated hostnames,
         //   because there is no way to create an exception to an exception.
 
-        let µburi = µb.URI;
-
-        for ( let hostname of parsed.hostnames ) {
-            let negated = hostname.charCodeAt(0) === 0x7E /* '~' */;
+        for ( let hn of parsed.hostnames ) {
+            let negated = hn.charCodeAt(0) === 0x7E /* '~' */;
             if ( negated ) {
-                hostname = hostname.slice(1);
+                hn = hn.slice(1);
             }
-            let hash = µburi.domainFromHostname(hostname);
+            let hash = µb.staticExtFilteringEngine.compileHostnameToHash(hn);
             if ( parsed.exception ) {
                 if ( negated ) { continue; }
-                hash = '!' + hash;
+                hash |= 0b0001;
             } else if ( negated ) {
-                hash = '!' + hash;
+                hash |= 0b0001;
             }
-            writer.push([ 32, hash, hostname, parsed.suffix ]);
+            writer.push([ 32, hash, hn, parsed.suffix ]);
         }
     };
 
@@ -301,10 +299,10 @@
         if ( scriptletDB.size === 0 ) { return; }
         if ( µb.hiddenSettings.ignoreScriptInjectFilters ) { return; }
 
-        var reng = µb.redirectEngine;
+        let reng = µb.redirectEngine;
         if ( !reng ) { return; }
 
-        var hostname = request.hostname;
+        let hostname = request.hostname;
 
         // https://github.com/gorhill/uBlock/issues/2835
         //   Do not inject scriptlets if the site is under an `allow` rule.
@@ -320,7 +318,7 @@
 
         // https://github.com/gorhill/uBlock/issues/1954
         // Implicit
-        var hn = hostname;
+        let hn = hostname;
         for (;;) {
             lookupScriptlet(hn + '.js', reng, scriptletsRegister);
             if ( hn === domain ) { break; }
@@ -334,11 +332,15 @@
 
         // Explicit
         let entries = [];
-        if ( domain !== '' ) {
-            scriptletDB.retrieve(domain, hostname, entries);
-            scriptletDB.retrieve(entity, entity, entries);
+        let domainHash = µb.staticExtFilteringEngine.makeHash(domain);
+        if ( domainHash !== 0 ) {
+            scriptletDB.retrieve(domainHash, hostname, entries);
         }
-        scriptletDB.retrieve('', hostname, entries);
+        let entityHash = µb.staticExtFilteringEngine.makeHash(entity);
+        if ( entityHash !== 0 ) {
+            scriptletDB.retrieve(entityHash, entity, entries);
+        }
+        scriptletDB.retrieve(0, hostname, entries);
         for ( let entry of entries ) {
             lookupScriptlet(entry.token, reng, scriptletsRegister);
         }
@@ -347,11 +349,13 @@
 
         // Collect exception filters.
         entries = [];
-        if ( domain !== '' ) {
-            scriptletDB.retrieve('!' + domain, hostname, entries);
-            scriptletDB.retrieve('!' + entity, entity, entries);
+        if ( domainHash !== 0 ) {
+            scriptletDB.retrieve(domainHash | 0b0001, hostname, entries);
         }
-        scriptletDB.retrieve('!', hostname, entries);
+        if ( entityHash !== 0 ) {
+            scriptletDB.retrieve(entityHash | 0b0001, entity, entries);
+        }
+        scriptletDB.retrieve(0 | 0b0001, hostname, entries);
         for ( let entry of entries ) {
             exceptionsRegister.add(entry.token);
         }

@@ -405,7 +405,7 @@
 
     api.HostnameBasedDB.prototype = {
         add: function(hash, entry) {
-            var bucket = this.db.get(hash);
+            let bucket = this.db.get(hash);
             if ( bucket === undefined ) {
                 this.db.set(hash, entry);
             } else if ( Array.isArray(bucket) ) {
@@ -420,16 +420,21 @@
             this.size = 0;
         },
         retrieve: function(hash, hostname, out) {
-            var bucket = this.db.get(hash);
+            let bucket = this.db.get(hash);
             if ( bucket === undefined ) { return; }
             if ( Array.isArray(bucket) === false ) {
-                if ( hostname.endsWith(bucket.hostname) ) { out.push(bucket); }
-                return;
+                bucket = [ bucket ];
             }
-            var i = bucket.length;
-            while ( i-- ) {
-                var entry = bucket[i];
-                if ( hostname.endsWith(entry.hostname) ) { out.push(entry); }
+            for ( let entry of bucket ) {
+                if ( hostname.endsWith(entry.hostname) === false ) { continue; }
+                let i = hostname.length - entry.hostname.length;
+                if (
+                    i === 0 ||
+                    i === hostname.length ||
+                    hostname.charCodeAt(i-1) === 0x2E /* '.' */
+                ) {
+                    out.push(entry);
+                }
             }
         },
         toSelfie: function() {
@@ -482,6 +487,60 @@
         µb.scriptletFilteringEngine.freeze();
         µb.htmlFilteringEngine.freeze();
         resetParsed(parsed);
+    };
+
+    // HHHHHHHHHHHH0000
+    //            |   |
+    //            |   |
+    //            |   +-- bit  3-0: reserved
+    //            +------ bit 15-4: FNV
+    api.makeHash = function(token) {
+        // Based on: FNV32a
+        // http://www.isthe.com/chongo/tech/comp/fnv/index.html#FNV-reference-source
+        // The rest is custom, suited for uBlock.
+        let i1 = token.length;
+        if ( i1 === 0 ) { return 0; }
+        let i2 = i1 >> 1;
+        let i4 = i1 >> 2;
+        let i8 = i1 >> 3;
+        let hval = (0x811c9dc5 ^ token.charCodeAt(0)) >>> 0;
+        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
+        hval >>>= 0;
+        hval ^= token.charCodeAt(i8);
+        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
+        hval >>>= 0;
+        hval ^= token.charCodeAt(i4);
+        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
+        hval >>>= 0;
+        hval ^= token.charCodeAt(i4+i8);
+        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
+        hval >>>= 0;
+        hval ^= token.charCodeAt(i2);
+        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
+        hval >>>= 0;
+        hval ^= token.charCodeAt(i2+i8);
+        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
+        hval >>>= 0;
+        hval ^= token.charCodeAt(i2+i4);
+        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
+        hval >>>= 0;
+        hval ^= token.charCodeAt(i1-1);
+        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
+        hval >>>= 0;
+        hval &= 0xFFF0;
+        // Can't return 0, it's reserved for empty string.
+        return hval !== 0 ? hval : 0xfff0;
+    };
+
+    api.compileHostnameToHash = function(hostname) {
+        let domain;
+        if ( hostname.endsWith('.*') ) {
+            let pos = hostname.lastIndexOf('.', hostname.length - 3);
+            domain = pos !== -1 ? hostname.slice(pos + 1) : hostname;
+        } else {
+            domain = µb.URI.domainFromHostnameNoCache(hostname);
+        }
+        return api.makeHash(domain);
     };
 
     // https://github.com/chrisaljoudi/uBlock/issues/1004
