@@ -493,21 +493,6 @@ FilterContainer.prototype.freeze = function() {
         this.highlyGeneric.simple.dict.size !== 0 ||
         this.highlyGeneric.complex.dict.size !== 0;
 
-    if ( this.genericDonthideSet.size !== 0 ) {
-        for ( let selector of this.genericDonthideSet ) {
-            let type = selector.charCodeAt(0);
-            if ( type === 0x23 /* '#' */ ) {
-                this.lowlyGeneric.id.simple.delete(selector.slice(1));
-            } else if ( type === 0x2E /* '.' */ ) {
-                this.lowlyGeneric.cl.simple.delete(selector.slice(1));
-            }
-            // TODO:
-            //  this.lowlyGeneric.id.complex.delete(selector);
-            //  this.lowlyGeneric.cl.complex.delete(selector);
-            this.highlyGeneric.simple.dict.delete(selector);
-            this.highlyGeneric.complex.dict.delete(selector);
-        }
-    }
     this.highlyGeneric.simple.str = Array.from(this.highlyGeneric.simple.dict).join(',\n');
     this.highlyGeneric.simple.mru.reset();
     this.highlyGeneric.complex.str = Array.from(this.highlyGeneric.complex.dict).join(',\n');
