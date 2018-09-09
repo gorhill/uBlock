@@ -28,6 +28,7 @@
 3x2-transparent.png
 addthis.com/addthis_widget.js
 amazon-adsystem.com/aax2/amzn_ads.js
+ampproject.org/v0.js
 antiAdBlock.js
 d3pkae9owd2lcf.cloudfront.net/mb105.js
 disqus.com/embed.js
