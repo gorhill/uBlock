@@ -130,6 +130,43 @@ var onVersionReady = function(lastVersion) {
         µb.redirectEngine.invalidateResourcesSelfie();
     }
 
+    // If unused, just comment out for when we need to compare versions in the
+    // future.
+    let intFromVersion = function(s) {
+        let parts = s.match(/(?:^|\.|b|rc)\d+/g);
+        if ( parts === null ) { return 0; }
+        let vint = 0;
+        for ( let i = 0; i < 4; i++ ) {
+            let pstr = parts[i] || '';
+            let pint;
+            if ( pstr === '' ) {
+                pint = 0;
+            } else if ( pstr.startsWith('.') || pstr.startsWith('b') ) {
+                pint = parseInt(pstr.slice(1), 10);
+            } else if ( pstr.startsWith('rc') ) {
+                pint = parseInt(pstr.slice(2), 10) * 100;
+            } else {
+                pint = parseInt(pstr, 10);
+            }
+            vint = vint * 1000 + pint;
+        }
+        return vint;
+    };
+
+    if ( intFromVersion(lastVersion) <= 1016021007 ) {
+        µb.sessionSwitches.toggle('no-scripting', 'behind-the-scene', 2);
+        µb.permanentSwitches.toggle('no-scripting', 'behind-the-scene', 2);
+        µb.saveHostnameSwitches();
+    }
+
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/212#issuecomment-419741324
+    if ( intFromVersion(lastVersion) <= 1015024000 ) {
+        if ( µb.hiddenSettings.manualUpdateAssetFetchPeriod === 2000 ) {
+            µb.hiddenSettings.manualUpdateAssetFetchPeriod = 500;
+            µb.saveHiddenSettings();
+        }
+    }
+
     vAPI.storage.set({ version: vAPI.app.version });
 };
 
@@ -244,7 +281,7 @@ var fromFetch = function(to, fetched) {
 var onSelectedFilterListsLoaded = function() {
     var fetchableProps = {
         'commandShortcuts': [],
-        'compiledMagic': '',
+        'compiledMagic': 0,
         'dynamicFilteringString': [
             'behind-the-scene * * noop',
             'behind-the-scene * image noop',
@@ -264,7 +301,7 @@ var onSelectedFilterListsLoaded = function() {
         'lastBackupFile': '',
         'lastBackupTime': 0,
         'netWhitelist': µb.netWhitelistDefault,
-        'selfieMagic': '',
+        'selfieMagic': 0,
         'version': '0.0.0.0'
     };
 
