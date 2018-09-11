@@ -364,7 +364,7 @@
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
-    "message": "Lista de servidores bloqueados",
+    "message": "Lista de dominios bloqueados",
     "description": "English: Lists of blocked hosts"
   },
   "3pApplyChanges": {
@@ -428,7 +428,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Un filtro por línea. Los filtros pueden ser un nombre de servidor, o un filtro compatible con Adblock Plus. Las líneas que comiencen con <code>!<\/code> serán ignoradas.",
+    "message": "Un filtro por línea. Los filtros pueden ser un nombre de dominio, o un filtro compatible con Adblock Plus. Las líneas que comiencen con <code>!<\/code> serán ignoradas.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {

@@ -44,7 +44,7 @@
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
-    "message": "uBlock₀ — Asset viewer",
+    "message": "uBlock₀ — Prohlížeč zdrojů",
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
@@ -184,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "obrázky\/css třetích stran",
+    "message": "CSS\/obrázky třetích stran",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {

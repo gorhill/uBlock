@@ -500,7 +500,7 @@
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
-    "message": "Importeren en toevoegen",
+    "message": "Importeren en toevoegen...",
     "description": "English: Import and append"
   },
   "whitelistExport": {

@@ -44,7 +44,7 @@
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
-    "message": "uBlock₀ — Varlık görüntüleyici",
+    "message": "uBlock₀ — Kaynak görüntüleyici",
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {

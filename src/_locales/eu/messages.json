@@ -148,11 +148,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Egin klik orri honetan JavaScript desgaitzeko",
+    "message": "Egin klik gune honetan JavaScript desgaitzeko",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Egin klik orri honetan JavaScript desgaitzeari uzteko",
+    "message": "Egin klik gune honetan JavaScript desgaitzeari uzteko",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
@@ -184,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "Hirugarrengoen css\/irudiak",
+    "message": "Hirugarrengoen CSS\/Irudiak",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
