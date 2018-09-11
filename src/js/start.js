@@ -144,7 +144,7 @@ var onVersionReady = function(lastVersion) {
             } else if ( pstr.startsWith('.') || pstr.startsWith('b') ) {
                 pint = parseInt(pstr.slice(1), 10);
             } else if ( pstr.startsWith('rc') ) {
-                pint = parseInt(pstr.slice(2), 10) * 100;
+                pint = parseInt(pstr.slice(2), 10) + 100;
             } else {
                 pint = parseInt(pstr, 10);
             }
@@ -153,14 +153,16 @@ var onVersionReady = function(lastVersion) {
         return vint;
     };
 
-    if ( intFromVersion(lastVersion) <= 1016021007 ) {
+    let lastVersionInt = intFromVersion(lastVersion);
+
+    if ( lastVersionInt <= 1016021007 ) {
         µb.sessionSwitches.toggle('no-scripting', 'behind-the-scene', 2);
         µb.permanentSwitches.toggle('no-scripting', 'behind-the-scene', 2);
         µb.saveHostnameSwitches();
     }
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/212#issuecomment-419741324
-    if ( intFromVersion(lastVersion) <= 1015024000 ) {
+    if ( lastVersionInt <= 1015024000 ) {
         if ( µb.hiddenSettings.manualUpdateAssetFetchPeriod === 2000 ) {
             µb.hiddenSettings.manualUpdateAssetFetchPeriod = 500;
             µb.saveHiddenSettings();
