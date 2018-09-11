@@ -2,6 +2,9 @@
 #
 # This script assumes a linux environment
 
+# https://github.com/uBlockOrigin/uBlock-issues/issues/217
+set -e
+
 echo "*** uBlock0.webext: Creating web store package"
 echo "*** uBlock0.webext: Copying files"
 
@@ -45,7 +48,7 @@ cp -R src/web_accessible_resources $DES/
 python3 tools/import-war.py $DES/
 
 echo "*** uBlock0.webext: Generating meta..."
-python tools/make-webext-meta.py $DES/
+python3 tools/make-webext-meta.py $DES/
 
 if [ "$1" = all ]; then
     echo "*** uBlock0.webext: Creating package..."
