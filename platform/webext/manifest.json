@@ -82,14 +82,6 @@
         "downloads"
     ],
     "short_name": "AdNauseam",
-    "sidebar_action": {
-    "default_title": "__MSG_statsPageName__",
-    "default_panel": "logger-ui.html",
-    "default_icon": {
-            "19": "img/browsericons/icon19.png",
-            "38": "img/browsericons/icon38.png"
-    }
-  },
   "web_accessible_resources": [
      "/web_accessible_resources/*"
   ]
