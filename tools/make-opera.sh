@@ -50,6 +50,10 @@ sed -i '' "s/\"{version}\"/${VERSION}/" $DES/manifest.json
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
 
+# Remove the following files
+rm $DES/js/adn/tests.js
+rm -R $DES/lib/qunit
+
 echo "*** AdNauseam.Opera: Package Done."
 echo
 # python tools/make-webext-meta.py $DES/  ADN: user our own version

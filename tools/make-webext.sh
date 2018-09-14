@@ -46,6 +46,9 @@ rm $DES/js/vapi-usercss.js
 rm $DES/img/icon_128.png
 rm $DES/options_ui.html
 rm $DES/js/options_ui.js
+# Remove the following files
+rm $DES/js/adn/tests.js
+rm -R $DES/lib/qunit
 
 echo "*** AdNauseam.WebExt: Generating meta..."
 # python tools/make-webext-meta.py $DES/     ADN: use our own version

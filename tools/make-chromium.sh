@@ -50,6 +50,10 @@ python3 tools/import-war.py $DES/
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
 
+# Remove the following files
+rm $DES/js/adn/tests.js
+rm -R $DES/lib/qunit
+
 #echo "*** uBlock0.chromium: Generating meta..."
 #python tools/make-chromium-meta.py $DES/
 
