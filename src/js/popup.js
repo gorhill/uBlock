@@ -423,14 +423,17 @@ var renderPopup = function() {
     }
 
     let elem = document.body;
-    elem.classList.toggle('advancedUser', popupData.advancedUserEnabled);
+    elem.classList.toggle(
+        'advancedUser',
+        popupData.advancedUserEnabled === true
+    );
     elem.classList.toggle(
         'off',
-        popupData.pageURL === '' || !popupData.netFilteringSwitch
+        popupData.pageURL === '' || popupData.netFilteringSwitch !== true
     );
 
-    let canElementPicker = popupData.canElementPicker &&
-                           popupData.netFilteringSwitch;
+    let canElementPicker = popupData.canElementPicker === true &&
+                           popupData.netFilteringSwitch === true;
     uDom.nodeFromId('gotoPick').classList.toggle('enabled', canElementPicker);
     uDom.nodeFromId('gotoZap').classList.toggle('enabled', canElementPicker);
 
@@ -489,11 +492,20 @@ var renderPopup = function() {
         vAPI.localStorage.setItem('popupFirewallPane', dfPaneVisibleStored);
     }
 
-    uDom.nodeFromId('panes').classList.toggle('dfEnabled', dfPaneVisible);
+    uDom.nodeFromId('panes').classList.toggle(
+        'dfEnabled',
+        dfPaneVisible === true
+    );
 
     elem = uDom.nodeFromId('firewallContainer');
-    elem.classList.toggle('minimized', popupData.firewallPaneMinimized);
-    elem.classList.toggle('colorBlind', popupData.colorBlindFriendly);
+    elem.classList.toggle(
+        'minimized',
+        popupData.firewallPaneMinimized === true
+    );
+    elem.classList.toggle(
+        'colorBlind',
+        popupData.colorBlindFriendly === true
+    );
 
     // Build dynamic filtering pane only if in use
     if ( dfPaneVisible ) {
