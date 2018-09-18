@@ -180,7 +180,7 @@
     "description": ""
   },
   "popup3pAnyRulePrompt": {
-    "message": "de terceros",
+    "message": "terceros",
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
@@ -188,7 +188,7 @@
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
-    "message": "scripts embebidos",
+    "message": "scripts integrados",
     "description": ""
   },
   "popup1pScriptRulePrompt": {
@@ -660,7 +660,7 @@
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
-    "message": "Se borrará toda la configuración y uBlock₀ se reiniciará.\n\n¿Restaurar uBlock₀ a la configuración por defecto?",
+    "message": "Se borrará todas sus configuraciones y uBlock₀ se reiniciará.\n\n¿Restablecer uBlock₀ a la configuración predeterminada?",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {

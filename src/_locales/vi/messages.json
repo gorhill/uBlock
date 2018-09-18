@@ -56,7 +56,7 @@
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Nhấp chuột để tắt uBlock₀ đối với toàn bộ tên miền này (site). \n\nCtrl + nhấp chuột để tắt uBlock₀ chỉ tại trang này (page).",
+    "message": "Nhấp chuột để vô hiệu uBlock₀ cho trang này. \n\nCtrl + nhấp chuột để tắt uBlock₀ chỉ trên trang này.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {

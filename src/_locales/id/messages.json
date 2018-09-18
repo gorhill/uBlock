@@ -44,7 +44,7 @@
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
-    "message": "uBlock₀ — Asset viewer",
+    "message": "uBlock₀ — Penampil aset",
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {

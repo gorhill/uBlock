@@ -660,7 +660,7 @@
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
-    "message": "Al uw instellingen zullen worden verwijderd, waarna uBlock₀ wordt herstart.\n\nStandaardwaarden van uBlock₀ terugzetten?",
+    "message": "Al uw instellingen zullen worden verwijderd, waarna uBlock₀ wordt herstart.\n\nStandaardinstellingen van uBlock₀ terugzetten?",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
