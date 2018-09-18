@@ -600,14 +600,17 @@ var onHeadersReceived = function(details) {
     // https://bugzilla.mozilla.org/show_bug.cgi?id=1376932
     //   Prevent document from being cached by the browser if we modified it,
     //   either through HTML filtering and/or modified response headers.
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/229
+    //   Use `no-cache` instead of `no-cache, no-store, must-revalidate`, this
+    //   allows Firefox's offline mode to work as expected.
     if ( (filteredHTML || modifiedHeaders) && dontCacheResponseHeaders ) {
         let i = headerIndexFromName('cache-control', responseHeaders);
         if ( i !== -1 ) {
-            responseHeaders[i].value = 'no-cache, no-store, must-revalidate';
+            responseHeaders[i].value = 'no-cache';
         } else {
             responseHeaders[responseHeaders.length] = {
                 name: 'Cache-Control',
-                value: 'no-cache, no-store, must-revalidate'
+                value: 'no-cache'
             };
         }
         modifiedHeaders = true;
