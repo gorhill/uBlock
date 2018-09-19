@@ -63,9 +63,9 @@
   "optional_permissions": [
     "file:///*"
   ],
-  "options_page": "dashboard.html",
   "options_ui": {
-    "page": "options_ui.html"
+    "page": "dashboard.html",
+    "open_in_tab": true
   },
   "permissions": [
     "contextMenus",

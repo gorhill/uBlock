@@ -40,8 +40,6 @@ rm $DES/js/vapi-usercss.pseudo.js
 
 # Firefox/webext-specific
 rm $DES/img/icon_128.png
-rm $DES/options_ui.html
-rm $DES/js/options_ui.js
 
 echo "*** uBlock0.firefox: Generating web accessible resources..."
 cp -R src/web_accessible_resources $DES/
