@@ -609,10 +609,7 @@ var onHeadersReceived = function(details) {
         if ( i !== -1 ) {
             responseHeaders[i].value = cacheControl;
         } else {
-            responseHeaders[responseHeaders.length] = {
-                name: 'Cache-Control',
-                value: cacheControl
-            };
+            responseHeaders.push({ name: 'Cache-Control', value: cacheControl });
         }
         modifiedHeaders = true;
     }
