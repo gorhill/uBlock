@@ -605,12 +605,13 @@ var onHeadersReceived = function(details) {
     //   allows Firefox's offline mode to work as expected.
     if ( (filteredHTML || modifiedHeaders) && dontCacheResponseHeaders ) {
         let i = headerIndexFromName('cache-control', responseHeaders);
+        let cacheControl = µb.hiddenSettings.cacheControlForFirefox1376932;
         if ( i !== -1 ) {
-            responseHeaders[i].value = 'no-cache';
+            responseHeaders[i].value = cacheControl;
         } else {
             responseHeaders[responseHeaders.length] = {
                 name: 'Cache-Control',
-                value: 'no-cache'
+                value: cacheControl
             };
         }
         modifiedHeaders = true;

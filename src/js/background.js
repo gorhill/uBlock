@@ -44,6 +44,7 @@ var µBlock = (function() { // jshint ignore:line
         autoUpdatePeriod: 7,
         cacheStorageCompression: true,
         debugScriptlets: false,
+        cacheControlForFirefox1376932: 'no-cache, no-store, must-revalidate',
         ignoreRedirectFilters: false,
         ignoreScriptInjectFilters: false,
         manualUpdateAssetFetchPeriod: 500,
