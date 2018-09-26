@@ -93,7 +93,8 @@
     "default_icon": {
       "16": "img/ublock.svg",
       "48": "img/ublock.svg"
-    }
+    },
+    "open_at_install": false
   },
   "storage": {
     "managed_schema": "managed_storage.json"

@@ -27,6 +27,12 @@ if match:
     webext_manifest['name'] += ' development build'
     webext_manifest['short_name'] += ' dev build'
     webext_manifest['browser_action']['default_title'] += ' dev build'
+else:
+    # https://bugzilla.mozilla.org/show_bug.cgi?id=1459007
+    # By design Firefox opens the sidebar with new installation of
+    # uBO when sidebar_action is present in the manifest.
+    # Remove sidebarAction support for stable release of uBO.
+    del webext_manifest['sidebar_action']
 
 with open(webext_manifest_file, mode='w', encoding='utf-8') as f2:
     json.dump(webext_manifest, f2, indent=2, separators=(',', ': '), sort_keys=True)
