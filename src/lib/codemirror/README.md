@@ -16,8 +16,8 @@ customizing CodeMirror to fit your application, and extending it with
 new functionality.
 
 You can find more information (and the
-[manual](http://codemirror.net/doc/manual.html)) on the [project
-page](http://codemirror.net). For questions and discussion, use the
+[manual](https://codemirror.net/doc/manual.html)) on the [project
+page](https://codemirror.net). For questions and discussion, use the
 [discussion forum](https://discuss.codemirror.net/).
 
 See
