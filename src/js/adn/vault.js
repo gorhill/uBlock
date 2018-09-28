@@ -431,8 +431,7 @@
     });
 
     // fix for #291
-    $img.load(function () {
-
+    $img.on('load', function() {
       // cache the dimensions of the img-item AFTER load
       var $this = $(this);
       $div.attr('data-width', $this.width());
@@ -1252,7 +1251,7 @@
           });
 
           createSlider(false, true);
-        
+
           break;
         }
 
@@ -1369,7 +1368,7 @@
   function createSlider(relayout, fromDelete) {
 
     // console.log('Vault-Slider.createSlider: '+gAds.length);
-    
+
     // remember brush if it is fromDelete
     var lastBrush;
     if (fromDelete)  lastBrush = document.getElementsByClassName("brush")[0];
@@ -1377,7 +1376,7 @@
     // clear all the old svg
     d3.select("g.parent").selectAll("*").remove();
     d3.select("svg").remove();
-   
+
 
     if (!gAds || !gAds.length) {
       computeStats();
@@ -1532,7 +1531,7 @@
       .attr("y", -50)
       .attr("x", -3);
     }
- 
+
     // cases: 1) no-gAdSets=first time, 2) filter+layout, 3) only-slider
 
     // do filter, then call either doLayout or computeStats
