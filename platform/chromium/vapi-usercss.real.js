@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2017-2018 Raymond Hill
+    Copyright (C) 2017-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -86,10 +86,17 @@ vAPI.DOMFilterer.prototype = {
     // Here we will deal with:
     // - Injecting low priority user styles;
     // - Notifying listeners about changed filterset.
+    // https://www.reddit.com/r/uBlockOrigin/comments/9jj0y1/no_longer_blocking_ads/
+    //   Ensure vAPI is still valid -- it can go away by the time we are
+    //   called, since the port could be force-disconnected from the main
+    //   process. Another approach would be to have vAPI.SafeAnimationFrame
+    //   register a shutdown job: to evaluate. For now I will keep the fix
+    //   trivial.
     commitNow: function() {
         this.commitTimer.clear();
-        var userStylesheet = vAPI.userStylesheet;
-        for ( var entry of this.addedCSSRules ) {
+        if ( vAPI instanceof Object === false ) { return; }
+        let userStylesheet = vAPI.userStylesheet;
+        for ( let entry of this.addedCSSRules ) {
             if (
                 this.disabled === false &&
                 entry.lazy &&
