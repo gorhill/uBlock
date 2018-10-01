@@ -69,12 +69,12 @@ let init = function() {
 // time elapse without the instance being used.
 
 let destroy = function() {
-    if ( lz4CodecInstance !== undefined ) {
-        console.info(
-            'uBO: freeing lz4-block-codec instance (%s KB)',
-            lz4CodecInstance.bytesInUse() >>> 10
-        );
-    }
+    //if ( lz4CodecInstance !== undefined ) {
+    //    console.info(
+    //        'uBO: freeing lz4-block-codec instance (%s KB)',
+    //        lz4CodecInstance.bytesInUse() >>> 10
+    //    );
+    //}
     lz4CodecInstance = undefined;
     textEncoder = textDecoder = undefined;
     ttlCount = 0;
@@ -107,7 +107,7 @@ let uint8ArrayFromBlob = function(key, data) {
 
 let encodeValue = function(key, value) {
     if ( !lz4CodecInstance ) { return; }
-    let t0 = window.performance.now();
+    //let t0 = window.performance.now();
     if ( textEncoder === undefined ) {
         textEncoder = new TextEncoder();
     }
@@ -123,20 +123,20 @@ let encodeValue = function(key, value) {
     outputArray[5] = (inputSize >>>  8) & 0xFF;
     outputArray[6] = (inputSize >>> 16) & 0xFF;
     outputArray[7] = (inputSize >>> 24) & 0xFF;
-    console.info(
-        'uBO: [%s] compressed %d KB => %d KB (%s%%) in %s ms',
-        key,
-        inputArray.byteLength >> 10,
-        outputArray.byteLength >> 10,
-        (outputArray.byteLength / inputArray.byteLength * 100).toFixed(0),
-        (window.performance.now() - t0).toFixed(1)
-    );
+    //console.info(
+    //    'uBO: [%s] compressed %d KB => %d KB (%s%%) in %s ms',
+    //    key,
+    //    inputArray.byteLength >> 10,
+    //    outputArray.byteLength >> 10,
+    //    (outputArray.byteLength / inputArray.byteLength * 100).toFixed(0),
+    //    (window.performance.now() - t0).toFixed(1)
+    //);
     return outputArray;
 };
 
 let decodeValue = function(key, inputArray) {
     if ( !lz4CodecInstance ) { return; }
-    let t0 = window.performance.now();
+    //let t0 = window.performance.now();
     if (
         inputArray[0] !== 0x18 || inputArray[1] !== 0x4D ||
         inputArray[2] !== 0x22 || inputArray[3] !== 0x04
@@ -152,14 +152,14 @@ let decodeValue = function(key, inputArray) {
         textDecoder = new TextDecoder();
     }
     let value = textDecoder.decode(outputArray);
-    console.info(
-        'uBO: [%s] decompressed %d KB => %d KB (%s%%) in %s ms',
-        key,
-        inputArray.byteLength >>> 10,
-        outputSize >>> 10,
-        (inputArray.byteLength / outputSize * 100).toFixed(0),
-        (window.performance.now() - t0).toFixed(1)
-    );
+    //console.info(
+    //    'uBO: [%s] decompressed %d KB => %d KB (%s%%) in %s ms',
+    //    key,
+    //    inputArray.byteLength >>> 10,
+    //    outputSize >>> 10,
+    //    (inputArray.byteLength / outputSize * 100).toFixed(0),
+    //    (window.performance.now() - t0).toFixed(1)
+    //);
     return value;
 };
 
