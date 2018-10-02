@@ -58,7 +58,7 @@
   },
   "incognito": "split",
   "manifest_version": 2,
-  "minimum_opera_version": "32.0",
+  "minimum_opera_version": "38.0",
   "name": "uBlock Origin",
   "optional_permissions": [
     "file:///*"
