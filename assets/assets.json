@@ -530,7 +530,10 @@
 		"off": true,
 		"title": "NOR: Dandelion Sprouts norske filtre",
 		"lang": "nb",
-		"contentURL": "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianList.txt",
+		"contentURL": [
+			"https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianList.txt",
+			"https://repo.or.cz/FilterMirrorRepo.git/blob_plain/refs/heads/master:/NorwegianList.txt"
+		],
 		"supportURL": "https://github.com/DandelionSprout/adfilt"
 	},
 	"POL-0": {
