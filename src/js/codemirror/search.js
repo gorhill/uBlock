@@ -54,8 +54,8 @@
     var searchWidgetHtml =
         '<div class="cm-search-widget">' +
             '<span class="fa">&#xf002;</span>&ensp;' +
-            '<span>' +
-                '<input type="text" size="20">' +
+            '<span class="cm-search-widget-input">' +
+                '<input type="text">' +
                 '<span class="cm-search-widget-count">' +
                     '<span><!-- future use --></span><span>0</span>' +
                 '</span>' +
@@ -211,11 +211,14 @@
                 state.query,
                 queryCaseInsensitive(state.query)
             );
-            var count = state.annotate.matches.length;
+            let count = state.annotate.matches.length;
             state.widget
                  .querySelector('.cm-search-widget-count > span:nth-of-type(2)')
                  .textContent = count > 1000 ? '1000+' : count;
             state.widget.setAttribute('data-query', state.queryText);
+            // Ensure the caret is visible
+            let input = state.widget.querySelector('.cm-search-widget-input > input');
+            input.selectionStart = input.selectionStart;
         }
     }
 

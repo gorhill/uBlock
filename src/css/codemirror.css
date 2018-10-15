@@ -44,22 +44,27 @@
     color: #888;
     font-size: 140%;
     }
-.cm-search-widget > span {
-    position: relative;
+.cm-search-widget-input {
+    border: 1px solid gray;
+    border-radius: 3px;
+    display: inline-flex;
+    min-width: 16em;
     }
-.cm-search-widget .cm-search-widget-count {
+.cm-search-widget-input > input {
+    border: 0;
+    flex-grow: 1;
+    }
+.cm-search-widget-input > .cm-search-widget-count {
     align-items: center;
-    bottom: 0;
     color: #888;
     display: none;
-    margin-right: 4px;
+    flex-grow: 0;
+    font-size: 80%;
+    padding: 0 0.4em;
     pointer-events: none;
-    position: absolute;
-    right: 0;
-    top: 0;
     }
 .cm-search-widget[data-query] .cm-search-widget-count {
-    display: flex;
+    display: inline-flex;
     }
 .cm-search-widget .cm-search-widget-button:hover {
     color: #000;
