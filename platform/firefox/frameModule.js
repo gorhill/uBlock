@@ -464,7 +464,10 @@ var contentObserver = {
         let docReady = (e) => {
             let doc = e.target;
             doc.removeEventListener(e.type, docReady, true);
-            if ( doc.querySelector('a[href^="abp:"],a[href^="https://subscribe.adblockplus.org/?"]') ) {
+            if (
+-               doc.querySelector('link[rel="canonical"][href="https://filterlists.com/"]') !== null ||
+-               doc.querySelector('a[href^="abp:"],a[href^="ubo:"],a[href^="https://subscribe.adblockplus.org/?"]') !== null
+            ) {
                 Services.scriptloader.loadSubScript(this.contentBaseURI + 'scriptlets/subscriber.js', sandbox);
             }
         };
