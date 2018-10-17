@@ -426,7 +426,9 @@
                 bucket = [ bucket ];
             }
             for ( let entry of bucket ) {
-                if ( hostname.endsWith(entry.hostname) === false ) { continue; }
+                if ( hostname.endsWith(entry.hostname) === false ) {
+                    continue;
+                }
                 let i = hostname.length - entry.hostname.length;
                 if (
                     i === 0 ||

@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2017 Raymond Hill
+    Copyright (C) 2017-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -32,18 +32,18 @@
         duplicates = new Set(),
         acceptedCount = 0,
         discardedCount = 0,
-        docRegister, loggerRegister;
+        docRegister;
 
     var PSelectorHasTextTask = function(task) {
-        var arg0 = task[1], arg1;
+        let arg0 = task[1], arg1;
         if ( Array.isArray(task[1]) ) {
             arg1 = arg0[1]; arg0 = arg0[0];
         }
         this.needle = new RegExp(arg0, arg1);
     };
     PSelectorHasTextTask.prototype.exec = function(input) {
-        var output = [];
-        for ( var node of input ) {
+        let output = [];
+        for ( let node of input ) {
             if ( this.needle.test(node.textContent) ) {
                 output.push(node);
             }
@@ -61,8 +61,8 @@
         }
     });
     PSelectorIfTask.prototype.exec = function(input) {
-        var output = [];
-        for ( var node of input ) {
+        let output = [];
+        for ( let node of input ) {
             if ( this.pselector.test(node) === this.target ) {
                 output.push(node);
             }
@@ -81,16 +81,16 @@
         this.xpe = task[1];
     };
     PSelectorXpathTask.prototype.exec = function(input) {
-        var output = [],
+        let output = [],
             xpe = docRegister.createExpression(this.xpe, null),
             xpr = null;
-        for ( var node of input ) {
+        for ( let node of input ) {
             xpr = xpe.evaluate(
                 node,
                 XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
                 xpr
             );
-            var j = xpr.snapshotLength;
+            let j = xpr.snapshotLength;
             while ( j-- ) {
                 node = xpr.snapshotItem(j);
                 if ( node.nodeType === 1 ) {
@@ -114,15 +114,14 @@
         this.raw = o.raw;
         this.selector = o.selector;
         this.tasks = [];
-        var tasks = o.tasks;
-        if ( !tasks ) { return; }
-        for ( var task of tasks ) {
-            var ctor = this.operatorToTaskMap.get(task[0]);
+        if ( !o.tasks ) { return; }
+        for ( let task of o.tasks ) {
+            let ctor = this.operatorToTaskMap.get(task[0]);
             if ( ctor === undefined ) {
                 this.invalid = true;
                 break;
             }
-            var pselector = new ctor(task);
+            let pselector = new ctor(task);
             if ( pselector instanceof PSelectorIfTask && pselector.invalid ) {
                 this.invalid = true;
                 break;
@@ -133,7 +132,7 @@
     PSelector.prototype.operatorToTaskMap = undefined;
     PSelector.prototype.invalid = false;
     PSelector.prototype.prime = function(input) {
-        var root = input || docRegister;
+        let root = input || docRegister;
         if ( this.selector !== '' ) {
             return root.querySelectorAll(this.selector);
         }
@@ -141,8 +140,8 @@
     };
     PSelector.prototype.exec = function(input) {
         if ( this.invalid ) { return []; }
-        var nodes = this.prime(input);
-        for ( var task of this.tasks ) {
+        let nodes = this.prime(input);
+        for ( let task of this.tasks ) {
             if ( nodes.length === 0 ) { break; }
             nodes = task.exec(nodes);
         }
@@ -150,8 +149,8 @@
     };
     PSelector.prototype.test = function(input) {
         if ( this.invalid ) { return false; }
-        var nodes = this.prime(input), AA = [ null ], aa;
-        for ( var node of nodes ) {
+        let nodes = this.prime(input), AA = [ null ], aa;
+        for ( let node of nodes ) {
             AA[0] = node; aa = AA;
             for ( var task of this.tasks ) {
                 aa = task.exec(aa);
@@ -162,11 +161,14 @@
         return false;
     };
 
-    var logOne = function(details, selector) {
-        loggerRegister.writeOne(
+    var logOne = function(details, exception, selector) {
+        µb.logger.writeOne(
             details.tabId,
             'cosmetic',
-            { source: 'cosmetic', raw: '##^' + selector },
+            {
+                source: 'cosmetic',
+                raw: (exception === 0 ? '##' : '#@#') + '^' + selector
+            },
             'dom',
             details.url,
             null,
@@ -175,40 +177,40 @@
     };
 
     var applyProceduralSelector = function(details, selector) {
-        var pselector = pselectors.get(selector);
+        let pselector = pselectors.get(selector);
         if ( pselector === undefined ) {
             pselector = new PSelector(JSON.parse(selector));
             pselectors.set(selector, pselector);
         }
-        var nodes = pselector.exec(),
+        let nodes = pselector.exec(),
             i = nodes.length,
             modified = false;
         while ( i-- ) {
-            var node = nodes[i];
+            let node = nodes[i];
             if ( node.parentNode !== null ) {
                 node.parentNode.removeChild(node);
                 modified = true;
             }
         }
-        if ( modified && loggerRegister.isEnabled() ) {
-            logOne(details, pselector.raw);
+        if ( modified && µb.logger.isEnabled() ) {
+            logOne(details, 0, pselector.raw);
         }
         return modified;
     };
 
     var applyCSSSelector = function(details, selector) {
-        var nodes = docRegister.querySelectorAll(selector),
+        let nodes = docRegister.querySelectorAll(selector),
             i = nodes.length,
             modified = false;
         while ( i-- ) {
-            var node = nodes[i];
+            let node = nodes[i];
             if ( node.parentNode !== null ) {
                 node.parentNode.removeChild(node);
                 modified = true;
             }
         }
-        if ( modified && loggerRegister.isEnabled() ) {
-            logOne(details, selector);
+        if ( modified && µb.logger.isEnabled() ) {
+            logOne(details, 0, selector);
         }
         return modified;
     };
@@ -259,13 +261,13 @@
 
         while ( reader.next() ) {
             acceptedCount += 1;
-            var fingerprint = reader.fingerprint();
+            let fingerprint = reader.fingerprint();
             if ( duplicates.has(fingerprint) ) {
                 discardedCount += 1;
                 continue;
             }
             duplicates.add(fingerprint);
-            var args = reader.args();
+            let args = reader.args();
             filterDB.add(args[1], {
                 type: args[0],
                 hostname: args[2],
@@ -274,8 +276,8 @@
         }
     };
 
-    api.retrieve = function(request) {
-        let hostname = request.hostname;
+    api.retrieve = function(details) {
+        let hostname = details.hostname;
 
         // https://github.com/gorhill/uBlock/issues/2835
         //   Do not filter if the site is under an `allow` rule.
@@ -286,41 +288,66 @@
             return;
         }
 
-        let out = [];
-        let domainHash = µb.staticExtFilteringEngine.makeHash(request.domain);
+        let toRemoveArray = [];
+        let domainHash = µb.staticExtFilteringEngine.makeHash(details.domain);
         if ( domainHash !== 0 ) {
-            filterDB.retrieve(domainHash, hostname, out);
+            filterDB.retrieve(domainHash, hostname, toRemoveArray);
         }
-        let entityHash = µb.staticExtFilteringEngine.makeHash(request.entity);
+        let entity = details.entity;
+        let entityHash = µb.staticExtFilteringEngine.makeHash(entity);
         if ( entityHash !== 0 ) {
-            filterDB.retrieve(entityHash, request.entity, out);
+            filterDB.retrieve(entityHash, entity, toRemoveArray);
         }
-        filterDB.retrieve(0, hostname, out);
+        filterDB.retrieve(0, hostname, toRemoveArray);
+        if ( toRemoveArray.length === 0 ) { return; }
 
-        // TODO: handle exceptions.
-
-        if ( out.length !== 0 ) {
-            return out;
+        let notToRemoveArray = [];
+        if ( domainHash !== 0 ) {
+            filterDB.retrieve(domainHash | 0b0001, hostname, notToRemoveArray);
         }
+        if ( entityHash !== 0 ) {
+            filterDB.retrieve(entityHash | 0b0001, entity, notToRemoveArray);
+        }
+        filterDB.retrieve(0 | 0b0001, hostname, notToRemoveArray);
+        if ( notToRemoveArray.length === 0 ) {
+            return toRemoveArray;
+        }
+
+        let toRemoveMap = new Map();
+        for ( let entry of toRemoveArray ) {
+            toRemoveMap.set(entry.selector, entry);
+        }
+        for ( let entry of notToRemoveArray ) {
+            if ( toRemoveMap.has(entry.selector) === false ) { continue; }
+            toRemoveMap.delete(entry.selector);
+            if ( µb.logger.isEnabled() === false ) { continue; }
+            let selector = entry.selector;
+            if ( entry.type === 65 ) {
+                selector = JSON.parse(selector).raw;
+            }
+            logOne(details, 1, selector);
+        }
+
+        if ( toRemoveMap.size === 0 ) { return; }
+        return Array.from(toRemoveMap);
     };
 
     api.apply = function(doc, details) {
         docRegister = doc;
-        loggerRegister = µb.logger;
-        var modified = false;
-        for ( var entry of details.selectors ) {
+        let modified = false;
+        for ( let entry of details.selectors ) {
             if ( entry.type === 64 ) {
                 if ( applyCSSSelector(details, entry.selector) ) {
                     modified = true;
                 }
-            } else {
+            } else /* if ( entry.type === 65 ) */ {
                 if ( applyProceduralSelector(details, entry.selector) ) {
                     modified = true;
                 }
             }
         }
 
-        docRegister = loggerRegister = undefined;
+        docRegister = undefined;
         return modified;
     };
 
