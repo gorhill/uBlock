@@ -48,7 +48,7 @@
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
-    "message": "Advanced settings",
+    "message": "மேம்பட்ட அமைப்புகள்",
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
@@ -172,7 +172,7 @@
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {
-    "message": "அனைத்து",
+    "message": "அனைத்தும்",
     "description": ""
   },
   "popupImageRulePrompt": {
@@ -204,7 +204,7 @@
     "description": ""
   },
   "popupHitDomainCountPrompt": {
-    "message": "இணைக்கப்பட்டுள்ள ஆள்களங்கள்",
+    "message": "ஆள்களங்கள் இணைக்கப்பட்டுள்ளது",
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
@@ -420,7 +420,7 @@
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Updating...",
+    "message": "புதுப்பிக்கிறது...",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -468,11 +468,11 @@
     "description": "Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave": {
-    "message": "சேமிக்கும்",
+    "message": "சேமி",
     "description": "Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard": {
-    "message": "நிராகரிக்கபடும்",
+    "message": "நிராகரி",
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
@@ -496,7 +496,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "uBlock₀ முடக்கப்பட வேண்டிய இடங்களாக நீங்கள் குறிக்கும் வழங்கிப்பெயர்கள். ஒரு வரிக்கு ஒரு பெயர் மட்டுமே. தவறான வழங்கிப்பெயர்கள் அமைதியாகப் புறக்கணிக்கப்படும்.",
+    "message": "எந்தெந்தப் பக்கங்களில் uBlock₀ முடக்கப்பட வேண்டுமென்பதை அனுமதிப்பட்ட கட்டளைகள் ஆணையிடுகின்றன. வரிக்கு ஒரு இடுகை மட்டுமே. தவறான கட்டளைகள் அமைதியாகப் புறக்கணிக்கப்படும்.",
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
@@ -532,11 +532,11 @@
     "description": "English: Filter"
   },
   "logAll": {
-    "message": "அனைத்து",
+    "message": "அனைத்தும்",
     "description": "Appears in the logger's tab selector"
   },
   "logBehindTheScene": {
-    "message": "திறக்கப்பட்ட இ.தளங்களின் பின்னால் நடப்பவை",
+    "message": "இ.தளங்களின் பின்னால் நடப்பவை",
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
@@ -572,7 +572,7 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
-    "message": "தடு",
+    "message": "முடக்கு",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAllow": {
@@ -772,7 +772,7 @@
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Apply changes",
+    "message": "மாற்றங்களைச் செயல்படுத்து",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {

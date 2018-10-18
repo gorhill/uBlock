@@ -308,7 +308,7 @@
     "description": ""
   },
   "settingsNoScriptingPrompt": {
-    "message": "Disable JavaScript",
+    "message": "Malŝalti JavaScript",
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
@@ -388,7 +388,7 @@
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {
-    "message": "Annoyances",
+    "message": "Ĝenoj",
     "description": "The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose": {
@@ -404,7 +404,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Import...",
+    "message": "Importi...",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -540,7 +540,7 @@
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
-    "message": "Current tab",
+    "message": "Nuna langeto",
     "description": "Appears in the logger's tab selector"
   },
   "logFilterPrompt": {

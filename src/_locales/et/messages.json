@@ -108,7 +108,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Klõpsa, et lubada kõik hüpikaknad sellel saidil",
+    "message": "Klõpsa, et lõpetada hüpikakende keelamine sellel saidil",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -120,7 +120,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Klõpsa, et lubada mahukad meediaelemendid sellel saidil",
+    "message": "Klõpsa, et lõpetada mahukate meediaelementide keelamine sellel saidil",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -144,15 +144,15 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Klõpsa, et lubada välisfondid sellel saidil",
+    "message": "Klõpsa, et lõpetada välisfontide keelamine sellel saidil",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Klõpsa, et keelata JavaScript sellel saidil täielikult",
+    "message": "Klõpsa, et keelata JavaScript sellel saidil",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Klõpsa, et lõpetada sellel saidil täielik JavaScripti keelamine",
+    "message": "Klõpsa, et lõpetada sellel saidil JavaScripti keelamine",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {

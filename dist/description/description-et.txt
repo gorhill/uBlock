@@ -6,7 +6,7 @@ Kasutamine: hüpikaknas oleva suure toitenupu abil on võimalik uBlock avatud le
 
 ***
 
-Paindlik, midagi rohkemat kui ainult "reklaamide blokeerija" - laiendus suudab lugeda ja luua filtreid ka domeenifailidest.
+Paindlik, midagi rohkemat kui ainult "reklaamide blokeerija" - laiendus suudab lugeda ja luua filtreid ka hosts-failidest.
 
 Laienduse installimisel kasutatakse järgnevaid soovitatud filtreid:
 
@@ -18,15 +18,15 @@ Laienduse installimisel kasutatakse järgnevaid soovitatud filtreid:
 Lisaks neile on veel saadaval:
 
 - Fanboy täiustatud jälitusloend
-- Dan Pollock'i domeenifail
+- Dan Pollock'i hosts-fail
 - hpHosts'i reklaami- ja jälitusserverid
 - MVPS HOSTS
 - Spam404
 - Ja paljud teised
 
-Mida rohkem filtreid on kasutusel, seda suurem on mälu kasutatavus. Siiski, pärast Fanboy kahe lisaloendi - hpHosts'i reklaami- ja jälitusserverite lisamist kasutab uBlock₀ palju vähem mälu kui ülejäänud tuntud blokeerijad.
+Mida rohkem filtreid on kasutusel, seda suurem on mälu kasutatavus. Siiski, pärast Fanboy kahe lisaloendi - hpHosts'i reklaami- ja jälitusserverite lisamist kasutab uBlock siiski palju vähem mälu kui ülejäänud tuntud blokeerijad.
 
-Lisaks pidage meeles, et täiendavate loendite lisamine tõstab saitide valesti kuvamise ohtu -- eriti nende loendite puhul, mida tavaliselt kasutatakse hosts failina.
+Lisaks pidage meeles, et täiendavate loendite lisamine tõstab saitide valesti kuvamise ohtu -- eriti nende loendite puhul, mida tavaliselt kasutatakse hosts-failina.
 
 ***
 

@@ -148,11 +148,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "לחץ כדי להשבית JavaScript באתר זה",
+    "message": "לחץ על מנת לחסום JavaScript באתר זה",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "לחץ כדי לאפשר JavaScript באתר זה",
+    "message": "לחץ על מנת להפסיק לחסום JavaScript באתר זה",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
