@@ -12,7 +12,7 @@
 		"updateAfter": 19,
 		"contentURL": [
 			"https://publicsuffix.org/list/public_suffix_list.dat",
-			"https://cdn.rawgit.com/publicsuffix/list/master/public_suffix_list.dat",
+			"https://gitcdn.xyz/repo/publicsuffix/list/master/public_suffix_list.dat",
 			"assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat"
 		]
 	},
@@ -173,10 +173,10 @@
 		"group": "malware",
 		"title": "Malware Domain List",
 		"contentURL": [
-			"https://cdn.rawgit.com/NanoMeow/MDLMirror/master/hosts.txt",
+			"https://gitcdn.xyz/repo/NanoMeow/MDLMirror/master/hosts.txt",
 			"https://raw.githubusercontent.com/NanoMeow/MDLMirror/master/hosts.txt",
 			"https://www.malwaredomainlist.com/hostslist/hosts.txt",
-			"https://cdn.rawgit.com/NanoMeow/MDLMirror/master/filter.txt",
+			"https://gitcdn.xyz/repo/NanoMeow/MDLMirror/master/filter.txt",
 			"https://raw.githubusercontent.com/NanoMeow/MDLMirror/master/filter.txt",
 			"assets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt"
 		]
