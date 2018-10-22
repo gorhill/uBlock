@@ -198,7 +198,7 @@
 		"group": "malware",
 		"off": true,
 		"title": "Spam404",
-		"contentURL": "https://raw.githubusercontent.com/Dawsey21/Lists/master/adblock-list.txt",
+		"contentURL": "https://raw.githubusercontent.com/Spam404/lists/master/adblock-list.txt",
 		"supportURL": "http://www.spam404.com/"
 	},
 	"adguard-annoyance": {
