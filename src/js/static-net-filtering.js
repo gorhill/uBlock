@@ -33,16 +33,15 @@
 var µb = µBlock;
 
 // fedcba9876543210
-// |     |    | |||
-// |     |    | |||
-// |     |    | |||
-// |     |    | |||
-// |     |    | ||+---- bit    0: [BlockAction | AllowAction]
-// |     |    | |+----- bit    1: `important`
-// |     |    | +------ bit 2- 3: party [0 - 3]
-// |     |    +-------- bit 4- 8: type [0 - 31]
-// |     +------------- bit 9-14: unused
-// +------------------- bit   15: bad filter
+//       |    | |||
+//       |    | |||
+//       |    | |||
+//       |    | |||
+//       |    | ||+---- bit    0: [BlockAction | AllowAction]
+//       |    | |+----- bit    1: `important`
+//       |    | +------ bit 2- 3: party [0 - 3]
+//       |    +-------- bit 4- 8: type [0 - 31]
+//       +------------- bit 9-15: unused
 
 var BlockAction = 0 << 0;
 var AllowAction = 1 << 0;
@@ -50,7 +49,6 @@ var Important   = 1 << 1;
 var AnyParty    = 0 << 2;
 var FirstParty  = 1 << 2;
 var ThirdParty  = 2 << 2;
-var BadFilter   = 1 << 15;
 
 var AnyType = 0 << 4;
 var typeNameToTypeValue = {
@@ -126,50 +124,6 @@ var pageHostnameRegister = '',
 //var filterRegister = null;
 //var categoryRegister = '';
 
-/******************************************************************************/
-
-var histogram = function() {};
-/*
-histogram = function(label, categories) {
-    var h = [],
-        categoryBucket;
-    for ( var k in categories ) {
-        // No need for hasOwnProperty() here: there is no prototype chain.
-        categoryBucket = categories[k];
-        for ( var kk in categoryBucket ) {
-            // No need for hasOwnProperty() here: there is no prototype chain.
-            filterBucket = categoryBucket[kk];
-            h.push({
-                k: k.charCodeAt(0).toString(2) + ' ' + kk,
-                n: filterBucket instanceof FilterBucket ? filterBucket.filters.length : 1
-            });
-        }
-    }
-
-    console.log('Histogram %s', label);
-
-    var total = h.length;
-    h.sort(function(a, b) { return b.n - a.n; });
-
-    // Find indices of entries of interest
-    var target = 2;
-    for ( var i = 0; i < total; i++ ) {
-        if ( h[i].n === target ) {
-            console.log('\tEntries with only %d filter(s) start at index %s (key = "%s")', target, i, h[i].k);
-            target -= 1;
-        }
-    }
-
-    h = h.slice(0, 50);
-
-    h.forEach(function(v) {
-        console.log('\tkey=%s  count=%d', v.k, v.n);
-    });
-    console.log('\tTotal buckets count: %d', total);
-};
-*/
-/******************************************************************************/
-
 // Local helpers
 
 // Be sure to not confuse 'example.com' with 'anotherexample.com'
@@ -219,16 +173,20 @@ rawToRegexStr.escape4 = /\*/g;
 rawToRegexStr.reTextHostnameAnchor1 = '^[a-z-]+://(?:[^/?#]+\\.)?';
 rawToRegexStr.reTextHostnameAnchor2 = '^[a-z-]+://(?:[^/?#]+)?';
 
-var filterFingerprinter = µb.CompiledLineWriter.fingerprint;
+const filterDataSerialize = µb.CompiledLineIO.serialize;
 
 var toLogDataInternal = function(categoryBits, tokenHash, filter) {
     if ( filter === null ) { return undefined; }
-    var logData = filter.logData();
-    logData.compiled = filterFingerprinter([ categoryBits, tokenHash, logData.compiled ]);
+    let logData = filter.logData();
+    logData.compiled = filterDataSerialize([
+        categoryBits,
+        tokenHash,
+        logData.compiled
+    ]);
     if ( categoryBits & 0x001 ) {
         logData.raw = '@@' + logData.raw;
     }
-    var opts = [];
+    let opts = [];
     if ( categoryBits & 0x002 ) {
         opts.push('important');
     }
@@ -237,7 +195,7 @@ var toLogDataInternal = function(categoryBits, tokenHash, filter) {
     } else if ( categoryBits & 0x004 ) {
         opts.push('first-party');
     }
-    var type = categoryBits & 0x1F0;
+    let type = categoryBits & 0x1F0;
     if ( type !== 0 && type !== typeNameToTypeValue.data ) {
         opts.push(typeValueToTypeName[type >>> 4]);
     }
@@ -300,15 +258,11 @@ var registerFilterClass = function(ctor) {
     var fid = filterClassIdGenerator++;
     ctor.fid = ctor.prototype.fid = fid;
     filterClasses[fid] = ctor;
-    //console.log(ctor.name, fid);
 };
 
 var filterFromCompiledData = function(args) {
-    //filterClassHistogram.set(fid, (filterClassHistogram.get(fid) || 0) + 1);
     return filterClasses[args[0]].load(args);
 };
-
-//var filterClassHistogram = new Map();
 
 /******************************************************************************/
 
@@ -1424,7 +1378,7 @@ FilterParser.prototype.toNormalizedType = {
 FilterParser.prototype.reset = function() {
     this.action = BlockAction;
     this.anchor = 0;
-    this.badFilter = 0;
+    this.badFilter = false;
     this.dataType = undefined;
     this.dataStr = undefined;
     this.elemHiding = false;
@@ -1594,7 +1548,7 @@ FilterParser.prototype.parseOptions = function(s) {
         }
         // https://github.com/uBlockOrigin/uAssets/issues/192
         if ( opt === 'badfilter' ) {
-            this.badFilter = BadFilter;
+            this.badFilter = true;
             continue;
         }
         // Unrecognized filter option: ignore whole filter.
@@ -2000,16 +1954,11 @@ FilterContainer.prototype.reset = function() {
     this.allowFilterCount = 0;
     this.blockFilterCount = 0;
     this.discardedCount = 0;
+    this.goodFilters = new Set();
     this.badFilters = new Set();
-    this.duplicateBuster = new Set();
     this.categories = new Map();
     this.dataFilters = new Map();
     this.filterParser.reset();
-
-    // Reuse filter instances whenever possible at load time.
-    this.fclassLast = null;
-    this.fdataLast = null;
-    this.filterLast = null;
 
     // Runtime registers
     this.cbRegister = undefined;
@@ -2020,18 +1969,82 @@ FilterContainer.prototype.reset = function() {
 /******************************************************************************/
 
 FilterContainer.prototype.freeze = function() {
-    histogram('allFilters', this.categories);
-    this.removeBadFilters();
-    this.duplicateBuster = new Set();
+    let filterPairId = FilterPair.fid,
+        filterBucketId = FilterBucket.fid,
+        filterDataHolderId = FilterDataHolder.fid,
+        redirectTypeValue = typeNameToTypeValue.redirect,
+        unserialize = µb.CompiledLineIO.unserialize;
+
+    for ( let line of this.goodFilters ) {
+        if ( this.badFilters.has(line) ) { continue; }
+
+        let args = unserialize(line);
+        let bits = args[0];
+
+        // Special cases: delegate to more specialized engines.
+        // Redirect engine.
+        if ( (bits & 0x1F0) === redirectTypeValue ) {
+            µb.redirectEngine.fromCompiledRule(args[1]);
+            continue;
+        }
+
+        // Plain static filters.
+        let tokenHash = args[1];
+        let fdata = args[2];
+
+        // Special treatment: data-holding filters are stored separately
+        // because they require special matching algorithm (unlike other
+        // filters, ALL hits must be reported).
+        if ( fdata[0] === filterDataHolderId ) {
+            let entry = new FilterDataHolderEntry(bits, tokenHash, fdata);
+            let bucket = this.dataFilters.get(tokenHash);
+            if ( bucket !== undefined ) {
+                entry.next = bucket;
+            }
+            this.dataFilters.set(tokenHash, entry);
+            continue;
+        }
+
+        let bucket = this.categories.get(bits);
+        if ( bucket === undefined ) {
+            bucket = new Map();
+            this.categories.set(bits, bucket);
+        }
+        let entry = bucket.get(tokenHash);
+
+        if ( tokenHash === this.dotTokenHash ) {
+            if ( entry === undefined ) {
+                entry = new FilterHostnameDict();
+                bucket.set(this.dotTokenHash, entry);
+            }
+            entry.add(fdata);
+            continue;
+        }
+
+        if ( entry === undefined ) {
+            bucket.set(tokenHash, filterFromCompiledData(fdata));
+            continue;
+        }
+        if ( entry.fid === filterBucketId ) {
+            entry.add(fdata);
+            continue;
+        }
+        if ( entry.fid === filterPairId ) {
+            bucket.set(
+                tokenHash,
+                entry.upgrade(filterFromCompiledData(fdata))
+            );
+            continue;
+        }
+        bucket.set(
+            tokenHash,
+            new FilterPair(entry, filterFromCompiledData(fdata))
+        );
+    }
+
     this.filterParser.reset();
-    this.fclassLast = null;
-    this.fdataLast = null;
-    this.filterLast = null;
+    this.goodFilters = new Set();
     this.frozen = true;
-    //console.log(JSON.stringify(Array.from(filterClassHistogram)));
-    //this.tokenHistogram = new Map(Array.from(this.tokenHistogram).sort(function(a, b) {
-    //    return a[0].localeCompare(b[0]) || (b[1] - a[1]);
-    //}));
 };
 
 /******************************************************************************/
@@ -2125,9 +2138,6 @@ FilterContainer.prototype.compile = function(raw, writer) {
         return false;
     }
 
-    // 0 = network filters
-    writer.select(0);
-
     // Pure hostnames, use more efficient dictionary lookup
     // https://github.com/chrisaljoudi/uBlock/issues/665
     // Create a dict keyed on request type etc.
@@ -2207,10 +2217,16 @@ FilterContainer.prototype.compileToAtomicFilter = function(
     fdata,
     writer
 ) {
-    let descBits = parsed.action |
-                   parsed.important |
-                   parsed.party |
-                   parsed.badFilter;
+
+    // 0 = network filters
+    // 1 = network filters: bad filters
+    if ( parsed.badFilter ) {
+        writer.select(1);
+    } else {
+        writer.select(0);
+    }
+
+    let descBits = parsed.action | parsed.important | parsed.party;
     let type = parsed.types;
 
     // Typeless
@@ -2231,7 +2247,7 @@ FilterContainer.prototype.compileToAtomicFilter = function(
 
     // Only static filter with an explicit type can be redirected. If we reach
     // this point, it's because there is one or more explicit type.
-    if ( parsed.badFilter === 0 && parsed.redirect ) {
+    if ( parsed.badFilter === false && parsed.redirect ) {
         let redirects = µb.redirectEngine.compileRuleFromStaticFilter(parsed.raw);
         if ( Array.isArray(redirects) ) {
             for ( let redirect of redirects ) {
@@ -2244,138 +2260,30 @@ FilterContainer.prototype.compileToAtomicFilter = function(
 /******************************************************************************/
 
 FilterContainer.prototype.fromCompiledContent = function(reader) {
-    var badFilterBit = BadFilter,
-        filterPairId = FilterPair.fid,
-        filterBucketId = FilterBucket.fid,
-        filterDataHolderId = FilterDataHolder.fid,
-        redirectTypeValue = typeNameToTypeValue.redirect,
-        args, bits, bucket, entry,
-        tokenHash, fdata, fingerprint;
-
     // 0 = network filters
     reader.select(0);
-
-    while ( reader.next() === true ) {
-        args = reader.args();
-        bits = args[0];
-
-        if ( (bits & badFilterBit) !== 0 ) {
-            this.badFilters.add(args);
-            continue;
-        }
-
-        // Special cases: delegate to more specialized engines.
-        // Redirect engine.
-        if ( (bits & 0x1F0) === redirectTypeValue ) {
-            µb.redirectEngine.fromCompiledRule(args[1]);
-            continue;
-        }
-
-        this.acceptedCount += 1;
-
-        // Plain static filters.
-        fingerprint = reader.fingerprint();
-        tokenHash = args[1];
-        fdata = args[2];
-
-        // Special treatment: data-holding filters are stored separately
-        // because they require special matching algorithm (unlike other
-        // filters, ALL hits must be reported).
-        if ( fdata[0] === filterDataHolderId ) {
-            if ( this.duplicateBuster.has(fingerprint) ) {
-                this.discardedCount += 1;
-                continue;
-            }
-            this.duplicateBuster.add(fingerprint);
-            entry = new FilterDataHolderEntry(bits, tokenHash, fdata);
-            bucket = this.dataFilters.get(tokenHash);
-            if ( bucket !== undefined ) {
-                entry.next = bucket;
-            }
-            this.dataFilters.set(tokenHash, entry);
-            continue;
-        }
-
-        bucket = this.categories.get(bits);
-        if ( bucket === undefined ) {
-            bucket = new Map();
-            this.categories.set(bits, bucket);
-        }
-        entry = bucket.get(tokenHash);
-
-        if ( tokenHash === this.dotTokenHash ) {
-            if ( entry === undefined ) {
-                entry = new FilterHostnameDict();
-                bucket.set(this.dotTokenHash, entry);
-            }
-            if ( entry.add(fdata) === false ) {
-                this.discardedCount += 1;
-            }
-            continue;
-        }
-
-        if ( this.duplicateBuster.has(fingerprint) ) {
+    while ( reader.next() ) {
+        if ( this.goodFilters.has(reader.line) ) {
             this.discardedCount += 1;
             continue;
         }
-        this.duplicateBuster.add(fingerprint);
-
-        if ( entry === undefined ) {
-            bucket.set(tokenHash, filterFromCompiledData(fdata));
-            continue;
-        }
-        if ( entry.fid === filterBucketId ) {
-            entry.add(fdata);
-            continue;
-        }
-        if ( entry.fid === filterPairId ) {
-            bucket.set(
-                tokenHash,
-                entry.upgrade(filterFromCompiledData(fdata))
-            );
-            continue;
-        }
-        bucket.set(
-            tokenHash,
-            new FilterPair(entry, filterFromCompiledData(fdata))
-        );
+        this.goodFilters.add(reader.line);
+        this.acceptedCount += 1;
     }
-};
 
-/******************************************************************************/
-
-FilterContainer.prototype.removeBadFilters = function() {
-    var filterPairId = FilterPair.fid,
-        filterBucketId = FilterBucket.fid,
-        filterHostnameDictId = FilterHostnameDict.fid,
-        bits, tokenHash, fdata, bucket, entry;
-    for ( var args of this.badFilters ) {
-        bits = args[0] & ~BadFilter;
-        bucket = this.categories.get(bits);
-        if ( bucket === undefined ) { continue; }
-        tokenHash = args[1];
-        entry = bucket.get(tokenHash);
-        if ( entry === undefined ) { continue; }
-        fdata = args[2];
-        if ( entry.fid === filterPairId || entry.fid === filterBucketId ) {
-            entry.remove(fdata);
-            entry = entry.downgrade();
-            if ( entry !== undefined ) {
-                bucket.set(tokenHash, entry);
-            } else {
-                bucket.delete(tokenHash);
-            }
-        } else if ( entry.fid === filterHostnameDictId ) {
-            entry.remove(fdata);
-            if ( entry.size === 0 ) {
-                bucket.delete(tokenHash);
-            }
-        } else if ( arrayStrictEquals(entry.compile(), fdata) ) {
-            bucket.delete(tokenHash);
+    // 1 = network filters: bad filters
+    // Since we are going to keep bad filter fingerprints around, we ensure
+    // they are "detached" from the parent string from which they are sliced.
+    // We keep bad filter fingerprints around to use them when user
+    // incrementally add filters (through "Block element" for example).
+    reader.select(1);
+    while ( reader.next() ) {
+        if ( this.badFilters.has(reader.line) ) {
+            this.discardedCount += 1;
+            continue;
         }
-        if ( bucket.size === 0 ) {
-            this.categories.delete(bits);
-        }
+        this.badFilters.add(µb.orphanizeString(reader.line));
+        this.acceptedCount += 1;
     }
 };
 

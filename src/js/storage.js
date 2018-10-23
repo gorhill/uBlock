@@ -743,27 +743,26 @@
 //   Lower minimum update period to 1 day.
 
 µBlock.extractFilterListMetadata = function(assetKey, raw) {
-    var listEntry = this.availableFilterLists[assetKey];
+    let listEntry = this.availableFilterLists[assetKey];
     if ( listEntry === undefined ) { return; }
     // Metadata expected to be found at the top of content.
-    var head = raw.slice(0, 1024),
-        matches, v;
+    let head = raw.slice(0, 1024);
     // https://github.com/gorhill/uBlock/issues/313
     // Always try to fetch the name if this is an external filter list.
     if ( listEntry.title === '' || listEntry.group === 'custom' ) {
-        matches = head.match(/(?:^|\n)(?:!|# )[\t ]*Title[\t ]*:([^\n]+)/i);
+        let matches = head.match(/(?:^|\n)(?:!|# )[\t ]*Title[\t ]*:([^\n]+)/i);
         if ( matches !== null ) {
             // https://bugs.chromium.org/p/v8/issues/detail?id=2869
-            // JSON.stringify/JSON.parse is to work around String.slice()
-            // potentially causing the whole raw filter list to be held in
-            // memory just because we cut out the title as a substring.
-            listEntry.title = JSON.parse(JSON.stringify(matches[1].trim()));
+            //   orphanizeString is to work around String.slice()
+            //   potentially causing the whole raw filter list to be held in
+            //   memory just because we cut out the title as a substring.
+            listEntry.title = this.orphanizeString(matches[1].trim());
         }
     }
     // Extract update frequency information
-    matches = head.match(/(?:^|\n)(?:!|# )[\t ]*Expires[\t ]*:[\t ]*(\d+)[\t ]*(h)?/i);
+    let matches = head.match(/(?:^|\n)(?:!|# )[\t ]*Expires[\t ]*:[\t ]*(\d+)[\t ]*(h)?/i);
     if ( matches !== null ) {
-        v = Math.max(parseInt(matches[1], 10), 1);
+        let v = Math.max(parseInt(matches[1], 10), 1);
         if ( matches[2] !== undefined ) {
             v = Math.ceil(v / 24);
         }
@@ -787,29 +786,28 @@
 /******************************************************************************/
 
 µBlock.compileFilters = function(rawText) {
-    var writer = new this.CompiledLineWriter();
+    let writer = new this.CompiledLineIO.Writer();
 
     // Useful references:
     //    https://adblockplus.org/en/filter-cheatsheet
     //    https://adblockplus.org/en/filters
-    var staticNetFilteringEngine = this.staticNetFilteringEngine,
+    let staticNetFilteringEngine = this.staticNetFilteringEngine,
         staticExtFilteringEngine = this.staticExtFilteringEngine,
         reIsWhitespaceChar = /\s/,
         reMaybeLocalIp = /^[\d:f]/,
         reIsLocalhostRedirect = /\s+(?:0\.0\.0\.0|broadcasthost|localhost|local|ip6-\w+)\b/,
         reLocalIp = /^(?:0\.0\.0\.0|127\.0\.0\.1|::1|fe80::1%lo0)/,
-        line, c, pos,
         lineIter = new this.LineIterator(this.processDirectives(rawText));
 
     while ( lineIter.eot() === false ) {
         // rhill 2014-04-18: The trim is important here, as without it there
         // could be a lingering `\r` which would cause problems in the
         // following parsing code.
-        line = lineIter.next().trim();
+        let line = lineIter.next().trim();
         if ( line.length === 0 ) { continue; }
 
         // Strip comments
-        c = line.charAt(0);
+        let c = line.charAt(0);
         if ( c === '!' || c === '[' ) { continue; }
 
         // Parse or skip cosmetic filters
@@ -828,7 +826,7 @@
         // Don't remove:
         //   ...#blah blah blah
         // because some ABP filters uses the `#` character (URL fragment)
-        pos = line.indexOf('#');
+        let pos = line.indexOf('#');
         if ( pos !== -1 && reIsWhitespaceChar.test(line.charAt(pos - 1)) ) {
             line = line.slice(0, pos).trim();
         }
@@ -860,7 +858,7 @@
 
 µBlock.applyCompiledFilters = function(rawText, firstparty) {
     if ( rawText === '' ) { return; }
-    var reader = new this.CompiledLineReader(rawText);
+    let reader = new this.CompiledLineIO.Reader(rawText);
     this.staticNetFilteringEngine.fromCompiledContent(reader);
     this.staticExtFilteringEngine.fromCompiledContent(reader, {
         skipGenericCosmetic: this.userSettings.ignoreGenericCosmeticFilters,

@@ -224,18 +224,47 @@
 
 /******************************************************************************/
 
-µBlock.CompiledLineWriter = function() {
-    this.blockId = undefined;
-    this.block = undefined;
-    this.blocks = new Map();
-    this.stringifier = JSON.stringify;
+µBlock.CompiledLineIO = {
+    serialize: JSON.stringify,
+    unserialize: JSON.parse,
+    blockStartPrefix: '#block-start-',  // ensure no special regex characters
+    blockEndPrefix: '#block-end-',      // ensure no special regex characters
+
+    Writer: function() {
+        this.io = µBlock.CompiledLineIO;
+        this.blockId = undefined;
+        this.block = undefined;
+        this.blocks = new Map();
+        this.stringifier = this.io.serialize;
+    },
+
+    Reader: function(raw, blockId) {
+        this.io = µBlock.CompiledLineIO;
+        this.block = '';
+        this.len = 0;
+        this.offset = 0;
+        this.line = '';
+        this.parser = this.io.unserialize;
+        this.blocks = new Map();
+        let reBlockStart = new RegExp(
+            '^' + this.io.blockStartPrefix + '(\\d+)\\n',
+            'gm'
+        );
+        let match = reBlockStart.exec(raw);
+        while ( match !== null ) {
+            let beg = match.index + match[0].length;
+            let end = raw.indexOf(this.io.blockEndPrefix + match[1], beg);
+            this.blocks.set(parseInt(match[1], 10), raw.slice(beg, end));
+            reBlockStart.lastIndex = end;
+            match = reBlockStart.exec(raw);
+        }
+        if ( blockId !== undefined ) {
+            this.select(blockId);
+        }
+    }
 };
 
-µBlock.CompiledLineWriter.fingerprint = function(args) {
-    return JSON.stringify(args);
-};
-
-µBlock.CompiledLineWriter.prototype = {
+µBlock.CompiledLineIO.Writer.prototype = {
     push: function(args) {
         this.block[this.block.length] = this.stringifier(args);
     },
@@ -248,50 +277,26 @@
         }
     },
     toString: function() {
-        var result = [];
-        for ( var entry of this.blocks ) {
-            if ( entry[1].length === 0 ) { continue; }
+        let result = [];
+        for ( let [ id, lines ] of this.blocks ) {
+            if ( lines.length === 0 ) { continue; }
             result.push(
-                '#block-start-' + entry[0],
-                entry[1].join('\n'),
-                '#block-end-' + entry[0]
+                this.io.blockStartPrefix + id,
+                lines.join('\n'),
+                this.io.blockEndPrefix + id
             );
         }
         return result.join('\n');
     }
 };
 
-/******************************************************************************/
-
-µBlock.CompiledLineReader = function(raw, blockId) {
-    this.block = '';
-    this.len = 0;
-    this.offset = 0;
-    this.line = '';
-    this.parser = JSON.parse;
-    this.blocks = new Map();
-    var reBlockStart = /^#block-start-(\d+)\n/gm,
-        match = reBlockStart.exec(raw),
-        beg, end;
-    while ( match !== null ) {
-        beg = match.index + match[0].length;
-        end = raw.indexOf('#block-end-' + match[1], beg);
-        this.blocks.set(parseInt(match[1], 10), raw.slice(beg, end));
-        reBlockStart.lastIndex = end;
-        match = reBlockStart.exec(raw);
-    }
-    if ( blockId !== undefined ) {
-        this.select(blockId);
-    }
-};
-
-µBlock.CompiledLineReader.prototype = {
+µBlock.CompiledLineIO.Reader.prototype = {
     next: function() {
         if ( this.offset === this.len ) {
             this.line = '';
             return false;
         }
-        var pos = this.block.indexOf('\n', this.offset);
+        let pos = this.block.indexOf('\n', this.offset);
         if ( pos !== -1 ) {
             this.line = this.block.slice(this.offset, pos);
             this.offset = pos + 1;
@@ -466,3 +471,11 @@
         return decomposed;
     };
 })();
+
+/******************************************************************************/
+
+// TODO: evaluate using TextEncoder/TextDecoder
+
+µBlock.orphanizeString = function(s) {
+    return JSON.parse(JSON.stringify(s));
+};
