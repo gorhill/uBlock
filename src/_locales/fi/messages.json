@@ -32,7 +32,7 @@
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "Shortcuts",
+    "message": "Pikakuvakkeet",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -44,7 +44,7 @@
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
-    "message": "uBlock₀ — Asset viewer",
+    "message": "uBlock₀ — Elementtien valitsin",
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
@@ -148,7 +148,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Click to disable JavaScript on this site",
+    "message": "Klikkaa poistaaksesi JavaScript käytöstä tältä sivulta",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
@@ -308,7 +308,7 @@
     "description": ""
   },
   "settingsNoScriptingPrompt": {
-    "message": "Disable JavaScript",
+    "message": "Poista JavaScript käytöstä",
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
@@ -372,7 +372,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Built-in",
+    "message": "Sisäänrakennettu",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -404,7 +404,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Import...",
+    "message": "Tuo...",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -540,7 +540,7 @@
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
-    "message": "Current tab",
+    "message": "Nykyinen välilehti",
     "description": "Appears in the logger's tab selector"
   },
   "logFilterPrompt": {
@@ -788,7 +788,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Type a shortcut",
+    "message": "Kirjoita pikakuvakkeen nimi",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
