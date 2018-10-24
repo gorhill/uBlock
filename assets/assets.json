@@ -368,15 +368,6 @@
 		"contentURL": "https://adblock.ee/list.php",
 		"supportURL": "https://adblock.ee/"
 	},
-	"FIN-0": {
-		"content": "filters",
-		"group": "regions",
-		"off": true,
-		"title": "FIN: Finnish Addition to Easylist",
-		"lang": "fi",
-		"contentURL": "https://adb.juvander.net/Finland_adb.txt",
-		"supportURL": "https://www.juvander.fi/AdblockFinland"
-	},
 	"FRA-0": {
 		"content": "filters",
 		"group": "regions",
