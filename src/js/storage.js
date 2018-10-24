@@ -1284,7 +1284,6 @@
             what: 'assetUpdated',
             key: details.assetKey,
             cached: cached
-            
         });
         // https://github.com/gorhill/uBlock/issues/2585
         // Whenever an asset is overwritten, the current selfie is quite

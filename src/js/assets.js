@@ -515,14 +515,6 @@ var assetCacheWrite = function(assetKey, details, callback) {
         return assetCacheRemove(assetKey, callback);
     }
 
-    let reportBack = function() {
-        let details = { assetKey: assetKey, content: content };
-        if ( typeof callback === 'function' ) {
-            callback(details);
-        }
-        fireNotification('after-asset-updated', details);
-    };
-
     let onReady = function() {
         let entry = assetCacheRegistry[assetKey];
         if ( entry === undefined ) {
@@ -534,7 +526,12 @@ var assetCacheWrite = function(assetKey, details, callback) {
         }
         let bin = { assetCacheRegistry: assetCacheRegistry };
         bin[internalKey] = content;
-        µBlock.cacheStorage.set(bin, reportBack);
+        µBlock.cacheStorage.set(bin);
+        let result = { assetKey: assetKey, content: content };
+        if ( typeof callback === 'function' ) {
+            callback(result);
+        }
+        fireNotification('after-asset-updated', result);
     };
     getAssetCacheRegistry(onReady);
 };
