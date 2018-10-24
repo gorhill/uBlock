@@ -2274,17 +2274,14 @@ FilterContainer.prototype.fromCompiledContent = function(reader) {
         }
     }
 
-    // 1 = network filters: bad filters
+    // 1 = network filters: bad filter directives
     // Since we are going to keep bad filter fingerprints around, we ensure
     // they are "detached" from the parent string from which they are sliced.
     // We keep bad filter fingerprints around to use them when user
     // incrementally add filters (through "Block element" for example).
     reader.select(1);
     while ( reader.next() ) {
-        this.acceptedCount += 1;
-        if ( this.badFilters.has(reader.line) ) {
-            this.discardedCount += 1;
-        } else {
+        if ( this.badFilters.has(reader.line) === false ) {
             this.badFilters.add(µb.orphanizeString(reader.line));
         }
     }
