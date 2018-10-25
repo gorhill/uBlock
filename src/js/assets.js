@@ -531,6 +531,7 @@ var assetCacheWrite = function(assetKey, details, callback) {
         if ( typeof callback === 'function' ) {
             callback(result);
         }
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/248
         fireNotification('after-asset-updated', result);
     };
     getAssetCacheRegistry(onReady);
