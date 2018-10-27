@@ -26,7 +26,7 @@
   'use strict';
 
   const States = ['pending', 'visited', 'failed', 'dnt-allowed'],
-    Zooms = [200, 150, 100, 75, 50, 25, 12.5, 6.25],
+    Zooms = [200, 150, 100, 75, 50, 25, 12.5, 7.5, 5],
     EnableContextMenu = 1,
     MaxStartNum = 300,
     MaxPerSet = 9;
@@ -68,10 +68,15 @@
       updateAd(request);
       break;
 
+    case 'updateVault':
+      // TODO: update vault on new Ads
+      updateAds(newAdset,true);
+      break;
+
     case 'notifications':
       renderNotifications(request.notifications, 'vault');
       adjustHeight();
-      createSlider(true);
+      createSlider();
       break;
     }
   });
@@ -96,7 +101,7 @@
     gAds = json.data; // store
     addInterfaceHandlers();
     settings = json.prefs;
-    createSlider(true);
+    createSlider();
     setCurrent(json.current);
 
     vAPI.messaging.send(
@@ -110,8 +115,23 @@
 
   };
 
-  var updateAd = function (json) {
+  var updateAds = function (json, newAdsOnly){
+    // console.log('updateAds: ', json);
+    if (newAdsOnly) {
+      // update gAds
+      for (var key in newAdsOnly) {
+          gAds[key] = newAdsOnly[key]
+          // TODO: update gAdSets
+      }
+    } else {
+      // replace all gAds
+      gAds = json.data; // store
+      gAdSets = null; // reset
+    }
+    createSlider("update");
+  }
 
+  var updateAd = function (json) {
     doUpdate(json.ad);
     computeStats(gAdSets);
   }
@@ -138,21 +158,22 @@
     setAttempting(ad);
   }
 
-  function doLayout(adsets) {
+  function doLayout(adsets, update) {
 
     adsets = adsets || [];
 
-    //console.log('Vault.doLayout: ' + adsets.length + " ad-sets, total=" + numFound(adsets));
+    console.log('Vault.doLayout: ' + adsets.length + " ad-sets, total=" + numFound(adsets));
 
-    $('.item').remove();
+    if (!update) $('.item').remove();
 
-    createDivs(adsets);
+    createDivs(adsets, update);
     computeStats(adsets);
     enableLightbox();
     repack();
   }
 
-  function createDivs(adsets) {
+
+  function createDivs(adsets, update) {
 
     function hoverOnDiv(e) { // on
 
@@ -178,18 +199,29 @@
       }
     }
 
-    for (var i = 0; i < adsets.length; i++) {
-
+    function addAd(ad) {
       var $div = $('<div/>', {
 
-        'class': 'item dup-count-' + adsets[i].count(),
-        'data-gid': adsets[i].gid
+        'class': 'item dup-count-' + ad.count(),
+        'data-gid': ad.gid
 
       }).appendTo('#container');
 
-      layoutAd($div, adsets[i]);
+      layoutAd($div, ad);
 
       $div.hover(hoverOnDiv, hoverOffDiv);
+    }
+    // // Hide #container while appending new divs from 0
+    if(!update) $('#container').css('opacity','0');
+
+    for (var i = 0; i < adsets.length; i++) {
+
+      if (update) {
+        if ($('div[data-gid=' + adsets[i].gid + ']').length < 1) addAd(adsets[i]);
+      } else {
+        addAd(adsets[i])
+      }
+
     }
   }
 
@@ -682,7 +714,7 @@
     setZoom(zoomIdx = Zooms.indexOf(100), true);
 
     var i = 0,
-      percentVis = 0.6,
+      percentVis = 0.55,
       winW = $(window).width(),
       winH = $('#svgcon').offset().top;
 
@@ -693,7 +725,7 @@
 
       if (!onscreen($this, winW, winH, scale, percentVis)) {
 
-        //log("Too-large @ " + Zooms[zoomIdx] + "%");
+        // console.log("Too-large @ " + Zooms[zoomIdx] + "%", percentVis);
         setZoom(++zoomIdx, true);
 
         if (zoomIdx === Zooms.length - 1)
@@ -725,8 +757,8 @@
     var $dm = $('#container');
 
     // compute offset of dragged container
-    var dragoffX = -5000 - parseInt($dm.css('margin-left')),
-      dragoffY = -5000 - parseInt($dm.css('margin-top'));
+    var dragoffX = -10000 - parseInt($dm.css('margin-left')),
+      dragoffY = -10000 - parseInt($dm.css('margin-top'));
 
     // compute offset of item-center from (dragged) window-center
     var pos = {
@@ -749,7 +781,7 @@
       // compute target positions for transform
       var dm, spacing = 10,
         metaOffset = 110,
-        center = -5000,
+        center = -10000,
         ww = $(window).width(),
         wh = $(window).height(),
         pos = itemPosition($ele);
@@ -1067,7 +1099,7 @@
       minY = (-h * (1 - percentVisible)),
       maxY = (winH - (h * percentVisible));
 
-    //log('onscreen() :: trying: '+Zooms[zoomIdx]+"%",$this.attr('data-gid'),off.left, minX, maxX);
+    // console.log('onscreen() :: trying: '+Zooms[zoomIdx]+"%",$this.attr('data-gid'),off.left, minX, maxX);
 
     return (!(off.left < minX || off.left > maxX || off.top < minY || off.top > maxY));
   }
@@ -1194,7 +1226,7 @@
 
         clearTimeout(resizeId); // only when done
         resizeId = setTimeout(function () {
-          createSlider(true);
+          createSlider("resize");
         }, 100);
 
 
@@ -1250,7 +1282,7 @@
             ids: selectedAdSet.childIds()
           });
 
-          createSlider(false, true);
+          createSlider("delete");
 
           break;
         }
@@ -1331,17 +1363,19 @@
 
     setTimeout(function () {
       if (!done) $('#loading-img').show();
-    }, 2000);
+    }, 1000);
 
     showAlert(visible ? false : 'no ads found');
+    console.log("Repacking")
 
     var loader = imagesLoaded($container, function () {
-
+      console.log("Images loaded")
       if (visible > 1) {
 
         var p = new Packery('#container', {
+
           centered: {
-            y: 5000
+            y: 10000
           }, // centered at half min-height
           itemSelector: '.item',
           gutter: 1
@@ -1352,26 +1386,29 @@
 
         $items.css({ // center single
 
-          top: (5000 - $items.height() / 2) + 'px',
-          left: (5000 - $items.width() / 2) + 'px'
+          top: (10000 - $items.height() / 2) + 'px',
+          left: (10000 - $items.width() / 2) + 'px'
         });
       }
 
       done = true;
 
       $('#loading-img').hide();
+      // Show #container after repack
+      $('#container').css('opacity','1');
     });
   }
 
   /********************************************************************/
 
-  function createSlider(relayout, fromDelete) {
+  function createSlider(mode) {
 
     // console.log('Vault-Slider.createSlider: '+gAds.length);
+    // three special modes:
+    // all three special modes: remember brush
 
-    // remember brush if it is fromDelete
     var lastBrush;
-    if (fromDelete)  lastBrush = document.getElementsByClassName("brush")[0];
+    if (mode)  lastBrush = document.getElementsByClassName("brush")[0];
 
     // clear all the old svg
     d3.select("g.parent").selectAll("*").remove();
@@ -1502,9 +1539,8 @@
       .extent(bExtent)
       .on("brushend", brushend);
 
-    // add the brush
-    if (fromDelete) {
-      // append the old brus
+    if (mode == "delete" || mode == "update")  {
+      // append the old brush
       document.getElementById("svgcon").getElementsByTagName("svg")[0].firstChild.appendChild(lastBrush);
     }
     else {
@@ -1532,10 +1568,26 @@
       .attr("x", -3);
     }
 
-    // cases: 1) no-gAdSets=first time, 2) filter+layout, 3) only-slider
+    // cases:
+    // 1) no-gAdSets=first time - runFilter - update gAdSets = 2
+    // 2) [default]]reload vault: doLayout, newAdset, update slider
+    // 3) "update": updateLayout, newAdset, same slider
+    //4) "delete":skipLayout, oldAdSet, same slider
+    //5) "resize": doLayout, oldAdSet, same slider
 
     // do filter, then call either doLayout or computeStats
-    (relayout ? doLayout : computeStats)(fromDelete ? gAdSets : runFilter(bExtent));
+    switch(mode) {
+      case "delete":
+      computeStats(gAdSets);
+      break;
+      case "resize":
+      doLayout(gAdSets)
+      break;
+      case "update":
+      doLayout(runFilter(bExtent), true)
+      default:
+      doLayout(runFilter(bExtent))
+    }
     // ---------------------------- functions ------------------------------
 
     // this is called on brushend() and createSlider()
@@ -1569,8 +1621,8 @@
     function centerContainer() {
       $('#container').addClass('notransition')
         .css({
-          marginLeft: '-5000px',
-          marginTop: '-5000px'
+          marginLeft: '-10000px',
+          marginTop: '-10000px'
         })
         .removeClass('notransition');
     }
@@ -1785,6 +1837,17 @@
       $("#stage").css('height', String($(window).height() - $("#notifications").height()) + "px" );
   }
 
+  var onKeyPressed = function(ev) {
+    // repack
+    if ( ev.key === 'p' || ev.which === 80 ) {
+      repack();
+    } else if ( ev.key === 'u') {
+      console.log("UpdateAds");
+      messager.send('adnauseam', {
+        what: 'adsForVault'
+      }, updateAds);
+    }
+  }
   /*
    * returns 'visited' if any are visited,
    *      'dnt-allowed' if all are dnt-allowed
@@ -1818,5 +1881,6 @@
   $('#import').on('click', startImportFilePicker);
   $('#importFilePicker').on('change', handleImportAds);
   $('#reset').on('click', clearAds);
+  $(document).keypress(onKeyPressed);
 
 })();

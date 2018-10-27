@@ -88,9 +88,9 @@ div.tooltip {
 	/* auto-centers the composition on adview-open (nice fix by cyrus) */
 	top:50%;
 	left:50%;
-	margin: -5000px 0 0 -5000px;
-	min-height: 10000px;
-	min-width: 10000px;
+	margin: -10000px 0 0 -10000px;
+	min-height: 20000px;
+	min-width: 20000px;
 }
 
 #container:not(.lightbox) {
