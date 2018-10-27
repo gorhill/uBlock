@@ -61,16 +61,22 @@
       break;
 
     case 'adDetected':
-      //console.log('ad-detected');
+      console.log('*** New-ad-detected ***', request.ad);
       break;
 
     case 'adVisited':
       updateAd(request);
       break;
 
+
     case 'updateVault':
+
+      // @cqx931 would normally be triggered by the 'adDetected' message (above),
+      // which contains the new ads, and is sent ONLY if the the vault is open
+      // see core.js:1046
+
       // TODO: update vault on new Ads
-      updateAds(newAdset,true);
+      updateAds(newAdset, true);
       break;
 
     case 'notifications':
@@ -1576,17 +1582,17 @@
     //5) "resize": doLayout, oldAdSet, same slider
 
     // do filter, then call either doLayout or computeStats
-    switch(mode) {
+    switch (mode) {
       case "delete":
-      computeStats(gAdSets);
-      break;
+        computeStats(gAdSets);
+        break;
       case "resize":
-      doLayout(gAdSets)
-      break;
+        doLayout(gAdSets)
+        break;
       case "update":
-      doLayout(runFilter(bExtent), true)
+        doLayout(runFilter(bExtent), true)
       default:
-      doLayout(runFilter(bExtent))
+        doLayout(runFilter(bExtent))
     }
     // ---------------------------- functions ------------------------------
 
@@ -1837,6 +1843,7 @@
       $("#stage").css('height', String($(window).height() - $("#notifications").height()) + "px" );
   }
 
+  // @cqx931 use the existing $(document).keyup function
   var onKeyPressed = function(ev) {
     // repack
     if ( ev.key === 'p' || ev.which === 80 ) {
@@ -1848,6 +1855,7 @@
       }, updateAds);
     }
   }
+
   /*
    * returns 'visited' if any are visited,
    *      'dnt-allowed' if all are dnt-allowed
@@ -1881,6 +1889,8 @@
   $('#import').on('click', startImportFilePicker);
   $('#importFilePicker').on('change', handleImportAds);
   $('#reset').on('click', clearAds);
+
+  // @cqx931 use the existing $(document).keyup function
   $(document).keypress(onKeyPressed);
 
 })();
