@@ -63,16 +63,9 @@ var µBlock = (function() { // jshint ignore:line
         'vivaldi-scheme',
         'wyciwyg-scheme',   // Firefox's "What-You-Cache-Is-What-You-Get"
     ];
-    // https://github.com/gorhill/uBlock/issues/3693#issuecomment-379782428
-    if ( vAPI.webextFlavor.soup.has('webext') === false ) {
-        whitelistDefault.push('behind-the-scene');
-    }
 
     return {
         firstInstall: false,
-
-        onBeforeStartQueue: [],
-        onStartCompletedQueue: [],
 
         userSettings: {
             advancedUserEnabled: false,
@@ -98,13 +91,13 @@ var µBlock = (function() { // jshint ignore:line
 
         hiddenSettingsDefault: hiddenSettingsDefault,
         hiddenSettings: (function() {
-            var out = Object.assign({}, hiddenSettingsDefault),
+            let out = Object.assign({}, hiddenSettingsDefault),
                 json = vAPI.localStorage.getItem('immediateHiddenSettings');
             if ( typeof json === 'string' ) {
                 try {
-                    var o = JSON.parse(json);
+                    let o = JSON.parse(json);
                     if ( o instanceof Object ) {
-                        for ( var k in o ) {
+                        for ( let k in o ) {
                             if ( out.hasOwnProperty(k) ) {
                                 out[k] = o[k];
                             }
@@ -122,7 +115,7 @@ var µBlock = (function() { // jshint ignore:line
         // Features detection.
         privacySettingsSupported: vAPI.browserSettings instanceof Object,
         cloudStorageSupported: vAPI.cloud instanceof Object,
-        canFilterResponseBody: vAPI.net.canFilterResponseBody === true,
+        canFilterResponseData: typeof browser.webRequest.filterResponseData === 'function',
         canInjectScriptletsNow: vAPI.webextFlavor.soup.has('chromium'),
 
         // https://github.com/chrisaljoudi/uBlock/issues/180

@@ -254,7 +254,7 @@
 
     api.fromCompiledContent = function(reader) {
         // Don't bother loading filters if stream filtering is not supported.
-        if ( µb.canFilterResponseBody === false ) { return; }
+        if ( µb.canFilterResponseData === false ) { return; }
 
         // 1002 = html filtering
         reader.select(1002);

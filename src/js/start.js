@@ -48,25 +48,14 @@ vAPI.app.onShutdown = function() {
 
 /******************************************************************************/
 
-var processCallbackQueue = function(queue, callback) {
-    var processOne = function() {
-        var fn = queue.pop();
-        if ( fn ) {
-            fn(processOne);
-        } else if ( typeof callback === 'function' ) {
-            callback();
-        }
-    };
-    processOne();
-};
-
-/******************************************************************************/
-
 // Final initialization steps after all needed assets are in memory.
 // - Initialize internal state with maybe already existing tabs.
 // - Schedule next update operation.
 
 var onAllReady = function() {
+    µb.webRequest.start();
+    initializeTabs();
+
     // https://github.com/chrisaljoudi/uBlock/issues/184
     // Check for updates not too far in the future.
     µb.assets.addObserver(µb.assetObserver.bind(µb));
@@ -84,8 +73,55 @@ var onAllReady = function() {
 
     µb.contextMenu.update(null);
     µb.firstInstall = false;
+};
 
-    processCallbackQueue(µb.onStartCompletedQueue);
+/******************************************************************************/
+
+// This is called only once, when everything has been loaded in memory after
+// the extension was launched. It can be used to inject content scripts
+// in already opened web pages, to remove whatever nuisance could make it to
+// the web pages before uBlock was ready.
+
+let initializeTabs = function() {
+    let handleScriptResponse = function(tabId, results) {
+        if (
+            Array.isArray(results) === false ||
+            results.length === 0 ||
+            results[0] !== true
+        ) {
+            return;
+        }
+        // Inject dclarative content scripts programmatically.
+        let manifest = chrome.runtime.getManifest();
+        if ( manifest instanceof Object === false ) { return; }
+        for ( let contentScript of manifest.content_scripts ) {
+            for ( let file of contentScript.js ) {
+                vAPI.tabs.injectScript(tabId, {
+                    file: file,
+                    allFrames: contentScript.all_frames,
+                    runAt: contentScript.run_at
+                });
+            }
+        }
+    };
+    let bindToTabs = function(tabs) {
+        for ( let tab of tabs  ) {
+            µb.tabContextManager.commit(tab.id, tab.url);
+            µb.bindTabToPageStats(tab.id);
+            // https://github.com/chrisaljoudi/uBlock/issues/129
+            //   Find out whether content scripts need to be injected
+            //   programmatically. This may be necessary for web pages which
+            //   were loaded before uBO launched.
+            if ( /^https?:\/\//.test(tab.url) === false ) { continue; }
+            vAPI.tabs.injectScript(
+                tab.id,
+                { file: 'js/scriptlets/should-inject-contentscript.js' },
+                handleScriptResponse.bind(null, tab.id)
+            );
+        }
+    };
+
+    browser.tabs.query({ url: '<all_urls>' }, bindToTabs);
 };
 
 /******************************************************************************/
@@ -329,10 +365,8 @@ var onAdminSettingsRestored = function() {
 /******************************************************************************/
 
 return function() {
-    processCallbackQueue(µb.onBeforeStartQueue, function() {
-        // https://github.com/gorhill/uBlock/issues/531
-        µb.restoreAdminSettings(onAdminSettingsRestored);
-    });
+    // https://github.com/gorhill/uBlock/issues/531
+    µb.restoreAdminSettings(onAdminSettingsRestored);
 };
 
 /******************************************************************************/

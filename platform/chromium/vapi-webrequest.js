@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2017-2018 Raymond Hill
+    Copyright (C) 2017-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,63 +25,24 @@
 
 /******************************************************************************/
 
-vAPI.net = {
-    onBeforeRequest: {},
-    onBeforeMaybeSpuriousCSPReport: {},
-    onHeadersReceived: {},
-    nativeCSPReportFiltering: false
-};
-
-vAPI.net.registerListeners = function() {
-
-    var µb = µBlock,
-        µburi = µb.URI,
-        wrApi = chrome.webRequest;
-
-    // https://bugs.chromium.org/p/chromium/issues/detail?id=410382
-    // Between Chromium 38-48, plug-ins' network requests were reported as
-    // type "other" instead of "object".
-    var is_v38_48 = /\bChrom[a-z]+\/(?:3[89]|4[0-8])\.[\d.]+\b/.test(navigator.userAgent);
-
-    // legacy Chromium understands only these network request types.
-    var validTypes = {
-        main_frame: true,
-        sub_frame: true,
-        stylesheet: true,
-        script: true,
-        image: true,
-        object: true,
-        xmlhttprequest: true,
-        other: true
-    };
-    // modern Chromium/WebExtensions: more types available.
-    if ( wrApi.ResourceType ) {
-        (function() {
-            for ( var typeKey in wrApi.ResourceType ) {
-                if ( wrApi.ResourceType.hasOwnProperty(typeKey) ) {
-                    validTypes[wrApi.ResourceType[typeKey]] = true;
-                }
-            }
-        })();
-    }
-
-    var extToTypeMap = new Map([
+(function() {
+    let extToTypeMap = new Map([
         ['eot','font'],['otf','font'],['svg','font'],['ttf','font'],['woff','font'],['woff2','font'],
         ['mp3','media'],['mp4','media'],['webm','media'],
         ['gif','image'],['ico','image'],['jpeg','image'],['jpg','image'],['png','image'],['webp','image']
     ]);
 
-    var denormalizeTypes = function(aa) {
+    let denormalizeTypes = function(aa) {
         if ( aa.length === 0 ) {
-            return Object.keys(validTypes);
+            return Array.from(vAPI.net.validTypes);
         }
-        var out = [];
-        var i = aa.length,
+        let out = [];
+        let i = aa.length,
             type,
             needOther = true;
         while ( i-- ) {
             type = aa[i];
-            if ( validTypes[type] ) {
+            if ( vAPI.net.validTypes.has(type) ) {
                 out.push(type);
             }
             if ( type === 'other' ) {
@@ -94,7 +55,7 @@ vAPI.net.registerListeners = function() {
         return out;
     };
 
-    var headerValue = function(headers, name) {
+    let headerValue = function(headers, name) {
         var i = headers.length;
         while ( i-- ) {
             if ( headers[i].name.toLowerCase() === name ) {
@@ -104,7 +65,9 @@ vAPI.net.registerListeners = function() {
         return '';
     };
 
-    var normalizeRequestDetails = function(details) {
+    let parsedURL = new URL('https://www.example.org/');
+
+    vAPI.net.normalizeDetails = function(details) {
         // Chromium 63+ supports the `initiator` property, which contains
         // the URL of the origin from which the network request was made.
         if (
@@ -116,7 +79,7 @@ vAPI.net.registerListeners = function() {
             details.documentUrl = details.initiator;
         }
 
-        var type = details.type;
+        let type = details.type;
 
         // https://github.com/gorhill/uBlock/issues/1493
         // Chromium 49+/WebExtensions support a new request type: `ping`,
@@ -137,7 +100,8 @@ vAPI.net.registerListeners = function() {
         }
 
         // Try to map known "extension" part of URL to request type.
-        var path = µburi.pathFromURI(details.url),
+        parsedURL.href = details.url;
+        let path = parsedURL.pathname,
             pos = path.indexOf('.', path.length - 6);
         if ( pos !== -1 && (type = extToTypeMap.get(path.slice(pos + 1))) ) {
             details.type = type;
@@ -160,58 +124,16 @@ vAPI.net.registerListeners = function() {
                 return;
             }
         }
+    };
 
-        // https://github.com/chrisaljoudi/uBlock/issues/862
-        //   If no transposition possible, transpose to `object` as per
-        //   Chromium bug 410382
-        // https://code.google.com/p/chromium/issues/detail?id=410382
-        if ( is_v38_48 ) {
-            details.type = 'object';
+    vAPI.net.denormalizeFilters = function(filters) {
+        let urls = filters.urls || [ '<all_urls>' ];
+        let types = filters.types;
+        if ( Array.isArray(types) ) {
+            types = denormalizeTypes(types);
         }
-    };
-
-    var onBeforeRequestClient = this.onBeforeRequest.callback;
-    var onBeforeRequest = function(details) {
-        normalizeRequestDetails(details);
-        return onBeforeRequestClient(details);
-    };
-
-    // This is needed for Chromium 49-55.
-    var onBeforeSendHeaders = validTypes.csp_report
-        // modern Chromium/WebExtensions: type 'csp_report' is supported
-        ? null
-        // legacy Chromium
-        : function(details) {
-            if ( details.type !== 'ping' || details.method !== 'POST' ) { return; }
-            var type = headerValue(details.requestHeaders, 'content-type');
-            if ( type === '' ) { return; }
-            if ( type.endsWith('/csp-report') ) {
-                details.type = 'csp_report';
-                return onBeforeRequestClient(details);
-            }
-        };
-
-    var onHeadersReceivedClient = this.onHeadersReceived.callback,
-        onHeadersReceivedClientTypes = this.onHeadersReceived.types.slice(0),
-        onHeadersReceivedTypes = denormalizeTypes(onHeadersReceivedClientTypes);
-    var onHeadersReceived = function(details) {
-        normalizeRequestDetails(details);
         if (
-            onHeadersReceivedClientTypes.length !== 0 &&
-            onHeadersReceivedClientTypes.indexOf(details.type) === -1
-        ) {
-            return;
-        }
-        return onHeadersReceivedClient(details);
-    };
-
-    var urls, types;
-
-    if ( onBeforeRequest ) {
-        urls = this.onBeforeRequest.urls || ['<all_urls>'];
-        types = this.onBeforeRequest.types || undefined;
-        if (
-            (validTypes.websocket) &&
+            (vAPI.net.validTypes.has('websocket')) &&
             (types === undefined || types.indexOf('websocket') !== -1) &&
             (urls.indexOf('<all_urls>') === -1)
         ) {
@@ -222,51 +144,8 @@ vAPI.net.registerListeners = function() {
                 urls.push('wss://*/*');
             }
         }
-        wrApi.onBeforeRequest.addListener(
-            onBeforeRequest,
-            { urls: urls, types: types },
-            this.onBeforeRequest.extra
-        );
-    }
-
-    // https://github.com/gorhill/uBlock/issues/3140
-    this.nativeCSPReportFiltering = validTypes.csp_report;
-    if (
-        this.nativeCSPReportFiltering &&
-        typeof this.onBeforeMaybeSpuriousCSPReport.callback === 'function'
-    ) {
-        wrApi.onBeforeRequest.addListener(
-            this.onBeforeMaybeSpuriousCSPReport.callback,
-            {
-                urls: [ 'http://*/*', 'https://*/*' ],
-                types: [ 'csp_report' ]
-            },
-            [ 'blocking', 'requestBody' ]
-        );
-    }
-
-    // Chromium 48 and lower does not support `ping` type.
-    // Chromium 56 and higher does support `csp_report` stype.
-    if ( onBeforeSendHeaders ) {
-        wrApi.onBeforeSendHeaders.addListener(
-            onBeforeSendHeaders,
-            {
-                'urls': [ '<all_urls>' ],
-                'types': [ 'ping' ]
-            },
-            [ 'blocking', 'requestHeaders' ]
-        );
-    }
-
-    if ( onHeadersReceived ) {
-        urls = this.onHeadersReceived.urls || ['<all_urls>'];
-        types = onHeadersReceivedTypes;
-        wrApi.onHeadersReceived.addListener(
-            onHeadersReceived,
-            { urls: urls, types: types },
-            this.onHeadersReceived.extra
-        );
-    }
-};
+        return { types, urls };
+    };
+})();
 
 /******************************************************************************/

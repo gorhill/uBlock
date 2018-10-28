@@ -29,10 +29,6 @@
 
 /******************************************************************************/
 
-var exports = {};
-
-/******************************************************************************/
-
 // Platform-specific behavior.
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/42
@@ -58,55 +54,9 @@ window.addEventListener('webextFlavor', function() {
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/2067
-//   Experimental: Block everything until uBO is fully ready.
-// TODO: re-work vAPI code to match more closely how listeners are
-//       registered with the webRequest API. This will simplify implementing
-//       the feature here: we could have a temporary onBeforeRequest listener
-//       which blocks everything until all is ready.
-//       This would allow to avoid the permanent special test at the top of
-//       the main onBeforeRequest just to implement this.
-// https://github.com/gorhill/uBlock/issues/3130
-//   Don't block root frame.
-
-var onBeforeReady = null;
-
-µBlock.onStartCompletedQueue.push(function(callback) {
-    vAPI.onLoadAllCompleted();
-    callback();
-});
-
-if ( µBlock.hiddenSettings.suspendTabsUntilReady ) {
-    onBeforeReady = (function() {
-        var suspendedTabs = new Set();
-        µBlock.onStartCompletedQueue.push(function(callback) {
-            onBeforeReady = null;
-            for ( var tabId of suspendedTabs ) {
-                vAPI.tabs.reload(tabId);
-            }
-            callback();
-        });
-        return function(details) {
-            if (
-                details.type !== 'main_frame' &&
-                vAPI.isBehindTheSceneTabId(details.tabId) === false
-            ) {
-                suspendedTabs.add(details.tabId);
-                return true;
-            }
-        };
-    })();
-}
-
-/******************************************************************************/
-
 // Intercept and filter web requests.
 
 var onBeforeRequest = function(details) {
-    if ( onBeforeReady !== null && onBeforeReady(details) ) {
-        return { cancel: true };
-    }
-
     // Special handling for root document.
     // https://github.com/chrisaljoudi/uBlock/issues/1001
     // This must be executed regardless of whether the request is
@@ -444,7 +394,7 @@ var onBeforeBehindTheSceneRequest = function(details) {
 
     // Blocked?
     if ( result === 1 ) {
-        return { 'cancel': true };
+        return { cancel: true };
     }
 };
 
@@ -452,91 +402,93 @@ var onBeforeBehindTheSceneRequest = function(details) {
 
 // https://github.com/gorhill/uBlock/issues/3140
 
-var onBeforeMaybeSpuriousCSPReport = function(details) {
-    var tabId = details.tabId;
+let onBeforeMaybeSpuriousCSPReport = (function() {
+    let textDecoder;
 
-    // Ignore behind-the-scene requests.
-    if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
+    return function(details) {
+        let tabId = details.tabId;
 
-    // Lookup the page store associated with this tab id.
-    var µb = µBlock,
-        pageStore = µb.pageStoreFromTabId(tabId);
-    if ( pageStore === null ) { return; }
+        // Ignore behind-the-scene requests.
+        if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
 
-    // If uBO is disabled for the page, it can't possibly causes CSP reports
-    // to be triggered.
-    if ( pageStore.getNetFilteringSwitch() === false ) { return; }
+        // Lookup the page store associated with this tab id.
+        let µb = µBlock,
+            pageStore = µb.pageStoreFromTabId(tabId);
+        if ( pageStore === null ) { return; }
 
-    // A resource was redirected to a neutered one?
-    // TODO: mind injected scripts/styles as well.
-    if ( pageStore.internalRedirectionCount === 0 ) { return; }
+        // If uBO is disabled for the page, it can't possibly causes CSP
+        // reports to be triggered.
+        if ( pageStore.getNetFilteringSwitch() === false ) { return; }
 
-    var textDecoder = onBeforeMaybeSpuriousCSPReport.textDecoder;
-    if (
-        textDecoder === undefined &&
-        typeof self.TextDecoder === 'function'
-    ) {
-        textDecoder =
-        onBeforeMaybeSpuriousCSPReport.textDecoder = new TextDecoder();
-    }
+        // A resource was redirected to a neutered one?
+        // TODO: mind injected scripts/styles as well.
+        if ( pageStore.internalRedirectionCount === 0 ) { return; }
 
-    // Find out whether the CSP report is a potentially spurious CSP report.
-    // If from this point on we are unable to parse the CSP report data, the
-    // safest assumption to protect users is to assume the CSP report is
-    // spurious.
-    if (
-        textDecoder !== undefined &&
-        details.method === 'POST'
-    ) {
-        var raw = details.requestBody && details.requestBody.raw;
         if (
-            Array.isArray(raw) &&
-            raw.length !== 0 &&
-            raw[0] instanceof Object &&
-            raw[0].bytes instanceof ArrayBuffer
+            textDecoder === undefined &&
+            typeof self.TextDecoder === 'function'
         ) {
-            var data;
-            try {
-                data = JSON.parse(textDecoder.decode(raw[0].bytes));
-            } catch (ex) {
-            }
-            if ( data instanceof Object ) {
-                var report = data['csp-report'];
-                if ( report instanceof Object ) {
-                    var blocked = report['blocked-uri'] || report['blockedURI'],
-                        validBlocked = typeof blocked === 'string',
-                        source = report['source-file'] || report['sourceFile'],
-                        validSource = typeof source === 'string';
-                    if (
-                        (validBlocked || validSource) &&
-                        (!validBlocked || !blocked.startsWith('data')) &&
-                        (!validSource || !source.startsWith('data'))
-                    ) {
-                        return;
+            textDecoder = new TextDecoder();
+        }
+
+        // Find out whether the CSP report is a potentially spurious CSP report.
+        // If from this point on we are unable to parse the CSP report data,
+        // the safest assumption to protect users is to assume the CSP report
+        // is spurious.
+        if (
+            textDecoder !== undefined &&
+            details.method === 'POST'
+        ) {
+            let raw = details.requestBody && details.requestBody.raw;
+            if (
+                Array.isArray(raw) &&
+                raw.length !== 0 &&
+                raw[0] instanceof Object &&
+                raw[0].bytes instanceof ArrayBuffer
+            ) {
+                let data;
+                try {
+                    data = JSON.parse(textDecoder.decode(raw[0].bytes));
+                } catch (ex) {
+                }
+                if ( data instanceof Object ) {
+                    let report = data['csp-report'];
+                    if ( report instanceof Object ) {
+                        let blocked =
+                                report['blocked-uri'] || report['blockedURI'],
+                            validBlocked = typeof blocked === 'string',
+                            source =
+                                report['source-file'] || report['sourceFile'],
+                            validSource = typeof source === 'string';
+                        if (
+                            (validBlocked || validSource) &&
+                            (!validBlocked || !blocked.startsWith('data')) &&
+                            (!validSource || !source.startsWith('data'))
+                        ) {
+                            return;
+                        }
                     }
                 }
             }
         }
-    }
 
-    // Potentially spurious CSP report.
-    if ( µb.logger.isEnabled() ) {
-        var hostname = µb.URI.hostnameFromURI(details.url);
-        µb.logger.writeOne(
-            tabId,
-            'net',
-            { result: 1, source: 'global', raw: 'no-spurious-csp-report' },
-            'csp_report',
-            details.url,
-            hostname,
-            hostname
-        );
-    }
+        // Potentially spurious CSP report.
+        if ( µb.logger.isEnabled() ) {
+            let hostname = µb.URI.hostnameFromURI(details.url);
+            µb.logger.writeOne(
+                tabId,
+                'net',
+                { result: 1, source: 'global', raw: 'no-spurious-csp-report' },
+                'csp_report',
+                details.url,
+                hostname,
+                hostname
+            );
+        }
 
-    return { cancel: true };
-};
-
-onBeforeMaybeSpuriousCSPReport.textDecoder = undefined;
+        return { cancel: true };
+    };
+})();
 
 /******************************************************************************/
 
@@ -592,7 +544,7 @@ var onHeadersReceived = function(details) {
 
     // At this point we have a HTML document.
 
-    let filteredHTML = µb.canFilterResponseBody &&
+    let filteredHTML = µb.canFilterResponseData &&
                        filterDocument(pageStore, details) === true;
 
     let modifiedHeaders = injectCSP(pageStore, details) === true;
@@ -880,7 +832,7 @@ var filterDocument = (function() {
         if ( headerValueFromName('content-disposition', headers) ) { return; }
 
         var stream = request.stream =
-            vAPI.net.webRequest.filterResponseData(details.requestId);
+            browser.webRequest.filterResponseData(details.requestId);
         stream.ondata = onStreamData;
         stream.onstop = onStreamStop;
         stream.onerror = onStreamError;
@@ -1122,74 +1074,93 @@ var headerValueFromName = function(headerName, headers) {
 
 /******************************************************************************/
 
-vAPI.net.onBeforeRequest = {
-    urls: [
-        'http://*/*',
-        'https://*/*'
-    ],
-    extra: [ 'blocking' ],
-    callback: onBeforeRequest
-};
-
-vAPI.net.onBeforeMaybeSpuriousCSPReport = {
-    callback: onBeforeMaybeSpuriousCSPReport
-};
-
-vAPI.net.onHeadersReceived = {
-    urls: [
-        'http://*/*',
-        'https://*/*'
-    ],
-    types: [
-        'main_frame',
-        'sub_frame',
-        'image',
-        'media'
-    ],
-    extra: [ 'blocking', 'responseHeaders' ],
-    callback: onHeadersReceived
-};
-
-vAPI.net.registerListeners();
-
-/******************************************************************************/
-
 var isTemporarilyWhitelisted = function(result, hostname) {
-    var obsolete, pos;
-
     for (;;) {
-        obsolete = documentWhitelists[hostname];
+        let obsolete = documentWhitelists.get(hostname);
         if ( obsolete !== undefined ) {
             if ( obsolete > Date.now() ) {
-                if ( result === 0 ) {
-                    return 2;
-                }
+                if ( result === 0 ) { return 2; }
             } else {
-                delete documentWhitelists[hostname];
+                documentWhitelists.delete(hostname);
             }
         }
-        pos = hostname.indexOf('.');
+        let pos = hostname.indexOf('.');
         if ( pos === -1 ) { break; }
         hostname = hostname.slice(pos + 1);
     }
     return result;
 };
 
-var documentWhitelists = Object.create(null);
+let documentWhitelists = new Map();
 
 /******************************************************************************/
 
-exports.temporarilyWhitelistDocument = function(hostname) {
-    if ( typeof hostname !== 'string' || hostname === '' ) {
-        return;
+return {
+    start: (function() {
+        let suspendedTabs = new Set();
+        let onBeforeReady = function(details) {
+            if ( details.type !== 'main_frame' && details.tabId > 0 ) {
+                suspendedTabs.add(details.tabId);
+                console.info('uBO suspend tab %d, block %s', details.tabId, details.url);
+                return { cancel: true };
+            }
+        };
+        // https://github.com/gorhill/uBlock/issues/2067
+        //   Experimental: Block everything until uBO is fully ready.
+        // https://github.com/gorhill/uBlock/issues/3130
+        //   Don't block root frame.
+        if ( µBlock.hiddenSettings.suspendTabsUntilReady ) {
+            vAPI.net.addListener(
+                'onBeforeRequest',
+                onBeforeReady,
+                { urls: [ 'http://*/*', 'https://*/*' ] },
+                [ 'blocking' ]
+            );
+        }
+        return function() {
+            vAPI.net.removeListener('onBeforeRequest', onBeforeReady);
+            vAPI.net.addListener(
+                'onBeforeRequest',
+                onBeforeRequest,
+                { urls: [ 'http://*/*', 'https://*/*' ] },
+                [ 'blocking' ]
+            );
+            vAPI.net.addListener(
+                'onHeadersReceived',
+                onHeadersReceived,
+                {
+                    types: [ 'main_frame', 'sub_frame', 'image', 'media' ],
+                    urls: [ 'http://*/*', 'https://*/*' ],
+                },
+                [ 'blocking', 'responseHeaders' ]
+            );
+            if ( vAPI.net.validTypes.has('csp_report') ) {
+                vAPI.net.addListener(
+                    'onBeforeRequest',
+                    onBeforeMaybeSpuriousCSPReport,
+                    {
+                        types: [ 'csp_report' ],
+                        urls: [ 'http://*/*', 'https://*/*' ]
+                    },
+                    [ 'blocking', 'requestBody' ]
+                );
+            }
+            // https://github.com/gorhill/uBlock/issues/2067
+            //   Force-reload tabs for which network requests were blocked
+            //   during launch. This can happen only if tabs were "suspended".
+            for ( let tabId of suspendedTabs ) {
+                console.info('uBO suspend tab %d, force reload', tabId);
+                vAPI.tabs.reload(tabId);
+            }
+            suspendedTabs.clear();
+        };
+    })(),
+
+    temporarilyWhitelistDocument: function(hostname) {
+        if ( typeof hostname !== 'string' || hostname === '' ) { return; }
+        documentWhitelists.set(hostname, Date.now() + 60 * 1000);
     }
-
-    documentWhitelists[hostname] = Date.now() + 60 * 1000;
 };
-
-/******************************************************************************/
-
-return exports;
 
 /******************************************************************************/
 

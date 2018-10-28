@@ -25,20 +25,7 @@
 
 /******************************************************************************/
 
-vAPI.net = {
-    onBeforeRequest: {},
-    onBeforeMaybeSpuriousCSPReport: {},
-    onHeadersReceived: {},
-    nativeCSPReportFiltering: true,
-    webRequest: browser.webRequest,
-    canFilterResponseBody:
-        typeof browser.webRequest === 'object' &&
-        typeof browser.webRequest.filterResponseData === 'function'
-};
-
-/******************************************************************************/
-
-vAPI.net.registerListeners = function() {
+(function() {
 
     // https://github.com/gorhill/uBlock/issues/2950
     // Firefox 56 does not normalize URLs to ASCII, uBO must do this itself.
@@ -56,40 +43,18 @@ vAPI.net.registerListeners = function() {
         mustPunycode = evalMustPunycode();
     }, { once: true });
 
-    let wrApi = browser.webRequest;
-
-    // legacy Chromium understands only these network request types.
-    let validTypes = new Set([
-        'image',
-        'main_frame',
-        'object',
-        'other',
-        'script',
-        'stylesheet',
-        'sub_frame',
-        'xmlhttprequest',
-    ]);
-    // modern Chromium/WebExtensions: more types available.
-    if ( wrApi.ResourceType ) {
-        for ( let typeKey in wrApi.ResourceType ) {
-            if ( wrApi.ResourceType.hasOwnProperty(typeKey) ) {
-                validTypes.add(wrApi.ResourceType[typeKey]);
-            }
-        }
-    }
-
     let denormalizeTypes = function(aa) {
         if ( aa.length === 0 ) {
-            return Array.from(validTypes);
+            return Array.from(vAPI.net.validTypes);
         }
         let out = new Set(),
             i = aa.length;
         while ( i-- ) {
             let type = aa[i];
-            if ( validTypes.has(type) ) {
+            if ( vAPI.net.validTypes.has(type) ) {
                 out.add(type);
             }
-            if ( type === 'image' && validTypes.has('imageset') ) {
+            if ( type === 'image' && vAPI.net.validTypes.has('imageset') ) {
                 out.add('imageset');
             }
         }
@@ -100,7 +65,7 @@ vAPI.net.registerListeners = function() {
     let reAsciiHostname  = /^https?:\/\/[0-9a-z_.:@-]+[/?#]/;
     let parsedURL = new URL('about:blank');
 
-    let normalizeRequestDetails = function(details) {
+    vAPI.net.normalizeDetails = function(details) {
         if (
             details.tabId === vAPI.noTabId &&
             typeof details.documentUrl === 'string'
@@ -132,79 +97,14 @@ vAPI.net.registerListeners = function() {
         }
     };
 
-    // This is to work around Firefox's inability to redirect xmlhttprequest
-    // requests to data: URIs.
-    let pseudoRedirector = {
-        filters: new Map(),
-        reDataURI: /^data:\w+\/\w+;base64,/,
-        dec: null,
-        init: function() {
-            this.dec = new Uint8Array(128);
-            let s = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-            for ( let i = 0, n = s.length; i < n; i++ ) {
-                this.dec[s.charCodeAt(i)] = i;
-            }
-            return this.dec;
-        },
-        start: function(requestId, redirectUrl) {
-            let match = this.reDataURI.exec(redirectUrl);
-            if ( match === null ) { return redirectUrl; }
-            let s = redirectUrl.slice(match[0].length).replace(/=*$/, '');
-            let f = browser.webRequest.filterResponseData(requestId);
-            f.onstop = this.done;
-            f.onerror = this.disconnect;
-            this.filters.set(f, s);
-        },
-        done: function() {
-            let pr = pseudoRedirector;
-            let bufIn = pr.filters.get(this);
-            if ( bufIn === undefined ) { return pr.disconnect(this); }
-            let dec = pr.dec || pr.init();
-            let sizeIn = bufIn.length;
-            let iIn = 0;
-            let sizeOut = sizeIn * 6 >>> 3;
-            let bufOut = new Uint8Array(sizeOut);
-            let iOut = 0;
-            let n = sizeIn & ~3;
-            while ( iIn < n ) {
-                let b0 = dec[bufIn.charCodeAt(iIn++)];
-                let b1 = dec[bufIn.charCodeAt(iIn++)];
-                let b2 = dec[bufIn.charCodeAt(iIn++)];
-                let b3 = dec[bufIn.charCodeAt(iIn++)];
-                bufOut[iOut++] = (b0 << 2) & 0xFC | (b1 >>> 4);
-                bufOut[iOut++] = (b1 << 4) & 0xF0 | (b2 >>> 2);
-                bufOut[iOut++] = (b2 << 6) & 0xC0 |  b3;
-            }
-            if ( iIn !== sizeIn ) {
-                let b0 = dec[bufIn.charCodeAt(iIn++)];
-                let b1 = dec[bufIn.charCodeAt(iIn++)];
-                bufOut[iOut++] = (b0 << 2) & 0xFC | (b1 >>> 4);
-                if ( iIn !== sizeIn ) {
-                    let b2 = dec[bufIn.charCodeAt(iIn++)];
-                    bufOut[iOut++] = (b1 << 4) & 0xF0 | (b2 >>> 2);
-                }
-            }
-            this.write(bufOut);
-            pr.disconnect(this);
-        },
-        disconnect: function(f) {
-            let pr = pseudoRedirector;
-            pr.filters.delete(f);
-            f.disconnect();
+    vAPI.net.denormalizeFilters = function(filters) {
+        let urls = filters.urls || [ '<all_urls>' ];
+        let types = filters.types;
+        if ( Array.isArray(types) ) {
+            types = denormalizeTypes(types);
         }
-    };
-
-    let onBeforeRequestClient = this.onBeforeRequest.callback;
-    let onBeforeRequest = function(details) {
-        normalizeRequestDetails(details);
-        return onBeforeRequestClient(details);
-    };
-
-    if ( onBeforeRequest ) {
-        let urls = this.onBeforeRequest.urls || ['<all_urls>'];
-        let types = this.onBeforeRequest.types || undefined;
         if (
-            (validTypes.has('websocket')) &&
+            (vAPI.net.validTypes.has('websocket')) &&
             (types === undefined || types.indexOf('websocket') !== -1) &&
             (urls.indexOf('<all_urls>') === -1)
         ) {
@@ -215,48 +115,8 @@ vAPI.net.registerListeners = function() {
                 urls.push('wss://*/*');
             }
         }
-        wrApi.onBeforeRequest.addListener(
-            onBeforeRequest,
-            { urls: urls, types: types },
-            this.onBeforeRequest.extra
-        );
-    }
-
-    // https://github.com/gorhill/uBlock/issues/3140
-    if ( typeof this.onBeforeMaybeSpuriousCSPReport.callback === 'function' ) {
-        wrApi.onBeforeRequest.addListener(
-            this.onBeforeMaybeSpuriousCSPReport.callback,
-            {
-                urls: [ 'http://*/*', 'https://*/*' ],
-                types: [ 'csp_report' ]
-            },
-            [ 'blocking', 'requestBody' ]
-        );
-    }
-
-    let onHeadersReceivedClient = this.onHeadersReceived.callback,
-        onHeadersReceivedClientTypes = this.onHeadersReceived.types.slice(0),
-        onHeadersReceivedTypes = denormalizeTypes(onHeadersReceivedClientTypes);
-    let onHeadersReceived = function(details) {
-        normalizeRequestDetails(details);
-        if (
-            onHeadersReceivedClientTypes.length !== 0 &&
-            onHeadersReceivedClientTypes.indexOf(details.type) === -1
-        ) {
-            return;
-        }
-        return onHeadersReceivedClient(details);
+        return { types, urls };
     };
-
-    if ( onHeadersReceived ) {
-        let urls = this.onHeadersReceived.urls || ['<all_urls>'];
-        let types = onHeadersReceivedTypes;
-        wrApi.onHeadersReceived.addListener(
-            onHeadersReceived,
-            { urls: urls, types: types },
-            this.onHeadersReceived.extra
-        );
-    }
-};
+})();
 
 /******************************************************************************/

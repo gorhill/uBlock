@@ -683,22 +683,6 @@ PageStore.prototype.filterCSPReport = function(context) {
         }
         return 1;
     }
-    // https://github.com/gorhill/uBlock/issues/3140
-    //   Special handling of CSP reports if and only if these can't be filtered
-    //   natively.
-    if (
-        vAPI.net.nativeCSPReportFiltering !== true &&
-        this.internalRedirectionCount !== 0
-    ) {
-        if ( µb.logger.isEnabled() ) {
-            this.logData = {
-                result: 1,
-                source: 'global',
-                raw: 'no-spurious-csp-report'
-            };
-        }
-        return 1;
-    }
     return 0;
 };
 

@@ -620,7 +620,7 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
         // https://code.google.com/p/chromium/issues/detail?id=410868#c8
         void chrome.runtime.lastError;
         if ( typeof callback === 'function' ) {
-            callback();
+            callback.apply(null, arguments);
         }
     };
     if ( tabId ) {
@@ -1038,6 +1038,61 @@ vAPI.messaging.broadcast = function(message) {
     );
 })();
 
+vAPI.net = {
+    listenerMap: new WeakMap(),
+    // legacy Chromium understands only these network request types.
+    validTypes: (function() {
+        let types = new Set([
+            'main_frame',
+            'sub_frame',
+            'stylesheet',
+            'script',
+            'image',
+            'object',
+            'xmlhttprequest',
+            'other'
+        ]);
+        let wrrt = browser.webRequest.ResourceType;
+        if ( wrrt instanceof Object ) {
+            for ( let typeKey in wrrt ) {
+                if ( wrrt.hasOwnProperty(typeKey) ) {
+                    types.add(wrrt[typeKey]);
+                }
+            }
+        }
+        return types;
+    })(),
+    denormalizeFilters: null,
+    normalizeDetails: null,
+    addListener: function(which, clientListener, filters, options) {
+        if ( typeof this.denormalizeFilters === 'function' ) {
+            filters = this.denormalizeFilters(filters);
+        }
+        let actualListener;
+        if ( typeof this.normalizeDetails === 'function' ) {
+            actualListener = function(details) {
+                vAPI.net.normalizeDetails(details);
+                return clientListener(details);
+            };
+            this.listenerMap.set(clientListener, actualListener);
+        }
+        browser.webRequest[which].addListener(
+            actualListener || clientListener,
+            filters,
+            options
+        );
+    },
+    removeListener: function(which, clientListener) {
+        let actualListener = this.listenerMap.get(clientListener);
+        if ( actualListener !== undefined ) {
+            this.listenerMap.delete(clientListener);
+        }
+        browser.webRequest[which].removeListener(
+            actualListener || clientListener
+        );
+    },
+};
+
 /******************************************************************************/
 /******************************************************************************/
 
@@ -1093,62 +1148,6 @@ vAPI.contextMenu = chrome.contextMenus && {
 /******************************************************************************/
 
 vAPI.commands = chrome.commands;
-
-/******************************************************************************/
-/******************************************************************************/
-
-// This is called only once, when everything has been loaded in memory after
-// the extension was launched. It can be used to inject content scripts
-// in already opened web pages, to remove whatever nuisance could make it to
-// the web pages before uBlock was ready.
-
-vAPI.onLoadAllCompleted = function() {
-    // http://code.google.com/p/chromium/issues/detail?id=410868#c11
-    // Need to be sure to access `vAPI.lastError()` to prevent
-    // spurious warnings in the console.
-    var onScriptInjected = function() {
-        vAPI.lastError();
-    };
-    var scriptStart = function(tabId) {
-        var manifest = chrome.runtime.getManifest();
-        if ( manifest instanceof Object === false ) { return; }
-        for ( var contentScript of manifest.content_scripts ) {
-            for ( var file of contentScript.js ) {
-                vAPI.tabs.injectScript(tabId, {
-                    file: file,
-                    allFrames: contentScript.all_frames,
-                    runAt: contentScript.run_at
-                }, onScriptInjected);
-            }
-        }
-    };
-    var bindToTabs = function(tabs) {
-        var µb = µBlock;
-        var i = tabs.length, tab;
-        while ( i-- ) {
-            tab = tabs[i];
-            µb.tabContextManager.commit(tab.id, tab.url);
-            µb.bindTabToPageStats(tab.id);
-            // https://github.com/chrisaljoudi/uBlock/issues/129
-            if ( /^https?:\/\//.test(tab.url) ) {
-                scriptStart(tab.id);
-            }
-        }
-    };
-
-    chrome.tabs.query({ url: '<all_urls>' }, bindToTabs);
-};
-
-/******************************************************************************/
-/******************************************************************************/
-
-vAPI.punycodeHostname = function(hostname) {
-    return hostname;
-};
-
-vAPI.punycodeURL = function(url) {
-    return url;
-};
 
 /******************************************************************************/
 /******************************************************************************/
