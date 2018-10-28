@@ -280,7 +280,7 @@
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
-    "message": "Disattivare l'auditing del collegamento ipertestuale",
+    "message": "Disattiva la revisione dei collegamenti ipertestuali",
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
