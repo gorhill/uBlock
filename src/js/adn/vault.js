@@ -45,9 +45,10 @@
     viewState = {},
     userZoomScale = Zooms[Zooms.indexOf(100)], // determined by mousewheel
     zoomIdx = 0, // determined by zoom in / out buttons
-    draggingVault = false;
+    draggingVault = false,
+    vaultLoading = false;
 
-  var gAds, gAdSets, gMin, gMax, gSliderRight, gSliderLeft, settings; // stateful
+  var gAds, gAdSets, gMin, gMax, gSliderRight, gSliderLeft, settings, lastAdDetectedTime, waitingAds = []; // stateful
 
   var messager = vAPI.messaging;
 
@@ -62,21 +63,18 @@
 
     case 'adDetected':
       console.log('*** New-ad-detected ***', request.ad);
+      waitingAds.push(request.ad);
+      lastAdDetectedTime = new Date();
+      var w =  d3.select('.chart-bg')[0][0].attributes.width.value;
+      // only when the slider covers 'now'
+      if (gSliderLeft.indexOf(w) !== -1) setTimeout(autoUpdateVault, 3000);
+
+      //  updatdVault() would normally be triggered by the 'adDetected' message (above),
+      //  which contains the new ads, and is sent ONLY if the the vault is open
       break;
 
     case 'adVisited':
-      updateAd(request);
-      break;
-
-
-    case 'updateVault':
-
-      // @cqx931 would normally be triggered by the 'adDetected' message (above),
-      // which contains the new ads, and is sent ONLY if the the vault is open
-      // see core.js:1046
-
-      // TODO: update vault on new Ads
-      updateAds(newAdset, true);
+      updateAd(reques);
       break;
 
     case 'notifications':
@@ -121,20 +119,53 @@
 
   };
 
-  var updateAds = function (json, newAdsOnly){
+  var autoUpdateVault = function(){
+
+    var gap = new Date() - lastAdDetectedTime;
+    if (waitingAds != [] && gap >= 3000){
+      updateVault(waitingAds, true);
+      // console.log("autoupdate", gap)
+    } else{
+      // console.log("skip-update", gap)
+    }
+  }
+
+  var updateVault = function (ads, newAdsOnly){
+    console.log()
+    if (vaultLoading) return;
+    if (gAdSets == null) {
+      gAds = ads;
+      createSlider();
+      return;
+    }
+
     // console.log('updateAds: ', json);
     if (newAdsOnly) {
-      // update gAds
-      for (var key in newAdsOnly) {
-          gAds[key] = newAdsOnly[key]
-          // TODO: update gAdSets
+      gAds = gAds.concat(ads);
+      for (var i = 0; i < ads.length; i++) {
+          var ad = ads[i];
+          var key = computeHash(ad);
+          if (!key) continue;
+
+          for (var j = 0; j < gAdSets.length; j++) {
+            if (gAdSets[j].gid === key){
+              gAdSets[j].children.append(ad);
+              ad = null
+            }
+          }
+
+          ad != null && gAdSets.push(new AdSet(ad));
       }
+      // clear waitingAds
+      waitingAds = []
     } else {
       // replace all gAds
-      gAds = json.data; // store
+      gAds = ads; // store
       gAdSets = null; // reset
     }
+
     createSlider("update");
+    waitingAds = [];
   }
 
   var updateAd = function (json) {
@@ -168,7 +199,7 @@
 
     adsets = adsets || [];
 
-    console.log('Vault.doLayout: ' + adsets.length + " ad-sets, total=" + numFound(adsets));
+    // console.log('Vault.doLayout: ' + adsets.length + " ad-sets, total=" + numFound(adsets));
 
     if (!update) $('.item').remove();
 
@@ -1153,6 +1184,8 @@
       (e.keyCode === 27) && lightboxMode(false); // esc
       (e.keyCode === 73) && toggleInterface(); // 'i'
       (e.keyCode === 68) && logAdSetInfo(); // 'd'
+      (e.keyCode === 80 ) && repack(); // 'p'
+      (e.keyCode === 85 ) && updateVault(waitingAds, true); // 'u'
       //console.log(e);
     });
 
@@ -1234,8 +1267,6 @@
         resizeId = setTimeout(function () {
           createSlider("resize");
         }, 100);
-
-
 
     });
 
@@ -1372,10 +1403,9 @@
     }, 1000);
 
     showAlert(visible ? false : 'no ads found');
-    console.log("Repacking")
 
     var loader = imagesLoaded($container, function () {
-      console.log("Images loaded")
+
       if (visible > 1) {
 
         var p = new Packery('#container', {
@@ -1402,19 +1432,19 @@
       $('#loading-img').hide();
       // Show #container after repack
       $('#container').css('opacity','1');
+      vaultLoading = false;
     });
   }
 
   /********************************************************************/
 
   function createSlider(mode) {
-
+    vaultLoading = true;
     // console.log('Vault-Slider.createSlider: '+gAds.length);
     // three special modes:
     // all three special modes: remember brush
 
-    var lastBrush;
-    if (mode)  lastBrush = document.getElementsByClassName("brush")[0];
+    var lastBrush = mode == "delete" ? document.getElementsByClassName("brush")[0] : null;
 
     // clear all the old svg
     d3.select("g.parent").selectAll("*").remove();
@@ -1545,52 +1575,54 @@
       .extent(bExtent)
       .on("brushend", brushend);
 
-    if (mode == "delete" || mode == "update")  {
+    if (lastBrush)  {
       // append the old brush
       document.getElementById("svgcon").getElementsByTagName("svg")[0].firstChild.appendChild(lastBrush);
     }
     else {
-    var gBrush = svg.append("g")
-      .attr("class", "brush")
-      .call(brush);
+      var gBrush = svg.append("g")
+        .attr("class", "brush")
+        .call(brush);
 
-    // set the height of the brush to that of the chart
-    gBrush.selectAll(".brush .extent")
-      .attr("height", 49)
-      .attr("y", -50)
-      .attr("fill", "#0076FF")
-      .attr("fill-opacity", ".25");
+      // set the height of the brush to that of the chart
+      gBrush.selectAll(".brush .extent")
+        .attr("height", 49)
+        .attr("y", -50)
+        .attr("fill", "#0076FF")
+        .attr("fill-opacity", ".25");
 
-    // set the height of the brush to that of the chart
-    // gBrush.selectAll("rect")
-    //   .attr("y", -50);
+      // set the height of the brush to that of the chart
+      // gBrush.selectAll("rect")
+      //   .attr("y", -50);
 
-    // attach handle image
-    gBrush.selectAll(".resize").append("image")
-      .attr("xlink:href","../img/timeline-handle.svg")
-      .attr("width", 5)
-      .attr("height", 50)
-      .attr("y", -50)
-      .attr("x", -3);
+      // attach handle image
+      gBrush.selectAll(".resize").append("image")
+        .attr("xlink:href","../img/timeline-handle.svg")
+        .attr("width", 5)
+        .attr("height", 50)
+        .attr("y", -50)
+        .attr("x", -3);
     }
 
     // cases:
-    // 1) no-gAdSets=first time - runFilter - update gAdSets = 2
-    // 2) [default]]reload vault: doLayout, newAdset, update slider
-    // 3) "update": updateLayout, newAdset, same slider
-    //4) "delete":skipLayout, oldAdSet, same slider
-    //5) "resize": doLayout, oldAdSet, same slider
+    // 1) [default]]reload vault: doLayout, update slider - runFilter()
+    // 2) "update": updateLayout, same slider
+    // 3) "delete":skipLayout, same slider
+    // 4) "resize": repack, same slider
 
     // do filter, then call either doLayout or computeStats
     switch (mode) {
       case "delete":
         computeStats(gAdSets);
+        vaultLoading = false;
         break;
       case "resize":
-        doLayout(gAdSets)
+        repack();
+        //TODO: remember the brush by scale
         break;
       case "update":
-        doLayout(runFilter(bExtent), true)
+        doLayout(gAdSets, true)
+        break;
       default:
         doLayout(runFilter(bExtent))
     }
@@ -1686,19 +1718,14 @@
       gSliderRight = d3.select('.w.resize')[0][0].attributes.transform.value;
       gSliderLeft = d3.select('.e.resize')[0][0].attributes.transform.value;
 
-      if (!lastgSliderRight || !lastgSliderLeft) {
-        return;
+      if (!lastgSliderRight || !lastgSliderLeft) return;
 
-      }
       if (gSliderRight === lastgSliderRight && gSliderLeft === lastgSliderLeft) {
-
         return;
       } else {
-
         var filtered = runFilter(d3.event.target.extent());
         filtered && doLayout(filtered);
       }
-
     }
   }
 
@@ -1844,17 +1871,6 @@
   }
 
   // @cqx931 use the existing $(document).keyup function
-  var onKeyPressed = function(ev) {
-    // repack
-    if ( ev.key === 'p' || ev.which === 80 ) {
-      repack();
-    } else if ( ev.key === 'u') {
-      console.log("UpdateAds");
-      messager.send('adnauseam', {
-        what: 'adsForVault'
-      }, updateAds);
-    }
-  }
 
   /*
    * returns 'visited' if any are visited,
@@ -1889,8 +1905,5 @@
   $('#import').on('click', startImportFilePicker);
   $('#importFilePicker').on('change', handleImportAds);
   $('#reset').on('click', clearAds);
-
-  // @cqx931 use the existing $(document).keyup function
-  $(document).keypress(onKeyPressed);
 
 })();
