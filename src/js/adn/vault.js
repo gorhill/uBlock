@@ -66,9 +66,12 @@
       waitingAds.push(request.ad);
       lastAdDetectedTime = new Date();
       var brush =  document.getElementsByClassName('chart-bg')[0]
-      var w = brush ? brush.attributes.width.value : 0;
-      // only when the slider covers 'now' or when there is no slider (empty vault)
-      if ( w == 0|| gSliderLeft.indexOf(w) !== -1) setTimeout(autoUpdateVault, 3000);
+      var w = brush ? parseInt(brush.attributes.width.value) : null,
+          sliderPos = gSliderLeft ? parseFloat(/\((.*?),/g.exec(gSliderLeft)[1]) : null;
+
+      // only when the slider covers 'now' or when there is no slider (empty vault or one ad)
+      // console.log(w, sliderPos)
+      if ( w - sliderPos <= 1 || sliderPos == 0) setTimeout(autoUpdateVault, 3000);
 
       //  updatdVault() would normally be triggered by the 'adDetected' message (above),
       //  which contains the new ads, and is sent ONLY if the the vault is open
@@ -132,7 +135,6 @@
   }
 
   var updateVault = function (ads, newAdsOnly){
-    console.log()
     if (vaultLoading) return;
     if (gAdSets == null) {
       gAds = ads;
@@ -199,7 +201,6 @@
   function doLayout(adsets, update) {
 
     adsets = adsets || [];
-
     // console.log('Vault.doLayout: ' + adsets.length + " ad-sets, total=" + numFound(adsets));
     vaultLoading = true;
     if (!update) $('.item').remove();
@@ -1444,7 +1445,7 @@
     // three special modes:
     // all three special modes: remember brush
 
-    var lastBrush = mode == "delete" ? document.getElementsByClassName("brush")[0] : null;
+    var lastBrush = (mode == "delete" || mode == "update") ? document.getElementsByClassName("brush")[0] : null;
 
     // clear all the old svg
     d3.select("g.parent").selectAll("*").remove();
@@ -1611,6 +1612,7 @@
     // 4) "resize": repack, same slider
 
     // do filter, then call either doLayout or computeStats
+
     switch (mode) {
       case "delete":
         computeStats(gAdSets);
@@ -1618,10 +1620,12 @@
         break;
       case "resize":
         repack();
-        //TODO: remember the brush by scale
+        runFilter([gMin, gMax])
         break;
       case "update":
-        doLayout(gAdSets, true)
+        // console.log(gMin, new Date())
+        var ext = [gMin, new Date()];
+        doLayout(runFilter(ext), true)
         break;
       default:
         doLayout(runFilter(bExtent))
@@ -1631,7 +1635,7 @@
     // this is called on brushend() and createSlider()
     function runFilter(ext) {
 
-      //log('vault.js::runFilter: '+ext[0]+","+ext[1]);
+      // console.log('vault.js::runFilter: '+ext[0]+","+ext[1]);
       centerContainer();
       gMin = ext[0], gMax = ext[1];
 
