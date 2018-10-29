@@ -125,9 +125,9 @@
     var gap = new Date() - lastAdDetectedTime;
     if (waitingAds != [] && gap >= 3000){
       updateVault(waitingAds, true);
-      console.log("autoupdate", gap)
+      // console.log("autoupdate", gap)
     } else{
-      console.log("skip-update", gap)
+      // console.log("skip-update", gap)
     }
   }
 
