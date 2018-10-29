@@ -1261,11 +1261,11 @@ var onMessage = function(request, sender, callback) {
     }
 
     // Sync
-    var response;
+    let response;
 
     switch ( request.what ) {
     case 'temporarilyWhitelistDocument':
-        µBlock.webRequest.temporarilyWhitelistDocument(request.hostname);
+        µBlock.webRequest.strictBlockBypass(request.hostname);
         break;
 
     default:

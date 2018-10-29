@@ -196,7 +196,10 @@ var onBeforeRootFrameRequest = function(details) {
     }
 
     // Permanently unrestricted?
-    if ( result === 0 && µb.sessionSwitches.evaluateZ('no-strict-blocking', requestHostname) ) {
+    if (
+        result === 0 &&
+        µb.sessionSwitches.evaluateZ('no-strict-blocking', requestHostname)
+    ) {
         result = 2;
         if ( logEnabled ) {
             logData = { engine: 'u', result: 2, raw: 'no-strict-blocking: ' + µb.sessionSwitches.z + ' true' };
@@ -204,10 +207,13 @@ var onBeforeRootFrameRequest = function(details) {
     }
 
     // Temporarily whitelisted?
-    if ( result === 0 ) {
-        result = isTemporarilyWhitelisted(result, requestHostname);
-        if ( result === 2 && logEnabled === true ) {
-            logData = { engine: 'u', result: 2, raw: 'no-strict-blocking true (temporary)' };
+    if (
+        result === 0 &&
+        strictBlockBypasser.isBypassed(requestHostname)
+    ) {
+        result = 2;
+        if ( logEnabled ) {
+            logData = { engine: 'u', result: 2, raw: 'no-strict-blocking: true (temporary)' };
         }
     }
 
@@ -1074,24 +1080,58 @@ var headerValueFromName = function(headerName, headers) {
 
 /******************************************************************************/
 
-var isTemporarilyWhitelisted = function(result, hostname) {
-    for (;;) {
-        let obsolete = documentWhitelists.get(hostname);
-        if ( obsolete !== undefined ) {
-            if ( obsolete > Date.now() ) {
-                if ( result === 0 ) { return 2; }
-            } else {
-                documentWhitelists.delete(hostname);
+let strictBlockBypasser = {
+    hostnameToDeadlineMap: new Map(),
+    cleanupTimer: undefined,
+
+    cleanup: function() {
+        for ( let [ hostname, deadline ] of this.hostnameToDeadlineMap ) {
+            if ( deadline <= Date.now() ) {
+                this.hostnameToDeadlineMap.delete(hostname);
             }
         }
-        let pos = hostname.indexOf('.');
-        if ( pos === -1 ) { break; }
-        hostname = hostname.slice(pos + 1);
-    }
-    return result;
-};
+    },
 
-let documentWhitelists = new Map();
+    bypass: function(hostname) {
+        if ( typeof hostname !== 'string' || hostname === '' ) { return; }
+        this.hostnameToDeadlineMap.set(
+            hostname,
+            Date.now() + µBlock.hiddenSettings.strictBlockingBypassDuration * 1000
+        );
+    },
+
+    isBypassed: function(hostname) {
+        if ( this.hostnameToDeadlineMap.size === 0 ) { return false; }
+        let bypassDuration =
+            µBlock.hiddenSettings.strictBlockingBypassDuration * 1000;
+        if ( this.cleanupTimer === undefined ) {
+            this.cleanupTimer = vAPI.setTimeout(
+                ( ) => {
+                    this.cleanupTimer = undefined;
+                    this.cleanup();
+                },
+                bypassDuration + 10000
+            );
+        }
+        for (;;) {
+            let deadline = this.hostnameToDeadlineMap.get(hostname);
+            if ( deadline !== undefined ) {
+                if ( deadline > Date.now() ) {
+                    this.hostnameToDeadlineMap.set(
+                        hostname,
+                        Date.now() + bypassDuration
+                    );
+                    return true;
+                }
+                this.hostnameToDeadlineMap.delete(hostname);
+            }
+            let pos = hostname.indexOf('.');
+            if ( pos === -1 ) { break; }
+            hostname = hostname.slice(pos + 1);
+        }
+        return false;
+    }
+};
 
 /******************************************************************************/
 
@@ -1156,9 +1196,8 @@ return {
         };
     })(),
 
-    temporarilyWhitelistDocument: function(hostname) {
-        if ( typeof hostname !== 'string' || hostname === '' ) { return; }
-        documentWhitelists.set(hostname, Date.now() + 60 * 1000);
+    strictBlockBypass: function(hostname) {
+        strictBlockBypasser.bypass(hostname);
     }
 };
 
