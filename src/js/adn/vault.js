@@ -65,9 +65,10 @@
       console.log('*** New-ad-detected ***', request.ad);
       waitingAds.push(request.ad);
       lastAdDetectedTime = new Date();
-      var w =  d3.select('.chart-bg')[0][0].attributes.width.value;
-      // only when the slider covers 'now'
-      if (gSliderLeft.indexOf(w) !== -1) setTimeout(autoUpdateVault, 3000);
+      var brush =  document.getElementsByClassName('chart-bg')[0]
+      var w = brush ? brush.attributes.width.value : 0;
+      // only when the slider covers 'now' or when there is no slider (empty vault)
+      if ( w == 0|| gSliderLeft.indexOf(w) !== -1) setTimeout(autoUpdateVault, 3000);
 
       //  updatdVault() would normally be triggered by the 'adDetected' message (above),
       //  which contains the new ads, and is sent ONLY if the the vault is open
@@ -124,9 +125,9 @@
     var gap = new Date() - lastAdDetectedTime;
     if (waitingAds != [] && gap >= 3000){
       updateVault(waitingAds, true);
-      // console.log("autoupdate", gap)
+      console.log("autoupdate", gap)
     } else{
-      // console.log("skip-update", gap)
+      console.log("skip-update", gap)
     }
   }
 
@@ -200,7 +201,7 @@
     adsets = adsets || [];
 
     // console.log('Vault.doLayout: ' + adsets.length + " ad-sets, total=" + numFound(adsets));
-
+    vaultLoading = true;
     if (!update) $('.item').remove();
 
     createDivs(adsets, update);
@@ -1439,7 +1440,6 @@
   /********************************************************************/
 
   function createSlider(mode) {
-    vaultLoading = true;
     // console.log('Vault-Slider.createSlider: '+gAds.length);
     // three special modes:
     // all three special modes: remember brush
