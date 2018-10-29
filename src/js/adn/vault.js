@@ -78,7 +78,7 @@
       break;
 
     case 'adVisited':
-      updateAd(reques);
+      updateAd(request);
       break;
 
     case 'notifications':
