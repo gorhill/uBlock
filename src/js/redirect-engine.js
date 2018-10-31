@@ -28,7 +28,7 @@
 /******************************************************************************/
 /******************************************************************************/
 
-var warResolve = (function() {
+const warResolve = (function() {
     var warPairs = [];
 
     var onPairsReady = function() {
@@ -76,12 +76,12 @@ var warResolve = (function() {
 //   Do not redirect to a WAR if the platform suffers from spurious redirect
 //   conflicts, and the request to redirect is not `https:`.
 //   This special handling code can removed once the Chromium issue is fixed.
-var suffersSpuriousRedirectConflicts = vAPI.webextFlavor.soup.has('chromium');
+const suffersSpuriousRedirectConflicts = vAPI.webextFlavor.soup.has('chromium');
 
 /******************************************************************************/
 /******************************************************************************/
 
-var RedirectEntry = function() {
+const RedirectEntry = function() {
     this.mime = '';
     this.data = '';
     this.warURL = undefined;
@@ -153,7 +153,7 @@ RedirectEntry.fromSelfie = function(selfie) {
 /******************************************************************************/
 /******************************************************************************/
 
-var RedirectEngine = function() {
+const RedirectEngine = function() {
     this.resources = new Map();
     this.reset();
     this.resourceNameRegister = '';
@@ -219,9 +219,9 @@ RedirectEngine.prototype.lookup = function(context) {
 };
 
 RedirectEngine.prototype.lookupToken = function(entries, reqURL) {
-    var j = entries.length, entry;
+    let j = entries.length;
     while ( j-- ) {
-        entry = entries[j];
+        let entry = entries[j];
         if ( entry.pat instanceof RegExp === false ) {
             entry.pat = new RegExp(entry.pat, 'i');
         }
@@ -235,9 +235,9 @@ RedirectEngine.prototype.lookupToken = function(entries, reqURL) {
 /******************************************************************************/
 
 RedirectEngine.prototype.toURL = function(context) {
-    var token = this.lookup(context);
+    let token = this.lookup(context);
     if ( token === undefined ) { return; }
-    var entry = this.resources.get(token);
+    let entry = this.resources.get(token);
     if ( entry !== undefined ) {
         return entry.toURL(context);
     }
@@ -457,24 +457,26 @@ RedirectEngine.prototype.resourceContentFromName = function(name, mime) {
 
 // TODO: combine same key-redirect pairs into a single regex.
 
+// https://github.com/uBlockOrigin/uAssets/commit/deefe875551197d655f79cb540e62dfc17c95f42
+//   Consider 'none' a reserved keyword, to be used to disable redirection.
+
 RedirectEngine.prototype.resourcesFromString = function(text) {
-    var line, fields, encoded,
+    let fields, encoded,
         reNonEmptyLine = /\S/,
         lineIter = new µBlock.LineIterator(text);
 
     this.resources = new Map();
 
     while ( lineIter.eot() === false ) {
-        line = lineIter.next();
+        let line = lineIter.next();
         if ( line.startsWith('#') ) { continue; }
 
         if ( fields === undefined ) {
-            fields = line.trim().split(/\s+/);
-            if ( fields.length === 2 ) {
-                encoded = fields[1].indexOf(';') !== -1;
-            } else {
-                fields = undefined;
-            }
+            let head = line.trim().split(/\s+/);
+            if ( head.length !== 2 ) { continue; }
+            if ( head[0] === 'none' ) { continue; }
+            encoded = head[1].indexOf(';') !== -1;
+            fields = head;
             continue;
         }
 
@@ -484,14 +486,20 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
         }
 
         // No more data, add the resource.
-        this.resources.set(fields[0], RedirectEntry.fromFields(fields[1], fields.slice(2)));
+        this.resources.set(
+            fields[0],
+            RedirectEntry.fromFields(fields[1], fields.slice(2))
+        );
 
         fields = undefined;
     }
 
     // Process pending resource data.
     if ( fields !== undefined ) {
-        this.resources.set(fields[0], RedirectEntry.fromFields(fields[1], fields.slice(2)));
+        this.resources.set(
+            fields[0],
+            RedirectEntry.fromFields(fields[1], fields.slice(2))
+        );
     }
 
     warResolve();
