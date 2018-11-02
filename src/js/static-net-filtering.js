@@ -2714,6 +2714,18 @@ FilterContainer.prototype.getFilterCount = function() {
 
 /******************************************************************************/
 
+FilterContainer.prototype.benchmark = function(contexts) {
+    const t0 = performance.now();
+    const results = [];
+    for ( const context of contexts ) {
+         results.push(this.matchString(context));
+    }
+    const t1 = performance.now();
+    return { t0, t1, duration: t1 - t0, results };
+};
+
+/******************************************************************************/
+
 return new FilterContainer();
 
 /******************************************************************************/

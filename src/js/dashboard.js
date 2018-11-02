@@ -74,6 +74,10 @@ vAPI.messaging.send('dashboard', { what: 'canUpdateShortcuts' }, response => {
     document.body.classList.toggle('canUpdateShortcuts', response === true);
 });
 
+vAPI.messaging.send('dashboard', { what: 'benchmarkingPane' }, response => {
+    document.body.classList.toggle('canBenchmark', response === true);
+});
+
 resizeFrame();
 window.addEventListener('resize', resizeFrame);
 uDom('.tabButton').on('click', onTabClickHandler);
