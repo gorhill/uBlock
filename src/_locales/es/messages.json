@@ -52,11 +52,11 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Clic: deshabilitar\/habilitar uBlock₀ en este sitio.\n\nCtrl+clic: deshabilitar uBlock₀ sólo en esta página.",
+    "message": "Clic: deshabilitar\/habilitar uBlock₀ en este sitio.\n\nCtrl+clic: deshabilitar uBlock₀ solo en esta página.",
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Clic para deshabilitar uBlock₀ en este sitio.\n\nCtrl+clic para deshabilitar uBlock₀ sólo en esta página.",
+    "message": "Clic para deshabilitar uBlock₀ en este sitio.\n\nCtrl+clic para deshabilitar uBlock₀ solo en esta página.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
@@ -160,7 +160,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Reglas locales: las reglas en esta columna aplican sólo al sitio actual.\nLas reglas locales anulan las reglas globales.",
+    "message": "Reglas locales: las reglas en esta columna aplican solo al sitio actual.\nLas reglas locales anulan las reglas globales.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
