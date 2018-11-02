@@ -648,11 +648,11 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 //   Ensure ImageData for toolbar icon is valid before use.
 
 vAPI.setIcon = (function() {
-    let browserAction = chrome.browserAction,
+    const browserAction = chrome.browserAction,
         titleTemplate =
             chrome.runtime.getManifest().browser_action.default_title +
             ' ({badge})';
-    let icons = [
+    const icons = [
         {
             path: { '16': 'img/icon_16-off.png', '32': 'img/icon_32-off.png' }
         },
@@ -682,27 +682,38 @@ vAPI.setIcon = (function() {
         // https://searchfox.org/mozilla-central/rev/5ff2d7683078c96e4b11b8a13674daded935aa44/browser/components/extensions/parent/ext-browserAction.js#631
         if ( vAPI.webextFlavor.soup.has('chromium') === false ) { return; }
 
-        let imgs = [];
+        const imgs = [];
         for ( let i = 0; i < icons.length; i++ ) {
             let path = icons[i].path;
-            for ( let key in path ) {
+            for ( const key in path ) {
                 if ( path.hasOwnProperty(key) === false ) { continue; }
                 imgs.push({ i: i, p: key });
             }
         }
-        let onLoaded = function() {
-            for ( let img of imgs ) {
+
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/296
+        const safeGetImageData = function(ctx, w, h) {
+            let data;
+            try {
+                data = ctx.getImageData(0, 0, w, h);
+            } catch(ex) {
+            }
+            return data;
+        };
+
+        const onLoaded = function() {
+            for ( const img of imgs ) {
                 if ( img.r.complete === false ) { return; }
             }
             let ctx = document.createElement('canvas').getContext('2d');
             let iconData = [ null, null ];
-            for ( let img of imgs ) {
+            for ( const img of imgs ) {
                 let w = img.r.naturalWidth, h = img.r.naturalHeight;
                 ctx.width = w; ctx.height = h;
                 ctx.clearRect(0, 0, w, h);
                 ctx.drawImage(img.r, 0, 0);
                 if ( iconData[img.i] === null ) { iconData[img.i] = {}; }
-                let imgData = ctx.getImageData(0, 0, w, h);
+                const imgData = safeGetImageData(ctx, w, h);
                 if (
                     imgData instanceof Object === false ||
                     imgData.data instanceof Uint8ClampedArray === false ||
@@ -721,7 +732,7 @@ vAPI.setIcon = (function() {
                 }
             }
         };
-        for ( let img of imgs ) {
+        for ( const img of imgs ) {
             img.r = new Image();
             img.r.addEventListener('load', onLoaded, { once: true });
             img.r.src = icons[img.i].path[img.p];
