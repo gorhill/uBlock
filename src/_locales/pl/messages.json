@@ -635,6 +635,10 @@
     "message": "Współtwórcy",
     "description": "English: Contributors"
   },
+  "aboutDependencies": {
+    "message": "Zewnętrzne zależności (kompatybilne z GPLv3):",
+    "description": "Shown in the About pane"
+  },
   "aboutBackupDataButton": {
     "message": "Utwórz kopię zapasową…",
     "description": "Text for button to create a backup of all settings"

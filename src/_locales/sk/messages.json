@@ -635,6 +635,10 @@
     "message": "Prispievatelia",
     "description": "English: Contributors"
   },
+  "aboutDependencies": {
+    "message": "Externé závislosti (GPLv3 kompatibilné):",
+    "description": "Shown in the About pane"
+  },
   "aboutBackupDataButton": {
     "message": "Zálohovať do súboru",
     "description": "Text for button to create a backup of all settings"

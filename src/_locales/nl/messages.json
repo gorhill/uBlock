@@ -635,6 +635,10 @@
     "message": "Medewerkers",
     "description": "English: Contributors"
   },
+  "aboutDependencies": {
+    "message": "Externe afhankelijkheden (GPLv3-compatibel):",
+    "description": "Shown in the About pane"
+  },
   "aboutBackupDataButton": {
     "message": "Back-up maken naar bestand...",
     "description": "Text for button to create a backup of all settings"

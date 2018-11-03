@@ -635,6 +635,10 @@
     "message": "貢獻者",
     "description": "English: Contributors"
   },
+  "aboutDependencies": {
+    "message": "外部相依套件（與 GPLv3 相容）：",
+    "description": "Shown in the About pane"
+  },
   "aboutBackupDataButton": {
     "message": "備份到檔案…",
     "description": "Text for button to create a backup of all settings"

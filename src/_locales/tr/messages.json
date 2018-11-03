@@ -635,6 +635,10 @@
     "message": "Katkıda bulunanlar",
     "description": "English: Contributors"
   },
+  "aboutDependencies": {
+    "message": "Dış bağımlılıklar (GPLv3-uyumlu):",
+    "description": "Shown in the About pane"
+  },
   "aboutBackupDataButton": {
     "message": "Dosyaya yedekle",
     "description": "Text for button to create a backup of all settings"

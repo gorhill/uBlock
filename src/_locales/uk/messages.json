@@ -635,6 +635,10 @@
     "message": "Учасники",
     "description": "English: Contributors"
   },
+  "aboutDependencies": {
+    "message": "Зовнішні залежності (сумісні з GPLv3):",
+    "description": "Shown in the About pane"
+  },
   "aboutBackupDataButton": {
     "message": "Зберегти резервну копію у файл...",
     "description": "Text for button to create a backup of all settings"

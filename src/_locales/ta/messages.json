@@ -635,6 +635,10 @@
     "message": "பங்களிப்பாளர்கள்",
     "description": "English: Contributors"
   },
+  "aboutDependencies": {
+    "message": "External dependencies (GPLv3-compatible):",
+    "description": "Shown in the About pane"
+  },
   "aboutBackupDataButton": {
     "message": "கோப்பிற்கு காப்பு பிரதி எடு",
     "description": "Text for button to create a backup of all settings"

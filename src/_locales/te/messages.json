@@ -635,6 +635,10 @@
     "message": "ప్రాజెక్ట్కు సహాయ పడిన వారు",
     "description": "English: Contributors"
   },
+  "aboutDependencies": {
+    "message": "External dependencies (GPLv3-compatible):",
+    "description": "Shown in the About pane"
+  },
   "aboutBackupDataButton": {
     "message": "ఫైల్ లో భద్రపరచు",
     "description": "Text for button to create a backup of all settings"

@@ -635,6 +635,10 @@
     "message": "Meiwurkers",
     "description": "English: Contributors"
   },
+  "aboutDependencies": {
+    "message": "External dependencies (GPLv3-compatible):",
+    "description": "Shown in the About pane"
+  },
   "aboutBackupDataButton": {
     "message": "Reservekopy nei bestân",
     "description": "Text for button to create a backup of all settings"

@@ -635,6 +635,10 @@
     "message": "Contribuidores",
     "description": "English: Contributors"
   },
+  "aboutDependencies": {
+    "message": "Dependências externas (compatíveis com GPLv3):",
+    "description": "Shown in the About pane"
+  },
   "aboutBackupDataButton": {
     "message": "Copiar para ficheiro",
     "description": "Text for button to create a backup of all settings"

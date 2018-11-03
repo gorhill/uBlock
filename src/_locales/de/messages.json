@@ -148,11 +148,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Klicken, um Javascript auf dieser Seite komplett zu deaktivieren",
+    "message": "Klicken, um JavaScript auf dieser Website zu deaktivieren",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Klicken, um JavaScript auf dieser Seite nicht mehr zu deaktivieren",
+    "message": "Klicken, um JavaScript auf dieser Seite wieder zuzulassen",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
@@ -634,6 +634,10 @@
   "aboutContributors": {
     "message": "Mitwirkende",
     "description": "English: Contributors"
+  },
+  "aboutDependencies": {
+    "message": "Externe Abhängigkeiten (GPLv3-kompatibel):",
+    "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
     "message": "Backup in eine Datei",
