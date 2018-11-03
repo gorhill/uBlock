@@ -604,9 +604,7 @@
 
 µBlock.loadFilterLists = function(callback) {
     // Callers are expected to check this first.
-    if ( this.loadingFilterLists ) {
-        return;
-    }
+    if ( this.loadingFilterLists ) { return; }
     this.loadingFilterLists = true;
 
     var µb = this,
@@ -961,38 +959,31 @@
 
 /******************************************************************************/
 
-µBlock.loadPublicSuffixList = function(callback) {
-    var µb = this,
-        assetKey = µb.pslAssetKey,
-        compiledAssetKey = 'compiled/' + assetKey;
-
-    if ( typeof callback !== 'function' ) {
-        callback = this.noopFunc;
-    }
-    var onRawListLoaded = function(details) {
-        if ( details.content !== '' ) {
-            µb.compilePublicSuffixList(details.content);
-        }
-        callback();
-    };
-
-    var onCompiledListLoaded = function(details) {
-        var selfie;
+µBlock.loadPublicSuffixList = function() {
+    return new Promise(resolve => {
+    // start of executor
+    this.assets.get('compiled/' + this.pslAssetKey, details => {
+        let selfie;
         try {
             selfie = JSON.parse(details.content);
         } catch (ex) {
         }
         if (
-            selfie === undefined ||
-            publicSuffixList.fromSelfie(selfie) === false
+            selfie instanceof Object &&
+            publicSuffixList.fromSelfie(selfie)
         ) {
-            µb.assets.get(assetKey, onRawListLoaded);
+            resolve();
             return;
         }
-        callback();
-    };
-
-    this.assets.get(compiledAssetKey, onCompiledListLoaded);
+        this.assets.get(this.pslAssetKey, details => {
+            if ( details.content !== '' ) {
+                this.compilePublicSuffixList(details.content);
+            }
+            resolve();
+        });
+    });
+    // end of executor
+    });
 };
 
 /******************************************************************************/

@@ -33,12 +33,12 @@ if ( vAPI.webextFlavor === undefined ) {
 
 /******************************************************************************/
 
-var µBlock = (function() { // jshint ignore:line
+const µBlock = (function() { // jshint ignore:line
 
-    var oneSecond = 1000,
-        oneMinute = 60 * oneSecond;
+    const oneSecond = 1000,
+          oneMinute = 60 * oneSecond;
 
-    var hiddenSettingsDefault = {
+    const hiddenSettingsDefault = {
         assetFetchTimeout: 30,
         autoUpdateAssetFetchPeriod: 120,
         autoUpdatePeriod: 7,
@@ -56,7 +56,7 @@ var µBlock = (function() { // jshint ignore:line
         userResourcesLocation: 'unset'
     };
 
-    var whitelistDefault = [
+    const whitelistDefault = [
         'about-scheme',
         'chrome-extension-scheme',
         'chrome-scheme',
