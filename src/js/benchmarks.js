@@ -181,6 +181,15 @@ const contexts = [
 
 /******************************************************************************/
 
+const stdout = function(s) {
+    const parent = document.getElementById('results');
+    const line = document.createElement('div');
+    line.textContent = s;
+    parent.insertBefore(line, parent.firstElementChild);
+};
+
+/******************************************************************************/
+
 document.querySelector('#staticNetFilteringEngine button').addEventListener(
     'click',
     ( ) => {
@@ -191,11 +200,9 @@ document.querySelector('#staticNetFilteringEngine button').addEventListener(
                 contexts,
             },
             response => {
-                document.querySelector('#staticNetFilteringEngine .results')
-                        .textContent =
-                        `${response.duration.toFixed(2)} ms for ${contexts.length} requests, ${(response.duration / contexts.length).toFixed(3)} ms/request`;
+                stdout(`Static Network Filtering Engine: ${response.duration.toFixed(2)} ms for ${contexts.length} requests, ${(response.duration / contexts.length).toFixed(3)} ms/request`);
             }
-        )
+        );
     }
 );
 
