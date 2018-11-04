@@ -472,6 +472,9 @@ const hnTrieManager = {
     uint32s[0] = 1;
     if ( uint8s[0] !== 1 ) { return; }    
 
+    // The directory from which the current script was fetched should also
+    // contain the related WASM file. The script is fetched from a trusted
+    // location, and consequently so will be the related WASM file.
     let workingDir;
     {
         const url = document.currentScript.src;
@@ -484,7 +487,7 @@ const hnTrieManager = {
     const memory = new WebAssembly.Memory({ initial: 1 });
 
     hnTrieManager.wasmLoading = WebAssembly.instantiateStreaming(
-        fetch(workingDir + 'wasm/hntrie.wasm', { mode: 'same-origin' }),
+        fetch(workingDir + 'wasm/hntrie.wasm'),
         { imports: { memory } }
     ).then(result => {
         hnTrieManager.wasmLoading = null;
