@@ -1,3 +1,3 @@
 ## uBlock Origin pages
 
-HTML: <http://gorhill.github.io/uBlock/>.
+HTML: <https://gorhill.github.io/uBlock/>.

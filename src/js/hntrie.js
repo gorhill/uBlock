@@ -477,11 +477,12 @@ const hnTrieManager = {
     // location, and consequently so will be the related WASM file.
     let workingDir;
     {
-        const url = document.currentScript.src;
-        const match = /[^\/]+$/.exec(url);
-        workingDir = match !== null
-            ? url.slice(0, match.index)
-            : '';
+        const url = new URL(document.currentScript.src);
+        const match = /[^\/]+$/.exec(url.pathname);
+        if ( match !== null ) {
+            url.pathname = url.pathname.slice(0, match.index);
+        }
+        workingDir = url.href;
     }
 
     const memory = new WebAssembly.Memory({ initial: 1 });
