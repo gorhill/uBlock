@@ -512,6 +512,10 @@ var cosmeticFilterFromElement = function(elem) {
                     if ( pos !== -1 ) {
                         v = v.slice(0, pos + 1);
                     }
+                } else if ( v.startsWith('blob:') ) {
+                    v = new URL(v.slice(5));
+                    v.pathname = '';
+                    v = 'blob:' + v.href;
                 }
                 attributes.push({ k: 'src', v: v.slice(0, 256) });
                 break;
