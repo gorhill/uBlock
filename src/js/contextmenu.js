@@ -87,13 +87,11 @@ var menuEntries = [
         id: 'uBlock0-blockElement',
         title: vAPI.i18n('pickerContextMenuEntry'),
         contexts: ['all'],
-        documentUrlPatterns: ['https://*/*', 'http://*/*']
     },
     {
         id: 'uBlock0-temporarilyAllowLargeMediaElements',
         title: vAPI.i18n('contextMenuTemporarilyAllowLargeMediaElements'),
         contexts: ['all'],
-        documentUrlPatterns: ['https://*/*', 'http://*/*']
     }
 ];
 

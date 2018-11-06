@@ -387,31 +387,25 @@ var netFilterFromUnion = (function() {
 // Extract the best possible net filter, i.e. as specific as possible.
 
 var netFilterFromElement = function(elem) {
-    if ( elem === null ) {
-        return 0;
-    }
-    if ( elem.nodeType !== 1 ) {
-        return 0;
-    }
-    var src = resourceURLFromElement(elem);
-    if ( src === '' ) {
-        return 0;
-    }
+    if ( elem === null ) { return 0; }
+    if ( elem.nodeType !== 1 ) { return 0; }
+    let src = resourceURLFromElement(elem);
+    if ( src === '' ) { return 0; }
 
     if ( candidateElements.indexOf(elem) === -1 ) {
         candidateElements.push(elem);
     }
 
-    var candidates = netFilterCandidates;
-    var len = candidates.length;
+    const candidates = netFilterCandidates;
+    const len = candidates.length;
 
     // Remove fragment
-    var pos = src.indexOf('#');
+    let pos = src.indexOf('#');
     if ( pos !== -1 ) {
         src = src.slice(0, pos);
     }
 
-    var filter = src.replace(/^https?:\/\//, '||');
+    const filter = src.replace(/^https?:\/\//, '||');
 
     if ( bestCandidateFilter === null ) {
         bestCandidateFilter = {
@@ -491,7 +485,7 @@ var cosmeticFilterFromElement = function(elem) {
     }
 
     // Tag name
-    let tagName = elem.localName;
+    const tagName = elem.localName;
 
     // Use attributes if still no selector found.
     // https://github.com/gorhill/uBlock/issues/1901
@@ -512,7 +506,14 @@ var cosmeticFilterFromElement = function(elem) {
         case 'img':
             v = elem.getAttribute('src');
             if ( v && v.length !== 0 ) {
-                attributes.push({ k: 'src', v: v.trim().slice(0, 1024) });
+                v = v.trim();
+                if ( v.startsWith('data:') ) {
+                    let pos = v.indexOf(',');
+                    if ( pos !== -1 ) {
+                        v = v.slice(0, pos + 1);
+                    }
+                }
+                attributes.push({ k: 'src', v: v.slice(0, 256) });
                 break;
             }
             v = elem.getAttribute('alt');
@@ -540,7 +541,7 @@ var cosmeticFilterFromElement = function(elem) {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/17
     //   If selector is ambiguous at this point, add the element name to
     //   further narrow it down.
-    let parentNode = elem.parentNode;
+    const parentNode = elem.parentNode;
     if (
         selector === '' ||
         safeQuerySelectorAll(parentNode, cssScope + selector).length > 1
@@ -753,14 +754,17 @@ var filterToDOMInterface = (function() {
     // normalize all a[href] on the page, but for now I will wait and see, as I
     // prefer to refrain from tampering with the page content if I can avoid it.
     var fromPlainCosmeticFilter = function(filter) {
-        var elems;
+        let elems;
         try {
-            elems = document.querySelectorAll(filter);
+            elems = document.querySelectorAll(
+                filter + ':not(#' + pickerRoot.id + ')'
+            );
         }
         catch (e) {
             return;
         }
-        var out = [], iElem = elems.length;
+        const out = [];
+        let iElem = elems.length;
         while ( iElem-- ) {
             out.push({ type: 'cosmetic', elem: elems[iElem]});
         }
@@ -1495,8 +1499,8 @@ var stopPicker = function() {
 var startPicker = function(details) {
     pickerRoot.addEventListener('load', stopPicker);
 
-    let frameDoc = pickerRoot.contentDocument;
-    let parsedDom = (new DOMParser()).parseFromString(
+    const frameDoc = pickerRoot.contentDocument;
+    const parsedDom = (new DOMParser()).parseFromString(
         details.frameContent,
         'text/html'
     );
@@ -1510,7 +1514,7 @@ var startPicker = function(details) {
     //   Remove the already declared inline style tag: we will create a new
     //   one based on the removed one, and replace the old one.
     let style = parsedDom.querySelector('style');
-    let styleText = style.textContent;
+    const styleText = style.textContent;
     style.parentNode.removeChild(style);
     style = frameDoc.createElement('style');
     style.textContent = styleText;
@@ -1544,7 +1548,7 @@ var startPicker = function(details) {
     pickerRoot.contentWindow.focus();
 
     // Restore net filter union data if it originate from the same URL.
-    let eprom = details.eprom || null;
+    const eprom = details.eprom || null;
     if ( eprom !== null && eprom.lastNetFilterSession === lastNetFilterSession ) {
         lastNetFilterHostname = eprom.lastNetFilterHostname || '';
         lastNetFilterUnion = eprom.lastNetFilterUnion || '';
@@ -1563,11 +1567,11 @@ var startPicker = function(details) {
     }
 
     // No mouse position available, use suggested target
-    let target = details.target || '';
-    let pos = target.indexOf('\t');
+    const target = details.target || '';
+    const pos = target.indexOf('\t');
     if ( pos === -1 ) { return; }
 
-    let srcAttrMap = {
+    const srcAttrMap = {
         'a': 'href',
         'audio': 'src',
         'embed': 'src',
@@ -1575,20 +1579,23 @@ var startPicker = function(details) {
         'img': 'src',
         'video': 'src',
     };
-    let tagName = target.slice(0, pos);
-    let url = target.slice(pos + 1);
-    let attr = srcAttrMap[tagName];
-    if ( attr === undefined ) {
-        return;
-    }
-    let elems = document.querySelectorAll(tagName + '[' + attr + ']');
+    const tagName = target.slice(0, pos);
+    const url = target.slice(pos + 1);
+    const attr = srcAttrMap[tagName];
+    if ( attr === undefined ) { return; }
+    const elems = document.getElementsByTagName(tagName);
     let i = elems.length;
-    let elem, src;
     while ( i-- ) {
-        elem = elems[i];
-        src = elem[attr];
-        if ( typeof src !== 'string' || src === '' ) { continue; }
-        if ( src !== url ) { continue; }
+        const elem = elems[i];
+        if ( elem === pickerRoot ) { continue; }
+        const src = elem[attr];
+        if ( typeof src !== 'string' ) { continue; }
+        if (
+            (src !== url) &&
+            (src !== '' || url !== 'about:blank')
+        ) {
+            continue;
+        }
         elem.scrollIntoView({
             behavior: 'smooth',
             block: 'start'
