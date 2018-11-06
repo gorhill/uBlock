@@ -17,7 +17,7 @@
 
 <script src="https://rawcdn.githack.com/gorhill/uBlock/e83ffde5af29bd44ae529c5a60e2506970e7af34/src/js/hntrie.js"></script>
 <script src="https://raw.githack.com/gorhill/uBlock/master/src/js/hntrie.js"></script>
-<!-- script src="../../src/js/hntrie.js"></script> -->
+<!-- <script src="../../src/js/hntrie.js"></script> -->
 <script src="hostname-pool.js"></script>
 
 <script src="https://cdn.jsdelivr.net/lodash/4.17.2/lodash.min.js"></script>
@@ -289,11 +289,11 @@ function initBenchmarks() {
         const bms = new Benchmark.Suite();
         const needles = [];
 
-        let setDicts = [];
-        let regexDicts = [];
-        let oldTrieDicts = []
-        let newTrieDicts = []
-        let results = [];
+        let setDicts;
+        let regexDicts;
+        let oldTrieDicts;
+        let newTrieDicts;
+        let results;
 
         const lookupDict = function(dicts, fn) {
             for ( let i = 0; i < needles.length; i++ ) {
@@ -325,6 +325,7 @@ function initBenchmarks() {
                 regexDicts = [];
                 oldTrieDicts = []
                 newTrieDicts = []
+                results = [];
                 hnTrieManager.reset();
                 for ( const domainOpt of domainOpts ) {
                     setDicts.push(setBasedDictCreate(domainOpt));
@@ -339,7 +340,11 @@ function initBenchmarks() {
             .on('cycle', function(event) {
                 stdout(gWhich, String(event.target) + '\n');
                 })
-            .on('complete', exitBenchmark);
+            .on('complete', ( ) => {
+                setDicts = regexDicts = oldTrieDicts = newTrieDicts = results = undefined;
+                hnTrieManager.reset();
+                exitBenchmark();
+                });
 
         if ( hnTrieManager.matchesWASM !== null ) {
             bms.add('  -     Trie-based WASM', function() {

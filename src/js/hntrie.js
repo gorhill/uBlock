@@ -65,7 +65,7 @@ const hnTrieManager = {
     reset: function() {
         if ( this.wasmMemory === null && this.trie.byteLength > 65536 ) {
             this.trie = new Uint8Array(65536);
-            this.trie32 = new Uint32Array(this.trie.buffer);
+            this.trie32 = null;
         } else {
             this.trie.fill(0);
         }
@@ -88,6 +88,7 @@ const hnTrieManager = {
         if ( needle !== this.needle ) {
             const buf = this.trie;
             let i = needle.length;
+            if ( i > 255 ) { i = 255; }
             buf[255] = i;
             while ( i-- ) {
                 buf[i] = needle.charCodeAt(i);
@@ -167,12 +168,13 @@ const hnTrieManager = {
     */
 
     add: function(hn) {
+        let ichar = hn.length - 1;
+        if ( ichar === -1 ) { return; }
         // 256 * 3 + 3 = 771
         if ( this.treesz + 771 >= this.tree.length ) {
             this.growTree();
         }
-        let ichar = hn.length - 1;
-        if ( ichar === -1 ) { return; }
+        if ( ichar > 254 ) { ichar = 254; }
         let c = hn.charCodeAt(ichar),
             i = 0, inext;
         for (;;) {
@@ -313,8 +315,8 @@ const hnTrieManager = {
           byte 7: number of extra characters
           Offset & count values are little-endian.
 
-          3 + 3 + 1 + 1 = 8 bytes for one character, otherwise
-          3 + 3 + 1 + 1 + n = 8 + n bytes for one + n character(s)
+          4 + 4 + 1 + 1 = 10 bytes for one character, otherwise
+          4 + 4 + 1 + 1 + n = 10 + n bytes for one + n character(s)
     */
 
     finish: function() {
@@ -410,7 +412,7 @@ const hnTrieManager = {
                 } else {
                     this.tree = null;
                 }
-            }, 30000);
+            }, 10000);
         }
     },
 
