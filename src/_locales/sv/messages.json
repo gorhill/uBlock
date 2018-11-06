@@ -32,7 +32,7 @@
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "Genvägar",
+    "message": "Kortkommandon",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -184,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "Tredjeparts-css\/bilder",
+    "message": "CSS\/bilder från tredjeparter",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -416,7 +416,7 @@
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "Senast uppdaterad: {{ago}}\nTryck för att påtvinga en uppdatering.",
+    "message": "Senast uppdaterad: {{ago}}\nKlicka för att påtvinga en uppdatering.",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
@@ -428,7 +428,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Ett filter per rad. Ett filter kan vara ett vanligt värdnamn eller ett Adblock Plus-kompatibelt filter. Rader med prefixet &lsquo;!&rsquo; kommer att ignoreras.",
+    "message": "Ett filter per rad. Ett filter kan vara ett vanligt värdnamn eller ett Adblock Plus-kompatibelt filter. Rader med prefixet <code>!<\/code> kommer att ignoreras.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -636,7 +636,7 @@
     "description": "English: Contributors"
   },
   "aboutDependencies": {
-    "message": "External dependencies (GPLv3-compatible):",
+    "message": "Externa beroenden (GPLv3-kompatibla):",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
@@ -756,7 +756,7 @@
     "description": "tooltip"
   },
   "cloudPullAndMerge": {
-    "message": "Importera från molnlagring och slå ihop med aktuella inställningar",
+    "message": "Importera från molnlagring och slå ihop med nuvarande inställningar",
     "description": "tooltip"
   },
   "cloudNoData": {
@@ -776,7 +776,7 @@
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Verkställ ändringar",
+    "message": "Tillämpa ändringar",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
@@ -792,7 +792,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Ange en genväg",
+    "message": "Ange ett kortkommando",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {

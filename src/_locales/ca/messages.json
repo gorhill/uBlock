@@ -152,7 +152,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Feu clic per no inhabilitar completament el JavaScript en aquest lloc",
+    "message": "Feu clic per no inhabilitar el JavaScript en aquest lloc",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {

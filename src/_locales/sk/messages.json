@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Filtre tretích strán",
+    "message": "Zoznam filtrov",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -44,7 +44,7 @@
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
-    "message": "uBlock₀ — zobrazovač zdrojov",
+    "message": "uBlock₀ — Zobrazenie zdrojov",
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
@@ -148,11 +148,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Kliknutím úplne zakážete javascript na tejto stránke",
+    "message": "Kliknutím úplne zakážete JavaScript na tejto stránke",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Kliknutím už nebude úplne zakázaný javascript na tejto stránke",
+    "message": "Kliknutím už nebude úplne zakázaný JavaScript na tejto stránke",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
@@ -372,7 +372,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Lokálne",
+    "message": "Vstavané",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -408,7 +408,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "Jedna URL na riadok. Riadky začínajúce s &lsquo;!&rsquo; budú ignorované. Neplatné URL budú potichu ignorované.",
+    "message": "Jedna URL adresa na riadok. Neplatné URL adresy budú potichu ignorované.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -428,7 +428,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Jeden filter na riadok. Filter môže byť jednoduchý názov hostiteľa alebo filter kompatibilný s Adblock Plus. Riadky začínajúce s &lsquo;!&rsquo; budú ignorované.",
+    "message": "Jeden filter na riadok. Filter môže byť jednoduchý názov hostiteľa alebo filter kompatibilný s Adblock Plus. Riadky začínajúce s <code>!<\/code> budú ignorované.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -624,7 +624,7 @@
     "description": "A link for where to get support"
   },
   "aboutIssues": {
-    "message": "Issue tracker",
+    "message": "Zoznam problémov",
     "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
@@ -636,7 +636,7 @@
     "description": "English: Contributors"
   },
   "aboutDependencies": {
-    "message": "Externé závislosti (GPLv3 kompatibilné):",
+    "message": "Externé závislosti (kompatibilné s GPLv3):",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {

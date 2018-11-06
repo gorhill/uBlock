@@ -764,7 +764,7 @@
     "description": ""
   },
   "cloudDeviceNamePrompt": {
-    "message": "Apparaatnaam:",
+    "message": "Naam van dit apparaat:",
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {

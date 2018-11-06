@@ -636,7 +636,7 @@
     "description": "English: Contributors"
   },
   "aboutDependencies": {
-    "message": "External dependencies (GPLv3-compatible):",
+    "message": "Внешние зависимости (GPLv3-совместимые):",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
