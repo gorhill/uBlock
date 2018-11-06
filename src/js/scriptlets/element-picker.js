@@ -764,9 +764,8 @@ var filterToDOMInterface = (function() {
             return;
         }
         const out = [];
-        let iElem = elems.length;
-        while ( iElem-- ) {
-            out.push({ type: 'cosmetic', elem: elems[iElem]});
+        for ( const elem of elems ) {
+            out.push({ type: 'cosmetic', elem });
         }
         return out;
     };
@@ -1584,9 +1583,7 @@ var startPicker = function(details) {
     const attr = srcAttrMap[tagName];
     if ( attr === undefined ) { return; }
     const elems = document.getElementsByTagName(tagName);
-    let i = elems.length;
-    while ( i-- ) {
-        const elem = elems[i];
+    for ( const elem of elems  ) {
         if ( elem === pickerRoot ) { continue; }
         const src = elem[attr];
         if ( typeof src !== 'string' ) { continue; }
