@@ -135,7 +135,7 @@ const isFirstParty = function(domain, hostname) {
 
 const normalizeRegexSource = function(s) {
     try {
-        var re = new RegExp(s);
+        const re = new RegExp(s);
         return re.source;
     } catch (ex) {
         normalizeRegexSource.message = ex.toString();
@@ -144,24 +144,23 @@ const normalizeRegexSource = function(s) {
 };
 
 const rawToRegexStr = function(s, anchor) {
-    let me = rawToRegexStr;
     // https://www.loggly.com/blog/five-invaluable-techniques-to-improve-regex-performance/
     // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions
     // Also: remove leading/trailing wildcards -- there is no point.
-    let reStr = s.replace(me.escape1, '\\$&')
-                 .replace(me.escape2, '(?:[^%.0-9a-z_-]|$)')
-                 .replace(me.escape3, '')
-                 .replace(me.escape4, '[^ ]*?');
-    if ( anchor & 0x4 ) {
+    let reStr = s.replace(rawToRegexStr.escape1, '\\$&')
+                 .replace(rawToRegexStr.escape2, '(?:[^%.0-9a-z_-]|$)')
+                 .replace(rawToRegexStr.escape3, '')
+                 .replace(rawToRegexStr.escape4, '[^ ]*?');
+    if ( anchor & 0b100 ) {
         reStr = (
-                    reStr.startsWith('\\.') ?
-                        rawToRegexStr.reTextHostnameAnchor2 :
-                        rawToRegexStr.reTextHostnameAnchor1
-                ) + reStr;
-    } else if ( anchor & 0x2 ) {
+            reStr.startsWith('\\.') ?
+                rawToRegexStr.reTextHostnameAnchor2 :
+                rawToRegexStr.reTextHostnameAnchor1
+        ) + reStr;
+    } else if ( anchor & 0b010 ) {
         reStr = '^' + reStr;
     }
-    if ( anchor & 0x1 ) {
+    if ( anchor & 0b001 ) {
         reStr += '$';
     }
     return reStr;
@@ -172,6 +171,19 @@ rawToRegexStr.escape3 = /^\*|\*$/g;
 rawToRegexStr.escape4 = /\*/g;
 rawToRegexStr.reTextHostnameAnchor1 = '^[a-z-]+://(?:[^/?#]+\\.)?';
 rawToRegexStr.reTextHostnameAnchor2 = '^[a-z-]+://(?:[^/?#]+)?';
+
+// https://github.com/uBlockOrigin/uAssets/issues/4083#issuecomment-436914727
+const rawToPlainStr = function(s, anchor) {
+    if (
+        anchor === 0 &&
+        s.charCodeAt(0) === 0x2F /* '/' */ &&
+        s.length > 2 &&
+        s.charCodeAt(s.length-1) === 0x2F /* '/' */
+    ) {
+        s = s + '*';
+    }
+    return s;
+};
 
 const filterDataSerialize = µb.CompiledLineIO.serialize;
 
@@ -308,8 +320,8 @@ FilterPlain.prototype.match = function(url, tokenBeg) {
 
 FilterPlain.prototype.logData = function() {
     return {
-        raw: this.s,
-        regex: rawToRegexStr(this.s),
+        raw: rawToPlainStr(this.s, 0),
+        regex: rawToRegexStr(this.s, 0),
         compiled: this.compile()
     };
 };
@@ -341,7 +353,7 @@ FilterPlainPrefix0.prototype.match = function(url, tokenBeg) {
 FilterPlainPrefix0.prototype.logData = function() {
     return {
         raw: this.s,
-        regex: rawToRegexStr(this.s),
+        regex: rawToRegexStr(this.s, 0),
         compiled: this.compile()
     };
 };
@@ -372,8 +384,8 @@ FilterPlainPrefix1.prototype.match = function(url, tokenBeg) {
 
 FilterPlainPrefix1.prototype.logData = function() {
     return {
-        raw: this.s,
-        regex: rawToRegexStr(this.s),
+        raw: rawToPlainStr(this.s, 0),
+        regex: rawToRegexStr(this.s, 0),
         compiled: this.compile()
     };
 };
@@ -408,7 +420,7 @@ FilterPlainHostname.prototype.match = function() {
 FilterPlainHostname.prototype.logData = function() {
     return {
         raw: '||' + this.s + '^',
-        regex: rawToRegexStr(this.s + '^'),
+        regex: rawToRegexStr(this.s + '^', 0),
         compiled: this.compile()
     };
 };
@@ -440,7 +452,7 @@ FilterPlainLeftAnchored.prototype.match = function(url) {
 FilterPlainLeftAnchored.prototype.logData = function() {
     return {
         raw: '|' + this.s,
-        regex: rawToRegexStr(this.s, 0x2),
+        regex: rawToRegexStr(this.s, 0b010),
         compiled: this.compile()
     };
 };
@@ -472,7 +484,7 @@ FilterPlainRightAnchored.prototype.match = function(url) {
 FilterPlainRightAnchored.prototype.logData = function() {
     return {
         raw: this.s + '|',
-        regex: rawToRegexStr(this.s, 0x1),
+        regex: rawToRegexStr(this.s, 0b001),
         compiled: this.compile()
     };
 };
@@ -504,7 +516,7 @@ FilterExactMatch.prototype.match = function(url) {
 FilterExactMatch.prototype.logData = function() {
     return {
         raw: '|' + this.s + '|',
-        regex: rawToRegexStr(this.s, 0x3),
+        regex: rawToRegexStr(this.s, 0b011),
         compiled: this.compile()
     };
 };
@@ -537,7 +549,7 @@ FilterPlainHnAnchored.prototype.match = function(url, tokenBeg) {
 FilterPlainHnAnchored.prototype.logData = function() {
     return {
         raw: '||' + this.s,
-        regex: rawToRegexStr(this.s),
+        regex: rawToRegexStr(this.s, 0),
         compiled: this.compile()
     };
 };
@@ -574,7 +586,7 @@ FilterGeneric.prototype.match = function(url) {
 
 FilterGeneric.prototype.logData = function() {
     var out = {
-        raw: this.s,
+        raw: rawToPlainStr(this.s, this.anchor),
         regex: this.re.source,
         compiled: this.compile()
     };
@@ -620,7 +632,7 @@ FilterGenericHnAnchored.prototype.match = function(url) {
 FilterGenericHnAnchored.prototype.logData = function() {
     var out = {
         raw: '||' + this.s,
-        regex: rawToRegexStr(this.s, this.anchor & ~0x4),
+        regex: rawToRegexStr(this.s, this.anchor & 0b001),
         compiled: this.compile()
     };
     return out;
@@ -1088,7 +1100,7 @@ FilterHostnameDict.prototype.match = function() {
 FilterHostnameDict.prototype.logData = function() {
     return {
         raw: '||' + this.h + '^',
-        regex: rawToRegexStr(this.h) + '(?:[^%.0-9a-z_-]|$)',
+        regex: rawToRegexStr(this.h, 0) + '(?:[^%.0-9a-z_-]|$)',
         compiled: this.h
     };
 };
