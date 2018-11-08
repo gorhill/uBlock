@@ -26,37 +26,40 @@
 /******************************************************************************/
 
 (function() {
-    let extToTypeMap = new Map([
+    const extToTypeMap = new Map([
         ['eot','font'],['otf','font'],['svg','font'],['ttf','font'],['woff','font'],['woff2','font'],
         ['mp3','media'],['mp4','media'],['webm','media'],
         ['gif','image'],['ico','image'],['jpeg','image'],['jpg','image'],['png','image'],['webp','image']
     ]);
 
-    let denormalizeTypes = function(aa) {
+    // https://www.reddit.com/r/uBlockOrigin/comments/9vcrk3/bug_in_ubo_1173_betas_when_saving_files_hosted_on/
+    //   Some types can be mapped from 'other', thus include 'other' if and
+    //   only if the caller is interested in at least one of those types.
+    const denormalizeTypes = function(aa) {
         if ( aa.length === 0 ) {
             return Array.from(vAPI.net.validTypes);
         }
-        let out = [];
-        let i = aa.length,
-            type,
-            needOther = true;
+        const out = new Set();
+        let i = aa.length;
         while ( i-- ) {
-            type = aa[i];
+            const type = aa[i];
             if ( vAPI.net.validTypes.has(type) ) {
-                out.push(type);
-            }
-            if ( type === 'other' ) {
-                needOther = false;
+                out.add(type);
             }
         }
-        if ( needOther ) {
-            out.push('other');
+        if ( out.has('other') === false ) {
+            for ( const type of extToTypeMap.values() ) {
+                if ( out.has(type) ) {
+                    out.add('other');
+                    break;
+                }
+            }
         }
-        return out;
+        return Array.from(out);
     };
 
-    let headerValue = function(headers, name) {
-        var i = headers.length;
+    const headerValue = function(headers, name) {
+        let i = headers.length;
         while ( i-- ) {
             if ( headers[i].name.toLowerCase() === name ) {
                 return headers[i].value.trim();
@@ -65,7 +68,7 @@
         return '';
     };
 
-    let parsedURL = new URL('https://www.example.org/');
+    const parsedURL = new URL('https://www.example.org/');
 
     vAPI.net.normalizeDetails = function(details) {
         // Chromium 63+ supports the `initiator` property, which contains
@@ -95,14 +98,12 @@
         }
 
         // The rest of the function code is to normalize type
-        if ( type !== 'other' ) {
-            return;
-        }
+        if ( type !== 'other' ) { return; }
 
         // Try to map known "extension" part of URL to request type.
         parsedURL.href = details.url;
-        let path = parsedURL.pathname,
-            pos = path.indexOf('.', path.length - 6);
+        const path = parsedURL.pathname,
+              pos = path.indexOf('.', path.length - 6);
         if ( pos !== -1 && (type = extToTypeMap.get(path.slice(pos + 1))) ) {
             details.type = type;
             return;
@@ -127,7 +128,7 @@
     };
 
     vAPI.net.denormalizeFilters = function(filters) {
-        let urls = filters.urls || [ '<all_urls>' ];
+        const urls = filters.urls || [ '<all_urls>' ];
         let types = filters.types;
         if ( Array.isArray(types) ) {
             types = denormalizeTypes(types);
