@@ -368,6 +368,15 @@
 		"contentURL": "https://adblock.ee/list.php",
 		"supportURL": "https://adblock.ee/"
 	},
+	"FIN-0": {
+		"content": "filters",
+		"group": "regions",
+		"off": true,
+		"title": "FIN: Adblock List for Finland",
+		"lang": "fi",
+		"contentURL": "https://raw.githubusercontent.com/finnish-easylist-addition/finnish-easylist-addition/master/Finland_adb.txt",
+		"supportURL": "https://github.com/finnish-easylist-addition/finnish-easylist-addition"
+	},
 	"FRA-0": {
 		"content": "filters",
 		"group": "regions",
@@ -377,6 +386,7 @@
 		"contentURL": "https://easylist-downloads.adblockplus.org/liste_fr.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=91"
 	},
+	
 	"GRC-0": {
 		"content": "filters",
 		"group": "regions",
