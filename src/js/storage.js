@@ -186,6 +186,7 @@
     vAPI.localStorage.setItem(
         'immediateHiddenSettings',
         JSON.stringify({
+               disableWebAssembly: this.hiddenSettings.disableWebAssembly,
             suspendTabsUntilReady: this.hiddenSettings.suspendTabsUntilReady,
             userResourcesLocation: this.hiddenSettings.userResourcesLocation
         })

@@ -52,7 +52,11 @@ let init = function() {
         return Promise.resolve(lz4CodecInstance);
     }
     if ( pendingInitialization === undefined ) {
-        pendingInitialization = lz4BlockCodec.createInstance()
+        let flavor;
+        if ( µBlock.hiddenSettings.disableWebAssembly === true ) {
+            flavor = 'js';
+        }
+        pendingInitialization = lz4BlockCodec.createInstance(flavor)
             .then(instance => {
                 lz4CodecInstance = instance;
                 pendingInitialization = undefined;

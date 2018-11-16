@@ -467,6 +467,15 @@ const hnTrieManager = {
         return;
     }
 
+    // Soft-dependency on µBlock's advanced settings so that the code here can
+    // be used outside of uBO (i.e. tests, benchmarks)
+    if (
+        typeof µBlock === 'object' &&
+        µBlock.hiddenSettings.disableWebAssembly === true
+    ) {
+        return;
+    }
+
     // The wasm module will work only if CPU is natively little-endian,
     // as we use native uint32 array in our trie-creation js code.
     const uint32s = new Uint32Array(1);
