@@ -1,3 +1,7 @@
+/* exported hostnamePool */
+
+'use strict';
+
 // Following hostnames were extracted from',
 // "hpHosts - Ad and Tracking servers only",',
 // except for the first few I added to test',
@@ -45755,4 +45759,4 @@ const hostnamePool = [
 'zzptzdhugavot.review',
 'zzz.clickbank.net',
 '_thums.ero-advertising.com',
-]
+];
