@@ -24,17 +24,17 @@
 /******************************************************************************/
 
 µBlock.htmlFilteringEngine = (function() {
-    var api = {};
+    const api = {};
 
-    var µb = µBlock,
-        filterDB = new µb.staticExtFilteringEngine.HostnameBasedDB(),
+    const µb = µBlock,
         pselectors = new Map(),
-        duplicates = new Set(),
+        duplicates = new Set();
+    let filterDB = new µb.staticExtFilteringEngine.HostnameBasedDB(),
         acceptedCount = 0,
         discardedCount = 0,
         docRegister;
 
-    var PSelectorHasTextTask = function(task) {
+    const PSelectorHasTextTask = function(task) {
         let arg0 = task[1], arg1;
         if ( Array.isArray(task[1]) ) {
             arg1 = arg0[1]; arg0 = arg0[0];
@@ -51,7 +51,7 @@
         return output;
     };
 
-    var PSelectorIfTask = function(task) {
+    const PSelectorIfTask = function(task) {
         this.pselector = new PSelector(task[1]);
     };
     PSelectorIfTask.prototype.target = true;
@@ -70,14 +70,14 @@
         return output;
     };
 
-    var PSelectorIfNotTask = function(task) {
+    const PSelectorIfNotTask = function(task) {
         PSelectorIfTask.call(this, task);
         this.target = false;
     };
     PSelectorIfNotTask.prototype = Object.create(PSelectorIfTask.prototype);
     PSelectorIfNotTask.prototype.constructor = PSelectorIfNotTask;
 
-    var PSelectorXpathTask = function(task) {
+    const PSelectorXpathTask = function(task) {
         this.xpe = task[1];
     };
     PSelectorXpathTask.prototype.exec = function(input) {
@@ -101,7 +101,7 @@
         return output;
     };
 
-    var PSelector = function(o) {
+    const PSelector = function(o) {
         if ( PSelector.prototype.operatorToTaskMap === undefined ) {
             PSelector.prototype.operatorToTaskMap = new Map([
                 [ ':has', PSelectorIfTask ],
@@ -161,7 +161,7 @@
         return false;
     };
 
-    var logOne = function(details, exception, selector) {
+    const logOne = function(details, exception, selector) {
         µb.logger.writeOne(
             details.tabId,
             'cosmetic',
@@ -176,7 +176,7 @@
         );
     };
 
-    var applyProceduralSelector = function(details, selector) {
+    const applyProceduralSelector = function(details, selector) {
         let pselector = pselectors.get(selector);
         if ( pselector === undefined ) {
             pselector = new PSelector(JSON.parse(selector));
@@ -198,7 +198,7 @@
         return modified;
     };
 
-    var applyCSSSelector = function(details, selector) {
+    const applyCSSSelector = function(details, selector) {
         let nodes = docRegister.querySelectorAll(selector),
             i = nodes.length,
             modified = false;
@@ -329,7 +329,7 @@
         }
 
         if ( toRemoveMap.size === 0 ) { return; }
-        return Array.from(toRemoveMap);
+        return Array.from(toRemoveMap.values());
     };
 
     api.apply = function(doc, details) {
