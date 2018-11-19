@@ -88,7 +88,7 @@ const hnTrieManager = {
         if ( needle !== this.needle ) {
             const buf = this.trie;
             let i = needle.length;
-            if ( i > 255 ) { i = 255; }
+            if ( i > 254 ) { i = 254; }
             buf[255] = i;
             while ( i-- ) {
                 buf[i] = needle.charCodeAt(i);
