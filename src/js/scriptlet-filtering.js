@@ -392,7 +392,7 @@
             domain: undefined,
             entity: undefined
         };
-        request.domain = µb.URI.domainFromHostnameNoCache(request.hostname);
+        request.domain = µb.URI.domainFromHostname(request.hostname);
         request.entity = µb.URI.entityFromDomain(request.domain);
         let scriptlets = µb.scriptletFilteringEngine.retrieve(request);
         if ( scriptlets === undefined ) { return; }
