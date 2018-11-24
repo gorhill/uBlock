@@ -330,39 +330,40 @@ URI.pathFromURI = function(uri) {
 // specific set of hostnames within a narrow time span -- in other words, I
 // believe probability of cache hit are high in uBlock.
 
-var domainCache = new Map();
-var domainCacheCountLowWaterMark = 40;
-var domainCacheCountHighWaterMark = 60;
-var domainCacheEntryJunkyardMax =
+const domainCache = new Map();
+const domainCacheCountLowWaterMark = 40;
+const domainCacheCountHighWaterMark = 60;
+const domainCacheEntryJunkyardMax =
     domainCacheCountHighWaterMark - domainCacheCountLowWaterMark;
 
-var DomainCacheEntry = function(domain) {
+const DomainCacheEntry = function(domain) {
     this.init(domain);
 };
 
-DomainCacheEntry.prototype.init = function(domain) {
-    this.domain = domain;
-    this.tstamp = Date.now();
-    return this;
+DomainCacheEntry.prototype = {
+    init: function(domain) {
+        this.domain = domain;
+        this.tstamp = Date.now();
+        return this;
+    },
+    dispose: function() {
+        this.domain = '';
+        if ( domainCacheEntryJunkyard.length < domainCacheEntryJunkyardMax ) {
+            domainCacheEntryJunkyard.push(this);
+        }
+    },
 };
 
-DomainCacheEntry.prototype.dispose = function() {
-    this.domain = '';
-    if ( domainCacheEntryJunkyard.length < domainCacheEntryJunkyardMax ) {
-        domainCacheEntryJunkyard.push(this);
-    }
-};
-
-var domainCacheEntryFactory = function(domain) {
+const domainCacheEntryFactory = function(domain) {
     return domainCacheEntryJunkyard.length !== 0 ?
         domainCacheEntryJunkyard.pop().init(domain) :
         new DomainCacheEntry(domain);
 };
 
-var domainCacheEntryJunkyard = [];
+const domainCacheEntryJunkyard = [];
 
-var domainCacheAdd = function(hostname, domain) {
-    var entry = domainCache.get(hostname);
+const domainCacheAdd = function(hostname, domain) {
+    const entry = domainCache.get(hostname);
     if ( entry !== undefined ) {
         entry.tstamp = Date.now();
     } else {
@@ -374,17 +375,17 @@ var domainCacheAdd = function(hostname, domain) {
     return domain;
 };
 
-var domainCacheEntrySort = function(a, b) {
+const domainCacheEntrySort = function(a, b) {
     return domainCache.get(b).tstamp - domainCache.get(a).tstamp;
 };
 
-var domainCachePrune = function() {
-    var hostnames = Array.from(domainCache.keys())
-                         .sort(domainCacheEntrySort)
-                         .slice(domainCacheCountLowWaterMark);
-    var i = hostnames.length;
+const domainCachePrune = function() {
+    const hostnames = Array.from(domainCache.keys())
+                           .sort(domainCacheEntrySort)
+                           .slice(domainCacheCountLowWaterMark);
+    let i = hostnames.length;
     while ( i-- ) {
-        var hostname = hostnames[i];
+        const hostname = hostnames[i];
         domainCache.get(hostname).dispose();
         domainCache.delete(hostname);
     }
