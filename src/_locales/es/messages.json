@@ -84,7 +84,7 @@
     "description": "English: or"
   },
   "popupTipDashboard": {
-    "message": "Abrir Panel de control",
+    "message": "Abrir panel de control",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
@@ -700,11 +700,11 @@
     "description": "English: {{value}} days ago"
   },
   "showDashboardButton": {
-    "message": "Mostrar Panel de control",
+    "message": "Mostrar panel de control",
     "description": "Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
-    "message": "Mostrar registro",
+    "message": "Mostrar registro de peticiones",
     "description": "Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
