@@ -214,7 +214,7 @@
 		"content": "filters",
 		"group": "social",
 		"off": true,
-		"title": "Fanboy’s Anti-Thirdparty Social (see warning inside list)",
+		"title": "Anti-Facebook List",
 		"contentURL": "https://fanboy.co.nz/fanboy-antifacebook.txt",
 		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
 	},
@@ -234,7 +234,7 @@
 		"content": "filters",
 		"group": "social",
 		"off": true,
-		"title": "Fanboy’s Cookiemonster List",
+		"title": "Fanboy's Cookie List",
 		"contentURL": "https://secure.fanboy.co.nz/fanboy-cookiemonster.txt",
 		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
 	},
