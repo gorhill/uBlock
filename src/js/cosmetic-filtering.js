@@ -762,9 +762,9 @@ FilterContainer.prototype.fromCompiledContent = function(reader, options) {
             if ( bucket === undefined ) {
                 db.simple.add(args[1]);
             } else if ( Array.isArray(bucket) ) {
-                bucket.push(args[1]);
+                bucket.push(db.prefix + args[1]);
             } else {
-                db.complex.set(args[1], [ bucket, args[1] ]);
+                db.complex.set(args[1], [ bucket, db.prefix + args[1] ]);
             }
             break;
 
@@ -775,7 +775,7 @@ FilterContainer.prototype.fromCompiledContent = function(reader, options) {
             bucket = db.complex.get(args[1]);
             if ( bucket === undefined ) {
                 if ( db.simple.has(args[1]) ) {
-                    db.complex.set(args[1], [ args[1], args[2] ]);
+                    db.complex.set(args[1], [ db.prefix + args[1], args[2] ]);
                 } else {
                     db.complex.set(args[1], args[2]);
                     db.simple.add(args[1]);
