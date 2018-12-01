@@ -16,7 +16,7 @@
 <div id="results-6" style="white-space:pre;font-family:mono"></div>
 
 <script src="https://rawcdn.githack.com/gorhill/uBlock/e83ffde5af29bd44ae529c5a60e2506970e7af34/src/js/hntrie.js"></script>
-<script src="https://raw.githack.com/gorhill/uBlock/master/src/js/hntrie.js"></script>
+<script src="https://rawcdn.githack.com/gorhill/uBlock/c3b0fd31f64bd7ffecdd282fb1208fe07aac3eb0/src/js/hntrie.js"></script>
 <!-- <script src="../../src/js/hntrie.js"></script> -->
 <script src="hostname-pool.js"></script>
 
@@ -258,16 +258,16 @@ function initBenchmarks() {
 
         var bms = new Benchmark.Suite();
         bms
-            .add('  -           Set-based', function() {
+            .add('  -            Set-based', function() {
                 createDict(setBasedDictCreate);
                 })
-            .add('  -         Regex-based', function() {
+            .add('  -          Regex-based', function() {
                 createDict(regexBasedDictCreate);
                 })
-            .add('  -    Trie-based (old)', function() {
+            .add('  - Trie-based (1st-gen)', function() {
                 createDict(oldTrieBasedDictCreate);
                 })
-            .add('  -          Trie-based', function() {
+            .add('  - Trie-based (2nd-gen)', function() {
                 hnTrieManager.reset();
                 createDict(trieBasedDictCreate);
                 })
@@ -280,6 +280,7 @@ function initBenchmarks() {
                 stdout(gWhich, String(event.target) + '\n');
                 })
             .on('complete', exitBenchmark);
+
         return bms;
     })());
 
@@ -305,16 +306,16 @@ function initBenchmarks() {
         };
 
         bms
-            .add('  -           Set-based', function() {
+            .add('  -                 Set-based', function() {
                 lookupDict(setDicts, setBasedDictTest);
                 })
-            .add('  -         Regex-based', function() {
+            .add('  -               Regex-based', function() {
                 lookupDict(regexDicts, regexBasedDictTest);
                 })
-            .add('  -    Trie-based (old)', function() {
+            .add('  -      Trie-based (1st-gen)', function() {
                 lookupDict(oldTrieDicts, oldTrieBasedDictTest);
                 })
-            .add('  -       Trie-based JS', function() {
+            .add('  -   Trie-based JS (2nd-gen)', function() {
                 lookupDict(newTrieDicts, trieBasedDictTest);
                 })
             .on('start', function() {
@@ -347,7 +348,7 @@ function initBenchmarks() {
                 });
 
         if ( hnTrieManager.matchesWASM !== null ) {
-            bms.add('  -     Trie-based WASM', function() {
+            bms.add('  - Trie-based WASM (2nd-gen)', function() {
                 lookupDict(newTrieDicts, trieBasedDictTestWASM);
             })
         }
@@ -358,7 +359,9 @@ function initBenchmarks() {
 
 /******************************************************************************/
 
-hnTrieManager.readyToUse().then(( ) => {
+Promise.all([
+    hnTrieManager.readyToUse(),
+]).then(( ) => {
     initBenchmarks();
 });
 
