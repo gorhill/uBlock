@@ -428,7 +428,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Jedna filtr na řádek. Filtr může být prostý název hostitele nebo filtr kompatibilní s Adblock Plus. Řádky začínající vykřičníkem <code>!<\/code> budou ignorovány.",
+    "message": "Jeden filtr na řádek. Filtr může být prostý název hostitele nebo filtr kompatibilní s Adblock Plus. Řádky začínající vykřičníkem <code>!<\/code> budou ignorovány.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -636,7 +636,7 @@
     "description": "English: Contributors"
   },
   "aboutDependencies": {
-    "message": "External dependencies (GPLv3-compatible):",
+    "message": "Externí závislosti (kompatibilní s GPLv3):",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {

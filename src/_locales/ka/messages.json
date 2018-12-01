@@ -636,7 +636,7 @@
     "description": "English: Contributors"
   },
   "aboutDependencies": {
-    "message": "External dependencies (GPLv3-compatible):",
+    "message": "ცალკეული დაქვემდებარებული პროექტები (GPLv3-თან თავსებადი):",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {

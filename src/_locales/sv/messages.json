@@ -32,7 +32,7 @@
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "Kortkommandon",
+    "message": "Genvägar",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -152,7 +152,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Klicka för att inte längre inaktivera JavaScript på den här webbplatsen",
+    "message": "Klicka för att aktivera JavaScript på den här webbplatsen",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
@@ -252,7 +252,7 @@
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "Inaktivera tipsrutor",
+    "message": "Inaktivera verktygstips",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
@@ -408,7 +408,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "En webbadress per rad. Rader med prefixet &lsquo;!&rsquo; kommer att ignoreras. Ogiltiga webbadresser kommer också ignoreras.",
+    "message": "En webbadress per rad. Ogiltiga webbadresser kommer att ignoreras utan meddelande.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -756,7 +756,7 @@
     "description": "tooltip"
   },
   "cloudPullAndMerge": {
-    "message": "Importera från molnlagring och slå ihop med nuvarande inställningar",
+    "message": "Importera från molnlagring och sammanfoga med aktuella inställningar",
     "description": "tooltip"
   },
   "cloudNoData": {
@@ -776,7 +776,7 @@
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Tillämpa ändringar",
+    "message": "Verkställ ändringarna",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
@@ -792,7 +792,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Ange ett kortkommando",
+    "message": "Ange en genväg",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {

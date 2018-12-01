@@ -184,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "3 వ పార్టీ CSS\/చిత్రాలు",
+    "message": "సైట్-ఏతరుల సిఎస్ఎస్\/చిత్రాలు",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -404,7 +404,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "దిగుమతించు...",
+    "message": "దిగుమతిచేయు...",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -624,7 +624,7 @@
     "description": "A link for where to get support"
   },
   "aboutIssues": {
-    "message": "ఇష్యూ ట్రాకర్",
+    "message": "సమస్యా సంచిక",
     "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
