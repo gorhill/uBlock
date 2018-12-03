@@ -862,6 +862,7 @@ FilterContainer.prototype.skipGenericCompiledContent = function(reader) {
         // hash,  example.com, .promoted-tweet
         // hash,  example.*, .promoted-tweet
         case 8:
+            this.duplicateBuster.add(fingerprint);
             bucket = this.specificFilters.get(args[1]);
             if ( bucket === undefined ) {
                 this.specificFilters.set(
