@@ -838,17 +838,15 @@ FilterContainer.prototype.skipGenericCompiledContent = function(reader) {
     // 1000 = cosmetic filtering
     reader.select(1000);
 
-    let bucket;
-
     while ( reader.next() ) {
         this.acceptedCount += 1;
-        let fingerprint = reader.fingerprint();
+        const fingerprint = reader.fingerprint();
         if ( this.duplicateBuster.has(fingerprint) ) {
             this.discardedCount += 1;
             continue;
         }
 
-        let args = reader.args();
+        const args = reader.args();
 
         switch ( args[0] ) {
 
@@ -863,7 +861,7 @@ FilterContainer.prototype.skipGenericCompiledContent = function(reader) {
         // hash,  example.*, .promoted-tweet
         case 8:
             this.duplicateBuster.add(fingerprint);
-            bucket = this.specificFilters.get(args[1]);
+            const bucket = this.specificFilters.get(args[1]);
             if ( bucket === undefined ) {
                 this.specificFilters.set(
                     args[1],
