@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body style="font: 14px sans-serif">
-<h1>Benchmark of hostname-lookup data structures: Set, RegExp, HNTrie</h1>
+<h1>Benchmark of hostname-lookup from small to medium set: Set, RegExp, HNTrie</h1>
 <p><button id="createBenchmark">Creation</button> <button id="lookupBenchmark">Lookup</button></p>
 <div id="results-0" style="white-space:pre;font-family:mono"></div>
 <div id="results-1" style="white-space:pre;font-family:mono"></div>
@@ -17,6 +17,7 @@
 
 <script src="https://rawcdn.githack.com/gorhill/uBlock/e83ffde5af29bd44ae529c5a60e2506970e7af34/src/js/hntrie.js"></script>
 <script src="https://rawcdn.githack.com/gorhill/uBlock/c3b0fd31f64bd7ffecdd282fb1208fe07aac3eb0/src/js/hntrie.js"></script>
+<script src="https://raw.githack.com/gorhill/uBlock/master/src/js/hntrie.js"></script>
 <!-- <script src="../../src/js/hntrie.js"></script> -->
 <script src="hostname-pool.js"></script>
 
@@ -202,6 +203,27 @@ var trieBasedDictTestWASM = function(haystack, needle) {
 
 /******************************************************************************/
 
+const hnBigTrieJS = new HNTrieContainer();
+const hnBigTrieWASM = new HNTrieContainer();
+
+const bigtrieBasedDictCreateJS = function(domainOpt) {
+    return hnBigTrieJS.fromIterable(domainOpt.split('|'), 'addJS');
+}
+
+const bigtrieBasedDictTestJS = function(haystack, needle) {
+    return haystack.matchesJS(needle);
+};
+
+const bigtrieBasedDictCreateWASM = function(domainOpt) {
+    return hnBigTrieWASM.fromIterable(domainOpt.split('|'), 'addWASM');
+}
+
+const bigtrieBasedDictTestWASM = function(haystack, needle) {
+    return haystack.matchesWASM(needle);
+};
+
+/******************************************************************************/
+
 const gBenchmarks = [ null ];
 let gWhich;
 
@@ -258,18 +280,22 @@ function initBenchmarks() {
 
         var bms = new Benchmark.Suite();
         bms
-            .add('  -            Set-based', function() {
+            .add('  -                 Set-based', function() {
                 createDict(setBasedDictCreate);
                 })
-            .add('  -          Regex-based', function() {
+            .add('  -               Regex-based', function() {
                 createDict(regexBasedDictCreate);
                 })
-            .add('  - Trie-based (1st-gen)', function() {
+            .add('  -      Trie-based (1st-gen)', function() {
                 createDict(oldTrieBasedDictCreate);
                 })
-            .add('  - Trie-based (2nd-gen)', function() {
+            .add('  -      Trie-based (2nd-gen)', function() {
                 hnTrieManager.reset();
                 createDict(trieBasedDictCreate);
+                })
+            .add('  -   Trie-based JS (3rd-gen)', function() {
+                hnBigTrieJS.reset();
+                createDict(bigtrieBasedDictCreateJS);
                 })
             .on('start', function() {
                 dicts = [];
@@ -280,6 +306,13 @@ function initBenchmarks() {
                 stdout(gWhich, String(event.target) + '\n');
                 })
             .on('complete', exitBenchmark);
+
+        if ( hnBigTrieWASM.addWASM !== null ) {
+            bms.add('  - Trie-based WASM (3rd-gen)', function() {
+                hnBigTrieWASM.reset();
+                createDict(bigtrieBasedDictCreateWASM);
+            })
+        }
 
         return bms;
     })());
@@ -294,6 +327,7 @@ function initBenchmarks() {
         let regexDicts;
         let oldTrieDicts;
         let newTrieDicts;
+        let bigTrieDicts;
         let results;
 
         const lookupDict = function(dicts, fn) {
@@ -315,9 +349,6 @@ function initBenchmarks() {
             .add('  -      Trie-based (1st-gen)', function() {
                 lookupDict(oldTrieDicts, oldTrieBasedDictTest);
                 })
-            .add('  -   Trie-based JS (2nd-gen)', function() {
-                lookupDict(newTrieDicts, trieBasedDictTest);
-                })
             .on('start', function() {
                 for ( let i = 0; i < lookupCount; i++ ) {
                     needles[i] = randomNeedle();
@@ -326,6 +357,7 @@ function initBenchmarks() {
                 regexDicts = [];
                 oldTrieDicts = []
                 newTrieDicts = []
+                bigTrieDicts = []
                 results = [];
                 hnTrieManager.reset();
                 for ( const domainOpt of domainOpts ) {
@@ -333,6 +365,7 @@ function initBenchmarks() {
                     regexDicts.push(regexBasedDictCreate(domainOpt));
                     oldTrieDicts.push(oldTrieBasedDictCreate(domainOpt));
                     newTrieDicts.push(trieBasedDictCreate(domainOpt));
+                    bigTrieDicts.push(bigtrieBasedDictCreateJS(domainOpt));
                 }
 
                 stdout(gWhich, '');
@@ -347,9 +380,20 @@ function initBenchmarks() {
                 exitBenchmark();
                 });
 
+        bms.add('  -   Trie-based JS (2nd-gen)', function() {
+            lookupDict(newTrieDicts, trieBasedDictTest);
+            })
         if ( hnTrieManager.matchesWASM !== null ) {
             bms.add('  - Trie-based WASM (2nd-gen)', function() {
                 lookupDict(newTrieDicts, trieBasedDictTestWASM);
+            })
+        }
+        bms.add('  -   Trie-based JS (3rd-gen)', function() {
+            lookupDict(newTrieDicts, bigtrieBasedDictTestJS);
+            })
+        if ( hnBigTrieWASM.matchesWASM !== null ) {
+            bms.add('  - Trie-based WASM (3rd-gen)', function() {
+                lookupDict(bigTrieDicts, bigtrieBasedDictTestWASM);
             })
         }
 
@@ -361,6 +405,8 @@ function initBenchmarks() {
 
 Promise.all([
     hnTrieManager.readyToUse(),
+    hnBigTrieJS.readyToUse(),
+    hnBigTrieWASM.readyToUse(),
 ]).then(( ) => {
     initBenchmarks();
 });
