@@ -153,37 +153,34 @@ function initBenchmarks() {
         };
 
         var bms = new Benchmark.Suite();
-        bms
-            .add('  -                 Set-based', function() {
-                dicts = createDict(setBasedDictCreate);
-                })
-            .add('  -           Trie-based (JS)', function() {
-                hnBigTrieJS.reset();
-                dicts = createDict(trieBasedDictCreateJS);
-                })
-            .add('  -         Trie-based (WASM)', function() {
+        bms.add('  -                         Set-based', function() {
+            dicts = createDict(setBasedDictCreate);
+        }).add('  -           Trie-based JS (3rd-gen)', function() {
+            hnBigTrieJS.reset();
+            dicts = createDict(trieBasedDictCreateJS);
+        });
+        if ( hnBigTrieWASM.addWASM !== null ) {
+            bms.add('  -         Trie-based WASM (3rd-gen)', function() {
                 hnBigTrieWASM.reset();
                 dicts = createDict(trieBasedDictCreateWASM);
-                })
-            .add('  - Trie-based (unserialized)', function() {
-                hnBigTrieJS.reset();
-                hnBigTrieJS.unserialize(bigTrieDictsSerialized);
-                })
-            .on('start', function() {
-                hnBigTrieJS.reset();
-                createDict(trieBasedDictCreateJS);
-                bigTrieDictsSerialized = hnBigTrieJS.serialize();
-                stdout(gWhich, '');
-                stdout(gWhich, 'Create dictionaries\n');
-                })
-            .on('cycle', function(event) {
-                stdout(gWhich, String(event.target) + '\n');
-                })
-            .on('complete', function() {
-                dicts = [];
-                bigTrieDictsSerialized = undefined;
-                exitBenchmark();
-                });
+            });
+        }
+        bms.add('  - Trie-based unserialized (3rd-gen)', function() {
+            hnBigTrieJS.reset();
+            hnBigTrieJS.unserialize(bigTrieDictsSerialized);
+        }).on('start', function() {
+            hnBigTrieJS.reset();
+            createDict(trieBasedDictCreateJS);
+            bigTrieDictsSerialized = hnBigTrieJS.serialize();
+            stdout(gWhich, '');
+            stdout(gWhich, 'Create dictionaries\n');
+        }).on('cycle', function(event) {
+            stdout(gWhich, String(event.target) + '\n');
+        }).on('complete', function() {
+            dicts = [];
+            bigTrieDictsSerialized = undefined;
+            exitBenchmark();
+        });
 
         return bms;
     })());
@@ -207,17 +204,17 @@ function initBenchmarks() {
             }
         };
 
-        bms
-            .add('  -           Set-based', function() {
-                lookupDict(setDicts, setBasedDictTest);
-                })
-            .add('  -       Trie-based JS', function() {
-                lookupDict(bigTrieDicts, trieBasedDictTest);
-                })
-            .add('  -     Trie-based WASM', function() {
+        bms.add('  -                     Set-based', function() {
+            lookupDict(setDicts, setBasedDictTest);
+        }).add('  -       Trie-based JS (3rd-gen)', function() {
+            lookupDict(bigTrieDicts, trieBasedDictTest);
+        });
+        if ( hnBigTrieWASM.matchesWASM !== null ) {
+            bms.add('  -     Trie-based WASM (3rd-gen)', function() {
                 lookupDict(bigTrieDicts, trieBasedDictTestWASM);
                 })
-            .on('start', function() {
+        }
+        bms.on('start', function() {
                 for ( let i = 0; i < lookupCount; i++ ) {
                     needles[i] = randomNeedle();
                 }
@@ -239,15 +236,13 @@ function initBenchmarks() {
                     ' and ' + hostnameLists[hostnameLists.length-1].length +
                     ' hostnames\n'
                 );
-               })
-            .on('cycle', function(event) {
-                stdout(gWhich, String(event.target) + '\n');
-                })
-            .on('complete', ( ) => {
+            }).on('cycle', function(event) {
+                    stdout(gWhich, String(event.target) + '\n');
+            }).on('complete', ( ) => {
                 setDicts = bigTrieDicts = results = [];
                 hnBigTrieJS.reset();
                 exitBenchmark();
-                });
+            });
 
         return bms;
     })());
