@@ -760,15 +760,14 @@ var filterToDOMInterface = (function() {
     var fromPlainCosmeticFilter = function(filter) {
         let elems;
         try {
-            elems = document.querySelectorAll(
-                filter + ':not(#' + pickerRoot.id + ')'
-            );
+            elems = document.querySelectorAll(filter);
         }
         catch (e) {
             return;
         }
         const out = [];
         for ( const elem of elems ) {
+            if ( elem === pickerRoot ) { continue; }
             out.push({ type: 'cosmetic', elem });
         }
         return out;
