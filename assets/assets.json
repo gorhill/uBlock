@@ -409,8 +409,8 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "IDN: ABPindo",
-		"lang": "id",
+		"title": "IDN, MYS: ABPindo",
+		"lang": "id ms",
 		"contentURL": [
 			"https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/subscriptions/abpindo.txt",
 			"https://raw.githubusercontent.com/heradhis/indonesianadblockrules/master/subscriptions/abpindo.txt"
