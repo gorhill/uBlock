@@ -608,15 +608,15 @@
     if ( this.loadingFilterLists ) { return; }
     this.loadingFilterLists = true;
 
-    var µb = this,
-        filterlistsCount = 0,
-        loadedListKeys = [];
+    const µb = µBlock;
+    const loadedListKeys = [];
+    let filterlistsCount = 0;
 
     if ( typeof callback !== 'function' ) {
         callback = this.noopFunc;
     }
 
-    var onDone = function() {
+    const onDone = function() {
         µb.staticNetFilteringEngine.freeze();
         µb.staticExtFilteringEngine.freeze();
         µb.redirectEngine.freeze();
@@ -632,17 +632,19 @@
         callback();
 
         µb.selfieManager.destroy();
+        µb.lz4Codec.relinquish();
+
         µb.loadingFilterLists = false;
     };
 
-    var applyCompiledFilters = function(assetKey, compiled) {
-        var snfe = µb.staticNetFilteringEngine,
-            sxfe = µb.staticExtFilteringEngine,
-            acceptedCount = snfe.acceptedCount + sxfe.acceptedCount,
+    const applyCompiledFilters = function(assetKey, compiled) {
+        const snfe = µb.staticNetFilteringEngine;
+        const sxfe = µb.staticExtFilteringEngine;
+        let acceptedCount = snfe.acceptedCount + sxfe.acceptedCount,
             discardedCount = snfe.discardedCount + sxfe.discardedCount;
         µb.applyCompiledFilters(compiled, assetKey === µb.userFiltersPath);
         if ( µb.availableFilterLists.hasOwnProperty(assetKey) ) {
-            var entry = µb.availableFilterLists[assetKey];
+            const entry = µb.availableFilterLists[assetKey];
             entry.entryCount = snfe.acceptedCount + sxfe.acceptedCount -
                 acceptedCount;
             entry.entryUsedCount = entry.entryCount -
@@ -651,7 +653,7 @@
         loadedListKeys.push(assetKey);
     };
 
-    var onCompiledListLoaded = function(details) {
+    const onCompiledListLoaded = function(details) {
         applyCompiledFilters(details.assetKey, details.content);
         filterlistsCount -= 1;
         if ( filterlistsCount === 0 ) {
@@ -659,7 +661,7 @@
         }
     };
 
-    var onFilterListsReady = function(lists) {
+    const onFilterListsReady = function(lists) {
         µb.availableFilterLists = lists;
 
         µb.redirectEngine.reset();
@@ -672,8 +674,8 @@
         // because it *may* happens that some load operations are synchronous:
         // This happens for assets which do not exist, ot assets with no
         // content.
-        var toLoad = [];
-        for ( var assetKey in lists ) {
+        const toLoad = [];
+        for ( const assetKey in lists ) {
             if ( lists.hasOwnProperty(assetKey) === false ) { continue; }
             if ( lists[assetKey].off ) { continue; }
             toLoad.push(assetKey);
@@ -683,7 +685,7 @@
             return onDone();
         }
 
-        var i = toLoad.length;
+        let i = toLoad.length;
         while ( i-- ) {
             µb.getCompiledFilterList(toLoad[i], onCompiledListLoaded);
         }
@@ -1021,6 +1023,7 @@
             staticExtFilteringEngine: µb.staticExtFilteringEngine.toSelfie()
         });
         µb.cacheStorage.set({ selfie: selfie });
+        µb.lz4Codec.relinquish();
     };
 
     let load = function(callback) {

@@ -198,7 +198,11 @@ return {
                 data: decodeValue(result.key, result.data) || result.data
             };
         });
-    }
+    },
+    relinquish: function() {
+        ttlDelay = 1;
+        ttlManage(0);
+    },
 };
 
 /******************************************************************************/

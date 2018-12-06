@@ -53,6 +53,13 @@ vAPI.app.onShutdown = function() {
 // - Schedule next update operation.
 
 var onAllReady = function() {
+    // Ensure that the resources allocated for decompression purpose (likely
+    // large buffers) are garbage-collectable immediately after launch.
+    // Otherwise I have observed that it may take quite a while before the
+    // garbage collection of these resources kicks in. Relinquishing as soon
+    // as possible ensure minimal memory usage baseline.
+    µb.lz4Codec.relinquish();
+
     µb.webRequest.start();
     initializeTabs();
 
