@@ -267,7 +267,7 @@ PageStore.factory = function(tabId, context) {
 //   logger.
 
 PageStore.prototype.init = function(tabId, context) {
-    var tabContext = µb.tabContextManager.mustLookup(tabId);
+    const tabContext = µb.tabContextManager.mustLookup(tabId);
     this.tabId = tabId;
 
     // If we are navigating from-to same site, remember whether large
@@ -297,11 +297,15 @@ PageStore.prototype.init = function(tabId, context) {
     this.netFilteringCache = NetFilteringResultCache.factory();
     this.internalRedirectionCount = 0;
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/314
+    const masterSwitch = tabContext.getNetFilteringSwitch();
+
     this.noCosmeticFiltering = µb.sessionSwitches.evaluateZ(
         'no-cosmetic-filtering',
         tabContext.rootHostname
     ) === true;
     if (
+        masterSwitch &&
         this.noCosmeticFiltering &&
         µb.logger.isEnabled() &&
         context === 'tabCommitted'
@@ -318,26 +322,29 @@ PageStore.prototype.init = function(tabId, context) {
     }
 
     // Support `generichide` filter option.
-    this.noGenericCosmeticFiltering = this.noCosmeticFiltering;
+    this.noGenericCosmeticFiltering = masterSwitch !== true;
     if ( this.noGenericCosmeticFiltering !== true ) {
-        let result = µb.staticNetFilteringEngine.matchStringGenericHide(
-            tabContext.normalURL
-        );
-        this.noGenericCosmeticFiltering = result === 2;
-        if (
-            result !== 0 &&
-            µb.logger.isEnabled() &&
-            context === 'tabCommitted'
-        ) {
-            µb.logger.writeOne(
-                tabId,
-                'net',
-                µb.staticNetFilteringEngine.toLogData(),
-                'generichide',
-                tabContext.rawURL,
-                this.tabHostname,
-                this.tabHostname
+        this.noGenericCosmeticFiltering = this.noCosmeticFiltering;
+        if ( this.noGenericCosmeticFiltering !== true ) {
+            let result = µb.staticNetFilteringEngine.matchStringGenericHide(
+                tabContext.normalURL
             );
+            this.noGenericCosmeticFiltering = result === 2;
+            if (
+                result !== 0 &&
+                µb.logger.isEnabled() &&
+                context === 'tabCommitted'
+            ) {
+                µb.logger.writeOne(
+                    tabId,
+                    'net',
+                    µb.staticNetFilteringEngine.toLogData(),
+                    'generichide',
+                    tabContext.rawURL,
+                    this.tabHostname,
+                    this.tabHostname
+                );
+            }
         }
     }
 
