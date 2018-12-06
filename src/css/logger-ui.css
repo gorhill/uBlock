@@ -347,7 +347,9 @@ body[dir="rtl"] #popupContainer > div {
     background-color: white;
     border: 2px solid white;
     box-sizing: border-box;
-    width: 80%;
+    width: 90vw;
+    max-height: 90vh;
+    overflow-y: auto;
     }
 
 #netFilteringDialog .dialog p {
