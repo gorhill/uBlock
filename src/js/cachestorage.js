@@ -59,7 +59,7 @@
 
     let db;
     let pendingInitialization;
-    let dbByteLength;
+    let dbBytesInUse;
 
     const get = function get(input, callback) {
         if ( typeof callback !== 'function' ) { return; }
@@ -114,12 +114,42 @@
     const noopfn = function () {
     };
 
-    const getDb = function getDb() {
-        if ( db instanceof IDBDatabase ) {
-            return Promise.resolve(db);
+    const disconnect = function() {
+        if ( dbTimer !== undefined ) {
+            clearTimeout(dbTimer);
+            dbTimer = undefined;
         }
+        if ( db instanceof IDBDatabase ) { 
+            db.close();
+            db = undefined;
+        }
+    };
+
+    let dbTimer;
+
+    const keepAlive = function() {
+        if ( dbTimer !== undefined ) {
+            clearTimeout(dbTimer);
+        }
+        dbTimer = vAPI.setTimeout(
+            ( ) => {
+                dbTimer = undefined;
+                disconnect();
+            },
+            Math.max(
+                µBlock.hiddenSettings.autoUpdateAssetFetchPeriod * 2 * 1000,
+                180000
+            )
+        );
+    };
+
+    const getDb = function getDb() {
         if ( db === null ) {
             return Promise.resolve(null);
+        }
+        keepAlive();
+        if ( db instanceof IDBDatabase ) {
+            return Promise.resolve(db);
         }
         if ( pendingInitialization !== undefined ) {
             return pendingInitialization;
@@ -256,16 +286,16 @@
 
     const getDbSize = function(callback) {
         if ( typeof callback !== 'function' ) { return; }
-        if ( typeof dbByteLength === 'number' ) {
+        if ( typeof dbBytesInUse === 'number' ) {
             return Promise.resolve().then(( ) => {
-                callback(dbByteLength);
+                callback(dbBytesInUse);
             });
         }
-        let textEncoder = new TextEncoder();
+        const textEncoder = new TextEncoder();
         let totalByteLength = 0;
         visitAllFromDb(entry => {
             if ( entry === undefined ) {
-                dbByteLength = totalByteLength;
+                dbBytesInUse = totalByteLength;
                 return callback(totalByteLength);
             }
             let value = entry.value;
@@ -314,7 +344,7 @@
         Promise.all(promises).then(( ) => {
             if ( !db ) { return callback(); }
             let finish = ( ) => {
-                dbByteLength = undefined;
+                dbBytesInUse = undefined;
                 if ( callback === undefined ) { return; }
                 let cb = callback;
                 callback = undefined;
@@ -344,7 +374,7 @@
         getDb().then(db => {
             if ( !db ) { return callback(); }
             let finish = ( ) => {
-                dbByteLength = undefined;
+                dbBytesInUse = undefined;
                 if ( callback === undefined ) { return; }
                 let cb = callback;
                 callback = undefined;
@@ -372,7 +402,9 @@
         getDb().then(db => {
             if ( !db ) { return callback(); }
             let finish = ( ) => {
-                dbByteLength = undefined;
+                disconnect();
+                indexedDB.deleteDatabase(STORAGE_NAME);
+                dbBytesInUse = 0;
                 if ( callback === undefined ) { return; }
                 let cb = callback;
                 callback = undefined;

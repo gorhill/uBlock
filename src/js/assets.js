@@ -278,12 +278,12 @@ api.fetchFilterList.toParsedURL = function(url) {
 
 **/
 
-var assetSourceRegistryStatus,
+let assetSourceRegistryPromise,
     assetSourceRegistry = Object.create(null);
 
-var registerAssetSource = function(assetKey, dict) {
-    var entry = assetSourceRegistry[assetKey] || {};
-    for ( var prop in dict ) {
+const registerAssetSource = function(assetKey, dict) {
+    const entry = assetSourceRegistry[assetKey] || {};
+    for ( const prop in dict ) {
         if ( dict.hasOwnProperty(prop) === false ) { continue; }
         if ( dict[prop] === undefined ) {
             delete entry[prop];
@@ -291,15 +291,15 @@ var registerAssetSource = function(assetKey, dict) {
             entry[prop] = dict[prop];
         }
     }
-    var contentURL = dict.contentURL;
+    let contentURL = dict.contentURL;
     if ( contentURL !== undefined ) {
         if ( typeof contentURL === 'string' ) {
             contentURL = entry.contentURL = [ contentURL ];
         } else if ( Array.isArray(contentURL) === false ) {
             contentURL = entry.contentURL = [];
         }
-        var remoteURLCount = 0;
-        for ( var i = 0; i < contentURL.length; i++ ) {
+        let remoteURLCount = 0;
+        for ( let i = 0; i < contentURL.length; i++ ) {
             if ( reIsExternalPath.test(contentURL[i]) ) {
                 remoteURLCount += 1;
             }
@@ -318,14 +318,14 @@ var registerAssetSource = function(assetKey, dict) {
     assetSourceRegistry[assetKey] = entry;
 };
 
-var unregisterAssetSource = function(assetKey) {
+const unregisterAssetSource = function(assetKey) {
     assetCacheRemove(assetKey);
     delete assetSourceRegistry[assetKey];
 };
 
-var saveAssetSourceRegistry = (function() {
-    var timer;
-    var save = function() {
+const saveAssetSourceRegistry = (function() {
+    let timer;
+    const save = function() {
         timer = undefined;
         µBlock.cacheStorage.set({ assetSourceRegistry: assetSourceRegistry });
     };
@@ -341,19 +341,18 @@ var saveAssetSourceRegistry = (function() {
     };
 })();
 
-var updateAssetSourceRegistry = function(json, silent) {
-    var newDict;
+const updateAssetSourceRegistry = function(json, silent) {
+    let newDict;
     try {
         newDict = JSON.parse(json);
     } catch (ex) {
     }
     if ( newDict instanceof Object === false ) { return; }
 
-    var oldDict = assetSourceRegistry,
-        assetKey;
+    const oldDict = assetSourceRegistry;
 
     // Remove obsolete entries (only those which were built-in).
-    for ( assetKey in oldDict ) {
+    for ( const assetKey in oldDict ) {
         if (
             newDict[assetKey] === undefined &&
             oldDict[assetKey].submitter === undefined
@@ -362,7 +361,7 @@ var updateAssetSourceRegistry = function(json, silent) {
         }
     }
     // Add/update existing entries. Notify of new asset sources.
-    for ( assetKey in newDict ) {
+    for ( const assetKey in newDict ) {
         if ( oldDict[assetKey] === undefined && !silent ) {
             fireNotification(
                 'builtin-asset-source-added',
@@ -374,49 +373,33 @@ var updateAssetSourceRegistry = function(json, silent) {
     saveAssetSourceRegistry();
 };
 
-var getAssetSourceRegistry = function(callback) {
-    // Already loaded.
-    if ( assetSourceRegistryStatus === 'ready' ) {
-        callback(assetSourceRegistry);
-        return;
-    }
-
-    // Being loaded.
-    if ( Array.isArray(assetSourceRegistryStatus) ) {
-        assetSourceRegistryStatus.push(callback);
-        return;
-    }
-
-    // Not loaded: load it.
-    assetSourceRegistryStatus = [ callback ];
-
-    var registryReady = function() {
-        var callers = assetSourceRegistryStatus;
-        assetSourceRegistryStatus = 'ready';
-        var fn;
-        while ( (fn = callers.shift()) ) {
-            fn(assetSourceRegistry);
-        }
-    };
-
-    // First-install case.
-    var createRegistry = function() {
-        api.fetchText(
-            µBlock.assetsBootstrapLocation || 'assets/assets.json',
-            function(details) {
-                updateAssetSourceRegistry(details.content, true);
-                registryReady();
+const getAssetSourceRegistry = function(callback) {
+    if ( assetSourceRegistryPromise === undefined ) {
+        assetSourceRegistryPromise = new Promise(resolve => {
+        // start of executor
+        µBlock.cacheStorage.get('assetSourceRegistry', bin => {
+            if (
+                bin instanceof Object === false ||
+                bin.assetSourceRegistry instanceof Object === false
+            ) {
+                api.fetchText(
+                    µBlock.assetsBootstrapLocation || 'assets/assets.json',
+                    details => {
+                        updateAssetSourceRegistry(details.content, true);
+                        resolve();
+                    }
+                );
+                return;
             }
-        );
-    };
+            assetSourceRegistry = bin.assetSourceRegistry;
+            resolve();
+        });
+        // end of executor
+        });
+    }
 
-    µBlock.cacheStorage.get('assetSourceRegistry', function(bin) {
-        if ( !bin || !bin.assetSourceRegistry ) {
-            createRegistry();
-            return;
-        }
-        assetSourceRegistry = bin.assetSourceRegistry;
-        registryReady();
+    assetSourceRegistryPromise.then(( ) => {
+        callback(assetSourceRegistry);
     });
 };
 
@@ -441,48 +424,37 @@ api.unregisterAssetSource = function(assetKey) {
 
 **/
 
-var assetCacheRegistryStatus,
-    assetCacheRegistryStartTime = Date.now(),
-    assetCacheRegistry = {};
+const assetCacheRegistryStartTime = Date.now();
+let assetCacheRegistryPromise;
+let assetCacheRegistry = {};
 
-var getAssetCacheRegistry = function(callback) {
-    // Already loaded.
-    if ( assetCacheRegistryStatus === 'ready' ) {
+const getAssetCacheRegistry = function(callback) {
+    if ( assetCacheRegistryPromise === undefined ) {
+        assetCacheRegistryPromise = new Promise(resolve => {
+        // start of executor
+        µBlock.cacheStorage.get('assetCacheRegistry', bin => {
+            if (
+                bin instanceof Object &&
+                bin.assetCacheRegistry instanceof Object
+            ) {
+                assetCacheRegistry = bin.assetCacheRegistry;
+            }
+            resolve();
+        });
+        // end of executor
+        });
+    }
+
+    assetCacheRegistryPromise.then(( ) => {
         callback(assetCacheRegistry);
-        return;
-    }
-
-    // Being loaded.
-    if ( Array.isArray(assetCacheRegistryStatus) ) {
-        assetCacheRegistryStatus.push(callback);
-        return;
-    }
-
-    // Not loaded: load it.
-    assetCacheRegistryStatus = [ callback ];
-
-    var registryReady = function() {
-        var callers = assetCacheRegistryStatus;
-        assetCacheRegistryStatus = 'ready';
-        var fn;
-        while ( (fn = callers.shift()) ) {
-            fn(assetCacheRegistry);
-        }
-    };
-
-    µBlock.cacheStorage.get('assetCacheRegistry', function(bin) {
-        if ( bin && bin.assetCacheRegistry ) {
-            assetCacheRegistry = bin.assetCacheRegistry;
-        }
-        registryReady();
     });
 };
 
-var saveAssetCacheRegistry = (function() {
-    var timer;
-    var save = function() {
+const saveAssetCacheRegistry = (function() {
+    let timer;
+    const save = function() {
         timer = undefined;
-        µBlock.cacheStorage.set({ assetCacheRegistry: assetCacheRegistry });
+        µBlock.cacheStorage.set({ assetCacheRegistry });
     };
     return function(lazily) {
         if ( timer !== undefined ) { clearTimeout(timer); }
@@ -494,17 +466,17 @@ var saveAssetCacheRegistry = (function() {
     };
 })();
 
-var assetCacheRead = function(assetKey, callback) {
-    let internalKey = 'cache/' + assetKey;
+const assetCacheRead = function(assetKey, callback) {
+    const internalKey = 'cache/' + assetKey;
 
-    let reportBack = function(content) {
+    const reportBack = function(content) {
         if ( content instanceof Blob ) { content = ''; }
         let details = { assetKey: assetKey, content: content };
         if ( content === '' ) { details.error = 'E_NOTFOUND'; }
         callback(details);
     };
 
-    let onAssetRead = function(bin) {
+    const onAssetRead = function(bin) {
         if (
             bin instanceof Object === false ||
             bin.hasOwnProperty(internalKey) === false
@@ -527,7 +499,7 @@ var assetCacheRead = function(assetKey, callback) {
     getAssetCacheRegistry(onReady);
 };
 
-var assetCacheWrite = function(assetKey, details, callback) {
+const assetCacheWrite = function(assetKey, details, callback) {
     let internalKey = 'cache/' + assetKey;
     let content = '';
     if ( typeof details === 'string' ) {
@@ -540,7 +512,7 @@ var assetCacheWrite = function(assetKey, details, callback) {
         return assetCacheRemove(assetKey, callback);
     }
 
-    let onReady = function() {
+    const onReady = function() {
         let entry = assetCacheRegistry[assetKey];
         if ( entry === undefined ) {
             entry = assetCacheRegistry[assetKey] = {};
@@ -549,10 +521,8 @@ var assetCacheWrite = function(assetKey, details, callback) {
         if ( details instanceof Object && typeof details.url === 'string' ) {
             entry.remoteURL = details.url;
         }
-        let bin = { assetCacheRegistry: assetCacheRegistry };
-        bin[internalKey] = content;
-        µBlock.cacheStorage.set(bin);
-        let result = { assetKey: assetKey, content: content };
+        µBlock.cacheStorage.set({ assetCacheRegistry, [internalKey]: content });
+        const result = { assetKey, content };
         if ( typeof callback === 'function' ) {
             callback(result);
         }
@@ -562,12 +532,12 @@ var assetCacheWrite = function(assetKey, details, callback) {
     getAssetCacheRegistry(onReady);
 };
 
-var assetCacheRemove = function(pattern, callback) {
-    var onReady = function() {
-        var cacheDict = assetCacheRegistry,
+const assetCacheRemove = function(pattern, callback) {
+    const onReady = function() {
+        const cacheDict = assetCacheRegistry,
             removedEntries = [],
             removedContent = [];
-        for ( var assetKey in cacheDict ) {
+        for ( const assetKey in cacheDict ) {
             if ( pattern instanceof RegExp && !pattern.test(assetKey) ) {
                 continue;
             }
@@ -580,26 +550,27 @@ var assetCacheRemove = function(pattern, callback) {
         }
         if ( removedContent.length !== 0 ) {
             µBlock.cacheStorage.remove(removedContent);
-            var bin = { assetCacheRegistry: assetCacheRegistry };
-            µBlock.cacheStorage.set(bin);
+            µBlock.cacheStorage.set({ assetCacheRegistry });
         }
         if ( typeof callback === 'function' ) {
             callback();
         }
-        for ( var i = 0; i < removedEntries.length; i++ ) {
-            fireNotification('after-asset-updated', { assetKey: removedEntries[i] });
+        for ( let i = 0; i < removedEntries.length; i++ ) {
+            fireNotification(
+                'after-asset-updated',
+                { assetKey: removedEntries[i] }
+            );
         }
     };
 
     getAssetCacheRegistry(onReady);
 };
 
-var assetCacheMarkAsDirty = function(pattern, exclude, callback) {
-    var onReady = function() {
-        var cacheDict = assetCacheRegistry,
-            cacheEntry,
-            mustSave = false;
-        for ( var assetKey in cacheDict ) {
+const assetCacheMarkAsDirty = function(pattern, exclude, callback) {
+    const onReady = function() {
+        const cacheDict = assetCacheRegistry;
+        let mustSave = false;
+        for ( const assetKey in cacheDict ) {
             if ( pattern instanceof RegExp ) {
                 if ( pattern.test(assetKey) === false ) { continue; }
             } else if ( typeof pattern === 'string' ) {
@@ -614,14 +585,13 @@ var assetCacheMarkAsDirty = function(pattern, exclude, callback) {
             } else if ( Array.isArray(exclude) ) {
                 if ( exclude.indexOf(assetKey) !== -1 ) { continue; }
             }
-            cacheEntry = cacheDict[assetKey];
+            const cacheEntry = cacheDict[assetKey];
             if ( !cacheEntry.writeTime ) { continue; }
             cacheDict[assetKey].writeTime = 0;
             mustSave = true;
         }
         if ( mustSave ) {
-            var bin = { assetCacheRegistry: assetCacheRegistry };
-            µBlock.cacheStorage.set(bin);
+            µBlock.cacheStorage.set({ assetCacheRegistry });
         }
         if ( typeof callback === 'function' ) {
             callback();
@@ -636,7 +606,7 @@ var assetCacheMarkAsDirty = function(pattern, exclude, callback) {
 
 /******************************************************************************/
 
-var stringIsNotEmpty = function(s) {
+const stringIsNotEmpty = function(s) {
     return typeof s === 'string' && s !== '';
 };
 
