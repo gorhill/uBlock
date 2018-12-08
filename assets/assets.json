@@ -541,11 +541,20 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "POL: polskie filtry do Adblocka i uBlocka",
+		"title": "POL: Oficjalne Polskie Filtry do AdBlocka, uBlocka Origin i AdGuarda",
 		"lang": "pl",
 		"contentURL": "https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt",
 		"supportURL": "https://github.com/MajkiIT/polish-ads-filter/issues",
 		"instructionURL": "https://github.com/MajkiIT/polish-ads-filter#polish-filters-for-adblock-ublock-origin--adguard"
+	},
+	"POL-2": {
+		"content": "filters",
+		"group": "regions",
+		"off": true,
+		"title": "POL: Oficjalne polskie filtry przeciwko alertom o Adblocku",
+		"lang": "pl",
+		"contentURL": "https://raw.githubusercontent.com/olegwukr/polish-privacy-filters/master/anti-adblock.txt",
+		"supportURL": "https://github.com/olegwukr/polish-privacy-filters/issues"
 	},
 	"ROU-1": {
 		"content": "filters",
