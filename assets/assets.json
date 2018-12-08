@@ -547,7 +547,7 @@
 		"supportURL": "https://github.com/MajkiIT/polish-ads-filter/issues",
 		"instructionURL": "https://github.com/MajkiIT/polish-ads-filter#polish-filters-for-adblock-ublock-origin--adguard"
 	},
-	"POL-1": {
+	"POL-2": {
 		"content": "filters",
 		"group": "regions",
 		"off": true,
