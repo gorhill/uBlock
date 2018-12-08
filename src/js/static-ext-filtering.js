@@ -51,25 +51,24 @@
 **/
 
 µBlock.staticExtFilteringEngine = (function() {
-    var µb = µBlock,
-        reHostnameSeparator = /\s*,\s*/,
-        reHasUnicode = /[^\x00-\x7F]/,
-        reParseRegexLiteral = /^\/(.+)\/([imu]+)?$/,
-        emptyArray = [],
-        parsed = {
-            hostnames: [],
-            exception: false,
-            suffix: ''
-        };
+    const µb = µBlock;
+    const reHasUnicode = /[^\x00-\x7F]/;
+    const reParseRegexLiteral = /^\/(.+)\/([imu]+)?$/;
+    const emptyArray = [];
+    const parsed = {
+        hostnames: [],
+        exception: false,
+        suffix: ''
+    };
 
     // To be called to ensure no big parent string of a string slice is
     // left into memory after parsing filter lists is over.
-    var resetParsed = function() {
+    const resetParsed = function() {
         parsed.hostnames = [];
         parsed.suffix = '';
     };
 
-    var isValidCSSSelector = (function() {
+    const isValidCSSSelector = (function() {
         var div = document.createElement('div'),
             matchesFn;
         // Keep in mind:
@@ -109,7 +108,7 @@
     })();
 
 
-    var isBadRegex = function(s) {
+    const isBadRegex = function(s) {
         try {
             void new RegExp(s);
         } catch (ex) {
@@ -119,23 +118,34 @@
         return false;
     };
 
-    var translateAdguardCSSInjectionFilter = function(suffix) {
+    const translateAdguardCSSInjectionFilter = function(suffix) {
         var matches = /^([^{]+)\{([^}]+)\}$/.exec(suffix);
         if ( matches === null ) { return ''; }
         return matches[1].trim() + ':style(' +  matches[2].trim() + ')';
     };
 
-    var toASCIIHostnames = function(hostnames) {
-        var i = hostnames.length;
-        while ( i-- ) {
-            var hostname = hostnames[i];
-            hostnames[i] = hostname.charCodeAt(0) === 0x7E /* '~' */ ?
-                '~' + punycode.toASCII(hostname.slice(1)) :
-                punycode.toASCII(hostname);
+    const hostnamesFromPrefix = function(s) {
+        const hostnames = [];
+        const hasUnicode = reHasUnicode.test(s);
+        let beg = 0;
+        while ( beg < s.length ) {
+            let end = s.indexOf(',', beg);
+            if ( end === -1 ) { end = s.length; }
+            let hostname = s.slice(beg, end).trim();
+            if ( hostname.length !== 0 ) {
+                if ( hasUnicode ) {
+                    hostname = hostname.charCodeAt(0) === 0x7E /* '~' */
+                        ? '~' + punycode.toASCII(hostname.slice(1))
+                        : punycode.toASCII(hostname);
+                }
+                hostnames.push(hostname);
+            }
+            beg = end + 1;
         }
+        return hostnames;
     };
 
-    var compileProceduralSelector = (function() {
+    const compileProceduralSelector = (function() {
         var reProceduralOperator = new RegExp([
             '^(?:',
                 [
@@ -713,11 +723,7 @@
         if ( lpos === 0 ) {
             parsed.hostnames = emptyArray;
         } else {
-            let prefix = raw.slice(0, lpos);
-            parsed.hostnames = prefix.split(reHostnameSeparator);
-            if ( reHasUnicode.test(prefix) ) {
-                toASCIIHostnames(parsed.hostnames);
-            }
+            parsed.hostnames = hostnamesFromPrefix(raw.slice(0, lpos));
         }
 
         // Backward compatibility with deprecated syntax.
