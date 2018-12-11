@@ -161,6 +161,7 @@
                 'contains',
                 'has',
                 'has-text',
+                'has-inner-text',
                 'if',
                 'if-not',
                 'matches-css',
@@ -272,6 +273,7 @@
         const compileArgument = new Map([
             [ ':has', compileConditionalSelector ],
             [ ':has-text', compileText ],
+            [ ':has-inner-text', compileText ],
             [ ':if', compileConditionalSelector ],
             [ ':if-not', compileConditionalSelector ],
             [ ':matches-css', compileCSSDeclaration ],
@@ -304,6 +306,7 @@
                     raw.push(':has', '(', decompile(task[1]), ')');
                     break;
                 case ':has-text':
+                case ':has-inner-text':
                     if ( Array.isArray(task[1]) ) {
                         value = '/' + task[1][0] + '/' + task[1][1];
                     } else {

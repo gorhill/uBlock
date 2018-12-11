@@ -412,6 +412,23 @@ vAPI.DOMFilterer = (function() {
         return output;
     };
 
+    const PSelectorHasInnerTextTask = function(task) {
+        let arg0 = task[1], arg1;
+        if ( Array.isArray(task[1]) ) {
+            arg1 = arg0[1]; arg0 = arg0[0];
+        }
+        this.needle = new RegExp(arg0, arg1);
+    };
+    PSelectorHasInnerTextTask.prototype.exec = function(input) {
+        const output = [];
+        for ( const node of input ) {
+            if ( this.needle.test(node.innerText) ) {
+                output.push(node);
+            }
+        }
+        return output;
+    };
+
     const PSelectorIfTask = function(task) {
         this.pselector = new PSelector(task[1]);
     };
@@ -553,6 +570,7 @@ vAPI.DOMFilterer = (function() {
             PSelector.prototype.operatorToTaskMap = new Map([
                 [ ':has', PSelectorIfTask ],
                 [ ':has-text', PSelectorHasTextTask ],
+                [ ':has-inner-text', PSelectorHasInnerTextTask ],
                 [ ':if', PSelectorIfTask ],
                 [ ':if-not', PSelectorIfNotTask ],
                 [ ':matches-css', PSelectorMatchesCSSTask ],
