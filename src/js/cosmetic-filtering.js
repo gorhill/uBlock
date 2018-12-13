@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2018 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -579,8 +579,11 @@ FilterContainer.prototype.compileGenericSelector = function(parsed, writer) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.compileGenericHideSelector = function(parsed, writer) {
-    let selector = parsed.suffix;
+FilterContainer.prototype.compileGenericHideSelector = function(
+    parsed,
+    writer
+) {
+    const selector = parsed.suffix;
 
     // For some selectors, it is mandatory to have a hostname or entity:
     //   ##.foo:-abp-contains(...)
@@ -596,18 +599,16 @@ FilterContainer.prototype.compileGenericHideSelector = function(parsed, writer) 
     //   ##:xpath(...)
     //   ##.foo:style(...)
     if ( this.reNeedHostname.test(selector) ) {
-        µb.logger.writeOne(
-            '',
-            'error',
-            'Cosmetic filtering – invalid generic filter: ##' + selector
-        );
+        µb.logger.writeOne({
+            error: 'Cosmetic filtering – invalid generic filter: ##' + selector
+        });
         return;
     }
 
     let type = selector.charCodeAt(0);
 
     if ( type === 0x23 /* '#' */ ) {
-        let key = this.keyFromSelector(selector);
+        const key = this.keyFromSelector(selector);
         if ( key === undefined ) { return; }
         // Simple selector-based CSS rule: no need to test for whether the
         // selector is valid, the regex took care of this. Most generic
@@ -624,7 +625,7 @@ FilterContainer.prototype.compileGenericHideSelector = function(parsed, writer) 
     }
 
     if ( type === 0x2E /* '.' */ ) {
-        let key = this.keyFromSelector(selector);
+        const key = this.keyFromSelector(selector);
         if ( key === undefined ) { return; }
         // Simple selector-based CSS rule: no need to test for whether the
         // selector is valid, the regex took care of this. Most generic
@@ -640,16 +641,16 @@ FilterContainer.prototype.compileGenericHideSelector = function(parsed, writer) 
         return;
     }
 
-    let compiled = µb.staticExtFilteringEngine.compileSelector(selector);
+    const compiled = µb.staticExtFilteringEngine.compileSelector(selector);
     if ( compiled === undefined ) { return; }
     // TODO: Detect and error on procedural cosmetic filters.
 
     // https://github.com/gorhill/uBlock/issues/909
     //   Anything which contains a plain id/class selector can be classified
     //   as a low generic cosmetic filter.
-    let matches = this.rePlainSelectorEx.exec(selector);
+    const matches = this.rePlainSelectorEx.exec(selector);
     if ( matches !== null ) {
-        let key = matches[1] || matches[2];
+        const key = matches[1] || matches[2];
         type = key.charCodeAt(0);
         writer.push([
             type === 0x23 ? 1 : 3 /* lg+ */,

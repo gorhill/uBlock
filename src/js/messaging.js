@@ -527,9 +527,8 @@ var onMessage = function(request, sender, callback) {
 
     case 'shouldRenderNoscriptTags':
         if ( pageStore === null ) { break; }
-        let tabContext = µb.tabContextManager.lookup(tabId);
-        if ( tabContext === null ) { break; }
-        if ( pageStore.filterScripting(tabContext.rootHostname, undefined) ) {
+        const fctxt = µBlock.filteringContext.fromTabId(tabId);
+        if ( pageStore.filterScripting(fctxt, undefined) ) {
             vAPI.tabs.injectScript(
                 tabId,
                 {
@@ -561,7 +560,10 @@ var onMessage = function(request, sender, callback) {
         request.domain = µb.URI.domainFromHostname(request.hostname);
         request.entity = µb.URI.entityFromDomain(request.domain);
         response.specificCosmeticFilters =
-            µb.cosmeticFilteringEngine.retrieveSpecificSelectors(request, response);
+            µb.cosmeticFilteringEngine.retrieveSpecificSelectors(
+                request,
+                response
+            );
         if ( µb.canInjectScriptletsNow === false ) {
             response.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
         }
@@ -1319,25 +1321,20 @@ var domSurveyFinalReport = function(tabId) {
 
 /******************************************************************************/
 
-var logCosmeticFilters = function(tabId, details) {
-    if ( µb.logger.isEnabled() === false ) {
-        return;
-    }
+const logCosmeticFilters = function(tabId, details) {
+    if ( µb.logger.enabled === false ) { return; }
 
-    var selectors = details.matchedSelectors;
-
-    selectors.sort();
-
-    for ( var i = 0; i < selectors.length; i++ ) {
-        µb.logger.writeOne(
-            tabId,
-            'cosmetic',
-            { source: 'cosmetic', raw: '##' + selectors[i] },
-            'dom',
-            details.frameURL,
-            null,
-            details.frameHostname
-        );
+    const filter = { source: 'cosmetic', raw: '' };
+    const fctxt = µb.filteringContext.duplicate();
+    fctxt.fromTabId(tabId)
+         .setRealm('cosmetic')
+         .setType('dom')
+         .setURL(details.frameURL)
+         .setDocOriginFromURL(details.frameURL)
+         .setFilter(filter);
+    for ( const selector of details.matchedSelectors.sort() ) {
+        filter.raw = '##' + selector;
+        fctxt.toLogger();
     }
 };
 

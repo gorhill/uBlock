@@ -29,16 +29,17 @@
 
 /******************************************************************************/
 
-var logger = self.logger = {
+const messaging = vAPI.messaging;
+
+const logger = self.logger = {
     ownerId: Date.now()
 };
 
-var messaging = vAPI.messaging;
-var activeTabId;
+let activeTabId;
 
 /******************************************************************************/
 
-var removeAllChildren = logger.removeAllChildren = function(node) {
+const removeAllChildren = logger.removeAllChildren = function(node) {
     while ( node.firstChild ) {
         node.removeChild(node.firstChild);
     }
@@ -46,18 +47,19 @@ var removeAllChildren = logger.removeAllChildren = function(node) {
 
 /******************************************************************************/
 
-var tabIdFromClassName = function(className) {
-    var matches = className.match(/\btab_([^ ]+)\b/);
+const tabIdFromClassName = function(className) {
+    const matches = className.match(/\btab_([^ ]+)\b/);
     if ( matches === null ) { return 0; }
     if ( matches[1] === 'bts' ) { return -1; }
     return parseInt(matches[1], 10);
 };
 
-var tabIdFromPageSelector = logger.tabIdFromPageSelector = function() {
-    var tabClass = uDom.nodeFromId('pageSelector').value;
+const tabIdFromPageSelector = logger.tabIdFromPageSelector = function() {
+    const tabClass = uDom.nodeFromId('pageSelector').value;
     if ( tabClass === 'tab_active' && activeTabId !== undefined ) {
         return activeTabId;
     }
+    if ( tabClass === 'tab_bts' ) { return -1; }
     return /^tab_\d+$/.test(tabClass) ? parseInt(tabClass.slice(4), 10) : 0;
 };
 
@@ -78,12 +80,11 @@ var tabIdFromPageSelector = logger.tabIdFromPageSelector = function() {
 var tbody = document.querySelector('#netInspector tbody');
 var trJunkyard = [];
 var tdJunkyard = [];
-var firstVarDataCol = 2;  // currently, column 2 (0-based index)
-var lastVarDataIndex = 4; // currently, d0-d3
+var firstVarDataCol = 1;
+var lastVarDataIndex = 6;
 var maxEntries = 5000;
 var allTabIds = new Map();
 var allTabIdsToken;
-var hiddenTemplate = document.querySelector('#hiddenTemplate > span');
 var reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
 var netFilteringDialog = uDom.nodeFromId('netFilteringDialog');
 
@@ -159,14 +160,15 @@ var renderedURLTemplate = document.querySelector('#renderedURLTemplate > span');
 
 /******************************************************************************/
 
-var createCellAt = function(tr, index) {
-    var td = tr.cells[index];
-    var mustAppend = !td;
+const createCellAt = function(tr, index) {
+    let td = tr.cells[index];
+    const mustAppend = !td;
     if ( mustAppend ) {
         td = tdJunkyard.pop();
     }
     if ( td ) {
         td.removeAttribute('colspan');
+        td.removeAttribute('title');
         td.textContent = '';
     } else {
         td = document.createElement('td');
@@ -180,24 +182,25 @@ var createCellAt = function(tr, index) {
 /******************************************************************************/
 
 var createRow = function(layout) {
-    var tr = trJunkyard.pop();
+    let tr = trJunkyard.pop();
     if ( tr ) {
         tr.className = '';
-        tr.removeAttribute('data-hn-page');
-        tr.removeAttribute('data-hn-frame');
+        tr.removeAttribute('data-tabhn');
+        tr.removeAttribute('data-dochn');
         tr.removeAttribute('data-filter');
+        tr.removeAttribute('data-tabid');
+        tr.removeAttribute('title');
     } else {
         tr = document.createElement('tr');
     }
-    for ( var index = 0; index < firstVarDataCol; index++ ) {
+    let index = 0;
+    for ( ; index < firstVarDataCol; index++ ) {
         createCellAt(tr, index);
     }
-    var i = 1, span = 1, td;
+    let i = 1, span = 1, td;
     for (;;) {
         td = createCellAt(tr, index);
-        if ( i === lastVarDataIndex ) {
-            break;
-        }
+        if ( i === lastVarDataIndex ) { break; }
         if ( layout.charAt(i) !== '1' ) {
             span += 1;
         } else {
@@ -221,24 +224,15 @@ var createRow = function(layout) {
 
 /******************************************************************************/
 
-var createHiddenTextNode = function(text) {
-    var node = hiddenTemplate.cloneNode(true);
-    node.textContent = text;
-    return node;
-};
-
-/******************************************************************************/
-
 var padTo2 = function(v) {
     return v < 10 ? '0' + v : v;
 };
 
 /******************************************************************************/
 
-var createGap = function(tabId, url) {
-    var tr = createRow('1');
-    tr.classList.add('tab');
-    tr.classList.add('canMtx');
+const createGap = function(tabId, url) {
+    const tr = createRow('1');
+    tr.setAttribute('data-tabid', tabId);
     tr.classList.add('tab_' + tabId);
     tr.classList.add('maindoc');
     tr.cells[firstVarDataCol].textContent = url;
@@ -247,36 +241,30 @@ var createGap = function(tabId, url) {
 
 /******************************************************************************/
 
-var renderNetLogEntry = function(tr, entry) {
-    var trcl = tr.classList;
-    var filter = entry.d0 || undefined;
-    var type = entry.d1;
-    var url = entry.d2;
-    var td;
-
-    trcl.add('canMtx');
+var renderNetLogEntry = function(tr, details) {
+    const trcl = tr.classList;
+    const type = details.type;
+    const url = details.url;
+    let td;
 
     // If the request is that of a root frame, insert a gap in the table
     // in order to visually separate entries for different documents. 
     if ( type === 'main_frame' ) {
-        createGap(entry.tab, url);
+        createGap(details.tabId, url);
     }
 
-    // Contexts
-    if ( entry.d3 ) {
-        tr.setAttribute('data-hn-page', entry.d3);
-    }
-    if ( entry.d4 ) {
-        tr.setAttribute('data-hn-frame', entry.d4);
+    tr.classList.add('cat_' + details.realm);
+
+    let filter = details.filter || undefined;
+    let filteringType;
+    if ( filter !== undefined ) {
+        if ( typeof filter.source === 'string' ) {
+            filteringType = filter.source;
+            trcl.add(filteringType);
+        }
     }
 
-    var filteringType;
-    if ( filter !== undefined && typeof filter.source === 'string' ) {
-        filteringType = filter.source;
-        trcl.add(filteringType);
-    }
-
-    td = tr.cells[2];
+    td = tr.cells[1];
     if ( filter !== undefined ) {
         if ( filteringType === 'static' ) {
             td.textContent = filter.raw;
@@ -290,7 +278,7 @@ var renderNetLogEntry = function(tr, entry) {
         }
     }
 
-    td = tr.cells[3];
+    td = tr.cells[2];
     if ( filter !== undefined ) {
         if ( filter.result === 1 ) {
             trcl.add('blocked');
@@ -301,65 +289,86 @@ var renderNetLogEntry = function(tr, entry) {
         } else if ( filter.result === 3 ) {
             trcl.add('nooped');
             td.textContent = '**';
-        } else if ( filter.source === 'redirect' ) {
+        } else if ( filteringType === 'redirect' ) {
             trcl.add('redirect');
             td.textContent = '<<';
         }
     }
 
-    tr.cells[4].textContent = (prettyRequestTypes[type] || type);
+    if ( details.tabHostname ) {
+        tr.setAttribute('data-tabhn', details.tabHostname);
+    }
+    if ( details.docHostname ) {
+        tr.setAttribute('data-dochn', details.docHostname);
+        tr.cells[3].textContent = details.docHostname;
+    }
 
-    var re = null;
+    // Partyness
+    if ( details.realm === 'net' && details.domain !== undefined ) {
+        td = tr.cells[4];
+        let text = '';
+        if ( details.tabDomain !== undefined ) {
+            text += details.domain === details.tabDomain ? '1' : '3';
+        } else {
+            text += '?';
+        }
+        if ( details.docDomain !== details.tabDomain ) {
+            text += ',';
+            if ( details.docDomain !== undefined ) {
+                text += details.domain === details.docDomain ? '1' : '3';
+            } else {
+                text += '?';
+            }
+        }
+        td.textContent = text;
+        text = details.domain;
+        if ( details.docDomain ) {
+            text = details.docDomain + ' \u21d2 ' + text;
+        }
+        if ( details.tabDomain && details.tabDomain !== details.docDomain ) {
+            text = details.tabDomain + ' \u21d2 ' + text;
+        }
+        td.setAttribute('title', text);
+    }
+
+    tr.cells[5].textContent = (prettyRequestTypes[type] || type);
+
+    let re = null;
     if ( filteringType === 'static' ) {
         re = new RegExp(filter.regex, 'gi');
     } else if ( filteringType === 'dynamicUrl' ) {
         re = regexFromURLFilteringResult(filter.rule.join(' '));
     }
-    tr.cells[5].appendChild(nodeFromURL(url, re));
+    tr.cells[6].appendChild(nodeFromURL(url, re));
 };
 
 /******************************************************************************/
 
-var renderLogEntry = function(entry) {
-    var tr;
-    var fvdc = firstVarDataCol;
+var renderLogEntry = function(details) {
+    const fvdc = firstVarDataCol;
+    let tr;
 
-    switch ( entry.cat ) {
-    case 'error':
-    case 'info':
+    if ( details.error !== undefined ) {
         tr = createRow('1');
-        tr.cells[fvdc].textContent = entry.d0;
-        break;
-
-    case 'cosmetic':
-    case 'net':
-    case 'redirect':
-        tr = createRow('1111');
-        renderNetLogEntry(tr, entry);
-        break;
-
-    default:
+        tr.cells[fvdc].textContent = details.error;
+    } else if ( details.url !== undefined ) {
+        tr = createRow('111111');
+        renderNetLogEntry(tr, details);
+    } else {
         tr = createRow('1');
-        tr.cells[fvdc].textContent = entry.d0;
-        break;
+        tr.cells[fvdc].textContent = '???';
     }
 
     // Fields common to all rows.
-    var time = logDate;
-    time.setTime(entry.tstamp - logDateTimezoneOffset);
+    const time = logDate;
+    time.setTime(details.tstamp - logDateTimezoneOffset);
     tr.cells[0].textContent = padTo2(time.getUTCHours()) + ':' +
                               padTo2(time.getUTCMinutes()) + ':' +
                               padTo2(time.getSeconds());
 
-    if ( entry.tab ) {
-        tr.classList.add('tab');
-        tr.classList.add(classNameFromTabId(entry.tab));
-        if ( entry.tab < 0 ) {
-            tr.cells[1].appendChild(createHiddenTextNode('bts'));
-        }
-    }
-    if ( entry.cat !== '' ) {
-        tr.classList.add('cat_' + entry.cat);
+    if ( details.tabId ) {
+        tr.setAttribute('data-tabid', details.tabId);
+        tr.classList.add(classNameFromTabId(details.tabId));
     }
 
     rowFilterer.filterOne(tr, true);
@@ -368,29 +377,29 @@ var renderLogEntry = function(entry) {
 };
 
 // Reuse date objects.
-var logDate = new Date(),
-    logDateTimezoneOffset = logDate.getTimezoneOffset() * 60000;
+const logDate = new Date();
+const logDateTimezoneOffset = logDate.getTimezoneOffset() * 60000;
 
 /******************************************************************************/
 
-var renderLogEntries = function(response) {
+const renderLogEntries = function(response) {
     document.body.classList.toggle('colorBlind', response.colorBlind);
 
-    let entries = response.entries;
+    const entries = response.entries;
     if ( entries.length === 0 ) { return; }
 
     // Preserve scroll position
-    let height = tbody.offsetHeight;
+    const height = tbody.offsetHeight;
 
-    let tabIds = allTabIds;
-    for ( let i = 0, n = entries.length; i < n; i++ ) {
-        let entry = entries[i];
-        let tr = renderLogEntry(entries[i]);
+    const tabIds = allTabIds;
+    for ( const entry of entries ) {
+        const details = JSON.parse(entry.details);
+        const tr = renderLogEntry(details);
         // https://github.com/gorhill/uBlock/issues/1613#issuecomment-217637122
         // Unlikely, but it may happen: mark as void if associated tab no
         // longer exist.
-        if ( entry.tab && tabIds.has(entry.tab) === false ) {
-            tr.classList.remove('canMtx');
+        if ( details.tabId && tabIds.has(details.tabId) === false ) {
+            tr.classList.add('void');
         }
     }
 
@@ -400,9 +409,9 @@ var renderLogEntries = function(response) {
     truncateLog(maxEntries);
 
     // Follow waterfall if not observing top of waterfall.
-    let yDelta = tbody.offsetHeight - height;
+    const yDelta = tbody.offsetHeight - height;
     if ( yDelta === 0 ) { return; }
-    let container = uDom.nodeFromSelector('#netInspector .vscrollable');
+    const container = uDom.nodeFromSelector('#netInspector .vscrollable');
     if ( container.scrollTop !== 0 ) {
         container.scrollTop += yDelta;
     }
@@ -428,21 +437,20 @@ let updateCurrentTabTitle = (function() {
 
 /******************************************************************************/
 
-var synchronizeTabIds = function(newTabIds) {
-    var select = uDom.nodeFromId('pageSelector');
-    var selectValue = select.value;
-
-    var oldTabIds = allTabIds;
-    var autoDeleteVoidRows = selectValue === 'tab_active';
-    var rowVoided = false;
-    for ( var tabId of oldTabIds.keys() ) {
+const synchronizeTabIds = function(newTabIds) {
+    const select = uDom.nodeFromId('pageSelector');
+    const selectValue = select.value;
+    const oldTabIds = allTabIds;
+    const autoDeleteVoidRows = selectValue === 'tab_active';
+    let rowVoided = false;
+    for ( const tabId of oldTabIds.keys() ) {
         if ( newTabIds.has(tabId) ) { continue; }
         // Mark or remove voided rows
-        var trs = uDom('.tab_' + tabId);
+        const trs = uDom('.tab_' + tabId);
         if ( autoDeleteVoidRows ) {
             toJunkyard(trs);
         } else {
-            trs.removeClass('canMtx');
+            trs.addClass('void');
             rowVoided = true;
         }
         // Remove popup if it is currently bound to a removed tab.
@@ -451,14 +459,14 @@ var synchronizeTabIds = function(newTabIds) {
         }
     }
 
-    var tabIds = Array.from(newTabIds.keys()).sort(function(a, b) {
+    const tabIds = Array.from(newTabIds.keys()).sort(function(a, b) {
         return newTabIds.get(a).localeCompare(newTabIds.get(b));
     });
-    var option;
-    for ( var i = 0, j = 3; i < tabIds.length; i++ ) {
-        tabId = tabIds[i];
+    let j = 3;
+    for ( let i = 0; i < tabIds.length; i++ ) {
+        const tabId = tabIds[i];
         if ( tabId < 0 ) { continue; }
-        option = select.options[j];
+        let option = select.options[j];
         if ( !option ) {
             option = document.createElement('option');
             select.appendChild(option);
@@ -508,7 +516,7 @@ var truncateLog = function(size) {
 
 /******************************************************************************/
 
-var onLogBufferRead = function(response) {
+const onLogBufferRead = function(response) {
     if ( !response || response.unavailable ) {
         readLogBufferAsync();
         return;
@@ -547,7 +555,7 @@ var onLogBufferRead = function(response) {
     if ( rowVoided ) {
         uDom('#clean').toggleClass(
             'disabled',
-            tbody.querySelector('#netInspector tr.tab:not(.canMtx)') === null
+            tbody.querySelector('#netInspector tr[data-tabid].void') === null
         );
     }
 
@@ -566,20 +574,20 @@ var onLogBufferRead = function(response) {
 // automatically. If called after init time, this will be messy, and this would
 // require a bit more code to ensure no multi time out events.
 
-var readLogBuffer = function() {
+const readLogBuffer = function() {
     if ( logger.ownerId === undefined ) { return; }
     vAPI.messaging.send(
         'loggerUI',
         {
             what: 'readAll',
             ownerId: logger.ownerId,
-            tabIdsToken: allTabIdsToken
+            tabIdsToken: allTabIdsToken,
         },
         onLogBufferRead
     );
 };
 
-var readLogBufferAsync = function() {
+const readLogBufferAsync = function() {
     if ( logger.ownerId === undefined ) { return; }
     vAPI.setTimeout(readLogBuffer, 1200);
 };
@@ -646,9 +654,13 @@ let pageSelectorFromURLHash = (function() {
         select.selectedIndex = option.index;
         select.value = option.value;
 
-        uDom('.needtab').toggleClass(
+        uDom('.needdom').toggleClass(
             'disabled',
             tabClass === '' || tabClass === 'tab_bts'
+        );
+        uDom('.needscope').toggleClass(
+            'disabled',
+            tabClass === ''
         );
     };
 })();
@@ -657,7 +669,7 @@ let pageSelectorFromURLHash = (function() {
 
 var reloadTab = function(ev) {
     var tabId = tabIdFromPageSelector();
-    if ( tabId === 0 ) { return; }
+    if ( tabId <= 0 ) { return; }
     messaging.send('loggerUI', {
         what: 'reloadTab',
         tabId: tabId,
@@ -1227,10 +1239,10 @@ var netFilteringManager = (function() {
         dialog = netFilteringDialog.querySelector('.dialog');
         targetRow = ev.target.parentElement;
         targetTabId = tabIdFromClassName(targetRow.className);
-        targetType = targetRow.cells[4].textContent.trim() || '';
-        targetURLs = createTargetURLs(targetRow.cells[5].textContent);
-        targetPageHostname = targetRow.getAttribute('data-hn-page') || '';
-        targetFrameHostname = targetRow.getAttribute('data-hn-frame') || '';
+        targetType = targetRow.cells[5].textContent.trim() || '';
+        targetURLs = createTargetURLs(targetRow.cells[6].textContent);
+        targetPageHostname = targetRow.getAttribute('data-tabhn') || '';
+        targetFrameHostname = targetRow.getAttribute('data-dochn') || '';
 
         // We need the root domain names for best user experience.
         messaging.send(
@@ -1345,7 +1357,7 @@ var reverseLookupManager = (function() {
 
     let toggleOn = function(ev) {
         let row = ev.target.parentElement;
-        rawFilter = row.cells[2].textContent;
+        rawFilter = row.cells[1].textContent;
         if ( rawFilter === '' ) { return; }
 
         if ( row.classList.contains('cat_net') ) {
@@ -1363,7 +1375,7 @@ var reverseLookupManager = (function() {
                 'loggerUI',
                 {
                     what: 'listsFromCosmeticFilter',
-                    url: row.cells[5].textContent,
+                    url: row.cells[6].textContent,
                     rawFilter: rawFilter,
                 },
                 reverseLookupDone
@@ -1385,10 +1397,10 @@ var reverseLookupManager = (function() {
 /******************************************************************************/
 /******************************************************************************/
 
-var rowFilterer = (function() {
-    var filters = [];
+const rowFilterer = (function() {
+    let filters = [];
 
-    var parseInput = function() {
+    const parseInput = function() {
         filters = [];
 
         var rawPart, hardBeg, hardEnd;
@@ -1438,33 +1450,30 @@ var rowFilterer = (function() {
         }
     };
 
-    var filterOne = function(tr, clean) {
-        var ff = filters;
-        var fcount = ff.length;
+    const filterOne = function(tr, clean) {
+        const ff = filters;
+        const fcount = ff.length;
         if ( fcount === 0 && clean === true ) {
             return;
         }
         // do not filter out doc boundaries, they help separate important
         // section of log.
-        var cl = tr.classList;
-        if ( cl.contains('maindoc') ) {
-            return;
-        }
+        const cl = tr.classList;
+        if ( cl.contains('maindoc') ) { return; }
         if ( fcount === 0 ) {
             cl.remove('f');
             return;
         }
-        var cc = tr.cells;
-        var ccount = cc.length;
-        var hit, j, f;
+        const cc = tr.cells;
+        const ccount = cc.length;
         // each filter expression must hit (implicit and-op)
         // if...
         //   positive filter expression = there must one hit on any field
         //   negative filter expression = there must be no hit on all fields
-        for ( var i = 0; i < fcount; i++ ) {
-            f = ff[i];
-            hit = !f.r;
-            for ( j = 0; j < ccount; j++ ) {
+        for ( let i = 0; i < fcount; i++ ) {
+            let f = ff[i];
+            let hit = !f.r;
+            for ( let j = 1; j < ccount; j++ ) {
                 if ( f.re.test(cc[j].textContent) ) {
                     hit = f.r;
                     break;
@@ -1478,7 +1487,7 @@ var rowFilterer = (function() {
         cl.remove('f');
     };
 
-    var filterAll = function() {
+    const filterAll = function() {
         // Special case: no filter
         if ( filters.length === 0 ) {
             uDom('#netInspector tr').removeClass('f');
@@ -1492,7 +1501,7 @@ var rowFilterer = (function() {
         }
     };
 
-    var onFilterChangedAsync = (function() {
+    const onFilterChangedAsync = (function() {
         var timer = null;
         var commit = function() {
             timer = null;
@@ -1507,7 +1516,7 @@ var rowFilterer = (function() {
         };
     })();
 
-    var onFilterButton = function() {
+    const onFilterButton = function() {
         uDom.nodeFromId('netInspector').classList.toggle('f');
     };
 
@@ -1559,14 +1568,14 @@ var clearBuffer = function() {
     );
     uDom.nodeFromId('clean').classList.toggle(
         'disabled',
-        tbody.querySelector('#netInspector tr.tab:not(.canMtx)') === null
+        tbody.querySelector('#netInspector tr[data-tabid].void') === null
     );
 };
 
 /******************************************************************************/
 
 var cleanBuffer = function() {
-    var rows = uDom('#netInspector tr.tab:not(.canMtx)').remove();
+    var rows = uDom('#netInspector tr[data-tabid].void').remove();
     var i = rows.length;
     while ( i-- ) {
         trJunkyard.push(rows.nodeAt(i));
@@ -1587,44 +1596,23 @@ var toggleVCompactRow = function(ev) {
 
 /******************************************************************************/
 
-var toggleInspectors = function() {
-    uDom.nodeFromId('inspectors').classList.toggle('dom');
-};
-
-/******************************************************************************/
-
 var popupManager = (function() {
-    var realTabId = null;
-    var localTabId = null;
-    var container = null;
-    var popup = null;
-    var popupObserver = null;
-    var style = null;
-    var styleTemplate = [
-        '#netInspector tr:not(.tab_{{tabId}}) {',
-            'cursor: not-allowed;',
-            'opacity: 0.2;',
-        '}'
-    ].join('\n');
+    let realTabId = 0;
+    let popup = null;
+    let popupObserver = null;
 
-    var resizePopup = function() {
-        if ( popup === null ) {
-            return;
-        }
-        var popupBody = popup.contentWindow.document.body;
-        if ( popupBody.clientWidth !== 0 && container.clientWidth !== popupBody.clientWidth ) {
-            container.style.setProperty('width', popupBody.clientWidth + 'px');
+    const resizePopup = function() {
+        if ( popup === null ) { return; }
+        const popupBody = popup.contentWindow.document.body;
+        if ( popupBody.clientWidth !== 0 && popup.clientWidth !== popupBody.clientWidth ) {
+            popup.style.setProperty('width', popupBody.clientWidth + 'px');
         }
         if ( popupBody.clientHeight !== 0 && popup.clientHeight !== popupBody.clientHeight ) {
             popup.style.setProperty('height', popupBody.clientHeight + 'px');
         }
     };
 
-    var toggleSize = function() {
-        container.classList.toggle('hide');
-    };
-
-    var onLoad = function() {
+    const onLoad = function() {
         resizePopup();
         popupObserver.observe(popup.contentDocument.body, {
             subtree: true,
@@ -1632,61 +1620,55 @@ var popupManager = (function() {
         });
     };
 
-    var toggleOn = function(td) {
-        var tr = td.parentNode;
-        realTabId = localTabId = tabIdFromClassName(tr.className);
-        if ( realTabId === 0 ) { return; }
-
-        container = uDom.nodeFromId('popupContainer');
-
-        container.querySelector('div > span:nth-of-type(1)').addEventListener('click', toggleSize);
-        container.querySelector('div > span:nth-of-type(2)').addEventListener('click', toggleOff);
-
-        popup = document.createElement('iframe');
-        popup.addEventListener('load', onLoad);
-        popup.setAttribute('src', 'popup.html?tabId=' + realTabId);
-        popupObserver = new MutationObserver(resizePopup);
-        container.appendChild(popup);
-
-        style = uDom.nodeFromId('popupFilterer');
-        style.textContent = styleTemplate.replace('{{tabId}}', localTabId);
-
-        var parent = uDom.nodeFromId('netInspector');
-        var rect = parent.getBoundingClientRect();
-        container.style.setProperty('top', rect.top + 'px');
-        container.style.setProperty('right', (rect.right - parent.clientWidth) + 'px');
-        parent.classList.add('popupOn');
+    const setTabId = function(tabId) {
+        if ( popup === null ) { return; }
+        popup.setAttribute('src', 'popup.html?tabId=' + tabId);
     };
 
-    var toggleOff = function() {
-        uDom.nodeFromId('netInspector').classList.remove('popupOn');
+    const onTabIdChanged = function() {
+        const tabId = tabIdFromPageSelector();
+        if ( tabId === 0 ) { return toggleOff(); }
+        realTabId = tabId;
+        setTabId(realTabId);
+    };
 
-        container.querySelector('div > span:nth-of-type(1)').removeEventListener('click', toggleSize);
-        container.querySelector('div > span:nth-of-type(2)').removeEventListener('click', toggleOff);
-        container.classList.remove('hide');
+    const toggleOn = function() {
+        const tabId = tabIdFromPageSelector();
+        if ( tabId === 0 ) { return; }
+        realTabId = tabId;
 
+        popup = uDom.nodeFromId('popupContainer');
+
+        popup.addEventListener('load', onLoad);
+        popupObserver = new MutationObserver(resizePopup);
+
+        const parent = uDom.nodeFromId('inspectors');
+        const rect = parent.getBoundingClientRect();
+        popup.style.setProperty('right', (rect.right - parent.clientWidth) + 'px');
+        parent.classList.add('popupOn');
+
+        document.addEventListener('tabIdChanged', onTabIdChanged);
+
+        setTabId(realTabId);
+    };
+
+    const toggleOff = function() {
+        document.removeEventListener('tabIdChanged', onTabIdChanged);
+        uDom.nodeFromId('inspectors').classList.remove('popupOn');
         popup.removeEventListener('load', onLoad);
         popupObserver.disconnect();
         popupObserver = null;
         popup.setAttribute('src', '');
-        container.removeChild(popup);
-        popup = null;
-
-        style.textContent = '';
-        style = null;
-
-        container = null;
-        realTabId = null;
+    
+        realTabId = 0;
     };
 
-    var exports = {
-        toggleOn: function(ev) {
-            if ( realTabId === null ) {
-                toggleOn(ev.target);
-            }
+    const exports = {
+        toggleOn: function() {
+            void (realTabId === 0 ? toggleOn() : toggleOff());
         },
         toggleOff: function() {
-            if ( realTabId !== null ) {
+            if ( realTabId !== 0 ) {
                 toggleOff();
             }
         }
@@ -1701,14 +1683,14 @@ var popupManager = (function() {
 
 /******************************************************************************/
 
-var grabView = function() {
+const grabView = function() {
     if ( logger.ownerId === undefined ) {
         logger.ownerId = Date.now();
     }
     readLogBufferAsync();
 };
 
-var releaseView = function() {
+const releaseView = function() {
     if ( logger.ownerId === undefined ) { return; }
     vAPI.messaging.send(
         'loggerUI',
@@ -1728,16 +1710,15 @@ readLogBuffer();
 
 uDom('#pageSelector').on('change', pageSelectorChanged);
 uDom('#refresh').on('click', reloadTab);
-uDom('#showdom').on('click', toggleInspectors);
+uDom('#showpopup').on('click', popupManager.toggleOn);
 
 uDom('#netInspector .vCompactToggler').on('click', toggleVCompactView);
 uDom('#clean').on('click', cleanBuffer);
 uDom('#clear').on('click', clearBuffer);
 uDom('#maxEntries').on('change', onMaxEntriesChanged);
 uDom('#netInspector table').on('click', 'tr > td:nth-of-type(1)', toggleVCompactRow);
-uDom('#netInspector table').on('click', 'tr.canMtx > td:nth-of-type(2)', popupManager.toggleOn);
-uDom('#netInspector').on('click', 'tr.canLookup > td:nth-of-type(3)', reverseLookupManager.toggleOn);
-uDom('#netInspector').on('click', 'tr.cat_net > td:nth-of-type(4)', netFilteringManager.toggleOn);
+uDom('#netInspector').on('click', 'tr.canLookup > td:nth-of-type(2)', reverseLookupManager.toggleOn);
+uDom('#netInspector').on('click', 'tr.cat_net > td:nth-of-type(3)', netFilteringManager.toggleOn);
 
 // https://github.com/gorhill/uBlock/issues/507
 // Ensure tab selector is in sync with URL hash

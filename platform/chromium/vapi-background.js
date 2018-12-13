@@ -282,21 +282,12 @@ vAPI.tabs = {};
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/3546
-//   Added a new flavor of behind-the-scene tab id: vAPI.anyTabId.
-//   vAPI.anyTabId will be used for network requests which can be filtered,
-//   because they comes with enough contextual information. It's just not
-//   possible to pinpoint exactly from which tab it comes from. For example,
-//   with Firefox/webext, the `documentUrl` property is available for every
-//   network requests.
-
 vAPI.isBehindTheSceneTabId = function(tabId) {
     return tabId < 0;
 };
 
 vAPI.unsetTabId = 0;
 vAPI.noTabId = -1;      // definitely not any existing tab
-vAPI.anyTabId = -2;     // one of the existing tab
 
 /******************************************************************************/
 

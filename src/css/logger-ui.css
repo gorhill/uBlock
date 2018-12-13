@@ -16,9 +16,11 @@ textarea {
     width: 100%;
     }
 .permatoolbar {
+    align-items: center;
     background-color: white;
     border: 0;
     box-sizing: border-box;
+    display: flex;
     font-size: 120%;
     left: 0;
     margin: 0;
@@ -28,14 +30,15 @@ textarea {
     z-index: 10;
     }
 .permatoolbar .button {
+    align-items: center;
     background-color: white;
     border: none;
     box-sizing: border-box;
     cursor: pointer;
-    display: inline-block;
+    display: inline-flex;
     font-size: 150%;
     margin: 0;
-    padding: 8px;
+    padding: 0.25em;
     }
 .permatoolbar .button.disabled {
     opacity: 0.2;
@@ -54,8 +57,14 @@ textarea {
     vertical-align: middle;
     }
 #pageSelector {
+    margin-right: 1em;
+    padding: 0.25em 0;
     width: 28em;
-    padding: 0.2em 0;
+    }
+#showpopup img {
+    filter: grayscale(100%);
+    height: auto;
+    width: 1em;
     }
 
 /*
@@ -128,19 +137,22 @@ textarea {
     width: 4.6em;
     }
 #netInspector table > colgroup > col:nth-of-type(2) {
-    width: 2.1em;
+    width: 16%;
     }
 #netInspector table > colgroup > col:nth-of-type(3) {
-    width: 20%;
-    }
-#netInspector table > colgroup > col:nth-of-type(4) {
     width: 2.1em;
     }
+#netInspector table > colgroup > col:nth-of-type(4) {
+    width: 20%;
+    }
 #netInspector table > colgroup > col:nth-of-type(5) {
-    width: 5.8em;
+    width: 2.4em;
     }
 #netInspector table > colgroup > col:nth-of-type(6) {
-    width: calc(100% - 14.6em - 20%);
+    width: 6em;
+    }
+#netInspector table > colgroup > col:nth-of-type(7) {
+    width: calc(100% - 4.6em - 16% - 2.1em - 20% - 2.4em - 6em);
     }
 #netInspector.f table tr.f {
     display: none;
@@ -205,6 +217,12 @@ body #netInspector td {
     text-overflow: ellipsis;
     white-space: nowrap;
     }
+#netInspector tr[data-tabid].void {
+    opacity: 0.3;
+    }
+#netInspector tr[data-tabid].void:hover {
+    opacity: 0.7;
+    }
 
 #netInspector tr td:nth-of-type(1) {
     cursor: default;
@@ -212,68 +230,71 @@ body #netInspector td {
     white-space: nowrap;
     }
 #netInspector tr td:nth-of-type(2) {
-    text-align: center;
-    white-space: nowrap;
     }
-#netInspector tr.tab_bts > td:nth-of-type(2):before {
-    content: '\f070';
-    font: 1em FontAwesome;
-    }
-#netInspector tr.tab:not(.canMtx) {
-    opacity: 0.3;
-    }
-#netInspector tr.tab:not(.canMtx):hover {
-    opacity: 0.7;
-    }
-#netInspector tr.tab:not(.canMtx) > td:nth-of-type(2):before {
-    content: '\f00d';
-    font: 1em FontAwesome;
-    }
-body:not(.popupOn) #netInspector tr.canMtx td:nth-of-type(2) {
+#netInspector tr.canLookup td:nth-of-type(2) {
     cursor: zoom-in;
     }
-body:not(.popupOn) #netInspector tr.canMtx td:nth-of-type(2):hover {
-    background: #ccc;
-    }
-#netInspector tr.canLookup td:nth-of-type(3) {
-    cursor: zoom-in;
-    }
-#netInspector tr.cat_net td:nth-of-type(4),
-#netInspector tr.cat_cosmetic td:nth-of-type(4),
-#netInspector tr.cat_redirect td:nth-of-type(4) {
+#netInspector tr.cat_net td:nth-of-type(3),
+#netInspector tr.cat_cosmetic td:nth-of-type(3),
+#netInspector tr.cat_redirect td:nth-of-type(3) {
     font: 12px monospace;
     text-align: center;
     white-space: nowrap;
     }
-#netInspector tr.cat_net td:nth-of-type(4) {
+#netInspector tr.cat_net td:nth-of-type(3) {
     cursor: pointer;
-    position: relative;
     }
-#netInspector tr.cat_net td:nth-of-type(4):hover {
+#netInspector tr.cat_net td:nth-of-type(3):hover {
     background: #ccc;
     }
-#netInspector tr.cat_net td:nth-of-type(6) > span > b {
+#netInspector tr td:nth-of-type(4) {
+    }
+#netInspector tr[data-dochn] td:nth-of-type(4) {
+    direction: rtl;
+    }
+#netInspector tr td:nth-of-type(5) {
+    cursor: default;
+    position: relative;
+    text-align: center;
+    }
+#netInspector tr.tab_bts td:nth-of-type(5)::after {
+    border: 5px solid #bbb;
+    border-bottom: 0;
+    border-top: 0;
+    bottom: 0;
+    content: '\00a0';
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: calc(100% - 10px);
+    z-index: -1;
+    }
+#netInspector tr td:nth-of-type(6) {
+    text-align: right;
+    }
+#netInspector tr.cat_net td:nth-of-type(7) > span > b {
     font-weight: bold;
     }
-#netInspector tr td:nth-of-type(6) b {
+#netInspector tr td:nth-of-type(7) b {
     font-weight: normal;
     }
-#netInspector tr.blocked td:nth-of-type(6) b {
+#netInspector tr.blocked td:nth-of-type(7) b {
     background-color: rgba(192, 0, 0, 0.2);
     }
-body.colorBlind #netInspector tr.blocked td:nth-of-type(6) b {
+body.colorBlind #netInspector tr.blocked td:nth-of-type(7) b {
     background-color: rgba(0, 19, 110, 0.2);
     }
-#netInspector tr.nooped td:nth-of-type(6) b {
+#netInspector tr.nooped td:nth-of-type(7) b {
     background-color: rgba(108, 108, 108, 0.2);
     }
-body.colorBlind #netInspector tr.nooped td:nth-of-type(6) b {
+body.colorBlind #netInspector tr.nooped td:nth-of-type(7) b {
     background-color: rgba(96, 96, 96, 0.2);
     }
-#netInspector tr.allowed td:nth-of-type(6) b {
+#netInspector tr.allowed td:nth-of-type(7) b {
     background-color: rgba(0, 160, 0, 0.2);
     }
-body.colorBlind #netInspector tr.allowed td:nth-of-type(6) b {
+body.colorBlind #netInspector tr.allowed td:nth-of-type(7) b {
     background-color: rgba(255, 194, 57, 0.2);
     }
 
@@ -281,48 +302,16 @@ body.colorBlind #netInspector tr.allowed td:nth-of-type(6) b {
     background: white;
     border: 1px solid gray;
     border-radius: 3px;
+    bottom: 0;
     box-sizing: border-box;
     display: none;
     overflow: hidden;
     position: fixed;
     right: 0;
-    top: 0;
     z-index: 200;
     }
-#netInspector.popupOn #popupContainer {
+#inspectors.popupOn #popupContainer {
     display: block;
-    }
-#popupContainer > div {
-    background: #aaa;
-    border: 0;
-    }
-body[dir="ltr"] #popupContainer > div {
-    text-align: right;
-    }
-body[dir="rtl"] #popupContainer > div {
-    text-align: left;
-    }
-#popupContainer > div > span {
-    color: #eee;
-    cursor: pointer;
-    display: inline-block;
-    font: 14px FontAwesome;
-    padding: 0 3px;
-    }
-#popupContainer > div > span:hover {
-    color: white;
-    }
-#popupContainer > iframe {
-    border: 0;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    }
-#popupContainer.hide {
-    width: 6em !important;
-    }
-#popupContainer.hide > iframe {
-    display: none;
     }
 
 .modalDialog {

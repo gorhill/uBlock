@@ -162,18 +162,18 @@
     };
 
     const logOne = function(details, exception, selector) {
-        µb.logger.writeOne(
-            details.tabId,
-            'cosmetic',
-            {
+        µBlock.filteringContext
+            .duplicate()
+            .fromTabId(details.tabId)
+            .setRealm('cosmetic')
+            .setType('dom')
+            .setURL(details.url)
+            .setDocOriginFromURL(details.url)
+            .setFilter({
                 source: 'cosmetic',
                 raw: (exception === 0 ? '##' : '#@#') + '^' + selector
-            },
-            'dom',
-            details.url,
-            null,
-            details.hostname
-        );
+            })
+            .toLogger();
     };
 
     const applyProceduralSelector = function(details, selector) {
@@ -192,7 +192,7 @@
                 modified = true;
             }
         }
-        if ( modified && µb.logger.isEnabled() ) {
+        if ( modified && µb.logger.enabled ) {
             logOne(details, 0, pselector.raw);
         }
         return modified;
@@ -209,7 +209,7 @@
                 modified = true;
             }
         }
-        if ( modified && µb.logger.isEnabled() ) {
+        if ( modified && µb.logger.enabled ) {
             logOne(details, 0, selector);
         }
         return modified;
@@ -277,7 +277,7 @@
     };
 
     api.retrieve = function(details) {
-        let hostname = details.hostname;
+        const hostname = details.hostname;
 
         // https://github.com/gorhill/uBlock/issues/2835
         //   Do not filter if the site is under an `allow` rule.
@@ -288,13 +288,13 @@
             return;
         }
 
-        let toRemoveArray = [];
-        let domainHash = µb.staticExtFilteringEngine.makeHash(details.domain);
+        const toRemoveArray = [];
+        const domainHash = µb.staticExtFilteringEngine.makeHash(details.domain);
         if ( domainHash !== 0 ) {
             filterDB.retrieve(domainHash, hostname, toRemoveArray);
         }
-        let entity = details.entity;
-        let entityHash = µb.staticExtFilteringEngine.makeHash(entity);
+        const entity = details.entity;
+        const entityHash = µb.staticExtFilteringEngine.makeHash(entity);
         if ( entityHash !== 0 ) {
             filterDB.retrieve(entityHash, entity, toRemoveArray);
         }
@@ -313,14 +313,14 @@
             return toRemoveArray;
         }
 
-        let toRemoveMap = new Map();
-        for ( let entry of toRemoveArray ) {
+        const toRemoveMap = new Map();
+        for ( const entry of toRemoveArray ) {
             toRemoveMap.set(entry.selector, entry);
         }
-        for ( let entry of notToRemoveArray ) {
+        for ( const entry of notToRemoveArray ) {
             if ( toRemoveMap.has(entry.selector) === false ) { continue; }
             toRemoveMap.delete(entry.selector);
-            if ( µb.logger.isEnabled() === false ) { continue; }
+            if ( µb.logger.enabled === false ) { continue; }
             let selector = entry.selector;
             if ( entry.type === 65 ) {
                 selector = JSON.parse(selector).raw;

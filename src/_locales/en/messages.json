@@ -536,7 +536,7 @@
     "description":"Appears in the logger's tab selector"
   },
   "logBehindTheScene":{
-    "message":"Behind the scene",
+    "message":"Tabless",
     "description":"Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab":{

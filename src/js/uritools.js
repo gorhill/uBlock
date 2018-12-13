@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2018 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ var reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
 // Derived
 var reSchemeFromURI          = /^[^:\/?#]+:/;
 var reAuthorityFromURI       = /^(?:[^:\/?#]+:)?(\/\/[^\/?#]+)/;
-var reOriginFromURI          = /^(?:[^:\/?#]+:)\/\/(?:[^\/?#]+)?/;
+var reOriginFromURI          = /^(?:[^:\/?#]+:)\/\/[^\/?#]+/;
 var reCommonHostnameFromURL  = /^https?:\/\/([0-9a-z_][0-9a-z._-]*[0-9a-z])\//;
 var rePathFromURI            = /^(?:[^:\/?#]+:)?(?:\/\/[^\/?#]*)?([^?#]*)/;
 var reMustNormalizeHostname  = /[^0-9a-z._-]/;
@@ -225,7 +225,7 @@ URI.assemble = function(bits) {
 /******************************************************************************/
 
 URI.originFromURI = function(uri) {
-    var matches = reOriginFromURI.exec(uri);
+    const matches = reOriginFromURI.exec(uri);
     return matches !== null ? matches[0].toLowerCase() : '';
 };
 

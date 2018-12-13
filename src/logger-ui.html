@@ -17,8 +17,9 @@
             <option value="tab_bts" data-i18n="logBehindTheScene">
             <option value="tab_active" data-i18n="loggerCurrentTab">
         </select>
-        <span id="refresh" class="button fa disabled needtab">&#xf021;</span>
-        <span id="showdom" class="button fa">&#xf121;</span>
+        <span id="refresh" class="button fa disabled needdom">&#xf021;</span>
+        <span id="showdom" class="button fa disabled needdom">&#xf121;</span>
+        <span id="showpopup" class="button disabled needscope"><img src="/img/icon_64.png"></span>
     </div>
 </div>
 
@@ -37,7 +38,6 @@
             <ul id="domTree"></ul>
         </div>
     </div>
-
     <div id="netInspector" class="inspector vCompact f">
         <div class="permatoolbar">
             <div>
@@ -50,21 +50,17 @@
         </div>
         <div class="vscrollable">
             <style id="tabFilterer"></style>
-            <style id="popupFilterer"></style>
             <table>
-                <colgroup><col><col><col><col><col></colgroup>
+                <colgroup><col><col><col><col><col><col></colgroup>
                 <tbody></tbody>
             </table>
-            <div id="popupContainer">
-                <div><span>&#xf068;</span>&ensp;<span>&#xf00d;</span></div>
-            </div>
         </div>
     </div>
+    <iframe id="popupContainer" class="hide"></iframe>
 </div>
 
 <div id="templates" style="display: none;">
     <div id="renderedURLTemplate"><span><span></span><b></b><span></span></span></div>
-    <div id="hiddenTemplate"><span style="display:none;"></span></div>
     <div id="netFilteringDialog" class="modalDialog">
         <div class="dialog">
             <div class="hide preview"></div>

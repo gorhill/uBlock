@@ -538,7 +538,7 @@ var matchBucket = function(url, hostname, bucket, start) {
 //   cosmetic filters.
 
 µBlock.logCosmeticFilters = function(tabId, frameId) {
-    if ( this.logger.isEnabled() ) {
+    if ( this.logger.enabled ) {
         vAPI.tabs.injectScript(tabId, {
             file: '/js/scriptlets/cosmetic-logger.js',
             frameId: frameId,

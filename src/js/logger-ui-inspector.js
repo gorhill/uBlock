@@ -559,16 +559,16 @@ var onMouseOver = (function() {
 
 /******************************************************************************/
 
-var currentTabId = function() {
+const currentTabId = function() {
     if ( showdomButton.classList.contains('active') === false ) { return 0; }
     return logger.tabIdFromPageSelector();
 };
 
 /******************************************************************************/
 
-var injectInspector = function() {
-    var tabId = currentTabId();
-    if ( tabId === 0 ) { return; }
+const injectInspector = function() {
+    const tabId = currentTabId();
+    if ( tabId <= 0 ) { return; }
     inspectedTabId = tabId;
     messaging.send('loggerUI', {
         what: 'scriptlet',
@@ -592,7 +592,11 @@ var shutdownInspector = function() {
 /******************************************************************************/
 
 var onTabIdChanged = function() {
-    if ( inspectedTabId !== currentTabId() ) {
+    const tabId = currentTabId();
+    if ( tabId <= 0 ) {
+        return toggleOff();
+    }
+    if ( inspectedTabId !== tabId ) {
         shutdownInspector();
         injectInspector();
     }
@@ -632,7 +636,8 @@ var revert = function() {
 
 /******************************************************************************/
 
-var toggleOn = function() {
+const toggleOn = function() {
+    uDom.nodeFromId('inspectors').classList.add('dom');
     window.addEventListener('beforeunload', toggleOff);
     document.addEventListener('tabIdChanged', onTabIdChanged);
     domTree.addEventListener('click', onClicked, true);
@@ -647,7 +652,9 @@ var toggleOn = function() {
 
 /******************************************************************************/
 
-var toggleOff = function() {
+const toggleOff = function() {
+    showdomButton.classList.remove('active');
+    uDom.nodeFromId('inspectors').classList.remove('dom');
     shutdownInspector();
     window.removeEventListener('beforeunload', toggleOff);
     document.removeEventListener('tabIdChanged', onTabIdChanged);
@@ -663,7 +670,7 @@ var toggleOff = function() {
 
 /******************************************************************************/
 
-var toggle = function() {
+const toggle = function() {
     if ( showdomButton.classList.toggle('active') ) {
         toggleOn();
     } else {

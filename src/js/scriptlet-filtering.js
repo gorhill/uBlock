@@ -24,17 +24,25 @@
 /******************************************************************************/
 
 µBlock.scriptletFilteringEngine = (function() {
-    let api = {};
-
-    let µb = µBlock,
-        scriptletDB = new µb.staticExtFilteringEngine.HostnameBasedDB(),
+    const µb = µBlock,
         duplicates = new Set(),
-        acceptedCount = 0,
-        discardedCount = 0,
         scriptletCache = new µb.MRUCache(32),
-        exceptionsRegister = new Set(),
         scriptletsRegister = new Map(),
+        exceptionsRegister = new Set(),
         reEscapeScriptArg = /[\\'"]/g;
+
+    let acceptedCount = 0,
+        discardedCount = 0,
+        scriptletDB = new µb.staticExtFilteringEngine.HostnameBasedDB();
+
+    const api = {
+        get acceptedCount() {
+            return acceptedCount;
+        },
+        get discardedCount() {
+            return discardedCount;
+        }
+    };
 
     // Purpose of `contentscriptCode` below is too programmatically inject
     // content script code which only purpose is to inject scriptlets. This
@@ -58,8 +66,8 @@
     // Consequently, the programmatic-injection code path is taken only with
     // Chromium-based browsers.
 
-    let contentscriptCode = (function() {
-        let parts = [
+    const contentscriptCode = (function() {
+        const parts = [
             '(',
             function(hostname, scriptlets) {
                 if (
@@ -163,15 +171,15 @@
         };
     })();
     
-    let lookupScriptlet = function(raw, reng, toInject) {
+    const lookupScriptlet = function(raw, reng, toInject) {
         if ( toInject.has(raw) ) { return; }
         if ( scriptletCache.resetTime < reng.modifyTime ) {
             scriptletCache.reset();
         }
-        var content = scriptletCache.lookup(raw);
+        let content = scriptletCache.lookup(raw);
         if ( content === undefined ) {
-            var token, args,
-                pos = raw.indexOf(',');
+            const pos = raw.indexOf(',');
+            let token, args;
             if ( pos === -1 ) {
                 token = raw;
             } else {
@@ -196,13 +204,12 @@
     // Fill template placeholders. Return falsy if:
     // - At least one argument contains anything else than /\w/ and `.`
 
-    let patchScriptlet = function(content, args) {
-        var i = 1,
-            pos, arg;
+    const patchScriptlet = function(content, args) {
+        let i = 1;
         while ( args !== '' ) {
-            pos = args.indexOf(',');
+            let pos = args.indexOf(',');
             if ( pos === -1 ) { pos = args.length; }
-            arg = args.slice(0, pos).trim().replace(reEscapeScriptArg, '\\$&');
+            const arg = args.slice(0, pos).trim().replace(reEscapeScriptArg, '\\$&');
             content = content.replace('{{' + i + '}}', arg);
             args = args.slice(pos + 1).trim();
             i++;
@@ -210,19 +217,19 @@
         return content;
     };
 
-    let logOne = function(isException, token, details) {
-        µb.logger.writeOne(
-            details.tabId,
-            'cosmetic',
-            {
+    const logOne = function(isException, token, details) {
+        µBlock.filteringContext
+            .duplicate()
+            .fromTabId(details.tabId)
+            .setRealm('cosmetic')
+            .setType('dom')
+            .setURL(details.url)
+            .setDocOriginFromURL(details.url)
+            .setFilter({
                 source: 'cosmetic',
                 raw: (isException ? '#@#' : '##') + '+js(' + token + ')'
-            },
-            'dom',
-            details.url,
-            null,
-            details.hostname
-        );
+            })
+            .toLogger();
     };
 
     api.reset = function() {
@@ -254,7 +261,7 @@
         //   because there is no way to create an exception to an exception.
 
         for ( let hn of parsed.hostnames ) {
-            let negated = hn.charCodeAt(0) === 0x7E /* '~' */;
+            const negated = hn.charCodeAt(0) === 0x7E /* '~' */;
             if ( negated ) {
                 hn = hn.slice(1);
             }
@@ -280,13 +287,13 @@
 
         while ( reader.next() ) {
             acceptedCount += 1;
-            let fingerprint = reader.fingerprint();
+            const fingerprint = reader.fingerprint();
             if ( duplicates.has(fingerprint) ) {
                 discardedCount += 1;
                 continue;
             }
             duplicates.add(fingerprint);
-            let args = reader.args();
+            const args = reader.args();
             if ( args.length < 4 ) { continue; }
             scriptletDB.add(
                 args[1],
@@ -299,10 +306,10 @@
         if ( scriptletDB.size === 0 ) { return; }
         if ( µb.hiddenSettings.ignoreScriptInjectFilters ) { return; }
 
-        let reng = µb.redirectEngine;
+        const reng = µb.redirectEngine;
         if ( !reng ) { return; }
 
-        let hostname = request.hostname;
+        const hostname = request.hostname;
 
         // https://github.com/gorhill/uBlock/issues/2835
         //   Do not inject scriptlets if the site is under an `allow` rule.
@@ -313,8 +320,8 @@
             return;
         }
 
-        let domain = request.domain,
-            entity = request.entity;
+        const domain = request.domain;
+        const entity = request.entity;
 
         // https://github.com/gorhill/uBlock/issues/1954
         // Implicit
@@ -322,7 +329,7 @@
         for (;;) {
             lookupScriptlet(hn + '.js', reng, scriptletsRegister);
             if ( hn === domain ) { break; }
-            var pos = hn.indexOf('.');
+            const pos = hn.indexOf('.');
             if ( pos === -1 ) { break; }
             hn = hn.slice(pos + 1);
         }
@@ -332,16 +339,16 @@
 
         // Explicit
         let entries = [];
-        let domainHash = µb.staticExtFilteringEngine.makeHash(domain);
+        const domainHash = µb.staticExtFilteringEngine.makeHash(domain);
         if ( domainHash !== 0 ) {
             scriptletDB.retrieve(domainHash, hostname, entries);
         }
-        let entityHash = µb.staticExtFilteringEngine.makeHash(entity);
+        const entityHash = µb.staticExtFilteringEngine.makeHash(entity);
         if ( entityHash !== 0 ) {
             scriptletDB.retrieve(entityHash, entity, entries);
         }
         scriptletDB.retrieve(0, hostname, entries);
-        for ( let entry of entries ) {
+        for ( const entry of entries ) {
             lookupScriptlet(entry.token, reng, scriptletsRegister);
         }
 
@@ -356,19 +363,19 @@
             scriptletDB.retrieve(entityHash | 0b0001, entity, entries);
         }
         scriptletDB.retrieve(0 | 0b0001, hostname, entries);
-        for ( let entry of entries ) {
+        for ( const entry of entries ) {
             exceptionsRegister.add(entry.token);
         }
 
         // Return an array of scriptlets, and log results if needed. 
-        let out = [],
-            logger = µb.logger.isEnabled() ? µb.logger : null,
-            isException;
-        for ( let entry of scriptletsRegister ) {
-            if ( (isException = exceptionsRegister.has(entry[0])) === false ) {
+        const out = [];
+        const loggerEnabled = µb.logger.enabled;
+        for ( const entry of scriptletsRegister ) {
+            const isException = exceptionsRegister.has(entry[0]);
+            if ( isException === false ) {
                 out.push(entry[1]);
             }
-            if ( logger !== null ) {
+            if ( loggerEnabled ) {
                 logOne(isException, entry[0], request);
             }
         }
@@ -384,7 +391,7 @@
     api.injectNow = function(details) {
         if ( typeof details.frameId !== 'number' ) { return; }
         if ( µb.URI.isNetworkURI(details.url) === false ) { return; }
-        let request = {
+        const request = {
             tabId: details.tabId,
             frameId: details.frameId,
             url: details.url,
@@ -394,7 +401,7 @@
         };
         request.domain = µb.URI.domainFromHostname(request.hostname);
         request.entity = µb.URI.entityFromDomain(request.domain);
-        let scriptlets = µb.scriptletFilteringEngine.retrieve(request);
+        const scriptlets = µb.scriptletFilteringEngine.retrieve(request);
         if ( scriptlets === undefined ) { return; }
         let code = contentscriptCode.assemble(request.hostname, scriptlets);
         if ( µb.hiddenSettings.debugScriptlets ) {
@@ -418,19 +425,6 @@
     api.fromSelfie = function(selfie) {
         scriptletDB = new µb.staticExtFilteringEngine.HostnameBasedDB(selfie);
     };
-
-    Object.defineProperties(api, {
-        acceptedCount: {
-            get: function() {
-                return acceptedCount;
-            }
-        },
-        discardedCount: {
-            get: function() {
-                return discardedCount;
-            }
-        }
-    });
 
     return api;
 })();

@@ -126,13 +126,6 @@ let pageHostnameRegister = '',
 
 // Local helpers
 
-// Be sure to not confuse 'example.com' with 'anotherexample.com'
-const isFirstParty = function(domain, hostname) {
-    return hostname.endsWith(domain) &&
-          (hostname.length === domain.length ||
-           hostname.charCodeAt(hostname.length - domain.length - 1) === 0x2E /* '.' */);
-};
-
 const normalizeRegexSource = function(s) {
     try {
         const re = new RegExp(s);
@@ -2184,12 +2177,10 @@ FilterContainer.prototype.compile = function(raw, writer) {
     // ORDER OF TESTS IS IMPORTANT!
 
     // Ignore empty lines
-    var s = raw.trim();
-    if ( s.length === 0 ) {
-        return false;
-    }
+    const s = raw.trim();
+    if ( s.length === 0 ) { return false; }
 
-    var parsed = this.filterParser.parse(s);
+    const parsed = this.filterParser.parse(s);
 
     // Ignore element-hiding filters
     if ( parsed.elemHiding ) {
@@ -2198,7 +2189,9 @@ FilterContainer.prototype.compile = function(raw, writer) {
 
     // Ignore filters with unsupported options
     if ( parsed.unsupported ) {
-        µb.logger.writeOne('', 'error', 'Network filtering – invalid filter: ' + raw);
+        µb.logger.writeOne({
+            error: 'Network filtering – invalid filter: ' + raw
+        });
         return false;
     }
 
@@ -2217,7 +2210,7 @@ FilterContainer.prototype.compile = function(raw, writer) {
 
     parsed.makeToken();
 
-    var fdata;
+    let fdata;
     if ( parsed.isRegex ) {
         fdata = FilterRegex.compile(parsed);
     } else if ( parsed.hostnamePure ) {
@@ -2256,7 +2249,7 @@ FilterContainer.prototype.compile = function(raw, writer) {
         fdata = FilterPlain.compile(parsed);
     }
 
-    var fwrapped;
+    let fwrapped;
     if ( parsed.domainOpt !== '' ) {
         fwrapped = fdata;
         fdata = FilterOrigin.compile(parsed);
@@ -2520,24 +2513,22 @@ FilterContainer.prototype.matchStringGenericHide = function(requestURL) {
 //   Some type of requests are exceptional, they need custom handling,
 //   not the generic handling.
 
-FilterContainer.prototype.matchStringExactType = function(context, requestURL, requestType) {
+FilterContainer.prototype.matchStringExactType = function(fctxt, requestType) {
     // Special cases.
     if ( requestType === 'generichide' ) {
-        return this.matchStringGenericHide(requestURL);
+        return this.matchStringGenericHide(fctxt.url);
     }
     let type = typeNameToTypeValue[requestType];
     if ( type === undefined ) { return 0; }
 
     // Prime tokenizer: we get a normalized URL in return.
-    let url = this.urlTokenizer.setURL(requestURL);
+    let url = this.urlTokenizer.setURL(fctxt.url);
 
     // These registers will be used by various filters
-    pageHostnameRegister = context.pageHostname || '';
-    requestHostnameRegister = µb.URI.hostnameFromURI(url);
+    pageHostnameRegister = fctxt.getDocHostname();
+    requestHostnameRegister = fctxt.getHostname();
 
-    let party = isFirstParty(context.pageDomain, requestHostnameRegister)
-        ? FirstParty
-        : ThirdParty;
+    let party = fctxt.is3rdPartyToDoc() ? ThirdParty : FirstParty;
     let categories = this.categories,
         catBits, bucket;
 
@@ -2602,15 +2593,15 @@ FilterContainer.prototype.matchStringExactType = function(context, requestURL, r
 
 /******************************************************************************/
 
-FilterContainer.prototype.matchString = function(context) {
+FilterContainer.prototype.matchString = function(fctxt) {
     // https://github.com/chrisaljoudi/uBlock/issues/519
     // Use exact type match for anything beyond `other`
     // Also, be prepared to support unknown types
-    let type = typeNameToTypeValue[context.requestType];
+    let type = typeNameToTypeValue[fctxt.type];
     if ( type === undefined ) {
          type = otherTypeBitValue;
     } else if ( type === 0 || type > otherTypeBitValue ) {
-        return this.matchStringExactType(context, context.requestURL, context.requestType);
+        return this.matchStringExactType(fctxt, fctxt.type);
     }
 
     // The logic here is simple:
@@ -2635,17 +2626,17 @@ FilterContainer.prototype.matchString = function(context) {
     // filter.
 
     // Prime tokenizer: we get a normalized URL in return.
-    let url = this.urlTokenizer.setURL(context.requestURL);
+    let url = this.urlTokenizer.setURL(fctxt.url);
 
     // These registers will be used by various filters
-    pageHostnameRegister = context.pageHostname || '';
-    requestHostnameRegister = context.requestHostname;
+    pageHostnameRegister = fctxt.getDocHostname();
+    requestHostnameRegister = fctxt.getHostname();
 
     this.fRegister = null;
 
-    let party = isFirstParty(context.pageDomain, context.requestHostname)
-        ? FirstParty
-        : ThirdParty;
+    let party = fctxt.is3rdPartyToDoc()
+        ? ThirdParty
+        : FirstParty;
     let categories = this.categories,
         catBits, bucket;
 

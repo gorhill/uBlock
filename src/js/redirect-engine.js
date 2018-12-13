@@ -95,14 +95,14 @@ const RedirectEntry = function() {
 // - https://stackoverflow.com/a/8056313
 // - https://bugzilla.mozilla.org/show_bug.cgi?id=998076
 
-RedirectEntry.prototype.toURL = function(details) {
+RedirectEntry.prototype.toURL = function(fctxt) {
     if (
         this.warURL !== undefined &&
-        details instanceof Object &&
-        details.requestType !== 'xmlhttprequest' &&
+        fctxt instanceof Object &&
+        fctxt.type !== 'xmlhttprequest' &&
         (
             suffersSpuriousRedirectConflicts === false ||
-            details.requestURL.startsWith('https:')
+            fctxt.url.startsWith('https:')
         )
     ) {
         return this.warURL + '?secret=' + vAPI.warSecret;
@@ -187,14 +187,14 @@ RedirectEngine.prototype.toBroaderHostname = function(hostname) {
 
 /******************************************************************************/
 
-RedirectEngine.prototype.lookup = function(context) {
-    var type = context.requestType;
+RedirectEngine.prototype.lookup = function(fctxt) {
+    const type = fctxt.type;
     if ( this.ruleTypes.has(type) === false ) { return; }
-    var src = context.pageHostname,
-        des = context.requestHostname,
-        desAll = this._desAll,
-        reqURL = context.requestURL;
-    var n = 0;
+    const desAll = this._desAll;
+    const reqURL = fctxt.url;
+    let src = fctxt.getDocHostname();
+    let des = fctxt.getHostname();
+    let n = 0;
     for (;;) {
         if ( this.ruleDestinations.has(des) ) {
             desAll[n] = des; n += 1;
@@ -203,11 +203,10 @@ RedirectEngine.prototype.lookup = function(context) {
         if ( des === '' ) { break; }
     }
     if ( n === 0 ) { return; }
-    var entries;
     for (;;) {
         if ( this.ruleSources.has(src) ) {
-            for ( var i = 0; i < n; i++ ) {
-                entries = this.rules.get(src + ' ' + desAll[i] + ' ' + type);
+            for ( let i = 0; i < n; i++ ) {
+                const entries = this.rules.get(src + ' ' + desAll[i] + ' ' + type);
                 if ( entries && this.lookupToken(entries, reqURL) ) {
                     return this.resourceNameRegister;
                 }
@@ -234,12 +233,12 @@ RedirectEngine.prototype.lookupToken = function(entries, reqURL) {
 
 /******************************************************************************/
 
-RedirectEngine.prototype.toURL = function(context) {
-    let token = this.lookup(context);
+RedirectEngine.prototype.toURL = function(fctxt) {
+    let token = this.lookup(fctxt);
     if ( token === undefined ) { return; }
     let entry = this.resources.get(token);
     if ( entry !== undefined ) {
-        return entry.toURL(context);
+        return entry.toURL(fctxt);
     }
 };
 

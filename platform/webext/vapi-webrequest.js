@@ -85,12 +85,10 @@ vAPI.net.registerListeners = function() {
             // Chromium uses `initiator` property.
             if (
                 details.documentUrl === undefined &&
-                typeof details.initiator === 'string'
+                typeof details.initiator === 'string' &&
+                details.initiator !== 'null'
             ) {
                 details.documentUrl = details.initiator;
-            }
-            if ( typeof details.documentUrl === 'string' ) {
-                details.tabId = vAPI.anyTabId;
             }
         }
 

@@ -663,11 +663,9 @@
                 return compiled;
             }
 
-            µb.logger.writeOne(
-                '',
-                'error',
-                'Cosmetic filtering – invalid filter: ' + raw
-            );
+            µb.logger.writeOne({
+                error: 'Cosmetic filtering – invalid filter: ' + raw
+            });
         };
 
         return entryPoint;

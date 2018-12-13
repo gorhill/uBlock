@@ -27,13 +27,12 @@
 
 /******************************************************************************/
 
-var reIsExternalPath = /^(?:[a-z-]+):\/\//,
+const reIsExternalPath = /^(?:[a-z-]+):\/\//,
     reIsUserAsset = /^user-/,
     errorCantConnectTo = vAPI.i18n('errorCantConnectTo'),
     noopfunc = function(){};
 
-var api = {
-};
+const api = {};
 
 /******************************************************************************/
 
@@ -64,14 +63,14 @@ var fireNotification = function(topic, details) {
 /******************************************************************************/
 
 api.fetchText = function(url, onLoad, onError) {
-    var isExternal = reIsExternalPath.test(url),
-        actualUrl = isExternal ? url : vAPI.getURL(url);
+    const isExternal = reIsExternalPath.test(url);
+    let actualUrl = isExternal ? url : vAPI.getURL(url);
 
     // https://github.com/gorhill/uBlock/issues/2592
     // Force browser cache to be bypassed, but only for resources which have
     // been fetched more than one hour ago.
     if ( isExternal ) {
-        var queryValue = '_=' + Math.floor(Date.now() / 7200000);
+        const queryValue = '_=' + Math.floor(Date.now() / 7200000);
         if ( actualUrl.indexOf('?') === -1 ) {
             actualUrl += '?';
         } else {
@@ -84,12 +83,12 @@ api.fetchText = function(url, onLoad, onError) {
         onError = onLoad;
     }
 
-    var contentLoaded = 0,
-        timeoutAfter = µBlock.hiddenSettings.assetFetchTimeout * 1000 || 30000,
-        timeoutTimer,
-        xhr = new XMLHttpRequest();
+    const timeoutAfter = µBlock.hiddenSettings.assetFetchTimeout * 1000 || 30000;
+    const xhr = new XMLHttpRequest();
+    let contentLoaded = 0;
+    let timeoutTimer;
 
-    var cleanup = function() {
+    const cleanup = function() {
         xhr.removeEventListener('load', onLoadEvent);
         xhr.removeEventListener('error', onErrorEvent);
         xhr.removeEventListener('abort', onErrorEvent);
@@ -101,11 +100,11 @@ api.fetchText = function(url, onLoad, onError) {
     };
 
     // https://github.com/gorhill/uMatrix/issues/15
-    var onLoadEvent = function() {
+    const onLoadEvent = function() {
         cleanup();
         // xhr for local files gives status 0, but actually succeeds
-        var details = {
-            url: url,
+        const details = {
+            url,
             content: '',
             statusCode: this.status || 200,
             statusText: this.statusText || ''
@@ -120,7 +119,7 @@ api.fetchText = function(url, onLoad, onError) {
         // we never download anything else than plain text: discard if response
         // appears to be a HTML document: could happen when server serves
         // some kind of error page I suppose
-        var text = this.responseText.trim();
+        const text = this.responseText.trim();
         if ( text.startsWith('<') && text.endsWith('>') ) {
             return onError.call(null, details);
         }
@@ -128,19 +127,21 @@ api.fetchText = function(url, onLoad, onError) {
         onLoad(details);
     };
 
-    var onErrorEvent = function() {
+    const onErrorEvent = function() {
         cleanup();
-        µBlock.logger.writeOne('', 'error', errorCantConnectTo.replace('{{msg}}', actualUrl));
-        onError({ url: url, content: '' });
+        µBlock.logger.writeOne({
+            error: errorCantConnectTo.replace('{{msg}}', actualUrl)
+        });
+        onError({ url, content: '' });
     };
 
-    var onTimeout = function() {
+    const onTimeout = function() {
         xhr.abort();
     };
 
     // https://github.com/gorhill/uBlock/issues/2526
     // - Timeout only when there is no progress.
-    var onProgressEvent = function(ev) {
+    const onProgressEvent = function(ev) {
         if ( ev.loaded === contentLoaded ) { return; }
         contentLoaded = ev.loaded;
         if ( timeoutTimer !== undefined ) {

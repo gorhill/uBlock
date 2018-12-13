@@ -37,14 +37,14 @@
 
 /******************************************************************************/
 
-var exceptions = new Map();
-var rules = new Map();
+let exceptions = new Map();
+let rules = new Map();
 
 // This value dictate how the search will be performed:
 //    < this.cutoffLength = indexOf()
 //   >= this.cutoffLength = binary search
-var cutoffLength = 256;
-var mustPunycode = /[^a-z0-9.-]/;
+const cutoffLength = 256;
+const mustPunycode = /[^a-z0-9.-]/;
 
 /******************************************************************************/
 
@@ -284,7 +284,7 @@ function crystallize(store) {
 
 /******************************************************************************/
 
-var selfieMagic = 1;
+const selfieMagic = 1;
 
 function toSelfie() {
     return {
@@ -311,12 +311,15 @@ function fromSelfie(selfie) {
 root = root || window;
 
 root.publicSuffixList = {
-    'version': '1.0',
-    'parse': parse,
-    'getDomain': getDomain,
-    'getPublicSuffix': getPublicSuffix,
-    'toSelfie': toSelfie,
-    'fromSelfie': fromSelfie,
+    version: '1.0',
+    parse: parse,
+    getDomain: getDomain,
+    getPublicSuffix: getPublicSuffix,
+    toSelfie: toSelfie,
+    fromSelfie: fromSelfie,
+    get empty() {
+        return rules.size === 0;
+    }
 };
 
 /******************************************************************************/

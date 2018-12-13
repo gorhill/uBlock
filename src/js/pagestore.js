@@ -37,18 +37,18 @@ To create a log of net requests
 
 /******************************************************************************/
 
-var µb = µBlock;
+const µb = µBlock;
 
 /******************************************************************************/
 /******************************************************************************/
 
 // To mitigate memory churning
-var netFilteringCacheJunkyard = [],
-    netFilteringCacheJunkyardMax = 10;
+const netFilteringCacheJunkyard = [];
+const  netFilteringCacheJunkyardMax = 10;
 
 /******************************************************************************/
 
-var NetFilteringResultCache = function() {
+const NetFilteringResultCache = function() {
     this.boundPruneAsyncCallback = this.pruneAsyncCallback.bind(this);
     this.init();
 };
@@ -60,7 +60,7 @@ NetFilteringResultCache.prototype.shelfLife = 15 * 1000;
 /******************************************************************************/
 
 NetFilteringResultCache.factory = function() {
-    var entry = netFilteringCacheJunkyard.pop();
+    let entry = netFilteringCacheJunkyard.pop();
     if ( entry === undefined ) {
         entry = new NetFilteringResultCache();
     } else {
@@ -90,31 +90,35 @@ NetFilteringResultCache.prototype.dispose = function() {
 
 /******************************************************************************/
 
-NetFilteringResultCache.prototype.rememberResult = function(context, result, logData) {
+NetFilteringResultCache.prototype.rememberResult = function(
+    fctxt,
+    result,
+    logData
+) {
     if ( this.results.size === 0 ) {
         this.pruneAsync();
     }
-    var key = context.pageHostname + ' ' + context.requestType + ' ' + context.requestURL;
+    const key = fctxt.getDocHostname() + ' ' + fctxt.type + ' ' + fctxt.url;
     this.results.set(key, {
         result: result,
         logData: logData,
         tstamp: Date.now()
     });
     if ( result !== 1 ) { return; }
-    var now = Date.now();
+    const now = Date.now();
     this.blocked.set(key, now);
     this.hash = now;
 };
 
 /******************************************************************************/
 
-NetFilteringResultCache.prototype.rememberBlock = function(details) {
+NetFilteringResultCache.prototype.rememberBlock = function(fctxt) {
     if ( this.blocked.size === 0 ) {
         this.pruneAsync();
     }
-    var now = Date.now();
+    const now = Date.now();
     this.blocked.set(
-        details.pageHostname + ' ' + details.requestType + ' ' + details.requestURL,
+        fctxt.getDocHostname() + ' ' + fctxt.type + ' ' + fctxt.url,
         now
     );
     this.hash = now;
@@ -162,21 +166,20 @@ NetFilteringResultCache.prototype.pruneAsyncCallback = function() {
 
 /******************************************************************************/
 
-NetFilteringResultCache.prototype.lookupResult = function(context) {
+NetFilteringResultCache.prototype.lookupResult = function(fctxt) {
     return this.results.get(
-        context.pageHostname + ' ' +
-        context.requestType + ' ' +
-        context.requestURL
+        fctxt.getDocHostname() + ' ' +
+        fctxt.type + ' ' +
+        fctxt.url
     );
 };
 
 /******************************************************************************/
 
 NetFilteringResultCache.prototype.lookupAllBlocked = function(hostname) {
-    var result = [],
-        pos;
-    for ( var entry of this.blocked ) {
-        pos = entry[0].indexOf(' ');
+    const result = [];
+    for ( const entry of this.blocked ) {
+        const pos = entry[0].indexOf(' ');
         if ( entry[0].slice(0, pos) === hostname ) {
             result[result.length] = entry[0].slice(pos + 1);
         }
@@ -193,19 +196,19 @@ NetFilteringResultCache.prototype.lookupAllBlocked = function(hostname) {
 // refactoring.
 
 // To mitigate memory churning
-var frameStoreJunkyard = [];
-var frameStoreJunkyardMax = 50;
+const frameStoreJunkyard = [];
+const frameStoreJunkyardMax = 50;
 
 /******************************************************************************/
 
-var FrameStore = function(frameURL) {
+const FrameStore = function(frameURL) {
     this.init(frameURL);
 };
 
 /******************************************************************************/
 
 FrameStore.factory = function(frameURL) {
-    var entry = frameStoreJunkyard.pop();
+    const entry = frameStoreJunkyard.pop();
     if ( entry === undefined ) {
         return new FrameStore(frameURL);
     }
@@ -215,7 +218,7 @@ FrameStore.factory = function(frameURL) {
 /******************************************************************************/
 
 FrameStore.prototype.init = function(frameURL) {
-    var µburi = µb.URI;
+    const µburi = µb.URI;
     this.pageHostname = µburi.hostnameFromURI(frameURL);
     this.pageDomain = µburi.domainFromHostname(this.pageHostname) || this.pageHostname;
     return this;
@@ -235,12 +238,12 @@ FrameStore.prototype.dispose = function() {
 /******************************************************************************/
 
 // To mitigate memory churning
-var pageStoreJunkyard = [];
-var pageStoreJunkyardMax = 10;
+const pageStoreJunkyard = [];
+const pageStoreJunkyardMax = 10;
 
 /******************************************************************************/
 
-var PageStore = function(tabId, context) {
+const PageStore = function(tabId, context) {
     this.init(tabId, context);
     this.journal = [];
     this.journalTimer = null;
@@ -251,7 +254,7 @@ var PageStore = function(tabId, context) {
 /******************************************************************************/
 
 PageStore.factory = function(tabId, context) {
-    var entry = pageStoreJunkyard.pop();
+    let entry = pageStoreJunkyard.pop();
     if ( entry === undefined ) {
         entry = new PageStore(tabId, context);
     } else {
@@ -297,6 +300,18 @@ PageStore.prototype.init = function(tabId, context) {
     this.netFilteringCache = NetFilteringResultCache.factory();
     this.internalRedirectionCount = 0;
 
+    // The current filtering context is cloned because:
+    // - We may be called with or without the current context having been
+    //   initialized.
+    // - If it has been initialized, we do not want to change the state
+    //   of the current context.
+    const fctxt = µb.logger.enabled
+        ? µBlock.filteringContext
+                .duplicate()
+                .fromTabId(tabId)
+                .setURL(tabContext.rawURL)
+        : undefined;
+
     // https://github.com/uBlockOrigin/uBlock-issues/issues/314
     const masterSwitch = tabContext.getNetFilteringSwitch();
 
@@ -307,18 +322,13 @@ PageStore.prototype.init = function(tabId, context) {
     if (
         masterSwitch &&
         this.noCosmeticFiltering &&
-        µb.logger.isEnabled() &&
+        µb.logger.enabled &&
         context === 'tabCommitted'
     ) {
-        µb.logger.writeOne(
-            tabId,
-            'cosmetic',
-            µb.sessionSwitches.toLogData(),
-            'dom',
-            tabContext.rawURL,
-            this.tabHostname,
-            this.tabHostname
-        );
+        fctxt.setRealm('cosmetic')
+             .setType('dom')
+             .setFilter(µb.sessionSwitches.toLogData())
+             .toLogger();
     }
 
     // Support `generichide` filter option.
@@ -332,18 +342,13 @@ PageStore.prototype.init = function(tabId, context) {
             this.noGenericCosmeticFiltering = result === 2;
             if (
                 result !== 0 &&
-                µb.logger.isEnabled() &&
+                µb.logger.enabled &&
                 context === 'tabCommitted'
             ) {
-                µb.logger.writeOne(
-                    tabId,
-                    'net',
-                    µb.staticNetFilteringEngine.toLogData(),
-                    'generichide',
-                    tabContext.rawURL,
-                    this.tabHostname,
-                    this.tabHostname
-                );
+                fctxt.setRealm('net')
+                     .setType('generichide')
+                     .setFilter(µb.staticNetFilteringEngine.toLogData())
+                     .toLogger();
             }
         }
     }
@@ -357,7 +362,7 @@ PageStore.prototype.reuse = function(context) {
     // When force refreshing a page, the page store data needs to be reset.
 
     // If the hostname changes, we can't merely just update the context.
-    var tabContext = µb.tabContextManager.mustLookup(this.tabId);
+    const tabContext = µb.tabContextManager.mustLookup(this.tabId);
     if ( tabContext.rootHostname !== this.tabHostname ) {
         context = '';
     }
@@ -416,22 +421,18 @@ PageStore.prototype.dispose = function() {
 /******************************************************************************/
 
 PageStore.prototype.disposeFrameStores = function() {
-    for ( var frameStore of this.frames.values() ) {
+    for ( const frameStore of this.frames.values() ) {
         frameStore.dispose();
     }
     this.frames.clear();
 };
 
-/******************************************************************************/
-
 PageStore.prototype.getFrame = function(frameId) {
     return this.frames.get(frameId) || null;
 };
 
-/******************************************************************************/
-
 PageStore.prototype.setFrame = function(frameId, frameURL) {
-    var frameStore = this.frames.get(frameId);
+    const frameStore = this.frames.get(frameId);
     if ( frameStore !== undefined ) {
         frameStore.init(frameURL);
     } else {
@@ -441,53 +442,18 @@ PageStore.prototype.setFrame = function(frameId, frameURL) {
 
 /******************************************************************************/
 
-PageStore.prototype.createContextFromPage = function() {
-    var context = µb.tabContextManager.createContext(this.tabId);
-    context.pageHostname = context.rootHostname;
-    context.pageDomain = context.rootDomain;
-    return context;
-};
-
-PageStore.prototype.createContextFromFrameId = function(frameId) {
-    var context = µb.tabContextManager.createContext(this.tabId);
-    var frameStore = this.frames.get(frameId);
-    if ( frameStore !== undefined ) {
-        context.pageHostname = frameStore.pageHostname;
-        context.pageDomain = frameStore.pageDomain;
-    } else {
-        context.pageHostname = context.rootHostname;
-        context.pageDomain = context.rootDomain;
-    }
-    return context;
-};
-
-PageStore.prototype.createContextFromFrameHostname = function(frameHostname) {
-    var context = µb.tabContextManager.createContext(this.tabId);
-    context.pageHostname = frameHostname;
-    context.pageDomain = µb.URI.domainFromHostname(frameHostname) || frameHostname;
-    return context;
-};
-
-/******************************************************************************/
-
 PageStore.prototype.getNetFilteringSwitch = function() {
     return µb.tabContextManager.mustLookup(this.tabId).getNetFilteringSwitch();
 };
-
-/******************************************************************************/
 
 PageStore.prototype.getSpecificCosmeticFilteringSwitch = function() {
     return this.noCosmeticFiltering !== true;
 };
 
-/******************************************************************************/
-
 PageStore.prototype.getGenericCosmeticFilteringSwitch = function() {
     return this.noGenericCosmeticFiltering !== true &&
            this.noCosmeticFiltering !== true;
 };
-
-/******************************************************************************/
 
 PageStore.prototype.toggleNetFilteringSwitch = function(url, scope, state) {
     µb.toggleNetFilteringSwitch(url, scope, state);
@@ -562,15 +528,14 @@ PageStore.prototype.journalProcess = function(fromTimer) {
     }
     this.journalTimer = null;
 
-    var journal = this.journal,
-        n = journal.length,
-        aggregateCounts = 0,
-        now = Date.now(),
-        pivot = this.journalLastCommitted || 0;
+    const journal = this.journal;
+    const now = Date.now();
+    let aggregateCounts = 0;
+    let pivot = this.journalLastCommitted || 0;
 
     // Everything after pivot originates from current page.
-    for ( let i = pivot; i < n; i += 2 ) {
-        let hostname = journal[i];
+    for ( let i = pivot; i < journal.length; i += 2 ) {
+        const hostname = journal[i];
         let hostnameCounts = this.hostnameToCountMap.get(hostname);
         if ( hostnameCounts === undefined ) {
             hostnameCounts = 0;
@@ -605,88 +570,101 @@ PageStore.prototype.journalProcess = function(fromTimer) {
 
 /******************************************************************************/
 
-PageStore.prototype.filterRequest = function(context) {
-    this.logData = undefined;
+PageStore.prototype.filterRequest = function(fctxt) {
+    fctxt.filter = undefined;
 
     if ( this.getNetFilteringSwitch() === false ) {
         return 0;
     }
 
-    var requestType = context.requestType;
+    const requestType = fctxt.type;
 
-    if ( requestType === 'csp_report' && this.filterCSPReport(context) === 1 ) {
+    if ( requestType === 'csp_report' && this.filterCSPReport(fctxt) === 1 ) {
         return 1;
     }
 
-    if ( requestType.endsWith('font') && this.filterFont(context) === 1 ) {
+    if ( requestType.endsWith('font') && this.filterFont(fctxt) === 1 ) {
         return 1;
     }
 
     if (
         requestType === 'script' &&
-        this.filterScripting(context.rootHostname, true) === 1
+        this.filterScripting(fctxt, true) === 1
     ) {
         return 1;
     }
 
-    var cacheableResult = this.cacheableResults[requestType] === true;
+    const cacheableResult = this.cacheableResults.has(requestType);
 
     if ( cacheableResult ) {
-        var entry = this.netFilteringCache.lookupResult(context);
+        const entry = this.netFilteringCache.lookupResult(fctxt);
         if ( entry !== undefined ) {
-            this.logData = entry.logData;
+            fctxt.filter = entry.logData;
             return entry.result;
         }
     }
 
     // Dynamic URL filtering.
-    var result = µb.sessionURLFiltering.evaluateZ(context.rootHostname, context.requestURL, requestType);
-    if ( result !== 0 && µb.logger.isEnabled() ) {
-        this.logData = µb.sessionURLFiltering.toLogData();
+    let result = µb.sessionURLFiltering.evaluateZ(
+        fctxt.getTabHostname(),
+        fctxt.url,
+        requestType
+    );
+    if ( result !== 0 && µb.logger.enabled ) {
+        fctxt.filter = µb.sessionURLFiltering.toLogData();
     }
 
     // Dynamic hostname/type filtering.
     if ( result === 0 && µb.userSettings.advancedUserEnabled ) {
-        result = µb.sessionFirewall.evaluateCellZY(context.rootHostname, context.requestHostname, requestType);
-        if ( result !== 0 && result !== 3 && µb.logger.isEnabled() ) {
-            this.logData = µb.sessionFirewall.toLogData();
+        result = µb.sessionFirewall.evaluateCellZY(
+            fctxt.getTabHostname(),
+            fctxt.getHostname(),
+            requestType
+        );
+        if ( result !== 0 && result !== 3 && µb.logger.enabled ) {
+            fctxt.filter = µb.sessionFirewall.toLogData();
         }
     }
 
     // Static filtering has lowest precedence.
     if ( result === 0 || result === 3 ) {
-        result = µb.staticNetFilteringEngine.matchString(context);
-        if ( result !== 0 && µb.logger.isEnabled() ) {
-            this.logData = µb.staticNetFilteringEngine.toLogData();
+        result = µb.staticNetFilteringEngine.matchString(fctxt);
+        if ( result !== 0 && µb.logger.enabled ) {
+            fctxt.filter = µb.staticNetFilteringEngine.toLogData();
         }
     }
 
     if ( cacheableResult ) {
-        this.netFilteringCache.rememberResult(context, result, this.logData);
-    } else if ( result === 1 && this.collapsibleResources[requestType] === true ) {
-        this.netFilteringCache.rememberBlock(context, true);
+        this.netFilteringCache.rememberResult(fctxt, result, this.logData);
+    } else if ( result === 1 && this.collapsibleResources.has(requestType) ) {
+        this.netFilteringCache.rememberBlock(fctxt, true);
     }
 
     return result;
 };
 
-PageStore.prototype.cacheableResults = {
-    sub_frame: true
-};
+PageStore.prototype.cacheableResults = new Set([
+    'sub_frame',
+]);
 
-PageStore.prototype.collapsibleResources = {
-    image: true,
-    media: true,
-    object: true,
-    sub_frame: true
-};
+PageStore.prototype.collapsibleResources = new Set([
+    'image',
+    'media',
+    'object',
+    'sub_frame',
+]);
 
 /******************************************************************************/
 
-PageStore.prototype.filterCSPReport = function(context) {
-    if ( µb.sessionSwitches.evaluateZ('no-csp-reports', context.requestHostname) ) {
-        if ( µb.logger.isEnabled() ) {
-            this.logData = µb.sessionSwitches.toLogData();
+PageStore.prototype.filterCSPReport = function(fctxt) {
+    if (
+        µb.sessionSwitches.evaluateZ(
+            'no-csp-reports',
+            fctxt.getHostname()
+        )
+    ) {
+        if ( µb.logger.enabled ) {
+            fctxt.filter = µb.sessionSwitches.toLogData();
         }
         return 1;
     }
@@ -695,13 +673,18 @@ PageStore.prototype.filterCSPReport = function(context) {
 
 /******************************************************************************/
 
-PageStore.prototype.filterFont = function(context) {
-    if ( context.requestType === 'font' ) {
+PageStore.prototype.filterFont = function(fctxt) {
+    if ( fctxt.type === 'font' ) {
         this.remoteFontCount += 1;
     }
-    if ( µb.sessionSwitches.evaluateZ('no-remote-fonts', context.rootHostname) !== false ) {
-        if ( µb.logger.isEnabled() ) {
-            this.logData = µb.sessionSwitches.toLogData();
+    if (
+        µb.sessionSwitches.evaluateZ(
+            'no-remote-fonts',
+            fctxt.getTabHostname()
+        ) !== false
+    ) {
+        if ( µb.logger.enabled ) {
+            fctxt.filter = µb.sessionSwitches.toLogData();
         }
         return 1;
     }
@@ -710,18 +693,22 @@ PageStore.prototype.filterFont = function(context) {
 
 /******************************************************************************/
 
-PageStore.prototype.filterScripting = function(rootHostname, netFiltering) {
+PageStore.prototype.filterScripting = function(fctxt, netFiltering) {
+    fctxt.filter = undefined;
     if ( netFiltering === undefined ) {
         netFiltering = this.getNetFilteringSwitch();
     }
     if (
         netFiltering === false ||
-        µb.sessionSwitches.evaluateZ('no-scripting', rootHostname) === false
+        µb.sessionSwitches.evaluateZ(
+            'no-scripting',
+            fctxt.getTabHostname()
+        ) === false
     ) {
         return 0;
     }
-    if ( µb.logger.isEnabled() ) {
-        this.logData = µb.sessionSwitches.toLogData();
+    if ( µb.logger.enabled ) {
+        fctxt.filter = µb.sessionSwitches.toLogData();
     }
     return 1;
 };
@@ -730,13 +717,18 @@ PageStore.prototype.filterScripting = function(rootHostname, netFiltering) {
 
 // The caller is responsible to check whether filtering is enabled or not.
 
-PageStore.prototype.filterLargeMediaElement = function(size) {
-    this.logData = undefined;
+PageStore.prototype.filterLargeMediaElement = function(fctxt, size) {
+    fctxt.filter = undefined;
 
     if ( Date.now() < this.allowLargeMediaElementsUntil ) {
         return 0;
     }
-    if ( µb.sessionSwitches.evaluateZ('no-large-media', this.tabHostname) !== true ) {
+    if (
+        µb.sessionSwitches.evaluateZ(
+            'no-large-media',
+            fctxt.getTabHostname()
+        ) !== true
+    ) {
         return 0;
     }
     if ( (size >>> 10) < µb.userSettings.largeMediaSize ) {
@@ -751,8 +743,8 @@ PageStore.prototype.filterLargeMediaElement = function(size) {
         );
     }
 
-    if ( µb.logger.isEnabled() ) {
-        this.logData = µb.sessionSwitches.toLogData();
+    if ( µb.logger.enabled ) {
+        fctxt.filter = µb.sessionSwitches.toLogData();
     }
 
     return 1;
@@ -763,26 +755,27 @@ PageStore.prototype.filterLargeMediaElement = function(size) {
 /******************************************************************************/
 
 PageStore.prototype.getBlockedResources = function(request, response) {
-    var µburi = µb.URI,
-        normalURL = µb.normalizePageURL(this.tabId, request.frameURL),
-        frameHostname = µburi.hostnameFromURI(normalURL),
-        resources = request.resources;
+    const normalURL = µb.normalizePageURL(this.tabId, request.frameURL);
+    const resources = request.resources;
+    const fctxt = µBlock.filteringContext;
+    fctxt.fromTabId(this.tabId)
+         .setDocOriginFromURL(normalURL);
     // Force some resources to go through the filtering engine in order to
     // populate the blocked-resources cache. This is required because for
     // some resources it's not possible to detect whether they were blocked
     // content script-side (i.e. `iframes` -- unlike `img`).
     if ( Array.isArray(resources) && resources.length !== 0 ) {
-        var context = this.createContextFromFrameHostname(frameHostname);
-        for ( var resource of resources ) {
-            context.requestType = resource.type;
-            context.requestHostname = µburi.hostnameFromURI(resource.url);
-            context.requestURL = resource.url;
-            this.filterRequest(context);
+        for ( const resource of resources ) {
+            this.filterRequest(
+                fctxt.setType(resource.type)
+                     .setURL(resource.url)
+            );
         }
     }
     if ( this.netFilteringCache.hash === response.hash ) { return; }
     response.hash = this.netFilteringCache.hash;
-    response.blockedResources = this.netFilteringCache.lookupAllBlocked(frameHostname);
+    response.blockedResources =
+        this.netFilteringCache.lookupAllBlocked(fctxt.getDocHostname());
 };
 
 /******************************************************************************/
