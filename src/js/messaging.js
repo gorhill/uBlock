@@ -1161,22 +1161,18 @@ const getLoggerData = function(details, activeTabId, callback) {
             tabs => {
                 if ( Array.isArray(tabs) === false ) { return; }
                 if ( tabs.length === 0 ) { return; }
-                browser.windows.get(
-                    tabs[0].windowId,
-                    { windowTypes: [ 'popup' ] },
-                    win => {
-                        if ( win instanceof Object === false ) { return; }
-                        vAPI.localStorage.setItem(
-                            'popupLoggerBox',
-                            JSON.stringify({
-                                left: win.left,
-                                top: win.top,
-                                width: win.width,
-                                height: win.height,
-                            })
-                        );
-                    }
-                );
+                browser.windows.get(tabs[0].windowId, win => {
+                    if ( win instanceof Object === false ) { return; }
+                    vAPI.localStorage.setItem(
+                        'popupLoggerBox',
+                        JSON.stringify({
+                            left: win.left,
+                            top: win.top,
+                            width: win.width,
+                            height: win.height,
+                        })
+                    );
+                });
             }
         );
     }
