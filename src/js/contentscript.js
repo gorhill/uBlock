@@ -381,16 +381,16 @@ vAPI.DOMFilterer = (function() {
 
     // 'P' stands for 'Procedural'
 
-    var PSelectorHasTextTask = function(task) {
-        var arg0 = task[1], arg1;
+    const PSelectorHasTextTask = function(task) {
+        let arg0 = task[1], arg1;
         if ( Array.isArray(task[1]) ) {
             arg1 = arg0[1]; arg0 = arg0[0];
         }
         this.needle = new RegExp(arg0, arg1);
     };
     PSelectorHasTextTask.prototype.exec = function(input) {
-        var output = [];
-        for ( var node of input ) {
+        const output = [];
+        for ( const node of input ) {
             if ( this.needle.test(node.textContent) ) {
                 output.push(node);
             }
@@ -398,13 +398,13 @@ vAPI.DOMFilterer = (function() {
         return output;
     };
 
-    var PSelectorIfTask = function(task) {
+    const PSelectorIfTask = function(task) {
         this.pselector = new PSelector(task[1]);
     };
     PSelectorIfTask.prototype.target = true;
     PSelectorIfTask.prototype.exec = function(input) {
-        var output = [];
-        for ( var node of input ) {
+        const output = [];
+        for ( const node of input ) {
             if ( this.pselector.test(node) === this.target ) {
                 output.push(node);
             }
@@ -412,16 +412,16 @@ vAPI.DOMFilterer = (function() {
         return output;
     };
 
-    var PSelectorIfNotTask = function(task) {
+    const PSelectorIfNotTask = function(task) {
         PSelectorIfTask.call(this, task);
         this.target = false;
     };
     PSelectorIfNotTask.prototype = Object.create(PSelectorIfTask.prototype);
     PSelectorIfNotTask.prototype.constructor = PSelectorIfNotTask;
 
-    var PSelectorMatchesCSSTask = function(task) {
+    const PSelectorMatchesCSSTask = function(task) {
         this.name = task[1].name;
-        var arg0 = task[1].value, arg1;
+        let arg0 = task[1].value, arg1;
         if ( Array.isArray(arg0) ) {
             arg1 = arg0[1]; arg0 = arg0[0];
         }
@@ -429,9 +429,9 @@ vAPI.DOMFilterer = (function() {
     };
     PSelectorMatchesCSSTask.prototype.pseudo = null;
     PSelectorMatchesCSSTask.prototype.exec = function(input) {
-        var output = [], style;
-        for ( var node of input ) {
-            style = window.getComputedStyle(node, this.pseudo);
+        const output = [];
+        for ( const node of input ) {
+            const style = window.getComputedStyle(node, this.pseudo);
             if ( style === null ) { return null; } /* FF */
             if ( this.value.test(style[this.name]) ) {
                 output.push(node);
@@ -440,35 +440,35 @@ vAPI.DOMFilterer = (function() {
         return output;
     };
 
-    var PSelectorMatchesCSSAfterTask = function(task) {
+    const PSelectorMatchesCSSAfterTask = function(task) {
         PSelectorMatchesCSSTask.call(this, task);
         this.pseudo = ':after';
     };
     PSelectorMatchesCSSAfterTask.prototype = Object.create(PSelectorMatchesCSSTask.prototype);
     PSelectorMatchesCSSAfterTask.prototype.constructor = PSelectorMatchesCSSAfterTask;
 
-    var PSelectorMatchesCSSBeforeTask = function(task) {
+    const PSelectorMatchesCSSBeforeTask = function(task) {
         PSelectorMatchesCSSTask.call(this, task);
         this.pseudo = ':before';
     };
     PSelectorMatchesCSSBeforeTask.prototype = Object.create(PSelectorMatchesCSSTask.prototype);
     PSelectorMatchesCSSBeforeTask.prototype.constructor = PSelectorMatchesCSSBeforeTask;
 
-    var PSelectorXpathTask = function(task) {
+    const PSelectorXpathTask = function(task) {
         this.xpe = document.createExpression(task[1], null);
         this.xpr = null;
     };
     PSelectorXpathTask.prototype.exec = function(input) {
-        var output = [], j;
-        for ( var node of input ) {
+        const output = [];
+        for ( const node of input ) {
             this.xpr = this.xpe.evaluate(
                 node,
                 XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
                 this.xpr
             );
-            j = this.xpr.snapshotLength;
+            let j = this.xpr.snapshotLength;
             while ( j-- ) {
-                node = this.xpr.snapshotItem(j);
+                const node = this.xpr.snapshotItem(j);
                 if ( node.nodeType === 1 ) {
                     output.push(node);
                 }
@@ -477,7 +477,7 @@ vAPI.DOMFilterer = (function() {
         return output;
     };
 
-    var PSelector = function(o) {
+    const PSelector = function(o) {
         if ( PSelector.prototype.operatorToTaskMap === undefined ) {
             PSelector.prototype.operatorToTaskMap = new Map([
                 [ ':has', PSelectorIfTask ],
@@ -497,33 +497,35 @@ vAPI.DOMFilterer = (function() {
         this.lastAllowanceTime = 0;
         this.selector = o.selector;
         this.tasks = [];
-        var tasks = o.tasks;
+        const tasks = o.tasks;
         if ( !tasks ) { return; }
-        for ( var task of tasks ) {
+        for ( const task of tasks ) {
             this.tasks.push(new (this.operatorToTaskMap.get(task[0]))(task));
         }
     };
     PSelector.prototype.operatorToTaskMap = undefined;
     PSelector.prototype.prime = function(input) {
-        var root = input || document;
+        const root = input || document;
         if ( this.selector !== '' ) {
             return root.querySelectorAll(this.selector);
         }
         return [ root ];
     };
     PSelector.prototype.exec = function(input) {
-        var nodes = this.prime(input);
-        for ( var task of this.tasks ) {
+        let nodes = this.prime(input);
+        for ( const task of this.tasks ) {
             if ( nodes.length === 0 ) { break; }
             nodes = task.exec(nodes);
         }
         return nodes;
     };
     PSelector.prototype.test = function(input) {
-        var nodes = this.prime(input), AA = [ null ], aa;
-        for ( var node of nodes ) {
-            AA[0] = node; aa = AA;
-            for ( var task of this.tasks ) {
+        const nodes = this.prime(input);
+        const AA = [ null ];
+        for ( const node of nodes ) {
+            AA[0] = node;
+            let aa = AA;
+            for ( const task of this.tasks ) {
                 aa = task.exec(aa);
                 if ( aa.length === 0 ) { break; }
             }
@@ -532,24 +534,23 @@ vAPI.DOMFilterer = (function() {
         return false;
     };
 
-    var DOMProceduralFilterer = function(domFilterer) {
+    const DOMProceduralFilterer = function(domFilterer) {
         this.domFilterer = domFilterer;
         this.domIsReady = false;
         this.domIsWatched = false;
-        this.addedSelectors = new Map();
-        this.addedNodes = false;
-        this.removedNodes = false;
+        this.mustApplySelectors = false;
         this.selectors = new Map();
+        this.hiddenNodes = new Set();
     };
 
     DOMProceduralFilterer.prototype = {
 
         addProceduralSelectors: function(aa) {
-            var raw, o, pselector,
-                mustCommit = this.domIsWatched;
-            for ( var i = 0, n = aa.length; i < n; i++ ) {
-                raw = aa[i];
-                o = JSON.parse(raw);
+            const addedSelectors = [];
+            let mustCommit = this.domIsWatched;
+            for ( let i = 0, n = aa.length; i < n; i++ ) {
+                const raw = aa[i];
+                const o = JSON.parse(raw);
                 if ( o.style ) {
                     this.domFilterer.addCSSRule(o.style[0], o.style[1]);
                     mustCommit = true;
@@ -565,19 +566,20 @@ vAPI.DOMFilterer = (function() {
                 }
                 if ( o.tasks ) {
                     if ( this.selectors.has(raw) === false ) {
-                        pselector = new PSelector(o);
+                        const pselector = new PSelector(o);
                         this.selectors.set(raw, pselector);
-                        this.addedSelectors.set(raw, pselector);
+                        addedSelectors.push(pselector);
                         mustCommit = true;
                     }
                     continue;
                 }
             }
             if ( mustCommit === false ) { return; }
+            this.mustApplySelectors = this.selectors.size !== 0;
             this.domFilterer.commit();
             if ( this.domFilterer.hasListeners() ) {
                 this.domFilterer.triggerListeners({
-                    procedural: Array.from(this.addedSelectors.values())
+                    procedural: addedSelectors
                 });
             }
         },
@@ -587,56 +589,46 @@ vAPI.DOMFilterer = (function() {
                 return;
             }
 
-            if ( this.addedNodes || this.removedNodes ) {
-                this.addedSelectors.clear();
-            }
-
-            var entry, nodes, i;
-
-            if ( this.addedSelectors.size !== 0 ) {
-                //console.time('procedural selectors/filterset changed');
-                for ( entry of this.addedSelectors ) {
-                    nodes = entry[1].exec();
-                    i = nodes.length;
-                    while ( i-- ) {
-                        this.domFilterer.hideNode(nodes[i]);
-                    }
-                }
-                this.addedSelectors.clear();
-                //console.timeEnd('procedural selectors/filterset changed');
-                return;
-            }
+            this.mustApplySelectors = false;
 
             //console.time('procedural selectors/dom layout changed');
 
-            this.addedNodes = this.removedNodes = false;
+            // https://github.com/uBlockOrigin/uBlock-issues/issues/341
+            //   Be ready to unhide nodes which no longer matches any of
+            //   the procedural selectors.
+            const toRemove = this.hiddenNodes;
+            this.hiddenNodes = new Set();
 
-            var t0 = Date.now(),
-                t1, pselector, allowance;
+            let t0 = Date.now();
 
-            for ( entry of this.selectors ) {
-                pselector = entry[1];
-                allowance = Math.floor((t0 - pselector.lastAllowanceTime) / 2000);
+            for ( const entry of this.selectors ) {
+                const pselector = entry[1];
+                const allowance = Math.floor((t0 - pselector.lastAllowanceTime) / 2000);
                 if ( allowance >= 1 ) {
                     pselector.budget += allowance * 50;
                     if ( pselector.budget > 200 ) { pselector.budget = 200; }
                     pselector.lastAllowanceTime = t0;
                 }
                 if ( pselector.budget <= 0 ) { continue; }
-                nodes = pselector.exec();
-                t1 = Date.now();
+                const nodes = pselector.exec();
+                const t1 = Date.now();
                 pselector.budget += t0 - t1;
                 if ( pselector.budget < -500 ) {
                     console.info('uBO: disabling %s', pselector.raw);
                     pselector.budget = -0x7FFFFFFF;
                 }
                 t0 = t1;
-                i = nodes.length;
+                let i = nodes.length;
                 while ( i-- ) {
                     this.domFilterer.hideNode(nodes[i]);
+                    this.hiddenNodes.add(nodes[i]);
                 }
             }
 
+            for ( const node of toRemove ) {
+                if ( this.hiddenNodes.has(node) ) { continue; }
+                this.domFilterer.unhideNode(node);
+            }
             //console.timeEnd('procedural selectors/dom layout changed');
         },
 
@@ -651,15 +643,17 @@ vAPI.DOMFilterer = (function() {
 
         onDOMChanged: function(addedNodes, removedNodes) {
             if ( this.selectors.size === 0 ) { return; }
-            this.addedNodes = this.addedNodes || addedNodes.length !== 0;
-            this.removedNodes = this.removedNodes || removedNodes;
+            this.mustApplySelectors =
+                this.mustApplySelectors ||
+                addedNodes.length !== 0 ||
+                removedNodes;
             this.domFilterer.commit();
         }
     };
 
-    var DOMFiltererBase = vAPI.DOMFilterer;
+    const DOMFiltererBase = vAPI.DOMFilterer;
 
-    var domFilterer = function() {
+    const domFilterer = function() {
         DOMFiltererBase.call(this);
         this.exceptions = [];
         this.proceduralFilterer = new DOMProceduralFilterer(this);
@@ -690,7 +684,7 @@ vAPI.DOMFilterer = (function() {
     };
 
     domFilterer.prototype.getAllSelectors = function() {
-        var out = DOMFiltererBase.prototype.getAllSelectors.call(this);
+        const out = DOMFiltererBase.prototype.getAllSelectors.call(this);
         out.procedural = Array.from(this.proceduralFilterer.selectors.values());
         return out;
     };
