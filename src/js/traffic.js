@@ -283,7 +283,14 @@ const onBeforeBehindTheSceneRequest = function(fctxt) {
 
     let result = 0;
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/339
+    //   Need to also test against `-scheme` since tabOrigin is normalized.
+    //   Not especially elegant but for now this accomplishes the purpose of
+    //   not dealing with network requests fired from a synthetic scope,
+    //   that is unless advanced user mode is enabled.
+
     if (
+        fctxt.tabOrigin.endsWith('-scheme') === false &&
         µb.URI.isNetworkURI(fctxt.tabOrigin) ||
         µb.userSettings.advancedUserEnabled ||
         fctxt.type === 'csp_report'
@@ -302,8 +309,6 @@ const onBeforeBehindTheSceneRequest = function(fctxt) {
             fctxt.filter = { engine: 'u', result: 2, raw: 'whitelisted' };
         }
     }
-
-    pageStore.journalAddRequest(fctxt.getHostname(), result);
 
     if ( µb.logger.enabled ) {
         fctxt.setRealm('net').toLogger();

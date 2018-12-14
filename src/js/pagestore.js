@@ -95,6 +95,7 @@ NetFilteringResultCache.prototype.rememberResult = function(
     result,
     logData
 ) {
+    if ( fctxt.tabId <= 0 ) { return; }
     if ( this.results.size === 0 ) {
         this.pruneAsync();
     }
@@ -113,6 +114,7 @@ NetFilteringResultCache.prototype.rememberResult = function(
 /******************************************************************************/
 
 NetFilteringResultCache.prototype.rememberBlock = function(fctxt) {
+    if ( fctxt.tabId <= 0 ) { return; }
     if ( this.blocked.size === 0 ) {
         this.pruneAsync();
     }
