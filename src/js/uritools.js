@@ -410,7 +410,7 @@ URI.isNetworkURI = function(uri) {
     return reNetworkURI.test(uri);
 };
 
-var reNetworkURI = /^(?:ftps?|https?|wss?):\/\//;
+const reNetworkURI = /^(?:ftps?|https?|wss?):\/\//;
 
 /******************************************************************************/
 
@@ -418,7 +418,7 @@ URI.isNetworkScheme = function(scheme) {
     return reNetworkScheme.test(scheme);
 };
 
-var reNetworkScheme = /^(?:ftps?|https?|wss?)$/;
+const reNetworkScheme = /^(?:ftps?|https?|wss?)$/;
 
 /******************************************************************************/
 

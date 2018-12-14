@@ -46,16 +46,16 @@ var µb = µBlock;
 /******************************************************************************/
 
 µb.normalizePageURL = function(tabId, pageURL) {
-    if ( vAPI.isBehindTheSceneTabId(tabId) ) {
+    if ( tabId < 0 ) {
         return 'http://behind-the-scene/';
     }
-    var uri = this.URI.set(pageURL);
-    var scheme = uri.scheme;
+    const uri = this.URI.set(pageURL);
+    const scheme = uri.scheme;
     if ( scheme === 'https' || scheme === 'http' ) {
         return uri.normalizedURI();
     }
 
-    var fakeHostname = scheme + '-scheme';
+    let fakeHostname = scheme + '-scheme';
 
     if ( uri.hostname !== '' ) {
         fakeHostname = uri.hostname + '.' + fakeHostname;

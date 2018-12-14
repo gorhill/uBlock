@@ -84,8 +84,9 @@
                 }
             }
         } else if ( details.documentUrl !== undefined ) {
-            this.setTabOriginFromURL(details.documentUrl);
-            this.setDocOriginFromURL(details.documentUrl);
+            const normalURL = µBlock.normalizePageURL(0, details.documentUrl);
+            this.setTabOriginFromURL(normalURL);
+            this.setDocOriginFromURL(normalURL);
         } else {
             this.setDocOrigin(this.tabOrigin);
         }

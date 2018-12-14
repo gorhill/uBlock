@@ -284,7 +284,7 @@ const onBeforeBehindTheSceneRequest = function(fctxt) {
     let result = 0;
 
     if (
-        µb.URI.isNetworkURI(fctxt.docOrigin) ||
+        µb.URI.isNetworkURI(fctxt.tabOrigin) ||
         µb.userSettings.advancedUserEnabled ||
         fctxt.type === 'csp_report'
     ) {
