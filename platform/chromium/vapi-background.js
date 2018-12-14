@@ -482,10 +482,35 @@ vAPI.tabs.open = function(details) {
         };
 
         // Open in a standalone window
+        //
         // https://github.com/uBlockOrigin/uBlock-issues/issues/168#issuecomment-413038191
         //   Not all platforms support browser.windows API.
-        if ( details.popup === true && chrome.windows instanceof Object ) {
-            chrome.windows.create({ url: details.url, type: 'popup' });
+        //
+        // For some reasons, some platforms do not honor the left,top
+        // position when specified. I found that further calling
+        // windows.update again with the same position _may_ help.
+        if ( details.popup === true && browser.windows instanceof Object ) {
+            const options = {
+                url: details.url,
+                type: 'popup',
+            };
+            if ( details.box instanceof Object ) {
+                Object.assign(options, details.box);
+            }
+            browser.windows.create(options, win => {
+                if ( win instanceof Object === false ) { return; }
+                if ( details.box instanceof Object === false ) { return; }
+                if (
+                    win.left === details.box.left &&
+                    win.top === details.box.top
+                ) {
+                    return;
+                }
+                browser.windows.update(win.id, {
+                    left: details.box.left,
+                    top: details.box.top
+                });
+            });
             return;
         }
 

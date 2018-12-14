@@ -1124,13 +1124,13 @@ vAPI.messaging.listen('dashboard', onMessage);
 
 /******************************************************************************/
 
-var µb = µBlock,
-    extensionOriginURL = vAPI.getURL('');
+const µb = µBlock;
+const extensionOriginURL = vAPI.getURL('');
 
 /******************************************************************************/
 
-var getLoggerData = function(details, activeTabId, callback) {
-    let response = {
+const getLoggerData = function(details, activeTabId, callback) {
+    const response = {
         colorBlind: µb.userSettings.colorBlindFriendly,
         entries: µb.logger.readAll(details.ownerId),
         maxEntries: µb.userSettings.requestLogMaxEntries,
@@ -1138,16 +1138,16 @@ var getLoggerData = function(details, activeTabId, callback) {
         tabIdsToken: µb.pageStoresToken
     };
     if ( µb.pageStoresToken !== details.tabIdsToken ) {
-        let tabIds = new Map();
-        for ( let entry of µb.pageStores ) {
-            let pageStore = entry[1];
+        const tabIds = new Map();
+        for ( const entry of µb.pageStores ) {
+            const pageStore = entry[1];
             if ( pageStore.rawURL.startsWith(extensionOriginURL) ) { continue; }
             tabIds.set(entry[0], pageStore.title);
         }
         response.tabIds = Array.from(tabIds);
     }
     if ( activeTabId ) {
-        let pageStore = µb.pageStoreFromTabId(activeTabId);
+        const pageStore = µb.pageStoreFromTabId(activeTabId);
         if (
             pageStore === null ||
             pageStore.rawURL.startsWith(extensionOriginURL)
@@ -1155,43 +1155,71 @@ var getLoggerData = function(details, activeTabId, callback) {
             response.activeTabId = undefined;
         }
     }
+    if ( details.popupLoggerBoxChanged && browser.windows instanceof Object ) {
+        browser.tabs.query(
+            { url: vAPI.getURL('/logger-ui.html?popup=1') },
+            tabs => {
+                if ( Array.isArray(tabs) === false ) { return; }
+                if ( tabs.length === 0 ) { return; }
+                browser.windows.get(
+                    tabs[0].windowId,
+                    { windowTypes: [ 'popup' ] },
+                    win => {
+                        if ( win instanceof Object === false ) { return; }
+                        vAPI.localStorage.setItem(
+                            'popupLoggerBox',
+                            JSON.stringify({
+                                left: win.left,
+                                top: win.top,
+                                width: win.width,
+                                height: win.height,
+                            })
+                        );
+                    }
+                );
+            }
+        );
+    }
     callback(response);
 };
 
 /******************************************************************************/
 
-var getURLFilteringData = function(details) {
-    var colors = {};
-    var response = {
+const getURLFilteringData = function(details) {
+    const colors = {};
+    const response = {
         dirty: false,
         colors: colors
     };
-    var suf = µb.sessionURLFiltering;
-    var puf = µb.permanentURLFiltering;
-    var urls = details.urls,
-        context = details.context,
-        type = details.type;
-    var url, colorEntry;
-    var i = urls.length;
-    while ( i-- ) {
-        url = urls[i];
-        colorEntry = colors[url] = { r: 0, own: false };
+    const suf = µb.sessionURLFiltering;
+    const puf = µb.permanentURLFiltering;
+    const urls = details.urls;
+    const context = details.context;
+    const type = details.type;
+    for ( const url of urls ) {
+        const colorEntry = colors[url] = { r: 0, own: false };
         if ( suf.evaluateZ(context, url, type).r !== 0 ) {
             colorEntry.r = suf.r;
-            colorEntry.own = suf.r !== 0 && suf.context === context && suf.url === url && suf.type === type;
+            colorEntry.own = suf.r !== 0 &&
+                             suf.context === context &&
+                             suf.url === url &&
+                             suf.type === type;
         }
-        if ( response.dirty ) {
-            continue;
-        }
+        if ( response.dirty ) { continue; }
         puf.evaluateZ(context, url, type);
-        response.dirty = colorEntry.own !== (puf.r !== 0 && puf.context === context && puf.url === url && puf.type === type);
+        response.dirty = colorEntry.own !== (
+            puf.r !== 0 &&
+            puf.context === context &&
+            puf.url === url &&
+            puf.type === type
+        );
     }
     return response;
 };
 
 /******************************************************************************/
 
-var onMessage = function(request, sender, callback) {
+const onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
     case 'readAll':
@@ -1212,7 +1240,7 @@ var onMessage = function(request, sender, callback) {
     }
 
     // Sync
-    var response;
+    let response;
 
     switch ( request.what ) {
     case 'releaseView':

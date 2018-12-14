@@ -30,11 +30,8 @@
 /******************************************************************************/
 
 const messaging = vAPI.messaging;
-
-const logger = self.logger = {
-    ownerId: Date.now()
-};
-
+const logger = self.logger = { ownerId: Date.now() };
+let popupLoggerBox;
 let activeTabId;
 
 /******************************************************************************/
@@ -576,15 +573,27 @@ const onLogBufferRead = function(response) {
 
 const readLogBuffer = function() {
     if ( logger.ownerId === undefined ) { return; }
-    vAPI.messaging.send(
-        'loggerUI',
-        {
-            what: 'readAll',
-            ownerId: logger.ownerId,
-            tabIdsToken: allTabIdsToken,
-        },
-        onLogBufferRead
-    );
+    const msg = {
+        what: 'readAll',
+        ownerId: logger.ownerId,
+        tabIdsToken: allTabIdsToken,
+    };
+    if (
+        popupLoggerBox instanceof Object &&
+        (
+            self.screenX !== popupLoggerBox.x ||
+            self.screenY !== popupLoggerBox.y ||
+            self.outerWidth !== popupLoggerBox.w ||
+            self.outerHeight !== popupLoggerBox.h
+        )
+    ) {
+        popupLoggerBox.x = self.screenX;
+        popupLoggerBox.y = self.screenY;
+        popupLoggerBox.w = self.outerWidth;
+        popupLoggerBox.h = self.outerHeight;
+        msg.popupLoggerBoxChanged = true;
+    }
+    vAPI.messaging.send('loggerUI', msg, onLogBufferRead);
 };
 
 const readLogBufferAsync = function() {
@@ -1398,42 +1407,50 @@ var reverseLookupManager = (function() {
 /******************************************************************************/
 
 const rowFilterer = (function() {
-    let filters = [];
+    const filters = [];
 
     const parseInput = function() {
-        filters = [];
+        filters.length = 0;
 
-        var rawPart, hardBeg, hardEnd;
-        var raw = uDom('#filterInput').val().trim();
-        var rawParts = raw.split(/\s+/);
-        var reStr, reStrs = [], not = false;
-        var n = rawParts.length;
-        for ( var i = 0; i < n; i++ ) {
-            rawPart = rawParts[i];
+        const rawParts = uDom('#filterInput').val().trim().split(/\s+/);
+        const n = rawParts.length;
+        const reStrs = [];
+        let not = false;
+        for ( let i = 0; i < n; i++ ) {
+            let rawPart = rawParts[i];
             if ( rawPart.charAt(0) === '!' ) {
                 if ( reStrs.length === 0 ) {
                     not = true;
                 }
                 rawPart = rawPart.slice(1);
             }
-            hardBeg = rawPart.charAt(0) === '|';
-            if ( hardBeg ) {
-                rawPart = rawPart.slice(1);
+            let reStr = '';
+            if ( rawPart.startsWith('/') && rawPart.endsWith('/') ) {
+                reStr = rawPart.slice(1, -1);
+                try {
+                    new RegExp(reStr);
+                } catch(ex) {
+                    reStr = '';
+                }
             }
-            hardEnd = rawPart.slice(-1) === '|';
-            if ( hardEnd ) {
-                rawPart = rawPart.slice(0, -1);
-            }
-            if ( rawPart === '' ) {
-                continue;
-            }
-            // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions
-            reStr = rawPart.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-            if ( hardBeg ) {
-                reStr = '(?:^|\\s)' + reStr;
-            }
-            if ( hardEnd ) {
-                reStr += '(?:\\s|$)';
+            if ( reStr === '' ) {
+                const hardBeg = rawPart.startsWith('|');
+                if ( hardBeg ) {
+                    rawPart = rawPart.slice(1);
+                }
+                const hardEnd = rawPart.endsWith('|');
+                if ( hardEnd ) {
+                    rawPart = rawPart.slice(0, -1);
+                }
+                if ( rawPart === '' ) { continue; }
+                // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions
+                reStr = rawPart.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                if ( hardBeg ) {
+                    reStr = '(?:^|\\s)' + reStr;
+                }
+                if ( hardEnd ) {
+                    reStr += '(?:\\s|$)';
+                }
             }
             reStrs.push(reStr);
             if ( i < (n - 1) && rawParts[i + 1] === '||' ) {
@@ -1445,22 +1462,18 @@ const rowFilterer = (function() {
                 re: new RegExp(reStr, 'i'),
                 r: !not
             });
-            reStrs = [];
+            reStrs.length = 0;
             not = false;
         }
     };
 
     const filterOne = function(tr, clean) {
-        const ff = filters;
-        const fcount = ff.length;
-        if ( fcount === 0 && clean === true ) {
-            return;
-        }
+        if ( filters.length === 0 && clean === true ) { return; }
         // do not filter out doc boundaries, they help separate important
         // section of log.
         const cl = tr.classList;
         if ( cl.contains('maindoc') ) { return; }
-        if ( fcount === 0 ) {
+        if ( filters.length === 0 ) {
             cl.remove('f');
             return;
         }
@@ -1470,8 +1483,7 @@ const rowFilterer = (function() {
         // if...
         //   positive filter expression = there must one hit on any field
         //   negative filter expression = there must be no hit on all fields
-        for ( let i = 0; i < fcount; i++ ) {
-            let f = ff[i];
+        for ( const f of filters ) {
             let hit = !f.r;
             for ( let j = 1; j < ccount; j++ ) {
                 if ( f.re.test(cc[j].textContent) ) {
@@ -1493,23 +1505,20 @@ const rowFilterer = (function() {
             uDom('#netInspector tr').removeClass('f');
             return;
         }
-        var tbody = document.querySelector('#netInspector tbody');
-        var rows = tbody.rows;
-        var i = rows.length;
-        while ( i-- ) {
-            filterOne(rows[i]);
+        for ( const row of document.querySelector('#netInspector tbody').rows ) {
+            filterOne(row);
         }
     };
 
     const onFilterChangedAsync = (function() {
-        var timer = null;
-        var commit = function() {
-            timer = null;
+        let timer;
+        const commit = ( ) => {
+            timer = undefined;
             parseInput();
             filterAll();
         };
         return function() {
-            if ( timer !== null ) {
+            if ( timer !== undefined ) {
                 clearTimeout(timer);
             }
             timer = vAPI.setTimeout(commit, 750);
@@ -1536,7 +1545,7 @@ const rowFilterer = (function() {
 
 /******************************************************************************/
 
-var toJunkyard = function(trs) {
+const toJunkyard = function(trs) {
     trs.remove();
     var i = trs.length;
     while ( i-- ) {
@@ -1724,6 +1733,17 @@ uDom('#netInspector').on('click', 'tr.cat_net > td:nth-of-type(3)', netFiltering
 // Ensure tab selector is in sync with URL hash
 pageSelectorFromURLHash();
 window.addEventListener('hashchange', pageSelectorFromURLHash);
+
+if ( self.location.search.includes('popup=1') ) {
+    window.addEventListener('load', ( ) => {
+        popupLoggerBox = {
+            x: self.screenX,
+            y: self.screenY,
+            w: self.outerWidth,
+            h: self.outerHeight,
+        };
+    }, { once: true });
+}
 
 /******************************************************************************/
 
