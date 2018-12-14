@@ -31,6 +31,9 @@
     };
 
     LogEntry.prototype.init = function(details) {
+        if ( details.tstamp === undefined ) {
+            details.tstamp = Date.now();
+        }
         this.details = JSON.stringify(details);
     };
 

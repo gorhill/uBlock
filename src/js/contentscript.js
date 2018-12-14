@@ -487,6 +487,7 @@ vAPI.DOMFilterer = (function() {
                 [ ':matches-css', PSelectorMatchesCSSTask ],
                 [ ':matches-css-after', PSelectorMatchesCSSAfterTask ],
                 [ ':matches-css-before', PSelectorMatchesCSSBeforeTask ],
+                [ ':not', PSelectorIfNotTask ],
                 [ ':xpath', PSelectorXpathTask ]
             ]);
         }

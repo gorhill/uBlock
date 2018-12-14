@@ -159,6 +159,7 @@
                 'matches-css',
                 'matches-css-after',
                 'matches-css-before',
+                'not',
                 'xpath'
                 ].join('|'),
             ')\\('
@@ -209,6 +210,9 @@
         };
 
         var compileConditionalSelector = function(s) {
+            if ( isValidCSSSelector(s) ) {
+                return { selector: s, tasks: [] };
+            }
             // https://github.com/AdguardTeam/ExtendedCss/issues/31#issuecomment-302391277
             // Prepend `:scope ` if needed.
             if ( reNeedScope.test(s) ) {
@@ -241,6 +245,7 @@
             [ ':matches-css', compileCSSDeclaration ],
             [ ':matches-css-after', compileCSSDeclaration ],
             [ ':matches-css-before', compileCSSDeclaration ],
+            [ ':not', compileConditionalSelector ],
             [ ':xpath', compileXpathExpression ]
         ]);
 
@@ -293,7 +298,8 @@
                     raw.push(':has', '(', decompile(task[1]), ')');
                     break;
                 case ':if-not':
-                    raw.push(task[0], '(', decompile(task[1]), ')');
+                case ':not':
+                    raw.push(':not', '(', decompile(task[1]), ')');
                     break;
                 }
             }
