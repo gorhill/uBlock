@@ -254,10 +254,12 @@ body #netInspector td {
     }
 #netInspector tr td:nth-of-type(5) {
     cursor: default;
+    overflow: visible !important;
     position: relative;
     text-align: center;
     }
-#netInspector tr.tab_bts td:nth-of-type(5)::after {
+/* visual for tabless network requests */
+#netInspector tr.tab_bts td:nth-of-type(5)::before {
     border: 5px solid #bbb;
     border-bottom: 0;
     border-top: 0;
@@ -270,6 +272,19 @@ body #netInspector td {
     width: calc(100% - 10px);
     z-index: -1;
     }
+/* visual for quick tooltip */
+#netInspector tr td[data-parties]:nth-of-type(5):hover::after {
+    background-color: #feb;
+    border: 1px outset #feb;
+    color: black;
+    content: attr(data-parties);
+    left: 100%;
+    padding: 0.4em 0.6em;
+    position: absolute;
+    text-align: left;
+    top: -50%;
+    white-space: pre;
+}
 #netInspector tr td:nth-of-type(6) {
     text-align: right;
     }

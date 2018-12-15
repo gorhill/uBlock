@@ -165,7 +165,7 @@ const createCellAt = function(tr, index) {
     }
     if ( td ) {
         td.removeAttribute('colspan');
-        td.removeAttribute('title');
+        td.removeAttribute('data-parties');
         td.textContent = '';
     } else {
         td = document.createElement('td');
@@ -186,7 +186,6 @@ var createRow = function(layout) {
         tr.removeAttribute('data-dochn');
         tr.removeAttribute('data-filter');
         tr.removeAttribute('data-tabid');
-        tr.removeAttribute('title');
     } else {
         tr = document.createElement('tr');
     }
@@ -318,14 +317,14 @@ var renderNetLogEntry = function(tr, details) {
             }
         }
         td.textContent = text;
-        text = details.domain;
-        if ( details.docDomain ) {
-            text = details.docDomain + ' \u21d2 ' + text;
+        let indent = '\t';
+        text = details.tabDomain;
+        if ( details.docDomain !== details.tabDomain ) {
+            text += ` \u21d2\n\t${details.docDomain}`;
+            indent = '\t\t';
         }
-        if ( details.tabDomain && details.tabDomain !== details.docDomain ) {
-            text = details.tabDomain + ' \u21d2 ' + text;
-        }
-        td.setAttribute('title', text);
+        text += ` \u21d2\n${indent}${details.domain}`;
+        td.setAttribute('data-parties', text);
     }
 
     tr.cells[5].textContent = (prettyRequestTypes[type] || type);
