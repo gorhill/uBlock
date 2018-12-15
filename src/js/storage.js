@@ -407,34 +407,39 @@
 µBlock.appendUserFilters = function(filters) {
     if ( filters.length === 0 ) { return; }
 
-    var µb = this;
-
-    var onSaved = function() {
-        var compiledFilters = µb.compileFilters(filters),
-            snfe = µb.staticNetFilteringEngine,
-            cfe = µb.cosmeticFilteringEngine,
-            acceptedCount = snfe.acceptedCount + cfe.acceptedCount,
-            discardedCount = snfe.discardedCount + cfe.discardedCount;
-        µb.applyCompiledFilters(compiledFilters, true);
-        var entry = µb.availableFilterLists[µb.userFiltersPath],
-            deltaEntryCount = snfe.acceptedCount + cfe.acceptedCount - acceptedCount,
-            deltaEntryUsedCount = deltaEntryCount - (snfe.discardedCount + cfe.discardedCount - discardedCount);
+    const onSaved = ( ) => {
+        const compiledFilters = this.compileFilters(
+            filters,
+            { assetKey: this.userFiltersPath }
+        );
+        const snfe = this.staticNetFilteringEngine;
+        const cfe = this.cosmeticFilteringEngine;
+        const acceptedCount = snfe.acceptedCount + cfe.acceptedCount;
+        const discardedCount = snfe.discardedCount + cfe.discardedCount;
+        this.applyCompiledFilters(compiledFilters, true);
+        const entry = this.availableFilterLists[this.userFiltersPath];
+        const deltaEntryCount =
+            snfe.acceptedCount +
+            cfe.acceptedCount - acceptedCount;
+        const deltaEntryUsedCount =
+            deltaEntryCount -
+            (snfe.discardedCount + cfe.discardedCount - discardedCount);
         entry.entryCount += deltaEntryCount;
         entry.entryUsedCount += deltaEntryUsedCount;
-        vAPI.storage.set({ 'availableFilterLists': µb.availableFilterLists });
-        µb.staticNetFilteringEngine.freeze();
-        µb.redirectEngine.freeze();
-        µb.staticExtFilteringEngine.freeze();
-        µb.selfieManager.destroy();
+        vAPI.storage.set({ 'availableFilterLists': this.availableFilterLists });
+        this.staticNetFilteringEngine.freeze();
+        this.redirectEngine.freeze();
+        this.staticExtFilteringEngine.freeze();
+        this.selfieManager.destroy();
     };
 
-    var onLoaded = function(details) {
+    const onLoaded = details => {
         if ( details.error ) { return; }
         // https://github.com/chrisaljoudi/uBlock/issues/976
         // If we reached this point, the filter quite probably needs to be
         // added for sure: do not try to be too smart, trying to avoid
         // duplicates at this point may lead to more issues.
-        µb.saveUserFilters(details.content.trim() + '\n\n' + filters.trim(), onSaved);
+        this.saveUserFilters(details.content.trim() + '\n\n' + filters.trim(), onSaved);
     };
 
     this.loadUserFilters(onLoaded);
@@ -704,7 +709,10 @@
 
     var onCompiledListLoaded2 = function(details) {
         if ( details.content === '' ) {
-            details.content = µb.compileFilters(rawContent);
+            details.content = µb.compileFilters(
+                rawContent,
+                { assetKey: assetKey }
+            );
             µb.assets.put(compiledPath, details.content);
         }
         rawContent = undefined;
@@ -786,19 +794,27 @@
 
 /******************************************************************************/
 
-µBlock.compileFilters = function(rawText) {
+µBlock.compileFilters = function(rawText, details) {
     let writer = new this.CompiledLineIO.Writer();
+
+    // Populate the writer with information potentially useful to the
+    // client compilers.
+    if ( details ) {
+        if ( details.assetKey ) {
+            writer.properties.set('assetKey', details.assetKey);
+        }
+    }
 
     // Useful references:
     //    https://adblockplus.org/en/filter-cheatsheet
     //    https://adblockplus.org/en/filters
-    let staticNetFilteringEngine = this.staticNetFilteringEngine,
-        staticExtFilteringEngine = this.staticExtFilteringEngine,
-        reIsWhitespaceChar = /\s/,
-        reMaybeLocalIp = /^[\d:f]/,
-        reIsLocalhostRedirect = /\s+(?:0\.0\.0\.0|broadcasthost|localhost|local|ip6-\w+)\b/,
-        reLocalIp = /^(?:0\.0\.0\.0|127\.0\.0\.1|::1|fe80::1%lo0)/,
-        lineIter = new this.LineIterator(this.processDirectives(rawText));
+    const staticNetFilteringEngine = this.staticNetFilteringEngine;
+    const staticExtFilteringEngine = this.staticExtFilteringEngine;
+    const reIsWhitespaceChar = /\s/;
+    const reMaybeLocalIp = /^[\d:f]/;
+    const reIsLocalhostRedirect = /\s+(?:0\.0\.0\.0|broadcasthost|localhost|local|ip6-\w+)\b/;
+    const reLocalIp = /^(?:0\.0\.0\.0|127\.0\.0\.1|::1|fe80::1%lo0)/;
+    const lineIter = new this.LineIterator(this.processDirectives(rawText));
 
     while ( lineIter.eot() === false ) {
         // rhill 2014-04-18: The trim is important here, as without it there
@@ -808,7 +824,7 @@
         if ( line.length === 0 ) { continue; }
 
         // Strip comments
-        let c = line.charAt(0);
+        const c = line.charAt(0);
         if ( c === '!' || c === '[' ) { continue; }
 
         // Parse or skip cosmetic filters
@@ -827,7 +843,7 @@
         // Don't remove:
         //   ...#blah blah blah
         // because some ABP filters uses the `#` character (URL fragment)
-        let pos = line.indexOf('#');
+        const pos = line.indexOf('#');
         if ( pos !== -1 && reIsWhitespaceChar.test(line.charAt(pos - 1)) ) {
             line = line.slice(0, pos).trim();
         }
@@ -1259,7 +1275,10 @@
                     );
                     this.assets.put(
                         'compiled/' + details.assetKey,
-                        this.compileFilters(details.content)
+                        this.compileFilters(
+                            details.content,
+                            { assetKey: details.assetKey }
+                        )
                     );
                 }
             } else {

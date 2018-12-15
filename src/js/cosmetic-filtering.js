@@ -361,25 +361,6 @@ let FilterContainer = function() {
     this.reEscapeSequence = /\\([0-9A-Fa-f]+ |.)/g;
     this.reSimpleHighGeneric1 = /^[a-z]*\[[^[]+]$/;
     this.reHighMedium = /^\[href\^="https?:\/\/([^"]{8})[^"]*"\]$/;
-    this.reNeedHostname = new RegExp([
-        '^',
-        '(?:',
-            [
-            '.+?:has',
-            '.+?:has-text',
-            '.+?:if',
-            '.+?:if-not',
-            '.+?:matches-css(?:-before|-after)?',
-            '.*?:xpath',
-            '.+?:style',
-            '.+?:-abp-contains', // ABP-specific for `:has-text`
-            '.+?:-abp-has',      // ABP-specific for `:if`
-            '.+?:contains'       // Adguard-specific for `:has-text`
-            ].join('|'),
-        ')',
-        '\\(.+\\)',
-        '$'
-    ].join(''));
 
     this.selectorCache = new Map();
     this.selectorCachePruneDelay = 10 * 60 * 1000; // 10 minutes
@@ -584,66 +565,56 @@ FilterContainer.prototype.compileGenericHideSelector = function(
     writer
 ) {
     const selector = parsed.suffix;
+    const type = selector.charCodeAt(0);
+    let key;
 
-    // For some selectors, it is mandatory to have a hostname or entity:
-    //   ##.foo:-abp-contains(...)
-    //   ##.foo:-abp-has(...)
-    //   ##.foo:contains(...)
-    //   ##.foo:has(...)
-    //   ##.foo:has-text(...)
-    //   ##.foo:if(...)
-    //   ##.foo:if-not(...)
-    //   ##.foo:matches-css(...)
-    //   ##.foo:matches-css-after(...)
-    //   ##.foo:matches-css-before(...)
-    //   ##:xpath(...)
-    //   ##.foo:style(...)
-    if ( this.reNeedHostname.test(selector) ) {
+    if ( type === 0x23 /* '#' */ ) {
+        key = this.keyFromSelector(selector);
+        // Simple selector-based CSS rule: no need to test for whether the
+        // selector is valid, the regex took care of this. Most generic
+        // selector falls into that category.
+        // - ###ad-bigbox
+        if ( key === selector ) {
+            writer.push([ 0, key.slice(1) ]);
+            return;
+        }
+    } else if ( type === 0x2E /* '.' */ ) {
+        key = this.keyFromSelector(selector);
+        // Simple selector-based CSS rule: no need to test for whether the
+        // selector is valid, the regex took care of this. Most generic
+        // selector falls into that category.
+        // - ##.ads-bigbox
+        if ( key === selector ) {
+            writer.push([ 2, key.slice(1) ]);
+            return;
+        }
+    }
+
+    const compiled = µb.staticExtFilteringEngine.compileSelector(selector);
+
+    // Invalid cosmetic filter, possible reasons:
+    // - Bad syntax
+    // - Procedural filters (can't be generic): the compiled version of
+    //   a procedural selector is NEVER equal to its raw version.
+    if ( compiled === undefined || compiled !== selector ) {
+        const who = writer.properties.get('assetKey') || '?';
         µb.logger.writeOne({
-            error: 'Cosmetic filtering – invalid generic filter: ##' + selector
+            error: `Invalid generic cosmetic filter in ${who} : ##${selector}`
         });
         return;
     }
 
-    let type = selector.charCodeAt(0);
-
-    if ( type === 0x23 /* '#' */ ) {
-        const key = this.keyFromSelector(selector);
-        if ( key === undefined ) { return; }
-        // Simple selector-based CSS rule: no need to test for whether the
-        // selector is valid, the regex took care of this. Most generic
-        // selector falls into that category.
-        if ( key === selector ) {
-            writer.push([ 0 /* lg */, key.slice(1) ]);
-            return;
-        }
-        // Complex selector-based CSS rule.
-        if ( µb.staticExtFilteringEngine.compileSelector(selector) !== undefined ) {
-            writer.push([ 1 /* lg+ */, key.slice(1), selector ]);
-        }
+    // Complex selector-based CSS rule:
+    // - ###tads + div + .c
+    // - ##.rscontainer > .ellip
+    if ( key !== undefined ) {
+        writer.push([
+            type === 0x23 /* '#' */ ? 1 : 3,
+            key.slice(1),
+            selector ]
+        );
         return;
     }
-
-    if ( type === 0x2E /* '.' */ ) {
-        const key = this.keyFromSelector(selector);
-        if ( key === undefined ) { return; }
-        // Simple selector-based CSS rule: no need to test for whether the
-        // selector is valid, the regex took care of this. Most generic
-        // selector falls into that category.
-        if ( key === selector ) {
-            writer.push([ 2 /* lg */, key.slice(1) ]);
-            return;
-        }
-        // Complex selector-based CSS rule.
-        if ( µb.staticExtFilteringEngine.compileSelector(selector) !== undefined ) {
-            writer.push([ 3 /* lg+ */, key.slice(1), selector ]);
-        }
-        return;
-    }
-
-    const compiled = µb.staticExtFilteringEngine.compileSelector(selector);
-    if ( compiled === undefined ) { return; }
-    // TODO: Detect and error on procedural cosmetic filters.
 
     // https://github.com/gorhill/uBlock/issues/909
     //   Anything which contains a plain id/class selector can be classified
@@ -651,9 +622,8 @@ FilterContainer.prototype.compileGenericHideSelector = function(
     const matches = this.rePlainSelectorEx.exec(selector);
     if ( matches !== null ) {
         const key = matches[1] || matches[2];
-        type = key.charCodeAt(0);
         writer.push([
-            type === 0x23 ? 1 : 3 /* lg+ */,
+            key.charCodeAt(0) === 0x23 /* '#' */ ? 1 : 3,
             key.slice(1),
             selector
         ]);
@@ -685,7 +655,13 @@ FilterContainer.prototype.compileGenericUnhideSelector = function(
 ) {
     // Procedural cosmetic filters are acceptable as generic exception filters.
     let compiled = µb.staticExtFilteringEngine.compileSelector(parsed.suffix);
-    if ( compiled === undefined ) { return; }
+    if ( compiled === undefined ) {
+        const who = writer.properties.get('assetKey') || '?';
+        µb.logger.writeOne({
+            error: `Invalid cosmetic filter in ${who} : #@#${parsed.suffix}`
+        });
+        return;
+    }
 
     // https://github.com/chrisaljoudi/uBlock/issues/497
     //   All generic exception filters are put in the same bucket: they are
@@ -708,7 +684,13 @@ FilterContainer.prototype.compileSpecificSelector = function(
     }
 
     let compiled = µb.staticExtFilteringEngine.compileSelector(parsed.suffix);
-    if ( compiled === undefined ) { return; }
+    if ( compiled === undefined ) {
+        const who = writer.properties.get('assetKey') || '?';
+        µb.logger.writeOne({
+            error: `Invalid cosmetic filter in ${who} : ##${parsed.suffix}`
+        });
+        return;
+    }
 
     let hash = µb.staticExtFilteringEngine.compileHostnameToHash(hostname);
 

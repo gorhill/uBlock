@@ -234,8 +234,9 @@
         this.io = µBlock.CompiledLineIO;
         this.blockId = undefined;
         this.block = undefined;
-        this.blocks = new Map();
         this.stringifier = this.io.serialize;
+        this.blocks = new Map();
+        this.properties = new Map();
     },
 
     Reader: function(raw, blockId) {
@@ -246,6 +247,7 @@
         this.line = '';
         this.parser = this.io.unserialize;
         this.blocks = new Map();
+        this.properties = new Map();
         let reBlockStart = new RegExp(
             '^' + this.io.blockStartPrefix + '(\\d+)\\n',
             'gm'
