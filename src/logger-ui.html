@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="css/common.css">
 <link rel="stylesheet" type="text/css" href="css/logger-ui.css">
 <link rel="stylesheet" type="text/css" href="css/logger-ui-inspector.css">
@@ -11,16 +12,14 @@
 <body>
 
 <div class="permatoolbar">
-    <div>
-        <select id="pageSelector">
-            <option value="" data-i18n="logAll">
-            <option value="tab_bts" data-i18n="logBehindTheScene">
-            <option value="tab_active" data-i18n="loggerCurrentTab">
-        </select>
-        <span id="refresh" class="button fa disabled needdom">&#xf021;</span>
-        <span id="showdom" class="button fa disabled needdom">&#xf121;</span>
-        <span id="showpopup" class="button disabled needdom"><img src="/img/icon_64.png"></span>
-    </div>
+    <select id="pageSelector">
+        <option value="" data-i18n="logAll">
+        <option value="tab_bts" data-i18n="logBehindTheScene">
+        <option value="tab_active" data-i18n="loggerCurrentTab">
+    </select>
+    <span id="refresh" class="button fa disabled needdom">&#xf021;</span>
+    <span id="showdom" class="button fa disabled needdom">&#xf121;</span>
+    <span id="showpopup" class="button disabled needdom"><img src="/img/icon_64.png"></span>
 </div>
 
 <div id="inspectors">
@@ -40,13 +39,20 @@
     </div>
     <div id="netInspector" class="inspector vCompact f">
         <div class="permatoolbar">
-            <div>
-                <span class="button fa vCompactToggler"></span>
-                <span id="clean" class="button fa disabled">&#xf00d;</span>
-                <span id="clear" class="button fa disabled">&#xf12d;</span>
-                <span id="filterButton" class="button fa">&#xf0b0;</span><input id="filterInput" type="text" placeholder="logFilterPrompt">
-                <input id="maxEntries" type="text" size="5" data-i18n-title="logMaxEntriesTip">
-            </div>
+            <span class="button fa vCompactToggler"></span>
+            <span id="clean" class="button fa disabled">&#xf00d;</span>
+            <span id="clear" class="button fa disabled">&#xf12d;</span>
+            <span id="filterExprGroup">
+                <span id="filterButton" class="button fa">&#xf0b0;</span>
+                <input id="filterInput" type="text" placeholder="logFilterPrompt">
+                <span id="filterExprButton" class="button fa"></span>
+                <div id="filterExprPicker">
+                    <div><span data-filtex="!">Not</span><span data-filtex="^--$|^\+\+$|^\*\*$|^<<$|^##|^#@#">eventful</span><span data-filtex="^--$|^<<$|^##">blocked</span><span data-filtex="^\+\+$|^#@#">allowed</span></div>
+                    <div><span data-filtex="!">Not</span><span data-filtex="^(?:css|font)$">css/font</span><span data-filtex="^image$">image</span><span data-filtex="^(?:inline-)?script$">script</span><span data-filtex="^(?:websocket|xhr)$">xhr</span><span data-filtex="^frame$">frame</span><span data-filtex="^dom$">dom</span></div>
+                    <div><span data-filtex="!">Not</span><span data-filtex="^1$">1st-party</span><span data-filtex="^3(?:,\d)?$">3rd-party</span></div>
+                </div>
+            </span>
+            <input id="maxEntries" type="text" size="5" data-i18n-title="logMaxEntriesTip">
         </div>
         <div class="vscrollable">
             <style id="tabFilterer"></style>

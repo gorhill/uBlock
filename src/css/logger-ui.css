@@ -16,7 +16,6 @@ textarea {
     width: 100%;
     }
 .permatoolbar {
-    align-items: center;
     background-color: white;
     border: 0;
     box-sizing: border-box;
@@ -49,12 +48,6 @@ textarea {
     }
 .permatoolbar .button:hover {
     background-color: #eee;
-    }
-.permatoolbar > div {
-    white-space: nowrap;
-    }
-.permatoolbar > div > * {
-    vertical-align: middle;
     }
 #pageSelector {
     margin-right: 1em;
@@ -111,6 +104,11 @@ textarea {
 #inspectors.dom #netInspector {
     display: none;
     }
+#netInspector #filterExprGroup {
+    display: flex;
+    margin: 0 1em;
+    position: relative;
+    }
 #netInspector #filterButton {
     opacity: 0.25;
     }
@@ -126,6 +124,59 @@ textarea {
 #netInspector #maxEntries {
     margin: 0 2em;
     }
+#netInspector #filterExprButton::before {
+    content: '\f078';
+    }
+#netInspector #filterExprButton.expanded::before {
+    content: '\f077';
+    }
+#netInspector #filterExprPicker {
+    background-color: white;
+    border: 1px solid gray;
+    display: none;
+    position: absolute;
+    flex-direction: column;
+    font-size: small;
+    margin-top: 0.2em;
+    top: 100%;
+    }
+#netInspector #filterExprButton.on {
+    color: #5F9EA0;
+    }
+#netInspector #filterExprButton.expanded ~ #filterExprPicker {
+    display: flex;
+    }
+#netInspector #filterExprPicker > div {
+    border: 1px dotted #ddd;
+    border-left: 0;
+    border-right: 0;
+    display: flex;
+    padding: 0.5em;
+    }
+#netInspector #filterExprPicker > div:first-of-type {
+    border-top: 0;
+    }
+#netInspector #filterExprPicker > div:last-of-type {
+    border-bottom: 0;
+    }
+#netInspector #filterExprPicker span[data-filtex] {
+    border: 1px solid transparent;
+    cursor: pointer;
+    margin: 0 0.5em 0 0;
+    padding: 0.5em;
+    }
+#netInspector #filterExprPicker span[data-filtex]:last-of-type {
+    margin: 0;
+    }
+#netInspector #filterExprPicker span[data-filtex]:hover {
+    background-color: aliceblue;
+    border: 1px solid lightblue;
+    }
+#netInspector #filterExprPicker span.on[data-filtex] {
+    background-color: lightblue;
+    border: 1px solid lightblue;
+    }
+
 #netInspector table {
     border: 0;
     border-collapse: collapse;
@@ -258,6 +309,9 @@ body #netInspector td {
     position: relative;
     text-align: center;
     }
+#netInspector tr td[data-parties]:nth-of-type(5) {
+    cursor: zoom-in;
+    }
 /* visual for tabless network requests */
 #netInspector tr.tab_bts td:nth-of-type(5)::before {
     border: 5px solid #bbb;
@@ -273,9 +327,10 @@ body #netInspector td {
     z-index: -1;
     }
 /* visual for quick tooltip */
-#netInspector tr td[data-parties]:nth-of-type(5):hover::after {
+#netInspector tr td[data-parties]:nth-of-type(5):active::after {
     background-color: #feb;
     border: 1px outset #feb;
+    border-left: 5px solid gray;
     color: black;
     content: attr(data-parties);
     left: 100%;

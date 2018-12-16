@@ -260,8 +260,8 @@ var renderNetLogEntry = function(tr, details) {
         }
     }
 
-    td = tr.cells[1];
     if ( filter !== undefined ) {
+        td = tr.cells[1];
         if ( filteringType === 'static' ) {
             td.textContent = filter.raw;
             trcl.add('canLookup');
@@ -274,8 +274,8 @@ var renderNetLogEntry = function(tr, details) {
         }
     }
 
-    td = tr.cells[2];
     if ( filter !== undefined ) {
+        td = tr.cells[2];
         if ( filter.result === 1 ) {
             trcl.add('blocked');
             td.textContent = '--';
@@ -1406,10 +1406,12 @@ var reverseLookupManager = (function() {
 /******************************************************************************/
 
 const rowFilterer = (function() {
-    const filters = [];
+    const userFilters = [];
+    const builtinFilters = [];
+    let filters = [];
 
     const parseInput = function() {
-        filters.length = 0;
+        userFilters.length = 0;
 
         const rawParts = uDom('#filterInput').val().trim().split(/\s+/);
         const n = rawParts.length;
@@ -1457,13 +1459,14 @@ const rowFilterer = (function() {
                 continue;
             }
             reStr = reStrs.length === 1 ? reStrs[0] : reStrs.join('|');
-            filters.push({
+            userFilters.push({
                 re: new RegExp(reStr, 'i'),
                 r: !not
             });
             reStrs.length = 0;
             not = false;
         }
+        filters = builtinFilters.concat(userFilters);
     };
 
     const filterOne = function(tr, clean) {
@@ -1528,17 +1531,60 @@ const rowFilterer = (function() {
         uDom.nodeFromId('netInspector').classList.toggle('f');
     };
 
+    const onToggleExtras = function(ev) {
+        ev.target.classList.toggle('expanded');
+    };
+
+    const onToggleBuiltinExpression = function(ev) {
+        builtinFilters.length = 0;
+
+        ev.target.classList.toggle('on');
+        const filtexElems = ev.currentTarget.querySelectorAll('[data-filtex]');
+        const orExprs = [];
+        let not = false;
+        for ( const filtexElem of filtexElems ) {
+            let filtex = filtexElem.getAttribute('data-filtex');
+            let active = filtexElem.classList.contains('on');
+            if ( filtex === '!' ) {
+                if ( orExprs.length !== 0 ) {
+                    builtinFilters.push({
+                        re: new RegExp(orExprs.join('|')),
+                        r: !not
+                    });
+                    orExprs.length = 0;
+                }
+                not = active;
+            } else if ( active ) {
+                orExprs.push(filtex);
+            }
+        }
+        if ( orExprs.length !== 0 ) {
+            builtinFilters.push({
+                re: new RegExp(orExprs.join('|')),
+                r: !not
+            });
+        }
+        uDom.nodeFromId('filterExprButton').classList.toggle(
+            'on',
+            builtinFilters.length !== 0
+        );
+        filters = builtinFilters.concat(userFilters);
+        filterAll();
+    };
+
     uDom('#filterButton').on('click', onFilterButton);
     uDom('#filterInput').on('input', onFilterChangedAsync);
+    uDom('#filterExprButton').on('click', onToggleExtras);
+    uDom('#filterExprPicker').on('click', '[data-filtex]', onToggleBuiltinExpression);
 
     // https://github.com/gorhill/uBlock/issues/404
-    // Ensure page state is in sync with the state of its various widgets.
+    //   Ensure page state is in sync with the state of its various widgets.
     parseInput();
     filterAll();
 
     return {
-        filterOne: filterOne,
-        filterAll: filterAll
+        filterOne,
+        filterAll,
     };
 })();
 
@@ -1733,14 +1779,19 @@ uDom('#netInspector').on('click', 'tr.cat_net > td:nth-of-type(3)', netFiltering
 pageSelectorFromURLHash();
 window.addEventListener('hashchange', pageSelectorFromURLHash);
 
+// Start to watch the current window geometry 2 seconds after the document
+// is loaded, to be sure no spurious geometry changes will be triggered due
+// to the window geometry pontentially not settling fast enough.
 if ( self.location.search.includes('popup=1') ) {
     window.addEventListener('load', ( ) => {
-        popupLoggerBox = {
-            x: self.screenX,
-            y: self.screenY,
-            w: self.outerWidth,
-            h: self.outerHeight,
-        };
+        setTimeout(( ) => {
+            popupLoggerBox = {
+                x: self.screenX,
+                y: self.screenY,
+                w: self.outerWidth,
+                h: self.outerHeight,
+            };
+        }, 2000);
     }, { once: true });
 }
 
