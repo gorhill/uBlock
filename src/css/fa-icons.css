@@ -1,0 +1,98 @@
+.fa-icon {
+    align-items: center;
+    background-color: transparent;
+    border: 0;
+    display: inline-flex;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 0.1em;
+    position: relative;
+    }
+.fa-icon > * {
+    pointer-events: none;
+    }
+.fa-icon.disabled,
+.disabled > .fa-icon,
+.fa-icon[disabled],
+[disabled] > .fa-icon {
+    color: #000;
+    fill: #000;
+    opacity: 0.25;
+    stroke: #888;
+    pointer-events: none;
+    }
+.fa-icon > .fa-icon-badge,
+.fa-icon.disabled > .fa-icon-badge {
+    display: none;
+    }
+.fa-icon.fa-icon-badged > .fa-icon-badge {
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 3px;
+    bottom: 1px;
+    display: inline-block;
+    font-family: sans-serif;
+    font-size: 40%;
+    position: absolute;
+    right: 1px;
+    }
+.fa-icon.disabled > .fa-icon-badge {
+    display: none;
+    }
+
+.fa-icon > svg {
+    height: 1em;
+    width: 1em;
+    }
+.fa-icon > .fa-icon_cloud-download-alt,
+.fa-icon > .fa-icon_cloud-upload-alt,
+.fa-icon > .fa-icon_code {
+    width: calc(1em * 640 / 512);
+    }
+.fa-icon > .fa-icon_exclamation-triangle,
+.fa-icon > .fa-icon_home,
+.fa-icon > .fa-icon_puzzle-piece,
+.fa-icon > .fa-icon_reply-all {
+    width: calc(1em * 576 / 512);
+    }
+.fa-icon > .fa-icon_clock,
+.fa-icon > .fa-icon_cog,
+.fa-icon > .fa-icon_download,
+.fa-icon > .fa-icon_eraser,
+.fa-icon > .fa-icon_eye-dropper,
+.fa-icon > .fa-icon_filter,
+.fa-icon > .fa-icon_info-circle,
+.fa-icon > .fa-icon_list-alt,
+.fa-icon > .fa-icon_pause-circle,
+.fa-icon > .fa-icon_play-circle,
+.fa-icon > .fa-icon_power-off,
+.fa-icon > .fa-icon_question-circle,
+.fa-icon > .fa-icon_reply,
+.fa-icon > .fa-icon_search-minus,
+.fa-icon > .fa-icon_search-plus,
+.fa-icon > .fa-icon_spinner,
+.fa-icon > .fa-icon_sync-alt,
+.fa-icon > .fa-icon_th,
+.fa-icon > .fa-icon_th-list,
+.fa-icon > .fa-icon_unlink {
+    width: calc(1em * 512 / 512);
+    }
+.fa-icon > .fa-icon_angle-double-left,
+.fa-icon > .fa-icon_arrow-left,
+.fa-icon > .fa-icon_arrow-right,
+.fa-icon > .fa-icon_lock,
+.fa-icon > .fa-icon_plus,
+.fa-icon > .fa-icon_save,
+.fa-icon > .fa-icon_unlock,
+.fa-icon > .fa-icon_trash-alt {
+    width: calc(1em * 448 / 512);
+    }
+.fa-icon > .fa-icon_times {
+    width: calc(1em * 352 / 512);
+    }
+.fa-icon > .fa-icon_angle-up,
+.fa-icon > .fa-icon_angle-double-up {
+    width: calc(1em * 320 / 512);
+    }
+.fa-icon > .fa-icon_ellipsis-v {
+    width: calc(1em * 192 / 512);
+    }
