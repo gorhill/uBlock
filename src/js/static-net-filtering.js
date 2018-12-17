@@ -1385,6 +1385,7 @@ FilterParser.prototype.toNormalizedType = {
             'beacon': 'other',
                'css': 'stylesheet',
               'data': 'data',
+               'doc': 'main_frame',
           'document': 'main_frame',
           'elemhide': 'generichide',
               'font': 'font',

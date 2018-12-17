@@ -299,20 +299,17 @@ RedirectEngine.prototype.fromCompiledRule = function(line) {
 /******************************************************************************/
 
 RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
-    var matches = this.reFilterParser.exec(line);
-    if ( matches === null || matches.length !== 4 ) {
-        return;
-    }
-    var µburi = µBlock.URI,
-        des = matches[1] || '',
-        pattern = (des + matches[2]).replace(/[.+?{}()|[\]\/\\]/g, '\\$&')
-                                    .replace(/\^/g, '[^\\w.%-]')
-                                    .replace(/\*/g, '.*?'),
-        type,
+    const matches = this.reFilterParser.exec(line);
+    if ( matches === null || matches.length !== 4 ) { return; }
+
+    let des = matches[1] || '';
+    const pattern = (des + matches[2]).replace(/[.+?{}()|[\]\/\\]/g, '\\$&')
+                                      .replace(/\^/g, '[^\\w.%-]')
+                                      .replace(/\*/g, '.*?');
+    let type,
         redirect = '',
-        srcs = [],
-        options = matches[3].split(','), option;
-    while ( (option = options.pop()) ) {
+        srcs = [];
+    for ( const option of matches[3].split(',') ) {
         if ( option.startsWith('redirect=') ) {
             redirect = option.slice(9);
             continue;
@@ -321,29 +318,23 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
             srcs = option.slice(7).split('|');
             continue;
         }
-        if ( option === 'first-party' ) {
-            srcs.push(µburi.domainFromHostnameNoCache(des) || des);
+        if ( option === 'first-party' || option === '1p' ) {
+            srcs.push(µBlock.URI.domainFromHostnameNoCache(des) || des);
             continue;
         }
         // One and only one type must be specified.
-        if ( option in this.supportedTypes ) {
-            if ( type !== undefined ) {
-                return;
-            }
-            type = this.supportedTypes[option];
+        if ( this.supportedTypes.has(option) ) {
+            if ( type !== undefined ) { return; }
+            type = this.supportedTypes.get(option);
             continue;
         }
     }
 
     // Need a resource token.
-    if ( redirect === '' ) {
-        return;
-    }
+    if ( redirect === '' ) { return; }
 
     // Need one single type -- not negated.
-    if ( type === undefined || type.startsWith('~') ) {
-        return;
-    }
+    if ( type === undefined ) { return; }
 
     if ( des === '' ) {
         des = '*';
@@ -353,16 +344,10 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
         srcs.push('*');
     }
 
-    var out = [];
-    var i = srcs.length, src;
-    while ( i-- ) {
-        src = srcs[i];
-        if ( src === '' ) {
-            continue;
-        }
-        if ( src.startsWith('~') ) {
-            continue;
-        }
+    const out = [];
+    for ( const src of srcs ) {
+        if ( src === '' ) { continue; }
+        if ( src.startsWith('~') ) { continue; }
         out.push(src + '\t' + des + '\t' + type + '\t' + pattern + '\t' + redirect);
     }
 
@@ -373,18 +358,19 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
 
 RedirectEngine.prototype.reFilterParser = /^(?:\|\|([^\/:?#^*]+)|\*)([^$]+)\$([^$]+)$/;
 
-RedirectEngine.prototype.supportedTypes = (function() {
-    var types = Object.create(null);
-    types.font = 'font';
-    types.image = 'image';
-    types.media = 'media';
-    types.object = 'object';
-    types.script = 'script';
-    types.stylesheet = 'stylesheet';
-    types.subdocument = 'sub_frame';
-    types.xmlhttprequest = 'xmlhttprequest';
-    return types;
-})();
+RedirectEngine.prototype.supportedTypes = new Map([
+    [ 'css', 'stylesheet' ],
+    [ 'font', 'font' ],
+    [ 'image', 'image' ],
+    [ 'media', 'media' ],
+    [ 'object', 'object' ],
+    [ 'script', 'script' ],
+    [ 'stylesheet', 'stylesheet' ],
+    [ 'frame', 'sub_frame' ],
+    [ 'subdocument', 'sub_frame' ],
+    [ 'xhr', 'xmlhttprequest' ],
+    [ 'xmlhttprequest', 'xmlhttprequest' ],
+]);
 
 /******************************************************************************/
 
