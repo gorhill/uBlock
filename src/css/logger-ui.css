@@ -339,7 +339,7 @@ body #netInspector td {
     text-align: left;
     top: -50%;
     white-space: pre;
-    z-index: 9999;
+    z-index: 600;
 }
 #netInspector tr td:nth-of-type(6) {
     text-align: right;
