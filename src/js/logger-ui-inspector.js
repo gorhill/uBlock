@@ -617,14 +617,14 @@ var toggleHCompactView = function() {
 };
 
 /******************************************************************************/
-
+/*
 var toggleHighlightMode = function() {
     messaging.sendTo(inspectorConnectionId, {
         what: 'highlightMode',
         invert: uDom.nodeFromSelector('#domInspector .permatoolbar .highlightMode').classList.toggle('invert')
     });
 };
-
+*/
 /******************************************************************************/
 
 var revert = function() {
@@ -644,7 +644,7 @@ const toggleOn = function() {
     domTree.addEventListener('mouseover', onMouseOver, true);
     uDom.nodeFromSelector('#domInspector .vCompactToggler').addEventListener('click', toggleVCompactView);
     uDom.nodeFromSelector('#domInspector .hCompactToggler').addEventListener('click', toggleHCompactView);
-    uDom.nodeFromSelector('#domInspector .permatoolbar .highlightMode').addEventListener('click', toggleHighlightMode);
+    //uDom.nodeFromSelector('#domInspector .permatoolbar .highlightMode').addEventListener('click', toggleHighlightMode);
     uDom.nodeFromSelector('#domInspector .permatoolbar .revert').addEventListener('click', revert);
     uDom.nodeFromSelector('#domInspector .permatoolbar .commit').addEventListener('click', startDialog);
     injectInspector();
@@ -662,7 +662,7 @@ const toggleOff = function() {
     domTree.removeEventListener('mouseover', onMouseOver, true);
     uDom.nodeFromSelector('#domInspector .vCompactToggler').removeEventListener('click', toggleVCompactView);
     uDom.nodeFromSelector('#domInspector .hCompactToggler').removeEventListener('click', toggleHCompactView);
-    uDom.nodeFromSelector('#domInspector .permatoolbar .highlightMode').removeEventListener('click', toggleHighlightMode);
+    //uDom.nodeFromSelector('#domInspector .permatoolbar .highlightMode').removeEventListener('click', toggleHighlightMode);
     uDom.nodeFromSelector('#domInspector .permatoolbar .revert').removeEventListener('click', revert);
     uDom.nodeFromSelector('#domInspector .permatoolbar .commit').removeEventListener('click', startDialog);
     inspectedTabId = 0;
@@ -676,6 +676,7 @@ const toggle = function() {
     } else {
         toggleOff();
     }
+    logger.resize();
 };
 
 /******************************************************************************/

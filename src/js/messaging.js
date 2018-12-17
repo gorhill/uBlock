@@ -1135,7 +1135,8 @@ const getLoggerData = function(details, activeTabId, callback) {
         entries: µb.logger.readAll(details.ownerId),
         maxEntries: µb.userSettings.requestLogMaxEntries,
         activeTabId: activeTabId,
-        tabIdsToken: µb.pageStoresToken
+        tabIdsToken: µb.pageStoresToken,
+        tooltips: µb.userSettings.tooltipsDisabled === false
     };
     if ( µb.pageStoresToken !== details.tabIdsToken ) {
         const tabIds = new Map();

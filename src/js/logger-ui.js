@@ -32,7 +32,9 @@
 const messaging = vAPI.messaging;
 const logger = self.logger = { ownerId: Date.now() };
 let popupLoggerBox;
+let popupLoggerTooltips;
 let activeTabId;
+let netInspectorPaused = false;
 
 /******************************************************************************/
 
@@ -63,43 +65,29 @@ const tabIdFromPageSelector = logger.tabIdFromPageSelector = function() {
 /******************************************************************************/
 /******************************************************************************/
 
-// Adjust top padding of content table, to match that of toolbar height.
+const tbody = document.querySelector('#netInspector tbody');
+const trJunkyard = [];
+const tdJunkyard = [];
+const firstVarDataCol = 1;
+const lastVarDataIndex = 6;
+const reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
+const netFilteringDialog = uDom.nodeFromId('netFilteringDialog');
 
-(function() {
-    var toolbar = uDom.nodeFromSelector('body > .permatoolbar');
-    var size = toolbar.clientHeight + 'px';
-    uDom('#inspectors').css('top', size);
-    uDom('.vscrollable').css('padding-top', size);
-})();
-
-/******************************************************************************/
-
-var tbody = document.querySelector('#netInspector tbody');
-var trJunkyard = [];
-var tdJunkyard = [];
-var firstVarDataCol = 1;
-var lastVarDataIndex = 6;
-var maxEntries = 5000;
-var allTabIds = new Map();
-var allTabIdsToken;
-var reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
-var netFilteringDialog = uDom.nodeFromId('netFilteringDialog');
-
-var prettyRequestTypes = {
+const prettyRequestTypes = {
     'main_frame': 'doc',
     'stylesheet': 'css',
     'sub_frame': 'frame',
     'xmlhttprequest': 'xhr'
 };
 
-var uglyRequestTypes = {
+const uglyRequestTypes = {
     'doc': 'main_frame',
     'css': 'stylesheet',
     'frame': 'sub_frame',
     'xhr': 'xmlhttprequest'
 };
 
-var staticFilterTypes = {
+const staticFilterTypes = {
     'beacon': 'other',
     'doc': 'document',
     'css': 'stylesheet',
@@ -108,6 +96,10 @@ var staticFilterTypes = {
     'object_subrequest': 'object',
     'xhr': 'xmlhttprequest'
 };
+
+let maxEntries = 5000;
+let allTabIds = new Map();
+let allTabIdsToken;
 
 /******************************************************************************/
 
@@ -518,6 +510,17 @@ const onLogBufferRead = function(response) {
         return;
     }
 
+    // Disable tooltips?
+    if (
+        popupLoggerTooltips === undefined &&
+        response.tooltips !== undefined
+    ) {
+        popupLoggerTooltips = response.tooltips;
+        if ( popupLoggerTooltips === false ) {
+            uDom('[data-i18n-title]').attr('title', '');
+        }
+    }
+
     // Tab id of currently active tab
     let activeTabIdChanged = false;
     if ( response.activeTabId ) {
@@ -546,7 +549,9 @@ const onLogBufferRead = function(response) {
         pageSelectorFromURLHash();
     }
 
-    renderLogEntries(response);
+    if ( netInspectorPaused === false ) {
+        renderLogEntries(response);
+    }
 
     if ( rowVoided ) {
         uDom('#clean').toggleClass(
@@ -1639,18 +1644,26 @@ var cleanBuffer = function() {
 
 /******************************************************************************/
 
-var toggleVCompactView = function() {
+const pauseNetInspector = function() {
+    netInspectorPaused = uDom.nodeFromId('netInspector')
+                             .classList
+                             .toggle('paused');
+};
+
+/******************************************************************************/
+
+const toggleVCompactView = function() {
     uDom.nodeFromId('netInspector').classList.toggle('vCompact');
     uDom('#netInspector .vExpanded').toggleClass('vExpanded');
 };
 
-var toggleVCompactRow = function(ev) {
+const toggleVCompactRow = function(ev) {
     ev.target.parentElement.classList.toggle('vExpanded');
 };
 
 /******************************************************************************/
 
-var popupManager = (function() {
+const popupManager = (function() {
     let realTabId = 0;
     let popup = null;
     let popupObserver = null;
@@ -1737,6 +1750,37 @@ var popupManager = (function() {
 
 /******************************************************************************/
 
+logger.resize = (function() {
+    let timer;
+
+    const resize = function() {
+        const vrect = document.body.getBoundingClientRect();
+        const elems = document.querySelectorAll('.vscrollable');
+        for ( const elem of elems ) {
+            const crect = elem.getBoundingClientRect();
+            const dh = crect.bottom - vrect.bottom;
+            if ( dh === 0 ) { continue; }
+            elem.style.height = (crect.height - dh) + 'px';
+        }
+    };
+
+    const resizeAsync = function() {
+        if ( timer !== undefined ) { return; }
+        timer = self.requestAnimationFrame(( ) => {
+            timer = undefined;
+            resize();
+        });
+    };
+
+    resizeAsync();
+
+    window.addEventListener('resize', resizeAsync, { passive: true });
+
+    return resizeAsync;
+})();
+
+/******************************************************************************/
+
 const grabView = function() {
     if ( logger.ownerId === undefined ) {
         logger.ownerId = Date.now();
@@ -1769,6 +1813,7 @@ uDom('#showpopup').on('click', popupManager.toggleOn);
 uDom('#netInspector .vCompactToggler').on('click', toggleVCompactView);
 uDom('#clean').on('click', cleanBuffer);
 uDom('#clear').on('click', clearBuffer);
+uDom('#pause').on('click', pauseNetInspector);
 uDom('#maxEntries').on('change', onMaxEntriesChanged);
 uDom('#netInspector table').on('click', 'tr > td:nth-of-type(1)', toggleVCompactRow);
 uDom('#netInspector').on('click', 'tr.canLookup > td:nth-of-type(2)', reverseLookupManager.toggleOn);

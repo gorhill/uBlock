@@ -2,9 +2,13 @@ body {
     background-color: white;
     border: 0;
     color: black;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
     margin: 0;
     overflow: hidden;
     padding: 0;
+    width: 100vw;
     }
 input:focus {
     background-color: #ffe;
@@ -20,31 +24,18 @@ textarea {
     border: 0;
     box-sizing: border-box;
     display: flex;
+    flex-shrink: 0;
     font-size: 120%;
-    left: 0;
     margin: 0;
     padding: 0.25em 0.5em;
-    position: absolute;
-    top: 0;
-    z-index: 10;
     }
 .permatoolbar .button {
-    align-items: center;
-    background-color: white;
-    border: none;
-    box-sizing: border-box;
     cursor: pointer;
-    display: inline-flex;
     font-size: 150%;
-    margin: 0;
     padding: 0.25em;
     }
-.permatoolbar .button.disabled {
-    opacity: 0.2;
-    pointer-events: none;
-    }
 .permatoolbar .button.active {
-    font-weight: bold;
+    fill: #5F9EA0;
     }
 .permatoolbar .button:hover {
     background-color: #eee;
@@ -54,10 +45,29 @@ textarea {
     padding: 0.25em 0;
     width: 28em;
     }
+#showpopup {
+    display: inline-flex;
+    align-items: center;
+    }
 #showpopup img {
     filter: grayscale(100%);
     height: auto;
     width: 1em;
+    }
+#info {
+    fill: #ccc;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    position: absolute;
+    right: 0;
+    }
+#info:hover {
+    fill: #000;
+    }
+@media (max-width: 600px) {
+    #info {
+        display: none;
+        }
     }
 
 /*
@@ -65,45 +75,42 @@ textarea {
     => https://devhints.io/css-system-font-stack
 */
 #inspectors {
-    bottom: 0;
+    flex-grow: 1;
     font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     font-size: 13px;
-    position: absolute;
-    top: 0;
-    width: 100%;
     }
 .inspector {
     border-top: 1px solid #ccc;
-    bottom: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
     }
 .vscrollable {
-    bottom: 0;
+    flex-grow: 1;
     overflow-x: hidden;
     overflow-y: auto;
-    position: absolute;
-    top: 0;
-    width: 100%;
 }
 
-.vCompactToggler.button:before {
-    content: '\f102';
+.vCompact .vCompactToggler.button {
+    transform: scaleY(-1)
     }
-.vCompact .vCompactToggler.button:before {
-    content: '\f103';
-    }
-.hCompactToggler.button:before {
-    content: '\f100';
-    }
-.hCompact .hCompactToggler.button:before {
-    content: '\f101';
+.hCompact .hCompactToggler.button {
+    transform: scaleX(-1)
     }
 
 #inspectors.dom #netInspector {
     display: none;
     }
+
+#netInspector #pause > span:last-of-type {
+    display: none;
+}
+#netInspector.paused #pause > span:first-of-type {
+    display: none;
+}
+#netInspector.paused #pause > span:last-of-type {
+    display: inline-flex;
+    fill: #5F9EA0;
+}
 #netInspector #filterExprGroup {
     display: flex;
     margin: 0 1em;
@@ -124,11 +131,11 @@ textarea {
 #netInspector #maxEntries {
     margin: 0 2em;
     }
-#netInspector #filterExprButton::before {
-    content: '\f078';
+#netInspector #filterExprButton {
+    transform: scaleY(-1);
     }
-#netInspector #filterExprButton.expanded::before {
-    content: '\f077';
+#netInspector #filterExprButton.expanded {
+    transform: scaleY(1);
     }
 #netInspector #filterExprPicker {
     background-color: white;
@@ -138,10 +145,12 @@ textarea {
     flex-direction: column;
     font-size: small;
     margin-top: 0.2em;
+    right: 0;
     top: 100%;
+    z-index: 100;
     }
 #netInspector #filterExprButton.on {
-    color: #5F9EA0;
+    fill: #5F9EA0;
     }
 #netInspector #filterExprButton.expanded ~ #filterExprPicker {
     display: flex;
@@ -509,7 +518,11 @@ body[dir="rtl"] #netFilteringDialog .dialog > div.headers > span.tools {
 #netFilteringDialog .dialog > div.headers > span.tools > span {
     cursor: pointer;
     font-size: 1.2em;
+    padding: 0.2em 0.4em;
     text-align: center;
+    }
+#netFilteringDialog .dialog > div.headers > span.tools > span:hover {
+    background-color: #eee;
     }
 #netFilteringDialog .dialog > div.containers {
     height: 40vh;
@@ -530,9 +543,9 @@ body[dir="rtl"] #netFilteringDialog .dialog > div.headers > span.tools {
     background-color: #ffe;
     border: 1px solid #ddc;
     border-radius: 4px;
-    color: #888;
+    fill: #888;
     cursor: pointer;
-    font-size: 1.8em;
+    font-size: 1.6em;
     margin: 0.1em;
     padding: 0.25em 0.5em;
     visibility: hidden;
@@ -541,7 +554,7 @@ body.dirty #netFilteringDialog .dialog > div.containers > div.dynamic > table.to
     visibility: visible;
     }
 #netFilteringDialog .dialog > div.containers > div.dynamic > table.toolbar #saveRules:hover {
-    color: black;
+    fill: black;
     }
 #netFilteringDialog .dialog > div.containers > div.dynamic > table.toolbar tr.entry {
     display: none;
@@ -662,16 +675,21 @@ body.colorBlind  #netFilteringDialog .dialog > div.containers > div.dynamic tr.e
 #filterFinderDialog .dialog ul {
     font-size: larger;
     }
+#filterFinderDialog .filterFinderListEntry {
+    align-items: center;
+    display: flex;
+    }
 #filterFinderDialog .filterFinderListEntry a {
     text-decoration: none;
     }
-#filterFinderDialog .filterFinderListEntry a.fa {
-    opacity: 0.8;
+#filterFinderDialog .filterFinderListEntry a.fa-icon {
+    margin: 0 0.5em;
+    opacity: 0.6;
     }
-#filterFinderDialog .filterFinderListEntry a.fa:hover {
+#filterFinderDialog .filterFinderListEntry a.fa-icon:hover {
     opacity: 1;
     }
-#filterFinderDialog .filterFinderListEntry a[href=""]:nth-of-type(2) {
+#filterFinderDialog .filterFinderListEntry a.fa-icon[href=""] {
     display: none;
     }
 #filterFinderDialog .dialog > *:first-child {

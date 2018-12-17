@@ -2,7 +2,7 @@
     display: none;
     }
 #inspectors.dom #domInspector {
-    display: block;
+    display: flex;
     }
 #domInspector .permatoolbar .highlightMode.invert {
     transform: rotate(180deg);

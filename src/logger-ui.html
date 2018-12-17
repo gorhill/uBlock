@@ -2,8 +2,10 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Does not work well:
+     <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 <link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" href="css/fa-icons.css" type="text/css">
 <link rel="stylesheet" type="text/css" href="css/logger-ui.css">
 <link rel="stylesheet" type="text/css" href="css/logger-ui-inspector.css">
 <link rel="shortcut icon" type="image/png" href="img/icon_16.png">
@@ -17,20 +19,21 @@
         <option value="tab_bts" data-i18n="logBehindTheScene">
         <option value="tab_active" data-i18n="loggerCurrentTab">
     </select>
-    <span id="refresh" class="button fa disabled needdom">&#xf021;</span>
-    <span id="showdom" class="button fa disabled needdom">&#xf121;</span>
-    <span id="showpopup" class="button disabled needdom"><img src="/img/icon_64.png"></span>
+    <span id="refresh" class="button fa-icon disabled needdom" data-i18n-title="loggerReloadTip">sync-alt</span>
+    <span id="showdom" class="button fa-icon disabled needdom" data-i18n-title="loggerDomInspectorTip">code</span>
+    <span id="showpopup" class="button fa-icon disabled needdom" data-i18n-title="loggerPopupPanelTip"><img src="/img/icon_64.png"></span>
+    <a id="info" class="button fa-icon" href="https://github.com/gorhill/uBlock/wiki/The-logger" target="_blank" data-i18n-title="loggerInfoTip">info-circle</a>
 </div>
 
 <div id="inspectors">
     <div id="domInspector" class="inspector vCompact hCompact">
         <div class="permatoolbar">
             <div>
-                <span class="button fa vCompactToggler"></span>
-                <span class="button fa hCompactToggler"></span>
-                <span class="button fa highlightMode" style="display: none">&#xf042;</span>
-                <span class="button fa revert disabled">&#xf12d;</span>
-                <span class="button fa commit disabled">&#xf0c7;</span>
+                <span class="button fa-icon vCompactToggler">angle-double-up</span>
+                <span class="button fa-icon hCompactToggler">angle-double-left</span>
+                <!-- <span class="button fa highlightMode" style="display: none">&#xf042;</span> -->
+                <span class="button fa-icon revert disabled">eraser</span>
+                <span class="button fa-icon commit disabled">save</span>
             </div>
         </div>
         <div class="vscrollable">
@@ -39,17 +42,18 @@
     </div>
     <div id="netInspector" class="inspector vCompact f">
         <div class="permatoolbar">
-            <span class="button fa vCompactToggler"></span>
-            <span id="clean" class="button fa disabled">&#xf00d;</span>
-            <span id="clear" class="button fa disabled">&#xf12d;</span>
+            <span class="button fa-icon vCompactToggler">angle-double-up</span>
+            <span id="clean" class="button fa-icon disabled">times</span>
+            <span id="clear" class="button fa-icon disabled" data-i18n-title="loggerClearTip">eraser</span>
+            <span id="pause"><span class="button fa-icon" data-i18n-title="loggerPauseTip">pause-circle</span><span class="button fa-icon" data-i18n-title="loggerUnpauseTip">play-circle</span></span>
             <span id="filterExprGroup">
-                <span id="filterButton" class="button fa">&#xf0b0;</span>
+                <span id="filterButton" class="button fa-icon" data-i18n-title="loggerRowFiltererButtonTip">filter</span>
                 <input id="filterInput" type="text" placeholder="logFilterPrompt">
-                <span id="filterExprButton" class="button fa"></span>
+                <span id="filterExprButton" class="button fa-icon" data-i18n-title="loggerRowFiltererBuiltinTip">angle-up</span>
                 <div id="filterExprPicker">
-                    <div><span data-filtex="!">Not</span><span data-filtex="^--$|^\+\+$|^\*\*$|^<<$|^##|^#@#">eventful</span><span data-filtex="^--$|^<<$|^##">blocked</span><span data-filtex="^\+\+$|^#@#">allowed</span></div>
-                    <div><span data-filtex="!">Not</span><span data-filtex="^(?:css|font)$">css/font</span><span data-filtex="^image$">image</span><span data-filtex="^(?:inline-)?script(ing)?$">script</span><span data-filtex="^(?:websocket|xhr)$">xhr</span><span data-filtex="^frame$">frame</span><span data-filtex="^dom$">dom</span></div>
-                    <div><span data-filtex="!">Not</span><span data-filtex="^1$">1st-party</span><span data-filtex="^3(?:,\d)?$">3rd-party</span></div>
+                    <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span><span data-filtex="^--$|^\+\+$|^\*\*$|^<<$|^##|^#@#" data-i18n="loggerRowFiltererBuiltinEventful"></span><span data-filtex="^--$|^<<$|^##" data-i18n="loggerRowFiltererBuiltinBlocked"></span><span data-filtex="^\+\+$|^#@#" data-i18n="loggerRowFiltererBuiltinAllowed"></span></div>
+                    <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span><span data-filtex="^(?:css|font)$">css/font</span><span data-filtex="^image$">image</span><span data-filtex="^(?:inline-)?script(?:ing)?$">script</span><span data-filtex="^(?:websocket|xhr)$">xhr</span><span data-filtex="^frame$">frame</span><span data-filtex="^dom$">dom</span></div>
+                    <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span><span data-filtex="^1$" data-i18n="loggerRowFiltererBuiltin1p"></span><span data-filtex="^3(?:,\d)?$" data-i18n="loggerRowFiltererBuiltin3p"></span></div>
                 </div>
             </span>
             <input id="maxEntries" type="text" size="5" data-i18n-title="logMaxEntriesTip">
@@ -73,7 +77,7 @@
             <div class="headers">
                 <span class="header dynamic selected" data-container="dynamic" data-i18n="loggerURLFilteringHeader"></span>
                 <span class="header static" data-container="static" data-i18n="loggerStaticFilteringHeader"></span>
-                <span class="tools"><span class="fa reload">&#xf021;</span>&emsp;<span class="fa picker">&#xf1fb;</span></span>
+                <span class="tools"><span class="fa-icon reload">sync-alt</span>&ensp;<span class="fa-icon picker">eye-dropper</span></span>
             </div>
             <div class="containers">
                 <div class="container dynamic selected">
@@ -81,7 +85,7 @@
                         <colgroup><col><col></colgroup>
                         <tbody>
                         <tr>
-                            <td><span id="saveRules" class="fa">&#xf023;</span>
+                            <td><span id="saveRules" class="fa-icon">lock</span>
                             <td><p>
                                 <label><span data-i18n="loggerURLFilteringContextLabel"></span> <select class="dynamic origin"></select></label>&emsp;
                                 <label><span data-i18n="loggerURLFilteringTypeLabel"></span> <select class="dynamic type"><option><option value="*">*</select></label>
@@ -111,7 +115,7 @@
     <ul id="filterFinderListEntry">
         <li class="filterFinderListEntry">
             <a href="asset-viewer.html?url=" target="_blank"></a>
-            <a href="" class="fa" target="_blank">&#xf015;</span></li>
+            <a href="" class="fa-icon" target="_blank">home</a></li>
     </ul>
     <div id="cosmeticFilteringDialog" class="modalDialog">
         <div class="dialog">
@@ -121,6 +125,7 @@
     </div>
 </div>
 
+<script src="js/fa-icons.js"></script>
 <script src="js/vapi.js"></script>
 <script src="js/vapi-common.js"></script>
 <script src="js/vapi-client.js"></script>
