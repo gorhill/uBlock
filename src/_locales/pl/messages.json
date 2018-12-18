@@ -36,7 +36,7 @@
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
-    "message": "uBlock₀ – Dziennik żądań sieciowych",
+    "message": "uBlock₀ – Rejestrator",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
@@ -96,7 +96,7 @@
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "Przejdź do dziennika żądań",
+    "message": "Otwórz rejestrator",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
@@ -556,31 +556,31 @@
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
-    "message": "uBlock Origin wiki: The logger",
+    "message": "uBlock Origin wiki: Rejestrator (ang.)",
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
-    "message": "Wyczyść log",
+    "message": "Wyczyść rejestr",
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
-    "message": "Pauzuj log (porzuć wszystkie przychodzące dane)",
+    "message": "Pauzuj rejestrowanie (porzuć wszystkie przychodzące dane)",
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {
-    "message": "Wznów log",
+    "message": "Wznów rejestrowanie",
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "Przełącz filtrowanie logu",
+    "message": "Przełącz filtrowanie rejestru",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
-    "message": "filtruj zawartość logu",
+    "message": "filtruj zawartość rejestru",
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
-    "message": "Opcje filtrowania logu",
+    "message": "Opcje filtrowania rejestru",
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {
@@ -608,7 +608,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "logMaxEntriesTip": {
-    "message": "Maksymalna liczba logowanych wpisów",
+    "message": "Maksymalna liczba rejestrowanych wpisów",
     "description": "Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "loggerURLFilteringContextLabel": {
@@ -764,7 +764,7 @@
     "description": "Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
-    "message": "Dziennik żądań",
+    "message": "Pokaż rejestrator",
     "description": "Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
