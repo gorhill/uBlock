@@ -33,17 +33,13 @@ a {
     align-items: flex-end;
     background-color: #444;
     border: 0;
-    color: #ccc;
+    color: #bbb;
     display: flex;
-    font-size: 80%;
+    font-size: smaller;
     justify-content: center;
     margin: 0;
     padding: 1px 0;
     width: 100%;
-    }
-#version {
-    font-size: 90%;
-    font-weight: normal;
     }
 
 #panes {
