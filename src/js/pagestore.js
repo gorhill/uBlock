@@ -90,11 +90,7 @@ NetFilteringResultCache.prototype.dispose = function() {
 
 /******************************************************************************/
 
-NetFilteringResultCache.prototype.rememberResult = function(
-    fctxt,
-    result,
-    logData
-) {
+NetFilteringResultCache.prototype.rememberResult = function(fctxt, result) {
     if ( fctxt.tabId <= 0 ) { return; }
     if ( this.results.size === 0 ) {
         this.pruneAsync();
@@ -102,7 +98,7 @@ NetFilteringResultCache.prototype.rememberResult = function(
     const key = fctxt.getDocHostname() + ' ' + fctxt.type + ' ' + fctxt.url;
     this.results.set(key, {
         result: result,
-        logData: logData,
+        logData: fctxt.filter,
         tstamp: Date.now()
     });
     if ( result !== 1 ) { return; }
@@ -637,7 +633,7 @@ PageStore.prototype.filterRequest = function(fctxt) {
     }
 
     if ( cacheableResult ) {
-        this.netFilteringCache.rememberResult(fctxt, result, this.logData);
+        this.netFilteringCache.rememberResult(fctxt, result);
     } else if ( result === 1 && this.collapsibleResources.has(requestType) ) {
         this.netFilteringCache.rememberBlock(fctxt, true);
     }
