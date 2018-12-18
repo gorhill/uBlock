@@ -1418,7 +1418,11 @@ const rowFilterer = (function() {
     const parseInput = function() {
         userFilters.length = 0;
 
-        const rawParts = uDom('#filterInput').val().trim().split(/\s+/);
+        const rawParts =
+            uDom.nodeFromSelector('#filterInput > input')
+                .value
+                .trim()
+                .split(/\s+/);
         const n = rawParts.length;
         const reStrs = [];
         let not = false;
@@ -1580,7 +1584,7 @@ const rowFilterer = (function() {
     };
 
     uDom('#filterButton').on('click', onFilterButton);
-    uDom('#filterInput').on('input', onFilterChangedAsync);
+    uDom('#filterInput > input').on('input', onFilterChangedAsync);
     uDom('#filterExprButton').on('click', onToggleExtras);
     uDom('#filterExprPicker').on('click', '[data-filtex]', onToggleBuiltinExpression);
 

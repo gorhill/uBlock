@@ -123,16 +123,24 @@ textarea {
     opacity: 1;
     }
 #netInspector #filterInput {
+    display: inline-flex;
+    }
+#netInspector #filterInput > input {
     min-width: 18em;
     }
-#netInspector #filterInput.bad {
+#netInspector #filterInput.bad > input {
     background-color: #fee;
     }
 #netInspector #maxEntries {
     margin: 0 2em;
     }
 #netInspector #filterExprButton {
+    position: absolute;
+    right: 0;
     transform: scaleY(-1);
+    }
+#netInspector #filterExprButton:hover {
+    background-color: transparent;
     }
 #netInspector #filterExprButton.expanded {
     transform: scaleY(1);
