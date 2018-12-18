@@ -1448,14 +1448,16 @@ const rowFilterer = (function() {
                 if ( hardEnd ) {
                     rawPart = rawPart.slice(0, -1);
                 }
-                if ( rawPart === '' ) { continue; }
                 // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions
                 reStr = rawPart.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                // https://github.com/orgs/uBlockOrigin/teams/ublock-issues-volunteers/discussions/51
+                //   Be more flexible when interpreting leading/trailing pipes,
+                //   as leading/trailing pipes are often used in static filters.
                 if ( hardBeg ) {
-                    reStr = '(?:^|\\s)' + reStr;
+                    reStr = reStr !== '' ? '(?:^|\\s|\\|)' + reStr : '\\|';
                 }
                 if ( hardEnd ) {
-                    reStr += '(?:\\s|$)';
+                    reStr += '(?:\\||\\s|$)';
                 }
             }
             reStrs.push(reStr);
