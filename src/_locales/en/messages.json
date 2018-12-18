@@ -561,7 +561,7 @@
   },
   "loggerClearTip":{
     "message":"Clear logger",
-    "description":"Tooltip for the eraser in the logger page"
+    "description":"Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip":{
     "message":"Pause logger (discard all incoming data)",
@@ -589,7 +589,7 @@
   },
   "loggerRowFiltererBuiltinEventful":{
     "message":"eventful",
-    "description":"A keyword in the built-in row filtering expression"
+    "description":"A keyword in the built-in row filtering expression: all items corresponding to uBO doing something (blocked, allowed, redirected, etc.)"
   },
   "loggerRowFiltererBuiltinBlocked":{
     "message":"blocked",
