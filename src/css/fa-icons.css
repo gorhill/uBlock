@@ -3,7 +3,7 @@
     background-color: transparent;
     border: 0;
     display: inline-flex;
-    justify-content: flex-start;
+    justify-content: center;
     margin: 0;
     padding: 0.1em;
     position: relative;
@@ -23,20 +23,15 @@
     }
 .fa-icon > .fa-icon-badge,
 .fa-icon.disabled > .fa-icon-badge {
-    display: none;
+    visibility: hidden;
     }
 .fa-icon.fa-icon-badged > .fa-icon-badge {
-    background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 3px;
-    bottom: 1px;
+    bottom: -20%;
     display: inline-block;
-    font-family: sans-serif;
-    font-size: 40%;
+    font: 60% sans-serif;
+    left: calc(100% - 0.2em);
     position: absolute;
-    right: 1px;
-    }
-.fa-icon.disabled > .fa-icon-badge {
-    display: none;
+    visibility: visible;
     }
 
 .fa-icon > svg {
@@ -49,6 +44,8 @@
     width: calc(1em * 640 / 512);
     }
 .fa-icon > .fa-icon_exclamation-triangle,
+.fa-icon > .fa-icon_eye,
+.fa-icon > .fa-icon_eye-slash,
 .fa-icon > .fa-icon_home,
 .fa-icon > .fa-icon_puzzle-piece,
 .fa-icon > .fa-icon_reply-all {
@@ -59,6 +56,7 @@
 .fa-icon > .fa-icon_download,
 .fa-icon > .fa-icon_eraser,
 .fa-icon > .fa-icon_eye-dropper,
+.fa-icon > .fa-icon_film,
 .fa-icon > .fa-icon_filter,
 .fa-icon > .fa-icon_info-circle,
 .fa-icon > .fa-icon_list-alt,
@@ -69,6 +67,7 @@
 .fa-icon > .fa-icon_reply,
 .fa-icon > .fa-icon_search-minus,
 .fa-icon > .fa-icon_search-plus,
+.fa-icon > .fa-icon_sliders-h,
 .fa-icon > .fa-icon_spinner,
 .fa-icon > .fa-icon_sync-alt,
 .fa-icon > .fa-icon_th,
@@ -79,6 +78,8 @@
 .fa-icon > .fa-icon_angle-double-left,
 .fa-icon > .fa-icon_arrow-left,
 .fa-icon > .fa-icon_arrow-right,
+.fa-icon > .fa-icon_copy,
+.fa-icon > .fa-icon_font,
 .fa-icon > .fa-icon_lock,
 .fa-icon > .fa-icon_plus,
 .fa-icon > .fa-icon_save,
@@ -90,7 +91,8 @@
     width: calc(1em * 352 / 512);
     }
 .fa-icon > .fa-icon_angle-up,
-.fa-icon > .fa-icon_angle-double-up {
+.fa-icon > .fa-icon_angle-double-up,
+.fa-icon > .fa-icon_bolt {
     width: calc(1em * 320 / 512);
     }
 .fa-icon > .fa-icon_ellipsis-v {

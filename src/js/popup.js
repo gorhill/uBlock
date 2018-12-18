@@ -466,17 +466,17 @@ var renderPopup = function() {
 
     // Report blocked popup count on badge
     total = popupData.popupBlockedCount;
-    uDom.nodeFromSelector('#no-popups > span.badge')
+    uDom.nodeFromSelector('#no-popups > span.fa-icon-badge')
         .textContent = total ? total.toLocaleString() : '';
 
     // Report large media count on badge
     total = popupData.largeMediaCount;
-    uDom.nodeFromSelector('#no-large-media > span.badge')
+    uDom.nodeFromSelector('#no-large-media > span.fa-icon-badge')
         .textContent = total ? total.toLocaleString() : '';
 
     // Report remote font count on badge
     total = popupData.remoteFontCount;
-    uDom.nodeFromSelector('#no-remote-fonts > span.badge')
+    uDom.nodeFromSelector('#no-remote-fonts > span.fa-icon-badge')
         .textContent = total ? total.toLocaleString() : '';
 
     // https://github.com/chrisaljoudi/uBlock/issues/470
@@ -669,14 +669,14 @@ var onPopupMessage = function(data) {
     switch ( data.what ) {
     case 'domSurveyFinalReport':
         let count = data.affectedElementCount || '';
-        uDom.nodeFromSelector('#no-cosmetic-filtering > span.badge')
+        uDom.nodeFromSelector('#no-cosmetic-filtering > span.fa-icon-badge')
             .textContent = typeof count === 'number' ?
                 count.toLocaleString() :
                 count;
         count = data.scriptCount || '';
-        uDom.nodeFromSelector('#no-scripting > span.badge')
+        uDom.nodeFromSelector('#no-scripting > span.fa-icon-badge')
             .textContent = typeof count === 'number' ?
-                count.toLocaleString() :
+                (count < 100 ? count.toLocaleString() : '99+') :
                 count;
         break;
     }
