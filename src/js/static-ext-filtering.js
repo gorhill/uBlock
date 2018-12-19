@@ -376,15 +376,15 @@
                     return;
                 }
                 tasks.push([ operator, args ]);
-                if ( i === n ) { break; }
                 opPrefixBeg = i;
+                if ( i === n ) { break; }
             }
             // No task found: then we have a CSS selector.
             // At least one task found: nothing should be left to parse.
             if ( tasks.length === 0 ) {
                 prefix = raw;
                 tasks = undefined;
-            } else if ( i < n ) {
+            } else if ( opPrefixBeg < n ) {
                 return;
             }
             // https://github.com/NanoAdblocker/NanoCore/issues/1#issuecomment-354394894
