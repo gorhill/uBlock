@@ -38,63 +38,51 @@
     height: 1em;
     width: 1em;
     }
-.fa-icon > .fa-icon_cloud-download-alt,
-.fa-icon > .fa-icon_cloud-upload-alt,
-.fa-icon > .fa-icon_code {
-    width: calc(1em * 640 / 512);
-    }
-.fa-icon > .fa-icon_exclamation-triangle,
-.fa-icon > .fa-icon_eye,
-.fa-icon > .fa-icon_eye-slash,
-.fa-icon > .fa-icon_home,
-.fa-icon > .fa-icon_puzzle-piece,
-.fa-icon > .fa-icon_reply-all {
-    width: calc(1em * 576 / 512);
-    }
-.fa-icon > .fa-icon_clock,
-.fa-icon > .fa-icon_cog,
-.fa-icon > .fa-icon_download,
+
 .fa-icon > .fa-icon_eraser,
-.fa-icon > .fa-icon_eye-dropper,
-.fa-icon > .fa-icon_film,
-.fa-icon > .fa-icon_filter,
-.fa-icon > .fa-icon_info-circle,
-.fa-icon > .fa-icon_list-alt,
-.fa-icon > .fa-icon_pause-circle,
-.fa-icon > .fa-icon_play-circle,
-.fa-icon > .fa-icon_power-off,
-.fa-icon > .fa-icon_question-circle,
-.fa-icon > .fa-icon_reply,
-.fa-icon > .fa-icon_search-minus,
-.fa-icon > .fa-icon_search-plus,
-.fa-icon > .fa-icon_sliders-h,
-.fa-icon > .fa-icon_spinner,
-.fa-icon > .fa-icon_sync-alt,
-.fa-icon > .fa-icon_th,
-.fa-icon > .fa-icon_th-list,
-.fa-icon > .fa-icon_unlink {
-    width: calc(1em * 512 / 512);
+.fa-icon > .fa-icon_film {
+    width: calc(1em * 1920 / 1792);
     }
-.fa-icon > .fa-icon_angle-double-left,
-.fa-icon > .fa-icon_arrow-left,
-.fa-icon > .fa-icon_arrow-right,
-.fa-icon > .fa-icon_copy,
-.fa-icon > .fa-icon_font,
-.fa-icon > .fa-icon_lock,
-.fa-icon > .fa-icon_plus,
-.fa-icon > .fa-icon_save,
-.fa-icon > .fa-icon_unlock,
-.fa-icon > .fa-icon_trash-alt {
-    width: calc(1em * 448 / 512);
+.fa-icon > .fa-icon_code {
+    width: calc(1em * 1830 / 1792);
+    }
+.fa-icon > .fa-icon_eye-dropper,
+.fa-icon > .fa-icon_eye-slash,
+.fa-icon > .fa-icon_files-o,
+.fa-icon > .fa-icon_list-alt {
+    width: calc(1em * 1792 / 1792);
+    }
+.fa-icon > .fa-icon_font {
+    width: calc(1em * 1664 / 1792);
+    }
+.fa-icon > .fa-icon_home {
+    width: calc(1em * 1612 / 1792);
+    }
+.fa-icon > .fa-icon_floppy-o,
+.fa-icon > .fa-icon_info-circle,
+.fa-icon > .fa-icon_pause-circle-o,
+.fa-icon > .fa-icon_play-circle-o,
+.fa-icon > .fa-icon_power-off,
+.fa-icon > .fa-icon_refresh,
+.fa-icon > .fa-icon_sliders {
+    width: calc(1em * 1536 / 1792);
+    }
+.fa-icon > .fa-icon_filter {
+    width: calc(1em * 1410 / 1792);
     }
 .fa-icon > .fa-icon_times {
-    width: calc(1em * 352 / 512);
+    width: calc(1em * 1188 / 1792);
+    }
+.fa-icon > .fa-icon_lock {
+    width: calc(1em *  1152 / 1792);
     }
 .fa-icon > .fa-icon_angle-up,
-.fa-icon > .fa-icon_angle-double-up,
-.fa-icon > .fa-icon_bolt {
-    width: calc(1em * 320 / 512);
+.fa-icon > .fa-icon_double-angle-up {
+    width: calc(1em *  998 / 1792);
     }
-.fa-icon > .fa-icon_ellipsis-v {
-    width: calc(1em * 192 / 512);
+.fa-icon > .fa-icon_double-angle-left {
+    width: calc(1em *  966 / 1792);
+    }
+.fa-icon > .fa-icon_bolt {
+    width: calc(1em *  896 / 1792);
     }

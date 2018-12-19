@@ -77,7 +77,6 @@ textarea {
 #inspectors {
     flex-grow: 1;
     font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-    font-size: 13px;
     }
 .inspector {
     border-top: 1px solid #ccc;
@@ -86,6 +85,7 @@ textarea {
     }
 .vscrollable {
     flex-grow: 1;
+    font-size: small;
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -156,9 +156,6 @@ textarea {
     right: 0;
     top: 100%;
     z-index: 100;
-    }
-#netInspector #filterExprButton.on {
-    fill: #5F9EA0;
     }
 #netInspector #filterExprButton.expanded ~ #filterExprPicker {
     display: flex;
@@ -684,7 +681,7 @@ body.colorBlind  #netFilteringDialog .dialog > div.containers > div.dynamic tr.e
     font-size: larger;
     }
 #filterFinderDialog .filterFinderListEntry {
-    align-items: center;
+    align-items: flex-end;
     display: flex;
     }
 #filterFinderDialog .filterFinderListEntry a {

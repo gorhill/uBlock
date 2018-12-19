@@ -19,9 +19,9 @@
         <option value="tab_bts" data-i18n="logBehindTheScene">
         <option value="tab_active" data-i18n="loggerCurrentTab">
     </select>
-    <span id="refresh" class="button fa-icon disabled needdom" data-i18n-title="loggerReloadTip">sync-alt</span>
+    <span id="refresh" class="button fa-icon disabled needdom" data-i18n-title="loggerReloadTip">refresh</span>
     <span id="showdom" class="button fa-icon disabled needdom" data-i18n-title="loggerDomInspectorTip">code</span>
-    <span id="showpopup" class="button fa-icon disabled needdom" data-i18n-title="loggerPopupPanelTip"><img src="/img/icon_64.png"></span>
+    <span id="showpopup" class="button fa-icon disabled needdom" data-i18n-title="loggerPopupPanelTip"><img src="/img/ublock-icon.svg"></span>
     <a id="info" class="button fa-icon" href="https://github.com/gorhill/uBlock/wiki/The-logger" target="_blank" data-i18n-title="loggerInfoTip">info-circle</a>
 </div>
 
@@ -29,11 +29,11 @@
     <div id="domInspector" class="inspector vCompact hCompact">
         <div class="permatoolbar">
             <div>
-                <span class="button fa-icon vCompactToggler">angle-double-up</span>
-                <span class="button fa-icon hCompactToggler">angle-double-left</span>
+                <span class="button fa-icon vCompactToggler">double-angle-up</span>
+                <span class="button fa-icon hCompactToggler">double-angle-left</span>
                 <!-- <span class="button fa highlightMode" style="display: none">&#xf042;</span> -->
                 <span class="button fa-icon revert disabled">eraser</span>
-                <span class="button fa-icon commit disabled">save</span>
+                <span class="button fa-icon commit disabled">floppy-o</span>
             </div>
         </div>
         <div class="vscrollable">
@@ -42,10 +42,10 @@
     </div>
     <div id="netInspector" class="inspector vCompact f">
         <div class="permatoolbar">
-            <span class="button fa-icon vCompactToggler">angle-double-up</span>
+            <span class="button fa-icon vCompactToggler">double-angle-up</span>
             <span id="clean" class="button fa-icon disabled">times</span>
             <span id="clear" class="button fa-icon disabled" data-i18n-title="loggerClearTip">eraser</span>
-            <span id="pause"><span class="button fa-icon" data-i18n-title="loggerPauseTip">pause-circle</span><span class="button fa-icon" data-i18n-title="loggerUnpauseTip">play-circle</span></span>
+            <span id="pause"><span class="button fa-icon" data-i18n-title="loggerPauseTip">pause-circle-o</span><span class="button fa-icon" data-i18n-title="loggerUnpauseTip">play-circle-o</span></span>
             <span id="filterExprGroup">
                 <span id="filterButton" class="button fa-icon" data-i18n-title="loggerRowFiltererButtonTip">filter</span>
                 <span id="filterInput">

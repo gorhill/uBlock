@@ -320,7 +320,7 @@ var updateAllFirewallCells = function() {
 
 /******************************************************************************/
 
-var buildAllFirewallRows = function() {
+const buildAllFirewallRows = function() {
     // Do this before removing the rows
     if ( dfHotspots === null ) {
         dfHotspots = uDom('#actionSelector')
@@ -331,11 +331,11 @@ var buildAllFirewallRows = function() {
 
     // Remove and reuse all rows: the order may have changed, we can't just
     // reuse them in-place.
-    rowsToRecycle = uDom('#firewallContainer > div:nth-of-type(7) ~ div').detach();
+    rowsToRecycle =
+        uDom('#firewallContainer > div:nth-of-type(7) ~ div').detach();
 
-    var n = allHostnameRows.length;
-    for ( var i = 0; i < n; i++ ) {
-        addFirewallRow(allHostnameRows[i]);
+    for ( const row of allHostnameRows ) {
+        addFirewallRow(row);
     }
 
     if ( dfPaneBuilt !== true && popupData.advancedUserEnabled ) {
@@ -351,25 +351,21 @@ var buildAllFirewallRows = function() {
 
 /******************************************************************************/
 
-var renderPrivacyExposure = function() {
+const renderPrivacyExposure = function() {
     allDomains = {};
     allDomainCount = touchedDomainCount = 0;
     allHostnameRows = [];
 
     // Sort hostnames. First-party hostnames must always appear at the top
     // of the list.
-    var desHostnameDone = {};
-    var keys = Object.keys(popupData.firewallRules)
+    const desHostnameDone = {};
+    const keys = Object.keys(popupData.firewallRules)
                      .sort(rulekeyCompare);
-    var key, des, hnDetails;
-    for ( var i = 0; i < keys.length; i++ ) {
-        key = keys[i];
-        des = key.slice(2, key.indexOf(' ', 2));
+    for ( const key of keys ) {
+        const des = key.slice(2, key.indexOf(' ', 2));
         // Specific-type rules -- these are built-in
-        if ( des === '*' || desHostnameDone.hasOwnProperty(des) ) {
-            continue;
-        }
-        hnDetails = popupData.hostnameDict[des] || {};
+        if ( des === '*' || desHostnameDone.hasOwnProperty(des) ) { continue; }
+        const hnDetails = popupData.hostnameDict[des] || {};
         if ( allDomains.hasOwnProperty(hnDetails.domain) === false ) {
             allDomains[hnDetails.domain] = false;
             allDomainCount += 1;
@@ -384,14 +380,15 @@ var renderPrivacyExposure = function() {
         desHostnameDone[des] = true;
     }
 
-    var summary = domainsHitStr.replace('{{count}}', touchedDomainCount.toLocaleString())
-                               .replace('{{total}}', allDomainCount.toLocaleString());
+    const summary = domainsHitStr
+                    .replace('{{count}}', touchedDomainCount.toLocaleString())
+                    .replace('{{total}}', allDomainCount.toLocaleString());
     uDom.nodeFromId('popupHitDomainCount').textContent = summary;
 };
 
 /******************************************************************************/
 
-let updateHnSwitches = function() {
+const updateHnSwitches = function() {
     uDom.nodeFromId('no-popups').classList.toggle(
         'on',
         popupData.noPopups === true
@@ -417,7 +414,7 @@ let updateHnSwitches = function() {
 
 // Assume everything has to be done incrementally.
 
-var renderPopup = function() {
+const renderPopup = function() {
     if ( popupData.tabTitle ) {
         document.title = popupData.appName + ' - ' + popupData.tabTitle;
     }
@@ -481,7 +478,7 @@ var renderPopup = function() {
 
     // https://github.com/chrisaljoudi/uBlock/issues/470
     // This must be done here, to be sure the popup is resized properly
-    let dfPaneVisible = popupData.dfEnabled;
+    const dfPaneVisible = popupData.dfEnabled;
 
     // https://github.com/chrisaljoudi/uBlock/issues/1068
     // Remember the last state of the firewall pane. This allows to

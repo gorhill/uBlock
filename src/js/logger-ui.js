@@ -1464,6 +1464,7 @@ const rowFilterer = (function() {
                     reStr += '(?:\\||\\s|$)';
                 }
             }
+            if ( reStr === '' ) { continue; }
             reStrs.push(reStr);
             if ( i < (n - 1) && rawParts[i + 1] === '||' ) {
                 i += 1;
@@ -1513,8 +1514,13 @@ const rowFilterer = (function() {
     };
 
     const filterAll = function() {
+        const filterCount = filters.length;
+        uDom.nodeFromId('filterButton').classList.toggle(
+            'active',
+            filterCount !== 0
+        );
         // Special case: no filter
-        if ( filters.length === 0 ) {
+        if ( filterCount === 0 ) {
             uDom('#netInspector tr').removeClass('f');
             return;
         }
@@ -1575,11 +1581,11 @@ const rowFilterer = (function() {
                 r: !not
             });
         }
+        filters = builtinFilters.concat(userFilters);
         uDom.nodeFromId('filterExprButton').classList.toggle(
-            'on',
+            'active',
             builtinFilters.length !== 0
         );
-        filters = builtinFilters.concat(userFilters);
         filterAll();
     };
 

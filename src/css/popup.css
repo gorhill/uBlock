@@ -98,7 +98,7 @@ p {
 #switch .fa-icon {
     fill: #0046ff;
     cursor: pointer;
-    font-size: 650%;
+    font-size: 700%;
     margin: 0;
     padding: 0;
     }
@@ -161,25 +161,21 @@ body.off #switch .fa-icon {
 #extraTools > span:first-of-type {
     margin-left: 0.9em;
     }
-#extraTools > span > span:last-of-type {
-    color: #e00;
+#extraTools > span > .nope {
     left: 50%;
     position: absolute;
-    top: 0;
-    transform: translateX(-50%);
-    visibility: hidden;
-    }
-#extraTools > span > span:last-of-type > svg {
     stroke: red;
     stroke-width: 2;
+    transform: translateX(-50%);
+    visibility: hidden;
     width: 1em;
     }
-#extraTools > span.on > span:last-of-type {
+#extraTools > span.on > .nope {
     visibility: visible;
     }
 #extraTools > span:hover {
-    color: #333;
-    fill: #333;
+    color: #222;
+    fill: #222;
     }
 
 #refresh {
@@ -498,11 +494,11 @@ body.advancedUser #firewallContainer > div > span.noopRule.ownRule {
     border-radius: 4px;
     cursor: pointer;
     display: inline-block;
-    font-size: 1.5em;
+    font-size: 1.8em;
     line-height: 1.0;
     margin: 0;
     margin-right: 0.1em;
-    padding: 0.3em 0.5em;
+    padding: 0.2em 0.4em;
     text-align: center;
     width: 1em;
     }
