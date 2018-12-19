@@ -28,7 +28,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Wyjątki",
+    "message": "Biała lista",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -496,7 +496,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Wytyczne wyjątków nakazują, na których stronach uBlock Origin powinien zostać wyłączony. Jeden wpis na linię. Nieprawidłowe wytyczne zostaną bez powiadomienia zignorowane i wykomentowane.",
+    "message": "Dyrektywy białej listy wskazują, na których stronach uBlock Origin powinien zostać wyłączony. Jeden wpis na linię. Nieprawidłowe wpisy zostaną bez powiadomienia zignorowane i wykomentowane.",
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
@@ -508,7 +508,7 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "ublock-lista-wyjatkow_{{datetime}}.txt",
+    "message": "ublock-biała-lista_{{datetime}}.txt",
     "description": "English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply": {
@@ -600,7 +600,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
-    "message": "ta domena",
+    "message": "własna domena",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin3p": {
@@ -672,19 +672,19 @@
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
-    "message": "Dziennik zmian",
+    "message": "Informacje o wydaniu",
     "description": ""
   },
   "aboutWiki": {
-    "message": "Informacje",
+    "message": "Instrukcja obsługi",
     "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
-    "message": "Pomoc",
+    "message": "Pomoc techniczna",
     "description": "A link for where to get support"
   },
   "aboutIssues": {
-    "message": "Lista problemów",
+    "message": "Zgłaszanie błędów",
     "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {

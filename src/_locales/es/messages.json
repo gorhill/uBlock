@@ -180,7 +180,7 @@
     "description": ""
   },
   "popup3pAnyRulePrompt": {
-    "message": "terceros",
+    "message": "peticiones de terceros",
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
@@ -600,11 +600,11 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
-    "message": "dominio actual",
+    "message": "peticiones del dominio",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin3p": {
-    "message": "terceros",
+    "message": "peticiones de terceros",
     "description": "A keyword in the built-in row filtering expression"
   },
   "logMaxEntriesTip": {
