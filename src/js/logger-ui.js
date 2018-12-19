@@ -1729,9 +1729,11 @@ const popupManager = (function() {
         document.addEventListener('tabIdChanged', onTabIdChanged);
 
         setTabId(realTabId);
+        uDom.nodeFromId('showpopup').classList.add('active');
     };
 
     const toggleOff = function() {
+        uDom.nodeFromId('showpopup').classList.remove('active');
         document.removeEventListener('tabIdChanged', onTabIdChanged);
         uDom.nodeFromId('inspectors').classList.remove('popupOn');
         popup.removeEventListener('load', onLoad);
@@ -1743,9 +1745,6 @@ const popupManager = (function() {
     };
 
     const exports = {
-        toggleOn: function() {
-            void (realTabId === 0 ? toggleOn() : toggleOff());
-        },
         toggleOff: function() {
             if ( realTabId !== 0 ) {
                 toggleOff();
@@ -1755,6 +1754,10 @@ const popupManager = (function() {
 
     Object.defineProperty(exports, 'tabId', {
         get: function() { return realTabId || 0; }
+    });
+
+    uDom('#showpopup').on('click', ( ) => {
+        void (realTabId === 0 ? toggleOn() : toggleOff());
     });
 
     return exports;
@@ -1820,7 +1823,6 @@ readLogBuffer();
 
 uDom('#pageSelector').on('change', pageSelectorChanged);
 uDom('#refresh').on('click', reloadTab);
-uDom('#showpopup').on('click', popupManager.toggleOn);
 
 uDom('#netInspector .vCompactToggler').on('click', toggleVCompactView);
 uDom('#clean').on('click', cleanBuffer);
