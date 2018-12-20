@@ -568,7 +568,7 @@
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {
-    "message": "Nis ditarin",
+    "message": "Nis regjistrin",
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
@@ -580,7 +580,7 @@
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
-    "message": "Zgjedhoj filtrat e regjistrimit",
+    "message": "Zgjedhni filtrat e regjistrimit",
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {

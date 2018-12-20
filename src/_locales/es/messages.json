@@ -628,7 +628,7 @@
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "{{action}} peticiones de red tipo {{type}} {{br}}cuya dirección URL contenga {{url}} {{br}}y que se originen desde {{origin}},{{br}}{{importance}} exista una regla de excepción aplicable.",
+    "message": "{{action}} peticiones de red de {{type}} {{br}}cuya dirección URL contenga {{url}} {{br}}y que se origine {{origin}},{{br}}{{importance}} exista una regla de excepción aplicable.",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
