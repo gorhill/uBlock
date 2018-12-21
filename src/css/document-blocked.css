@@ -22,6 +22,12 @@ body {
     font-size: large;
     text-align: center;
     }
+
+@media (max-height: 640px) {
+    body {
+        font-size: small;
+        }
+}
 body > div {
     margin: 1.5em 0;
     }
