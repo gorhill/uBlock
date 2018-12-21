@@ -60,7 +60,6 @@ select {
     }
 #warningSign {
     opacity: 1;
-    pointer-events: none;
     width: 100%;
     }
 #warningSign > a {
