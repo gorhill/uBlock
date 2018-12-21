@@ -1054,26 +1054,28 @@ var netFilteringManager = (function() {
     };
 
     // Build list of candidate URLs
-    var createTargetURLs = function(url) {
-        var urls = [];
-        var matches = reRFC3986.exec(url);
+    const createTargetURLs = function(url) {
+        const urls = [];
+        const matches = reRFC3986.exec(url);
         if ( matches === null || !matches[1] || !matches[2] ) {
             return urls;
         }
         // Shortest URL for a valid URL filtering rule
-        var rootURL = matches[1] + matches[2];
+        const rootURL = matches[1] + matches[2];
         urls.unshift(rootURL);
-        var path = matches[3] || '';
-        var pos = path.charAt(0) === '/' ? 1 : 0;
+        const path = matches[3] || '';
+        let pos = path.charAt(0) === '/' ? 1 : 0;
         while ( pos < path.length ) {
-            pos = path.indexOf('/', pos + 1);
+            pos = path.indexOf('/', pos);
             if ( pos === -1 ) {
                 pos = path.length;
+            } else {
+                pos += 1;
             }
-            urls.unshift(rootURL + path.slice(0, pos + 1));
+            urls.unshift(rootURL + path.slice(0, pos));
         }
-        var query = matches[4] || '';
-        if ( query !== '') {
+        const query = matches[4] || '';
+        if ( query !== '' ) {
             urls.unshift(rootURL + path + query);
         }
         return urls;
