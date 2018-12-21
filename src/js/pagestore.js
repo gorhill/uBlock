@@ -44,145 +44,127 @@ const µb = µBlock;
 
 // To mitigate memory churning
 const netFilteringCacheJunkyard = [];
-const  netFilteringCacheJunkyardMax = 10;
+const netFilteringCacheJunkyardMax = 10;
 
 /******************************************************************************/
 
 const NetFilteringResultCache = function() {
-    this.boundPruneAsyncCallback = this.pruneAsyncCallback.bind(this);
     this.init();
 };
 
-/******************************************************************************/
+NetFilteringResultCache.prototype = {
+    shelfLife: 15000,
 
-NetFilteringResultCache.prototype.shelfLife = 15 * 1000;
+    init: function() {
+        this.blocked = new Map();
+        this.results = new Map();
+        this.hash = 0;
+        this.timer = undefined;
+        return this;
+    },
 
-/******************************************************************************/
+    dispose: function() {
+        this.empty();
+        if ( netFilteringCacheJunkyard.length < netFilteringCacheJunkyardMax ) {
+            netFilteringCacheJunkyard.push(this);
+        }
+        return null;
+    },
+
+    rememberResult: function(fctxt, result) {
+        if ( fctxt.tabId <= 0 ) { return; }
+        if ( this.results.size === 0 ) {
+            this.pruneAsync();
+        }
+        const key = fctxt.getDocHostname() + ' ' + fctxt.type + ' ' + fctxt.url;
+        this.results.set(key, {
+            result: result,
+            logData: fctxt.filter,
+            tstamp: Date.now()
+        });
+        if ( result !== 1 ) { return; }
+        const now = Date.now();
+        this.blocked.set(key, now);
+        this.hash = now;
+    },
+
+    rememberBlock: function(fctxt) {
+        if ( fctxt.tabId <= 0 ) { return; }
+        if ( this.blocked.size === 0 ) {
+            this.pruneAsync();
+        }
+        const now = Date.now();
+        this.blocked.set(
+            fctxt.getDocHostname() + ' ' + fctxt.type + ' ' + fctxt.url,
+            now
+        );
+        this.hash = now;
+    },
+
+    empty: function() {
+        this.blocked.clear();
+        this.results.clear();
+        this.hash = 0;
+        if ( this.timer !== undefined ) {
+            clearTimeout(this.timer);
+            this.timer = undefined;
+        }
+    },
+
+    prune: function() {
+        const obsolete = Date.now() - this.shelfLife;
+        for ( const entry of this.blocked ) {
+            if ( entry[1] <= obsolete ) {
+                this.results.delete(entry[0]);
+                this.blocked.delete(entry[0]);
+            }
+        }
+        for ( const entry of this.results ) {
+            if ( entry[1].tstamp <= obsolete ) {
+                this.results.delete(entry[0]);
+            }
+        }
+        if ( this.blocked.size !== 0 || this.results.size !== 0 ) {
+            this.pruneAsync();
+        }
+    },
+
+    pruneAsync: function() {
+        if ( this.timer !== undefined ) { return; }
+        this.timer = vAPI.setTimeout(
+            ( ) => {
+                this.timer = undefined;
+                this.prune();
+            },
+            this.shelfLife
+        );
+    },
+
+    lookupResult: function(fctxt) {
+        return this.results.get(
+            fctxt.getDocHostname() + ' ' +
+            fctxt.type + ' ' +
+            fctxt.url
+        );
+    },
+
+    lookupAllBlocked: function(hostname) {
+        const result = [];
+        for ( const entry of this.blocked ) {
+            const pos = entry[0].indexOf(' ');
+            if ( entry[0].slice(0, pos) === hostname ) {
+                result[result.length] = entry[0].slice(pos + 1);
+            }
+        }
+        return result;
+    },
+};
 
 NetFilteringResultCache.factory = function() {
-    let entry = netFilteringCacheJunkyard.pop();
-    if ( entry === undefined ) {
-        entry = new NetFilteringResultCache();
-    } else {
-        entry.init();
-    }
-    return entry;
-};
-
-/******************************************************************************/
-
-NetFilteringResultCache.prototype.init = function() {
-    this.blocked = new Map();
-    this.results = new Map();
-    this.hash = 0;
-    this.timer = null;
-};
-
-/******************************************************************************/
-
-NetFilteringResultCache.prototype.dispose = function() {
-    this.empty();
-    if ( netFilteringCacheJunkyard.length < netFilteringCacheJunkyardMax ) {
-        netFilteringCacheJunkyard.push(this);
-    }
-    return null;
-};
-
-/******************************************************************************/
-
-NetFilteringResultCache.prototype.rememberResult = function(fctxt, result) {
-    if ( fctxt.tabId <= 0 ) { return; }
-    if ( this.results.size === 0 ) {
-        this.pruneAsync();
-    }
-    const key = fctxt.getDocHostname() + ' ' + fctxt.type + ' ' + fctxt.url;
-    this.results.set(key, {
-        result: result,
-        logData: fctxt.filter,
-        tstamp: Date.now()
-    });
-    if ( result !== 1 ) { return; }
-    const now = Date.now();
-    this.blocked.set(key, now);
-    this.hash = now;
-};
-
-/******************************************************************************/
-
-NetFilteringResultCache.prototype.rememberBlock = function(fctxt) {
-    if ( fctxt.tabId <= 0 ) { return; }
-    if ( this.blocked.size === 0 ) {
-        this.pruneAsync();
-    }
-    const now = Date.now();
-    this.blocked.set(
-        fctxt.getDocHostname() + ' ' + fctxt.type + ' ' + fctxt.url,
-        now
-    );
-    this.hash = now;
-};
-
-/******************************************************************************/
-
-NetFilteringResultCache.prototype.empty = function() {
-    this.blocked.clear();
-    this.results.clear();
-    this.hash = 0;
-    if ( this.timer !== null ) {
-        clearTimeout(this.timer);
-        this.timer = null;
-    }
-};
-
-/******************************************************************************/
-
-NetFilteringResultCache.prototype.pruneAsync = function() {
-    if ( this.timer === null ) {
-        this.timer = vAPI.setTimeout(this.boundPruneAsyncCallback, this.shelfLife * 2);
-    }
-};
-
-NetFilteringResultCache.prototype.pruneAsyncCallback = function() {
-    this.timer = null;
-    var obsolete = Date.now() - this.shelfLife,
-        entry;
-    for ( entry of this.blocked ) {
-        if ( entry[1] <= obsolete ) {
-            this.results.delete(entry[0]);
-            this.blocked.delete(entry[0]);
-        }
-    }
-    for ( entry of this.results ) {
-        if ( entry[1].tstamp <= obsolete ) {
-            this.results.delete(entry[0]);
-        }
-    }
-    if ( this.blocked.size !== 0 || this.results.size !== 0 ) {
-        this.pruneAsync();
-    }
-};
-
-/******************************************************************************/
-
-NetFilteringResultCache.prototype.lookupResult = function(fctxt) {
-    return this.results.get(
-        fctxt.getDocHostname() + ' ' +
-        fctxt.type + ' ' +
-        fctxt.url
-    );
-};
-
-/******************************************************************************/
-
-NetFilteringResultCache.prototype.lookupAllBlocked = function(hostname) {
-    const result = [];
-    for ( const entry of this.blocked ) {
-        const pos = entry[0].indexOf(' ');
-        if ( entry[0].slice(0, pos) === hostname ) {
-            result[result.length] = entry[0].slice(pos + 1);
-        }
-    }
-    return result;
+    const entry = netFilteringCacheJunkyard.pop();
+    return entry !== undefined
+        ? entry.init()
+        : new NetFilteringResultCache();
 };
 
 /******************************************************************************/
@@ -203,7 +185,23 @@ const FrameStore = function(frameURL) {
     this.init(frameURL);
 };
 
-/******************************************************************************/
+FrameStore.prototype = {
+    init: function(frameURL) {
+        const µburi = µb.URI;
+        this.pageHostname = µburi.hostnameFromURI(frameURL);
+        this.pageDomain =
+            µburi.domainFromHostname(this.pageHostname) || this.pageHostname;
+        return this;
+    },
+
+    dispose: function() {
+        this.pageHostname = this.pageDomain = '';
+        if ( frameStoreJunkyard.length < frameStoreJunkyardMax ) {
+            frameStoreJunkyard.push(this);
+        }
+        return null;
+    },
+};
 
 FrameStore.factory = function(frameURL) {
     const entry = frameStoreJunkyard.pop();
@@ -211,25 +209,6 @@ FrameStore.factory = function(frameURL) {
         return new FrameStore(frameURL);
     }
     return entry.init(frameURL);
-};
-
-/******************************************************************************/
-
-FrameStore.prototype.init = function(frameURL) {
-    const µburi = µb.URI;
-    this.pageHostname = µburi.hostnameFromURI(frameURL);
-    this.pageDomain = µburi.domainFromHostname(this.pageHostname) || this.pageHostname;
-    return this;
-};
-
-/******************************************************************************/
-
-FrameStore.prototype.dispose = function() {
-    this.pageHostname = this.pageDomain = '';
-    if ( frameStoreJunkyard.length < frameStoreJunkyardMax ) {
-        frameStoreJunkyard.push(this);
-    }
-    return null;
 };
 
 /******************************************************************************/

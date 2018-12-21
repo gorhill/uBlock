@@ -425,10 +425,6 @@ const onHeadersReceived = function(details) {
     const isRootDoc = requestType === 'main_frame';
     const isDoc = isRootDoc || requestType === 'sub_frame';
 
-    if ( isRootDoc ) {
-        µb.tabContextManager.push(details.tabId, details.url);
-    }
-
     let pageStore = µb.pageStoreFromTabId(fctxt.tabId);
     if ( pageStore === null ) {
         if ( isRootDoc === false ) { return; }
@@ -783,11 +779,12 @@ const injectCSP = function(fctxt, pageStore, responseHeaders) {
         }
     } else {
         fctxt.type = 'inline-script';
-        if ( pageStore.filterRequest(fctxt) === 1 ) {
+        const result = pageStore.filterRequest(fctxt);
+        if ( result === 1 ) {
             builtinDirectives.push("script-src 'unsafe-eval' * blob: data:");
-            if ( loggerEnabled ) {
-                fctxt.setRealm('net').toLogger();
-            }
+        }
+        if ( result !== 0 && loggerEnabled ) {
+            fctxt.setRealm('net').toLogger();
         }
     }
 

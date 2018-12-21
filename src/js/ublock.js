@@ -548,13 +548,19 @@ var matchBucket = function(url, hostname, bucket, start) {
 //   cosmetic filters.
 
 µBlock.logCosmeticFilters = function(tabId, frameId) {
-    if ( this.logger.enabled ) {
-        vAPI.tabs.injectScript(tabId, {
-            file: '/js/scriptlets/cosmetic-logger.js',
-            frameId: frameId,
-            runAt: 'document_start'
-        });
-    }
+    vAPI.tabs.injectScript(tabId, {
+        file: '/js/scriptlets/cosmetic-logger.js',
+        frameId: frameId,
+        runAt: 'document_start'
+    });
+};
+
+µBlock.logInlineScript = function(tabId, frameId) {
+    vAPI.tabs.injectScript(tabId, {
+        frameId: frameId,
+        file: '/js/scriptlets/inlinescript-logger.js',
+        runAt: 'document_start'
+    });
 };
 
 /******************************************************************************/

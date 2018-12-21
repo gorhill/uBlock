@@ -497,8 +497,8 @@ var onMessage = function(request, sender, callback) {
     }
 
     // Sync
-    var µb = µBlock,
-        response,
+    const µb = µBlock;
+    let response,
         tabId, frameId,
         pageStore = null;
 
@@ -527,7 +527,7 @@ var onMessage = function(request, sender, callback) {
 
     case 'shouldRenderNoscriptTags':
         if ( pageStore === null ) { break; }
-        const fctxt = µBlock.filteringContext.fromTabId(tabId);
+        const fctxt = µb.filteringContext.fromTabId(tabId);
         if ( pageStore.filterScripting(fctxt, undefined) ) {
             vAPI.tabs.injectScript(
                 tabId,
@@ -567,8 +567,11 @@ var onMessage = function(request, sender, callback) {
         if ( µb.canInjectScriptletsNow === false ) {
             response.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
         }
-        if ( response.noCosmeticFiltering !== true ) {
-            µb.logCosmeticFilters(tabId, frameId);
+        if ( µb.logger.enabled ) {
+            if ( response.noCosmeticFiltering !== true ) {
+                µb.logCosmeticFilters(tabId, frameId);
+            }
+            µb.logInlineScript(tabId, frameId);
         }
         break;
 
@@ -1317,15 +1320,15 @@ vAPI.messaging.listen('documentBlocked', onMessage);
 
 /******************************************************************************/
 
-let µb = µBlock;
-let broadcastTimers = new Map();
+const µb = µBlock;
+const broadcastTimers = new Map();
 
 /******************************************************************************/
 
-var domSurveyFinalReport = function(tabId) {
+const domSurveyFinalReport = function(tabId) {
     broadcastTimers.delete(tabId + '-domSurveyReport');
 
-    let pageStore = µb.pageStoreFromTabId(tabId);
+    const pageStore = µb.pageStoreFromTabId(tabId);
     if ( pageStore === null ) { return; }
 
     vAPI.messaging.broadcast({
@@ -1358,8 +1361,8 @@ const logCosmeticFilters = function(tabId, details) {
 /******************************************************************************/
 
 var onMessage = function(request, sender, callback) {
-    let tabId = sender && sender.tab ? sender.tab.id : 0;
-    let pageStore = µb.pageStoreFromTabId(tabId);
+    const tabId = sender && sender.tab ? sender.tab.id : 0;
+    const pageStore = µb.pageStoreFromTabId(tabId);
 
     // Async
     switch ( request.what ) {
@@ -1385,6 +1388,19 @@ var onMessage = function(request, sender, callback) {
                     ( ) => { domSurveyFinalReport(tabId); },
                     53
                 ));
+            }
+        }
+        break;
+
+    case 'inlinescriptFound':
+        if ( µb.logger.enabled && pageStore !== null ) {
+            const fctxt = µb.filteringContext.duplicate();
+            fctxt.fromTabId(tabId)
+                .setType('inline-script')
+                .setURL(request.docURL)
+                .setDocOriginFromURL(request.docURL);
+            if ( pageStore.filterRequest(fctxt) === 0 ) {
+                fctxt.setRealm('net').toLogger();
             }
         }
         break;
