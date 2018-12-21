@@ -272,13 +272,6 @@ var highlightElements = function(elems, force) {
 
 /******************************************************************************/
 
-// TODO: Investigate why diff'ing these two strings returns an incorrect result:
-//                                                                                                                       |
-//   /articles/5c1a7aae1854f30006cb26f7/lede/1545239527833-shutterstock_726017572-copy.jpeg?crop=0.8889xw%3A0.9988xh%3B0.1089xw%2C0xh&resize=650%3A*&output-quality=55
-//   /articles/5c1aaea91854f30006cb2f1e/lede/1545253629235-shutterstock_1063990172-copy.jpeg?crop=0.7749xw%3A1xh%3B0.0391xw%2C0xh&resize=650%3A*&output-quality=55
-//                                                                                                                   |
-//   This appears to be an issue in the differ, need to investigate it.
-
 const mergeStrings = function(urls) {
     if ( urls.length === 0 ) { return ''; }
     if (
