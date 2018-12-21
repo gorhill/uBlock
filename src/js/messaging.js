@@ -1041,14 +1041,6 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
-    case 'benchmark':
-        response = µb.staticNetFilteringEngine.benchmark(request.contexts);
-        break;
-
-    case 'benchmarkingPane':
-        response = µb.hiddenSettings.benchmarkingPane;
-        break;
-
     case 'canUpdateShortcuts':
         response = µb.canUpdateShortcuts;
         break;
