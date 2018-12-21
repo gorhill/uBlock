@@ -29,7 +29,7 @@ body {
         }
 }
 body > div {
-    margin: 1.5em 0;
+    margin: 0 0 1.5em 0;
     }
 body > div > p,
 body > div > div {
@@ -54,7 +54,6 @@ select {
 .code {
     background-color: rgba(0, 0, 0, 0.1);
     font-family: monospace;
-    font-size: large;
     line-height: 1;
     padding: 4px;
     word-break: break-all;
@@ -64,9 +63,10 @@ select {
     pointer-events: none;
     width: 100%;
     }
-#warningSign > span {
-    color: #f2a500;
+#warningSign > a {
+    fill: #f2a500;
     font-size: 10em;
+    padding: 0;
     }
 #theURL {
     padding: 0;
@@ -128,9 +128,6 @@ body[dir="rtl"] #theURL > p > span {
     }
 #parsed span:first-of-type {
     font-weight: bold;
-    }
-#whyex {
-    font-size: smaller;
     }
 #whyex a {
     white-space: nowrap;
