@@ -559,7 +559,7 @@ var matchBucket = function(url, hostname, bucket, start) {
     vAPI.tabs.injectScript(tabId, {
         frameId: frameId,
         file: '/js/scriptlets/inlinescript-logger.js',
-        runAt: 'document_start'
+        runAt: 'document_end'
     });
 };
 
