@@ -1217,7 +1217,7 @@ var removeAllChildren = function(parent) {
 // TODO: for convenience I could provide a small set of net filters instead
 // of just a single one. Truncating the right-most part of the path etc.
 
-var showDialog = function(options) {
+const showDialog = function(options) {
     pausePicker();
 
     options = options || {};
@@ -1228,7 +1228,7 @@ var showDialog = function(options) {
     dialog.classList.remove('hide');
 
     // Create lists of candidate filters
-    var populate = function(src, des) {
+    const populate = function(src, des) {
         var root = dialog.querySelector(des);
         var ul = root.querySelector('ul');
         removeAllChildren(ul);
@@ -1257,7 +1257,7 @@ var showDialog = function(options) {
         return;
     }
 
-    var filterChoice = {
+    const filterChoice = {
         filters: bestCandidateFilter.filters,
         slot: bestCandidateFilter.slot,
         modifier: options.modifier || false
@@ -1269,10 +1269,10 @@ var showDialog = function(options) {
 
 /******************************************************************************/
 
-var zap = function() {
+const zap = function() {
     if ( targetElements.length === 0 ) { return; }
-    var elem = targetElements[0],
-        style = window.getComputedStyle(elem);
+    let elem = targetElements[0];
+    const style = window.getComputedStyle(elem);
     // Heuristic to detect scroll-locking: remove such lock when detected.
     if ( parseInt(style.zIndex, 10) >= 1000 || style.position === 'fixed' ) {
         document.body.style.setProperty('overflow', 'auto', 'important');
@@ -1433,7 +1433,10 @@ var onSvgClicked = function(ev) {
     if ( filtersFrom(ev.clientX, ev.clientY) === 0 ) {
         return;
     }
-    showDialog({ show: ev.type === 'touch' });
+    showDialog({
+        show: ev.type === 'touch',
+        modifier: ev.ctrlKey
+    });
 };
 
 /******************************************************************************/
