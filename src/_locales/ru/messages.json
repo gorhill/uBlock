@@ -384,7 +384,7 @@
     "description": "English: Privacy"
   },
   "3pGroupMalware": {
-    "message": "Вредоносные программы",
+    "message": "Вредоносные домены",
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {
@@ -854,6 +854,10 @@
   "shortcutCapturePlaceholder": {
     "message": "Введите сочетание",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
+  },
+  "genericMergeViewScrollLock": {
+    "message": "Вкл\/Выкл общую прокрутку",
+    "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "dummy": {
     "message": "Эта запись должна быть последней",

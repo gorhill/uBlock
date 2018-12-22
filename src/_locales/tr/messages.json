@@ -855,6 +855,10 @@
     "message": "Bir kısayol girin",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
+  "genericMergeViewScrollLock": {
+    "message": "Kilitli kaydırmayı aç\/kapa",
+    "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
+  },
   "dummy": {
     "message": "Bu girdi en sonda olmalıdır",
     "description": "so we dont need to deal with comma for last entry"

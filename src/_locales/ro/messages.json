@@ -855,6 +855,10 @@
     "message": "Tastează o comandă rapidă",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
+  "genericMergeViewScrollLock": {
+    "message": "Comutați derularea blocată",
+    "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
+  },
   "dummy": {
     "message": "Aceasta intrare trebuie sa fie ultima",
     "description": "so we dont need to deal with comma for last entry"

@@ -56,7 +56,7 @@
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Klicka för att inaktivera uBlock₀ för den här webbplatsen.\n\nCtrl+klicka för att inaktivera uBlock₀ enbart för den här sidan.",
+    "message": "Klicka för att inaktivera uBlock₀ för hela webbplatsen.\n\nCtrl+klicka för att inaktivera uBlock₀ enbart för den här sidan.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
@@ -184,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "CSS\/bilder från tredjeparter",
+    "message": "CSS\/bilder från tredjepart",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -854,6 +854,10 @@
   "shortcutCapturePlaceholder": {
     "message": "Ange en genväg",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
+  },
+  "genericMergeViewScrollLock": {
+    "message": "Växla rullningslås",
+    "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "dummy": {
     "message": "This entry must be the last one",

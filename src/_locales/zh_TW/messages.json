@@ -36,7 +36,7 @@
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
-    "message": "uBlock₀ — 連線請求記錄工具",
+    "message": "uBlock₀ — 記錄器",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
@@ -96,7 +96,7 @@
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "開啟連線請求記錄工具",
+    "message": "開啟記錄器",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
@@ -552,35 +552,35 @@
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "切換彈出式面板",
+    "message": "開閉彈出式面板",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
-    "message": "uBlock Origin wiki：紀錄程式",
+    "message": "uBlock Origin wiki：記錄器",
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
-    "message": "清除紀錄程式",
+    "message": "清除記錄",
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
-    "message": "暫停紀錄程式（丟棄所有收到的資料）",
+    "message": "暫停記錄（丟棄所有傳入資料）",
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {
-    "message": "恢復紀錄程式",
+    "message": "取消暫停記錄",
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "切換紀錄過濾器",
+    "message": "開閉記錄篩選",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
-    "message": "過濾日誌項目",
+    "message": "篩選記錄條目",
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
-    "message": "紀錄過濾器選項",
+    "message": "記錄篩選設定",
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {
@@ -588,7 +588,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinEventful": {
-    "message": "已處理",
+    "message": "已套用規則",
     "description": "A keyword in the built-in row filtering expression: all items corresponding to uBO doing something (blocked, allowed, redirected, etc.)"
   },
   "loggerRowFiltererBuiltinBlocked": {
@@ -608,7 +608,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "logMaxEntriesTip": {
-    "message": "最大日誌項目數量",
+    "message": "最大記錄條目數量",
     "description": "Tooltip informaing that the input field is to set the maximum number of entries in the log"
   },
   "loggerURLFilteringContextLabel": {
@@ -764,7 +764,7 @@
     "description": "Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
-    "message": "顯示連線請求記錄工具",
+    "message": "顯示記錄器",
     "description": "Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
@@ -854,6 +854,10 @@
   "shortcutCapturePlaceholder": {
     "message": "鍵入快速鍵",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
+  },
+  "genericMergeViewScrollLock": {
+    "message": "Toggle locked scrolling",
+    "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "dummy": {
     "message": "此條目須為最後一個",

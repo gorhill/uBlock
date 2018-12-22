@@ -148,7 +148,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Klicken, um Javascript auf dieser Seite zu deaktivieren",
+    "message": "Klicken, um JavaScript auf dieser Seite zu deaktivieren",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
@@ -854,6 +854,10 @@
   "shortcutCapturePlaceholder": {
     "message": "Tastaturkürzel festlegen",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
+  },
+  "genericMergeViewScrollLock": {
+    "message": "Gesperrten Bildlauf umschalten",
+    "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "dummy": {
     "message": "Dieser Eintrag muss der letzte sein",

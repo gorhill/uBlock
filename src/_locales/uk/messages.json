@@ -855,6 +855,10 @@
     "message": "Уведіть комбінацію",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
+  "genericMergeViewScrollLock": {
+    "message": "Перемкнути замкнуту прокрутку",
+    "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
+  },
   "dummy": {
     "message": "Цей запис має бути останнім",
     "description": "so we dont need to deal with comma for last entry"

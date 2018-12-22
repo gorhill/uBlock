@@ -564,11 +564,11 @@
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
-    "message": "Logboek pauzeren (alle inkomende gegevens negeren)",
+    "message": "Logger pauzeren (alle inkomende gegevens negeren)",
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {
-    "message": "Logboek hervatten",
+    "message": "Logger hervatten",
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
@@ -854,6 +854,10 @@
   "shortcutCapturePlaceholder": {
     "message": "Typ een sneltoets",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
+  },
+  "genericMergeViewScrollLock": {
+    "message": "Toggle locked scrolling",
+    "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "dummy": {
     "message": "This entry must be the last one",
