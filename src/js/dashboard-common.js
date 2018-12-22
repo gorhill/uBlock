@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2018 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -33,28 +33,25 @@ self.uBlockDashboard = self.uBlockDashboard || {};
 //   Remove literal duplicate lines from a set based on another set.
 
 self.uBlockDashboard.mergeNewLines = function(text, newText) {
-    var lineBeg, textEnd, lineEnd;
-    var line, hash, bucket;
-
     // Step 1: build dictionary for existing lines.
-    var fromDict = Object.create(null);
-    lineBeg = 0;
-    textEnd = text.length;
+    const fromDict = Object.create(null);
+    let lineBeg = 0;
+    let textEnd = text.length;
     while ( lineBeg < textEnd ) {
-        lineEnd = text.indexOf('\n', lineBeg);
+        let lineEnd = text.indexOf('\n', lineBeg);
         if ( lineEnd === -1 ) {
             lineEnd = text.indexOf('\r', lineBeg);
             if ( lineEnd === -1 ) {
                 lineEnd = textEnd;
             }
         }
-        line = text.slice(lineBeg, lineEnd).trim();
+        let line = text.slice(lineBeg, lineEnd).trim();
         lineBeg = lineEnd + 1;
         if ( line.length === 0 ) {
             continue;
         }
-        hash = line.slice(0, 8);
-        bucket = fromDict[hash];
+        const hash = line.slice(0, 8);
+        const bucket = fromDict[hash];
         if ( bucket === undefined ) {
             fromDict[hash] = line;
         } else if ( typeof bucket === 'string' ) {
@@ -65,18 +62,18 @@ self.uBlockDashboard.mergeNewLines = function(text, newText) {
     }
 
     // Step 2: use above dictionary to filter out duplicate lines.
-    var out = [ '' ];
+    const out = [ '' ];
     lineBeg = 0;
     textEnd = newText.length;
     while ( lineBeg < textEnd ) {
-        lineEnd = newText.indexOf('\n', lineBeg);
+        let lineEnd = newText.indexOf('\n', lineBeg);
         if ( lineEnd === -1 ) {
             lineEnd = newText.indexOf('\r', lineBeg);
             if ( lineEnd === -1 ) {
                 lineEnd = textEnd;
             }
         }
-        line = newText.slice(lineBeg, lineEnd).trim();
+        let line = newText.slice(lineBeg, lineEnd).trim();
         lineBeg = lineEnd + 1;
         if ( line.length === 0 ) {
             if ( out[out.length - 1] !== '' ) {
@@ -84,7 +81,7 @@ self.uBlockDashboard.mergeNewLines = function(text, newText) {
             }
             continue;
         }
-        bucket = fromDict[line.slice(0, 8)];
+        const bucket = fromDict[line.slice(0, 8)];
         if ( bucket === undefined ) {
             out.push(line);
             continue;
@@ -105,7 +102,7 @@ self.uBlockDashboard.mergeNewLines = function(text, newText) {
 /******************************************************************************/
 
 self.uBlockDashboard.dateNowToSensibleString = function() {
-    var now = new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000);
+    const now = new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000);
     return now.toISOString().replace(/\.\d+Z$/, '')
                             .replace(/:/g, '.')
                             .replace('T', '_');
@@ -114,13 +111,14 @@ self.uBlockDashboard.dateNowToSensibleString = function() {
 /******************************************************************************/
 
 self.uBlockDashboard.patchCodeMirrorEditor = (function() {
-    var grabFocusTimer;
-    var grabFocusTarget;
-    var grabFocus = function() {
+    let grabFocusTimer;
+    let grabFocusTarget;
+
+    const grabFocus = function() {
         grabFocusTarget.focus();
         grabFocusTimer = grabFocusTarget = undefined;
     };
-    var grabFocusAsync = function(cm) {
+    const grabFocusAsync = function(cm) {
         grabFocusTarget = cm;
         if ( grabFocusTimer === undefined ) {
             grabFocusTimer = vAPI.setTimeout(grabFocus, 1);
@@ -128,7 +126,7 @@ self.uBlockDashboard.patchCodeMirrorEditor = (function() {
     };
 
     // https://github.com/gorhill/uBlock/issues/3646
-    var patchSelectAll = function(cm, details) {
+    const patchSelectAll = function(cm, details) {
         var vp = cm.getViewport();
         if ( details.ranges.length !== 1 ) { return; }
         var range = details.ranges[0],
@@ -146,11 +144,11 @@ self.uBlockDashboard.patchCodeMirrorEditor = (function() {
         grabFocusAsync(cm);
     };
 
-    var lastGutterClick = 0;
-    var lastGutterLine = 0;
+    let lastGutterClick = 0;
+    let lastGutterLine = 0;
 
-    var onGutterClicked = function(cm, line) {
-        var delta = Date.now() - lastGutterClick;
+    const onGutterClicked = function(cm, line) {
+        const delta = Date.now() - lastGutterClick;
         if ( delta >= 500 || line !== lastGutterLine ) {
             cm.setSelection(
                 { line: line, ch: 0 },
@@ -169,23 +167,28 @@ self.uBlockDashboard.patchCodeMirrorEditor = (function() {
         grabFocusAsync(cm);
     };
 
-    var resizeTimer,
+    let resizeTimer,
         resizeObserver;
-    var resize = function(cm) {
+    const resize = function(cm) {
         resizeTimer = undefined;
-        var child = document.querySelector('.codeMirrorFillVertical');
+        const child = document.querySelector('.codeMirrorFillVertical');
         if ( child === null ) { return; }
-        var prect = document.documentElement.getBoundingClientRect();
-        var crect = child.getBoundingClientRect();
-        var cssHeight = Math.floor(Math.max(prect.bottom - crect.top, 80)) + 'px';
-        if ( child.style.height !== cssHeight ) {
-            child.style.height = cssHeight;
-            if ( cm instanceof CodeMirror ) {
-                cm.refresh();
-            }
+        const prect = document.documentElement.getBoundingClientRect();
+        const crect = child.getBoundingClientRect();
+        const cssHeight = Math.floor(Math.max(prect.bottom - crect.top, 80)) + 'px';
+        if ( child.style.height === cssHeight ) { return; }
+        child.style.height = cssHeight;
+        // https://github.com/gorhill/uBlock/issues/3694
+        //   Need to call cm.refresh() when resizing occurs. However the
+        //   cursor position may end up outside the viewport, hence we also
+        //   call cm.scrollIntoView() to address this.
+        //   Reference: https://codemirror.net/doc/manual.html#api_sizing
+        if ( cm instanceof CodeMirror ) {
+            cm.refresh();
+            cm.scrollIntoView(null);
         }
     };
-    var resizeAsync = function(cm, delay) {
+    const resizeAsync = function(cm, delay) {
         if ( resizeTimer !== undefined ) { return; }
         resizeTimer = vAPI.setTimeout(
             resize.bind(null, cm),
@@ -195,7 +198,7 @@ self.uBlockDashboard.patchCodeMirrorEditor = (function() {
 
     return function(cm) {
         if ( document.querySelector('.codeMirrorFillVertical') !== null ) {
-            var boundResizeAsync = resizeAsync.bind(null, cm);
+            const boundResizeAsync = resizeAsync.bind(null, cm);
             window.addEventListener('resize', boundResizeAsync);
             resizeObserver = new MutationObserver(boundResizeAsync);
             resizeObserver.observe(document.querySelector('.body'), {
