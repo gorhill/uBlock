@@ -505,10 +505,7 @@ var truncateLog = function(size) {
 /******************************************************************************/
 
 const onLogBufferRead = function(response) {
-    if ( !response || response.unavailable ) {
-        readLogBufferAsync();
-        return;
-    }
+    if ( !response || response.unavailable ) { return; }
 
     // Disable tooltips?
     if (
@@ -565,45 +562,57 @@ const onLogBufferRead = function(response) {
         'disabled',
         tbody.querySelector('tr') === null
     );
-
-    readLogBufferAsync();
 };
 
 /******************************************************************************/
 
-// This can be called only once, at init time. After that, this will be called
-// automatically. If called after init time, this will be messy, and this would
-// require a bit more code to ensure no multi time out events.
+const readLogBuffer = (function() {
+    let timer;
 
-const readLogBuffer = function() {
-    if ( logger.ownerId === undefined ) { return; }
-    const msg = {
-        what: 'readAll',
-        ownerId: logger.ownerId,
-        tabIdsToken: allTabIdsToken,
+    const readLogBufferNow = function() {
+        if ( logger.ownerId === undefined ) { return; }
+
+        const msg = {
+            what: 'readAll',
+            ownerId: logger.ownerId,
+            tabIdsToken: allTabIdsToken,
+        };
+
+        // This is to detect changes in the position or size of the logger
+        // popup window (if in use).
+        if (
+            popupLoggerBox instanceof Object &&
+            (
+                self.screenX !== popupLoggerBox.x ||
+                self.screenY !== popupLoggerBox.y ||
+                self.outerWidth !== popupLoggerBox.w ||
+                self.outerHeight !== popupLoggerBox.h
+            )
+        ) {
+            popupLoggerBox.x = self.screenX;
+            popupLoggerBox.y = self.screenY;
+            popupLoggerBox.w = self.outerWidth;
+            popupLoggerBox.h = self.outerHeight;
+            msg.popupLoggerBoxChanged = true;
+        }
+
+        vAPI.messaging.send('loggerUI', msg, response => {
+            timer = undefined;
+            onLogBufferRead(response);
+            readLogBufferLater();
+        });
     };
-    if (
-        popupLoggerBox instanceof Object &&
-        (
-            self.screenX !== popupLoggerBox.x ||
-            self.screenY !== popupLoggerBox.y ||
-            self.outerWidth !== popupLoggerBox.w ||
-            self.outerHeight !== popupLoggerBox.h
-        )
-    ) {
-        popupLoggerBox.x = self.screenX;
-        popupLoggerBox.y = self.screenY;
-        popupLoggerBox.w = self.outerWidth;
-        popupLoggerBox.h = self.outerHeight;
-        msg.popupLoggerBoxChanged = true;
-    }
-    vAPI.messaging.send('loggerUI', msg, onLogBufferRead);
-};
 
-const readLogBufferAsync = function() {
-    if ( logger.ownerId === undefined ) { return; }
-    vAPI.setTimeout(readLogBuffer, 1200);
-};
+    const readLogBufferLater = function() {
+        if ( timer !== undefined ) { return; }
+        if ( logger.ownerId === undefined ) { return; }
+        timer = vAPI.setTimeout(readLogBufferNow, 1200);
+    };
+
+    readLogBufferNow();
+
+    return readLogBufferLater;
+})();
  
 /******************************************************************************/
 
@@ -1802,7 +1811,7 @@ const grabView = function() {
     if ( logger.ownerId === undefined ) {
         logger.ownerId = Date.now();
     }
-    readLogBufferAsync();
+    readLogBuffer();
 };
 
 const releaseView = function() {
@@ -1820,8 +1829,6 @@ window.addEventListener('pageshow', grabView);
 window.addEventListener('beforeunload', releaseView);
 
 /******************************************************************************/
-
-readLogBuffer();
 
 uDom('#pageSelector').on('change', pageSelectorChanged);
 uDom('#refresh').on('click', reloadTab);
