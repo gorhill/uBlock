@@ -355,9 +355,6 @@ body #netInspector td {
     top: -50%;
     white-space: pre;
 }
-#netInspector tr td:nth-of-type(6) {
-    text-align: right;
-    }
 #netInspector tr.cat_net td:nth-of-type(7) > span > b {
     font-weight: bold;
     }
