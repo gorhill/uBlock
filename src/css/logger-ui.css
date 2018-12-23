@@ -178,6 +178,7 @@ textarea {
     cursor: pointer;
     margin: 0 0.5em 0 0;
     padding: 0.5em;
+    white-space: nowrap;
     }
 #netInspector #filterExprPicker span[data-filtex]:last-of-type {
     margin: 0;
