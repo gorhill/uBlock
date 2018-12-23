@@ -119,9 +119,16 @@
     };
 
     const translateAdguardCSSInjectionFilter = function(suffix) {
-        var matches = /^([^{]+)\{([^}]+)\}$/.exec(suffix);
+        const matches = /^([^{]+)\{([^}]+)\}$/.exec(suffix);
         if ( matches === null ) { return ''; }
-        return matches[1].trim() + ':style(' +  matches[2].trim() + ')';
+        const selector = matches[1].trim();
+        const style = matches[2].trim();
+        // For some reasons, many of Adguard's plain cosmetic filters are
+        // "disguised" as style-based cosmetic filters: convert such filters
+        // to plain cosmetic filters.
+        return /display\s*:\s*none\s*!important;?$/.test(style)
+            ? selector
+            : selector + ':style(' +  style + ')';
     };
 
     const hostnamesFromPrefix = function(s) {
