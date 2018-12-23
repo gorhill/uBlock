@@ -53,6 +53,11 @@ if [ "$1" = all ]; then
     pushd $DES > /dev/null
     zip ../$(basename $DES).xpi -qr *
     popd > /dev/null
+elif [ -n "$1" ]; then
+    echo "*** uBlock0.firefox: Creating versioned package..."
+    pushd $DES > /dev/null
+    zip ../$(basename $DES).xpi -qr * -O ../uBlock0_"$1".firefox.xpi
+    popd > /dev/null
 fi
 
 echo "*** uBlock0.firefox: Package done."

@@ -42,16 +42,6 @@ if not os.path.isfile(version_filepath):
     print('Version file not found.')
     exit(1)
 
-extension_id = 'uBlock0@raymondhill.net'
-tmpdir = tempfile.TemporaryDirectory()
-raw_xpi_filename = 'uBlock0.firefox.xpi'
-raw_xpi_filepath = os.path.join(tmpdir.name, raw_xpi_filename)
-unsigned_xpi_filepath = os.path.join(tmpdir.name, 'uBlock0.firefox.unsigned.xpi')
-signed_xpi_filename = 'uBlock0.firefox.signed.xpi'
-signed_xpi_filepath = os.path.join(tmpdir.name, signed_xpi_filename)
-github_owner = 'gorhill'
-github_repo = 'uBlock'
-
 # We need a version string to work with
 if len(sys.argv) >= 2 and sys.argv[1]:
     tag_version = sys.argv[1]
@@ -68,6 +58,16 @@ if match.group(2):
     if match.group(2) == 'rc':
         revision += 100;
     ext_version += '.' + str(revision)
+
+extension_id = 'uBlock0@raymondhill.net'
+tmpdir = tempfile.TemporaryDirectory()
+raw_xpi_filename = 'uBlock0_' + tag_version + '.firefox.xpi'
+raw_xpi_filepath = os.path.join(tmpdir.name, raw_xpi_filename)
+unsigned_xpi_filepath = os.path.join(tmpdir.name, 'uBlock0.firefox.unsigned.xpi')
+signed_xpi_filename = 'uBlock0_' + tag_version + '.firefox.signed.xpi'
+signed_xpi_filepath = os.path.join(tmpdir.name, signed_xpi_filename)
+github_owner = 'gorhill'
+github_repo = 'uBlock'
 
 # Load/save auth secrets
 # The build directory is excluded from git
