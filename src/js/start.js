@@ -53,6 +53,8 @@ vAPI.app.onShutdown = function() {
 // - Schedule next update operation.
 
 var onAllReady = function() {
+    µb.webRequest.start();
+
     // Ensure that the resources allocated for decompression purpose (likely
     // large buffers) are garbage-collectable immediately after launch.
     // Otherwise I have observed that it may take quite a while before the
@@ -60,7 +62,6 @@ var onAllReady = function() {
     // as possible ensure minimal memory usage baseline.
     µb.lz4Codec.relinquish();
 
-    µb.webRequest.start();
     initializeTabs();
 
     // https://github.com/chrisaljoudi/uBlock/issues/184

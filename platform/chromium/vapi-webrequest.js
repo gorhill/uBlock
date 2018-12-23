@@ -148,3 +148,44 @@
 })();
 
 /******************************************************************************/
+
+// https://github.com/gorhill/uBlock/issues/2067
+//   Experimental: Block everything until uBO is fully ready.
+
+vAPI.net.onBeforeReady = (function() {
+    let pendings;
+
+    const handler = function(details) {
+        if ( pendings === undefined ) { return; }
+        if ( details.tabId < 0 ) { return; }
+
+        pendings.add(details.tabId);
+
+        return { cancel: true };
+    };
+
+    return {
+        experimental: true,
+        start: function() {
+            pendings = new Set();
+            browser.webRequest.onBeforeRequest.addListener(
+                handler,
+                { urls: [ 'http://*/*', 'https://*/*' ] },
+                [ 'blocking' ]
+            );
+        },
+        // https://github.com/gorhill/uBlock/issues/2067
+        //   Force-reload tabs for which network requests were blocked
+        //   during launch. This can happen only if tabs were "suspended".
+        stop: function() {
+            if ( pendings === undefined ) { return; }
+            browser.webRequest.onBeforeRequest.removeListener(handler);
+            for ( const tabId of pendings ) {
+                vAPI.tabs.reload(tabId);
+            }
+            pendings = undefined;
+        },
+    };
+})();
+
+/******************************************************************************/

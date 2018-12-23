@@ -130,3 +130,52 @@
 })();
 
 /******************************************************************************/
+
+// Related issues:
+// - https://github.com/gorhill/uBlock/issues/2067
+// - https://github.com/uBlockOrigin/uBlock-issues/issues/128
+// - https://bugzilla.mozilla.org/show_bug.cgi?id=1503721
+
+vAPI.net.onBeforeReady = (function() {
+    let pendings;
+
+    const handler = function(details) {
+        if ( pendings === undefined ) { return; }
+        if ( details.tabId < 0 ) { return; }
+
+        const pending = {
+            details: Object.assign({}, details),
+            resolve: undefined,
+            promise: undefined
+        };
+
+        pending.promise = new Promise(function(resolve) {
+            pending.resolve = resolve;
+        });
+
+        pendings.push(pending);
+
+        return pending.promise;
+    };
+
+    return {
+        start: function() {
+            pendings = [];
+            browser.webRequest.onBeforeRequest.addListener(
+                handler,
+                { urls: [ 'http://*/*', 'https://*/*' ] },
+                [ 'blocking' ]
+            );
+        },
+        stop: function(resolver) {
+            if ( pendings === undefined ) { return; }
+            for ( const pending of pendings ) {
+                const result = resolver(pending.details);
+                pending.resolve(result);
+            }
+            pendings = undefined;
+        },
+    };
+})();
+
+/******************************************************************************/

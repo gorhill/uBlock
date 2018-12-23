@@ -992,28 +992,17 @@ const strictBlockBypasser = {
 
 return {
     start: (function() {
-        const suspendedTabs = new Set();
-        const onBeforeReady = function(details) {
-            if ( details.type !== 'main_frame' && details.tabId > 0 ) {
-                suspendedTabs.add(details.tabId);
-                console.info('uBO suspend tab %d, block %s', details.tabId, details.url);
-                return { cancel: true };
-            }
-        };
-        // https://github.com/gorhill/uBlock/issues/2067
-        //   Experimental: Block everything until uBO is fully ready.
-        // https://github.com/gorhill/uBlock/issues/3130
-        //   Don't block root frame.
-        if ( µBlock.hiddenSettings.suspendTabsUntilReady ) {
-            vAPI.net.addListener(
-                'onBeforeRequest',
-                onBeforeReady,
-                { urls: [ 'http://*/*', 'https://*/*' ] },
-                [ 'blocking' ]
-            );
+        if (
+            vAPI.net.onBeforeReady instanceof Object &&
+            (
+                vAPI.net.onBeforeReady.experimental !== true ||
+                µBlock.hiddenSettings.suspendTabsUntilReady
+            )
+        ) {
+            vAPI.net.onBeforeReady.start();
         }
+
         return function() {
-            vAPI.net.removeListener('onBeforeRequest', onBeforeReady);
             vAPI.net.addListener(
                 'onBeforeRequest',
                 onBeforeRequest,
@@ -1040,14 +1029,9 @@ return {
                     [ 'blocking', 'requestBody' ]
                 );
             }
-            // https://github.com/gorhill/uBlock/issues/2067
-            //   Force-reload tabs for which network requests were blocked
-            //   during launch. This can happen only if tabs were "suspended".
-            for ( const tabId of suspendedTabs ) {
-                console.info('uBO suspend tab %d, force reload', tabId);
-                vAPI.tabs.reload(tabId);
+            if ( vAPI.net.onBeforeReady instanceof Object ) {
+                vAPI.net.onBeforeReady.stop(onBeforeRequest);
             }
-            suspendedTabs.clear();
         };
     })(),
 
