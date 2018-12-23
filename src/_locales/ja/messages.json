@@ -584,7 +584,7 @@
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {
-    "message": "条件を反転",
+    "message": "否定",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinEventful": {
@@ -856,7 +856,7 @@
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "Toggle locked scrolling",
+    "message": "スクロールを同期する・しない",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "dummy": {

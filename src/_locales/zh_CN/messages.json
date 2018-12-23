@@ -856,7 +856,7 @@
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "切换滚动锁定",
+    "message": "是否启用同步滚动",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "dummy": {
