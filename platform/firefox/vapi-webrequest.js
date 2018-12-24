@@ -170,8 +170,8 @@ vAPI.net.onBeforeReady = (function() {
         stop: function(resolver) {
             if ( pendings === undefined ) { return; }
             for ( const pending of pendings ) {
-                const result = resolver(pending.details);
-                pending.resolve(result);
+                vAPI.net.normalizeDetails(pending.details);
+                pending.resolve(resolver(pending.details));
             }
             pendings = undefined;
         },

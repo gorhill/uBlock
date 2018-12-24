@@ -46,13 +46,11 @@
 
 µBlock.FilteringContext.prototype = {
     fromTabId: function(tabId) {
-        if ( tabId !== -1 || tabId !== this.tabId ) {
-            const tabContext = µBlock.tabContextManager.mustLookup(tabId);
-            this.tabOrigin = tabContext.origin;
-            this.tabHostname = tabContext.rootHostname;
-            this.tabDomain = tabContext.rootDomain;
-            this.tabId = tabId;
-        }
+        const tabContext = µBlock.tabContextManager.mustLookup(tabId);
+        this.tabOrigin = tabContext.origin;
+        this.tabHostname = tabContext.rootHostname;
+        this.tabDomain = tabContext.rootDomain;
+        this.tabId = tabContext.tabId;
         return this;
     },
     fromWebrequestDetails: function(details) {
