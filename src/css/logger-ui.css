@@ -10,9 +10,6 @@ body {
     padding: 0;
     width: 100vw;
     }
-input:focus {
-    background-color: #ffe;
-    }
 textarea {
     box-sizing: border-box;
     direction: ltr;
@@ -127,9 +124,6 @@ textarea {
     }
 #netInspector #filterInput > input {
     min-width: 18em;
-    }
-#netInspector #filterInput.bad > input {
-    background-color: #fee;
     }
 #netInspector #maxEntries {
     margin: 0 2em;
