@@ -132,7 +132,7 @@
 /******************************************************************************/
 
 // Related issues:
-// - https://github.com/gorhill/uBlock/issues/2067
+// - https://github.com/gorhill/uBlock/issues/1327
 // - https://github.com/uBlockOrigin/uBlock-issues/issues/128
 // - https://bugzilla.mozilla.org/show_bug.cgi?id=1503721
 
