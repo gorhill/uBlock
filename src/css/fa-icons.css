@@ -48,6 +48,9 @@
 .fa-icon > .fa-icon_code {
     width: calc(1em * 1830 / 1792);
     }
+.fa-icon > .fa-icon_exclamation-triangle {
+    width: calc(1em * 1794 / 1792);
+    }
 .fa-icon > .fa-icon_eye-dropper,
 .fa-icon > .fa-icon_eye-slash,
 .fa-icon > .fa-icon_files-o,
