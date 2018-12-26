@@ -167,6 +167,7 @@
                 'matches-css-after',
                 'matches-css-before',
                 'not',
+                'watch-attrs',
                 'xpath'
                 ].join('|'),
             ')\\('
@@ -235,6 +236,23 @@
             }
         };
 
+        const compileSpathExpression = function(s) {
+            if ( isValidCSSSelector('*' + s) ) {
+                return s;
+            }
+        };
+
+        const compileAttrList = function(s) {
+            const attrs = s.split('\s*,\s*');
+            const out = [];
+            for ( const attr of attrs ) {
+                if ( attr !== '' ) {
+                    out.push(attr);
+                }
+            }
+            return out;
+        };
+
         const compileXpathExpression = function(s) {
             try {
                 document.createExpression(s, null);
@@ -260,6 +278,8 @@
             [ ':matches-css-after', compileCSSDeclaration ],
             [ ':matches-css-before', compileCSSDeclaration ],
             [ ':not', compileNotSelector ],
+            [ ':spath', compileSpathExpression ],
+            [ ':watch-attrs', compileAttrList ],
             [ ':xpath', compileXpathExpression ]
         ]);
 
@@ -277,10 +297,11 @@
             }
             const raw = [ compiled.selector ];
             let value;
-            for ( let task of tasks ) {
+            for ( const task of tasks ) {
                 switch ( task[0] ) {
-                case ':xpath':
-                    raw.push(task[0], '(', task[1], ')');
+                case ':has':
+                case ':if':
+                    raw.push(':has', '(', decompile(task[1]), ')');
                     break;
                 case ':has-text':
                     if ( Array.isArray(task[1]) ) {
@@ -306,13 +327,14 @@
                     }
                     raw.push(task[0], '(', task[1].name, ': ', value, ')');
                     break;
-                case ':has':
-                case ':if':
-                    raw.push(':has', '(', decompile(task[1]), ')');
-                    break;
-                case ':if-not':
                 case ':not':
+                case ':if-not':
                     raw.push(':not', '(', decompile(task[1]), ')');
+                    break;
+                case ':spath':
+                case ':watch-attrs':
+                case ':xpath':
+                    raw.push(task[0], '(', task[1], ')');
                     break;
                 }
             }
@@ -364,13 +386,7 @@
                 //   then consider it to be part of the prefix. If there is
                 //   at least one task present, then we fail, as we do not
                 //   support suffix CSS selectors.
-                // TODO: AdGuard does support suffix CSS selectors, so
-                //       supporting this would increase compatibility with
-                //       AdGuard filter lists.
-                if ( isValidCSSSelector(raw.slice(opNameBeg, i)) ) {
-                    if ( opPrefixBeg !== 0 ) { return; }
-                    continue;
-                }
+                if ( isValidCSSSelector(raw.slice(opNameBeg, i)) ) { continue; }
                 // Extract and remember operator details.
                 let operator = raw.slice(opNameBeg, opNameEnd);
                 operator = normalizedOperators.get(operator) || operator;
@@ -380,7 +396,11 @@
                 if ( opPrefixBeg === 0 ) {
                     prefix = raw.slice(0, opNameBeg);
                 } else if ( opNameBeg !== opPrefixBeg ) {
-                    return;
+                    const spath = compileSpathExpression(
+                        raw.slice(opPrefixBeg, opNameBeg)
+                    );
+                    if ( spath === undefined ) { return; }
+                    tasks.push([ ':spath', spath ]);
                 }
                 tasks.push([ operator, args ]);
                 opPrefixBeg = i;
@@ -392,7 +412,9 @@
                 prefix = raw;
                 tasks = undefined;
             } else if ( opPrefixBeg < n ) {
-                return;
+                const spath = compileSpathExpression(raw.slice(opPrefixBeg));
+                if ( spath === undefined ) { return; }
+                tasks.push([ ':spath', spath ]);
             }
             // https://github.com/NanoAdblocker/NanoCore/issues/1#issuecomment-354394894
             if ( prefix !== '' ) {
@@ -407,7 +429,7 @@
                 return lastProceduralSelectorCompiled;
             }
             lastProceduralSelector = raw;
-            var compiled = compile(raw);
+            let compiled = compile(raw);
             if ( compiled !== undefined ) {
                 compiled.raw = decompile(compiled);
                 compiled = JSON.stringify(compiled);

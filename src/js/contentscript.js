@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2018 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -105,7 +105,8 @@
 //   https://github.com/chrisaljoudi/uBlock/issues/456
 //   https://github.com/gorhill/uBlock/issues/2029
 
-if ( typeof vAPI === 'object' && !vAPI.contentScript ) { // >>>>>>>> start of HUGE-IF-BLOCK
+ // >>>>>>>> start of HUGE-IF-BLOCK
+if ( typeof vAPI === 'object' && !vAPI.contentScript ) {
 
 /******************************************************************************/
 /******************************************************************************/
@@ -178,28 +179,28 @@ vAPI.SafeAnimationFrame.prototype = {
 
 vAPI.domWatcher = (function() {
 
-    var addedNodeLists = [],
-        addedNodes = [],
-        domIsReady = false,
+    const addedNodeLists = [];
+    const removedNodeLists = [];
+    const addedNodes = [];
+    const ignoreTags = new Set([ 'br', 'head', 'link', 'meta', 'script', 'style' ]);
+    const listeners = [];
+
+    let domIsReady = false,
         domLayoutObserver,
-        ignoreTags = new Set([ 'br', 'head', 'link', 'meta', 'script', 'style' ]),
-        listeners = [],
         listenerIterator = [], listenerIteratorDirty = false,
-        removedNodeLists = [],
         removedNodes = false,
         safeObserverHandlerTimer;
 
-    var safeObserverHandler = function() {
+    const safeObserverHandler = function() {
         //console.time('dom watcher/safe observer handler');
         safeObserverHandlerTimer.clear();
-        var i = addedNodeLists.length,
-            j = addedNodes.length,
-            nodeList, iNode, node;
+        let i = addedNodeLists.length,
+            j = addedNodes.length;
         while ( i-- ) {
-            nodeList = addedNodeLists[i];
-            iNode = nodeList.length;
+            const nodeList = addedNodeLists[i];
+            let iNode = nodeList.length;
             while ( iNode-- ) {
-                node = nodeList[iNode];
+                const node = nodeList[iNode];
                 if ( node.nodeType !== 1 ) { continue; }
                 if ( ignoreTags.has(node.localName) ) { continue; }
                 if ( node.parentElement === null ) { continue; }
@@ -209,8 +210,8 @@ vAPI.domWatcher = (function() {
         addedNodeLists.length = 0;
         i = removedNodeLists.length;
         while ( i-- && removedNodes === false ) {
-            nodeList = removedNodeLists[i];
-            iNode = nodeList.length;
+            const nodeList = removedNodeLists[i];
+            let iNode = nodeList.length;
             while ( iNode-- ) {
                 if ( nodeList[iNode].nodeType !== 1 ) { continue; }
                 removedNodes = true;
@@ -220,7 +221,7 @@ vAPI.domWatcher = (function() {
         removedNodeLists.length = 0;
         //console.timeEnd('dom watcher/safe observer handler');
         if ( addedNodes.length === 0 && removedNodes === false ) { return; }
-        for ( var listener of getListenerIterator() ) {
+        for ( const listener of getListenerIterator() ) {
             listener.onDOMChanged(addedNodes, removedNodes);
         }
         addedNodes.length = 0;
@@ -229,17 +230,15 @@ vAPI.domWatcher = (function() {
 
     // https://github.com/chrisaljoudi/uBlock/issues/205
     // Do not handle added node directly from within mutation observer.
-    var observerHandler = function(mutations) {
+    const observerHandler = function(mutations) {
         //console.time('dom watcher/observer handler');
-        var nodeList, mutation,
-            i = mutations.length;
+        let i = mutations.length;
         while ( i-- ) {
-            mutation = mutations[i];
-            nodeList = mutation.addedNodes;
+            const mutation = mutations[i];
+            let nodeList = mutation.addedNodes;
             if ( nodeList.length !== 0 ) {
                 addedNodeLists.push(nodeList);
             }
-            if ( removedNodes ) { continue; }
             nodeList = mutation.removedNodes;
             if ( nodeList.length !== 0 ) {
                 removedNodeLists.push(nodeList);
@@ -253,7 +252,7 @@ vAPI.domWatcher = (function() {
         //console.timeEnd('dom watcher/observer handler');
     };
 
-    var startMutationObserver = function() {
+    const startMutationObserver = function() {
         if ( domLayoutObserver !== undefined || !domIsReady ) { return; }
         domLayoutObserver = new MutationObserver(observerHandler);
         domLayoutObserver.observe(document.documentElement, {
@@ -266,13 +265,13 @@ vAPI.domWatcher = (function() {
         vAPI.shutdown.add(cleanup);
     };
 
-    var stopMutationObserver = function() {
+    const stopMutationObserver = function() {
         if ( domLayoutObserver === undefined ) { return; }
         cleanup();
         vAPI.shutdown.remove(cleanup);
     };
 
-    var getListenerIterator = function() {
+    const getListenerIterator = function() {
         if ( listenerIteratorDirty ) {
             listenerIterator = listeners.slice();
             listenerIteratorDirty = false;
@@ -280,7 +279,7 @@ vAPI.domWatcher = (function() {
         return listenerIterator;
     };
 
-    var addListener = function(listener) {
+    const addListener = function(listener) {
         if ( listeners.indexOf(listener) !== -1 ) { return; }
         listeners.push(listener);
         listenerIteratorDirty = true;
@@ -289,8 +288,8 @@ vAPI.domWatcher = (function() {
         startMutationObserver();
     };
 
-    var removeListener = function(listener) {
-        var pos = listeners.indexOf(listener);
+    const removeListener = function(listener) {
+        const pos = listeners.indexOf(listener);
         if ( pos === -1 ) { return; }
         listeners.splice(pos, 1);
         listenerIteratorDirty = true;
@@ -299,7 +298,7 @@ vAPI.domWatcher = (function() {
         }
     };
 
-    var cleanup = function() {
+    const cleanup = function() {
         if ( domLayoutObserver !== undefined ) {
             domLayoutObserver.disconnect();
             domLayoutObserver = null;
@@ -310,19 +309,15 @@ vAPI.domWatcher = (function() {
         }
     };
 
-    var start = function() {
+    const start = function() {
         domIsReady = true;
-        for ( var listener of getListenerIterator() ) {
+        for ( const listener of getListenerIterator() ) {
             listener.onDOMCreated();
         }
         startMutationObserver();
     };
 
-    return {
-        start: start,
-        addListener: addListener,
-        removeListener: removeListener
-    };
+    return { start, addListener, removeListener };
 })();
 
 /******************************************************************************/
@@ -330,7 +325,7 @@ vAPI.domWatcher = (function() {
 /******************************************************************************/
 
 vAPI.matchesProp = (function() {
-    var docElem = document.documentElement;
+    const docElem = document.documentElement;
     if ( typeof docElem.matches !== 'function' ) {
         if ( typeof docElem.mozMatchesSelector === 'function' ) {
             return 'mozMatchesSelector';
@@ -454,6 +449,63 @@ vAPI.DOMFilterer = (function() {
     PSelectorMatchesCSSBeforeTask.prototype = Object.create(PSelectorMatchesCSSTask.prototype);
     PSelectorMatchesCSSBeforeTask.prototype.constructor = PSelectorMatchesCSSBeforeTask;
 
+    const PSelectorSpathTask = function(task) {
+        this.spath = task[1];
+    };
+    PSelectorSpathTask.prototype.exec = function(input) {
+        const output = [];
+        for ( let node of input ) {
+            const parent = node.parentElement;
+            if ( parent === null ) { continue; }
+            let pos = 1;
+            for (;;) {
+                node = node.previousElementSibling;
+                if ( node === null ) { break; }
+                pos += 1;
+            }
+            const nodes = parent.querySelectorAll(
+                ':scope > :nth-child(' + pos + ')' + this.spath
+            );
+            for ( const node of nodes ) {
+                output.push(node);
+            }
+        }
+        return output;
+    };
+
+    const PSelectorWatchAttrs = function(task) {
+        this.observer = null;
+        this.observed = new WeakSet();
+        this.observerOptions = {
+            attributes: true,
+            subtree: true,
+        };
+        const attrs = task[1];
+        if ( Array.isArray(attrs) && attrs.length !== 0 ) {
+            this.observerOptions.attributeFilter = task[1];
+        }
+    };
+    // TODO: Is it worth trying to re-apply only the current selector?
+    PSelectorWatchAttrs.prototype.handler = function() {
+        const filterer =
+            vAPI.domFilterer && vAPI.domFilterer.proceduralFilterer;
+        if ( filterer instanceof Object ) {
+            filterer.onDOMChanged([ null ]);
+        }
+    };
+    PSelectorWatchAttrs.prototype.exec = function(input) {
+        if ( input.length === 0 ) { return input; }
+        if ( this.observer === null ) {
+            this.observer = new MutationObserver(this.handler);
+        }
+        for ( const node of input ) {
+            if ( this.observed.has(node) ) { continue; }
+            this.observer.observe(node, this.observerOptions);
+            this.observed.add(node);
+        }
+        return input;
+    };
+
     const PSelectorXpathTask = function(task) {
         this.xpe = document.createExpression(task[1], null);
         this.xpr = null;
@@ -488,7 +540,9 @@ vAPI.DOMFilterer = (function() {
                 [ ':matches-css-after', PSelectorMatchesCSSAfterTask ],
                 [ ':matches-css-before', PSelectorMatchesCSSBeforeTask ],
                 [ ':not', PSelectorIfNotTask ],
-                [ ':xpath', PSelectorXpathTask ]
+                [ ':spath', PSelectorSpathTask ],
+                [ ':watch-attrs', PSelectorWatchAttrs ],
+                [ ':xpath', PSelectorXpathTask ],
             ]);
         }
         this.budget = 200; // I arbitrary picked a 1/5 second
@@ -618,10 +672,9 @@ vAPI.DOMFilterer = (function() {
                     pselector.budget = -0x7FFFFFFF;
                 }
                 t0 = t1;
-                let i = nodes.length;
-                while ( i-- ) {
-                    this.domFilterer.hideNode(nodes[i]);
-                    this.hiddenNodes.add(nodes[i]);
+                for ( const node of nodes ) {
+                    this.domFilterer.hideNode(node);
+                    this.hiddenNodes.add(node);
                 }
             }
 
@@ -720,33 +773,34 @@ vAPI.domFilterer = new vAPI.DOMFilterer();
 /******************************************************************************/
 
 vAPI.domCollapser = (function() {
-    var resquestIdGenerator = 1,
-        processTimer,
-        toProcess = [],
-        toFilter = [],
-        toCollapse = new Map(),
-        cachedBlockedSet,
-        cachedBlockedSetHash,
-        cachedBlockedSetTimer;
-    var src1stProps = {
-        'embed': 'src',
-        'iframe': 'src',
-        'img': 'src',
-        'object': 'data'
+    const messaging = vAPI.messaging;
+    const toProcess = [];
+    const toFilter = [];
+    const toCollapse = new Map();
+    const src1stProps = {
+        embed: 'src',
+        iframe: 'src',
+        img: 'src',
+        object: 'data'
     };
-    var src2ndProps = {
-        'img': 'srcset'
+    const src2ndProps = {
+        img: 'srcset'
     };
-    var tagToTypeMap = {
+    const tagToTypeMap = {
         embed: 'object',
         iframe: 'sub_frame',
         img: 'image',
         object: 'object'
     };
-    var netSelectorCacheCount = 0,
-        messaging = vAPI.messaging;
 
-    var cachedBlockedSetClear = function() {
+    let resquestIdGenerator = 1,
+        processTimer,
+        cachedBlockedSet,
+        cachedBlockedSetHash,
+        cachedBlockedSetTimer,
+        netSelectorCacheCount = 0;
+
+    const cachedBlockedSetClear = function() {
         cachedBlockedSet =
         cachedBlockedSetHash =
         cachedBlockedSetTimer = undefined;
@@ -754,13 +808,13 @@ vAPI.domCollapser = (function() {
 
     // https://github.com/chrisaljoudi/uBlock/issues/174
     //   Do not remove fragment from src URL
-    var onProcessed = function(response) {
+    const onProcessed = function(response) {
         if ( !response ) { // This happens if uBO is disabled or restarted.
             toCollapse.clear();
             return;
         }
 
-        var targets = toCollapse.get(response.id);
+        const targets = toCollapse.get(response.id);
         if ( targets === undefined ) { return; }
         toCollapse.delete(response.id);
         if ( cachedBlockedSetHash !== response.hash ) {
@@ -774,16 +828,15 @@ vAPI.domCollapser = (function() {
         if ( cachedBlockedSet === undefined || cachedBlockedSet.size === 0 ) {
             return;
         }
-        var selectors = [],
-            iframeLoadEventPatch = vAPI.iframeLoadEventPatch,
-            netSelectorCacheCountMax = response.netSelectorCacheCountMax,
-            tag, prop, src, value;
+        const selectors = [];
+        const iframeLoadEventPatch = vAPI.iframeLoadEventPatch;
+        let netSelectorCacheCountMax = response.netSelectorCacheCountMax;
 
-        for ( var target of targets ) {
-            tag = target.localName;
-            prop = src1stProps[tag];
+        for ( const target of targets ) {
+            const tag = target.localName;
+            let prop = src1stProps[tag];
             if ( prop === undefined ) { continue; }
-            src = target[prop];
+            let src = target[prop];
             if ( typeof src !== 'string' || src.length === 0 ) {
                 prop = src2ndProps[tag];
                 if ( prop === undefined ) { continue; }
@@ -799,12 +852,12 @@ vAPI.domCollapser = (function() {
             target.hidden = true;
             // https://github.com/chrisaljoudi/uBlock/issues/1048
             // Use attribute to construct CSS rule
-            if (
-                netSelectorCacheCount <= netSelectorCacheCountMax &&
-                (value = target.getAttribute(prop))
-            ) {
-                selectors.push(tag + '[' + prop + '="' + value + '"]');
-                netSelectorCacheCount += 1;
+            if ( netSelectorCacheCount <= netSelectorCacheCountMax ) {
+                const value = target.getAttribute(prop);
+                if ( value ) {
+                    selectors.push(tag + '[' + prop + '="' + value + '"]');
+                    netSelectorCacheCount += 1;
+                }
             }
             if ( iframeLoadEventPatch !== undefined ) {
                 iframeLoadEventPatch(target);
@@ -824,10 +877,10 @@ vAPI.domCollapser = (function() {
         }
     };
 
-    var send = function() {
+    const send = function() {
         processTimer = undefined;
         toCollapse.set(resquestIdGenerator, toProcess);
-        var msg = {
+        const msg = {
             what: 'getCollapsibleBlockedRequests',
             id: resquestIdGenerator,
             frameURL: window.location.href,
@@ -835,12 +888,12 @@ vAPI.domCollapser = (function() {
             hash: cachedBlockedSetHash
         };
         messaging.send('contentscript', msg, onProcessed);
-        toProcess = [];
-        toFilter = [];
+        toProcess.length = 0;
+        toFilter.length = 0;
         resquestIdGenerator += 1;
     };
 
-    var process = function(delay) {
+    const process = function(delay) {
         if ( toProcess.length === 0 ) { return; }
         if ( delay === 0 ) {
             if ( processTimer !== undefined ) {
@@ -852,26 +905,24 @@ vAPI.domCollapser = (function() {
         }
     };
 
-    var add = function(target) {
+    const add = function(target) {
         toProcess[toProcess.length] = target;
     };
 
-    var addMany = function(targets) {
-        var i = targets.length;
-        while ( i-- ) {
-            add(targets[i]);
+    const addMany = function(targets) {
+        for ( const target of targets ) {
+            add(target);
         }
     };
 
-    var iframeSourceModified = function(mutations) {
-        var i = mutations.length;
-        while ( i-- ) {
-            addIFrame(mutations[i].target, true);
+    const iframeSourceModified = function(mutations) {
+        for ( const mutation of mutations ) {
+            addIFrame(mutation.target, true);
         }
         process();
     };
-    var iframeSourceObserver = new MutationObserver(iframeSourceModified);
-    var iframeSourceObserverOptions = {
+    const iframeSourceObserver = new MutationObserver(iframeSourceModified);
+    const iframeSourceObserverOptions = {
         attributes: true,
         attributeFilter: [ 'src' ]
     };
@@ -880,7 +931,7 @@ vAPI.domCollapser = (function() {
     // document, from within `bootstrapPhase1`, and which scriptlets are
     // selectively looked-up from:
     // https://github.com/uBlockOrigin/uAssets/blob/master/filters/resources.txt
-    var primeLocalIFrame = function(iframe) {
+    const primeLocalIFrame = function(iframe) {
         if ( vAPI.injectedScripts ) {
             vAPI.injectScriptlet(iframe.contentDocument, vAPI.injectedScripts);
         }
@@ -888,11 +939,11 @@ vAPI.domCollapser = (function() {
 
     // https://github.com/gorhill/uBlock/issues/162
     // Be prepared to deal with possible change of src attribute.
-    var addIFrame = function(iframe, dontObserve) {
+    const addIFrame = function(iframe, dontObserve) {
         if ( dontObserve !== true ) {
             iframeSourceObserver.observe(iframe, iframeSourceObserverOptions);
         }
-        var src = iframe.src;
+        const src = iframe.src;
         if ( src === '' || typeof src !== 'string' ) {
             primeLocalIFrame(iframe);
             return;
@@ -905,21 +956,20 @@ vAPI.domCollapser = (function() {
         add(iframe);
     };
 
-    var addIFrames = function(iframes) {
-        var i = iframes.length;
-        while ( i-- ) {
-            addIFrame(iframes[i]);
+    const addIFrames = function(iframes) {
+        for ( const iframe of iframes ) {
+            addIFrame(iframe);
         }
     };
 
-    var onResourceFailed = function(ev) {
+    const onResourceFailed = function(ev) {
         if ( tagToTypeMap[ev.target.localName] !== undefined ) {
             add(ev.target);
             process();
         }
     };
 
-    var domWatcherInterface = {
+    const domWatcherInterface = {
         onDOMCreated: function() {
             if ( vAPI instanceof Object === false ) { return; }
             if ( vAPI.domCollapser instanceof Object === false ) {
@@ -935,10 +985,9 @@ vAPI.domCollapser = (function() {
             // https://github.com/chrisaljoudi/uBlock/issues/7
             // Preferring getElementsByTagName over querySelectorAll:
             //   http://jsperf.com/queryselectorall-vs-getelementsbytagname/145
-            var elems = document.images || document.getElementsByTagName('img'),
-                i = elems.length, elem;
-            while ( i-- ) {
-                elem = elems[i];
+            const elems = document.images ||
+                          document.getElementsByTagName('img');
+            for ( const elem of elems ) {
                 if ( elem.complete ) {
                     add(elem);
                 }
@@ -958,15 +1007,13 @@ vAPI.domCollapser = (function() {
             });
         },
         onDOMChanged: function(addedNodes) {
-            var ni = addedNodes.length;
-            if ( ni === 0 ) { return; }
-            for ( var i = 0, node; i < ni; i++ ) {
-                node = addedNodes[i];
+            if ( addedNodes.length === 0 ) { return; }
+            for ( const node of addedNodes ) {
                 if ( node.localName === 'iframe' ) {
                     addIFrame(node);
                 }
                 if ( node.childElementCount === 0 ) { continue; }
-                var iframes = node.getElementsByTagName('iframe');
+                const iframes = node.getElementsByTagName('iframe');
                 if ( iframes.length !== 0 ) {
                     addIFrames(iframes);
                 }
@@ -979,13 +1026,7 @@ vAPI.domCollapser = (function() {
         vAPI.domWatcher.addListener(domWatcherInterface);
     }
 
-    return {
-        add: add,
-        addMany: addMany,
-        addIFrame: addIFrame,
-        addIFrames: addIFrames,
-        process: process
-    };
+    return { add, addMany, addIFrame, addIFrames, process };
 })();
 
 /******************************************************************************/
@@ -993,13 +1034,14 @@ vAPI.domCollapser = (function() {
 /******************************************************************************/
 
 vAPI.domSurveyor = (function() {
-    var messaging = vAPI.messaging,
-        domFilterer,
+    const messaging = vAPI.messaging;
+    const queriedIds = new Set();
+    const queriedClasses = new Set();
+    const pendingIdNodes = { nodes: [], added: [] };
+    const pendingClassNodes = { nodes: [], added: [] };
+
+    let domFilterer,
         hostname = '',
-        queriedIds = new Set(),
-        queriedClasses = new Set(),
-        pendingIdNodes = { nodes: [], added: [] },
-        pendingClassNodes = { nodes: [], added: [] },
         surveyCost = 0;
 
     // This is to shutdown the surveyor if result of surveying keeps being
@@ -1007,17 +1049,17 @@ vAPI.domSurveyor = (function() {
     // picked 5 minutes before the surveyor is allowed to shutdown. I also
     // arbitrarily picked 256 misses before the surveyor is allowed to
     // shutdown.
-    var canShutdownAfter = Date.now() + 300000,
+    let canShutdownAfter = Date.now() + 300000,
         surveyingMissCount = 0;
 
     // Handle main process' response.
 
-    var surveyPhase3 = function(response) {
-        var result = response && response.result,
-            mustCommit = false;
+    const surveyPhase3 = function(response) {
+        const result = response && response.result;
+        let mustCommit = false;
 
         if ( result ) {
-            var selectors = result.simple;
+            let selectors = result.simple;
             if ( Array.isArray(selectors) && selectors.length !== 0 ) {
                 domFilterer.addCSSRule(
                     selectors,
@@ -1068,19 +1110,14 @@ vAPI.domSurveyor = (function() {
         vAPI.domSurveyor = null;
     };
 
-    var surveyTimer = new vAPI.SafeAnimationFrame(function() {
-        surveyPhase1();
-    });
-
     // The purpose of "chunkification" is to ensure the surveyor won't unduly
     // block the main event loop.
 
-    var hasChunk = function(pending) {
-        return pending.nodes.length !== 0 ||
-               pending.added.length !== 0;
+    const hasChunk = function(pending) {
+        return pending.nodes.length !== 0 || pending.added.length !== 0;
     };
 
-    var addChunk = function(pending, added) {
+    const addChunk = function(pending, added) {
         if ( added.length === 0 ) { return; }
         if (
             Array.isArray(added) === false ||
@@ -1094,8 +1131,8 @@ vAPI.domSurveyor = (function() {
         }
     };
 
-    var nextChunk = function(pending) {
-        var added = pending.added.length !== 0 ? pending.added.shift() : [],
+    const nextChunk = function(pending) {
+        let added = pending.added.length !== 0 ? pending.added.shift() : [],
             nodes;
         if ( pending.nodes.length === 0 ) {
             if ( added.length <= 1000 ) { return added; }
@@ -1121,39 +1158,39 @@ vAPI.domSurveyor = (function() {
     // Extract all classes/ids: these will be passed to the cosmetic
     // filtering engine, and in return we will obtain only the relevant
     // CSS selectors.
+    const reWhitespace = /\s/;
 
     // https://github.com/gorhill/uBlock/issues/672
     // http://www.w3.org/TR/2014/REC-html5-20141028/infrastructure.html#space-separated-tokens
     // http://jsperf.com/enumerate-classes/6
 
-    var surveyPhase1 = function() {
+    const surveyPhase1 = function() {
         //console.time('dom surveyor/surveying');
         surveyTimer.clear();
-        var t0 = window.performance.now();
-        var rews = reWhitespace,
-            qq, iout, nodes, i, node, v, vv, j;
-        var ids = [];
-        iout = 0;
-        qq = queriedIds;
-        nodes = nextChunk(pendingIdNodes);
-        i = nodes.length;
+        const t0 = window.performance.now();
+        const rews = reWhitespace;
+        const ids = [];
+        let iout = 0;
+        let qq = queriedIds;
+        let nodes = nextChunk(pendingIdNodes);
+        let i = nodes.length;
         while ( i-- ) {
-            node = nodes[i];
-            v = node.id;
+            const node = nodes[i];
+            let v = node.id;
             if ( typeof v !== 'string' ) { continue; }
             v = v.trim();
             if ( qq.has(v) === false && v.length !== 0 ) {
                 ids[iout++] = v; qq.add(v);
             }
         }
-        var classes = [];
+        const classes = [];
         iout = 0;
         qq = queriedClasses;
         nodes = nextChunk(pendingClassNodes);
         i = nodes.length;
         while ( i-- ) {
-            node = nodes[i];
-            vv = node.className;
+            const node = nodes[i];
+            let vv = node.className;
             if ( typeof vv !== 'string' ) { continue; }
             if ( rews.test(vv) === false ) {
                 if ( qq.has(vv) === false && vv.length !== 0 ) {
@@ -1161,9 +1198,9 @@ vAPI.domSurveyor = (function() {
                 }
             } else {
                 vv = node.classList;
-                j = vv.length;
+                let j = vv.length;
                 while ( j-- ) {
-                    v = vv[j];
+                    let v = vv[j];
                     if ( qq.has(v) === false ) {
                         classes[iout++] = v; qq.add(v);
                     }
@@ -1190,9 +1227,10 @@ vAPI.domSurveyor = (function() {
         }
         //console.timeEnd('dom surveyor/surveying');
     };
-    var reWhitespace = /\s/;
 
-    var domWatcherInterface = {
+    const surveyTimer = new vAPI.SafeAnimationFrame(surveyPhase1);
+
+    const domWatcherInterface = {
         onDOMCreated: function() {
             if (
                 vAPI instanceof Object === false ||
@@ -1217,17 +1255,18 @@ vAPI.domSurveyor = (function() {
         onDOMChanged: function(addedNodes) {
             if ( addedNodes.length === 0 ) { return; }
             //console.time('dom surveyor/dom layout changed');
-            var idNodes = [], iid = 0,
-                classNodes = [], iclass = 0;
-            var i = addedNodes.length,
-                node, nodeList, j;
+            const idNodes = [];
+            let iid = 0;
+            const classNodes = [];
+            let iclass = 0;
+            let i = addedNodes.length;
             while ( i-- ) {
-                node = addedNodes[i];
+                const node = addedNodes[i];
                 idNodes[iid++] = node;
                 classNodes[iclass++] = node;
                 if ( node.childElementCount === 0 ) { continue; }
-                nodeList = node.querySelectorAll('[id]');
-                j = nodeList.length;
+                let nodeList = node.querySelectorAll('[id]');
+                let j = nodeList.length;
                 while ( j-- ) {
                     idNodes[iid++] = nodeList[j];
                 }
@@ -1246,15 +1285,13 @@ vAPI.domSurveyor = (function() {
         }
     };
 
-    var start = function(details) {
+    const start = function(details) {
         if ( vAPI.domWatcher instanceof Object === false ) { return; }
         hostname = details.hostname;
         vAPI.domWatcher.addListener(domWatcherInterface);
     };
 
-    return {
-        start: start
-    };
+    return { start };
 })();
 
 /******************************************************************************/
@@ -1266,18 +1303,11 @@ vAPI.domSurveyor = (function() {
 
 (function bootstrap() {
 
-    var bootstrapPhase2 = function(ev) {
+    const bootstrapPhase2 = function() {
         // This can happen on Firefox. For instance:
         // https://github.com/gorhill/uBlock/issues/1893
         if ( window.location === null ) { return; }
-
-        if ( ev ) {
-            document.removeEventListener('DOMContentLoaded', bootstrapPhase2);
-        }
-
-        if ( vAPI instanceof Object === false ) {
-            return;
-        }
+        if ( vAPI instanceof Object === false ) { return; }
 
         vAPI.messaging.send(
             'contentscript',
@@ -1303,8 +1333,8 @@ vAPI.domSurveyor = (function() {
         // as nuisance popups.
         // Ref.: https://developer.mozilla.org/en-US/docs/Web/Events/contextmenu
 
-        var onMouseClick = function(ev) {
-            var elem = ev.target;
+        const onMouseClick = function(ev) {
+            let elem = ev.target;
             while ( elem !== null && elem.localName !== 'a' ) {
                 elem = elem.parentElement;
             }
@@ -1327,9 +1357,9 @@ vAPI.domSurveyor = (function() {
         });
     };
 
-    var bootstrapPhase1 = function(response) {
+    const bootstrapPhase1 = function(response) {
         // cosmetic filtering engine aka 'cfe'
-        var cfeDetails = response && response.specificCosmeticFilters;
+        const cfeDetails = response && response.specificCosmeticFilters;
         if ( !cfeDetails || !cfeDetails.ready ) {
             vAPI.domWatcher = vAPI.domCollapser = vAPI.domFilterer =
             vAPI.domSurveyor = vAPI.domIsLoaded = null;
@@ -1340,7 +1370,7 @@ vAPI.domSurveyor = (function() {
             vAPI.domFilterer = null;
             vAPI.domSurveyor = null;
         } else {
-            var domFilterer = vAPI.domFilterer;
+            const domFilterer = vAPI.domFilterer;
             if ( response.noGenericCosmeticFiltering || cfeDetails.noDOMSurveying ) {
                 vAPI.domSurveyor = null;
             }
@@ -1398,7 +1428,11 @@ vAPI.domSurveyor = (function() {
         ) {
             bootstrapPhase2();
         } else {
-            document.addEventListener('DOMContentLoaded', bootstrapPhase2);
+            document.addEventListener(
+                'DOMContentLoaded',
+                bootstrapPhase2,
+                { once: true }
+            );
         }
     };
 
@@ -1419,4 +1453,5 @@ vAPI.domSurveyor = (function() {
 /******************************************************************************/
 /******************************************************************************/
 
-} // <<<<<<<< end of HUGE-IF-BLOCK
+}
+// <<<<<<<< end of HUGE-IF-BLOCK

@@ -61,7 +61,7 @@ let filterFromCompiledData = function(args) {
 
 // One hostname => one selector
 
-let FilterOneOne = function(hostname, selector) {
+const FilterOneOne = function(hostname, selector) {
     this.hostname = hostname;
     this.selector = selector;
 };
@@ -87,7 +87,7 @@ FilterOneOne.prototype = {
 
     retrieve: function(target, out) {
         if ( target.endsWith(this.hostname) === false ) { return; }
-        let i = target.length - this.hostname.length;
+        const i = target.length - this.hostname.length;
         if ( i !== 0 && target.charCodeAt(i-1) !== 0x2E /* '.' */ ) { return; }
         out.add(this.selector);
     },
@@ -107,7 +107,7 @@ registerFilterClass(FilterOneOne);
 
 // One hostname => many selectors
 
-let FilterOneMany = function(hostname, selectors) {
+const FilterOneMany = function(hostname, selectors) {
     this.hostname = hostname;
     this.selectors = selectors;
 };
@@ -131,7 +131,7 @@ FilterOneMany.prototype = {
 
     retrieve: function(target, out) {
         if ( target.endsWith(this.hostname) === false ) { return; }
-        let i = target.length - this.hostname.length;
+        const i = target.length - this.hostname.length;
         if ( i !== 0 && target.charCodeAt(i-1) !== 0x2E /* '.' */ ) { return; }
         for ( let selector of this.selectors ) {
             out.add(selector);
@@ -161,7 +161,7 @@ FilterManyAny.prototype = {
     fid: 10,
 
     add: function(hostname, selector) {
-        let selectors = this.entries.get(hostname);
+        const selectors = this.entries.get(hostname);
         if ( selectors === undefined ) {
             this.entries.set(hostname, selector);
         } else if ( typeof selectors === 'string' ) {
@@ -172,19 +172,19 @@ FilterManyAny.prototype = {
     },
 
     retrieve: function(target, out) {
-        for ( let entry of this.entries ) {
-            let hostname = entry[0];
+        for ( const entry of this.entries ) {
+            const hostname = entry[0];
             if ( target.endsWith(hostname) === false ) { continue; }
-            let i = target.length - hostname.length;
+            const i = target.length - hostname.length;
             if ( i !== 0 && target.charCodeAt(i-1) !== 0x2E /* '.' */ ) {
                 continue;
             }
-            let selectors = entry[1];
+            const selectors = entry[1];
             if ( typeof selectors === 'string' ) {
                 out.add(selectors);
                 continue;
             }
-            for ( let selector of selectors ) {
+            for ( const selector of selectors ) {
                 out.add(selector);
             }
         }
@@ -523,8 +523,8 @@ FilterContainer.prototype.compile = function(parsed, writer) {
     // 1000 = cosmetic filtering
     writer.select(1000);
 
-    let hostnames = parsed.hostnames,
-        i = hostnames.length;
+    const hostnames = parsed.hostnames;
+    let i = hostnames.length;
     if ( i === 0 ) {
         this.compileGenericSelector(parsed, writer);
         return true;
@@ -535,7 +535,7 @@ FilterContainer.prototype.compile = function(parsed, writer) {
     // of same filter OR globally if there is no non-negated hostnames.
     let applyGlobally = true;
     while ( i-- ) {
-        let hostname = hostnames[i];
+        const hostname = hostnames[i];
         if ( hostname.startsWith('~') === false ) {
             applyGlobally = false;
         }
@@ -599,7 +599,7 @@ FilterContainer.prototype.compileGenericHideSelector = function(
     if ( compiled === undefined || compiled !== selector ) {
         const who = writer.properties.get('assetKey') || '?';
         µb.logger.writeOne({
-            error: `Invalid generic cosmetic filter in ${who} : ##${selector}`
+            error: `Invalid generic cosmetic filter in ${who}: ##${selector}`
         });
         return;
     }
