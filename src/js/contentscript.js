@@ -774,8 +774,6 @@ vAPI.domFilterer = new vAPI.DOMFilterer();
 
 vAPI.domCollapser = (function() {
     const messaging = vAPI.messaging;
-    const toProcess = [];
-    const toFilter = [];
     const toCollapse = new Map();
     const src1stProps = {
         embed: 'src',
@@ -798,6 +796,8 @@ vAPI.domCollapser = (function() {
         cachedBlockedSet,
         cachedBlockedSetHash,
         cachedBlockedSetTimer,
+        toProcess = [],
+        toFilter = [],
         netSelectorCacheCount = 0;
 
     const cachedBlockedSetClear = function() {
@@ -888,8 +888,8 @@ vAPI.domCollapser = (function() {
             hash: cachedBlockedSetHash
         };
         messaging.send('contentscript', msg, onProcessed);
-        toProcess.length = 0;
-        toFilter.length = 0;
+        toProcess = [];
+        toFilter = [];
         resquestIdGenerator += 1;
     };
 
@@ -949,10 +949,7 @@ vAPI.domCollapser = (function() {
             return;
         }
         if ( src.startsWith('http') === false ) { return; }
-        toFilter[toFilter.length] = {
-            type: 'sub_frame',
-            url: iframe.src
-        };
+        toFilter.push({ type: 'sub_frame', url: iframe.src });
         add(iframe);
     };
 
