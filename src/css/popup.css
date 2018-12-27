@@ -155,7 +155,7 @@ body.off #switch .fa-icon {
 #extraTools > span {
     cursor: pointer;
     font-size: 1.2em;
-    margin: 0 0.9em 0 0;
+    margin: 0 0.8em 0 0;
     position: relative;
     }
 #extraTools > span:first-of-type {
