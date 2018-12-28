@@ -282,11 +282,18 @@ body[dir="rtl"] #tooltip {
     text-overflow: ellipsis;
     width: calc(100% - 4em);
     }
-#firewallContainer > div.isDomain > span.isIDN:first-of-type > sup::before {
+#firewallContainer > div > span:first-of-type > sup {
     color: #666;
-    content: '\0416\2002';
+    display: none;
     font-size: 80%;
     font-weight: normal;
+    line-height: 1;
+    }
+#firewallContainer > div.isDomain > span.isIDN:first-of-type > sup {
+    display: inline-block;
+    }
+#firewallContainer > div.isDomain > span.isIDN:first-of-type > sup::before {
+    content: '\0416\2002';
     }
 #firewallContainer > div > span:nth-of-type(2) {
     display: none;
