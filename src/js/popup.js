@@ -208,7 +208,7 @@ const addFirewallRow = function(des) {
         row = uDom('#templates > div:nth-of-type(1)').clone();
     }
 
-    row.descendants('[data-des]').attr('data-des', des);
+    row.attr('data-des', des);
 
     const hnDetails = popupData.hostnameDict[des] || {};
     const isDomain = des === hnDetails.domain;
@@ -238,36 +238,45 @@ const addFirewallRow = function(des) {
 /******************************************************************************/
 
 const updateFirewallCell = function(scope, des, type, rule) {
-    const selector = '#firewallContainer span[data-src="' + scope + '"][data-des="' + des + '"][data-type="' + type + '"]';
-    const cells = uDom(selector);
+    const row = document.querySelector(
+        `#firewallContainer div[data-des="${des}"][data-type="${type}"]`
+    );
+    if ( row === null ) { return; }
+
+    const cells = row.querySelectorAll(`:scope > span[data-src="${scope}"]`);
     if ( cells.length === 0 ) { return; }
 
-    cells.removeClass();
     if ( rule !== null ) {
-        cells.toggleClass(rule.action + 'Rule', true);
+        cells.forEach(el => { el.setAttribute('class', rule.action + 'Rule'); });
+    } else {
+        cells.forEach(el => { el.removeAttribute('class'); });
     }
 
     // Use dark shade visual cue if the rule is specific to the cell.
-    let ownRule = false;
-    if ( rule !== null ) {
-        ownRule = (rule.des !== '*' || rule.type === type) &&
-                  (rule.des === des) &&
-                  (rule.src === scopeToSrcHostnameMap[scope]);
+    if (
+        (rule !== null) &&
+        (rule.des !== '*' || rule.type === type) &&
+        (rule.des === des) &&
+        (rule.src === scopeToSrcHostnameMap[scope])
+        
+    ) {
+        cells.forEach(el => { el.classList.add('ownRule'); });
     }
-    cells.toggleClass('ownRule', ownRule);
 
     if ( scope !== '.' || des === '*' ) { return; }
 
     // Remember this may be a cell from a reused row, we need to clear text
     // content if we can't compute request counts.
     if ( popupData.hostnameDict.hasOwnProperty(des) === false ) {
-        cells.removeAttr('data-acount');
-        cells.removeAttr('data-acount');
+        cells.forEach(el => {
+            el.removeAttribute('data-acount');
+            el.removeAttribute('data-bcount');
+        });
         return;
     }
 
     const hnDetails = popupData.hostnameDict[des];
-    let cell = cells.nodeAt(0);
+    let cell = cells[0];
     if ( hnDetails.allowCount !== 0 ) {
         cell.setAttribute('data-acount', Math.min(Math.ceil(Math.log(hnDetails.allowCount + 1) / Math.LN10), 3));
     } else {
@@ -283,7 +292,7 @@ const updateFirewallCell = function(scope, des, type, rule) {
         return;
     }
 
-    cell = cells.nodeAt(1);
+    cell = cells[1];
     if ( hnDetails.totalAllowCount !== 0 ) {
         cell.setAttribute('data-acount', Math.min(Math.ceil(Math.log(hnDetails.totalAllowCount + 1) / Math.LN10), 3));
     } else {
@@ -832,11 +841,12 @@ const setFirewallRule = function(src, des, type, action, persist) {
 /******************************************************************************/
 
 const unsetFirewallRuleHandler = function(ev) {
-    const cell = uDom(ev.target);
+    const cell = ev.target;
+    const row = cell.closest('[data-des]');
     setFirewallRule(
-        cell.attr('data-src') === '/' ? '*' : popupData.pageHostname,
-        cell.attr('data-des'),
-        cell.attr('data-type'),
+        cell.getAttribute('data-src') === '/' ? '*' : popupData.pageHostname,
+        row.getAttribute('data-des'),
+        row.getAttribute('data-type'),
         0,
         ev.ctrlKey || ev.metaKey
     );
@@ -846,22 +856,22 @@ const unsetFirewallRuleHandler = function(ev) {
 /******************************************************************************/
 
 const setFirewallRuleHandler = function(ev) {
-    const hotspot = uDom(ev.target);
-    const cell = hotspot.ancestors('[data-src]');
-    if ( cell.length === 0 ) { return; }
-    const hotspotId = hotspot.attr('id');
+    const hotspot = ev.target;
+    const cell = hotspot.closest('[data-src]');
+    if ( cell === null ) { return; }
+    const row = cell.closest('[data-des]');
     let action = 0;
-    if ( hotspotId === 'dynaAllow' ) {
+    if ( hotspot.id === 'dynaAllow' ) {
         action = 2;
-    } else if ( hotspotId === 'dynaNoop' ) {
+    } else if ( hotspot.id === 'dynaNoop' ) {
         action = 3;
     } else {
         action = 1;
     }
     setFirewallRule(
-        cell.attr('data-src') === '/' ? '*' : popupData.pageHostname,
-        cell.attr('data-des'),
-        cell.attr('data-type'),
+        cell.getAttribute('data-src') === '/' ? '*' : popupData.pageHostname,
+        row.getAttribute('data-des'),
+        row.getAttribute('data-type'),
         action,
         ev.ctrlKey || ev.metaKey
     );
