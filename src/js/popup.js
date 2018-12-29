@@ -75,7 +75,6 @@ let allDomains = {};
 let allDomainCount = 0;
 let allHostnameRows = [];
 let touchedDomainCount = 0;
-let rowsToRecycle = uDom();
 let cachedPopupHash = '';
 
 // https://github.com/gorhill/uBlock/issues/2550
@@ -202,41 +201,6 @@ const rulekeyCompare = function(a, b) {
 
 /******************************************************************************/
 
-const addFirewallRow = function(des) {
-    let row = rowsToRecycle.pop();
-    if ( row.length === 0 ) {
-        row = uDom('#templates > div:nth-of-type(1)').clone();
-    }
-
-    row.attr('data-des', des);
-
-    const hnDetails = popupData.hostnameDict[des] || {};
-    const isDomain = des === hnDetails.domain;
-    const prettyDomainName = punycode.toUnicode(des);
-    const isPunycoded = prettyDomainName !== des;
-    const span = row.nodeAt(0).querySelector('span:first-of-type');
-    span.classList.toggle(
-        'isIDN',
-        isPunycoded && reCyrillicAmbiguous.test(prettyDomainName) === true &&
-                       reCyrillicNonAmbiguous.test(prettyDomainName) === false
-    );
-    span.querySelector('span').textContent = prettyDomainName;
-    span.title = isDomain && isPunycoded ? des : '';
-
-    row.toggleClass('isDomain', isDomain)
-       .toggleClass('isSubDomain', !isDomain)
-       .toggleClass('allowed', hnDetails.allowCount !== 0)
-       .toggleClass('blocked', hnDetails.blockCount !== 0)
-       .toggleClass('totalAllowed', hnDetails.totalAllowCount !== 0)
-       .toggleClass('totalBlocked', hnDetails.totalBlockCount !== 0);
-
-    row.appendTo('#firewallContainer');
-
-    return row;
-};
-
-/******************************************************************************/
-
 const updateFirewallCell = function(scope, des, type, rule) {
     const row = document.querySelector(
         `#firewallContainer div[data-des="${des}"][data-type="${type}"]`
@@ -337,13 +301,57 @@ const buildAllFirewallRows = function() {
     }
     dfHotspots.detach();
 
-    // Remove and reuse all rows: the order may have changed, we can't just
-    // reuse them in-place.
-    rowsToRecycle =
-        uDom('#firewallContainer > div:nth-of-type(7) ~ div').detach();
+    // Update incrementally: reuse existing rows if possible.
+    let rowContainer = document.getElementById('firewallContainer');
+    let toAppend = document.createDocumentFragment();
+    let rowTemplate = document.querySelector('#templates > div:nth-of-type(1)');
+    let row = rowContainer.querySelector('div:nth-of-type(7) + div');
 
-    for ( const row of allHostnameRows ) {
-        addFirewallRow(row);
+    for ( const des of allHostnameRows ) {
+        if ( row === null ) {
+            row = rowTemplate.cloneNode(true);
+            toAppend.appendChild(row);
+        }
+
+        row.setAttribute('data-des', des);
+
+        const hnDetails = popupData.hostnameDict[des] || {};
+        const isDomain = des === hnDetails.domain;
+        const prettyDomainName = punycode.toUnicode(des);
+        const isPunycoded = prettyDomainName !== des;
+
+        const span = row.querySelector('span:first-of-type');
+        span.classList.toggle(
+            'isIDN',
+            isPunycoded &&
+                reCyrillicAmbiguous.test(prettyDomainName) === true &&
+                reCyrillicNonAmbiguous.test(prettyDomainName) === false
+        );
+        span.querySelector('span').textContent = prettyDomainName;
+        span.title = isDomain && isPunycoded ? des : '';
+
+        const classList = row.classList;
+        classList.toggle('isDomain', isDomain);
+        classList.toggle('isSubDomain', !isDomain);
+        classList.toggle('allowed', hnDetails.allowCount !== 0);
+        classList.toggle('blocked', hnDetails.blockCount !== 0);
+        classList.toggle('totalAllowed', hnDetails.totalAllowCount !== 0);
+        classList.toggle('totalBlocked', hnDetails.totalBlockCount !== 0);
+
+        row = row.nextElementSibling;
+    }
+
+    // Remove unused trailing rows
+    if ( row !== null ) {
+        while ( row.nextElementSibling !== null ) {
+            rowContainer.removeChild(row.nextElementSibling);
+        }
+        rowContainer.removeChild(row);
+    }
+
+    // Add new rows all at once
+    if ( toAppend.childElementCount !== 0 ) {
+        rowContainer.appendChild(toAppend);
     }
 
     if ( dfPaneBuilt !== true && popupData.advancedUserEnabled ) {
