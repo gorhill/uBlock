@@ -1054,14 +1054,8 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
     for ( let type in this.lowlyGeneric ) {
         let entry = this.lowlyGeneric[type];
         let selectors = request[entry.canonical];
-        if ( typeof selectors !== 'string' ) { continue; }
-        let strEnd = selectors.length;
-        let sliceBeg = 0;
-        do {
-            let sliceEnd = selectors.indexOf('\n', sliceBeg);
-            if ( sliceEnd === -1 ) { sliceEnd = strEnd; }
-            let selector = selectors.slice(sliceBeg, sliceEnd);
-            sliceBeg = sliceEnd + 1;
+        if ( Array.isArray(selectors) === false ) { continue; }
+        for ( let selector of selectors ) {
             if ( entry.simple.has(selector) === false ) { continue; }
             let bucket = entry.complex.get(selector);
             if ( bucket !== undefined ) {
@@ -1080,7 +1074,7 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
                     simpleSelectors.add(selector);
                 }
             }
-        } while ( sliceBeg < strEnd );
+        }
     }
 
     // Apply exceptions: it is the responsibility of the caller to provide

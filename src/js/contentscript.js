@@ -1147,7 +1147,9 @@ vAPI.domSurveyor = (function() {
             pending.nodes = added;
         } else {
             nodes = pending.nodes.splice(0, 1000);
-            pending.nodes = pending.nodes.concat(added);
+            if ( added.length !== 0 ) {
+                pending.nodes = pending.nodes.concat(added);
+            }
         }
         return nodes;
     };
@@ -1212,8 +1214,8 @@ vAPI.domSurveyor = (function() {
                 {
                     what: 'retrieveGenericCosmeticSelectors',
                     hostname: hostname,
-                    ids: ids.join('\n'),
-                    classes: classes.join('\n'),
+                    ids: ids,
+                    classes: classes,
                     exceptions: domFilterer.exceptions,
                     cost: surveyCost
                 },
