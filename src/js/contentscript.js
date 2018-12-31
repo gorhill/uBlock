@@ -142,35 +142,55 @@ vAPI.contentScript = true;
 // https://github.com/gorhill/uBlock/issues/2147
 
 vAPI.SafeAnimationFrame = function(callback) {
-    this.fid = this.tid = null;
+    this.fid = this.tid = undefined;
     this.callback = callback;
-    this.boundMacroToMicro = this.macroToMicro.bind(this);
 };
 
 vAPI.SafeAnimationFrame.prototype = {
     start: function(delay) {
         if ( delay === undefined ) {
-            if ( this.fid === null ) {
-                this.fid = requestAnimationFrame(this.callback);
+            if ( this.fid === undefined ) {
+                this.fid = requestAnimationFrame(( ) => { this.onRAF(); } );
             }
-            if ( this.tid === null ) {
-                this.tid = vAPI.setTimeout(this.callback, 20000);
+            if ( this.tid === undefined ) {
+                this.tid = vAPI.setTimeout(( ) => { this.onSTO(); }, 20000);
             }
             return;
         }
-        if ( this.fid === null && this.tid === null ) {
-            this.tid = vAPI.setTimeout(this.boundMacroToMicro, delay);
+        if ( this.fid === undefined && this.tid === undefined ) {
+            this.tid = vAPI.setTimeout(( ) => { this.macroToMicro(); }, delay);
         }
     },
     clear: function() {
-        if ( this.fid !== null ) { cancelAnimationFrame(this.fid); }
-        if ( this.tid !== null ) { clearTimeout(this.tid); }
-        this.fid = this.tid = null;
+        if ( this.fid !== undefined ) {
+            cancelAnimationFrame(this.fid);
+            this.fid = undefined;
+        }
+        if ( this.tid !== undefined ) {
+            clearTimeout(this.tid);
+            this.tid = undefined;
+        }
     },
     macroToMicro: function() {
-        this.tid = null;
+        this.tid = undefined;
         this.start();
-    }
+    },
+    onRAF: function() {
+        if ( this.tid !== undefined ) {
+            clearTimeout(this.tid);
+            this.tid = undefined;
+        }
+        this.fid = undefined;
+        this.callback();
+    },
+    onSTO: function() {
+        if ( this.fid !== undefined ) {
+            cancelAnimationFrame(this.fid);
+            this.fid = undefined;
+        }
+        this.tid = undefined;
+        this.callback();
+    },
 };
 
 /******************************************************************************/
@@ -193,7 +213,6 @@ vAPI.domWatcher = (function() {
 
     const safeObserverHandler = function() {
         //console.time('dom watcher/safe observer handler');
-        safeObserverHandlerTimer.clear();
         let i = addedNodeLists.length,
             j = addedNodes.length;
         while ( i-- ) {
@@ -1034,12 +1053,148 @@ vAPI.domSurveyor = (function() {
     const messaging = vAPI.messaging;
     const queriedIds = new Set();
     const queriedClasses = new Set();
-    const pendingIdNodes = { nodes: [], added: [] };
-    const pendingClassNodes = { nodes: [], added: [] };
+    const maxSurveyNodes = 65536;
+    const maxSurveyTimeSlice = 4;
+    const maxSurveyBuffer = 64;
 
     let domFilterer,
         hostname = '',
         surveyCost = 0;
+
+    const pendingNodes = {
+        nodeLists: [],
+        buffer: [
+            null, null, null, null, null, null, null, null,
+            null, null, null, null, null, null, null, null,
+            null, null, null, null, null, null, null, null,
+            null, null, null, null, null, null, null, null,
+            null, null, null, null, null, null, null, null,
+            null, null, null, null, null, null, null, null,
+            null, null, null, null, null, null, null, null,
+            null, null, null, null, null, null, null, null,
+        ],
+        j: 0,
+        accepted: 0,
+        iterated: 0,
+        stopped: false,
+        add: function(nodes) {
+            if ( nodes.length === 0 || this.accepted >= maxSurveyNodes ) {
+                return;
+            }
+            this.nodeLists.push(nodes);
+            this.accepted += nodes.length;
+        },
+        next: function() {
+            if ( this.nodeLists.length === 0 || this.stopped ) { return 0; }
+            const nodeLists = this.nodeLists;
+            let ib = 0;
+            do {
+                const nodeList = nodeLists[0];
+                let j = this.j;
+                let n = j + maxSurveyBuffer - ib;
+                if ( n > nodeList.length ) {
+                    n = nodeList.length;
+                }
+                for ( let i = j; i < n; i++ ) {
+                    this.buffer[ib++] = nodeList[j++];
+                }
+                if ( j !== nodeList.length ) {
+                    this.j = j;
+                    break;
+                }
+                this.j = 0;
+                this.nodeLists.shift();
+            } while ( ib < maxSurveyBuffer && nodeLists.length !== 0 );
+            this.iterated += ib;
+            if ( this.iterated >= maxSurveyNodes ) {
+                this.nodeLists = [];
+                this.stopped = true;
+                //console.info(`domSurveyor> Surveyed a total of ${this.iterated} nodes. Enough.`);
+            }
+            return ib;
+        },
+        hasNodes: function() {
+            return this.nodeLists.length !== 0;
+        },
+    };
+
+    // Extract all classes/ids: these will be passed to the cosmetic
+    // filtering engine, and in return we will obtain only the relevant
+    // CSS selectors.
+    const reWhitespace = /\s/;
+
+    // https://github.com/gorhill/uBlock/issues/672
+    // http://www.w3.org/TR/2014/REC-html5-20141028/infrastructure.html#space-separated-tokens
+    // http://jsperf.com/enumerate-classes/6
+
+    const surveyPhase1 = function() {
+        //console.time('dom surveyor/surveying');
+        const t0 = performance.now();
+        const rews = reWhitespace;
+        const ids = [];
+        const classes = [];
+        const nodes = pendingNodes.buffer;
+        const deadline = t0 + maxSurveyTimeSlice;
+        let qids = queriedIds;
+        let qcls = queriedClasses;
+        let processed = 0;
+        for (;;) {
+            const n = pendingNodes.next();
+            if ( n === 0 ) { break; }
+            for ( let i = 0; i < n; i++ ) {
+                const node = nodes[i]; nodes[i] = null;
+                let v = node.id;
+                if ( typeof v === 'string' && v.length !== 0 ) {
+                    v = v.trim();
+                    if ( qids.has(v) === false && v.length !== 0 ) {
+                        ids.push(v); qids.add(v);
+                    }
+                }
+                let vv = node.className;
+                if ( typeof vv === 'string' && vv.length !== 0 ) {
+                    if ( rews.test(vv) === false ) {
+                        if ( qcls.has(vv) === false ) {
+                            classes.push(vv); qcls.add(vv);
+                        }
+                    } else {
+                        vv = node.classList;
+                        let j = vv.length;
+                        while ( j-- ) {
+                            const v = vv[j];
+                            if ( qcls.has(v) === false ) {
+                                classes.push(v); qcls.add(v);
+                            }
+                        }
+                    }
+                }
+            }
+            processed += n;
+            if ( performance.now() >= deadline ) { break; }
+        }
+        const t1 = performance.now();
+        surveyCost += t1 - t0;
+        //console.info(`domSurveyor> Surveyed ${processed} nodes in ${(t1-t0).toFixed(2)} ms`);
+        // Phase 2: Ask main process to lookup relevant cosmetic filters.
+        if ( ids.length !== 0 || classes.length !== 0 ) {
+            messaging.send(
+                'contentscript',
+                {
+                    what: 'retrieveGenericCosmeticSelectors',
+                    hostname: hostname,
+                    ids: ids,
+                    classes: classes,
+                    exceptions: domFilterer.exceptions,
+                    cost: surveyCost
+                },
+                surveyPhase3
+            );
+        } else {
+            surveyPhase3(null);
+        }
+        //console.timeEnd('dom surveyor/surveying');
+    };
+
+    const surveyTimer = new vAPI.SafeAnimationFrame(surveyPhase1);
 
     // This is to shutdown the surveyor if result of surveying keeps being
     // fruitless. This is useful on long-lived web page. I arbitrarily
@@ -1085,19 +1240,19 @@ vAPI.domSurveyor = (function() {
             }
         }
 
-        if ( hasChunk(pendingIdNodes) || hasChunk(pendingClassNodes) ) {
-            surveyTimer.start(1);
-        }
-
-        if ( mustCommit ) {
-            surveyingMissCount = 0;
-            canShutdownAfter = Date.now() + 300000;
-            return;
-        }
-
-        surveyingMissCount += 1;
-        if ( surveyingMissCount < 256 || Date.now() < canShutdownAfter ) {
-            return;
+        if ( pendingNodes.stopped === false ) {
+            if ( pendingNodes.hasNodes() ) {
+                surveyTimer.start(1);
+            }
+            if ( mustCommit ) {
+                surveyingMissCount = 0;
+                canShutdownAfter = Date.now() + 300000;
+                return;
+            }
+            surveyingMissCount += 1;
+            if ( surveyingMissCount < 256 || Date.now() < canShutdownAfter ) {
+                return;
+            }
         }
 
         //console.info('dom surveyor shutting down: too many misses');
@@ -1106,126 +1261,6 @@ vAPI.domSurveyor = (function() {
         vAPI.domWatcher.removeListener(domWatcherInterface);
         vAPI.domSurveyor = null;
     };
-
-    // The purpose of "chunkification" is to ensure the surveyor won't unduly
-    // block the main event loop.
-
-    const hasChunk = function(pending) {
-        return pending.nodes.length !== 0 || pending.added.length !== 0;
-    };
-
-    const addChunk = function(pending, added) {
-        if ( added.length === 0 ) { return; }
-        if (
-            Array.isArray(added) === false ||
-            pending.added.length === 0 ||
-            Array.isArray(pending.added[0]) === false ||
-            pending.added[0].length >= 1000
-        ) {
-            pending.added.push(added);
-        } else {
-            pending.added = pending.added.concat(added);
-        }
-    };
-
-    const nextChunk = function(pending) {
-        let added = pending.added.length !== 0 ? pending.added.shift() : [],
-            nodes;
-        if ( pending.nodes.length === 0 ) {
-            if ( added.length <= 1000 ) { return added; }
-            nodes = Array.isArray(added)
-                ? added
-                : Array.prototype.slice.call(added);
-            pending.nodes = nodes.splice(1000);
-            return nodes;
-        }
-        if ( Array.isArray(added) === false ) {
-            added = Array.prototype.slice.call(added);
-        }
-        if ( pending.nodes.length < 1000 ) {
-            nodes = pending.nodes.concat(added.splice(0, 1000 - pending.nodes.length));
-            pending.nodes = added;
-        } else {
-            nodes = pending.nodes.splice(0, 1000);
-            pending.nodes = pending.nodes.concat(added);
-        }
-        return nodes;
-    };
-
-    // Extract all classes/ids: these will be passed to the cosmetic
-    // filtering engine, and in return we will obtain only the relevant
-    // CSS selectors.
-    const reWhitespace = /\s/;
-
-    // https://github.com/gorhill/uBlock/issues/672
-    // http://www.w3.org/TR/2014/REC-html5-20141028/infrastructure.html#space-separated-tokens
-    // http://jsperf.com/enumerate-classes/6
-
-    const surveyPhase1 = function() {
-        //console.time('dom surveyor/surveying');
-        surveyTimer.clear();
-        const t0 = window.performance.now();
-        const rews = reWhitespace;
-        const ids = [];
-        let iout = 0;
-        let qq = queriedIds;
-        let nodes = nextChunk(pendingIdNodes);
-        let i = nodes.length;
-        while ( i-- ) {
-            const node = nodes[i];
-            let v = node.id;
-            if ( typeof v !== 'string' ) { continue; }
-            v = v.trim();
-            if ( qq.has(v) === false && v.length !== 0 ) {
-                ids[iout++] = v; qq.add(v);
-            }
-        }
-        const classes = [];
-        iout = 0;
-        qq = queriedClasses;
-        nodes = nextChunk(pendingClassNodes);
-        i = nodes.length;
-        while ( i-- ) {
-            const node = nodes[i];
-            let vv = node.className;
-            if ( typeof vv !== 'string' ) { continue; }
-            if ( rews.test(vv) === false ) {
-                if ( qq.has(vv) === false && vv.length !== 0 ) {
-                    classes[iout++] = vv; qq.add(vv);
-                }
-            } else {
-                vv = node.classList;
-                let j = vv.length;
-                while ( j-- ) {
-                    let v = vv[j];
-                    if ( qq.has(v) === false ) {
-                        classes[iout++] = v; qq.add(v);
-                    }
-                }
-            }
-        }
-        surveyCost += window.performance.now() - t0;
-        // Phase 2: Ask main process to lookup relevant cosmetic filters.
-        if ( ids.length !== 0 || classes.length !== 0 ) {
-            messaging.send(
-                'contentscript',
-                {
-                    what: 'retrieveGenericCosmeticSelectors',
-                    hostname: hostname,
-                    ids: ids.join('\n'),
-                    classes: classes.join('\n'),
-                    exceptions: domFilterer.exceptions,
-                    cost: surveyCost
-                },
-                surveyPhase3
-            );
-        } else {
-            surveyPhase3(null);
-        }
-        //console.timeEnd('dom surveyor/surveying');
-    };
-
-    const surveyTimer = new vAPI.SafeAnimationFrame(surveyPhase1);
 
     const domWatcherInterface = {
         onDOMCreated: function() {
@@ -1244,38 +1279,21 @@ vAPI.domSurveyor = (function() {
             }
             //console.time('dom surveyor/dom layout created');
             domFilterer = vAPI.domFilterer;
-            addChunk(pendingIdNodes, document.querySelectorAll('[id]'));
-            addChunk(pendingClassNodes, document.querySelectorAll('[class]'));
+            pendingNodes.add(document.querySelectorAll('[id],[class]'));
             surveyTimer.start();
             //console.timeEnd('dom surveyor/dom layout created');
         },
         onDOMChanged: function(addedNodes) {
             if ( addedNodes.length === 0 ) { return; }
             //console.time('dom surveyor/dom layout changed');
-            const idNodes = [];
-            let iid = 0;
-            const classNodes = [];
-            let iclass = 0;
             let i = addedNodes.length;
             while ( i-- ) {
                 const node = addedNodes[i];
-                idNodes[iid++] = node;
-                classNodes[iclass++] = node;
+                pendingNodes.add([ node ]);
                 if ( node.childElementCount === 0 ) { continue; }
-                let nodeList = node.querySelectorAll('[id]');
-                let j = nodeList.length;
-                while ( j-- ) {
-                    idNodes[iid++] = nodeList[j];
-                }
-                nodeList = node.querySelectorAll('[class]');
-                j = nodeList.length;
-                while ( j-- ) {
-                    classNodes[iclass++] = nodeList[j];
-                }
+                pendingNodes.add(node.querySelectorAll('[id],[class]'));
             }
-            if ( idNodes.length !== 0 || classNodes.lengh !== 0 ) {
-                addChunk(pendingIdNodes, idNodes);
-                addChunk(pendingClassNodes, classNodes);
+            if ( pendingNodes.hasNodes() ) {
                 surveyTimer.start(1);
             }
             //console.timeEnd('dom surveyor/dom layout changed');
