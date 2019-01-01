@@ -297,7 +297,7 @@ with open(updates_json_filepath) as f:
         r = subprocess.run(['git', 'status', '-s', updates_json_filepath], stdout=subprocess.PIPE)
         rout = bytes.decode(r.stdout).strip()
         if len(rout) >= 2 and rout[0] == 'M':
-            subprocess.run(['git', 'commit', '-m', 'make Firefox dev build auto-update', updates_json_filepath])
-            subprocess.run(['git', 'push', 'origin', 'master'])
+            subprocess.run(['git', 'commit', '-m', 'Make Firefox dev build auto-update', updates_json_filepath])
+            subprocess.run(['git', 'push', 'origin', 'HEAD'])
 
 print('All done.')
