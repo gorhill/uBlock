@@ -151,7 +151,7 @@ textarea {
     top: 100%;
     z-index: 100;
     }
-#netInspector #filterExprButton.expanded ~ #filterExprPicker {
+#netInspector #filterExprGroup:hover #filterExprButton.expanded ~ #filterExprPicker {
     display: flex;
     }
 #netInspector #filterExprPicker > div {
