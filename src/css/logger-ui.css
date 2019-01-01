@@ -146,7 +146,6 @@ textarea {
     position: absolute;
     flex-direction: column;
     font-size: small;
-    margin-top: 0.2em;
     right: 0;
     top: 100%;
     z-index: 100;
