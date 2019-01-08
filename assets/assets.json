@@ -126,7 +126,6 @@
 			"https://easylist.to/easylist/easylist.txt",
 			"https://secure.fanboy.co.nz/easylist.txt",
 			"https://easylist-downloads.adblockplus.org/easylist.txt",
-			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/thirdparties/easylist-downloads.adblockplus.org/easylist.txt",
 			"assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt"
 		],
 		"supportURL": "https://forums.lanik.us/"
@@ -148,7 +147,6 @@
 			"https://easylist.to/easylist/easyprivacy.txt",
 			"https://secure.fanboy.co.nz/easyprivacy.txt",
 			"https://easylist-downloads.adblockplus.org/easyprivacy.txt",
-			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt",
 			"assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt"
 		],
 		"supportURL": "https://forums.lanik.us/"
@@ -225,8 +223,7 @@
 		"title": "Fanboy’s Annoyance List",
 		"contentURL": [
 			"https://easylist.to/easylist/fanboy-annoyance.txt",
-			"https://fanboy.co.nz/fanboy-annoyance.txt",
-			"https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt"
+			"https://fanboy.co.nz/fanboy-annoyance.txt"
 		],
 		"supportURL": "https://forums.lanik.us/"
 	},
@@ -245,8 +242,7 @@
 		"title": "Fanboy’s Social Blocking List",
 		"contentURL": [
 			"https://easylist.to/easylist/fanboy-social.txt",
-			"https://fanboy.co.nz/fanboy-social.txt",
-			"https://easylist-downloads.adblockplus.org/fanboy-social.txt"
+			"https://fanboy.co.nz/fanboy-social.txt"
 		],
 		"supportURL": "https://forums.lanik.us/"
 	},
@@ -411,10 +407,7 @@
 		"off": true,
 		"title": "IDN, MYS: ABPindo",
 		"lang": "id ms",
-		"contentURL": [
-			"https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/subscriptions/abpindo.txt",
-			"https://raw.githubusercontent.com/heradhis/indonesianadblockrules/master/subscriptions/abpindo.txt"
-		],
+		"contentURL": "https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/subscriptions/abpindo.txt",
 		"supportURL": "https://github.com/ABPindo/indonesianadblockrules"
 	},
 	"IRN-0": {
