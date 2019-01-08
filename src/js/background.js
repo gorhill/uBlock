@@ -40,6 +40,7 @@ const µBlock = (function() { // jshint ignore:line
 
     const hiddenSettingsDefault = {
         assetFetchTimeout: 30,
+        autoCommentFilterTemplate: '{{date}} {{origin}}',
         autoUpdateAssetFetchPeriod: 120,
         autoUpdatePeriod: 7,
         cacheStorageCompression: true,

@@ -1144,7 +1144,7 @@ var filterChoiceFromEvent = function(ev) {
 
 /******************************************************************************/
 
-var onDialogClicked = function(ev) {
+const onDialogClicked = function(ev) {
     if ( ev.isTrusted === false ) { return; }
 
     // If the dialog is hidden, clicking on it force it to become visible.
@@ -1163,12 +1163,13 @@ var onDialogClicked = function(ev) {
         filterToDOMInterface.preview(false);
         userFilterFromCandidate(function(filter) {
             if ( !filter ) { return; }
-            var d = new Date();
             vAPI.messaging.send(
                 'elementPicker',
                 {
                     what: 'createUserFilter',
-                    filters: '! ' + d.toLocaleString() + ' ' + window.location.href + '\n' + filter,
+                    autoComment: true,
+                    filters: filter,
+                    origin: window.location.origin,
                     pageDomain: window.location.hostname
                 }
             );

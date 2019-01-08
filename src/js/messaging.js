@@ -52,7 +52,7 @@ var getDomainNames = function(targets) {
 
 /******************************************************************************/
 
-var onMessage = function(request, sender, callback) {
+const onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
     case 'getAssetContent':
@@ -84,7 +84,7 @@ var onMessage = function(request, sender, callback) {
         break;
     }
 
-    var tabId = sender && sender.tab ? sender.tab.id : 0;
+    const tabId = sender && sender.tab ? sender.tab.id : 0;
 
     // Sync
     var response;
@@ -103,7 +103,7 @@ var onMessage = function(request, sender, callback) {
         break;
 
     case 'createUserFilter':
-        µb.appendUserFilters(request.filters);
+        µb.appendUserFilters(request.filters, request);
         // https://github.com/gorhill/uBlock/issues/1786
         µb.cosmeticFilteringEngine.removeFromSelectorCache(request.pageDomain);
         break;
@@ -608,15 +608,13 @@ vAPI.messaging.listen('contentscript', onMessage);
 
 /******************************************************************************/
 
-var µb = µBlock;
+const onMessage = function(request, sender, callback) {
+    const µb = µBlock;
 
-/******************************************************************************/
-
-var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
     case 'elementPickerArguments':
-        var xhr = new XMLHttpRequest();
+        const xhr = new XMLHttpRequest();
         xhr.open('GET', 'epicker.html', true);
         xhr.overrideMimeType('text/html;charset=utf-8');
         xhr.responseType = 'text';
@@ -632,8 +630,8 @@ var onMessage = function(request, sender, callback) {
                 cosmeticFilters: vAPI.i18n('pickerCosmeticFilters'),
                 cosmeticFiltersHint: vAPI.i18n('pickerCosmeticFiltersHint')
             };
-            var reStrings = /\{\{(\w+)\}\}/g;
-            var replacer = function(a0, string) {
+            const reStrings = /\{\{(\w+)\}\}/g;
+            const replacer = function(a0, string) {
                 return i18n[string];
             };
 
@@ -657,7 +655,7 @@ var onMessage = function(request, sender, callback) {
     }
 
     // Sync
-    var response;
+    let response;
 
     switch ( request.what ) {
     case 'elementPickerEprom':
