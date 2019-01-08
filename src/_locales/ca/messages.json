@@ -544,7 +544,7 @@
     "description": "Appears in the logger's tab selector"
   },
   "loggerReloadTip": {
-    "message": "Torna a carregar el contingut de la pestanya",
+    "message": "Refresca la pestanya",
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {

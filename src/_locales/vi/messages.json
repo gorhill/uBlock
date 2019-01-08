@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Danh sách bộ lọc",
+    "message": "Bộ lọc",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -548,7 +548,7 @@
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
-    "message": "Toggle the DOM inspector",
+    "message": "https:\/\/manvip.club\/\n",
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
