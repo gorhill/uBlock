@@ -564,7 +564,7 @@
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
-    "message": "Günlükçüyü duraklat (gelen verinin hepsini yok say)",
+    "message": "Günlükçüyü duraklat (tüm gelen veriyi yok say)",
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {
