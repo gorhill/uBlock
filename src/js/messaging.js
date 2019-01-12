@@ -1398,7 +1398,7 @@ var onMessage = function(request, sender, callback) {
                 .setURL(request.docURL)
                 .setDocOriginFromURL(request.docURL);
             if ( pageStore.filterRequest(fctxt) === 0 ) {
-                fctxt.setRealm('net').toLogger();
+                fctxt.setRealm('network').toLogger();
             }
         }
         break;

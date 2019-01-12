@@ -26,17 +26,6 @@
 
 µBlock.logger = (function() {
 
-    const LogEntry = function(details) {
-        this.init(details);
-    };
-
-    LogEntry.prototype.init = function(details) {
-        if ( details.tstamp === undefined ) {
-            details.tstamp = Date.now();
-        }
-        this.details = JSON.stringify(details);
-    };
-
     let buffer = null;
     let lastReadTime = 0;
     let writePtr = 0;
@@ -61,15 +50,22 @@
         }
     };
 
+    const boxEntry = function(details) {
+        if ( details.tstamp === undefined ) {
+            details.tstamp = Date.now();
+        }
+        return JSON.stringify(details);
+    };
+
     const api = {
         enabled: false,
         ownerId: undefined,
         writeOne: function(details) {
             if ( buffer === null ) { return; }
             if ( writePtr === buffer.length ) {
-                buffer.push(new LogEntry(details));
+                buffer.push(boxEntry(details));
             } else {
-                buffer[writePtr].init(details);
+                buffer[writePtr] = boxEntry(details);
             }
             writePtr += 1;
         },

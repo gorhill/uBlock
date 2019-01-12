@@ -38,10 +38,16 @@ textarea {
     background-color: #eee;
     }
 #pageSelector {
-    margin-right: 1em;
     padding: 0.25em 0;
     width: 28em;
     }
+body[dir="ltr"] #pageSelector {
+    margin-right: 1em;
+    }
+body[dir="rtl"] #pageSelector {
+    margin-left: 1em;
+    }
+
 #showpopup {
     display: inline-flex;
     align-items: center;
@@ -56,10 +62,15 @@ textarea {
     padding-left: 0.5em;
     padding-right: 0.5em;
     position: absolute;
-    right: 0;
     }
 #info:hover {
     fill: #000;
+    }
+body[dir="ltr"] #info {
+    right: 0;
+    }
+body[dir="rtl"] #info {
+    left: 0;
     }
 @media (max-width: 600px) {
     #info {
@@ -81,13 +92,14 @@ textarea {
     flex-direction: column;
     }
 .vscrollable {
+    direction: ltr;
     flex-grow: 1;
     font-size: small;
     overflow-x: hidden;
     overflow-y: auto;
 }
 
-.vCompact .vCompactToggler.button {
+.inspector:not(.vExpanded) .vCompactToggler.button {
     transform: scaleY(-1)
     }
 .hCompact .hCompactToggler.button {
@@ -125,13 +137,15 @@ textarea {
 #netInspector #filterInput > input {
     min-width: 18em;
     }
-#netInspector #maxEntries {
-    margin: 0 2em;
-    }
 #netInspector #filterExprButton {
     position: absolute;
-    right: 0;
     transform: scaleY(-1);
+    }
+body[dir="ltr"] #netInspector #filterExprButton {
+    right: 0;
+    }
+body[dir="rtl"] #netInspector #filterExprButton {
+    left: 0;
     }
 #netInspector #filterExprButton:hover {
     background-color: transparent;
@@ -146,10 +160,16 @@ textarea {
     position: absolute;
     flex-direction: column;
     font-size: small;
-    right: 0;
     top: 100%;
     z-index: 100;
     }
+body[dir="ltr"] #netInspector #filterExprPicker {
+    right: 0;
+    }
+body[dir="rtl"] #netInspector #filterExprPicker {
+    left: 0;
+    }
+
 #netInspector #filterExprGroup:hover #filterExprButton.expanded ~ #filterExprPicker {
     display: flex;
     }
@@ -184,145 +204,169 @@ textarea {
     background-color: lightblue;
     border: 1px solid lightblue;
     }
+#netInspector #settings {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    position: absolute;
+}
+body[dir="ltr"] #netInspector #settings {
+    right: 0;
+    }
+body[dir="rtl"] #netInspector #settings {
+    left: 0;
+    }
 
-#netInspector table {
-    border: 0;
-    border-collapse: collapse;
-    direction: ltr;
-    table-layout: fixed;
+#netInspector .vscrollable {
+    overflow: hidden;
+    }
+#vwRenderer {
+    box-sizing: border-box;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
     width: 100%;
     }
-#netInspector table > colgroup > col:nth-of-type(1) {
-    width: 4.6em;
+#vwRenderer #vwScroller {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: absolute;
+    width: 100%;
     }
-#netInspector table > colgroup > col:nth-of-type(2) {
-    width: 16%;
+#vwRenderer #vwScroller #vwVirtualContent {
+    overflow: hidden;
     }
-#netInspector table > colgroup > col:nth-of-type(3) {
-    width: 2.1em;
+#vwRenderer #vwContent {
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
     }
-#netInspector table > colgroup > col:nth-of-type(4) {
-    width: 20%;
+#vwRenderer .logEntry {
+    display: block;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
     }
-#netInspector table > colgroup > col:nth-of-type(5) {
-    width: 2.4em;
-    }
-#netInspector table > colgroup > col:nth-of-type(6) {
-    width: 6em;
-    }
-#netInspector table > colgroup > col:nth-of-type(7) {
-    width: calc(100% - 4.6em - 16% - 2.1em - 20% - 2.4em - 6em);
-    }
-#netInspector.f table tr.f {
+#vwRenderer .logEntry:empty {
     display: none;
     }
-
-#netInspector tr.cat_info {
-    color: #00f;
-    }
-#netInspector tr.blocked {
-    background-color: rgba(192, 0, 0, 0.1);
-    }
-body.colorBlind #netInspector tr.blocked {
-    background-color: rgba(0, 19, 110, 0.1);
-    }
-#netInspector tr.nooped {
-    background-color: rgba(108, 108, 108, 0.1);
-    }
-body.colorBlind #netInspector tr.nooped {
-    background-color: rgba(96, 96, 96, 0.1);
-    }
-#netInspector tr.allowed {
-    background-color: rgba(0, 160, 0, 0.1);
-    }
-body.colorBlind #netInspector tr.allowed {
-    background-color: rgba(255, 194, 57, 0.1)
-    }
-#netInspector tr.cosmetic,
-#netInspector tr.redirect {
-    background-color: rgba(255, 255, 0, 0.1);
-    }
-body.colorBlind #netInspector tr.cosmetic,
-body.colorBlind #netInspector tr.redirect {
-    background-color: rgba(0, 19, 110, 0.1);
-    }
-#netInspector tr.maindoc {
-    background-color: #666;
-    color: white;
-    text-align: center;
-    }
-
-body #netInspector td {
-    border: 1px solid #ccc;
-    border-top: none;
-    min-width: 0.5em;
-    padding: 3px;
-    vertical-align: top;
-    white-space: normal;
-    word-break: break-all;
-    word-wrap: break-word;
-    }
-#netInspector tr td {
-    border-top: 1px solid #ccc;
-    }
-#netInspector tr td:first-of-type {
-    border-left: none;
-    }
-#netInspector tr td:last-of-type {
-    border-right: none;
-    }
-#netInspector.vCompact tr:not(.vExpanded) td {
-    overflow: hidden;
-    text-overflow: ellipsis;
+#vwRenderer .logEntry > div {
+    height: 100%;
     white-space: nowrap;
     }
-#netInspector tr[data-tabid].void {
+#vwRenderer .logEntry > div.blocked {
+    background-color: rgba(192, 0, 0, 0.1);
+    }
+body.colorBlind #vwRenderer .logEntry > div.blocked {
+    background-color: rgba(0, 19, 110, 0.1);
+    }
+#vwRenderer .logEntry > div.nooped {
+    background-color: rgba(108, 108, 108, 0.1);
+    }
+body.colorBlind #vwRenderer .logEntry > div.nooped {
+    background-color: rgba(96, 96, 96, 0.1);
+    }
+#vwRenderer .logEntry > div.allowed {
+    background-color: rgba(0, 160, 0, 0.1);
+    }
+body.colorBlind #vwRenderer .logEntry > div.allowed {
+    background-color: rgba(255, 194, 57, 0.1)
+    }
+#vwRenderer .logEntry > div.cosmetic,
+#vwRenderer .logEntry > div.redirect {
+    background-color: rgba(255, 255, 0, 0.1);
+    }
+body.colorBlind #vwRenderer .logEntry > div.cosmetic,
+body.colorBlind #vwRenderer .logEntry > div.redirect {
+    background-color: rgba(0, 19, 110, 0.1);
+    }
+#vwRenderer .logEntry > div[data-type="tabLoad"] {
+    background-color: #666;
+    color: white;
+    }
+#vwRenderer .logEntry > div[data-type="error"] {
+    color: #800;
+    }
+#vwRenderer .logEntry > div[data-type="info"] {
+    color: #008;
+    }
+#vwRenderer .logEntry > div.voided {
     opacity: 0.3;
     }
-#netInspector tr[data-tabid].void:hover {
+#vwRenderer .logEntry > div.voided:hover {
     opacity: 0.7;
     }
 
-#netInspector tr td:nth-of-type(1) {
-    cursor: default;
-    text-align: right;
+#vwRenderer .logEntry > div > span {
+    border: 1px solid #ccc;
+    border-top: 0;
+    border-right: 0;
+    box-sizing: border-box;
+    display: inline-block;
+    height: 100%;
+    overflow: hidden;
+    padding: 0.2em;
+    vertical-align: middle;
     white-space: nowrap;
+    word-break: break-all;
     }
-#netInspector tr td:nth-of-type(2) {
+#vwRenderer .logEntry > div.canDetails:hover > span {
+    background-color: rgba(0,0,0,0.04);
     }
-#netInspector tr.canLookup td:nth-of-type(2) {
+body[dir="ltr"] #vwRenderer .logEntry > div > span:first-child {
+    border-left: 0;
+    }
+body[dir="rtl"] #vwRenderer .logEntry > div > span:first-child {
+    border-right: 0;
+    }
+#vwRenderer .logEntry > div > span:nth-of-type(1) {
+    }
+#vwRenderer .logEntry > div > span:nth-of-type(2) {
+    }
+#vwRenderer #vwContent .logEntry > div > span:nth-of-type(2) {
+    text-overflow: ellipsis;
+    }
+.vExpanded #vwRenderer #vwContent .logEntry > div > span:nth-of-type(2) {
+    overflow-y: auto;
+    white-space: pre-line;
+    }
+#vwRenderer .logEntry > div.messageRealm[data-type="tabLoad"] > span:nth-of-type(2) {
+    text-align: center;
+    }
+#vwRenderer .logEntry > div > span:nth-of-type(3) {
+    font: 12px monospace;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+    text-align: center;
+    }
+#vwRenderer .logEntry > div.canDetails:hover > span:nth-of-type(2),
+#vwRenderer .logEntry > div.canDetails:hover > span:nth-of-type(3),
+#vwRenderer .logEntry > div.canDetails:hover > span:nth-of-type(5) {
+    background: rgba(0, 0, 0, 0.08);
     cursor: zoom-in;
     }
-#netInspector tr.cat_net td:nth-of-type(3),
-#netInspector tr.cat_cosmetic td:nth-of-type(3),
-#netInspector tr.cat_redirect td:nth-of-type(3) {
-    font: 12px monospace;
-    text-align: center;
-    white-space: nowrap;
-    }
-#netInspector tr.cat_net td:nth-of-type(3) {
-    cursor: pointer;
-    }
-#netInspector tr.cat_net td:nth-of-type(3):hover {
-    background: #ccc;
-    }
-#netInspector tr td:nth-of-type(4) {
-    }
-#netInspector tr[data-dochn] td:nth-of-type(4) {
+#netInspector:not(.vExpanded) #vwRenderer .logEntry > div > span:nth-of-type(4) {
     direction: rtl;
     }
-#netInspector tr td:nth-of-type(5) {
-    cursor: default;
-    overflow: visible !important;
-    position: relative;
+#vwRenderer #vwContent .logEntry > div > span:nth-of-type(4) {
+    text-overflow: ellipsis;
+    }
+.vExpanded #vwRenderer #vwContent .logEntry > div > span:nth-of-type(4) {
+    overflow-y: auto;
+    text-overflow: clip;
+    white-space: pre-line;
+    }
+#vwRenderer .logEntry > div > span:nth-of-type(5) {
     text-align: center;
     }
-#netInspector tr td[data-parties]:nth-of-type(5) {
-    cursor: zoom-in;
-    }
 /* visual for tabless network requests */
-#netInspector tr.tab_bts td:nth-of-type(5)::before {
-    border: 5px solid #bbb;
+#vwRenderer .logEntry > div > span:nth-of-type(5) {
+    position: relative;
+    }
+#vwRenderer .logEntry > div[data-tabid="-1"] > span:nth-of-type(5)::before {
+    border: 5px solid #ccc;
     border-bottom: 0;
     border-top: 0;
     bottom: 0;
@@ -334,49 +378,61 @@ body #netInspector td {
     width: calc(100% - 10px);
     z-index: -1;
     }
-/* visual for quick tooltip */
-#netInspector tr td[data-parties]:nth-of-type(5):active::after {
-    background-color: #feb;
-    border: 1px outset #feb;
-    border-left: 5px solid gray;
-    color: black;
-    content: attr(data-parties);
-    left: 100%;
-    padding: 0.4em 0.6em;
-    position: absolute;
-    text-align: left;
-    top: -50%;
-    white-space: pre;
-}
-#netInspector tr.cat_net td:nth-of-type(7) > span > b {
+#vwRenderer .logEntry > div > span:nth-of-type(6) {
+    }
+#vwRenderer #vwContent .logEntry > div > span:nth-of-type(6) {
+    }
+#vwRenderer .logEntry > div > span:nth-of-type(7) {
+    }
+#vwRenderer #vwContent .logEntry > div > span:nth-of-type(7) {
+    text-overflow: ellipsis;
+    }
+.vExpanded #vwRenderer #vwContent .logEntry > div > span:nth-of-type(7) {
+    overflow-y: auto;
+    white-space: pre-line;
+    }
+#vwRenderer .logEntry > div > span:nth-of-type(7) > span > b {
     font-weight: bold;
     }
-#netInspector tr td:nth-of-type(7) b {
+#vwRenderer .logEntry > div > span:nth-of-type(7) b {
     font-weight: normal;
     }
-#netInspector tr.blocked td:nth-of-type(7) b {
+#vwRenderer .logEntry > div.blocked > span:nth-of-type(7) b {
     background-color: rgba(192, 0, 0, 0.2);
     }
-body.colorBlind #netInspector tr.blocked td:nth-of-type(7) b {
+body.colorBlind #vwRenderer .logEntry > div.blocked > span:nth-of-type(7) b {
     background-color: rgba(0, 19, 110, 0.2);
     }
-#netInspector tr.nooped td:nth-of-type(7) b {
+#vwRenderer .logEntry > div.nooped > span:nth-of-type(7) b {
     background-color: rgba(108, 108, 108, 0.2);
     }
-body.colorBlind #netInspector tr.nooped td:nth-of-type(7) b {
+body.colorBlind #vwRenderer .logEntry > div.nooped > span:nth-of-type(7) b {
     background-color: rgba(96, 96, 96, 0.2);
     }
-#netInspector tr.allowed td:nth-of-type(7) b {
+#vwRenderer .logEntry > div.allowed > span:nth-of-type(7) b {
     background-color: rgba(0, 160, 0, 0.2);
     }
-body.colorBlind #netInspector tr.allowed td:nth-of-type(7) b {
+body.colorBlind #vwRenderer .logEntry > div.allowed > span:nth-of-type(7) b {
     background-color: rgba(255, 194, 57, 0.2);
+    }
+#vwRenderer #vwBottom {
+    background-color: #00F;
+    height: 0;
+    overflow: hidden;
+    width: 100%;
+    }
+#vwRenderer #vwLineSizer {
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    visibility: hidden;
+    width: 100%;
     }
 
 #popupContainer {
     background: white;
     border: 1px solid gray;
-    border-radius: 3px;
     bottom: 0;
     box-sizing: border-box;
     display: none;
@@ -389,16 +445,13 @@ body.colorBlind #netInspector tr.allowed td:nth-of-type(7) b {
     display: block;
     }
 
-.modalDialog {
+#modalOverlay {
     align-items: center;
-    -webkit-align-items: center;
     background-color: rgba(0, 0, 0, 0.5);
     border: 0;
     bottom: 0;
-    display: flex;
-    display: -webkit-flex;
+    display: none;
     justify-content: center;
-    -webkit-justify-content: center;
     left: 0;
     margin: 0;
     position: fixed;
@@ -406,27 +459,56 @@ body.colorBlind #netInspector tr.allowed td:nth-of-type(7) b {
     top: 0;
     z-index: 400;
     }
-
-.modalDialog .dialog {
+#modalOverlay.on {
+    display: flex;
+    }
+#modalOverlay > div {
+    position: relative;
+    }
+#modalOverlay > div > div:nth-of-type(1) {
     background-color: white;
-    border: 2px solid white;
+    border: 0;
     box-sizing: border-box;
-    width: 90vw;
+    padding: 1em;
     max-height: 90vh;
     overflow-y: auto;
+    width: 90vw;
+    }
+#modalOverlay > div > div:nth-of-type(2) {
+    stroke: #000;
+    stroke-width: 3px;
+    position: absolute;
+    width: 1.6em;
+    height: 1.6em;
+    bottom: calc(100% + 2px);
+    background-color: white;
+    }
+body[dir="ltr"] #modalOverlay > div > div:nth-of-type(2) {
+    right: 0;
+    }
+body[dir="rtl"] #modalOverlay > div > div:nth-of-type(2) {
+    left: 0;
+    }
+#modalOverlay > div > div:nth-of-type(2):hover {
+    background-color: #eee;
+    }
+#modalOverlay > div > div:nth-of-type(2) > * {
+    pointer-events: none;
     }
 
-#netFilteringDialog .dialog p {
-    line-height: 2em;
+#netFilteringDialog {
+    font-size: 90%;
     }
-
-#netFilteringDialog .dialog select {
+#netFilteringDialog a {
+    text-decoration: none;
+    }
+#netFilteringDialog select {
     max-width: 75%;
     outline: none;
     padding: 0.2em;
 }
-
-#netFilteringDialog .dialog > div.preview {
+#netFilteringDialog > .preview {
+    align-items: center;
     /* http://lea.verou.me/css3patterns/ */
     background-color: #aaa;
     background-image:
@@ -448,35 +530,28 @@ body.colorBlind #netInspector tr.allowed td:nth-of-type(7) b {
         );
     background-position:0 0, 9px 9px;
     background-size: 18px 18px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1em;
+    padding: 0.5em;
     text-align: center;
     }
-#netFilteringDialog .dialog > div.preview > * {
+#netFilteringDialog > .preview > * {
+    background-color: white;
     max-width: 100%;
-    max-height: 40vh;
+    max-height: 20vh;
+    }
+#netFilteringDialog > .preview > span {
+    cursor: pointer;
+    padding: 0.5em;
     }
 
-#netFilteringDialog .dialog table {
-    border: 0;
-    border-collapse: collapse;
-    table-layout: fixed;
-    width: 100%;
-    }
-#netFilteringDialog .dialog table > colgroup > col:nth-of-type(1) {
-    width: 3.8em;
-    }
-#netFilteringDialog .dialog table > colgroup > col:nth-of-type(2) {
-    }
-
-#netFilteringDialog .dialog td {
-    border: 0;
-    padding: 0;
-    vertical-align: middle;
-    }
-#netFilteringDialog .dialog > div.headers {
+#netFilteringDialog > .headers {
     border-bottom: 1px solid #888;
+    line-height: 2;
     position: relative;
     }
-#netFilteringDialog .dialog > div.headers > span.header {
+#netFilteringDialog > .headers > .header {
     background-color: #eee;
     border: 1px solid #aaa;
     border-bottom: 1px solid #888;
@@ -485,98 +560,164 @@ body.colorBlind #netInspector tr.allowed td:nth-of-type(7) b {
     color: #888;
     cursor: pointer;
     display: inline-block;
-    font-size: small;
-    line-height: 2em;
-    margin-left: 0.5em;
     padding: 0 1em;
     position: relative;
     text-align: center;
     top: 1px;
     }
-#netFilteringDialog .dialog > div.headers > span.header.selected {
+#netFilteringDialog[data-pane="details"] > .headers > [data-pane="details"],
+#netFilteringDialog[data-pane="dynamic"] > .headers > [data-pane="dynamic"],
+#netFilteringDialog[data-pane="static"] > .headers > [data-pane="static"] {
     background-color: white;
     border-color: #888;
     border-bottom: 1px solid white;
     color: black;
     }
-#netFilteringDialog .dialog > div.headers > span.tools {
-    display: inline-block;
+#netFilteringDialog > .headers > .tools {
+    bottom: 0;
+    display: flex;
     position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
     }
-body[dir="ltr"] #netFilteringDialog .dialog > div.headers > span.tools {
-    right: 0.1em;
+body[dir="ltr"] #netFilteringDialog > .headers > .tools {
+    right: 0;
     }
-body[dir="rtl"] #netFilteringDialog .dialog > div.headers > span.tools {
-    left: 0.1em;
+body[dir="rtl"] #netFilteringDialog > .headers > .tools {
+    left: 0;
     }
-#netFilteringDialog .dialog > div.headers > span.tools > span {
+#netFilteringDialog > .headers > .tools > span {
     cursor: pointer;
-    font-size: 1.2em;
-    padding: 0.2em 0.4em;
+    font-size: 1.5em;
+    padding: 0 0.25em;
     text-align: center;
     }
-#netFilteringDialog .dialog > div.headers > span.tools > span:hover {
+#netFilteringDialog > .headers > .tools > span:hover {
     background-color: #eee;
     }
-#netFilteringDialog .dialog > div.containers {
-    height: 40vh;
-    overflow: hidden;
-    overflow-y: auto;
-    }
-#netFilteringDialog .dialog > div.containers > div {
+#netFilteringDialog.cosmeticRealm > .headers > .dynamic,
+#netFilteringDialog.cosmeticRealm > .panes > .dynamic {
     display: none;
     }
-#netFilteringDialog .dialog > div.containers > div.selected {
-    display: block;
+#netFilteringDialog.cosmeticRealm > .headers > .static,
+#netFilteringDialog.cosmeticRealm > .panes > .static {
+    display: none;
     }
-#netFilteringDialog .dialog > div.containers > div.dynamic > table.toolbar select {
-    font: 14px;
-    height: 2.5em;
+#netFilteringDialog > div.panes {
+    min-height: 40vh;
+    overflow: hidden;
+    overflow-y: auto;
+    padding-top: 1em;
     }
-#netFilteringDialog .dialog > div.containers > div.dynamic > table.toolbar #saveRules {
+#netFilteringDialog > div.panes > div {
+    display: none;
+    }
+#netFilteringDialog[data-pane="details"] > .panes > [data-pane="details"],
+#netFilteringDialog[data-pane="dynamic"] > .panes > [data-pane="dynamic"],
+#netFilteringDialog[data-pane="static"] > .panes > [data-pane="static"] {
+    display: flex;
+    flex-direction: column;
+    }
+#netFilteringDialog > .panes > .details > div {
+    align-items: stretch;
+    background-color: #e6e6e6;
+    border: 0;
+    border-bottom: 1px solid white;
+    display: flex;
+    min-height: 2.2em;
+    }
+#netFilteringDialog > .panes > .details > div > span {
+    align-items: center;
+    display: inline-flex;
+    flex-wrap: wrap;
+    padding: 0.25em 0.5em;
+    }
+#netFilteringDialog > .panes > .details > div > span:nth-of-type(1) {
+    border: 0;
+    flex-grow: 0;
+    flex-shrink: 0;
+    justify-content: flex-end;
+    width: 8em;
+    }
+body[dir="ltr"] #netFilteringDialog > .panes > .details > div > span:nth-of-type(1) {
+    border-right: 1px solid white;
+    }
+body[dir="rtl"] #netFilteringDialog > .panes > .details > div > span:nth-of-type(1) {
+    border-left: 1px solid white;
+    }
+#netFilteringDialog > .panes > .details > div > span:nth-of-type(2) {
+    max-height: 20vh;
+    overflow: hidden auto;
+    white-space: pre-line
+    }
+#netFilteringDialog > .panes > .details > div > span:nth-of-type(2):not(.prose) {
+    word-break: break-all;
+    }
+#netFilteringDialog > .panes > .details > div > span:nth-of-type(2) .fa-icon {
+    font-size: 110%;
+    opacity: 0.5;
+    vertical-align: bottom;
+    }
+#netFilteringDialog > .panes > .details > div > span:nth-of-type(2) .fa-icon:hover {
+    opacity: 1;
+    }
+#netFilteringDialog > div.panes > .dynamic > .toolbar {
+    padding-bottom: 1em;
+    }
+#netFilteringDialog > div.panes > .dynamic .row {
+    display: flex;
+    min-height: 2.2em;
+    }
+#netFilteringDialog > div.panes > .dynamic .row > span:nth-of-type(1) {
+    align-self: stretch;
+    border: 0;
+    display: inline-flex;
+    flex-grow: 0;
+    flex-shrink: 0;
+    text-align: center;
+    width: 4.5em;
+    }
+body[dir="ltr"] #netFilteringDialog > div.panes > .dynamic .row > span:nth-of-type(1) {
+    border-right: 1px solid white;
+    }
+body[dir="rtl"] #netFilteringDialog > div.panes > .dynamic .row > span:nth-of-type(1) {
+    border-left: 1px solid white;
+    }
+#netFilteringDialog > div.panes > .dynamic .row > span:nth-of-type(2) {
+    align-self: center;
+    padding: 0 0.5em;
+    }
+#netFilteringDialog > div.panes > .dynamic > .toolbar #saveRules {
     background-color: #ffe;
     border: 1px solid #ddc;
     border-radius: 4px;
     fill: #888;
     cursor: pointer;
-    font-size: 1.6em;
-    margin: 0.1em;
-    padding: 0.25em 0.5em;
+    font-size: 2em;
     visibility: hidden;
+    width: 100%;
     }
-body.dirty #netFilteringDialog .dialog > div.containers > div.dynamic > table.toolbar #saveRules {
+body.dirty #netFilteringDialog > div.panes > .dynamic > .toolbar #saveRules {
     visibility: visible;
     }
-#netFilteringDialog .dialog > div.containers > div.dynamic > table.toolbar #saveRules:hover {
+#netFilteringDialog > div.panes > .dynamic > .toolbar #saveRules:hover {
     fill: black;
     }
-#netFilteringDialog .dialog > div.containers > div.dynamic > table.toolbar tr.entry {
+#netFilteringDialog > div.panes > .dynamic > .toolbar .entry {
     display: none;
     }
-#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry {
+#netFilteringDialog > div.panes > .dynamic .entry {
     background-color: #e6e6e6;
     border: 0;
     border-bottom: 1px solid white;
-    font-size: 13px;
     }
-#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry:hover {
+#netFilteringDialog > div.panes > .dynamic .entry:hover {
     background-color: #f0f0f0;
     }
-#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td:first-of-type {
-    border: 0;
-    border-right: 1px solid white;
-    text-align: center;
-    }
-#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action {
+#netFilteringDialog > div.panes > .dynamic .entry > .action {
     background-color: transparent;
     border: 0;
     cursor: pointer;
-    height: 2em;
-    width: 100%;
     }
-#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action > span {
+#netFilteringDialog > div.panes > .dynamic .entry > .action > span {
     background-color: transparent;
     border: 0;
     display: inline-block;
@@ -585,90 +726,94 @@ body.dirty #netFilteringDialog .dialog > div.containers > div.dynamic > table.to
     visibility: hidden;
     width: 33.33%;
     }
-#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.allow {
+#netFilteringDialog > div.panes > .dynamic .entry > .action.allow {
     background-color: rgba(0, 160, 0, 0.3);
     }
-body.colorBlind #netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.allow {
+body.colorBlind #netFilteringDialog > div.panes > .dynamic .entry > .action.allow {
     background-color: rgba(255, 194, 57, 0.4);
     }
-#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.noop {
+#netFilteringDialog > div.panes > .dynamic .entry > .action.noop {
     background-color: rgba(108, 108, 108, 0.3);
     }
-body.colorBlind #netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.noop {
+body.colorBlind #netFilteringDialog > div.panes > .dynamic .entry > .action.noop {
     background-color: rgba(96, 96, 96, 0.4);
     }
-#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.block {
+#netFilteringDialog > div.panes > .dynamic .entry > .action.block {
     background-color: rgba(192, 0, 0, 0.3);
     }
-body.colorBlind #netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.block {
+body.colorBlind #netFilteringDialog > div.panes > .dynamic .entry > .action.block {
     background-color: rgba(0, 19, 110, 0.4);
     }
-#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.own.allow {
+#netFilteringDialog > div.panes > .dynamic .entry > .action.own.allow {
     background-color: rgba(0, 160, 0, 1);
     }
-body.colorBlind #netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.own.allow {
+body.colorBlind #netFilteringDialog > div.panes > .dynamic .entry > .action.own.allow {
     background-color: rgba(255, 194, 57, 1);
     }
-#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.own.noop,
-body.colorBlind #netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.own.noop {
+#netFilteringDialog > div.panes > .dynamic .entry > .action.own.noop,
+body.colorBlind #netFilteringDialog > div.panes > .dynamic .entry > .action.own.noop {
     background-color: rgba(108, 108, 108, 1);
     }
-#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.own.block {
+#netFilteringDialog > div.panes > .dynamic .entry > .action.own.block {
     background-color: rgba(192, 0, 0, 1);
     }
-body.colorBlind #netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action.own.block {
+body.colorBlind #netFilteringDialog > div.panes > .dynamic .entry > .action.own.block {
     background-color: rgba(0, 19, 110, 1);
     }
-#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action:not(.own):hover > span {
+#netFilteringDialog > div.panes > .dynamic .entry > .action:not(.own):hover > span {
     opacity: 0.2;
     visibility: visible;
     }
-#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action:not(.own):hover > span:hover {
+#netFilteringDialog > div.panes > .dynamic .entry > .action:not(.own):hover > span:hover {
     opacity: 0.75;
     }
-#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action > span.allow {
+#netFilteringDialog > div.panes > .dynamic .entry > .action > .allow {
     background-color: rgb(0, 160, 0);
     }
-body.colorBlind  #netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action > span.allow {
+body.colorBlind  #netFilteringDialog > div.panes > .dynamic .entry > .action > .allow {
     background-color: rgb(255, 194, 57);
     }
-#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action > span.noop {
+#netFilteringDialog > div.panes > .dynamic .entry > .action > .noop {
     background-color: rgb(108, 108, 108);
     }
-#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action > span.block {
+#netFilteringDialog > div.panes > .dynamic .entry > .action > .block {
     background-color: rgb(192, 0, 0);
     }
-body.colorBlind  #netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td > div.action > span.block {
+body.colorBlind  #netFilteringDialog > div.panes > .dynamic .entry > .action > .block {
     background-color: rgb(0, 19, 110);
     }
-#netFilteringDialog .dialog > div.containers > div.dynamic tr.entry > td.url {
+#netFilteringDialog > div.panes > .dynamic .entry > .url {
     overflow: hidden;
-    padding-left: 4px;
     text-overflow: ellipsis;
     white-space: nowrap;
     }
-#netFilteringDialog .dialog > div.containers > div.static > p {
-    margin: 0.75em 0;
+#netFilteringDialog > div.panes > div.static > div {
+    line-height: 2;
     }
-#netFilteringDialog .dialog > div.containers > div.static textarea {
+#netFilteringDialog > div.panes > div.static > div {
+    padding-bottom: 1em;
+    }
+#netFilteringDialog > div.panes > div.static textarea {
     height: 6em;
+    max-height: 20vh;
+    min-height: 10vh;
+    word-break: break-all;
     }
-#netFilteringDialog .dialog > div.containers > div.static > p:nth-of-type(2) {
+#netFilteringDialog > div.panes > div.static > div:nth-of-type(2) {
     text-align: center;
     }
 
-#filterFinderDialog .dialog {
-    padding: 1em;
+#filterFinderDialog {
     word-break: break-all;
     }
-#filterFinderDialog .dialog code {
+#filterFinderDialog code {
     background: #eee;
     font-size: 85%;
     padding: 3px;
     unicode-bidi: plaintext;
     white-space: pre-wrap;
     }
-#filterFinderDialog .dialog ul {
+#filterFinderDialog ul {
     font-size: larger;
     }
 #filterFinderDialog .filterFinderListEntry {
@@ -688,13 +833,40 @@ body.colorBlind  #netFilteringDialog .dialog > div.containers > div.dynamic tr.e
 #filterFinderDialog .filterFinderListEntry a.fa-icon[href=""] {
     display: none;
     }
-#filterFinderDialog .dialog > *:first-child {
+#filterFinderDialog > *:first-child {
     margin-top: 0;
     }
-#filterFinderDialog .dialog > *:last-child {
+#filterFinderDialog > *:last-child {
     margin-bottom: 0;
     }
 
+#loggerSettingsDialog {
+    display: flex;
+    flex-direction: column;
+    }
+#loggerSettingsDialog > div {
+    padding-bottom: 1em;
+    }
+#loggerSettingsDialog > div:last-of-type {
+    padding-bottom: 0;
+    }
+#loggerSettingsDialog ul {
+    padding: 0;
+    }
+body[dir="ltr"] #loggerSettingsDialog ul {
+    padding-left: 2em;
+    }
+body[dir="rtl"] #loggerSettingsDialog ul {
+    padding-right: 2em;
+    }
+#loggerSettingsDialog li {
+    list-style-type: none;
+    margin: 0.5em 0 0 0;
+    }
+#loggerSettingsDialog input {
+    max-width: 6em;
+    }
+
 .hide {
-    display: none;
+    display: none !important;
     }

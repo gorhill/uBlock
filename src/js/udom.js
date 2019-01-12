@@ -132,12 +132,9 @@ var addSelectorToList = function(list, selector, context) {
 
 /******************************************************************************/
 
-var nodeInNodeList = function(node, nodeList) {
-    var i = nodeList.length;
-    while ( i-- ) {
-        if ( nodeList[i] === node ) {
-            return true;
-        }
+const nodeInNodeList = function(node, nodeList) {
+    for ( const other of nodeList ) {
+        if ( other === node ) { return true; }
     }
     return false;
 };
@@ -603,9 +600,9 @@ DOMList.prototype.toggleClasses = function(classNames, targetState) {
 
 /******************************************************************************/
 
-var listenerEntries = [];
+const listenerEntries = [];
 
-var ListenerEntry = function(target, type, capture, callback) {
+const ListenerEntry = function(target, type, capture, callback) {
     this.target = target;
     this.type = type;
     this.capture = capture;
@@ -621,13 +618,16 @@ ListenerEntry.prototype.dispose = function() {
 
 /******************************************************************************/
 
-var makeEventHandler = function(selector, callback) {
+const makeEventHandler = function(selector, callback) {
     return function(event) {
-        var dispatcher = event.currentTarget;
-        if ( !dispatcher || typeof dispatcher.querySelectorAll !== 'function' ) {
+        const dispatcher = event.currentTarget;
+        if (
+            dispatcher instanceof HTMLElement === false ||
+            typeof dispatcher.querySelectorAll !== 'function'
+        ) {
             return;
         }
-        var receiver = event.target;
+        const receiver = event.target;
         if ( nodeInNodeList(receiver, dispatcher.querySelectorAll(selector)) ) {
             callback.call(receiver, event);
         }
@@ -642,9 +642,10 @@ DOMList.prototype.on = function(etype, selector, callback) {
         callback = makeEventHandler(selector, callback);
     }
 
-    var i = this.nodes.length;
-    while ( i-- ) {
-        listenerEntries.push(new ListenerEntry(this.nodes[i], etype, selector !== undefined, callback));
+    for ( const node of this.nodes ) {
+        listenerEntries.push(
+            new ListenerEntry(node, etype, selector !== undefined, callback)
+        );
     }
     return this;
 };

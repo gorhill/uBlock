@@ -753,7 +753,7 @@ const gotoURL = function(ev) {
 
     let url = this.getAttribute('href');
     if (
-        url === 'logger-ui.html#tab_active' &&
+        url === 'logger-ui.html#_' &&
         typeof popupData.tabId === 'number'
     ) {
         url += '+' + popupData.tabId;

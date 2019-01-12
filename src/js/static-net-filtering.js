@@ -2192,7 +2192,9 @@ FilterContainer.prototype.compile = function(raw, writer) {
     if ( parsed.unsupported ) {
         const who = writer.properties.get('assetKey') || '?';
         µb.logger.writeOne({
-            error: `Invalid network filter in ${who}: ${raw}`
+            realm: 'message',
+            type: 'error',
+            text: `Invalid network filter in ${who}: ${raw}`
         });
         return false;
     }

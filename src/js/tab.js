@@ -789,7 +789,7 @@ vAPI.tabs.onPopupUpdated = (function() {
         // Log only for when there was a hit against an actual filter (allow or block).
         // https://github.com/gorhill/uBlock/issues/2776
         if ( µb.logger.enabled ) {
-            fctxt.setRealm('net').setType(popupType);
+            fctxt.setRealm('network').setType(popupType);
             if ( popupType === 'popup' ) {
                 fctxt.setURL(targetURL)
                      .setTabId(openerTabId)

@@ -31,47 +31,93 @@
 
 const messaging = vAPI.messaging;
 const logger = self.logger = { ownerId: Date.now() };
+const logDate = new Date();
+const logDateTimezoneOffset = logDate.getTimezoneOffset() * 60000;
+const loggerEntries = [];
+
+let filteredLoggerEntries = [];
+let filteredLoggerEntryVoidedCount = 0;
+
 let popupLoggerBox;
 let popupLoggerTooltips;
-let activeTabId;
+let activeTabId = 0;
+let selectedTabId = 0;
 let netInspectorPaused = false;
 
 /******************************************************************************/
 
-const removeAllChildren = logger.removeAllChildren = function(node) {
-    while ( node.firstChild ) {
-        node.removeChild(node.firstChild);
-    }
-};
-
-/******************************************************************************/
-
-const tabIdFromClassName = function(className) {
-    const matches = className.match(/\btab_([^ ]+)\b/);
-    if ( matches === null ) { return 0; }
-    if ( matches[1] === 'bts' ) { return -1; }
-    return parseInt(matches[1], 10);
-};
+// Various helpers.
 
 const tabIdFromPageSelector = logger.tabIdFromPageSelector = function() {
-    const tabClass = uDom.nodeFromId('pageSelector').value;
-    if ( tabClass === 'tab_active' && activeTabId !== undefined ) {
-        return activeTabId;
-    }
-    if ( tabClass === 'tab_bts' ) { return -1; }
-    return /^tab_\d+$/.test(tabClass) ? parseInt(tabClass.slice(4), 10) : 0;
+    const value = uDom.nodeFromId('pageSelector').value;
+    return value !== '_' ? (parseInt(value, 10) || 0) : activeTabId;
+};
+
+const tabIdFromAttribute = function(elem) {
+    const value = elem.getAttribute('data-tabid') || '';
+    const tabId = parseInt(value, 10);
+    return isNaN(tabId) ? 0 : tabId;
 };
 
 /******************************************************************************/
 /******************************************************************************/
 
-const tbody = document.querySelector('#netInspector tbody');
-const trJunkyard = [];
-const tdJunkyard = [];
-const firstVarDataCol = 1;
-const lastVarDataIndex = 6;
-const reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
-const netFilteringDialog = uDom.nodeFromId('netFilteringDialog');
+// Current design allows for only one modal DOM-based dialog at any given time.
+//
+const modalDialog = (function() {
+    const overlay = uDom.nodeFromId('modalOverlay');
+    const container = overlay.querySelector(
+        ':scope > div > div:nth-of-type(1)'
+    );
+    const closeButton = overlay.querySelector(
+        ':scope > div > div:nth-of-type(2)'
+    );
+    let onDestroyed;
+
+    const removeChildren = logger.removeAllChildren = function(node) {
+        while ( node.firstChild ) {
+            node.removeChild(node.firstChild);
+        }
+    };
+
+    const create = function(selector, destroyListener) {
+        const template = document.querySelector(selector);
+        const dialog = template.cloneNode(true);
+        removeChildren(container);
+        container.appendChild(dialog);
+        onDestroyed = destroyListener;
+        return dialog;
+    };
+
+    const show = function() {
+        overlay.classList.add('on');
+    };
+
+    const destroy = function() {
+        overlay.classList.remove('on');
+        const dialog = container.firstElementChild;
+        removeChildren(container);
+        if ( typeof onDestroyed === 'function' ) {
+            onDestroyed(dialog);
+        }
+        onDestroyed = undefined;
+    };
+
+    const onClose = function(ev) {
+        if ( ev.target === overlay || ev.target === closeButton ) {
+            destroy();
+        }
+    };
+    overlay.addEventListener('click', onClose);
+    closeButton.addEventListener('click', onClose);
+
+    return { create, show, destroy };
+})();
+
+self.logger.modalDialog = modalDialog;
+
+/******************************************************************************/
+/******************************************************************************/
 
 const prettyRequestTypes = {
     'main_frame': 'doc',
@@ -87,39 +133,16 @@ const uglyRequestTypes = {
     'xhr': 'xmlhttprequest'
 };
 
-const staticFilterTypes = {
-    'beacon': 'other',
-    'doc': 'document',
-    'css': 'stylesheet',
-    'frame': 'subdocument',
-    'ping': 'other',
-    'object_subrequest': 'object',
-    'xhr': 'xmlhttprequest'
-};
-
-let maxEntries = 5000;
 let allTabIds = new Map();
 let allTabIdsToken;
 
 /******************************************************************************/
-
-var classNameFromTabId = function(tabId) {
-    if ( tabId < 0 ) {
-        return 'tab_bts';
-    }
-    if ( tabId !== 0 ) {
-        return 'tab_' + tabId;
-    }
-    return '';
-};
-
-/******************************************************************************/
 /******************************************************************************/
 
-var regexFromURLFilteringResult = function(result) {
-    var beg = result.indexOf(' ');
-    var end = result.indexOf(' ', beg + 1);
-    var url = result.slice(beg + 1, end);
+const regexFromURLFilteringResult = function(result) {
+    const beg = result.indexOf(' ');
+    const end = result.indexOf(' ', beg + 1);
+    const url = result.slice(beg + 1, end);
     if ( url === '*' ) {
         return new RegExp('^.*$', 'gi');
     }
@@ -130,291 +153,636 @@ var regexFromURLFilteringResult = function(result) {
 
 // Emphasize hostname in URL, as this is what matters in uMatrix's rules.
 
-var nodeFromURL = function(url, re) {
+const nodeFromURL = function(url, re) {
     if ( re instanceof RegExp === false ) {
         return document.createTextNode(url);
     }
-    var matches = re.exec(url);
+    const matches = re.exec(url);
     if ( matches === null || matches[0].length === 0 ) {
         return document.createTextNode(url);
     }
-    var node = renderedURLTemplate.cloneNode(true);
+    const node = renderedURLTemplate.cloneNode(true);
     node.childNodes[0].textContent = url.slice(0, matches.index);
     node.childNodes[1].textContent = url.slice(matches.index, re.lastIndex);
     node.childNodes[2].textContent = url.slice(re.lastIndex);
     return node;
 };
 
-var renderedURLTemplate = document.querySelector('#renderedURLTemplate > span');
+const renderedURLTemplate = document.querySelector('#renderedURLTemplate > span');
 
 /******************************************************************************/
 
-const createCellAt = function(tr, index) {
-    let td = tr.cells[index];
-    const mustAppend = !td;
-    if ( mustAppend ) {
-        td = tdJunkyard.pop();
-    }
-    if ( td ) {
-        td.removeAttribute('colspan');
-        td.removeAttribute('data-parties');
-        td.textContent = '';
-    } else {
-        td = document.createElement('td');
-    }
-    if ( mustAppend ) {
-        tr.appendChild(td);
-    }
-    return td;
-};
-
-/******************************************************************************/
-
-var createRow = function(layout) {
-    let tr = trJunkyard.pop();
-    if ( tr ) {
-        tr.className = '';
-        tr.removeAttribute('data-tabhn');
-        tr.removeAttribute('data-dochn');
-        tr.removeAttribute('data-filter');
-        tr.removeAttribute('data-tabid');
-    } else {
-        tr = document.createElement('tr');
-    }
-    let index = 0;
-    for ( ; index < firstVarDataCol; index++ ) {
-        createCellAt(tr, index);
-    }
-    let i = 1, span = 1, td;
-    for (;;) {
-        td = createCellAt(tr, index);
-        if ( i === lastVarDataIndex ) { break; }
-        if ( layout.charAt(i) !== '1' ) {
-            span += 1;
-        } else {
-            if ( span !== 1 ) {
-                td.setAttribute('colspan', span);
-            }
-            index += 1;
-            span = 1;
-        }
-        i += 1;
-    }
-    if ( span !== 1 ) {
-        td.setAttribute('colspan', span);
-    }
-    index += 1;
-    while ( (td = tr.cells[index]) ) {
-        tdJunkyard.push(tr.removeChild(td));
-    }
-    return tr;
-};
-
-/******************************************************************************/
-
-var padTo2 = function(v) {
+const padTo2 = function(v) {
     return v < 10 ? '0' + v : v;
 };
 
-/******************************************************************************/
-
-const createGap = function(tabId, url) {
-    const tr = createRow('1');
-    tr.setAttribute('data-tabid', tabId);
-    tr.classList.add('tab_' + tabId);
-    tr.classList.add('maindoc');
-    tr.cells[firstVarDataCol].textContent = url;
-    tbody.insertBefore(tr, tbody.firstChild);
+const normalizeToStr = function(s) {
+    return typeof s === 'string' && s !== '' ? s : '';
 };
 
 /******************************************************************************/
 
-var renderNetLogEntry = function(tr, details) {
-    const trcl = tr.classList;
-    const type = details.type;
-    const url = details.url;
-    let td;
-
-    // If the request is that of a root frame, insert a gap in the table
-    // in order to visually separate entries for different documents. 
-    if ( type === 'main_frame' ) {
-        createGap(details.tabId, url);
-    }
-
-    tr.classList.add('cat_' + details.realm);
-
-    let filter = details.filter || undefined;
-    let filteringType;
-    if ( filter !== undefined ) {
-        if ( typeof filter.source === 'string' ) {
-            filteringType = filter.source;
-            trcl.add(filteringType);
+const LogEntry = function(details) {
+    if ( details instanceof Object === false ) { return; }
+    const receiver = LogEntry.prototype;
+    for ( const prop in receiver ) {
+        if (
+            details.hasOwnProperty(prop) &&
+            details[prop] !== receiver[prop]
+        ) {
+            this[prop] = details[prop];
         }
     }
-
-    if ( filter !== undefined ) {
-        td = tr.cells[1];
-        if ( filteringType === 'static' ) {
-            td.textContent = filter.raw;
-            trcl.add('canLookup');
-            tr.setAttribute('data-filter', filter.compiled);
-        } else if ( filteringType === 'cosmetic' ) {
-            td.textContent = filter.raw;
-            trcl.add('canLookup');
-        } else {
-            td.textContent = filter.raw;
-        }
-    }
-
-    if ( filter !== undefined ) {
-        td = tr.cells[2];
-        if ( filter.result === 1 ) {
-            trcl.add('blocked');
-            td.textContent = '--';
-        } else if ( filter.result === 2 ) {
-            trcl.add('allowed');
-            td.textContent = '++';
-        } else if ( filter.result === 3 ) {
-            trcl.add('nooped');
-            td.textContent = '**';
-        } else if ( filteringType === 'redirect' ) {
-            trcl.add('redirect');
-            td.textContent = '<<';
-        }
-    }
-
-    if ( details.tabHostname ) {
-        tr.setAttribute('data-tabhn', details.tabHostname);
-    }
-    if ( details.docHostname ) {
-        tr.setAttribute('data-dochn', details.docHostname);
-        tr.cells[3].textContent = details.docHostname;
-    }
-
-    // Partyness
-    if ( details.realm === 'net' && details.domain !== undefined ) {
-        td = tr.cells[4];
-        let text = '';
-        if ( details.tabDomain !== undefined ) {
-            text += details.domain === details.tabDomain ? '1' : '3';
-        } else {
-            text += '?';
-        }
-        if ( details.docDomain !== details.tabDomain ) {
-            text += ',';
-            if ( details.docDomain !== undefined ) {
-                text += details.domain === details.docDomain ? '1' : '3';
-            } else {
-                text += '?';
-            }
-        }
-        td.textContent = text;
-        let indent = '\t';
-        text = details.tabDomain;
-        if ( details.docDomain !== details.tabDomain ) {
-            text += ` \u21d2\n\t${details.docDomain}`;
-            indent = '\t\t';
-        }
-        text += ` \u21d2\n${indent}${details.domain}`;
-        td.setAttribute('data-parties', text);
-    }
-
-    tr.cells[5].textContent = (prettyRequestTypes[type] || type);
-
-    let re = null;
-    if ( filteringType === 'static' ) {
-        re = new RegExp(filter.regex, 'gi');
-    } else if ( filteringType === 'dynamicUrl' ) {
-        re = regexFromURLFilteringResult(filter.rule.join(' '));
-    }
-    tr.cells[6].appendChild(nodeFromURL(url, re));
+};
+LogEntry.prototype = {
+    dead: false,
+    docDomain: '',
+    docHostname: '',
+    domain: '',
+    filter: undefined,
+    realm: '',
+    tabDomain: '',
+    tabHostname: '',
+    tabId: undefined,
+    textContent: '',
+    tstamp: 0,
+    type: '',
+    voided: false,
 };
 
 /******************************************************************************/
 
-var renderLogEntry = function(details) {
-    const fvdc = firstVarDataCol;
-    let tr;
+const createLogSeparator = function(details, text) {
+    const separator = new LogEntry();
+    separator.tstamp = details.tstamp;
+    separator.realm = 'message';
+    separator.tabId = details.tabId;
+    separator.type = 'tabLoad';
+    separator.textContent = '';
 
-    if ( details.error !== undefined ) {
-        tr = createRow('1');
-        tr.cells[fvdc].textContent = details.error;
-    } else if ( details.url !== undefined ) {
-        tr = createRow('111111');
-        renderNetLogEntry(tr, details);
-    } else {
-        tr = createRow('1');
-        tr.cells[fvdc].textContent = '???';
+    const textContent = [];
+    logDate.setTime(separator.tstamp - logDateTimezoneOffset);
+    textContent.push(
+        // cell 0
+        padTo2(logDate.getUTCHours()) + ':' +
+            padTo2(logDate.getUTCMinutes()) + ':' +
+            padTo2(logDate.getSeconds()),
+        // cell 1
+        text
+    );
+    separator.textContent = textContent.join('\t');
+
+    if ( details.voided ) {
+        separator.voided = true;
     }
 
-    // Fields common to all rows.
-    const time = logDate;
-    time.setTime(details.tstamp - logDateTimezoneOffset);
-    tr.cells[0].textContent = padTo2(time.getUTCHours()) + ':' +
-                              padTo2(time.getUTCMinutes()) + ':' +
-                              padTo2(time.getSeconds());
-
-    if ( details.tabId ) {
-        tr.setAttribute('data-tabid', details.tabId);
-        tr.classList.add(classNameFromTabId(details.tabId));
-    }
-
-    rowFilterer.filterOne(tr, true);
-    tbody.insertBefore(tr, tbody.firstChild);
-    return tr;
+    return separator;
 };
-
-// Reuse date objects.
-const logDate = new Date();
-const logDateTimezoneOffset = logDate.getTimezoneOffset() * 60000;
 
 /******************************************************************************/
 
-const renderLogEntries = function(response) {
-    document.body.classList.toggle('colorBlind', response.colorBlind);
-
+// TODO: once refactoring is mature, consider using push() instead of
+//       unshift(). This will require inverting the access logic
+//       throughout the code.
+//
+const processLoggerEntries = function(response) {
     const entries = response.entries;
     if ( entries.length === 0 ) { return; }
 
-    // Preserve scroll position
-    const height = tbody.offsetHeight;
+    const autoDeleteVoidedRows = uDom.nodeFromId('pageSelector').value === '_';
+    const previousCount = filteredLoggerEntries.length;
 
-    const tabIds = allTabIds;
     for ( const entry of entries ) {
-        const details = JSON.parse(entry.details);
-        const tr = renderLogEntry(details);
-        // https://github.com/gorhill/uBlock/issues/1613#issuecomment-217637122
-        // Unlikely, but it may happen: mark as void if associated tab no
-        // longer exist.
-        if ( details.tabId && tabIds.has(details.tabId) === false ) {
-            tr.classList.add('void');
+        const unboxed = JSON.parse(entry);
+        const parsed = parseLogEntry(unboxed);
+        if (
+            parsed.tabId !== undefined &&
+            allTabIds.has(parsed.tabId) === false
+        ) {
+            if ( autoDeleteVoidedRows ) { continue; }
+            parsed.voided = true;
+        }
+        if ( parsed.type === 'main_frame' ) {
+            const separator = createLogSeparator(parsed, unboxed.url);
+            loggerEntries.unshift(separator);
+            if ( rowFilterer.filterOne(separator) ) {
+                filteredLoggerEntries.unshift(separator);
+                if ( separator.voided ) {
+                    filteredLoggerEntryVoidedCount += 1;
+                }
+            }
+        }
+        loggerEntries.unshift(parsed);
+        if ( rowFilterer.filterOne(parsed) ) {
+            filteredLoggerEntries.unshift(parsed);
+            if ( parsed.voided ) {
+                filteredLoggerEntryVoidedCount += 1;
+            }
         }
     }
 
-    // Prevent logger from growing infinitely and eating all memory. For
-    // instance someone could forget that it is left opened for some
-    // dynamically refreshed pages.
-    truncateLog(maxEntries);
-
-    // Follow waterfall if not observing top of waterfall.
-    const yDelta = tbody.offsetHeight - height;
-    if ( yDelta === 0 ) { return; }
-    const container = uDom.nodeFromSelector('#netInspector .vscrollable');
-    if ( container.scrollTop !== 0 ) {
-        container.scrollTop += yDelta;
+    const addedCount = filteredLoggerEntries.length - previousCount;
+    if ( addedCount !== 0 ) {
+        viewPort.updateContent(addedCount);
+        rowJanitor.inserted(addedCount);
     }
 };
 
 /******************************************************************************/
 
-let updateCurrentTabTitle = (function() {
-    let i18nCurrentTab = vAPI.i18n('loggerCurrentTab');
+const parseLogEntry = function(details) {
+    const entry = new LogEntry(details);
+
+    // Assemble the text content, i.e. the pre-built string which will be
+    // used to match logger output filtering expressions.
+    const textContent = [];
+
+    // Cell 0
+    logDate.setTime(details.tstamp - logDateTimezoneOffset);
+    textContent.push(
+        padTo2(logDate.getUTCHours()) + ':' +
+        padTo2(logDate.getUTCMinutes()) + ':' +
+        padTo2(logDate.getSeconds())
+    );
+
+    // Cell 1
+    if ( details.realm === 'message' ) {
+        textContent.push(details.text);
+        entry.textContent = textContent.join('\t');
+        return entry;
+    }
+
+    // Cell 1, 2
+    if ( entry.filter !== undefined ) {
+        textContent.push(entry.filter.raw);
+        if ( entry.filter.result === 1 ) {
+            textContent.push('--');
+        } else if ( entry.filter.result === 2 ) {
+            textContent.push('++');
+        } else if ( entry.filter.result === 3 ) {
+            textContent.push('**');
+        } else if ( entry.filter.source === 'redirect' ) {
+            textContent.push('<<');
+        } else {
+            textContent.push('');
+        }
+    } else {
+        textContent.push('', '');
+    }
+
+    // Cell 3
+    textContent.push(normalizeToStr(entry.docHostname));
+
+    // Cell 4
+    if (
+        entry.realm === 'network' &&
+        typeof entry.domain === 'string' &&
+        entry.domain !== ''
+    ) {
+        let partyness = '';
+        if ( entry.tabDomain !== undefined ) {
+            partyness += entry.domain === entry.tabDomain ? '1' : '3';
+        } else {
+            partyness += '?';
+        }
+        if ( entry.docDomain !== entry.tabDomain ) {
+            partyness += ',';
+            if ( entry.docDomain !== undefined ) {
+                partyness += entry.domain === entry.docDomain ? '1' : '3';
+            } else {
+                partyness += '?';
+            }
+        }
+        textContent.push(partyness);
+    } else {
+        textContent.push('');
+    }
+
+    // Cell 5
+    textContent.push(
+        normalizeToStr(prettyRequestTypes[entry.type] || entry.type)
+    );
+
+    // Cell 6
+    textContent.push(normalizeToStr(details.url));
+
+    entry.textContent = textContent.join('\t');
+    return entry;
+};
+
+/******************************************************************************/
+
+const viewPort = (function() {
+    const vwRenderer = document.getElementById('vwRenderer');
+    const vwScroller = document.getElementById('vwScroller');
+    const vwVirtualContent = document.getElementById('vwVirtualContent');
+    const vwContent = document.getElementById('vwContent');
+    const vwLineSizer = document.getElementById('vwLineSizer');
+    const vwLogEntryTemplate = document.querySelector('#logEntryTemplate > div');
+    const vwEntries = [];
+
+    let vwHeight = 0;
+    let lineHeight = 0;
+    let wholeHeight = 0;
+    let lastTopPix = 0;
+    let lastTopRow = 0;
+    let scrollTimer;
+    let resizeTimer;
+
+    const ViewEntry = function() {
+        this.div = document.createElement('div');
+        this.div.className = 'logEntry';
+        vwContent.appendChild(this.div);
+        this.logEntry = undefined;
+    };
+    ViewEntry.prototype = {
+        dispose: function() {
+            vwContent.removeChild(this.div);
+        },
+    };
+
+    const rowFromScrollTopPix = function(px) {
+        return lineHeight !== 0 ? Math.floor(px / lineHeight) : 0;
+    };
+
+    // This is called when the browser fired scroll events
+    const onScrollChanged = function() {
+        const newScrollTopPix = vwScroller.scrollTop;
+        const delta = newScrollTopPix - lastTopPix;
+        if ( delta === 0 ) { return; }
+        lastTopPix = newScrollTopPix;
+        if ( filteredLoggerEntries.length <= 2 ) { return; }
+        // No entries were rolled = all entries keep their current details
+        if ( rollLines(rowFromScrollTopPix(newScrollTopPix)) ) {
+            fillLines();
+        }
+        positionLines();
+        vwContent.style.top = `${lastTopPix}px`;
+    };
+
+    // Coallesce scroll events
+    const onScroll = function() {
+        if ( scrollTimer !== undefined ) { return; }
+        scrollTimer = setTimeout(
+            ( ) => {
+                scrollTimer = requestAnimationFrame(( ) => {
+                    scrollTimer = undefined;
+                    onScrollChanged();
+                });
+            },
+            1000/32
+        );
+    };
+
+    vwScroller.addEventListener('scroll', onScroll, { passive: true });
+
+    const onLayoutChanged = function() {
+        vwHeight = vwRenderer.clientHeight;
+        vwContent.style.height = `${vwScroller.clientHeight}px`;
+
+        const vExpanded =
+            uDom.nodeFromSelector('#netInspector .vCompactToggler')
+                .classList
+                .contains('vExpanded');
+
+        let newLineHeight =
+            vwLineSizer.querySelector('.oneLine').clientHeight;
+
+        if ( vExpanded ) {
+            newLineHeight *= loggerSettings.linesPerEntry;
+        }
+
+        const lineCount = newLineHeight !== 0
+            ? Math.ceil(vwHeight / newLineHeight) + 1
+            : 0;
+        if ( lineCount > vwEntries.length ) {
+            do {
+                vwEntries.push(new ViewEntry());
+            } while ( lineCount > vwEntries.length );
+        } else if ( lineCount < vwEntries.length ) {
+            do {
+                vwEntries.pop().dispose();
+            } while ( lineCount < vwEntries.length );
+        }
+
+        const cellWidths = Array.from(
+            vwLineSizer.querySelectorAll('.oneLine span')
+        ).map((el, i) => {
+            return loggerSettings.columns[i] !== false
+                ? el.clientWidth + 1
+                : 0;
+        });
+        const reservedWidth =
+            cellWidths[0] + cellWidths[2] + cellWidths[4] + cellWidths[5];
+        cellWidths[6] = 0.5;
+        if ( cellWidths[1] === 0 && cellWidths[3] === 0 ) {
+            cellWidths[6] = 1;
+        } else if ( cellWidths[1] === 0 ) {
+            cellWidths[3] = 0.35;
+            cellWidths[6] = 0.65;
+        } else if ( cellWidths[3] === 0 ) {
+            cellWidths[1] = 0.35;
+            cellWidths[6] = 0.65;
+        } else {
+            cellWidths[1] = 0.25;
+            cellWidths[3] = 0.25;
+            cellWidths[6] = 0.5;
+        }
+        const style = document.getElementById('vwRendererRuntimeStyles');
+        const cssRules = [
+            '#vwContent .logEntry {',
+            `  height: ${newLineHeight}px;`,
+            '}',
+            '#vwContent .logEntry > div > span:nth-of-type(1) {',
+            `  width: ${cellWidths[0]}px;`,
+            '}',
+            '#vwContent .logEntry > div > span:nth-of-type(2) {',
+            `  width: calc(calc(100% - ${reservedWidth}px) * ${cellWidths[1]});`,
+            '}',
+            '#vwContent .logEntry > div.messageRealm > span:nth-of-type(2) {',
+            `  width: calc(100% - ${cellWidths[0]}px);`,
+            '}',
+            '#vwContent .logEntry > div > span:nth-of-type(3) {',
+            `  width: ${cellWidths[2]}px;`,
+            '}',
+            '#vwContent .logEntry > div > span:nth-of-type(4) {',
+            `  width: calc(calc(100% - ${reservedWidth}px) * ${cellWidths[3]});`,
+            '}',
+            '#vwContent .logEntry > div > span:nth-of-type(5) {',
+            `  width: ${cellWidths[4]}px;`,
+            '}',
+            '#vwContent .logEntry > div > span:nth-of-type(6) {',
+            `  width: ${cellWidths[5]}px;`,
+            '}',
+            '#vwContent .logEntry > div > span:nth-of-type(7) {',
+            `  width: calc(calc(100% - ${reservedWidth}px) * ${cellWidths[6]});`,
+            '}',
+            '',
+        ];
+        for ( let i = 0; i < cellWidths.length; i++ ) {
+            if ( cellWidths[i] !== 0 ) { continue; }
+            cssRules.push(
+                `#vwContent .logEntry > div > span:nth-of-type(${i + 1}) {`,
+                '  display: none;',
+                '}'
+            );
+        }
+        style.textContent = cssRules.join('\n');
+
+        lineHeight = newLineHeight;
+        positionLines();
+        uDom.nodeFromId('netInspector')
+            .classList
+            .toggle('vExpanded', vExpanded);
+
+        updateContent(0);
+    };
+
+    const updateLayout = function() {
+        if ( resizeTimer !== undefined ) { return; }
+        resizeTimer = setTimeout(
+            ( ) => {
+                resizeTimer = requestAnimationFrame(( ) => {
+                    resizeTimer = undefined;
+                    onLayoutChanged();
+                });
+            },
+            1000/8
+        );
+    };
+
+    window.addEventListener('resize', updateLayout, { passive: true });
+
+    updateLayout();
+
+    const renderToDiv = function(vwEntry, i) {
+        if ( i >= filteredLoggerEntries.length ) {
+            vwEntry.logEntry = undefined;
+            return null;
+        }
+
+        const details = filteredLoggerEntries[i];
+        if ( vwEntry.logEntry === details ) {
+            return vwEntry.div.firstElementChild;
+        }
+
+        vwEntry.logEntry = details;
+
+        const cells = details.textContent.split('\t');
+        const div = vwLogEntryTemplate.cloneNode(true);
+        const divcl = div.classList;
+        let span;
+
+
+        // Realm
+        if ( details.realm !== undefined ) {
+            divcl.add(details.realm + 'Realm');
+        }
+
+        // Timestamp
+        span = div.children[0];
+        span.textContent = cells[0];
+
+        // Tab id
+        if ( details.tabId !== undefined ) {
+            div.setAttribute('data-tabid', details.tabId);
+            if ( details.voided ) {
+                divcl.add('voided');
+            }
+        }
+
+        if ( details.realm === 'message' ) {
+            if ( details.type !== undefined ) {
+                div.setAttribute('data-type', details.type);
+            }
+            span = div.children[1];
+            span.textContent = cells[1];
+            return div;
+        }
+
+        if ( details.realm === 'network' || details.realm === 'cosmetic' ) {
+            divcl.add('canDetails');
+        }
+
+        // Filter
+        const filter = details.filter || undefined;
+        let filteringType;
+        if ( filter !== undefined ) {
+            if ( typeof filter.source === 'string' ) {
+                filteringType = filter.source;
+                divcl.add(filteringType);
+            }
+            if ( filteringType === 'static' ) {
+                divcl.add('canLookup');
+                div.setAttribute('data-filter', filter.compiled);
+            } else if ( filteringType === 'cosmetic' ) {
+                divcl.add('canLookup');
+            }
+        }
+        span = div.children[1];
+        span.textContent = cells[1];
+
+        // Event
+        if ( cells[2] === '--' ) {
+            divcl.add('blocked');
+        } else if ( cells[2] === '++' ) {
+            divcl.add('allowed');
+        } else if ( cells[2] === '**' ) {
+            span.add('nooped');
+        } else if ( cells[2] === '<<' ) {
+            divcl.add('redirect');
+        }
+        span = div.children[2];
+        span.textContent = cells[2];
+
+        // Origins
+        if ( details.tabHostname ) {
+            div.setAttribute('data-tabhn', details.tabHostname);
+        }
+        if ( details.docHostname ) {
+            div.setAttribute('data-dochn', details.docHostname);
+        }
+        span = div.children[3];
+        span.textContent = cells[3];
+
+        // Partyness
+        if (
+            cells[4] !== '' &&
+            details.realm === 'network' &&
+            details.domain !== undefined
+        ) {
+            let text = `${details.tabDomain}`;
+            if ( details.docDomain !== details.tabDomain ) {
+                text += ` \u22ef ${details.docDomain}`;
+            }
+            text += ` \u21d2 ${details.domain}`;
+            div.setAttribute('data-parties', text);
+        }
+        span = div.children[4];
+        span.textContent = cells[4];
+
+        // Type
+        span = div.children[5];
+        span.textContent = cells[5];
+
+        // URL
+        let re = null;
+        if ( filteringType === 'static' ) {
+            re = new RegExp(filter.regex, 'gi');
+        } else if ( filteringType === 'dynamicUrl' ) {
+            re = regexFromURLFilteringResult(filter.rule.join(' '));
+        }
+        span = div.children[6];
+        span.appendChild(nodeFromURL(cells[6], re));
+
+        return div;
+    };
+
+    // The idea is that positioning DOM elements is faster than
+    // removing/inserting DOM elements.
+    const positionLines = function() {
+        if ( lineHeight === 0 ) { return; }
+        let y = -(lastTopPix % lineHeight);
+        for ( const vwEntry of vwEntries ) {
+            vwEntry.div.style.top = `${y}px`;
+            y += lineHeight;
+        }
+    };
+
+    const rollLines = function(topRow) {
+        let delta = topRow - lastTopRow;
+        let deltaLength = Math.abs(delta);
+        // No point rolling if no rows can be reused
+        if ( deltaLength > 0 && deltaLength < vwEntries.length ) {
+            if ( delta < 0 ) {      // Move bottom rows to the top
+                vwEntries.unshift(...vwEntries.splice(delta));
+            } else {                // Move top rows to the bottom
+                vwEntries.push(...vwEntries.splice(0, delta));
+            }
+        }
+        lastTopRow = topRow;
+        return delta;
+    };
+
+    const fillLines = function() {
+        let rowBeg = lastTopRow;
+        for ( const vwEntry of vwEntries ) {
+            const newDiv = renderToDiv(vwEntry, rowBeg);
+            const container = vwEntry.div;
+            const oldDiv = container.firstElementChild;
+            if ( newDiv !== null ) {
+                if ( oldDiv === null ) {
+                    container.appendChild(newDiv);
+                } else if ( newDiv !== oldDiv ) {
+                    container.removeChild(oldDiv);
+                    container.appendChild(newDiv);
+                }
+            } else if ( oldDiv !== null ) {
+                container.removeChild(oldDiv);
+            }
+            rowBeg += 1;
+        }
+    };
+
+    const contentChanged = function(addedCount) {
+        lastTopRow += addedCount;
+        const newWholeHeight = Math.max(
+            filteredLoggerEntries.length * lineHeight,
+            vwRenderer.clientHeight
+        );
+        if ( newWholeHeight !== wholeHeight ) {
+            vwVirtualContent.style.height = `${newWholeHeight}px`;
+            wholeHeight = newWholeHeight;
+        }
+    };
+
+    const updateContent = function(addedCount) {
+        contentChanged(addedCount);
+        // Content changed
+        if ( addedCount === 0 ) {
+            if (
+                lastTopRow !== 0 &&
+                lastTopRow + vwEntries.length > filteredLoggerEntries.length
+            ) {
+                lastTopRow = filteredLoggerEntries.length - vwEntries.length;
+                if ( lastTopRow < 0 ) { lastTopRow = 0; }
+                lastTopPix = lastTopRow * lineHeight;
+                vwContent.style.top = `${lastTopPix}px`;
+                vwScroller.scrollTop = lastTopPix;
+                positionLines();
+            }
+            fillLines();
+            return;
+        }
+
+        // Content added
+        // Preserve scroll position
+        if ( lastTopPix === 0 ) {
+            rollLines(0);
+            positionLines();
+            fillLines();
+            return;
+        }
+
+        // Preserve row position
+        lastTopPix += lineHeight * addedCount;
+        vwContent.style.top = `${lastTopPix}px`;
+        vwScroller.scrollTop = lastTopPix;
+    };
+
+    return { updateContent, updateLayout, };
+})();
+
+/******************************************************************************/
+
+const updateCurrentTabTitle = (function() {
+    const i18nCurrentTab = vAPI.i18n('loggerCurrentTab');
 
     return function() {
-        let select = uDom.nodeFromId('pageSelector');
-        if ( select.value !== 'tab_active' ) { return; }
-        let opt0 = select.querySelector('[value="tab_active"]');
-        let opt1 = select.querySelector('[value="tab_' + activeTabId + '"]');
+        const select = uDom.nodeFromId('pageSelector');
+        if ( select.value !== '_' || activeTabId === 0 ) { return; }
+        const opt0 = select.querySelector('[value="_"]');
+        const opt1 = select.querySelector('[value="' + activeTabId + '"]');
         let text = i18nCurrentTab;
         if ( opt1 !== null ) {
             text += ' / ' + opt1.textContent;
@@ -427,24 +795,44 @@ let updateCurrentTabTitle = (function() {
 
 const synchronizeTabIds = function(newTabIds) {
     const select = uDom.nodeFromId('pageSelector');
-    const selectValue = select.value;
+    const selectedTabValue = select.value;
     const oldTabIds = allTabIds;
-    const autoDeleteVoidRows = selectValue === 'tab_active';
-    let rowVoided = false;
+
+    // Collate removed tab ids.
+    const toVoid = new Set();
     for ( const tabId of oldTabIds.keys() ) {
         if ( newTabIds.has(tabId) ) { continue; }
-        // Mark or remove voided rows
-        const trs = uDom('.tab_' + tabId);
-        if ( autoDeleteVoidRows ) {
-            toJunkyard(trs);
-        } else {
-            trs.addClass('void');
-            rowVoided = true;
+        toVoid.add(tabId);
+    }
+    allTabIds = newTabIds;
+
+    // Mark as "void" all logger entries which are linked to now invalid
+    // tab ids.
+    // When an entry is voided without being removed, we re-create a new entry
+    // in order to ensure the entry has a new identity. A new identify ensures
+    // that identity-based associations elsewhere are automatically
+    // invalidated.
+    if ( toVoid.size !== 0 ) {
+        const autoDeleteVoidedRows = selectedTabValue === '_';
+        let rowVoided = false;
+        for ( let i = 0, n = loggerEntries.length; i < n; i++ ) {
+            const entry = loggerEntries[i];
+            if ( toVoid.has(entry.tabId) === false ) { continue; }
+            if ( entry.voided ) { continue; }
+            rowVoided = entry.voided = true;
+            if ( autoDeleteVoidedRows ) {
+                entry.dead = true;
+            }
+            loggerEntries[i] = new LogEntry(entry);
         }
-        // Remove popup if it is currently bound to a removed tab.
-        if ( tabId === popupManager.tabId ) {
-            popupManager.toggleOff();
+        if ( rowVoided ) {
+            rowFilterer.filterAll();
         }
+    }
+
+    // Remove popup if it is currently bound to a removed tab.
+    if ( toVoid.has(popupManager.tabId) ) {
+        popupManager.toggleOff();
     }
 
     const tabIds = Array.from(newTabIds.keys()).sort(function(a, b) {
@@ -453,16 +841,15 @@ const synchronizeTabIds = function(newTabIds) {
     let j = 3;
     for ( let i = 0; i < tabIds.length; i++ ) {
         const tabId = tabIds[i];
-        if ( tabId < 0 ) { continue; }
-        let option = select.options[j];
-        if ( !option ) {
-            option = document.createElement('option');
-            select.appendChild(option);
+        if ( tabId <= 0 ) { continue; }
+        if ( j === select.options.length ) {
+            select.appendChild(document.createElement('option'));
         }
+        const option = select.options[j];
         // Truncate too long labels.
         option.textContent = newTabIds.get(tabId).slice(0, 80);
-        option.value = classNameFromTabId(tabId);
-        if ( option.value === selectValue ) {
+        option.setAttribute('value', tabId);
+        if ( option.value === selectedTabValue ) {
             select.selectedIndex = j;
             option.setAttribute('selected', '');
         } else {
@@ -473,33 +860,14 @@ const synchronizeTabIds = function(newTabIds) {
     while ( j < select.options.length ) {
         select.removeChild(select.options[j]);
     }
-    if ( select.value !== selectValue ) {
+    if ( select.value !== selectedTabValue ) {
         select.selectedIndex = 0;
         select.value = '';
         select.options[0].setAttribute('selected', '');
         pageSelectorChanged();
     }
 
-    allTabIds = newTabIds;
-
     updateCurrentTabTitle();
-
-    return rowVoided;
-};
-
-/******************************************************************************/
-
-var truncateLog = function(size) {
-    if ( size === 0 ) {
-        size = 5000;
-    }
-    var tbody = document.querySelector('#netInspector tbody');
-    size = Math.min(size, 10000);
-    var tr;
-    while ( tbody.childElementCount > size ) {
-        tr = tbody.lastElementChild;
-        trJunkyard.push(tbody.removeChild(tr));
-    }
 };
 
 /******************************************************************************/
@@ -525,20 +893,13 @@ const onLogBufferRead = function(response) {
         activeTabId = response.activeTabId;
     }
 
-    // This may have changed meanwhile
-    if ( response.maxEntries !== maxEntries ) {
-        maxEntries = response.maxEntries;
-        uDom('#maxEntries').val(maxEntries || '');
-    }
-
     if ( Array.isArray(response.tabIds) ) {
         response.tabIds = new Map(response.tabIds);
     }
 
-    // Neuter rows for which a tab does not exist anymore
-    let rowVoided = false;
+    // List of tab ids has changed
     if ( response.tabIds !== undefined ) {
-        rowVoided = synchronizeTabIds(response.tabIds);
+        synchronizeTabIds(response.tabIds);
         allTabIdsToken = response.tabIdsToken;
     }
 
@@ -547,20 +908,21 @@ const onLogBufferRead = function(response) {
     }
 
     if ( netInspectorPaused === false ) {
-        renderLogEntries(response);
+        processLoggerEntries(response);
     }
 
-    if ( rowVoided ) {
-        uDom('#clean').toggleClass(
-            'disabled',
-            tbody.querySelector('#netInspector tr[data-tabid].void') === null
-        );
-    }
-
-    // Synchronize toolbar with content of log
-    uDom('#clear').toggleClass(
+    // Synchronize DOM with sent logger data
+    document.body.classList.toggle(
+        'colorBlind',
+        response.colorBlind === true
+    );
+    uDom.nodeFromId('clean').classList.toggle(
         'disabled',
-        tbody.querySelector('tr') === null
+        filteredLoggerEntryVoidedCount === 0
+    );
+    uDom.nodeFromId('clear').classList.toggle(
+        'disabled',
+        filteredLoggerEntries.length === 0
     );
 };
 
@@ -616,81 +978,58 @@ const readLogBuffer = (function() {
  
 /******************************************************************************/
 
-let pageSelectorChanged = function() {
-    let select = uDom.nodeFromId('pageSelector');
+const pageSelectorChanged = function() {
+    const select = uDom.nodeFromId('pageSelector');
     window.location.replace('#' + select.value);
     pageSelectorFromURLHash();
 };
 
-let pageSelectorFromURLHash = (function() {
-    let lastTabClass = '';
-    let lastEffectiveTabClass = '';
-    let reActiveTabId = /^(tab_[^+]+)\+(.+)$/;
-
-    let selectRows = function(tabClass) {
-        let effectiveTabClass = tabClass;
-        if ( tabClass === 'tab_active' ) {
-            if ( activeTabId === undefined ) { return; }
-            effectiveTabClass = 'tab_' + activeTabId;
-        }
-        if ( effectiveTabClass === lastEffectiveTabClass ) { return; }
-        lastEffectiveTabClass = effectiveTabClass;
-
-        document.dispatchEvent(new Event('tabIdChanged'));
-
-        let style = uDom.nodeFromId('tabFilterer');
-        let sheet = style.sheet;
-        while ( sheet.cssRules.length !== 0 )  {
-            sheet.deleteRule(0);
-        }
-        if ( effectiveTabClass === '' ) { return; }
-        sheet.insertRule(
-            '#netInspector tr:not(.' + effectiveTabClass + '):not(.tab_bts) ' +
-            '{display:none;}',
-            0
-        );
-
-        updateCurrentTabTitle();
-    };
+const pageSelectorFromURLHash = (function() {
+    let lastHash;
+    let lastSelectedTabId;
 
     return function() {
-        let tabClass = window.location.hash.slice(1);
-        let match = reActiveTabId.exec(tabClass);
+        let hash = window.location.hash.slice(1);
+        let match = /^([^+]+)\+(.+)$/.exec(hash);
         if ( match !== null ) {
-            tabClass = match[1];
-            activeTabId = parseInt(match[2], 10) || undefined;
-            window.location.hash = '#' + match[1];
-        }
-        selectRows(tabClass);
-        if ( tabClass === lastTabClass ) { return; }
-        lastTabClass = tabClass;
-
-        let select = uDom.nodeFromId('pageSelector');
-        let option = select.querySelector('option[value="' + tabClass + '"]');
-        if ( option === null ) {
-            window.location.hash = '';
-            tabClass = '';
-            option = select.options[0];
+            hash = match[1];
+            activeTabId = parseInt(match[2], 10) || 0;
+            window.location.hash = '#' + hash;
         }
 
-        select.selectedIndex = option.index;
-        select.value = option.value;
+        if ( hash !== lastHash ) {
+            const select = uDom.nodeFromId('pageSelector');
+            let option = select.querySelector(
+                'option[value="' + hash + '"]'
+            );
+            if ( option === null ) {
+                hash = '0';
+                option = select.options[0];
+            }
+            select.selectedIndex = option.index;
+            select.value = option.value;
+            lastHash = hash;
+        }
 
-        uDom('.needdom').toggleClass(
-            'disabled',
-            tabClass === '' || tabClass === 'tab_bts'
-        );
-        uDom('.needscope').toggleClass(
-            'disabled',
-            tabClass === ''
-        );
+        selectedTabId = hash === '_'
+            ? activeTabId
+            : parseInt(hash, 10) || 0;
+
+        if ( lastSelectedTabId === selectedTabId ) { return; }
+
+        rowFilterer.filterAll();
+        document.dispatchEvent(new Event('tabIdChanged'));
+        updateCurrentTabTitle();
+        uDom('.needdom').toggleClass('disabled', selectedTabId <= 0);
+        uDom('.needscope').toggleClass('disabled', selectedTabId <= 0);
+        lastSelectedTabId = selectedTabId;
     };
 })();
 
 /******************************************************************************/
 
-var reloadTab = function(ev) {
-    var tabId = tabIdFromPageSelector();
+const reloadTab = function(ev) {
+    const tabId = tabIdFromPageSelector();
     if ( tabId <= 0 ) { return; }
     messaging.send('loggerUI', {
         what: 'reloadTab',
@@ -700,85 +1039,59 @@ var reloadTab = function(ev) {
 };
 
 /******************************************************************************/
-
-var onMaxEntriesChanged = function() {
-    var input = this;
-    try {
-        maxEntries = parseInt(input.value, 10);
-        if ( maxEntries === 0 || isNaN(maxEntries) ) {
-            maxEntries = 1000;
-        }
-    } catch (e) {
-        maxEntries = 1000;
-    }
-
-    maxEntries = Math.min(maxEntries, 5000);
-    maxEntries = Math.max(maxEntries, 10);
-
-    input.value = maxEntries.toString(10);
-
-    messaging.send(
-        'loggerUI',
-        {
-            what: 'userSettings',
-            name: 'requestLogMaxEntries',
-            value: maxEntries
-        }
-    );
-
-    truncateLog(maxEntries);
-};
-
-/******************************************************************************/
 /******************************************************************************/
 
-var netFilteringManager = (function() {
-    var targetRow = null;
-    var dialog = null;
-    var createdStaticFilters = {};
+const netFilteringManager = (function() {
+    const reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
+    const staticFilterTypes = {
+        'beacon': 'other',
+        'doc': 'document',
+        'css': 'stylesheet',
+        'frame': 'subdocument',
+        'ping': 'other',
+        'object_subrequest': 'object',
+        'xhr': 'xmlhttprequest'
+    };
+    const createdStaticFilters = {};
 
-    var targetType;
-    var targetURLs = [];
-    var targetFrameHostname;
-    var targetPageHostname;
-    var targetTabId;
-    var targetDomain;
-    var targetPageDomain;
-    var targetFrameDomain;
+    let dialog = null;
+    let targetRow = null;
+    let targetType;
+    let targetURLs = [];
+    let targetFrameHostname;
+    let targetPageHostname;
+    let targetTabId;
+    let targetDomain;
+    let targetPageDomain;
+    let targetFrameDomain;
 
-    var uglyTypeFromSelector = function(pane) {
-        var prettyType = selectValue('select.type.' + pane);
+    const uglyTypeFromSelector = function(pane) {
+        const prettyType = selectValue('select.type.' + pane);
         if ( pane === 'static' ) {
             return staticFilterTypes[prettyType] || prettyType;
         }
         return uglyRequestTypes[prettyType] || prettyType;
     };
 
-    var selectNode = function(selector) {
+    const selectNode = function(selector) {
         return dialog.querySelector(selector);
     };
 
-    var selectValue = function(selector) {
+    const selectValue = function(selector) {
         return selectNode(selector).value || '';
     };
 
-    var staticFilterNode = function() {
-        return dialog.querySelector('div.containers > div.static textarea');
+    const staticFilterNode = function() {
+        return dialog.querySelector('div.panes > div.static textarea');
     };
 
-    var onColorsReady = function(response) {
+    const onColorsReady = function(response) {
         document.body.classList.toggle('dirty', response.dirty);
-        var colorEntries = response.colors;
-        var colorEntry, node;
-        for ( var url in colorEntries ) {
-            if ( colorEntries.hasOwnProperty(url) === false ) {
-                continue;
-            }
-            colorEntry = colorEntries[url];
-            node = dialog.querySelector('.dynamic .entry .action[data-url="' + url + '"]');
-            if ( node === null ) {
-                continue;
-            }
+        for ( const url in response.colors ) {
+            if ( response.colors.hasOwnProperty(url) === false ) { continue; }
+            const colorEntry = response.colors[url];
+            const node = dialog.querySelector('.dynamic .entry .action[data-url="' + url + '"]');
+            if ( node === null ) { continue; }
             node.classList.toggle('allow', colorEntry.r === 2);
             node.classList.toggle('noop', colorEntry.r === 3);
             node.classList.toggle('block', colorEntry.r === 1);
@@ -786,7 +1099,7 @@ var netFilteringManager = (function() {
         }
     };
 
-    var colorize = function() {
+    const colorize = function() {
         messaging.send(
             'loggerUI',
             {
@@ -799,14 +1112,14 @@ var netFilteringManager = (function() {
         );
     };
 
-    var parseStaticInputs = function() {
-        var filter = '',
-            options = [],
-            block = selectValue('select.static.action') === '';
+    const parseStaticInputs = function() {
+        const options = [];
+        const block = selectValue('select.static.action') === '';
+        let filter = '';
         if ( !block ) {
             filter = '@@';
         }
-        var value = selectValue('select.static.url');
+        let value = selectValue('select.static.url');
         if ( value !== '' ) {
             if ( value.slice(-1) === '/' ) {
                 value += '*';
@@ -838,44 +1151,28 @@ var netFilteringManager = (function() {
         updateWidgets();
     };
 
-    var updateWidgets = function() {
-        var value = staticFilterNode().value;
+    const updateWidgets = function() {
+        const value = staticFilterNode().value;
         dialog.querySelector('#createStaticFilter').classList.toggle(
             'disabled',
             createdStaticFilters.hasOwnProperty(value) || value === ''
         );
     };
 
-    var onClick = function(ev) {
-        var target = ev.target;
-
-        // click outside the dialog proper
-        if ( target.classList.contains('modalDialog') ) {
-            toggleOff();
-            return;
-        }
-
-        ev.stopPropagation();
-
-        var tcl = target.classList;
-        var value;
+    const onClick = function(ev) {
+        const target = ev.target;
+        const tcl = target.classList;
 
         // Select a mode
         if ( tcl.contains('header') ) {
-            if ( tcl.contains('selected') ) {
-                return;
-            }
-            uDom('.header').removeClass('selected');
-            uDom('.container').removeClass('selected');
-            value = target.getAttribute('data-container');
-            uDom('.header.' + value).addClass('selected');
-            uDom('.container.' + value).addClass('selected');
+            dialog.setAttribute('data-pane', target.getAttribute('data-pane') );
+            ev.stopPropagation();
             return;
         }
 
         // Create static filter
         if ( target.id === 'createStaticFilter' ) {
-            value = staticFilterNode().value;
+            const value = staticFilterNode().value;
             // Avoid duplicates
             if ( createdStaticFilters.hasOwnProperty(value) ) {
                 return;
@@ -894,6 +1191,7 @@ var netFilteringManager = (function() {
                 );
             }
             updateWidgets();
+            ev.stopPropagation();
             return;
         }
 
@@ -909,10 +1207,11 @@ var netFilteringManager = (function() {
                 },
                 colorize
             );
+            ev.stopPropagation();
             return;
         }
 
-        var persist = !!ev.ctrlKey || !!ev.metaKey;
+        const persist = !!ev.ctrlKey || !!ev.metaKey;
 
         // Remove url filtering rule
         if ( tcl.contains('action') ) {
@@ -928,6 +1227,7 @@ var netFilteringManager = (function() {
                 },
                 colorize
             );
+            ev.stopPropagation();
             return;
         }
 
@@ -945,6 +1245,7 @@ var netFilteringManager = (function() {
                 },
                 colorize
             );
+            ev.stopPropagation();
             return;
         }
 
@@ -962,6 +1263,7 @@ var netFilteringManager = (function() {
                 },
                 colorize
             );
+            ev.stopPropagation();
             return;
         }
 
@@ -979,6 +1281,7 @@ var netFilteringManager = (function() {
                 },
                 colorize
             );
+            ev.stopPropagation();
             return;
         }
 
@@ -991,6 +1294,7 @@ var netFilteringManager = (function() {
                     tabId: targetTabId
                 }
             );
+            ev.stopPropagation();
             return;
         }
 
@@ -1005,13 +1309,13 @@ var netFilteringManager = (function() {
                     select: true
                 }
             );
+            ev.stopPropagation();
             return;
         }
     };
 
-    var onSelectChange = function(ev) {
-        var target = ev.target;
-        var tcl = target.classList;
+    const onSelectChange = function(ev) {
+        const tcl = ev.target.classList;
 
         if ( tcl.contains('dynamic') ) {
             colorize();
@@ -1024,42 +1328,47 @@ var netFilteringManager = (function() {
         }
     };
 
-    var onInputChange = function() {
+    const onInputChange = function() {
         updateWidgets();
     };
 
-    var createPreview = function(type, url) {
-        // First, whether picker can be used
+    const createPreview = function(type, url) {
+        const cantPreview =
+            type !== 'image' ||
+            targetRow.classList.contains('networkRealm') === false  ||
+            targetRow.classList.contains('blocked');
+
+        // Whether picker can be used
         dialog.querySelector('.picker').classList.toggle(
             'hide',
-            targetTabId < 0 ||
-            targetType !== 'image' ||
-            /(?:^| )[dlsu]b(?: |$)/.test(targetRow.className)
+            targetTabId < 0 || cantPreview
         );
 
-        var preview = null;
+        // Whether the resource can be previewed
+        if ( cantPreview ) { return; }
 
-        if ( type === 'image' ) {
-            preview = document.createElement('img');
-            preview.setAttribute('src', url);
-        }
+        const container = dialog.querySelector('.preview');
+        container.querySelector('span').addEventListener(
+            'click',
+            ( ) => {
+                const preview = document.createElement('img');
+                preview.setAttribute('src', url);
+                container.replaceChild(preview, container.firstElementChild);
+            },
+            { once: true }
+        );
 
-        var container = dialog.querySelector('div.preview');
-        container.classList.toggle('hide', preview === null);
-        if ( preview === null ) {
-            return;
-        }
-        container.appendChild(preview);
+        container.classList.remove('hide');
     };
 
     // https://github.com/gorhill/uBlock/issues/1511
-    var shortenLongString = function(url, max) {
-        var urlLen = url.length;
+    const shortenLongString = function(url, max) {
+        const urlLen = url.length;
         if ( urlLen <= max ) {
             return url;
         }
-        var n = urlLen - max - 1;
-        var i = (urlLen - n) / 2 | 0;
+        const n = urlLen - max - 1;
+        const i = (urlLen - n) / 2 | 0;
         return url.slice(0, i) + '…' + url.slice(i + n);
     };
 
@@ -1091,14 +1400,153 @@ var netFilteringManager = (function() {
         return urls;
     };
 
+    const fillSummaryPaneFilterList = function(row) {
+        const nodeFromFilter = function(filter, lists) {
+            if ( Array.isArray(lists) === false || lists.length === 0 ) {
+                return;
+            }
+            const fragment = document.createDocumentFragment();
+            const template = document.querySelector(
+                '#filterFinderListEntry > span'
+            );
+            for ( const list of lists ) {
+                const span = template.cloneNode(true);
+                let a = span.querySelector('a:nth-of-type(1)');
+                a.href += encodeURIComponent(list.assetKey);
+                a.textContent = list.title;
+                if ( list.supportURL ) {
+                    a = span.querySelector('a:nth-of-type(2)');
+                    a.setAttribute('href', list.supportURL);
+                }
+                if ( fragment.childElementCount !== 0 ) {
+                    fragment.appendChild(document.createTextNode('\n'));
+                }
+                fragment.appendChild(span);
+            }
+            return fragment;
+        };
+
+        const handleResponse = function(response) {
+            if ( response instanceof Object === false ) {
+                response = {};
+            }
+            const fragment = document.createDocumentFragment();
+            for ( const filter in response ) {
+                const spans = nodeFromFilter(filter, response[filter]);
+                if ( spans === undefined ) { continue; }
+                fragment.appendChild(spans);
+            }
+            row.children[1].appendChild(fragment);
+            // https://github.com/gorhill/uBlock/issues/2179
+            if ( row.children[1].childElementCount === 0 ) {
+                vAPI.i18n.safeTemplateToDOM(
+                    'loggerStaticFilteringFinderSentence2',
+                    { filter: rawFilter },
+                    row.children[1]
+                );
+            }
+        };
+        const rawFilter = targetRow.children[1].textContent;
+        const compiledFilter = targetRow.getAttribute('data-filter');
+
+        if ( targetRow.classList.contains('networkRealm') ) {
+            messaging.send(
+                'loggerUI',
+                {
+                    what: 'listsFromNetFilter',
+                    compiledFilter: compiledFilter,
+                    rawFilter: rawFilter
+                },
+                handleResponse
+            );
+        } else if ( targetRow.classList.contains('cosmeticRealm') ) {
+            messaging.send(
+                'loggerUI',
+                {
+                    what: 'listsFromCosmeticFilter',
+                    url: targetRow.children[6].textContent,
+                    rawFilter: rawFilter,
+                },
+                handleResponse
+            );
+        }
+    };
+
+    const fillSummaryPane = function() {
+        const rows = dialog.querySelectorAll('.pane.details > div');
+        const tr = targetRow;
+        const trcl = tr.classList;
+        const trch = tr.children;
+        let text;
+        // Filter and context
+        text = trch[1].textContent;
+        if (
+            (text !== '') &&
+            (trcl.contains('cosmetic') || trcl.contains('static'))
+        ) {
+            rows[0].children[1].textContent = text;
+        } else {
+            rows[0].style.display = 'none';
+        }
+        // Rule
+        if (
+            (text !== '') &&
+            (trcl.contains('dynamicHost') || trcl.contains('dynamicUrl'))
+        ) {
+            rows[2].children[1].textContent = text;
+        } else {
+            rows[2].style.display = 'none';
+        }
+        // Filter list
+        if ( trcl.contains('canLookup') ) {
+            fillSummaryPaneFilterList(rows[1]);
+        } else {
+            rows[1].style.display = 'none';
+        }
+        // Root and immediate contexts
+        const tabhn = tr.getAttribute('data-tabhn') || '';
+        const dochn = tr.getAttribute('data-dochn') || '';
+        if ( tabhn !== '' && tabhn !== dochn ) {
+            rows[3].children[1].textContent = tabhn;
+        } else {
+            rows[3].style.display = 'none';
+        }
+        if ( dochn !== '' ) {
+            rows[4].children[1].textContent = dochn;
+        } else {
+            rows[4].style.display = 'none';
+        }
+        // Partyness
+        text = tr.getAttribute('data-parties') || '';
+        if ( text !== '' ) {
+            rows[5].children[1].textContent = `${trch[4].textContent}\u2002${text}`;
+        } else {
+            rows[5].style.display = 'none';
+        }
+        // Type
+        text = trch[5].textContent;
+        if ( text !== '' ) {
+            rows[6].children[1].textContent = text;
+        } else {
+            rows[6].style.display = 'none';
+        }
+        // URL
+        text = trch[6].textContent;
+        if ( text !== '' ) {
+            rows[7].children[1].appendChild(trch[6].cloneNode(true));
+        } else {
+            rows[7].style.display = 'none';
+        }
+    };
+
     // Fill dynamic URL filtering pane
-    var fillDynamicPane = function() {
-        var select;
+    const fillDynamicPane = function() {
+        if ( targetRow.classList.contains('cosmeticRealm') ) { return; }
+
         // Fill context selector
-        select = selectNode('select.dynamic.origin');
-        removeAllChildren(select);
+        let select = selectNode('select.dynamic.origin');
         fillOriginSelect(select, targetPageHostname, targetPageDomain);
-        var option = document.createElement('option');
+        const option = document.createElement('option');
         option.textContent = '*';
         option.setAttribute('value', '*');
         select.appendChild(option);
@@ -1110,56 +1558,50 @@ var netFilteringManager = (function() {
         select.selectedIndex = 0;
 
         // Fill entries
-        var menuEntryTemplate = dialog.querySelector('table.toolbar tr.entry');
-        var tbody = dialog.querySelector('div.dynamic table.entries tbody');
-        var url, menuEntry;
-        for ( var i = 0; i < targetURLs.length; i++ ) {
-            url = targetURLs[i];
-            menuEntry = menuEntryTemplate.cloneNode(true);
-            menuEntry.cells[0].children[0].setAttribute('data-url', url);
-            menuEntry.cells[1].textContent = shortenLongString(url, 128);
+        const menuEntryTemplate = dialog.querySelector('.dynamic .toolbar .entry');
+        const tbody = dialog.querySelector('.dynamic .entries');
+        for ( let i = 0; i < targetURLs.length; i++ ) {
+            const url = targetURLs[i];
+            const menuEntry = menuEntryTemplate.cloneNode(true);
+            menuEntry.children[0].setAttribute('data-url', url);
+            menuEntry.children[1].textContent = shortenLongString(url, 128);
             tbody.appendChild(menuEntry);
         }
 
         colorize();
     };
 
-    var fillOriginSelect = function(select, hostname, domain) {
-        var option, pos;
-        var template = vAPI.i18n('loggerStaticFilteringSentencePartOrigin');
-        var value = hostname;
+    const fillOriginSelect = function(select, hostname, domain) {
+        const template = vAPI.i18n('loggerStaticFilteringSentencePartOrigin');
+        let value = hostname;
         for (;;) {
-            option = document.createElement('option');
+            const option = document.createElement('option');
             option.setAttribute('value', value);
             option.textContent = template.replace('{{origin}}', value);
             select.appendChild(option);
-            if ( value === domain ) {
-                break;
-            }
-            pos = value.indexOf('.');
-            if ( pos === -1 ) {
-                break;
-            }
+            if ( value === domain ) { break; }
+            const pos = value.indexOf('.');
+            if ( pos === -1 ) { break; }
             value = value.slice(pos + 1);
         }
     };
 
     // Fill static filtering pane
-    var fillStaticPane = function() {
-        var template = vAPI.i18n('loggerStaticFilteringSentence');
-        var rePlaceholder = /\{\{[^}]+?\}\}/g;
-        var nodes = [];
-        var match, pos = 0;
-        var select, option, n, i, value;
+    const fillStaticPane = function() {
+        if ( targetRow.classList.contains('cosmeticRealm') ) { return; }
+
+        const template = vAPI.i18n('loggerStaticFilteringSentence');
+        const rePlaceholder = /\{\{[^}]+?\}\}/g;
+        const nodes = [];
+        let pos = 0;
         for (;;) {
-            match = rePlaceholder.exec(template);
-            if ( match === null ) {
-                break;
-            }
+            const match = rePlaceholder.exec(template);
+            if ( match === null ) { break; }
             if ( pos !== match.index ) {
                 nodes.push(document.createTextNode(template.slice(pos, match.index)));
             }
             pos = rePlaceholder.lastIndex;
+            let select, option;
             switch ( match[0] ) {
             case '{{br}}':
                 nodes.push(document.createElement('br'));
@@ -1196,8 +1638,8 @@ var netFilteringManager = (function() {
             case '{{url}}':
                 select = document.createElement('select');
                 select.className = 'static url';
-                for ( i = 0, n = targetURLs.length; i < n; i++ ) {
-                    value = targetURLs[i].replace(/^[a-z-]+:\/\//, '');
+                for ( let i = 0, n = targetURLs.length; i < n; i++ ) {
+                    const value = targetURLs[i].replace(/^[a-z-]+:\/\//, '');
                     option = document.createElement('option');
                     option.setAttribute('value', value);
                     option.textContent = shortenLongString(value, 128);
@@ -1238,34 +1680,46 @@ var netFilteringManager = (function() {
         if ( pos < template.length ) {
             nodes.push(document.createTextNode(template.slice(pos)));
         }
-        var parent = dialog.querySelector('div.containers > div.static > p:first-of-type');
-        removeAllChildren(parent);
-        for ( i = 0; i < nodes.length; i++ ) {
+        const parent = dialog.querySelector('div.panes > .static > div:first-of-type');
+        for ( let i = 0; i < nodes.length; i++ ) {
             parent.appendChild(nodes[i]);
         }
         parseStaticInputs();
     };
 
-    var fillDialog = function(domains) {
+    const fillDialog = function(domains) {
+        dialog = modalDialog.create(
+            '#netFilteringDialog',
+            ( ) => {
+                targetURLs = [];
+                targetRow = null;
+                dialog = null;
+            }
+        );
+        dialog.classList.toggle(
+            'cosmeticRealm',
+            targetRow.classList.contains('cosmeticRealm')
+        );
         targetDomain = domains[0];
         targetPageDomain = domains[1];
         targetFrameDomain = domains[2];
-
         createPreview(targetType, targetURLs[0]);
+        fillSummaryPane();
         fillDynamicPane();
         fillStaticPane();
-        document.body.appendChild(netFilteringDialog);
-        netFilteringDialog.addEventListener('click', onClick, true);
-        netFilteringDialog.addEventListener('change', onSelectChange, true);
-        netFilteringDialog.addEventListener('input', onInputChange, true);
+        dialog.addEventListener('click', onClick, true);
+        dialog.addEventListener('change', onSelectChange, true);
+        dialog.addEventListener('input', onInputChange, true);
+        modalDialog.show();
     };
 
-    var toggleOn = function(ev) {
-        dialog = netFilteringDialog.querySelector('.dialog');
-        targetRow = ev.target.parentElement;
-        targetTabId = tabIdFromClassName(targetRow.className);
-        targetType = targetRow.cells[5].textContent.trim() || '';
-        targetURLs = createTargetURLs(targetRow.cells[6].textContent);
+    const toggleOn = function(ev) {
+        targetRow = ev.target.closest('.canDetails');
+        if ( targetRow === null ) { return; }
+        ev.stopPropagation();
+        targetTabId = tabIdFromAttribute(targetRow);
+        targetType = targetRow.children[5].textContent.trim() || '';
+        targetURLs = createTargetURLs(targetRow.children[6].textContent);
         targetPageHostname = targetRow.getAttribute('data-tabhn') || '';
         targetFrameHostname = targetRow.getAttribute('data-dochn') || '';
 
@@ -1280,21 +1734,7 @@ var netFilteringManager = (function() {
         );
     };
 
-    var toggleOff = function() {
-        removeAllChildren(dialog.querySelector('div.preview'));
-        removeAllChildren(dialog.querySelector('div.dynamic table.entries tbody'));
-        dialog = null;
-        targetRow = null;
-        targetURLs = [];
-        netFilteringDialog.removeEventListener('click', onClick, true);
-        netFilteringDialog.removeEventListener('change', onSelectChange, true);
-        netFilteringDialog.removeEventListener('input', onInputChange, true);
-        document.body.removeChild(netFilteringDialog);
-    };
-
-    return {
-        toggleOn: toggleOn
-    };
+    return { toggleOn };
 })();
 
 // https://www.youtube.com/watch?v=XyNYrmmdUd4
@@ -1302,129 +1742,11 @@ var netFilteringManager = (function() {
 /******************************************************************************/
 /******************************************************************************/
 
-var reverseLookupManager = (function() {
-    let filterFinderDialog = uDom.nodeFromId('filterFinderDialog');
-    let rawFilter = '';
-
-    let removeAllChildren = function(node) {
-        while ( node.firstChild ) {
-            node.removeChild(node.firstChild);
-        }
-    };
-
-    // Clicking outside the dialog will close the dialog
-    let onClick = function(ev) {
-        if ( ev.target.classList.contains('modalDialog') ) {
-            toggleOff();
-            return;
-        }
-
-        ev.stopPropagation();
-    };
-
-    let nodeFromFilter = function(filter, lists) {
-        if ( Array.isArray(lists) === false || lists.length === 0 ) {
-            return;
-        }
-
-        let p = document.createElement('p');
-
-        vAPI.i18n.safeTemplateToDOM(
-            'loggerStaticFilteringFinderSentence1',
-            { filter: filter },
-            p
-        );
-
-        let ul = document.createElement('ul');
-        for ( let list of lists ) {
-            let li = document.querySelector('#filterFinderListEntry > li')
-                             .cloneNode(true);
-            let a = li.querySelector('a:nth-of-type(1)');
-            a.href += encodeURIComponent(list.assetKey);
-            a.textContent = list.title;
-            if ( list.supportURL ) {
-                a = li.querySelector('a:nth-of-type(2)');
-                a.setAttribute('href', list.supportURL);
-            }
-            ul.appendChild(li);
-        }
-        p.appendChild(ul);
-
-        return p;
-    };
-
-    let reverseLookupDone = function(response) {
-        if ( response instanceof Object === false ) {
-            response = {};
-        }
-
-        let dialog = filterFinderDialog.querySelector('.dialog');
-        removeAllChildren(dialog);
-
-        for ( let filter in response ) {
-            let p = nodeFromFilter(filter, response[filter]);
-            if ( p === undefined ) { continue; }
-            dialog.appendChild(p);
-        }
-
-        // https://github.com/gorhill/uBlock/issues/2179
-        if ( dialog.childElementCount === 0 ) {
-            vAPI.i18n.safeTemplateToDOM(
-                'loggerStaticFilteringFinderSentence2',
-                { filter: rawFilter },
-                dialog
-            );
-        }
-
-        document.body.appendChild(filterFinderDialog);
-        filterFinderDialog.addEventListener('click', onClick, true);
-    };
-
-    let toggleOn = function(ev) {
-        let row = ev.target.parentElement;
-        rawFilter = row.cells[1].textContent;
-        if ( rawFilter === '' ) { return; }
-
-        if ( row.classList.contains('cat_net') ) {
-            messaging.send(
-                'loggerUI',
-                {
-                    what: 'listsFromNetFilter',
-                    compiledFilter: row.getAttribute('data-filter') || '',
-                    rawFilter: rawFilter
-                },
-                reverseLookupDone
-            );
-        } else if ( row.classList.contains('cat_cosmetic') ) {
-            messaging.send(
-                'loggerUI',
-                {
-                    what: 'listsFromCosmeticFilter',
-                    url: row.cells[6].textContent,
-                    rawFilter: rawFilter,
-                },
-                reverseLookupDone
-            );
-        }
-    };
-
-    let toggleOff = function() {
-        filterFinderDialog.removeEventListener('click', onClick, true);
-        document.body.removeChild(filterFinderDialog);
-        rawFilter = '';
-    };
-
-    return {
-        toggleOn: toggleOn
-    };
-})();
-
-/******************************************************************************/
-/******************************************************************************/
-
 const rowFilterer = (function() {
     const userFilters = [];
     const builtinFilters = [];
+
+    let masterFilterSwitch = true;
     let filters = [];
 
     const parseInput = function() {
@@ -1493,52 +1815,54 @@ const rowFilterer = (function() {
         filters = builtinFilters.concat(userFilters);
     };
 
-    const filterOne = function(tr, clean) {
-        if ( filters.length === 0 && clean === true ) { return; }
-        // do not filter out doc boundaries, they help separate important
-        // section of log.
-        const cl = tr.classList;
-        if ( cl.contains('maindoc') ) { return; }
-        if ( filters.length === 0 ) {
-            cl.remove('f');
-            return;
+    const filterOne = function(logEntry) {
+        if (
+            logEntry.dead ||
+            selectedTabId !== 0 &&
+                logEntry.tabId !== undefined &&
+                logEntry.tabId > 0 &&
+                logEntry.tabId !== selectedTabId
+        ) {
+            return false;
         }
-        const cc = tr.cells;
-        const ccount = cc.length;
-        // each filter expression must hit (implicit and-op)
-        // if...
-        //   positive filter expression = there must one hit on any field
-        //   negative filter expression = there must be no hit on all fields
+
+        if ( masterFilterSwitch === false || filters.length === 0 ) {
+            return true;
+        }
+
+        // Do not filter out tab load event, they help separate key sections
+        // of logger.
+        if ( logEntry.type === 'tabLoad' ) { return true; }
+
         for ( const f of filters ) {
-            let hit = !f.r;
-            for ( let j = 1; j < ccount; j++ ) {
-                if ( f.re.test(cc[j].textContent) ) {
-                    hit = f.r;
-                    break;
-                }
-            }
-            if ( !hit ) {
-                cl.add('f');
-                return;
-            }
+            if ( f.re.test(logEntry.textContent) !== f.r ) { return false; }
         }
-        cl.remove('f');
+        return true;
     };
 
     const filterAll = function() {
-        const filterCount = filters.length;
+        filteredLoggerEntries = [];
+        filteredLoggerEntryVoidedCount = 0;
+        for ( const entry of loggerEntries ) {
+            if ( filterOne(entry) === false ) { continue; }
+            filteredLoggerEntries.push(entry);
+            if ( entry.voided ) {
+                filteredLoggerEntryVoidedCount += 1;
+            }
+        }
+        viewPort.updateContent(0);
         uDom.nodeFromId('filterButton').classList.toggle(
             'active',
-            filterCount !== 0
+            filters.length !== 0
         );
-        // Special case: no filter
-        if ( filterCount === 0 ) {
-            uDom('#netInspector tr').removeClass('f');
-            return;
-        }
-        for ( const row of document.querySelector('#netInspector tbody').rows ) {
-            filterOne(row);
-        }
+        uDom.nodeFromId('clean').classList.toggle(
+            'disabled',
+            filteredLoggerEntryVoidedCount === 0
+        );
+        uDom.nodeFromId('clear').classList.toggle(
+            'disabled',
+            filteredLoggerEntries.length === 0
+        );
     };
 
     const onFilterChangedAsync = (function() {
@@ -1557,7 +1881,12 @@ const rowFilterer = (function() {
     })();
 
     const onFilterButton = function() {
-        uDom.nodeFromId('netInspector').classList.toggle('f');
+        masterFilterSwitch = !masterFilterSwitch;
+        uDom.nodeFromId('netInspector').classList.toggle(
+            'f',
+            masterFilterSwitch
+        );
+        filterAll();            
     };
 
     const onToggleExtras = function(ev) {
@@ -1611,60 +1940,207 @@ const rowFilterer = (function() {
     parseInput();
     filterAll();
 
-    return {
-        filterOne,
-        filterAll,
-    };
+    return { filterOne, filterAll };
 })();
 
 /******************************************************************************/
 
-const toJunkyard = function(trs) {
-    trs.remove();
-    var i = trs.length;
-    while ( i-- ) {
-        trJunkyard.push(trs.nodeAt(i));
-    }
-};
+// Discard logger entries to prevent undue memory usage growth. The criteria
+// to discard are multiple and user configurable:
+//
+// - Max number of page load per distinct tab
+// - Max number of entry per distinct tab
+// - Max entry age
 
-/******************************************************************************/
+const rowJanitor = (function() {
+    const tabIdToDiscard = new Set();
+    const tabIdToLoadCountMap = new Map();
+    const tabIdToEntryCountMap = new Map();
 
-var clearBuffer = function() {
-    var tabClass = uDom.nodeFromId('pageSelector').value;
-    var btsAlso = tabClass === '' || tabClass === 'tab_bts';
-    var tbody = document.querySelector('#netInspector tbody');
-    var tr = tbody.lastElementChild;
-    var trPrevious;
-    while ( tr !== null ) {
-        trPrevious = tr.previousElementSibling;
-        if (
-            (tr.clientHeight > 0) &&
-            (tr.classList.contains('tab_bts') === false || btsAlso)
-        ) {
-            trJunkyard.push(tbody.removeChild(tr));
+    let rowIndex = 0;
+
+    const discard = function(timeRemaining) {
+        const opts = loggerSettings.discard;
+        const maxLoadCount = typeof opts.maxLoadCount === 'number'
+            ? opts.maxLoadCount
+            : 0;
+        const maxEntryCount = typeof opts.maxEntryCount === 'number'
+            ? opts.maxEntryCount
+            : 0;
+        const obsolete = typeof opts.maxAge === 'number'
+            ? Date.now() - opts.maxAge * 60000
+            : 0;
+        const deadline = Date.now() + Math.ceil(timeRemaining);
+
+        let i = rowIndex;
+        // TODO: below should not happen -- remove when confirmed.
+        if ( i >= loggerEntries.length ) {
+            i = 0;
         }
-        tr = trPrevious;
-    }
-    uDom.nodeFromId('clear').classList.toggle(
-        'disabled',
-        tbody.childElementCount === 0
-    );
-    uDom.nodeFromId('clean').classList.toggle(
-        'disabled',
-        tbody.querySelector('#netInspector tr[data-tabid].void') === null
-    );
-};
 
-/******************************************************************************/
+        if ( i === 0 ) {
+            tabIdToDiscard.clear();
+            tabIdToLoadCountMap.clear();
+            tabIdToEntryCountMap.clear();
+        }
 
-var cleanBuffer = function() {
-    var rows = uDom('#netInspector tr[data-tabid].void').remove();
-    var i = rows.length;
-    while ( i-- ) {
-        trJunkyard.push(rows.nodeAt(i));
-    }
-    uDom('#clean').addClass('disabled');
-};
+        let idel = -1;
+        let bufferedTabId = 0;
+        let bufferedEntryCount = 0;
+        let modified = false;
+
+        while ( i < loggerEntries.length ) {
+
+            if ( i % 64 === 0 && Date.now() >= deadline ) { break; }
+
+            const entry = loggerEntries[i];
+            const tabId = entry.tabId || 0;
+
+            if ( entry.dead || tabIdToDiscard.has(tabId) ) {
+                if ( idel === -1 ) { idel = i; }
+                i += 1;
+                continue;
+            }
+
+            if ( maxLoadCount !== 0 && entry.type === 'tabLoad' ) {
+                let count = (tabIdToLoadCountMap.get(tabId) || 0) + 1;
+                tabIdToLoadCountMap.set(tabId, count);
+                if ( count >= maxLoadCount ) {
+                    tabIdToDiscard.add(tabId);
+                }
+            }
+
+            if ( maxEntryCount !== 0 ) {
+                if ( bufferedTabId !== tabId ) {
+                    if ( bufferedEntryCount !== 0 ) {
+                        tabIdToEntryCountMap.set(bufferedTabId, bufferedEntryCount);
+                    }
+                    bufferedTabId = tabId;
+                    bufferedEntryCount = tabIdToEntryCountMap.get(tabId) || 0;
+                }
+                bufferedEntryCount += 1;
+                if ( bufferedEntryCount >= maxEntryCount ) {
+                    tabIdToDiscard.add(bufferedTabId);
+                }
+            }
+
+            // Since entries in the logger are chronologically ordered,
+            // everything below obsolete is to be discarded.
+            if ( obsolete !== 0 && entry.tstamp <= obsolete ) {
+                if ( idel === -1 ) { idel = i; }
+                break;
+            }
+
+            if ( idel !== -1 ) {
+                loggerEntries.copyWithin(idel, i);
+                loggerEntries.length -= i - idel;
+                idel = -1;
+                modified = true;
+            }
+
+            i += 1;
+        }
+
+        if ( idel !== -1 ) {
+            loggerEntries.length = idel;
+            modified = true;
+        }
+
+        if ( i >= loggerEntries.length ) { i = 0; }
+        rowIndex = i;
+
+        if ( rowIndex === 0 ) {
+            tabIdToDiscard.clear();
+            tabIdToLoadCountMap.clear();
+            tabIdToEntryCountMap.clear();
+        }
+
+        if ( modified === false ) { return; }
+
+        rowFilterer.filterAll();
+    };
+
+    const discardAsync = function() {
+        setTimeout(
+            ( ) => {
+                self.requestIdleCallback(deadline => {
+                    discard(deadline.timeRemaining());
+                    discardAsync();
+                });
+            },
+            1889
+        );
+    };
+
+    // Clear voided entries from the logger's visible content.
+    //
+    // Voided entries should be visible only from the "All" option of the
+    // tab selector.
+    //
+    const clean = function() {
+        if ( filteredLoggerEntries.length === 0 ) { return; }
+
+        let j = 0;
+        let targetEntry = filteredLoggerEntries[0];
+        for ( const entry of loggerEntries ) {
+            if ( entry !== targetEntry ) { continue; }
+            if ( entry.voided ) {
+                entry.dead = true;
+            }
+            j += 1;
+            if ( j === filteredLoggerEntries.length ) { break; }
+            targetEntry = filteredLoggerEntries[j];
+        }
+        rowFilterer.filterAll();
+    };
+
+    // Clear the logger's visible content.
+    //
+    // "Unrelated" entries -- shown for convenience -- will be also cleared
+    // if and only if the filtered logger content is made entirely of unrelated
+    // entries. In effect, this means clicking a second time on the eraser will
+    // cause unrelated entries to also be cleared.
+    //
+    const clear = function() {
+        if ( filteredLoggerEntries.length === 0 ) { return; }
+
+        let clearUnrelated = true;
+        if ( selectedTabId !== 0 ) {
+            for ( const entry of filteredLoggerEntries ) {
+                if ( entry.tabId === selectedTabId ) {
+                    clearUnrelated = false;
+                    break;
+                }
+            }
+        }
+
+        let j = 0;
+        let targetEntry = filteredLoggerEntries[0];
+        for ( const entry of loggerEntries ) {
+            if ( entry !== targetEntry ) { continue; }
+            if ( entry.tabId === selectedTabId || clearUnrelated ) {
+                entry.dead = true;
+            }
+            j += 1;
+            if ( j === filteredLoggerEntries.length ) { break; }
+            targetEntry = filteredLoggerEntries[j];
+        }
+        rowFilterer.filterAll();
+    };
+
+    discardAsync();
+
+    uDom.nodeFromId('clean').addEventListener('click', clean);
+    uDom.nodeFromId('clear').addEventListener('click', clear);
+
+    return {
+        inserted: function(count) {
+            if ( rowIndex !== 0 ) {
+                rowIndex += count;
+            }
+        },
+    };
+})();
 
 /******************************************************************************/
 
@@ -1677,12 +2153,10 @@ const pauseNetInspector = function() {
 /******************************************************************************/
 
 const toggleVCompactView = function() {
-    uDom.nodeFromId('netInspector').classList.toggle('vCompact');
-    uDom('#netInspector .vExpanded').toggleClass('vExpanded');
-};
-
-const toggleVCompactRow = function(ev) {
-    ev.target.parentElement.classList.toggle('vExpanded');
+    uDom.nodeFromSelector('#netInspector .vCompactToggler')
+        .classList
+        .toggle('vExpanded');
+    viewPort.updateLayout();
 };
 
 /******************************************************************************/
@@ -1735,7 +2209,7 @@ const popupManager = (function() {
 
         const parent = uDom.nodeFromId('inspectors');
         const rect = parent.getBoundingClientRect();
-        popup.style.setProperty('right', (rect.right - parent.clientWidth) + 'px');
+        popup.style.setProperty('right', `${rect.right - parent.clientWidth}px`);
         parent.classList.add('popupOn');
 
         document.addEventListener('tabIdChanged', onTabIdChanged);
@@ -1756,7 +2230,8 @@ const popupManager = (function() {
         realTabId = 0;
     };
 
-    const exports = {
+    const api = {
+        get tabId() { return realTabId || 0; },
         toggleOff: function() {
             if ( realTabId !== 0 ) {
                 toggleOff();
@@ -1764,15 +2239,132 @@ const popupManager = (function() {
         }
     };
 
-    Object.defineProperty(exports, 'tabId', {
-        get: function() { return realTabId || 0; }
-    });
+    uDom.nodeFromId('showpopup').addEventListener(
+        'click',
+        ( ) => {
+            void (realTabId === 0 ? toggleOn() : toggleOff());
+        }
+    );
 
-    uDom('#showpopup').on('click', ( ) => {
-        void (realTabId === 0 ? toggleOn() : toggleOff());
-    });
+    return api;
+})();
 
-    return exports;
+/******************************************************************************/
+
+// TODO:
+// - Give some thoughts to:
+//   - an option to discard immediately filtered out new entries
+//   - max entry count _per load_
+//
+const loggerSettings = (function() {
+    const settings = {
+        discard: {
+            maxAge: 240,            // global
+            maxEntryCount: 2000,    // per-tab
+            maxLoadCount: 20,       // per-tab
+        },
+        columns: [ true, true, true, true, true, true, true, true ],
+        linesPerEntry: 4,
+    };
+
+    {
+        try {
+            const stored = JSON.parse(vAPI.localStorage.getItem('loggerSettings'));
+            if ( typeof stored.discard.maxAge === 'number' ) {
+                settings.discard.maxAge = stored.discard.maxAge;
+            }
+            if ( typeof stored.discard.maxEntryCount === 'number' ) {
+                settings.discard.maxEntryCount = stored.discard.maxEntryCount;
+            }
+            if ( typeof stored.discard.maxLoadCount === 'number' ) {
+                settings.discard.maxLoadCount = stored.discard.maxLoadCount;
+            }
+            if ( typeof stored.linesPerEntry === 'number' ) {
+                settings.linesPerEntry = stored.linesPerEntry;
+            }
+            if ( Array.isArray(stored.columns) ) {
+                settings.columns = stored.columns;
+            }
+        } catch(ex) {
+        }
+    }
+
+    const valueFromInput = function(input, def) {
+        let value = parseInt(input.value, 10);
+        if ( isNaN(value) ) { value = def; }
+        const min = parseInt(input.getAttribute('min'), 10);
+        if ( isNaN(min) === false ) {
+            value = Math.max(value, min);
+        }
+        const max = parseInt(input.getAttribute('max'), 10);
+        if ( isNaN(max) === false ) {
+            value = Math.min(value, max);
+        }
+        return value;
+    };
+
+    const toggleOn = function() {
+        const dialog = modalDialog.create(
+            '#loggerSettingsDialog',
+            dialog => {
+                toggleOff(dialog);
+            }
+        );
+
+        // Number inputs
+        let inputs = dialog.querySelectorAll('input[type="number"]');
+        inputs[0].value = settings.discard.maxAge;
+        inputs[1].value = settings.discard.maxLoadCount;
+        inputs[2].value = settings.discard.maxEntryCount;
+        inputs[3].value = settings.linesPerEntry;
+        inputs[3].addEventListener('input', ev => {
+            settings.linesPerEntry = valueFromInput(ev.target, 4);
+            viewPort.updateLayout();
+        });
+
+        // Column checkboxs
+        const onColumnChanged = ev => {
+            const input = ev.target;
+            const i = parseInt(input.getAttribute('data-column'), 10);
+            settings.columns[i] = input.checked !== true;
+            viewPort.updateLayout();
+        };
+        inputs = dialog.querySelectorAll('input[type="checkbox"][data-column]');
+        for ( const input of inputs ) {
+            const i = parseInt(input.getAttribute('data-column'), 10);
+            input.checked = settings.columns[i] === false;
+            input.addEventListener('change', onColumnChanged);
+        }
+
+        modalDialog.show();
+    };
+
+    const toggleOff = function(dialog) {
+        // Number inputs
+        let inputs = dialog.querySelectorAll('input[type="number"]');
+        settings.discard.maxAge = valueFromInput(inputs[0], 240);
+        settings.discard.maxLoadCount = valueFromInput(inputs[1], 25);
+        settings.discard.maxEntryCount = valueFromInput(inputs[2], 2000);
+        settings.linesPerEntry = valueFromInput(inputs[3], 4);
+
+        // Column checkboxs
+        inputs = dialog.querySelectorAll('input[type="checkbox"][data-column]');
+        for ( const input of inputs ) {
+            const i = parseInt(input.getAttribute('data-column'), 10);
+            settings.columns[i] = input.checked !== true;
+        }
+
+        vAPI.localStorage.setItem(
+            'loggerSettings',
+            JSON.stringify(settings)
+        );
+
+        viewPort.updateLayout();
+    };
+
+    uDom.nodeFromId('settings').addEventListener('click', toggleOn);
+
+    return settings;
 })();
 
 /******************************************************************************/
@@ -1835,16 +2427,16 @@ uDom('#pageSelector').on('change', pageSelectorChanged);
 uDom('#refresh').on('click', reloadTab);
 
 uDom('#netInspector .vCompactToggler').on('click', toggleVCompactView);
-uDom('#clean').on('click', cleanBuffer);
-uDom('#clear').on('click', clearBuffer);
 uDom('#pause').on('click', pauseNetInspector);
-uDom('#maxEntries').on('change', onMaxEntriesChanged);
-uDom('#netInspector table').on('click', 'tr > td:nth-of-type(1)', toggleVCompactRow);
-uDom('#netInspector').on('click', 'tr.canLookup > td:nth-of-type(2)', reverseLookupManager.toggleOn);
-uDom('#netInspector').on('click', 'tr.cat_net > td:nth-of-type(3)', netFilteringManager.toggleOn);
+
+uDom('#netInspector').on(
+    'click',
+    'span:nth-of-type(2),span:nth-of-type(3),span:nth-of-type(5)',
+    netFilteringManager.toggleOn
+);
 
 // https://github.com/gorhill/uBlock/issues/507
-// Ensure tab selector is in sync with URL hash
+//   Ensure tab selector is in sync with URL hash
 pageSelectorFromURLHash();
 window.addEventListener('hashchange', pageSelectorFromURLHash);
 
@@ -1852,16 +2444,21 @@ window.addEventListener('hashchange', pageSelectorFromURLHash);
 // is loaded, to be sure no spurious geometry changes will be triggered due
 // to the window geometry pontentially not settling fast enough.
 if ( self.location.search.includes('popup=1') ) {
-    window.addEventListener('load', ( ) => {
-        setTimeout(( ) => {
-            popupLoggerBox = {
-                x: self.screenX,
-                y: self.screenY,
-                w: self.outerWidth,
-                h: self.outerHeight,
-            };
-        }, 2000);
-    }, { once: true });
+    window.addEventListener(
+        'load',
+        ( ) => {
+            setTimeout(
+                ( ) => {
+                    popupLoggerBox = {
+                        x: self.screenX,
+                        y: self.screenY,
+                        w: self.outerWidth,
+                        h: self.outerHeight,
+                    };
+            }, 2000);
+        },
+        { once: true }
+    );
 }
 
 /******************************************************************************/

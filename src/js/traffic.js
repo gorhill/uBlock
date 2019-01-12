@@ -91,7 +91,7 @@ const onBeforeRequest = function(details) {
     pageStore.journalAddRequest(fctxt.getHostname(), result);
 
     if ( µb.logger.enabled ) {
-        fctxt.setRealm('net').toLogger();
+        fctxt.setRealm('network').toLogger();
     }
 
     // Not blocked
@@ -203,7 +203,7 @@ const onBeforeRootFrameRequest = function(fctxt) {
     }
 
     if ( logEnabled ) {
-        fctxt.setRealm('net').setFilter(logData).toLogger();
+        fctxt.setRealm('network').setFilter(logData).toLogger();
     }
 
     // Not blocked
@@ -311,7 +311,7 @@ const onBeforeBehindTheSceneRequest = function(fctxt) {
     }
 
     if ( µb.logger.enabled ) {
-        fctxt.setRealm('net').toLogger();
+        fctxt.setRealm('network').toLogger();
     }
 
     // Blocked?
@@ -396,7 +396,7 @@ const onBeforeMaybeSpuriousCSPReport = (function() {
         // At this point, we have a potentially spurious CSP report.
 
         if ( µBlock.logger.enabled ) {
-            fctxt.setRealm('net')
+            fctxt.setRealm('network')
                  .setType('csp_report')
                  .setFilter({ result: 1, source: 'global', raw: 'no-spurious-csp-report' })
                  .toLogger();
@@ -775,7 +775,7 @@ const injectCSP = function(fctxt, pageStore, responseHeaders) {
     if ( pageStore.filterScripting(fctxt, true) === 1 ) {
         builtinDirectives.push("script-src http: https:");
         if ( loggerEnabled ) {
-            fctxt.setRealm('net').setType('scripting').toLogger();
+            fctxt.setRealm('network').setType('scripting').toLogger();
         }
     } else {
         fctxt.type = 'inline-script';
@@ -784,7 +784,7 @@ const injectCSP = function(fctxt, pageStore, responseHeaders) {
             builtinDirectives.push("script-src 'unsafe-eval' * blob: data:");
         }
         if ( result !== 0 && loggerEnabled ) {
-            fctxt.setRealm('net').toLogger();
+            fctxt.setRealm('network').toLogger();
         }
     }
 
@@ -794,7 +794,7 @@ const injectCSP = function(fctxt, pageStore, responseHeaders) {
     if ( pageStore.filterRequest(fctxt) === 1 ) {
         builtinDirectives.push('font-src *');
         if ( loggerEnabled ) {
-            fctxt.setRealm('net').toLogger();
+            fctxt.setRealm('network').toLogger();
         }
     }
 
@@ -825,7 +825,7 @@ const injectCSP = function(fctxt, pageStore, responseHeaders) {
         ) === 2
     ) {
         if ( loggerEnabled ) {
-            fctxt.setRealm('net')
+            fctxt.setRealm('network')
                  .setType('csp')
                  .setFilter(µb.sessionURLFiltering.toLogData())
                  .toLogger();
@@ -844,7 +844,7 @@ const injectCSP = function(fctxt, pageStore, responseHeaders) {
         ) === 2
     ) {
         if ( loggerEnabled ) {
-            fctxt.setRealm('net')
+            fctxt.setRealm('network')
                  .setType('csp')
                  .setFilter(µb.sessionFirewall.toLogData())
                  .toLogger();
@@ -856,7 +856,7 @@ const injectCSP = function(fctxt, pageStore, responseHeaders) {
 
     // Static CSP policies will be applied.
     if ( logDataEntries !== undefined ) {
-        fctxt.setRealm('net').setType('csp');
+        fctxt.setRealm('network').setType('csp');
         for ( const entry of logDataEntries ) {
             fctxt.setFilter(entry).toLogger();
         }
@@ -908,7 +908,7 @@ const foilLargeMediaElement = function(fctxt, pageStore, responseHeaders) {
     if ( result === 0 ) { return; }
 
     if ( µBlock.logger.enabled ) {
-        fctxt.setRealm('net').toLogger();
+        fctxt.setRealm('network').toLogger();
     }
 
     return { cancel: true };

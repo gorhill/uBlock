@@ -244,7 +244,9 @@
         if ( compiled === undefined ) {
             const who = writer.properties.get('assetKey') || '?';
             µb.logger.writeOne({
-                error: `Invalid HTML filter in ${who} : ##${selector}`
+                realm: 'message',
+                type: 'error',
+                text: `Invalid HTML filter in ${who}: ##${selector}`
             });
             return;
         }

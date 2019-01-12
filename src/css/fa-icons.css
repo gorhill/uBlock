@@ -63,6 +63,7 @@
 .fa-icon > .fa-icon_home {
     width: calc(1em * 1612 / 1792);
     }
+.fa-icon > .fa-icon_cog,
 .fa-icon > .fa-icon_floppy-o,
 .fa-icon > .fa-icon_info-circle,
 .fa-icon > .fa-icon_pause-circle-o,

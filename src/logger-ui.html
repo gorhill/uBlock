@@ -10,14 +10,15 @@
 <link rel="stylesheet" type="text/css" href="css/logger-ui-inspector.css">
 <link rel="shortcut icon" type="image/png" href="img/icon_16.png">
 <title data-i18n="statsPageName"></title>
+<style id="vwRendererRuntimeStyles"></style>
 </head>
 <body>
 
 <div class="permatoolbar">
     <select id="pageSelector">
-        <option value="" data-i18n="logAll">
-        <option value="tab_bts" data-i18n="logBehindTheScene">
-        <option value="tab_active" data-i18n="loggerCurrentTab">
+        <option value="0" data-i18n="logAll">
+        <option value="-1" data-i18n="logBehindTheScene">
+        <option value="_" data-i18n="loggerCurrentTab">
     </select>
     <span id="refresh" class="button fa-icon disabled needdom" data-i18n-title="loggerReloadTip">refresh</span>
     <span id="showdom" class="button fa-icon disabled needdom" data-i18n-title="loggerDomInspectorTip">code</span>
@@ -26,7 +27,7 @@
 </div>
 
 <div id="inspectors">
-    <div id="domInspector" class="inspector vCompact hCompact">
+    <div id="domInspector" class="inspector hCompact">
         <div class="permatoolbar">
             <div>
                 <span class="button fa-icon vCompactToggler">double-angle-up</span>
@@ -40,7 +41,7 @@
             <ul id="domTree"></ul>
         </div>
     </div>
-    <div id="netInspector" class="inspector vCompact f">
+    <div id="netInspector" class="inspector f">
         <div class="permatoolbar">
             <span class="button fa-icon vCompactToggler">double-angle-up</span>
             <span id="clean" class="button fa-icon disabled">times</span>
@@ -52,79 +53,117 @@
                     <input type="text" placeholder="logFilterPrompt">
                     <span id="filterExprButton" class="button fa-icon expanded" data-i18n-title="loggerRowFiltererBuiltinTip">angle-up</span>
                     <div id="filterExprPicker">
-                        <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span><span data-filtex="^--$|^<<$|^##" data-i18n="loggerRowFiltererBuiltinBlocked"></span><span data-filtex="^\+\+$|^\*\*$|^#@#" data-i18n="loggerRowFiltererBuiltinAllowed"></span></div>
-                        <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span><span data-filtex="^(?:css|font)$">css/font</span><span data-filtex="^image$">image</span><span data-filtex="^(?:inline-)?script(?:ing)?$">script</span><span data-filtex="^(?:websocket|xhr)$">xhr</span><span data-filtex="^frame$">frame</span><span data-filtex="^dom$">dom</span></div>
-                        <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span><span data-filtex="^1$" data-i18n="loggerRowFiltererBuiltin1p"></span><span data-filtex="^3(?:,\d)?$" data-i18n="loggerRowFiltererBuiltin3p"></span></div>
+                        <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span><span data-filtex="\t--\t|\t<<\t|\t##" data-i18n="loggerRowFiltererBuiltinBlocked"></span><span data-filtex="\t\+\+\t|\t\*\*\t|\t#@#" data-i18n="loggerRowFiltererBuiltinAllowed"></span></div>
+                        <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span><span data-filtex="\t(?:css|font)\t">css/font</span><span data-filtex="\timage\t">image</span><span data-filtex="\t(?:inline-)?script(?:ing)?\t">script</span><span data-filtex="\t(?:websocket|xhr)\t">xhr</span><span data-filtex="\tframe\t">frame</span><span data-filtex="\tdom\t">dom</span></div>
+                        <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span><span data-filtex="\t1\t" data-i18n="loggerRowFiltererBuiltin1p"></span><span data-filtex="\t3(?:,\d)?\t" data-i18n="loggerRowFiltererBuiltin3p"></span></div>
                     </div>
                 </span>
             </span>
-            <input id="maxEntries" type="text" size="5" data-i18n-title="logMaxEntriesTip">
+            <span id="settings" class="button fa-icon">cog</span>
         </div>
         <div class="vscrollable">
-            <style id="tabFilterer"></style>
-            <table>
-                <colgroup><col><col><col><col><col><col></colgroup>
-                <tbody></tbody>
-            </table>
+            <div id="vwRenderer">
+                <div id="vwScroller">
+                    <div id="vwVirtualContent">
+                        <div id="vwContent"></div>
+                    </div>
+                </div>
+                <div id="vwLineSizer">
+                    <div class="logEntry oneLine"><div><span>00:00:00</span><span>&nbsp;</span><span>**</span><span>&nbsp;</span><span>3,3</span><span>inline-script</span><span>&nbsp;</span></div></div>
+                </div>
+            </div>
         </div>
     </div>
-    <iframe id="popupContainer" class="hide"></iframe>
+    <iframe id="popupContainer"></iframe>
+</div>
+
+<div id="modalOverlay">
+    <div>
+        <div id="modalOverlayContainer"></div>
+        <div id="modalOverlayClose"><svg viewBox="0 0 64 64"><path d="M 16 16 L 48 48 M 16 48 L 48 16" /></svg></div>
+    </div>
 </div>
 
 <div id="templates" style="display: none;">
+    <div id="logEntryTemplate"><div><span></span>&#8203;<span></span>&#8203;<span></span>&#8203;<span></span>&#8203;<span></span>&#8203;<span></span>&#8203;<span></span></div></div>
     <div id="renderedURLTemplate"><span><span></span><b></b><span></span></span></div>
-    <div id="netFilteringDialog" class="modalDialog">
-        <div class="dialog">
-            <div class="hide preview"></div>
-            <div class="headers">
-                <span class="header dynamic selected" data-container="dynamic" data-i18n="loggerURLFilteringHeader"></span>
-                <span class="header static" data-container="static" data-i18n="loggerStaticFilteringHeader"></span>
-                <span class="tools"><span class="fa-icon reload">refresh</span>&ensp;<span class="fa-icon picker">eye-dropper</span></span>
+
+    <div id="netFilteringDialog" data-pane="details">
+        <div class="hide preview"><span>click to preview</span></div>
+        <div class="headers">
+            &ensp;
+            <span class="header details" data-pane="details" data-i18n="loggerEntryDetailsHeader"></span>
+            <span class="header dynamic" data-pane="dynamic" data-i18n="loggerURLFilteringHeader"></span>
+            <span class="header static" data-pane="static" data-i18n="loggerStaticFilteringHeader"></span>
+            <span class="tools"><span class="fa-icon reload">refresh</span>&ensp;<span class="fa-icon picker">eye-dropper</span></span>
+        </div>
+        <div class="panes">
+            <div class="pane details" data-pane="details">
+                <div><span data-i18n="loggerEntryDetailsFilter"></span><span></span></div>
+                <div><span data-i18n="loggerEntryDetailsFilterList"></span><span class="prose"></span></div>
+                <div><span data-i18n="loggerEntryDetailsRule"></span><span></span></div>
+                <div><span data-i18n="loggerEntryDetailsRootContext"></span><span></span></div>
+                <div><span data-i18n="loggerEntryDetailsContext"></span><span></span></div>
+                <div><span data-i18n="loggerEntryDetailsPartyness"></span><span class="prose"></span></div>
+                <div><span data-i18n="loggerEntryDetailsType"></span><span></span></div>
+                <div><span data-i18n="loggerEntryDetailsURL"></span><span></span></div>
             </div>
-            <div class="containers">
-                <div class="container dynamic selected">
-                    <table class="toolbar">
-                        <colgroup><col><col></colgroup>
-                        <tbody>
-                        <tr>
-                            <td><span id="saveRules" class="fa-icon">lock</span>
-                            <td><p>
-                                <label><span data-i18n="loggerURLFilteringContextLabel"></span> <select class="dynamic origin"></select></label>&emsp;
-                                <label><span data-i18n="loggerURLFilteringTypeLabel"></span> <select class="dynamic type"><option><option value="*">*</select></label>
-                                </p>
-                        <tr class="entry">
-                            <td><div class="action"><span class="allow">&nbsp;</span><span class="noop">&nbsp;</span><span class="block">&nbsp;</span></div>
-                            <td class="url">
-                        </tbody>
-                    </table>
-                    <table class="entries">
-                        <colgroup><col><col></colgroup>
-                        <tbody></tbody>
-                    </table>
+            <div class="pane dynamic" data-pane="dynamic">
+                <div class="toolbar row">
+                    <span><span id="saveRules" class="fa-icon">lock</span></span>
+                    <span>
+                        <label><span data-i18n="loggerURLFilteringContextLabel"></span> <select class="dynamic origin"></select></label>&emsp;
+                        <label><span data-i18n="loggerURLFilteringTypeLabel"></span> <select class="dynamic type"><option><option value="*">*</select></label>
+                    </span>
+                    <div class="entry row">
+                        <span class="action"><span class="allow">&nbsp;</span><span class="noop">&nbsp;</span><span class="block">&nbsp;</span></span>
+                        <span class="url"></span>
+                    </div>
                 </div>
-                <div class="container static">
-                    <p></p>
-                    <p><textarea class="staticFilter" spellcheck="false" value=""></textarea>
-                       <button id="createStaticFilter" class="custom important" type="button" data-i18n="pickerCreate"></button>
-                   </p>
-                </div>
+                <div class="entries"></div>
+            </div>
+            <div class="pane static" data-pane="static">
+                <div></div>
+                <div><textarea class="staticFilter" spellcheck="false" value=""></textarea>
+                   <button id="createStaticFilter" class="custom important" type="button" data-i18n="pickerCreate"></button>
+               </div>
             </div>
         </div>
     </div>
-    <div id="filterFinderDialog" class="modalDialog">
-        <div class="dialog"></div>
+
+    <div id="filterFinderDialog">
     </div>
-    <ul id="filterFinderListEntry">
-        <li class="filterFinderListEntry">
-            <a href="asset-viewer.html?url=" target="_blank"></a>
-            <a href="" class="fa-icon" target="_blank">home</a></li>
-    </ul>
+
+    <div id="filterFinderListEntry">
+        <span><!--
+         --><a href="asset-viewer.html?url=" target="_blank"></a>&nbsp;<!--
+         --><a href="" class="fa-icon" target="_blank">home</a><!--
+     --></span>
+    </div>
+
     <div id="cosmeticFilteringDialog" class="modalDialog">
-        <div class="dialog">
-            <textarea class="cosmeticFilters" value=""></textarea>
-            <button id="createCosmeticFilters" class="custom important" type="button" data-i18n="pickerCreate"></button>
-        </div>
+        <textarea class="cosmeticFilters" value=""></textarea>
+        <button id="createCosmeticFilters" class="custom important" type="button" data-i18n="pickerCreate"></button>
     </div>
+
+    <div id="loggerSettingsDialog">
+        <div><span data-i18n="loggerSettingDiscardPrompt"></span>
+            <ul>
+            <li><label data-i18n="loggerSettingPerEntryMaxAge"><input type="number" min="0" max="50000" /></label>
+            <li><label data-i18n="loggerSettingPerTabMaxLoads"><input type="number" min="0" max="1000000" /></label>
+            <li><label data-i18n="loggerSettingPerTabMaxEntries"><input type="number" min="0" max="1000000" /></label>
+            </ul>
+        </div>
+        <div><span data-i18n="loggerSettingHideColumnsPrompt"></span>
+            <ul>
+            <li><label data-i18n="loggerSettingHideColumnTime"><input type="checkbox" data-column="0" /></label>
+            <li><label data-i18n="loggerSettingHideColumnFilter"><input type="checkbox" data-column="1" /></label>
+            <li><label data-i18n="loggerSettingHideColumnContext"><input type="checkbox" data-column="3" /></label>
+            <li><label data-i18n="loggerSettingHideColumnPartyness"><input type="checkbox" data-column="4" /></label>
+            </ul>
+        </div>
+        <div><label data-i18n="loggerSettingPerEntryLineCount"><input type="number" min="2" max="6"></label></div>
+        </div>
 </div>
 
 <script src="js/fa-icons.js"></script>

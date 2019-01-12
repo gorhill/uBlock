@@ -29,7 +29,7 @@
 
 /******************************************************************************/
 
-var showdomButton = uDom.nodeFromId('showdom');
+const showdomButton = uDom.nodeFromId('showdom');
 
 // Don't bother if the browser is not modern enough.
 if (
@@ -340,31 +340,25 @@ var nidFromNode = function(node) {
 
 /******************************************************************************/
 
-var startDialog = (function() {
-    var dialog = uDom.nodeFromId('cosmeticFilteringDialog');
-    var textarea = dialog.querySelector('textarea');
-    var hideSelectors = [];
-    var unhideSelectors = [];
-    var inputTimer = null;
+const startDialog = (function() {
+    let dialog;
+    let textarea;
+    let hideSelectors = [];
+    let unhideSelectors = [];
+    let inputTimer;
 
-    var onInputChanged = (function() {
-        var parse = function() {
-            inputTimer = null;
+    const onInputChanged = (function() {
+        const parse = function() {
+            inputTimer = undefined;
             hideSelectors = [];
             unhideSelectors = [];
 
-            var line, matches;
-            var re = /^([^#]*)(#@?#)(.+)$/;
-            var lines = textarea.value.split(/\s*\n\s*/);
-            for ( var i = 0; i < lines.length; i++ ) {
-                line = lines[i].trim();
-                if ( line === '' || line.charAt(0) === '!' ) {
-                    continue;
-                }
-                matches = re.exec(line);
-                if ( matches === null || matches.length !== 4 ) {
-                    continue;
-                }
+            const re = /^([^#]*)(#@?#)(.+)$/;
+            for ( let line of textarea.value.split(/\s*\n\s*/) ) {
+                line = line.trim();
+                if ( line === '' || line.charAt(0) === '!' ) { continue; }
+                const matches = re.exec(line);
+                if ( matches === null || matches.length !== 4 ) { continue; }
                 if ( inspectedHostname.lastIndexOf(matches[1]) === -1 ) {
                     continue;
                 }
@@ -379,19 +373,15 @@ var startDialog = (function() {
         };
 
         return function parseAsync() {
-            if ( inputTimer === null ) {
+            if ( inputTimer === undefined ) {
                 inputTimer = vAPI.setTimeout(parse, 743);
             }
         };
     })();
 
-    var onClicked = function(ev) {
+    const onClicked = function(ev) {
         var target = ev.target;
 
-        // click outside the dialog proper
-        if ( target.classList.contains('modalDialog') ) {
-            return stop();
-        }
         ev.stopPropagation();
 
         if ( target.id === 'createCosmeticFilters' ) {
@@ -402,7 +392,7 @@ var startDialog = (function() {
         }
     };
 
-    var showCommitted = function() {
+    const showCommitted = function() {
         messaging.sendTo(inspectorConnectionId, {
             what: 'showCommitted',
             hide: hideSelectors.join(',\n'),
@@ -410,7 +400,7 @@ var startDialog = (function() {
         });
     };
 
-    var showInteractive = function() {
+    const showInteractive = function() {
         messaging.sendTo(inspectorConnectionId, {
             what: 'showInteractive',
             hide: hideSelectors.join(',\n'),
@@ -418,46 +408,45 @@ var startDialog = (function() {
         });
     };
 
-    var start = function() {
+    const start = function() {
+        dialog = logger.modalDialog.create('#cosmeticFilteringDialog', stop);
+        textarea = dialog.querySelector('textarea');
         hideSelectors = [];
-        textarea.addEventListener('input', onInputChanged);
-        var node;
-        for ( node of domTree.querySelectorAll('code.off') ) {
-            if ( node.classList.contains('filter') === false ) {
-                hideSelectors.push(selectorFromNode(node));
-            }
+        for ( const node of domTree.querySelectorAll('code.off') ) {
+            if ( node.classList.contains('filter') ) { continue; }
+            hideSelectors.push(selectorFromNode(node));
         }
-        var taValue = [];
-        var d = new Date();
-        taValue.push('! ' + d.toLocaleString() + ' ' + inspectedURL);
-        for ( var selector of hideSelectors ) {
+        const taValue = [];
+        for ( const selector of hideSelectors ) {
             taValue.push(inspectedHostname + '##' + selector);
         }
-        var ids = new Set(), id;
-        for ( node of domTree.querySelectorAll('code.filter.off') ) {
-            id = node.getAttribute('data-filter-id');
+        const ids = new Set();
+        for ( const node of domTree.querySelectorAll('code.filter.off') ) {
+            const id = node.getAttribute('data-filter-id');
             if ( ids.has(id) ) { continue; }
             ids.add(id);
             unhideSelectors.push(node.textContent);
             taValue.push(inspectedHostname + '#@#' + node.textContent);
         }
         textarea.value = taValue.join('\n');
-        document.body.appendChild(dialog);
+        textarea.addEventListener('input', onInputChanged);
         dialog.addEventListener('click', onClicked, true);
         showCommitted();
+        logger.modalDialog.show();
     };
 
-    var stop = function() {
-        if ( inputTimer !== null ) {
+    const stop = function() {
+        if ( inputTimer !== undefined ) {
             clearTimeout(inputTimer);
-            inputTimer = null;
+            inputTimer = undefined;
         }
         showInteractive();
-        hideSelectors = [];
-        unhideSelectors = [];
         textarea.removeEventListener('input', onInputChanged);
         dialog.removeEventListener('click', onClicked, true);
-        document.body.removeChild(dialog);
+        dialog = undefined;
+        textarea = undefined;
+        hideSelectors = [];
+        unhideSelectors = [];
     };
 
     return start;
@@ -585,7 +574,7 @@ var shutdownInspector = function() {
         inspectorConnectionId = undefined;
     }
     logger.removeAllChildren(domTree);
-    inspector.classList.add('vCompact');
+    inspector.classList.remove('vExpanded');
     inspectedTabId = 0;
 };
 
@@ -605,7 +594,7 @@ var onTabIdChanged = function() {
 /******************************************************************************/
 
 var toggleVCompactView = function() {
-    var state = !inspector.classList.toggle('vCompact');
+    var state = inspector.classList.toggle('vExpanded');
     var branches = document.querySelectorAll('#domInspector li.branch');
     for ( var branch of branches ) {
         branch.classList.toggle('show', state);

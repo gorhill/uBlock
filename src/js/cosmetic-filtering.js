@@ -599,7 +599,9 @@ FilterContainer.prototype.compileGenericHideSelector = function(
     if ( compiled === undefined || compiled !== selector ) {
         const who = writer.properties.get('assetKey') || '?';
         µb.logger.writeOne({
-            error: `Invalid generic cosmetic filter in ${who}: ##${selector}`
+            realm: 'message',
+            type: 'error',
+            text: `Invalid generic cosmetic filter in ${who}: ##${selector}`
         });
         return;
     }
@@ -658,7 +660,9 @@ FilterContainer.prototype.compileGenericUnhideSelector = function(
     if ( compiled === undefined ) {
         const who = writer.properties.get('assetKey') || '?';
         µb.logger.writeOne({
-            error: `Invalid cosmetic filter in ${who} : #@#${parsed.suffix}`
+            realm: 'message',
+            type: 'error',
+            text: `Invalid cosmetic filter in ${who}: #@#${parsed.suffix}`
         });
         return;
     }
@@ -687,7 +691,9 @@ FilterContainer.prototype.compileSpecificSelector = function(
     if ( compiled === undefined ) {
         const who = writer.properties.get('assetKey') || '?';
         µb.logger.writeOne({
-            error: `Invalid cosmetic filter in ${who} : ##${parsed.suffix}`
+            realm: 'message',
+            type: 'error',
+            text: `Invalid cosmetic filter in ${who}: ##${parsed.suffix}`
         });
         return;
     }

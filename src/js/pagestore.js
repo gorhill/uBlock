@@ -322,7 +322,7 @@ PageStore.prototype.init = function(tabId, context) {
                 µb.logger.enabled &&
                 context === 'tabCommitted'
             ) {
-                fctxt.setRealm('net')
+                fctxt.setRealm('network')
                      .setType('generichide')
                      .setFilter(µb.staticNetFilteringEngine.toLogData())
                      .toLogger();

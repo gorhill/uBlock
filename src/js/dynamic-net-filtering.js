@@ -404,24 +404,18 @@ Matrix.prototype.lookupRuleData = function(src, des, type) {
 /******************************************************************************/
 
 Matrix.prototype.toLogData = function() {
-    if ( this.r === 0  || this.type === '' ) {
-        return;
-    }
-    var logData = {
+    if ( this.r === 0  || this.type === '' ) { return; }
+    return {
         source: 'dynamicHost',
         result: this.r,
-        raw: this.z + ' ' +
-             this.y + ' ' +
-             this.type + ' ' +
-             this.intToActionMap.get(this.r)
+        raw: `${this.z} ${this.y} ${this.type} ${this.intToActionMap.get(this.r)}`
     };
-    return logData;
 };
 
 Matrix.prototype.intToActionMap = new Map([
-    [ 1, ' block' ],
-    [ 2, ' allow' ],
-    [ 3, ' noop' ]
+    [ 1, 'block' ],
+    [ 2, 'allow' ],
+    [ 3, 'noop' ]
 ]);
 
 /******************************************************************************/
