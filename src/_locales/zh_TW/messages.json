@@ -44,7 +44,7 @@
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
-    "message": "uBlock₀ — 資源檢視工具",
+    "message": "uBlock₀ — 資源檢視器",
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {

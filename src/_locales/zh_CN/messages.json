@@ -88,7 +88,7 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "进入元素临时移除模式",
+    "message": "进入临时移除元素模式",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
@@ -100,7 +100,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "是否禁止此网站弹出任何窗口",
+    "message": "是否禁止此网站的所有弹出窗口",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
@@ -152,7 +152,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "单击不再禁用此网站的所有脚本",
+    "message": "单击以取消禁用此网站的所有脚本",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
@@ -184,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "第三方 样式\/图片",
+    "message": "第三方 CSS\/图像",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -236,7 +236,7 @@
     "description": "English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint": {
-    "message": "单击、Ctrl + 单击",
+    "message": "单击，Ctrl + 单击",
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
@@ -492,7 +492,7 @@
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
-    "message": "规则语法：<code>来源 目标 类型 操作<\/code>（<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>完整说明<\/a>）。",
+    "message": "规则语法：<code>来源主机名称 目标主机名称 连接请求类型 操作<\/code>（<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>完整说明<\/a>）。",
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
@@ -680,7 +680,7 @@
     "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
-    "message": "支持网站",
+    "message": "支持",
     "description": "A link for where to get support"
   },
   "aboutIssues": {
