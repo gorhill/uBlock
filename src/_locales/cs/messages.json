@@ -607,9 +607,45 @@
     "message": "3rd-party",
     "description": "A keyword in the built-in row filtering expression"
   },
-  "logMaxEntriesTip": {
-    "message": "Maximální počet záznamů",
-    "description": "Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  "loggerEntryDetailsHeader": {
+    "message": "Details",
+    "description": "Small header to identify the 'Details' pane for a specific logger entry"
+  },
+  "loggerEntryDetailsFilter": {
+    "message": "Filter",
+    "description": "Label to identify a filter field"
+  },
+  "loggerEntryDetailsFilterList": {
+    "message": "Filter list",
+    "description": "Label to identify a filter list field"
+  },
+  "loggerEntryDetailsRule": {
+    "message": "Rule",
+    "description": "Label to identify a rule field"
+  },
+  "loggerEntryDetailsContext": {
+    "message": "Context",
+    "description": "Label to identify a context field (typically a hostname)"
+  },
+  "loggerEntryDetailsRootContext": {
+    "message": "Root context",
+    "description": "Label to identify a root context field (typically a hostname)"
+  },
+  "loggerEntryDetailsPartyness": {
+    "message": "Partyness",
+    "description": "Label to identify a field providing partyness information"
+  },
+  "loggerEntryDetailsType": {
+    "message": "Type",
+    "description": "Label to identify the type of an entry"
+  },
+  "loggerEntryDetailsURL": {
+    "message": "URL",
+    "description": "Label to identify the URL of an entry"
+  },
+  "loggerURLFilteringHeader": {
+    "message": "Dynamické filtrování URL adres",
+    "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
     "message": "Kontext:",
@@ -618,10 +654,6 @@
   "loggerURLFilteringTypeLabel": {
     "message": "Typ:",
     "description": "Label for the type selector"
-  },
-  "loggerURLFilteringHeader": {
-    "message": "Dynamické filtrování URL adres",
-    "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerStaticFilteringHeader": {
     "message": "Statické filtrování",
@@ -670,6 +702,46 @@
   "loggerStaticFilteringFinderSentence2": {
     "message": "Statický filtr <code>{{filter}}<\/code> nebyl nalezen v žádném aktuálně povoleném seznamu filtrů",
     "description": "Message to show when a filter cannot be found in any filter lists"
+  },
+  "loggerSettingDiscardPrompt": {
+    "message": "Logger entries which do not fulfill all three conditions below will be automatically discarded:",
+    "description": "Logger setting: A sentence to describe the purpose of the settings below"
+  },
+  "loggerSettingPerEntryMaxAge": {
+    "message": "Preserve entries from the last {{input}} minutes",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerTabMaxLoads": {
+    "message": "Preserve at most {{input}} page loads per tab",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerTabMaxEntries": {
+    "message": "Preserve at most {{input}} entries per tab",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerEntryLineCount": {
+    "message": "Use {{input}} lines per entry in vertically expanded mode",
+    "description": "A logger setting"
+  },
+  "loggerSettingHideColumnsPrompt": {
+    "message": "Hide columns:",
+    "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
+  },
+  "loggerSettingHideColumnTime": {
+    "message": "{{input}} Time",
+    "description": "A label for the time column"
+  },
+  "loggerSettingHideColumnFilter": {
+    "message": "{{input}} Filter\/rule",
+    "description": "A label for the filter or rule column"
+  },
+  "loggerSettingHideColumnContext": {
+    "message": "{{input}} Context",
+    "description": "A label for the context column"
+  },
+  "loggerSettingHideColumnPartyness": {
+    "message": "{{input}} Partyness",
+    "description": "A label for the partyness column"
   },
   "aboutChangelog": {
     "message": "Přehled změn",
