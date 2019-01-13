@@ -624,11 +624,11 @@ const viewPort = (function() {
 
         // Event
         if ( cells[2] === '--' ) {
-            divcl.add('blocked');
+            div.setAttribute('data-status', '1');
         } else if ( cells[2] === '++' ) {
-            divcl.add('allowed');
+            div.setAttribute('data-status', '2');
         } else if ( cells[2] === '**' ) {
-            span.add('nooped');
+            div.setAttribute('data-status', '3');
         } else if ( cells[2] === '<<' ) {
             divcl.add('redirect');
         }
@@ -1336,7 +1336,7 @@ const netFilteringManager = (function() {
         const cantPreview =
             type !== 'image' ||
             targetRow.classList.contains('networkRealm') === false  ||
-            targetRow.classList.contains('blocked');
+            targetRow.getAttribute('data-status') === '1';
 
         // Whether picker can be used
         dialog.querySelector('.picker').classList.toggle(
@@ -1533,6 +1533,10 @@ const netFilteringManager = (function() {
         // URL
         text = trch[6].textContent;
         if ( text !== '' ) {
+            const attr = tr.getAttribute('data-status') || '';
+            if ( attr !== '' ) {
+                rows[7].setAttribute('data-status', attr);
+            }
             rows[7].children[1].appendChild(trch[6].cloneNode(true));
         } else {
             rows[7].style.display = 'none';
