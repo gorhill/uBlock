@@ -14,15 +14,19 @@
 <body>
 
 <div class="permatoolbar">
-    <select id="pageSelector">
-        <option value="0" data-i18n="logAll">
-        <option value="-1" data-i18n="logBehindTheScene">
-        <option value="_" data-i18n="loggerCurrentTab">
-    </select>
-    <span id="refresh" class="button fa-icon disabled needdom" data-i18n-title="loggerReloadTip">refresh</span>
-    <span id="showdom" class="button fa-icon disabled needdom" data-i18n-title="loggerDomInspectorTip">code</span>
-    <span id="showpopup" class="button ubo-icon disabled needdom" data-i18n-title="loggerPopupPanelTip"><svg><use href="/img/ublock-defs.svg#ubo-solid"></use></svg></span>
-    <a id="info" class="button fa-icon" href="https://github.com/gorhill/uBlock/wiki/The-logger" target="_blank" data-i18n-title="loggerInfoTip">info-circle</a>
+    <div>
+        <select id="pageSelector">
+            <option value="0" data-i18n="logAll">
+            <option value="-1" data-i18n="logBehindTheScene">
+            <option value="_" data-i18n="loggerCurrentTab">
+        </select>
+        <span id="refresh" class="button fa-icon disabled needdom" data-i18n-title="loggerReloadTip">refresh</span>
+        <span id="showdom" class="button fa-icon disabled needdom" data-i18n-title="loggerDomInspectorTip">code</span>
+        <span id="showpopup" class="button ubo-icon disabled needdom" data-i18n-title="loggerPopupPanelTip"><svg><use href="/img/ublock-defs.svg#ubo-solid"></use></svg></span>
+    </div>
+    <div>
+        <a id="info" class="button fa-icon" href="https://github.com/gorhill/uBlock/wiki/The-logger" target="_blank" data-i18n-title="loggerInfoTip">info-circle</a>
+    </div>
 </div>
 
 <div id="inspectors">
@@ -42,23 +46,28 @@
     </div>
     <div id="netInspector" class="inspector f">
         <div class="permatoolbar">
-            <span class="button fa-icon vCompactToggler">double-angle-up</span>
-            <span id="clean" class="button fa-icon disabled">times</span>
-            <span id="clear" class="button fa-icon disabled" data-i18n-title="loggerClearTip">eraser</span>
-            <span id="pause"><span class="button fa-icon" data-i18n-title="loggerPauseTip">pause-circle-o</span><span class="button fa-icon" data-i18n-title="loggerUnpauseTip">play-circle-o</span></span>
-            <span id="filterExprGroup">
-                <span id="filterButton" class="button fa-icon" data-i18n-title="loggerRowFiltererButtonTip">filter</span>
-                <span id="filterInput">
-                    <input type="text" placeholder="logFilterPrompt">
-                    <span id="filterExprButton" class="button fa-icon expanded" data-i18n-title="loggerRowFiltererBuiltinTip">angle-up</span>
-                    <div id="filterExprPicker">
-                        <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span><span data-filtex="\t--\t|\t<<\t|\t##" data-i18n="loggerRowFiltererBuiltinBlocked"></span><span data-filtex="\t\+\+\t|\t\*\*\t|\t#@#" data-i18n="loggerRowFiltererBuiltinAllowed"></span></div>
-                        <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span><span data-filtex="\t(?:css|font)\t">css/font</span><span data-filtex="\timage\t">image</span><span data-filtex="\t(?:inline-)?script(?:ing)?\t">script</span><span data-filtex="\t(?:websocket|xhr)\t">xhr</span><span data-filtex="\tframe\t">frame</span><span data-filtex="\tdom\t">dom</span></div>
-                        <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span><span data-filtex="\t1\t" data-i18n="loggerRowFiltererBuiltin1p"></span><span data-filtex="\t3(?:,\d)?\t" data-i18n="loggerRowFiltererBuiltin3p"></span></div>
-                    </div>
+            <div>
+                <span class="button fa-icon vCompactToggler">double-angle-up</span>
+                <span id="clean" class="button fa-icon disabled">times</span>
+                <span id="clear" class="button fa-icon disabled" data-i18n-title="loggerClearTip">eraser</span>
+                <span id="pause"><span class="button fa-icon" data-i18n-title="loggerPauseTip">pause-circle-o</span><span class="button fa-icon" data-i18n-title="loggerUnpauseTip">play-circle-o</span></span>
+                <span id="filterExprGroup">
+                    <span id="filterButton" class="button fa-icon" data-i18n-title="loggerRowFiltererButtonTip">filter</span>
+                    <span id="filterInput">
+                        <input type="text" placeholder="logFilterPrompt">
+                        <span id="filterExprButton" class="button fa-icon expanded" data-i18n-title="loggerRowFiltererBuiltinTip">angle-up</span>
+                        <div id="filterExprPicker">
+                            <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span><span data-filtex="\t--\t|\t<<\t|\t##" data-i18n="loggerRowFiltererBuiltinBlocked"></span><span data-filtex="\t\+\+\t|\t\*\*\t|\t#@#" data-i18n="loggerRowFiltererBuiltinAllowed"></span></div>
+                            <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span><span data-filtex="\t(?:css|font)\t">css/font</span><span data-filtex="\timage\t">image</span><span data-filtex="\t(?:inline-)?script(?:ing)?\t">script</span><span data-filtex="\t(?:websocket|xhr)\t">xhr</span><span data-filtex="\tframe\t">frame</span><span data-filtex="\tdom\t">dom</span></div>
+                            <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span><span data-filtex="\t(?:0,)?1\t" data-i18n="loggerRowFiltererBuiltin1p"></span><span data-filtex="\t(?:3(?:,\d)?|0,3)\t" data-i18n="loggerRowFiltererBuiltin3p"></span></div>
+                        </div>
+                    </span>
                 </span>
-            </span>
-            <span id="settings" class="button fa-icon">cog</span>
+            </div>
+            <div>
+                <span id="loggerExport" class="button fa-icon">clipboard</span>
+                <span id="settings" class="button fa-icon">cog</span>
+            </div>
         </div>
         <div class="vscrollable">
             <div id="vwRenderer">
@@ -162,7 +171,24 @@
             </ul>
         </div>
         <div><label data-i18n="loggerSettingPerEntryLineCount"><input type="number" min="2" max="6"></label></div>
+    </div>
+
+    <div id="loggerExportDialog">
+        <div class="options">
+            <div data-radio="format">
+                <span data-i18n="" data-radio-item="list">List</span>
+                <span data-i18n="" data-radio-item="table">Table</span>
+            </div>
+            <div data-radio="encoding">
+                <span data-i18n="" data-radio-item="plain">Plain</span>
+                <span data-i18n="" data-radio-item="markdown">Markdown</span>
+            </div>
+            <div>
+                <span data-i18n="" class="pushbutton">Copy to clipboard</span>
+            </div>
         </div>
+        <textarea class="output" readonly spellcheck="false"></textarea>
+    </div>
 </div>
 
 <script src="js/fa-icons.js"></script>

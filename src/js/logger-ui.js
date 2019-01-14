@@ -341,6 +341,9 @@ const parseLogEntry = function(details) {
     ) {
         let partyness = '';
         if ( entry.tabDomain !== undefined ) {
+            if ( entry.tabId < 0 ) {
+                partyness += '0,';
+            }
             partyness += entry.domain === entry.tabDomain ? '1' : '3';
         } else {
             partyness += '?';
@@ -1041,7 +1044,7 @@ const reloadTab = function(ev) {
 /******************************************************************************/
 /******************************************************************************/
 
-const netFilteringManager = (function() {
+(function() {
     const reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
     const staticFilterTypes = {
         'beacon': 'other',
@@ -1400,11 +1403,11 @@ const netFilteringManager = (function() {
         return urls;
     };
 
-    const fillSummaryPaneFilterList = function(row) {
+    const fillSummaryPaneFilterList = function(rows) {
+        const rawFilter = targetRow.children[1].textContent;
+        const compiledFilter = targetRow.getAttribute('data-filter');
+
         const nodeFromFilter = function(filter, lists) {
-            if ( Array.isArray(lists) === false || lists.length === 0 ) {
-                return;
-            }
             const fragment = document.createDocumentFragment();
             const template = document.querySelector(
                 '#filterFinderListEntry > span'
@@ -1414,9 +1417,11 @@ const netFilteringManager = (function() {
                 let a = span.querySelector('a:nth-of-type(1)');
                 a.href += encodeURIComponent(list.assetKey);
                 a.textContent = list.title;
+                a = span.querySelector('a:nth-of-type(2)');
                 if ( list.supportURL ) {
-                    a = span.querySelector('a:nth-of-type(2)');
                     a.setAttribute('href', list.supportURL);
+                } else {
+                    a.style.display = 'none';
                 }
                 if ( fragment.childElementCount !== 0 ) {
                     fragment.appendChild(document.createTextNode('\n'));
@@ -1430,24 +1435,31 @@ const netFilteringManager = (function() {
             if ( response instanceof Object === false ) {
                 response = {};
             }
-            const fragment = document.createDocumentFragment();
+            let bestMatchFilter = '';
             for ( const filter in response ) {
-                const spans = nodeFromFilter(filter, response[filter]);
-                if ( spans === undefined ) { continue; }
-                fragment.appendChild(spans);
+                if ( filter.length > bestMatchFilter.length ) {
+                    bestMatchFilter = filter;
+                }
             }
-            row.children[1].appendChild(fragment);
+            if (
+                bestMatchFilter !== '' &&
+                Array.isArray(response[bestMatchFilter])
+            ) {
+                rows[0].children[1].textContent = bestMatchFilter;
+                rows[1].children[1].appendChild(nodeFromFilter(
+                    bestMatchFilter,
+                    response[bestMatchFilter]
+                ));
+            }
             // https://github.com/gorhill/uBlock/issues/2179
-            if ( row.children[1].childElementCount === 0 ) {
+            if ( rows[1].children[1].childElementCount === 0 ) {
                 vAPI.i18n.safeTemplateToDOM(
                     'loggerStaticFilteringFinderSentence2',
                     { filter: rawFilter },
-                    row.children[1]
+                    rows[1].children[1]
                 );
             }
         };
-        const rawFilter = targetRow.children[1].textContent;
-        const compiledFilter = targetRow.getAttribute('data-filter');
 
         if ( targetRow.classList.contains('networkRealm') ) {
             messaging.send(
@@ -1499,7 +1511,7 @@ const netFilteringManager = (function() {
         }
         // Filter list
         if ( trcl.contains('canLookup') ) {
-            fillSummaryPaneFilterList(rows[1]);
+            fillSummaryPaneFilterList(rows);
         } else {
             rows[1].style.display = 'none';
         }
@@ -1519,7 +1531,7 @@ const netFilteringManager = (function() {
         // Partyness
         text = tr.getAttribute('data-parties') || '';
         if ( text !== '' ) {
-            rows[5].children[1].textContent = `${trch[4].textContent}\u2002${text}`;
+            rows[5].children[1].textContent = `(${trch[4].textContent})\u2002${text}`;
         } else {
             rows[5].style.display = 'none';
         }
@@ -1738,7 +1750,11 @@ const netFilteringManager = (function() {
         );
     };
 
-    return { toggleOn };
+    uDom('#netInspector').on(
+        'click',
+        '.canDetails > span:nth-of-type(2),.canDetails > span:nth-of-type(3),.canDetails > span:nth-of-type(5)',
+        toggleOn
+    );
 })();
 
 // https://www.youtube.com/watch?v=XyNYrmmdUd4
@@ -2255,6 +2271,187 @@ const popupManager = (function() {
 
 /******************************************************************************/
 
+(function() {
+    const lines = [];
+    const options = {
+        format: 'list',
+        encoding: 'markdown',
+        time: 'anonymous',
+    };
+    let dialog;
+
+    const collectLines = function() {
+        lines.length = 0;
+        let t0 = filteredLoggerEntries.length !== 0
+            ? filteredLoggerEntries[filteredLoggerEntries.length - 1].tstamp
+            : 0;
+        for ( const entry of filteredLoggerEntries ) {
+            const text = entry.textContent;
+            const fields = [];
+            let i = 0;
+            let beg = text.indexOf('\t');
+            if ( beg === 0 ) { continue; }
+            let timeField = text.slice(0, beg);
+            if ( options.time === 'anonymous' ) {
+                timeField = '+' + Math.round((entry.tstamp - t0) / 1000).toString();
+            }
+            fields.push(timeField);
+            beg += 1;
+            while ( beg < text.length ) {
+                let end = text.indexOf('\t', beg);
+                if ( end === -1 ) { end = text.length; }
+                fields.push(text.slice(beg, end));
+                beg = end + 1;
+                i += 1;
+            }
+            lines.push(fields);
+        }
+    };
+
+    const formatAsPlainTextTable = function() {
+        const outputAll = [];
+        for ( const fields of lines ) {
+            outputAll.push(fields.join('\t'));
+        }
+        outputAll.push('');
+        return outputAll.join('\n');
+    };
+
+    const formatAsMarkdownTable = function() {
+        const outputAll = [];
+        let fieldCount = 0;
+        for ( const fields of lines ) {
+            if ( fields.length <= 2 ) { continue; }
+            if ( fields.length > fieldCount ) {
+                fieldCount = fields.length;
+            }
+            const outputOne = [];
+            for ( let i = 0; i < fields.length; i++ ) {
+                const field = fields[i];
+                let code = /\b(?:www\.|https?:\/\/)/.test(field) ? '`' : '';
+                outputOne.push(` ${code}${field.replace(/\|/g, '\\|')}${code} `);
+            }
+            outputAll.push(outputOne.join('|'));
+        }
+        outputAll.unshift(
+            `${' |'.repeat(fieldCount-1)} `,
+            `${':--- |'.repeat(fieldCount-1)}:--- `
+        );
+        return `<details><summary>Logger output</summary>\n\n|${outputAll.join('|\n|')}|\n</details>\n`;
+    };
+
+    const formatAsTable = function() {
+        if ( options.encoding === 'plain' ) {
+            return formatAsPlainTextTable();
+        }
+        return formatAsMarkdownTable();
+    };
+
+    const formatAsList = function() {
+        const outputAll = [];
+        for ( const fields of lines ) {
+            const outputOne = [];
+            for ( let i = 0; i < fields.length; i++ ) {
+                let str = fields[i];
+                if ( str.length === 0 ) { continue; }
+                outputOne.push(str);
+            }
+            outputAll.push(outputOne.join('\n'));
+        }
+        let before, between, after;
+        if ( options.encoding === 'markdown' ) {
+            const code = '```';
+            before = `<details><summary>Logger output</summary>\n\n${code}\n`;
+            between = `\n${code}\n${code}\n`;
+            after = `\n${code}\n</details>\n`;
+        } else {
+            before = '';
+            between = '\n\n';
+            after = '\n';
+        }
+        return `${before}${outputAll.join(between)}${after}`;
+    };
+
+    const format = function() {
+        const output = dialog.querySelector('.output');
+        if ( options.format === 'list' ) {
+            output.textContent = formatAsList();
+        } else {
+            output.textContent = formatAsTable();
+        }
+    };
+
+    const setRadioButton = function(group, value) {
+        if ( options.hasOwnProperty(group) === false ) { return; }
+        const groupEl = dialog.querySelector(`[data-radio="${group}"]`);
+        const buttonEls = groupEl.querySelectorAll('[data-radio-item]');
+        for ( const buttonEl of buttonEls ) {
+            buttonEl.classList.toggle(
+                'on',
+                buttonEl.getAttribute('data-radio-item') === value
+            );
+        }
+        options[group] = value;
+        format();
+    };
+
+    const onOption = function(ev) {
+        const target = ev.target.closest('span[data-i18n]');
+        if ( target === null ) { return; }
+
+        // Copy to clipboard
+        if ( target.matches('.pushbutton') ) {
+            const textarea = dialog.querySelector('textarea');
+            textarea.focus();
+            if ( textarea.selectionEnd === textarea.selectionStart ) {
+                textarea.select();
+            }
+            document.execCommand('copy');
+            ev.stopPropagation();
+            return;
+        }
+
+        // Radio buttons
+        const group = target.closest('[data-radio]');
+        if ( group === null ) { return; }
+        if ( target.matches('span.on') ) { return; }
+        const item = target.closest('[data-radio-item]');
+        if ( item === null ) { return; }
+        setRadioButton(
+            group.getAttribute('data-radio'),
+            item.getAttribute('data-radio-item')
+        );
+        ev.stopPropagation();
+    };
+
+    const toggleOn = function() {
+        dialog = modalDialog.create(
+            '#loggerExportDialog',
+            ( ) => {
+                dialog = undefined;
+                lines.length = 0;
+            }
+        );
+        setRadioButton('format', options.format);
+        setRadioButton('encoding', options.encoding);
+
+        dialog.querySelector('.options').addEventListener(
+            'click',
+            onOption,
+            { capture: true }
+        );
+
+        collectLines();
+        format();
+
+        modalDialog.show();
+    };
+
+    uDom.nodeFromId('loggerExport').addEventListener('click', toggleOn);
+})();
+
+/******************************************************************************/
+
 // TODO:
 // - Give some thoughts to:
 //   - an option to discard immediately filtered out new entries
@@ -2429,15 +2626,8 @@ window.addEventListener('beforeunload', releaseView);
 
 uDom('#pageSelector').on('change', pageSelectorChanged);
 uDom('#refresh').on('click', reloadTab);
-
 uDom('#netInspector .vCompactToggler').on('click', toggleVCompactView);
 uDom('#pause').on('click', pauseNetInspector);
-
-uDom('#netInspector').on(
-    'click',
-    'span:nth-of-type(2),span:nth-of-type(3),span:nth-of-type(5)',
-    netFilteringManager.toggleOn
-);
 
 // https://github.com/gorhill/uBlock/issues/507
 //   Ensure tab selector is in sync with URL hash

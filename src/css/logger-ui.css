@@ -23,8 +23,12 @@ textarea {
     display: flex;
     flex-shrink: 0;
     font-size: 120%;
+    justify-content: space-between;
     margin: 0;
-    padding: 0.25em 0.5em;
+    padding: 0.25em;
+    }
+.permatoolbar > div {
+    display: flex;
     }
 .permatoolbar .button {
     cursor: pointer;
@@ -59,23 +63,9 @@ body[dir="rtl"] #pageSelector {
     }
 #info {
     fill: #ccc;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    position: absolute;
     }
 #info:hover {
     fill: #000;
-    }
-body[dir="ltr"] #info {
-    right: 0;
-    }
-body[dir="rtl"] #info {
-    left: 0;
-    }
-@media (max-width: 540px) {
-    #info {
-        display: none;
-        }
     }
 
 /*
@@ -204,17 +194,6 @@ body[dir="rtl"] #netInspector #filterExprPicker {
     background-color: lightblue;
     border: 1px solid lightblue;
     }
-#netInspector #settings {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    position: absolute;
-}
-body[dir="ltr"] #netInspector #settings {
-    right: 0;
-    }
-body[dir="rtl"] #netInspector #settings {
-    left: 0;
-    }
 
 #netInspector .vscrollable {
     overflow: hidden;
@@ -277,6 +256,9 @@ body.colorBlind #vwRenderer .logEntry > div[data-status="3"] {
 body.colorBlind #vwRenderer .logEntry > div[data-status="2"],
 body.colorBlind #netFilteringDialog > .panes > .details > div[data-status="2"] {
     background-color: rgba(255, 194, 57, 0.1)
+    }
+#vwRenderer .logEntry > div[data-tabid="-1"] {
+    text-shadow: 0 0 0.8em #444;
     }
 #vwRenderer .logEntry > div.cosmetic,
 #vwRenderer .logEntry > div.redirect {
@@ -348,7 +330,7 @@ body[dir="rtl"] #vwRenderer .logEntry > div > span:first-child {
 #vwRenderer .logEntry > div.canDetails:hover > span:nth-of-type(2),
 #vwRenderer .logEntry > div.canDetails:hover > span:nth-of-type(3),
 #vwRenderer .logEntry > div.canDetails:hover > span:nth-of-type(5) {
-    background: rgba(0, 0, 0, 0.08);
+    background: rgba(0, 0, 0, 0.1);
     cursor: zoom-in;
     }
 #netInspector:not(.vExpanded) #vwRenderer .logEntry > div > span:nth-of-type(4) {
@@ -368,19 +350,6 @@ body[dir="rtl"] #vwRenderer .logEntry > div > span:first-child {
 /* visual for tabless network requests */
 #vwRenderer .logEntry > div > span:nth-of-type(5) {
     position: relative;
-    }
-#vwRenderer .logEntry > div[data-tabid="-1"] > span:nth-of-type(5)::before {
-    border: 5px solid #ccc;
-    border-bottom: 0;
-    border-top: 0;
-    bottom: 0;
-    content: '\00a0';
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: calc(100% - 10px);
-    z-index: -1;
     }
 #vwRenderer .logEntry > div > span:nth-of-type(6) {
     }
@@ -630,19 +599,15 @@ body[dir="rtl"] #netFilteringDialog > .headers > .tools {
     border: 0;
     border-bottom: 1px solid white;
     display: flex;
-    min-height: 2.2em;
     }
 #netFilteringDialog > .panes > .details > div > span {
-    align-items: center;
-    display: inline-flex;
-    flex-wrap: wrap;
-    padding: 0.25em 0.5em;
+    padding: 0.5em;
     }
 #netFilteringDialog > .panes > .details > div > span:nth-of-type(1) {
     border: 0;
     flex-grow: 0;
     flex-shrink: 0;
-    justify-content: flex-end;
+    text-align: right;
     width: 8em;
     }
 body[dir="ltr"] #netFilteringDialog > .panes > .details > div > span:nth-of-type(1) {
@@ -873,6 +838,43 @@ body[dir="rtl"] #loggerSettingsDialog ul {
     }
 #loggerSettingsDialog input {
     max-width: 6em;
+    }
+
+#loggerExportDialog {
+    display: flex;
+    flex-direction: column;
+    }
+#loggerExportDialog .options {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1em;
+    }
+#loggerExportDialog .options > div {
+    white-space: nowrap;
+    }
+#loggerExportDialog .options span[data-i18n] {
+    border: 1px solid lightblue;
+    cursor: pointer;
+    font-size: 90%;
+    margin: 0 0.25em 0 0;
+    padding: 0.5em;
+    white-space: nowrap;
+    }
+#loggerExportDialog .options span[data-i18n]:last-of-type {
+    margin: 0;
+    }
+#loggerExportDialog .options span[data-i18n]:hover {
+    background-color: aliceblue;
+    }
+#loggerExportDialog .options span.on[data-i18n],
+#loggerExportDialog .options span.pushbutton:active {
+    background-color: lightblue;
+    }
+#loggerExportDialog .output {
+    font: x-small mono;
+    height: 60vh;
+    padding: 0.5em;
+    white-space: pre;
     }
 
 .hide {
