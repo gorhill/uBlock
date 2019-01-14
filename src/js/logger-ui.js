@@ -1503,7 +1503,11 @@ const reloadTab = function(ev) {
         // Rule
         if (
             (text !== '') &&
-            (trcl.contains('dynamicHost') || trcl.contains('dynamicUrl'))
+            (
+                trcl.contains('dynamicHost') ||
+                trcl.contains('dynamicUrl') ||
+                trcl.contains('switch')
+            )
         ) {
             rows[2].children[1].textContent = text;
         } else {
@@ -2333,10 +2337,12 @@ const popupManager = (function() {
             }
             outputAll.push(outputOne.join('|'));
         }
-        outputAll.unshift(
-            `${' |'.repeat(fieldCount-1)} `,
-            `${':--- |'.repeat(fieldCount-1)}:--- `
-        );
+        if ( fieldCount !== 0 ) {
+            outputAll.unshift(
+                `${' |'.repeat(fieldCount-1)} `,
+                `${':--- |'.repeat(fieldCount-1)}:--- `
+            );
+        }
         return `<details><summary>Logger output</summary>\n\n|${outputAll.join('|\n|')}|\n</details>\n`;
     };
 
@@ -2392,7 +2398,6 @@ const popupManager = (function() {
             );
         }
         options[group] = value;
-        format();
     };
 
     const onOption = function(ev) {
@@ -2421,6 +2426,7 @@ const popupManager = (function() {
             group.getAttribute('data-radio'),
             item.getAttribute('data-radio-item')
         );
+        format();
         ev.stopPropagation();
     };
 
@@ -2432,17 +2438,18 @@ const popupManager = (function() {
                 lines.length = 0;
             }
         );
+
         setRadioButton('format', options.format);
         setRadioButton('encoding', options.encoding);
+
+        collectLines();
+        format();
 
         dialog.querySelector('.options').addEventListener(
             'click',
             onOption,
             { capture: true }
         );
-
-        collectLines();
-        format();
 
         modalDialog.show();
     };
