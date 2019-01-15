@@ -193,6 +193,17 @@ const LogEntry = function(details) {
             this[prop] = details[prop];
         }
     }
+    // TODO: Shouldn't this be done in µBlock.filteringContext?
+    //       Need to evaluate.
+    if ( this.tabDomain === '' ) {
+        this.tabDomain = this.tabHostname;
+    }
+    if ( this.docDomain === '' ) {
+        this.docDomain = this.docHostname;
+    }
+    if ( this.domain === '' ) {
+        this.domain = this.hostname;
+    }
 };
 LogEntry.prototype = {
     dead: false,

@@ -474,7 +474,7 @@ body[dir="rtl"] #modalOverlay > div > div:nth-of-type(2) {
     }
 
 #netFilteringDialog {
-    font-size: 90%;
+    font-size: 95%;
     }
 #netFilteringDialog a {
     text-decoration: none;
@@ -871,7 +871,7 @@ body[dir="rtl"] #loggerSettingsDialog ul {
     background-color: lightblue;
     }
 #loggerExportDialog .output {
-    font: x-small mono;
+    font: smaller mono;
     height: 60vh;
     padding: 0.5em;
     white-space: pre;
