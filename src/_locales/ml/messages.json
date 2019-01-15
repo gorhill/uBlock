@@ -300,7 +300,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Block media elements larger than {{input}} kB",
+    "message": "Block media elements larger than {{input}} KB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {

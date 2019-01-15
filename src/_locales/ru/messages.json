@@ -300,7 +300,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Блокировать медиа-элементы больше {{input}} KБ",
+    "message": "Блокировать медиа-элементы больше {{input:number}} КБ",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -656,7 +656,7 @@
     "description": "Label for the type selector"
   },
   "loggerStaticFilteringHeader": {
-    "message": "Фильтр",
+    "message": "Статическая фильтрация",
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {

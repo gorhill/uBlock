@@ -624,7 +624,7 @@
     "description": "Label to identify a rule field"
   },
   "loggerEntryDetailsContext": {
-    "message": "内容",
+    "message": "上下文",
     "description": "Label to identify a context field (typically a hostname)"
   },
   "loggerEntryDetailsRootContext": {
@@ -648,7 +648,7 @@
     "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
-    "message": "内容",
+    "message": "上下文：",
     "description": "Label for the context selector"
   },
   "loggerURLFilteringTypeLabel": {
@@ -736,7 +736,7 @@
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
-    "message": "{{input}} 情境",
+    "message": "{{input}} 上下文",
     "description": "A label for the context column"
   },
   "loggerSettingHideColumnPartyness": {

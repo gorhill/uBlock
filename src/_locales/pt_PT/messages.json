@@ -300,7 +300,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Bloquear elementos multimédia maiores do que {{input:number}} kB",
+    "message": "Bloquear elementos multimédia maiores do que {{input}} KB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -632,7 +632,7 @@
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
-    "message": "Partyness",
+    "message": "Tipo de relação",
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
@@ -644,7 +644,7 @@
     "description": "Label to identify the URL of an entry"
   },
   "loggerURLFilteringHeader": {
-    "message": "Filtragem dinâmica de URL",
+    "message": "Regra do URL",
     "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
@@ -656,7 +656,7 @@
     "description": "Label for the type selector"
   },
   "loggerStaticFilteringHeader": {
-    "message": "Filtragem estática",
+    "message": "Filtro",
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
@@ -740,7 +740,7 @@
     "description": "A label for the context column"
   },
   "loggerSettingHideColumnPartyness": {
-    "message": "{{input}} Partyness",
+    "message": "{{input}} Tipo de relação",
     "description": "A label for the partyness column"
   },
   "aboutChangelog": {

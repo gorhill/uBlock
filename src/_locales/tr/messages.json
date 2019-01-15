@@ -656,7 +656,7 @@
     "description": "Label for the type selector"
   },
   "loggerStaticFilteringHeader": {
-    "message": "Süzme",
+    "message": "Süzgeç",
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {

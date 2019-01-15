@@ -608,19 +608,19 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerEntryDetailsHeader": {
-    "message": "Details",
+    "message": "Chi tiết",
     "description": "Small header to identify the 'Details' pane for a specific logger entry"
   },
   "loggerEntryDetailsFilter": {
-    "message": "Filter",
+    "message": "Bộ lọc",
     "description": "Label to identify a filter field"
   },
   "loggerEntryDetailsFilterList": {
-    "message": "Filter list",
+    "message": "Danh sách bộ lọc",
     "description": "Label to identify a filter list field"
   },
   "loggerEntryDetailsRule": {
-    "message": "Rule",
+    "message": "Quy tắc",
     "description": "Label to identify a rule field"
   },
   "loggerEntryDetailsContext": {

@@ -536,7 +536,7 @@
     "description": "Appears in the logger's tab selector"
   },
   "logBehindTheScene": {
-    "message": "背景的網路連線請求",
+    "message": "背景網路連線請求",
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
@@ -624,11 +624,11 @@
     "description": "Label to identify a rule field"
   },
   "loggerEntryDetailsContext": {
-    "message": "內容",
+    "message": "來源",
     "description": "Label to identify a context field (typically a hostname)"
   },
   "loggerEntryDetailsRootContext": {
-    "message": "主內容",
+    "message": "根來源",
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
@@ -648,7 +648,7 @@
     "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
-    "message": "情境：",
+    "message": "來源：",
     "description": "Label for the context selector"
   },
   "loggerURLFilteringTypeLabel": {
@@ -736,7 +736,7 @@
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
-    "message": "{{input}} 情境",
+    "message": "{{input}} 來源",
     "description": "A label for the context column"
   },
   "loggerSettingHideColumnPartyness": {
