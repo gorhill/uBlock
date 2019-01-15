@@ -621,7 +621,7 @@ const makeEventHandler = function(selector, callback) {
         const receiver = event.target;
         const ancestor = receiver.closest(selector);
         if (
-            ancestor !== null &&
+            ancestor === receiver &&
             ancestor !== dispatcher &&
             dispatcher.contains(ancestor)
         ) {
