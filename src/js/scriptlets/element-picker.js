@@ -704,7 +704,7 @@ var filtersFrom = function(x, y) {
     TODO: need to be revised once I implement chained cosmetic operators.
 
 */
-var filterToDOMInterface = (function() {
+const filterToDOMInterface = (function() {
     // Net filters: we need to lookup manually -- translating into a foolproof
     // CSS selector is just not possible.
     var fromNetworkFilter = function(filter) {
@@ -997,7 +997,7 @@ var filterToDOMInterface = (function() {
 
 /******************************************************************************/
 
-var userFilterFromCandidate = function(callback) {
+const userFilterFromCandidate = function(callback) {
     var v = rawFilterFromTextarea();
     filterToDOMInterface.set(v, function(items) {
         if ( !items || items.length === 0 ) {
@@ -1041,7 +1041,7 @@ var userFilterFromCandidate = function(callback) {
 
 /******************************************************************************/
 
-var onCandidateChanged = (function() {
+const onCandidateChanged = (function() {
     var process = function(items) {
         var elems = [], valid = items !== undefined;
         if ( valid ) {
@@ -1064,7 +1064,7 @@ var onCandidateChanged = (function() {
 
 /******************************************************************************/
 
-var candidateFromFilterChoice = function(filterChoice) {
+const candidateFromFilterChoice = function(filterChoice) {
     let slot = filterChoice.slot;
     let filters = filterChoice.filters;
     let filter = filters[slot];
@@ -1127,7 +1127,7 @@ var candidateFromFilterChoice = function(filterChoice) {
 
 /******************************************************************************/
 
-var filterChoiceFromEvent = function(ev) {
+const filterChoiceFromEvent = function(ev) {
     var li = ev.target;
     var isNetFilter = li.textContent.slice(0, 2) !== '##';
     var r = {
@@ -1207,16 +1207,13 @@ const onDialogClicked = function(ev) {
 
 /******************************************************************************/
 
-var removeAllChildren = function(parent) {
+const removeAllChildren = function(parent) {
     while ( parent.firstChild ) {
         parent.removeChild(parent.firstChild);
     }
 };
 
 /******************************************************************************/
-
-// TODO: for convenience I could provide a small set of net filters instead
-// of just a single one. Truncating the right-most part of the path etc.
 
 const showDialog = function(options) {
     pausePicker();
@@ -1230,16 +1227,19 @@ const showDialog = function(options) {
 
     // Create lists of candidate filters
     const populate = function(src, des) {
-        var root = dialog.querySelector(des);
-        var ul = root.querySelector('ul');
+        const root = dialog.querySelector(des);
+        const ul = root.querySelector('ul');
         removeAllChildren(ul);
-        var li;
-        for ( var i = 0; i < src.length; i++ ) {
-            li = document.createElement('li');
+        for ( let i = 0; i < src.length; i++ ) {
+            const li = document.createElement('li');
             li.textContent = src[i];
             ul.appendChild(li);
         }
-        root.style.display = src.length !== 0 ? '' : 'none';
+        if ( src.length !== 0 ) {
+            root.style.removeProperty('display');
+        } else {
+            root.style.setProperty('display', 'none', 'important');
+        }
     };
 
     populate(netFilterCandidates, '#netFilters');
@@ -1298,32 +1298,33 @@ var elementFromPoint = (function() {
             return null;
         }
         if ( !pickerRoot ) { return null; }
-        pickerRoot.style.pointerEvents = 'none';
+        pickerRoot.style.setProperty('pointer-events', 'none', 'important');
         var elem = document.elementFromPoint(x, y);
         if ( elem === document.body || elem === document.documentElement ) {
             elem = null;
         }
-        pickerRoot.style.pointerEvents = '';
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/380
+        pickerRoot.style.setProperty('pointer-events', 'auto', 'important');
         return elem;
     };
 })();
 
 /******************************************************************************/
 
-var onSvgHovered = (function() {
-    var timer = null;
-    var mx = 0, my = 0;
+const onSvgHovered = (function() {
+    let timer;
+    let mx = 0, my = 0;
 
-    var onTimer = function() {
-        timer = null;
-        var elem = elementFromPoint(mx, my);
+    const onTimer = function() {
+        timer = undefined;
+        const elem = elementFromPoint(mx, my);
         highlightElements(elem ? [elem] : []);
     };
 
     return function onMove(ev) {
         mx = ev.clientX;
         my = ev.clientY;
-        if ( timer === null ) {
+        if ( timer === undefined ) {
             timer = vAPI.setTimeout(onTimer, 40);
         }
     };
@@ -1677,7 +1678,6 @@ const pickerCSSStyle = [
     'opacity: 1',
     'outline: 0',
     'padding: 0',
-    'pointer-events: auto',
     'position: fixed',
     'top: 0',
     'visibility: visible',
@@ -1688,12 +1688,12 @@ const pickerCSSStyle = [
 pickerRoot.style.cssText = pickerCSSStyle;
 
 const pickerCSS1 = [
-    '#' + pickerRoot.id + ' {',
+    `#${pickerRoot.id} {`,
         pickerCSSStyle,
     '}'
 ].join('\n');
 const pickerCSS2 = [
-    '[' + pickerRoot.id + '-clickblind] {',
+    `[${pickerRoot.id}-clickblind] {`,
         'pointer-events: none !important;',
     '}'
 ].join('\n');
