@@ -300,7 +300,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "{{input}} kB より大きいメディア要素をブロックする",
+    "message": "{{input}} KB より大きいメディア要素をブロックする",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -656,7 +656,7 @@
     "description": "Label for the type selector"
   },
   "loggerStaticFilteringHeader": {
-    "message": "静的フィルタリング",
+    "message": "静的フィルター",
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {

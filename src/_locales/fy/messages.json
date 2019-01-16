@@ -300,7 +300,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Media-eleminten grutter as {{input}} kB blokkearje",
+    "message": "Media-eleminten grutter as {{input}} KB blokkearje",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -656,7 +656,7 @@
     "description": "Label for the type selector"
   },
   "loggerStaticFilteringHeader": {
-    "message": "Statysk filterje",
+    "message": "Statysk filter",
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {

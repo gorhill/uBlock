@@ -656,7 +656,7 @@
     "description": "Label for the type selector"
   },
   "loggerStaticFilteringHeader": {
-    "message": "Филтър",
+    "message": "Статично филтриране",
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
@@ -712,11 +712,11 @@
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "Запазване на най-много {{input}} зареждания на страница за раздел",
+    "message": "Запазване най-много на {{input}} зареждания на страница за раздел",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
-    "message": "Запазване на най-много {{input}} записа за раздел",
+    "message": "Запазване най-много на {{input}} записа за раздел",
     "description": "A logger setting"
   },
   "loggerSettingPerEntryLineCount": {

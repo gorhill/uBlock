@@ -300,7 +300,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Bloquear elementos multimedia mayores que {{input}} kB",
+    "message": "Bloquear elementos multimedia mayores que {{input}} KB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -656,7 +656,7 @@
     "description": "Label for the type selector"
   },
   "loggerStaticFilteringHeader": {
-    "message": "Filtro",
+    "message": "Filtro estático",
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {

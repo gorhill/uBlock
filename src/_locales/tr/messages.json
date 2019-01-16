@@ -300,7 +300,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "{{input}} kB'tan büyük medya ögelerini engelle",
+    "message": "{{input}} KB'tan büyük medya ögelerini engelle",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -656,7 +656,7 @@
     "description": "Label for the type selector"
   },
   "loggerStaticFilteringHeader": {
-    "message": "Süzgeç",
+    "message": "Statik süzme",
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
