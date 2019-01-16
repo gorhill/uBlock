@@ -1854,9 +1854,10 @@ const rowFilterer = (function() {
         if (
             logEntry.dead ||
             selectedTabId !== 0 &&
-                logEntry.tabId !== undefined &&
-                logEntry.tabId > 0 &&
-                logEntry.tabId !== selectedTabId
+            (
+                logEntry.tabId === undefined ||
+                logEntry.tabId > 0 && logEntry.tabId !== selectedTabId
+            )
         ) {
             return false;
         }
