@@ -850,18 +850,15 @@ body[dir="rtl"] #loggerSettingsDialog ul {
     margin-bottom: 1em;
     }
 #loggerExportDialog .options > div {
-    white-space: nowrap;
+    display: inline-flex;
     }
 #loggerExportDialog .options span[data-i18n] {
     border: 1px solid lightblue;
     cursor: pointer;
     font-size: 90%;
-    margin: 0 0.25em 0 0;
+    margin: 0;
     padding: 0.5em;
     white-space: nowrap;
-    }
-#loggerExportDialog .options span[data-i18n]:last-of-type {
-    margin: 0;
     }
 #loggerExportDialog .options span[data-i18n]:hover {
     background-color: aliceblue;
