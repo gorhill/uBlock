@@ -330,7 +330,7 @@ body[dir="rtl"] #vwRenderer .logEntry > div > span:first-child {
 #vwRenderer .logEntry > div.canDetails:hover > span:nth-of-type(2),
 #vwRenderer .logEntry > div.canDetails:hover > span:nth-of-type(3),
 #vwRenderer .logEntry > div.canDetails:hover > span:nth-of-type(5) {
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 255, 0.1);
     cursor: zoom-in;
     }
 #netInspector:not(.vExpanded) #vwRenderer .logEntry > div > span:nth-of-type(4) {
