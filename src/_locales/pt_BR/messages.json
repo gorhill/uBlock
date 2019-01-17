@@ -743,6 +743,22 @@
     "message": "{{input}} primário\/terceiro",
     "description": "A label for the partyness column"
   },
+  "loggerExportFormatList": {
+    "message": "Lista",
+    "description": "Label for radio-button to pick export format"
+  },
+  "loggerExportFormatTable": {
+    "message": "Tabela",
+    "description": "Label for radio-button to pick export format"
+  },
+  "loggerExportEncodePlain": {
+    "message": "Sem formatação",
+    "description": "Label for radio-button to pick export text format"
+  },
+  "loggerExportEncodeMarkdown": {
+    "message": "Markdown",
+    "description": "Label for radio-button to pick export text format"
+  },
   "aboutChangelog": {
     "message": "Registro de alterações",
     "description": ""
@@ -930,6 +946,10 @@
   "genericMergeViewScrollLock": {
     "message": "Alternar bloqueio de rolagem",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
+  },
+  "genericCopyToClipboard": {
+    "message": "Copiar para a área de transferência",
+    "description": "Label for buttons used to copy something to the clipboard"
   },
   "dummy": {
     "message": "Esta entrada deve ser a última",

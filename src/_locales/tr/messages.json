@@ -743,6 +743,22 @@
     "message": "{{input}} Taraf",
     "description": "A label for the partyness column"
   },
+  "loggerExportFormatList": {
+    "message": "List",
+    "description": "Label for radio-button to pick export format"
+  },
+  "loggerExportFormatTable": {
+    "message": "Table",
+    "description": "Label for radio-button to pick export format"
+  },
+  "loggerExportEncodePlain": {
+    "message": "Plain",
+    "description": "Label for radio-button to pick export text format"
+  },
+  "loggerExportEncodeMarkdown": {
+    "message": "Markdown",
+    "description": "Label for radio-button to pick export text format"
+  },
   "aboutChangelog": {
     "message": "Değişiklik günlüğü",
     "description": ""
@@ -930,6 +946,10 @@
   "genericMergeViewScrollLock": {
     "message": "Kilitli kaydırmayı aç\/kapa",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
+  },
+  "genericCopyToClipboard": {
+    "message": "Copy to clipboard",
+    "description": "Label for buttons used to copy something to the clipboard"
   },
   "dummy": {
     "message": "Bu girdi en sonda olmalıdır",
