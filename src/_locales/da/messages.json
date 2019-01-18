@@ -632,7 +632,7 @@
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
-    "message": "Partiskhed",
+    "message": "Partsrelation",
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {

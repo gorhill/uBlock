@@ -756,7 +756,7 @@
     "description": "Label for radio-button to pick export text format"
   },
   "loggerExportEncodeMarkdown": {
-    "message": "Marcado ligero",
+    "message": "Markdown",
     "description": "Label for radio-button to pick export text format"
   },
   "aboutChangelog": {

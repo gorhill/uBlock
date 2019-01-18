@@ -752,7 +752,7 @@
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportEncodePlain": {
-    "message": "Selgesõnaline",
+    "message": "Lihttekst",
     "description": "Label for radio-button to pick export text format"
   },
   "loggerExportEncodeMarkdown": {
