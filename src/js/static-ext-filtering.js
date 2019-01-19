@@ -493,7 +493,7 @@
     api.compileSelector = (function() {
         var reAfterBeforeSelector = /^(.+?)(::?after|::?before)$/,
             reStyleSelector = /^(.+?):style\((.+?)\)$/,
-            reStyleBad = /url\([^)]+\)/,
+            reStyleBad = /url\(/,
             reExtendedSyntax = /\[-(?:abp|ext)-[a-z-]+=(['"])(?:.+?)(?:\1)\]/,
             reExtendedSyntaxParser = /\[-(?:abp|ext)-([a-z-]+)=(['"])(.+?)\2\]/,
             div = document.createElement('div');

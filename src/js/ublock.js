@@ -511,7 +511,11 @@ var matchBucket = function(url, hostname, bucket, start) {
 
     var injectNow = function(tabId) {
         tabIdToTimerMap.delete(tabId);
-        µBlock.scriptlets.injectDeep(tabId, 'cosmetic-logger');
+        µBlock.scriptlets.injectDeep(
+            tabId,
+            'cosmetic-logger',
+            { runAt: 'document_start' }
+        );
     };
 
     var injectAsync = function(tabId) {
@@ -579,10 +583,11 @@ var matchBucket = function(url, hostname, bucket, start) {
     };
 
     // TODO: think about a callback mechanism.
-    var injectDeep = function(tabId, scriptlet) {
+    var injectDeep = function(tabId, scriptlet, options) {
         vAPI.tabs.injectScript(tabId, {
             file: '/js/scriptlets/' + scriptlet + '.js',
-            allFrames: true
+            allFrames: true,
+            runAt: options && options.runAt || undefined
         });
     };
 
