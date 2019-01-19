@@ -744,19 +744,19 @@
     "description": "A label for the partyness column"
   },
   "loggerExportFormatList": {
-    "message": "List",
+    "message": "სია",
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportFormatTable": {
-    "message": "Table",
+    "message": "ცხრილი",
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportEncodePlain": {
-    "message": "Plain",
+    "message": "მარტივი",
     "description": "Label for radio-button to pick export text format"
   },
   "loggerExportEncodeMarkdown": {
-    "message": "Markdown",
+    "message": "გაფორმებული",
     "description": "Label for radio-button to pick export text format"
   },
   "aboutChangelog": {
@@ -948,7 +948,7 @@
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
-    "message": "Copy to clipboard",
+    "message": "ასლის აღება",
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "dummy": {

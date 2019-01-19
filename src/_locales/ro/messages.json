@@ -948,7 +948,7 @@
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
-    "message": "Copiează în clipboard",
+    "message": "Copiază în clipboard",
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "dummy": {
