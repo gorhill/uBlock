@@ -744,19 +744,19 @@
     "description": "A label for the partyness column"
   },
   "loggerExportFormatList": {
-    "message": "Lista",
+    "message": "Formato lista",
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportFormatTable": {
-    "message": "Tabla",
+    "message": "Formato tabla",
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportEncodePlain": {
-    "message": "Sin formato",
+    "message": "Texto sin formato",
     "description": "Label for radio-button to pick export text format"
   },
   "loggerExportEncodeMarkdown": {
-    "message": "Markdown",
+    "message": "Formato markdown",
     "description": "Label for radio-button to pick export text format"
   },
   "aboutChangelog": {
