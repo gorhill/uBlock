@@ -196,13 +196,13 @@ const LogEntry = function(details) {
     // TODO: Shouldn't this be done in µBlock.filteringContext?
     //       Need to evaluate.
     if ( this.tabDomain === '' ) {
-        this.tabDomain = this.tabHostname;
+        this.tabDomain = this.tabHostname || '';
     }
     if ( this.docDomain === '' ) {
-        this.docDomain = this.docHostname;
+        this.docDomain = this.docHostname || '';
     }
     if ( this.domain === '' ) {
-        this.domain = this.hostname;
+        this.domain = details.hostname || '';
     }
 };
 LogEntry.prototype = {
