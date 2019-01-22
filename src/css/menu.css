@@ -119,6 +119,7 @@ a:hover {
 .container {
   width: 100%;
   max-width: 400px;
+  min-width:350px;
   height: 500px;
   margin: 0 auto;
   padding: 0 0px;
@@ -222,7 +223,8 @@ header{
 #toggle-button {
   display: block;
   height: 90px;
-  width: 90px;
+  width: 22%;
+  min-width: 70px;
   margin:10px 0 0 10px;
   background: url(../img/active@2x.png) center center no-repeat;
   background-size: 100px 100px;
@@ -241,7 +243,7 @@ header{
   padding: 15px 10px 0;
   height: 100px;
   position: relative;
-  width:300px;
+  width:75%;
   float:right;
 }
 
@@ -411,7 +413,7 @@ span.adStatus:before {
   margin-right: 2px;
   content:"";
   display: inline-block;
-  position:relative; 
+  position:relative;
   z-index:100;
   top:0;
   left:0;
@@ -677,7 +679,8 @@ footer {
 button.pause,
 button.resume,
 button.settings {
-  width: 153px;
+  width: 38%;
+  min-width: 100px;
   float: left;
   margin-right: 6px;
 }
