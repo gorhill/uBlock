@@ -1687,6 +1687,12 @@ const pickerCSSStyle = [
 ].join(' !important;');
 pickerRoot.style.cssText = pickerCSSStyle;
 
+// https://github.com/uBlockOrigin/uBlock-issues/issues/393
+//   This needs to be injected as an inline style, *never* as a user styles,
+//   hence why it's not added above as part of the pickerCSSStyle
+//   properties.
+pickerRoot.style.setProperty('pointer-events', 'auto', 'important');
+
 const pickerCSS1 = [
     `#${pickerRoot.id} {`,
         pickerCSSStyle,
