@@ -300,7 +300,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Keine Medienelemente laden, die größer als {{input:number}} kB sind",
+    "message": "Blockiere Medienelemente größer als {{input}} KB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
