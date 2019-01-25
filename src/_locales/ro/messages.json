@@ -784,7 +784,7 @@
     "description": "English: Contributors"
   },
   "aboutDependencies": {
-    "message": "Dependențe externe (compatibile GPLv3):",
+    "message": "Dependențe externe (compatible GPLv3):",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
@@ -944,7 +944,7 @@
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "Comutați blocarea derulării",
+    "message": "Comutați derularea blocată",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {

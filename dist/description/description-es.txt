@@ -2,7 +2,7 @@ Un bloqueador eficiente: capaz de cargar y aplicar miles más de filtros en comp
 
 Ejemplo con imágenes ilustrando su eficiencia (en inglés): https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Uso: El botón grande de apagado/encendido en la ventana emergente de la extensión, es para deshabilitar/habilitar uBlock₀ permanentemente en el sitio web actual. Aplica solo al sitio web actual, no activa o desactiva la extensión de forma general.
+Uso: El botón grande de apagado/encendido en la interfaz emergente de la extensión, es para deshabilitar/habilitar uBlock₀ permanentemente en el sitio web actual. Aplica solo al sitio web actual, no activa o desactiva la extensión de forma general.
 
 ***
 

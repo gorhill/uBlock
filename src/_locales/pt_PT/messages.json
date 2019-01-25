@@ -728,7 +728,7 @@
     "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
   },
   "loggerSettingHideColumnTime": {
-    "message": "{{input}} Tempo",
+    "message": "{{input}} Hora",
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
