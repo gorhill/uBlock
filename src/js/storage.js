@@ -186,9 +186,10 @@
     vAPI.localStorage.setItem(
         'immediateHiddenSettings',
         JSON.stringify({
+                  cacheStorageAPI: this.hiddenSettings.cacheStorageAPI,
                disableWebAssembly: this.hiddenSettings.disableWebAssembly,
             suspendTabsUntilReady: this.hiddenSettings.suspendTabsUntilReady,
-            userResourcesLocation: this.hiddenSettings.userResourcesLocation
+            userResourcesLocation: this.hiddenSettings.userResourcesLocation,
         })
     );
 };

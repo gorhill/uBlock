@@ -48,9 +48,12 @@
     // https://github.com/uBlockOrigin/uBlock-issues/issues/328
     //   Use IndexedDB for Chromium as well, to take advantage of LZ4
     //   compression.
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/399
+    //   Revert Chromium support of IndexedDB, use advanced setting to force
+    //   IndexedDB.
     if (
         vAPI.webextFlavor.soup.has('firefox') === false &&
-        vAPI.webextFlavor.soup.has('chromium') === false
+        µBlock.hiddenSettings.cacheStorageAPI.toLowerCase() !== 'indexeddb'
     ) {
         // In case IndexedDB was used as cache storage, remove it.
         indexedDB.deleteDatabase(STORAGE_NAME);
