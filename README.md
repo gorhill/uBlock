@@ -39,11 +39,6 @@ uBlock Origin is **NOT** an "ad blocker": [it is a wide-spectrum blocker](https:
 
 * [Documentation](#documentation)
 * [Purpose & General Info](#philosophy)
-* [Performance and Efficiency](#performance)
-  * [Memory](#memory)
-  * [CPU](#cpu)
-  * [Blocking](#blocking)
-  * [Quick tests](#quick-tests)
 * [Installation](#installation)
   * [Chromium](#chromium)
   * [Firefox](#firefox--firefox-for-android)
@@ -75,40 +70,6 @@ Ads, "unintrusive" or not, are just the visible portions of privacy-invading app
 _EasyList_, _Peter Lowe's Adservers_, _EasyPrivacy_ and _Malware domains_ are enabled by default when you install uBlock Origin. Many more lists are readily available to block trackers, analytics, and more. Hosts files are also supported.
 
 Once you install uBlock Origin, you may easily un-select any of the pre-selected filter lists if you think uBlock Origin blocks too much. For reference, Adblock Plus installs with only _EasyList_ enabled by default.
-
-## Performance
-
-#### Memory
-
-<div align="center">
-On average, uBlock Origin does make your browser run leaner. <sup>[1]</sup><br><br>
-
-Chromium<br>
-<img src="https://cloud.githubusercontent.com/assets/585534/10074141/15f04128-629c-11e5-9155-177fd4909083.png" /><br><br>
-
-Firefox<br>
-<img src="https://cloud.githubusercontent.com/assets/585534/10074130/0577118c-629c-11e5-9902-bf367c6a96c3.png" /><br><br>
-
-</div>
-
-<sup>[1] Details of the benchmark available at <a href="https://github.com/gorhill/uBlock/wiki/Firefox-version:-benchmarking-memory-footprint">Firefox version: benchmarking memory footprint</a>.</sup><br>
-
-#### CPU
-
-<p align="center">
-uBlock Origin is also easy on the CPU<br>
-<img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/benchmarks/cpu-usage-overall-chart-20141226.png" /><br>
-<sup>Details of the benchmark available in <a href="https://github.com/gorhill/uBlock/blob/master/doc/benchmarks/cpu-usage-overall-20141226.ods">this LibreOffice spreadsheet</a>.</sup>
-</p>
-
-#### Blocking
-
-<p align="center">
-Being lean and efficient doesn't mean blocking less<br>
-<img src="https://raw.githubusercontent.com/gorhill/uBlock/master/doc/benchmarks/privex-201502-16.png" /><br>
-<sup>For details of benchmark, see 
-<a href="https://github.com/gorhill/uBlock/wiki/uBlock-and-others%3A-Blocking-ads%2C-trackers%2C-malwares">uBlock Origin and others: Blocking ads, trackers, malwares</a>.
-</p>
 
 ## Installation
 
