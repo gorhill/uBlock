@@ -23,10 +23,19 @@
 
 // If content scripts are already injected, we need to respond with `false`,
 // to "should inject content scripts?"
+//
+// https://github.com/uBlockOrigin/uBlock-issues/issues/403
+//   If the content script was not boostrapped, give it another try.
 
 (function() {
     try {
-        return vAPI.uBO !== true;
+        let status = vAPI.uBO !== true;
+        if ( status === false && vAPI.bootstrap ) {
+            self.requestIdleCallback(( ) => {
+                return vAPI && vAPI.bootstrap();
+            });
+        }
+        return status;
     } catch(ex) {
     }
     return true;

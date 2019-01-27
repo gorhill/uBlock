@@ -1316,7 +1316,7 @@ vAPI.domSurveyor = (function() {
 // Bootstrapping allows all components of the content script to be launched
 // if/when needed.
 
-(function bootstrap() {
+vAPI.bootstrap = (function() {
 
     const bootstrapPhase2 = function() {
         // This can happen on Firefox. For instance:
@@ -1372,7 +1372,16 @@ vAPI.domSurveyor = (function() {
         });
     };
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/403
+    //   If there was a spurious port disconnection -- in which case the
+    //   response is expressly set to `null`, rather than undefined or
+    //   an object -- let's stay around, we may be given the opportunity
+    //   to try bootstrapping again later.
+
     const bootstrapPhase1 = function(response) {
+        if ( response === null ) { return; }
+        vAPI.bootstrap = undefined;
+
         // cosmetic filtering engine aka 'cfe'
         const cfeDetails = response && response.specificCosmeticFilters;
         if ( !cfeDetails || !cfeDetails.ready ) {
@@ -1451,18 +1460,22 @@ vAPI.domSurveyor = (function() {
         }
     };
 
-    // This starts bootstrap process.
-    vAPI.messaging.send(
-        'contentscript',
-        {
-            what: 'retrieveContentScriptParameters',
-            url: window.location.href,
-            isRootFrame: window === window.top,
-            charset: document.characterSet
-        },
-        bootstrapPhase1
-    );
+    return function() {
+        vAPI.messaging.send(
+            'contentscript',
+            {
+                what: 'retrieveContentScriptParameters',
+                url: window.location.href,
+                isRootFrame: window === window.top,
+                charset: document.characterSet,
+            },
+            bootstrapPhase1
+        );
+    };
 })();
+
+// This starts bootstrap process.
+vAPI.bootstrap();
 
 /******************************************************************************/
 /******************************************************************************/
