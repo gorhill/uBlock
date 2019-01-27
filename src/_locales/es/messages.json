@@ -916,7 +916,7 @@
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
-    "message": "¡Alerta! Cambie estas configuraciones avanzadas bajo su propio riesgo.",
+    "message": "¡Atención! Cambie estas configuraciones avanzadas bajo su propio riesgo.",
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {
