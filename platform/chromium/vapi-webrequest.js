@@ -26,6 +26,9 @@
 /******************************************************************************/
 
 (function() {
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/407
+    if ( vAPI.webextFlavor.soup.has('chromium') === false ) { return; }
+
     const extToTypeMap = new Map([
         ['eot','font'],['otf','font'],['svg','font'],['ttf','font'],['woff','font'],['woff2','font'],
         ['mp3','media'],['mp4','media'],['webm','media'],
@@ -152,7 +155,10 @@
 // https://github.com/gorhill/uBlock/issues/2067
 //   Experimental: Block everything until uBO is fully ready.
 
-vAPI.net.onBeforeReady = (function() {
+vAPI.net.onBeforeReady = vAPI.net.onBeforeReady || (function() {
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/407
+    if ( vAPI.webextFlavor.soup.has('chromium') === false ) { return; }
+
     let pendings;
 
     const handler = function(details) {

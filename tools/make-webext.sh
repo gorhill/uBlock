@@ -28,7 +28,13 @@ cp LICENSE.txt                          $DES/
 
 cp platform/webext/manifest.json        $DES/
 cp platform/webext/vapi-usercss.js      $DES/js/
-cp platform/webext/vapi-webrequest.js   $DES/js/
+
+# https://github.com/uBlockOrigin/uBlock-issues/issues/407
+echo "*** uBlock0.webext: concatenating vapi-webrequest.js"
+cat platform/chromium/vapi-webrequest.js > /tmp/vapi-webrequest.js
+echo >> /tmp/contentscript.js
+grep -v "^'use strict';$" platform/firefox/vapi-webrequest.js >> /tmp/vapi-webrequest.js
+mv /tmp/vapi-webrequest.js $DES/js/vapi-webrequest.js
 
 echo "*** uBlock0.webext: concatenating content scripts"
 cat $DES/js/vapi-usercss.js > /tmp/contentscript.js
