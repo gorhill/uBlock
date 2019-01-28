@@ -53,10 +53,15 @@ vAPI.shutdown = {
         this.jobs.push(job);
     },
     exec: function() {
-        let job;
-        while ( (job = this.jobs.pop()) ) {
-            job();
-        }
+        // Shutdown asynchronously, to ensure shutdown jobs are called from
+        // the top context.
+        self.requestIdleCallback(( ) => {
+            const jobs = this.jobs.slice();
+            this.jobs.length = 0;
+            while ( jobs.length !== 0 ) {
+                (jobs.pop())();
+            }
+        });
     },
     remove: function(job) {
         let pos;
@@ -238,16 +243,20 @@ vAPI.messaging = {
         } catch (ex) {
             this.port = null;
         }
-        if ( this.port !== null ) {
-            this.port.onMessage.addListener(this.messageListenerCallback);
-            this.port.onDisconnect.addListener(this.disconnectListenerBound);
-            this.portTimerDelay = 10000;
-            if ( this.portTimer === null ) {
-                this.portTimer = vAPI.setTimeout(
-                    this.portPollerBound,
-                    this.portTimerDelay
-                );
-            }
+        // Not having a valid port at this point means the main process is
+        // not available: no point keeping the content scripts alive.
+        if ( this.port === null ) {
+            vAPI.shutdown.exec();
+            return null;
+        }
+        this.port.onMessage.addListener(this.messageListenerCallback);
+        this.port.onDisconnect.addListener(this.disconnectListenerBound);
+        this.portTimerDelay = 10000;
+        if ( this.portTimer === null ) {
+            this.portTimer = vAPI.setTimeout(
+                this.portPollerBound,
+                this.portTimerDelay
+            );
         }
         return this.port;
     },
