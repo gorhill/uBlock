@@ -191,8 +191,11 @@
     // The idea is to minimize the amout of work done to figure out whether
     // the resource is 3rd-party to the document.
     is3rdPartyToDoc: function() {
-        const docDomain = this.getDocDomain();
-        if ( this.domain !== undefined ) { return this.domain !== docDomain; }
+        let docDomain = this.getDocDomain();
+        if ( docDomain === '' ) { docDomain = this.docHostname; }
+        if ( this.domain !== undefined && this.domain !== '' ) {
+            return this.domain !== docDomain;
+        }
         const hostname = this.getHostname();
         if ( hostname.endsWith(docDomain) === false ) { return true; }
         const i = hostname.length - docDomain.length;
@@ -248,8 +251,11 @@
     // The idea is to minimize the amout of work done to figure out whether
     // the resource is 3rd-party to the top document.
     is3rdPartyToTab: function() {
-        const tabDomain = this.getTabDomain();
-        if ( this.domain !== undefined ) { return this.domain !== tabDomain; }
+        let tabDomain = this.getTabDomain();
+        if ( tabDomain === '' ) { tabDomain = this.tabHostname; }
+        if ( this.domain !== undefined && this.domain !== '' ) {
+            return this.domain !== tabDomain;
+        }
         const hostname = this.getHostname();
         if ( hostname.endsWith(tabDomain) === false ) { return true; }
         const i = hostname.length - tabDomain.length;

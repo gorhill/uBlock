@@ -193,8 +193,6 @@ const LogEntry = function(details) {
             this[prop] = details[prop];
         }
     }
-    // TODO: Shouldn't this be done in µBlock.filteringContext?
-    //       Need to evaluate.
     if ( this.tabDomain === '' ) {
         this.tabDomain = this.tabHostname || '';
     }
