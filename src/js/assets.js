@@ -179,7 +179,19 @@ api.fetchFilterList = function(mainlistURL, onLoad, onError) {
     const pendingSublistURLs = new Set([ mainlistURL ]);
     const loadedSublistURLs = new Set();
     const toParsedURL = api.fetchFilterList.toParsedURL;
-    const parsedURL = toParsedURL(mainlistURL);
+
+    // https://github.com/NanoAdblocker/NanoCore/issues/239
+    //   Anything under URL's root directory is allowed to be fetched. The
+    //   URL of a sublist will always be relative to the URL of the parent
+    //   list (instead of the URL of the root list).
+    const rootDirectoryURL = toParsedURL(mainlistURL);
+    if ( rootDirectoryURL !== undefined ) {
+        const pos = rootDirectoryURL.pathname.lastIndexOf('/');
+        if ( pos !== -1 ) {
+            rootDirectoryURL.pathname =
+                rootDirectoryURL.pathname.slice(0, pos + 1);
+        }
+    }
 
     let errored = false;
 
@@ -193,13 +205,16 @@ api.fetchFilterList = function(mainlistURL, onLoad, onError) {
             if ( match === null ) { break; }
             if ( toParsedURL(match[1]) !== undefined ) { continue; }
             if ( match[1].indexOf('..') !== -1 ) { continue; }
-            const subURL = parsedURL.origin +
-                           parsedURL.pathname.replace(/[^/]+$/, match[1]);
-            if ( pendingSublistURLs.has(subURL) ) { continue; }
-            if ( loadedSublistURLs.has(subURL) ) { continue; }
-            pendingSublistURLs.add(subURL);
-            api.fetchText(subURL, onLocalLoadSuccess, onLocalLoadError);
-            out.push(content.slice(lastIndex, match.index).trim(), subURL);
+            const subURL = toParsedURL(details.url);
+            subURL.pathname = subURL.pathname.replace(/[^/]+$/, match[1]);
+            if ( subURL.href.startsWith(rootDirectoryURL.href) === false ) {
+                continue;
+            }
+            if ( pendingSublistURLs.has(subURL.href) ) { continue; }
+            if ( loadedSublistURLs.has(subURL.href) ) { continue; }
+            pendingSublistURLs.add(subURL.href);
+            api.fetchText(subURL.href, onLocalLoadSuccess, onLocalLoadError);
+            out.push(content.slice(lastIndex, match.index).trim(), subURL.href);
             lastIndex = reInclude.lastIndex;
         }
         out.push(lastIndex === 0 ? content : content.slice(lastIndex).trim());
@@ -231,7 +246,10 @@ api.fetchFilterList = function(mainlistURL, onLoad, onError) {
         }
 
         // Find and process #!include directives
-        if ( parsedURL !== undefined && parsedURL.pathname.length > 0 ) {
+        if (
+            rootDirectoryURL !== undefined &&
+            rootDirectoryURL.pathname.length > 0
+        ) {
             const processed = processIncludeDirectives(details);
             if ( processed.length > 1 ) {
                 content.splice(slot, 1, ...processed);
