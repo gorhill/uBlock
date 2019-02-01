@@ -497,6 +497,9 @@ HNTrieContainer.prototype = {
     },
 
     initWASM: function(module) {
+        if ( module instanceof WebAssembly.Module === false ) {
+            return Promise.resolve(null);
+        }
         if ( this.wasmInstancePromise === null ) {
             const memory = new WebAssembly.Memory({ initial: 2 });
             this.wasmInstancePromise = WebAssembly.instantiate(
