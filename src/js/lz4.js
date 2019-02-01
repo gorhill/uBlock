@@ -43,7 +43,7 @@ let ttlCount = 0;
 let ttlTimer;
 let ttlDelay = 60000;
 
-let init = function() {
+const init = function() {
     ttlDelay = µBlock.hiddenSettings.autoUpdateAssetFetchPeriod * 1000 + 15000;
     if ( lz4CodecInstance === null ) {
         return Promise.resolve(null);
@@ -72,7 +72,7 @@ let init = function() {
 // which will cause the wasm instance to be forgotten after enough
 // time elapse without the instance being used.
 
-let destroy = function() {
+const destroy = function() {
     //if ( lz4CodecInstance !== undefined ) {
     //    console.info(
     //        'uBO: freeing lz4-block-codec instance (%s KB)',
@@ -85,7 +85,7 @@ let destroy = function() {
     ttlTimer = undefined;
 };
 
-let ttlManage = function(count) {
+const ttlManage = function(count) {
     if ( ttlTimer !== undefined ) {
         clearTimeout(ttlTimer);
         ttlTimer = undefined;
@@ -96,7 +96,7 @@ let ttlManage = function(count) {
     ttlTimer = vAPI.setTimeout(destroy, ttlDelay);
 };
 
-let uint8ArrayFromBlob = function(key, data) {
+const uint8ArrayFromBlob = function(key, data) {
     if ( data instanceof Blob === false ) {
         return Promise.resolve({ key, data });
     }
@@ -109,7 +109,7 @@ let uint8ArrayFromBlob = function(key, data) {
     });
 };
 
-let encodeValue = function(key, value) {
+const encodeValue = function(key, value) {
     if ( !lz4CodecInstance ) { return; }
     //let t0 = window.performance.now();
     if ( textEncoder === undefined ) {
@@ -138,7 +138,7 @@ let encodeValue = function(key, value) {
     return outputArray;
 };
 
-let decodeValue = function(key, inputArray) {
+const decodeValue = function(key, inputArray) {
     if ( !lz4CodecInstance ) { return; }
     //let t0 = window.performance.now();
     if (

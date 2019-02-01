@@ -46,6 +46,15 @@ rm -r $DES/_locales/mr
 rm -r $DES/_locales/ta
 rm -r $DES/_locales/th
 
+# Removing WASM modules until I receive an answer from Opera people: Opera's
+# uploader issue an error for hntrie.wasm and this prevents me from
+# updating uBO in the Opera store. The modules are unused anyway for
+# Chromium- based browsers.
+rm $DES/js/wasm/*.wasm
+rm $DES/js/wasm/*.wat
+rm $DES/lib/lz4/*.wasm
+rm $DES/lib/lz4/*.wat
+
 echo "*** uBlock0.opera: Generating web accessible resources..."
 cp -R src/web_accessible_resources $DES/
 python3 tools/import-war.py $DES/
