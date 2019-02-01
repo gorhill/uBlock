@@ -53,7 +53,7 @@
     //   IndexedDB.
     if (
         vAPI.webextFlavor.soup.has('firefox') === false &&
-        µBlock.hiddenSettings.cacheStorageAPI !== 'IndexedDB'
+        µBlock.hiddenSettings.cacheStorageAPI !== 'indexedDB'
     ) {
         // In case IndexedDB was used as cache storage, remove it.
         indexedDB.deleteDatabase(STORAGE_NAME);
