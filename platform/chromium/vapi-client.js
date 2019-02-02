@@ -84,8 +84,7 @@ vAPI.messaging = {
     shuttingDown: false,
 
     Connection: function(handler, details) {
-        const messaging = vAPI.messaging;
-        this.messaging = messaging;
+        this.messaging = vAPI.messaging;
         this.handler = handler;
         this.id = details.id;
         this.to = details.to;
@@ -95,7 +94,7 @@ vAPI.messaging = {
         this.checkTimer = undefined;
         // On Firefox it appears ports are not automatically disconnected
         // when navigating to another page.
-        const ctor = vAPI.messaging.Connection;
+        const ctor = this.messaging.Connection;
         if ( ctor.pagehide !== undefined ) { return; }
         ctor.pagehide = ( ) => {
             for ( const connection of this.messaging.connections.values() ) {
@@ -270,7 +269,7 @@ vAPI.messaging = {
         // the main process is no longer reachable: memory leaks and bad
         // performance become a risk -- especially for long-lived, dynamic
         // pages. Guard against this.
-        if ( this.pending.size > 25 ) {
+        if ( this.pending.size > 50 ) {
             vAPI.shutdown.exec();
         }
         const port = this.getPort();
@@ -294,7 +293,7 @@ vAPI.messaging = {
         const port = this.getPort();
         if ( port === null ) { return; }
         const connection = new this.Connection(handler, {
-            id: from + '-' + to + '-' + vAPI.sessionId,
+            id: `${from}-${to}-${vAPI.sessionId}`,
             to: to,
             from: from,
             fromToken: port.name

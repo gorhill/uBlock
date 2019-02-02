@@ -31,9 +31,7 @@
     try {
         let status = vAPI.uBO !== true;
         if ( status === false && vAPI.bootstrap ) {
-            self.requestIdleCallback(( ) => {
-                return vAPI && vAPI.bootstrap();
-            });
+            self.requestIdleCallback(( ) => vAPI && vAPI.bootstrap());
         }
         return status;
     } catch(ex) {
