@@ -258,7 +258,7 @@ body.colorBlind #netFilteringDialog > .panes > .details > div[data-status="2"] {
     background-color: rgba(255, 194, 57, 0.1)
     }
 #vwRenderer .logEntry > div[data-tabid="-1"] {
-    text-shadow: 0 0 0.8em #444;
+    text-shadow: 0 0.2em 0.4em #aaa;
     }
 #vwRenderer .logEntry > div.cosmetic,
 #vwRenderer .logEntry > div.redirect {
