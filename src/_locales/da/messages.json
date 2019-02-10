@@ -224,7 +224,7 @@
     "description": "English: Quit"
   },
   "pickerPreview": {
-    "message": "Uddrag",
+    "message": "Eksempel",
     "description": "Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters": {
@@ -240,7 +240,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Blokere element",
+    "message": "Blokér element",
     "description": "English: Block element"
   },
   "settingsCollapseBlockedPrompt": {
