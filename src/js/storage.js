@@ -1009,6 +1009,10 @@
 /******************************************************************************/
 
 µBlock.loadPublicSuffixList = function() {
+    if ( this.hiddenSettings.disableWebAssembly === false ) {
+        publicSuffixList.enableWASM();
+    }
+
     return new Promise(resolve => {
     // start of executor
     this.assets.get('compiled/' + this.pslAssetKey, details => {

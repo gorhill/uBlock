@@ -307,7 +307,7 @@ URI.domain = function() {
 
 // It is expected that there is higher-scoped `publicSuffixList` lingering
 // somewhere. Cache it. See <https://github.com/gorhill/publicsuffixlist.js>.
-var psl = publicSuffixList;
+const psl = publicSuffixList;
 
 /******************************************************************************/
 
@@ -391,7 +391,7 @@ const domainCachePrune = function() {
     }
 };
 
-window.addEventListener('publicSuffixList', function() {
+window.addEventListener('publicSuffixListChanged', function() {
     domainCache.clear();
 });
 
