@@ -142,10 +142,10 @@ vAPI.net.onBeforeReady = vAPI.net.onBeforeReady || (function() {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/407
     if ( vAPI.webextFlavor.soup.has('firefox') === false ) { return; }
 
-    let pendings;
+    let pendingSet;
 
     const handler = function(details) {
-        if ( pendings === undefined ) { return; }
+        if ( pendingSet === undefined ) { return; }
         if ( details.tabId < 0 ) { return; }
 
         const pending = {
@@ -158,14 +158,14 @@ vAPI.net.onBeforeReady = vAPI.net.onBeforeReady || (function() {
             pending.resolve = resolve;
         });
 
-        pendings.push(pending);
+        pendingSet.push(pending);
 
         return pending.promise;
     };
 
     return {
         start: function() {
-            pendings = [];
+            pendingSet = [];
             browser.webRequest.onBeforeRequest.addListener(
                 handler,
                 { urls: [ 'http://*/*', 'https://*/*' ] },
@@ -173,12 +173,13 @@ vAPI.net.onBeforeReady = vAPI.net.onBeforeReady || (function() {
             );
         },
         stop: function(resolver) {
-            if ( pendings === undefined ) { return; }
-            for ( const pending of pendings ) {
-                vAPI.net.normalizeDetails(pending.details);
-                pending.resolve(resolver(pending.details));
+            if ( pendingSet === undefined ) { return; }
+            const resolvingSet = pendingSet;    // not sure if re-entrance
+            pendingSet = undefined;             // can occur...
+            for ( const entry of resolvingSet ) {
+                vAPI.net.normalizeDetails(entry.details);
+                entry.resolve(resolver(entry.details));
             }
-            pendings = undefined;
         },
     };
 })();
