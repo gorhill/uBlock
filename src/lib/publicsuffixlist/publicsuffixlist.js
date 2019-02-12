@@ -52,9 +52,9 @@
     Tree encoding in array buffer:
     
      Node:
-     + u16: length of array of children
-     +  u8: flags => bit 0: is_publicsuffix, bit 1: is_exception
      +  u8: length of char data
+     +  u8: flags => bit 0: is_publicsuffix, bit 1: is_exception
+     + u16: length of array of children
      + u32: char data or offset to char data
      + u32: offset to array of children
      = 12 bytes
@@ -473,29 +473,46 @@ const getDomain = function(hostname) {
 
 /******************************************************************************/
 
-const toSelfie = function() {
-    const selfie = {
+const toSelfie = function(encoder) {
+    if ( pslBuffer8 === undefined ) { return ''; }
+    if ( encoder instanceof Object ) {
+        const bufferStr = encoder.encode(pslBuffer8.buffer, pslByteLength);
+        return `${SELFIE_MAGIC}\t${bufferStr}`;
+    }
+    return {
         magic: SELFIE_MAGIC,
-        byteLength: pslByteLength,
-        buffer: pslBuffer32 !== undefined
-            ? Array.from(new Uint32Array(pslBuffer32.buffer, 0, pslByteLength >>> 2))
-            : null,
+        buf32: Array.from(
+            new Uint32Array(this.buf32.buffer, 0, pslByteLength >>> 2)
+        ),
     };
-    return selfie;
 };
 
-const fromSelfie = function(selfie) {
+const fromSelfie = function(selfie, decoder) {
+    let byteLength = 0;
     if (
-        selfie instanceof Object === false ||
-        selfie.magic !== SELFIE_MAGIC ||
-        typeof selfie.byteLength !== 'number' ||
-        Array.isArray(selfie.buffer) === false
+        typeof selfie === 'string' &&
+        selfie.length !== 0 &&
+        decoder instanceof Object
     ) {
+        const pos = selfie.indexOf('\t');
+        if ( pos === -1 || selfie.slice(0, pos) !== `${SELFIE_MAGIC}` ) {
+            return false;
+        }
+        const bufferStr = selfie.slice(pos + 1);
+        byteLength = decoder.decodeSize(bufferStr);
+        allocateBuffers(byteLength);
+        decoder.decode(bufferStr, pslBuffer8.buffer);
+    } else if (
+        selfie instanceof Object &&
+        selfie.magic === SELFIE_MAGIC &&
+        Array.isArray(selfie.buf32)
+    ) {
+        byteLength = selfie.buf32.length << 2;
+        allocateBuffers(byteLength);
+        pslBuffer32.set(selfie.buf32);
+    } else {
         return false;
     }
-
-    allocateBuffers(selfie.byteLength);
-    pslBuffer32.set(selfie.buffer);
 
     // Important!
     hostnameArg = '';
@@ -568,13 +585,13 @@ const enableWASM = (function() {
             if ( newPageCount > curPageCount ) {
                 memory.grow(newPageCount - curPageCount);
             }
-            const buf8 = new Uint8Array(memory.buffer);
-            const buf32 = new Uint32Array(memory.buffer);
             if ( pslBuffer32 !== undefined ) {
+                const buf8 = new Uint8Array(memory.buffer);
+                const buf32 = new Uint32Array(memory.buffer);
                 buf32.set(pslBuffer32);
+                pslBuffer8 = buf8;
+                pslBuffer32 = buf32;
             }
-            pslBuffer8 = buf8;
-            pslBuffer32 = buf32;
             wasmMemory = memory;
             getPublicSuffixPosWASM = instance.exports.getPublicSuffixPos;
             getPublicSuffixPos = getPublicSuffixPosWASM;
@@ -592,14 +609,15 @@ const disableWASM = function() {
         getPublicSuffixPos = getPublicSuffixPosJS;
         getPublicSuffixPosWASM = undefined;
     }
-    if ( wasmMemory !== undefined ) {
+    if ( wasmMemory === undefined ) { return; }
+    if ( pslBuffer32 !== undefined ) {
         const buf8 = new Uint8Array(pslByteLength);
         const buf32 = new Uint32Array(buf8.buffer);
         buf32.set(pslBuffer32);
         pslBuffer8 = buf8;
         pslBuffer32 = buf32;
-        wasmMemory = undefined;
     }
+    wasmMemory = undefined;
 };
 
 /******************************************************************************/
