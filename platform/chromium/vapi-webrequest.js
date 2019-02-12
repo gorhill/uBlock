@@ -27,7 +27,7 @@
 
 (function() {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/407
-    if ( vAPI.webextFlavor.soup.has('chromium') === false ) { return; }
+    if ( vAPI.webextFlavor.soup.has('firefox') ) { return; }
 
     const extToTypeMap = new Map([
         ['eot','font'],['otf','font'],['svg','font'],['ttf','font'],['woff','font'],['woff2','font'],
@@ -157,7 +157,7 @@
 
 vAPI.net.onBeforeReady = vAPI.net.onBeforeReady || (function() {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/407
-    if ( vAPI.webextFlavor.soup.has('chromium') === false ) { return; }
+    if ( vAPI.webextFlavor.soup.has('firefox') ) { return; }
 
     let pendings;
 
