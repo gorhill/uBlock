@@ -463,15 +463,6 @@
 		"contentURL": "https://raw.githubusercontent.com/gioxx/xfiles/master/filtri.txt",
 		"supportURL": "https://xfiles.noads.it/"
 	},
-	"JPN-0": {
-		"content": "filters",
-		"group": "regions",
-		"off": true,
-		"title": "JPN: ABP Japanese filters (日本用フィルタ)",
-		"lang": "ja",
-		"contentURL": "https://raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abpjf.txt",
-		"supportURL": "https://github.com/k2jp/abp-japanese-filters/wiki/Support_Policy"
-	},
 	"JPN-1": {
 		"content": "filters",
 		"group": "regions",
