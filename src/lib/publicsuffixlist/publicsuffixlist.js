@@ -482,7 +482,7 @@ const toSelfie = function(encoder) {
     return {
         magic: SELFIE_MAGIC,
         buf32: Array.from(
-            new Uint32Array(this.buf32.buffer, 0, pslByteLength >>> 2)
+            new Uint32Array(pslBuffer8.buffer, 0, pslByteLength >>> 2)
         ),
     };
 };
