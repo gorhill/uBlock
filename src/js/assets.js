@@ -449,26 +449,22 @@ const assetCacheRegistryStartTime = Date.now();
 let assetCacheRegistryPromise;
 let assetCacheRegistry = {};
 
-const getAssetCacheRegistry = function(callback) {
+const getAssetCacheRegistry = function() {
     if ( assetCacheRegistryPromise === undefined ) {
         assetCacheRegistryPromise = new Promise(resolve => {
-        // start of executor
-        µBlock.cacheStorage.get('assetCacheRegistry', bin => {
-            if (
-                bin instanceof Object &&
-                bin.assetCacheRegistry instanceof Object
-            ) {
-                assetCacheRegistry = bin.assetCacheRegistry;
-            }
-            resolve();
-        });
-        // end of executor
+            µBlock.cacheStorage.get('assetCacheRegistry', bin => {
+                if (
+                    bin instanceof Object &&
+                    bin.assetCacheRegistry instanceof Object
+                ) {
+                    assetCacheRegistry = bin.assetCacheRegistry;
+                }
+                resolve();
+            });
         });
     }
 
-    assetCacheRegistryPromise.then(( ) => {
-        callback(assetCacheRegistry);
-    });
+    return assetCacheRegistryPromise.then(( ) => assetCacheRegistry);
 };
 
 const saveAssetCacheRegistry = (function() {
@@ -513,11 +509,9 @@ const assetCacheRead = function(assetKey, callback) {
         reportBack(bin[internalKey]);
     };
 
-    let onReady = function() {
+    getAssetCacheRegistry().then(( ) => {
         µBlock.cacheStorage.get(internalKey, onAssetRead);
-    };
-
-    getAssetCacheRegistry(onReady);
+    });
 };
 
 const assetCacheWrite = function(assetKey, details, callback) {
@@ -542,7 +536,18 @@ const assetCacheWrite = function(assetKey, details, callback) {
         if ( details instanceof Object && typeof details.url === 'string' ) {
             entry.remoteURL = details.url;
         }
-        µBlock.cacheStorage.set({ assetCacheRegistry, [internalKey]: content });
+        µBlock.cacheStorage.set(
+            { [internalKey]: content },
+            details => {
+                if (
+                    details instanceof Object &&
+                    typeof details.bytesInUse === 'number'
+                ) {
+                    entry.byteLength = details.bytesInUse;
+                }
+                saveAssetCacheRegistry(true);
+            }
+        );
         const result = { assetKey, content };
         if ( typeof callback === 'function' ) {
             callback(result);
@@ -550,14 +555,16 @@ const assetCacheWrite = function(assetKey, details, callback) {
         // https://github.com/uBlockOrigin/uBlock-issues/issues/248
         fireNotification('after-asset-updated', result);
     };
-    getAssetCacheRegistry(onReady);
+
+    getAssetCacheRegistry().then(( ) => {
+        µBlock.cacheStorage.get(internalKey, onReady);
+    });
 };
 
 const assetCacheRemove = function(pattern, callback) {
-    const onReady = function() {
-        const cacheDict = assetCacheRegistry,
-            removedEntries = [],
-            removedContent = [];
+    getAssetCacheRegistry().then(cacheDict => {
+        const removedEntries = [];
+        const removedContent = [];
         for ( const assetKey in cacheDict ) {
             if ( pattern instanceof RegExp && !pattern.test(assetKey) ) {
                 continue;
@@ -582,14 +589,15 @@ const assetCacheRemove = function(pattern, callback) {
                 { assetKey: removedEntries[i] }
             );
         }
-    };
-
-    getAssetCacheRegistry(onReady);
+    });
 };
 
 const assetCacheMarkAsDirty = function(pattern, exclude, callback) {
-    const onReady = function() {
-        const cacheDict = assetCacheRegistry;
+    if ( typeof exclude === 'function' ) {
+        callback = exclude;
+        exclude = undefined;
+    }
+    getAssetCacheRegistry().then(cacheDict => {
         let mustSave = false;
         for ( const assetKey in cacheDict ) {
             if ( pattern instanceof RegExp ) {
@@ -617,12 +625,7 @@ const assetCacheMarkAsDirty = function(pattern, exclude, callback) {
         if ( typeof callback === 'function' ) {
             callback();
         }
-    };
-    if ( typeof exclude === 'function' ) {
-        callback = exclude;
-        exclude = undefined;
-    }
-    getAssetCacheRegistry(onReady);
+    });
 };
 
 /******************************************************************************/
@@ -642,12 +645,12 @@ const stringIsNotEmpty = function(s) {
 
 **/
 
-var readUserAsset = function(assetKey, callback) {
-    var reportBack = function(content) {
+const readUserAsset = function(assetKey, callback) {
+    const reportBack = function(content) {
         callback({ assetKey: assetKey, content: content });
     };
 
-    var onLoaded = function(bin) {
+    const onLoaded = function(bin) {
         if ( !bin ) { return reportBack(''); }
         var content = '';
         if ( typeof bin['cached_asset_content://assets/user/filters.txt'] === 'string' ) {
@@ -671,7 +674,7 @@ var readUserAsset = function(assetKey, callback) {
         }
         return reportBack(content);
     };
-    var toRead = assetKey;
+    let toRead = assetKey;
     if ( assetKey === µBlock.userFiltersPath ) {
         toRead = [
             assetKey,
@@ -682,7 +685,7 @@ var readUserAsset = function(assetKey, callback) {
     vAPI.storage.get(toRead, onLoaded);
 };
 
-var saveUserAsset = function(assetKey, content, callback) {
+const saveUserAsset = function(assetKey, content, callback) {
     var bin = {};
     bin[assetKey] = content;
     // TODO(seamless migration):
@@ -711,27 +714,33 @@ api.get = function(assetKey, options, callback) {
         callback = noopfunc;
     }
 
+    return new Promise(resolve => {
+    // start of executor
     if ( assetKey === µBlock.userFiltersPath ) {
-        readUserAsset(assetKey, callback);
+        readUserAsset(assetKey, details => {
+            callback(details);
+            resolve(details);
+        });
         return;
     }
 
-    var assetDetails = {},
+    let assetDetails = {},
         contentURLs,
         contentURL;
 
-    var reportBack = function(content, err) {
-        var details = { assetKey: assetKey, content: content };
+    const reportBack = function(content, err) {
+        const details = { assetKey: assetKey, content: content };
         if ( err ) {
             details.error = assetDetails.lastError = err;
         } else {
             assetDetails.lastError = undefined;
         }
         callback(details);
+        resolve(details);
     };
 
-    var onContentNotLoaded = function() {
-        var isExternal;
+    const onContentNotLoaded = function() {
+        let isExternal;
         while ( (contentURL = contentURLs.shift()) ) {
             isExternal = reIsExternalPath.test(contentURL);
             if ( isExternal === false || assetDetails.hasLocalURL !== true ) {
@@ -748,7 +757,7 @@ api.get = function(assetKey, options, callback) {
         }
     };
 
-    var onContentLoaded = function(details) {
+    const onContentLoaded = function(details) {
         if ( stringIsNotEmpty(details.content) === false ) {
             onContentNotLoaded();
             return;
@@ -762,7 +771,7 @@ api.get = function(assetKey, options, callback) {
         reportBack(details.content);
     };
 
-    var onCachedContentLoaded = function(details) {
+    const onCachedContentLoaded = function(details) {
         if ( details.content !== '' ) {
             return reportBack(details.content);
         }
@@ -780,11 +789,13 @@ api.get = function(assetKey, options, callback) {
     };
 
     assetCacheRead(assetKey, onCachedContentLoaded);
+    // end of executor
+    });
 };
 
 /******************************************************************************/
 
-var getRemote = function(assetKey, callback) {
+const getRemote = function(assetKey, callback) {
    var assetDetails = {},
         contentURLs,
         contentURL;
@@ -852,10 +863,19 @@ var getRemote = function(assetKey, callback) {
 /******************************************************************************/
 
 api.put = function(assetKey, content, callback) {
-    if ( reIsUserAsset.test(assetKey) ) {
-        return saveUserAsset(assetKey, content, callback);
-    }
-    assetCacheWrite(assetKey, content, callback);
+    return new Promise(resolve => {
+        const onDone = function(details) {
+            if ( typeof callback === 'function' ) {
+                callback(details);
+            }
+            resolve(details);
+        };
+        if ( reIsUserAsset.test(assetKey) ) {
+            saveUserAsset(assetKey, content, onDone);
+        } else {
+            assetCacheWrite(assetKey, content, onDone);
+        }
+    });
 };
 
 /******************************************************************************/
@@ -895,9 +915,22 @@ api.metadata = function(callback) {
         if ( cacheRegistryReady ) { onReady(); }
     });
 
-    getAssetCacheRegistry(function() {
+    getAssetCacheRegistry().then(( ) => {
         cacheRegistryReady = true;
         if ( assetRegistryReady ) { onReady(); }
+    });
+};
+
+/******************************************************************************/
+
+api.getBytesInUse = function() {
+    return getAssetCacheRegistry().then(cacheDict => {
+        let bytesUsed = 0;
+        for ( const assetKey in cacheDict ) {
+            if ( cacheDict.hasOwnProperty(assetKey) === false ) { continue; }
+            bytesUsed += cacheDict[assetKey].byteLength || 0;
+        }
+        return bytesUsed;
     });
 };
 
@@ -1013,7 +1046,7 @@ var updateNext = function() {
         updateOne();
     });
 
-    getAssetCacheRegistry(function(dict) {
+    getAssetCacheRegistry().then(dict => {
         cacheDict = dict;
         if ( !assetDict ) { return; }
         updateOne();

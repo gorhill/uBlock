@@ -821,18 +821,30 @@
         µb.htmlFilteringEngine.fromCompiledContent(reader, options);
     };
 
-    api.toSelfie = function() {
-        return {
-            cosmetic: µb.cosmeticFilteringEngine.toSelfie(),
-            scriptlets: µb.scriptletFilteringEngine.toSelfie(),
-            html: µb.htmlFilteringEngine.toSelfie()
-        };
+    api.toSelfie = function(path) {
+        return µBlock.assets.put(
+            `${path}/main`,
+            JSON.stringify({
+                cosmetic: µb.cosmeticFilteringEngine.toSelfie(),
+                scriptlets: µb.scriptletFilteringEngine.toSelfie(),
+                html: µb.htmlFilteringEngine.toSelfie()
+            })
+        );
     };
 
-    api.fromSelfie = function(selfie) {
-        µb.cosmeticFilteringEngine.fromSelfie(selfie.cosmetic);
-        µb.scriptletFilteringEngine.fromSelfie(selfie.scriptlets);
-        µb.htmlFilteringEngine.fromSelfie(selfie.html);
+    api.fromSelfie = function(path) {
+        return µBlock.assets.get(`${path}/main`).then(details => {
+            let selfie;
+            try {
+                selfie = JSON.parse(details.content);
+            } catch (ex) {
+            }
+            if ( selfie instanceof Object === false ) { return false; }
+            µb.cosmeticFilteringEngine.fromSelfie(selfie.cosmetic);
+            µb.scriptletFilteringEngine.fromSelfie(selfie.scriptlets);
+            µb.htmlFilteringEngine.fromSelfie(selfie.html);
+            return true;
+        });
     };
 
     return api;

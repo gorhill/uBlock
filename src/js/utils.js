@@ -496,3 +496,112 @@
 µBlock.orphanizeString = function(s) {
     return JSON.parse(JSON.stringify(s));
 };
+
+/******************************************************************************/
+
+// Custom base128 encoder/decoder
+//
+// TODO:
+//   Could expand the LZ4 codec API to be able to return UTF8-safe string
+//   representation of a compressed buffer, and thus the code below could be
+//   moved LZ4 codec-side.
+
+µBlock.base128 = {
+    encode: function(arrbuf, arrlen) {
+        const inbuf = new Uint8Array(arrbuf, 0, arrlen);
+        const inputLength = arrlen;
+        let _7cnt = Math.floor(inputLength / 7);
+        let outputLength = _7cnt * 8;
+        let _7rem = inputLength % 7;
+        if ( _7rem !== 0 ) {
+            outputLength += 1 + _7rem;
+        }
+        const outbuf = new Uint8Array(outputLength);
+        let msbits, v;
+        let i = 0, j = 0;
+        while ( _7cnt--  ) {
+            v = inbuf[i+0];
+            msbits  = (v & 0x80) >>> 7;
+            outbuf[j+1] = v & 0x7F;
+            v = inbuf[i+1];
+            msbits |= (v & 0x80) >>> 6;
+            outbuf[j+2] = v & 0x7F;
+            v = inbuf[i+2];
+            msbits |= (v & 0x80) >>> 5;
+            outbuf[j+3] = v & 0x7F;
+            v = inbuf[i+3];
+            msbits |= (v & 0x80) >>> 4;
+            outbuf[j+4] = v & 0x7F;
+            v = inbuf[i+4];
+            msbits |= (v & 0x80) >>> 3;
+            outbuf[j+5] = v & 0x7F;
+            v = inbuf[i+5];
+            msbits |= (v & 0x80) >>> 2;
+            outbuf[j+6] = v & 0x7F;
+            v = inbuf[i+6];
+            msbits |= (v & 0x80) >>> 1;
+            outbuf[j+7] = v & 0x7F;
+            outbuf[j+0] = msbits;
+            i += 7; j += 8;
+        }
+        if ( _7rem > 0 ) {
+            msbits = 0;
+            for ( let ir = 0; ir < _7rem; ir++ ) {
+                v = inbuf[i+ir];
+                msbits |= (v & 0x80) >>> (7 - ir);
+                outbuf[j+ir+1] = v & 0x7F;
+            }
+            outbuf[j+0] = msbits;
+        }
+        const textDecoder = new TextDecoder();
+        return textDecoder.decode(outbuf);
+    },
+    // TODO:
+    //   Surprisingly, there does not seem to be any performance gain when
+    //   first converting the input string into a Uint8Array through
+    //   TextEncoder. Investigate again to confirm original findings and
+    //   to find out whether results have changed. Not using TextEncoder()
+    //   to create an intermediate input buffer lower peak memory usage
+    //   at selfie load time.
+    //
+    //   const textEncoder = new TextEncoder();
+    //   const inbuf = textEncoder.encode(instr);
+    //   const inputLength = inbuf.byteLength;
+    decode: function(instr, arrbuf) {
+        const inputLength = instr.length;
+        let _8cnt = inputLength >>> 3;
+        let outputLength = _8cnt * 7;
+        let _8rem = inputLength % 8;
+        if ( _8rem !== 0 ) {
+            outputLength += _8rem - 1;
+        }
+        const outbuf = arrbuf instanceof ArrayBuffer === false
+            ? new Uint8Array(outputLength)
+            : new Uint8Array(arrbuf);
+        let msbits;
+        let i = 0, j = 0;
+        while ( _8cnt-- ) {
+            msbits = instr.charCodeAt(i+0);
+            outbuf[j+0] = msbits << 7 & 0x80 | instr.charCodeAt(i+1);
+            outbuf[j+1] = msbits << 6 & 0x80 | instr.charCodeAt(i+2);
+            outbuf[j+2] = msbits << 5 & 0x80 | instr.charCodeAt(i+3);
+            outbuf[j+3] = msbits << 4 & 0x80 | instr.charCodeAt(i+4);
+            outbuf[j+4] = msbits << 3 & 0x80 | instr.charCodeAt(i+5);
+            outbuf[j+5] = msbits << 2 & 0x80 | instr.charCodeAt(i+6);
+            outbuf[j+6] = msbits << 1 & 0x80 | instr.charCodeAt(i+7);
+            i += 8; j += 7;
+        }
+        if ( _8rem > 1 ) {
+            msbits = instr.charCodeAt(i+0);
+            for ( let ir = 1; ir < _8rem; ir++ ) {
+                outbuf[j+ir-1] = msbits << (8-ir) & 0x80 | instr.charCodeAt(i+ir);
+            }
+        }
+        return outbuf;
+    },
+    decodeSize: function(instr) {
+        const size = (instr.length >>> 3) * 7;
+        const rem = instr.length & 7;
+        return rem === 0 ? size : size + rem - 1;
+    },
+};

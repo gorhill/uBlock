@@ -29,12 +29,12 @@
 /******************************************************************************/
 
 const warResolve = (function() {
-    var warPairs = [];
+    let warPairs = [];
 
-    var onPairsReady = function() {
-        var reng = µBlock.redirectEngine;
-        for ( var i = 0; i < warPairs.length; i += 2 ) {
-            var resource = reng.resources.get(warPairs[i+0]);
+    const onPairsReady = function() {
+        const reng = µBlock.redirectEngine;
+        for ( let i = 0; i < warPairs.length; i += 2 ) {
+            const resource = reng.resources.get(warPairs[i+0]);
             if ( resource === undefined ) { continue; }
             resource.warURL = vAPI.getURL(
                 '/web_accessible_resources/' + warPairs[i+1]
@@ -48,15 +48,15 @@ const warResolve = (function() {
             return onPairsReady();
         }
 
-        var onPairsLoaded = function(details) {
-            var marker = '>>>>>';
-            var pos = details.content.indexOf(marker);
+        const onPairsLoaded = function(details) {
+            const marker = '>>>>>';
+            const pos = details.content.indexOf(marker);
             if ( pos === -1 ) { return; }
-            var pairs = details.content.slice(pos + marker.length)
+            const pairs = details.content.slice(pos + marker.length)
                                       .trim()
                                       .split('\n');
             if ( (pairs.length & 1) !== 0 ) { return; }
-            for ( var i = 0; i < pairs.length; i++ ) {
+            for ( let i = 0; i < pairs.length; i++ ) {
                 pairs[i] = pairs[i].trim();
             }
             warPairs = pairs;
@@ -64,7 +64,7 @@ const warResolve = (function() {
         };
 
         µBlock.assets.fetchText(
-            '/web_accessible_resources/imported.txt?secret=' + vAPI.warSecret,
+            `/web_accessible_resources/imported.txt?secret=${vAPI.warSecret}`,
             onPairsLoaded
         );
     };
@@ -374,18 +374,17 @@ RedirectEngine.prototype.supportedTypes = new Map([
 
 /******************************************************************************/
 
-RedirectEngine.prototype.toSelfie = function() {
+RedirectEngine.prototype.toSelfie = function(path) {
     // Because rules may contains RegExp instances, we need to manually
     // convert it to a serializable format. The serialized format must be
     // suitable to be used as an argument to the Map() constructor.
-    var rules = [],
-        rule, entries, i, entry;
-    for ( var item of this.rules ) {
-        rule = [ item[0], [] ];
-        entries = item[1];
-        i = entries.length;
+    const rules = [];
+    for ( const item of this.rules ) {
+        const rule = [ item[0], [] ];
+        const entries = item[1];
+        let i = entries.length;
         while ( i-- ) {
-            entry = entries[i];
+            const entry = entries[i];
             rule[1].push({
                 tok: entry.tok,
                 pat: entry.pat instanceof RegExp ? entry.pat.source : entry.pat
@@ -393,23 +392,34 @@ RedirectEngine.prototype.toSelfie = function() {
         }
         rules.push(rule);
     }
-    return {
-        rules: rules,
-        ruleTypes: Array.from(this.ruleTypes),
-        ruleSources: Array.from(this.ruleSources),
-        ruleDestinations: Array.from(this.ruleDestinations)
-    };
+    return µBlock.assets.put(
+        `${path}/main`,
+        JSON.stringify({
+            rules: rules,
+            ruleTypes: Array.from(this.ruleTypes),
+            ruleSources: Array.from(this.ruleSources),
+            ruleDestinations: Array.from(this.ruleDestinations)
+        })
+    );
 };
 
 /******************************************************************************/
 
-RedirectEngine.prototype.fromSelfie = function(selfie) {
-    this.rules = new Map(selfie.rules);
-    this.ruleTypes = new Set(selfie.ruleTypes);
-    this.ruleSources = new Set(selfie.ruleSources);
-    this.ruleDestinations = new Set(selfie.ruleDestinations);
-    this.modifyTime = Date.now();
-    return true;
+RedirectEngine.prototype.fromSelfie = function(path) {
+    return µBlock.assets.get(`${path}/main`).then(details => {
+        let selfie;
+        try {
+            selfie = JSON.parse(details.content);
+        } catch (ex) {
+        }
+        if ( selfie instanceof Object === false ) { return false; }
+        this.rules = new Map(selfie.rules);
+        this.ruleTypes = new Set(selfie.ruleTypes);
+        this.ruleSources = new Set(selfie.ruleSources);
+        this.ruleDestinations = new Set(selfie.ruleDestinations);
+        this.modifyTime = Date.now();
+        return true;
+    });
 };
 
 /******************************************************************************/
@@ -494,41 +504,46 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
 
 /******************************************************************************/
 
-let resourcesSelfieVersion = 3;
+const resourcesSelfieVersion = 3;
 
 RedirectEngine.prototype.selfieFromResources = function() {
-    let selfie = {
-        version: resourcesSelfieVersion,
-        resources: Array.from(this.resources)
-    };
-    µBlock.cacheStorage.set({ resourcesSelfie: JSON.stringify(selfie) });
+    µBlock.assets.put(
+        'compiled/redirectEngine/resources',
+        JSON.stringify({
+            version: resourcesSelfieVersion,
+            resources: Array.from(this.resources)
+        })
+    );
 };
 
-RedirectEngine.prototype.resourcesFromSelfie = function(callback) {
-    µBlock.cacheStorage.get('resourcesSelfie', bin => {
-        let selfie = bin && bin.resourcesSelfie;
-        if ( typeof selfie === 'string' ) {
-            try {
-                selfie = JSON.parse(selfie);
-            } catch(ex) {
-            }
+RedirectEngine.prototype.resourcesFromSelfie = function() {
+    return µBlock.assets.get(
+        'compiled/redirectEngine/resources'
+    ).then(details => {
+        let selfie;
+        try {
+            selfie = JSON.parse(details.content);
+        } catch(ex) {
         }
         if (
             selfie instanceof Object === false ||
             selfie.version !== resourcesSelfieVersion ||
             Array.isArray(selfie.resources) === false
         ) {
-            return callback(false);
+            return false;
         }
         this.resources = new Map();
-        for ( let entry of selfie.resources ) {
-            this.resources.set(entry[0], RedirectEntry.fromSelfie(entry[1]));
+        for ( const [ token, entry ] of selfie.resources ) {
+            this.resources.set(token, RedirectEntry.fromSelfie(entry));
         }
-        callback(true);
+        return true;
     });
 };
 
 RedirectEngine.prototype.invalidateResourcesSelfie = function() {
+    µBlock.assets.remove('compiled/redirectEngine/resources');
+
+    // TODO: obsolete, remove eventually
     µBlock.cacheStorage.remove('resourcesSelfie');
 };
 

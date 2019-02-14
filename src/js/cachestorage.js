@@ -326,17 +326,27 @@
         if ( typeof callback !== 'function' ) {
             callback = noopfn;
         }
-        let keys = Object.keys(keyvalStore);
+        const keys = Object.keys(keyvalStore);
         if ( keys.length === 0 ) { return callback(); }
-        let promises = [ getDb() ];
-        let entries = [];
-        let dontCompress = µBlock.hiddenSettings.cacheStorageCompression !== true;
-        let handleEncodingResult = result => {
+        const promises = [ getDb() ];
+        const entries = [];
+        const dontCompress = µBlock.hiddenSettings.cacheStorageCompression !== true;
+        let bytesInUse = 0;
+        const handleEncodingResult = result => {
+            if ( typeof result.data === 'string' ) {
+                bytesInUse += result.data.length;
+            } else if ( result.data instanceof Blob ) {
+                bytesInUse += result.data.size;
+            }
             entries.push({ key: result.key, value: result.data });
         };
-        for ( let key of keys ) {
-            let data = keyvalStore[key];
-            if ( typeof data !== 'string' || dontCompress ) {
+        for ( const key of keys ) {
+            const data = keyvalStore[key];
+            const isString = typeof data === 'string';
+            if ( isString === false || dontCompress ) {
+                if ( isString ) {
+                    bytesInUse += data.length;
+                }
                 entries.push({ key, value: data });
                 continue;
             }
@@ -346,20 +356,20 @@
         }
         Promise.all(promises).then(( ) => {
             if ( !db ) { return callback(); }
-            let finish = ( ) => {
+            const finish = ( ) => {
                 dbBytesInUse = undefined;
                 if ( callback === undefined ) { return; }
                 let cb = callback;
                 callback = undefined;
-                cb();
+                cb({ bytesInUse });
             };
             try {
-                let transaction = db.transaction(STORAGE_NAME, 'readwrite');
+                const transaction = db.transaction(STORAGE_NAME, 'readwrite');
                 transaction.oncomplete =
                 transaction.onerror =
                 transaction.onabort = finish;
-                let table = transaction.objectStore(STORAGE_NAME);
-                for ( let entry of entries ) {
+                const table = transaction.objectStore(STORAGE_NAME);
+                for ( const entry of entries ) {
                     table.put(entry);
                 }
             } catch (ex) {

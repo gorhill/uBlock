@@ -81,6 +81,8 @@ var onAllReady = function() {
 
     µb.contextMenu.update(null);
     µb.firstInstall = false;
+
+    log.info(`All ready ${Date.now()-vAPI.T0} ms after launch`);
 };
 
 /******************************************************************************/
@@ -137,22 +139,29 @@ let initializeTabs = function() {
 // Filtering engines dependencies:
 // - PSL
 
-var onPSLReady = function() {
-    µb.selfieManager.load(function(valid) {
+const onPSLReady = function() {
+    log.info(`PSL ready ${Date.now()-vAPI.T0} ms after launch`);
+
+    µb.selfieManager.load().then(valid => {
         if ( valid === true ) {
-            return onAllReady();
+            log.info(`Selfie ready ${Date.now()-vAPI.T0} ms after launch`);
+            onAllReady();
+            return;
         }
-        µb.loadFilterLists(onAllReady);
+        µb.loadFilterLists(( ) => {
+            log.info(`Filter lists ready ${Date.now()-vAPI.T0} ms after launch`);
+            onAllReady();
+        });
     });
 };
 
 /******************************************************************************/
 
-var onCommandShortcutsReady = function(commandShortcuts) {
+const onCommandShortcutsReady = function(commandShortcuts) {
     if ( Array.isArray(commandShortcuts) === false ) { return; }
     µb.commandShortcuts = new Map(commandShortcuts);
     if ( µb.canUpdateShortcuts === false ) { return; }
-    for ( let entry of commandShortcuts ) {
+    for ( const entry of commandShortcuts ) {
         vAPI.commands.update({ name: entry[0], shortcut: entry[1] });
     }
 };
@@ -161,7 +170,7 @@ var onCommandShortcutsReady = function(commandShortcuts) {
 
 // To bring older versions up to date
 
-var onVersionReady = function(lastVersion) {
+const onVersionReady = function(lastVersion) {
     if ( lastVersion === vAPI.app.version ) { return; }
 
     // Since AMO does not allow updating resources.txt, force a reload when a
@@ -176,7 +185,7 @@ var onVersionReady = function(lastVersion) {
 
     // If unused, just comment out for when we need to compare versions in the
     // future.
-    let intFromVersion = function(s) {
+    const intFromVersion = function(s) {
         let parts = s.match(/(?:^|\.|b|rc)\d+/g);
         if ( parts === null ) { return 0; }
         let vint = 0;
@@ -223,7 +232,7 @@ var onVersionReady = function(lastVersion) {
 // Whitelist parser needs PSL to be ready.
 // gorhill 2014-12-15: not anymore
 
-var onNetWhitelistReady = function(netWhitelistRaw) {
+const onNetWhitelistReady = function(netWhitelistRaw) {
     µb.netWhitelist = µb.whitelistFromString(netWhitelistRaw);
     µb.netWhitelistModifyTime = Date.now();
 };
@@ -232,8 +241,10 @@ var onNetWhitelistReady = function(netWhitelistRaw) {
 
 // User settings are in memory
 
-var onUserSettingsReady = function(fetched) {
-    var userSettings = µb.userSettings;
+const onUserSettingsReady = function(fetched) {
+    log.info(`User settings ready ${Date.now()-vAPI.T0} ms after launch`);
+
+    const userSettings = µb.userSettings;
 
     fromFetch(userSettings, fetched);
 
@@ -264,7 +275,7 @@ var onUserSettingsReady = function(fetched) {
 
 // Housekeeping, as per system setting changes
 
-var onSystemSettingsReady = function(fetched) {
+const onSystemSettingsReady = function(fetched) {
     var mustSaveSystemSettings = false;
     if ( fetched.compiledMagic !== µb.systemSettings.compiledMagic ) {
         µb.assets.remove(/^compiled\//);
@@ -282,7 +293,9 @@ var onSystemSettingsReady = function(fetched) {
 
 /******************************************************************************/
 
-var onFirstFetchReady = function(fetched) {
+const onFirstFetchReady = function(fetched) {
+    log.info(`First fetch ready ${Date.now()-vAPI.T0} ms after launch`);
+
     // https://github.com/gorhill/uBlock/issues/747
     µb.firstInstall = fetched.version === '0.0.0.0';
 
@@ -295,10 +308,7 @@ var onFirstFetchReady = function(fetched) {
     onVersionReady(fetched.version);
     onCommandShortcutsReady(fetched.commandShortcuts);
 
-    Promise.all([
-        µb.loadPublicSuffixList(),
-        µb.staticNetFilteringEngine.readyToUse()
-    ]).then(( ) => {
+    µb.loadPublicSuffixList().then(( ) => {
         onPSLReady();
     });
     µb.loadRedirectResources();
@@ -306,31 +316,27 @@ var onFirstFetchReady = function(fetched) {
 
 /******************************************************************************/
 
-var toFetch = function(from, fetched) {
-    for ( var k in from ) {
-        if ( from.hasOwnProperty(k) === false ) {
-            continue;
-        }
+const toFetch = function(from, fetched) {
+    for ( const k in from ) {
+        if ( from.hasOwnProperty(k) === false ) { continue; }
         fetched[k] = from[k];
     }
 };
 
-var fromFetch = function(to, fetched) {
-    for ( var k in to ) {
-        if ( to.hasOwnProperty(k) === false ) {
-            continue;
-        }
-        if ( fetched.hasOwnProperty(k) === false ) {
-            continue;
-        }
+const fromFetch = function(to, fetched) {
+    for ( const k in to ) {
+        if ( to.hasOwnProperty(k) === false ) { continue; }
+        if ( fetched.hasOwnProperty(k) === false ) { continue; }
         to[k] = fetched[k];
     }
 };
 
 /******************************************************************************/
 
-var onSelectedFilterListsLoaded = function() {
-    var fetchableProps = {
+const onSelectedFilterListsLoaded = function() {
+    log.info(`List selection ready ${Date.now()-vAPI.T0} ms after launch`);
+
+    const fetchableProps = {
         'commandShortcuts': [],
         'compiledMagic': 0,
         'dynamicFilteringString': [
@@ -371,7 +377,8 @@ var onSelectedFilterListsLoaded = function() {
 // compatibility, this means a special asynchronous call to load selected
 // filter lists.
 
-var onAdminSettingsRestored = function() {
+const onAdminSettingsRestored = function() {
+    log.info(`Admin settings ready ${Date.now()-vAPI.T0} ms after launch`);
     µb.loadSelectedFilterLists(onSelectedFilterListsLoaded);
 };
 

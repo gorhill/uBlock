@@ -46,6 +46,7 @@ const µBlock = (function() { // jshint ignore:line
         cacheStorageAPI: 'unset',
         cacheStorageCompression: true,
         cacheControlForFirefox1376932: 'no-cache, no-store, must-revalidate',
+        consoleLogLevel: 'unset',
         debugScriptlets: false,
         disableWebAssembly: false,
         ignoreRedirectFilters: false,
@@ -53,6 +54,7 @@ const µBlock = (function() { // jshint ignore:line
         manualUpdateAssetFetchPeriod: 500,
         popupFontSize: 'unset',
         requestJournalProcessPeriod: 1000,
+        selfieAfter: 11,
         strictBlockingBypassDuration: 120,
         suspendTabsUntilReady: false,
         userResourcesLocation: 'unset'
@@ -95,13 +97,13 @@ const µBlock = (function() { // jshint ignore:line
 
         hiddenSettingsDefault: hiddenSettingsDefault,
         hiddenSettings: (function() {
-            let out = Object.assign({}, hiddenSettingsDefault),
+            const out = Object.assign({}, hiddenSettingsDefault),
                 json = vAPI.localStorage.getItem('immediateHiddenSettings');
             if ( typeof json === 'string' ) {
                 try {
-                    let o = JSON.parse(json);
+                    const o = JSON.parse(json);
                     if ( o instanceof Object ) {
-                        for ( let k in o ) {
+                        for ( const k in o ) {
                             if ( out.hasOwnProperty(k) ) {
                                 out[k] = o[k];
                             }
@@ -111,8 +113,6 @@ const µBlock = (function() { // jshint ignore:line
                 catch(ex) {
                 }
             }
-            // Remove once 1.15.12+ is widespread.
-            vAPI.localStorage.removeItem('hiddenSettings');
             return out;
         })(),
 
@@ -138,7 +138,7 @@ const µBlock = (function() { // jshint ignore:line
         // Read-only
         systemSettings: {
             compiledMagic: 6,   // Increase when compiled format changes
-            selfieMagic: 7      // Increase when selfie format changes
+            selfieMagic: 8      // Increase when selfie format changes
         },
 
         restoreBackupSettings: {
@@ -160,8 +160,6 @@ const µBlock = (function() { // jshint ignore:line
 
         selectedFilterLists: [],
         availableFilterLists: {},
-
-        selfieAfter: 17 * oneMinute,
 
         pageStores: new Map(),
         pageStoresToken: 0,

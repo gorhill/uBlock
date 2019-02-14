@@ -355,7 +355,13 @@ HNTrieContainer.prototype = {
         return trieRef;
     },
 
-    serialize: function() {
+    serialize: function(encoder) {
+        if ( encoder instanceof Object ) {
+            return encoder.encode(
+                this.buf32.buffer,
+                this.buf32[HNTRIE_CHAR1_SLOT]
+            );
+        }
         return Array.from(
             new Uint32Array(
                 this.buf32.buffer,
@@ -365,23 +371,29 @@ HNTrieContainer.prototype = {
         );
     },
 
-    unserialize: function(selfie) {
-        const len = (selfie.length << 2) + HNTRIE_PAGE_SIZE-1 & ~(HNTRIE_PAGE_SIZE-1);
+    unserialize: function(selfie, decoder) {
+        const shouldDecode = typeof selfie === 'string';
+        let byteLength = shouldDecode
+            ? decoder.decodeSize(selfie)
+            : selfie.length << 2;
+        byteLength = byteLength + HNTRIE_PAGE_SIZE-1 & ~(HNTRIE_PAGE_SIZE-1);
         if ( this.wasmMemory !== null ) {
             const pageCountBefore = this.buf.length >>> 16;
-            const pageCountAfter = len >>> 16;
+            const pageCountAfter = byteLength >>> 16;
             if ( pageCountAfter > pageCountBefore ) {
                 this.wasmMemory.grow(pageCountAfter - pageCountBefore);
                 this.buf = new Uint8Array(this.wasmMemory.buffer);
                 this.buf32 = new Uint32Array(this.buf.buffer);
             }
-        } else {
-            if ( len > this.buf.length ) {
-                this.buf = new Uint8Array(len);
-                this.buf32 = new Uint32Array(this.buf.buffer);
-            }
+        } else if ( byteLength > this.buf.length ) {
+            this.buf = new Uint8Array(byteLength);
+            this.buf32 = new Uint32Array(this.buf.buffer);
         }
-        this.buf32.set(selfie);
+        if ( shouldDecode ) {
+            decoder.decode(selfie, this.buf.buffer);
+        } else {
+            this.buf32.set(selfie);
+        }
         this.needle = '';
     },
 
@@ -684,6 +696,6 @@ HNTrieContainer.prototype.HNTrieRef.prototype = {
         WebAssembly.compileStreaming
     ).catch(reason => {
         HNTrieContainer.wasmModulePromise = null;
-        console.info(reason);
+        log.info(reason);
     });
 })();
