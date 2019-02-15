@@ -777,14 +777,21 @@ const injectCSP = function(fctxt, pageStore, responseHeaders) {
         if ( loggerEnabled ) {
             fctxt.setRealm('network').setType('scripting').toLogger();
         }
-    } else {
-        fctxt.type = 'inline-script';
-        const result = pageStore.filterRequest(fctxt);
+    }
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/422
+    //   We need to derive a special context for filtering `inline-script`,
+    //   as the embedding document for this "resource" will always be the
+    //   frame itself, not that of the parent of the frame.
+    else {
+        const fctxt2 = fctxt.duplicate();
+        fctxt2.type = 'inline-script';
+        fctxt2.setDocOriginFromURL(fctxt.url);
+        const result = pageStore.filterRequest(fctxt2);
         if ( result === 1 ) {
             builtinDirectives.push("script-src 'unsafe-eval' * blob: data:");
         }
         if ( result !== 0 && loggerEnabled ) {
-            fctxt.setRealm('network').toLogger();
+            fctxt2.setRealm('network').toLogger();
         }
     }
 
