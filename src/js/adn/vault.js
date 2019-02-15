@@ -1445,12 +1445,20 @@
     // three special modes:
     // all three special modes: remember brush
 
-    var lastBrush = (mode == "delete" || mode == "update") ? document.getElementsByClassName("brush")[0] : null;
+    var lastBrush = null;
+
+    if (mode!= undefined && !d3.select('.brush').empty()) {
+      lastBrush = {};
+      lastBrush.w = d3.transform(d3.select(".resize.w").attr("transform")).translate[0];
+      lastBrush.e = d3.transform(d3.select(".resize.e").attr("transform")).translate[0];
+      lastBrush.extentX = d3.select(".extent").attr("x");
+      lastBrush.extentWidth = d3.select(".extent").attr("width");
+      lastBrush.width = d3.select('.chart-bg').attr("width");
+    }
 
     // clear all the old svg
     d3.select("g.parent").selectAll("*").remove();
     d3.select("svg").remove();
-
 
     if (!gAds || !gAds.length) {
       computeStats();
@@ -1463,7 +1471,6 @@
     var iconW = 100;
 
     try {
-
       var width = parseInt(d3.select("#stage").style("width")) -
         (margin.left + margin.right + iconW);
     } catch (e) {
@@ -1576,11 +1583,6 @@
       .extent(bExtent)
       .on("brushend", brushend);
 
-    if (lastBrush)  {
-      // append the old brush
-      document.getElementById("svgcon").getElementsByTagName("svg")[0].firstChild.appendChild(lastBrush);
-    }
-    else {
       var gBrush = svg.append("g")
         .attr("class", "brush")
         .call(brush);
@@ -1603,13 +1605,21 @@
         .attr("height", 50)
         .attr("y", -50)
         .attr("x", -3);
-    }
+
+      if (lastBrush && mode!= undefined) {
+        // map all values if resize
+        var r =  mode == "resize" ? d3.select('.chart-bg').attr("width") / lastBrush.width : 1;
+        d3.select(".extent").attr("width", lastBrush.extentWidth * r);
+        d3.select(".extent").attr("x", lastBrush.extentX * r);
+        d3.select(".resize.w").attr("transform", "translate(" + lastBrush.w * r +",0)");
+        d3.select(".resize.e").attr("transform", "translate(" + lastBrush.e * r +",0)");
+      }
 
     // cases:
     // 1) [default]]reload vault: doLayout, update slider - runFilter()
     // 2) "update": updateLayout, same slider
-    // 3) "delete":skipLayout, same slider
-    // 4) "resize": repack, same slider
+    // 3) "delete": skipLayout, same slider
+    // 4) "resize": repack, remap slider
 
     // do filter, then call either doLayout or computeStats
 
@@ -1642,13 +1652,13 @@
       gSliderRight = d3.select('.w.resize')[0][0].attributes.transform.value;
       gSliderLeft = d3.select('.e.resize')[0][0].attributes.transform.value;
 
-      d3.select('.resize').style("display", "block");
+      // make sure the sliders are always visible
+      if (gMax - gMin <= 0) d3.select('.resize').style("display", "block");
 
-      if (gAdSets != null && gAds.length !== 1 && gMax - gMin < 0) {
-        // make sure the sliders are always visible
-        //console.log('vault-slider::ignore-micro: ' + ext[0] + "," + ext[1]);
-        return; // gAdSets || (gAdSets = createAdSets(gAds)); // fix for gh #100
-      }
+      // if (gAdSets != null && gAds.length !== 1 && gMax - gMin < 0) {
+      //   //console.log('vault-slider::ignore-micro: ' + ext[0] + "," + ext[1]);
+      //   return; // gAdSets || (gAdSets = createAdSets(gAds)); // fix for gh #100
+      // }
 
       if (gAds.length >= MaxStartNum) {
         uDom("a[class=showing-help]").text("?")
@@ -1656,7 +1666,6 @@
       }
 
       var filtered = dateFilter(gMin, gMax);
-
 
       return gAdSets && gAds.length < MaxStartNum ? filterAdSets(filtered) :
         (gAdSets = createAdSets(filtered));
