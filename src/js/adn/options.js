@@ -48,7 +48,7 @@
       minute: 'numeric',
       timeZoneName: 'short'
     };
-    
+
     // var lastBackupFile = details.lastBackupFile || '';
     // if (lastBackupFile !== '') {
     //   dt = new Date(details.lastBackupTime);
@@ -71,7 +71,7 @@
   /******************************************************************************/
 
   var resetUserData = function() {
-      var msg = vAPI.i18n('aboutResetDataConfirm').replace(/uBlock₀/g, 'AdNauseam'); // ADN
+      var msg = vAPI.i18n('adnAboutResetDataConfirm'); // ADN
       var proceed = window.confirm(msg); // ADN: changed from vAPI.confirm merge1.14.12
       if ( proceed ) {
           messager.send('dashboard', { what: 'resetUserData' });
@@ -139,7 +139,7 @@
     var exportDialog = function() {
        uDom('#export-dialog').removeClass("hide");
      }
-    
+
     var exportTo = function() {
         var action = uDom('#export-dialog input:checked').nodes[0].id;
         exportToFile(action)
@@ -197,14 +197,14 @@
         uNode.val(details[uNode.attr('data-setting-name')])
           .on('change', onInputChanged);
       });
-    
+
 
     // Minor text fixes
     if (uDom('#exportDialog').text() === "Back up to file")
       uDom('#exportDialog').text("Backup to file");
     uDom('#import').text(uDom('#import').text().replace('...',''));
     uDom('#resetOptions').text(uDom('#resetOptions').text().replace('...',''));
-    
+
     // On click events
     uDom('#reset').on('click', clearAds);
     uDom('#exportDialog').on('click', exportDialog);
