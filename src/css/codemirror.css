@@ -21,7 +21,7 @@
 .cm-staticext { color: #008; }
 .cm-staticnetBlock { color: #800; }
 .cm-staticnetAllow { color: #004f00; }
-.cm-staticOpt { background-color: #ddd; font-weight: bold; }
+.cm-staticOpt { background-color: #777; font-weight: bold; }
 
 .cm-search-widget {
     align-items: center;
