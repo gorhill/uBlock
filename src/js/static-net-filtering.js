@@ -58,6 +58,7 @@ const typeNameToTypeValue = {
             'object':  3 << 4,
  'object_subrequest':  3 << 4,
             'script':  4 << 4,
+             'fetch':  5 << 4,
     'xmlhttprequest':  5 << 4,
          'sub_frame':  6 << 4,
               'font':  7 << 4,
@@ -2792,14 +2793,72 @@ FilterContainer.prototype.getFilterCount = function() {
 
 /******************************************************************************/
 
-FilterContainer.prototype.benchmark = function(contexts) {
-    const t0 = performance.now();
-    const results = [];
-    for ( const context of contexts ) {
-         results.push(this.matchString(context));
-    }
-    const t1 = performance.now();
-    return { t0, t1, duration: t1 - t0, results };
+// The requests.json.gz file can be downloaded from:
+//   https://cdn.cliqz.com/adblocking/requests_top500.json.gz
+//
+// Which is linked from:
+//   https://whotracks.me/blog/adblockers_performance_study.html
+//
+// Copy the file into ./tmp/requests.json.gz
+//
+// If the file is present when you build uBO using `make-[target].sh` from
+// the shell, the resulting package will have `./assets/requests.json`, which
+// will be looked-up by the method below to launch a benchmark session.
+//
+// From uBO's dev console, launch the benchmark:
+//   µBlock.staticNetFilteringEngine.benchmark();
+//
+// The usual browser dev tools can be used to obtain useful profiling
+// data, i.e. start the profiler, call the benchmark method from the
+// console, then stop the profiler when it completes.
+//
+// Keep in mind that the measurements at the blog post above where obtained
+// with ONLY EasyList. The CPU reportedly used was:
+//   https://www.cpubenchmark.net/cpu.php?cpu=Intel+Core+i7-6600U+%40+2.60GHz&id=2608
+//
+// Rename ./tmp/requests.json.gz to something else if you no longer want
+// ./assets/requests.json in the build.
+
+FilterContainer.prototype.benchmark = function() {
+    new Promise(resolve => {
+        const url = vAPI.getURL('/assets/requests.json');
+        µb.assets.fetchText(vAPI.getURL('/assets/requests.json'), details => {
+            if ( details.error !== undefined ) {
+                console.info(`Not found: ${url}`);
+                resolve();
+                return;
+            }
+            const requests = [];
+            const lineIter = new µb.LineIterator(details.content);
+            while ( lineIter.eot() === false ) {
+                let request;
+                try {
+                    request = JSON.parse(lineIter.next());
+                } catch(ex) {
+                }
+                if ( request instanceof Object === false ) { continue; }
+                requests.push(request);
+            }
+            resolve(requests);
+        });
+    }).then(requests => {
+        if ( Array.isArray(requests) === false || requests.length === 0 ) {
+            console.info('No requests found to benchmark');
+            return;
+        }
+        const fctxt = µb.filteringContext;
+        const t0 = self.performance.now();
+        for ( const request of requests ) {
+            fctxt.url = request.url;
+            fctxt.setDocOriginFromURL(request.frameUrl);
+            fctxt.setType(request.cpt);
+            void this.matchString(fctxt);
+        }
+        const t1 = self.performance.now();
+        const dur = t1 - t0;
+        console.info(`Evaluated ${requests.length} requests in ${dur.toFixed(0)} ms`);
+        console.info(`\tAverage: ${(dur / requests.length).toFixed(3)} ms per request`);
+    });
 };
 
 /******************************************************************************/
