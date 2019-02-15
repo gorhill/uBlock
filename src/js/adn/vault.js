@@ -1642,8 +1642,10 @@
       gSliderRight = d3.select('.w.resize')[0][0].attributes.transform.value;
       gSliderLeft = d3.select('.e.resize')[0][0].attributes.transform.value;
 
-      if (gAdSets != null && gAds.length !== 1 && gMax - gMin <= 1) {
+      d3.select('.resize').style("display", "block");
 
+      if (gAdSets != null && gAds.length !== 1 && gMax - gMin < 0) {
+        // make sure the sliders are always visible
         //console.log('vault-slider::ignore-micro: ' + ext[0] + "," + ext[1]);
         return; // gAdSets || (gAdSets = createAdSets(gAds)); // fix for gh #100
       }
