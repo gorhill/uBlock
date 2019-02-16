@@ -183,7 +183,7 @@ const filterDataSerialize = µb.CompiledLineIO.serialize;
 
 const toLogDataInternal = function(categoryBits, tokenHash, filter) {
     if ( filter === null ) { return undefined; }
-    let logData = filter.logData();
+    const logData = filter.logData();
     logData.compiled = filterDataSerialize([
         categoryBits,
         tokenHash,
@@ -291,12 +291,14 @@ FilterTrue.prototype.compile = function() {
     return [ this.fid ];
 };
 
+FilterTrue.instance = new FilterTrue();
+
 FilterTrue.compile = function() {
     return [ FilterTrue.fid ];
 };
 
 FilterTrue.load = function() {
-    return new FilterTrue();
+    return FilterTrue.instance;
 };
 
 registerFilterClass(FilterTrue);
@@ -727,289 +729,284 @@ registerFilterClass(FilterRegex);
 
 /******************************************************************************/
 
-// Filtering according to the origin.
+// The optimal "class" is picked according to the content of the
+// `domain=` filter option.
 
-const FilterOrigin = function() {
-};
-
-FilterOrigin.prototype = {
-    wrapped: {
-        compile: function() {
-            return '';
-        },
-        logData: function() {
-            return {
-                compiled: ''
-            };
-        },
-        match: function() {
-            return true;
+const filterOrigin = {
+    compile: function(details, wrapped) {
+        const domainOpt = details.domainOpt;
+        // One hostname
+        if ( domainOpt.indexOf('|') === -1 ) {
+            if ( domainOpt.charCodeAt(0) === 0x7E /* '~' */ ) {
+                return FilterOriginMiss.compile(domainOpt, wrapped);
+            }
+            return FilterOriginHit.compile(domainOpt, wrapped);
         }
-    },
-    matchOrigin: function() {
-        return true;
-    },
-    match: function(url, tokenBeg) {
-        return this.matchOrigin() && this.wrapped.match(url, tokenBeg);
-    },
-    logData: function() {
-        const out = this.wrapped.logData();
-        const domainOpt = this.toDomainOpt();
-        out.compiled = [ this.fid, domainOpt, out.compiled ];
-        if ( out.opts === undefined ) {
-            out.opts = 'domain=' + domainOpt;
-        } else {
-            out.opts += ',domain=' + domainOpt;
+        // Many hostnames.
+        // Must be in set (none negated).
+        if ( domainOpt.indexOf('~') === -1 ) {
+            return FilterOriginHitSet.compile(domainOpt, wrapped);
         }
+        // Must not be in set (all negated).
+        const reAllNegated = /^~(?:[^|~]+\|~)+[^|~]+$/;
+        if ( reAllNegated.test(domainOpt) ) {
+            return FilterOriginMissSet.compile(domainOpt, wrapped);
+        }
+        // Must be in one set, but not in the other.
+        return FilterOriginMixedSet.compile(domainOpt, wrapped);
+    },
+    logData: function(f, arg1, arg2) {
+        const out = f.wrapped.logData();
+        out.compiled = [ f.fid, arg1, out.compiled ];
+        if ( out.opts !== undefined ) { out.opts += ','; }
+        out.opts = `domain=${arg2 || arg1}`;
         return out;
     },
-    compile: function() {
-        return [ this.fid, this.toDomainOpt(), this.wrapped.compile() ];
-    },
-};
-
-// *** start of specialized origin matchers
-
-const FilterOriginHit = function(domainOpt) {
-    FilterOrigin.call(this);
-    this.hostname = domainOpt;
-};
-
-FilterOriginHit.prototype = Object.create(FilterOrigin.prototype, {
-    constructor: {
-        value: FilterOriginHit
-    },
-    toDomainOpt: {
-        value: function() {
-            return this.hostname;
+    trieContainer: (function() {
+        let trieDetails;
+        try {
+            trieDetails = JSON.parse(
+                vAPI.localStorage.getItem('FilterOrigin.trieDetails')
+            );
+        } catch(ex) {
         }
+        return new HNTrieContainer(trieDetails);
+    })(),
+    readyToUse: function() {
+        return this.trieContainer.readyToUse();
     },
-    matchOrigin: {
-        value: function() {
-            var needle = this.hostname, haystack = pageHostnameRegister;
-            if ( haystack.endsWith(needle) === false ) { return false; }
-            var offset = haystack.length - needle.length;
-            return offset === 0 || haystack.charCodeAt(offset - 1) === 0x2E /* '.' */;
-        }
+    reset: function() {
+        return this.trieContainer.reset();
     },
-});
-
-//
-
-const FilterOriginMiss = function(domainOpt) {
-    FilterOrigin.call(this);
-    this.hostname = domainOpt.slice(1);
-};
-
-FilterOriginMiss.prototype = Object.create(FilterOrigin.prototype, {
-    constructor: {
-        value: FilterOriginMiss
-    },
-    toDomainOpt: {
-        value: function() {
-            return '~' + this.hostname;
-        }
-    },
-    matchOrigin: {
-        value: function() {
-            var needle = this.hostname, haystack = pageHostnameRegister;
-            if ( haystack.endsWith(needle) === false ) { return true; }
-            var offset = haystack.length - needle.length;
-            return offset !== 0 &&
-                   haystack.charCodeAt(offset - 1) !== 0x2E /* '.' */;
-        }
-    },
-});
-
-//
-
-const FilterOriginHitSet = function(domainOpt) {
-    FilterOrigin.call(this);
-    this.domainOpt = domainOpt.length < 128
-        ? domainOpt
-        : µb.stringDeduplicater.lookup(domainOpt);
-};
-
-FilterOriginHitSet.prototype = Object.create(FilterOrigin.prototype, {
-    constructor: {
-        value: FilterOriginHitSet
-    },
-    oneOf: {
-        value: null,
-        writable: true
-    },
-    toDomainOpt: {
-        value: function() {
-            return this.domainOpt;
-        }
-    },
-    matchOrigin: {
-        value: function() {
-            if ( this.oneOf === null ) {
-                this.oneOf = FilterOrigin.trieContainer.fromIterable(
-                    this.domainOpt.split('|')
-                );
-            }
-            return this.oneOf.matches(pageHostnameRegister) !== -1;
-        }
-    },
-});
-
-//
-
-const FilterOriginMissSet = function(domainOpt) {
-    FilterOrigin.call(this);
-    this.domainOpt = domainOpt.length < 128
-        ? domainOpt
-        : µb.stringDeduplicater.lookup(domainOpt);
-};
-
-FilterOriginMissSet.prototype = Object.create(FilterOrigin.prototype, {
-    constructor: {
-        value: FilterOriginMissSet
-    },
-    noneOf: {
-        value: null,
-        writable: true
-    },
-    toDomainOpt: {
-        value: function() {
-            return this.domainOpt;
-        }
-    },
-    matchOrigin: {
-        value: function() {
-            if ( this.noneOf === null ) {
-                this.noneOf = FilterOrigin.trieContainer.fromIterable(
-                    this.domainOpt.replace(/~/g, '').split('|')
-                );
-            }
-            return this.noneOf.matches(pageHostnameRegister) === -1;
-        }
-    },
-});
-
-//
-
-const FilterOriginMixedSet = function(domainOpt) {
-    FilterOrigin.call(this);
-    this.domainOpt = domainOpt.length < 128
-        ? domainOpt
-        : µb.stringDeduplicater.lookup(domainOpt);
-};
-
-FilterOriginMixedSet.prototype = Object.create(FilterOrigin.prototype, {
-    constructor: {
-        value: FilterOriginMixedSet
-    },
-    oneOf: {
-        value: null,
-        writable: true
-    },
-    noneOf: {
-        value: null,
-        writable: true
-    },
-    init: {
-        value: function() {
-            let oneOf = [], noneOf = [];
-            for ( let hostname of this.domainOpt.split('|') ) {
-                if ( hostname.charCodeAt(0) === 0x7E /* '~' */ ) {
-                    noneOf.push(hostname.slice(1));
-                } else {
-                    oneOf.push(hostname);
-                }
-            }
-            this.oneOf = FilterOrigin.trieContainer.fromIterable(oneOf);
-            this.noneOf = FilterOrigin.trieContainer.fromIterable(noneOf);
-        }
-    },
-    toDomainOpt: {
-        value: function() {
-            return this.domainOpt;
-        }
-    },
-    matchOrigin: {
-        value: function() {
-            if ( this.oneOf === null ) { this.init(); }
-            let needle = pageHostnameRegister;
-            return this.oneOf.matches(needle) !== -1 &&
-                   this.noneOf.matches(needle) === -1;
-        }
-    },
-});
-
-// *** end of specialized origin matchers
-
-// The optimal test function is picked according to the content of the
-// `domain=` filter option.
-// Re-factored in light of:
-// - https://gorhill.github.io/obj-vs-set-vs-map/set-vs-regexp.html
-// The re-factoring made possible to reuse instances of a matcher. As of
-// writing, I observed that just with EasyList, there were ~1,200 reused
-// instances out of ~2,800.
-
-FilterOrigin.matcherFactory = function(domainOpt) {
-    // One hostname
-    if ( domainOpt.indexOf('|') === -1 ) {
-        if ( domainOpt.charCodeAt(0) === 0x7E /* '~' */ ) {
-            return new FilterOriginMiss(domainOpt);
-        }
-        return new FilterOriginHit(domainOpt);
-    }
-    // Many hostnames.
-    // Must be in set (none negated).
-    if ( domainOpt.indexOf('~') === -1 ) {
-        return new FilterOriginHitSet(domainOpt);
-    }
-    // Must not be in set (all negated).
-    if ( FilterOrigin.reAllNegated.test(domainOpt) ) {
-        return new FilterOriginMissSet(domainOpt);
-    }
-    // Must be in one set, but not in the other.
-    return new FilterOriginMixedSet(domainOpt);
-};
-
-FilterOrigin.reAllNegated = /^~(?:[^|~]+\|~)+[^|~]+$/;
-
-FilterOrigin.compile = function(details) {
-    return [ FilterOrigin.fid, details.domainOpt ];
-};
-
-FilterOrigin.load = function(args) {
-    var f = FilterOrigin.matcherFactory(args[1]);
-    f.wrapped = filterFromCompiledData(args[2]);
-    return f;
-};
-
-FilterOrigin.trieContainer = (function() {
-    let trieDetails;
-    try {
-        trieDetails = JSON.parse(
-            vAPI.localStorage.getItem('FilterOrigin.trieDetails')
+    optimize: function() {
+        const trieDetails = this.trieContainer.optimize();
+        vAPI.localStorage.setItem(
+            'FilterOrigin.trieDetails',
+            JSON.stringify(trieDetails)
         );
-    } catch(ex) {
+    },
+};
+
+/******************************************************************************/
+
+const FilterOriginHit = function(hostname, wrapped) {
+    this.hostname = hostname;
+    this.wrapped = wrapped;
+};
+
+// Surprinsingly, first peeking and comparing only the first character using
+// charCodeAt() does help a bit performance -- 3-6µs gain per request on
+// average for Chromium 71 and Firefox 65 with default lists.
+// A likely explanation is that most visits are a miss, and in such case
+// calling charCodeAt() to bail out earlier is cheaper than calling endsWith().
+
+FilterOriginHit.prototype = {
+    match: function(url, tokenBeg) {
+        const haystack = pageHostnameRegister;
+        const offset = haystack.length - this.hostname.length;
+        if ( offset < 0 ) { return false; }
+        if ( haystack.charCodeAt(offset) !== this.hostname.charCodeAt(0) ) {
+            return false;
+        }
+        if ( haystack.endsWith(this.hostname) === false ) { return false; }
+        if ( offset !== 0 && haystack.charCodeAt(offset-1) !== 0x2E /* '.' */ ) {
+            return false;
+        }
+        return this.wrapped.match(url, tokenBeg);
+    },
+    logData: function() {
+        return filterOrigin.logData(this, this.hostname);
+    },
+    compile: function() {
+        return [ this.fid, this.hostname, this.wrapped.compile() ];
     }
-    return new HNTrieContainer(trieDetails);
-})();
-
-FilterOrigin.readyToUse = function() {
-    return FilterOrigin.trieContainer.readyToUse();
 };
 
-FilterOrigin.reset = function() {
-    return FilterOrigin.trieContainer.reset();
+FilterOriginHit.compile = function(domainOpt, wrapped) {
+    return [ FilterOriginHit.fid, domainOpt, wrapped ];
 };
 
-FilterOrigin.optimize = function() {
-    const trieDetails = FilterOrigin.trieContainer.optimize();
-    vAPI.localStorage.setItem(
-        'FilterOrigin.trieDetails',
-        JSON.stringify(trieDetails)
+FilterOriginHit.load = function(args) {
+    return new FilterOriginHit(
+        args[1],
+        filterFromCompiledData(args[2])
     );
 };
 
-registerFilterClass(FilterOrigin);
+registerFilterClass(FilterOriginHit);
+
+/******************************************************************************/
+
+const FilterOriginMiss = function(hostname, wrapped) {
+    this.hostname = hostname;
+    this.wrapped = wrapped;
+};
+
+FilterOriginMiss.prototype = {
+    match: function(url, tokenBeg) {
+        const haystack = pageHostnameRegister;
+        if ( haystack.endsWith(this.hostname) ) {
+            const offset = haystack.length - this.hostname.length;
+            if ( offset === 0 || haystack.charCodeAt(offset-1) === 0x2E /* '.' */ ) {
+                return false;
+            }
+        }
+        return this.wrapped.match(url, tokenBeg);
+    },
+    logData: function() {
+        return filterOrigin.logData(this, this.hostname, `~${this.hostname}`);
+    },
+    compile: function() {
+        return [ this.fid, this.hostname, this.wrapped.compile() ];
+    }
+};
+
+FilterOriginMiss.compile = function(domainOpt, wrapped) {
+    return [ FilterOriginMiss.fid, domainOpt.slice(1), wrapped ];
+};
+
+FilterOriginMiss.load = function(args) {
+    return new FilterOriginMiss(
+        args[1],
+        filterFromCompiledData(args[2])
+    );
+};
+
+registerFilterClass(FilterOriginMiss);
+
+/******************************************************************************/
+
+const FilterOriginHitSet = function(domainOpt, wrapped) {
+    this.domainOpt = domainOpt.length < 128
+        ? domainOpt
+        : µb.stringDeduplicater.lookup(domainOpt);
+    this.oneOf = null;
+    this.wrapped = wrapped;
+};
+
+FilterOriginHitSet.prototype = {
+    match: function(url, tokenBeg) {
+        if ( this.oneOf === null ) {
+            this.oneOf = filterOrigin.trieContainer.fromIterable(
+                this.domainOpt.split('|')
+            );
+        }
+        return this.oneOf.matches(pageHostnameRegister) !== -1 &&
+               this.wrapped.match(url, tokenBeg);
+    },
+    logData: function() {
+        return filterOrigin.logData(this, this.domainOpt);
+    },
+    compile: function() {
+        return [ this.fid, this.domainOpt, this.wrapped.compile() ];
+    },
+};
+
+FilterOriginHitSet.compile = function(domainOpt, wrapped) {
+    return [ FilterOriginHitSet.fid, domainOpt, wrapped ];
+};
+
+FilterOriginHitSet.load = function(args) {
+    return new FilterOriginHitSet(
+        args[1],
+        filterFromCompiledData(args[2])
+    );
+};
+
+registerFilterClass(FilterOriginHitSet);
+
+/******************************************************************************/
+
+const FilterOriginMissSet = function(domainOpt, wrapped) {
+    this.domainOpt = domainOpt.length < 128
+        ? domainOpt
+        : µb.stringDeduplicater.lookup(domainOpt);
+    this.noneOf = null;
+    this.wrapped = wrapped;
+};
+
+FilterOriginMissSet.prototype = {
+    match: function(url, tokenBeg) {
+        if ( this.noneOf === null ) {
+            this.noneOf = filterOrigin.trieContainer.fromIterable(
+                this.domainOpt.replace(/~/g, '').split('|')
+            );
+        }
+        return this.noneOf.matches(pageHostnameRegister) === -1 &&
+               this.wrapped.match(url, tokenBeg);
+    },
+    logData: function() {
+        return filterOrigin.logData(this, this.domainOpt);
+    },
+    compile: function() {
+        return [ this.fid, this.domainOpt, this.wrapped.compile() ];
+    },
+};
+
+FilterOriginMissSet.compile = function(domainOpt, wrapped) {
+    return [ FilterOriginMissSet.fid, domainOpt, wrapped ];
+};
+
+FilterOriginMissSet.load = function(args) {
+    return new FilterOriginMissSet(
+        args[1],
+        filterFromCompiledData(args[2])
+    );
+};
+
+registerFilterClass(FilterOriginMissSet);
+
+/******************************************************************************/
+
+const FilterOriginMixedSet = function(domainOpt, wrapped) {
+    this.domainOpt = domainOpt.length < 128
+        ? domainOpt
+        : µb.stringDeduplicater.lookup(domainOpt);
+    this.oneOf = null;
+    this.noneOf = null;
+    this.wrapped = wrapped;
+};
+
+FilterOriginMixedSet.prototype = {
+    init: function() {
+        const oneOf = [], noneOf = [];
+        for ( const hostname of this.domainOpt.split('|') ) {
+            if ( hostname.charCodeAt(0) === 0x7E /* '~' */ ) {
+                noneOf.push(hostname.slice(1));
+            } else {
+                oneOf.push(hostname);
+            }
+        }
+        this.oneOf = filterOrigin.trieContainer.fromIterable(oneOf);
+        this.noneOf = filterOrigin.trieContainer.fromIterable(noneOf);
+    },
+    match: function(url, tokenBeg) {
+        if ( this.oneOf === null ) { this.init(); }
+        let needle = pageHostnameRegister;
+        return this.oneOf.matches(needle) !== -1 &&
+               this.noneOf.matches(needle) === -1 &&
+               this.wrapped.match(url, tokenBeg);
+    },
+    logData: function() {
+        return filterOrigin.logData(this, this.domainOpt);
+    },
+    compile: function() {
+        return [ this.fid, this.domainOpt, this.wrapped.compile() ];
+    },
+};
+
+FilterOriginMixedSet.compile = function(domainOpt, wrapped) {
+    return [ FilterOriginMixedSet.fid, domainOpt, wrapped ];
+};
+
+FilterOriginMixedSet.load = function(args) {
+    return new FilterOriginMixedSet(
+        args[1],
+        filterFromCompiledData(args[2])
+    );
+};
+
+registerFilterClass(FilterOriginMixedSet);
 
 /******************************************************************************/
 
@@ -2000,7 +1997,7 @@ FilterContainer.prototype.reset = function() {
     this.filterParser.reset();
 
     // This will invalidate all hn tries throughout uBO:
-    FilterOrigin.reset();
+    filterOrigin.reset();
     FilterHostnameDict.reset();
 
     // Runtime registers
@@ -2090,7 +2087,7 @@ FilterContainer.prototype.freeze = function() {
 
     this.filterParser.reset();
     this.goodFilters = new Set();
-    FilterOrigin.optimize();
+    filterOrigin.optimize();
     FilterHostnameDict.optimize();
     this.frozen = true;
 };
@@ -2279,15 +2276,12 @@ FilterContainer.prototype.compile = function(raw, writer) {
         fdata = FilterPlain.compile(parsed);
     }
 
-    let fwrapped;
     if ( parsed.domainOpt !== '' ) {
-        fwrapped = fdata;
-        fdata = FilterOrigin.compile(parsed);
-        fdata.push(fwrapped);
+        fdata = filterOrigin.compile(parsed, fdata);
     }
 
     if ( parsed.dataType !== undefined ) {
-        fwrapped = fdata;
+        let fwrapped = fdata;
         fdata = FilterDataHolder.compile(parsed);
         fdata.push(fwrapped);
     }
@@ -2517,7 +2511,7 @@ FilterContainer.prototype.matchStringGenericHide = function(requestURL) {
 
     // https://github.com/gorhill/uBlock/issues/2225
     //   Important:
-    //   - `pageHostnameRegister` is used by FilterOrigin.matchOrigin().
+    //   - `pageHostnameRegister` is used by FilterOrigin?.match().
     //   - `requestHostnameRegister` is used by FilterHostnameDict.match().
     pageHostnameRegister = requestHostnameRegister = µb.URI.hostnameFromURI(url);
 
@@ -2656,7 +2650,7 @@ FilterContainer.prototype.matchString = function(fctxt) {
     // filter.
 
     // Prime tokenizer: we get a normalized URL in return.
-    let url = this.urlTokenizer.setURL(fctxt.url);
+    const url = this.urlTokenizer.setURL(fctxt.url);
 
     // These registers will be used by various filters
     pageHostnameRegister = fctxt.getDocHostname();
@@ -2664,11 +2658,11 @@ FilterContainer.prototype.matchString = function(fctxt) {
 
     this.fRegister = null;
 
-    let party = fctxt.is3rdPartyToDoc()
+    const party = fctxt.is3rdPartyToDoc()
         ? ThirdParty
         : FirstParty;
-    let categories = this.categories,
-        catBits, bucket;
+    const categories = this.categories;
+    let catBits, bucket;
 
     // https://github.com/chrisaljoudi/uBlock/issues/139
     // Test against important block filters.
@@ -2808,6 +2802,10 @@ FilterContainer.prototype.getFilterCount = function() {
 // From uBO's dev console, launch the benchmark:
 //   µBlock.staticNetFilteringEngine.benchmark();
 //
+// The advanced setting `consoleLogLevel` must be set to `info` to see the
+// results in uBO's dev console, see:
+//   https://github.com/gorhill/uBlock/wiki/Advanced-settings#consoleloglevel
+//
 // The usual browser dev tools can be used to obtain useful profiling
 // data, i.e. start the profiler, call the benchmark method from the
 // console, then stop the profiler when it completes.
@@ -2821,13 +2819,15 @@ FilterContainer.prototype.getFilterCount = function() {
 
 FilterContainer.prototype.benchmark = function() {
     new Promise(resolve => {
+        console.info(`Loading benchmark dataset...`);
         const url = vAPI.getURL('/assets/requests.json');
-        µb.assets.fetchText(vAPI.getURL('/assets/requests.json'), details => {
+        µb.assets.fetchText(url, details => {
             if ( details.error !== undefined ) {
                 console.info(`Not found: ${url}`);
                 resolve();
                 return;
             }
+            console.info(`Parsing benchmark dataset...`);
             const requests = [];
             const lineIter = new µb.LineIterator(details.content);
             while ( lineIter.eot() === false ) {
@@ -2837,6 +2837,7 @@ FilterContainer.prototype.benchmark = function() {
                 } catch(ex) {
                 }
                 if ( request instanceof Object === false ) { continue; }
+                if ( !request.frameUrl || !request.url ) { continue; }
                 requests.push(request);
             }
             resolve(requests);
@@ -2846,6 +2847,7 @@ FilterContainer.prototype.benchmark = function() {
             console.info('No requests found to benchmark');
             return;
         }
+        console.info(`Benchmarking...`);
         const fctxt = µb.filteringContext;
         const t0 = self.performance.now();
         for ( const request of requests ) {
@@ -2859,6 +2861,7 @@ FilterContainer.prototype.benchmark = function() {
         console.info(`Evaluated ${requests.length} requests in ${dur.toFixed(0)} ms`);
         console.info(`\tAverage: ${(dur / requests.length).toFixed(3)} ms per request`);
     });
+    return 'ok';
 };
 
 /******************************************************************************/
