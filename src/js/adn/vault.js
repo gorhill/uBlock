@@ -26,7 +26,7 @@
   'use strict';
 
   const States = ['pending', 'visited', 'failed', 'dnt-allowed'],
-    Zooms = [200, 150, 100, 75, 50, 25, 12.5, 6.25],
+    Zooms = [200, 150, 100, 75, 50, 25, 12.5, 7.5, 5],
     EnableContextMenu = 1,
     MaxStartNum = 300,
     MaxPerSet = 9;
@@ -45,9 +45,10 @@
     viewState = {},
     userZoomScale = Zooms[Zooms.indexOf(100)], // determined by mousewheel
     zoomIdx = 0, // determined by zoom in / out buttons
-    draggingVault = false;
+    draggingVault = false,
+    vaultLoading = false;
 
-  var gAds, gAdSets, gMin, gMax, gSliderRight, gSliderLeft, settings; // stateful
+  var gAds, gAdSets, gMin, gMax, gSliderRight, gSliderLeft, settings, lastAdDetectedTime, waitingAds = []; // stateful
 
   var messager = vAPI.messaging;
 
@@ -61,7 +62,19 @@
       break;
 
     case 'adDetected':
-      //console.log('ad-detected');
+      console.log('*** New-ad-detected ***', request.ad);
+      waitingAds.push(request.ad);
+      lastAdDetectedTime = new Date();
+      var brush =  document.getElementsByClassName('chart-bg')[0]
+      var w = brush ? parseInt(brush.attributes.width.value) : null,
+          sliderPos = gSliderLeft ? parseFloat(/\((.*?),/g.exec(gSliderLeft)[1]) : null;
+
+      // only when the slider covers 'now' or when there is no slider (empty vault or one ad)
+      // console.log(w, sliderPos)
+      if ( w - sliderPos <= 1 || sliderPos == 0) setTimeout(autoUpdateVault, 3000);
+
+      //  updatdVault() would normally be triggered by the 'adDetected' message (above),
+      //  which contains the new ads, and is sent ONLY if the the vault is open
       break;
 
     case 'adVisited':
@@ -71,7 +84,7 @@
     case 'notifications':
       renderNotifications(request.notifications, 'vault');
       adjustHeight();
-      createSlider(true);
+      createSlider();
       break;
     }
   });
@@ -96,7 +109,7 @@
     gAds = json.data; // store
     addInterfaceHandlers();
     settings = json.prefs;
-    createSlider(true);
+    createSlider();
     setCurrent(json.current);
 
     vAPI.messaging.send(
@@ -110,8 +123,55 @@
 
   };
 
-  var updateAd = function (json) {
+  var autoUpdateVault = function(){
 
+    var gap = new Date() - lastAdDetectedTime;
+    if (waitingAds != [] && gap >= 3000){
+      updateVault(waitingAds, true);
+      // console.log("autoupdate", gap)
+    } else{
+      // console.log("skip-update", gap)
+    }
+  }
+
+  var updateVault = function (ads, newAdsOnly){
+    if (vaultLoading) return;
+    if (gAdSets == null) {
+      gAds = ads;
+      createSlider();
+      return;
+    }
+
+    // console.log('updateAds: ', json);
+    if (newAdsOnly) {
+      gAds = gAds.concat(ads);
+      for (var i = 0; i < ads.length; i++) {
+          var ad = ads[i];
+          var key = computeHash(ad);
+          if (!key) continue;
+
+          for (var j = 0; j < gAdSets.length; j++) {
+            if (gAdSets[j].gid === key){
+              gAdSets[j].children.append(ad);
+              ad = null
+            }
+          }
+
+          ad != null && gAdSets.push(new AdSet(ad));
+      }
+      // clear waitingAds
+      waitingAds = []
+    } else {
+      // replace all gAds
+      gAds = ads; // store
+      gAdSets = null; // reset
+    }
+
+    createSlider("update");
+    waitingAds = [];
+  }
+
+  var updateAd = function (json) {
     doUpdate(json.ad);
     computeStats(gAdSets);
   }
@@ -138,21 +198,21 @@
     setAttempting(ad);
   }
 
-  function doLayout(adsets) {
+  function doLayout(adsets, update) {
 
     adsets = adsets || [];
+    // console.log('Vault.doLayout: ' + adsets.length + " ad-sets, total=" + numFound(adsets));
+    vaultLoading = true;
+    if (!update) $('.item').remove();
 
-    //console.log('Vault.doLayout: ' + adsets.length + " ad-sets, total=" + numFound(adsets));
-
-    $('.item').remove();
-
-    createDivs(adsets);
+    createDivs(adsets, update);
     computeStats(adsets);
     enableLightbox();
     repack();
   }
 
-  function createDivs(adsets) {
+
+  function createDivs(adsets, update) {
 
     function hoverOnDiv(e) { // on
 
@@ -178,18 +238,29 @@
       }
     }
 
-    for (var i = 0; i < adsets.length; i++) {
-
+    function addAd(ad) {
       var $div = $('<div/>', {
 
-        'class': 'item dup-count-' + adsets[i].count(),
-        'data-gid': adsets[i].gid
+        'class': 'item dup-count-' + ad.count(),
+        'data-gid': ad.gid
 
       }).appendTo('#container');
 
-      layoutAd($div, adsets[i]);
+      layoutAd($div, ad);
 
       $div.hover(hoverOnDiv, hoverOffDiv);
+    }
+    // // Hide #container while appending new divs from 0
+    if(!update) $('#container').css('opacity','0');
+
+    for (var i = 0; i < adsets.length; i++) {
+
+      if (update) {
+        if ($('div[data-gid=' + adsets[i].gid + ']').length < 1) addAd(adsets[i]);
+      } else {
+        addAd(adsets[i])
+      }
+
     }
   }
 
@@ -682,7 +753,7 @@
     setZoom(zoomIdx = Zooms.indexOf(100), true);
 
     var i = 0,
-      percentVis = 0.6,
+      percentVis = 0.55,
       winW = $(window).width(),
       winH = $('#svgcon').offset().top;
 
@@ -693,7 +764,7 @@
 
       if (!onscreen($this, winW, winH, scale, percentVis)) {
 
-        //log("Too-large @ " + Zooms[zoomIdx] + "%");
+        // console.log("Too-large @ " + Zooms[zoomIdx] + "%", percentVis);
         setZoom(++zoomIdx, true);
 
         if (zoomIdx === Zooms.length - 1)
@@ -725,8 +796,8 @@
     var $dm = $('#container');
 
     // compute offset of dragged container
-    var dragoffX = -5000 - parseInt($dm.css('margin-left')),
-      dragoffY = -5000 - parseInt($dm.css('margin-top'));
+    var dragoffX = -10000 - parseInt($dm.css('margin-left')),
+      dragoffY = -10000 - parseInt($dm.css('margin-top'));
 
     // compute offset of item-center from (dragged) window-center
     var pos = {
@@ -749,7 +820,7 @@
       // compute target positions for transform
       var dm, spacing = 10,
         metaOffset = 110,
-        center = -5000,
+        center = -10000,
         ww = $(window).width(),
         wh = $(window).height(),
         pos = itemPosition($ele);
@@ -1067,7 +1138,7 @@
       minY = (-h * (1 - percentVisible)),
       maxY = (winH - (h * percentVisible));
 
-    //log('onscreen() :: trying: '+Zooms[zoomIdx]+"%",$this.attr('data-gid'),off.left, minX, maxX);
+    // console.log('onscreen() :: trying: '+Zooms[zoomIdx]+"%",$this.attr('data-gid'),off.left, minX, maxX);
 
     return (!(off.left < minX || off.left > maxX || off.top < minY || off.top > maxY));
   }
@@ -1115,6 +1186,8 @@
       (e.keyCode === 27) && lightboxMode(false); // esc
       (e.keyCode === 73) && toggleInterface(); // 'i'
       (e.keyCode === 68) && logAdSetInfo(); // 'd'
+      (e.keyCode === 80 ) && repack(); // 'p'
+      (e.keyCode === 85 ) && updateVault(waitingAds, true); // 'u'
       //console.log(e);
     });
 
@@ -1194,10 +1267,8 @@
 
         clearTimeout(resizeId); // only when done
         resizeId = setTimeout(function () {
-          createSlider(true);
+          createSlider("resize");
         }, 100);
-
-
 
     });
 
@@ -1250,7 +1321,7 @@
             ids: selectedAdSet.childIds()
           });
 
-          createSlider(false, true);
+          createSlider("delete");
 
           break;
         }
@@ -1331,7 +1402,7 @@
 
     setTimeout(function () {
       if (!done) $('#loading-img').show();
-    }, 2000);
+    }, 1000);
 
     showAlert(visible ? false : 'no ads found');
 
@@ -1340,8 +1411,9 @@
       if (visible > 1) {
 
         var p = new Packery('#container', {
+
           centered: {
-            y: 5000
+            y: 10000
           }, // centered at half min-height
           itemSelector: '.item',
           gutter: 1
@@ -1352,31 +1424,41 @@
 
         $items.css({ // center single
 
-          top: (5000 - $items.height() / 2) + 'px',
-          left: (5000 - $items.width() / 2) + 'px'
+          top: (10000 - $items.height() / 2) + 'px',
+          left: (10000 - $items.width() / 2) + 'px'
         });
       }
 
       done = true;
 
       $('#loading-img').hide();
+      // Show #container after repack
+      $('#container').css('opacity','1');
+      vaultLoading = false;
     });
   }
 
   /********************************************************************/
 
-  function createSlider(relayout, fromDelete) {
-
+  function createSlider(mode) {
     // console.log('Vault-Slider.createSlider: '+gAds.length);
+    // three special modes:
+    // all three special modes: remember brush
 
-    // remember brush if it is fromDelete
-    var lastBrush;
-    if (fromDelete)  lastBrush = document.getElementsByClassName("brush")[0];
+    var lastBrush = null;
+
+    if (mode!= undefined && !d3.select('.brush').empty()) {
+      lastBrush = {};
+      lastBrush.w = d3.transform(d3.select(".resize.w").attr("transform")).translate[0];
+      lastBrush.e = d3.transform(d3.select(".resize.e").attr("transform")).translate[0];
+      lastBrush.extentX = d3.select(".extent").attr("x");
+      lastBrush.extentWidth = d3.select(".extent").attr("width");
+      lastBrush.width = d3.select('.chart-bg').attr("width");
+    }
 
     // clear all the old svg
     d3.select("g.parent").selectAll("*").remove();
     d3.select("svg").remove();
-
 
     if (!gAds || !gAds.length) {
       computeStats();
@@ -1389,7 +1471,6 @@
     var iconW = 100;
 
     try {
-
       var width = parseInt(d3.select("#stage").style("width")) -
         (margin.left + margin.right + iconW);
     } catch (e) {
@@ -1502,57 +1583,82 @@
       .extent(bExtent)
       .on("brushend", brushend);
 
-    // add the brush
-    if (fromDelete) {
-      // append the old brus
-      document.getElementById("svgcon").getElementsByTagName("svg")[0].firstChild.appendChild(lastBrush);
-    }
-    else {
-    var gBrush = svg.append("g")
-      .attr("class", "brush")
-      .call(brush);
+      var gBrush = svg.append("g")
+        .attr("class", "brush")
+        .call(brush);
 
-    // set the height of the brush to that of the chart
-    gBrush.selectAll(".brush .extent")
-      .attr("height", 49)
-      .attr("y", -50)
-      .attr("fill", "#0076FF")
-      .attr("fill-opacity", ".25");
+      // set the height of the brush to that of the chart
+      gBrush.selectAll(".brush .extent")
+        .attr("height", 49)
+        .attr("y", -50)
+        .attr("fill", "#0076FF")
+        .attr("fill-opacity", ".25");
 
-    // set the height of the brush to that of the chart
-    // gBrush.selectAll("rect")
-    //   .attr("y", -50);
+      // set the height of the brush to that of the chart
+      // gBrush.selectAll("rect")
+      //   .attr("y", -50);
 
-    // attach handle image
-    gBrush.selectAll(".resize").append("image")
-      .attr("xlink:href","../img/timeline-handle.svg")
-      .attr("width", 5)
-      .attr("height", 50)
-      .attr("y", -50)
-      .attr("x", -3);
-    }
+      // attach handle image
+      gBrush.selectAll(".resize").append("image")
+        .attr("xlink:href","../img/timeline-handle.svg")
+        .attr("width", 5)
+        .attr("height", 50)
+        .attr("y", -50)
+        .attr("x", -3);
 
-    // cases: 1) no-gAdSets=first time, 2) filter+layout, 3) only-slider
+      if (lastBrush && mode!= undefined) {
+        // map all values if resize
+        var r =  mode == "resize" ? d3.select('.chart-bg').attr("width") / lastBrush.width : 1;
+        d3.select(".extent").attr("width", lastBrush.extentWidth * r);
+        d3.select(".extent").attr("x", lastBrush.extentX * r);
+        d3.select(".resize.w").attr("transform", "translate(" + lastBrush.w * r +",0)");
+        d3.select(".resize.e").attr("transform", "translate(" + lastBrush.e * r +",0)");
+      }
+
+    // cases:
+    // 1) [default]]reload vault: doLayout, update slider - runFilter()
+    // 2) "update": updateLayout, same slider
+    // 3) "delete": skipLayout, same slider
+    // 4) "resize": repack, remap slider
 
     // do filter, then call either doLayout or computeStats
-    (relayout ? doLayout : computeStats)(fromDelete ? gAdSets : runFilter(bExtent));
+
+    switch (mode) {
+      case "delete":
+        computeStats(gAdSets);
+        vaultLoading = false;
+        break;
+      case "resize":
+        repack();
+        runFilter([gMin, gMax])
+        break;
+      case "update":
+        // console.log(gMin, new Date())
+        var ext = [gMin, new Date()];
+        doLayout(runFilter(ext), true)
+        break;
+      default:
+        doLayout(runFilter(bExtent))
+    }
     // ---------------------------- functions ------------------------------
 
     // this is called on brushend() and createSlider()
     function runFilter(ext) {
 
-      //log('vault.js::runFilter: '+ext[0]+","+ext[1]);
+      // console.log('vault.js::runFilter: '+ext[0]+","+ext[1]);
       centerContainer();
       gMin = ext[0], gMax = ext[1];
 
       gSliderRight = d3.select('.w.resize')[0][0].attributes.transform.value;
       gSliderLeft = d3.select('.e.resize')[0][0].attributes.transform.value;
 
-      if (gAdSets != null && gAds.length !== 1 && gMax - gMin <= 1) {
+      // make sure the sliders are always visible
+      if (gMax - gMin <= 0) d3.select('.resize').style("display", "block");
 
-        //console.log('vault-slider::ignore-micro: ' + ext[0] + "," + ext[1]);
-        return; // gAdSets || (gAdSets = createAdSets(gAds)); // fix for gh #100
-      }
+      // if (gAdSets != null && gAds.length !== 1 && gMax - gMin < 0) {
+      //   //console.log('vault-slider::ignore-micro: ' + ext[0] + "," + ext[1]);
+      //   return; // gAdSets || (gAdSets = createAdSets(gAds)); // fix for gh #100
+      // }
 
       if (gAds.length >= MaxStartNum) {
         uDom("a[class=showing-help]").text("?")
@@ -1561,7 +1667,6 @@
 
       var filtered = dateFilter(gMin, gMax);
 
-
       return gAdSets && gAds.length < MaxStartNum ? filterAdSets(filtered) :
         (gAdSets = createAdSets(filtered));
     }
@@ -1569,8 +1674,8 @@
     function centerContainer() {
       $('#container').addClass('notransition')
         .css({
-          marginLeft: '-5000px',
-          marginTop: '-5000px'
+          marginLeft: '-10000px',
+          marginTop: '-10000px'
         })
         .removeClass('notransition');
     }
@@ -1628,19 +1733,14 @@
       gSliderRight = d3.select('.w.resize')[0][0].attributes.transform.value;
       gSliderLeft = d3.select('.e.resize')[0][0].attributes.transform.value;
 
-      if (!lastgSliderRight || !lastgSliderLeft) {
-        return;
+      if (!lastgSliderRight || !lastgSliderLeft) return;
 
-      }
       if (gSliderRight === lastgSliderRight && gSliderLeft === lastgSliderLeft) {
-
         return;
       } else {
-
         var filtered = runFilter(d3.event.target.extent());
         filtered && doLayout(filtered);
       }
-
     }
   }
 
@@ -1784,6 +1884,8 @@
   function adjustHeight(){
       $("#stage").css('height', String($(window).height() - $("#notifications").height()) + "px" );
   }
+
+  // @cqx931 use the existing $(document).keyup function
 
   /*
    * returns 'visited' if any are visited,

@@ -170,7 +170,7 @@ var onLocalDataReceived = function(details) {
 /******************************************************************************/
 
 var resetUserData = function() {
-    var msg = vAPI.i18n('aboutResetDataConfirm').replace(/uBlock₀/g, 'AdNauseam');
+    var msg = vAPI.i18n('adnAboutResetDataConfirm');
     var proceed = window.confirm(msg);
     if ( proceed ) {
         messaging.send('dashboard', { what: 'resetUserData' });

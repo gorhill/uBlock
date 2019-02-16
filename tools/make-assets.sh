@@ -33,6 +33,6 @@ cp -R ../uAssets/thirdparties/www.eff.org                        $DES/thirdparti
 mkdir $DES/ublock
 cp -R ../uAssets/filters/*                                       $DES/ublock/
 # Optional filter lists: do not include in package
-rm    $DES/ublock/annoyances.txt
+rm    $DES/ublock/annoyances.txt 2> /dev/null
 
 echo "done."
