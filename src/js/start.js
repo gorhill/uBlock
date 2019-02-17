@@ -333,7 +333,7 @@ const fromFetch = function(to, fetched) {
 
 /******************************************************************************/
 
-const onSelectedFilterListsLoaded = function() {
+const onSelectedFilterListsReady = function() {
     log.info(`List selection ready ${Date.now()-vAPI.T0} ms after launch`);
 
     const fetchableProps = {
@@ -371,6 +371,16 @@ const onSelectedFilterListsLoaded = function() {
 
 /******************************************************************************/
 
+const onHiddenSettingsReady = function() {
+    return µb.cacheStorage.select(
+        µb.hiddenSettings.cacheStorageAPI
+    ).then(backend => {
+        log.info(`Backend storage for cache will be ${backend}`);
+    });
+};
+
+/******************************************************************************/
+
 // TODO(seamless migration):
 // Eventually selected filter list keys will be loaded as a fetchable
 // property. Until then we need to handle backward and forward
@@ -379,14 +389,24 @@ const onSelectedFilterListsLoaded = function() {
 
 const onAdminSettingsRestored = function() {
     log.info(`Admin settings ready ${Date.now()-vAPI.T0} ms after launch`);
-    µb.loadSelectedFilterLists(onSelectedFilterListsLoaded);
+
+    Promise.all([
+        µb.loadHiddenSettings().then(( ) =>
+            onHiddenSettingsReady()
+        ),
+        µb.loadSelectedFilterLists(),
+    ]).then(( ) =>
+        onSelectedFilterListsReady()
+    );
 };
 
 /******************************************************************************/
 
 return function() {
     // https://github.com/gorhill/uBlock/issues/531
-    µb.restoreAdminSettings(onAdminSettingsRestored);
+    µb.restoreAdminSettings().then(( ) => {
+        onAdminSettingsRestored();
+    });
 };
 
 /******************************************************************************/

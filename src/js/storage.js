@@ -50,7 +50,7 @@
         countdown += 1;
         vAPI.storage.getBytesInUse(null, process);
     }
-    if ( this.cacheStorage !== vAPI.storage ) {
+    if ( this.cacheStorage.name !== 'browser.storage.local' ) {
         countdown += 1;
         this.assets.getBytesInUse().then(count => {
             process(count);
@@ -91,8 +91,13 @@
 /******************************************************************************/
 
 µBlock.loadHiddenSettings = function() {
+    return new Promise(resolve => {
+    // >>>> start of executor
+
     vAPI.storage.get('hiddenSettings', bin => {
-        if ( bin instanceof Object === false ) { return; }
+        if ( bin instanceof Object === false ) {
+            return resolve();
+        }
         const hs = bin.hiddenSettings;
         if ( hs instanceof Object ) {
             const hsDefault = this.hiddenSettingsDefault;
@@ -110,6 +115,10 @@
             this.saveImmediateHiddenSettings();
         }
         self.log.verbosity = this.hiddenSettings.consoleLogLevel;
+        resolve();
+    });
+
+    // <<<< end of executor
     });
 };
 
@@ -195,9 +204,6 @@
     );
 };
 
-// Do this here to have these hidden settings loaded ASAP.
-µBlock.loadHiddenSettings();
-
 /******************************************************************************/
 
 µBlock.savePermanentFirewallRules = function() {
@@ -240,24 +246,29 @@
 
 **/
 
-µBlock.loadSelectedFilterLists = function(callback) {
-    var µb = this;
-    vAPI.storage.get('selectedFilterLists', function(bin) {
+µBlock.loadSelectedFilterLists = function() {
+    return new Promise(resolve => {
+    // >>>> start of executor
+
+    vAPI.storage.get('selectedFilterLists', bin => {
         // Select default filter lists if first-time launch.
-        if ( !bin || Array.isArray(bin.selectedFilterLists) === false ) {
-            µb.assets.metadata(function(availableLists) {
-                µb.saveSelectedFilterLists(
-                    µb.autoSelectRegionalFilterLists(availableLists)
+        if (
+            bin instanceof Object === false ||
+            Array.isArray(bin.selectedFilterLists) === false
+        ) {
+            this.assets.metadata(function(availableLists) {
+                this.saveSelectedFilterLists(
+                    this.autoSelectRegionalFilterLists(availableLists)
                 );
-                callback();
+                resolve();
             });
             return;
         }
-        // TODO: Removes once 1.1.15 is in widespread use.
-        // https://github.com/gorhill/uBlock/issues/3383
-        vAPI.storage.remove('remoteBlacklists');
-        µb.selectedFilterLists = bin.selectedFilterLists;
-        callback();
+        this.selectedFilterLists = bin.selectedFilterLists;
+        resolve();
+    });
+
+    // <<<< end of executor
     });
 };
 
@@ -1130,16 +1141,16 @@
 // necessarily present, i.e. administrators may removed entries which
 // values are left to the user's choice.
 
-µBlock.restoreAdminSettings = function(callback) {
-    // Support for vAPI.adminStorage is optional (webext).
+µBlock.restoreAdminSettings = function() {
+    return new Promise(resolve => {
+    // >>>> start of executor
+
     if ( vAPI.adminStorage instanceof Object === false ) {
-        callback();
-        return;
+        return resolve();
     }
 
-    var onRead = function(json) {
-        var µb = µBlock;
-        var data;
+    vAPI.adminStorage.getItem('adminSettings', json => {
+        let data;
         if ( typeof json === 'string' && json !== '' ) {
             try {
                 data = JSON.parse(json);
@@ -1148,13 +1159,12 @@
             }
         }
 
-        if ( typeof data !== 'object' || data === null ) {
-            callback();
-            return;
+        if ( data instanceof Object === false ) {
+            return resolve();
         }
 
-        var bin = {};
-        var binNotEmpty = false;
+        const bin = {};
+        let binNotEmpty = false;
 
         // Allows an admin to set their own 'assets.json' file, with their own
         // set of stock assets.
@@ -1164,8 +1174,8 @@
         }
 
         if ( typeof data.userSettings === 'object' ) {
-            for ( var name in µb.userSettings ) {
-                if ( µb.userSettings.hasOwnProperty(name) === false ) {
+            for ( const name in this.userSettings ) {
+                if ( this.userSettings.hasOwnProperty(name) === false ) {
                     continue;
                 }
                 if ( data.userSettings.hasOwnProperty(name) === false ) {
@@ -1208,13 +1218,14 @@
         }
 
         if ( typeof data.userFilters === 'string' ) {
-            µb.assets.put(µb.userFiltersPath, data.userFilters);
+            this.assets.put(this.userFiltersPath, data.userFilters);
         }
 
-        callback();
-    };
+        resolve();
+    });
 
-    vAPI.adminStorage.getItem('adminSettings', onRead);
+    // <<<< end of executor
+    });
 };
 
 /******************************************************************************/

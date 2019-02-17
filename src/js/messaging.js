@@ -848,17 +848,17 @@ var restoreUserData = function(request) {
 // Remove all stored data but keep global counts, people can become
 // quite attached to numbers
 
-var resetUserData = function() {
+const resetUserData = function() {
     let count = 3;
-    let countdown = ( ) => {
+    const countdown = ( ) => {
         count -= 1;
         if ( count === 0 ) {
             vAPI.app.restart();
         }
     };
-    µb.cacheStorage.clear(countdown); // 1
-    vAPI.storage.clear(countdown);    // 2
-    µb.saveLocalSettings(countdown);  // 3
+    µb.cacheStorage.clear().then(( ) => countdown()); // 1
+    vAPI.storage.clear(countdown);             // 2
+    µb.saveLocalSettings(countdown);           // 3
     vAPI.localStorage.removeItem('immediateHiddenSettings');
 };
 

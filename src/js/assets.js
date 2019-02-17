@@ -396,13 +396,17 @@ const updateAssetSourceRegistry = function(json, silent) {
 
 const getAssetSourceRegistry = function(callback) {
     if ( assetSourceRegistryPromise === undefined ) {
-        assetSourceRegistryPromise = new Promise(resolve => {
-        // start of executor
-        µBlock.cacheStorage.get('assetSourceRegistry', bin => {
+        assetSourceRegistryPromise = µBlock.cacheStorage.get(
+            'assetSourceRegistry'
+        ).then(bin => {
             if (
-                bin instanceof Object === false ||
-                bin.assetSourceRegistry instanceof Object === false
+                bin instanceof Object &&
+                bin.assetSourceRegistry instanceof Object
             ) {
+                assetSourceRegistry = bin.assetSourceRegistry;
+                return;
+            }
+            return new Promise(resolve => {
                 api.fetchText(
                     µBlock.assetsBootstrapLocation || 'assets/assets.json',
                     details => {
@@ -410,12 +414,7 @@ const getAssetSourceRegistry = function(callback) {
                         resolve();
                     }
                 );
-                return;
-            }
-            assetSourceRegistry = bin.assetSourceRegistry;
-            resolve();
-        });
-        // end of executor
+            });
         });
     }
 
@@ -451,16 +450,15 @@ let assetCacheRegistry = {};
 
 const getAssetCacheRegistry = function() {
     if ( assetCacheRegistryPromise === undefined ) {
-        assetCacheRegistryPromise = new Promise(resolve => {
-            µBlock.cacheStorage.get('assetCacheRegistry', bin => {
-                if (
-                    bin instanceof Object &&
-                    bin.assetCacheRegistry instanceof Object
-                ) {
-                    assetCacheRegistry = bin.assetCacheRegistry;
-                }
-                resolve();
-            });
+        assetCacheRegistryPromise = µBlock.cacheStorage.get(
+            'assetCacheRegistry'
+        ).then(bin => {
+            if (
+                bin instanceof Object &&
+                bin.assetCacheRegistry instanceof Object
+            ) {
+                assetCacheRegistry = bin.assetCacheRegistry;
+            }
         });
     }
 
@@ -509,8 +507,11 @@ const assetCacheRead = function(assetKey, callback) {
         reportBack(bin[internalKey]);
     };
 
-    getAssetCacheRegistry().then(( ) => {
-        µBlock.cacheStorage.get(internalKey, onAssetRead);
+    Promise.all([
+        getAssetCacheRegistry(),
+        µBlock.cacheStorage.get(internalKey),
+    ]).then(results => {
+        onAssetRead(results[1]);
     });
 };
 
@@ -537,17 +538,16 @@ const assetCacheWrite = function(assetKey, details, callback) {
             entry.remoteURL = details.url;
         }
         µBlock.cacheStorage.set(
-            { [internalKey]: content },
-            details => {
-                if (
-                    details instanceof Object &&
-                    typeof details.bytesInUse === 'number'
-                ) {
-                    entry.byteLength = details.bytesInUse;
-                }
-                saveAssetCacheRegistry(true);
+            { [internalKey]: content }
+        ).then(details => {
+            if (
+                details instanceof Object &&
+                typeof details.bytesInUse === 'number'
+            ) {
+                entry.byteLength = details.bytesInUse;
             }
-        );
+            saveAssetCacheRegistry(true);
+        });
         const result = { assetKey, content };
         if ( typeof callback === 'function' ) {
             callback(result);
@@ -556,9 +556,7 @@ const assetCacheWrite = function(assetKey, details, callback) {
         fireNotification('after-asset-updated', result);
     };
 
-    getAssetCacheRegistry().then(( ) => {
-        µBlock.cacheStorage.get(internalKey, onReady);
-    });
+    getAssetCacheRegistry().then(( ) => onReady());
 };
 
 const assetCacheRemove = function(pattern, callback) {
