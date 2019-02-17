@@ -2754,7 +2754,7 @@ FilterContainer.prototype.benchmark = function() {
         const fctxt = µb.filteringContext;
         const t0 = self.performance.now();
         for ( const request of requests ) {
-            fctxt.url = request.url;
+            fctxt.setURL(request.url);
             fctxt.setDocOriginFromURL(request.frameUrl);
             fctxt.setType(request.cpt);
             void this.matchString(fctxt);
