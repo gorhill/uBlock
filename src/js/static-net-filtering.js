@@ -1593,96 +1593,6 @@ FilterParser.prototype.parseOptions = function(s) {
     }
 };
 
-/******************************************************************************/
-
-// https://github.com/gorhill/uBlock/issues/1943#issuecomment-243188946
-//   Convert websocket-related filter where possible to a format which
-//   can be handled using CSP injection.
-
-FilterParser.prototype.translate = function() {
-    var dataTypeBit = this.bitFromType('data');
-
-    if ( this.cantWebsocket && this.reWebsocketAny.test(this.f) ) {
-        this.f = '*';
-        this.types = dataTypeBit;
-        this.dataType = 'csp';
-        this.dataStr = "connect-src https: http:";
-        // https://bugs.chromium.org/p/chromium/issues/detail?id=669086
-        // TODO: remove when most users are beyond Chromium v56
-        if (
-            vAPI.webextFlavor.soup.has('chromium') &&
-            vAPI.webextFlavor.major < 57
-        ) {
-            this.dataStr += '; frame-src *';
-        }
-        return;
-    }
-
-    // Broad |data:-based filters.
-    if ( this.f === 'data:' ) {
-        switch ( this.types ) {
-        case 0:
-            this.f = '*';
-            this.types = dataTypeBit;
-            this.dataType = 'csp';
-            this.dataStr = "default-src 'self' * blob: 'unsafe-inline' 'unsafe-eval'";
-            break;
-        case this.bitFromType('script'):
-            this.f = '*';
-            this.types = dataTypeBit;
-            this.dataType = 'csp';
-            this.dataStr = "script-src 'self' * blob: 'unsafe-inline' 'unsafe-eval'";
-            break;
-        case this.bitFromType('sub_frame'):
-            this.f = '*';
-            this.types = dataTypeBit;
-            this.dataType = 'csp';
-            this.dataStr = "frame-src 'self' * blob:";
-            break;
-        case this.bitFromType('script') | this.bitFromType('sub_frame'):
-            this.f = '*';
-            this.types = dataTypeBit;
-            this.dataType = 'csp';
-            this.dataStr = "frame-src 'self' * blob:; script-src 'self' * blob: 'unsafe-inline' 'unsafe-eval';";
-            break;
-        default:
-            break;
-        }
-    }
-
-    // Broad |blob:-based filters.
-    if ( this.f === 'blob:' ) {
-        switch ( this.types ) {
-        case 0:
-            this.f = '*';
-            this.types = dataTypeBit;
-            this.dataType = 'csp';
-            this.dataStr = "default-src 'self' * data: 'unsafe-inline' 'unsafe-eval'";
-            break;
-        case this.bitFromType('script'):
-            this.f = '*';
-            this.types = dataTypeBit;
-            this.dataType = 'csp';
-            this.dataStr = "script-src 'self' * data: 'unsafe-inline' 'unsafe-eval'";
-            break;
-        case this.bitFromType('sub_frame'):
-            this.f = '*';
-            this.types = dataTypeBit;
-            this.dataType = 'csp';
-            this.dataStr = "frame-src 'self' * data:";
-            break;
-        case this.bitFromType('script') | this.bitFromType('sub_frame'):
-            this.f = '*';
-            this.types = dataTypeBit;
-            this.dataType = 'csp';
-            this.dataStr = "frame-src 'self' * data:; script-src 'self' * data: 'unsafe-inline' 'unsafe-eval';";
-            break;
-        default:
-            break;
-        }
-    }
-};
-
 /*******************************************************************************
 
     anchor: bit vector
@@ -1850,13 +1760,6 @@ FilterParser.prototype.parse = function(raw) {
     // toLowerCase(), at least on Chromium. Because copy-on-write?
 
     this.f = this.reHasUppercase.test(s) ? s.toLowerCase() : s;
-
-    // Convenience:
-    //   Convert special broad filters for non-webRequest aware types into
-    //   `csp` filters wherever possible.
-    if ( this.anchor & 0x2 && this.party === 0 ) {
-        this.translate();
-    }
 
     return this;
 };
