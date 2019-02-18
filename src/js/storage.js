@@ -256,7 +256,7 @@
             bin instanceof Object === false ||
             Array.isArray(bin.selectedFilterLists) === false
         ) {
-            this.assets.metadata(function(availableLists) {
+            this.assets.metadata(availableLists => {
                 this.saveSelectedFilterLists(
                     this.autoSelectRegionalFilterLists(availableLists)
                 );
