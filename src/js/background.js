@@ -35,9 +35,6 @@ if ( vAPI.webextFlavor === undefined ) {
 
 const µBlock = (function() { // jshint ignore:line
 
-    const oneSecond = 1000,
-          oneMinute = 60 * oneSecond;
-
     const hiddenSettingsDefault = {
         assetFetchTimeout: 30,
         autoCommentFilterTemplate: '{{date}} {{origin}}',
@@ -97,21 +94,19 @@ const µBlock = (function() { // jshint ignore:line
 
         hiddenSettingsDefault: hiddenSettingsDefault,
         hiddenSettings: (function() {
-            const out = Object.assign({}, hiddenSettingsDefault),
-                json = vAPI.localStorage.getItem('immediateHiddenSettings');
-            if ( typeof json === 'string' ) {
-                try {
-                    const o = JSON.parse(json);
-                    if ( o instanceof Object ) {
-                        for ( const k in o ) {
-                            if ( out.hasOwnProperty(k) ) {
-                                out[k] = o[k];
-                            }
-                        }
+            const out = Object.assign({}, hiddenSettingsDefault);
+            const json = vAPI.localStorage.getItem('immediateHiddenSettings');
+            if ( typeof json !== 'string' ) { return out; }
+            try {
+                const o = JSON.parse(json);
+                if ( o instanceof Object ) {
+                    for ( const k in o ) {
+                        if ( out.hasOwnProperty(k) ) { out[k] = o[k]; }
                     }
+                    self.log.verbosity = out.consoleLogLevel;
                 }
-                catch(ex) {
-                }
+            }
+            catch(ex) {
             }
             return out;
         })(),

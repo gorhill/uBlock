@@ -29,6 +29,6 @@ self.log = (function() {
         set verbosity(level) {
             this.info = console.info = level === 'info' ? info : noopFunc;
         },
-        info,
+        info: noopFunc,
     };
 })();
