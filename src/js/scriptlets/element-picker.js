@@ -707,17 +707,17 @@ var filtersFrom = function(x, y) {
 const filterToDOMInterface = (function() {
     // Net filters: we need to lookup manually -- translating into a foolproof
     // CSS selector is just not possible.
-    var fromNetworkFilter = function(filter) {
-        var out = [];
+    const fromNetworkFilter = function(filter) {
+        const out = [];
         // https://github.com/chrisaljoudi/uBlock/issues/945
         // Transform into a regular expression, this allows the user to edit and
         // insert wildcard(s) into the proposed filter.
-        var reStr = '';
+        let reStr = '';
         if ( filter.length > 1 && filter.charAt(0) === '/' && filter.slice(-1) === '/' ) {
             reStr = filter.slice(1, -1);
         }
         else {
-            var rePrefix = '', reSuffix = '';
+            let rePrefix = '', reSuffix = '';
             if ( filter.slice(0, 2) === '||' ) {
                 filter = filter.replace('||', '');
             } else {
@@ -734,7 +734,7 @@ const filterToDOMInterface = (function() {
                     filter.replace(/[.+?${}()|[\]\\]/g, '\\$&').replace(/[\*^]+/g, '.*') +
                     reSuffix;
         }
-        var reFilter = null;
+        let reFilter = null;
         try {
             reFilter = new RegExp(reStr);
         }
@@ -743,18 +743,14 @@ const filterToDOMInterface = (function() {
         }
 
         // Lookup by tag names.
-        var src1stProps = netFilter1stSources;
-        var src2ndProps = netFilter2ndSources;
-        var srcProp, src;
-        var elems = document.querySelectorAll(Object.keys(src1stProps).join()),
-            iElem = elems.length,
-            elem;
-        while ( iElem-- ) {
-            elem = elems[iElem];
-            srcProp = src1stProps[elem.localName];
-            src = elem[srcProp];
+        let elems = document.querySelectorAll(
+            Object.keys(netFilter1stSources).join()
+        );
+        for ( const elem of elems ) {
+            let srcProp = netFilter1stSources[elem.localName];
+            let src = elem[srcProp];
             if ( typeof src !== 'string' || src.length === 0 ) {
-                srcProp = src2ndProps[elem.localName];
+                srcProp = netFilter2ndSources[elem.localName];
                 src = elem[srcProp];
             }
             if ( src && reFilter.test(src) ) {
@@ -768,10 +764,7 @@ const filterToDOMInterface = (function() {
         }
 
         // Find matching background image in current set of candidate elements.
-        elems = candidateElements;
-        iElem = elems.length;
-        while ( iElem-- ) {
-            elem = elems[iElem];
+        for ( const elem of candidateElements ) {
             if ( reFilter.test(backgroundImageURLFromElement(elem)) ) {
                 out.push({
                     type: 'network',
@@ -790,9 +783,14 @@ const filterToDOMInterface = (function() {
     // ways to compose a valid href to the same effective URL. One idea is to
     // normalize all a[href] on the page, but for now I will wait and see, as I
     // prefer to refrain from tampering with the page content if I can avoid it.
-    var fromPlainCosmeticFilter = function(filter) {
+    //
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/389
+    //   Test filter using comma-separated list to better detect invalid CSS
+    //   selectors.
+    const fromPlainCosmeticFilter = function(filter) {
         let elems;
         try {
+            document.documentElement.matches(`${filter},\na`);
             elems = document.querySelectorAll(filter);
         }
         catch (e) {
@@ -808,15 +806,15 @@ const filterToDOMInterface = (function() {
 
     // https://github.com/gorhill/uBlock/issues/1772
     // Handle procedural cosmetic filters.
-    var fromCompiledCosmeticFilter = function(raw) {
+    const fromCompiledCosmeticFilter = function(raw) {
         if ( typeof raw !== 'string' ) { return; }
-        var o;
+        let o;
         try {
             o = JSON.parse(raw);
         } catch(ex) {
             return;
         }
-        var elems;
+        let elems;
         if ( o.style ) {
             elems = document.querySelectorAll(o.style[0]);
             lastAction = o.style[0] + ' {' + o.style[1] + '}';
@@ -824,21 +822,21 @@ const filterToDOMInterface = (function() {
             elems = vAPI.domFilterer.createProceduralFilter(o).exec();
         }
         if ( !elems ) { return; }
-        var out = [];
-        for ( var i = 0, n = elems.length; i < n; i++ ) {
-            out.push({ type: 'cosmetic', elem: elems[i] });
+        const out = [];
+        for ( const elem of elems ) {
+            out.push({ type: 'cosmetic', elem });
         }
         return out;
     };
 
-    var lastFilter,
+    let lastFilter,
         lastResultset,
         lastAction,
         appliedStyleTag,
         applied = false,
         previewing = false;
 
-    var queryAll = function(filter, callback) {
+    const queryAll = function(filter, callback) {
         filter = filter.trim();
         if ( filter === lastFilter ) {
             callback(lastResultset);
@@ -859,7 +857,7 @@ const filterToDOMInterface = (function() {
             callback(lastResultset);
             return;
         }
-        var selector = filter.slice(2);
+        const selector = filter.slice(2);
         lastResultset = fromPlainCosmeticFilter(selector);
         if ( lastResultset ) {
             if ( previewing ) { apply(); }
@@ -878,18 +876,13 @@ const filterToDOMInterface = (function() {
         );
     };
 
-    var applyHide = function() {
-        var htmlElem = document.documentElement,
-            items = lastResultset,
-            item, elem, style;
-        for ( var i = 0, n = items.length; i < n; i++ ) {
-            item = items[i];
-            elem = item.elem;
+    const applyHide = function() {
+        const htmlElem = document.documentElement;
+        for ( const item of lastResultset ) {
+            const elem = item.elem;
             // https://github.com/gorhill/uBlock/issues/1629
-            if ( elem === pickerRoot ) {
-                continue;
-            }
-            style = elem.style;
+            if ( elem === pickerRoot ) { continue; }
+            const style = elem.style;
             if (
                 (elem !== htmlElem) &&
                 (item.type === 'cosmetic' || item.type === 'network' && item.src !== undefined)
@@ -906,10 +899,9 @@ const filterToDOMInterface = (function() {
         }
     };
 
-    var unapplyHide = function() {
-        var items = lastResultset, item;
-        for ( var i = 0, n = items.length; i < n; i++ ) {
-            item = items[i];
+    const unapplyHide = function() {
+        if ( lastResultset === undefined ) { return; }
+        for ( const item of lastResultset ) {
             if ( item.hasOwnProperty('display') ) {
                 item.elem.style.setProperty(
                     'display',
@@ -929,14 +921,14 @@ const filterToDOMInterface = (function() {
         }
     };
 
-    var unapplyStyle = function() {
+    const unapplyStyle = function() {
         if ( !appliedStyleTag || appliedStyleTag.parentNode === null ) {
             return;
         }
         appliedStyleTag.parentNode.removeChild(appliedStyleTag);
     };
 
-    var applyStyle = function() {
+    const applyStyle = function() {
         if ( !appliedStyleTag ) {
             appliedStyleTag = document.createElement('style');
             appliedStyleTag.setAttribute('type', 'text/css');
@@ -947,13 +939,11 @@ const filterToDOMInterface = (function() {
         }
     };
 
-    var apply = function() {
+    const apply = function() {
         if ( applied ) {
             unapply();
         }
-        if ( lastResultset === undefined ) {
-            return;
-        }
+        if ( lastResultset === undefined ) { return; }
         if ( typeof lastAction === 'string' ) {
             applyStyle();
         } else {
@@ -962,10 +952,8 @@ const filterToDOMInterface = (function() {
         applied = true;
     };
 
-    var unapply = function() {
-        if ( !applied ) {
-            return;
-        }
+    const unapply = function() {
+        if ( !applied ) { return; }
         if ( typeof lastAction === 'string' ) {
             unapplyStyle();
         } else {
@@ -974,13 +962,12 @@ const filterToDOMInterface = (function() {
         applied = false;
     };
 
-    var preview = function(filter) {
+    const preview = function(filter) {
         previewing = filter !== false;
         if ( previewing ) {
-            queryAll(filter, function(items) {
-                if ( items !== undefined ) {
-                    apply();
-                }
+            queryAll(filter, items => {
+                if ( items === undefined ) { return; }
+                apply();
             });
         } else {
             unapply();
@@ -998,7 +985,7 @@ const filterToDOMInterface = (function() {
 /******************************************************************************/
 
 const userFilterFromCandidate = function(callback) {
-    var v = rawFilterFromTextarea();
+    let v = rawFilterFromTextarea();
     filterToDOMInterface.set(v, function(items) {
         if ( !items || items.length === 0 ) {
             callback();
@@ -1007,7 +994,7 @@ const userFilterFromCandidate = function(callback) {
 
         // https://github.com/gorhill/uBlock/issues/738
         // Trim dots.
-        var hostname = window.location.hostname;
+        let hostname = window.location.hostname;
         if ( hostname.slice(-1) === '.' ) {
             hostname = hostname.slice(0, -1);
         }
@@ -1019,14 +1006,14 @@ const userFilterFromCandidate = function(callback) {
         }
 
         // Assume net filter
-        var opts = [];
+        const opts = [];
 
         // If no domain included in filter, we need domain option
         if ( v.lastIndexOf('||', 0) === -1 ) {
             opts.push('domain=' + hostname);
         }
 
-        var item = items[0];
+        const item = items[0];
         if ( item.opts ) {
             opts.push(item.opts);
         }
@@ -1042,11 +1029,12 @@ const userFilterFromCandidate = function(callback) {
 /******************************************************************************/
 
 const onCandidateChanged = (function() {
-    var process = function(items) {
-        var elems = [], valid = items !== undefined;
+    const process = function(items) {
+        const elems = [];
+        const valid = items !== undefined;
         if ( valid ) {
-            for ( var i = 0; i < items.length; i++ ) {
-                elems.push(items[i].elem);
+            for ( const item of items ) {
+                elems.push(item.elem);
             }
         }
         pickerBody.querySelector('#resultsetCount').textContent = valid ?
