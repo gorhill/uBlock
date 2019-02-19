@@ -605,3 +605,85 @@
         return rem === 0 ? size : size + rem - 1;
     },
 };
+
+/******************************************************************************/
+
+// The requests.json.gz file can be downloaded from:
+//   https://cdn.cliqz.com/adblocking/requests_top500.json.gz
+//
+// Which is linked from:
+//   https://whotracks.me/blog/adblockers_performance_study.html
+//
+// Copy the file into ./tmp/requests.json.gz
+//
+// If the file is present when you build uBO using `make-[target].sh` from
+// the shell, the resulting package will have `./assets/requests.json`, which
+// will be looked-up by the method below to launch a benchmark session.
+//
+// From uBO's dev console, launch the benchmark:
+//   µBlock.staticNetFilteringEngine.benchmark();
+//
+// The advanced setting `consoleLogLevel` must be set to `info` to see the
+// results in uBO's dev console, see:
+//   https://github.com/gorhill/uBlock/wiki/Advanced-settings#consoleloglevel
+//
+// The usual browser dev tools can be used to obtain useful profiling
+// data, i.e. start the profiler, call the benchmark method from the
+// console, then stop the profiler when it completes.
+//
+// Keep in mind that the measurements at the blog post above where obtained
+// with ONLY EasyList. The CPU reportedly used was:
+//   https://www.cpubenchmark.net/cpu.php?cpu=Intel+Core+i7-6600U+%40+2.60GHz&id=2608
+//
+// Rename ./tmp/requests.json.gz to something else if you no longer want
+// ./assets/requests.json in the build.
+
+µBlock.loadBenchmarkDataset = (function() {
+    let datasetPromise;
+    let ttlTimer;
+
+    return function() {
+        if ( ttlTimer !== undefined ) {
+            clearTimeout(ttlTimer);
+            ttlTimer = undefined;
+        }
+
+        vAPI.setTimeout(( ) => {
+            ttlTimer = undefined;
+            datasetPromise = undefined;
+        }, 60000);
+
+        if ( datasetPromise !== undefined ) {
+            return datasetPromise;
+        }
+
+        datasetPromise = new Promise(resolve => {
+            console.info(`Loading benchmark dataset...`);
+            const url = vAPI.getURL('/assets/requests.json');
+            µBlock.assets.fetchText(url, details => {
+                if ( details.error !== undefined ) {
+                    datasetPromise = undefined;
+                    console.info(`Not found: ${url}`);
+                    resolve();
+                    return;
+                }
+                console.info(`Parsing benchmark dataset...`);
+                const requests = [];
+                const lineIter = new µBlock.LineIterator(details.content);
+                while ( lineIter.eot() === false ) {
+                    let request;
+                    try {
+                        request = JSON.parse(lineIter.next());
+                    } catch(ex) {
+                    }
+                    if ( request instanceof Object === false ) { continue; }
+                    if ( !request.frameUrl || !request.url ) { continue; }
+                    requests.push(request);
+                }
+                resolve(requests);
+            });
+        });
+
+        return datasetPromise;
+    };
+})();
