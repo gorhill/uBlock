@@ -53,7 +53,7 @@ const µBlock = (function() { // jshint ignore:line
         requestJournalProcessPeriod: 1000,
         selfieAfter: 11,
         strictBlockingBypassDuration: 120,
-        suspendTabsUntilReady: false,
+        suspendTabsUntilReady: 'unset',
         userResourcesLocation: 'unset'
     };
 
@@ -104,6 +104,11 @@ const µBlock = (function() { // jshint ignore:line
                         if ( out.hasOwnProperty(k) ) { out[k] = o[k]; }
                     }
                     self.log.verbosity = out.consoleLogLevel;
+                    if ( typeof out.suspendTabsUntilReady === 'boolean' ) {
+                        out.suspendTabsUntilReady = out.suspendTabsUntilReady
+                            ? 'yes'
+                            : 'unset';
+                    }
                 }
             }
             catch(ex) {

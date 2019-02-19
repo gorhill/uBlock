@@ -110,6 +110,12 @@
                     this.hiddenSettings[key] = hs[key];
                 }
             }
+            if ( typeof this.hiddenSettings.suspendTabsUntilReady === 'boolean' ) {
+                this.hiddenSettings.suspendTabsUntilReady =
+                    this.hiddenSettings.suspendTabsUntilReady
+                        ? 'yes'
+                        : 'unset';
+            }
         }
         if ( vAPI.localStorage.getItem('immediateHiddenSettings') === null ) {
             this.saveImmediateHiddenSettings();

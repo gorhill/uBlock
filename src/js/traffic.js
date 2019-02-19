@@ -1002,8 +1002,10 @@ return {
         if (
             vAPI.net.onBeforeReady instanceof Object &&
             (
-                vAPI.net.onBeforeReady.experimental !== true ||
-                µBlock.hiddenSettings.suspendTabsUntilReady
+                vAPI.net.onBeforeReady.experimental !== true &&
+                µBlock.hiddenSettings.suspendTabsUntilReady !== 'no' ||
+                vAPI.net.onBeforeReady.experimental &&
+                µBlock.hiddenSettings.suspendTabsUntilReady === 'yes'
             )
         ) {
             vAPI.net.onBeforeReady.start();
