@@ -615,7 +615,7 @@
             const pos = hostname.lastIndexOf('.', hostname.length - 3);
             domain = pos !== -1 ? hostname.slice(pos + 1) : hostname;
         } else {
-            domain = µb.URI.domainFromHostnameNoCache(hostname);
+            domain = µb.URI.domainFromHostname(hostname);
         }
         return api.makeHash(domain);
     };

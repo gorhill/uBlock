@@ -319,7 +319,7 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
             continue;
         }
         if ( option === 'first-party' || option === '1p' ) {
-            srcs.push(µBlock.URI.domainFromHostnameNoCache(des) || des);
+            srcs.push(µBlock.URI.domainFromHostname(des) || des);
             continue;
         }
         // One and only one type must be specified.

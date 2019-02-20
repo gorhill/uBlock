@@ -286,18 +286,6 @@ URI.hostnameFromURI = function(uri) {
 /******************************************************************************/
 
 URI.domainFromHostname = function(hostname) {
-    let entry = domainCache.get(hostname);
-    if ( entry !== undefined ) {
-        entry.tstamp = Date.now();
-        return entry.domain;
-    }
-    if ( reIPAddressNaive.test(hostname) === false ) {
-        return domainCacheAdd(hostname, psl.getDomain(hostname));
-    }
-    return domainCacheAdd(hostname, hostname);
-};
-
-URI.domainFromHostnameNoCache = function(hostname) {
     return reIPAddressNaive.test(hostname) ? hostname : psl.getDomain(hostname);
 };
 
@@ -322,78 +310,6 @@ URI.pathFromURI = function(uri) {
     var matches = rePathFromURI.exec(uri);
     return matches !== null ? matches[1] : '';
 };
-
-/******************************************************************************/
-
-// Trying to alleviate the worries of looking up too often the domain name from
-// a hostname. With a cache, uBlock benefits given that it deals with a
-// specific set of hostnames within a narrow time span -- in other words, I
-// believe probability of cache hit are high in uBlock.
-
-const domainCache = new Map();
-const domainCacheCountLowWaterMark = 40;
-const domainCacheCountHighWaterMark = 60;
-const domainCacheEntryJunkyardMax =
-    domainCacheCountHighWaterMark - domainCacheCountLowWaterMark;
-
-const DomainCacheEntry = function(domain) {
-    this.init(domain);
-};
-
-DomainCacheEntry.prototype = {
-    init: function(domain) {
-        this.domain = domain;
-        this.tstamp = Date.now();
-        return this;
-    },
-    dispose: function() {
-        this.domain = '';
-        if ( domainCacheEntryJunkyard.length < domainCacheEntryJunkyardMax ) {
-            domainCacheEntryJunkyard.push(this);
-        }
-    },
-};
-
-const domainCacheEntryFactory = function(domain) {
-    return domainCacheEntryJunkyard.length !== 0 ?
-        domainCacheEntryJunkyard.pop().init(domain) :
-        new DomainCacheEntry(domain);
-};
-
-const domainCacheEntryJunkyard = [];
-
-const domainCacheAdd = function(hostname, domain) {
-    const entry = domainCache.get(hostname);
-    if ( entry !== undefined ) {
-        entry.tstamp = Date.now();
-    } else {
-        domainCache.set(hostname, domainCacheEntryFactory(domain));
-        if ( domainCache.size === domainCacheCountHighWaterMark ) {
-            domainCachePrune();
-        }
-    }
-    return domain;
-};
-
-const domainCacheEntrySort = function(a, b) {
-    return domainCache.get(b).tstamp - domainCache.get(a).tstamp;
-};
-
-const domainCachePrune = function() {
-    const hostnames = Array.from(domainCache.keys())
-                           .sort(domainCacheEntrySort)
-                           .slice(domainCacheCountLowWaterMark);
-    let i = hostnames.length;
-    while ( i-- ) {
-        const hostname = hostnames[i];
-        domainCache.get(hostname).dispose();
-        domainCache.delete(hostname);
-    }
-};
-
-window.addEventListener('publicSuffixListChanged', function() {
-    domainCache.clear();
-});
 
 /******************************************************************************/
 
