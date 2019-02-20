@@ -323,22 +323,7 @@
         const domain = request.domain;
         const entity = request.entity;
 
-        // https://github.com/gorhill/uBlock/issues/1954
-        // Implicit
-        let hn = hostname;
-        for (;;) {
-            lookupScriptlet(hn + '.js', reng, scriptletsRegister);
-            if ( hn === domain ) { break; }
-            const pos = hn.indexOf('.');
-            if ( pos === -1 ) { break; }
-            hn = hn.slice(pos + 1);
-        }
-        if ( entity !== '' ) {
-            lookupScriptlet(entity + '.js', reng, scriptletsRegister);
-        }
-
-        // Explicit
-        let entries = [];
+        const entries = [];
         const domainHash = µb.staticExtFilteringEngine.makeHash(domain);
         if ( domainHash !== 0 ) {
             scriptletDB.retrieve(domainHash, hostname, entries);
@@ -355,7 +340,7 @@
         if ( scriptletsRegister.size === 0 ) { return; }
 
         // Collect exception filters.
-        entries = [];
+        entries.length = 0;
         if ( domainHash !== 0 ) {
             scriptletDB.retrieve(domainHash | 0b0001, hostname, entries);
         }
