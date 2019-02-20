@@ -300,7 +300,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Blokuoti medijos elementus didesnius nei {{input:number}} kB",
+    "message": "Blokuoti medijos elementus didesnius nei {{input}} kB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -644,7 +644,7 @@
     "description": "Label to identify the URL of an entry"
   },
   "loggerURLFilteringHeader": {
-    "message": "Dinaminis URL filtravimas",
+    "message": "URL taisyklė",
     "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
