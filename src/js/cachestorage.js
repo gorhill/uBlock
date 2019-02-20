@@ -112,15 +112,16 @@
                     });
                 });
             },
-        select: function(backend) {
-            if ( backend === undefined || backend === 'unset' ) {
-                backend = vAPI.webextFlavor.soup.has('firefox')
+        select: function(selectedBackend) {
+            let actualBackend = selectedBackend;
+            if ( actualBackend === undefined || actualBackend === 'unset' ) {
+                actualBackend = vAPI.webextFlavor.soup.has('firefox')
                     ? 'indexedDB'
                     : 'browser.storage.local';
             }
-            if ( backend === 'indexedDB' ) {
+            if ( actualBackend === 'indexedDB' ) {
                 return selectIDB().then(success => {
-                    if ( success ) {
+                    if ( success || selectedBackend === 'indexedDB' ) {
                         clearWebext();
                         return 'indexedDB';
                     }
@@ -128,7 +129,7 @@
                     return 'browser.storage.local';
                 });
             }
-            if ( backend === 'browser.storage.local' ) {
+            if ( actualBackend === 'browser.storage.local' ) {
                 clearIDB();
             }
             return Promise.resolve('browser.storage.local');
