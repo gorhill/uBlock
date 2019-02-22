@@ -53,4 +53,8 @@ if (
         : { uBO: true };
 }
 
+// Set the value of the last expression to undefined to avoid serializing the
+// vAPI object when the content script is run using chrome.tabs.executeScript.
+void 0;
+
 /******************************************************************************/

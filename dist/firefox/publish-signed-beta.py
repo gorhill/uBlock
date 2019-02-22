@@ -16,19 +16,19 @@ import zipfile
 from distutils.version import LooseVersion
 from string import Template
 
-# - Download target (raw) uBlock0.webext.xpi from GitHub
+# - Download target (raw) uBlock0.firefox.xpi from GitHub
 #   - This is referred to as "raw" package
 #   - This will fail if not a dev build
 # - Modify raw package to make it self-hosted
 #   - This is referred to as "unsigned" package
-# - Ask AMO to sign uBlock0.webext.xpi
+# - Ask AMO to sign uBlock0.firefox.xpi
 #   - Generate JWT to be used for communication with server
 #   - Upload unsigned package to AMO
 #   - Wait for a valid download URL for signed package
-#   - Download signed package as uBlock0.webext.signed.xpi
+#   - Download signed package as uBlock0.firefox.signed.xpi
 #     - This is referred to as "signed" package
-# - Upload uBlock0.webext.signed.xpi to GitHub
-# - Remove uBlock0.webext.xpi from GitHub
+# - Upload uBlock0.firefox.signed.xpi to GitHub
+# - Remove uBlock0.firefox.xpi from GitHub
 # - Modify updates.json to point to new version
 #   - Commit changes to repo
 
@@ -44,10 +44,10 @@ if not os.path.isfile(version_filepath):
 
 extension_id = 'uBlock0@raymondhill.net'
 tmpdir = tempfile.TemporaryDirectory()
-raw_xpi_filename = 'uBlock0.webext.xpi'
+raw_xpi_filename = 'uBlock0.firefox.xpi'
 raw_xpi_filepath = os.path.join(tmpdir.name, raw_xpi_filename)
-unsigned_xpi_filepath = os.path.join(tmpdir.name, 'uBlock0.webext.unsigned.xpi')
-signed_xpi_filename = 'uBlock0.webext.signed.xpi'
+unsigned_xpi_filepath = os.path.join(tmpdir.name, 'uBlock0.firefox.unsigned.xpi')
+signed_xpi_filename = 'uBlock0.firefox.signed.xpi'
 signed_xpi_filepath = os.path.join(tmpdir.name, signed_xpi_filename)
 github_owner = 'gorhill'
 github_repo = 'uBlock'
@@ -62,12 +62,35 @@ if not re.search('^\d+\.\d+\.\d+(b|rc)\d+$', version):
     print('Error: Invalid version string.')
     exit(1)
 
+# Load/save auth secrets
+# The build directory is excluded from git
+ubo_secrets = dict()
+ubo_secrets_filename = os.path.join(projdir, 'dist', 'build', 'ubo_secrets')
+if os.path.isfile(ubo_secrets_filename):
+    with open(ubo_secrets_filename) as f:
+        ubo_secrets = json.load(f)
+
+def input_secret(prompt, token):
+    if token in ubo_secrets:
+        prompt += ' ✔'
+    prompt += ': '
+    value = input(prompt).strip()
+    if len(value) == 0:
+        if token not in ubo_secrets:
+            print('Token error:', token)
+            exit(1)
+        value = ubo_secrets[token]
+    elif token not in ubo_secrets or value != ubo_secrets[token]:
+        ubo_secrets[token] = value
+        exists = os.path.isfile(ubo_secrets_filename)
+        with open(ubo_secrets_filename, 'w') as f:
+            json.dump(ubo_secrets, f, indent=2)
+        if not exists:
+            os.chmod(ubo_secrets_filename, 0o600)
+    return value
+
 # GitHub API token
-# TODO: support as environment variable? (see os.environ)
-github_token = input("Github token: ").strip()
-if len(github_token) == 0:
-    print('Error: invalid GitHub token')
-    exit(1)
+github_token = input_secret('Github token', 'github_token')
 github_auth = 'token ' + github_token
 
 #
@@ -88,7 +111,7 @@ release_info = response.json()
 # Extract URL to raw package from metadata
 #
 
-# Find url for uBlock0.webext.xpi
+# Find url for uBlock0.firefox.xpi
 raw_xpi_url = ''
 for asset in release_info['assets']:
     if asset['name'] == signed_xpi_filename:
@@ -145,9 +168,8 @@ with zipfile.ZipFile(raw_xpi_filepath, 'r') as zipin:
 
 print('Ask AMO to sign self-hosted xpi package...')
 with open(unsigned_xpi_filepath, 'rb') as f:
-    # TODO: support use of env variables for key/secret?
-    amo_api_key = input("AMO API key: ").strip()
-    amo_secret = input("AMO API secret: ").strip()
+    amo_api_key = input_secret('AMO API key', 'amo_api_key')
+    amo_secret = input_secret('AMO API secret', 'amo_secret')
     amo_nonce = os.urandom(8).hex()
     jwt_payload = {
         'iss': amo_api_key,
@@ -251,7 +273,7 @@ with open(updates_json_filepath) as f:
     f.close()
     previous_version = updates_json['addons'][extension_id]['updates'][0]['version']
     if LooseVersion(version) > LooseVersion(previous_version):
-        with open(os.path.join(projdir, 'platform', 'webext', 'updates.template.json')) as f:
+        with open(os.path.join(projdir, 'dist', 'firefox', 'updates.template.json')) as f:
             template_json = Template(f.read())
             f.close()
             updates_json = template_json.substitute(version=version)

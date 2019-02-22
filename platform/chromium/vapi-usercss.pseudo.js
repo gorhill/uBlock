@@ -21,20 +21,10 @@
 
 'use strict';
 
-// For content pages
+// Packaging this file is optional: it is not necessary to package it if the
+// platform is known to support user stylesheets.
 
-// Abort execution if our global vAPI object does not exist.
-//   https://github.com/chrisaljoudi/uBlock/issues/456
-//   https://github.com/gorhill/uBlock/issues/2029
-
-// https://github.com/gorhill/uBlock/issues/3588
-//   Chromium 66+ supports user stylesheets. Testing support against a regex is
-//   (unfortunately) necessary from content scripts.
-
-if (
-    typeof vAPI === 'object' &&
-    /\bEdge\/\d+|\bChrom(?:e|ium)\/(?:[45][0-9]|6[0-5])/.test(navigator.userAgent)
-) {
+if ( typeof vAPI === 'object' && vAPI.userStylesheet === undefined ) {
 // >>>>>>>> start of HUGE-IF-BLOCK
 
 /******************************************************************************/

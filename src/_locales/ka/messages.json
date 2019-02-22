@@ -599,6 +599,10 @@
     "message": "მხარდაჭერა",
     "description": "A link for where to get support"
   },
+  "aboutIssues": {
+    "message": "ხარვეზების აღმრიცხავი",
+    "description": "Text for a link to official issue tracker"
+  },
   "aboutCode": {
     "message": "წყაროს კოდი (GPLv3)",
     "description": "English: Source code (GPLv3)"

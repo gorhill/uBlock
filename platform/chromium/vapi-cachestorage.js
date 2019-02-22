@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2016-2017 The uBlock Origin authors
+    Copyright (C) 2016-2018 The uBlock Origin authors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -39,6 +39,14 @@
 // indexedDB.
 
 vAPI.cacheStorage = (function() {
+
+    // Firefox-specific: we use indexedDB because chrome.storage.local() has
+    // poor performance in Firefox. See:
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=1371255
+    if ( vAPI.webextFlavor.soup.has('firefox') === false ) {
+        return vAPI.cacheStorage;
+    }
+
     const STORAGE_NAME = 'uBlock0CacheStorage';
     var db;
     var pending = [];

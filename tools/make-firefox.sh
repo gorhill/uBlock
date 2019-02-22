@@ -41,11 +41,25 @@ cp    LICENSE.txt                       $DES/
 echo "*** AdNauseam.firefox: concatenating content scripts"
 cat $DES/js/vapi-usercss.real.js > /tmp/contentscript.js
 echo >> /tmp/contentscript.js
+grep -v "^'use strict';$" $DES/js/vapi-usercss.real.js >> /tmp/contentscript.js
+
+echo >> /tmp/contentscript.js
 grep -v "^'use strict';$" $DES/js/contentscript.js >> /tmp/contentscript.js
 mv /tmp/contentscript.js $DES/js/contentscript.js
+rm $DES/js/vapi-usercss.js
 rm $DES/js/vapi-usercss.real.js
+rm $DES/js/vapi-usercss.pseudo.js
+
+# Firefox/webext-specific
+rm $DES/img/icon_128.png
+rm $DES/options_ui.html
+rm $DES/js/options_ui.js
+
 echo "*** AdNauseam::Firefox: Generating meta..."
 python tools/make-firefox-meta.py $DES/ "$2"
+echo "*** AdNauseam.firefox: Generating web accessible resources..."
+cp -R src/web_accessible_resources $DES/
+python3 tools/import-war.py $DES/
 
 
 if [ "$1" = all ]; then

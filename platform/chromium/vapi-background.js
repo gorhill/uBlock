@@ -49,6 +49,12 @@ vAPI.resetLastError = function() {
 };
 
 vAPI.supportsUserStylesheets = vAPI.webextFlavor.soup.has('user_stylesheet');
+// The real actual webextFlavor value may not be set in stone, so listen
+// for possible future changes.
+window.addEventListener('webextFlavor', function() {
+    vAPI.supportsUserStylesheets =
+        vAPI.webextFlavor.soup.has('user_stylesheet');
+}, { once: true });
 
 vAPI.insertCSS = function(tabId, details) {
     return chrome.tabs.insertCSS(tabId, details, vAPI.resetLastError);
@@ -105,12 +111,10 @@ vAPI.browserSettings = (function() {
         // only for Chromium proper (because it can be compiled without the
         // WebRTC feature): hence avoid overhead of the evaluation (which uses
         // an iframe) for platforms where it's a non-issue.
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/9
+        //   Some Chromium builds are made to look like a Chrome build.
         webRTCSupported: (function() {
-            var flavor = vAPI.webextFlavor.soup;
-            if (
-                flavor.has('chromium') === false ||
-                flavor.has('google') || flavor.has('opera')
-            ) {
+            if ( vAPI.webextFlavor.soup.has('chromium') === false ) {
                 return true;
             }
         })(),
@@ -810,8 +814,7 @@ vAPI.messaging.listen = function(listenerName, callback) {
 /******************************************************************************/
 
 vAPI.messaging.onPortMessage = (function() {
-    var messaging = vAPI.messaging,
-        supportsUserStylesheets = vAPI.supportsUserStylesheets;
+    var messaging = vAPI.messaging;
 
     // Use a wrapper to avoid closure and to allow reuse.
     var CallbackWrapper = function(port, request) {
@@ -895,7 +898,7 @@ vAPI.messaging.onPortMessage = (function() {
                 frameId: sender.frameId,
                 matchAboutBlank: true
             };
-            if ( supportsUserStylesheets ) {
+            if ( vAPI.supportsUserStylesheets ) {
                 details.cssOrigin = 'user';
             }
             if ( msg.add ) {

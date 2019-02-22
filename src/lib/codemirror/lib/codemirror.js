@@ -4783,7 +4783,7 @@ function addChangeToHistory(doc, change, selAfter, opId) {
 
   if ((hist.lastOp == opId ||
        hist.lastOrigin == change.origin && change.origin &&
-       ((change.origin.charAt(0) == "+" && doc.cm && hist.lastModTime > time - doc.cm.options.historyEventDelay) ||
+       ((change.origin.charAt(0) == "+" && hist.lastModTime > time - (doc.cm ? doc.cm.options.historyEventDelay : 500)) ||
         change.origin.charAt(0) == "*")) &&
       (cur = lastChangeEvent(hist, hist.lastOp == opId))) {
     // Merge this change into the last event
@@ -7312,8 +7312,8 @@ function leftButtonStartDrag(cm, event, pos, behavior) {
   var dragEnd = operation(cm, function (e) {
     if (webkit) { display.scroller.draggable = false }
     cm.state.draggingText = false
-    off(document, "mouseup", dragEnd)
-    off(document, "mousemove", mouseMove)
+    off(display.wrapper.ownerDocument, "mouseup", dragEnd)
+    off(display.wrapper.ownerDocument, "mousemove", mouseMove)
     off(display.scroller, "dragstart", dragStart)
     off(display.scroller, "drop", dragEnd)
     if (!moved) {
@@ -7322,7 +7322,7 @@ function leftButtonStartDrag(cm, event, pos, behavior) {
         { extendSelection(cm.doc, pos, null, null, behavior.extend) }
       // Work around unexplainable focus problem in IE9 (#2127) and Chrome (#3081)
       if (webkit || ie && ie_version == 9)
-        { setTimeout(function () {document.body.focus(); display.input.focus()}, 20) }
+        { setTimeout(function () {display.wrapper.ownerDocument.body.focus(); display.input.focus()}, 20) }
       else
         { display.input.focus() }
     }
@@ -7337,8 +7337,8 @@ function leftButtonStartDrag(cm, event, pos, behavior) {
   dragEnd.copy = !behavior.moveOnDrag
   // IE's approach to draggable
   if (display.scroller.dragDrop) { display.scroller.dragDrop() }
-  on(document, "mouseup", dragEnd)
-  on(document, "mousemove", mouseMove)
+  on(display.wrapper.ownerDocument, "mouseup", dragEnd)
+  on(display.wrapper.ownerDocument, "mousemove", mouseMove)
   on(display.scroller, "dragstart", dragStart)
   on(display.scroller, "drop", dragEnd)
 
@@ -7470,8 +7470,8 @@ function leftButtonSelect(cm, event, start, behavior) {
     counter = Infinity
     e_preventDefault(e)
     display.input.focus()
-    off(document, "mousemove", move)
-    off(document, "mouseup", up)
+    off(display.wrapper.ownerDocument, "mousemove", move)
+    off(display.wrapper.ownerDocument, "mouseup", up)
     doc.history.lastSelOrigin = null
   }
 
@@ -7481,8 +7481,8 @@ function leftButtonSelect(cm, event, start, behavior) {
   })
   var up = operation(cm, done)
   cm.state.selectingText = up
-  on(document, "mousemove", move)
-  on(document, "mouseup", up)
+  on(display.wrapper.ownerDocument, "mousemove", move)
+  on(display.wrapper.ownerDocument, "mouseup", up)
 }
 
 // Used when mouse-selecting to adjust the anchor to the proper side
@@ -9005,7 +9005,7 @@ ContentEditableInput.prototype.setUneditable = function (node) {
 };
 
 ContentEditableInput.prototype.onKeyPress = function (e) {
-  if (e.charCode == 0) { return }
+  if (e.charCode == 0 || this.composing) { return }
   e.preventDefault()
   if (!this.cm.isReadOnly())
     { operation(this.cm, applyTextInput)(this.cm, String.fromCharCode(e.charCode == null ? e.keyCode : e.charCode), 0) }
@@ -9187,13 +9187,10 @@ TextareaInput.prototype.init = function (display) {
     var this$1 = this;
 
   var input = this, cm = this.cm
+  this.createField(display)
+  var te = this.textarea
 
-  // Wraps and hides input textarea
-  var div = this.wrapper = hiddenTextarea()
-  // The semihidden textarea that is focused when the editor is
-  // focused, and receives input.
-  var te = this.textarea = div.firstChild
-  display.wrapper.insertBefore(div, display.wrapper.firstChild)
+  display.wrapper.insertBefore(this.wrapper, display.wrapper.firstChild)
 
   // Needed to hide big blue blinking cursor on Mobile Safari (doesn't seem to work in iOS 8 anymore)
   if (ios) { te.style.width = "0px" }
@@ -9258,6 +9255,14 @@ TextareaInput.prototype.init = function (display) {
       input.composing = null
     }
   })
+};
+
+TextareaInput.prototype.createField = function (_display) {
+  // Wraps and hides input textarea
+  this.wrapper = hiddenTextarea()
+  // The semihidden textarea that is focused when the editor is
+  // focused, and receives input.
+  this.textarea = this.wrapper.firstChild
 };
 
 TextareaInput.prototype.prepareSelection = function () {
@@ -9653,7 +9658,7 @@ CodeMirror.fromTextArea = fromTextArea
 
 addLegacyProps(CodeMirror)
 
-CodeMirror.version = "5.35.0"
+CodeMirror.version = "5.37.0"
 
 return CodeMirror;
 

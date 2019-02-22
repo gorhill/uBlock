@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2016 The uBlock Origin authors
+    Copyright (C) 2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,12 +19,16 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-// For background page or non-background pages
-
 'use strict';
 
-/******************************************************************************/
+// This file can be replaced by platform-specific code. If a platform is
+// known to NOT support user stylsheets, vAPI.supportsUserStylesheets can be
+// set to `false`.
 
-var objectAssign = Object.assign;
+// Chromium 66 and above supports user stylesheets:
+// https://github.com/gorhill/uBlock/issues/3588
 
-/******************************************************************************/
+if ( typeof vAPI === 'object' ) {
+    vAPI.supportsUserStylesheets =
+        /\bChrom(?:e|ium)\/(?:6[6789]|[789]|1\d\d)/.test(navigator.userAgent);
+}

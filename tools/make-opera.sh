@@ -36,12 +36,15 @@ cp platform/chromium/*.html $DES/
 cp platform/chromium/*.json $DES/
 cp LICENSE.txt              $DES/
 
-echo "*** AdNauseam.Opera: concatenating content scripts"
-cat $DES/js/vapi-usercss.js > /tmp/contentscript.js
+echo "*** AdNauseam.opera: concatenating content scripts"
+cat $DES/js/vapi-usercss.pseudo.js > /tmp/contentscript.js
+echo >> /tmp/contentscript.js
+grep -v "^'use strict';$" $DES/js/vapi-usercss.real.js >> /tmp/contentscript.js
 echo >> /tmp/contentscript.js
 grep -v "^'use strict';$" $DES/js/contentscript.js >> /tmp/contentscript.js
 mv /tmp/contentscript.js $DES/js/contentscript.js
-rm $DES/js/vapi-usercss.js
+rm $DES/js/vapi-usercss.pseudo.js
+rm $DES/js/vapi-usercss.real.js
 
 cp platform/opera/manifest.json $DES/  # adn: overwrites chromium manifest
 cp LICENSE.txt $DES/

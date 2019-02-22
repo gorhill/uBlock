@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2016-2017 The uBlock Origin authors
+    Copyright (C) 2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,25 +19,16 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-// For background page or non-background pages
-
-/* exported objectAssign */
-
 'use strict';
 
-/******************************************************************************/
-/******************************************************************************/
+// This file can be replaced by platform-specific code. If a platform is
+// known to NOT support user stylsheets, vAPI.supportsUserStylesheets can be
+// set to `false`.
 
-// As per MDN, Object.assign appeared first in Firefox 34.
-// https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#Browser_compatibility
+// Chromium 66 and above supports user stylesheets:
+// https://github.com/gorhill/uBlock/issues/3588
 
-var objectAssign = Object.assign || function(target, source) {
-    var keys = Object.keys(source);
-    for ( var i = 0, n = keys.length, key; i < n; i++ ) {
-        key = keys[i];
-        target[key] = source[key];
-    }
-    return target;
-};
-
-/******************************************************************************/
+if ( typeof vAPI === 'object' ) {
+    vAPI.supportsUserStylesheets =
+        /\bChrom(?:e|ium)\/(?:6[6789]|[789]|1\d\d)|\bFirefox\/\d/.test(navigator.userAgent);
+}

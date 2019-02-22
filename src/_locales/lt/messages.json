@@ -352,7 +352,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Vietiniai",
+    "message": "Įtaisyti",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -598,6 +598,10 @@
   "aboutSupport": {
     "message": "Palaikymas",
     "description": "A link for where to get support"
+  },
+  "aboutIssues": {
+    "message": "Klaidų sekimo sistema",
+    "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
     "message": "Pirminis tekstas (GPLv3)",

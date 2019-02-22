@@ -62,14 +62,15 @@ if (
 // - Its vertical position depends on the height of the popup title bar
 // - Its horizontal position depends on whether there is a vertical scrollbar.
 var positionRulesetTools = function() {
-    document.getElementById('rulesetTools').style.setProperty(
-        'top',
-        (document.getElementById('appinfo').getBoundingClientRect().bottom + 3) + 'px'
-    );
-    document.getElementById('rulesetTools').style.setProperty(
-        'left',
-        (document.getElementById('firewallContainer').getBoundingClientRect().left + 3) + 'px'
-    );
+    var vpos = document.getElementById('appinfo')
+                       .getBoundingClientRect()
+                       .bottom + window.scrollY + 3;
+    var hpos = document.getElementById('firewallContainer')
+                       .getBoundingClientRect()
+                       .left + window.scrollX + 3;
+    var style = document.getElementById('rulesetTools').style;
+    style.setProperty('top', (vpos >>> 0) + 'px');
+    style.setProperty('left', (hpos >>> 0) + 'px');
 };
 
 // https://github.com/chrisaljoudi/uBlock/issues/996
@@ -577,6 +578,11 @@ var renderOnce = function() {
 
     uDom.nodeFromId('appname').textContent = popupData.appName;
     uDom.nodeFromId('version').textContent = popupData.appVersion;
+
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/22
+    if ( popupData.advancedUserEnabled !== true ) {
+        uDom('#firewallContainer [data-i18n-tip][data-src]').removeAttr('data-tip');
+    }
 
     // For large displays: we do not want the left pane -- optional and
     // hidden by defaut -- to dictate the height of the popup. The right pane

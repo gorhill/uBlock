@@ -69,7 +69,9 @@ vAPI.webextFlavor = {
             flavor.major = parseInt(info.version, 10) || 0;
             soup.add(info.vendor.toLowerCase())
                 .add(info.name.toLowerCase());
+            soup.delete('user_stylesheet');
             if ( flavor.major >= 53 ) { soup.add('user_stylesheet'); }
+            soup.delete('html_filtering');
             if ( flavor.major >= 57 ) { soup.add('html_filtering'); }
             dispatch();
         });

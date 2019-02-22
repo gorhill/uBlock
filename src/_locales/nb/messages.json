@@ -599,6 +599,10 @@
     "message": "Brukerstøtte",
     "description": "A link for where to get support"
   },
+  "aboutIssues": {
+    "message": "Problemsporing",
+    "description": "Text for a link to official issue tracker"
+  },
   "aboutCode": {
     "message": "Kildekode (GPLv3)",
     "description": "English: Source code (GPLv3)"

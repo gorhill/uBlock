@@ -44,15 +44,15 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Click: desactivar\/activar uBlock₀ neste sitio.\n\nCtrl+click: desactivar o uBlock₀ só nesta páxina.",
+    "message": "Click: desactivar\/activar o uBlock₀ neste sitio.\n\nCtrl+click: desactivar o Block₀ só nesta páxina.",
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Click: desactivar\/activar uBO neste sitio.\n\nCtrl+click: desactivar o uBO só nesta páxina.",
+    "message": "Click: desactivar\/activar o uBlock₀ neste sitio.\n\nCtrl+click: desactivar o Block₀ só nesta páxina.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Click: activar uBO neste sitio.",
+    "message": "Click: activar o uBlock₀ neste sitio.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -352,7 +352,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Built-in",
+    "message": "Local",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -384,11 +384,11 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Import...",
+    "message": "Importar...",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "Un enderezo por liña. As liñas prefixadas con &lsquo;!&rsquo; seranche ignoradas, así como os enderezos inválidos.",
+    "message": "Un enderezo por liña. Os enderezos inválidos seranche ignorados.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -408,7 +408,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Un filtro por cada liña. O filtro pode ser un nome de servidor, ou un filtro compatible co Adblock Plus. As liñas que comecen con &lsquo;!&rsquo; seranche ignoradas.",
+    "message": "Un filtro por cada liña. O filtro pode ser un nome de servidor, ou un filtro compatible co Adblock Plus. As liñas que comecen con <code>!<\/code> seranche ignoradas.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -598,6 +598,10 @@
   "aboutSupport": {
     "message": "Asistencia",
     "description": "A link for where to get support"
+  },
+  "aboutIssues": {
+    "message": "Seguimento de erros",
+    "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
     "message": "Código fonte (GPLv3)",

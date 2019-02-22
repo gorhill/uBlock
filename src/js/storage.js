@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global objectAssign, punycode, publicSuffixList */
+/* global punycode, publicSuffixList */
 
 'use strict';
 
@@ -146,7 +146,7 @@
 /******************************************************************************/
 
 µBlock.hiddenSettingsFromString = function(raw) {
-    var out = objectAssign({}, this.hiddenSettingsDefault),
+    var out = Object.assign({}, this.hiddenSettingsDefault),
         lineIter = new this.LineIterator(raw),
         line, matches, name, value;
     while ( lineIter.eot() === false ) {
@@ -583,7 +583,7 @@
             if ( entries.hasOwnProperty(assetKey) === false ) { continue; }
             entry = entries[assetKey];
             if ( entry.content !== 'filters' ) { continue; }
-            newAvailableLists[assetKey] = objectAssign({}, entry);
+            newAvailableLists[assetKey] = Object.assign({}, entry);
         }
 
         // Load set of currently selected filter lists.
@@ -807,7 +807,7 @@
         staticExtFilteringEngine = this.staticExtFilteringEngine,
         reIsWhitespaceChar = /\s/,
         reMaybeLocalIp = /^[\d:f]/,
-        reIsLocalhostRedirect = /\s+(?:0\.0\.0\.0|broadcasthost|ip6-all(?:nodes|routers)|local|localhost|localhost\.localdomain)\b/,
+        reIsLocalhostRedirect = /\s+(?:0\.0\.0\.0|broadcasthost|localhost|local|ip6-\w+)\b/,
         reLocalIp = /^(?:0\.0\.0\.0|127\.0\.0\.1|::1|fe80::1%lo0)/,
         line, c, pos,
         lineIter = new this.LineIterator(this.processDirectives(rawText));

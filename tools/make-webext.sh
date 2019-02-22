@@ -30,17 +30,21 @@ cp LICENSE.txt                   $DES/
 
 
 cp platform/webext/manifest.json        $DES/
-cp platform/webext/polyfill.js          $DES/js/
+cp platform/webext/vapi-usercss.js      $DES/js/
 cp platform/webext/vapi-webrequest.js   $DES/js/
-cp platform/webext/vapi-cachestorage.js $DES/js/
 
 echo "*** AdNauseam.webext: concatenating content scripts"
 cat $DES/js/vapi-usercss.js > /tmp/contentscript.js
 echo >> /tmp/contentscript.js
+grep -v "^'use strict';$" $DES/js/vapi-usercss.real.js >> /tmp/contentscript.js
+echo >> /tmp/contentscript.js
+grep -v "^'use strict';$" $DES/js/vapi-usercss.pseudo.js >> /tmp/contentscript.js
+echo >> /tmp/contentscript.js
 grep -v "^'use strict';$" $DES/js/contentscript.js >> /tmp/contentscript.js
 mv /tmp/contentscript.js $DES/js/contentscript.js
-rm $DES/js/vapi-usercss.pseudo.js
+rm $DES/js/vapi-usercss.js
 rm $DES/js/vapi-usercss.real.js
+rm $DES/js/vapi-usercss.pseudo.js
 
 # Webext-specific
 rm $DES/img/icon_128.png

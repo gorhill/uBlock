@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
@@ -268,7 +268,7 @@
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
-    "message": "Impedir que o WebRTC divulgue endereços de IP locais",
+    "message": "Impedir o WebRTC de vazar endereços IP locais",
     "description": "English: "
   },
   "settingPerSiteSwitchGroup": {
@@ -352,7 +352,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Locais",
+    "message": "Integrados",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -456,7 +456,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Importar do ficheiro...",
+    "message": "Importar a partir de ficheiro...",
     "description": ""
   },
   "rulesExport": {
@@ -599,6 +599,10 @@
     "message": "Suporte",
     "description": "A link for where to get support"
   },
+  "aboutIssues": {
+    "message": "Monitorizador de problemas",
+    "description": "Text for a link to official issue tracker"
+  },
   "aboutCode": {
     "message": "Código fonte (GPLv3)",
     "description": "English: Source code (GPLv3)"
@@ -608,7 +612,7 @@
     "description": "English: Contributors"
   },
   "aboutBackupDataButton": {
-    "message": "Cópia para ficheiro",
+    "message": "Copiar para ficheiro",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
@@ -616,7 +620,7 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Restaurar a partir de um ficheiro...",
+    "message": "Restaurar a partir de ficheiro...",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
@@ -728,7 +732,7 @@
     "description": "tooltip"
   },
   "cloudNoData": {
-    "message": "...\n...",
+    "message": "... ...",
     "description": ""
   },
   "cloudDeviceNamePrompt": {
