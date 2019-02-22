@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Bộ lọc bên thứ ba",
+    "message": "Bộ lọc",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -48,11 +48,11 @@
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Nhấp chuột: vô hiệu hoá uBlock₀ cho trang này.\nCtrl + nhấp chuột: chỉ vô hiệu hoá uBlock₀ trên trang này.",
+    "message": "Nhấp chuột để vô hiệu uBlock₀ cho trang này. \n\nCtrl + nhấp chuột để tắt uBlock₀ chỉ trên trang này.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Nhấp để bật uBO trên trang này.",
+    "message": "Nhấp để bật uBlock₀ trên trang này.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -120,11 +120,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Nhấp để vô hiệu hoá lọc mỹ phẩm trên trang này",
+    "message": "Nhấn để tắt bộ lọc phần tử trên trang này",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Nhấp để bật lọc mỹ phẩm trên trang này",
+    "message": "Nhấn để bật bộ lọc phần tử trên trang này",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -351,6 +351,10 @@
     "message": "Áp dụng các thay đổi",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Trên máy",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Quảng cáo",
     "description": "English: Ads"
@@ -379,9 +383,13 @@
     "message": "Tuỳ chỉnh",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Nhập...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
     "message": "Một URL cho mỗi dòng. Dòng bắt đầu với &lsquo;!&rsquo;sẽ bị bỏ qua. Các URL không hợp lệ sẽ được bỏ qua âm thầm.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "đã cũ",
@@ -401,7 +409,7 @@
   },
   "1pFormatHint": {
     "message": "Một bộ lọc trên mỗi dòng. Một bộ lọc có thể là một tên máy chủ đơn giản, hoặc một bộ lọc Adblock Plus tương thích. Những dòng bắt đầu với &lsquo;!&rsquo; sẽ bị bỏ qua.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Nhập và thêm vào",
@@ -512,7 +520,7 @@
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
-    "message": "Current tab",
+    "message": "Tab hiện tại",
     "description": "Appears in the logger's tab selector"
   },
   "logFilterPrompt": {
@@ -736,7 +744,7 @@
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Áp dụng các thay đổi",
+    "message": "Lưu thay đổi",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {

@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Zewnętrzne filtry",
+    "message": "Listy filtrów",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -351,6 +351,10 @@
     "message": "Zastosuj zmiany",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Wbudowane",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Reklamy",
     "description": "English: Ads"
@@ -379,9 +383,13 @@
     "message": "Własne",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Importuj...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
-    "message": "W jednym wierszu może być tylko jeden adres URL. Wiersze poprzedzone znakiem wykrzyknika [ ! ] i błędne adresy URL będą pomijane.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "message": "Jeden adres URL na linię. Błędne adresy URL będą pomijane.",
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "Nieaktualne.",
@@ -400,8 +408,8 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "W jednym wierszu może być tylko jeden filtr. Filtrem może być nazwa hosta lub filtr kompatybilny z dodatkiem AdBlock Plus. Wiersze poprzedzone znakiem wykrzyknika [ ! ] będą pomijane.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "message": "Jeden filtr na linię. Filtrem może być nazwa hosta lub filtr kompatybilny z dodatkiem Adblock Plus. Wiersze poprzedzone <code>!<\/code> będą pomijane.",
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Importuj i dołącz",

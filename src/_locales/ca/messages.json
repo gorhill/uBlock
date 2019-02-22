@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
@@ -351,6 +351,10 @@
     "message": "Aplicar canvis",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Local",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Anuncis",
     "description": "English: Ads"
@@ -379,9 +383,13 @@
     "message": "Personalitzat",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Importa...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
-    "message": "Una URL per línia. Línies amb el símbol &lsquo;!&rsquo; s'ignoraran. Adreces URL no vàlides s'ignoraran silenciosament.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "message": "Una URL per línia. S'ignoraran les línies amb el símbol &lsquo;!&rsquo;. Les URL no vàlides s'ignoraran silenciosament.",
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "Obsolet",
@@ -400,8 +408,8 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Un filtre per línia. Un filtre pot ser un domini, o un filtre compatible amb Adblock Plus. Línies amb el símbol &lsquo;!&rsquo; s'ignoraran.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "message": "Un filtre per línia. Un filtre pot ser un domini, o un filtre compatible amb l'Adblock Plus. S'ignoraran les línies amb el símbol &lsquo;!&rsquo;.",
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Importar i annexar",

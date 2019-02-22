@@ -16,7 +16,7 @@
     "description":"appears as tab name in dashboard"
   },
   "3pPageName":{
-    "message":"3rd-party filters",
+    "message":"Filter lists",
     "description":"appears as tab name in dashboard"
   },
   "1pPageName":{
@@ -351,6 +351,10 @@
     "message":"Apply changes",
     "description":"English: Apply changes"
   },
+  "3pGroupDefault":{
+    "message":"Built-in",
+    "description":"Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds":{
     "message":"Ads",
     "description":"English: Ads"
@@ -379,8 +383,12 @@
     "message":"Custom",
     "description":"English: Custom"
   },
+  "3pImport":{
+    "message":"Import...",
+    "description":"The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint":{
-    "message":"One URL per line. Lines prefixed with <code>!</code> will be ignored. Invalid URLs will be silently ignored.",
+    "message":"One URL per line. Invalid URLs will be silently ignored.",
     "description":"Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete":{

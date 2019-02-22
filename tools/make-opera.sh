@@ -63,4 +63,7 @@ echo
 #rm -r $DES/_locales/mr
 #rm -r $DES/_locales/ta
 
+echo "*** AdNauseam.opera: Generating web accessible resources..."
+cp -R src/web_accessible_resources $DES/
+python3 tools/import-war.py $DES/
 # grep version $DES/manifest.json

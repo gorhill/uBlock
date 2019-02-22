@@ -61,5 +61,8 @@
   "short_name": "AdNauseam",
   "storage": {
     "managed_schema": "managed_storage.json"
-  }
+  },
+  "web_accessible_resources": [
+    "/web_accessible_resources/*"
+  ]
 }

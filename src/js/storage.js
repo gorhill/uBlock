@@ -104,6 +104,15 @@
                     µb.hiddenSettings[key] = hs[key];
                 }
             }
+            // To remove once 1.15.26 is widespread. The reason is to ensure
+            // the change in the following commit is taken into account:
+            // https://github.com/gorhill/uBlock/commit/8071321e9104
+            if ( hs.manualUpdateAssetFetchPeriod === 2000 ) {
+                µb.hiddenSettings.manualUpdateAssetFetchPeriod =
+                    µb.hiddenSettingsDefault.manualUpdateAssetFetchPeriod;
+                hs.manualUpdateAssetFetchPeriod = undefined;
+                µb.saveHiddenSettings();
+            }
         }
         if ( vAPI.localStorage.getItem('immediateHiddenSettings') === null ) {
             µb.saveImmediateHiddenSettings();
@@ -116,8 +125,21 @@
     );
 };
 
+// Note: Save only the settings which values differ from the default ones.
+// This way the new default values in the future will properly apply for those
+// which were not modified by the user.
+
 µBlock.saveHiddenSettings = function(callback) {
-    vAPI.storage.set({ hiddenSettings: this.hiddenSettings, callback });
+    var bin = { hiddenSettings: {} };
+    for ( var prop in this.hiddenSettings ) {
+        if (
+            this.hiddenSettings.hasOwnProperty(prop) &&
+            this.hiddenSettings[prop] !== this.hiddenSettingsDefault[prop]
+        ) {
+            bin.hiddenSettings[prop] = this.hiddenSettings[prop];
+        }
+    }
+    vAPI.storage.set(bin, callback);
     this.saveImmediateHiddenSettings();
 };
 
@@ -456,7 +478,7 @@
 
     // User filter list.
     newAvailableLists[this.userFiltersPath] = {
-        group: 'default',
+        group: 'user',
         title: vAPI.i18n('1pPageName')
     };
 
@@ -743,7 +765,7 @@
     // https://github.com/gorhill/uBlock/issues/313
     // Always try to fetch the name if this is an external filter list.
     if ( listEntry.title === '' || listEntry.group === 'custom' ) {
-        matches = head.match(/(?:^|\n)!\s*Title:([^\n]+)/i);
+        matches = head.match(/(?:^|\n)(?:!|# )[\t ]*Title:([^\n]+)/i);
         if ( matches !== null ) {
             // https://bugs.chromium.org/p/v8/issues/detail?id=2869
             // JSON.stringify/JSON.parse is to work around String.slice()
@@ -753,7 +775,7 @@
         }
     }
     // Extract update frequency information
-    matches = head.match(/(?:^|\n)![\t ]*Expires:[\t ]*([\d]+)[\t ]*days?/i);
+    matches = head.match(/(?:^|\n)(?:!|# )[\t ]*Expires:[\t ]*(\d+)[\t ]*day/i);
     if ( matches !== null ) {
         v = Math.max(parseInt(matches[1], 10), 1);
         if ( v !== listEntry.updateAfter ) {
@@ -785,18 +807,16 @@
         staticExtFilteringEngine = this.staticExtFilteringEngine,
         reIsWhitespaceChar = /\s/,
         reMaybeLocalIp = /^[\d:f]/,
-        reIsLocalhostRedirect = /\s+(?:broadcasthost|local|localhost|localhost\.localdomain)\b/,
+        reIsLocalhostRedirect = /\s+(?:0\.0\.0\.0|broadcasthost|ip6-all(?:nodes|routers)|local|localhost|localhost\.localdomain)\b/,
         reLocalIp = /^(?:0\.0\.0\.0|127\.0\.0\.1|::1|fe80::1%lo0)/,
         line, c, pos,
-        lineIter = new this.LineIterator(rawText);
+        lineIter = new this.LineIterator(this.processDirectives(rawText));
 
     while ( lineIter.eot() === false ) {
-        line = lineIter.next().trim();
-
         // rhill 2014-04-18: The trim is important here, as without it there
         // could be a lingering `\r` which would cause problems in the
         // following parsing code.
-
+        line = lineIter.next().trim();
         if ( line.length === 0 ) { continue; }
 
         // Strip comments
@@ -903,6 +923,59 @@
 
 /******************************************************************************/
 
+// https://github.com/AdguardTeam/AdguardBrowserExtension/issues/917
+
+µBlock.processDirectives = function(content) {
+    var reIf = /^!#(if|endif)\b([^\n]*)/gm,
+        parts = [],
+        beg = 0, depth = 0, discard = false;
+    while ( beg < content.length ) {
+        var match = reIf.exec(content);
+        if ( match === null ) { break; }
+        if ( match[1] === 'if' ) {
+            var expr = match[2].trim();
+            var target = expr.startsWith('!');
+            if ( target ) { expr = expr.slice(1); }
+            var token = this.processDirectives.tokens.get(expr);
+            if (
+                depth === 0 &&
+                discard === false &&
+                token !== undefined &&
+                vAPI.webextFlavor.soup.has(token) === target
+            ) {
+                parts.push(content.slice(beg, match.index));
+                discard = true;
+            }
+            depth += 1;
+            continue;
+        }
+        depth -= 1;
+        if ( depth < 0 ) { break; }
+        if ( depth === 0 && discard ) {
+            beg = match.index + match[0].length + 1;
+            discard = false;
+        }
+    }
+    if ( depth === 0 && parts.length !== 0 ) {
+        parts.push(content.slice(beg));
+        content = parts.join('\n');
+    }
+    return content.trim();
+};
+
+µBlock.processDirectives.tokens = new Map([
+    [ 'ext_ublock', 'ublock' ],
+    [ 'env_chromium', 'chromium' ],
+    [ 'env_edge', 'edge' ],
+    [ 'env_firefox', 'firefox' ],
+    [ 'env_mobile', 'mobile' ],
+    [ 'env_safari', 'safari' ],
+    [ 'cap_html_filtering', 'html_filtering' ],
+    [ 'cap_user_stylesheet', 'user_stylesheet' ]
+]);
+
+/******************************************************************************/
+
 µBlock.loadRedirectResources = function(updatedContent) {
     var µb = this,
         content = '';
@@ -959,11 +1032,18 @@
     };
 
     var onCompiledListLoaded = function(details) {
-        if ( details.content === '' ) {
+        var selfie;
+        try {
+            selfie = JSON.parse(details.content);
+        } catch (ex) {
+        }
+        if (
+            selfie === undefined ||
+            publicSuffixList.fromSelfie(selfie) === false
+        ) {
             µb.assets.get(assetKey, onRawListLoaded);
             return;
         }
-        publicSuffixList.fromSelfie(JSON.parse(details.content));
         callback();
     };
 
@@ -993,7 +1073,6 @@
         timer = null;
         var selfie = {
             magic: this.systemSettings.selfieMagic,
-            publicSuffixList: publicSuffixList.toSelfie(),
             availableFilterLists: this.availableFilterLists,
             staticNetFilteringEngine: this.staticNetFilteringEngine.toSelfie(),
             redirectEngine: this.redirectEngine.toSelfie(),
@@ -1001,6 +1080,25 @@
         };
         vAPI.cacheStorage.set({ selfie: selfie });
     }.bind(µBlock);
+
+    var load = function(callback) {
+        vAPI.cacheStorage.get('selfie', function(bin) {
+            var µb = µBlock;
+            if (
+                bin instanceof Object === false ||
+                bin.selfie instanceof Object === false ||
+                bin.selfie.magic !== µb.systemSettings.selfieMagic ||
+                bin.selfie.redirectEngine === undefined
+            ) {
+                return callback(false);
+            }
+            µb.availableFilterLists = bin.selfie.availableFilterLists;
+            µb.staticNetFilteringEngine.fromSelfie(bin.selfie.staticNetFilteringEngine);
+            µb.redirectEngine.fromSelfie(bin.selfie.redirectEngine);
+            µb.staticExtFilteringEngine.fromSelfie(bin.selfie.staticExtFilteringEngine);
+            callback(true);
+        });
+    };
 
     var destroy = function() {
         if ( timer !== null ) {
@@ -1012,6 +1110,7 @@
     }.bind(µBlock);
 
     return {
+        load: load,
         destroy: destroy
     };
 })();

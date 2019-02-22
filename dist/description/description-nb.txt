@@ -24,7 +24,7 @@ Flere lister er tilgjengelige om ønskelig:
 - Spam404
 - Og mange andre
 
-Jo flere filtre som er aktivert, desto høyere minnebruk. Men selv etter å ha lagt til Fanboys to ekstra lister og "hpHosts’s Ad and tracking servers", har uBlock fortsatt lavere minnebruk enn andre populære utvidelser for blokkering.
+Jo flere filtre som er aktivert, desto høyere minnebruk. Men selv etter å ha lagt til Fanboys to ekstra lister og "hpHosts’s Ad and tracking servers", har uBlock Origin fortsatt lavere minnebruk enn andre populære utvidelser for blokkering.
 
 Vær også oppmerksom på at å velge noen av disse ekstra listene kan lede til høyere sannsynlighet for at nettsider ikke lastes riktig -- spesielt de listene som normalt brukes som vertsfil.
 
@@ -43,7 +43,7 @@ Bidragsytere @ Crowdin: https://crowdin.net/project/ublock
 
 ***
 
-Dette er en tidlig versjon, ha det i tankene når du bedømmer den.
+ 
 
 Endringslogg for prosjektet:
 https://github.com/gorhill/uBlock/releases

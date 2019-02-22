@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Tredjeparts filtre",
+    "message": "Filterlister",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -351,6 +351,10 @@
     "message": "Bruk endringer",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Innebygd",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Reklame",
     "description": "English: Ads"
@@ -379,9 +383,13 @@
     "message": "Egendefinert",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Importer...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
-    "message": "En nettadresse per linje. Linjer med prefikset &lsquo;!&rsquo; vil bli ignorert. Ugyldige nettadresser ignoreres stille.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "message": "En nettadresse per linje. Ugyldige nettadresser ignoreres stille.",
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "Utgått på dato",
@@ -400,8 +408,8 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Ett filter per linje. Et filter kan være et vanlig vertsnavn eller et Adblock Plus-kompatibelt filter. Linjer med prefikset &lsquo;!&rsquo; vil bli ignorert.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "message": "Ett filter per linje. Et filter kan være et vanlig vertsnavn eller et Adblock Plus-kompatibelt filter. Linjer med prefikset <code>!<\/code> blir ignorert.",
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Importer og legg til",

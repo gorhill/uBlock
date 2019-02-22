@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
@@ -351,6 +351,10 @@
     "message": "套用變更",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "內置",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "廣告",
     "description": "English: Ads"
@@ -379,9 +383,13 @@
     "message": "自訂",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "匯入…",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
-    "message": "每行一個網址。以“!”開頭的行將被忽略。無效的網址將被忽略。",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "message": "每行一個網址。無效網址將被忽略。",
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "已過期。",
@@ -400,8 +408,8 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "每行一個過濾規則。一個規則可以是一個平凡的主機名稱或者是一個與 Adblock Plus 相容的過濾規則。以“!”開頭的行將被忽略。",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "message": "每行一個過濾規則。規則可以單純是主機名稱，或是 Adblock Plus 相容格式的過濾規則，以 <code>!<\/code> 開頭的行將被忽略。",
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "匯入並加入",

@@ -1137,7 +1137,7 @@ var filterDocument = (function() {
             selectors: undefined,
             scriptlets: undefined,
             buffer: null,
-            mime: undefined,
+            mime: 'text/html',
             charset: undefined
         };
 
@@ -1349,20 +1349,18 @@ var injectCSP = function(pageStore, details) {
 
 // https://github.com/gorhill/uMatrix/issues/967#issuecomment-373002011
 //   This can be removed once Firefox 60 ESR is released.
-var cantMergeCSPHeaders = (function() {
-    if (
-        self.browser instanceof Object &&
-        typeof self.browser.runtime.getBrowserInfo === 'function'
-    ) {
-        self.browser.runtime.getBrowserInfo().then(function(info) {
-            cantMergeCSPHeaders =
-                info.vendor === 'Mozilla' &&
-                info.name === 'Firefox' &&
-                parseInt(info.version, 10) < 59;
-        });
-    }
-    return false;
-})();
+var evalCantMergeCSPHeaders = function() {
+    return vAPI.webextFlavor.soup.has('firefox') &&
+           vAPI.webextFlavor.major < 59;
+};
+
+var cantMergeCSPHeaders = evalCantMergeCSPHeaders();
+
+// The real actual webextFlavor value may not be set in stone, so listen
+// for possible future changes.
+window.addEventListener('webextFlavor', function() {
+    cantMergeCSPHeaders = evalCantMergeCSPHeaders();
+}, { once: true });
 
 /******************************************************************************/
 

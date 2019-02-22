@@ -64,7 +64,7 @@
     "description": "English: on this page"
   },
   "popupBlockedStats": {
-    "message": "{{count}} 或称 {{percent}}%",
+    "message": "{{count}} 占 {{percent}}%",
     "description": "Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt": {
@@ -72,7 +72,7 @@
     "description": "English: since install"
   },
   "popupOr": {
-    "message": "或",
+    "message": "占",
     "description": "English: or"
   },
   "popupTipDashboard": {
@@ -351,6 +351,10 @@
     "message": "应用更改",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "内置",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "广告",
     "description": "English: Ads"
@@ -379,9 +383,13 @@
     "message": "自定义",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "导入…",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
-    "message": "一行一条 URL。以 &lsquo;!&rsquo; 开头的行将被忽略，无效的 URL 也将被忽略。",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "message": "一行一条网址。无效网址将被忽略。",
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "需要更新",
@@ -400,8 +408,8 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "一行一条过滤规则。每条规则可以是一个普通的主机名或者是一条 Adblock Plus 兼容的过滤规则。以 &lsquo;!&rsquo; 开头的行将被忽略。",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "message": "一行一条过滤规则。每条规则可以是一个普通的主机名或者是一条 Adblock Plus 兼容的过滤规则。以 <code>!<\/code> 开头的行将被忽略。",
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "导入并添加",

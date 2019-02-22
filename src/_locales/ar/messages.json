@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "فلاتر خارجيه",
+    "message": "فلاتر خارجية",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -351,6 +351,10 @@
     "message": "حفظ التغيرات",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "محلية",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "اعلانات",
     "description": "English: Ads"
@@ -379,9 +383,13 @@
     "message": "مخصصه",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "إستعادة …",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
-    "message": "رابط واحد كل سطر. روابط التي تحتوي على &lsquo;!&rsquo; سوف يتم تجاهلها . الروابط الغير صحيحه سوف ايضاً تجاهلها .",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "message": "رابط واحد في كل سطر. الروابط التي تحتوي على &lsquo;!&rsquo; سوف يتم تجاهلها. الروابط غير الصحيحة سوف يتم تجاهلها بصمت.",
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "متقادم.",
@@ -401,7 +409,7 @@
   },
   "1pFormatHint": {
     "message": "كل سطر يمكن ان يتحمل على فلتر واحد. يمكن ان يكون الفلتر رابط موقع او فلتر متعارف مع نظام AdBlock Plus. روابط التي تحتوي على &lsquo;!&rsquo;  سوف يتم تجاهلها.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "استيراد",

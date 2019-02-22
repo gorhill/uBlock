@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
@@ -351,6 +351,10 @@
     "message": "Použiť zmeny",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Lokálne",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Reklamy",
     "description": "English: Ads"
@@ -379,9 +383,13 @@
     "message": "Vlastné",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Importovať...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
     "message": "Jedna URL na riadok. Riadky začínajúce s &lsquo;!&rsquo; budú ignorované. Neplatné URL budú potichu ignorované.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "Zastarané.",
@@ -401,7 +409,7 @@
   },
   "1pFormatHint": {
     "message": "Jeden filter na riadok. Filter môže byť jednoduchý názov hostiteľa alebo filter kompatibilný s Adblock Plus. Riadky začínajúce s &lsquo;!&rsquo; budú ignorované.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Importovať a pripojiť",

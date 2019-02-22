@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
@@ -351,6 +351,10 @@
     "message": "മാറ്റങ്ങള്‍ അപ്ലേ ചെയ്യുക",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Built-in",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "പരസ്യങ്ങള്‍",
     "description": "English: Ads"
@@ -379,9 +383,13 @@
     "message": "കസ്റ്റം",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Import...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
     "message": "ഒരു വരിയില്‍ ഒരു യുആര്‍എല്‍ എന്ന രീതിയില്‍. &lsquo;!&rsquo; എന്നിവയില്‍ തുടങ്ങുന്ന വരികള്‍ ഇഗ്നോര്‍ ചെയ്യപ്പെടും. ഇന്‍വാലിഡ്‌ ആയ യുആര്‍എല്ലുകള്‍ നിശബ്ദമായി ഇഗ്നോര്‍ ചെയ്യപ്പെടും.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "കാലഹരണപ്പെട്ടത്",
@@ -401,7 +409,7 @@
   },
   "1pFormatHint": {
     "message": "ഒരു വരിയില്‍ ഒരു ഫില്‍റ്റര്‍ എന്ന രീതിയില്‍. ഒരു ഫില്‍റ്റര്‍ എന്നത്, ഹോസ്റ്റ് നെയിം, അല്ലെങ്കില്‍ ആഡ് ബ്ലോക്ക് പ്ലസ്‌-നോട്‌ കംപാറ്റബിള്‍ ആയ ഫില്‍റ്റര്‍ എന്നിവ ആകാം. &lsquo;!&rsquo; എന്നിവയില്‍ ആരംഭിക്കുന്ന വരികള്‍ ഇഗ്നോര്‍ ചെയ്യപ്പെടും.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "ഇമ്പോര്‍ട്ടും കൂട്ടിചേര്‍ക്കലും ചെയ്യുക",

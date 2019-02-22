@@ -41,9 +41,8 @@
 </div>
 <div id="templates" style="display: none;">
     <ul>
-        <li class="groupEntry"><span class="geName"></span> <span class="geCount dim"></span>
-            <ul class="listEntries">
-            </ul>
+        <li class="groupEntry"><span class="geDetails"><span class="geName"></span> <span class="geCount dim"></span></span>
+            <ul class="listEntries"></ul>
             </li>
         <li class="listEntry">
             <input type="checkbox"><label></label><!--
@@ -58,6 +57,9 @@
          --><span class="fa status updating" title="3pUpdating">&#xf110;</span>&#8203;<!--
          --><span class="fa status failed" title="3pNetworkError">&#xf127;</span>
             </li>
+        <li class="listEntry toImport"><input type="checkbox" id="importLists"><label for="importLists" data-i18n="3pImport"></label><!--
+            --><a class="fa info towiki" href="https://github.com/gorhill/uBlock/wiki/Filter-lists-from-around-the-web" target="_blank">&#xf05a;</a><!--
+            --><textarea id="externalLists" dir="ltr" spellcheck="false" placeholder="3pExternalListsHint"></textarea>
         </ul>
     </div>
 

@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Сторонние фильтры",
+    "message": "Списки фильтров",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -351,6 +351,10 @@
     "message": "Применить изменения",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Встроенные",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Реклама",
     "description": "English: Ads"
@@ -379,9 +383,13 @@
     "message": "Пользовательские",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Импортировать...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
-    "message": "Один URL на строку. Строки, начинающиеся с символа &lsquo;!&rsquo;, будут игнорироваться. Неверные ссылки будут игнорироваться без предупреждения.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "message": "Один URL на строку. Неверные URL будут проигнорированы без предупреждения.",
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "Устарел.",
@@ -400,8 +408,8 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Одно правило на строку. Правилом может быть обычное имя сайта, или Adblock Plus-совместимый фильтр. Строки, начинающиеся с &lsquo;!&rsquo;, будут игнорироваться.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "message": "Одно правило на строку. Правилом может быть обычное имя сайта, или Adblock Plus-совместимый фильтр. Строки, начинающиеся с <code>!<\/code>, будут проигнорированы.",
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Импортировать и добавить",

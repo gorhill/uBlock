@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global publicSuffixList */
-
 'use strict';
 
 /******************************************************************************/
@@ -98,7 +96,12 @@ var onAllReady = function() {
 // - PSL
 
 var onPSLReady = function() {
-    µb.loadFilterLists(onAllReady);
+    µb.selfieManager.load(function(valid) {
+        if ( valid === true ) {
+            return onAllReady();
+        }
+        µb.loadFilterLists(onAllReady);
+    });
 };
 
 /******************************************************************************/
@@ -112,7 +115,7 @@ var onVersionReady = function(lastVersion) {
     // new version is detected, as resources.txt may have changed since last
     // release. This will be done only for release versions of Firefox.
     if (
-        /^Mozilla-Firefox-/.test(vAPI.webextFlavor) &&
+        vAPI.webextFlavor.soup.has('firefox') &&
         /(b|rc)\d+$/.test(vAPI.app.version) === false
     ) {
         µb.redirectEngine.invalidateResourcesSelfie();
@@ -160,31 +163,6 @@ var onVersionReady = function(lastVersion) {
     })(lastVersion);
 
     vAPI.storage.set({ version: vAPI.app.version });
-};
-
-/******************************************************************************/
-
-var onSelfieReady = function(selfie) {
-    if (
-        selfie instanceof Object === false ||
-        selfie.magic !== µb.systemSettings.selfieMagic
-    ) {
-        return false;
-    }
-    if ( publicSuffixList.fromSelfie(selfie.publicSuffixList) !== true ) {
-        return false;
-    }
-    if ( selfie.redirectEngine === undefined ) {
-        return false;
-    }
-
-    µb.availableFilterLists = selfie.availableFilterLists;
-    µb.staticNetFilteringEngine.fromSelfie(selfie.staticNetFilteringEngine);
-    µb.redirectEngine.fromSelfie(selfie.redirectEngine);
-    µb.staticExtFilteringEngine.fromSelfie(selfie.staticExtFilteringEngine);
-    µb.loadRedirectResources();
-
-    return true;
 };
 
 /******************************************************************************/
@@ -247,7 +225,7 @@ var onSystemSettingsReady = function(fetched) {
     if ( mustSaveSystemSettings ) {
         fetched.selfie = null;
         µb.selfieManager.destroy();
-        vAPI.storage.set(µb.systemSettings, µb.noopFunc);
+        vAPI.storage.set(µb.systemSettings);
     }
 };
 
@@ -265,13 +243,8 @@ var onFirstFetchReady = function(fetched) {
     onNetWhitelistReady(fetched.netWhitelist);
     onVersionReady(fetched.version);
 
-    // If we have a selfie, skip loading PSL, filter lists
-    vAPI.cacheStorage.get('selfie', function(bin) {
-        if ( bin instanceof Object && onSelfieReady(bin.selfie) ) {
-            return onAllReady();
-        }
-        µb.loadPublicSuffixList(onPSLReady);
-    });
+    µb.loadPublicSuffixList(onPSLReady);
+    µb.loadRedirectResources();
 };
 
 /******************************************************************************/

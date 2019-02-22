@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "3-iųjų šalių filtrai",
+    "message": "Filtrų sąrašai",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -351,6 +351,10 @@
     "message": "Taikyti pakeitimus",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Vietiniai",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Reklamos",
     "description": "English: Ads"
@@ -379,9 +383,13 @@
     "message": "Adaptuoti",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Importuoti...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
-    "message": "Vienas URL eilutėje. Eilutės pradėtos „!“ bus ignoruotos. Neteisingi URL bus tyliai ignoruoti.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "message": "Vienas URL eilutėje. Neteisingi URL bus tyliai ignoruoti.",
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "Pasenęs.",
@@ -400,8 +408,8 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Vienas filtras eilutėje. Filtras gali būti paprastas serverio adresas, arba su Adblock Plus suderinamas filtras. Eilutės pradėtos „!“ bus ignoruotos. ",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "message": "Vienas filtras eilutėje. Filtras gali būti paprastas serverio adresas, arba su Adblock Plus suderinamas filtras. Eilutės pradėtos <code>!<\/code> bus ignoruotos.",
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Importuoti ir papildyti",

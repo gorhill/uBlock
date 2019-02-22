@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Filtrat nga palët e treta",
+    "message": "Listat e filtrave",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -351,6 +351,10 @@
     "message": "Ruaj ndryshimet",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Lokale",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Reklamat",
     "description": "English: Ads"
@@ -379,9 +383,13 @@
     "message": "Personalizoj",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Importoj...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
-    "message": "Një URL për rresht. Nuk do të merren parasysh rreshtat që fillojnë me &lsquo;!&rsquo;, sikundër adresat e pasakta.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "message": "Një URL për rresht. Nuk do të merren parasysh adresat e pasakta.",
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "E vjetër.",
@@ -400,8 +408,8 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Një filtër për rresht. Filtri mund të jetë thjesht emri i një hosti ose t'i përngjajë atyre që përdor Adblock Plus. Nuk do të merren parasysh rreshtat që fillojnë me &lsquo;!&rsquo;.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "message": "Një filtër për rresht. Filtri mund të jetë thjesht emri i një hosti ose i ngjashëm me ata që përdor Adblock Plus. Nuk do të merren parasysh rreshtat që fillojnë me <code>!<\/code>.",
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Importoj dhe shtoj",

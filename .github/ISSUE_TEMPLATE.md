@@ -1,7 +1,8 @@
 ### Describe the issue
 
+The official issue tracker for uBlock Origin is at:
 
-### One or more specific URLs where the issue occurs
+https://github.com/uBlockOrigin/uBlock-issues/issues
 
 
 ### Screenshot in which the issue can be seen
