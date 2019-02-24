@@ -505,7 +505,10 @@
     };
 
     const clearIDB = function() {
-        indexedDB.deleteDatabase(STORAGE_NAME);
+        try {
+            indexedDB.deleteDatabase(STORAGE_NAME);
+        } catch(ex) {
+        }
     };
 
     return api;
