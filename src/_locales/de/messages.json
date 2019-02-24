@@ -616,7 +616,7 @@
     "description": "Label to identify a filter field"
   },
   "loggerEntryDetailsFilterList": {
-    "message": "Liste filtern",
+    "message": "Filterliste",
     "description": "Label to identify a filter list field"
   },
   "loggerEntryDetailsRule": {

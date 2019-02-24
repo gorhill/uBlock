@@ -260,7 +260,7 @@
     "description": "English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt": {
-    "message": "Modo daltonismo",
+    "message": "Cores amigáveis para daltônicos",
     "description": "English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt": {
@@ -344,7 +344,7 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll": {
-    "message": "Limpar todos caches",
+    "message": "Limpar todos os caches",
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
@@ -396,7 +396,7 @@
     "description": "English: Multipurpose"
   },
   "3pGroupRegions": {
-    "message": "Regiões, idiomas",
+    "message": "Regiões e idiomas",
     "description": "English: Regions, languages"
   },
   "3pGroupCustom": {
@@ -556,7 +556,7 @@
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
-    "message": "uBlock Origin wiki: Registros",
+    "message": "Wiki do uBlock Origin: Registros",
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
@@ -628,7 +628,7 @@
     "description": "Label to identify a context field (typically a hostname)"
   },
   "loggerEntryDetailsRootContext": {
-    "message": "Contexto raiz",
+    "message": "Raiz de contexto",
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
