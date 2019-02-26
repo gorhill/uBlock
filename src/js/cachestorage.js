@@ -140,11 +140,12 @@
 
     // Reassign API entries to that of indexedDB-based ones
     const selectIDB = function() {
+        let db;
         let dbPromise;
         let dbTimer;
 
         const genericErrorHandler = function(ev) {
-            let error = ev.target && ev.target.error;
+            const error = ev.target && ev.target.error;
             if ( error && error.name === 'QuotaExceededError' ) {
                 api.error = error.name;
             }
@@ -159,13 +160,10 @@
                 clearTimeout(dbTimer);
                 dbTimer = undefined;
             }
-            if ( dbPromise === undefined ) { return; }
-            dbPromise.then(db => {
-                if ( db instanceof IDBDatabase ) {
-                    db.close();
-                }
-                dbPromise = undefined;
-            });
+            if ( db instanceof IDBDatabase ) {
+                db.close();
+                db = undefined;
+            }
         };
 
         const keepAlive = function() {
@@ -196,6 +194,9 @@
 
         const getDb = function() {
             keepAlive();
+            if ( db !== undefined ) {
+                return Promise.resolve(db);
+            }
             if ( dbPromise !== undefined ) {
                 return dbPromise;
             }
@@ -210,6 +211,8 @@
                 } catch(ex) {
                 }
                 if ( req === undefined ) {
+                    db = null;
+                    dbPromise = undefined;
                     return resolve(null);
                 }
                 req.onupgradeneeded = function(ev) {
@@ -224,13 +227,16 @@
                 };
                 req.onsuccess = function(ev) {
                     req = undefined;
-                    const db = ev.target.result;
+                    db = ev.target.result;
                     db.onerror = db.onabort = genericErrorHandler;
+                    dbPromise = undefined;
                     resolve(db);
                 };
                 req.onerror = req.onblocked = function() {
                     req = undefined;
                     console.log(this.error);
+                    db = null;
+                    dbPromise = undefined;
                     resolve(null);
                 };
             });
@@ -416,25 +422,15 @@
             if ( typeof callback !== 'function' ) {
                 callback = noopfn;
             }
-            getDb().then(db => {
-                if ( !db ) { return callback(); }
-                const finish = ( ) => {
-                    disconnect();
-                    indexedDB.deleteDatabase(STORAGE_NAME);
-                    if ( callback === undefined ) { return; }
-                    let cb = callback;
-                    callback = undefined;
-                    cb();
+            disconnect();
+            try {
+                const req = indexedDB.deleteDatabase(STORAGE_NAME);
+                req.onsuccess = req.onerror = ( ) => {
+                    callback();
                 };
-                try {
-                    const req = db.transaction(STORAGE_NAME, 'readwrite')
-                                  .objectStore(STORAGE_NAME)
-                                  .clear();
-                    req.onsuccess = req.onerror = finish;
-                } catch (ex) {
-                    finish();
-                }
-            });
+            } catch(ex) {
+                callback();
+            }
         };
 
         return getDb().then(db => {
