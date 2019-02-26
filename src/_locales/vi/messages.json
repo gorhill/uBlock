@@ -148,7 +148,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Nhấp để vô hiệu hóa javascript trên trang này",
+    "message": "Nhấp để vô hiệu hóa JavaScript trên trang này",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
@@ -644,7 +644,7 @@
     "description": "Label to identify the URL of an entry"
   },
   "loggerURLFilteringHeader": {
-    "message": "Lọc URL chủ động",
+    "message": "Quy tắc URL",
     "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
@@ -948,7 +948,7 @@
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
-    "message": "Sao chép tới clipboard",
+    "message": "Sao chép vào khay nhớ tạm",
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "dummy": {
