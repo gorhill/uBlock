@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Επιτέλους, ένας αποτελεσματικός blocker. Ελαφρύς για τον επεξεργαστή και τη μνήμη.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ - Πίνακας ελέγχου",
@@ -42,6 +42,10 @@
   "aboutPageName": {
     "message": "Σχετικά",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Asset viewer",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Ρυθμίσεις για προχωρημένους",
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Κάντε κλικ για αναίρεση φραγής απομακρυσμένων γραμματοσειρών σε αυτή την ιστοσελίδα",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Click to disable JavaScript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Click to no longer disable JavaScript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Καθολικοί κανόνες: αυτή η στήλη είναι για κανόνες με εφαρμογή σε όλες τις τοποθεσίες.",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Φραγή απομακρυσμένων γραμματοσειρών",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Disable JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Φραγή αναφορών CSP",
@@ -597,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Αρχείο καταγραφής αλλαγών",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Υποστήριξη",

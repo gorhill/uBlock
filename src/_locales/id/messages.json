@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Akhirnya, pemblokir iklan yang efisien. Ringan penggunaan CPU dan memori.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Dasbor",
@@ -42,6 +42,10 @@
   "aboutPageName": {
     "message": "Tentang",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Penampil aset",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Pengaturan lanjutan",
@@ -143,6 +147,14 @@
     "message": "Klik untuk tidak lagi memblokir fon eksternal pada situs ini",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
+  "popupTipNoScripting1": {
+    "message": "Klik untuk menonaktifkan total JavaScript di situs ini",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Klik untuk tidak lagi menonaktifkan total JavaScript di situs ini",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
   "popupTipGlobalRules": {
     "message": "Aturan global: kolom ini untuk aturan yang diterapkan ke semua situs.",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
@@ -172,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "css\/gambar pihak ketiga",
+    "message": "CSS\/gambar pihak ke-3",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Blokir fon rajuh",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Nonaktifkan JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Blokir laporan CSP",
@@ -597,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Catatan perubahan",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Dukungan",

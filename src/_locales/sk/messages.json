@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Konečne efektívny blokovač, ktorý nezaťažuje CPU a pamäť.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Ovládací panel",
@@ -42,6 +42,10 @@
   "aboutPageName": {
     "message": "O doplnku",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — zobrazovač zdrojov",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Pokročilé nastavenia",
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Kliknutím povolíte vzdialené písma pre túto stránku",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Kliknutím úplne zakážete javascript na tejto stránke",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Kliknutím už nebude úplne zakázaný javascript na tejto stránke",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Globálne pravidlá: tento stĺpec slúži pre pravidlá, ktoré platia pre všetky weby.",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Blokovať vzdialené písma",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Zakázať JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Zablokovať CSP hlásenia",
@@ -597,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Zoznam zmien",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Podpora",

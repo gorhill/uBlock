@@ -1326,6 +1326,11 @@ vAPI.domSurveyor = (function() {
             return;
         }
 
+        vAPI.messaging.send(
+            'contentscript',
+            { what: 'shouldRenderNoscriptTags' }
+        );
+
         if ( vAPI.domWatcher instanceof Object ) {
             vAPI.domWatcher.start();
         }

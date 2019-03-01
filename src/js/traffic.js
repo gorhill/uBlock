@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2018 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -407,10 +407,10 @@ var onBeforeRootFrameRequest = function(details) {
     }
 
     // Permanently unrestricted?
-    if ( result === 0 && µb.hnSwitches.evaluateZ('no-strict-blocking', requestHostname) ) {
+    if ( result === 0 && µb.sessionSwitches.evaluateZ('no-strict-blocking', requestHostname) ) {
         result = 2;
-        if ( logEnabled === true ) {
-            logData = { engine: 'u', result: 2, raw: 'no-strict-blocking: ' + µb.hnSwitches.z + ' true' };
+        if ( logEnabled ) {
+            logData = { engine: 'u', result: 2, raw: 'no-strict-blocking: ' + µb.sessionSwitches.z + ' true' };
         }
     }
 
@@ -816,15 +816,16 @@ var onHeadersReceived = function(details) {
     // https://bugzilla.mozilla.org/show_bug.cgi?id=1376932
     //   Prevent document from being cached by the browser if we modified it,
     //   either through HTML filtering and/or modified response headers.
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/229
+    //   Use `no-cache` instead of `no-cache, no-store, must-revalidate`, this
+    //   allows Firefox's offline mode to work as expected.
     if ( (filteredHTML || modifiedHeaders) && dontCacheResponseHeaders ) {
         let i = headerIndexFromName('cache-control', responseHeaders);
+        let cacheControl = µb.hiddenSettings.cacheControlForFirefox1376932;
         if ( i !== -1 ) {
-            responseHeaders[i].value = 'no-cache, no-store, must-revalidate';
+            responseHeaders[i].value = cacheControl;
         } else {
-            responseHeaders[responseHeaders.length] = {
-                name: 'Cache-Control',
-                value: 'no-cache, no-store, must-revalidate'
-            };
+            responseHeaders.push({ name: 'Cache-Control', value: cacheControl });
         }
         modifiedHeaders = true;
     }
@@ -1138,20 +1139,36 @@ var injectCSP = function(pageStore, details) {
 
     let builtinDirectives = [];
 
-    context.requestType = 'inline-script';
-    if ( pageStore.filterRequest(context) === 1 ) {
-        builtinDirectives.push("script-src 'unsafe-eval' * blob: data:");
-    }
-    if ( loggerEnabled === true ) {
-        logger.writeOne(
-            tabId,
-            'net',
-            pageStore.logData,
-            'inline-script',
-            requestURL,
-            context.rootHostname,
-            context.pageHostname
-        );
+    context.requestType = 'script';
+    if ( pageStore.filterScripting(context.rootHostname, true) === 1 ) {
+        builtinDirectives.push("script-src http: https:");
+        if ( loggerEnabled === true ) {
+            logger.writeOne(
+                tabId,
+                'net',
+                pageStore.logData,
+                'no-scripting',
+                requestURL,
+                context.rootHostname,
+                context.pageHostname
+            );
+        }
+    } else {
+        context.requestType = 'inline-script';
+        if ( pageStore.filterRequest(context) === 1 ) {
+            builtinDirectives.push("script-src 'unsafe-eval' * blob: data:");
+        }
+        if ( loggerEnabled === true ) {
+            logger.writeOne(
+                tabId,
+                'net',
+                pageStore.logData,
+                'inline-script',
+                requestURL,
+                context.rootHostname,
+                context.pageHostname
+            );
+        }
     }
 
     // https://github.com/gorhill/uBlock/issues/1539

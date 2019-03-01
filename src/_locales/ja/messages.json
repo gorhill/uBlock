@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "高効率ブロッカーが遂に登場。CPUとメモリーの負担を抑えます。",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — ダッシュボード",
@@ -42,6 +42,10 @@
   "aboutPageName": {
     "message": "このプロジェクトについて",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — アセットビューアー",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "詳細設定",
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "クリックで、このサイトでのリモートフォントがブロックされないようにします",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "クリックすると、このサイトの JavaScript をブロックします",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "クリックすると、このサイトの JavaScript のブロックを解除します",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "グローバルルール: この列にあるルールは、すべてのサイトに適用されます。",
@@ -295,6 +307,10 @@
     "message": "リモートフォントをブロックする",
     "description": ""
   },
+  "settingsNoScriptingPrompt": {
+    "message": "JavaScript をブロックする",
+    "description": "The default state for the per-site no-scripting switch"
+  },
   "settingsNoCSPReportsPrompt": {
     "message": "CSPレポートをブロックする",
     "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
@@ -392,7 +408,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "URL1つにつき1行です。無効なURLは無視されます。",
+    "message": "1行に1つのURLを記入します。無効なURLは無視されます。",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -597,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "更新履歴",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "サポート",
@@ -736,7 +752,7 @@
     "description": "tooltip"
   },
   "cloudPullAndMerge": {
-    "message": "クラウドストレージからインポートし、現在の設定と合併させます",
+    "message": "クラウドストレージからインポートし、現在の設定と統合します",
     "description": "tooltip"
   },
   "cloudNoData": {
@@ -772,7 +788,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "ショートカットキーを入力",
+    "message": "ショートカットを入力",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {

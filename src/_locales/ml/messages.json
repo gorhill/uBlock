@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "അവസാനം, ഒരു കാര്യക്ഷമമായ ബ്ലോക്കര്‍. ലഘുവായ CPU, memory ഉപയോഗം.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "യുബ്ലോക്ക്ഒ - ഡാഷ്ബോര്‍ഡ്",
@@ -42,6 +42,10 @@
   "aboutPageName": {
     "message": "ഇതിനെ കുറിച്ച്",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Asset viewer",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Advanced settings",
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Click to no longer block remote fonts on this site",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Click to disable JavaScript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Click to no longer disable JavaScript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "ആഗോള നിയമങ്ങൾ: ഈ കോളത്തിലെ നിയമങ്ങൾ എല്ലാ സൈറ്റുകളിലും പ്രയോഗിക്കുന്ന നിയമങ്ങള് ആണ്.",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "വിദൂര ഫോണ്ടുകൾ തടയുക",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Disable JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Block CSP reports",
@@ -597,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "മാറ്റങ്ങളുടെ ലോഗ്",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "വിക്കി",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Support",

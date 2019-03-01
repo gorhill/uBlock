@@ -127,7 +127,8 @@ var proceedPermanent = function() {
             name: 'no-strict-blocking',
             hostname: getTargetHostname(),
             deep: true,
-            state: true
+            state: true,
+            persist: true
         },
         proceedToURL
     );

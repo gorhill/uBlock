@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "आख़िरकार, क्रोमियम-बेस्ड ब्राउज़रों के लिए एक कुशल अवरोधक। CPU और स्मृति पर आसान।",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — डैशबोर्ड",
@@ -42,6 +42,10 @@
   "aboutPageName": {
     "message": "जानकारी",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Asset viewer",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "उन्नत सेटिंग्स",
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Click to no longer block remote fonts on this site",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Click to disable JavaScript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Click to no longer disable JavaScript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "निन्मलिखित नियमें सब वेस्बिते पर लागू है",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "बाहरी अक्षराकृति को रोकें",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Disable JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Block CSP reports",
@@ -597,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "परिवर्तन सूची",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "विकी",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "मदद",

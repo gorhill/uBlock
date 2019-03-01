@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Konačno, efikasan blokator. Lak na CPU i memoriji.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Nadzorna ploča",
@@ -42,6 +42,10 @@
   "aboutPageName": {
     "message": "O programu",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Preglednik svojstva",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Napredne postavke",
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Kliknite za ukloniti blokiranje udaljenih fontova na ovom sajtu",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Kliknite kako biste onemogućili JavaScript na ovoj stranici",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Kliknite kako biste omogućili JavaScript na ovoj stranici",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Globalna pravila: ovaj stupac je za pravila koja vrijede za sve stranice.",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Blokiraj udaljene fontove",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Onemogući JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Blokiraj CSP izvješća",
@@ -597,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Popis promjena",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Podrška",

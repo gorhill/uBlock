@@ -12,6 +12,7 @@
 		"updateAfter": 19,
 		"contentURL": [
 			"https://publicsuffix.org/list/public_suffix_list.dat",
+			"https://cdn.rawgit.com/publicsuffix/list/master/public_suffix_list.dat",
 			"assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat"
 		]
 	},
@@ -264,8 +265,8 @@
 		"updateAfter": 11,
 		"off": true,
 		"title": "Dan Pollock’s hosts file",
-		"contentURL": "http://someonewhocares.org/hosts/hosts",
-		"supportURL": "http://someonewhocares.org/hosts/"
+		"contentURL": "https://someonewhocares.org/hosts/hosts",
+		"supportURL": "https://someonewhocares.org/hosts/"
 	},
 	"hphosts": {
 		"content": "filters",
@@ -511,10 +512,10 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "LTU: Adblock Plus Lithuania",
+		"title": "LTU: EasyList Lithuania",
 		"lang": "lt",
-		"contentURL": "http://margevicius.lt/easylistlithuania.txt",
-		"supportURL": "http://margevicius.lt/easylist_lithuania/"
+		"contentURL": "https://margevicius.lt/easylistlithuania.txt",
+		"supportURL": "https://margevicius.lt/2014/06/26/easylist_lithuania/"
 	},
 	"LVA-0": {
 		"content": "filters",
@@ -619,6 +620,15 @@
 		"lang": "sv",
 		"contentURL": "https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Frellwits-Swedish-Filter.txt",
 		"supportURL": "https://github.com/lassekongo83/Frellwits-filter-lists"
+	},
+	"THA-0": {
+		"content": "filters",
+		"group": "regions",
+		"off": true,
+		"title": "THA: EasyList Thailand",
+		"lang": "th",
+		"contentURL": "https://raw.githubusercontent.com/easylist-thailand/easylist-thailand/master/subscription/easylist-thailand.txt",
+		"supportURL": "https://github.com/easylist-thailand/easylist-thailand"
 	},
 	"TUR-0": {
 		"content": "filters",

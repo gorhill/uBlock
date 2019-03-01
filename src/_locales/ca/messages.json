@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Finalment, un blocador eficient que utilitza pocs recursos de memòria i processador.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Tauler de control",
@@ -42,6 +42,10 @@
   "aboutPageName": {
     "message": "Quant a",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Visor de recursos",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Configuració avançada",
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Feu clic per desblocar les fonts remotes en aquest lloc",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Feu clic per inhabilitar completament el JavaScript en aquest lloc",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Feu clic per no inhabilitar completament el JavaScript en aquest lloc",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Regles globals: les regles d'aquesta columna s'apliquen a tots els llocs.",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Bloca les fonts remotes",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Inhabilita el JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Bloca els informes CSP",
@@ -460,7 +476,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Importa des de...",
+    "message": "Importa des del fitxer...",
     "description": ""
   },
   "rulesExport": {
@@ -592,16 +608,16 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "No s'ha pogut trobar el filtre estàtic <code>{{filter}}<\/code> en cap de les llistes de filtres actualment activades",
+    "message": "No s'ha trobat el filtre estàtic <code>{{filter}}<\/code> a cap de les llistes de filtres actualment habilitades",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
     "message": "Registre de canvis",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Suport",

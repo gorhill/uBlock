@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Finalmente, um bloqueador eficiente. Com baixo uso de memória e CPU.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Painel de controle",
@@ -42,6 +42,10 @@
   "aboutPageName": {
     "message": "Sobre",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Visualizador de recursos",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Configurações avançadas",
@@ -143,6 +147,14 @@
     "message": "Clique para não bloquear fontes remotas neste site",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
+  "popupTipNoScripting1": {
+    "message": "Clique para desativar completamente o JavaScript neste site",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Clique para deixar de desativar completamente o JavaScript neste site",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
   "popupTipGlobalRules": {
     "message": "Regras globais: esta coluna é para as regras que se aplicam a todos os sites.",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
@@ -172,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "css de terceiros\/imagens",
+    "message": "CSS\/imagens de terceiros",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -256,7 +268,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Eu sou um usuário avançado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>leitura necessária<\/a>)",
+    "message": "Sou um usuário avançado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>leitura recomendada<\/a>)",
     "description": ""
   },
   "settingsAdvancedUserSettings": {
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Bloquear fontes remotas",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Desativar JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Bloquear relatórios CSP",
@@ -597,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Registro de alterações",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Documentação",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Suporte",

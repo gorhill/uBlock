@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Endelig en effektiv blokkeringsutvidelse. Lavt CPU- og minnebruk.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Dashbord",
@@ -42,6 +42,10 @@
   "aboutPageName": {
     "message": "Om",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Ressursviser",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Avanserte innstillinger",
@@ -143,6 +147,14 @@
     "message": "Klikk for å ikke lenger blokkere eksterne skrifttyper på dette nettstedet",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
+  "popupTipNoScripting1": {
+    "message": "Klikk for å slå av JavaScript på dette nettstedet",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Klikk for å ikke lenger slå av JavaScript på dette nettstedet",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
   "popupTipGlobalRules": {
     "message": "Globale regler: Denne kolonnen er for regler som gjelder alle nettsteder.",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
@@ -172,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "tredjeparts css\/bilder",
+    "message": "tredjeparts CSS\/bilder",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -295,6 +307,10 @@
     "message": "Blokker eksterne skrifttyper",
     "description": ""
   },
+  "settingsNoScriptingPrompt": {
+    "message": "Deaktiver JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
+  },
   "settingsNoCSPReportsPrompt": {
     "message": "Blokker CSP-rapporter",
     "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
@@ -404,7 +420,7 @@
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Oppdaterer…",
+    "message": "Oppdaterer...",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -597,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Endringslogg",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Brukerstøtte",

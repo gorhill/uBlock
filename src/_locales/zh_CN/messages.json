@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "一款高效的网络请求过滤工具，占用极低的内存和 CPU。",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — 控制面板",
@@ -42,6 +42,10 @@
   "aboutPageName": {
     "message": "关于",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — 资源查看器",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "高级设置",
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "单击取消屏蔽此网站上的远程字体",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "单击禁用此网站的所有脚本",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "单击不再禁用此网站的所有脚本",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "全局规则：此列的规则作用于所有网站。",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "屏蔽远程字体",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "禁用 JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "屏蔽 CSP 报告",
@@ -596,12 +612,12 @@
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
-    "message": "更新日志",
-    "description": "English: Change log"
+    "message": "变更日志",
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "支持网站",

@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Endlich ein effizienter Blocker. Prozessor-freundlich und bescheiden beim Speicherbedarf.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Dashboard",
@@ -42,6 +42,10 @@
   "aboutPageName": {
     "message": "Über",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Ressourcenbetrachter",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Erweiterte Einstellungen",
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Hier klicken, um Remote-Schriftarten auf dieser Website nicht mehr zu blockieren",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Klicken, um Javascript auf dieser Seite komplett zu deaktivieren",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Klicken, um JavaScript auf dieser Seite nicht mehr zu deaktivieren",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Globale Regeln: Diese Spalte ist für Regeln, die bei allen Seiten angewendet werden.",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Externe Schriftarten blocken",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "JavaScript deaktivieren",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "CSP-Berichte blockieren",
@@ -597,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Änderungsprotokoll",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Unterstützung",

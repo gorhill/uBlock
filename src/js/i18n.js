@@ -191,11 +191,11 @@ vAPI.i18n.render = function(context) {
 
     }
 
-    elems = root.querySelectorAll('[title]');
+    elems = root.querySelectorAll('[data-i18n-title]');
     n = elems.length;
     for ( i = 0; i < n; i++ ) {
         elem = elems[i];
-        text = vAPI.i18n(elem.getAttribute('title'));
+        text = vAPI.i18n(elem.getAttribute('data-i18n-title'));
         if ( !text ) { continue; }
         elem.setAttribute('title', text);
     }

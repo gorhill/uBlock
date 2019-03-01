@@ -29,24 +29,37 @@
     if ( typeof callback !== 'function' ) {
         callback = this.noopFunc;
     }
-    var getBytesInUseHandler = function(bytesInUse) {
+    let bytesInUse;
+    let countdown = 0;
+
+    let process = count => {
+        if ( typeof count === 'number' ) {
+            if ( bytesInUse === undefined ) {
+                bytesInUse = 0;
+            }
+            bytesInUse += count;
+        }
+        countdown -= 1;
+        if ( countdown > 0 ) { return; }
         µBlock.storageUsed = bytesInUse;
         callback(bytesInUse);
     };
+
     // Not all platforms implement this method.
     if ( vAPI.storage.getBytesInUse instanceof Function ) {
-        vAPI.storage.getBytesInUse(null, getBytesInUseHandler);
-    } else {
+        countdown += 1;
+        vAPI.storage.getBytesInUse(null, process);
+    }
+    if (
+        this.cacheStorage !== vAPI.storage &&
+        this.cacheStorage.getBytesInUse instanceof Function
+    ) {
+        countdown += 1;
+        this.cacheStorage.getBytesInUse(null, process);
+    }
+    if ( countdown === 0 ) {
         callback();
     }
-};
-
-/******************************************************************************/
-
-µBlock.keyvalSetOne = function(key, val, callback) {
-    var bin = {};
-    bin[key] = val;
-    vAPI.storage.set(bin, callback || this.noopFunc);
 };
 
 /******************************************************************************/
@@ -79,48 +92,25 @@
 /******************************************************************************/
 
 µBlock.loadHiddenSettings = function() {
-    var onLoaded = function(bin) {
+    vAPI.storage.get('hiddenSettings', bin => {
         if ( bin instanceof Object === false ) { return; }
-        var µb = µBlock,
-            hs = bin.hiddenSettings;
-        // Remove following condition once 1.15.12+ is widespread.
-        if (
-            hs instanceof Object === false &&
-            typeof bin.hiddenSettingsString === 'string'
-        ) {
-            vAPI.storage.remove('hiddenSettingsString');
-            hs = µBlock.hiddenSettingsFromString(bin.hiddenSettingsString);
-        }
+        let hs = bin.hiddenSettings;
         if ( hs instanceof Object ) {
-            var hsDefault = µb.hiddenSettingsDefault;
-            for ( var key in hsDefault ) {
+            let hsDefault = this.hiddenSettingsDefault;
+            for ( let key in hsDefault ) {
                 if (
                     hsDefault.hasOwnProperty(key) &&
                     hs.hasOwnProperty(key) &&
                     typeof hs[key] === typeof hsDefault[key]
                 ) {
-                    µb.hiddenSettings[key] = hs[key];
+                    this.hiddenSettings[key] = hs[key];
                 }
-            }
-            // To remove once 1.15.26 is widespread. The reason is to ensure
-            // the change in the following commit is taken into account:
-            // https://github.com/gorhill/uBlock/commit/8071321e9104
-            if ( hs.manualUpdateAssetFetchPeriod === 2000 ) {
-                µb.hiddenSettings.manualUpdateAssetFetchPeriod =
-                    µb.hiddenSettingsDefault.manualUpdateAssetFetchPeriod;
-                hs.manualUpdateAssetFetchPeriod = undefined;
-                µb.saveHiddenSettings();
             }
         }
         if ( vAPI.localStorage.getItem('immediateHiddenSettings') === null ) {
-            µb.saveImmediateHiddenSettings();
+            this.saveImmediateHiddenSettings();
         }
-    };
-
-    vAPI.storage.get(
-        [ 'hiddenSettings', 'hiddenSettingsString'],
-        onLoaded
-    );
+    });
 };
 
 // Note: Save only the settings which values differ from the default ones.
@@ -128,8 +118,8 @@
 // which were not modified by the user.
 
 µBlock.saveHiddenSettings = function(callback) {
-    var bin = { hiddenSettings: {} };
-    for ( var prop in this.hiddenSettings ) {
+    let bin = { hiddenSettings: {} };
+    for ( let prop in this.hiddenSettings ) {
         if (
             this.hiddenSettings.hasOwnProperty(prop) &&
             this.hiddenSettings[prop] !== this.hiddenSettingsDefault[prop]
@@ -208,25 +198,33 @@
 /******************************************************************************/
 
 µBlock.savePermanentFirewallRules = function() {
-    this.keyvalSetOne('dynamicFilteringString', this.permanentFirewall.toString());
+    vAPI.storage.set({
+        dynamicFilteringString: this.permanentFirewall.toString()
+    });
 };
 
 /******************************************************************************/
 
 µBlock.savePermanentURLFilteringRules = function() {
-    this.keyvalSetOne('urlFilteringString', this.permanentURLFiltering.toString());
+    vAPI.storage.set({
+        urlFilteringString: this.permanentURLFiltering.toString()
+    });
 };
 
 /******************************************************************************/
 
 µBlock.saveHostnameSwitches = function() {
-    this.keyvalSetOne('hostnameSwitchesString', this.hnSwitches.toString());
+    vAPI.storage.set({
+        hostnameSwitchesString: this.permanentSwitches.toString()
+    });
 };
 
 /******************************************************************************/
 
 µBlock.saveWhitelist = function() {
-    this.keyvalSetOne('netWhitelist', this.stringFromWhitelist(this.netWhitelist));
+    vAPI.storage.set({
+        netWhitelist: this.stringFromWhitelist(this.netWhitelist)
+    });
     this.netWhitelistModifyTime = Date.now();
 };
 
@@ -1077,30 +1075,39 @@
 
     let create = function() {
         timer = null;
-        let selfie = {
+        let selfie = JSON.stringify({
             magic: µb.systemSettings.selfieMagic,
-            availableFilterLists: JSON.stringify(µb.availableFilterLists),
-            staticNetFilteringEngine: JSON.stringify(µb.staticNetFilteringEngine.toSelfie()),
-            redirectEngine: JSON.stringify(µb.redirectEngine.toSelfie()),
-            staticExtFilteringEngine: JSON.stringify(µb.staticExtFilteringEngine.toSelfie())
-        };
-        vAPI.cacheStorage.set({ selfie: selfie });
+            availableFilterLists: µb.availableFilterLists,
+            staticNetFilteringEngine: µb.staticNetFilteringEngine.toSelfie(),
+            redirectEngine: µb.redirectEngine.toSelfie(),
+            staticExtFilteringEngine: µb.staticExtFilteringEngine.toSelfie()
+        });
+        µb.cacheStorage.set({ selfie: selfie });
     };
 
     let load = function(callback) {
-        vAPI.cacheStorage.get('selfie', function(bin) {
+        µb.cacheStorage.get('selfie', function(bin) {
             if (
                 bin instanceof Object === false ||
-                bin.selfie instanceof Object === false ||
-                bin.selfie.magic !== µb.systemSettings.selfieMagic ||
-                bin.selfie.redirectEngine === undefined
+                typeof bin.selfie !== 'string'
             ) {
                 return callback(false);
             }
-            µb.availableFilterLists = JSON.parse(bin.selfie.availableFilterLists);
-            µb.staticNetFilteringEngine.fromSelfie(JSON.parse(bin.selfie.staticNetFilteringEngine));
-            µb.redirectEngine.fromSelfie(JSON.parse(bin.selfie.redirectEngine));
-            µb.staticExtFilteringEngine.fromSelfie(JSON.parse(bin.selfie.staticExtFilteringEngine));
+            let selfie;
+            try {
+                selfie = JSON.parse(bin.selfie);
+            } catch(ex) {
+            }
+            if (
+                selfie instanceof Object === false ||
+                selfie.magic !== µb.systemSettings.selfieMagic
+            ) {
+                return callback(false);
+            }
+            µb.availableFilterLists = selfie.availableFilterLists;
+            µb.staticNetFilteringEngine.fromSelfie(selfie.staticNetFilteringEngine);
+            µb.redirectEngine.fromSelfie(selfie.redirectEngine);
+            µb.staticExtFilteringEngine.fromSelfie(selfie.staticExtFilteringEngine);
             callback(true);
         });
     };
@@ -1110,7 +1117,7 @@
             clearTimeout(timer);
             timer = null;
         }
-        vAPI.cacheStorage.remove('selfie');
+        µb.cacheStorage.remove('selfie');
         timer = vAPI.setTimeout(create, µb.selfieAfter);
     };
 

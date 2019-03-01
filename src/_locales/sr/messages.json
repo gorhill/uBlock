@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Коначно, ефикасан блокатор. Ниски процесорски и меморијски захтеви.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Контролна табла",
@@ -42,6 +42,10 @@
   "aboutPageName": {
     "message": "О програму",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Прегледач ресурса",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Напредна подешавања",
@@ -143,6 +147,14 @@
     "message": "Кликните да бисте зауставили блокирање удаљених фонтова на овом сајту",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
+  "popupTipNoScripting1": {
+    "message": "Кликните да потпуно онемогућите JavaScript на овом сајту",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Кликните да JavaScript не буде више потпуно онемогућен на овом сајту",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
   "popupTipGlobalRules": {
     "message": "Општа правила: ова колона је за правила која се примењују на свим сајтовима.",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
@@ -172,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "Css\/слике трећих страна",
+    "message": "CSS\/слике трећих страна",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Блокирај удаљене фонтове",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Онемогући JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Блокирај CSP извештаје",
@@ -596,12 +612,12 @@
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
-    "message": "Евиденција промена",
-    "description": "English: Change log"
+    "message": "Списак измена",
+    "description": ""
   },
   "aboutWiki": {
     "message": "Вики",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Подршка",

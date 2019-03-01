@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Viimeinkin tehokas ja kevyt mainosten estäjä.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Hallintapaneeli",
@@ -42,6 +42,10 @@
   "aboutPageName": {
     "message": "Tietoja",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Asset viewer",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Lisäasetukset",
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Klikkaa salliaksesi ulkoiset kirjasimet tällä sivustolla",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Click to disable JavaScript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Click to no longer disable JavaScript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Yleiset säännöt: tämä sarake on säännöille, joita käytetään kaikille sivustoille.",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Estä etäladattavat kirjasimet",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Disable JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Estä CSP-raportit",
@@ -597,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Muutosloki",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Tuki",

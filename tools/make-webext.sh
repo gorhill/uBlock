@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 #
 # This script assumes a linux environment
-
+# https://github.com/uBlockOrigin/uBlock-issues/issues/217
+set -e
 echo "*** AdNauseam.WebExt: Creating web store package"
 echo "*** AdNauseam.WebExt: Copying files"
 

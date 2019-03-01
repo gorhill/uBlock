@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Më në fund, një bllokues efikas që nuk e rëndon procesorin dhe memorjen.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Paneli i kontrollit",
@@ -42,6 +42,10 @@
   "aboutPageName": {
     "message": "Info",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Ilustruesi i aseteve",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Parametra të avancuar",
@@ -108,15 +112,15 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Bllokoj elementet e mëdha mediatike te faqja",
+    "message": "Bllokoj elementet e mëdha multimediale te faqja",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Bllokoj elementet e mëdha mediatike te faqja",
+    "message": "Bllokoj elementet e mëdha multimediale te faqja",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Zbllokoj elementet e mëdha mediatike te faqja",
+    "message": "Zbllokoj elementet e mëdha multimediale te faqja",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -132,16 +136,24 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Bllokoj sistemin e shkronjave në linjë",
+    "message": "Bllokoj sistemin e shkronjave jashtë faqes",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Bllokoj sistemin e shkronjave në linjë",
+    "message": "Bllokoj sistemin e shkronjave jashtë faqes",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Zhbllokoj sistemin e shkronjave në linjë",
+    "message": "Zhbllokoj sistemin e shkronjave jashtë faqes",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Çaktivizoj JavaScript-in te ky uebsajti",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Nuk e çaktivizoj më JavaScript-in te ky uebsajti",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Rregullat globale: rregullat në këtë shtyllë aplikohen për të gjitha faqet.",
@@ -164,7 +176,7 @@
     "description": ""
   },
   "popupImageRulePrompt": {
-    "message": "figurat",
+    "message": "imazhet",
     "description": ""
   },
   "popup3pAnyRulePrompt": {
@@ -172,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "css\/figurat nga palët e treta",
+    "message": "CSS\/imazhet nga palët e treta",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -244,7 +256,7 @@
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
-    "message": "Përdor menynë kontekstuale kur duhet",
+    "message": "Përdor menunë kontekstuale sipas rrethanave",
     "description": "English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt": {
@@ -264,11 +276,11 @@
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Çaktivizoj kërkesat e parakohshme (për të evituar çdo lidhje me kërkesat e refuzuara)",
+    "message": "Çaktivizoj kërkesat paraprake (për të evituar çdo lidhje me kërkesat e refuzuara)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
-    "message": "Çaktivizoj shqyrtimin e tejlidhjeve",
+    "message": "Çaktivizoj analizën e lidhjeve hipertekstuale",
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
@@ -288,12 +300,16 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Bllokoj elementet mediatike më të mëdha se {{input:number}} kB",
+    "message": "Bllokoj elementet multimediale më të mëdha se {{input:number}} kB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
-    "message": "Bllokoj sistemin e shkronjave në linjë",
+    "message": "Bllokoj sistemin e shkronjave jashtë faqes",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Çaktivizoj JavaScript-in",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Bllokoj raportet e CSP-së",
@@ -597,18 +613,18 @@
   },
   "aboutChangelog": {
     "message": "Ditari i ndryshimeve",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
-    "message": "Dokumentimi",
-    "description": "English: project' wiki on Github"
+    "message": "Wiki",
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Mbështetja teknike",
     "description": "A link for where to get support"
   },
   "aboutIssues": {
-    "message": "Treguesi i problemeve",
+    "message": "Lista e problemeve",
     "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
@@ -616,7 +632,7 @@
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Kontributorët",
+    "message": "Kontribuesit",
     "description": "English: Contributors"
   },
   "aboutBackupDataButton": {
@@ -768,7 +784,7 @@
     "description": ""
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
-    "message": "Lejoj përkohësisht elementet me përmasa të mëdha",
+    "message": "Lejoj përkohësisht elementet multimediale me përmasa të mëdha",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {

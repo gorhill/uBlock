@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Наконец-то, быстрый и эффективный блокировщик для браузеров.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Панель управления",
@@ -42,6 +42,10 @@
   "aboutPageName": {
     "message": "О расширении",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Активы",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Расширенные настройки",
@@ -143,6 +147,14 @@
     "message": "Кликните для отключения блокировки удаленных шрифтов на этом сайте",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
+  "popupTipNoScripting1": {
+    "message": "Кликните, чтобы отключить JavaScript на этом сайте",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Кликните, чтобы перестать блокировать JavaScript на этом сайте",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
   "popupTipGlobalRules": {
     "message": "Глобальные правила: этот столбец предназначен для правил, применяемых ко всем сайтам.",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
@@ -172,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "сторонние css\/изображения",
+    "message": "сторонние CSS\/изображения",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Блокировать сторонние шрифты",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Отключить JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Блокировать CSP отчеты",
@@ -597,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Список изменений",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Вики",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Поддержка",

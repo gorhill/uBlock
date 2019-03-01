@@ -338,51 +338,6 @@ SelectorCacheEntry.prototype = {
 /******************************************************************************/
 /******************************************************************************/
 
-// HHHHHHHHHHHH0000
-//            |   |
-//            |   |
-//            |   +-- bit  3-0: reserved: 0=exception
-//            |                           1=procedural
-//            +------ bit 15-4: FNV
-
-let makeHash = function(token) {
-    // Based on: FNV32a
-    // http://www.isthe.com/chongo/tech/comp/fnv/index.html#FNV-reference-source
-    // The rest is custom, suited for uBlock.
-    let i1 = token.length;
-    let i2 = i1 >> 1;
-    let i4 = i1 >> 2;
-    let i8 = i1 >> 3;
-    let hval = (0x811c9dc5 ^ token.charCodeAt(0)) >>> 0;
-        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
-        hval >>>= 0;
-        hval ^= token.charCodeAt(i8);
-        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
-        hval >>>= 0;
-        hval ^= token.charCodeAt(i4);
-        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
-        hval >>>= 0;
-        hval ^= token.charCodeAt(i4+i8);
-        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
-        hval >>>= 0;
-        hval ^= token.charCodeAt(i2);
-        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
-        hval >>>= 0;
-        hval ^= token.charCodeAt(i2+i8);
-        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
-        hval >>>= 0;
-        hval ^= token.charCodeAt(i2+i4);
-        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
-        hval >>>= 0;
-        hval ^= token.charCodeAt(i1-1);
-        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
-        hval >>>= 0;
-    return hval & 0xFFF0;
-};
-
-/******************************************************************************/
-/******************************************************************************/
-
 // Cosmetic filter family tree:
 //
 // Generic
@@ -538,21 +493,6 @@ FilterContainer.prototype.freeze = function() {
         this.highlyGeneric.simple.dict.size !== 0 ||
         this.highlyGeneric.complex.dict.size !== 0;
 
-    if ( this.genericDonthideSet.size !== 0 ) {
-        for ( let selector of this.genericDonthideSet ) {
-            let type = selector.charCodeAt(0);
-            if ( type === 0x23 /* '#' */ ) {
-                this.lowlyGeneric.id.simple.delete(selector.slice(1));
-            } else if ( type === 0x2E /* '.' */ ) {
-                this.lowlyGeneric.cl.simple.delete(selector.slice(1));
-            }
-            // TODO:
-            //  this.lowlyGeneric.id.complex.delete(selector);
-            //  this.lowlyGeneric.cl.complex.delete(selector);
-            this.highlyGeneric.simple.dict.delete(selector);
-            this.highlyGeneric.complex.dict.delete(selector);
-        }
-    }
     this.highlyGeneric.simple.str = Array.from(this.highlyGeneric.simple.dict).join(',\n');
     this.highlyGeneric.simple.mru.reset();
     this.highlyGeneric.complex.str = Array.from(this.highlyGeneric.complex.dict).join(',\n');
@@ -769,25 +709,19 @@ FilterContainer.prototype.compileSpecificSelector = function(
     let compiled = µb.staticExtFilteringEngine.compileSelector(parsed.suffix);
     if ( compiled === undefined ) { return; }
 
-    // https://github.com/chrisaljoudi/uBlock/issues/188
-    // If not a real domain as per PSL, assign a synthetic one
-    let hash;
-    if ( hostname.endsWith('.*') === false ) {
-        let domain = this.µburi.domainFromHostnameNoCache(hostname);
-        hash = domain !== '' ? makeHash(domain) : 0;
-    } else {
-        hash = makeHash(hostname);
-    }
+    let hash = µb.staticExtFilteringEngine.compileHostnameToHash(hostname);
+
+    // Exception?
     if ( unhide === 1 ) {
-        hash |= 0b01;
+        hash |= 0b0001;
     }
 
-    writer.push([
-        8,
-        compiled.charCodeAt(0) !== 0x7B ? hash : hash | 0b10,
-        hostname,
-        compiled
-    ]);
+    // Procedural?
+    if ( compiled.charCodeAt(0) === 0x7B ) {
+        hash |= 0b0010;
+    }
+
+    writer.push([ 8, hash, hostname, compiled ]);
 };
 
 /******************************************************************************/
@@ -1268,8 +1202,9 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
 
     if ( options.noCosmeticFiltering !== true ) {
         let entity = request.entity,
-            domainHash = makeHash(request.domain),
-            entityHash = entity !== '' ? makeHash(entity) : undefined;
+            domainHash = µb.staticExtFilteringEngine.makeHash(request.domain),
+            entityHash = µb.staticExtFilteringEngine.makeHash(entity),
+            bucket;
 
         // Exception cosmetic filters: prime with generic exception filters.
         let exceptionSet = this.setRegister0;
@@ -1278,32 +1213,34 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
             exceptionSet.add(exception);
         }
         // Specific exception cosmetic filters.
-        let bucket = this.specificFilters.get(domainHash | 0b01);
-        if ( bucket !== undefined ) {
-            bucket.retrieve(hostname, exceptionSet);
-        }
-        bucket = this.specificFilters.get(domainHash | 0b11);
-        if ( bucket !== undefined ) {
-            bucket.retrieve(hostname, exceptionSet);
+        if ( domainHash !== 0 ) {
+            bucket = this.specificFilters.get(domainHash | 0b0001);
+            if ( bucket !== undefined ) {
+                bucket.retrieve(hostname, exceptionSet);
+            }
+            bucket = this.specificFilters.get(domainHash | 0b0011);
+            if ( bucket !== undefined ) {
+                bucket.retrieve(hostname, exceptionSet);
+            }
         }
         // Specific entity-based exception cosmetic filters.
-        if ( entityHash !== undefined ) {
-            bucket = this.specificFilters.get(entityHash | 0b01);
+        if ( entityHash !== 0 ) {
+            bucket = this.specificFilters.get(entityHash | 0b0001);
             if ( bucket !== undefined ) {
                 bucket.retrieve(entity, exceptionSet);
             }
-            bucket = this.specificFilters.get(entityHash | 0b11);
+            bucket = this.specificFilters.get(entityHash | 0b0011);
             if ( bucket !== undefined ) {
                 bucket.retrieve(entity, exceptionSet);
             }
         }
         // Special bucket for those filters without a valid
         // domain name as per PSL.
-        bucket = this.specificFilters.get(0b01);
+        bucket = this.specificFilters.get(0 | 0b0001);
         if ( bucket !== undefined ) {
             bucket.retrieve(hostname, exceptionSet);
         }
-        bucket = this.specificFilters.get(0b11);
+        bucket = this.specificFilters.get(0 | 0b0011);
         if ( bucket !== undefined ) {
             bucket.retrieve(hostname, exceptionSet);
         }
@@ -1317,20 +1254,23 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
         //       slightly content script code.
         let specificSet = this.setRegister1;
         // Specific cosmetic filters.
-        bucket = this.specificFilters.get(domainHash | 0b00);
-        if ( bucket !== undefined ) {
-            bucket.retrieve(hostname, specificSet);
+        if ( domainHash !== 0 ) {
+            bucket = this.specificFilters.get(domainHash | 0b0000);
+            if ( bucket !== undefined ) {
+                bucket.retrieve(hostname, specificSet);
+            }
         }
         // Specific entity-based cosmetic filters.
-        if ( entityHash !== undefined ) {
-            bucket = this.specificFilters.get(entityHash | 0b00);
+        if ( entityHash !== 0 ) {
+            bucket = this.specificFilters.get(entityHash | 0b0000);
             if ( bucket !== undefined ) {
                 bucket.retrieve(entity, specificSet);
             }
         }
         // https://github.com/chrisaljoudi/uBlock/issues/188
-        // Special bucket for those filters without a valid domain name as per PSL
-        bucket = this.specificFilters.get(0b00);
+        //   Special bucket for those filters without a valid domain name
+        //   as per PSL
+        bucket = this.specificFilters.get(0 | 0b0000);
         if ( bucket !== undefined ) {
             bucket.retrieve(hostname, specificSet);
         }
@@ -1346,20 +1286,23 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
         // Procedural cosmetic filters.
         let proceduralSet = this.setRegister2;
         // Specific cosmetic filters.
-        bucket = this.specificFilters.get(domainHash | 0b10);
-        if ( bucket !== undefined ) {
-            bucket.retrieve(hostname, proceduralSet);
+        if ( domainHash !== 0 ) {
+            bucket = this.specificFilters.get(domainHash | 0b0010);
+            if ( bucket !== undefined ) {
+                bucket.retrieve(hostname, proceduralSet);
+            }
         }
         // Specific entity-based cosmetic filters.
-        if ( entityHash !== undefined ) {
-            bucket = this.specificFilters.get(entityHash | 0b10);
+        if ( entityHash !== 0 ) {
+            bucket = this.specificFilters.get(entityHash | 0b0010);
             if ( bucket !== undefined ) {
                 bucket.retrieve(entity, proceduralSet);
             }
         }
         // https://github.com/chrisaljoudi/uBlock/issues/188
-        // Special bucket for those filters without a valid domain name as per PSL
-        bucket = this.specificFilters.get(0b10);
+        //   Special bucket for those filters without a valid domain name
+        //   as per PSL
+        bucket = this.specificFilters.get(0 | 0b0010);
         if ( bucket !== undefined ) {
             bucket.retrieve(hostname, proceduralSet);
         }

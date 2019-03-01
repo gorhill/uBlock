@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2018 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -282,25 +282,23 @@ var matchBucket = function(url, hostname, bucket, start) {
 
 µBlock.changeUserSettings = function(name, value) {
 
-    var us = this.userSettings, adn = µBlock.adnauseam;
-
-    //console.log('changeUserSettings', name, value, us);
+    let us = this.userSettings;
 
     // Return all settings if none specified.
     if ( name === undefined ) {
 
         us = JSON.parse(JSON.stringify(us));
-        us.noCosmeticFiltering = this.hnSwitches.evaluate('no-cosmetic-filtering', '*') === 1;
-        us.noLargeMedia = this.hnSwitches.evaluate('no-large-media', '*') === 1;
-        us.noRemoteFonts = this.hnSwitches.evaluate('no-remote-fonts', '*') === 1;
+        us.noCosmeticFiltering = this.sessionSwitches.evaluate('no-cosmetic-filtering', '*') === 1;
+        us.noLargeMedia = this.sessionSwitches.evaluate('no-large-media', '*') === 1;
+        us.noRemoteFonts = this.sessionSwitches.evaluate('no-remote-fonts', '*') === 1;
+        us.noScripting = this.sessionSwitches.evaluate('no-scripting', '*') === 1;
+        us.noCSPReports = this.sessionSwitches.evaluate('no-csp-reports', '*') === 1;
         us.appName = vAPI.app.name; // ADN
         us.appVersion = vAPI.app.version; // ADN
         return us;
     }
 
-    if ( typeof name !== 'string' || name === '' ) {
-        return;
-    }
+    if ( typeof name !== 'string' || name === '' ) { return; }
 
     if ( value === undefined ) {
         return us[name];
@@ -319,7 +317,7 @@ var matchBucket = function(url, hostname, bucket, start) {
     }
 
     // Change -- but only if the user setting actually exists.
-    var mustSave = us.hasOwnProperty(name) && value !== us[name];
+    let mustSave = us.hasOwnProperty(name) && value !== us[name];
     if ( mustSave ) {
         us[name] = value;
     }
@@ -348,22 +346,29 @@ var matchBucket = function(url, hostname, bucket, start) {
         }
         break;
     case 'noCosmeticFiltering':
-        if ( this.hnSwitches.toggle('no-cosmetic-filtering', '*', value ? 1 : 0) ) {
-            this.saveHostnameSwitches();
-        }
-        break;
     case 'noLargeMedia':
-        if ( this.hnSwitches.toggle('no-large-media', '*', value ? 1 : 0) ) {
-            this.saveHostnameSwitches();
-        }
-        break;
     case 'noRemoteFonts':
-        if ( this.hnSwitches.toggle('no-remote-fonts', '*', value ? 1 : 0) ) {
-            this.saveHostnameSwitches();
-        }
-        break;
+    case 'noScripting':
     case 'noCSPReports':
-        if ( this.hnSwitches.toggle('no-csp-reports', '*', value ? 1 : 0) ) {
+        let switchName;
+        switch ( name ) {
+        case 'noCosmeticFiltering':
+            switchName = 'no-cosmetic-filtering'; break;
+        case 'noLargeMedia':
+            switchName = 'no-large-media'; break;
+        case 'noRemoteFonts':
+            switchName = 'no-remote-fonts'; break;
+        case 'noScripting':
+            switchName = 'no-scripting'; break;
+        case 'noCSPReports':
+            switchName = 'no-csp-reports'; break;
+        default:
+            break;
+        }
+        if ( switchName === undefined ) { break; }
+        let switchState = value ? 1 : 0;
+        this.sessionSwitches.toggle(switchName, '*', switchState);
+        if ( this.permanentSwitches.toggle(switchName, '*', switchState) ) {
             this.saveHostnameSwitches();
         }
         break;
@@ -440,10 +445,20 @@ var matchBucket = function(url, hostname, bucket, start) {
 
     this.epickerTarget = targetElement || '';
     this.epickerZap = zap || false;
-    vAPI.tabs.injectScript(tabId, {
-        file: '/js/scriptlets/element-picker.js',
-        runAt: 'document_end'
-    });
+
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/168
+    //   Force activate the target tab once the element picker has been
+    //   injected.
+    vAPI.tabs.injectScript(
+        tabId,
+        {
+            file: '/js/scriptlets/element-picker.js',
+            runAt: 'document_end'
+        },
+        ( ) => {
+            vAPI.tabs.select(tabId);
+        }
+    );
 };
 
 /******************************************************************************/
@@ -453,7 +468,7 @@ var matchBucket = function(url, hostname, bucket, start) {
 // (but not really) redundant rules led to this issue.
 
 µBlock.toggleFirewallRule = function(details) {
-    var requestType = details.requestType;
+    let requestType = details.requestType;
 
     if ( details.action !== 0 ) {
         this.sessionFirewall.setCell(details.srcHostname, details.desHostname, requestType, details.action);
@@ -475,7 +490,7 @@ var matchBucket = function(url, hostname, bucket, start) {
     // Flush all cached `net` cosmetic filters if we are dealing with a
     // collapsible type: any of the cached entries could be a resource on the
     // target page.
-    var srcHostname = details.srcHostname;
+    let srcHostname = details.srcHostname;
     if (
         (srcHostname !== '*') &&
         (requestType === '*' || requestType === 'image' || requestType === '3p' || requestType === '3p-frame')
@@ -490,22 +505,17 @@ var matchBucket = function(url, hostname, bucket, start) {
 /******************************************************************************/
 
 µBlock.toggleURLFilteringRule = function(details) {
-    var changed = this.sessionURLFiltering.setRule(
+    let changed = this.sessionURLFiltering.setRule(
         details.context,
         details.url,
         details.type,
         details.action
     );
-
-    if ( !changed ) {
-        return;
-    }
+    if ( changed === false ) { return; }
 
     this.cosmeticFilteringEngine.removeFromSelectorCache(details.context, 'net');
 
-    if ( !details.persist ) {
-        return;
-    }
+    if ( details.persist !== true ) { return; }
 
     changed = this.permanentURLFiltering.setRule(
         details.context,
@@ -522,9 +532,13 @@ var matchBucket = function(url, hostname, bucket, start) {
 /******************************************************************************/
 
 µBlock.toggleHostnameSwitch = function(details) {
-    if ( this.hnSwitches.toggleZ(details.name, details.hostname, !!details.deep, details.state) ) {
-        this.saveHostnameSwitches();
-    }
+    let changed = this.sessionSwitches.toggleZ(
+        details.name,
+        details.hostname,
+        !!details.deep,
+        details.state
+    );
+    if ( changed === false ) { return; }
 
     // Take action if needed
     switch ( details.name ) {
@@ -541,15 +555,33 @@ var matchBucket = function(url, hostname, bucket, start) {
         }
         break;
     }
+
+    if ( details.persist !== true ) { return; }
+
+    changed = this.permanentSwitches.toggleZ(
+        details.name,
+        details.hostname,
+        !!details.deep,
+        details.state
+    );
+    if ( changed ) {
+        this.saveHostnameSwitches();
+    }
 };
 
 /******************************************************************************/
+
+// https://github.com/NanoMeow/QuickReports/issues/6#issuecomment-414516623
+//   Inject as early as possible to make the cosmetic logger code less
+//   sensitive to the removal of DOM nodes which may match injected
+//   cosmetic filters.
 
 µBlock.logCosmeticFilters = function(tabId, frameId) {
     if ( this.logger.isEnabled() ) {
         vAPI.tabs.injectScript(tabId, {
             file: '/js/scriptlets/cosmetic-logger.js',
-            frameId: frameId
+            frameId: frameId,
+            runAt: 'document_start'
         });
     }
 };

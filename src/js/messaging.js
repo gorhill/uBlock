@@ -85,10 +85,7 @@ var onMessage = function(request, sender, callback) {
         break;
     }
 
-    // The concatenation with the empty string ensure that the resulting value
-    // is a string. This is important since tab id values are assumed to be
-    // of string type.
-    var tabId = sender && sender.tab ? '' + sender.tab.id : 0;
+    var tabId = sender && sender.tab ? sender.tab.id : 0;
 
     // Sync
     var response;
@@ -303,9 +300,10 @@ var getFirewallRules = function(srcHostname, desHostnames) {
 /******************************************************************************/
 
 var popupDataFromTabId = function(tabId, tabTitle) {
-    var tabContext = µb.tabContextManager.mustLookup(tabId),
+    let tabContext = µb.tabContextManager.mustLookup(tabId),
         rootHostname = tabContext.rootHostname;
-    var r = {
+
+    let r = {
         advancedUserEnabled: µb.userSettings.advancedUserEnabled,
         appName: vAPI.app.name,
         appVersion: vAPI.app.version,
@@ -329,7 +327,7 @@ var popupDataFromTabId = function(tabId, tabTitle) {
         tooltipsDisabled: µb.userSettings.tooltipsDisabled
     };
 
-    var pageStore = µb.pageStoreFromTabId(tabId);
+    let pageStore = µb.pageStoreFromTabId(tabId);
     if ( pageStore ) {
         // https://github.com/gorhill/uBlock/issues/2105
         //   Be sure to always include the current page's hostname -- it might
@@ -349,23 +347,30 @@ var popupDataFromTabId = function(tabId, tabTitle) {
         r.contentLastModified = pageStore.contentLastModified;
         r.firewallRules = getFirewallRules(rootHostname, r.hostnameDict);
         r.canElementPicker = µb.URI.isNetworkURI(r.rawURL);
-        r.noPopups = µb.hnSwitches.evaluateZ('no-popups', rootHostname);
+        r.noPopups = µb.sessionSwitches.evaluateZ('no-popups', rootHostname);
         r.popupBlockedCount = pageStore.popupBlockedCount;
-        r.noCosmeticFiltering = µb.hnSwitches.evaluateZ('no-cosmetic-filtering', rootHostname);
-        r.noLargeMedia = µb.hnSwitches.evaluateZ('no-large-media', rootHostname);
+        r.noCosmeticFiltering = µb.sessionSwitches.evaluateZ('no-cosmetic-filtering', rootHostname);
+        r.noLargeMedia = µb.sessionSwitches.evaluateZ('no-large-media', rootHostname);
         r.largeMediaCount = pageStore.largeMediaCount;
-        r.noRemoteFonts = µb.hnSwitches.evaluateZ('no-remote-fonts', rootHostname);
+        r.noRemoteFonts = µb.sessionSwitches.evaluateZ('no-remote-fonts', rootHostname);
         r.remoteFontCount = pageStore.remoteFontCount;
+        r.noScripting = µb.sessionSwitches.evaluateZ('no-scripting', rootHostname);
     } else {
         r.hostnameDict = {};
         r.firewallRules = getFirewallRules();
     }
-    r.matrixIsDirty = !µb.sessionFirewall.hasSameRules(
+
+    r.matrixIsDirty = µb.sessionFirewall.hasSameRules(
         µb.permanentFirewall,
         rootHostname,
         r.hostnameDict
-    );
-
+    ) === false;
+    if ( r.matrixIsDirty === false ) {
+        r.matrixIsDirty = µb.sessionSwitches.hasSameRules(
+            µb.permanentSwitches,
+            rootHostname
+        ) === false;
+    }
     return r;
 };
 
@@ -396,14 +401,6 @@ var onMessage = function(request, sender, callback) {
 
     // Async
     switch ( request.what ) {
-    case 'getPopupLazyData':
-        pageStore = µb.pageStoreFromTabId(request.tabId);
-        if ( pageStore !== null ) {
-            pageStore.hiddenElementCount = 0;
-            µb.scriptlets.injectDeep(request.tabId, 'cosmetic-survey');
-        }
-        return;
-
     case 'getPopupData':
         popupDataFromRequest(request, callback);
         return;
@@ -416,6 +413,19 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
+    case 'getPopupLazyData':
+        pageStore = µb.pageStoreFromTabId(request.tabId);
+        if ( pageStore !== null ) {
+            pageStore.hiddenElementCount = 0;
+            pageStore.scriptCount = 0;
+            vAPI.tabs.injectScript(request.tabId, {
+                allFrames: true,
+                file: '/js/scriptlets/dom-survey.js',
+                runAt: 'document_end'
+            });
+        }
+        break;
+
     case 'hasPopupContentChanged':
         pageStore = µb.pageStoreFromTabId(request.tabId);
         var lastModified = pageStore ? pageStore.contentLastModified : 0;
@@ -428,18 +438,41 @@ var onMessage = function(request, sender, callback) {
             request.srcHostname,
             request.desHostnames
         );
+        µb.sessionSwitches.copyRules(
+            µb.permanentSwitches,
+            request.srcHostname
+        );
         // https://github.com/gorhill/uBlock/issues/188
-        µb.cosmeticFilteringEngine.removeFromSelectorCache(request.srcHostname, 'net');
+        µb.cosmeticFilteringEngine.removeFromSelectorCache(
+            request.srcHostname,
+            'net'
+        );
         response = popupDataFromTabId(request.tabId);
         break;
 
     case 'saveFirewallRules':
-        µb.permanentFirewall.copyRules(
-            µb.sessionFirewall,
-            request.srcHostname,
-            request.desHostnames
-        );
-        µb.savePermanentFirewallRules();
+        if (
+            µb.permanentFirewall.copyRules(
+                µb.sessionFirewall,
+                request.srcHostname,
+                request.desHostnames
+            )
+        ) {
+            µb.savePermanentFirewallRules();
+        }
+        if (
+            µb.permanentSwitches.copyRules(
+                µb.sessionSwitches,
+                request.srcHostname
+            )
+        ) {
+            µb.saveHostnameSwitches();
+        }
+        break;
+
+    case 'toggleHostnameSwitch':
+        µb.toggleHostnameSwitch(request);
+        response = popupDataFromTabId(request.tabId);
         break;
 
     case 'toggleFirewallRule':
@@ -510,6 +543,22 @@ var onMessage = function(request, sender, callback) {
             pageStore.getNetFilteringSwitch()
         ) {
             pageStore.getBlockedResources(request, response);
+        }
+        break;
+
+    case 'shouldRenderNoscriptTags':
+        if ( pageStore === null ) { break; }
+        let tabContext = µb.tabContextManager.lookup(tabId);
+        if ( tabContext === null ) { break; }
+        if ( pageStore.filterScripting(tabContext.rootHostname, undefined) ) {
+            vAPI.tabs.injectScript(
+                tabId,
+                {
+                    file: '/js/scriptlets/noscript-spoof.js',
+                    frameId: frameId,
+                    runAt: 'document_end'
+                }
+            );
         }
         break;
 
@@ -748,7 +797,7 @@ var backupUserData = function(callback) {
         netWhitelist: µb.stringFromWhitelist(µb.netWhitelist),
         dynamicFilteringString: µb.permanentFirewall.toString(),
         urlFilteringString: µb.permanentURLFiltering.toString(),
-        hostnameSwitchesString: µb.hnSwitches.toString(),
+        hostnameSwitchesString: µb.permanentSwitches.toString(),
         userFilters: ''
     };
 
@@ -809,7 +858,7 @@ var restoreUserData = function(request) {
 
     // If we are going to restore all, might as well wipe out clean local
     // storage
-    vAPI.cacheStorage.clear();
+    µb.cacheStorage.clear();
     vAPI.storage.clear(onAllRemoved);
     vAPI.localStorage.removeItem('immediateHiddenSettings');
 };
@@ -825,9 +874,9 @@ var resetUserData = function() {
             vAPI.app.restart();
         }
     };
-    vAPI.cacheStorage.clear(countdown); // 1
-    vAPI.storage.clear(countdown);      // 2
-    µb.saveLocalSettings(countdown);    // 3
+    µb.cacheStorage.clear(countdown); // 1
+    vAPI.storage.clear(countdown);    // 2
+    µb.saveLocalSettings(countdown);  // 3
     vAPI.localStorage.removeItem('immediateHiddenSettings');
 };
 
@@ -901,44 +950,55 @@ var getLists = function(callback) {
 
 var getRules = function() {
     return {
-        permanentRules: µb.permanentFirewall.toArray().concat(
-                            µb.permanentURLFiltering.toArray()
-                        ),
-          sessionRules: µb.sessionFirewall.toArray().concat(
-                            µb.sessionURLFiltering.toArray()
-                        ),
-            hnSwitches: µb.hnSwitches.toArray()
+        permanentRules:
+            µb.permanentFirewall.toArray().concat(
+                µb.permanentSwitches.toArray(),
+                µb.permanentURLFiltering.toArray()
+            ),
+        sessionRules:
+            µb.sessionFirewall.toArray().concat(
+                µb.sessionSwitches.toArray(),
+                µb.sessionURLFiltering.toArray()
+            )
     };
 };
 
 var modifyRuleset = function(details) {
-    var swRuleset = µb.hnSwitches,
-        hnRuleset, urlRuleset;
+    let swRuleset, hnRuleset, urlRuleset;
     if ( details.permanent ) {
+        swRuleset = µb.permanentSwitches;
         hnRuleset = µb.permanentFirewall;
         urlRuleset = µb.permanentURLFiltering;
     } else {
+        swRuleset = µb.sessionSwitches;
         hnRuleset = µb.sessionFirewall;
         urlRuleset = µb.sessionURLFiltering;
     }
-    var toRemove = new Set(details.toRemove.trim().split(/\s*[\n\r]+\s*/));
-    var rule, parts, _;
-    for ( rule of toRemove ) {
+    let toRemove = new Set(details.toRemove.trim().split(/\s*[\n\r]+\s*/));
+    for ( let rule of toRemove ) {
         if ( rule === '' ) { continue; }
-        parts = rule.split(/\s+/);
-        _ = hnRuleset.removeFromRuleParts(parts) ||
-            swRuleset.removeFromRuleParts(parts) ||
-            urlRuleset.removeFromRuleParts(parts);
+        let parts = rule.split(/\s+/);
+        if ( hnRuleset.removeFromRuleParts(parts) === false ) {
+            if ( swRuleset.removeFromRuleParts(parts) === false ) {
+                urlRuleset.removeFromRuleParts(parts);
+            }
+        }
     }
-    var toAdd = new Set(details.toAdd.trim().split(/\s*[\n\r]+\s*/));
-    for ( rule of toAdd ) {
+    let toAdd = new Set(details.toAdd.trim().split(/\s*[\n\r]+\s*/));
+    for ( let rule of toAdd ) {
         if ( rule === '' ) { continue; }
-        parts = rule.split(/\s+/);
-        _ = hnRuleset.addFromRuleParts(parts) ||
-            swRuleset.addFromRuleParts(parts) ||
-            urlRuleset.addFromRuleParts(parts);
+        let parts = rule.split(/\s+/);
+        if ( hnRuleset.addFromRuleParts(parts) === false ) {
+            if ( swRuleset.addFromRuleParts(parts) === false ) {
+                urlRuleset.addFromRuleParts(parts);
+            }
+        }
     }
     if ( details.permanent ) {
+        if ( swRuleset.changed ) {
+            µb.saveHostnameSwitches();
+            swRuleset.changed = false;
+        }
         if ( hnRuleset.changed ) {
             µb.savePermanentFirewallRules();
             hnRuleset.changed = false;
@@ -947,10 +1007,6 @@ var modifyRuleset = function(details) {
             µb.savePermanentURLFilteringRules();
             urlRuleset.changed = false;
         }
-    }
-    if ( swRuleset.changed ) {
-        µb.saveHostnameSwitches();
-        swRuleset.changed = false;
     }
 };
 
@@ -1268,23 +1324,22 @@ vAPI.messaging.listen('documentBlocked', onMessage);
 
 /******************************************************************************/
 
-var µb = µBlock;
-var broadcastTimers = Object.create(null);
+let µb = µBlock;
+let broadcastTimers = new Map();
 
 /******************************************************************************/
 
-var cosmeticallyFilteredElementCountChanged = function(tabId) {
-    delete broadcastTimers[tabId + '-cosmeticallyFilteredElementCountChanged'];
+var domSurveyFinalReport = function(tabId) {
+    broadcastTimers.delete(tabId + '-domSurveyReport');
 
-    var pageStore = µb.pageStoreFromTabId(tabId);
-    if ( pageStore === null ) {
-        return;
-    }
+    let pageStore = µb.pageStoreFromTabId(tabId);
+    if ( pageStore === null ) { return; }
 
     vAPI.messaging.broadcast({
-        what: 'cosmeticallyFilteredElementCountChanged',
+        what: 'domSurveyFinalReport',
         tabId: tabId,
-        count: pageStore.hiddenElementCount
+        affectedElementCount: pageStore.hiddenElementCount,
+        scriptCount: pageStore.scriptCount,
     });
 };
 
@@ -1315,8 +1370,8 @@ var logCosmeticFilters = function(tabId, details) {
 /******************************************************************************/
 
 var onMessage = function(request, sender, callback) {
-    var tabId = sender && sender.tab ? sender.tab.id : 0;
-    var pageStore = µb.pageStoreFromTabId(tabId);
+    let tabId = sender && sender.tab ? sender.tab.id : 0;
+    let pageStore = µb.pageStoreFromTabId(tabId);
 
     // Async
     switch ( request.what ) {
@@ -1328,15 +1383,20 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
-    case 'cosmeticallyFilteredElementCount':
-        if ( pageStore !== null && request.filteredElementCount ) {
-            pageStore.hiddenElementCount += request.filteredElementCount;
-            var broadcastKey = tabId + '-cosmeticallyFilteredElementCountChanged';
-            if ( broadcastTimers[broadcastKey] === undefined ) {
-                broadcastTimers[broadcastKey] = vAPI.setTimeout(
-                    cosmeticallyFilteredElementCountChanged.bind(null, tabId),
-                    250
-                );
+    case 'domSurveyTransientReport':
+        if ( pageStore !== null ) {
+            if ( request.filteredElementCount ) {
+                pageStore.hiddenElementCount += request.filteredElementCount;
+            }
+            if ( request.scriptCount ) {
+                pageStore.scriptCount += request.scriptCount;
+            }
+            let broadcastKey = tabId + '-domSurveyReport';
+            if ( broadcastTimers.has(broadcastKey) === false ) {
+                broadcastTimers.set(broadcastKey, vAPI.setTimeout(
+                    ( ) => { domSurveyFinalReport(tabId); },
+                    53
+                ));
             }
         }
         break;

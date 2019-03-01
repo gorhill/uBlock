@@ -112,18 +112,18 @@ var fromNetFilter = function(details) {
 // FilterContainer.fromCompiledContent() is our reference code to create
 // the various compiled versions.
 
-var fromCosmeticFilter = function(details) {
-    var match = /^#@?#\^?/.exec(details.rawFilter),
+let fromCosmeticFilter = function(details) {
+    let match = /^#@?#\^?/.exec(details.rawFilter),
         prefix = match[0],
         exception = prefix.charAt(1) === '@',
         selector = details.rawFilter.slice(prefix.length);
 
     // The longer the needle, the lower the number of false positives.
-    var needle = selector.match(/\w+/g).reduce(function(a, b) {
+    let needle = selector.match(/\w+/g).reduce(function(a, b) {
         return a.length > b.length ? a : b;
     });
 
-    var reHostname = new RegExp(
+    let reHostname = new RegExp(
         '^' +
         details.hostname.split('.').reduce(
             function(acc, item) {
@@ -136,7 +136,7 @@ var fromCosmeticFilter = function(details) {
         '$'
     );
 
-    var reEntity,
+    let reEntity,
         domain = details.domain,
         pos = domain.indexOf('.');
     if ( pos !== -1 ) {
@@ -154,24 +154,28 @@ var fromCosmeticFilter = function(details) {
         );
     }
         
-    var response = Object.create(null),
-        assetKey, entry, content,
-        found, beg, end,
-        fargs, isProcedural;
+    let hostnameMatches = hn => {
+        return hn === '' ||
+               reHostname.test(hn) ||
+               reEntity !== undefined && reEntity.test(hn);
+    };
 
-    for ( assetKey in listEntries ) {
-        entry = listEntries[assetKey];
+    let response = Object.create(null);
+
+    for ( let assetKey in listEntries ) {
+        let entry = listEntries[assetKey];
         if ( entry === undefined ) { continue; }
-        content = extractBlocks(entry.content, 1000, 2000);
-        pos = 0;
-        found = undefined;
+        let content = extractBlocks(entry.content, 1000, 2000),
+            isProcedural,
+            found;
+        let pos = 0;
         while ( (pos = content.indexOf(needle, pos)) !== -1 ) {
-            beg = content.lastIndexOf('\n', pos);
+            let beg = content.lastIndexOf('\n', pos);
             if ( beg === -1 ) { beg = 0; }
-            end = content.indexOf('\n', pos);
+            let end = content.indexOf('\n', pos);
             if ( end === -1 ) { end = content.length; }
             pos = end;
-            fargs = JSON.parse(content.slice(beg, end));
+            let fargs = JSON.parse(content.slice(beg, end));
 
             // https://github.com/gorhill/uBlock/issues/2763
             if ( fargs[0] >= 0 && fargs[0] <= 5 && details.ignoreGeneric ) {
@@ -179,7 +183,8 @@ var fromCosmeticFilter = function(details) {
             }
 
             switch ( fargs[0] ) {
-            case 0: // id-based
+            // Lowly generic cosmetic filters
+            case 0: // simple id-based
                 if (
                     fargs[1] === selector.slice(1) &&
                     selector.charAt(0) === '#'
@@ -187,7 +192,7 @@ var fromCosmeticFilter = function(details) {
                     found = prefix + selector;
                 }
                 break;
-            case 2: // class-based
+            case 2: // simple class-based
                 if (
                     fargs[1] === selector.slice(1) &&
                     selector.charAt(0) === '.'
@@ -195,46 +200,53 @@ var fromCosmeticFilter = function(details) {
                     found = prefix + selector;
                 }
                 break;
-            case 1: // id-based
-            case 3: // class-based
+            case 1: // complex id-based
+            case 3: // complex class-based
                 if ( fargs[2] === selector ) {
                     found = prefix + selector;
                 }
                 break;
-            case 4:
-            case 5:
-            case 7:
+            // Highly generic cosmetic filters
+            case 4: // simple highly generic
+            case 5: // complex highly generic
+            case 7: // generic exception
                 if ( fargs[1] === selector ) {
                     found = prefix + selector;
                 }
                 break;
+            // Specific cosmetic filtering
             case 8:
-                if ( exception !== ((fargs[1] & 0b01) !== 0) ) { break; }
-                isProcedural = (fargs[1] & 0b10) !== 0;
+                if ( exception !== ((fargs[1] & 0b0001) !== 0) ) { break; }
+                isProcedural = (fargs[1] & 0b0010) !== 0;
                 if (
                     isProcedural === false && fargs[3] !== selector ||
                     isProcedural && JSON.parse(fargs[3]).raw !== selector
                 ) {
                     break;
                 }
-                if (
-                    fargs[2] === '' ||
-                    reHostname.test(fargs[2]) === true ||
-                    reEntity !== undefined && reEntity.test(fargs[2]) === true
-                ) {
+                if ( hostnameMatches(fargs[2]) ) {
                     found = fargs[2] + prefix + selector;
                 }
                 break;
+            // Scriptlet injection
             case 32:
-            case 64:
-            case 65:
-                if ( exception !== (fargs[1].charAt(0) === '!') ) { break; }
+                if ( exception !== ((fargs[1] & 0b0001) !== 0) ) { break; }
                 if ( fargs[3] !== selector ) { break; }
+                if ( hostnameMatches(fargs[2]) ) {
+                    found = fargs[2] + prefix + selector;
+                }
+                break;
+            // HTML filtering
+            case 64: // CSS selector
+            case 65: // procedural
+                if ( exception !== ((fargs[1] & 0b0001) !== 0) ) { break; }
                 if (
-                    fargs[2] === '' ||
-                    reHostname.test(fargs[2]) === true ||
-                    reEntity !== undefined && reEntity.test(fargs[2]) === true
+                    fargs[0] === 64 && fargs[3] !== selector ||
+                    fargs[0] === 65 && JSON.parse(fargs[3]).raw !== selector
                 ) {
+                    break;
+                }
+                if ( hostnameMatches(fargs[2]) ) {
                     found = fargs[2] + prefix + selector;
                 }
                 break;

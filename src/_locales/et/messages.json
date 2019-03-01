@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Lõpuks on valminud tõhus blokeerija. Protsessori- ja mälusõbralik.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Töölaud",
@@ -42,6 +42,10 @@
   "aboutPageName": {
     "message": "Teave",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — vara vaatur",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Täpsemad seaded",
@@ -136,12 +140,20 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Klõpsa, et keelata välisfondid selle saidil",
+    "message": "Klõpsa, et keelata välisfondid sellel saidil",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Klõpsa, et lubada välisfondid selle saidil",
+    "message": "Klõpsa, et lubada välisfondid sellel saidil",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Klõpsa, et keelata JavaScript sellel saidil täielikult",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Klõpsa, et lõpetada sellel saidil täielik JavaScripti keelamine",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Üldised reeglid: selle veeru reeglid kehtivad kõikidele saitidele.",
@@ -152,11 +164,11 @@
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
-    "message": "Vajuta, et teha oma muudatused püsivaks.",
+    "message": "Klõpsa, et teha oma muudatused püsivaks.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Vajuta, et võtta muudatused tagasi.",
+    "message": "Klõpsa, et võtta muudatused tagasi.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Keela välised fondid",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Keela JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Keela lehe turvareeglite (CSP-de) aruanded",
@@ -597,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Muudatuste logi",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Viki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Tugi",

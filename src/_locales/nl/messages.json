@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Eindelijk, een efficiënte adblocker. Gebruikt weinig processorkracht en geheugen.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ – Dashboard",
@@ -42,6 +42,10 @@
   "aboutPageName": {
     "message": "Over",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ – Middelenviewer",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Geavanceerde instellingen",
@@ -143,6 +147,14 @@
     "message": "Klik om externe lettertypen op deze website niet meer te blokkeren",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
+  "popupTipNoScripting1": {
+    "message": "Klik om JavaScript op deze website uit te schakelen",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Klik om JavaScript op deze website niet meer uit te schakelen",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
   "popupTipGlobalRules": {
     "message": "Algemene regels: deze kolom is voor regels die op alle websites van toepassing zijn.",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
@@ -172,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "css\/afbeeldingen van derden",
+    "message": "CSS\/afbeeldingen van derden",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -295,6 +307,10 @@
     "message": "Externe lettertypen blokkeren",
     "description": ""
   },
+  "settingsNoScriptingPrompt": {
+    "message": "JavaScript uitschakelen",
+    "description": "The default state for the per-site no-scripting switch"
+  },
   "settingsNoCSPReportsPrompt": {
     "message": "CSP-rapporten blokkeren",
     "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
@@ -416,11 +432,11 @@
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
-    "message": "Importeren en toevoegen",
+    "message": "Importeren en toevoegen...",
     "description": "English: Import and append"
   },
   "1pExport": {
-    "message": "Exporteren",
+    "message": "Exporteren...",
     "description": "English: Export"
   },
   "1pExportFilename": {
@@ -484,11 +500,11 @@
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
-    "message": "Importeren en toevoegen",
+    "message": "Importeren en toevoegen...",
     "description": "English: Import and append"
   },
   "whitelistExport": {
-    "message": "Exporteren",
+    "message": "Exporteren...",
     "description": "English: Export"
   },
   "whitelistExportFilename": {
@@ -597,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Wijzigingenlogboek",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Ondersteuning",
@@ -644,7 +660,7 @@
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
-    "message": "Al uw instellingen zullen worden verwijderd, waarna uBlock₀ wordt herstart.\n\nStandaardwaarden van uBlock₀ terugzetten?",
+    "message": "Al uw instellingen zullen worden verwijderd, waarna uBlock₀ wordt herstart.\n\nStandaardinstellingen van uBlock₀ terugzetten?",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {

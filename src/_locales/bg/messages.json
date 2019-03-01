@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Най-накрая, ефективен блокер. Щадящ процесора и паметта.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Табло",
@@ -36,12 +36,16 @@
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
-    "message": "uBlock₀ — Дневник на мрежовите заявки",
+    "message": "uBlock₀ — Дневник",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
     "message": "Относно",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Активи",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Разширени настройки",
@@ -56,7 +60,7 @@
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Щракнете, за да включите uBO за този сайт.",
+    "message": "Щракнете, за да включите uBlock₀ за този сайт.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -143,6 +147,14 @@
     "message": "Щракнете, за да разрешите външните шрифтове за този сайт",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
+  "popupTipNoScripting1": {
+    "message": "Щракнете, за да забраните JavaScript за този сайт",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Щракнете, за да разрешите JavaScript за този сайт",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
   "popupTipGlobalRules": {
     "message": "Глобални правила: колона с правила, приложими към всички сайтове.",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
@@ -172,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "css\/изображения от 3-ти страни",
+    "message": "CSS от 3-ти страни\/изображения",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -295,6 +307,10 @@
     "message": "Блокиране на външни шрифтове",
     "description": ""
   },
+  "settingsNoScriptingPrompt": {
+    "message": "Забраняване на JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
+  },
   "settingsNoCSPReportsPrompt": {
     "message": "Блокиране на CSP отчетите",
     "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
@@ -400,7 +416,7 @@
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "Последно обновяване: {{ago}}\nЩракнете за принудително обновяване.",
+    "message": "Последно обновяване: {{ago}}.\nЩракнете за принудително обновяване.",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
@@ -597,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Списък с промени",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Поддръжка",

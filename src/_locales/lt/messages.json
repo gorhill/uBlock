@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Pagaliau, efektyvus blokatorius, neapkraunantis nei procesoriaus, nei darbinės atminties.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Prietaisų skydas",
@@ -42,6 +42,10 @@
   "aboutPageName": {
     "message": "Apie",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — resursų žiūryklė",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Sudėtingesni nustatymai",
@@ -143,6 +147,14 @@
     "message": "Spustelėkite nutolusių šriftų neblokavimui šioje svetainėje",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
+  "popupTipNoScripting1": {
+    "message": "Spustelėkite JavaScript išjungimui šioje svetainėje",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Spustelėkite JavaScript įjungimui šioje svetainėje",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
   "popupTipGlobalRules": {
     "message": "Globalios taisyklės: ši skiltis skirta visiems puslapiams taikomoms taisyklėms.",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
@@ -172,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "3-ios šalies css\/paveikslai",
+    "message": "3-ios šalies CSS\/paveikslai",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Blokuoti nuotolinius šriftus",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Išjungti JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Blokuoti CSP ataskaitas",
@@ -597,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Pakeitimų žurnalas",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Viki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Palaikymas",

@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "이 부가 기능은 효율적인 차단기입니다. CPU와 메모리에 주는 부담이 적습니다.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — 대시보드",
@@ -42,6 +42,10 @@
   "aboutPageName": {
     "message": "정보",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Asset 뷰어",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "고급 설정",
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "클릭하여 이 사이트에서 더 이상 외부 폰트를 차단하지 않습니다.",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "클릭하여 이 사이트에서 JavaScript 비활성화",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "클릭하여 이 사이트에서 JavaScript 활성화",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "공용 규칙: 이 열은 모든 사이트에 적용되는 규칙 열 입니다.",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "글꼴 조종 차단",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "JavaScript 비활성화",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "CSP 보고서 차단",
@@ -592,16 +608,16 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Static filter <code>{{filter}}<\/code> could not be found in any of the currently enabled filter lists",
+    "message": "활성화된 정적 필터 목록에서 <code>{{filter}}<\/code>를 찾지 못했습니다",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
     "message": "변경사항",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "위키",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "지원",
@@ -772,7 +788,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Type a shortcut",
+    "message": "단축키를 입력하세요",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {

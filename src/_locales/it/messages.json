@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Finalmente, un blocker efficiente. Leggero sulla CPU e sulla memoria.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Dashboard",
@@ -42,6 +42,10 @@
   "aboutPageName": {
     "message": "Info",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Visualizzatore di risorse",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Impostazioni avanzate",
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Clicca per sbloccare i font remoti in questo sito",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Clicca per disabilitare completamente javascript su questo sito",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Clicca per non disabilitare più javascript su questo sito",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Regole globali: questa colonna è per le regole che si applicano a tutti i siti.",
@@ -295,6 +307,10 @@
     "message": "Blocca font remoti",
     "description": ""
   },
+  "settingsNoScriptingPrompt": {
+    "message": "Disattiva javascript",
+    "description": "The default state for the per-site no-scripting switch"
+  },
   "settingsNoCSPReportsPrompt": {
     "message": "Blocca i report CSP",
     "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
@@ -356,7 +372,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Locale",
+    "message": "Integrati",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -597,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Change log",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Supporto",

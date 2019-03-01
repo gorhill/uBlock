@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "როგორც იქნა, მძლავრი და შედეგიანი რეკლამების შემზღუდავი. ზოგავს CPU-ს და მეხსიერებას.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — სამართავი დაფა",
@@ -42,6 +42,10 @@
   "aboutPageName": {
     "message": "შესახებ",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — რესურსები",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "დამატებითი პარამეტრები",
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "დააწკაპეთ ვებშრიფტების შეზღუდვის გასაუქმებლად ამ საიტზე",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "დააწკაპეთ JavaScript-ის გასათიშად ამ საიტზე",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "დააწკაპეთ JavaScript-ზე შეზღუდვის მოსახსნელად ამ საიტზე",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "გლობალური წესები: ეს სვეტი არის წესებისთვის, რომლებიც მოქმედებს ყველა საიტზე.",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "ვებშრიფტების შეზღუდვა",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "JavaScript-ის გათიშვა",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "CSP მოხსენებების აკრძალვა",
@@ -597,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "ცვლილებათა ჟურნალი",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "მხარდაჭერა",

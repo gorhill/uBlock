@@ -146,28 +146,28 @@ body.off #switch .fa {
 #extraTools {
     background-color: #eee;
     border: 0;
-    color: #aaa;
+    color: #888;
     margin: 0.8em 0 0 0;
-    padding: 4px 0;
+    padding: 4px 0 4px 0.8em;
     text-align: center;
     }
 #extraTools > span {
     cursor: pointer;
     font-size: 1.2em;
-    margin: 0 0.4em;
+    margin: 0 0.8em 0 0;
     position: relative;
     }
 #extraTools > span > span.badge {
     color: #222;
-    bottom: -1px;
+    bottom: -2px;
     font: x-small sans-serif;
     position: absolute;
     }
 body[dir="ltr"] #extraTools > span > span.badge {
-    left: 100%;
+    /* left: 100%; */
     }
 body[dir="rtl"] #extraTools > span > span.badge {
-    right: 100%;
+    /* right: 100%; */
     }
 #extraTools > span > span:last-of-type {
     color: #e00;

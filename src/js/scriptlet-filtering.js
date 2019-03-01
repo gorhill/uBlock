@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2017-2018 Raymond Hill
+    Copyright (C) 2017-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -216,7 +216,7 @@
             'cosmetic',
             {
                 source: 'cosmetic',
-                raw: (isException ? '#@#' : '##') + 'script:inject(' + token + ')'
+                raw: (isException ? '#@#' : '##') + '+js(' + token + ')'
             },
             'dom',
             details.url,
@@ -244,7 +244,7 @@
 
         if ( parsed.hostnames.length === 0 ) {
             if ( parsed.exception ) {
-                writer.push([ 32, '!', '', parsed.suffix ]);
+                writer.push([ 32, 0 | 0b0001, '', parsed.suffix ]);
             }
             return;
         }
@@ -253,28 +253,26 @@
         //   Ignore instances of exception filter with negated hostnames,
         //   because there is no way to create an exception to an exception.
 
-        var µburi = µb.URI;
-
-        for ( var hostname of parsed.hostnames ) {
-            var negated = hostname.charCodeAt(0) === 0x7E /* '~' */;
+        for ( let hn of parsed.hostnames ) {
+            let negated = hn.charCodeAt(0) === 0x7E /* '~' */;
             if ( negated ) {
-                hostname = hostname.slice(1);
+                hn = hn.slice(1);
             }
-            var hash = µburi.domainFromHostname(hostname);
+            let hash = µb.staticExtFilteringEngine.compileHostnameToHash(hn);
             if ( parsed.exception ) {
                 if ( negated ) { continue; }
-                hash = '!' + hash;
+                hash |= 0b0001;
             } else if ( negated ) {
-                hash = '!' + hash;
+                hash |= 0b0001;
             }
-            writer.push([ 32, hash, hostname, parsed.suffix ]);
+            writer.push([ 32, hash, hn, parsed.suffix ]);
         }
     };
 
     // 01234567890123456789
-    // script:inject(token[, arg[, ...]])
-    //               ^                 ^
-    //              14                 -1
+    // +js(token[, arg[, ...]])
+    //     ^                 ^
+    //     4                -1
 
     api.fromCompiledContent = function(reader) {
         // 1001 = scriptlet injection
@@ -282,17 +280,17 @@
 
         while ( reader.next() ) {
             acceptedCount += 1;
-            var fingerprint = reader.fingerprint();
+            let fingerprint = reader.fingerprint();
             if ( duplicates.has(fingerprint) ) {
                 discardedCount += 1;
                 continue;
             }
             duplicates.add(fingerprint);
-            var args = reader.args();
+            let args = reader.args();
             if ( args.length < 4 ) { continue; }
             scriptletDB.add(
                 args[1],
-                { hostname: args[2], token: args[3].slice(14, -1) }
+                { hostname: args[2], token: args[3].slice(4, -1) }
             );
         }
     };
@@ -301,10 +299,10 @@
         if ( scriptletDB.size === 0 ) { return; }
         if ( µb.hiddenSettings.ignoreScriptInjectFilters ) { return; }
 
-        var reng = µb.redirectEngine;
+        let reng = µb.redirectEngine;
         if ( !reng ) { return; }
 
-        var hostname = request.hostname;
+        let hostname = request.hostname;
 
         // https://github.com/gorhill/uBlock/issues/2835
         //   Do not inject scriptlets if the site is under an `allow` rule.
@@ -320,7 +318,7 @@
 
         // https://github.com/gorhill/uBlock/issues/1954
         // Implicit
-        var hn = hostname;
+        let hn = hostname;
         for (;;) {
             lookupScriptlet(hn + '.js', reng, scriptletsRegister);
             if ( hn === domain ) { break; }
@@ -334,11 +332,15 @@
 
         // Explicit
         let entries = [];
-        if ( domain !== '' ) {
-            scriptletDB.retrieve(domain, hostname, entries);
-            scriptletDB.retrieve(entity, entity, entries);
+        let domainHash = µb.staticExtFilteringEngine.makeHash(domain);
+        if ( domainHash !== 0 ) {
+            scriptletDB.retrieve(domainHash, hostname, entries);
         }
-        scriptletDB.retrieve('', hostname, entries);
+        let entityHash = µb.staticExtFilteringEngine.makeHash(entity);
+        if ( entityHash !== 0 ) {
+            scriptletDB.retrieve(entityHash, entity, entries);
+        }
+        scriptletDB.retrieve(0, hostname, entries);
         for ( let entry of entries ) {
             lookupScriptlet(entry.token, reng, scriptletsRegister);
         }
@@ -347,11 +349,13 @@
 
         // Collect exception filters.
         entries = [];
-        if ( domain !== '' ) {
-            scriptletDB.retrieve('!' + domain, hostname, entries);
-            scriptletDB.retrieve('!' + entity, entity, entries);
+        if ( domainHash !== 0 ) {
+            scriptletDB.retrieve(domainHash | 0b0001, hostname, entries);
         }
-        scriptletDB.retrieve('!', hostname, entries);
+        if ( entityHash !== 0 ) {
+            scriptletDB.retrieve(entityHash | 0b0001, entity, entries);
+        }
+        scriptletDB.retrieve(0 | 0b0001, hostname, entries);
         for ( let entry of entries ) {
             exceptionsRegister.add(entry.token);
         }

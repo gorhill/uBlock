@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Nareszcie skuteczny bloker charakteryzujący się niskim użyciem procesora i pamięci.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ – Panel sterowania",
@@ -42,6 +42,10 @@
   "aboutPageName": {
     "message": "Informacje",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ – Podgląd zasobu",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Ustawienia zaawansowane",
@@ -143,6 +147,14 @@
     "message": "Kliknij, aby nie blokować zdalnych czcionek na tej witrynie",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
+  "popupTipNoScripting1": {
+    "message": "Kliknij, aby wyłączyć JavaScript na tej witrynie",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Kliknij, aby JavaScript nie był już wyłączony na tej witrynie",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
   "popupTipGlobalRules": {
     "message": "Reguły globalne. W tej kolumnie znajdują się reguły stosowane na wszystkich witrynach.",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
@@ -172,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "zewnętrzne css\/obrazki",
+    "message": "zewnętrzne CSS\/obrazki",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -264,7 +276,7 @@
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Wyłącz wstępne pobieranie, by uniknąć połączeń z zablokowanymi zapytaniami sieciowymi",
+    "message": "Wyłącz wstępne pobieranie (by uniknąć połączeń z zablokowanymi zapytaniami sieciowymi)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Blokuj zdalne czcionki",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Wyłącz JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Blokuj raporty CSP",
@@ -597,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Dziennik zmian",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Informacje",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Pomoc",
@@ -620,7 +636,7 @@
     "description": "English: Contributors"
   },
   "aboutBackupDataButton": {
-    "message": "Utwórz kopię zapasową",
+    "message": "Utwórz kopię zapasową…",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
@@ -628,7 +644,7 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Przywróć z kopii…",
+    "message": "Przywróć z pliku…",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {

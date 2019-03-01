@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Por fin, un bloqueador eficiente con uso mínimo de procesador y memoria.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Panel de control",
@@ -28,7 +28,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Lista de permitidos",
+    "message": "Lista blanca",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -36,23 +36,27 @@
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
-    "message": "uBlock₀ — Registro de peticiones de red",
+    "message": "uBlock₀ — Registro de peticiones",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
     "message": "Acerca de",
     "description": "appears as tab name in dashboard"
   },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Visor de recursos",
+    "description": "Title for the asset viewer page"
+  },
   "advancedSettingsPageName": {
     "message": "Configuración avanzada",
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Clic: deshabilitar\/habilitar uBlock₀ para este sitio.\n\nCtrl + clic: deshabilitar uBlock₀ sólo en esta página.",
+    "message": "Clic: deshabilitar\/habilitar uBlock₀ en este sitio.\n\nCtrl + clic: deshabilitar uBlock₀ solo en esta página.",
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Clic para deshabilitar uBlock₀ en este sitio. \n\nCtrl+clic para deshabilitar uBlock₀ solo en esta página.",
+    "message": "Clic para deshabilitar uBlock₀ en este sitio.\n\nCtrl+clic para deshabilitar uBlock₀ solo en esta página.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
@@ -88,7 +92,7 @@
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Activar el modo de selección de elementos",
+    "message": "Activar el modo selección de elementos",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
@@ -96,7 +100,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Alternar bloqueo de ventanas emergentes en este sitio",
+    "message": "Alternar bloqueo de todas las ventanas emergentes en este sitio",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
@@ -108,7 +112,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Alternar bloqueo de elementos multimedia grandes para este sitio",
+    "message": "Alternar bloqueo de elementos multimedia grandes en este sitio",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
@@ -120,7 +124,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Alternar filtros cosméticos para este sitio",
+    "message": "Alternar el filtrado cosmético en este sitio",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
@@ -132,7 +136,7 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Alternar bloqueo de fuentes remotas para este sitio",
+    "message": "Alternar bloqueo de fuentes remotas en este sitio",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Clic para no bloquear más fuentes remotas en este sitio",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Clic para deshabilitar JavaScript en este sitio",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Clic para no deshabilitar más JavaScript en este sitio",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Reglas globales: las reglas en esta columna se aplican a todos los sitios.",
@@ -164,31 +176,31 @@
     "description": ""
   },
   "popupImageRulePrompt": {
-    "message": "Imágenes",
+    "message": "imágenes",
     "description": ""
   },
   "popup3pAnyRulePrompt": {
-    "message": "De terceros",
+    "message": "terceros",
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "css\/imágenes de terceros",
+    "message": "CSS\/imágenes de terceros",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
-    "message": "Scripts embebidos",
+    "message": "scripts integrados",
     "description": ""
   },
   "popup1pScriptRulePrompt": {
-    "message": "Scripts del dominio",
+    "message": "scripts del dominio",
     "description": ""
   },
   "popup3pScriptRulePrompt": {
-    "message": "Scripts de terceros",
+    "message": "scripts de terceros",
     "description": ""
   },
   "popup3pFrameRulePrompt": {
-    "message": "Frames de terceros",
+    "message": "frames de terceros",
     "description": ""
   },
   "popupHitDomainCountPrompt": {
@@ -256,7 +268,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Soy usuario avanzado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>lectura obligatoria en inglés<\/a>)",
+    "message": "Soy usuario avanzado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>lectura necesaria<\/a>)",
     "description": ""
   },
   "settingsAdvancedUserSettings": {
@@ -284,7 +296,7 @@
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "Deshabilitar filtros cosméticos",
+    "message": "Deshabilitar el filtrado cosmético",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Bloquear fuentes remotas",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Deshabilitar JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Bloquear reportes CSP",
@@ -336,7 +352,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Esta opción permite el análisis y aplicación de <a href=\"https:\/\/adblockplus.org\/es\/faq_internal#elemhide\">&ldquo;filtros de ocultación de elementos&rdquo; compatibles con Adblock Plus\"<\/a>. Estos filtros son esencialmente cosméticos, sirven para ocultar elementos que se consideran una molestia visual en una página web, no siendo posible su eliminación con el motor de bloqueo basado en peticiones.<\/p><p>Habilitar esta opción aumenta el consumo de memoria de <i>uBlock₀<\/i>.<\/p>",
+    "message": "<p>Esta opción permite el análisis y aplicación de <a href=\"https:\/\/adblockplus.org\/es\/faq_internal#elemhide\">filtros de &ldquo;ocultación de elementos&rdquo; compatibles con Adblock Plus\"<\/a>. Estos filtros son esencialmente cosméticos, sirven para ocultar elementos que se consideran una molestia visual en una página web, no siendo posible su eliminación con el motor de bloqueo basado en peticiones.<\/p><p>Habilitar esta opción aumenta el consumo de memoria de uBlock₀.<\/p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -344,11 +360,11 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Los filtros cosméticos genéricos son aquellos filtros cosméticos que aplican a todas las páginas. <p>Aunque uBlock₀ los gestiona de forma eficiente, estos filtros pueden contribuir a un aumento del uso de la memoria y la CPU en algunas páginas web, especialmente si contienen gran cantidad de contenido.<p>Al habilitar esta opción se disminuirá el uso de la CPU y exceso de uso de la memoria que resulta del procesamiento de los filtros cosméticos genéricos, así como el consumo de memoria de uBlock₀.<p>Se recomienda habilitar esta opción para dispositivos poco potentes.",
+    "message": "<p>Los filtros cosméticos genéricos son aquellos filtros cosméticos que aplican a todas las páginas.<p>Aunque uBlock₀ los gestiona de forma eficiente, estos filtros pueden contribuir a un aumento del uso de la memoria y la CPU en algunas páginas web, especialmente si contienen gran cantidad de contenido.<p>Al habilitar esta opción se disminuirá el uso de la CPU y exceso de uso de la memoria que resulta del procesamiento de los filtros cosméticos genéricos, así como el consumo de memoria de uBlock₀.<p>Se recomienda habilitar esta opción para dispositivos poco potentes.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
-    "message": "Lista de servidores bloqueados",
+    "message": "Lista de dominios bloqueados",
     "description": "English: Lists of blocked hosts"
   },
   "3pApplyChanges": {
@@ -412,7 +428,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Un filtro por línea. Los filtros pueden ser un nombre de servidor, o un filtro compatible con Adblock Plus. Las líneas que comiencen con <code>!<\/code> serán ignoradas.",
+    "message": "Un filtro por línea. Los filtros pueden ser un nombre de dominio, o un filtro compatible con Adblock Plus. Las líneas que comiencen con <code>!<\/code> serán ignoradas.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -472,7 +488,7 @@
     "description": "default file name to use"
   },
   "rulesHint": {
-    "message": "Listado de sus reglas de filtrado dinámico.",
+    "message": "Lista de sus reglas de filtrado dinámico.",
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
@@ -480,7 +496,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Lista de permitidos de páginas web para los cuales se deshabilitará uBlock Origin. Una entrada por línea. Se omitirán nombres de páginas web no válidos.",
+    "message": "Lista blanca de páginas web para los cuales se deshabilitará uBlock Origin. Una entrada por línea. Se omitirán nombres de páginas web no válidos.",
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
@@ -492,7 +508,7 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "ublock-mi-lista-de-permitidos_{{datetime}}.txt",
+    "message": "ublock-mi-lista-blanca_{{datetime}}.txt",
     "description": "English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply": {
@@ -597,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Registro de cambios",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Soporte",
@@ -620,7 +636,7 @@
     "description": "English: Contributors"
   },
   "aboutBackupDataButton": {
-    "message": "Respaldar en archivo...",
+    "message": "Respaldar en archivo",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
@@ -644,7 +660,7 @@
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
-    "message": "Se borrará toda la configuración y uBlock₀ se reiniciará.\n\n¿Restaurar uBlock₀ a la configuración por defecto?",
+    "message": "Se borrará todas sus configuraciones y uBlock₀ se reiniciará.\n\n¿Restablecer uBlock₀ a la configuración predeterminada?",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {

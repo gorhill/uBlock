@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "بالاخره، یک بلاکر کارآمد. کم حجم بر روی پردازنده و حافظه.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — داشبورد",
@@ -32,7 +32,7 @@
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "Shortcuts",
+    "message": "میانبرها",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -42,6 +42,10 @@
   "aboutPageName": {
     "message": "در باره",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Asset viewer",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "تنظیمات پیشرفته",
@@ -142,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "کلیک کنید تا از این به بعد فونت های راه دور در این سایت مسدود نشوند",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Click to disable JavaScript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Click to no longer disable JavaScript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "قوانین همگانی: این ستون برای قوانینی است که برای همۀ سایت ها اعمال می شوند.",
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "انسداد فونت های راه دور",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Disable JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "مسدود کردن براساس گزارشات سیاست امنیت محتوا",
@@ -597,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "تغییرات اخیر",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "ویکی",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "پشتیبانی",
@@ -772,7 +788,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Type a shortcut",
+    "message": "یک میانبر وارد کنید",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {

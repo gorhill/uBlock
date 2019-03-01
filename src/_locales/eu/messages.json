@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Behingoz, blokeatzaile eraginkor bat. PUZ eta memorian arina.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Kontrol panela",
@@ -42,6 +42,10 @@
   "aboutPageName": {
     "message": "Honi buruz",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Aktibo-ikuslea",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Ezarpen aurreratuak",
@@ -143,6 +147,14 @@
     "message": "Klik: Utzi urruneko letra-tipoak gune honetan blokeatzeari",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
+  "popupTipNoScripting1": {
+    "message": "Egin klik gune honetan JavaScript desgaitzeko",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Egin klik gune honetan JavaScript desgaitzeari uzteko",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
   "popupTipGlobalRules": {
     "message": "Arau orokorrak: Zutabe hau gune guztietan aplikatzen diren arauentzat da.",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
@@ -172,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "Hirugarrengoen css\/irudiak",
+    "message": "Hirugarrengoen CSS\/Irudiak",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -294,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Blokeatu urruneko letra-tipoak",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Desgaitu JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Blokeatu CSP txostenak",
@@ -597,11 +613,11 @@
   },
   "aboutChangelog": {
     "message": "Aldaketa egunkaria",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Laguntza",

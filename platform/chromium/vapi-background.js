@@ -64,19 +64,10 @@ var noopFunc = function(){};
 
 /******************************************************************************/
 
-vAPI.app = (function() {
-    let version = manifest.version;
-    let match = /(\d+\.\d+\.\d+)(?:\.(\d+))?/.exec(version);
-    if ( match && match[2] ) {
-        let v = parseInt(match[2], 10);
-        version = match[1] + (v < 100 ? 'b' + v : 'rc' + (v - 100));
-    }
-
-    return {
-        name: manifest.name.replace(/ dev\w+ build/, ''),
-        version: version
-    };
-})();
+vAPI.app = {
+    name: manifest.name.replace(' dev build', ''),
+    version: manifest.version
+};
 
 /******************************************************************************/
 
@@ -359,7 +350,16 @@ vAPI.tabs.registerListeners = function() {
         }
     };
 
+    var onBeforeNavigate = function(details) {
+        if ( details.frameId !== 0 ) {
+            return;
+        }
+    };
+
     var onCommitted = function(details) {
+        if ( details.frameId !== 0 ) {
+            return;
+        }
         details.url = sanitizeURL(details.url);
         onNavigationClient(details);
     };
@@ -382,6 +382,7 @@ vAPI.tabs.registerListeners = function() {
         onUpdatedClient(tabId, changeInfo, tab);
     };
 
+    chrome.webNavigation.onBeforeNavigate.addListener(onBeforeNavigate);
     chrome.webNavigation.onCommitted.addListener(onCommitted);
     // Not supported on Firefox WebExtensions yet.
     if ( chrome.webNavigation.onCreatedNavigationTarget instanceof Object ) {
@@ -645,14 +646,14 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 /*
 vAPI.setIcon = (function() {
     let browserAction = chrome.browserAction,
-        titleTemplate =
-            chrome.runtime.getManifest().browser_action.default_title +
-            ' ({badge})';
+        titleTemplate = chrome.runtime.getManifest().name + ' ({badge})';
     let icons = [
         {
+            tabId: 0,
             path: { '16': 'img/icon_16-off.png', '32': 'img/icon_32-off.png' }
         },
         {
+            tabId: 0,
             path: { '16': 'img/icon_16.png', '32': 'img/icon_32.png' }
         }
     ];
@@ -678,14 +679,10 @@ vAPI.setIcon = (function() {
         // https://searchfox.org/mozilla-central/rev/5ff2d7683078c96e4b11b8a13674daded935aa44/browser/components/extensions/parent/ext-browserAction.js#631
         if ( vAPI.webextFlavor.soup.has('chromium') === false ) { return; }
 
-        let imgs = [];
-        for ( let i = 0; i < icons.length; i++ ) {
-            let path = icons[i].path;
-            for ( let key in path ) {
-                if ( path.hasOwnProperty(key) === false ) { continue; }
-                imgs.push({ i: i, p: key });
-            }
-        }
+        let imgs = [
+            { i: 0, p: '16' }, { i: 0, p: '32' },
+            { i: 1, p: '16' }, { i: 1, p: '32' },
+        ];
         let onLoaded = function() {
             for ( let img of imgs ) {
                 if ( img.r.complete === false ) { return; }
@@ -711,11 +708,8 @@ vAPI.setIcon = (function() {
                 }
                 iconData[img.i][img.p] = imgData;
             }
-            for ( let i = 0; i < iconData.length; i++ ) {
-                if ( iconData[i] ) {
-                    icons[i] = { imageData: iconData[i] };
-                }
-            }
+            icons[0] = { tabId: 0, imageData: iconData[0] };
+            icons[1] = { tabId: 0, imageData: iconData[1] };
         };
         for ( let img of imgs ) {
             img.r = new Image();
@@ -729,9 +723,8 @@ vAPI.setIcon = (function() {
 
         if ( browserAction.setIcon !== undefined ) {
             if ( parts === undefined || (parts & 0x01) !== 0 ) {
-                browserAction.setIcon(
-                    Object.assign({ tabId: tab.id }, icons[state])
-                );
+                icons[state].tabId = tab.id;
+                browserAction.setIcon(icons[state]);
             }
             browserAction.setBadgeText({ tabId: tab.id, text: badge });
         }
@@ -783,7 +776,7 @@ vAPI.setIcon = (function() {
                 iconPaths = { '16': 'img/adn_off_16.png', '32': 'img/adn_off_32.png'};
                 break;
             default://on
-                iconPaths = { '16': 'img/adn_on_16.png', '32': 'img/adn_on_32.png'};
+                iconPaths = { '16': 'img/adn_on_16.png', '32': 'img/adn_on_32.png' };
         }
 
         tabId = toChromiumTabId(tabId);
@@ -1445,7 +1438,7 @@ vAPI.cloud = (function() {
             var i = 0;
             for (;;) {
                 jsonSlice = bin[dataKey + i.toString()];
-                if ( jsonSlice === '' || jsonSlice === undefined ) {
+                if ( jsonSlice === '' ) {
                     break;
                 }
                 json.push(jsonSlice);

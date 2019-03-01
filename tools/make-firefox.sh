@@ -52,8 +52,6 @@ rm $DES/js/vapi-usercss.pseudo.js
 
 # Firefox/webext-specific
 rm $DES/img/icon_128.png
-rm $DES/options_ui.html
-rm $DES/js/options_ui.js
 
 echo "*** AdNauseam::Firefox: Generating meta..."
 python tools/make-firefox-meta.py $DES/ "$2"

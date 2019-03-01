@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2017-2018 Raymond Hill
+    Copyright (C) 2017-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -219,8 +219,8 @@
         // https://github.com/gorhill/uBlock/issues/2793
         var normalizedOperators = new Map([
             [ ':-abp-contains', ':has-text' ],
-            [ ':-abp-has', ':if' ],
-            [ ':contains', ':has-text' ]
+            [ ':-abp-has', ':has' ],
+            [ ':contains', ':has-text' ],
         ]);
 
         var compileArgument = new Map([
@@ -280,6 +280,8 @@
                     break;
                 case ':has':
                 case ':if':
+                    raw.push(':has', '(', decompile(task[1]), ')');
+                    break;
                 case ':if-not':
                     raw.push(task[0], '(', decompile(task[1]), ')');
                     break;
@@ -311,6 +313,7 @@
                 // Find end of argument: first balanced closing parenthesis.
                 // Note: unbalanced parenthesis can be used in a regex literal
                 // when they are escaped using `\`.
+                // TODO: need to handle quoted parentheses.
                 var pcnt = 1;
                 while ( i < n ) {
                     c = raw.charCodeAt(i++);
@@ -323,8 +326,9 @@
                         if ( pcnt === 0 ) { break; }
                     }
                 }
-                // Unbalanced parenthesis?
-                if ( pcnt !== 0 ) { return; }
+                // Unbalanced parenthesis? An unbalanced parenthesis is fine
+                // as long as the last character is a closing parenthesis.
+                if ( pcnt !== 0 && c !== 0x29 ) { return; }
                 // Extract and remember operator details.
                 var operator = raw.slice(opNameBeg, opNameEnd);
                 operator = normalizedOperators.get(operator) || operator;
@@ -401,7 +405,7 @@
 
     api.HostnameBasedDB.prototype = {
         add: function(hash, entry) {
-            var bucket = this.db.get(hash);
+            let bucket = this.db.get(hash);
             if ( bucket === undefined ) {
                 this.db.set(hash, entry);
             } else if ( Array.isArray(bucket) ) {
@@ -416,16 +420,21 @@
             this.size = 0;
         },
         retrieve: function(hash, hostname, out) {
-            var bucket = this.db.get(hash);
+            let bucket = this.db.get(hash);
             if ( bucket === undefined ) { return; }
             if ( Array.isArray(bucket) === false ) {
-                if ( hostname.endsWith(bucket.hostname) ) { out.push(bucket); }
-                return;
+                bucket = [ bucket ];
             }
-            var i = bucket.length;
-            while ( i-- ) {
-                var entry = bucket[i];
-                if ( hostname.endsWith(entry.hostname) ) { out.push(entry); }
+            for ( let entry of bucket ) {
+                if ( hostname.endsWith(entry.hostname) === false ) { continue; }
+                let i = hostname.length - entry.hostname.length;
+                if (
+                    i === 0 ||
+                    i === hostname.length ||
+                    hostname.charCodeAt(i-1) === 0x2E /* '.' */
+                ) {
+                    out.push(entry);
+                }
             }
         },
         toSelfie: function() {
@@ -480,6 +489,60 @@
         resetParsed(parsed);
     };
 
+    // HHHHHHHHHHHH0000
+    //            |   |
+    //            |   |
+    //            |   +-- bit  3-0: reserved
+    //            +------ bit 15-4: FNV
+    api.makeHash = function(token) {
+        // Based on: FNV32a
+        // http://www.isthe.com/chongo/tech/comp/fnv/index.html#FNV-reference-source
+        // The rest is custom, suited for uBlock.
+        let i1 = token.length;
+        if ( i1 === 0 ) { return 0; }
+        let i2 = i1 >> 1;
+        let i4 = i1 >> 2;
+        let i8 = i1 >> 3;
+        let hval = (0x811c9dc5 ^ token.charCodeAt(0)) >>> 0;
+        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
+        hval >>>= 0;
+        hval ^= token.charCodeAt(i8);
+        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
+        hval >>>= 0;
+        hval ^= token.charCodeAt(i4);
+        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
+        hval >>>= 0;
+        hval ^= token.charCodeAt(i4+i8);
+        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
+        hval >>>= 0;
+        hval ^= token.charCodeAt(i2);
+        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
+        hval >>>= 0;
+        hval ^= token.charCodeAt(i2+i8);
+        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
+        hval >>>= 0;
+        hval ^= token.charCodeAt(i2+i4);
+        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
+        hval >>>= 0;
+        hval ^= token.charCodeAt(i1-1);
+        hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
+        hval >>>= 0;
+        hval &= 0xFFF0;
+        // Can't return 0, it's reserved for empty string.
+        return hval !== 0 ? hval : 0xfff0;
+    };
+
+    api.compileHostnameToHash = function(hostname) {
+        let domain;
+        if ( hostname.endsWith('.*') ) {
+            let pos = hostname.lastIndexOf('.', hostname.length - 3);
+            domain = pos !== -1 ? hostname.slice(pos + 1) : hostname;
+        } else {
+            domain = µb.URI.domainFromHostnameNoCache(hostname);
+        }
+        return api.makeHash(domain);
+    };
+
     // https://github.com/chrisaljoudi/uBlock/issues/1004
     //   Detect and report invalid CSS selectors.
 
@@ -503,7 +566,7 @@
 
         var normalizedExtendedSyntaxOperators = new Map([
             [ 'contains', ':has-text' ],
-            [ 'has', ':if' ],
+            [ 'has', ':has' ],
             [ 'matches-css', ':matches-css' ],
             [ 'matches-css-after', ':matches-css-after' ],
             [ 'matches-css-before', ':matches-css-before' ],
@@ -599,9 +662,9 @@
     })();
 
     api.compile = function(raw, writer) {
-        var lpos = raw.indexOf('#');
+        let lpos = raw.indexOf('#');
         if ( lpos === -1 ) { return false; }
-        var rpos = lpos + 1;
+        let rpos = lpos + 1;
         if ( raw.charCodeAt(rpos) !== 0x23 /* '#' */ ) {
             rpos = raw.indexOf('#', rpos + 1);
             if ( rpos === -1 ) { return false; }
@@ -614,7 +677,7 @@
         if ( (rpos - lpos) > 3 ) { return false; }
 
         // Extract the selector.
-        var suffix = raw.slice(rpos + 1).trim();
+        let suffix = raw.slice(rpos + 1).trim();
         if ( suffix.length === 0 ) { return false; }
         parsed.suffix = suffix;
 
@@ -625,7 +688,7 @@
         //   We have an Adguard/ABP cosmetic filter if and only if the
         //   character is `$`, `%` or `?`, otherwise it's not a cosmetic
         //   filter.
-        var cCode = raw.charCodeAt(rpos - 1);
+        let cCode = raw.charCodeAt(rpos - 1);
         if ( cCode !== 0x23 /* '#' */ && cCode !== 0x40 /* '@' */ ) {
             // Adguard's scriptlet injection: not supported.
             if ( cCode === 0x25 /* '%' */ ) { return true; }
@@ -648,37 +711,26 @@
         if ( lpos === 0 ) {
             parsed.hostnames = emptyArray;
         } else {
-            var prefix = raw.slice(0, lpos);
+            let prefix = raw.slice(0, lpos);
             parsed.hostnames = prefix.split(reHostnameSeparator);
             if ( reHasUnicode.test(prefix) ) {
                 toASCIIHostnames(parsed.hostnames);
             }
         }
 
+        // Backward compatibility with deprecated syntax.
         if ( suffix.startsWith('script:') ) {
-            // Scriptlet injection engine.
             if ( suffix.startsWith('script:inject') ) {
-                µb.scriptletFilteringEngine.compile(parsed, writer);
-                return true;
-            }
-            // Script tag filtering: courtesy-conversion to HTML filtering.
-            if ( suffix.startsWith('script:contains') ) {
-                console.info(
-                    'uBO: ##script:contains(...) is deprecated, ' +
-                    'converting to ##^script:has-text(...)'
-                );
-                suffix = suffix.replace(/^script:contains/, '^script:has-text');
-                parsed.suffix = suffix;
+                suffix = parsed.suffix = '+js' + suffix.slice(13);
+            } else if ( suffix.startsWith('script:contains') ) {
+                suffix = parsed.suffix = '^script:has-text' + suffix.slice(15);
             }
         }
 
-        var c0 = suffix.charCodeAt(0);
+        let c0 = suffix.charCodeAt(0);
 
         // New shorter syntax for scriptlet injection engine.
         if ( c0 === 0x2B /* '+' */ && suffix.startsWith('+js') ) {
-            // Convert to deprecated syntax for now. Once 1.15.12 is
-            // widespread, `+js` form will be the official syntax.
-            parsed.suffix = 'script:inject' + parsed.suffix.slice(3);
             µb.scriptletFilteringEngine.compile(parsed, writer);
             return true;
         }

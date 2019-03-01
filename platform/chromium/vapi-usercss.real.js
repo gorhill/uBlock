@@ -66,8 +66,14 @@ vAPI.DOMFilterer = function() {
     this.excludedNodeSet = new WeakSet();
     this.addedCSSRules = new Set();
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/167
+    //   By the time the DOMContentLoaded is fired, the content script might
+    //   have been disconnected from the background page. Unclear why this
+    //   would happen, so far seems to be a Chromium-specific behavior at
+    //   launch time.
     if ( this.domIsReady !== true ) {
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', ( ) => {
+            if ( vAPI instanceof Object === false ) { return; }
             this.domIsReady = true;
             this.commit();
         });
