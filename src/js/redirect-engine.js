@@ -307,7 +307,7 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
     var µburi = µBlock.URI,
         des = matches[1] || '',
         pattern = (des + matches[2]).replace(/[.+?{}()|[\]\/\\]/g, '\\$&')
-                                    .replace(/\^/g, '[^\\w\\d%-]')
+                                    .replace(/\^/g, '[^\\w.%-]')
                                     .replace(/\*/g, '.*?'),
         type,
         redirect = '',

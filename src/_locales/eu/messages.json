@@ -31,6 +31,10 @@
     "message": "Zerrenda zuria",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Lasterbideak",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — Egunkaria",
     "description": "Title for the logger window"
@@ -584,8 +588,12 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "{{filter}} iragazki estatiko aurkitu da hemen:",
-    "description": "Below this sentence, the filter lists in which the filter was found"
+    "message": "<code>{{filter}}<\/code> iragazki estatikoa aurkitu da hemen:",
+    "description": "Below this sentence, the filter list(s) in which the filter was found"
+  },
+  "loggerStaticFilteringFinderSentence2": {
+    "message": "<code>{{filter}}<\/code> iragazki estatikoa ezin izan da aurkitu orain aktibatutako iragazki zerrendetan",
+    "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
     "message": "Aldaketa egunkaria",
@@ -762,6 +770,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Une batez baimendu multimedia elementu handiak",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Idatzi lasterbide bat",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "This entry must be the last one",

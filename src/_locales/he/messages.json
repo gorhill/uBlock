@@ -31,6 +31,10 @@
     "message": "רשימה לבנה",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "קיצורי דרך",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — מתעד הבקשות",
     "description": "Title for the logger window"
@@ -584,8 +588,12 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "המסנן הסטאטי {{filter}} נמצא ב:",
-    "description": "Below this sentence, the filter lists in which the filter was found"
+    "message": "המסנן הסטאטי <code>{{filter}}<\/code> נמצא ב:",
+    "description": "Below this sentence, the filter list(s) in which the filter was found"
+  },
+  "loggerStaticFilteringFinderSentence2": {
+    "message": "המסנן הסטאטי <code>{{filter}}<\/code> לא נמצא בשום אחת מרשימות המסננים המופעלות כרגע",
+    "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
     "message": "רשימת שינויים",
@@ -762,6 +770,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "זמנית אפשר אלמנטי מדיה גדולים",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "הקלד קיצור דרך",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "ערך זה חייב להיות האחרון",

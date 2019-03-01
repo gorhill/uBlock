@@ -31,6 +31,10 @@
     "message": "నేను నమ్మే సైట్ల జాబితా",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "షార్ట్కట్లు",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — నెట్వర్కు అభ్యర్ధనల చిట్టా",
     "description": "Title for the logger window"
@@ -352,7 +356,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Built-in",
+    "message": "అంతర్నిర్మితం",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -384,7 +388,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Import...",
+    "message": "దిగుమతించు...",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -584,8 +588,12 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "నిశ్చలాత్మక వడపోత అయిన {{filter}} క్రింది వాటిలో కలదు:",
-    "description": "Below this sentence, the filter lists in which the filter was found"
+    "message": "నిశ్చలాత్మక ఫిల్టర్ అయిన <code>{{filter}}<\/code> క్రింది వాటిలో కలదు:",
+    "description": "Below this sentence, the filter list(s) in which the filter was found"
+  },
+  "loggerStaticFilteringFinderSentence2": {
+    "message": "నిశ్చలాత్మక ఫిల్టర్ అయిన <code>{{filter}}<\/code> ప్రస్తుతం ఉత్తేజపరిచిన ఫిల్టర్ జాబితాలలో కనుగొనబడలేదు",
+    "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
     "message": "మార్పుల సంచిక",
@@ -600,7 +608,7 @@
     "description": "A link for where to get support"
   },
   "aboutIssues": {
-    "message": "Issue tracker",
+    "message": "ఇష్యూ ట్రాకర్",
     "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
@@ -762,6 +770,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "భారి దృశ్య\/శ్రవణ అంశాలను తాత్కాలికంగా అనుమతించు",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "షార్ట్కట్ టైప్ చేయండి",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "ఇది అంతిమంగా వుండాల్సిన నమోదు",

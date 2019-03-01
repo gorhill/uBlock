@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
@@ -28,7 +28,11 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Lista blanca",
+    "message": "Lista de permitidos",
+    "description": "appears as tab name in dashboard"
+  },
+  "shortcutsPageName": {
+    "message": "Atajos",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -40,11 +44,11 @@
     "description": "appears as tab name in dashboard"
   },
   "advancedSettingsPageName": {
-    "message": "Ajustes avanzados",
+    "message": "Configuración avanzada",
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Clic: desactivar\/activar uBlock₀ para este sitio.\n\nCtrl + clic: deshabilitar uBlock₀ sólo en esta página.",
+    "message": "Clic: deshabilitar\/habilitar uBlock₀ para este sitio.\n\nCtrl + clic: deshabilitar uBlock₀ sólo en esta página.",
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
@@ -92,7 +96,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Alternar bloqueo de todos los pop-ups para este sitio",
+    "message": "Alternar bloqueo de ventanas emergentes en este sitio",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
@@ -252,11 +256,11 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Soy usuario avanzado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'> Lectura Obligatoria - Inglés<\/a>)",
+    "message": "Soy usuario avanzado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>lectura obligatoria en inglés<\/a>)",
     "description": ""
   },
   "settingsAdvancedUserSettings": {
-    "message": "ajustes avanzados",
+    "message": "configuración avanzada",
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt": {
@@ -312,11 +316,11 @@
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
-    "message": "{{used}} de {{total}} utilizados",
+    "message": "{{used}} utilizados de {{total}}",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
-    "message": "Actualizar automáticamente la lista de filtros.",
+    "message": "Actualizar automáticamente las listas de filtros",
     "description": "A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow": {
@@ -328,7 +332,7 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
-    "message": "Analizar y aplicar filtros cosméticos.",
+    "message": "Analizar y aplicar filtros cosméticos",
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
@@ -408,7 +412,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Un filtro por línea. Los filtros pueden ser un nombre de servidor, o un filtro compatible con Adblock Plus. Las líneas que comiencen con &lsquo;!&rsquo; serán ignoradas.",
+    "message": "Un filtro por línea. Los filtros pueden ser un nombre de servidor, o un filtro compatible con Adblock Plus. Las líneas que comiencen con <code>!<\/code> serán ignoradas.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -472,11 +476,11 @@
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
-    "message": "Sintaxis de las reglas: <code>origen destino tipo acción<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'> documentación completa<\/a>).",
+    "message": "Sintaxis de las reglas: <code>origen destino tipo acción<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>documentación completa<\/a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Lista de servidores para los cuales se deshabilitará uBlock₀. Una entrada por línea. Se omitirán nombres de servidores inválidos.",
+    "message": "Lista de permitidos de páginas web para los cuales se deshabilitará uBlock Origin. Una entrada por línea. Se omitirán nombres de páginas web no válidos.",
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
@@ -512,7 +516,7 @@
     "description": "English: Filter"
   },
   "logAll": {
-    "message": "Todas",
+    "message": "Todo",
     "description": "Appears in the logger's tab selector"
   },
   "logBehindTheScene": {
@@ -584,8 +588,12 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Filtro estático {{filter}} encontrado en:",
-    "description": "Below this sentence, the filter lists in which the filter was found"
+    "message": "Filtro estático <code>{{filter}}<\/code> encontrado en:",
+    "description": "Below this sentence, the filter list(s) in which the filter was found"
+  },
+  "loggerStaticFilteringFinderSentence2": {
+    "message": "No se pudo encontrar el filtro estático <code>{{filter}}<\/code> en ninguna de las listas de filtros actualmente habilitadas",
+    "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
     "message": "Registro de cambios",
@@ -616,7 +624,7 @@
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
-    "message": "ublock-respaldo_{{datetime}}.txt",
+    "message": "ublock-mi-respaldo_{{datetime}}.txt",
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
@@ -628,7 +636,7 @@
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
-    "message": "Toda la configuración se sobrescribirá utilizando datos respaldados en {{time}} y uBlock₀ se reiniciará.  \n\n¿Sobrescribir toda la configuración existente utilizando datos de la copia de seguridad?",
+    "message": "Toda la configuración se sobrescribirá utilizando datos respaldados en {{time}} y uBlock₀ se reiniciará.\n\n¿Sobrescribir toda la configuración existente utilizando los datos de respaldo?",
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {
@@ -708,7 +716,7 @@
     "description": "English: Close this window"
   },
   "docblockedProceed": {
-    "message": "Deshabilitar bloqueo estricto para  {{hostname}}",
+    "message": "Deshabilitar bloqueo estricto para {{hostname}}",
     "description": "English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary": {
@@ -740,7 +748,7 @@
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
-    "message": "¡Alerta! Cambie estos ajustes avanzados bajo su propio riesgo.",
+    "message": "¡Alerta! Cambie estas configuraciones avanzadas bajo su propio riesgo.",
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {
@@ -762,6 +770,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Permitir temporalmente elementos multimedia grandes",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Escriba un atajo",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "Esta entrada debe ser la última",

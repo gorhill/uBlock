@@ -168,6 +168,8 @@ var µBlock = (function() { // jshint ignore:line
             lastBackupTime: 0
         },
 
+        commandShortcuts: new Map(),
+
         // Allows to fully customize uBO's assets, typically set through admin
         // settings. The content of 'assets.json' will also tell which filter
         // lists to enable by default when uBO is first installed.

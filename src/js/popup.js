@@ -67,7 +67,7 @@ var scopeToSrcHostnameMap = {
     '.': ''
 };
 var dfHotspots = null;
-var hostnameToSortableTokenMap = {};
+var hostnameToSortableTokenMap = new Map();
 var allDomains = {};
 var allDomainCount = 0;
 var allHostnameRows = [];
@@ -111,30 +111,30 @@ var positionRulesetTools = function() {
 var cachePopupData = function(data) {
     popupData = {};
     scopeToSrcHostnameMap['.'] = '';
-    hostnameToSortableTokenMap = {};
+    hostnameToSortableTokenMap.clear();
 
     if ( typeof data !== 'object' ) {
         return popupData;
     }
     popupData = data;
     scopeToSrcHostnameMap['.'] = popupData.pageHostname || '';
-    var hostnameDict = popupData.hostnameDict;
+    let hostnameDict = popupData.hostnameDict;
     if ( typeof hostnameDict !== 'object' ) {
         return popupData;
     }
-    var domain, prefix;
-    for ( var hostname in hostnameDict ) {
-        if ( hostnameDict.hasOwnProperty(hostname) === false ) {
-            continue;
-        }
-        domain = hostnameDict[hostname].domain;
-        prefix = hostname.slice(0, 0 - domain.length);
+    for ( let hostname in hostnameDict ) {
+        if ( hostnameDict.hasOwnProperty(hostname) === false ) { continue; }
+        let domain = hostnameDict[hostname].domain;
+        let prefix = hostname.slice(0, 0 - domain.length - 1);
         // Prefix with space char for 1st-party hostnames: this ensure these
         // will come first in list.
         if ( domain === popupData.pageDomain ) {
             domain = '\u0020';
         }
-        hostnameToSortableTokenMap[hostname] = domain + prefix.split('.').reverse().join('.');
+        hostnameToSortableTokenMap.set(
+            hostname,
+            domain + ' ' + prefix.split('.').reverse().join('.')
+        );
     }
     return popupData;
 };
@@ -180,11 +180,11 @@ var formatNumber = function(count) {
 var rulekeyCompare = function(a, b) {
     var ha = a.slice(2, a.indexOf(' ', 2));
     if ( !reIP.test(ha) ) {
-        ha = hostnameToSortableTokenMap[ha] || ' ';
+        ha = hostnameToSortableTokenMap.get(ha) || ' ';
     }
     var hb = b.slice(2, b.indexOf(' ', 2));
     if ( !reIP.test(hb) ) {
-        hb = hostnameToSortableTokenMap[hb] || ' ';
+        hb = hostnameToSortableTokenMap.get(hb) || ' ';
     }
     var ca = ha.charCodeAt(0),
         cb = hb.charCodeAt(0);

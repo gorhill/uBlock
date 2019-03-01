@@ -31,6 +31,10 @@
     "message": "വൈറ്റ് ലിസ്റ്റ്",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Shortcuts",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "യുബ്ലോക്ക്ഒ - നെറ്റ്‌വര്‍ക്ക് അപേക്ഷാ ലോഗ്",
     "description": "Title for the logger window"
@@ -584,8 +588,12 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "സ്റ്റാറ്റിക് ഫില്‍ട്ടര്‍ {{filter}} ഇതില്‍ കണ്ടെത്തി:",
-    "description": "Below this sentence, the filter lists in which the filter was found"
+    "message": "സ്റ്റാറ്റിക് ഫില്‍ട്ടര്‍ <code>{{filter}}<\/code> ഇതില്‍ കണ്ടെത്തി:",
+    "description": "Below this sentence, the filter list(s) in which the filter was found"
+  },
+  "loggerStaticFilteringFinderSentence2": {
+    "message": "Static filter <code>{{filter}}<\/code> could not be found in any of the currently enabled filter lists",
+    "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
     "message": "മാറ്റങ്ങളുടെ ലോഗ്",
@@ -762,6 +770,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "താൽക്കാലികമായി വലിയ മീഡിയ അനുവദിക്കുക",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Type a shortcut",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "This entry must be the last one",

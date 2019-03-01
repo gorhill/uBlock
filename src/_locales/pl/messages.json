@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
@@ -31,8 +31,12 @@
     "message": "Wyjątki",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Skróty",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
-    "message": "uBlock — Dziennik żądań sieciowych",
+    "message": "uBlock₀ – Dziennik żądań sieciowych",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
@@ -236,7 +240,7 @@
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "Nie wyświetlaj podpowiedzi",
+    "message": "Nie wyświetlaj dymków podpowiedzi",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
@@ -264,7 +268,7 @@
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
-    "message": "Nie śledź kliknięć odnośników",
+    "message": "Wyłącz śledzenie kliknięć odnośników",
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
@@ -584,8 +588,12 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Filtr statyczny {{filter}} znajdujący się w:",
-    "description": "Below this sentence, the filter lists in which the filter was found"
+    "message": "Filtr statyczny <code>{{filter}}<\/code> znajdujący się w:",
+    "description": "Below this sentence, the filter list(s) in which the filter was found"
+  },
+  "loggerStaticFilteringFinderSentence2": {
+    "message": "Filtr statyczny <code>{{filter}}<\/code> nie został znaleziony w aktualnie włączonych listach filtrów",
+    "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
     "message": "Dziennik zmian",
@@ -684,7 +692,7 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1": {
-    "message": "uBlock₀ zablokował wczytywanie następującej strony:",
+    "message": "uBlock Origin zablokował wczytywanie następującej strony:",
     "description": "English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2": {
@@ -708,7 +716,7 @@
     "description": "English: Close this window"
   },
   "docblockedProceed": {
-    "message": "Wyłącz skrupulatne blokowanie na {{hostname}}",
+    "message": "Wyłącz rygorystyczne blokowanie dla {{hostname}}",
     "description": "English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary": {
@@ -762,6 +770,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Tymczasowo zezwalaj na wyświetlanie dużych elementów multimedialnych",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Wprowadź skrót",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "Ten wpis musi być ostatni",

@@ -1445,7 +1445,7 @@ vAPI.cloud = (function() {
             var i = 0;
             for (;;) {
                 jsonSlice = bin[dataKey + i.toString()];
-                if ( jsonSlice === '' ) {
+                if ( jsonSlice === '' || jsonSlice === undefined ) {
                     break;
                 }
                 json.push(jsonSlice);

@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2015-2018 Raymond Hill
+    Copyright (C) 2015-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,11 +21,11 @@
 
 /* global uDom */
 
+'use strict';
+
 /******************************************************************************/
 
 (function() {
-
-'use strict';
 
 /******************************************************************************/
 
@@ -1303,21 +1303,18 @@ var netFilteringManager = (function() {
 /******************************************************************************/
 
 var reverseLookupManager = (function() {
-    var reSentence1 = /\{\{filter\}\}/g;
-    var sentence1Template = vAPI.i18n('loggerStaticFilteringFinderSentence1');
-    var filterFinderDialog = uDom.nodeFromId('filterFinderDialog');
+    let filterFinderDialog = uDom.nodeFromId('filterFinderDialog');
+    let rawFilter = '';
 
-    var removeAllChildren = function(node) {
+    let removeAllChildren = function(node) {
         while ( node.firstChild ) {
             node.removeChild(node.firstChild);
         }
     };
 
-    var onClick = function(ev) {
-        var target = ev.target;
-
-        // click outside the dialog proper
-        if ( target.classList.contains('modalDialog') ) {
+    // Clicking outside the dialog will close the dialog
+    let onClick = function(ev) {
+        if ( ev.target.classList.contains('modalDialog') ) {
             toggleOff();
             return;
         }
@@ -1325,42 +1322,30 @@ var reverseLookupManager = (function() {
         ev.stopPropagation();
     };
 
-    var nodeFromFilter = function(filter, lists) {
+    let nodeFromFilter = function(filter, lists) {
         if ( Array.isArray(lists) === false || lists.length === 0 ) {
-            return null;
+            return;
         }
-        var node,
-            p = document.createElement('p');
 
-        reSentence1.lastIndex = 0;
-        var matches = reSentence1.exec(sentence1Template);
-        if ( matches === null ) {
-            node = document.createTextNode(sentence1Template);
-        } else {
-            node = uDom.nodeFromSelector('#filterFinderDialogSentence1 > span').cloneNode(true);
-            node.childNodes[0].textContent = sentence1Template.slice(0, matches.index);
-            // https://github.com/gorhill/uBlock/issues/2753
-            node.childNodes[1].textContent = filter.length <= 1024
-                ? filter
-                : filter.slice(0, 1023) + '…';
-            node.childNodes[2].textContent = sentence1Template.slice(reSentence1.lastIndex);
-        }
-        p.appendChild(node);
+        let p = document.createElement('p');
 
-        var ul = document.createElement('ul');
-        var list, li;
-        for ( var i = 0; i < lists.length; i++ ) {
-            list = lists[i];
-            li = document.createElement('li');
+        vAPI.i18n.safeTemplateToDOM(
+            'loggerStaticFilteringFinderSentence1',
+            { filter: filter },
+            p
+        );
+
+        let ul = document.createElement('ul');
+        for ( let list of lists ) {
+            let li = document.querySelector('#filterFinderListEntry > li')
+                             .cloneNode(true);
+            let a = li.querySelector('a:nth-of-type(1)');
+            a.href += encodeURIComponent(list.assetKey);
+            a.textContent = list.title;
             if ( list.supportURL ) {
-                node = document.createElement('a');
-                node.textContent = list.title;
-                node.setAttribute('href', list.supportURL);
-                node.setAttribute('target', '_blank');
-            } else {
-                node = document.createTextNode(list.title);
+                a = li.querySelector('a:nth-of-type(2)');
+                a.setAttribute('href', list.supportURL);
             }
-            li.appendChild(node);
             ul.appendChild(li);
         }
         p.appendChild(ul);
@@ -1368,30 +1353,37 @@ var reverseLookupManager = (function() {
         return p;
     };
 
-    var reverseLookupDone = function(response) {
-        if ( typeof response !== 'object' ) {
-            return;
+    let reverseLookupDone = function(response) {
+        if ( response instanceof Object === false ) {
+            response = {};
         }
 
-        var dialog = filterFinderDialog.querySelector('.dialog');
+        let dialog = filterFinderDialog.querySelector('.dialog');
         removeAllChildren(dialog);
 
-        for ( var filter in response ) {
-            var p = nodeFromFilter(filter, response[filter]);
-            if ( p === null ) { continue; }
+        for ( let filter in response ) {
+            let p = nodeFromFilter(filter, response[filter]);
+            if ( p === undefined ) { continue; }
             dialog.appendChild(p);
+        }
+
+        // https://github.com/gorhill/uBlock/issues/2179
+        if ( dialog.childElementCount === 0 ) {
+            vAPI.i18n.safeTemplateToDOM(
+                'loggerStaticFilteringFinderSentence2',
+                { filter: rawFilter },
+                dialog
+            );
         }
 
         document.body.appendChild(filterFinderDialog);
         filterFinderDialog.addEventListener('click', onClick, true);
     };
 
-    var toggleOn = function(ev) {
-        var row = ev.target.parentElement;
-        var rawFilter = row.cells[2].textContent;
-        if ( rawFilter === '' ) {
-            return;
-        }
+    let toggleOn = function(ev) {
+        let row = ev.target.parentElement;
+        rawFilter = row.cells[2].textContent;
+        if ( rawFilter === '' ) { return; }
 
         if ( row.classList.contains('cat_net') ) {
             messaging.send(
@@ -1408,7 +1400,7 @@ var reverseLookupManager = (function() {
                 'loggerUI',
                 {
                     what: 'listsFromCosmeticFilter',
-                    hostname: row.getAttribute('data-hn-frame') || '',
+                    url: row.cells[5].textContent,
                     rawFilter: rawFilter,
                 },
                 reverseLookupDone
@@ -1416,9 +1408,10 @@ var reverseLookupManager = (function() {
         }
     };
 
-    var toggleOff = function() {
+    let toggleOff = function() {
         filterFinderDialog.removeEventListener('click', onClick, true);
         document.body.removeChild(filterFinderDialog);
+        rawFilter = '';
     };
 
     return {

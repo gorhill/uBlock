@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2018 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -70,11 +70,7 @@ var onMessage = function(request, sender, callback) {
         return;
 
     case 'listsFromCosmeticFilter':
-        µb.staticFilteringReverseLookup.fromCosmeticFilter(
-            request.hostname,
-            request.rawFilter,
-            callback
-        );
+        µb.staticFilteringReverseLookup.fromCosmeticFilter(request, callback);
         return;
 
     case 'reloadAllFilters':
@@ -108,10 +104,6 @@ var onMessage = function(request, sender, callback) {
 
     case 'cosmeticFiltersInjected':
         µb.cosmeticFilteringEngine.addToSelectorCache(request);
-        // Net-based cosmetic filters are of no interest for logging purpose.
-        if ( µb.logger.isEnabled() && request.type !== 'net' ) {
-            µb.logCosmeticFilters(tabId);
-        }
         break;
 
     case 'createUserFilter':
@@ -545,8 +537,8 @@ var onMessage = function(request, sender, callback) {
         if ( µb.canInjectScriptletsNow === false ) {
             response.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
         }
-        if ( request.isRootFrame && µb.logger.isEnabled() ) {
-            µb.logCosmeticFilters(tabId);
+        if ( response.noCosmeticFiltering !== true ) {
+            µb.logCosmeticFilters(tabId, frameId);
         }
         break;
 
@@ -822,15 +814,21 @@ var restoreUserData = function(request) {
     vAPI.localStorage.removeItem('immediateHiddenSettings');
 };
 
+// Remove all stored data but keep global counts, people can become
+// quite attached to numbers
+
 var resetUserData = function() {
-    vAPI.cacheStorage.clear();
-    vAPI.storage.clear();
+    let count = 3;
+    let countdown = ( ) => {
+        count -= 1;
+        if ( count === 0 ) {
+            vAPI.app.restart();
+        }
+    };
+    vAPI.cacheStorage.clear(countdown); // 1
+    vAPI.storage.clear(countdown);      // 2
+    µb.saveLocalSettings(countdown);    // 3
     vAPI.localStorage.removeItem('immediateHiddenSettings');
-
-    // Keep global counts, people can become quite attached to numbers
-    µb.saveLocalSettings();
-
-    vAPI.app.restart();
 };
 
 /******************************************************************************/
@@ -958,6 +956,43 @@ var modifyRuleset = function(details) {
 
 /******************************************************************************/
 
+// Shortcuts pane
+
+let getShortcuts = function(callback) {
+    if ( µb.canUseShortcuts === false ) {
+        return callback([]);
+    }
+
+    vAPI.commands.getAll(commands => {
+        let response = [];
+        for ( let command of commands ) {
+            let desc = command.description;
+            let match = /^__MSG_(.+?)__$/.exec(desc);
+            if ( match !== null ) {
+                desc = vAPI.i18n(match[1]);
+            }
+            if ( desc === '' ) { continue; }
+            command.description = desc;
+            response.push(command);
+        }
+        callback(response);
+    });
+};
+
+let setShortcut = function(details) {
+    if  ( µb.canUpdateShortcuts === false ) { return; }
+    if ( details.shortcut === undefined ) {
+        vAPI.commands.reset(details.name);
+        µb.commandShortcuts.delete(details.name);
+    } else {
+        vAPI.commands.update({ name: details.name, shortcut: details.shortcut });
+        µb.commandShortcuts.set(details.name, details.shortcut);
+    }
+    vAPI.storage.set({ commandShortcuts: Array.from(µb.commandShortcuts) });
+};
+
+/******************************************************************************/
+
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
@@ -969,6 +1004,9 @@ var onMessage = function(request, sender, callback) {
 
     case 'getLocalData':
         return getLocalData(callback);
+
+    case 'getShortcuts':
+        return getShortcuts(callback);
 
     case 'readUserFilters':
         return µb.loadUserFilters(callback);
@@ -984,6 +1022,10 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
+    case 'canUpdateShortcuts':
+        response = µb.canUpdateShortcuts;
+        break;
+
     case 'getRules':
         response = getRules();
         break;
@@ -1023,6 +1065,10 @@ var onMessage = function(request, sender, callback) {
 
     case 'resetUserData':
         resetUserData();
+        break;
+
+    case 'setShortcut':
+        setShortcut(request);
         break;
 
     case 'writeHiddenSettings':

@@ -31,6 +31,10 @@
     "message": "Išimtys",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Nuorodos",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — Žurnalas",
     "description": "Title for the logger window"
@@ -584,8 +588,12 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Statinis filtras {{filter}} rastas:",
-    "description": "Below this sentence, the filter lists in which the filter was found"
+    "message": "Statinis filtras <code>{{filter}}<\/code> rastas:",
+    "description": "Below this sentence, the filter list(s) in which the filter was found"
+  },
+  "loggerStaticFilteringFinderSentence2": {
+    "message": "Statinis filtras <code>{{filter}}<\/code> nerastas jokiame dabar įjungtame filtrų sąraše",
+    "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
     "message": "Pakeitimų žurnalas",
@@ -762,6 +770,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Laikinai leisti didelius medijos elementus",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Įveskite nuorodą",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "This entry must be the last one",

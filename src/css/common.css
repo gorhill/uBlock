@@ -556,7 +556,6 @@ button.error{
     user-select: none;
       -moz-user-select: none;
       -webkit-user-select: none;
-    vertical-align: middle;
     }
 body {
     font: 14px sans-serif;

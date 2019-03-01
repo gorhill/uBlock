@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2018 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -2134,9 +2134,10 @@ FilterContainer.prototype.compile = function(raw, writer) {
     if (
         parsed.hostnamePure &&
         parsed.domainOpt === '' &&
-        parsed.dataType === undefined &&
-        this.compileHostnameOnlyFilter(parsed, writer)
+        parsed.dataType === undefined
     ) {
+        parsed.tokenHash = this.dotTokenHash;
+        this.compileToAtomicFilter(parsed, parsed.f, writer);
         return true;
     }
 
@@ -2194,52 +2195,32 @@ FilterContainer.prototype.compile = function(raw, writer) {
         fdata.push(fwrapped);
     }
 
-    this.compileToAtomicFilter(fdata, parsed, writer);
+    this.compileToAtomicFilter(parsed, fdata, writer);
 
     return true;
 };
 
 /******************************************************************************/
 
-// Using fast/compact dictionary when filter is a pure hostname.
+FilterContainer.prototype.compileToAtomicFilter = function(
+    parsed,
+    fdata,
+    writer
+) {
+    let descBits = parsed.action |
+                   parsed.important |
+                   parsed.party |
+                   parsed.badFilter;
+    let type = parsed.types;
 
-FilterContainer.prototype.compileHostnameOnlyFilter = function(parsed, writer) {
-    // Can't fit the filter in a pure hostname dictionary.
-    // https://github.com/gorhill/uBlock/issues/1757
-    // This should no longer happen with fix to above issue.
-    //if ( parsed.domainOpt.length !== 0 ) {
-    //    return;
-    //}
-
-    var descBits = parsed.action | parsed.important | parsed.party | parsed.badFilter;
-
-    var type = parsed.types;
-    if ( type === 0 ) {
-        writer.push([ descBits, this.dotTokenHash, parsed.f ]);
-        return true;
-    }
-
-    var bitOffset = 1;
-    do {
-        if ( type & 1 ) {
-            writer.push([ descBits | (bitOffset << 4), this.dotTokenHash, parsed.f ]);
-        }
-        bitOffset += 1;
-        type >>>= 1;
-    } while ( type !== 0 );
-    return true;
-};
-
-/******************************************************************************/
-
-FilterContainer.prototype.compileToAtomicFilter = function(fdata, parsed, writer) {
-    var descBits = parsed.action | parsed.important | parsed.party | parsed.badFilter,
-        type = parsed.types;
+    // Typeless
     if ( type === 0 ) {
         writer.push([ descBits, parsed.tokenHash, fdata ]);
         return;
     }
-    var bitOffset = 1;
+
+    // Specific type(s)
+    let bitOffset = 1;
     do {
         if ( type & 1 ) {
             writer.push([ descBits | (bitOffset << 4), parsed.tokenHash, fdata ]);
@@ -2250,22 +2231,13 @@ FilterContainer.prototype.compileToAtomicFilter = function(fdata, parsed, writer
 
     // Only static filter with an explicit type can be redirected. If we reach
     // this point, it's because there is one or more explicit type.
-    if ( !parsed.redirect ) {
-        return;
-    }
-
-    if ( parsed.badFilter ) {
-        return;
-    }
-
-    var redirects = µb.redirectEngine.compileRuleFromStaticFilter(parsed.raw);
-    if ( Array.isArray(redirects) === false ) {
-        return;
-    }
-    descBits = typeNameToTypeValue.redirect;
-    var i = redirects.length;
-    while ( i-- ) {
-        writer.push([ descBits, redirects[i] ]);
+    if ( parsed.badFilter === 0 && parsed.redirect ) {
+        let redirects = µb.redirectEngine.compileRuleFromStaticFilter(parsed.raw);
+        if ( Array.isArray(redirects) ) {
+            for ( let redirect of redirects ) {
+                writer.push([ typeNameToTypeValue.redirect, redirect ]);
+            }
+        }
     }
 };
 
@@ -2553,14 +2525,14 @@ FilterContainer.prototype.matchTokens = function(bucket, url) {
 // https://github.com/gorhill/uBlock/issues/2103
 //   User may want to override `generichide` exception filters.
 
-FilterContainer.prototype.matchStringGenericHide = function(context, requestURL) {
-    var url = this.urlTokenizer.setURL(requestURL);
+FilterContainer.prototype.matchStringGenericHide = function(requestURL) {
+    let url = this.urlTokenizer.setURL(requestURL);
 
     // https://github.com/gorhill/uBlock/issues/2225
     //   Important: this is used by FilterHostnameDict.match().
     requestHostnameRegister = µb.URI.hostnameFromURI(url);
 
-    var bucket = this.categories.get(genericHideException);
+    let bucket = this.categories.get(genericHideException);
     if ( !bucket || this.matchTokens(bucket, url) === false ) {
         this.fRegister = null;
         return 0;
@@ -2585,7 +2557,7 @@ FilterContainer.prototype.matchStringGenericHide = function(context, requestURL)
 FilterContainer.prototype.matchStringExactType = function(context, requestURL, requestType) {
     // Special cases.
     if ( requestType === 'generichide' ) {
-        return this.matchStringGenericHide(context, requestURL);
+        return this.matchStringGenericHide(requestURL);
     }
     var type = typeNameToTypeValue[requestType];
     if ( type === undefined ) {

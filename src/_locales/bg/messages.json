@@ -31,6 +31,10 @@
     "message": "Изключения",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Клавишни комбинации",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — Дневник на мрежовите заявки",
     "description": "Title for the logger window"
@@ -584,8 +588,12 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Статичният филтър {{filter}} е намерен в:",
-    "description": "Below this sentence, the filter lists in which the filter was found"
+    "message": "Статичният филтър <code>{{filter}}<\/code> е намерен в:",
+    "description": "Below this sentence, the filter list(s) in which the filter was found"
+  },
+  "loggerStaticFilteringFinderSentence2": {
+    "message": "Статичният филтър <code>{{filter}}<\/code> не е намерен в никой от списъка с активни филтри",
+    "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
     "message": "Списък с промени",
@@ -762,6 +770,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Временно разрешаване на големи мултимедийни елементи",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Натиснете клавиши",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "Това поле трябва да бъде последното",

@@ -436,15 +436,14 @@ var matchBucket = function(url, hostname, bucket, start) {
 /******************************************************************************/
 
 µBlock.elementPickerExec = function(tabId, targetElement, zap) {
-    if ( vAPI.isBehindTheSceneTabId(tabId) ) {
-        return;
-    }
+    if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
+
     this.epickerTarget = targetElement || '';
     this.epickerZap = zap || false;
-    this.scriptlets.inject(tabId, 'element-picker');
-    if ( typeof vAPI.tabs.select === 'function' ) {
-        vAPI.tabs.select(tabId);
-    }
+    vAPI.tabs.injectScript(tabId, {
+        file: '/js/scriptlets/element-picker.js',
+        runAt: 'document_end'
+    });
 };
 
 /******************************************************************************/
@@ -546,24 +545,14 @@ var matchBucket = function(url, hostname, bucket, start) {
 
 /******************************************************************************/
 
-µBlock.logCosmeticFilters = (function() {
-    var tabIdToTimerMap = new Map();
-
-    var injectNow = function(tabId) {
-        tabIdToTimerMap.delete(tabId);
-        µBlock.scriptlets.injectDeep(tabId, 'cosmetic-logger');
-    };
-
-    var injectAsync = function(tabId) {
-        if ( tabIdToTimerMap.has(tabId) ) { return; }
-        tabIdToTimerMap.set(
-            tabId,
-            vAPI.setTimeout(injectNow.bind(null, tabId), 100)
-        );
-    };
-
-    return injectAsync;
-})();
+µBlock.logCosmeticFilters = function(tabId, frameId) {
+    if ( this.logger.isEnabled() ) {
+        vAPI.tabs.injectScript(tabId, {
+            file: '/js/scriptlets/cosmetic-logger.js',
+            frameId: frameId
+        });
+    }
+};
 
 /******************************************************************************/
 

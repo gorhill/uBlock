@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2018 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -102,6 +102,17 @@ var onPSLReady = function() {
         }
         µb.loadFilterLists(onAllReady);
     });
+};
+
+/******************************************************************************/
+
+var onCommandShortcutsReady = function(commandShortcuts) {
+    if ( Array.isArray(commandShortcuts) === false ) { return; }
+    µb.commandShortcuts = new Map(commandShortcuts);
+    if ( µb.canUpdateShortcuts === false ) { return; }
+    for ( let entry of commandShortcuts ) {
+        vAPI.commands.update({ name: entry[0], shortcut: entry[1] });
+    }
 };
 
 /******************************************************************************/
@@ -242,6 +253,7 @@ var onFirstFetchReady = function(fetched) {
     fromFetch(µb.restoreBackupSettings, fetched);
     onNetWhitelistReady(fetched.netWhitelist);
     onVersionReady(fetched.version);
+    onCommandShortcutsReady(fetched.commandShortcuts);
 
     µb.loadPublicSuffixList(onPSLReady);
     µb.loadRedirectResources();
@@ -274,6 +286,7 @@ var fromFetch = function(to, fetched) {
 
 var onSelectedFilterListsLoaded = function() {
     var fetchableProps = {
+        'commandShortcuts': [],
         'compiledMagic': '',
         'dynamicFilteringString': [
             'behind-the-scene * * noop',

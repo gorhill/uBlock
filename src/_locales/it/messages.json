@@ -31,6 +31,10 @@
     "message": "Whitelist",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Scorciatoie",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — Cronologia richieste di rete",
     "description": "Title for the logger window"
@@ -76,7 +80,7 @@
     "description": "English: or"
   },
   "popupTipDashboard": {
-    "message": "Aprire il cruscotto",
+    "message": "Apri la dashboard",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
@@ -264,7 +268,7 @@
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
-    "message": "Disattivare l' auditing del collegamento ipertestuale",
+    "message": "Disattivare l'auditing del collegamento ipertestuale",
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
@@ -584,8 +588,12 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Filtro statico {{filter}} trovato in:",
-    "description": "Below this sentence, the filter lists in which the filter was found"
+    "message": "Filtro statico <code>{{filter}}<\/code> trovato in:",
+    "description": "Below this sentence, the filter list(s) in which the filter was found"
+  },
+  "loggerStaticFilteringFinderSentence2": {
+    "message": "Non è stato possibile trovare il filtro statico <code>{{filter}}<\/code> in nessun filtro di terze parti attualmente abilitato",
+    "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
     "message": "Change log",
@@ -762,6 +770,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Consenti temporaneamente elementi multimediali di grandi dimensioni",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Digita una scorciatoia",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "This entry must be the last one",
