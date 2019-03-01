@@ -925,7 +925,7 @@ vAPI.tabs.registerListeners();
 µb.updateToolbarIcon = (function() {
     let tabIdToDetails = new Map();
 
-    let updateBadge = function(tabId) {
+    let updateBadge = function(tabId, isClick) {
         let parts = tabIdToDetails.get(tabId);
         tabIdToDetails.delete(tabId);
 
@@ -985,14 +985,14 @@ vAPI.tabs.registerListeners();
     };
 
      return function(tabId, isClick) {
-        if ( tabIdToTimer.has(tabId)) {
+        if ( tabIdToDetails.has(tabId)) {
             return;
         }
         if ( vAPI.isBehindTheSceneTabId(tabId) ) {
             return;
         }
 
-        tabIdToTimer[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId, isClick), 222); // ADN
+        tabIdToDetails[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId, isClick), 222); // ADN
     }
 })();
 

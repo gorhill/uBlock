@@ -6,8 +6,8 @@
   "default_locale": "en",
   "description": "__MSG_extShortDesc__",
   "icons": {
-    "16": "img/icon_16.png",
-    "128": "img/icon_128.png"
+    "19": "img/browsericons/icon19.png",
+    "38": "img/browsericons/icon38.png"
   },
   "browser_action": {
     "default_icon": {

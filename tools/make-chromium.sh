@@ -27,6 +27,7 @@ cp -R src/lib               $DES/
 #cp -R $DES/_locales/nb      $DES/_locales/no
 cp src/*.html               $DES/
 cp platform/chromium/*.js   $DES/js/
+cp -R platform/chromium/img $DES/
 cp platform/chromium/*.html $DES/
 cp platform/chromium/*.json $DES/
 cp manifest.json $DES/            # use ADN manifest, not ublock's

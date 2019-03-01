@@ -442,9 +442,9 @@
 
         if (tab && tab.id) { // do click animation
           var tabId = tab.id;
-          µb.updateBadgeAsync(tabId, true); // click icon
+          µb.updateToolbarIcon(tabId, true); // click icon
           setTimeout(function () {
-            µb.updateBadgeAsync(tabId);
+            µb.updateToolbarIcon(tabId);
           }, 600); // back to normal icon
         }
         // else warn('Null tab in click animation: ', tab); // not a problem
@@ -1055,7 +1055,7 @@
     // else console.log('[FOUND] !Broadcast: no menu or vault');
 
     if (µb.userSettings.showIconBadge)
-      µb.updateBadgeAsync(tabId);
+      µb.updateToolbarIcon(tabId);
 
     storeUserData();
   }

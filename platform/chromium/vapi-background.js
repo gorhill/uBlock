@@ -643,7 +643,7 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/32
 //   Ensure ImageData for toolbar icon is valid before use.
-
+/*
 vAPI.setIcon = (function() {
     let browserAction = chrome.browserAction,
         titleTemplate = chrome.runtime.getManifest().name + ' ({badge})';
