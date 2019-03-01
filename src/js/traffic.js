@@ -770,7 +770,7 @@ var onHeadersReceived = function(details) {
         µb.tabContextManager.push(tabId, details.url);
     }
 
-    let pageStore = µb.pageStoreFromTabId(tabId);
+    var pageStore = µb.pageStoreFromTabId(tabId);
 
     // ADN: check if this was an allowed exception and, if so, block cookies
     var  modified = pageStore && µBlock.adnauseam.checkAllowedException
