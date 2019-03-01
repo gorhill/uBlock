@@ -158,7 +158,7 @@ a.external-link {
 .custom-check input[type="checkbox"]:checked + label::before,
 .custom-check #lists input[type="checkbox"]:not(#effListInput):checked:before,
 .custom-check ul li input[type="radio"]:checked + label::before{
-  background: #0076FF url(../img/check.svg) center center no-repeat;
+  background: #0076FF url(../img/check.svg) -2px -0px no-repeat;
   color: black;
   content: "";
   font-size: 0.8em;
@@ -778,9 +778,9 @@ body[dir=rtl] #lists {
     padding: 0;
     list-style-type: none;
     }
-#lists > .groupEntry > .geName {
+#lists > .groupEntry .geName {
     cursor: pointer;
-    font-size: 140%;
+    font-size: 120%;
     font-family: bebas_neue,sans-serif;
     }
 #lists > .groupEntry > .geCount {

@@ -342,13 +342,15 @@ var renderFilterLists = function(soft) {
             groups = groupsFromLists(details.available),
             liGroup, i, groupKey,
             groupKeys = [
+            'user',
             'default',
             'ads',
             'privacy',
             'malware',
             'social',
             'multipurpose',
-            'regions'
+            'regions',
+            'custom'
         ];
 
         // ADN: move the lists in these groups to 'multipurpose(Other)'
@@ -397,6 +399,7 @@ var renderFilterLists = function(soft) {
         uDom('#lists .listEntries .listEntry.discard').remove();
 
         // Re-insert import widget.
+        // TODO: no groupkey custom
         uDom('[data-groupkey="custom"] .listEntries').append(importWidget);
 
         uDom.nodeFromId('autoUpdate').checked = listDetails.autoUpdate === true;
