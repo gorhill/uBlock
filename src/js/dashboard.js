@@ -40,7 +40,7 @@ let resizeFrame = function() {
     );
 };
 
-let loadDashboardPanel = function() {
+let loadDashboardPanel = function(notifications) {
     let pane = window.location.hash.slice(1);
     if ( pane === '' ) {
         pane = vAPI.localStorage.getItem('dashboardLastVisitedPane');
@@ -53,9 +53,11 @@ let loadDashboardPanel = function() {
     let tabButton = uDom('[href="#' + pane + '"]');
     if ( !tabButton || tabButton.hasClass('selected') ) { return; }
     uDom('.tabButton.selected').toggleClass('selected', false);
+    notifications && renderNotifications(notifications, "dashboard");
     uDom('iframe').attr('src', pane);
 
     tabButton.toggleClass('selected', true);
+};
 
 let onTabClickHandler = function(e) {
     let url = window.location.href,
@@ -78,8 +80,17 @@ vAPI.messaging.send('dashboard', { what: 'canUpdateShortcuts' }, response => {
 resizeFrame();
 window.addEventListener('resize', resizeFrame);
 uDom('.tabButton').on('click', onTabClickHandler);
-loadDashboardPanel();
-
+vAPI.messaging.send(
+      'adnauseam', {
+          what: 'verifyAdBlockers'
+        }, function() {
+          vAPI.messaging.send(
+          'adnauseam', {
+            what: 'getNotifications'
+          }, loadDashboardPanel);
+});
 /******************************************************************************/
+
+
 
 })();
