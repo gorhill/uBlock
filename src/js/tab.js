@@ -815,7 +815,7 @@ vAPI.tabs.onPopupUpdated = (function() {
 
         // Blocked
         if ( µb.userSettings.showIconBadge ) {
-            µb.updateBadgeAsync(openerTabId);
+            µb.updateToolbarIcon(openerTabId, 0x02);
         }
 
         // It is a popup, block and remove the tab.
@@ -839,7 +839,7 @@ vAPI.tabs.registerListeners();
 // Create an entry for the tab if it doesn't exist.
 
 µb.bindTabToPageStats = function(tabId, context) {
-    µb.updateBadgeAsync(tabId);
+    this.updateToolbarIcon(tabId, 0x03);
 
     // Do not create a page store for URLs which are of no interests
     if ( µb.tabContextManager.exists(tabId) === false ) {
@@ -922,14 +922,15 @@ vAPI.tabs.registerListeners();
 
 // Update visual of extension icon.
 
-µb.updateBadgeAsync = (function() {
-    var tabIdToTimer = new Map();
+µb.updateToolbarIcon = (function() {
+    let tabIdToDetails = new Map();
 
-    var updateBadge = function(tabId, isClick) {
-        tabIdToTimer.delete(tabId);
+    let updateBadge = function(tabId) {
+        let parts = tabIdToDetails.get(tabId);
+        tabIdToDetails.delete(tabId);
 
-        var state = false;
-        var badge = '';
+        let state = 0;
+        let badge = '';
 
         var pageStore = this.pageStoreFromTabId(tabId),
             pageDomain = pageStore ? µb.URI.domainFromHostname(pageStore.tabHostname) : null, // ADN
@@ -952,6 +953,35 @@ vAPI.tabs.registerListeners();
             iconStatus += (isClick ? 'active' : '');
         }
         vAPI.setIcon(tabId, iconStatus, badge);
+        //     let pageStore = this.pageStoreFromTabId(tabId);
+        //     if ( pageStore !== null ) {
+        //         state = pageStore.getNetFilteringSwitch() ? 1 : 0;
+        //         if (
+        //             state === 1 &&
+        //             this.userSettings.showIconBadge &&
+        //             pageStore.perLoadBlockedRequestCount
+        //         ) {
+        //             badge = this.formatCount(pageStore.perLoadBlockedRequestCount);
+        //         }
+        //     }
+        //
+        //     vAPI.setIcon(tabId, state, badge, parts);
+        // };
+        //
+        // // parts: bit 0 = icon
+        // //        bit 1 = badge
+        //
+        // return function(tabId, newParts) {
+        //     if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
+        //     if ( newParts === undefined ) { newParts = 0x03; }
+        //     let currentParts = tabIdToDetails.get(tabId);
+        //     if ( currentParts === newParts ) { return; }
+        //     if ( currentParts === undefined ) {
+        //         vAPI.setTimeout(updateBadge.bind(this, tabId), 701);
+        //     } else {
+        //         newParts |= currentParts;
+        //     }
+        //     tabIdToDetails.set(tabId, newParts);
     };
 
      return function(tabId, isClick) {

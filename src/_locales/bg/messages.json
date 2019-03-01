@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Най-накрая, ефективен рекламен блокер с малки изисквания за процесор и памет.",
+    "message": "Най-накрая, ефективен блокер. Щадящ процесора и паметта.",
     "description": "this will be in the chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
@@ -44,11 +44,11 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Щракване: изключва\/включва uBO за този сайт.\n\nCtrl + щракване: изключва uBO само за тази страница.",
+    "message": "Щракване: изключва\/включва uBlock₀ за този сайт.\n\nCtrl + щракване: изключва uBlock₀ само за тази страница.",
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Щракване: изключва uBO за този сайт.\n\nCtrl + щракване: изключва uBO само за тази страница.",
+    "message": "Щракване: изключва uBlock₀ за този сайт.\n\nCtrl + щракване: изключва uBlock₀ само за тази страница.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
@@ -140,11 +140,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipGlobalRules": {
-    "message": "Глобални правила: тази колона е за правила, прилагани за всички сайтове.",
+    "message": "Глобални правила: колона с правила, приложими към всички сайтове.",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Локални правила: тази колона е за правила, прилагани само за текущият сайт. Локалните правила заместват глобалните.",
+    "message": "Локални правила: колона с правила, приложими само към текущият сайт. Локалните правила заместват глобалните.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -164,11 +164,11 @@
     "description": ""
   },
   "popup3pAnyRulePrompt": {
-    "message": "3-ти лица",
+    "message": "3-ти страни",
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "CSS\/изображения от 3-ти лица",
+    "message": "css\/изображения от 3-ти страни",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -176,15 +176,15 @@
     "description": ""
   },
   "popup1pScriptRulePrompt": {
-    "message": "Скриптове от 1-ви лица",
+    "message": "Скриптове от 1-ви страни",
     "description": ""
   },
   "popup3pScriptRulePrompt": {
-    "message": "Скриптове от 3-ти лица",
+    "message": "Скриптове от 3-ти страни",
     "description": ""
   },
   "popup3pFrameRulePrompt": {
-    "message": "Рамки от 3-ти лица",
+    "message": "Рамки от 3-ти страни",
     "description": ""
   },
   "popupHitDomainCountPrompt": {
@@ -312,19 +312,19 @@
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
-    "message": "използвани {{used}} от общо {{total}}",
+    "message": "ползвани {{used}} от общо {{total}}",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
-    "message": "Автоматично актуализиране на списъците с филтри",
+    "message": "Автоматично обновяване на филтрите",
     "description": "A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow": {
-    "message": "Актуализиране",
+    "message": "Обновяване",
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll": {
-    "message": "Изчистване на цялата кеш памет",
+    "message": "Изчистване на кеш паметта",
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
@@ -332,7 +332,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Тази опция дава възможност за анализиране и прилагане на <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> съвместими с Adblock  Plus филтри за  &ldquo;скриване на елементи&rdquo;<\/a>. Тези филтри, по същество са козметични и служат за скриване на елементи в уеб страница, които се считат за визуално неприятни, и които не могат да бъдат блокирани от системата за филтриране на мрежовите заявки.<\/p><p>Активирането на тази опция увеличава паметта, която  uBlock₀ използва.<\/p>",
+    "message": "<p>Настройката разрешава синтактично обособяване и налагане на <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> съвместими с Adblock Plus филтри за &ldquo;скриване на елементи&rdquo;<\/a>. Козметични по същество, филтрите скриват визуално неприятни елементи в страницата, които иначе не се блокират от системата за филтриране по мрежова заявка.<\/p><p>Разрешаването ѝ ще увеличи ползваната от uBlock₀ памет.<\/p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -340,7 +340,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Общите козметични филтри са тези филтри, които са предназначени за прилагане във всички уеб сайтове.<p>Въпреки, че работят ефективно с uBlock₀, те могат да окажат влияние върху използването на паметта и процесора при някои уеб страници, особено големите такива.<p>Активирането на тази опция ще премахне натоварването към тях, като резултат от обработката на общите козметични филтри, също така ще намали и използваната от uBlock₀ памет.<p>Тази опция е препоръчително да се използва на по-слаби устройства.",
+    "message": "<p>Общокозметични са филтрите, предназначени за прилагане във всички сайтове.<p>И макар че се ползват ефективно в uBlock₀, те могат съществено да увеличат натоварването на паметта и процесора в определени страници, особено в такива обемисти и дългозареждащи се.<p>Разрешаването ѝ ще премахне натоварването им в тях, поради начина на боравене с общокозметични филтри, както и ще намали ползваната от uBlock₀ памет.<p>Ползването на настройката се препоръчва при по-слаби устройства.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -372,7 +372,7 @@
     "description": "The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose": {
-    "message": "Универсални",
+    "message": "Многоцелеви",
     "description": "English: Multipurpose"
   },
   "3pGroupRegions": {
@@ -384,11 +384,11 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Внеси…",
+    "message": "Внасяне...",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "Един адрес на ред. Редовете с представка &lsquo;!&rsquo; ще бъдат игнорирани. Невалидните адреси също ще бъдат игнорирани.",
+    "message": "Един адрес на ред. Невалидните адреси ще бъдат игнорирани.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -396,19 +396,19 @@
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "Последна актуализация: {{ago}}\nЩракнете за принудително актуализиране.",
+    "message": "Последно обновяване: {{ago}}\nЩракнете за принудително обновяване.",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Актуализиране...",
+    "message": "Обновяване...",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
-    "message": "Актуализирането на ресурса е прекратено заради грешка в мрежата.",
+    "message": "Грешка в мрежата възпрепятства обновяването на ресурса.",
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Един филтър на ред. Това може да бъде обикновен адрес или съвместим с Adblock Plus филтър. Редовете с представка &lsquo;!&rsquo; ще бъдат игнорирани.",
+    "message": "Един филтър на ред. Може да е обикновено име на хост или съвместим с Adblock Plus филтър. Редовете с представка <code>!<\/code> ще бъдат игнорирани.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -476,7 +476,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Списък на вашите адреси, за които uBlock₀ ще бъде изключен. Един елемент на ред. Невалидните адреси ще бъдат игнорирани.",
+    "message": "Списък на адресите, за които uBlock₀ ще бъде изключен. Един елемент на ред. Невалидните адреси ще бъдат игнорирани.",
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
@@ -600,7 +600,7 @@
     "description": "A link for where to get support"
   },
   "aboutIssues": {
-    "message": "Трекер на неизправности",
+    "message": "Проследяване на проблеми",
     "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
@@ -640,7 +640,7 @@
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
-    "message": "Неуспешно свързване: {{msg}}",
+    "message": "Грешка в мрежата: {{msg}}",
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {

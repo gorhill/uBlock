@@ -456,7 +456,7 @@ var onMessage = function(request, sender, callback) {
         pageStore = µb.pageStoreFromTabId(request.tabId);
         if ( pageStore ) {
             pageStore.toggleNetFilteringSwitch(request.url, request.scope, request.state);
-            µb.updateBadgeAsync(request.tabId);
+            µb.updateToolbarIcon(request.tabId, 0x03);
         }
         break;
 

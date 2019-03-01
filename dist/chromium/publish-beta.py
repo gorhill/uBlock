@@ -134,6 +134,7 @@ cs_refresh = input_secret('Chrome store refresh token', 'cs_refresh')
 
 print('Uploading to Chrome store...')
 with open(raw_zip_filepath, 'rb') as f:
+    print('Generating access token...')
     auth_url = 'https://accounts.google.com/o/oauth2/token'
     auth_payload = {
         'client_id': cs_id,
@@ -146,28 +147,32 @@ with open(raw_zip_filepath, 'rb') as f:
         print('Error: Auth failed -- server error {0}'.format(auth_response.status_code))
         print(auth_response.text)
         exit(1)
-    auth_data = auth_response.json()
-    if 'access_token' not in auth_data:
+    response_dict = auth_response.json()
+    if 'access_token' not in response_dict:
         print('Error: Auth failed -- no access token')
         exit(1)
     # Prepare access token
-    cs_auth = 'Bearer ' + auth_data['access_token']
+    cs_auth = 'Bearer ' + response_dict['access_token']
     headers = {
         'Authorization': cs_auth,
         'x-goog-api-version': '2',
     }
     # Upload
-    print('Uploading package to the Chrome store...')
+    print('Uploading package...')
     upload_url = 'https://www.googleapis.com/upload/chromewebstore/v1.1/items/{0}'.format(cs_extension_id)
     upload_response = requests.put(upload_url, headers=headers, data=f)
+    f.close()
     if upload_response.status_code != 200:
-        print('Error: Upload failed -- server error {0}'.format(upload_response.status_code))
+        print('Upload failed -- server error {0}'.format(upload_response.status_code))
         print(upload_response.text)
         exit(1)
+    response_dict = upload_response.json();
+    if 'uploadState' not in response_dict or response_dict['uploadState'] != 'SUCCESS':
+        print('Upload failed -- server error {0}'.format(response_dict['uploadState']))
+        exit(1)
     print('Upload succeeded.')
-    f.close()
     # Publish
-    print('Publishing package to the Chrome store...')
+    print('Publishing package...')
     publish_url = 'https://www.googleapis.com/chromewebstore/v1.1/items/{0}/publish'.format(cs_extension_id)
     headers = {
         'Authorization': cs_auth,
@@ -178,6 +183,10 @@ with open(raw_zip_filepath, 'rb') as f:
     if publish_response.status_code != 200:
         print('Error: Chrome store publishing failed -- server error {0}'.format(publish_response.status_code))
         exit(1)
-    print('Extension successfully published.')
+    response_dict = publish_response.json();
+    if 'status' not in response_dict or response_dict['status'][0] != 'OK':
+        print('Publishing failed -- server error {0}'.format(response_dict['status']))
+        exit(1)
+    print('Publishing succeeded.')
 
 print('All done.')

@@ -54,7 +54,7 @@
     var µb = µBlock,
         reHostnameSeparator = /\s*,\s*/,
         reHasUnicode = /[^\x00-\x7F]/,
-        reParseRegexLiteral = /^\/(.+)\/([im]+)?$/,
+        reParseRegexLiteral = /^\/(.+)\/([imu]+)?$/,
         emptyArray = [],
         parsed = {
             hostnames: [],

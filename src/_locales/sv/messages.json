@@ -236,7 +236,7 @@
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "Inaktivera verktygstips",
+    "message": "Inaktivera tipsrutor",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
@@ -352,7 +352,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Lokalt",
+    "message": "Inbyggd",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -600,7 +600,7 @@
     "description": "A link for where to get support"
   },
   "aboutIssues": {
-    "message": "Issue tracker",
+    "message": "Ärendehantering",
     "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {

@@ -56,7 +56,7 @@
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
-    "message": "已阻擋的連線請求",
+    "message": "已阻擋連線請求",
     "description": "English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt": {
@@ -188,7 +188,7 @@
     "description": ""
   },
   "popupHitDomainCountPrompt": {
-    "message": "已連結的域名",
+    "message": "已連結域名",
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
@@ -516,7 +516,7 @@
     "description": "Appears in the logger's tab selector"
   },
   "logBehindTheScene": {
-    "message": "背景的網路連線請求",
+    "message": "背景網路連線請求",
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {

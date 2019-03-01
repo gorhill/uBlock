@@ -639,39 +639,94 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 
 // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/browserAction#Browser_compatibility
 //   Firefox for Android does no support browser.browserAction.setIcon().
+//   Performance: use ImageData for platforms supporting it.
 
-/*vAPI.setIcon = (function() { OLD-ADN
-    var browserAction = chrome.browserAction,
+// https://github.com/uBlockOrigin/uBlock-issues/issues/32
+//   Ensure ImageData for toolbar icon is valid before use.
+
+vAPI.setIcon = (function() {
+    let browserAction = chrome.browserAction,
         titleTemplate = chrome.runtime.getManifest().name + ' ({badge})';
-    var iconPaths = [
+    let icons = [
         {
-            '19': 'img/browsericons/icon19-off.png',
-            '38': 'img/browsericons/icon38-off.png'
+            tabId: 0,
+            path: { '16': 'img/icon_16-off.png', '32': 'img/icon_32-off.png' }
         },
         {
-            '19': 'img/browsericons/icon19.png',
-            '38': 'img/browsericons/icon38.png'
+            tabId: 0,
+            path: { '16': 'img/icon_16.png', '32': 'img/icon_32.png' }
         }
     ];
 
-    var onTabReady = function(tab, status, badge) {
+    (function() {
+        if ( browserAction.setIcon === undefined ) { return; }
+
+        // The global badge background color.
+        if ( browserAction.setBadgeBackgroundColor !== undefined ) {
+            browserAction.setBadgeBackgroundColor({
+                color: [ 0x66, 0x66, 0x66, 0xFF ]
+            });
+        }
+
+        // As of 2018-05, benchmarks show that only Chromium benefits for sure
+        // from using ImageData.
+        //
+        // Chromium creates a new ImageData instance every call to setIcon
+        // with paths:
+        // https://cs.chromium.org/chromium/src/extensions/renderer/resources/set_icon.js?l=56&rcl=99be185c25738437ecfa0dafba72a26114196631
+        //
+        // Firefox uses an internal cache for each setIcon's paths:
+        // https://searchfox.org/mozilla-central/rev/5ff2d7683078c96e4b11b8a13674daded935aa44/browser/components/extensions/parent/ext-browserAction.js#631
+        if ( vAPI.webextFlavor.soup.has('chromium') === false ) { return; }
+
+        let imgs = [
+            { i: 0, p: '16' }, { i: 0, p: '32' },
+            { i: 1, p: '16' }, { i: 1, p: '32' },
+        ];
+        let onLoaded = function() {
+            for ( let img of imgs ) {
+                if ( img.r.complete === false ) { return; }
+            }
+            let ctx = document.createElement('canvas').getContext('2d');
+            let iconData = [ null, null ];
+            for ( let img of imgs ) {
+                let w = img.r.naturalWidth, h = img.r.naturalHeight;
+                ctx.width = w; ctx.height = h;
+                ctx.clearRect(0, 0, w, h);
+                ctx.drawImage(img.r, 0, 0);
+                if ( iconData[img.i] === null ) { iconData[img.i] = {}; }
+                let imgData = ctx.getImageData(0, 0, w, h);
+                if (
+                    imgData instanceof Object === false ||
+                    imgData.data instanceof Uint8ClampedArray === false ||
+                    imgData.data[0] !== 0 ||
+                    imgData.data[1] !== 0 ||
+                    imgData.data[2] !== 0 ||
+                    imgData.data[3] !== 0
+                ) {
+                    return;
+                }
+                iconData[img.i][img.p] = imgData;
+            }
+            icons[0] = { tabId: 0, imageData: iconData[0] };
+            icons[1] = { tabId: 0, imageData: iconData[1] };
+        };
+        for ( let img of imgs ) {
+            img.r = new Image();
+            img.r.addEventListener('load', onLoaded, { once: true });
+            img.r.src = icons[img.i].path[img.p];
+        }
+    })();
+
+    var onTabReady = function(tab, state, badge, parts) {
         if ( vAPI.lastError() || !tab ) { return; }
 
         if ( browserAction.setIcon !== undefined ) {
-            browserAction.setIcon({
-                tabId: tab.id,
-                path: iconPaths[status === 'on' ? 1 : 0]
-            });
-            browserAction.setBadgeText({
-                tabId: tab.id,
-                text: badge
-            });
-            if ( badge !== '' ) {
-                browserAction.setBadgeBackgroundColor({
-                    tabId: tab.id,
-                    color: '#666'
-                });
+            if ( parts === undefined || (parts & 0x01) !== 0 ) {
+                icons[state].tabId = tab.id;
+                browserAction.setIcon(icons[state]);
             }
+            browserAction.setBadgeText({ tabId: tab.id, text: badge });
         }
 
         if ( browserAction.setTitle !== undefined ) {
@@ -679,18 +734,21 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
                 tabId: tab.id,
                 title: titleTemplate.replace(
                     '{badge}',
-                    status === 'on' ? (badge !== '' ? badge : '0') : 'off'
+                    state === 1 ? (badge !== '' ? badge : '0') : 'off'
                 )
             });
         }
     };
 
-    return function(tabId, iconStatus, badge) {
+    // parts: bit 0 = icon
+    //        bit 1 = badge
+
+    return function(tabId, state, badge, parts) {
         tabId = toChromiumTabId(tabId);
         if ( tabId === 0 ) { return; }
 
         chrome.tabs.get(tabId, function(tab) {
-            onTabReady(tab, iconStatus, badge);
+            onTabReady(tab, state, badge, parts);
         });
 
     var iconPaths;
@@ -790,7 +848,7 @@ vAPI.setIcon = (function() {
 chrome.browserAction.onClicked.addListener(function(tab) {
     vAPI.tabs.open({
         select: true,
-        url: 'popup.html?tabId=' + tab.id + '&mobile=1'
+        url: 'popup.html?tabId=' + tab.id + '&responsive=1'
     });
 });
 

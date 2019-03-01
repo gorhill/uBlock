@@ -56,7 +56,7 @@
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
-    "message": "请求已拦截",
+    "message": "已拦截请求",
     "description": "English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt": {
@@ -64,7 +64,7 @@
     "description": "English: on this page"
   },
   "popupBlockedStats": {
-    "message": "{{count}} 占 {{percent}}%",
+    "message": "{{count}} 或 {{percent}}%",
     "description": "Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt": {
@@ -72,7 +72,7 @@
     "description": "English: since install"
   },
   "popupOr": {
-    "message": "占",
+    "message": "或",
     "description": "English: or"
   },
   "popupTipDashboard": {
@@ -188,7 +188,7 @@
     "description": ""
   },
   "popupHitDomainCountPrompt": {
-    "message": "作用到的域",
+    "message": "已连接域名",
     "description": "appears in popup"
   },
   "popupHitDomainCount": {

@@ -34,49 +34,24 @@ if ( typeof popupFontSize === 'string' && popupFontSize !== 'unset' ) {
     document.body.style.setProperty('font-size', popupFontSize);
 }
 
-// Ensure the popup is properly sized as soon as possible. It is assume the DOM
-// content is ready at this point, which should be the case given where this
-// script file is included in the HTML file.
-
-var dfPaneVisibleStored = vAPI.localStorage.getItem('popupFirewallPane') === 'true';
-
-// No restriction on vertical size?
-if ( /[\?&]fullsize=1/.test(window.location.search) ) {
-    document.body.classList.add('fullsize');
-}
-
-// Mobile device?
 // https://github.com/gorhill/uBlock/issues/3032
-// - If at least one of the window's viewport dimension is larger than the
-//   corresponding device's screen dimension, assume uBO's popup panel sits in
-//   its own tab.
+// Popup panel can be in one of two modes:
+// - not responsive: viewport is expected to adjust to popup panel size
+// - responsive: popup panel must adjust to viewport size -- this happens
+//   when the viewport is not resized by the browser to perfectly fits uBO's
+//   popup panel.
 if (
-    /[\?&]mobile=1/.test(window.location.search) ||
-    window.innerWidth >= window.screen.availWidth ||
-    window.innerHeight >= window.screen.availHeight
+    vAPI.webextFlavor.soup.has('mobile') ||
+    /[\?&]responsive=1/.test(window.location.search)
 ) {
-    document.body.classList.add('mobile');
+    document.body.classList.add('responsive');
 }
-
-// The padlock/eraser must be manually positioned:
-// - Its vertical position depends on the height of the popup title bar
-// - Its horizontal position depends on whether there is a vertical scrollbar.
-var positionRulesetTools = function() {
-    var vpos = document.getElementById('appinfo')
-                       .getBoundingClientRect()
-                       .bottom + window.scrollY + 3;
-    var hpos = document.getElementById('firewallContainer')
-                       .getBoundingClientRect()
-                       .left + window.scrollX + 3;
-    var style = document.getElementById('rulesetTools').style;
-    style.setProperty('top', (vpos >>> 0) + 'px');
-    style.setProperty('left', (hpos >>> 0) + 'px');
-};
 
 // https://github.com/chrisaljoudi/uBlock/issues/996
-// Experimental: mitigate glitchy popup UI: immediately set the firewall pane
-// visibility to its last known state. By default the pane is hidden.
-// Will remove if it makes no difference.
+// Experimental: mitigate glitchy popup UI: immediately set the firewall
+// pane visibility to its last known state. By default the pane is hidden.
+let dfPaneVisibleStored =
+    vAPI.localStorage.getItem('popupFirewallPane') === 'true';
 if ( dfPaneVisibleStored ) {
     document.getElementById('panes').classList.add('dfEnabled');
 }
@@ -112,6 +87,24 @@ var domainsHitStr = vAPI.i18n('popupHitDomainCount');
 // - https://www.chromium.org/developers/design-documents/idn-in-google-chrome
 var reCyrillicNonAmbiguous = /[\u0400-\u042b\u042d-\u042f\u0431\u0432\u0434\u0436-\u043d\u0442\u0444\u0446-\u0449\u044b-\u0454\u0457\u0459-\u0460\u0462-\u0474\u0476-\u04ba\u04bc\u04be-\u04ce\u04d0-\u0500\u0502-\u051a\u051c\u051e-\u052f]/;
 var reCyrillicAmbiguous = /[\u042c\u0430\u0433\u0435\u043e\u043f\u0440\u0441\u0443\u0445\u044a\u0455\u0456\u0458\u0461\u0475\u04bb\u04bd\u04cf\u0501\u051b\u051d]/;
+
+/******************************************************************************/
+
+// The padlock/eraser must be manually positioned:
+// - Its vertical position depends on the height of the popup title bar
+// - Its horizontal position depends on whether there is a vertical scrollbar.
+
+var positionRulesetTools = function() {
+    var vpos = document.getElementById('appinfo')
+                       .getBoundingClientRect()
+                       .bottom + window.scrollY + 3;
+    var hpos = document.getElementById('firewallContainer')
+                       .getBoundingClientRect()
+                       .left + window.scrollX + 3;
+    var style = document.getElementById('rulesetTools').style;
+    style.setProperty('top', (vpos >>> 0) + 'px');
+    style.setProperty('left', (hpos >>> 0) + 'px');
+};
 
 /******************************************************************************/
 
@@ -584,43 +577,47 @@ var renderOnce = function() {
         uDom('#firewallContainer [data-i18n-tip][data-src]').removeAttr('data-tip');
     }
 
+    // https://github.com/gorhill/uBlock/issues/2274
+    //   Make use of the whole viewport when in responsive mode.
+    if ( document.body.classList.contains('responsive') ) { return; }
+
     // For large displays: we do not want the left pane -- optional and
     // hidden by defaut -- to dictate the height of the popup. The right pane
     // dictates the height of the popup, and the left pane will have a
     // scrollbar if ever its height is more than what is available.
     // For small displays: we use the whole viewport.
 
-    var panes = uDom.nodeFromId('panes'),
-        rpane = uDom.nodeFromSelector('#panes > div:first-of-type'),
+    let rpane = uDom.nodeFromSelector('#panes > div:first-of-type'),
         lpane = uDom.nodeFromSelector('#panes > div:last-of-type');
 
-    var fillViewport = function() {
-        var newHeight = Math.max(
-            window.innerHeight - uDom.nodeFromSelector('#appinfo').offsetHeight,
-            rpane.offsetHeight
-        );
-        if ( newHeight !== lpane.offsetHeight ) {
-            lpane.style.setProperty('height', newHeight + 'px');
+    lpane.style.setProperty('height', rpane.offsetHeight + 'px');
+
+    // Be prepared to fall into responsive mode if ever it is found the
+    // viewport is not a perfect match for the popup panel.
+
+    let resizeTimer;
+    let resize = function() {
+        resizeTimer = undefined;
+        // Do not use equality, fractional pixel dimension occurs and must
+        // be ignored.
+        if (
+            Math.abs(document.body.offsetWidth - window.innerWidth) < 2 &&
+            Math.abs(document.body.offsetHeight - window.innerHeight) < 2
+        ) {
+            return;
         }
-        // https://github.com/gorhill/uBlock/issues/3038
-        // - Resize the firewall pane while minding the space between the panes.
-        var newWidth = window.innerWidth - panes.offsetWidth + lpane.offsetWidth;
-        if ( newWidth !== lpane.offsetWidth ) {
-            lpane.style.setProperty('width', newWidth + 'px');
-        }
+        document.body.classList.add('responsive');
+        lpane.style.removeProperty('height');
+        window.removeEventListener('resize', resizeAsync);
     };
-
-    // https://github.com/gorhill/uBlock/issues/2274
-    //   Make use of the whole viewport on mobile devices.
-    if ( document.body.classList.contains('mobile') ) {
-        fillViewport();
-        window.addEventListener('resize', fillViewport);
-        return;
-    }
-
-    if ( document.body.classList.contains('fullsize') === false ) {
-        lpane.style.setProperty('height', rpane.offsetHeight + 'px');
-    }
+    let resizeAsync = function() {
+        if ( resizeTimer !== undefined ) {
+            clearTimeout(resizeTimer);
+        }
+        resizeTimer = vAPI.setTimeout(resize, 67);
+    };
+    window.addEventListener('resize', resizeAsync);
+    resizeAsync();
 };
 
 /******************************************************************************/
@@ -864,7 +861,7 @@ var toggleMinimize = function(ev) {
             {
                 what: 'gotoURL',
                 details: {
-                    url: 'popup.html?tabId=' + popupData.tabId + '&fullsize=1',
+                    url: 'popup.html?tabId=' + popupData.tabId + '&responsive=1',
                     select: true,
                     index: -1
                 }
@@ -1066,30 +1063,30 @@ var onHideTooltip = function() {
 (function() {
     // If there's no tab id specified in the query string,
     // it will default to current tab.
-    var tabId = null;
+    let tabId = null;
 
     // Extract the tab id of the page this popup is for
-    var matches = window.location.search.match(/[\?&]tabId=([^&]+)/);
+    let matches = window.location.search.match(/[\?&]tabId=([^&]+)/);
     if ( matches && matches.length === 2 ) {
         tabId = parseInt(matches[1], 10) || 0;
     }
     getPopupData(tabId);
-
-    uDom('#switch').on('click', toggleNetFilteringSwitch);
-    uDom('#gotoZap').on('click', gotoZap);
-    uDom('#gotoPick').on('click', gotoPick);
-    uDom('h2').on('click', toggleFirewallPane);
-    uDom('#refresh').on('click', reloadTab);
-    uDom('.hnSwitch').on('click', toggleHostnameSwitch);
-    uDom('#saveRules').on('click', saveFirewallRules);
-    uDom('#revertRules').on('click', revertFirewallRules);
-    uDom('[data-i18n="popupAnyRulePrompt"]').on('click', toggleMinimize);
-
-    uDom('body').on('mouseenter', '[data-tip]', onShowTooltip)
-                .on('mouseleave', '[data-tip]', onHideTooltip);
-
-    uDom('a[href]').on('click', gotoURL);
 })();
+
+uDom('#switch').on('click', toggleNetFilteringSwitch);
+uDom('#gotoZap').on('click', gotoZap);
+uDom('#gotoPick').on('click', gotoPick);
+uDom('h2').on('click', toggleFirewallPane);
+uDom('#refresh').on('click', reloadTab);
+uDom('.hnSwitch').on('click', toggleHostnameSwitch);
+uDom('#saveRules').on('click', saveFirewallRules);
+uDom('#revertRules').on('click', revertFirewallRules);
+uDom('[data-i18n="popupAnyRulePrompt"]').on('click', toggleMinimize);
+
+uDom('body').on('mouseenter', '[data-tip]', onShowTooltip)
+            .on('mouseleave', '[data-tip]', onHideTooltip);
+
+uDom('a[href]').on('click', gotoURL);
 
 /******************************************************************************/
 

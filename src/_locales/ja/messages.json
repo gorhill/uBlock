@@ -364,7 +364,7 @@
     "description": "English: Privacy"
   },
   "3pGroupMalware": {
-    "message": "ウイルス",
+    "message": "マルウェア ドメイン",
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {
@@ -388,7 +388,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "URL1つにつき1行です。&lsquo;!&rsquo; が先頭にある行は無視されます。無効なURLもそのまま無視されます。",
+    "message": "URL1つにつき1行です。無効なURLは無視されます。",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -408,7 +408,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "1行につき1つのフィルターです。フィルターはただのホストネームでもAdblock Plus適合のフィルターでも構いません。&lsquo;!&rsquo;ですでに固定されている行は無視されます。",
+    "message": "1行につき1つのフィルターです。フィルターはただのホストネームでもAdblock Plus書式のフィルターでも構いません。<code>!<\/code> が先頭にある行は無視されます。",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -588,7 +588,7 @@
     "description": "Below this sentence, the filter lists in which the filter was found"
   },
   "aboutChangelog": {
-    "message": "バージョン更新履歴 (Change log)",
+    "message": "更新履歴",
     "description": "English: Change log"
   },
   "aboutWiki": {
@@ -600,7 +600,7 @@
     "description": "A link for where to get support"
   },
   "aboutIssues": {
-    "message": "Issue tracker",
+    "message": "問題追跡システム",
     "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {

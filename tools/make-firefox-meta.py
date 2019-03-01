@@ -30,6 +30,11 @@ if match:
     firefox_manifest['version'] = match.group(1) + builttype
 else:
     firefox_manifest['version'] = version
+    # https://bugzilla.mozilla.org/show_bug.cgi?id=1459007
+    # By design Firefox opens the sidebar with new installation of
+    # uBO when sidebar_action is present in the manifest.
+    # Remove sidebarAction support for stable release of uBO.
+    del firefox_manifest['sidebar_action']
 
 with open(firefox_manifest_file, 'w') as f2:
     json.dump(firefox_manifest, f2, indent=2, separators=(',', ': '), sort_keys=True)
