@@ -21,20 +21,14 @@ with open(firefox_manifest_file) as f2:
     firefox_manifest = json.load(f2)
 
 match = re.search('^(\d+\.\d+\.\d+)(\.\d+)$', version)
-if match:
-    buildtype = int(match.group(2)[1:])
-    if buildtype < 100:
-        builttype = 'b' + str(buildtype)
-    else:
-        builttype = 'rc' + str(buildtype - 100)
-    firefox_manifest['version'] = match.group(1) + builttype
-else:
-    firefox_manifest['version'] = version
+if not match:
     # https://bugzilla.mozilla.org/show_bug.cgi?id=1459007
     # By design Firefox opens the sidebar with new installation of
     # uBO when sidebar_action is present in the manifest.
     # Remove sidebarAction support for stable release of uBO.
     del firefox_manifest['sidebar_action']
+
+firefox_manifest['version'] = version
 
 with open(firefox_manifest_file, 'w') as f2:
     json.dump(firefox_manifest, f2, indent=2, separators=(',', ': '), sort_keys=True)

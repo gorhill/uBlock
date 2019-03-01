@@ -552,11 +552,11 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
-    "message": "Blokkeren",
+    "message": "blokkeren",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAllow": {
-    "message": "Toestaan",
+    "message": "toestaan",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType": {

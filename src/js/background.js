@@ -42,6 +42,7 @@ var µBlock = (function() { // jshint ignore:line
         assetFetchTimeout: 30,
         autoUpdateAssetFetchPeriod: 120,
         autoUpdatePeriod: 7,
+        debugScriptlets: false,
         ignoreRedirectFilters: false,
         ignoreScriptInjectFilters: false,
         manualUpdateAssetFetchPeriod: 500,
@@ -139,6 +140,7 @@ var µBlock = (function() { // jshint ignore:line
         privacySettingsSupported: vAPI.browserSettings instanceof Object,
         cloudStorageSupported: vAPI.cloud instanceof Object,
         canFilterResponseBody: vAPI.net.canFilterResponseBody === true,
+        canInjectScriptletsNow: vAPI.webextFlavor.soup.has('chromium'),
 
         // https://github.com/chrisaljoudi/uBlock/issues/180
         // Whitelist directives need to be loaded once the PSL is available
@@ -153,10 +155,10 @@ var µBlock = (function() { // jshint ignore:line
         localSettingsLastModified: 0,
         localSettingsLastSaved: 0,
 
-        // read-only
+        // Read-only
         systemSettings: {
-            compiledMagic: 1,
-            selfieMagic: 1
+            compiledMagic: 3,   // Increase when compiled format changes
+            selfieMagic: 3      // Increase when selfie format changes
         },
 
         restoreBackupSettings: {

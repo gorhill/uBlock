@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "তৃতীয় পক্ষের ফিল্টারস",
+    "message": "ছাঁকন তালিকা",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -600,7 +600,7 @@
     "description": "A link for where to get support"
   },
   "aboutIssues": {
-    "message": "Issue tracker",
+    "message": "ইস্যু অনুসরণকারী",
     "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {

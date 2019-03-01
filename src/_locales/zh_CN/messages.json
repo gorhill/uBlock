@@ -16,15 +16,15 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "第三方规则列表",
+    "message": "规则列表",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
-    "message": "自定义规则列表",
+    "message": "自定义静态规则",
     "description": "appears as tab name in dashboard"
   },
   "rulesPageName": {
-    "message": "自定义规则",
+    "message": "自定义动态规则",
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
@@ -32,7 +32,7 @@
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
-    "message": "uBlock₀ — 网络请求日志",
+    "message": "uBlock₀ 网络请求日志",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
@@ -44,7 +44,7 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "单击：对此网站禁用\/启用 uBlock₀。\n\nCtrl + 单击：在此页面上禁用 uBlock₀。",
+    "message": "单击：对此网站禁用\/启用 uBlock₀。\n\nCtrl + 单击：仅对此页面禁用 uBlock₀。",
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
@@ -60,15 +60,15 @@
     "description": "English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt": {
-    "message": "此页面上的",
+    "message": "在此页面",
     "description": "English: on this page"
   },
   "popupBlockedStats": {
-    "message": "{{count}} 或 {{percent}}%",
+    "message": "{{count}} 个，占 {{percent}}%",
     "description": "Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt": {
-    "message": "总计",
+    "message": "自安装后",
     "description": "English: since install"
   },
   "popupOr": {
@@ -84,11 +84,11 @@
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "进入元素选择器模式",
+    "message": "进入元素选择过滤模式",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "查看网络请求日志",
+    "message": "打开网络请求记录器",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
@@ -104,7 +104,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "是否屏蔽在此网站上较大的媒体元素",
+    "message": "是否屏蔽此网站上较大的媒体元素",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
@@ -116,7 +116,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "是否对此网站应用修饰规则",
+    "message": "是否在此网站启用网页元素过滤",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
@@ -128,7 +128,7 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "是否阻止此网站的第三方字体",
+    "message": "是否屏蔽此网站的第三方字体",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
@@ -148,11 +148,11 @@
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
-    "message": "使更改永久生效。",
+    "message": "点击以使更改永久生效。",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "还原更改。",
+    "message": "点击以撤销更改。",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {
@@ -160,7 +160,7 @@
     "description": ""
   },
   "popupImageRulePrompt": {
-    "message": "图像",
+    "message": "图片",
     "description": ""
   },
   "popup3pAnyRulePrompt": {
@@ -168,7 +168,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "第三方 css\/图片",
+    "message": "第三方 样式\/图片",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -220,7 +220,7 @@
     "description": "English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint": {
-    "message": "单击，Ctrl + 单击",
+    "message": "单击、Ctrl + 单击",
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
@@ -240,7 +240,7 @@
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
-    "message": "加入右键菜单",
+    "message": "当适用时改进右键菜单",
     "description": "English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt": {
@@ -268,7 +268,7 @@
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
-    "message": "避免 WebRTC 泄露本地IP地址",
+    "message": "防止 WebRTC 泄露本地 IP 地址",
     "description": "English: "
   },
   "settingPerSiteSwitchGroup": {
@@ -276,11 +276,11 @@
     "description": ""
   },
   "settingPerSiteSwitchGroupSynopsis": {
-    "message": "默认设置会被具体站点设置覆盖",
+    "message": "这些默认行为可被针对各网站的设置取代",
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "停用元素过滤规则",
+    "message": "禁用元素过滤规则",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
@@ -312,11 +312,11 @@
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
-    "message": "已使用 {{used}} \/ {{total}}",
+    "message": "{{used}} \/ {{total}} 使用中",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
-    "message": "自动更新规则列表",
+    "message": "自动更新过滤规则",
     "description": "A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow": {
@@ -328,7 +328,7 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
-    "message": "解析并应用元素过滤规则。",
+    "message": "解析并应用元素过滤规则",
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
@@ -336,7 +336,7 @@
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
-    "message": "忽略通用元素过滤规则。",
+    "message": "忽略通用元素过滤规则",
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
@@ -392,11 +392,11 @@
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
-    "message": "需要更新",
+    "message": "过久未更新。",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "上次更新：{{ago}}\n点此强制更新",
+    "message": "上次更新：{{ago}}。\n点击此处要求更新。",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
@@ -468,15 +468,15 @@
     "description": "default file name to use"
   },
   "rulesHint": {
-    "message": "自定义动态过滤规则列表。",
+    "message": "您的动态过滤规则列表。",
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
-    "message": "规则语法：<code>来源 目标 资源类型 操作<\/code>（<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>完整文档<\/a>）。",
+    "message": "规则语法：<code>来源 目标 类型 操作<\/code>（<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>完整说明<\/a>）。",
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "您的列表中针对 µBlock 的主机名将被禁用。每行一条规则。无效的主机名将直接被忽略。",
+    "message": "白名单中的规则适用的页面不会被 uBlock₀ 过滤或阻挡。每行一条规则。无效的规则将被忽略。",
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
@@ -508,7 +508,7 @@
     "description": "English: URL"
   },
   "logRequestsHeaderFilter": {
-    "message": "过滤",
+    "message": "过滤规则",
     "description": "English: Filter"
   },
   "logAll": {
@@ -548,7 +548,7 @@
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "{{action}} URL 匹配{{br}}{{url}}{{br}}且来源于 {{origin}} 的 {{type}} 的网络请求，{{br}}{{importance}}有一个匹配的例外规则。",
+    "message": "当 URL 匹配 {{url}}，{{br}}且来源于 {{origin}} 时，{{br}}{{action}} {{type}} 的网络请求，{{br}}{{importance}} 有一个匹配的例外规则。",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
@@ -572,7 +572,7 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin": {
-    "message": "所有范围",
+    "message": "任何地方",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant": {
@@ -596,11 +596,11 @@
     "description": "English: project' wiki on Github"
   },
   "aboutSupport": {
-    "message": "支持",
+    "message": "支持网站",
     "description": "A link for where to get support"
   },
   "aboutIssues": {
-    "message": "问题报告",
+    "message": "问题反馈",
     "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
@@ -632,7 +632,7 @@
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {
-    "message": "数据无法读取或无效",
+    "message": "无法读取数据，或数据无效",
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
@@ -644,11 +644,11 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀：添加下列 URL 到您的自定义规则列表吗？\n\n标题： \"{{title}}\"\nURL： {{url}}",
+    "message": "uBlock₀：添加下列 URL 到您的自定义规则列表吗？\n\n标题： “{{title}}”\nURL： {{url}}",
     "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo": {
-    "message": "一分钟前",
+    "message": "1 分钟前",
     "description": "English: a minute ago"
   },
   "elapsedManyMinutesAgo": {
@@ -656,7 +656,7 @@
     "description": "English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo": {
-    "message": "一小时前",
+    "message": "1 小时前",
     "description": "English: an hour ago"
   },
   "elapsedManyHoursAgo": {
@@ -664,7 +664,7 @@
     "description": "English: {{value}} hours ago"
   },
   "elapsedOneDayAgo": {
-    "message": "一天前",
+    "message": "1 天前",
     "description": "English: a day ago"
   },
   "elapsedManyDaysAgo": {
@@ -692,7 +692,7 @@
     "description": "English: Because of the following filter"
   },
   "docblockedNoParamsPrompt": {
-    "message": "无参数",
+    "message": "不带参数",
     "description": "label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {

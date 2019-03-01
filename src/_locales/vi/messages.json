@@ -48,7 +48,7 @@
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Nhấp chuột để vô hiệu uBlock₀ cho trang này. \n\nCtrl + nhấp chuột để tắt uBlock₀ chỉ trên trang này.",
+    "message": "Nhấp chuột để tắt uBlock₀ đối với toàn bộ tên miền này (site). \n\nCtrl + nhấp chuột để tắt uBlock₀ chỉ tại trang này (page).",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
@@ -108,11 +108,11 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Nhấp để chặn các yếu tố truyền thông lớn trên trang này",
+    "message": "Nhấp để chặn các thành phần đa phương tiện lớn trên trang này",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Nhấp để hủy các yếu tố truyền thông lớn trên trang này",
+    "message": "Nhấp để hủy chặn các thành phần đa phương tiện lớn trên trang này",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -368,7 +368,7 @@
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {
-    "message": "Những bất tiện",
+    "message": "Khó chịu",
     "description": "The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose": {

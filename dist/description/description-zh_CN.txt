@@ -1,22 +1,22 @@
-一款高效的请求过滤工具：占用极低的内存和CPU，和其他常见的过滤工具相比，它能够加载并执行上千条过滤规则。
+一款高效的请求过滤工具：占用极低的内存和 CPU，与其他常见的过滤器相比，它能够多加载并执行上千条过滤规则。
 
-效率概述说明： 
+带图表的效率概述说明： 
 https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-用法：点击弹出窗口中的电源按钮，uBlock 将对当前网页永久禁用/启用过滤功能。 它只控制当前网页的请求过滤，而不是一个全局开关。
+用法：点击弹出窗口中的电源按钮，uBlock 将对当前网站永久禁用/启用过滤功能。 它仅应用于当前网站，而非全局性的开关。
 
 ***
 
-它很灵活，它不只是一个广告拦截工具，它还可以从 hosts 文件里读取和创建过滤规则。
+它很灵活，不只是一个“广告拦截器”：它还能从 hosts 文件中读取、创建过滤规则。
 
-初始默认加载和执行下列过滤规则列表：
+初始默认加载和执行下列过滤规则：
 
 - EasyList
 - Peter Lowe’s Ad server list
 - EasyPrivacy
 - Malware domains
 
-这里还有更多的规则列表供你选择：
+这里还有更多规则列表可供您选择：
 
 - Fanboy’s Enhanced Tracking List
 - Dan Pollock’s hosts file
@@ -25,23 +25,23 @@ https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 - Spam404
 - 等等
 
-当然，启用越多的过滤规则就会产生越高的内存占用。 然而，即使再添加两个 Fanboy 规则列表，比如 hpHosts’s Ad 和 tracking servers，uBlock 的内存占用依然比其他常见的过滤工具要低得多。
+当然，启用的过滤规则越多，占用的内存也就越高。 然而，即使再添加 Fanboy 的两个额外规则列表与 hpHosts’s Ad and tracking servers，uBlock 的内存占用依然比其他流行的过滤器更低。
 
-另外请注意，启用一些额外的规则列表可能会增加网页显示错误的可能性 —— 尤其是那些通常被用作 hosts 文件的列表。
-
-***
-
-没有这些过滤规则列表，这个扩展就没有了意义。 所以如果你真的想做点贡献，想想那些努力维护过滤规则的人们，是他们让所有人能够免费使用这一切。
+另外，请注意，一些额外的规则列表可能会导致网站出现错误 —— 尤其是那些一般被作为 hosts 文件使用的列表。
 
 ***
 
-免费。
-遵从 GPLv3 公共许可协议开源。
-一切为了用户。
+没有这些过滤规则列表，这个扩展就没有了意义。 所以如果你真的想做点贡献，想想那些维护过滤规则的人们，是他们让所有人能够免费使用这一切变得可能。
 
-贡献者 @ Github:
+***
+
+自由并且免费。
+使用 GPLv3 公共许可协议开源。
+来自用户，只为用户。
+
+Github 上的贡献者们：
 https://github.com/gorhill/uBlock/graphs/contributors
-贡献者 @ Crowdin:
+Crowdin 上的贡献者们：
 https://crowdin.net/project/ublock
 
 ***

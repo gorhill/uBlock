@@ -92,15 +92,15 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Alternar o bloqueio de todos popups para este site",
+    "message": "Alternar o bloqueio de todos pop-ups para este site",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Clique para bloquear todos os popups neste site",
+    "message": "Clique para bloquear todos os pop-ups neste site",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Clique para deixar de bloquear todos os popups neste site",
+    "message": "Clique para deixar de bloquear todos os pop-ups neste site",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {

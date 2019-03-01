@@ -42,8 +42,11 @@
             break;
         case 'launch-logger':
             vAPI.tabs.get(null, function(tab) {
+                let hash = tab.url.startsWith(vAPI.getURL('')) ?
+                    '' :
+                    '#tab_active+' + tab.id;
                 µb.openNewTab({
-                    url: 'logger-ui.html#tab_' + tab.id,
+                    url: 'logger-ui.html' + hash,
                     select: true,
                     index: -1
                 });

@@ -70,40 +70,8 @@ var nameToActionMap = {
 /******************************************************************************/
 
 // For performance purpose, as simple tests as possible
-var reHostnameVeryCoarse = /[g-z_-]/;
-var reIPv4VeryCoarse = /\.\d+$/;
 var reBadHostname = /[^0-9a-z_.\[\]:%-]/;
 var reNotASCII = /[^\x20-\x7F]/;
-
-// http://tools.ietf.org/html/rfc5952
-// 4.3: "MUST be represented in lowercase"
-// Also: http://en.wikipedia.org/wiki/IPv6_address#Literal_IPv6_addresses_in_network_resource_identifiers
-
-var isIPAddress = function(hostname) {
-    if ( reHostnameVeryCoarse.test(hostname) ) {
-        return false;
-    }
-    if ( reIPv4VeryCoarse.test(hostname) ) {
-        return true;
-    }
-    return hostname.startsWith('[');
-};
-
-var toBroaderHostname = function(hostname) {
-    var pos = hostname.indexOf('.');
-    if ( pos !== -1 ) {
-        return hostname.slice(pos + 1);
-    }
-    return hostname !== '*' && hostname !== '' ? '*' : '';
-};
-
-var toBroaderIPAddress = function(ipaddress) {
-    return ipaddress !== '*' && ipaddress !== '' ? '*' : '';
-};
-
-var selectHostnameBroadener = function(hostname) {
-    return isIPAddress(hostname) ? toBroaderIPAddress : toBroaderHostname;
-};
 
 /******************************************************************************/
 
@@ -114,6 +82,8 @@ Matrix.prototype.reset = function() {
     this.z = '';
     this.rules = new Map();
     this.changed = false;
+    this.decomposedSource = [];
+    this.decomposedDestination = [];
 };
 
 /******************************************************************************/
@@ -291,14 +261,13 @@ var domainFromHostname = µBlock.URI.domainFromHostname;
 
 /******************************************************************************/
 
-Matrix.prototype.evaluateCellZ = function(srcHostname, desHostname, type, broadener) {
+Matrix.prototype.evaluateCellZ = function(srcHostname, desHostname, type) {
+    µBlock.decomposeHostname(srcHostname, this.decomposedSource);
     this.type = type;
-    var bitOffset = typeBitOffsets[type];
-    var s = srcHostname;
-    var v;
-    for (;;) {
-        this.z = s;
-        v = this.rules.get(s + ' ' + desHostname);
+    let bitOffset = typeBitOffsets[type];
+    for ( let shn of this.decomposedSource ) {
+        this.z = shn;
+        let v = this.rules.get(shn + ' ' + desHostname);
         if ( v !== undefined ) {
             v = v >>> bitOffset & 3;
             if ( v !== 0 ) {
@@ -306,8 +275,6 @@ Matrix.prototype.evaluateCellZ = function(srcHostname, desHostname, type, broade
                 return v;
             }
         }
-        s = broadener(s);
-        if ( s === '' ) { break; }
     }
     // srcHostname is '*' at this point
     this.r = 0;
@@ -318,29 +285,24 @@ Matrix.prototype.evaluateCellZ = function(srcHostname, desHostname, type, broade
 
 Matrix.prototype.evaluateCellZY = function(srcHostname, desHostname, type) {
     // Pathological cases.
-    var d = desHostname;
-    if ( d === '' ) {
+    if ( desHostname === '' ) {
         this.r = 0;
         return 0;
     }
 
-    // Prepare broadening handlers -- depends on whether we are dealing with
-    // a hostname or IP address.
-    var broadenSource = selectHostnameBroadener(srcHostname),
-        broadenDestination = selectHostnameBroadener(desHostname);
-
     // Precedence: from most specific to least specific
 
     // Specific-destination, any party, any type
-    while ( d !== '*' ) {
-        this.y = d;
-        if ( this.evaluateCellZ(srcHostname, d, '*', broadenSource) !== 0 ) {
+    µBlock.decomposeHostname(desHostname, this.decomposedDestination);
+    for ( let dhn of this.decomposedDestination ) {
+        if ( dhn === '*' ) { break; }
+        this.y = dhn;
+        if ( this.evaluateCellZ(srcHostname, dhn, '*') !== 0 ) {
             return this.r;
         }
-        d = broadenDestination(d);
     }
 
-    var thirdParty = is3rdParty(srcHostname, desHostname);
+    let thirdParty = is3rdParty(srcHostname, desHostname);
 
     // Any destination
     this.y = '*';
@@ -349,34 +311,34 @@ Matrix.prototype.evaluateCellZY = function(srcHostname, desHostname, type) {
     if ( thirdParty ) {
         // 3rd-party, specific type
         if ( type === 'script' ) {
-            if ( this.evaluateCellZ(srcHostname, '*', '3p-script', broadenSource) !== 0 ) {
+            if ( this.evaluateCellZ(srcHostname, '*', '3p-script') !== 0 ) {
                 return this.r;
             }
         } else if ( type === 'sub_frame' ) {
-            if ( this.evaluateCellZ(srcHostname, '*', '3p-frame', broadenSource) !== 0 ) {
+            if ( this.evaluateCellZ(srcHostname, '*', '3p-frame') !== 0 ) {
                 return this.r;
             }
         }
         // 3rd-party, any type
-        if ( this.evaluateCellZ(srcHostname, '*', '3p', broadenSource) !== 0 ) {
+        if ( this.evaluateCellZ(srcHostname, '*', '3p') !== 0 ) {
             return this.r;
         }
     } else if ( type === 'script' ) {
         // 1st party, specific type
-        if ( this.evaluateCellZ(srcHostname, '*', '1p-script', broadenSource) !== 0 ) {
+        if ( this.evaluateCellZ(srcHostname, '*', '1p-script') !== 0 ) {
             return this.r;
         }
     }
 
     // Any destination, any party, specific type
     if ( supportedDynamicTypes.hasOwnProperty(type) ) {
-        if ( this.evaluateCellZ(srcHostname, '*', type, broadenSource) !== 0 ) {
+        if ( this.evaluateCellZ(srcHostname, '*', type) !== 0 ) {
             return this.r;
         }
     }
 
     // Any destination, any party, any type
-    if ( this.evaluateCellZ(srcHostname, '*', '*', broadenSource) !== 0 ) {
+    if ( this.evaluateCellZ(srcHostname, '*', '*') !== 0 ) {
         return this.r;
     }
 

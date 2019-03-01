@@ -352,7 +352,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "uBlock₀ 제공",
+    "message": "Ublock₀ 제공",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -384,7 +384,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "직접 추가",
+    "message": "불러오기..",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {

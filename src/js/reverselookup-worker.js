@@ -203,20 +203,27 @@ var fromCosmeticFilter = function(details) {
                 }
                 break;
             case 8:
-            case 9:
-            case 32:
-            case 64:
-            case 65:
-                if ( exception !== (fargs[1].charAt(0) === '!') ) {
-                    break;
-                }
-                isProcedural = fargs[3].charCodeAt(0) === 0x7B;
+                if ( exception !== ((fargs[1] & 0b01) !== 0) ) { break; }
+                isProcedural = (fargs[1] & 0b10) !== 0;
                 if (
                     isProcedural === false && fargs[3] !== selector ||
                     isProcedural && JSON.parse(fargs[3]).raw !== selector
                 ) {
                     break;
                 }
+                if (
+                    fargs[2] === '' ||
+                    reHostname.test(fargs[2]) === true ||
+                    reEntity !== undefined && reEntity.test(fargs[2]) === true
+                ) {
+                    found = fargs[2] + prefix + selector;
+                }
+                break;
+            case 32:
+            case 64:
+            case 65:
+                if ( exception !== (fargs[1].charAt(0) === '!') ) { break; }
+                if ( fargs[3] !== selector ) { break; }
                 if (
                     fargs[2] === '' ||
                     reHostname.test(fargs[2]) === true ||

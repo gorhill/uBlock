@@ -52,7 +52,7 @@
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Click per attivare uBo per questo sito.",
+    "message": "Fare click per attivare uBlock₀ in questo sito.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -408,7 +408,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Un filtro per ogni riga. Un filtro può essere un hostname, o un filtro compatibile con Adblock Plus. Ogni riga che comincia con &lsquo;!&rsquo; verrà ignorata.",
+    "message": "Un filtro per ogni riga. Un filtro può essere un hostname, o un filtro compatibile con Adblock Plus. Ogni riga che comincia con <code>!<\/code> verrà ignorata.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {

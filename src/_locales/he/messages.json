@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "מסננים צד שלישי",
+    "message": "רשימות מסננים",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -388,7 +388,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "כתובת URL אחת בכל שורה. שורות עם קידומת &lsquo;!&rsquo; לא יפורשו. כתובות לא חוקיות לא יפורשו ולא תהיה התראה לכך.",
+    "message": "כתובת אינטרנט אחת בכל שורה. כתובות אינטרנט שאינן חוקיות לא יפורשו.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -408,7 +408,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "מסנן אחד לכל שורה. המסנן יכול להיות דומיין פשוט, או מסנן המותאם ל- Adblock Plus. שורות עם קידומת &lsquo;!&rsquo; לא יפורשו.",
+    "message": "מסנן אחד לכל שורה. המסנן יכול להיות דומיין פשוט, או מסנן המותאם ל- Adblock Plus. שורות עם קידומת <code>!<\/code> לא יפורשו.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -600,7 +600,7 @@
     "description": "A link for where to get support"
   },
   "aboutIssues": {
-    "message": "מאתר תקלות",
+    "message": "בעיות ידועות",
     "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {

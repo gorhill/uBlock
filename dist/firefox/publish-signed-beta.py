@@ -54,13 +54,20 @@ github_repo = 'uBlock'
 
 # We need a version string to work with
 if len(sys.argv) >= 2 and sys.argv[1]:
-    version = sys.argv[1]
+    tag_version = sys.argv[1]
 else:
-    version = input('Github release version: ')
-version.strip()
-if not re.search('^\d+\.\d+\.\d+(b|rc)\d+$', version):
+    tag_version = input('Github release version: ')
+tag_version.strip()
+match = re.search('^(\d+\.\d+\.\d+)(?:(b|rc)(\d+))?$', tag_version)
+if not match:
     print('Error: Invalid version string.')
     exit(1)
+ext_version = match.group(1);
+if match.group(2):
+    revision = int(match.group(3))
+    if match.group(2) == 'rc':
+        revision += 100;
+    ext_version += '.' + str(revision)
 
 # Load/save auth secrets
 # The build directory is excluded from git
@@ -99,7 +106,7 @@ github_auth = 'token ' + github_token
 
 # https://developer.github.com/v3/repos/releases/#get-a-single-release
 print('Downloading release info from GitHub...')
-release_info_url = 'https://api.github.com/repos/{0}/{1}/releases/tags/{2}'.format(github_owner, github_repo, version)
+release_info_url = 'https://api.github.com/repos/{0}/{1}/releases/tags/{2}'.format(github_owner, github_repo, tag_version)
 headers = { 'Authorization': github_auth, }
 response = requests.get(release_info_url, headers=headers)
 if response.status_code != 200:
@@ -181,7 +188,7 @@ with open(unsigned_xpi_filepath, 'rb') as f:
     headers = { 'Authorization': jwt_auth, }
     data = { 'channel': 'unlisted' }
     files = { 'upload': f, }
-    signing_url = 'https://addons.mozilla.org/api/v3/addons/{0}/versions/{1}/'.format(extension_id, version)
+    signing_url = 'https://addons.mozilla.org/api/v3/addons/{0}/versions/{1}/'.format(extension_id, ext_version)
     print('Submitting package to be signed...')
     response = requests.put(signing_url, headers=headers, data=data, files=files)
     if response.status_code != 202:
@@ -272,11 +279,11 @@ with open(updates_json_filepath) as f:
     updates_json = json.load(f)
     f.close()
     previous_version = updates_json['addons'][extension_id]['updates'][0]['version']
-    if LooseVersion(version) > LooseVersion(previous_version):
+    if LooseVersion(ext_version) > LooseVersion(previous_version):
         with open(os.path.join(projdir, 'dist', 'firefox', 'updates.template.json')) as f:
             template_json = Template(f.read())
             f.close()
-            updates_json = template_json.substitute(version=version)
+            updates_json = template_json.substitute(ext_version=ext_version, tag_version=tag_version)
             with open(updates_json_filepath, 'w') as f:
                 f.write(updates_json)
                 f.close()

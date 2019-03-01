@@ -137,6 +137,7 @@ URLNetFiltering.prototype.reset = function() {
     this.type = '';
     this.r = 0;
     this.changed = false;
+    this.decomposedSource = [];
 };
 
 /******************************************************************************/
@@ -207,32 +208,31 @@ URLNetFiltering.prototype.evaluateZ = function(context, target, type) {
     if ( this.rules.size === 0 ) {
         return 0;
     }
-    var entries, pos, i, entry;
-    for (;;) {
-        this.context = context;
-        if ( (entries = this.rules.get(context + ' ' + type)) ) {
-            i = indexOfMatch(entries, target);
+    µBlock.decomposeHostname(context, this.decomposedSource);
+    for ( let shn of this.decomposedSource ) {
+        this.context = shn;
+        let entries = this.rules.get(shn + ' ' + type);
+        if ( entries !== undefined ) {
+            let i = indexOfMatch(entries, target);
             if ( i !== -1 ) {
-                entry = entries[i];
+                let entry = entries[i];
                 this.url = entry.url;
                 this.type = type;
                 this.r = entry.action;
                 return this.r;
             }
         }
-        if ( (entries = this.rules.get(context + ' *')) ) {
-            i = indexOfMatch(entries, target);
+        entries = this.rules.get(shn + ' *');
+        if ( entries !== undefined ) {
+            let i = indexOfMatch(entries, target);
             if ( i !== -1 ) {
-                entry = entries[i];
+                let entry = entries[i];
                 this.url = entry.url;
                 this.type = '*';
                 this.r = entry.action;
                 return this.r;
             }
         }
-        if ( context === '*' ) { break; }
-        pos = context.indexOf('.');
-        context = pos !== -1 ? context.slice(pos + 1) : '*';
     }
     return 0;
 };

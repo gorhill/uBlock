@@ -430,15 +430,6 @@ var renderPopup = function() {
     }
     uDom.nodeFromId('total-blocked').textContent = text;
 
-    // https://github.com/gorhill/uBlock/issues/507
-    // Convenience: open the logger with current tab automatically selected
-    if ( popupData.tabId ) {
-        uDom.nodeFromSelector('#basicTools > a[href^="logger-ui.html"]').setAttribute(
-            'href',
-            'logger-ui.html#tab_' + popupData.tabId
-        );
-    }
-
     // This will collate all domains, touched or not
     renderPrivacyExposure();
 
@@ -600,9 +591,11 @@ var renderOnce = function() {
         resizeTimer = undefined;
         // Do not use equality, fractional pixel dimension occurs and must
         // be ignored.
+        // https://www.reddit.com/r/uBlockOrigin/comments/8qodpw/how_to_hide_the_info_shown_of_what_is_currently/e0lglrr/
+        //   Tolerance of 2px fixes the issue.
         if (
-            Math.abs(document.body.offsetWidth - window.innerWidth) < 2 &&
-            Math.abs(document.body.offsetHeight - window.innerHeight) < 2
+            Math.abs(document.body.offsetWidth - window.innerWidth) <= 2 &&
+            Math.abs(document.body.offsetHeight - window.innerHeight) <= 2
         ) {
             return;
         }
@@ -694,18 +687,24 @@ var gotoPick = function() {
 /******************************************************************************/
 
 var gotoURL = function(ev) {
-    if ( this.hasAttribute('href') === false ) {
-        return;
-    }
+    if ( this.hasAttribute('href') === false ) { return; }
 
     ev.preventDefault();
+
+    let url = this.getAttribute('href');
+    if (
+        url === 'logger-ui.html#tab_active' &&
+        typeof popupData.tabId === 'number'
+    ) {
+        url += '+' + popupData.tabId;
+    }
 
     messaging.send(
         'popupPanel',
         {
             what: 'gotoURL',
             details: {
-                url: this.getAttribute('href'),
+                url: url,
                 select: true,
                 index: -1,
                 shiftKey: ev.shiftKey
