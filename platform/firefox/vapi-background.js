@@ -2768,8 +2768,15 @@ vAPI.toolbarButton = {
             }
             // Found our button on this toolbar - but where on it?
             var before = null;
-            for ( var i = index + 1; i < currentset.length; i++ ) {
-                before = toolbar.querySelector('[id="' + currentset[i] + '"]');
+            for ( var i = index + 1, special; i < currentset.length; i++ ) {
+                if ( (special = /^(spring|spacer|separator)$/.exec(currentset[i])) !== null ) {
+                    // Special elements have pseudo-random ids different from specified in the currentset
+                    var specials = toolbar.querySelectorAll('toolbar' + special[1]);
+                    var remain = currentset.slice(i-currentset.length).filter(s => s == special[1]).length;
+                    before = toolbar.querySelector('[id="' + specials[specials.length - remain].id + '"]');
+                } else {
+                    before = toolbar.querySelector('[id="' + currentset[i] + '"]');
+                }
                 if ( before !== null ) {
                     break;
                 }
