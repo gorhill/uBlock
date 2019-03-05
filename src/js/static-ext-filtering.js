@@ -741,11 +741,22 @@
             if ( rpos === -1 ) { return false; }
         }
 
+        // https://github.com/AdguardTeam/AdguardFilters/commit/4fe02d73cee6
+        //   AdGuard also uses `$?` to force inline-based style rather than
+        //   stylesheet-based style.
         // Coarse-check that the anchor is valid.
-        // `##`: l = 1
-        // `#@#`, `#$#`, `#%#`, `#?#`: l = 2
-        // `#@$#`, `#@%#`, `#@?#`: l = 3
-        if ( (rpos - lpos) > 3 ) { return false; }
+        // `##`: l === 1
+        // `#@#`, `#$#`, `#%#`, `#?#`: l === 2
+        // `#@$#`, `#@%#`, `#@?#`, `#$?#`: l === 3
+        // `#@$?#`: l === 4
+        const anchorLen = rpos - lpos;
+        if ( anchorLen > 4 ) { return false; }
+        if (
+            anchorLen > 1 &&
+            /^@?(?:\$\??|%|\?)$/.test(raw.slice(lpos + 1, rpos)) === false
+        ) {
+            return false;
+        }
 
         // Extract the selector.
         let suffix = raw.slice(rpos + 1).trim();
@@ -763,9 +774,8 @@
         if ( cCode !== 0x23 /* '#' */ && cCode !== 0x40 /* '@' */ ) {
             // Adguard's scriptlet injection: not supported.
             if ( cCode === 0x25 /* '%' */ ) { return true; }
-            // Not a known extended filter.
-            if ( cCode !== 0x24 /* '$' */ && cCode !== 0x3F /* '?' */ ) {
-                return false;
+            if ( cCode === 0x3F /* '?' */ && anchorLen > 2 ) {
+                cCode = raw.charCodeAt(rpos - 2);
             }
             // Adguard's style injection: translate to uBO's format.
             if ( cCode === 0x24 /* '$' */ ) {
