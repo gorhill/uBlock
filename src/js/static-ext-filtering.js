@@ -753,7 +753,7 @@
         if ( anchorLen > 4 ) { return false; }
         if (
             anchorLen > 1 &&
-            /^@?(?:\$\??|%|\?)$/.test(raw.slice(lpos + 1, rpos)) === false
+            /^@?(?:\$\??|%|\?)?$/.test(raw.slice(lpos + 1, rpos)) === false
         ) {
             return false;
         }
