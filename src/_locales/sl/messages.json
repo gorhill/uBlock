@@ -148,11 +148,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Click to disable JavaScript on this site",
+    "message": "Klikni, da onemogočiš JavaScript na tej strani",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Click to no longer disable JavaScript on this site",
+    "message": "Klikni, da prenehaš onemogočati JavaScript na tej strani",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
@@ -544,11 +544,11 @@
     "description": "Appears in the logger's tab selector"
   },
   "loggerReloadTip": {
-    "message": "Reload the tab content",
+    "message": "Ponovno naloži vsebino zavihka",
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
-    "message": "Toggle the DOM inspector",
+    "message": "Preklopi DOM pregledovalnik",
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
@@ -584,7 +584,7 @@
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {
-    "message": "Not",
+    "message": "Ni",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinEventful": {
@@ -592,23 +592,23 @@
     "description": "A keyword in the built-in row filtering expression: all items corresponding to uBO doing something (blocked, allowed, redirected, etc.)"
   },
   "loggerRowFiltererBuiltinBlocked": {
-    "message": "blocked",
+    "message": "blokiran",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinAllowed": {
-    "message": "allowed",
+    "message": "dovoljeno",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
-    "message": "1st-party",
+    "message": "1. osebni",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin3p": {
-    "message": "3rd-party",
+    "message": "3. osebni",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerEntryDetailsHeader": {
-    "message": "Details",
+    "message": "Podrobnosti",
     "description": "Small header to identify the 'Details' pane for a specific logger entry"
   },
   "loggerEntryDetailsFilter": {
@@ -616,11 +616,11 @@
     "description": "Label to identify a filter field"
   },
   "loggerEntryDetailsFilterList": {
-    "message": "Filter list",
+    "message": "Seznam filtrov",
     "description": "Label to identify a filter list field"
   },
   "loggerEntryDetailsRule": {
-    "message": "Rule",
+    "message": "Pravilo",
     "description": "Label to identify a rule field"
   },
   "loggerEntryDetailsContext": {
@@ -636,7 +636,7 @@
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
-    "message": "Type",
+    "message": "Vrsta",
     "description": "Label to identify the type of an entry"
   },
   "loggerEntryDetailsURL": {
@@ -700,31 +700,31 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Static filter <code>{{filter}}<\/code> could not be found in any of the currently enabled filter lists",
+    "message": "Statični filter <code>{{filter}}<\/code> ni bil najden v nobenem izmed trenutno izbranih seznamov",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
-    "message": "Logger entries which do not fulfill all three conditions below will be automatically discarded:",
+    "message": "Zapisi, ki ne ustrezajo vsem spodaj podanim pogojem, bodo avtomatsko zavrženi:",
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
-    "message": "Preserve entries from the last {{input}} minutes",
+    "message": "Ohrani vnose izpred zadnjih {{input}} minut",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "Preserve at most {{input}} page loads per tab",
+    "message": "Ohrani največ {{input}} nalaganj strani na zavihek",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
-    "message": "Preserve at most {{input}} entries per tab",
+    "message": "Ohrani največ {{input}} vnosov na zavihek",
     "description": "A logger setting"
   },
   "loggerSettingPerEntryLineCount": {
-    "message": "Use {{input}} lines per entry in vertically expanded mode",
+    "message": "Uporabi {{input}} vrstic pri vsakem vnosu v navpično razširjenem načinu",
     "description": "A logger setting"
   },
   "loggerSettingHideColumnsPrompt": {
-    "message": "Hide columns:",
+    "message": "Skrij stolpce:",
     "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
   },
   "loggerSettingHideColumnTime": {
@@ -744,15 +744,15 @@
     "description": "A label for the partyness column"
   },
   "loggerExportFormatList": {
-    "message": "List",
+    "message": "Seznam",
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportFormatTable": {
-    "message": "Table",
+    "message": "Tabela",
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportEncodePlain": {
-    "message": "Plain",
+    "message": "Navaden",
     "description": "Label for radio-button to pick export text format"
   },
   "loggerExportEncodeMarkdown": {
@@ -772,7 +772,7 @@
     "description": "A link for where to get support"
   },
   "aboutIssues": {
-    "message": "Issue tracker",
+    "message": "Sledilec težav",
     "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
@@ -784,7 +784,7 @@
     "description": "English: Contributors"
   },
   "aboutDependencies": {
-    "message": "External dependencies (GPLv3-compatible):",
+    "message": "Zunanje odvisnosti (GPLv3-kompatibilne):",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
@@ -944,11 +944,11 @@
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "Toggle locked scrolling",
+    "message": "Preklopi zaklenjeno drsenje",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
-    "message": "Copy to clipboard",
+    "message": "Kopiraj v odložišče",
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "dummy": {

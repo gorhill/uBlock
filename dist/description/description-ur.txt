@@ -1,0 +1,52 @@
+ایک زبردست اشتہارات کو روکنے والا سافٹویئر. کم میموری اور cpu استعمال کرتا ہے مگر کام بہترین کرتا ہے.
+
+اس کا بہترین اور پراثر کام کرنے کی تصاویر:
+https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+
+ہدایات: بڑا آن/ آف کا بٹن دبا کر آپ موجودہ ویب سائٹ پر uBlock کو فعال یا غیر فعال کر سکتے ہیں. یہ بٹن صرف موجودہ ویب سائٹ کے لئے ہے، باقی ویب سائٹس کو اس سے کوئی فرق نہیں پڑے گا.
+
+***
+
+Flexible, it's more than an "ad blocker": it can also read and create filters from hosts files.
+
+یہ والے فلٹر پہلے سے لاگو ہوں گے:
+
+- EasyList
+- Peter Lowe’s Ad server list
+- EasyPrivacy
+- Malware domains
+
+More lists are available for you to select if you wish:
+
+- Fanboy’s Enhanced Tracking List
+- Dan Pollock’s hosts file
+- hpHosts’s Ad and tracking servers
+- MVPS HOSTS
+- Spam404
+- And many others
+
+جتنے زیادہ فلٹر لگائیں گے اتنی زیادہ میموری لے گا. Yet, even after adding Fanboy's two extra lists, hpHosts’s Ad and tracking servers, uBlock still has a lower memory footprint than other very popular blockers out there.
+
+Also, be aware that selecting some of these extra lists may lead to higher likelihood of web site breakage -- especially those lists which are normally used as hosts file.
+
+***
+
+Without the preset lists of filters, this extension is nothing. So if ever you really do want to contribute something, think about the people working hard to maintain the filter lists you are using, which were made available to use by all for free.
+
+***
+
+مفت.
+اوپن سورس عوامی لائسنس(جی.پی.ایل ورژن ٣) کے ساتھ
+عوام کے لیے، عوام کا بنایا ہوا.
+
+معاونین کی فہرست Github پر دیکھیں:
+https://github.com/gorhill/uBlock/graphs/contributors
+مترجمین کی فہرست Crowdin پر دیکھیں:
+https://crowdin.net/project/ublock
+
+***
+
+It's quite an early version, keep this in mind when you review.
+
+پراجیکٹ میں ترقیاتی کام کا ریکارڈ:
+https://github.com/gorhill/uBlock/releases
