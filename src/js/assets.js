@@ -643,63 +643,35 @@ const stringIsNotEmpty = function(s) {
 
 **/
 
+/*******************************************************************************
+
+    User assets are NOT persisted in the cache storage. User assets are
+    recognized by the asset key which always starts with 'user-'.
+
+**/
+
 const readUserAsset = function(assetKey, callback) {
     const reportBack = function(content) {
-        callback({ assetKey: assetKey, content: content });
+        callback({ assetKey, content });
     };
-
-    const onLoaded = function(bin) {
-        if ( !bin ) { return reportBack(''); }
-        var content = '';
-        if ( typeof bin['cached_asset_content://assets/user/filters.txt'] === 'string' ) {
-            content = bin['cached_asset_content://assets/user/filters.txt'];
-            µBlock.cacheStorage.remove('cached_asset_content://assets/user/filters.txt');
-        }
-        if ( typeof bin['assets/user/filters.txt'] === 'string' ) {
-            content = bin['assets/user/filters.txt'];
-            // TODO(seamless migration):
-            // Uncomment once all moved to v1.11+.
-            //vAPI.storage.remove('assets/user/filters.txt');
-        }
-        if ( typeof bin[assetKey] === 'string' ) {
-            // TODO(seamless migration):
-            // Replace conditional with assignment once all moved to v1.11+
-            if ( content !== bin[assetKey] ) {
-                saveUserAsset(assetKey, content);
-            }
-        } else if ( content !== '' ) {
-            saveUserAsset(assetKey, content);
-        }
+    vAPI.storage.get(assetKey, bin => {
+        const content =
+            bin instanceof Object && typeof bin[assetKey] === 'string'
+                ? bin[assetKey]
+                : '';
         return reportBack(content);
-    };
-    let toRead = assetKey;
-    if ( assetKey === µBlock.userFiltersPath ) {
-        toRead = [
-            assetKey,
-            'assets/user/filters.txt',
-            'cached_asset_content://assets/user/filters.txt'
-        ];
-    }
-    vAPI.storage.get(toRead, onLoaded);
+    });
+    // Remove obsolete entry
+    // TODO: remove once everybody is well beyond 1.18.6
+    vAPI.storage.remove('assets/user/filters.txt');
 };
 
 const saveUserAsset = function(assetKey, content, callback) {
-    var bin = {};
-    bin[assetKey] = content;
-    // TODO(seamless migration):
-    // This is for forward compatibility. Only for a limited time. Remove when
-    // everybody moved to 1.11.0 and beyond.
-    // >>>>>>>>
-    if ( assetKey === µBlock.userFiltersPath ) {
-        bin['assets/user/filters.txt'] = content;
-    }
-    // <<<<<<<<
-    var onSaved = function() {
+    vAPI.storage.set({ [assetKey]: content }, ( ) => {
         if ( callback instanceof Function ) {
-            callback({ assetKey: assetKey, content: content });
+            callback({ assetKey, content });
         }
-    };
-    vAPI.storage.set(bin, onSaved);
+    });
 };
 
 /******************************************************************************/
