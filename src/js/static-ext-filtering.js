@@ -332,6 +332,8 @@
                     raw.push(':not', '(', decompile(task[1]), ')');
                     break;
                 case ':spath':
+                    raw.push(task[1]);
+                    break;
                 case ':watch-attrs':
                 case ':xpath':
                     raw.push(task[0], '(', task[1], ')');
