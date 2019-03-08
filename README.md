@@ -19,7 +19,7 @@ We conceptualize AdNauseam as a software system that serves ethical, political, 
 
 * Web Site:         http://adnauseam.io
 * Authors:          [Daniel C. Howe](http://rednoise.org/daniel), [Helen Nissenbaum](https://www.nyu.edu/projects/nissenbaum/) & [Mushon Zer-Aviv](http://mushon.com)
-* Developers:       [Sally Chen](https://github.com/cqx931), [Leon Eckert](https://github.com/leoneckert), [Cyrus Suen](https://github.com/CyrusSUEN)
+* Developers:       [Daniel C. Howe](http://rednoise.org/daniel) and [Sally Chen](https://github.com/cqx931)
 * License:          GPLv3 (see included [LICENSE.txt](https://github.com/dhowe/AdNauseam/blob/master/LICENSE.txt) file for full license)
 * Github Repo:      https://github.com/dhowe/adnauseam/
 * Bug Tracker:      https://github.com/dhowe/adnauseam/issues
