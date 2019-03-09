@@ -34,9 +34,10 @@
 let resizeFrame = function() {
     let navRect = document.getElementById('dashboard-nav').getBoundingClientRect();
     let viewRect = document.documentElement.getBoundingClientRect();
+    let notiRect = document.getElementById('notifications').offsetHeight; //AdNauseam
     document.getElementById('iframe').style.setProperty(
         'height',
-        (viewRect.height - navRect.height) + 'px'
+        (viewRect.height - navRect.height - notiRect) + 'px' //AdNauseam
     );
 };
 
@@ -51,12 +52,12 @@ let loadDashboardPanel = function(notifications) {
         vAPI.localStorage.setItem('dashboardLastVisitedPane', pane);
     }
     let tabButton = uDom('[href="#' + pane + '"]');
+    notifications && renderNotifications(notifications, "dashboard");
     if ( !tabButton || tabButton.hasClass('selected') ) { return; }
     uDom('.tabButton.selected').toggleClass('selected', false);
-    notifications && renderNotifications(notifications, "dashboard");
     uDom('iframe').attr('src', pane);
-
     tabButton.toggleClass('selected', true);
+    resizeFrame();
 };
 
 let onTabClickHandler = function(e) {
@@ -77,10 +78,28 @@ vAPI.messaging.send('dashboard', { what: 'canUpdateShortcuts' }, response => {
     document.body.classList.toggle('canUpdateShortcuts', response === true);
 });
 
-resizeFrame();
-window.addEventListener('resize', resizeFrame);
-uDom('.tabButton').on('click', onTabClickHandler);
-vAPI.messaging.send(
+vAPI.messaging.addChannelListener('adnauseam', function (request) {
+
+  // console.log("dashboard.js::BROADCAST", request);
+
+  switch (request.what) {
+  case 'notifications':
+
+    loadDashboardPanel(request.notifications);
+    break;
+  }
+});
+
+/******************************************************************************/
+
+
+uDom.onLoad(function () {
+    resizeFrame();
+    window.addEventListener('resize', resizeFrame);
+    uDom('.tabButton').on('click', onTabClickHandler);
+    uDom('#notifications').on('click', resizeFrame);
+
+     vAPI.messaging.send(
       'adnauseam', {
           what: 'verifyAdBlockers'
         }, function() {
@@ -88,8 +107,10 @@ vAPI.messaging.send(
           'adnauseam', {
             what: 'getNotifications'
           }, loadDashboardPanel);
-});
-/******************************************************************************/
+      });
+
+  });
+
 
 
 
