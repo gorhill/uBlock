@@ -233,13 +233,14 @@ var renderFilterLists = function(soft) {
 
     var liFromListGroup = function(groupKey, listKeys) {
 
-       // ADN: change some group key names
-      if (groupKey === 'default') groupKey = 'Essentials';
-      if (groupKey === 'multipurpose') groupKey = 'Other';
-
-      var groupName = groupKey === 'hidden' ? groupKey : vAPI.i18n('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1));
-
       let liGroup = document.querySelector('#lists > .groupEntry[data-groupkey="' + groupKey + '"]');
+
+      // ADN: change some group key names
+     if (groupKey === 'default') groupKey = 'Essentials';
+     if (groupKey === 'multipurpose') groupKey = 'Other';
+
+    var groupName = groupKey === 'hidden' ? groupKey : vAPI.i18n('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1));
+
         if ( liGroup === null ) {
             liGroup = listGroupTemplate.clone().nodeAt(0);
             let groupName = groupNames.get(groupKey);
@@ -343,7 +344,7 @@ var renderFilterLists = function(soft) {
             ];
         document.body.classList.toggle('hideUnused', mustHideUnusedLists('*'));
 
-        // ADN: move the lists in these groups to 'multipurpose(Other)'
+        // ADN: move the lists in these groups to default/Essentials
         var toOther = ['ads', 'privacy'];
         for (let i = 0; i < toOther.length; i++) {
             Array.prototype.push.apply(groups.get('multipurpose'), groups.get(toOther[i]));
@@ -353,7 +354,7 @@ var renderFilterLists = function(soft) {
         }
 
 
-        // ADN: move these specific lists to 'default(Essentials)'
+        // ADN: move these specific lists to default/Essentials
         var toDefault = [ 'easylist', 'easyprivacy', 'ublock-abuse' ];
         for (let i = 0; i < toDefault.length; i++) {
             var idx = groups.get('multipurpose').indexOf(toDefault[i]);
