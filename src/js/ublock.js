@@ -282,7 +282,7 @@ var matchBucket = function(url, hostname, bucket, start) {
 
 µBlock.changeUserSettings = function(name, value) {
 
-    let us = this.userSettings;
+    let us = this.userSettings, adn = µBlock.adnauseam;
 
     // Return all settings if none specified.
     if ( name === undefined ) {

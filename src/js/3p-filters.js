@@ -345,8 +345,8 @@ var renderFilterLists = function(soft) {
 
         // ADN: move the lists in these groups to 'multipurpose(Other)'
         var toOther = ['ads', 'privacy'];
-        for (i = 0; i < toOther.length; i++) {
-            Array.prototype.push.apply(groups['multipurpose'], groups[toOther[i]]);
+        for (let i = 0; i < toOther.length; i++) {
+            Array.prototype.push.apply(groups.get('multipurpose'), groups.get(toOther[i]));
             delete groups[toOther[i]];
             var index = groupKeys.indexOf(toOther[i]);
             groupKeys.splice(index,1);
@@ -355,10 +355,10 @@ var renderFilterLists = function(soft) {
 
         // ADN: move these specific lists to 'default(Essentials)'
         var toDefault = [ 'easylist', 'easyprivacy', 'ublock-abuse' ];
-        for (i = 0; i < toDefault.length; i++) {
-            var idx = groups['multipurpose'].indexOf(toDefault[i]);
+        for (let i = 0; i < toDefault.length; i++) {
+            var idx = groups.get('multipurpose').indexOf(toDefault[i]);
             if (idx > -1) {
-              groups['default'].push(groups['multipurpose'].splice(idx, 1)[0]);
+              groups.get('default').push(groups.get('multipurpose').splice(idx, 1)[0]);
             }
         }
 
@@ -775,7 +775,7 @@ var fromCloudData = function(data, append) {
     var selectedSet = new Set(data.selectedLists),
         listEntries = uDom('#lists .listEntry'),
         listEntry, listKey;
-    for ( var i = 0, n = listEntries.length; i < n; i++ ) {
+    for ( let i = 0, n = listEntries.length; i < n; i++ ) {
         listEntry = listEntries.at(i);
         listKey = listEntry.attr('data-listkey');
         var hasListKey = selectedSet.has(listKey);
