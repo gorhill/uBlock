@@ -48,8 +48,6 @@ rm $DES/js/vapi-usercss.pseudo.js
 
 # Webext-specific
 rm $DES/img/icon_128.png
-rm $DES/options_ui.html
-rm $DES/js/options_ui.js
 # Remove the following files
 rm $DES/js/adn/tests.js
 rm -R $DES/lib/qunit
