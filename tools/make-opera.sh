@@ -54,6 +54,8 @@ rm $DES/js/wasm/*.wasm
 rm $DES/js/wasm/*.wat
 rm $DES/lib/lz4/*.wasm
 rm $DES/lib/lz4/*.wat
+rm $DES/lib/publicsuffixlist/wasm/*.wasm
+rm $DES/lib/publicsuffixlist/wasm/*.wat
 
 echo "*** uBlock0.opera: Generating web accessible resources..."
 cp -R src/web_accessible_resources $DES/
