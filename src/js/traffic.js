@@ -283,6 +283,17 @@ const onBeforeBehindTheSceneRequest = function(fctxt) {
 
     let result = 0;
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/459
+    //   In case of a request for frame, if ever no context is specified assume
+    //   the origin of the context is the same as the request itself.
+    if (
+        fctxt.type === 'sub_frame' &&
+        fctxt.getDocHostname() === 'behind-the-scene'
+        
+    ) {
+        fctxt.setDocOriginFromURL(fctxt.url).setTabOriginFromURL(fctxt.url);
+    }
+
     // https://github.com/uBlockOrigin/uBlock-issues/issues/339
     //   Need to also test against `-scheme` since tabOrigin is normalized.
     //   Not especially elegant but for now this accomplishes the purpose of
