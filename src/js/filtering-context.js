@@ -53,6 +53,9 @@
         this.tabId = tabContext.tabId;
         return this;
     },
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/459
+    //   In case of a request for frame and if ever no context is specified,
+    //   assume the origin of the context is the same as the request itself.
     fromWebrequestDetails: function(details) {
         const tabId = details.tabId;
         if ( tabId > 0 && details.type === 'main_frame' ) {
@@ -85,6 +88,9 @@
             const normalURL = µBlock.normalizePageURL(0, details.documentUrl);
             this.setTabOriginFromURL(normalURL);
             this.setDocOriginFromURL(normalURL);
+        } else if ( this.type === 'sub_frame' ) {
+            const origin = this.originFromURI(this.url);
+            this.setDocOrigin(origin).setTabOrigin(origin);
         } else {
             this.setDocOrigin(this.tabOrigin);
         }
