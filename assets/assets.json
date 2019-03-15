@@ -33,6 +33,16 @@
 		],
 		"supportURL": "https://github.com/uBlockOrigin/uAssets/issues"
 	},
+	"ublock-filters-legacy": {
+		"content": "filters",
+		"group": "default",
+		"title": "uBlock filters - Legacy",
+		"contentURL": [
+			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/legacy.txt",
+			"assets/ublock/legacy.txt"
+		],
+		"supportURL": "https://github.com/uBlockOrigin/uAssets/issues"
+	},
 	"ublock-badware": {
 		"content": "filters",
 		"group": "default",
