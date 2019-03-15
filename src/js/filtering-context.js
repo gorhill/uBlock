@@ -76,18 +76,21 @@
             } else if ( details.documentUrl !== undefined ) {
                 this.setDocOriginFromURL(details.documentUrl);
             } else {
-                const pageStore = µBlock.pageStoreFromTabId(this.docId);
+                const pageStore = µBlock.pageStoreFromTabId(this.tabId);
                 const docStore = pageStore && pageStore.frames.get(this.docId);
                 if ( docStore ) {
                     this.docOrigin = undefined;
                     this.docHostname = docStore.pageHostname;
                     this.docDomain = docStore.pageDomain;
+                } else {
+                    this.setDocOrigin(this.tabOrigin);
                 }
             }
         } else if ( details.documentUrl !== undefined ) {
-            const normalURL = µBlock.normalizePageURL(0, details.documentUrl);
-            this.setTabOriginFromURL(normalURL);
-            this.setDocOriginFromURL(normalURL);
+            const origin = this.originFromURI(
+                µBlock.normalizePageURL(0, details.documentUrl)
+            );
+            this.setDocOrigin(origin).setTabOrigin(origin);
         } else if ( this.type === 'sub_frame' ) {
             const origin = this.originFromURI(this.url);
             this.setDocOrigin(origin).setTabOrigin(origin);
