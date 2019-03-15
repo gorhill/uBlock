@@ -33,7 +33,7 @@
 		],
 		"supportURL": "https://github.com/uBlockOrigin/uAssets/issues"
 	},
-	"ublock-filters-legacy": {
+	"ublock-legacy": {
 		"content": "filters",
 		"group": "default",
 		"title": "uBlock filters - Legacy",
