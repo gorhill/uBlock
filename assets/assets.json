@@ -3,7 +3,7 @@
 		"content": "internal",
 		"updateAfter": 13,
 		"contentURL": [
-			"https://raw.githubusercontent.com/gorhill/uBlock/master/assets/assets.json",
+			"https://raw.githubusercontent.com/gorhill/uBlock/firefox-legacy/assets/assets.json",
 			"assets/assets.json"
 		]
 	},
