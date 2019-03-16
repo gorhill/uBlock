@@ -505,9 +505,22 @@
 //   Could expand the LZ4 codec API to be able to return UTF8-safe string
 //   representation of a compressed buffer, and thus the code below could be
 //   moved LZ4 codec-side.
+// https://github.com/uBlockOrigin/uBlock-issues/issues/461
+//   Provide a fallback encoding for Chromium 59 and less by issuing a plain
+//   JSON string. The fallback can be removed once min supported version is
+//   above 59.
 
 µBlock.base128 = {
     encode: function(arrbuf, arrlen) {
+        if (
+            vAPI.webextFlavor.soup.has('chromium') &&
+            vAPI.webextFlavor.major < 60
+        ) {
+            return this.encodeJSON(arrbuf);
+        }
+        return this.encodeBase128(arrbuf, arrlen);
+    },
+    encodeBase128: function(arrbuf, arrlen) {
         const inbuf = new Uint8Array(arrbuf, 0, arrlen);
         const inputLength = arrlen;
         let _7cnt = Math.floor(inputLength / 7);
@@ -556,6 +569,9 @@
         const textDecoder = new TextDecoder();
         return textDecoder.decode(outbuf);
     },
+    encodeJSON: function(arrbuf) {
+        return JSON.stringify(Array.from(new Uint32Array(arrbuf)));
+    },
     // TODO:
     //   Surprisingly, there does not seem to be any performance gain when
     //   first converting the input string into a Uint8Array through
@@ -568,6 +584,22 @@
     //   const inbuf = textEncoder.encode(instr);
     //   const inputLength = inbuf.byteLength;
     decode: function(instr, arrbuf) {
+        if ( instr.length === 0 ) { return; }
+        if ( instr.charCodeAt(0) === 0x5B /* '[' */ ) {
+            const outbuf = this.decodeJSON(instr, arrbuf);
+            if ( outbuf !== undefined ) {
+                return outbuf;
+            }
+        }
+        if (
+            vAPI.webextFlavor.soup.has('chromium') &&
+            vAPI.webextFlavor.major < 60
+        ) {
+            throw new Error('Unexpected µBlock.base128 encoding');
+        }
+        return this.decodeBase128(instr, arrbuf);
+    },
+    decodeBase128: function(instr, arrbuf) {
         const inputLength = instr.length;
         let _8cnt = inputLength >>> 3;
         let outputLength = _8cnt * 7;
@@ -599,7 +631,37 @@
         }
         return outbuf;
     },
+    decodeJSON: function(instr, arrbuf) {
+        let buf;
+        try {
+            buf = JSON.parse(instr);
+        } catch (ex) {
+        }
+        if ( Array.isArray(buf) === false ) { return; }
+        const outbuf = arrbuf instanceof ArrayBuffer === false
+            ? new Uint32Array(buf.length << 2)
+            : new Uint32Array(arrbuf);
+        outbuf.set(buf);
+        return new Uint8Array(outbuf.buffer);
+    },
     decodeSize: function(instr) {
+        if ( instr.length === 0 ) { return 0; }
+        if ( instr.charCodeAt(0) === 0x5B /* '[' */ ) {
+            let buf;
+            try {
+                buf = JSON.parse(instr);
+            } catch (ex) {
+            }
+            if ( Array.isArray(buf) ) {
+                return buf.length << 2;
+            }
+        }
+        if (
+            vAPI.webextFlavor.soup.has('chromium') &&
+            vAPI.webextFlavor.major < 60
+        ) {
+            throw new Error('Unexpected µBlock.base128 encoding');
+        }
         const size = (instr.length >>> 3) * 7;
         const rem = instr.length & 7;
         return rem === 0 ? size : size + rem - 1;

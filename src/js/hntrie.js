@@ -372,11 +372,13 @@ HNTrieContainer.prototype = {
     },
 
     unserialize: function(selfie, decoder) {
+        this.needle = '';
         const shouldDecode = typeof selfie === 'string';
         let byteLength = shouldDecode
             ? decoder.decodeSize(selfie)
             : selfie.length << 2;
         byteLength = byteLength + HNTRIE_PAGE_SIZE-1 & ~(HNTRIE_PAGE_SIZE-1);
+        if ( byteLength === 0 ) { return; }
         if ( this.wasmMemory !== null ) {
             const pageCountBefore = this.buf.length >>> 16;
             const pageCountAfter = byteLength >>> 16;
@@ -394,7 +396,6 @@ HNTrieContainer.prototype = {
         } else {
             this.buf32.set(selfie);
         }
-        this.needle = '';
     },
 
     //--------------------------------------------------------------------------

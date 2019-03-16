@@ -500,6 +500,7 @@ const fromSelfie = function(selfie, decoder) {
         }
         const bufferStr = selfie.slice(pos + 1);
         byteLength = decoder.decodeSize(bufferStr);
+        if ( byteLength === 0 ) { return false; }
         allocateBuffers(byteLength);
         decoder.decode(bufferStr, pslBuffer8.buffer);
     } else if (

@@ -935,17 +935,17 @@
 // https://github.com/AdguardTeam/AdguardBrowserExtension/issues/917
 
 µBlock.processDirectives = function(content) {
-    var reIf = /^!#(if|endif)\b([^\n]*)/gm,
-        parts = [],
-        beg = 0, depth = 0, discard = false;
+    const reIf = /^!#(if|endif)\b([^\n]*)/gm;
+    const parts = [];
+    let  beg = 0, depth = 0, discard = false;
     while ( beg < content.length ) {
-        var match = reIf.exec(content);
+        const match = reIf.exec(content);
         if ( match === null ) { break; }
         if ( match[1] === 'if' ) {
-            var expr = match[2].trim();
-            var target = expr.startsWith('!');
+            let expr = match[2].trim();
+            const target = expr.startsWith('!');
             if ( target ) { expr = expr.slice(1); }
-            var token = this.processDirectives.tokens.get(expr);
+            const token = this.processDirectives.tokens.get(expr);
             if (
                 depth === 0 &&
                 discard === false &&
@@ -1034,8 +1034,11 @@
         'compiled/' + this.pslAssetKey
     ).then(details =>
         publicSuffixList.fromSelfie(details.content, µBlock.base128)
-    ).then(valid => {
-        if ( valid === true ) { return; }
+    ).catch(reason => {
+        console.info(reason);
+        return false;
+    }).then(success => {
+        if ( success ) { return; }
         return this.assets.get(this.pslAssetKey, details => {
             if ( details.content !== '' ) {
                 this.compilePublicSuffixList(details.content);
