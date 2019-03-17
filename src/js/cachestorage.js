@@ -226,19 +226,30 @@
                     table.createIndex('value', 'value', { unique: false });
                 };
                 req.onsuccess = function(ev) {
+                    if ( resolve === undefined ) { return; }
                     req = undefined;
                     db = ev.target.result;
                     db.onerror = db.onabort = genericErrorHandler;
                     dbPromise = undefined;
                     resolve(db);
+                    resolve = undefined;
                 };
                 req.onerror = req.onblocked = function() {
+                    if ( resolve === undefined ) { return; }
                     req = undefined;
                     console.log(this.error);
                     db = null;
                     dbPromise = undefined;
                     resolve(null);
+                    resolve = undefined;
                 };
+                setTimeout(( ) => {
+                    if ( resolve === undefined ) { return; }
+                    db = null;
+                    dbPromise = undefined;
+                    resolve(null);
+                    resolve = undefined;
+                }, 5000);
             });
             return dbPromise;
         };
@@ -246,8 +257,8 @@
         const getFromDb = function(keys, keyvalStore, callback) {
             if ( typeof callback !== 'function' ) { return; }
             if ( keys.length === 0 ) { return callback(keyvalStore); }
-            let promises = [];
-            let gotOne = function() {
+            const promises = [];
+            const gotOne = function() {
                 if ( typeof this.result !== 'object' ) { return; }
                 keyvalStore[this.result.key] = this.result.value;
                 if ( this.result.value instanceof Blob === false ) { return; }
@@ -262,7 +273,7 @@
             };
             getDb().then(db => {
                 if ( !db ) { return callback(); }
-                const transaction = db.transaction(STORAGE_NAME);
+                const transaction = db.transaction(STORAGE_NAME, 'readonly');
                 transaction.oncomplete =
                 transaction.onerror =
                 transaction.onabort = ( ) => {
@@ -272,11 +283,13 @@
                 };
                 const table = transaction.objectStore(STORAGE_NAME);
                 for ( const key of keys ) {
-                    let req = table.get(key);
+                    const req = table.get(key);
                     req.onsuccess = gotOne;
                     req.onerror = noopfn;
-                    req = undefined;
                 }
+            }).catch(reason => {
+                console.info(`cacheStorage.getFromDb() failed: ${reason}`);
+                callback();
             });
         };
 
