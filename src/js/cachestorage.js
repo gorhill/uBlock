@@ -144,14 +144,6 @@
         let dbPromise;
         let dbTimer;
 
-        const genericErrorHandler = function(ev) {
-            const error = ev.target && ev.target.error;
-            if ( error && error.name === 'QuotaExceededError' ) {
-                api.error = error.name;
-            }
-            console.error('[%s]', STORAGE_NAME, error && error.name);
-        };
-
         const noopfn = function () {
         };
 
@@ -216,20 +208,22 @@
                     return resolve(null);
                 }
                 req.onupgradeneeded = function(ev) {
-                    req = undefined;
-                    const db = ev.target.result;
-                    db.onerror = db.onabort = genericErrorHandler;
-                    const table = db.createObjectStore(
-                        STORAGE_NAME,
-                        { keyPath: 'key' }
-                    );
-                    table.createIndex('value', 'value', { unique: false });
+                    if ( ev.oldVersion === 1 ) { return; }
+                    try {
+                        const db = ev.target.result;
+                        const table = db.createObjectStore(
+                            STORAGE_NAME,
+                            { keyPath: 'key' }
+                        );
+                        table.createIndex('value', 'value', { unique: false });
+                    } catch(ex) {
+                        req.onerror();
+                    }
                 };
                 req.onsuccess = function(ev) {
                     if ( resolve === undefined ) { return; }
                     req = undefined;
                     db = ev.target.result;
-                    db.onerror = db.onabort = genericErrorHandler;
                     dbPromise = undefined;
                     resolve(db);
                     resolve = undefined;
@@ -296,7 +290,7 @@
         const visitAllFromDb = function(visitFn) {
             getDb().then(db => {
                 if ( !db ) { return visitFn(); }
-                const transaction = db.transaction(STORAGE_NAME);
+                const transaction = db.transaction(STORAGE_NAME, 'readonly');
                 transaction.oncomplete =
                 transaction.onerror =
                 transaction.onabort = ( ) => visitFn();
@@ -333,6 +327,9 @@
                         keyvalStore[result.key] = result.value;
                     })
                 );
+            }).catch(reason => {
+                console.info(`cacheStorage.getAllFromDb() failed: ${reason}`);
+                callback();
             });
         };
 
