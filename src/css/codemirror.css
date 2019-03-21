@@ -18,6 +18,7 @@
     }
 
 .cm-s-default .cm-comment { color: #777; }
+.cm-directive { color: #333; font-weight: bold; }
 .cm-staticext { color: #008; }
 .cm-staticnetBlock { color: #800; }
 .cm-staticnetAllow { color: #004f00; }

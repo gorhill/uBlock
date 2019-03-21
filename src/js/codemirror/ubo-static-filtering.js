@@ -24,28 +24,29 @@
 'use strict';
 
 CodeMirror.defineMode("ubo-static-filtering", function() {
-    var reComment1 = /^\s*!/;
-    var reComment2 = /^\s*#/;
-    var reExt = /^(\s*[^#]*)(#@?(?:\$\??|\?)?#)(.+)$/;
-    var reNet = /^(.*?)(?:(\$)([^$]+)?)?$/;
-    var reNetAllow = /^\s*@@/;
-    var lineStyle = null;
-    var lineMatches = null;
+    const reDirective = /^\s*!#(?:if|endif)\b/;
+    const reComment1 = /^\s*!/;
+    const reComment2 = /^\s*#/;
+    const reExt = /^(\s*[^#]*)(#@?(?:\$\??|\?)?#)(.+)$/;
+    const reNet = /^(.*?)(?:(\$)([^$]+)?)?$/;
+    const reNetAllow = /^\s*@@/;
+    let lineStyle = null;
+    let lineMatches = null;
 
-    var lineStyles = new Map([
+    const lineStyles = new Map([
         [ 'staticext',      [ '', 'staticOpt', '' ] ],
         [ 'staticnetAllow', [ '', 'staticOpt', '' ] ],
         [ 'staticnetBlock', [ '', 'staticOpt', '' ] ],
     ]);
 
-    var styleFromStream = function(stream) {
-        for ( var i = 1, l = 0; i < lineMatches.length; i++ ) {
+    const styleFromStream = function(stream) {
+        for ( let i = 1, l = 0; i < lineMatches.length; i++ ) {
             if ( typeof lineMatches[i] !== 'string' ) { continue; }
             l += lineMatches[i].length;
             if ( stream.pos < l ) {
                 stream.pos = l;
-                var style = lineStyle;
-                var xstyle = lineStyles.get(style)[i-1];
+                let style = lineStyle;
+                const xstyle = lineStyles.get(style)[i-1];
                 if ( xstyle !== '' ) { style += ' ' + xstyle; }
                 return style;
             }
@@ -61,6 +62,10 @@ CodeMirror.defineMode("ubo-static-filtering", function() {
                 lineMatches = null;
             } else if ( lineStyle !== null ) {
                 return styleFromStream(stream);
+            }
+            if ( reDirective.test(stream.string) ) {
+                stream.skipToEnd();
+                return 'directive';
             }
             if ( reComment1.test(stream.string) ) {
                 stream.skipToEnd();
