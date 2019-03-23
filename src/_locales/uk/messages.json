@@ -32,7 +32,7 @@
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "Гарячі клавіші",
+    "message": "Комбінації клавіш",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -60,7 +60,7 @@
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Натисніть для увімкнення uBlock₀ для поточного сайту.",
+    "message": "Натисніть, щоб увімкнути uBlock₀ для цього сайту.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -88,7 +88,7 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Перейти до режиму пульта ДУ",
+    "message": "Перейти в режим блокування елементів",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
@@ -184,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "сторонні css\/зображення",
+    "message": "Сторонні CSS\/зображення",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -356,7 +356,7 @@
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
-    "message": "Ігнорувати загальні косметичні фільтри.",
+    "message": "Ігнорувати загальні косметичні фільтри",
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
@@ -416,7 +416,7 @@
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "Останнє оновлення: {{ago}}",
+    "message": "Останнє оновлення: {{ago}}\nКлацніть для примусового оновлення.",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
@@ -424,7 +424,7 @@
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
-    "message": "Через помилку мережі не вдалося оновити дані.",
+    "message": "Оновлення не вдалося, у зв'язку з помилкою мережі.",
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
@@ -644,7 +644,7 @@
     "description": "Label to identify the URL of an entry"
   },
   "loggerURLFilteringHeader": {
-    "message": "Динамічна фільтрація посилань",
+    "message": "URL правило",
     "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
@@ -656,7 +656,7 @@
     "description": "Label for the type selector"
   },
   "loggerStaticFilteringHeader": {
-    "message": "Статична фільтрація",
+    "message": "Статичний фільтр",
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
@@ -816,7 +816,7 @@
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
-    "message": "Не вдалося підключитися до {{url}}",
+    "message": "Помилка мережі: {{msg}}",
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
@@ -916,7 +916,7 @@
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
-    "message": "Зверніть увагу! Зміна додаткових налаштувань на ваш ризик.",
+    "message": "Увага! Змінюйте ці розширені налаштування на власний ризик.",
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {
