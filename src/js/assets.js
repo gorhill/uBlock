@@ -537,17 +537,7 @@ const assetCacheWrite = function(assetKey, details, callback) {
         if ( details instanceof Object && typeof details.url === 'string' ) {
             entry.remoteURL = details.url;
         }
-        µBlock.cacheStorage.set(
-            { [internalKey]: content }
-        ).then(details => {
-            if (
-                details instanceof Object &&
-                typeof details.bytesInUse === 'number'
-            ) {
-                entry.byteLength = details.bytesInUse;
-            }
-            saveAssetCacheRegistry(true);
-        });
+        µBlock.cacheStorage.set({ assetCacheRegistry, [internalKey]: content });
         const result = { assetKey, content };
         if ( typeof callback === 'function' ) {
             callback(result);
@@ -888,19 +878,6 @@ api.metadata = function(callback) {
     getAssetCacheRegistry().then(( ) => {
         cacheRegistryReady = true;
         if ( assetRegistryReady ) { onReady(); }
-    });
-};
-
-/******************************************************************************/
-
-api.getBytesInUse = function() {
-    return getAssetCacheRegistry().then(cacheDict => {
-        let bytesUsed = 0;
-        for ( const assetKey in cacheDict ) {
-            if ( cacheDict.hasOwnProperty(assetKey) === false ) { continue; }
-            bytesUsed += cacheDict[assetKey].byteLength || 0;
-        }
-        return bytesUsed;
     });
 };
 

@@ -215,7 +215,6 @@
                             STORAGE_NAME,
                             { keyPath: 'key' }
                         );
-                        table.createIndex('value', 'value', { unique: false });
                     } catch(ex) {
                         req.onerror();
                     }
@@ -349,22 +348,13 @@
             const entries = [];
             const dontCompress =
                 µBlock.hiddenSettings.cacheStorageCompression !== true;
-            let bytesInUse = 0;
             const handleEncodingResult = result => {
-                if ( typeof result.data === 'string' ) {
-                    bytesInUse += result.data.length;
-                } else if ( result.data instanceof Blob ) {
-                    bytesInUse += result.data.size;
-                }
                 entries.push({ key: result.key, value: result.data });
             };
             for ( const key of keys ) {
                 const data = keyvalStore[key];
                 const isString = typeof data === 'string';
                 if ( isString === false || dontCompress ) {
-                    if ( isString ) {
-                        bytesInUse += data.length;
-                    }
                     entries.push({ key, value: data });
                     continue;
                 }
@@ -379,7 +369,7 @@
                     if ( callback === undefined ) { return; }
                     let cb = callback;
                     callback = undefined;
-                    cb({ bytesInUse });
+                    cb();
                 };
                 try {
                     const transaction = db.transaction(

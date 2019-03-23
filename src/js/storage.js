@@ -50,10 +50,13 @@
         countdown += 1;
         vAPI.storage.getBytesInUse(null, process);
     }
-    if ( this.cacheStorage.name !== 'browser.storage.local' ) {
+    if (
+        navigator.storage instanceof Object &&
+        navigator.storage.estimate instanceof Function
+    ) {
         countdown += 1;
-        this.assets.getBytesInUse().then(count => {
-            process(count);
+        navigator.storage.estimate().then(estimate => {
+            process(estimate.usage);
         });
     }
     if ( countdown === 0 ) {
