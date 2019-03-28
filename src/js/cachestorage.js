@@ -211,10 +211,7 @@
                     if ( ev.oldVersion === 1 ) { return; }
                     try {
                         const db = ev.target.result;
-                        const table = db.createObjectStore(
-                            STORAGE_NAME,
-                            { keyPath: 'key' }
-                        );
+                        db.createObjectStore(STORAGE_NAME, { keyPath: 'key' });
                     } catch(ex) {
                         req.onerror();
                     }
@@ -422,15 +419,18 @@
             if ( typeof callback !== 'function' ) {
                 callback = noopfn;
             }
-            disconnect();
-            try {
-                const req = indexedDB.deleteDatabase(STORAGE_NAME);
-                req.onsuccess = req.onerror = ( ) => {
+            getDb().then(db => {
+                let transaction = db.transaction(STORAGE_NAME, 'readwrite');
+                transaction.oncomplete =
+                transaction.onerror =
+                transaction.onabort = ( ) => {
                     callback();
                 };
-            } catch(ex) {
+                transaction.objectStore(STORAGE_NAME).clear();
+            }).catch(reason => {
+                console.info(`cacheStorage.clearDb() failed: ${reason}`);
                 callback();
-            }
+            });
         };
 
         return getDb().then(db => {

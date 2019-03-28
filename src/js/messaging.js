@@ -799,17 +799,21 @@ var backupUserData = function(callback) {
     µb.assets.get(µb.userFiltersPath, onUserFiltersReady);
 };
 
-var restoreUserData = function(request) {
-    var userData = request.userData;
+const restoreUserData = function(request) {
+    const userData = request.userData;
 
-    var restart = function() {
+    const restart = function() {
         vAPI.app.restart();
     };
 
-    var onAllRemoved = function() {
+    let countdown = 2;
+
+    const onAllRemoved = function() {
+        countdown -= 1;
+        if ( countdown !== 0 ) { return; }
         µBlock.saveLocalSettings();
         vAPI.storage.set(userData.userSettings);
-        var hiddenSettings = userData.hiddenSettings;
+        let hiddenSettings = userData.hiddenSettings;
         if ( hiddenSettings instanceof Object === false ) {
             hiddenSettings = µBlock.hiddenSettingsFromString(
                 userData.hiddenSettingsString || ''
@@ -840,7 +844,7 @@ var restoreUserData = function(request) {
 
     // If we are going to restore all, might as well wipe out clean local
     // storage
-    µb.cacheStorage.clear();
+    µb.cacheStorage.clear().then(( ) => { onAllRemoved(); });
     vAPI.storage.clear(onAllRemoved);
     vAPI.localStorage.removeItem('immediateHiddenSettings');
 };
@@ -856,9 +860,9 @@ const resetUserData = function() {
             vAPI.app.restart();
         }
     };
-    µb.cacheStorage.clear().then(( ) => countdown()); // 1
-    vAPI.storage.clear(countdown);             // 2
-    µb.saveLocalSettings(countdown);           // 3
+    µb.cacheStorage.clear().then(( ) => countdown());   // 1
+    vAPI.storage.clear(countdown);                      // 2
+    µb.saveLocalSettings(countdown);                    // 3
     vAPI.localStorage.removeItem('immediateHiddenSettings');
 };
 
