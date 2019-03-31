@@ -533,7 +533,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "NOR, DNK, ISL: Dandelion Sprouts nordiske filtre",
-		"lang": "nb no da is",
+		"lang": "nb nn no da is",
 		"contentURL": [
 			"https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianList.txt",
 			"https://repo.or.cz/FilterMirrorRepo.git/blob_plain/refs/heads/master:/NorwegianList.txt"
