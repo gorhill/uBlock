@@ -44,19 +44,20 @@ let resizeFrame = function() {
 let loadDashboardPanel = function(notifications) {
     let pane = window.location.hash.slice(1);
     if ( pane === '' ) {
-        pane = vAPI.localStorage.getItem('dashboardLastVisitedPane');
-        if ( pane === null ) {
-             pane = 'settings.html';
-        }
+        pane = vAPI.localStorage.getItem('dashboardLastVisitedPane') || 'options.html';
+
     } else {
         vAPI.localStorage.setItem('dashboardLastVisitedPane', pane);
     }
+
     let tabButton = uDom('[href="#' + pane + '"]');
-    notifications && renderNotifications(notifications, "dashboard");
-    if ( !tabButton || tabButton.hasClass('selected') ) { return; }
+    if ( !tabButton ) { return; }
+
     uDom('.tabButton.selected').toggleClass('selected', false);
     uDom('iframe').attr('src', pane);
     tabButton.toggleClass('selected', true);
+
+    notifications && renderNotifications(notifications, "dashboard");
     resizeFrame();
 };
 
