@@ -143,11 +143,20 @@ var AdBlockerEnabled = new Notification({
   link: 'https://github.com/dhowe/AdNauseam/wiki/FAQ#can-i-combine-adnauseam-with-another-blocker',
   firstrun: true
 });
+
+var FirefoxSetting = new Notification({
+  name: 'FirefoxSetting',
+  text: 'adnNotificationBrowserSetting',
+  button: undefined,
+  link: 'https://github.com/dhowe/AdNauseam/wiki/FAQ#why-adnauseam-does-not-work-with-certain-browser-settings',
+  firstrun: true
+});
+
 AdBlockerEnabled.func = isFirefox() ? undefined : openExtPage.bind(AdBlockerEnabled);
 
 /***************************************************************************/
 
-var Notifications = [AdBlockerEnabled, HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList, AdNauseamTxt, DNTAllowed, DNTHideNotClick, DNTClickNotHide, DNTNotify];
+var Notifications = [AdBlockerEnabled, HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList, AdNauseamTxt, DNTAllowed, DNTHideNotClick, DNTClickNotHide, DNTNotify, FirefoxSetting];
 
 function Notification(m) {
 
@@ -342,7 +351,7 @@ function reactivateList() {
     list: this.listName
   }, function(){
     vAPI.messaging.send('adnauseam', { what: 'verifyLists' });
-    messaging.send('dashboard', { what: 'reloadAllFilters' });
+    vAPI.messaging.send('dashboard', { what: 'reloadAllFilters' });
     reloadPane();
   });
 }
@@ -596,11 +605,11 @@ var targetDomain = function (ad) {
 /*** functions used to export/import/clear ads in vault.js and options.js ***/
 
 var exportToFile = function (action) {
-  
+
   var outputData = function (jsonData, fileType) {
     var filename = getExportFileName(),
        url = URL.createObjectURL(new Blob([ jsonData ], { type: "text/plain" }));
-    
+
     if (fileType === undefined) fileType = "Ads";
     filename = "AdNauseam_" + fileType + filename.substr(9,filename.length);
 
@@ -666,7 +675,7 @@ var handleImportFilePicker = function() {
                   adsOnLoadHandler(userData);
                   return;
             }
-           
+
         }
         catch (e) {
             userData = undefined;
@@ -705,7 +714,7 @@ var adsOnLoadHandler = function(adData, file) {
 }
 
 function handleImportAds(evt) {
- 
+
   var files = evt.target.files;
 
   var reader = new FileReader();
@@ -721,7 +730,7 @@ function handleImportAds(evt) {
           window.alert(vAPI.i18n('adnImportAlertFormat'));
           return;
        }
-        
+
      } catch (e) {
        postImportAlert({
          count: -1,
