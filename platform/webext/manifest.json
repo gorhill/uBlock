@@ -79,7 +79,8 @@
         "webRequestBlocking",
         "<all_urls>",
         "management",
-        "downloads"
+        "downloads",
+        "privacy"
     ],
     "short_name": "AdNauseam",
   "web_accessible_resources": [
