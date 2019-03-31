@@ -1159,6 +1159,7 @@ var µb = µBlock,
 /******************************************************************************/
 
 var getLoggerData = function(details, activeTabId, callback) {
+    let tabIds = new Map();
     let response = {
         colorBlind: µb.userSettings.colorBlindFriendly,
         entries: µb.logger.readAll(details.ownerId),
@@ -1169,7 +1170,6 @@ var getLoggerData = function(details, activeTabId, callback) {
         tabIdsToken: µb.pageStoresToken
     };
     if ( µb.pageStoresToken !== details.tabIdsToken ) {
-        let tabIds = new Map();
         for ( let entry of µb.pageStores ) {
             let pageStore = entry[1];
             if ( pageStore.rawURL.startsWith(extensionOriginURL) ) { continue; }
