@@ -331,6 +331,7 @@ const setHostnameArg = function(hostname) {
     const buf = pslBuffer8;
     if ( hostname === hostnameArg ) { return buf[LABEL_INDICES_SLOT]; }
     if ( hostname === null || hostname.length === 0 ) {
+        hostnameArg = '';
         return (buf[LABEL_INDICES_SLOT] = 0);
     }
     hostname = hostname.toLowerCase();
