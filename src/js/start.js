@@ -296,6 +296,13 @@ const onSystemSettingsReady = function(fetched) {
 const onFirstFetchReady = function(fetched) {
     log.info(`First fetch ready ${Date.now()-vAPI.T0} ms after launch`);
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/507
+    //   Firefox-specific: somehow `fetched` is undefined under certain
+    //   circumstances even though we asked to load with default values.
+    if ( fetched instanceof Object === false ) {
+        fetched = createDefaultProps();
+    }
+
     // https://github.com/gorhill/uBlock/issues/747
     µb.firstInstall = fetched.version === '0.0.0.0';
 
@@ -331,11 +338,7 @@ const fromFetch = function(to, fetched) {
     }
 };
 
-/******************************************************************************/
-
-const onSelectedFilterListsReady = function() {
-    log.info(`List selection ready ${Date.now()-vAPI.T0} ms after launch`);
-
+const createDefaultProps = function() {
     const fetchableProps = {
         'commandShortcuts': [],
         'compiledMagic': 0,
@@ -361,12 +364,10 @@ const onSelectedFilterListsReady = function() {
         'selfieMagic': 0,
         'version': '0.0.0.0'
     };
-
     toFetch(µb.localSettings, fetchableProps);
     toFetch(µb.userSettings, fetchableProps);
     toFetch(µb.restoreBackupSettings, fetchableProps);
-
-    vAPI.storage.get(fetchableProps, onFirstFetchReady);
+    return fetchableProps;
 };
 
 /******************************************************************************/
@@ -395,9 +396,10 @@ const onAdminSettingsRestored = function() {
             onHiddenSettingsReady()
         ),
         µb.loadSelectedFilterLists(),
-    ]).then(( ) =>
-        onSelectedFilterListsReady()
-    );
+    ]).then(( ) => {
+        log.info(`List selection ready ${Date.now()-vAPI.T0} ms after launch`);
+        vAPI.storage.get(createDefaultProps(), onFirstFetchReady);
+    });
 };
 
 /******************************************************************************/
