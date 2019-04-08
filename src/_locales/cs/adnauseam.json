@@ -31,6 +31,10 @@
     "message": "Blokování malware (škodlivých programů)",
     "description": "English: Firstrun.html -> Block Malware"
   },
+  "adnAboutResetDataConfirm": {
+    "message": "Odstraní všechna vaše nastavení, budou odstraněny reklamy v trezoru a AdNauseam bude restartován.\n\nAdNauseam reset do továrního nastavení?",
+    "description": "Message asking user to confirm reset"
+  },
   "adnFirstRunHideAllAdsDescription": {
     "message": "Skrýt reklamy ve vámi vybraných <span class='link' id='To3pfilter'> seznamech filtrů<\/span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
@@ -78,6 +82,10 @@
   "adnNotificationDisableUBlock": {
     "message": "uBlock a AdNauseam mohou být v rozporu!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationBrowserSetting": {
+    "message": "\"Blokování obsahu\" nastavení v prohlížeči může kolidovat s AdNauseam!",
+    "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
   "adnNotificationDNTAllowed": {
     "message": "Tato stránka respektuje <b>Do Not Track<\/b>, reklamy jsou povoleny.",

@@ -28,8 +28,12 @@
     "description": "English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware": {
-    "message": "Block Malware",
+    "message": "صد البرامج الضارة",
     "description": "English: Firstrun.html -> Block Malware"
+  },
+  "adnAboutResetDataConfirm": {
+    "message": "All your settings will be removed, ads in your vault will be deleted, and AdNauseam will restart.\n\nReset AdNauseam to factory settings?",
+    "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
     "message": "إخفاء الإعلانات في <span> قوائم التصفية<\/span> المحددة",
@@ -40,7 +44,7 @@
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Block trackers and other malware (<span>customize<\/span>)",
+    "message": "صد برامج التجسس والبرامج الضاره (<span>ضبط<\/span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -78,6 +82,10 @@
   "adnNotificationDisableUBlock": {
     "message": "احتمال تعارض بين يوبلوك و ادنوسيام!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationBrowserSetting": {
+    "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
+    "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
   "adnNotificationDNTAllowed": {
     "message": "هذه الصفحة تحترم<b>لا تتبع<\/b>، الإعلانات مسموحة.",

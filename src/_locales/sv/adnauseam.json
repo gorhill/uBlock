@@ -31,6 +31,10 @@
     "message": "Blockera skadlig kod",
     "description": "English: Firstrun.html -> Block Malware"
   },
+  "adnAboutResetDataConfirm": {
+    "message": "Alla dina inställningar kommer att tas bort, annonser i ditt valv kommer att tas bort, och AdNauseam startas om. \n\nÅterställ AdNauseam till fabriksinställningar?",
+    "description": "Message asking user to confirm reset"
+  },
   "adnFirstRunHideAllAdsDescription": {
     "message": "dölj annonser i dina valda <span class='link' id='To3pfilter'>filterlistor<\/span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
@@ -78,6 +82,10 @@
   "adnNotificationDisableUBlock": {
     "message": "En konflikt kan komma att inträffa mellan uBlock och AdNauseam!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationBrowserSetting": {
+    "message": "Inställningarna \"innehållsblockering\" i din webbläsare kan störa AdNauseam!",
+    "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
   "adnNotificationDNTAllowed": {
     "message": "Sidan respekterar <b>Spåra inte<\/b>, annonser är tillåtna.",

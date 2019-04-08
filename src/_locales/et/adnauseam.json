@@ -28,8 +28,12 @@
     "description": "English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware": {
-    "message": "Block Malware",
+    "message": "Blokeeri pahavara",
     "description": "English: Firstrun.html -> Block Malware"
+  },
+  "adnAboutResetDataConfirm": {
+    "message": "All your settings will be removed, ads in your vault will be deleted, and AdNauseam will restart.\n\nReset AdNauseam to factory settings?",
+    "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
     "message": "Peida valitud reklaamid <span>filtreeri nimekirju<\/span>",
@@ -40,7 +44,7 @@
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Block trackers and other malware (<span>customize<\/span>)",
+    "message": "Blokeeri jälitajad ja muu pahavara (<span>kohanda<\/span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -60,7 +64,7 @@
     "description": "English: Notifications -> Activate Ad clicking"
   },
   "adnNotificationActivateBlocking": {
-    "message": "Activate malware blocking",
+    "message": "Aktiveeri pahavara blokeerimine",
     "description": "English: Notifications -> Activate malware blocking"
   },
   "adnNotificationActivateEasyList": {
@@ -78,6 +82,10 @@
   "adnNotificationDisableUBlock": {
     "message": "uBlock ja AdNauseam võivad minna vastuollu!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationBrowserSetting": {
+    "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
+    "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
   "adnNotificationDNTAllowed": {
     "message": "See leht austab <b>Ära jälgi<\/b>, reklaamid lubatud.",
@@ -108,7 +116,7 @@
     "description": "English: Not Yet Visited"
   },
   "adnAllowedByDNT": {
-    "message": "Allowed via Do Not Track policy",
+    "message": "Lubatud jälgimise keelamise poliitika poolt",
     "description": "English: Not Yet Visited"
   },
   "adnFirstRunSwitchMeOn": {
@@ -152,7 +160,7 @@
     "description": "English: AdNauseam file export"
   },
   "adnImportAlertFormat": {
-    "message": "The file doesn't contain any Ads, please choose another file.",
+    "message": "See fail ei sisalda ühtki reklaami, palun vali mõni muu fail.",
     "description": "appears in ADN vault, after import"
   },
   "adnImportAlert": {
@@ -164,31 +172,31 @@
     "description": "appears in ADN settings"
   },
   "adnAdClickingStatusPending": {
-    "message": "Pending",
+    "message": "Ootel",
     "description": "Menu & AdVault: Pending"
   },
   "adnAdClickingStatusVisited": {
-    "message": "Visited",
+    "message": "Külastatud",
     "description": "Menu & AdVault: Visited"
   },
   "adnAdClickingStatusFailed": {
-    "message": "Failed",
+    "message": "Ebaõnnestus",
     "description": "Menu & AdVault: Failed"
   },
   "adnAdClickingStatusSkippedDNT": {
-    "message": "SKIPPED: DNT Allowed",
+    "message": "VAHELE JÄETUD: jälgimise keelamine lubatud",
     "description": "Menu & AdVault: SKIPPED: DNT Allowed"
   },
   "adnAdClickingStatusSkippedUser": {
-    "message": "SKIPPED: Clicked by user",
+    "message": "VAHELE JÄETUD: kasutaja klikkis",
     "description": "Menu & AdVault: SKIPPED: Clicked by User"
   },
   "adnAdClickingStatusSkippedFrequency": {
-    "message": "SKIPPED: Click Frequency",
+    "message": "VAHELE JÄETUD: klikkimissagedus",
     "description": "Menu & AdVault: SKIPPED: Click Frequency"
   },
   "adnAdClickingStatusSkippedDisabled": {
-    "message": "SKIPPED: Clicking Disabled",
+    "message": "VAHELE JÄETUD: klikkimine keelatud",
     "description": "Menu & AdVault: SKIPPED: Clicking disabled"
   },
   "adnMenuViewLog": {
@@ -200,7 +208,7 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuOfThe": {
-    "message": "of the",
+    "message": ", kokku",
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsDetected": {
@@ -220,19 +228,19 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuExportOptions": {
-    "message": "Export Options",
+    "message": "Ekspordi valikud",
     "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuExportAdsOnly": {
-    "message": "Ads Only",
+    "message": "Ainult reklaamid",
     "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuExportSettingsOnly": {
-    "message": "Settings Only",
+    "message": "Ainult seaded",
     "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuExportSettingsAndAds": {
-    "message": "Settings and Ads",
+    "message": "Seaded ja reklaamid",
     "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuImportAds": {
@@ -316,7 +324,7 @@
     "description": "English: Click Ads identified by your chosen filter lists"
   },
   "blockingMalwarePrompt": {
-    "message": "Block trackers and other malware",
+    "message": "Blokeeri jälitajad ja muu pahavara",
     "description": "English: lock trackers and other malware"
   },
   "parseTextAdsPrompt": {
@@ -344,7 +352,7 @@
     "description": "English: Don't send cookies on visits"
   },
   "noOutgoingUserAgentPrompt": {
-    "message": "Hide user-agent header on visits",
+    "message": "Peida külastustel kasutajaagendi päis",
     "description": "English: Hide user-agent header on visits"
   },
   "noOutgoingRefererPrompt": {
@@ -408,7 +416,7 @@
     "description": "appears as tab name in dashboard"
   },
   "eventLoggingPrompt": {
-    "message": "Activate debugging mode",
+    "message": "Aktiveeri silumisrežiim",
     "description": "prompt for toggle"
   }
 }

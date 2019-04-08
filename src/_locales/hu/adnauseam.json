@@ -31,6 +31,10 @@
     "message": "Block Malware",
     "description": "English: Firstrun.html -> Block Malware"
   },
+  "adnAboutResetDataConfirm": {
+    "message": "All your settings will be removed, ads in your vault will be deleted, and AdNauseam will restart.\n\nReset AdNauseam to factory settings?",
+    "description": "Message asking user to confirm reset"
+  },
   "adnFirstRunHideAllAdsDescription": {
     "message": "Hide Ads in your selected <span>filter lists<\/span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
@@ -78,6 +82,10 @@
   "adnNotificationDisableUBlock": {
     "message": "uBlock és AdNauseam összeütközhet egymással!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationBrowserSetting": {
+    "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
+    "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
   "adnNotificationDNTAllowed": {
     "message": "Ez az oldal tiszteletben tartja, <b>Nem Követi<\/b>, hirdetések engedélyezettek.",
@@ -200,11 +208,11 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuOfThe": {
-    "message": "of the",
+    "message": "ennyiből:",
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsDetected": {
-    "message": "Ads detected",
+    "message": "Hirdetés észlelve",
     "description": "appears in ADN popup menu"
   },
   "adnMenuViewVault": {
@@ -212,7 +220,7 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuResume": {
-    "message": "Resume",
+    "message": "Folytatás",
     "description": "appears in ADN popup menu"
   },
   "adnMenuSettings": {
@@ -224,7 +232,7 @@
     "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuExportAdsOnly": {
-    "message": "Ads Only",
+    "message": "Csak hirdetések",
     "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuExportSettingsOnly": {
@@ -256,7 +264,7 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuClearAdsNow": {
-    "message": "Clear Ads",
+    "message": "Hirdetések törlése",
     "description": "appears in ADN popup menu"
   },
   "adnLogNoLog": {
@@ -268,7 +276,7 @@
     "description": "appears in ADN log page"
   },
   "adnVaultSince": {
-    "message": "Since",
+    "message": "Mióta:",
     "description": "appears on vault page"
   },
   "adnVaultDefaultDate": {
@@ -276,27 +284,27 @@
     "description": "appears on vault page"
   },
   "adnVaultExport": {
-    "message": "Export",
+    "message": "Exportálás",
     "description": "appears on vault page"
   },
   "adnVaultImport": {
-    "message": "Import",
+    "message": "Importálás",
     "description": "appears on vault page"
   },
   "adnVaultClear": {
-    "message": "Clear",
+    "message": "Törlés",
     "description": "appears on vault page"
   },
   "adnVaultFound": {
-    "message": "ads collected",
+    "message": "összegyűjtött hirdetések",
     "description": "appears on vault page"
   },
   "adnVaultShowing": {
-    "message": "showing",
+    "message": "mutatva",
     "description": "appears on vault page"
   },
   "adnVaultDeleteThisAd": {
-    "message": "delete this Ad",
+    "message": "ezen hirdetés törlése",
     "description": "appears on vault page"
   },
   "adnVaultTotalEstimated": {

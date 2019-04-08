@@ -31,6 +31,10 @@
     "message": "ব্লক ম্যালওয়্যার",
     "description": "English: Firstrun.html -> Block Malware"
   },
+  "adnAboutResetDataConfirm": {
+    "message": "All your settings will be removed, ads in your vault will be deleted, and AdNauseam will restart.\n\nReset AdNauseam to factory settings?",
+    "description": "Message asking user to confirm reset"
+  },
   "adnFirstRunHideAllAdsDescription": {
     "message": "আপনার নির্বাচিত<span>ফিল্টার তালিকাগুলিতে বিজ্ঞাপনগুলি লুকান<\/span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
@@ -78,6 +82,10 @@
   "adnNotificationDisableUBlock": {
     "message": "uBlock ও AdNauseam দ্বন্দ্ব সৃষ্টি করতে পারে!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationBrowserSetting": {
+    "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
+    "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
   "adnNotificationDNTAllowed": {
     "message": "এই পৃষ্ঠাটি <b>Do Not Track<\/b> শ্রদ্ধা করে বিজ্ঞাপন দেওয়া হয়।",

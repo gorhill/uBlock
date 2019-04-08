@@ -31,6 +31,10 @@
     "message": "Blokkeer schadelijke software (virussen en andere malware)",
     "description": "English: Firstrun.html -> Block Malware"
   },
+  "adnAboutResetDataConfirm": {
+    "message": "All your settings will be removed, ads in your vault will be deleted, and AdNauseam will restart.\n\nReset AdNauseam to factory settings?",
+    "description": "Message asking user to confirm reset"
+  },
   "adnFirstRunHideAllAdsDescription": {
     "message": "Verberg advertenties in uw geselecteerde <span> filter lijst <\/span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
@@ -78,6 +82,10 @@
   "adnNotificationDisableUBlock": {
     "message": "uBlock en AdNauseam kunnen conflicteren!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationBrowserSetting": {
+    "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
+    "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
   "adnNotificationDNTAllowed": {
     "message": "Deze pagina respecteert <b>Do Not Track<\/b>, advertenties zijn toegestaan.",
@@ -180,7 +188,7 @@
     "description": "Menu & AdVault: SKIPPED: DNT Allowed"
   },
   "adnAdClickingStatusSkippedUser": {
-    "message": "SKIPPED: Clicked by user",
+    "message": "OVERGESLAGEN: Geklikt door gebruiker",
     "description": "Menu & AdVault: SKIPPED: Clicked by User"
   },
   "adnAdClickingStatusSkippedFrequency": {
@@ -188,7 +196,7 @@
     "description": "Menu & AdVault: SKIPPED: Click Frequency"
   },
   "adnAdClickingStatusSkippedDisabled": {
-    "message": "SKIPPED: Clicking Disabled",
+    "message": "Overgeslagen: Klikken uitgezet",
     "description": "Menu & AdVault: SKIPPED: Clicking disabled"
   },
   "adnMenuViewLog": {

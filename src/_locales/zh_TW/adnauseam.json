@@ -31,6 +31,10 @@
     "message": "遮蔽惡意軟體",
     "description": "English: Firstrun.html -> Block Malware"
   },
+  "adnAboutResetDataConfirm": {
+    "message": "您所有的設定與廣告都將被移除，並將重新啟動 uBlock₀。\\n\\n您確定要將 uBlock₀ 回復為原廠設定？",
+    "description": "Message asking user to confirm reset"
+  },
   "adnFirstRunHideAllAdsDescription": {
     "message": "隱藏由你的<span>篩選器列表<\/span>標記的廣告",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
@@ -78,6 +82,10 @@
   "adnNotificationDisableUBlock": {
     "message": "uBlock 同 AdNauseam 可能會衝突！",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationBrowserSetting": {
+    "message": "瀏覽器中的 \"內容封鎖\" 設置可能會干擾 AdNauseam!",
+    "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
   "adnNotificationDNTAllowed": {
     "message": "此頁尊重 <b>不跟蹤<\/b>準則，允許廣告。",

@@ -31,6 +31,10 @@
     "message": "Απέκλεισε τα κακόβουλα λογισμικά",
     "description": "English: Firstrun.html -> Block Malware"
   },
+  "adnAboutResetDataConfirm": {
+    "message": "Θα καταργηθούν όλες οι ρυθμίσεις σας, διαφημίσεις στο θησαυροφυλάκιο σας θα διαγραφούν και θα γίνει επανεκκίνηση της AdNauseam.\n\nAdNauseam επαναφορά στις εργοστασιακές ρυθμίσεις;",
+    "description": "Message asking user to confirm reset"
+  },
   "adnFirstRunHideAllAdsDescription": {
     "message": "Κρύψε τις διαφημίσεις στην επιλεγμένη <span>λίστα<\/span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
@@ -78,6 +82,10 @@
   "adnNotificationDisableUBlock": {
     "message": "Το uBlock και το AdNauseam τρέχουν ταυτόχρονα! Αύτο μπορεί να δημιουργήσει προβλήματα",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationBrowserSetting": {
+    "message": "Οι «Φραγή περιεχομένου» ρυθμίσεις στο πρόγραμμα περιήγησής σας ενδέχεται να επηρεάσουν με AdNauseam!",
+    "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
   "adnNotificationDNTAllowed": {
     "message": "Αυτή η σελίδα σέβεται το <b>Μην Με Παρακολουθήτε<\/b> πρότυπο, Οι διαφημίσεις επιτρέπονται.",

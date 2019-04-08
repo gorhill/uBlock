@@ -31,6 +31,10 @@
     "message": "屏蔽恶意软件",
     "description": "English: Firstrun.html -> Block Malware"
   },
+  "adnAboutResetDataConfirm": {
+    "message": "您的设置與廣告均将被清除，AdNauseam将重新启动。\\n\\n确定将AdNauseam重置到初始状态？",
+    "description": "Message asking user to confirm reset"
+  },
   "adnFirstRunHideAllAdsDescription": {
     "message": "隐藏由你的<span>筛选器列表<\/span>标记的广告",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
@@ -78,6 +82,10 @@
   "adnNotificationDisableUBlock": {
     "message": "uBlock 和 AdNauseam 可能会冲突！",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationBrowserSetting": {
+    "message": "您的浏览器设置“内容拦截”可能会干扰 AdNauseam！",
+    "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
   "adnNotificationDNTAllowed": {
     "message": "此页尊重 <b>Do Not Track<\/b>原则，允许广告。",

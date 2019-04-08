@@ -28,8 +28,12 @@
     "description": "English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware": {
-    "message": "Block Malware",
+    "message": "マルウェアをブロック",
     "description": "English: Firstrun.html -> Block Malware"
+  },
+  "adnAboutResetDataConfirm": {
+    "message": "All your settings will be removed, ads in your vault will be deleted, and AdNauseam will restart.\n\nReset AdNauseam to factory settings?",
+    "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
     "message": "フィルターリスト（<span>filter lists<\/span>）に入ってる広告を隠す",
@@ -78,6 +82,10 @@
   "adnNotificationDisableUBlock": {
     "message": "uBlock and AdNauseam may conflict!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationBrowserSetting": {
+    "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
+    "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
   "adnNotificationDNTAllowed": {
     "message": "This page respects <b>Do Not Track<\/b>, Ads are allowed.",
