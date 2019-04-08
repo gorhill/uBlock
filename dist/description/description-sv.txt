@@ -3,7 +3,7 @@ En effektiv blockerare: lätt på minne och CPU-fotavtryck, som ändå kan ladda
 Illustrerad översikt av dess effektivitet:
 https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Användning: Den stora strömbrytarikonen i poppupprutan är till för att avaktivera/aktivera uBlock₀ på den aktuella webbplatsen permanent. Detta gäller enbart för den aktuella webbplatsen, det är inte en global strömbrytare.
+Användning: Den stora strömbrytarikonen i popup-rutan är till för att inaktivera/aktivera uBlock₀ på den aktuella webbplatsen permanent. Detta gäller enbart för den aktuella webbplatsen, det är inte en global strömbrytare.
 
 ***
 

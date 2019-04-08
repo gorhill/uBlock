@@ -748,7 +748,7 @@
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportFormatTable": {
-    "message": "Táblázat",
+    "message": "Tábla",
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportEncodePlain": {
