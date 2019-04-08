@@ -25,10 +25,9 @@ manifest_out['version'] = version
 # Development build? If so, modify name accordingly.
 match = re.search('^\d+\.\d+\.\d+\.\d+$', version)
 if match:
-    dev_build = ' dev build'
-    manifest_out['name'] += dev_build
-    manifest_out['short_name'] += dev_build
-    manifest_out['browser_action']['default_title'] += dev_build
+    manifest_out['name'] += ' development build'
+    manifest_out['short_name'] += ' dev build'
+    manifest_out['browser_action']['default_title'] += ' dev build'
 
 with open(manifest_out_file, 'w') as f:
     json.dump(manifest_out, f, indent=2, separators=(',', ': '), sort_keys=True)

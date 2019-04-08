@@ -5,7 +5,7 @@
 <title>AdNauseam</title>
 </head>
 <body>
-<script src="js/polyfill.js"></script>
+<script src="lib/lz4/lz4-block-codec-any.js"></script>
 <script src="lib/punycode.js"></script>
 <script src="lib/publicsuffixlist.js"></script>
 <script src="lib/jszip.min.js"></script>
@@ -14,11 +14,12 @@
 <script src="js/vapi-common.js"></script>
 <script src="js/vapi-background.js"></script>
 <script src="js/vapi-webrequest.js"></script><!-- Forks can pick the webext, chromium, or their own implementation -->
-<script src="js/vapi-cachestorage.js"></script><!-- Optional, only for webext for now -->
 <script src="js/background.js"></script>
 <script src="js/hntrie.js"></script>
 <script src="js/utils.js"></script>
 <script src="js/uritools.js"></script>
+<script src="js/lz4.js"></script>
+<script src="js/cachestorage.js"></script>
 <script src="js/assets.js"></script>
 <script src="js/redirect-engine.js"></script>
 <script src="js/dynamic-net-filtering.js"></script>
@@ -39,7 +40,6 @@
 <script src="js/text-encode.js"></script>
 <script src="js/contextmenu.js"></script>
 <script src="js/reverselookup.js"></script>
-<script src="js/rpcreceiver.js"></script>
 <script src="js/adn/shared.js"></script>
 <script src="js/adn/core.js"></script>
 <script src="js/adn/dnt.js"></script>

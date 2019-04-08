@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2018 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -486,13 +486,18 @@ housekeep itself.
 // content has changed.
 
 vAPI.tabs.onNavigation = function(details) {
-    if ( details.frameId !== 0 ) {
-        return;
+    if ( details.frameId === 0 ) {
+        µb.tabContextManager.commit(details.tabId, details.url);
+        let pageStore = µb.bindTabToPageStats(details.tabId, 'tabCommitted');
+        if ( pageStore ) {
+            pageStore.journalAddRootFrame('committed', details.url);
+        }
     }
-    µb.tabContextManager.commit(details.tabId, details.url);
-    var pageStore = µb.bindTabToPageStats(details.tabId, 'tabCommitted');
-    if ( pageStore ) {
-        pageStore.journalAddRootFrame('committed', details.url);
+    if ( µb.canInjectScriptletsNow ) {
+        let pageStore = µb.pageStoreFromTabId(details.tabId);
+        if ( pageStore !== null && pageStore.getNetFilteringSwitch() ) {
+            µb.scriptletFilteringEngine.injectNow(details);
+        }
     }
 };
 
@@ -503,12 +508,8 @@ vAPI.tabs.onNavigation = function(details) {
 // the extension icon won't be properly refreshed.
 
 vAPI.tabs.onUpdated = function(tabId, changeInfo, tab) {
-    if ( !tab.url || tab.url === '' ) {
-        return;
-    }
-    if ( !changeInfo.url ) {
-        return;
-    }
+    if ( !tab.url || tab.url === '' ) { return; }
+    if ( !changeInfo.url ) { return; }
     µb.tabContextManager.commit(tabId, changeInfo.url);
     µb.bindTabToPageStats(tabId, 'tabUpdated');
 };
@@ -609,10 +610,10 @@ vAPI.tabs.onPopupUpdated = (function() {
             //   popunders.
             if (
                 popupType === 'popup' &&
-                µb.hnSwitches.evaluateZ('no-popups', openerHostname)
+                µb.sessionSwitches.evaluateZ('no-popups', openerHostname)
             ) {
                 logData = {
-                    raw: 'no-popups: ' + µb.hnSwitches.z + ' true',
+                    raw: 'no-popups: ' + µb.sessionSwitches.z + ' true',
                     result: 1,
                     source: 'switch'
                 };
@@ -815,7 +816,7 @@ vAPI.tabs.onPopupUpdated = (function() {
 
         // Blocked
         if ( µb.userSettings.showIconBadge ) {
-            µb.updateBadgeAsync(openerTabId);
+            µb.updateToolbarIcon(openerTabId, 0x02);
         }
 
         // It is a popup, block and remove the tab.
@@ -839,7 +840,7 @@ vAPI.tabs.registerListeners();
 // Create an entry for the tab if it doesn't exist.
 
 µb.bindTabToPageStats = function(tabId, context) {
-    µb.updateBadgeAsync(tabId);
+    this.updateToolbarIcon(tabId, 0x03);
 
     // Do not create a page store for URLs which are of no interests
     if ( µb.tabContextManager.exists(tabId) === false ) {
@@ -853,9 +854,9 @@ vAPI.tabs.registerListeners();
     // Tab is not bound
     if ( pageStore === undefined ) {
         this.updateTitle(tabId);
-        this.pageStoresToken = Date.now();
         pageStore = this.PageStore.factory(tabId, context);
         this.pageStores.set(tabId, pageStore);
+        this.pageStoresToken = Date.now();
         return pageStore;
     }
 
@@ -922,14 +923,15 @@ vAPI.tabs.registerListeners();
 
 // Update visual of extension icon.
 
-µb.updateBadgeAsync = (function() {
-    var tabIdToTimer = new Map();
+µb.updateToolbarIcon = (function() {
+    let tabIdToDetails = new Map();
 
-    var updateBadge = function(tabId, isClick) {
-        tabIdToTimer.delete(tabId);
+    let updateBadge = function(tabId, isClick) {
+        let parts = tabIdToDetails.get(tabId);
+        tabIdToDetails.delete(tabId);
 
-        var state = false;
-        var badge = '';
+        let state = 0;
+        let badge = '';
 
         var pageStore = this.pageStoreFromTabId(tabId),
             pageDomain = pageStore ? µb.URI.domainFromHostname(pageStore.tabHostname) : null, // ADN
@@ -952,17 +954,46 @@ vAPI.tabs.registerListeners();
             iconStatus += (isClick ? 'active' : '');
         }
         vAPI.setIcon(tabId, iconStatus, badge);
+        //     let pageStore = this.pageStoreFromTabId(tabId);
+        //     if ( pageStore !== null ) {
+        //         state = pageStore.getNetFilteringSwitch() ? 1 : 0;
+        //         if (
+        //             state === 1 &&
+        //             this.userSettings.showIconBadge &&
+        //             pageStore.perLoadBlockedRequestCount
+        //         ) {
+        //             badge = this.formatCount(pageStore.perLoadBlockedRequestCount);
+        //         }
+        //     }
+        //
+        //     vAPI.setIcon(tabId, state, badge, parts);
+        // };
+        //
+        // // parts: bit 0 = icon
+        // //        bit 1 = badge
+        //
+        // return function(tabId, newParts) {
+        //     if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
+        //     if ( newParts === undefined ) { newParts = 0x03; }
+        //     let currentParts = tabIdToDetails.get(tabId);
+        //     if ( currentParts === newParts ) { return; }
+        //     if ( currentParts === undefined ) {
+        //         vAPI.setTimeout(updateBadge.bind(this, tabId), 701);
+        //     } else {
+        //         newParts |= currentParts;
+        //     }
+        //     tabIdToDetails.set(tabId, newParts);
     };
 
      return function(tabId, isClick) {
-        if ( tabIdToTimer.has(tabId)) {
+        if ( tabIdToDetails.has(tabId)) {
             return;
         }
         if ( vAPI.isBehindTheSceneTabId(tabId) ) {
             return;
         }
 
-        tabIdToTimer[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId, isClick), 222); // ADN
+        tabIdToDetails[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId, isClick), 222); // ADN
     }
 })();
 

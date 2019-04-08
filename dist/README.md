@@ -20,7 +20,7 @@ Remember that you have to update manually also. For some users, updating manuall
 - You can update when **you** want
 - If ever a new version sucks, you can easily just re-install the previous one
 
-### Firefox webext
+### Firefox
 
 Compatible with Firefox 52 and beyond. 
 
@@ -28,13 +28,13 @@ Compatible with Firefox 52 and beyond.
 
 This works only if you set `xpinstall.signatures.required` to `false` in `about:config`.<sup>[see "Add-on signing in Firefox"](https://support.mozilla.org/en-US/kb/add-on-signing-in-firefox)</sup>
 
-- Download `ublock0.webext.xpi` ([latest release desirable](https://github.com/gorhill/uBlock/releases)).
+- Download `ublock0.firefox.xpi` ([latest release desirable](https://github.com/gorhill/uBlock/releases)).
     - Right-click and choose _"Save As..."_.
-- Drag and drop the previously downloaded `ublock0.webext.xpi` into Firefox
+- Drag and drop the previously downloaded `ublock0.firefox.xpi` into Firefox
 
 #### For beta version
 
-- Click on `ublock0.webext.signed.xpi` ([latest release desirable](https://github.com/gorhill/uBlock/releases)).
+- Click on `ublock0.firefox.signed.xpi` ([latest release desirable](https://github.com/gorhill/uBlock/releases)).
 
 #### Location of uBO settings
 
@@ -46,8 +46,9 @@ When you uninstall the extension, Firefox deletes that file, so all your setting
 
 Compatible with Firefox 24 to Firefox 56.
 
-- Download `ublock0.firefox.xpi` ([latest release desirable](https://github.com/gorhill/uBlock/releases)). 
-- Drag and drop the previously downloaded `ublock0.firefox.xpi` into Firefox
+- Download `ublock0.firefox-legacy.xpi` ([latest release desirable](https://github.com/gorhill/uBlock/releases)).
+    - Right-click and select "Save Link As..."
+- Drag and drop the previously downloaded `ublock0.firefox-legacy.xpi` into Firefox
 
 With Firefox 43 and beyond, you may need to toggle the setting `xpinstall.signatures.required` to `false` in `about:config`.<sup>[see "Add-on signing in Firefox"](https://support.mozilla.org/en-US/kb/add-on-signing-in-firefox)</sup>
 
@@ -60,13 +61,18 @@ On Windows, the settings are saved in a SQlite file located at `%APPDATA%\Mozill
 ### Build instructions (for developers)
 
 - Clone [uBlock](https://github.com/gorhill/uBlock) and [uAssets](https://github.com/uBlockOrigin/uAssets) repositories in the same parent directory
+    - `git clone https://github.com/gorhill/uBlock.git`
+    - `git clone https://github.com/uBlockOrigin/uAssets.git`
 - Set path to uBlock: `cd uBlock`
-- Optional: Select the version to build: `git checkout <tag>`
+- The official version of uBO is in the `master` branch
+    - `git checkout master`
 - Build the plugin:
     - Chromium: `./tools/make-chromium.sh`
-    - Firefox webext: `./tools/make-webext.sh all`
-    - Firefox legacy: `./tools/make-firefox.sh all`
+    - Firefox webext: `./tools/make-firefox.sh all`
+    - Firefox legacy:
+        - `git checkout firefox-legacy`
+        - `./tools/make-firefox-legacy.sh all`
 - Load the result of the build into your browser:
     - Chromium: load the unpacked extension folder `/uBlock/dist/build/uBlock0.chromium/` in Chromium to use the extension.
-    - Firefox: drag-and-drop `/uBlock/dist/build/uBlock0.firefox.xpi` or `/uBlock/dist/build/uBlock0.webext.xpi` into Firefox.
+    - Firefox: drag-and-drop `/uBlock/dist/build/uBlock0.firefox.xpi` or `/uBlock/dist/build/uBlock0.firefox-legacy.xpi` into Firefox.
    

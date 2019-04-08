@@ -1,11 +1,11 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
     "message": "高効率ブロッカーが遂に登場。CPUとメモリーの負担を抑えます。",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — ダッシュボード",
@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "外部フィルター",
+    "message": "フィルター一覧",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -31,6 +31,10 @@
     "message": "ホワイトリスト",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "ショートカットキー",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — ネットワークリクエストログ",
     "description": "Title for the logger window"
@@ -38,6 +42,10 @@
   "aboutPageName": {
     "message": "このプロジェクトについて",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — アセットビューアー",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "詳細設定",
@@ -138,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "クリックで、このサイトでのリモートフォントがブロックされないようにします",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "クリックすると、このサイトの JavaScript をブロックします",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "クリックすると、このサイトの JavaScript のブロックを解除します",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "グローバルルール: この列にあるルールは、すべてのサイトに適用されます。",
@@ -291,6 +307,10 @@
     "message": "リモートフォントをブロックする",
     "description": ""
   },
+  "settingsNoScriptingPrompt": {
+    "message": "JavaScript をブロックする",
+    "description": "The default state for the per-site no-scripting switch"
+  },
   "settingsNoCSPReportsPrompt": {
     "message": "CSPレポートをブロックする",
     "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
@@ -351,6 +371,10 @@
     "message": "適用",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "内製フィルター",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "広告",
     "description": "English: Ads"
@@ -360,7 +384,7 @@
     "description": "English: Privacy"
   },
   "3pGroupMalware": {
-    "message": "ウイルス",
+    "message": "マルウェア ドメイン",
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {
@@ -379,9 +403,13 @@
     "message": "カスタム",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "インポート...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
-    "message": "URL1つにつき1行です。&lsquo;!&rsquo; が先頭にある行は無視されます。無効なURLもそのまま無視されます。",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "message": "1行に1つのURLを記入します。無効なURLは無視されます。",
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "古いバージョンです",
@@ -400,8 +428,8 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "1行につき1つのフィルターです。フィルターはただのホストネームでもAdblock Plus適合のフィルターでも構いません。&lsquo;!&rsquo;ですでに固定されている行は無視されます。",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "message": "1行につき1つのフィルターです。フィルターはただのホストネームでもAdblock Plus書式のフィルターでも構いません。<code>!<\/code> が先頭にある行は無視されます。",
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "インポートと追加",
@@ -432,7 +460,7 @@
     "description": "This will remove all temporary rules"
   },
   "rulesCommit": {
-    "message": "コミット",
+    "message": "確定する",
     "description": "This will persist temporary rules"
   },
   "rulesEdit": {
@@ -460,7 +488,7 @@
     "description": "default file name to use"
   },
   "rulesHint": {
-    "message": "ダイナミックフィルタリングルールのリスト",
+    "message": "ダイナミックフィルタリングルールの一覧",
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
@@ -540,7 +568,7 @@
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "URLアドレスが {{url}} と一致し、{{origin}} を発信源とする{{br}}ネットワークリクエストが {{type}} であれば、要素を {{action}} する。{{br}}例外フィルターと一致する項目がある場合は {{importance}} とする。",
+    "message": "URLアドレスが {{url}} と一致し{{br}}発信源が {{origin}} であり{{br}}リクエストの種類が {{type}} のとき、要素を {{action}} する。{{br}}例外フィルターと一致する場合、{{importance}} を優先する。",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
@@ -552,44 +580,52 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType": {
-    "message": "タイプ \"{{type}}\"",
+    "message": "{{type}}",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyType": {
-    "message": "任意のタイプ",
+    "message": "任意",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin": {
-    "message": "\"{{origin}}\" から",
+    "message": "{{origin}}",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin": {
-    "message": "全体",
+    "message": "任意",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant": {
-    "message": "例外",
+    "message": "例外フィルター",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartImportant": {
-    "message": "非例外",
+    "message": "このフィルター",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "静的フィルター {{filter}} が見つかりました:",
-    "description": "Below this sentence, the filter lists in which the filter was found"
+    "message": "静的フィルター <code>{{filter}}<\/code> が見つかりました:",
+    "description": "Below this sentence, the filter list(s) in which the filter was found"
+  },
+  "loggerStaticFilteringFinderSentence2": {
+    "message": "現在 有効にしているフィルターの中には、静的フィルター <code>{{filter}}<\/code> はありません",
+    "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
-    "message": "バージョン更新履歴 (Change log)",
-    "description": "English: Change log"
+    "message": "更新履歴",
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "サポート",
     "description": "A link for where to get support"
+  },
+  "aboutIssues": {
+    "message": "問題追跡システム",
+    "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
     "message": "ソースコード (GPLバージョン3)",
@@ -672,11 +708,11 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1": {
-    "message": "uBlock Originは、以下のページの読み込みを防いでいます:",
+    "message": "uBlock Origin は、このページの読み込みをブロックしました",
     "description": "English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2": {
-    "message": "以下のフィルターによる",
+    "message": "該当するフィルター",
     "description": "English: Because of the following filter"
   },
   "docblockedNoParamsPrompt": {
@@ -684,7 +720,7 @@
     "description": "label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {
-    "message": "次のフィルターで見つかりました:",
+    "message": "このフィルターを含むリストの名前:",
     "description": "English: List of filter list names follows"
   },
   "docblockedBack": {
@@ -716,7 +752,7 @@
     "description": "tooltip"
   },
   "cloudPullAndMerge": {
-    "message": "クラウドストレージからインポートし、現在の設定と合併させます",
+    "message": "クラウドストレージからインポートし、現在の設定と統合します",
     "description": "tooltip"
   },
   "cloudNoData": {
@@ -748,8 +784,12 @@
     "description": ""
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
-    "message": "一時的に大部分のメディア要素を許可",
+    "message": "一時的に大きなメディア要素を許可",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "ショートカットを入力",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "これは最後のエントリである必要があります",

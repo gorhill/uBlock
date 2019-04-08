@@ -1,0 +1,14 @@
+{
+ "addons": {
+  "uBlock0@raymondhill.net": {
+   "updates": [
+    {
+     "version": "$ext_version",
+     "applications": { "gecko": { "strict_min_version": "52" } },
+     "update_info_url": "https://github.com/gorhill/uBlock/releases/tag/$tag_version",
+     "update_link": "https://github.com/gorhill/uBlock/releases/download/$tag_version/uBlock0.firefox.signed.xpi"
+    }
+   ]
+  }
+ }
+}

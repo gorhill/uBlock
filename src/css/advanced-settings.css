@@ -1,8 +1,13 @@
-textarea {
-    box-sizing: border-box;
-    height: 60vh;
+html {
+    height: 100vh;
+    overflow: hidden;
+    }
+body {
+    overflow: hidden;
+    }
+#advancedSettings {
+    border-top: 1px solid #ddd;
+    height: 75vh;
     text-align: left;
-    white-space: pre;
     width: 100%;
-    word-wrap: normal;
     }

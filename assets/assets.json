@@ -12,6 +12,7 @@
 		"updateAfter": 19,
 		"contentURL": [
 			"https://publicsuffix.org/list/public_suffix_list.dat",
+			"https://cdn.rawgit.com/publicsuffix/list/master/public_suffix_list.dat",
 			"assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat"
 		]
 	},
@@ -173,7 +174,11 @@
 		"group": "malware",
 		"title": "Malware Domain List",
 		"contentURL": [
+			"https://cdn.rawgit.com/NanoMeow/MDLMirror/master/hosts.txt",
+			"https://raw.githubusercontent.com/NanoMeow/MDLMirror/master/hosts.txt",
 			"https://www.malwaredomainlist.com/hostslist/hosts.txt",
+			"https://cdn.rawgit.com/NanoMeow/MDLMirror/master/filter.txt",
+			"https://raw.githubusercontent.com/NanoMeow/MDLMirror/master/filter.txt",
 			"assets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt"
 		]
 	},
@@ -188,13 +193,6 @@
 			"assets/thirdparties/mirror1.malwaredomains.com/files/justdomains"
 		],
 		"supportURL": "https://www.malwaredomains.com/"
-	},
-	"disconnect-malware": {
-		"content": "filters",
-		"group": "malware",
-		"off": true,
-		"title": "Malware filter list by Disconnect",
-		"contentURL": "https://s3.amazonaws.com/lists.disconnect.me/simple_malware.txt"
 	},
 	"spam404-0": {
 		"content": "filters",
@@ -267,8 +265,8 @@
 		"updateAfter": 11,
 		"off": true,
 		"title": "Dan Pollock’s hosts file",
-		"contentURL": "http://someonewhocares.org/hosts/hosts",
-		"supportURL": "http://someonewhocares.org/hosts/"
+		"contentURL": "https://someonewhocares.org/hosts/hosts",
+		"supportURL": "https://someonewhocares.org/hosts/"
 	},
 	"hphosts": {
 		"content": "filters",
@@ -349,7 +347,7 @@
 		"off": true,
 		"title": "CZE, SVK: EasyList Czech and Slovak",
 		"lang": "cs sk",
-		"contentURL": "https://raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters_ublock.txt",
+		"contentURL": "https://raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt",
 		"supportURL": "https://github.com/tomasko126/easylistczechandslovak"
 	},
 	"DEU-0": {
@@ -514,10 +512,10 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "LTU: Adblock Plus Lithuania",
+		"title": "LTU: EasyList Lithuania",
 		"lang": "lt",
-		"contentURL": "http://margevicius.lt/easylistlithuania.txt",
-		"supportURL": "http://margevicius.lt/easylist_lithuania/"
+		"contentURL": "https://margevicius.lt/easylistlithuania.txt",
+		"supportURL": "https://margevicius.lt/2014/06/26/easylist_lithuania/"
 	},
 	"LVA-0": {
 		"content": "filters",
@@ -543,7 +541,7 @@
 		"off": true,
 		"title": "NOR: Dandelion Sprouts norske filtre",
 		"lang": "nb",
-		"contentURL": "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/ExperimentalNorwegianList.txt",
+		"contentURL": "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianList.txt",
 		"supportURL": "https://github.com/DandelionSprout/adfilt"
 	},
 	"POL-0": {
@@ -623,6 +621,15 @@
 		"contentURL": "https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Frellwits-Swedish-Filter.txt",
 		"supportURL": "https://github.com/lassekongo83/Frellwits-filter-lists"
 	},
+	"THA-0": {
+		"content": "filters",
+		"group": "regions",
+		"off": true,
+		"title": "THA: EasyList Thailand",
+		"lang": "th",
+		"contentURL": "https://raw.githubusercontent.com/easylist-thailand/easylist-thailand/master/subscription/easylist-thailand.txt",
+		"supportURL": "https://github.com/easylist-thailand/easylist-thailand"
+	},
 	"TUR-0": {
 		"content": "filters",
 		"group": "regions",
@@ -640,6 +647,6 @@
 		"title": "VIE: ABPVN List",
 		"lang": "vi",
 		"contentURL": "https://raw.githubusercontent.com/abpvn/abpvn/master/filter/abpvn.txt",
-		"supportURL": "http://abpvn.com/"
+		"supportURL": "https://abpvn.com/"
 	}
 }

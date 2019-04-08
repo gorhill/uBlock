@@ -1,11 +1,11 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Akhirnya, penghalang iklan yang cekap.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "message": "Akhirnya, penyekat yang cekap. Tidak membebankan CPU dan memori.",
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Papanmuka",
@@ -31,6 +31,10 @@
     "message": "Senarai putih",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Shortcuts",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — Catatan",
     "description": "Title for the logger window"
@@ -38,6 +42,10 @@
   "aboutPageName": {
     "message": "Mengenai",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Asset viewer",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Tetapan lanjut",
@@ -96,11 +104,11 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Click to block all popups on this site",
+    "message": "Klik untuk menyekat semua popup di laman ini",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Click to no longer block all popups on this site",
+    "message": "Klik untuk berhenti menyekat semua popup di laman ini",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -108,11 +116,11 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Click to block large media elements on this site",
+    "message": "Klik untuk menyekat elemen media yang besar di laman ini",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Click to no longer block large media elements on this site",
+    "message": "Klik untuk berhenti menyekat elemen media yang besar di laman ini",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -120,11 +128,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Click to disable cosmetic filtering on this site",
+    "message": "Klik untuk mematikan penapisan kosmetik di laman ini",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Click to enable cosmetic filtering on this site",
+    "message": "Klik untuk mengaktifkan penapisan kosmetik di laman ini",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -138,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Click to no longer block remote fonts on this site",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Click to disable JavaScript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Click to no longer disable JavaScript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Peraturan global: kolumn ini adalah untuk peraturan yang dikuatkuasakan untuk semua laman.",
@@ -291,6 +307,10 @@
     "message": "Block remote fonts",
     "description": ""
   },
+  "settingsNoScriptingPrompt": {
+    "message": "Disable JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
+  },
   "settingsNoCSPReportsPrompt": {
     "message": "Block CSP reports",
     "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
@@ -351,6 +371,10 @@
     "message": "Apply changes",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Built-in",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Iklan",
     "description": "English: Ads"
@@ -379,9 +403,13 @@
     "message": "Custom",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Import...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
-    "message": "One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "message": "One URL per line. Invalid URLs will be silently ignored.",
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "Out of date.",
@@ -400,8 +428,8 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "message": "One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with <code>!<\/code> will be ignored.",
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Import and append",
@@ -576,20 +604,28 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Static filter {{filter}} found in:",
-    "description": "Below this sentence, the filter lists in which the filter was found"
+    "message": "Static filter <code>{{filter}}<\/code> found in:",
+    "description": "Below this sentence, the filter list(s) in which the filter was found"
+  },
+  "loggerStaticFilteringFinderSentence2": {
+    "message": "Static filter <code>{{filter}}<\/code> could not be found in any of the currently enabled filter lists",
+    "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
     "message": "Catatan perubahan",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Support",
     "description": "A link for where to get support"
+  },
+  "aboutIssues": {
+    "message": "Issue tracker",
+    "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
     "message": "Kod sumber (GPLv3)",
@@ -700,11 +736,11 @@
     "description": "English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary": {
-    "message": "Temporarily",
+    "message": "Sementara",
     "description": "English: Temporarily"
   },
   "docblockedDisablePermanent": {
-    "message": "Permanently",
+    "message": "Kekal",
     "description": "English: Permanently"
   },
   "cloudPush": {
@@ -724,7 +760,7 @@
     "description": ""
   },
   "cloudDeviceNamePrompt": {
-    "message": "This device name:",
+    "message": "Nama alat ini:",
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
@@ -732,7 +768,7 @@
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {
-    "message": "Submit",
+    "message": "Hantar",
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
@@ -750,6 +786,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Temporarily allow large media elements",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Type a shortcut",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "This entry must be the last one",

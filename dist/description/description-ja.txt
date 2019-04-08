@@ -1,5 +1,4 @@
-効率的なブロッカー：コンピュータのメモリとCPUのフットプリントはより少なく
-、別の人気のブロッカーよりも何千ものフィルタをロードし、強制的にブロックができます
+効率的なブロッカー：メモリーとCPUに優しいため、人気のある他のブロッカーと比べて何千も多くのフィルターを使用することができます。
 
 他ソフトとの比較： https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
@@ -25,7 +24,7 @@
 - Spam404
 - などなど
 
-もちろん、多くのフィルターを適用すれば使用メモリーは増えます。 ただ、それでも、Fanboy's Special Blocking List、Fanboy's Enhanced Tracking List、hpHost's Ad and tracking serversの三つのリストを追加で適用しても、uBlockは他の人気のブロッカーより少ないメモリー消費を実現しています。
+もちろん、多くのフィルターを適用すれば使用メモリーは増えます。 それでも、Fanboy's Special Blocking List、Fanboy's Enhanced Tracking List、hpHost's Ad and tracking serversの3つを追加してもなお、他の人気のブロッカーよりも少ないメモリー消費を実現しています。
 
 それと、多くのリストの適用は（特にホストファイルとしてよく使われているリスト）ウェブサイトの崩壊を起こしかねないことに注意してください。
 
