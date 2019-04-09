@@ -31,17 +31,22 @@ cp -R src/lib $DES/
 cp src/*.html $DES/
 cp platform/chromium/*.html $DES/
 cp platform/chromium/*.js   $DES/js/
-cp -R platform/chromium/img $DES/
 cp platform/chromium/*.html $DES/
 cp platform/chromium/*.json $DES/
 cp LICENSE.txt              $DES/
 
-echo "*** AdNauseam.Opera: concatenating content scripts"
+echo "*** AdNauseam.opera: concatenating content scripts"
 cat $DES/js/vapi-usercss.js > /tmp/contentscript.js
+echo >> /tmp/contentscript.js
+grep -v "^'use strict';$" $DES/js/vapi-usercss.real.js >> /tmp/contentscript.js
+echo >> /tmp/contentscript.js
+grep -v "^'use strict';$" $DES/js/vapi-usercss.pseudo.js >> /tmp/contentscript.js
 echo >> /tmp/contentscript.js
 grep -v "^'use strict';$" $DES/js/contentscript.js >> /tmp/contentscript.js
 mv /tmp/contentscript.js $DES/js/contentscript.js
 rm $DES/js/vapi-usercss.js
+rm $DES/js/vapi-usercss.real.js
+rm $DES/js/vapi-usercss.pseudo.js
 
 cp platform/opera/manifest.json $DES/  # adn: overwrites chromium manifest
 cp LICENSE.txt $DES/
@@ -63,4 +68,7 @@ echo
 #rm -r $DES/_locales/mr
 #rm -r $DES/_locales/ta
 
+echo "*** AdNauseam.opera: Generating web accessible resources..."
+cp -R src/web_accessible_resources $DES/
+python3 tools/import-war.py $DES/
 # grep version $DES/manifest.json

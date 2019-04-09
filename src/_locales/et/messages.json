@@ -5,7 +5,7 @@
   },
   "extShortDesc": {
     "message": "Lõpuks on valminud tõhus blokeerija. Protsessori- ja mälusõbralik.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Töölaud",
@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Kolmanda osapoole filtrid",
+    "message": "Filtri loendid",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -31,13 +31,21 @@
     "message": "Valge loend",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Otseteed",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
-    "message": "uBlock₀ — Võrgutaotluste logi",
+    "message": "uBlock₀ — Logija",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
     "message": "Teave",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — vara vaatur",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Täpsemad seaded",
@@ -88,7 +96,7 @@
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "Avage logija",
+    "message": "Ava logija",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
@@ -132,12 +140,20 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Klõpsa, et keelata välisfondid selle saidil",
+    "message": "Klõpsa, et keelata välisfondid sellel saidil",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Klõpsa, et lubada välisfondid selle saidil",
+    "message": "Klõpsa, et lubada välisfondid sellel saidil",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Klõpsa, et keelata JavaScript sellel saidil täielikult",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Klõpsa, et lõpetada sellel saidil täielik JavaScripti keelamine",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Üldised reeglid: selle veeru reeglid kehtivad kõikidele saitidele.",
@@ -148,11 +164,11 @@
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
-    "message": "Vajuta, et teha oma muudatused püsivaks.",
+    "message": "Klõpsa, et teha oma muudatused püsivaks.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Vajuta, et võtta muudatused tagasi.",
+    "message": "Klõpsa, et võtta muudatused tagasi.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {
@@ -291,6 +307,10 @@
     "message": "Keela välised fondid",
     "description": ""
   },
+  "settingsNoScriptingPrompt": {
+    "message": "Keela JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
+  },
   "settingsNoCSPReportsPrompt": {
     "message": "Keela lehe turvareeglite (CSP-de) aruanded",
     "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
@@ -351,6 +371,10 @@
     "message": "Kinnita muudatused",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Seadmes",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Reklaamid",
     "description": "English: Ads"
@@ -379,9 +403,13 @@
     "message": "Kohandatud",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Impordi...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
-    "message": "Üks URL rea kohta, märgiga &lsquo;!&rsquo; algavaid ridu eiratakse. Vigased URLid jäetakse vahele.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "message": "Üks URL rea kohta. Vigased URLid jäetakse taustal vahele.",
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "vananenud",
@@ -400,8 +428,8 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Üks filter rea kohta, filtriks võib olla tavaline domeenilist või Adblock Plusiga-ühilduv filter. Märgiga &lsquo;!&rsquo; algavaid ridu eiratakse.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "message": "Üks filter rea kohta. Filtriks võib olla tavaline domeenilist või Adblock Plusiga-ühilduv filter. Märgiga <code>!<\/code> algavaid ridu eiratakse.",
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Impordi ja lisa",
@@ -576,20 +604,28 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Staatiline filter {{filter}} asub:",
-    "description": "Below this sentence, the filter lists in which the filter was found"
+    "message": "Staatiline filter <code>{{filter}}<\/code> asub:",
+    "description": "Below this sentence, the filter list(s) in which the filter was found"
+  },
+  "loggerStaticFilteringFinderSentence2": {
+    "message": "Staatilist filtrit <code>{{filter}}<\/code> ei leitud ühegi hetkel lubatud filtrite loendist",
+    "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
     "message": "Muudatuste logi",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Viki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Tugi",
     "description": "A link for where to get support"
+  },
+  "aboutIssues": {
+    "message": "Probleemide jälgija",
+    "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
     "message": "Lähtekood (GPLv3)",
@@ -750,6 +786,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Luba ajutiselt mahukad meediaelemendid",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Kirjuta otsetee",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "See sisestus peab olema viimane",

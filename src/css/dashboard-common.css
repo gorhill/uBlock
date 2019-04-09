@@ -2,14 +2,8 @@ body {
     margin: 1em;
     /*padding: 0 0.5em 0.5em 0.5em;*/
     box-sizing: border-box;
-    left: 0;
-    height: 100vh;
     margin: 0;
-    overflow: auto;
     padding: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
     }
 
 body > div.body {
@@ -123,4 +117,3 @@ button.whatisthis:hover {
         overflow: auto !important;
         }
 }
-

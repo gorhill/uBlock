@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2017 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -462,27 +462,21 @@ var filterTypes = {
 // Extract the best possible cosmetic filter, i.e. as specific as possible.
 
 // https://github.com/gorhill/uBlock/issues/1725
-// Also take into account the `src` attribute for `img` elements -- and limit
-// the value to the 1024 first characters.
+//   Also take into account the `src` attribute for `img` elements -- and limit
+//   the value to the 1024 first characters.
 
 var cosmeticFilterFromElement = function(elem) {
-    if ( elem === null ) {
-        return 0;
-    }
-    if ( elem.nodeType !== 1 ) {
-        return 0;
-    }
+    if ( elem === null ) { return 0; }
+    if ( elem.nodeType !== 1 ) { return 0; }
 
     if ( candidateElements.indexOf(elem) === -1 ) {
         candidateElements.push(elem);
     }
 
-    var tagName = elem.localName;
-    var selector = '';
-    var v, i;
+    let selector = '';
 
     // Id
-    v = typeof elem.id === 'string' && CSS.escape(elem.id);
+    let v = typeof elem.id === 'string' && CSS.escape(elem.id);
     if ( v ) {
         selector = '#' + v;
     }
@@ -490,18 +484,20 @@ var cosmeticFilterFromElement = function(elem) {
     // Class(es)
     v = elem.classList;
     if ( v ) {
-        i = v.length || 0;
+        let i = v.length || 0;
         while ( i-- ) {
             selector += '.' + CSS.escape(v.item(i));
         }
     }
 
     // Tag name
+    let tagName = elem.localName;
+
+    // Use attributes if still no selector found.
     // https://github.com/gorhill/uBlock/issues/1901
-    // Trim attribute value, this may help in case of malformed HTML.
+    //   Trim attribute value, this may help in case of malformed HTML.
     if ( selector === '' ) {
-        selector = tagName;
-        var attributes = [], attr;
+        let attributes = [], attr;
         switch ( tagName ) {
         case 'a':
             v = elem.getAttribute('href');
@@ -529,13 +525,11 @@ var cosmeticFilterFromElement = function(elem) {
             break;
         }
         while ( (attr = attributes.pop()) ) {
-            if ( attr.v.length === 0 ) {
-                continue;
-            }
+            if ( attr.v.length === 0 ) { continue; }
             v = elem.getAttribute(attr.k);
             if ( attr.v === v ) {
                 selector += '[' + attr.k + '="' + attr.v + '"]';
-            } else if ( v.lastIndexOf(attr.v, 0) === 0 ) {
+            } else if ( v.startsWith(attr.v) ) {
                 selector += '[' + attr.k + '^="' + attr.v + '"]';
             } else {
                 selector += '[' + attr.k + '*="' + attr.v + '"]';
@@ -543,19 +537,31 @@ var cosmeticFilterFromElement = function(elem) {
         }
     }
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/17
+    //   If selector is ambiguous at this point, add the element name to
+    //   further narrow it down.
+    let parentNode = elem.parentNode;
+    if (
+        selector === '' ||
+        safeQuerySelectorAll(parentNode, cssScope + selector).length > 1
+    ) {
+        selector = tagName + selector;
+    }
+
     // https://github.com/chrisaljoudi/uBlock/issues/637
-    // If the selector is still ambiguous at this point, further narrow using
-    // `nth-of-type`. It is preferable to use `nth-of-type` as opposed to
-    // `nth-child`, as `nth-of-type` is less volatile.
-    var parentNode = elem.parentNode;
+    //   If the selector is still ambiguous at this point, further narrow using
+    //   `nth-of-type`. It is preferable to use `nth-of-type` as opposed to
+    //   `nth-child`, as `nth-of-type` is less volatile.
     if ( safeQuerySelectorAll(parentNode, cssScope + selector).length > 1 ) {
-        i = 1;
+        let i = 1;
         while ( elem.previousSibling !== null ) {
             elem = elem.previousSibling;
-            if ( typeof elem.localName !== 'string' || elem.localName !== tagName ) {
-                continue;
+            if (
+                typeof elem.localName === 'string' &&
+                elem.localName === tagName
+            ) {
+                i++;
             }
-            i++;
         }
         selector += ':nth-of-type(' + i + ')';
     }
@@ -582,7 +588,7 @@ var filtersFrom = function(x, y) {
     candidateElements.length = 0;
 
     // We need at least one element.
-    var first = null;
+    let first = null;
     if ( typeof x === 'number' ) {
         first = elementFromPoint(x, y);
     } else if ( x instanceof HTMLElement ) {
@@ -596,23 +602,29 @@ var filtersFrom = function(x, y) {
     }
 
     // Cosmetic filter candidates from ancestors.
-    var elem = first;
+    let elem = first;
     while ( elem && elem !== document.body ) {
         cosmeticFilterFromElement(elem);
         elem = elem.parentNode;
     }
     // The body tag is needed as anchor only when the immediate child
-    // uses`nth-of-type`.
-    var i = cosmeticFilterCandidates.length;
-    if ( i !== 0 && cosmeticFilterCandidates[i-1].indexOf(':nth-of-type(') !== -1 ) {
-        cosmeticFilterCandidates.push('##body');
+    // uses `nth-of-type`.
+    let i = cosmeticFilterCandidates.length;
+    if ( i !== 0 ) {
+        let selector = cosmeticFilterCandidates[i-1];
+        if (
+            selector.indexOf(':nth-of-type(') !== -1 &&
+            safeQuerySelectorAll(document.body, selector).length > 1
+        ) {
+            cosmeticFilterCandidates.push('##body');
+        }
     }
 
     // https://github.com/gorhill/uBlock/issues/1545
     // Network filter candidates from all other elements found at point (x, y).
     if ( typeof x === 'number' ) {
-        var attrName = pickerRoot.id + '-clickblind';
-        var previous;
+        let attrName = pickerRoot.id + '-clickblind';
+        let previous;
         elem = first;
         while ( elem !== null ) {
             previous = elem;
@@ -623,7 +635,7 @@ var filtersFrom = function(x, y) {
             }
             netFilterFromElement(elem);
         }
-        var elems = document.querySelectorAll('[' + attrName + ']');
+        let elems = document.querySelectorAll('[' + attrName + ']');
         i = elems.length;
         while ( i-- ) {
             elems[i].removeAttribute(attrName);
@@ -1014,56 +1026,58 @@ var onCandidateChanged = (function() {
 /******************************************************************************/
 
 var candidateFromFilterChoice = function(filterChoice) {
-    var slot = filterChoice.slot;
-    var filters = filterChoice.filters;
-    var filter = filters[slot];
+    let slot = filterChoice.slot;
+    let filters = filterChoice.filters;
+    let filter = filters[slot];
 
-    if ( filter === undefined ) {
-        return '';
-    }
+    if ( filter === undefined ) { return ''; }
 
     // For net filters there no such thing as a path
-    if ( filter.lastIndexOf('##', 0) !== 0 ) {
-        return filter;
-    }
+    if ( filter.startsWith('##') === false ) { return filter; }
 
     // At this point, we have a cosmetic filter
 
     // Modifier means "target broadly". Hence:
     // - Do not compute exact path.
     // - Discard narrowing directives.
+    // - Remove the id if one or more classes exist
+    //   TODO: should remove tag name too? ¯\_(ツ)_/¯
     if ( filterChoice.modifier ) {
         filter = filter.replace(/:nth-of-type\(\d+\)/, '');
-        // Remove the id if one or more classes exist.
-        if ( filter.charAt(2) === '#' && filter.indexOf('.') !== -1 ) {
-            filter = filter.replace(/#[^#.]+/, '');
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/162
+        //   Mind escaped periods: they do not denote a class identifier.
+        if ( filter.charAt(2) === '#' ) {
+            let pos = filter.search(/[^\\]\./);
+            if ( pos !== -1 ) {
+                filter = '##' + filter.slice(pos + 1);
+            }
         }
         return filter;
     }
 
     // Return path: the target element, then all siblings prepended
-    var selector = '', joiner = '';
+    let selector = '', joiner = '';
     for ( ; slot < filters.length; slot++ ) {
         filter = filters[slot];
         // Remove all classes when an id exists.
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/162
+        //   Mind escaped periods: they do not denote a class identifier.
         if ( filter.charAt(2) === '#' ) {
-            filter = filter.replace(/\..+$/, '');
+            filter = filter.replace(/([^\\])\..+$/, '$1');
         }
         selector = filter.slice(2) + joiner + selector;
         // Stop at any element with an id: these are unique in a web page
-        if ( filter.lastIndexOf('###', 0) === 0 ) {
-            break;
-        }
+        if ( filter.startsWith('###') ) { break; }
         // Stop if current selector matches only one element on the page
-        if ( document.querySelectorAll(selector).length === 1 ) {
-            break;
-        }
+        if ( document.querySelectorAll(selector).length === 1 ) { break; }
         joiner = ' > ';
     }
 
     // https://github.com/gorhill/uBlock/issues/2519
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/17
     if (
         slot === filters.length &&
+        selector.startsWith('body > ') === false &&
         document.querySelectorAll(selector).length > 1
     ) {
         selector = 'body > ' + selector;
@@ -1481,8 +1495,8 @@ var stopPicker = function() {
 var startPicker = function(details) {
     pickerRoot.addEventListener('load', stopPicker);
 
-    var frameDoc = pickerRoot.contentDocument;
-    var parsedDom = (new DOMParser()).parseFromString(
+    let frameDoc = pickerRoot.contentDocument;
+    let parsedDom = (new DOMParser()).parseFromString(
         details.frameContent,
         'text/html'
     );
@@ -1490,6 +1504,17 @@ var startPicker = function(details) {
     // Provide an id users can use as anchor to personalize uBO's element
     // picker style properties.
     parsedDom.documentElement.id = 'ublock0-epicker';
+
+    // https://github.com/gorhill/uBlock/issues/2240
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/170
+    //   Remove the already declared inline style tag: we will create a new
+    //   one based on the removed one, and replace the old one.
+    let style = parsedDom.querySelector('style');
+    let styleText = style.textContent;
+    style.parentNode.removeChild(style);
+    style = frameDoc.createElement('style');
+    style.textContent = styleText;
+    parsedDom.head.appendChild(style);
 
     frameDoc.replaceChild(
         frameDoc.adoptNode(parsedDom.documentElement),
@@ -1519,7 +1544,7 @@ var startPicker = function(details) {
     pickerRoot.contentWindow.focus();
 
     // Restore net filter union data if it originate from the same URL.
-    var eprom = details.eprom || null;
+    let eprom = details.eprom || null;
     if ( eprom !== null && eprom.lastNetFilterSession === lastNetFilterSession ) {
         lastNetFilterHostname = eprom.lastNetFilterHostname || '';
         lastNetFilterUnion = eprom.lastNetFilterUnion || '';
@@ -1538,12 +1563,11 @@ var startPicker = function(details) {
     }
 
     // No mouse position available, use suggested target
-    var target = details.target || '';
-    var pos = target.indexOf('\t');
-    if ( pos === -1 ) {
-        return;
-    }
-    var srcAttrMap = {
+    let target = details.target || '';
+    let pos = target.indexOf('\t');
+    if ( pos === -1 ) { return; }
+
+    let srcAttrMap = {
         'a': 'href',
         'audio': 'src',
         'embed': 'src',
@@ -1551,24 +1575,20 @@ var startPicker = function(details) {
         'img': 'src',
         'video': 'src',
     };
-    var tagName = target.slice(0, pos);
-    var url = target.slice(pos + 1);
-    var attr = srcAttrMap[tagName];
+    let tagName = target.slice(0, pos);
+    let url = target.slice(pos + 1);
+    let attr = srcAttrMap[tagName];
     if ( attr === undefined ) {
         return;
     }
-    var elems = document.querySelectorAll(tagName + '[' + attr + ']');
-    var i = elems.length;
-    var elem, src;
+    let elems = document.querySelectorAll(tagName + '[' + attr + ']');
+    let i = elems.length;
+    let elem, src;
     while ( i-- ) {
         elem = elems[i];
         src = elem[attr];
-        if ( typeof src !== 'string' || src === '' ) {
-            continue;
-        }
-        if ( src !== url ) {
-            continue;
-        }
+        if ( typeof src !== 'string' || src === '' ) { continue; }
+        if ( src !== url ) { continue; }
         elem.scrollIntoView({
             behavior: 'smooth',
             block: 'start'
@@ -1649,3 +1669,23 @@ document.documentElement.appendChild(pickerRoot);
 /******************************************************************************/
 
 })();
+
+
+
+
+
+
+
+
+/*******************************************************************************
+
+    DO NOT:
+    - Remove the following code
+    - Add code beyond the following code
+    Reason:
+    - https://github.com/gorhill/uBlock/pull/3721
+    - uBO never uses the return value from injected content scripts
+
+**/
+
+void 0;

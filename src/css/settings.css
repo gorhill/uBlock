@@ -3,12 +3,12 @@
 ============================================================ */
 
 ul {
-  padding-left: 1em;
-}
-
-@media screen and (max-width: 500px) {
-    ul#userSettings {
-        margin: 0px !important;
+    padding-left: 1em;
+    padding-right: 0;
+    }
+body[dir="rtl"] ul {
+    padding-left: 0;
+    padding-right: 1em;
     }
 }
 
@@ -41,7 +41,7 @@ ul#userSettings .subgroup p {
 ul#userSettings .subgroup p.last {
   margin-right:15px;
   padding-right: 0;
-}  
+}
 
 ul#userSettings .subgroup .subgroupDescription {
     clear: both;
@@ -172,7 +172,7 @@ input[type=range]:disabled::-moz-range-progress {
     font-weight: bold;
     display: inline-block;
     line-height: 0px;
-    padding: 11px 5px 11px 0;  
+    padding: 11px 5px 11px 0;
 }
 .close:before {
     content: "×";

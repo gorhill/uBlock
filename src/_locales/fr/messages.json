@@ -1,11 +1,11 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
     "message": "Un bloqueur de nuisances efficace, qui ménagera votre processeur et votre mémoire vive.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Tableau de bord",
@@ -31,6 +31,10 @@
     "message": "Liste blanche",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Raccourcis",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — Journal des requêtes réseau",
     "description": "Title for the logger window"
@@ -38,6 +42,10 @@
   "aboutPageName": {
     "message": "À propos",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Visionneuse d'éléments",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Paramètres avancés",
@@ -100,7 +108,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Cliquez pour cesser de bloquer toutes les pop-up de ce site",
+    "message": "Cliquez pour cesser de bloquer toutes les pop-ups de ce site",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -138,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Cliquez pour cesser de bloquer les polices d'écriture distantes sur ce site",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Cliquez pour désactiver JavaScript sur ce site",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Cliquez pour cesser de désactiver JavaScript sur ce site",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Règles globales : Cette colonne concerne des règles qui s'appliquent partout.",
@@ -291,6 +307,10 @@
     "message": "Bloquer les polices d'écriture distantes",
     "description": ""
   },
+  "settingsNoScriptingPrompt": {
+    "message": "Désactiver JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
+  },
   "settingsNoCSPReportsPrompt": {
     "message": "Bloquer les rapports CSP",
     "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
@@ -351,6 +371,10 @@
     "message": "Appliquer",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Intégrées",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Publicités",
     "description": "English: Ads"
@@ -379,9 +403,13 @@
     "message": "Vos propres listes",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Importer",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
-    "message": "Une adresse Web par ligne. Les lignes débutant par un &lsquo;!&rsquo; seront ignorées. Les adresses Web invalides seront ignorées sans avertissement.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "message": "Une adresse Web par ligne. Les adresses Web invalides seront ignorées sans avertissement.",
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "Obsolète",
@@ -400,8 +428,8 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Une règle par ligne. Une règle peut être un simple nom d'hôte, ou encore un filtre respectant la syntaxe des filtres Adblock Plus. Les lignes débutant par &lsquo;!&rsquo; seront ignorées.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "message": "Une règle par ligne. Une règle peut être un simple nom d'hôte, ou encore un filtre respectant la syntaxe des filtres Adblock Plus. Les lignes débutant par <code>!<\/code> seront ignorées.",
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Importer",
@@ -576,20 +604,28 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Filtre statique {{filter}} trouvé dans :",
-    "description": "Below this sentence, the filter lists in which the filter was found"
+    "message": "Filtre statique <code>{{filter}}<\/code> trouvé dans :",
+    "description": "Below this sentence, the filter list(s) in which the filter was found"
+  },
+  "loggerStaticFilteringFinderSentence2": {
+    "message": "Filtre statique <code>{{filter}}<\/code> introuvable dans aucune des listes de filtre actives",
+    "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
     "message": "Journal des changements (en Anglais)",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Documentation (en Anglais)",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Support (en Anglais)",
     "description": "A link for where to get support"
+  },
+  "aboutIssues": {
+    "message": "Suivi des problèmes (en Anglais)",
+    "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
     "message": "Code Source (Licence GPLv3, en Anglais)",
@@ -750,6 +786,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Autoriser temporairement le chargement d'éléments médias à taille plus importante",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Saisir un raccourci",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "This entry must be the last one",

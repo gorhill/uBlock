@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2018 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -183,7 +183,24 @@ api.fetchFilterList = function(mainlistURL, onLoad, onError) {
         pendingSublistURLs = new Set([ mainlistURL ]),
         loadedSublistURLs = new Set(),
         toParsedURL = api.fetchFilterList.toParsedURL,
-        parsedMainURL = toParsedURL(mainlistURL);
+        parsedURL = toParsedURL(mainlistURL);
+
+    var processIncludeDirectives = function(details) {
+        var reInclude = /^!#include +(\S+)/gm;
+        for (;;) {
+            var match = reInclude.exec(details.content);
+            if ( match === null ) { break; }
+            if ( toParsedURL(match[1]) !== undefined ) { continue; }
+            if ( match[1].indexOf('..') !== -1 ) { continue; }
+            var subURL =
+                parsedURL.origin +
+                parsedURL.pathname.replace(/[^/]+$/, match[1]);
+            if ( pendingSublistURLs.has(subURL) ) { continue; }
+            if ( loadedSublistURLs.has(subURL) ) { continue; }
+            pendingSublistURLs.add(subURL);
+            api.fetchText(subURL, onLocalLoadSuccess, onLocalLoadError);
+        }
+    };
 
     var onLocalLoadSuccess = function(details) {
         if ( errored ) { return; }
@@ -195,24 +212,8 @@ api.fetchFilterList = function(mainlistURL, onLoad, onError) {
         if ( isSublist ) { content.push('\n! ' + '>>>>>>>> ' + details.url); }
         content.push(details.content.trim());
         if ( isSublist ) { content.push('! <<<<<<<< ' + details.url); }
-        if (
-            parsedMainURL !== undefined &&
-            parsedMainURL.pathname.length > 0
-        ) {
-            var reInclude = /^!#include +(\S+)/gm;
-            for (;;) {
-                var match = reInclude.exec(details.content);
-                if ( match === null ) { break; }
-                if ( toParsedURL(match[1]) !== undefined ) { continue; }
-                if ( match[1].indexOf('..') !== -1 ) { continue; }
-                var subURL =
-                    parsedMainURL.origin +
-                    parsedMainURL.pathname.replace(/[^/]+$/, match[1]);
-                if ( pendingSublistURLs.has(subURL) ) { continue; }
-                if ( loadedSublistURLs.has(subURL) ) { continue; }
-                pendingSublistURLs.add(subURL);
-                api.fetchText(subURL, onLocalLoadSuccess, onLocalLoadError);
-            }
+        if ( parsedURL !== undefined && parsedURL.pathname.length > 0 ) {
+            processIncludeDirectives(details);
         }
 
         if ( pendingSublistURLs.size !== 0 ) { return; }
@@ -222,7 +223,13 @@ api.fetchFilterList = function(mainlistURL, onLoad, onError) {
         onLoad(details);
     };
 
+    // https://github.com/AdguardTeam/FiltersRegistry/issues/82
+    //   Not checking for `errored` status was causing repeated notifications
+    //   to the caller. This can happen when more than one out of multiple
+    //   sublists can't be fetched.
     var onLocalLoadError = function(details) {
+        if ( errored ) { return; }
+
         errored = true;
         details.url = mainlistURL;
         details.content = '';
@@ -301,7 +308,7 @@ var saveAssetSourceRegistry = (function() {
     var timer;
     var save = function() {
         timer = undefined;
-        vAPI.cacheStorage.set({ assetSourceRegistry: assetSourceRegistry });
+        µBlock.cacheStorage.set({ assetSourceRegistry: assetSourceRegistry });
     };
     return function(lazily) {
         if ( timer !== undefined ) {
@@ -384,7 +391,7 @@ var getAssetSourceRegistry = function(callback) {
         );
     };
 
-    vAPI.cacheStorage.get('assetSourceRegistry', function(bin) {
+    µBlock.cacheStorage.get('assetSourceRegistry', function(bin) {
         if ( !bin || !bin.assetSourceRegistry ) {
             createRegistry();
             return;
@@ -444,7 +451,7 @@ var getAssetCacheRegistry = function(callback) {
         }
     };
 
-    vAPI.cacheStorage.get('assetCacheRegistry', function(bin) {
+    µBlock.cacheStorage.get('assetCacheRegistry', function(bin) {
         if ( bin && bin.assetCacheRegistry ) {
             assetCacheRegistry = bin.assetCacheRegistry;
         }
@@ -456,7 +463,7 @@ var saveAssetCacheRegistry = (function() {
     var timer;
     var save = function() {
         timer = undefined;
-        vAPI.cacheStorage.set({ assetCacheRegistry: assetCacheRegistry });
+        µBlock.cacheStorage.set({ assetCacheRegistry: assetCacheRegistry });
     };
     return function(lazily) {
         if ( timer !== undefined ) { clearTimeout(timer); }
@@ -469,37 +476,41 @@ var saveAssetCacheRegistry = (function() {
 })();
 
 var assetCacheRead = function(assetKey, callback) {
-    var internalKey = 'cache/' + assetKey;
+    let internalKey = 'cache/' + assetKey;
 
-    var reportBack = function(content, err) {
-        var details = { assetKey: assetKey, content: content };
-        if ( err ) { details.error = err; }
+    let reportBack = function(content) {
+        if ( content instanceof Blob ) { content = ''; }
+        let details = { assetKey: assetKey, content: content };
+        if ( content === '' ) { details.error = 'E_NOTFOUND'; }
         callback(details);
     };
 
-    var onAssetRead = function(bin) {
-        if ( !bin || !bin[internalKey] ) {
-            return reportBack('', 'E_NOTFOUND');
+    let onAssetRead = function(bin) {
+        if (
+            bin instanceof Object === false ||
+            bin.hasOwnProperty(internalKey) === false
+        ) {
+            return reportBack('');
         }
-        var entry = assetCacheRegistry[assetKey];
+        let entry = assetCacheRegistry[assetKey];
         if ( entry === undefined ) {
-            return reportBack('', 'E_NOTFOUND');
+            return reportBack('');
         }
         entry.readTime = Date.now();
         saveAssetCacheRegistry(true);
         reportBack(bin[internalKey]);
     };
 
-    var onReady = function() {
-        vAPI.cacheStorage.get(internalKey, onAssetRead);
+    let onReady = function() {
+        µBlock.cacheStorage.get(internalKey, onAssetRead);
     };
 
     getAssetCacheRegistry(onReady);
 };
 
 var assetCacheWrite = function(assetKey, details, callback) {
-    var internalKey = 'cache/' + assetKey;
-    var content = '';
+    let internalKey = 'cache/' + assetKey;
+    let content = '';
     if ( typeof details === 'string' ) {
         content = details;
     } else if ( details instanceof Object ) {
@@ -510,16 +521,16 @@ var assetCacheWrite = function(assetKey, details, callback) {
         return assetCacheRemove(assetKey, callback);
     }
 
-    var reportBack = function(content) {
-        var details = { assetKey: assetKey, content: content };
+    let reportBack = function() {
+        let details = { assetKey: assetKey, content: content };
         if ( typeof callback === 'function' ) {
             callback(details);
         }
         fireNotification('after-asset-updated', details);
     };
 
-    var onReady = function() {
-        var entry = assetCacheRegistry[assetKey];
+    let onReady = function() {
+        let entry = assetCacheRegistry[assetKey];
         if ( entry === undefined ) {
             entry = assetCacheRegistry[assetKey] = {};
         }
@@ -527,10 +538,9 @@ var assetCacheWrite = function(assetKey, details, callback) {
         if ( details instanceof Object && typeof details.url === 'string' ) {
             entry.remoteURL = details.url;
         }
-        var bin = { assetCacheRegistry: assetCacheRegistry };
+        let bin = { assetCacheRegistry: assetCacheRegistry };
         bin[internalKey] = content;
-        vAPI.cacheStorage.set(bin);
-        reportBack(content);
+        µBlock.cacheStorage.set(bin, reportBack);
     };
     getAssetCacheRegistry(onReady);
 };
@@ -552,9 +562,9 @@ var assetCacheRemove = function(pattern, callback) {
             delete cacheDict[assetKey];
         }
         if ( removedContent.length !== 0 ) {
-            vAPI.cacheStorage.remove(removedContent);
+            µBlock.cacheStorage.remove(removedContent);
             var bin = { assetCacheRegistry: assetCacheRegistry };
-            vAPI.cacheStorage.set(bin);
+            µBlock.cacheStorage.set(bin);
         }
         if ( typeof callback === 'function' ) {
             callback();
@@ -594,7 +604,7 @@ var assetCacheMarkAsDirty = function(pattern, exclude, callback) {
         }
         if ( mustSave ) {
             var bin = { assetCacheRegistry: assetCacheRegistry };
-            vAPI.cacheStorage.set(bin);
+            µBlock.cacheStorage.set(bin);
         }
         if ( typeof callback === 'function' ) {
             callback();
@@ -634,7 +644,7 @@ var readUserAsset = function(assetKey, callback) {
         var content = '';
         if ( typeof bin['cached_asset_content://assets/user/filters.txt'] === 'string' ) {
             content = bin['cached_asset_content://assets/user/filters.txt'];
-            vAPI.cacheStorage.remove('cached_asset_content://assets/user/filters.txt');
+            µBlock.cacheStorage.remove('cached_asset_content://assets/user/filters.txt');
         }
         if ( typeof bin['assets/user/filters.txt'] === 'string' ) {
             content = bin['assets/user/filters.txt'];
@@ -920,16 +930,10 @@ var updateFirst = function() {
     //   Allow self-hosted dev build to update: if update_url is present but
     //   null, assume the extension is hosted on AMO.
     if ( noRemoteResources === undefined ) {
-        var manifest =
-            typeof browser === 'object' &&
-            browser.runtime.getManifest();
         noRemoteResources =
-            typeof vAPI.webextFlavor === 'string' &&
-            vAPI.webextFlavor.startsWith('Mozilla-Firefox-') &&
-            manifest instanceof Object &&
-            manifest.applications instanceof Object &&
-            manifest.applications.gecko instanceof Object &&
-            manifest.applications.gecko.update_url === null;
+            vAPI.webextFlavor.soup.has('firefox') &&
+            vAPI.webextFlavor.soup.has('webext') &&
+            vAPI.webextFlavor.soup.has('devbuild') === false;
     }
     updaterStatus = 'updating';
     updaterFetched.clear();

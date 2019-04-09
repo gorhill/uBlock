@@ -1,11 +1,11 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
     "message": "Végre egy hatékony reklám- és követésblokkoló böngészőkhöz, amely kíméletes a processzorral és a memóriával.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Vezérlőpult",
@@ -31,6 +31,10 @@
     "message": "Kivételek",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Billentyűparancsok",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — Hálózati lekérések naplója",
     "description": "Title for the logger window"
@@ -38,6 +42,10 @@
   "aboutPageName": {
     "message": "Névjegy",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ - Eszköznézet",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Haladó beállítások",
@@ -48,7 +56,7 @@
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Kattints a uBlock₀ letiltásához ezen a webhelyen.\n\nCtrl+klikk a uBlock₀ letiltásához csak a jelenlegi oldalon.",
+    "message": "Kattints a uBlock₀ letiltásához ezen a webhelyen.\n\nCtrl+kattintás a uBlock₀ letiltásához csak a jelenlegi oldalon.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
@@ -100,7 +108,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Kattints az összes előugró ablak blokkolásának visszavonásához ezen a webhelyen",
+    "message": "Kattints, hogy ne legyen többé az összes előugró ablak blokkolva ezen a webhelyen",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -132,12 +140,20 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Kattints a távoli fontok blokkolásához ezen a webhelyen",
+    "message": "Kattints a távoli betűtípusok blokkolásához ezen a webhelyen",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Kattints a távoli fontok blokkolásának visszavonásához ezen a webhelyen",
+    "message": "Kattints a távoli betűtípusok blokkolásának visszavonásához ezen a webhelyen",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Kattints a JavaScript teljes letiltásához ezen az oldalon",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Kattints, hogy JavaScript ne legyen teljesen letiltva ezen az oldalon",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Globális szabályok: ebben az oszlopban azok a szabályok vannak, amelyek minden weboldalra vonatkoznak.",
@@ -168,7 +184,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "3rd-party css\/képek",
+    "message": "külső féltől származó css\/képek",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -291,6 +307,10 @@
     "message": "Távoli betűkészletek blokkolása",
     "description": ""
   },
+  "settingsNoScriptingPrompt": {
+    "message": "JavaScript letiltása",
+    "description": "The default state for the per-site no-scripting switch"
+  },
   "settingsNoCSPReportsPrompt": {
     "message": "CSP jelentések blokkolása",
     "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
@@ -351,6 +371,10 @@
     "message": "Módosítások alkalmazása",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Beépített",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Hirdetések",
     "description": "English: Ads"
@@ -379,9 +403,13 @@
     "message": "Saját",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Importálás...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
     "message": "Soronként egy URL. A &lsquo;!&rsquo; kezdetű sorok figyelmen kívül maradnak. A szabálytalan URL-ek szintén figyelmen kívül maradnak, hibajelzés nélkül.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "Elavult.",
@@ -400,8 +428,8 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Soronként egy szűrő. A szűrő lehet egy hostnév, vagy egy Adblock Plus kompatibilis szűrő.\nA &lsquo;!&rsquo; kezdetű sorok figyelmen kívül maradnak.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "message": "Soronként egy szűrő. A szűrő lehet egy hostnév, vagy egy Adblock Plus kompatibilis szűrő.\nA <code>!<\/code> kezdetű sorok figyelmen kívül maradnak.",
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Importál és hozzáad",
@@ -576,20 +604,28 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Statikus filter, amiben {{filter}} benne van:",
-    "description": "Below this sentence, the filter lists in which the filter was found"
+    "message": "Statikus filter, amiben <code>{{filter}}<\/code> benne van:",
+    "description": "Below this sentence, the filter list(s) in which the filter was found"
+  },
+  "loggerStaticFilteringFinderSentence2": {
+    "message": "A statikus szűrő <code>{{filter}}<\/code> nem található az aktuálisan engedélyezett szűrőlisták egyikében sem",
+    "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
     "message": "Változások listája",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Támogatás",
     "description": "A link for where to get support"
+  },
+  "aboutIssues": {
+    "message": "Bugok és problémák",
+    "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
     "message": "Forráskód (GPLv3)",
@@ -750,6 +786,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Nagyméretű média elemek ideiglenes engedélyezése",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Billentyűkombináció megadása",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "Ez a bejegyzés utolsó kell hogy legyen",

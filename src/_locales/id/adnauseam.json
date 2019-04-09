@@ -31,6 +31,10 @@
     "message": "Memblokir Malware",
     "description": "English: Firstrun.html -> Block Malware"
   },
+  "adnAboutResetDataConfirm": {
+    "message": "Semua setelan akan dihapus, iklan di vault Anda akan dihapus, dan AdNauseam akan me-restart.\n\nulang AdNauseam ke pengaturan pabrik?",
+    "description": "Message asking user to confirm reset"
+  },
   "adnFirstRunHideAllAdsDescription": {
     "message": "sembunyikan iklan di <span class='link' id='To3pfilter'>daftar filter<\/span> yang telah Anda pilih",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
@@ -78,6 +82,10 @@
   "adnNotificationDisableUBlock": {
     "message": "uBlock dan AdNauseam mungkin tidak cocok!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationBrowserSetting": {
+    "message": "'Pemblokiran konten' pengaturan di browser Anda dapat mengganggu AdNauseam!",
+    "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
   "adnNotificationDNTAllowed": {
     "message": "Halaman ini menyetujui penggunaan <b>Do Not Track<b>, Iklan diperbolehkan.",

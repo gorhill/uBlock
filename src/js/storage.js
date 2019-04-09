@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2018 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global objectAssign, punycode, publicSuffixList */
+/* global punycode, publicSuffixList */
 
 'use strict';
 
@@ -29,47 +29,58 @@
     if ( typeof callback !== 'function' ) {
         callback = this.noopFunc;
     }
-    var getBytesInUseHandler = function(bytesInUse) {
+    let bytesInUse;
+    let countdown = 0;
+
+    let process = count => {
+        if ( typeof count === 'number' ) {
+            if ( bytesInUse === undefined ) {
+                bytesInUse = 0;
+            }
+            bytesInUse += count;
+        }
+        countdown -= 1;
+        if ( countdown > 0 ) { return; }
         µBlock.storageUsed = bytesInUse;
         callback(bytesInUse);
     };
+
     // Not all platforms implement this method.
     if ( vAPI.storage.getBytesInUse instanceof Function ) {
-        vAPI.storage.getBytesInUse(null, getBytesInUseHandler);
-    } else {
+        countdown += 1;
+        vAPI.storage.getBytesInUse(null, process);
+    }
+    if (
+        this.cacheStorage !== vAPI.storage &&
+        this.cacheStorage.getBytesInUse instanceof Function
+    ) {
+        countdown += 1;
+        this.cacheStorage.getBytesInUse(null, process);
+    }
+    if ( countdown === 0 ) {
         callback();
     }
 };
 
 /******************************************************************************/
 
-µBlock.keyvalSetOne = function(key, val, callback) {
-    var bin = {};
-    bin[key] = val;
-    vAPI.storage.set(bin, callback || this.noopFunc);
-};
-
-/******************************************************************************/
-
 µBlock.saveLocalSettings = (function() {
-    var saveAfter = 4 * 60 * 1000;
+    let saveAfter = 4 * 60 * 1000;
 
-    var save = function() {
-        this.localSettingsLastSaved = Date.now();
-        vAPI.storage.set(this.localSettings);
-    };
-
-    var onTimeout = function() {
-        var µb = µBlock;
+    let onTimeout = ( ) => {
+        let µb = µBlock;
         if ( µb.localSettingsLastModified > µb.localSettingsLastSaved ) {
-            save.call(µb);
+            µb.saveLocalSettings();
         }
         vAPI.setTimeout(onTimeout, saveAfter);
     };
 
     vAPI.setTimeout(onTimeout, saveAfter);
 
-    return save;
+    return function(callback) {
+        this.localSettingsLastSaved = Date.now();
+        vAPI.storage.set(this.localSettings, callback);
+    };
 })();
 
 /******************************************************************************/
@@ -81,50 +92,49 @@
 /******************************************************************************/
 
 µBlock.loadHiddenSettings = function() {
-    var onLoaded = function(bin) {
+    vAPI.storage.get('hiddenSettings', bin => {
         if ( bin instanceof Object === false ) { return; }
-        var µb = µBlock,
-            hs = bin.hiddenSettings;
-        // Remove following condition once 1.15.12+ is widespread.
-        if (
-            hs instanceof Object === false &&
-            typeof bin.hiddenSettingsString === 'string'
-        ) {
-            vAPI.storage.remove('hiddenSettingsString');
-            hs = µBlock.hiddenSettingsFromString(bin.hiddenSettingsString);
-        }
+        let hs = bin.hiddenSettings;
         if ( hs instanceof Object ) {
-            var hsDefault = µb.hiddenSettingsDefault;
-            for ( var key in hsDefault ) {
+            let hsDefault = this.hiddenSettingsDefault;
+            for ( let key in hsDefault ) {
                 if (
                     hsDefault.hasOwnProperty(key) &&
                     hs.hasOwnProperty(key) &&
                     typeof hs[key] === typeof hsDefault[key]
                 ) {
-                    µb.hiddenSettings[key] = hs[key];
+                    this.hiddenSettings[key] = hs[key];
                 }
             }
         }
         if ( vAPI.localStorage.getItem('immediateHiddenSettings') === null ) {
-            µb.saveImmediateHiddenSettings();
+            this.saveImmediateHiddenSettings();
         }
-    };
-
-    vAPI.storage.get(
-        [ 'hiddenSettings', 'hiddenSettingsString'],
-        onLoaded
-    );
+    });
 };
 
+// Note: Save only the settings which values differ from the default ones.
+// This way the new default values in the future will properly apply for those
+// which were not modified by the user.
+
 µBlock.saveHiddenSettings = function(callback) {
-    vAPI.storage.set({ hiddenSettings: this.hiddenSettings, callback });
+    let bin = { hiddenSettings: {} };
+    for ( let prop in this.hiddenSettings ) {
+        if (
+            this.hiddenSettings.hasOwnProperty(prop) &&
+            this.hiddenSettings[prop] !== this.hiddenSettingsDefault[prop]
+        ) {
+            bin.hiddenSettings[prop] = this.hiddenSettings[prop];
+        }
+    }
+    vAPI.storage.set(bin, callback);
     this.saveImmediateHiddenSettings();
 };
 
 /******************************************************************************/
 
 µBlock.hiddenSettingsFromString = function(raw) {
-    var out = objectAssign({}, this.hiddenSettingsDefault),
+    var out = Object.assign({}, this.hiddenSettingsDefault),
         lineIter = new this.LineIterator(raw),
         line, matches, name, value;
     while ( lineIter.eot() === false ) {
@@ -188,25 +198,33 @@
 /******************************************************************************/
 
 µBlock.savePermanentFirewallRules = function() {
-    this.keyvalSetOne('dynamicFilteringString', this.permanentFirewall.toString());
+    vAPI.storage.set({
+        dynamicFilteringString: this.permanentFirewall.toString()
+    });
 };
 
 /******************************************************************************/
 
 µBlock.savePermanentURLFilteringRules = function() {
-    this.keyvalSetOne('urlFilteringString', this.permanentURLFiltering.toString());
+    vAPI.storage.set({
+        urlFilteringString: this.permanentURLFiltering.toString()
+    });
 };
 
 /******************************************************************************/
 
 µBlock.saveHostnameSwitches = function() {
-    this.keyvalSetOne('hostnameSwitchesString', this.hnSwitches.toString());
+    vAPI.storage.set({
+        hostnameSwitchesString: this.permanentSwitches.toString()
+    });
 };
 
 /******************************************************************************/
 
 µBlock.saveWhitelist = function() {
-    this.keyvalSetOne('netWhitelist', this.stringFromWhitelist(this.netWhitelist));
+    vAPI.storage.set({
+        netWhitelist: this.stringFromWhitelist(this.netWhitelist)
+    });
     this.netWhitelistModifyTime = Date.now();
 };
 
@@ -256,7 +274,7 @@
             this.removeFilterList(oldKeys[i]);
         }
     }
-    newKeys = this.arrayFrom(newSet);
+    newKeys = Array.from(newSet);
     var bin = {
         selectedFilterLists: newKeys
     };
@@ -336,10 +354,10 @@
             }
             selectedListKeySet.add(assetKey);
         }
-        externalLists = this.arrayFrom(importedSet).sort().join('\n');
+        externalLists = Array.from(importedSet).sort().join('\n');
     }
 
-    var result = this.arrayFrom(selectedListKeySet);
+    var result = Array.from(selectedListKeySet);
     if ( externalLists !== this.userSettings.externalLists ) {
         this.userSettings.externalLists = externalLists;
         vAPI.storage.set({ externalLists: externalLists });
@@ -365,7 +383,7 @@
         }
         out.add(location);
     }
-    return this.arrayFrom(out);
+    return Array.from(out);
 };
 
 /******************************************************************************/
@@ -456,7 +474,7 @@
 
     // User filter list.
     newAvailableLists[this.userFiltersPath] = {
-        group: 'default',
+        group: 'user',
         title: vAPI.i18n('1pPageName')
     };
 
@@ -561,7 +579,7 @@
             if ( entries.hasOwnProperty(assetKey) === false ) { continue; }
             entry = entries[assetKey];
             if ( entry.content !== 'filters' ) { continue; }
-            newAvailableLists[assetKey] = objectAssign({}, entry);
+            newAvailableLists[assetKey] = Object.assign({}, entry);
         }
 
         // Load set of currently selected filter lists.
@@ -743,7 +761,7 @@
     // https://github.com/gorhill/uBlock/issues/313
     // Always try to fetch the name if this is an external filter list.
     if ( listEntry.title === '' || listEntry.group === 'custom' ) {
-        matches = head.match(/(?:^|\n)!\s*Title:([^\n]+)/i);
+        matches = head.match(/(?:^|\n)(?:!|# )[\t ]*Title[\t ]*:([^\n]+)/i);
         if ( matches !== null ) {
             // https://bugs.chromium.org/p/v8/issues/detail?id=2869
             // JSON.stringify/JSON.parse is to work around String.slice()
@@ -753,9 +771,12 @@
         }
     }
     // Extract update frequency information
-    matches = head.match(/(?:^|\n)![\t ]*Expires:[\t ]*([\d]+)[\t ]*days?/i);
+    matches = head.match(/(?:^|\n)(?:!|# )[\t ]*Expires[\t ]*:[\t ]*(\d+)[\t ]*(h)?/i);
     if ( matches !== null ) {
         v = Math.max(parseInt(matches[1], 10), 1);
+        if ( matches[2] !== undefined ) {
+            v = Math.ceil(v / 24);
+        }
         if ( v !== listEntry.updateAfter ) {
             this.assets.registerAssetSource(assetKey, { updateAfter: v });
         }
@@ -785,18 +806,16 @@
         staticExtFilteringEngine = this.staticExtFilteringEngine,
         reIsWhitespaceChar = /\s/,
         reMaybeLocalIp = /^[\d:f]/,
-        reIsLocalhostRedirect = /\s+(?:broadcasthost|local|localhost|localhost\.localdomain)\b/,
+        reIsLocalhostRedirect = /\s+(?:0\.0\.0\.0|broadcasthost|localhost|local|ip6-\w+)\b/,
         reLocalIp = /^(?:0\.0\.0\.0|127\.0\.0\.1|::1|fe80::1%lo0)/,
         line, c, pos,
-        lineIter = new this.LineIterator(rawText);
+        lineIter = new this.LineIterator(this.processDirectives(rawText));
 
     while ( lineIter.eot() === false ) {
-        line = lineIter.next().trim();
-
         // rhill 2014-04-18: The trim is important here, as without it there
         // could be a lingering `\r` which would cause problems in the
         // following parsing code.
-
+        line = lineIter.next().trim();
         if ( line.length === 0 ) { continue; }
 
         // Strip comments
@@ -903,6 +922,59 @@
 
 /******************************************************************************/
 
+// https://github.com/AdguardTeam/AdguardBrowserExtension/issues/917
+
+µBlock.processDirectives = function(content) {
+    var reIf = /^!#(if|endif)\b([^\n]*)/gm,
+        parts = [],
+        beg = 0, depth = 0, discard = false;
+    while ( beg < content.length ) {
+        var match = reIf.exec(content);
+        if ( match === null ) { break; }
+        if ( match[1] === 'if' ) {
+            var expr = match[2].trim();
+            var target = expr.startsWith('!');
+            if ( target ) { expr = expr.slice(1); }
+            var token = this.processDirectives.tokens.get(expr);
+            if (
+                depth === 0 &&
+                discard === false &&
+                token !== undefined &&
+                vAPI.webextFlavor.soup.has(token) === target
+            ) {
+                parts.push(content.slice(beg, match.index));
+                discard = true;
+            }
+            depth += 1;
+            continue;
+        }
+        depth -= 1;
+        if ( depth < 0 ) { break; }
+        if ( depth === 0 && discard ) {
+            beg = match.index + match[0].length + 1;
+            discard = false;
+        }
+    }
+    if ( depth === 0 && parts.length !== 0 ) {
+        parts.push(content.slice(beg));
+        content = parts.join('\n');
+    }
+    return content.trim();
+};
+
+µBlock.processDirectives.tokens = new Map([
+    [ 'ext_ublock', 'ublock' ],
+    [ 'env_chromium', 'chromium' ],
+    [ 'env_edge', 'edge' ],
+    [ 'env_firefox', 'firefox' ],
+    [ 'env_mobile', 'mobile' ],
+    [ 'env_safari', 'safari' ],
+    [ 'cap_html_filtering', 'html_filtering' ],
+    [ 'cap_user_stylesheet', 'user_stylesheet' ]
+]);
+
+/******************************************************************************/
+
 µBlock.loadRedirectResources = function(updatedContent) {
     var µb = this,
         content = '';
@@ -959,11 +1031,18 @@
     };
 
     var onCompiledListLoaded = function(details) {
-        if ( details.content === '' ) {
+        var selfie;
+        try {
+            selfie = JSON.parse(details.content);
+        } catch (ex) {
+        }
+        if (
+            selfie === undefined ||
+            publicSuffixList.fromSelfie(selfie) === false
+        ) {
             µb.assets.get(assetKey, onRawListLoaded);
             return;
         }
-        publicSuffixList.fromSelfie(JSON.parse(details.content));
         callback();
     };
 
@@ -987,31 +1066,63 @@
 // some set time.
 
 µBlock.selfieManager = (function() {
-    var timer = null;
+    let µb = µBlock;
+    let timer = null;
 
-    var create = function() {
+    // As of 2018-05-31:
+    // JSON.stringify-ing ourselves results in a better baseline
+    // memory usage at selfie-load time. For some reasons.
+
+    let create = function() {
         timer = null;
-        var selfie = {
-            magic: this.systemSettings.selfieMagic,
-            publicSuffixList: publicSuffixList.toSelfie(),
-            availableFilterLists: this.availableFilterLists,
-            staticNetFilteringEngine: this.staticNetFilteringEngine.toSelfie(),
-            redirectEngine: this.redirectEngine.toSelfie(),
-            staticExtFilteringEngine: this.staticExtFilteringEngine.toSelfie()
-        };
-        vAPI.cacheStorage.set({ selfie: selfie });
-    }.bind(µBlock);
+        let selfie = JSON.stringify({
+            magic: µb.systemSettings.selfieMagic,
+            availableFilterLists: µb.availableFilterLists,
+            staticNetFilteringEngine: µb.staticNetFilteringEngine.toSelfie(),
+            redirectEngine: µb.redirectEngine.toSelfie(),
+            staticExtFilteringEngine: µb.staticExtFilteringEngine.toSelfie()
+        });
+        µb.cacheStorage.set({ selfie: selfie });
+    };
 
-    var destroy = function() {
+    let load = function(callback) {
+        µb.cacheStorage.get('selfie', function(bin) {
+            if (
+                bin instanceof Object === false ||
+                typeof bin.selfie !== 'string'
+            ) {
+                return callback(false);
+            }
+            let selfie;
+            try {
+                selfie = JSON.parse(bin.selfie);
+            } catch(ex) {
+            }
+            if (
+                selfie instanceof Object === false ||
+                selfie.magic !== µb.systemSettings.selfieMagic
+            ) {
+                return callback(false);
+            }
+            µb.availableFilterLists = selfie.availableFilterLists;
+            µb.staticNetFilteringEngine.fromSelfie(selfie.staticNetFilteringEngine);
+            µb.redirectEngine.fromSelfie(selfie.redirectEngine);
+            µb.staticExtFilteringEngine.fromSelfie(selfie.staticExtFilteringEngine);
+            callback(true);
+        });
+    };
+
+    let destroy = function() {
         if ( timer !== null ) {
             clearTimeout(timer);
             timer = null;
         }
-        vAPI.cacheStorage.remove('selfie');
-        timer = vAPI.setTimeout(create, this.selfieAfter);
-    }.bind(µBlock);
+        µb.cacheStorage.remove('selfie');
+        timer = vAPI.setTimeout(create, µb.selfieAfter);
+    };
 
     return {
+        load: load,
         destroy: destroy
     };
 })();

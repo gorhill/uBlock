@@ -1,14 +1,14 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
     "message": "როგორც იქნა, მძლავრი და შედეგიანი რეკლამების შემზღუდავი. ზოგავს CPU-ს და მეხსიერებას.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
-    "message": "uBlock₀ — სამართავი გვერდი",
+    "message": "uBlock₀ — სამართავი დაფა",
     "description": "English: uBlock₀ — Dashboard"
   },
   "settingsPageName": {
@@ -31,6 +31,10 @@
     "message": "გამონაკლისები",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "მალსახმობები",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — აღმრიცხავი",
     "description": "Title for the logger window"
@@ -38,6 +42,10 @@
   "aboutPageName": {
     "message": "შესახებ",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — რესურსები",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "დამატებითი პარამეტრები",
@@ -138,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "დააწკაპეთ ვებშრიფტების შეზღუდვის გასაუქმებლად ამ საიტზე",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "დააწკაპეთ JavaScript-ის გასათიშად ამ საიტზე",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "დააწკაპეთ JavaScript-ზე შეზღუდვის მოსახსნელად ამ საიტზე",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "გლობალური წესები: ეს სვეტი არის წესებისთვის, რომლებიც მოქმედებს ყველა საიტზე.",
@@ -268,7 +284,7 @@
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
-    "message": "WebRTC-სთვის ხელის შეშლა ლოკალური IP მისამართის გაჟონვაში",
+    "message": "WebRTC-სთვის ხელის შეშლა შიდა IP მისამართის გაჟონვაში",
     "description": "English: "
   },
   "settingPerSiteSwitchGroup": {
@@ -290,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "ვებშრიფტების შეზღუდვა",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "JavaScript-ის გათიშვა",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "CSP მოხსენებების აკრძალვა",
@@ -316,7 +336,7 @@
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
-    "message": "ფილტრების სიების თვითგანახლება",
+    "message": "ფილტრების წესების თვითგანახლება",
     "description": "A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow": {
@@ -332,7 +352,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>ეს პარამეტრი <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-სთან თავსებადი &ldquo;ელემენტის დასამალი&rdquo; ფილტრების<\/a> დამუშავებისა და გამოყენების შესაძლებლობას იძლევა. ეს ფილტრები, ძირითადად, იმ ხილული ელემენტების დასამალად გამოიყენება ვებგვერდზე, რომელსაც ქსელის მოთხოვნაზე დაფუძნებული ფილტრაციის საშუალებები ვერ ზღუდავს.<\/p><p>ამ შესაძლებლობის ჩართვის შედეგად გაიზრდება uBlock₀-ის მიერ მეხიერების მოხმარება.<\/p>",
+    "message": "<p>ეს პარამეტრი <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-სთან თავსებადი &ldquo;ელემენტის დასამალი&rdquo; ფილტრების<\/a> დამუშავებისა და გამოყენების შესაძლებლობას იძლევა. ეს ფილტრები, ძირითადად, იმ ხილული ელემენტების დასამალად გამოიყენება ვებგვერდზე, რომელსაც ქსელის მოთხოვნაზე დაფუძნებული ფილტრაციის საშუალებები ვერ ზღუდავს.<\/p><p>ამ შესაძლებლობის ჩართვის შედეგად გაიზრდება uBlock₀-ის მიერ მეხსიერების მოხმარება.<\/p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -350,6 +370,10 @@
   "3pApplyChanges": {
     "message": "ცვლილებების ასახვა",
     "description": "English: Apply changes"
+  },
+  "3pGroupDefault": {
+    "message": "ჩაშენებული",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
     "message": "რეკლამები",
@@ -379,9 +403,13 @@
     "message": "საკუთარი სიები",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "შემოტანა...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
-    "message": "თითოეული URL ცალკეულ ხაზზე. ხაზები &lsquo;!&rsquo; თავსართით უგულებელყოფილი იქნება. არამართებული URL ბმულები, უგულებელყოფილი იქნება გაფრთხილების გარეშე.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "message": "თითოეული URL ცალკეულ ხაზზე. არამართებული URL ბმულები, უგულებელყოფილი იქნება გაფრთხილების გარეშე.",
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "მოძველებული",
@@ -401,7 +429,7 @@
   },
   "1pFormatHint": {
     "message": "თითოეული ფილტრი ცალკეულ ხაზზე. ფილტრი შეიძლება იყოს საიტის უბრალო დასახელება, ან Adblock Plus-სთან თავსებადი ფილტრი. ხაზები &lsquo;!&rsquo; თავსართით უგულებელყოფილი იქნება.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "შემოტანა და დამატება",
@@ -460,7 +488,7 @@
     "description": "default file name to use"
   },
   "rulesHint": {
-    "message": "თქვენი ცვალებადი ფილტრების წესების სია.",
+    "message": "თქვენი ცვალებადი ფილტრების წესები.",
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
@@ -576,27 +604,35 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "მუდმივი ფილტრი {{filter}} ნაპოვნია სიაში:",
-    "description": "Below this sentence, the filter lists in which the filter was found"
+    "message": "მუდმივი ფილტრი <code>{{filter}}<\/code> ნაპოვნია სიაში:",
+    "description": "Below this sentence, the filter list(s) in which the filter was found"
+  },
+  "loggerStaticFilteringFinderSentence2": {
+    "message": "მუდმივი ფილტრი <code>{{filter}}<\/code> ვერ მოიძებნა ამჟამად გამოყენებულ ფილტრებს შორის",
+    "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
     "message": "ცვლილებათა ჟურნალი",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "მხარდაჭერა",
     "description": "A link for where to get support"
+  },
+  "aboutIssues": {
+    "message": "ხარვეზების აღმრიცხავი",
+    "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
     "message": "წყაროს კოდი (GPLv3)",
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "დამხმარეები",
+    "message": "მოხალისეები",
     "description": "English: Contributors"
   },
   "aboutBackupDataButton": {
@@ -632,7 +668,7 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: გსურთ შემდეგი URL ბმულის საკუთარი ფილტრის სიაში ჩამატება?\n\nდასახელება: „{{title}}“\nURL: {{url}}",
+    "message": "uBlock₀: გსურთ შემდეგი URL ბმულის საკუთარ ფილტრის წესებში ჩამატება?\n\nდასახელება: „{{title}}“\nURL: {{url}}",
     "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo": {
@@ -728,7 +764,7 @@
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
-    "message": "გაფრთხილება! დამატებითი პარამეტრებს ცვლილების შედეგებზე, თავად ხართ პასუხისმგებელი.",
+    "message": "გაფრთხილება! დამატებითი პარამეტრების ცვლილების შედეგებზე, თავად იქნებით პასუხისმგებელი.",
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {
@@ -750,6 +786,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "დიდი მედია-ელემენტების დროებით დაშვება",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "მალსახმობის მითითება",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "This entry must be the last one",

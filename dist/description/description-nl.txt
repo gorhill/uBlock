@@ -1,0 +1,47 @@
+Een efficiënte adblocker: gebruikt weinig processorkracht en geheugen. Toch kan het duizenden filters meer laden en toepassen dan andere populaire adblockers.
+
+Geïllustreerde efficiëntievergelijking: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+
+Gebruik: met de grote aan-uitknop in de pop-up kan uBlock voor de huidige website permanent worden in- of uitgeschakeld. Dit wordt alleen op de huidige website toegepast; het is geen algemene aan-uitknop.
+
+***
+
+Flexibel, want het is meer dan een ‘adblocker’: het kan ook filters inlezen en aanmaken vanuit hosts-bestanden.
+
+Standaard worden de volgende filterlijsten geladen en toegepast:
+
+- EasyList
+- Peter Lowe’s Ad server list
+- EasyPrivacy
+- Malware domains
+
+Er zijn meer lijsten beschikbaar die u kunt inschakelen:
+
+- Fanboy’s Enhanced Tracking List
+- Dan Pollock’s hosts file
+- hpHosts’s Ad and tracking servers
+- MVPS HOSTS
+- Spam404
+- en nog vele andere...
+
+Natuurlijk wordt het geheugengebruik groter naarmate er meer filters worden ingeschakeld. Maar zelfs na het inschakelen van Fanboy’s twee extra lijsten, hpHosts’s Ad en tracking servers, heeft uBlock een lager geheugengebruik dan andere populaire blockers.
+
+Houd er ook rekening mee dat het gebruik van sommige van deze extra lijsten de kans vergroot dat websites niet goed worden weergegeven - met name de lijsten die doorgaans als hosts-bestand worden gebruikt.
+
+***
+
+Zonder de standaard filterlijsten doet deze extensie niets. Als u dus ooit echt een bijdrage wilt leveren, denk dan aan de mensen die hard werken om de filterlijsten die u gebruikt te onderhouden, welke allemaal gratis beschikbaar zijn gemaakt.
+
+***
+
+Vrij.
+Open source met publieke licentie (GPLv3)
+Voor gebruikers, door gebruikers.
+
+Medewerkers @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Medewerkers @ Crowdin: https://crowdin.net/project/ublock
+
+***
+
+Projectwijzigingenlogboek:
+https://github.com/gorhill/uBlock/releases

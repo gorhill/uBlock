@@ -2,7 +2,7 @@
 
     publicsuffixlist.js - an efficient javascript implementation to deal with
     Mozilla Foundation's Public Suffix List <http://publicsuffix.org/list/>
-    Copyright (C) 2013  Raymond Hill
+    Copyright (C) 2013-2018 Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -37,17 +37,14 @@
 
 /******************************************************************************/
 
-var exceptions = {};
-var rules = {};
-var selfieMagic = 'iscjsfsaolnm';
+var exceptions = new Map();
+var rules = new Map();
 
 // This value dictate how the search will be performed:
 //    < this.cutoffLength = indexOf()
 //   >= this.cutoffLength = binary search
 var cutoffLength = 256;
 var mustPunycode = /[^a-z0-9.-]/;
-
-var onChangedListeners = [];
 
 /******************************************************************************/
 
@@ -127,20 +124,17 @@ function search(store, hostname) {
         tld = hostname.slice(pos + 1);
         remainder = hostname.slice(0, pos);
     }
-    var substore = store[tld];
-    if ( !substore ) {
-        return false;
-    }
+    var substore = store.get(tld);
+    if ( substore === undefined ) { return false; }
     // If substore is a string, use indexOf()
     if ( typeof substore === 'string' ) {
         return substore.indexOf(' ' + remainder + ' ') >= 0;
     }
     // It is an array: use binary search.
     var l = remainder.length;
+    if ( l >= substore.length ) { return false; }
     var haystack = substore[l];
-    if ( !haystack ) {
-        return false;
-    }
+    if ( haystack.length === 0 ) { return false; }
     var left = 0;
     var right = Math.floor(haystack.length / l + 0.5);
     var i, needle;
@@ -168,8 +162,8 @@ function search(store, hostname) {
 // Suggestion: use <https://github.com/bestiejs/punycode.js> it's quite good.
 
 function parse(text, toAscii) {
-    exceptions = {};
-    rules = {};
+    exceptions = new Map();
+    rules = new Map();
 
     // http://publicsuffix.org/list/:
     // "... all rules must be canonicalized in the normal way
@@ -229,16 +223,18 @@ function parse(text, toAscii) {
         }
 
         // Store suffix using tld as key
-        if ( !store.hasOwnProperty(tld) ) {
-            store[tld] = [];
+        var substore = store.get(tld);
+        if ( substore === undefined ) {
+            store.set(tld, (substore = []));
         }
         if ( line ) {
-            store[tld].push(line);
+            substore.push(line);
         }
     }
     crystallize(exceptions);
     crystallize(rules);
-    callListeners(onChangedListeners);
+
+    window.dispatchEvent(new CustomEvent('publicSuffixList'));
 }
 
 /******************************************************************************/
@@ -247,104 +243,66 @@ function parse(text, toAscii) {
 // for future look up.
 
 function crystallize(store) {
-    var suffixes, suffix, i, l;
-
-    for ( var tld in store ) {
-        if ( !store.hasOwnProperty(tld) ) {
-            continue;
-        }
-        suffixes = store[tld].join(' ');
+    for ( var entry of store ) {
+        var tld = entry[0];
+        var suffixes = entry[1];
         // No suffix
-        if ( !suffixes ) {
-            store[tld] = '';
+        if ( suffixes.length === 0 ) {
+            store.set(tld, '');
             continue;
         }
         // Concatenated list of suffixes less than cutoff length:
         //   Store as string, lookup using indexOf()
-        if ( suffixes.length < cutoffLength ) {
-            store[tld] = ' ' + suffixes + ' ';
+        var s = suffixes.join(' ');
+        if ( s.length < cutoffLength ) {
+            store.set(tld, ' ' + s + ' ');
             continue;
         }
         // Concatenated list of suffixes greater or equal to cutoff length
         //   Store as array keyed on suffix length, lookup using binary search.
         // I borrowed the idea to key on string length here:
         //   http://ejohn.org/blog/dictionary-lookups-in-javascript/#comment-392072
-
-        i = store[tld].length;
-        suffixes = [];
+        var i = suffixes.length, l;
+        var aa = [];
         while ( i-- ) {
-            suffix = store[tld][i];
+            var suffix = suffixes[i];
+            var j = aa.length;
             l = suffix.length;
-            if ( !suffixes[l] ) {
-                suffixes[l] = [];
+            while ( j <= l ) {
+                aa[j] = []; j += 1;
             }
-            suffixes[l].push(suffix);
+            aa[l].push(suffix);
         }
-        l = suffixes.length;
+        l = aa.length;
         while ( l-- ) {
-            if ( suffixes[l] ) {
-                suffixes[l] = suffixes[l].sort().join('');
-            }
+            aa[l] = aa[l].sort().join('');
         }
-        store[tld] = suffixes;
+        store.set(tld, aa);
     }
     return store;
 }
 
 /******************************************************************************/
 
+var selfieMagic = 1;
+
 function toSelfie() {
     return {
         magic: selfieMagic,
-        rules: rules,
-        exceptions: exceptions
+        rules: Array.from(rules),
+        exceptions: Array.from(exceptions)
     };
 }
 
 function fromSelfie(selfie) {
-    if ( typeof selfie !== 'object' || typeof selfie.magic !== 'string' || selfie.magic !== selfieMagic ) {
+    if ( typeof selfie !== 'object' || selfie.magic !== selfieMagic ) {
         return false;
     }
-    rules = selfie.rules;
-    exceptions = selfie.exceptions;
-    callListeners(onChangedListeners);
+    rules = new Map(selfie.rules);
+    exceptions = new Map(selfie.exceptions);
+    window.dispatchEvent(new CustomEvent('publicSuffixList'));
     return true;
 }
-
-/******************************************************************************/
-
-var addListener = function(listeners, callback) {
-    if ( typeof callback !== 'function' ) {
-        return;
-    }
-    if ( listeners.indexOf(callback) === -1 ) {
-        listeners.push(callback);
-    }
-};
-
-var removeListener = function(listeners, callback) {
-    var pos = listeners.indexOf(callback);
-    if ( pos !== -1 ) {
-        listeners.splice(pos, 1);
-    }
-};
-
-var callListeners = function(listeners) {
-    for ( var i = 0; i < listeners.length; i++ ) {
-        listeners[i]();
-    }
-};
-
-/******************************************************************************/
-
-var onChanged = {
-    addListener: function(callback) {
-        addListener(onChangedListeners, callback);
-    },
-    removeListener: function(callback) {
-        removeListener(onChangedListeners, callback);
-    }
-};
 
 /******************************************************************************/
 
@@ -359,7 +317,6 @@ root.publicSuffixList = {
     'getPublicSuffix': getPublicSuffix,
     'toSelfie': toSelfie,
     'fromSelfie': fromSelfie,
-    'onChanged': onChanged
 };
 
 /******************************************************************************/

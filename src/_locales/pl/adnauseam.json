@@ -31,6 +31,10 @@
     "message": "Zablokuj złośliwe oprogramowanie",
     "description": "English: Firstrun.html -> Block Malware"
   },
+  "adnAboutResetDataConfirm": {
+    "message": "Wszystkie ustawienia zostaną usunięte, reklamy w magazynie zostaną usunięte i ponownie uruchomi AdNauseam.\n\nAdNauseam reset do ustawień fabrycznych?",
+    "description": "Message asking user to confirm reset"
+  },
   "adnFirstRunHideAllAdsDescription": {
     "message": "ukryj reklamy z wybranych <span class='link' id='To3pfilter'>list filtrów<\/span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
@@ -78,6 +82,10 @@
   "adnNotificationDisableUBlock": {
     "message": "uBlock i AdNauseam mogą ze sobą konfliktować!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationBrowserSetting": {
+    "message": "'Blokowanie treści' Ustawienia w przeglądarce może kolidować z AdNauseam!",
+    "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
   "adnNotificationDNTAllowed": {
     "message": "Ta strona szanuje politykę <b>Nie śledź<\/b>. Reklamy zostaną wyświetlone.",

@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2015-2018 Raymond Hill
+    Copyright (C) 2015-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -70,6 +70,14 @@ var warResolve = (function() {
     };
 })();
 
+// https://github.com/gorhill/uBlock/issues/3639
+// https://github.com/EFForg/https-everywhere/issues/14961
+// https://bugs.chromium.org/p/chromium/issues/detail?id=111700
+//   Do not redirect to a WAR if the platform suffers from spurious redirect
+//   conflicts, and the request to redirect is not `https:`.
+//   This special handling code can removed once the Chromium issue is fixed.
+var suffersSpuriousRedirectConflicts = vAPI.webextFlavor.soup.has('chromium');
+
 /******************************************************************************/
 /******************************************************************************/
 
@@ -91,7 +99,11 @@ RedirectEntry.prototype.toURL = function(details) {
     if (
         this.warURL !== undefined &&
         details instanceof Object &&
-        details.requestType !== 'xmlhttprequest'
+        details.requestType !== 'xmlhttprequest' &&
+        (
+            suffersSpuriousRedirectConflicts === false ||
+            details.requestURL.startsWith('https:')
+        )
     ) {
         return this.warURL + '?secret=' + vAPI.warSecret;
     }
@@ -295,7 +307,7 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
     var µburi = µBlock.URI,
         des = matches[1] || '',
         pattern = (des + matches[2]).replace(/[.+?{}()|[\]\/\\]/g, '\\$&')
-                                    .replace(/\^/g, '[^\\w\\d%-]')
+                                    .replace(/\^/g, '[^\\w.%-]')
                                     .replace(/\*/g, '.*?'),
         type,
         redirect = '',
@@ -396,12 +408,11 @@ RedirectEngine.prototype.toSelfie = function() {
         }
         rules.push(rule);
     }
-    var µb = µBlock;
     return {
         rules: rules,
-        ruleTypes: µb.arrayFrom(this.ruleTypes),
-        ruleSources: µb.arrayFrom(this.ruleSources),
-        ruleDestinations: µb.arrayFrom(this.ruleDestinations)
+        ruleTypes: Array.from(this.ruleTypes),
+        ruleSources: Array.from(this.ruleSources),
+        ruleDestinations: Array.from(this.ruleDestinations)
     };
 };
 
@@ -490,25 +501,25 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
 
 /******************************************************************************/
 
-var resourcesSelfieVersion = 3;
+let resourcesSelfieVersion = 3;
 
 RedirectEngine.prototype.selfieFromResources = function() {
-    vAPI.cacheStorage.set({
-        resourcesSelfie: {
-            version: resourcesSelfieVersion,
-            resources: µBlock.arrayFrom(this.resources)
-        }
-    });
+    let selfie = {
+        version: resourcesSelfieVersion,
+        resources: Array.from(this.resources)
+    };
+    µBlock.cacheStorage.set({ resourcesSelfie: JSON.stringify(selfie) });
 };
 
 RedirectEngine.prototype.resourcesFromSelfie = function(callback) {
-    var me = this;
-
-    var onSelfieReady = function(bin) {
-        if ( bin instanceof Object === false ) {
-            return callback(false);
+    µBlock.cacheStorage.get('resourcesSelfie', bin => {
+        let selfie = bin && bin.resourcesSelfie;
+        if ( typeof selfie === 'string' ) {
+            try {
+                selfie = JSON.parse(selfie);
+            } catch(ex) {
+            }
         }
-        var selfie = bin.resourcesSelfie;
         if (
             selfie instanceof Object === false ||
             selfie.version !== resourcesSelfieVersion ||
@@ -516,18 +527,16 @@ RedirectEngine.prototype.resourcesFromSelfie = function(callback) {
         ) {
             return callback(false);
         }
-        me.resources = new Map();
-        for ( var entry of bin.resourcesSelfie.resources ) {
-            me.resources.set(entry[0], RedirectEntry.fromSelfie(entry[1]));
+        this.resources = new Map();
+        for ( let entry of selfie.resources ) {
+            this.resources.set(entry[0], RedirectEntry.fromSelfie(entry[1]));
         }
         callback(true);
-    };
-
-    vAPI.cacheStorage.get('resourcesSelfie', onSelfieReady);
+    });
 };
 
 RedirectEngine.prototype.invalidateResourcesSelfie = function() {
-    vAPI.cacheStorage.remove('resourcesSelfie');
+    µBlock.cacheStorage.remove('resourcesSelfie');
 };
 
 /******************************************************************************/

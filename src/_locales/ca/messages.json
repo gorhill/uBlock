@@ -1,11 +1,11 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
     "message": "Finalment, un blocador eficient que utilitza pocs recursos de memòria i processador.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Tauler de control",
@@ -31,6 +31,10 @@
     "message": "Llista blanca",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Dreceres",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — Registre de peticions de xarxa",
     "description": "Title for the logger window"
@@ -38,6 +42,10 @@
   "aboutPageName": {
     "message": "Quant a",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Visor de recursos",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Configuració avançada",
@@ -48,11 +56,11 @@
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Feu clic per desactivar l'uBlock₀ en aquest lloc.\n\nFeu Ctrl+clic per desactivar l'uBlock₀ només en aquesta pàgina.",
+    "message": "Feu clic per inhabilitar l'uBlock₀ en aquest lloc.\n\nFeu Ctrl+clic per inhabilitar l'uBlock₀ només en aquesta pàgina.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Feu clic per activar l'uBlock₀ en aquest lloc.",
+    "message": "Feu clic per habilitar l'uBlock₀ en aquest lloc.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -96,11 +104,11 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Feu clic per bloquejar totes les finestres emergents d'aquest lloc",
+    "message": "Feu clic per blocar totes les finestres emergents d'aquest lloc",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Feu clic per desbloquejar les finestres emergents d'aquest lloc",
+    "message": "Feu clic per desblocar les finestres emergents d'aquest lloc",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -108,11 +116,11 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Feu clic per bloquejar elements multimèdia grans en aquest lloc",
+    "message": "Feu clic per blocar elements multimèdia grans en aquest lloc",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Fes clic per no bloquejar els elements multimèdia grans en aquest lloc",
+    "message": "Feu clic per desblocar elements multimèdia grans en aquest lloc",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -120,11 +128,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Feu clic per desactivar els filtres cosmètics en aquest lloc",
+    "message": "Feu clic per inhabilitar els filtres cosmètics en aquest lloc",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Feu clic per activar els filtres cosmètics en aquest lloc",
+    "message": "Feu clic per habilitar els filtres cosmètics en aquest lloc",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -132,12 +140,20 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Feu clic per bloquejar fonts remotes en aquest lloc",
+    "message": "Feu clic per blocar les fonts remotes en aquest lloc",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Feu clic per desbloquejar les fonts remotes en aquest lloc",
+    "message": "Feu clic per desblocar les fonts remotes en aquest lloc",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Feu clic per inhabilitar completament el JavaScript en aquest lloc",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Feu clic per no inhabilitar completament el JavaScript en aquest lloc",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Regles globals: les regles d'aquesta columna s'apliquen a tots els llocs.",
@@ -224,19 +240,19 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Bloqueja l'element",
+    "message": "Bloca l'element",
     "description": "English: Block element"
   },
   "settingsCollapseBlockedPrompt": {
-    "message": "Amaga els marcardors de posició dels elements bloquejats",
+    "message": "Amaga els marcadors de posició dels elements blocats",
     "description": "English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt": {
-    "message": "Mostra el número de peticions bloquejades a la icona",
+    "message": "Mostra el número de peticions blocades a l'icona",
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "Desactiva els suggeriments",
+    "message": "Inhabilita els suggeriments",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
@@ -248,7 +264,7 @@
     "description": "English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt": {
-    "message": "Activa el suport d'emmagatzematge al núvol",
+    "message": "Habilita el suport d'emmagatzematge al núvol",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
@@ -280,19 +296,23 @@
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "Desactiva els filtres cosmètics",
+    "message": "Inhabilita els filtres cosmètics",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Bloqueja els fitxers multimèdia més grans que {{input:number}} kB",
+    "message": "Bloca els fitxers multimèdia més grans que {{input:number}} kB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
-    "message": "Bloqueja les fonts remotes",
+    "message": "Bloca les fonts remotes",
     "description": ""
   },
+  "settingsNoScriptingPrompt": {
+    "message": "Inhabilita el JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
+  },
   "settingsNoCSPReportsPrompt": {
-    "message": "Bloqueja informes CSP",
+    "message": "Bloca els informes CSP",
     "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
   },
   "settingsStorageUsed": {
@@ -351,6 +371,10 @@
     "message": "Aplicar canvis",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Local",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Anuncis",
     "description": "English: Ads"
@@ -379,9 +403,13 @@
     "message": "Personalitzat",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Importa...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
-    "message": "Una URL per línia. Línies amb el símbol &lsquo;!&rsquo; s'ignoraran. Adreces URL no vàlides s'ignoraran silenciosament.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "message": "Una URL per línia. S'ignoraran les línies amb el símbol &lsquo;!&rsquo;. Les URL no vàlides s'ignoraran silenciosament.",
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "Obsolet",
@@ -400,8 +428,8 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Un filtre per línia. Un filtre pot ser un domini, o un filtre compatible amb Adblock Plus. Línies amb el símbol &lsquo;!&rsquo; s'ignoraran.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "message": "Un filtre per línia. Un filtre pot ser un domini, o un filtre compatible amb l'Adblock Plus. S'ignoraran les línies amb el símbol &lsquo;!&rsquo;.",
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Importar i annexar",
@@ -448,7 +476,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Importa des de...",
+    "message": "Importa des del fitxer...",
     "description": ""
   },
   "rulesExport": {
@@ -540,11 +568,11 @@
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "{{action}} peticions de la xarxa {{type}} {{br}}amb l'URL coincidint {{url}} {{br}}originada des de {{origin}},{{br}}{{importance}} si és una concordança d'un filtre d'excepció.",
+    "message": "{{action}} peticions de la xarxa {{type}} {{br}}amb l'URL coincidint {{url}} {{br}}originada des de {{origin}},{{br}}{{importance}} si és una concordança d'un filtre d'excepció.\nhttps:\/\/github.com\/gorhill\/uBlock\/issues\/235#issuecomment-109745745.",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
-    "message": "Bloqueja",
+    "message": "Bloca",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAllow": {
@@ -576,20 +604,28 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "S'ha trobat el filtre estàtic {{filter}} a:",
-    "description": "Below this sentence, the filter lists in which the filter was found"
+    "message": "S'ha trobat el filtre estàtic <code>{{filter}}<\/code> a:",
+    "description": "Below this sentence, the filter list(s) in which the filter was found"
+  },
+  "loggerStaticFilteringFinderSentence2": {
+    "message": "No s'ha trobat el filtre estàtic <code>{{filter}}<\/code> a cap de les llistes de filtres actualment habilitades",
+    "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
     "message": "Registre de canvis",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Suport",
     "description": "A link for where to get support"
+  },
+  "aboutIssues": {
+    "message": "Seguiment d'errors",
+    "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
     "message": "Codi font (GPLv3)",
@@ -750,6 +786,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Permet temporalment els fitxers multimèdia grans",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Escriviu una drecera",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "Aquesta entrada ha de ser l'última",

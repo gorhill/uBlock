@@ -1,197 +1,202 @@
 <head>
 <meta charset="utf-8">
+<title>uBlock Origin Element Picker</title>
 <style>
-:focus {
-    outline: none;
-}
-html, body {
+html#ublock0-epicker,
+#ublock0-epicker body {
     background: transparent !important;
-    color: black;
-    font: 12px sans-serif;
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-    width: 100%;
+    color: black !important;
+    font: 12px sans-serif !important;
+    height: 100% !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    width: 100% !important;
 }
-ul, li, div {
-    display: block;
+#ublock0-epicker :focus {
+    outline: none !important;
 }
-ul {
-    margin: 0.25em 0 0 0;
+#ublock0-epicker ul,
+#ublock0-epicker li,
+#ublock0-epicker div {
+    display: block !important;
 }
-button {
-    background-color: #ccc;
-    border: 1px solid #aaa;
-    border-radius: 3px;
-    box-sizing: border-box;
-    box-shadow: none;
-    color: #000;
-    cursor: pointer;
-    margin: 0 0 0 2px;
-    opacity: 0.7;
-    padding: 4px 6px;
+#ublock0-epicker ul {
+    margin: 0.25em 0 0 0 !important;
 }
-button:first-of-type {
-    margin-left: 0;
+#ublock0-epicker button {
+    background-color: #ccc !important;
+    border: 1px solid #aaa !important;
+    border-radius: 3px !important;
+    box-sizing: border-box !important;
+    box-shadow: none !important;
+    color: #000 !important;
+    cursor: pointer !important;
+    margin: 0 0 0 2px !important;
+    opacity: 0.7 !important;
+    padding: 4px 6px !important;
 }
-button:disabled {
-    color: #999;
-    background-color: #ccc;
+#ublock0-epicker button:first-of-type {
+    margin-left: 0 !important;
 }
-button:not(:disabled):hover {
-    opacity: 1;
+#ublock0-epicker button:disabled {
+    color: #999 !important;
+    background-color: #ccc !important;
 }
-#create:not(:disabled) {
-    background-color: hsl(36, 100%, 83%);
-    border-color: hsl(36, 50%, 60%);
+#ublock0-epicker button:not(:disabled):hover {
+    opacity: 1 !important;
 }
-#preview {
-    float: left;
+#ublock0-epicker #create:not(:disabled) {
+    background-color: hsl(36, 100%, 83%) !important;
+    border-color: hsl(36, 50%, 60%) !important;
 }
-body.preview #preview {
-    background-color: hsl(204, 100%, 83%);
-    border-color: hsl(204, 50%, 60%);
+#ublock0-epicker #preview {
+    float: left !important;
 }
-section {
-    border: 0;
-    box-sizing: border-box;
-    display: inline-block;
-    width: 100%;
+#ublock0-epicker body.preview #preview {
+    background-color: hsl(204, 100%, 83%) !important;
+    border-color: hsl(204, 50%, 60%) !important;
 }
-section > div:first-child {
-    border: 1px solid #aaa;
-    margin: 0;
-    position: relative;
+#ublock0-epicker section {
+    border: 0 !important;
+    box-sizing: border-box !important;
+    display: inline-block !important;
+    width: 100% !important;
 }
-section.invalidFilter > div:first-child {
-    border-color: red;
+#ublock0-epicker section > div:first-child {
+    border: 1px solid #aaa !important;
+    margin: 0 !important;
+    position: relative !important;
 }
-section > div:first-child > textarea {
-    background-color: #fff;
-    border: none;
-    box-sizing: border-box;
-    font: 11px monospace;
-    height: 8em;
-    margin: 0;
-    overflow: hidden;
-    overflow-y: auto;
-    padding: 2px;
-    resize: none;
-    width: 100%;
+#ublock0-epicker section.invalidFilter > div:first-child {
+    border-color: red !important;
 }
-#resultsetCount {
-    background-color: #aaa;
-    bottom: 0;
-    color: white;
-    padding: 2px 4px;
-    position: absolute;
-    right: 0;
+#ublock0-epicker section > div:first-child > textarea {
+    background-color: #fff !important;
+    border: none !important;
+    box-sizing: border-box !important;
+    color: #000 !important;
+    font: 11px monospace !important;
+    height: 8em !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    overflow-y: auto !important;
+    padding: 2px !important;
+    resize: none !important;
+    width: 100% !important;
 }
-section.invalidFilter #resultsetCount {
-    background-color: red;
+#ublock0-epicker #resultsetCount {
+    background-color: #aaa !important;
+    bottom: 0 !important;
+    color: white !important;
+    padding: 2px 4px !important;
+    position: absolute !important;
+    right: 0 !important;
 }
-section > div:first-child + div {
-    direction: ltr;
-    margin: 2px 0;
-    text-align: right;
+#ublock0-epicker section.invalidFilter #resultsetCount {
+    background-color: red !important;
 }
-ul {
-    padding: 0;
-    list-style-type: none;
-    text-align: left;
-    overflow: hidden;
+#ublock0-epicker section > div:first-child + div {
+    direction: ltr !important;
+    margin: 2px 0 !important;
+    text-align: right !important;
 }
-aside > ul {
-    max-height: 16em;
-    overflow-y: auto;
+#ublock0-epicker ul {
+    padding: 0 !important;
+    list-style-type: none !important;
+    text-align: left !important;
+    overflow: hidden !important;
 }
-aside > ul > li:first-of-type {
-    margin-bottom: 0.5em;
+#ublock0-epicker aside > ul {
+    max-height: 16em !important;
+    overflow-y: auto !important;
 }
-ul > li > span:nth-of-type(1) {
-    font-weight: bold;
+#ublock0-epicker aside > ul > li:first-of-type {
+    margin-bottom: 0.5em !important;
 }
-ul > li > span:nth-of-type(2) {
-    font-size: smaller;
-    color: gray;
+#ublock0-epicker ul > li > span:nth-of-type(1) {
+    font-weight: bold !important;
 }
-ul > li > ul {
-    list-style-type: none;
-    margin: 0 0 0 1em;
-    overflow: hidden;
-    text-align: left;
+#ublock0-epicker ul > li > span:nth-of-type(2) {
+    font-size: smaller !important;
+    color: gray !important;
 }
-ul > li > ul > li {
-    font: 11px monospace;
-    white-space: nowrap;
-    cursor: pointer;
-    direction: ltr;
+#ublock0-epicker ul > li > ul {
+    list-style-type: none !important;
+    margin: 0 0 0 1em !important;
+    overflow: hidden !important;
+    text-align: left !important;
 }
-ul > li > ul > li:hover {
-    background-color: white;
+#ublock0-epicker ul > li > ul > li {
+    font: 11px monospace !important;
+    white-space: nowrap !important;
+    cursor: pointer !important;
+    direction: ltr !important;
 }
-svg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    cursor: crosshair;
-    width: 100%;
-    height: 100%;
+#ublock0-epicker ul > li > ul > li:hover {
+    background-color: white !important;
 }
-.paused > svg {
-    cursor: not-allowed;
+#ublock0-epicker svg {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    cursor: crosshair !important;
+    width: 100% !important;
+    height: 100% !important;
 }
-svg > path:first-child {
-    fill: rgba(0,0,0,0.5);
-    fill-rule: evenodd;
+#ublock0-epicker .paused > svg {
+    cursor: not-allowed !important;
 }
-svg > path + path {
-    stroke: #F00;
-    stroke-width: 0.5px;
-    fill: rgba(255,63,63,0.20);
+#ublock0-epicker svg > path:first-child {
+    fill: rgba(0,0,0,0.5) !important;
+    fill-rule: evenodd !important;
 }
-body.zap svg > path + path {
-    stroke: #FF0;
-    stroke-width: 0.5px;
-    fill: rgba(255,255,63,0.20);
+#ublock0-epicker svg > path + path {
+    stroke: #F00 !important;
+    stroke-width: 0.5px !important;
+    fill: rgba(255,63,63,0.20) !important;
 }
-body.preview svg > path {
-    fill: rgba(0,0,0,0.10);
+#ublock0-epicker body.zap svg > path + path {
+    stroke: #FF0 !important;
+    stroke-width: 0.5px !important;
+    fill: rgba(255,255,63,0.20) !important;
 }
-body.preview svg > path + path {
-    stroke: none;
+#ublock0-epicker body.preview svg > path {
+    fill: rgba(0,0,0,0.10) !important;
 }
-aside {
-    background-color: #eee;
-    border: 1px solid #aaa;
-    bottom: 4px;
-    box-sizing: border-box;
-    min-width: 24em;
-    padding: 4px;
-    position: fixed;
-    right: 4px;
-    visibility: hidden;
-    width: calc(40% - 4px);
+#ublock0-epicker body.preview svg > path + path {
+    stroke: none !important;
 }
-body.paused > aside {
-    opacity: 0.1;
-    visibility: visible;
-    z-index: 100;
+#ublock0-epicker aside {
+    background-color: #eee !important;
+    border: 1px solid #aaa !important;
+    bottom: 4px !important;
+    box-sizing: border-box !important;
+    min-width: 24em !important;
+    padding: 4px !important;
+    position: fixed !important;
+    right: 4px !important;
+    visibility: hidden !important;
+    width: calc(40% - 4px) !important;
 }
-body.paused > aside:hover {
-    opacity: 1;
+#ublock0-epicker body.paused > aside {
+    opacity: 0.1 !important;
+    visibility: visible !important;
+    z-index: 100 !important;
 }
-body.paused > aside.show {
-    opacity: 1;
+#ublock0-epicker body.paused > aside:hover {
+    opacity: 1 !important;
 }
-body.paused > aside.hide {
-    opacity: 0.1;
+#ublock0-epicker body.paused > aside.show {
+    opacity: 1 !important;
+}
+#ublock0-epicker body.paused > aside.hide {
+    opacity: 0.1 !important;
 }
 </style>
 </head>
 
 <body direction="{{bidi_dir}}">
-<svg><path></path><path></path></svg>
+<svg><path d></path><path d></path></svg>
 <aside>
 <section>
     <div>

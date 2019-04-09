@@ -1,11 +1,11 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
     "message": "অবশেষে, একটি কার্যকর বিজ্ঞাপন প্রতিরোধক। সিপিইউ এবং মেমরি সহায়ক।",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — ড্যাশবোর্ড",
@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "৩য়-দলের ফিল্টার",
+    "message": "ছাঁকন তালিকা",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -31,6 +31,10 @@
     "message": "সাদাতালিকা",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "সংক্ষিপ্ত",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — ঘটনাবলী",
     "description": "Title for the logger window"
@@ -38,6 +42,10 @@
   "aboutPageName": {
     "message": "সম্পর্কে",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Asset viewer",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "উন্নত সেটিংস",
@@ -138,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "এই সাইটে রিমোট ফন্ট আর অবরুদ্ধ না করতে ক্লিক করুন",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Click to disable JavaScript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Click to no longer disable JavaScript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "সার্বজনীন নিয়ম: এই কলামটি সেইসব নিয়মের জন্য যা সকল সাইটের উপর প্রযোজ্য।",
@@ -291,6 +307,10 @@
     "message": "রিমোট ফন্ট অবরুদ্ধ করুন",
     "description": ""
   },
+  "settingsNoScriptingPrompt": {
+    "message": "Disable JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
+  },
   "settingsNoCSPReportsPrompt": {
     "message": "CSP প্রতিবেদন অবরুদ্ধ করুন",
     "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
@@ -351,6 +371,10 @@
     "message": "পরিবর্তনগুলি প্রয়োগ",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "বিল্ট-ইন",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "বিজ্ঞাপন",
     "description": "English: Ads"
@@ -379,9 +403,13 @@
     "message": "স্বনির্ধারিত",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "আমদানি করুন...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
     "message": "লাইন প্রতি একটি URL। &lsquo;!&rsquo; সহ উপসর্গ লাইন উপেক্ষা করা হবে। অকার্যকর URL গুলি নীরবে উপেক্ষা করা হবে।",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "পুরোনো",
@@ -401,7 +429,7 @@
   },
   "1pFormatHint": {
     "message": "লাইন প্রতি একটি ফিল্টার। একটি ফিল্টার স্পষ্ট হোস্টনেম বা অ্যাডব্লক প্লাস-সামঞ্জস্যপূর্ণ ফিল্টার হতে পারে। &lsquo;!&rsquo; সহ উপসর্গ লাইন উপেক্ষা করা হবে।",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "আমদানি ও পরিশেষে যোগ করুন",
@@ -576,20 +604,28 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "স্থির ফিল্টার {{filter}} পাওয়া গেছে:",
-    "description": "Below this sentence, the filter lists in which the filter was found"
+    "message": "স্থির ফিল্টার <code>{{filter}}<\/code> পাওয়া গেছে:",
+    "description": "Below this sentence, the filter list(s) in which the filter was found"
+  },
+  "loggerStaticFilteringFinderSentence2": {
+    "message": "Static filter <code>{{filter}}<\/code> could not be found in any of the currently enabled filter lists",
+    "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
     "message": "পরিবর্তন লগ",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "উইকি",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "সমর্থন",
     "description": "A link for where to get support"
+  },
+  "aboutIssues": {
+    "message": "ইস্যু অনুসরণকারী",
+    "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
     "message": "উত্স কোড (GPLv৩)",
@@ -750,6 +786,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "সাময়িকভাবে বৃহৎ মিডিয়া উপাদান মঞ্জুরি দিন",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Type a shortcut",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "This entry must be the last one",

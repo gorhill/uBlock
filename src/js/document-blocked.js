@@ -1,7 +1,7 @@
 /*******************************************************************************
 
-    uBlock - a browser extension to block requests.
-    Copyright (C) 2015 Raymond Hill
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2015-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,11 +21,11 @@
 
 /* global uDom */
 
+'use strict';
+
 /******************************************************************************/
 
 (function() {
-
-'use strict';
 
 /******************************************************************************/
 
@@ -44,14 +44,11 @@ var details = {};
 
 (function() {
     var onReponseReady = function(response) {
-        if ( typeof response !== 'object' ) {
-            return;
-        }
-        var lists;
-        for ( var rawFilter in response ) {
-            if ( response.hasOwnProperty(rawFilter) === false ) {
-                continue;
-            }
+        if ( response instanceof Object === false ) { return; }
+
+        let lists;
+        for ( let rawFilter in response ) {
+            if ( response.hasOwnProperty(rawFilter) === false ) { continue; }
             lists = response[rawFilter];
             break;
         }
@@ -59,25 +56,22 @@ var details = {};
         if ( Array.isArray(lists) === false || lists.length === 0 ) {
             return;
         }
-        var parent = uDom.nodeFromSelector('#whyex > span:nth-of-type(2)');
-        var separator = '';
-        var entry, url, node;
-        for ( var i = 0; i < lists.length; i++ ) {
-            entry = lists[i];
-            if ( separator !== '' ) {
-                parent.appendChild(document.createTextNode(separator));
+
+        let parent = uDom.nodeFromSelector('#whyex > span:nth-of-type(2)');
+        for ( let list of lists ) {
+            let elem = document.querySelector('#templates .filterList')
+                               .cloneNode(true);
+            let source = elem.querySelector('.filterListSource');
+            source.href += encodeURIComponent(list.assetKey);
+            source.textContent = list.title;
+            if (
+                typeof list.supportURL === 'string' &&
+                list.supportURL !== ''
+            ) {
+                elem.querySelector('.filterListSupport')
+                    .setAttribute('href', list.supportURL);
             }
-            url = entry.supportURL;
-            if ( typeof url === 'string' && url !== '' ) {
-                node = document.createElement('a');
-                node.textContent = entry.title;
-                node.setAttribute('href', url);
-                node.setAttribute('target', '_blank');
-            } else {
-                node = document.createTextNode(entry.title);
-            }
-            parent.appendChild(node);
-            separator = ' \u2022 ';
+            parent.appendChild(elem);
         }
         uDom.nodeFromId('whyex').style.removeProperty('display');
     };
@@ -133,7 +127,8 @@ var proceedPermanent = function() {
             name: 'no-strict-blocking',
             hostname: getTargetHostname(),
             deep: true,
-            state: true
+            state: true,
+            persist: true
         },
         proceedToURL
     );
@@ -146,7 +141,7 @@ var proceedPermanent = function() {
     if ( matches === null ) {
         return;
     }
-    var proceed = uDom('#proceedTemplate').clone();
+    var proceed = uDom('#templates .proceed').clone();
     proceed.descendants('span:nth-of-type(1)').text(matches[1]);
     proceed.descendants('span:nth-of-type(4)').text(matches[2]);
 

@@ -19,7 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global uDom */
+/* global CodeMirror, uDom */
+
 'use strict';
 
 /******************************************************************************/
@@ -168,23 +169,40 @@ self.uBlockDashboard.patchCodeMirrorEditor = (function() {
         grabFocusAsync(cm);
     };
 
-    var resizeTimer;
-    var resize = function() {
+    var resizeTimer,
+        resizeObserver;
+    var resize = function(cm) {
         resizeTimer = undefined;
-        let prect = document.body.getBoundingClientRect();
-        let child = document.querySelector('.codeMirrorFillVertical');
-        let crect = child.getBoundingClientRect();
-        let height = Math.max(prect.bottom - crect.top, 80);
-        child.style.height = height + 'px';
+        var child = document.querySelector('.codeMirrorFillVertical');
+        if ( child === null ) { return; }
+        var prect = document.documentElement.getBoundingClientRect();
+        var crect = child.getBoundingClientRect();
+        var cssHeight = Math.floor(Math.max(prect.bottom - crect.top, 80)) + 'px';
+        if ( child.style.height !== cssHeight ) {
+            child.style.height = cssHeight;
+            if ( cm instanceof CodeMirror ) {
+                cm.refresh();
+            }
+        }
+    };
+    var resizeAsync = function(cm, delay) {
+        if ( resizeTimer !== undefined ) { return; }
+        resizeTimer = vAPI.setTimeout(
+            resize.bind(null, cm),
+            typeof delay === 'number' ? delay : 66
+        );
     };
 
     return function(cm) {
         if ( document.querySelector('.codeMirrorFillVertical') !== null ) {
-            resize();
-            window.addEventListener('resize', function() {
-                if ( resizeTimer !== undefined ) { return; }
-                resizeTimer = vAPI.setTimeout(resize, 66);
+            var boundResizeAsync = resizeAsync.bind(null, cm);
+            window.addEventListener('resize', boundResizeAsync);
+            resizeObserver = new MutationObserver(boundResizeAsync);
+            resizeObserver.observe(document.querySelector('.body'), {
+                childList: true,
+                subtree: true
             });
+            resizeAsync(cm, 1);
         }
         if ( cm.options.inputStyle === 'contenteditable' ) {
             cm.on('beforeSelectionChange', patchSelectAll);

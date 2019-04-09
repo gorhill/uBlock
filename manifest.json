@@ -47,7 +47,7 @@
   "minimum_chrome_version": "38.0",
   "options_page": "dashboard.html",
   "options_ui": {
-    "page": "options_ui.html"
+    "page": "options.html"
   },
   "permissions": [
     "contextMenus",

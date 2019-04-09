@@ -31,6 +31,10 @@
     "message": "Estää haittaohjelmat",
     "description": "English: Firstrun.html -> Block Malware"
   },
+  "adnAboutResetDataConfirm": {
+    "message": "Kaikki asetukset poistetaan, mainoksia sinun holvissa poistetaan ja AdNauseam käynnistyy uudelleen.\n\npalauttaa AdNauseam tehdasasetukset?",
+    "description": "Message asking user to confirm reset"
+  },
   "adnFirstRunHideAllAdsDescription": {
     "message": "piilota mainokset valitsemistasi <span class='link' id='To3pfilter'>suodatuslistoista<\/span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
@@ -78,6 +82,10 @@
   "adnNotificationDisableUBlock": {
     "message": "uBlock ja AdNauseam saattavat olla ristiriidassa!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationBrowserSetting": {
+    "message": "Sisällön esto selaimen asetukset saattavat häiritä AdNauseam!",
+    "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
   "adnNotificationDNTAllowed": {
     "message": "Tämä sivu kunnioittaa <b>Älä Seuraa<\/b> -ominaisuutta, mainokset sallittuja.",

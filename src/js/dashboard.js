@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2016 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -31,41 +31,41 @@
 
   /******************************************************************************/
 
-  var resizeFrame = function () {
-    var navRect = document.getElementById('dashboard-nav').getBoundingClientRect();
-    var viewRect = document.documentElement.getBoundingClientRect();
-    var notiRect = document.getElementById('notifications').offsetHeight;
+let resizeFrame = function() {
+    let navRect = document.getElementById('dashboard-nav').getBoundingClientRect();
+    let viewRect = document.documentElement.getBoundingClientRect();
+    let notiRect = document.getElementById('notifications').offsetHeight; //AdNauseam
+    document.getElementById('iframe').style.setProperty(
+        'height',
+        (viewRect.height - navRect.height - notiRect) + 'px' //AdNauseam
+    );
+};
 
-    document.getElementById('iframe').style.setProperty('height', (viewRect.height - navRect.height - notiRect) + 'px');
-  };
-
-  var loadDashboardPanel = function (notifications) {
-    // console.log(notifications);
-
-    var pane = window.location.hash.slice(1);
+let loadDashboardPanel = function(notifications) {
+    let pane = window.location.hash.slice(1);
     if ( pane === '' ) {
         pane = vAPI.localStorage.getItem('dashboardLastVisitedPane') || 'options.html';
+
     } else {
         vAPI.localStorage.setItem('dashboardLastVisitedPane', pane);
     }
 
-    var tabButton = uDom('[href="#' + pane + '"]');
-    if (!tabButton) return;
+    let tabButton = uDom('[href="#' + pane + '"]');
+    if ( !tabButton ) { return; }
 
     uDom('.tabButton.selected').toggleClass('selected', false);
     uDom('iframe').attr('src', pane);
-
     tabButton.toggleClass('selected', true);
 
     notifications && renderNotifications(notifications, "dashboard");
     resizeFrame();
-  };
+};
 
-  var onTabClickHandler = function (e) {
-    var url = window.location.href,
-      pos = url.indexOf('#');
-    if (pos !== -1) {
-      url = url.slice(0, pos);
+let onTabClickHandler = function(e) {
+    let url = window.location.href,
+        pos = url.indexOf('#');
+    if ( pos !== -1 ) {
+        url = url.slice(0, pos);
     }
     url += this.hash;
     window.location.replace(url);
@@ -74,37 +74,27 @@
     e.preventDefault();
   };
 
-  var recalculateIframeHeight = function () {
-    //recalculate the height
-    var h = document.getElementById('notifications').offsetHeight;
-    var currenth = document.getElementById('ad-list').offsetHeight;
-    var newh = currenth - h;
-    uDom('#ad-list').css('height', newh + 'px');
-  };
+// https://github.com/uBlockOrigin/uBlock-issues/issues/106
+vAPI.messaging.send('dashboard', { what: 'canUpdateShortcuts' }, response => {
+    document.body.classList.toggle('canUpdateShortcuts', response === true);
+});
 
-  var setBackBlockHeight = function () {
-    uDom('#ad-list').css('height', '350px');
-  };
+vAPI.messaging.addChannelListener('adnauseam', function (request) {
 
+  // console.log("dashboard.js::BROADCAST", request);
 
-  vAPI.messaging.addChannelListener('adnauseam', function (request) {
+  switch (request.what) {
+  case 'notifications':
 
-    // console.log("dashboard.js::BROADCAST", request);
+    loadDashboardPanel(request.notifications);
+    break;
+  }
+});
 
-    switch (request.what) {
-
-
-    case 'notifications':
-
-      loadDashboardPanel(request.notifications);
-      break;
-    }
-  });
+/******************************************************************************/
 
 
-  /******************************************************************************/
-
-  uDom.onLoad(function () {
+uDom.onLoad(function () {
     resizeFrame();
     window.addEventListener('resize', resizeFrame);
     uDom('.tabButton').on('click', onTabClickHandler);
@@ -122,6 +112,7 @@
 
   });
 
-  /******************************************************************************/
+
+
 
 })();

@@ -31,6 +31,10 @@
     "message": "Bloquer les malveillants",
     "description": "English: Firstrun.html -> Block Malware"
   },
+  "adnAboutResetDataConfirm": {
+    "message": "Tous vos paramètres seront supprimés, les annonces dans votre coffre seront supprimées, et AdNauseam redémarrera.\n\nRéinitialiser AdNauseam dans les paramètres d'usine ?",
+    "description": "Message asking user to confirm reset"
+  },
   "adnFirstRunHideAllAdsDescription": {
     "message": "Cacher les publicités depuis vos <span> listes de filtres<\/span> sélectionnés",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
@@ -78,6 +82,10 @@
   "adnNotificationDisableUBlock": {
     "message": "uBlock et AdNauseam peuvent entrer en conflit !",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationBrowserSetting": {
+    "message": "Les paramètres de 'Blocage de Contenu\" de votre navigateur peuvent interférer avec AdNauseam!",
+    "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
   "adnNotificationDNTAllowed": {
     "message": "Cette page respecte <b>Do Not Track<\/b>, les annonces sont autorisés.",

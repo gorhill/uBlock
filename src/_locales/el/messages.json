@@ -1,11 +1,11 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
     "message": "Επιτέλους, ένας αποτελεσματικός blocker. Ελαφρύς για τον επεξεργαστή και τη μνήμη.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ - Πίνακας ελέγχου",
@@ -31,6 +31,10 @@
     "message": "Λίστα επιτρεπόμενων",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Shortcuts",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ - Καταγραφή αιτημάτων δικτύου",
     "description": "Title for the logger window"
@@ -38,6 +42,10 @@
   "aboutPageName": {
     "message": "Σχετικά",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Asset viewer",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Ρυθμίσεις για προχωρημένους",
@@ -100,7 +108,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Click to no longer block all popups on this site",
+    "message": "Κάντε κλικ για φραγή όλων των αναδυόμενων σε αυτή την ιστοσελίδα",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -108,11 +116,11 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Click to block large media elements on this site",
+    "message": "Κάντε κλικ για αποκλεισμό μεγάλων στοιχείων πολυμέσων σε αυτή την ιστοσελίδα",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Click to no longer block large media elements on this site",
+    "message": "Κάντε κλικ για φραγή πλέον μεγάλων στοιχείων πολυμέσων σε αυτή την ιστοσελίδα",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -120,11 +128,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Click to disable cosmetic filtering on this site",
+    "message": "Κάντε κλικ για να απενεργοποιήσετε το καλλυντικό φιλτράρισμα σε αυτή την σελίδα",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Click to enable cosmetic filtering on this site",
+    "message": "Κάντε κλικ για να ενεργοποιήσετε το καλλυντικό φιλτράρισμα σε αυτή την σελίδα",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -138,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Κάντε κλικ για αναίρεση φραγής απομακρυσμένων γραμματοσειρών σε αυτή την ιστοσελίδα",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Click to disable JavaScript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Click to no longer disable JavaScript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Καθολικοί κανόνες: αυτή η στήλη είναι για κανόνες με εφαρμογή σε όλες τις τοποθεσίες.",
@@ -291,6 +307,10 @@
     "message": "Φραγή απομακρυσμένων γραμματοσειρών",
     "description": ""
   },
+  "settingsNoScriptingPrompt": {
+    "message": "Disable JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
+  },
   "settingsNoCSPReportsPrompt": {
     "message": "Φραγή αναφορών CSP",
     "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
@@ -351,6 +371,10 @@
     "message": "Εφαρμογή αλλαγών",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Τοπικά",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Διαφημίσεις",
     "description": "English: Ads"
@@ -379,9 +403,13 @@
     "message": "Προσαρμοσμένη",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Εισαγωγή...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
     "message": "Ένα URL ανά γραμμή. Γραμμές με το πρόθεμα &lsquo;!&rsquo; θα παραβλέπονται. Άκυρα URL θα παρακάμπτονται σιωπηλά.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "ξεπερασμένη",
@@ -401,7 +429,7 @@
   },
   "1pFormatHint": {
     "message": "Ένα φίλτρο ανά γραμμή. Φίλτρο μπορεί να είναι ένα απλό όνομα κεντρικού υπολογιστή (hostname) ή ένα, συμβατό με το Adblock Plus, φίλτρο. Γραμμές με το πρόθεμα &lsquo;!&rsquo; θα παραβλέπονται.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Εισαγωγή και προσάρτηση",
@@ -576,20 +604,28 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Στατικό φίλτρο {{filter}} βρέθηκε σε:",
-    "description": "Below this sentence, the filter lists in which the filter was found"
+    "message": "Στατικό φίλτρο <code>{{filter}}<\/code> βρέθηκε σε:",
+    "description": "Below this sentence, the filter list(s) in which the filter was found"
+  },
+  "loggerStaticFilteringFinderSentence2": {
+    "message": "Static filter <code>{{filter}}<\/code> could not be found in any of the currently enabled filter lists",
+    "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
     "message": "Αρχείο καταγραφής αλλαγών",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Υποστήριξη",
     "description": "A link for where to get support"
+  },
+  "aboutIssues": {
+    "message": "Ιχνηλάτης ζητημάτων",
+    "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
     "message": "Πηγαίος κώδικας (GPLv3)",
@@ -750,6 +786,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Να επιτρέπονται προσωρινά μεγάλα στοιχεία πολυμέσων",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Type a shortcut",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "Αυτή η καταχώρηση θα πρέπει να είναι τελευταία",

@@ -1,0 +1,61 @@
+/**
+    uBlock Origin - a browser extension to block requests.
+    Copyright (C) 2018-present Raymond Hill
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see {http://www.gnu.org/licenses/}.
+
+    Home: https://github.com/gorhill/uBlock
+*/
+
+.commandEntries {
+    margin: 2em;
+    }
+
+.commandEntries td {
+    padding: 0.5em 0.25em;
+    }
+
+.commandEntries td.commandDesc {
+    text-align: end;
+    }
+
+.commandEntries td.commandShortcut {
+    white-space: nowrap;
+    }
+
+.commandEntries td.commandShortcut input {
+    padding: 0.4em;
+    }
+
+.commandEntries td.commandShortcut input:focus {
+    outline: 2px solid blue;
+    }
+
+.commandEntries td.commandShortcut input ~ .commandReset {
+    color: #888;
+    cursor: pointer;
+    font-size: 150%;
+    padding: 0 0.2em;
+    vertical-align: middle;
+    }
+
+.commandEntries td.commandShortcut input ~ .commandReset:hover {
+    background-color: #eee;
+    color: black;
+    }
+
+.commandEntries td.commandShortcut input:placeholder-shown ~ .commandReset,
+.commandEntries td.commandShortcut input:focus ~ .commandReset {
+    display: none;
+    }

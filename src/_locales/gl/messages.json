@@ -1,11 +1,11 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
     "message": "Ó fin, un bloqueador eficiente que non chupa toda a memoria e o procesador.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Panel de control",
@@ -31,6 +31,10 @@
     "message": "Lista branca",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Atallos",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — Rexistro de peticións de rede",
     "description": "Title for the logger window"
@@ -39,20 +43,24 @@
     "message": "Sobre",
     "description": "appears as tab name in dashboard"
   },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Asset viewer",
+    "description": "Title for the asset viewer page"
+  },
   "advancedSettingsPageName": {
     "message": "Configuración avanzada",
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Click: desactivar\/activar uBlock₀ neste sitio.\n\nCtrl+click: desactivar o uBlock₀ só nesta páxina.",
+    "message": "Click: desactivar\/activar o uBlock₀ neste sitio.\n\nCtrl+click: desactivar o Block₀ só nesta páxina.",
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Click: desactivar\/activar uBO neste sitio.\n\nCtrl+click: desactivar o uBO só nesta páxina.",
+    "message": "Click: desactivar\/activar o uBlock₀ neste sitio.\n\nCtrl+click: desactivar o Block₀ só nesta páxina.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Click: activar uBO neste sitio.",
+    "message": "Click: activar o uBlock₀ neste sitio.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -138,6 +146,14 @@
   "popupTipNoRemoteFonts2": {
     "message": "Click: deixar de bloquear fontes remotas neste sitio",
     "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Click to disable JavaScript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Click to no longer disable JavaScript on this site",
+    "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
     "message": "Reglas globais: esta columna é para as reglas que afectan a todos os sitios.",
@@ -291,6 +307,10 @@
     "message": "Bloquear fontes remotas",
     "description": ""
   },
+  "settingsNoScriptingPrompt": {
+    "message": "Disable JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
+  },
   "settingsNoCSPReportsPrompt": {
     "message": "Bloquear reportes CSP",
     "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
@@ -351,6 +371,10 @@
     "message": "Aplicar os cambios",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Local",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Anuncios",
     "description": "English: Ads"
@@ -379,9 +403,13 @@
     "message": "Personalizado",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Importar...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
-    "message": "Un enderezo por liña. As liñas prefixadas con &lsquo;!&rsquo; seranche ignoradas, así como os enderezos inválidos.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "message": "Un enderezo por liña. Os enderezos inválidos seranche ignorados.",
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "Desactualizada.",
@@ -400,8 +428,8 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Un filtro por cada liña. O filtro pode ser un nome de servidor, ou un filtro compatible co Adblock Plus. As liñas que comecen con &lsquo;!&rsquo; seranche ignoradas.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "message": "Un filtro por cada liña. O filtro pode ser un nome de servidor, ou un filtro compatible co Adblock Plus. As liñas que comecen con <code>!<\/code> seranche ignoradas.",
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Importar e anexar",
@@ -576,20 +604,28 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Filtro estático {{filter}}atopado en:",
-    "description": "Below this sentence, the filter lists in which the filter was found"
+    "message": "Filtro estático <code>{{filter}}<\/code>atopado en:",
+    "description": "Below this sentence, the filter list(s) in which the filter was found"
+  },
+  "loggerStaticFilteringFinderSentence2": {
+    "message": "Non atopamos filtro estático <code>{{filter}}<\/code> en ningunha das listas de filtros activas",
+    "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
     "message": "Rexistro de cambios",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Asistencia",
     "description": "A link for where to get support"
+  },
+  "aboutIssues": {
+    "message": "Seguimento de erros",
+    "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
     "message": "Código fonte (GPLv3)",
@@ -750,6 +786,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Permitir temporalmente os elementos multimedia grandes",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Introduce un atallo",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "Esta ten que ser a derradeira entrada",

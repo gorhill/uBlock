@@ -1,3 +1,7 @@
+html {
+    height: 100vh;
+    overflow: hidden;
+    }
 body {
     display: flex;
     flex-direction: column;

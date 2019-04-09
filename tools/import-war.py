@@ -21,7 +21,7 @@ with open('./src/web_accessible_resources/to-import.txt', 'r') as f:
             to_import.add(line)
 
 # https://github.com/gorhill/uBlock/issues/3636
-safe_exts = { 'javascript': 'js' }
+safe_exts = { 'javascript': 'js', 'plain': 'txt' }
 
 imported = []
 

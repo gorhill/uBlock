@@ -1,11 +1,11 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
     "message": "Äntligen en effektiv blockerare. Snäll mot både processor och minne.",
-    "description": "this will be in the chrome web store: must be 132 characters or less"
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
     "message": "uBlock₀ — Kontrollpanel",
@@ -16,7 +16,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Tredjepartsfilter",
+    "message": "Filterlistor",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -31,6 +31,10 @@
     "message": "Vitlista",
     "description": "appears as tab name in dashboard"
   },
+  "shortcutsPageName": {
+    "message": "Genvägar",
+    "description": "appears as tab name in dashboard"
+  },
   "statsPageName": {
     "message": "uBlock₀ — Logg för nätverksbegäran",
     "description": "Title for the logger window"
@@ -38,6 +42,10 @@
   "aboutPageName": {
     "message": "Om",
     "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Asset viewer",
+    "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
     "message": "Avancerade inställningar",
@@ -139,6 +147,14 @@
     "message": "Klicka för att inte längre blockera externa typsnitt på den här webbplatsen",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
+  "popupTipNoScripting1": {
+    "message": "Klicka för att inaktivera JavaScript på den här webbplatsen",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Klicka för att inte längre inaktivera JavaScript på den här webbplatsen",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
   "popupTipGlobalRules": {
     "message": "Globala regler: denna kolumn avser regler som gäller alla sidor.",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
@@ -236,7 +252,7 @@
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "Inaktivera verktygstips",
+    "message": "Inaktivera tipsrutor",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
@@ -290,6 +306,10 @@
   "settingsNoRemoteFontsPrompt": {
     "message": "Blockera externa typsnitt",
     "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Inaktivera JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Blockera CSP-rapporter",
@@ -351,6 +371,10 @@
     "message": "Verkställ ändringar",
     "description": "English: Apply changes"
   },
+  "3pGroupDefault": {
+    "message": "Inbyggd",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
   "3pGroupAds": {
     "message": "Annonser",
     "description": "English: Ads"
@@ -379,9 +403,13 @@
     "message": "Egna filter",
     "description": "English: Custom"
   },
+  "3pImport": {
+    "message": "Importera...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
   "3pExternalListsHint": {
-    "message": "En adress per rad. Rader med prefixet &lsquo;!&rsquo; kommer att ignoreras. Ogiltiga adresser kommer också ignoreras.",
-    "description": "English: One URL per line. Lines prefixed with &lsquo;!&rsquo; will be ignored. Invalid URLs will be silently ignored."
+    "message": "En webbadress per rad. Rader med prefixet &lsquo;!&rsquo; kommer att ignoreras. Ogiltiga webbadresser kommer också ignoreras.",
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
     "message": "Föråldrad.",
@@ -401,7 +429,7 @@
   },
   "1pFormatHint": {
     "message": "Ett filter per rad. Ett filter kan vara ett vanligt värdnamn eller ett Adblock Plus-kompatibelt filter. Rader med prefixet &lsquo;!&rsquo; kommer att ignoreras.",
-    "description": "English: One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with &lsquo;!&rsquo; will be ignored."
+    "description": "Short information about how to create custom filters"
   },
   "1pImport": {
     "message": "Importera och lägg till",
@@ -576,20 +604,28 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Det statiska filtret {{filter}} hittades i:",
-    "description": "Below this sentence, the filter lists in which the filter was found"
+    "message": "Det statiska filtret <code>{{filter}}<\/code> hittades i:",
+    "description": "Below this sentence, the filter list(s) in which the filter was found"
+  },
+  "loggerStaticFilteringFinderSentence2": {
+    "message": "Det statiska filtret <code>{{filter}}<\/code> kunde inte hittas i någon av aktiverade aktuella filterlistorna",
+    "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "aboutChangelog": {
     "message": "Ändringslogg",
-    "description": "English: Change log"
+    "description": ""
   },
   "aboutWiki": {
     "message": "Wiki",
-    "description": "English: project' wiki on Github"
+    "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
     "message": "Hjälp",
     "description": "A link for where to get support"
+  },
+  "aboutIssues": {
+    "message": "Ärendehantering",
+    "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
     "message": "Källkod (GPLv3)",
@@ -750,6 +786,10 @@
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Tillåt tillfälligt stora medieelement",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Ange en genväg",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "dummy": {
     "message": "This entry must be the last one",

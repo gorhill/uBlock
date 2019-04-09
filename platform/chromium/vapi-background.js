@@ -33,33 +33,32 @@
 var chrome = self.chrome;
 var manifest = chrome.runtime.getManifest();
 
-vAPI.chrome = true;
-vAPI.chromiumVersion = (function(){
-    var matches = /\bChrom(?:e|ium)\/(\d+)\b/.exec(navigator.userAgent);
-    return matches !== null ? parseInt(matches[1], 10) : NaN;
-    })();
-
 vAPI.cantWebsocket =
     chrome.webRequest.ResourceType instanceof Object === false  ||
     chrome.webRequest.ResourceType.WEBSOCKET !== 'websocket';
 
-vAPI.webextFlavor = '';
-if (
-    self.browser instanceof Object &&
-    typeof self.browser.runtime.getBrowserInfo === 'function'
-) {
-    self.browser.runtime.getBrowserInfo().then(function(info) {
-        vAPI.webextFlavor = info.vendor + '-' + info.name + '-' + info.version;
-    });
-}
+vAPI.lastError = function() {
+    return chrome.runtime.lastError;
+};
 
-// https://issues.adblockplus.org/ticket/5695
-// - Good idea, adopted: cleaner way to detect user-stylesheet support.
-vAPI.supportsUserStylesheets =
-    chrome.extensionTypes instanceof Object &&
-    chrome.extensionTypes.CSSOrigin instanceof Object &&
-    'USER' in chrome.extensionTypes.CSSOrigin;
-vAPI.insertCSS = chrome.tabs.insertCSS;
+// https://github.com/gorhill/uBlock/issues/875
+// https://code.google.com/p/chromium/issues/detail?id=410868#c8
+//   Must not leave `lastError` unchecked.
+vAPI.resetLastError = function() {
+    void chrome.runtime.lastError;
+};
+
+vAPI.supportsUserStylesheets = vAPI.webextFlavor.soup.has('user_stylesheet');
+// The real actual webextFlavor value may not be set in stone, so listen
+// for possible future changes.
+window.addEventListener('webextFlavor', function() {
+    vAPI.supportsUserStylesheets =
+        vAPI.webextFlavor.soup.has('user_stylesheet');
+}, { once: true });
+
+vAPI.insertCSS = function(tabId, details) {
+    return chrome.tabs.insertCSS(tabId, details, vAPI.resetLastError);
+};
 
 var noopFunc = function(){};
 
@@ -108,13 +107,17 @@ vAPI.browserSettings = (function() {
     }
 
     return {
-        webRTCSupported: undefined,
-
-        // https://github.com/gorhill/uBlock/issues/875
-        // Must not leave `lastError` unchecked.
-        noopCallback: function() {
-            void chrome.runtime.lastError;
-        },
+        // Whether the WebRTC-related privacy API is crashy is an open question
+        // only for Chromium proper (because it can be compiled without the
+        // WebRTC feature): hence avoid overhead of the evaluation (which uses
+        // an iframe) for platforms where it's a non-issue.
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/9
+        //   Some Chromium builds are made to look like a Chrome build.
+        webRTCSupported: (function() {
+            if ( vAPI.webextFlavor.soup.has('chromium') === false ) {
+                return true;
+            }
+        })(),
 
         // Calling with `true` means IP address leak is not prevented.
         // https://github.com/gorhill/uBlock/issues/533
@@ -128,6 +131,10 @@ vAPI.browserSettings = (function() {
         setWebrtcIPAddress: function(setting) {
             // We don't know yet whether this browser supports WebRTC: find out.
             if ( this.webRTCSupported === undefined ) {
+                // If asked to leave WebRTC setting alone at this point in the
+                // code, this means we never grabbed the setting in the first
+                // place.
+                if ( setting ) { return; }
                 this.webRTCSupported = { setting: setting };
                 var iframe = document.createElement('iframe');
                 var me = this;
@@ -173,12 +180,12 @@ vAPI.browserSettings = (function() {
                     if ( setting ) {
                         cpn.webRTCMultipleRoutesEnabled.clear({
                             scope: 'regular'
-                        }, this.noopCallback);
+                        }, vAPI.resetLastError);
                     } else {
                         cpn.webRTCMultipleRoutesEnabled.set({
                             value: false,
                             scope: 'regular'
-                        }, this.noopCallback);
+                        }, vAPI.resetLastError);
                     }
                 } catch(ex) {
                     console.error(ex);
@@ -191,14 +198,14 @@ vAPI.browserSettings = (function() {
                     if ( setting ) {
                         cpn.webRTCIPHandlingPolicy.clear({
                             scope: 'regular'
-                        }, this.noopCallback);
+                        }, vAPI.resetLastError);
                     } else {
                         // https://github.com/uBlockOrigin/uAssets/issues/333#issuecomment-289426678
                         // - Leverage virtuous side-effect of strictest setting.
                         cpn.webRTCIPHandlingPolicy.set({
                             value: 'disable_non_proxied_udp',
                             scope: 'regular'
-                        }, this.noopCallback);
+                        }, vAPI.resetLastError);
                     }
                 } catch(ex) {
                     console.error(ex);
@@ -217,12 +224,12 @@ vAPI.browserSettings = (function() {
                         if ( !!details[setting] ) {
                             chrome.privacy.network.networkPredictionEnabled.clear({
                                 scope: 'regular'
-                            }, this.noopCallback);
+                            }, vAPI.resetLastError);
                         } else {
                             chrome.privacy.network.networkPredictionEnabled.set({
                                 value: false,
                                 scope: 'regular'
-                            }, this.noopCallback);
+                            }, vAPI.resetLastError);
                         }
                     } catch(ex) {
                         console.error(ex);
@@ -234,12 +241,12 @@ vAPI.browserSettings = (function() {
                         if ( !!details[setting] ) {
                             chrome.privacy.websites.hyperlinkAuditingEnabled.clear({
                                 scope: 'regular'
-                            }, this.noopCallback);
+                            }, vAPI.resetLastError);
                         } else {
                             chrome.privacy.websites.hyperlinkAuditingEnabled.set({
                                 value: false,
                                 scope: 'regular'
-                            }, this.noopCallback);
+                            }, vAPI.resetLastError);
                         }
                     } catch(ex) {
                         console.error(ex);
@@ -274,7 +281,6 @@ vAPI.tabs = {};
 //   network requests.
 
 vAPI.isBehindTheSceneTabId = function(tabId) {
-    if ( typeof tabId === 'string' ) { debugger; }
     return tabId < 0;
 };
 
@@ -287,11 +293,9 @@ vAPI.anyTabId = -2;     // one of the existing tab
 // To remove when tabId-as-integer has been tested enough.
 
 var toChromiumTabId = function(tabId) {
-    if ( typeof tabId === 'string' ) { debugger; }
-    if ( typeof tabId !== 'number' || isNaN(tabId) || tabId === -1 ) {
-        return 0;
-    }
-    return tabId || 0;
+    return typeof tabId === 'number' && !isNaN(tabId) && tabId > 0 ?
+        tabId :
+        0;
 };
 
 /******************************************************************************/
@@ -404,7 +408,7 @@ vAPI.tabs.get = function(tabId, callback) {
         chrome.tabs.query(
             { active: true, currentWindow: true },
             function(tabs) {
-                if ( chrome.runtime.lastError ) { /* noop */ }
+                void chrome.runtime.lastError;
                 callback(
                     Array.isArray(tabs) && tabs.length !== 0 ? tabs[0] : null
                 );
@@ -420,7 +424,7 @@ vAPI.tabs.get = function(tabId, callback) {
     }
 
     chrome.tabs.get(tabId, function(tab) {
-        if ( chrome.runtime.lastError ) { /* noop */ }
+        void chrome.runtime.lastError;
         callback(tab);
     });
 };
@@ -515,7 +519,10 @@ vAPI.tabs.open = function(details) {
 
     // https://github.com/gorhill/uBlock/issues/3053#issuecomment-332276818
     // - Do not try to lookup uBO's own pages with FF 55 or less.
-    if ( /^Mozilla-Firefox-5[2-5]\./.test(vAPI.webextFlavor) ) {
+    if (
+        vAPI.webextFlavor.soup.has('firefox') &&
+        vAPI.webextFlavor.major < 56
+    ) {
         wrapper();
         return;
     }
@@ -528,7 +535,7 @@ vAPI.tabs.open = function(details) {
         targetURLWithoutHash = pos === -1 ? targetURL : targetURL.slice(0, pos);
 
     chrome.tabs.query({ url: targetURLWithoutHash }, function(tabs) {
-        if ( chrome.runtime.lastError ) { /* noop */ }
+        void chrome.runtime.lastError;
         var tab = Array.isArray(tabs) && tabs[0];
         if ( !tab ) {
             wrapper();
@@ -562,12 +569,7 @@ vAPI.tabs.replace = function(tabId, url) {
         targetURL = vAPI.getURL(targetURL);
     }
 
-    chrome.tabs.update(tabId, { url: targetURL }, function() {
-        // https://code.google.com/p/chromium/issues/detail?id=410868#c8
-        if ( chrome.runtime.lastError ) {
-            /* noop */
-        }
-    });
+    chrome.tabs.update(tabId, { url: targetURL }, vAPI.resetLastError);
 };
 
 /******************************************************************************/
@@ -576,14 +578,7 @@ vAPI.tabs.remove = function(tabId) {
     tabId = toChromiumTabId(tabId);
     if ( tabId === 0 ) { return; }
 
-    var onTabRemoved = function() {
-        // https://code.google.com/p/chromium/issues/detail?id=410868#c8
-        if ( chrome.runtime.lastError ) {
-            /* noop */
-        }
-    };
-
-    chrome.tabs.remove(tabId, onTabRemoved);
+    chrome.tabs.remove(tabId, vAPI.resetLastError);
 };
 
 /******************************************************************************/
@@ -592,17 +587,10 @@ vAPI.tabs.reload = function(tabId, bypassCache) {
     tabId = toChromiumTabId(tabId);
     if ( tabId === 0 ) { return; }
 
-    var onReloaded = function() {
-        // https://code.google.com/p/chromium/issues/detail?id=410868#c8
-        if ( chrome.runtime.lastError ) {
-            /* noop */
-        }
-    };
-
     chrome.tabs.reload(
         tabId,
         { bypassCache: bypassCache === true },
-        onReloaded
+        vAPI.resetLastError
     );
 };
 
@@ -615,12 +603,8 @@ vAPI.tabs.select = function(tabId) {
     if ( tabId === 0 ) { return; }
 
     chrome.tabs.update(tabId, { active: true }, function(tab) {
-        if ( chrome.runtime.lastError ) {
-            /* noop */
-        }
-        if ( !tab ) {
-            return;
-        }
+        void chrome.runtime.lastError;
+        if ( !tab ) { return; }
         chrome.windows.update(tab.windowId, { focused: true });
     });
 };
@@ -630,9 +614,7 @@ vAPI.tabs.select = function(tabId) {
 vAPI.tabs.injectScript = function(tabId, details, callback) {
     var onScriptExecuted = function() {
         // https://code.google.com/p/chromium/issues/detail?id=410868#c8
-        if ( chrome.runtime.lastError ) {
-            /* noop */
-        }
+        void chrome.runtime.lastError;
         if ( typeof callback === 'function' ) {
             callback();
         }
@@ -657,39 +639,94 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 
 // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/browserAction#Browser_compatibility
 //   Firefox for Android does no support browser.browserAction.setIcon().
+//   Performance: use ImageData for platforms supporting it.
 
-/*vAPI.setIcon = (function() { OLD-ADN
-    var browserAction = chrome.browserAction,
+// https://github.com/uBlockOrigin/uBlock-issues/issues/32
+//   Ensure ImageData for toolbar icon is valid before use.
+/*
+vAPI.setIcon = (function() {
+    let browserAction = chrome.browserAction,
         titleTemplate = chrome.runtime.getManifest().name + ' ({badge})';
-    var iconPaths = [
+    let icons = [
         {
-            '19': 'img/browsericons/icon19-off.png',
-            '38': 'img/browsericons/icon38-off.png'
+            tabId: 0,
+            path: { '16': 'img/icon_16-off.png', '32': 'img/icon_32-off.png' }
         },
         {
-            '19': 'img/browsericons/icon19.png',
-            '38': 'img/browsericons/icon38.png'
+            tabId: 0,
+            path: { '16': 'img/icon_16.png', '32': 'img/icon_32.png' }
         }
     ];
 
-    var onTabReady = function(tab, status, badge) {
+    (function() {
+        if ( browserAction.setIcon === undefined ) { return; }
+
+        // The global badge background color.
+        if ( browserAction.setBadgeBackgroundColor !== undefined ) {
+            browserAction.setBadgeBackgroundColor({
+                color: [ 0x66, 0x66, 0x66, 0xFF ]
+            });
+        }
+
+        // As of 2018-05, benchmarks show that only Chromium benefits for sure
+        // from using ImageData.
+        //
+        // Chromium creates a new ImageData instance every call to setIcon
+        // with paths:
+        // https://cs.chromium.org/chromium/src/extensions/renderer/resources/set_icon.js?l=56&rcl=99be185c25738437ecfa0dafba72a26114196631
+        //
+        // Firefox uses an internal cache for each setIcon's paths:
+        // https://searchfox.org/mozilla-central/rev/5ff2d7683078c96e4b11b8a13674daded935aa44/browser/components/extensions/parent/ext-browserAction.js#631
+        if ( vAPI.webextFlavor.soup.has('chromium') === false ) { return; }
+
+        let imgs = [
+            { i: 0, p: '16' }, { i: 0, p: '32' },
+            { i: 1, p: '16' }, { i: 1, p: '32' },
+        ];
+        let onLoaded = function() {
+            for ( let img of imgs ) {
+                if ( img.r.complete === false ) { return; }
+            }
+            let ctx = document.createElement('canvas').getContext('2d');
+            let iconData = [ null, null ];
+            for ( let img of imgs ) {
+                let w = img.r.naturalWidth, h = img.r.naturalHeight;
+                ctx.width = w; ctx.height = h;
+                ctx.clearRect(0, 0, w, h);
+                ctx.drawImage(img.r, 0, 0);
+                if ( iconData[img.i] === null ) { iconData[img.i] = {}; }
+                let imgData = ctx.getImageData(0, 0, w, h);
+                if (
+                    imgData instanceof Object === false ||
+                    imgData.data instanceof Uint8ClampedArray === false ||
+                    imgData.data[0] !== 0 ||
+                    imgData.data[1] !== 0 ||
+                    imgData.data[2] !== 0 ||
+                    imgData.data[3] !== 0
+                ) {
+                    return;
+                }
+                iconData[img.i][img.p] = imgData;
+            }
+            icons[0] = { tabId: 0, imageData: iconData[0] };
+            icons[1] = { tabId: 0, imageData: iconData[1] };
+        };
+        for ( let img of imgs ) {
+            img.r = new Image();
+            img.r.addEventListener('load', onLoaded, { once: true });
+            img.r.src = icons[img.i].path[img.p];
+        }
+    })();
+
+    var onTabReady = function(tab, state, badge, parts) {
         if ( vAPI.lastError() || !tab ) { return; }
 
         if ( browserAction.setIcon !== undefined ) {
-            browserAction.setIcon({
-                tabId: tab.id,
-                path: iconPaths[status === 'on' ? 1 : 0]
-            });
-            browserAction.setBadgeText({
-                tabId: tab.id,
-                text: badge
-            });
-            if ( badge !== '' ) {
-                browserAction.setBadgeBackgroundColor({
-                    tabId: tab.id,
-                    color: '#666'
-                });
+            if ( parts === undefined || (parts & 0x01) !== 0 ) {
+                icons[state].tabId = tab.id;
+                browserAction.setIcon(icons[state]);
             }
+            browserAction.setBadgeText({ tabId: tab.id, text: badge });
         }
 
         if ( browserAction.setTitle !== undefined ) {
@@ -697,45 +734,24 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
                 tabId: tab.id,
                 title: titleTemplate.replace(
                     '{badge}',
-                    status === 'on' ? (badge !== '' ? badge : '0') : 'off'
+                    state === 1 ? (badge !== '' ? badge : '0') : 'off'
                 )
             });
         }
     };
 
-    return function(tabId, iconStatus, badge) {
+    // parts: bit 0 = icon
+    //        bit 1 = badge
+
+    return function(tabId, state, badge, parts) {
         tabId = toChromiumTabId(tabId);
         if ( tabId === 0 ) { return; }
 
         chrome.tabs.get(tabId, function(tab) {
-            onTabReady(tab, iconStatus, badge);
+            onTabReady(tab, state, badge, parts);
         });
 
     var iconPaths;
-
-    switch(iconStatus) {
-        case 'dnt':
-            iconPaths = { '16': 'img/adn_dnt_on_16.png', '32': 'img/adn_dnt_on_32.png' };
-            break;
-        case 'dntactive':
-            iconPaths = { '16': 'img/adn_dnt_active_16.png', '32': 'img/adn_dnt_active_32.png' };
-            break;
-        case 'onactive':
-            iconPaths = { '16': 'img/adn_active_16.png', '32': 'img/adn_active_32.png'};
-            break;
-        case 'off':
-            iconPaths = { '16': 'img/adn_off_16.png', '32': 'img/adn_off_32.png', '19': 'img/browsericons/icon19-off.png', '38': 'img/browsericons/icon38-off.png' };
-            break;
-        default://on
-            iconPaths = { '16': 'img/adn_on_16.png', '32': 'img/adn_on_32.png', '19': 'img/browsericons/icon19.png', '38': 'img/browsericons/icon38.png' };
-    }
-
-    if (chrome.browserAction && typeof chrome.browserAction.setIcon === 'function') { // ADN
-      chrome.browserAction.setIcon({ tabId: tabId, path: iconPaths }, onIconReady);
-    }
-    if ( vAPI.contextMenu instanceof Object ) {
-      vAPI.contextMenu.onMustUpdate(tabId);
-    }
 };*/
 
 vAPI.setIcon = (function() {
@@ -757,10 +773,10 @@ vAPI.setIcon = (function() {
                 iconPaths = { '16': 'img/adn_active_16.png', '32': 'img/adn_active_32.png'};
                 break;
             case 'off':
-                iconPaths = { '16': 'img/adn_off_16.png', '32': 'img/adn_off_32.png', '19': 'img/browsericons/icon19-off.png', '38': 'img/browsericons/icon38-off.png' };
+                iconPaths = { '16': 'img/adn_off_16.png', '32': 'img/adn_off_32.png'};
                 break;
             default://on
-                iconPaths = { '16': 'img/adn_on_16.png', '32': 'img/adn_on_32.png', '19': 'img/browsericons/icon19.png', '38': 'img/browsericons/icon38.png' };
+                iconPaths = { '16': 'img/adn_on_16.png', '32': 'img/adn_on_32.png' };
         }
 
         tabId = toChromiumTabId(tabId);
@@ -808,7 +824,7 @@ vAPI.setIcon = (function() {
 chrome.browserAction.onClicked.addListener(function(tab) {
     vAPI.tabs.open({
         select: true,
-        url: 'popup.html?tabId=' + tab.id + '&mobile=1'
+        url: 'popup.html?tabId=' + tab.id + '&responsive=1'
     });
 });
 
@@ -832,8 +848,7 @@ vAPI.messaging.listen = function(listenerName, callback) {
 /******************************************************************************/
 
 vAPI.messaging.onPortMessage = (function() {
-    var messaging = vAPI.messaging,
-        supportsUserStylesheets = vAPI.supportsUserStylesheets;
+    var messaging = vAPI.messaging;
 
     // Use a wrapper to avoid closure and to allow reuse.
     var CallbackWrapper = function(port, request) {
@@ -917,26 +932,35 @@ vAPI.messaging.onPortMessage = (function() {
                 frameId: sender.frameId,
                 matchAboutBlank: true
             };
-            if ( supportsUserStylesheets ) {
+            if ( vAPI.supportsUserStylesheets ) {
                 details.cssOrigin = 'user';
             }
             if ( msg.add ) {
                 details.runAt = 'document_start';
             }
             var cssText;
-            const cssPromises = [];
-            for ( cssText of msg.add ) {
-                details.code = cssText;
-                cssPromises.push(chrome.tabs.insertCSS(tabId, details));
-            }
-            for ( cssText of msg.remove ) {
-                details.code = cssText;
-                cssPromises.push(chrome.tabs.removeCSS(tabId, details));
-            }
-            if ( typeof callback === 'function' ) {
-                Promise.all(cssPromises).then(() => {
+            var countdown = 0;
+            var countdownHandler = function() {
+                void chrome.runtime.lastError;
+                countdown -= 1;
+                if ( countdown === 0 && typeof callback === 'function' ) {
                     callback();
-                }, null);
+                }
+            };
+            for ( cssText of msg.add ) {
+                countdown += 1;
+                details.code = cssText;
+                chrome.tabs.insertCSS(tabId, details, countdownHandler);
+            }
+            if ( typeof chrome.tabs.removeCSS === 'function' ) {
+                for ( cssText of msg.remove ) {
+                    countdown += 1;
+                    details.code = cssText;
+                    chrome.tabs.removeCSS(tabId, details, countdownHandler);
+                }
+            }
+            if ( countdown === 0 && typeof callback === 'function' ) {
+                callback();
             }
             break;
         }
@@ -1133,13 +1157,6 @@ vAPI.commands = chrome.commands;
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.lastError = function() {
-    return chrome.runtime.lastError;
-};
-
-/******************************************************************************/
-/******************************************************************************/
-
 // This is called only once, when everything has been loaded in memory after
 // the extension was launched. It can be used to inject content scripts
 // in already opened web pages, to remove whatever nuisance could make it to
@@ -1281,26 +1298,31 @@ vAPI.cloud = (function() {
     var maxChunkCountPerItem = Math.floor(512 * 0.75) & ~(chunkCountPerFetch - 1);
 
     // Mind chrome.storage.sync.QUOTA_BYTES_PER_ITEM (8192 at time of writing)
-    var maxChunkSize = chrome.storage.sync.QUOTA_BYTES_PER_ITEM || 8192;
+    // https://github.com/gorhill/uBlock/issues/3006
+    //  For Firefox, we will use a lower ratio to allow for more overhead for
+    //  the infrastructure. Unfortunately this leads to less usable space for
+    //  actual data, but all of this is provided for free by browser vendors,
+    //  so we need to accept and deal with these limitations.
+    var evalMaxChunkSize = function() {
+        return Math.floor(
+            (chrome.storage.sync.QUOTA_BYTES_PER_ITEM || 8192) *
+            (vAPI.webextFlavor.soup.has('firefox') ? 0.6 : 0.75)
+        );
+    };
+
+    var maxChunkSize = evalMaxChunkSize();
+
+    // The real actual webextFlavor value may not be set in stone, so listen
+    // for possible future changes.
+    window.addEventListener('webextFlavor', function() {
+        maxChunkSize = evalMaxChunkSize();
+    }, { once: true });
 
     // Mind chrome.storage.sync.QUOTA_BYTES (128 kB at time of writing)
     // Firefox:
     // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/storage/sync
     // > You can store up to 100KB of data using this API/
     var maxStorageSize = chrome.storage.sync.QUOTA_BYTES || 102400;
-
-    // Flavor-specific handling needs to be done here. Reason: to allow time
-    // for vAPI.webextFlavor to be properly set.
-    // https://github.com/gorhill/uBlock/issues/3006
-    //  For Firefox, we will use a lower ratio to allow for more overhead for
-    //  the infrastructure. Unfortunately this leads to less usable space for
-    //  actual data, but all of this is provided for free by browser vendors,
-    //  so we need to accept and deal with these limitations.
-    var initialize = function() {
-        var ratio = vAPI.webextFlavor.startsWith('Mozilla-Firefox-') ? 0.6 : 0.75;
-        maxChunkSize = Math.floor(maxChunkSize * ratio);
-        initialize = function(){};
-    };
 
     var options = {
         defaultDeviceName: window.navigator.platform,
@@ -1360,7 +1382,6 @@ vAPI.cloud = (function() {
     };
 
     var push = function(dataKey, data, callback) {
-        initialize();
 
         var bin = {
             'source': options.deviceName || options.defaultDeviceName,
@@ -1393,7 +1414,7 @@ vAPI.cloud = (function() {
                 //   until such cases are reported for other browsers, we will
                 //   reset the (now corrupted) content of the cloud storage
                 //   only on Firefox.
-                if ( vAPI.webextFlavor.startsWith('Mozilla-Firefox-') ) {
+                if ( vAPI.webextFlavor.soup.has('firefox') ) {
                     chunkCount = 0;
                 }
             }
@@ -1405,7 +1426,6 @@ vAPI.cloud = (function() {
     };
 
     var pull = function(dataKey, callback) {
-        initialize();
 
         var assembleChunks = function(bin) {
             if ( chrome.runtime.lastError ) {

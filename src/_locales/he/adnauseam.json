@@ -31,6 +31,10 @@
     "message": "חסום תוכנה זדונית",
     "description": "English: Firstrun.html -> Block Malware"
   },
+  "adnAboutResetDataConfirm": {
+    "message": "כל ההגדרות שלך יוסרו, פרסומות בכספת יימחקו ו-AdNauseam יופעל מחדש.\n\nאיפוס AdNauseam להגדרות מפעל?",
+    "description": "Message asking user to confirm reset"
+  },
   "adnFirstRunHideAllAdsDescription": {
     "message": "הסתר פרסומות על פי <span>רשימת המסננים<\/span> אשר בחרת",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
@@ -78,6 +82,10 @@
   "adnNotificationDisableUBlock": {
     "message": "ייתכן וקיימת התנגשות בין uBlock ו- AdNauseam!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
+  },
+  "adnNotificationBrowserSetting": {
+    "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
+    "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
   "adnNotificationDNTAllowed": {
     "message": "דף זה מכבד <b>אל תעקוב<\/b>, פרסומות מאופשרות.",
@@ -152,7 +160,7 @@
     "description": "English: AdNauseam file export"
   },
   "adnImportAlertFormat": {
-    "message": "The file doesn't contain any Ads, please choose another file.",
+    "message": "הקובץ אינו מכיל פרסומות, יש לבחור קובץ אחר.",
     "description": "appears in ADN vault, after import"
   },
   "adnImportAlert": {
