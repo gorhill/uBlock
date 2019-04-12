@@ -2698,16 +2698,18 @@ FilterContainer.prototype.benchmark = function() {
         }
         console.info(`Benchmarking staticNetFilteringEngine.matchString()...`);
         const fctxt = µb.filteringContext.duplicate();
+        let blockCount = 0;
         const t0 = self.performance.now();
         for ( const request of requests ) {
             fctxt.setURL(request.url);
             fctxt.setDocOriginFromURL(request.frameUrl);
             fctxt.setType(request.cpt);
-            this.matchString(fctxt);
+            if ( this.matchString(fctxt) === 1 ) { blockCount += 1; }
         }
         const t1 = self.performance.now();
         const dur = t1 - t0;
         console.info(`Evaluated ${requests.length} requests in ${dur.toFixed(0)} ms`);
+        console.info(`\tBlocked: ${blockCount}`);
         console.info(`\tAverage: ${(dur / requests.length).toFixed(3)} ms per request`);
     });
     return 'ok';
