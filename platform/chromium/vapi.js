@@ -50,7 +50,7 @@ if (
 ) {
     vAPI = window.vAPI = vAPI instanceof Object && vAPI.uBO === true
         ? vAPI
-        : { uBO: true };
+        : { uBO: true, chrome: true /* adn */ };
 }
 
 

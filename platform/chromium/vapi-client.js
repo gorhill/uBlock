@@ -43,7 +43,6 @@ vAPI.randomToken = function() {
 
 vAPI.sessionId = vAPI.randomToken();
 vAPI.setTimeout = vAPI.setTimeout || self.setTimeout.bind(self);
-vAPI.chrome = true;
 
 /******************************************************************************/
 
@@ -250,6 +249,7 @@ vAPI.messaging = {
     },
 
     send: function(channelName, message, callback) {
+
         // Too large a gap between the last request and the last response means
         // the main process is no longer reachable: memory leaks and bad
         // performance become a risk -- especially for long-lived, dynamic

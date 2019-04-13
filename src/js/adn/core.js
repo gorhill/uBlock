@@ -1657,7 +1657,7 @@
 
   var blockIncomingCookies = exports.blockIncomingCookies = function (headers, requestUrl, originalUrl) {
 
-    var modified = false, dbug = 1, hostname, us = µb.userSettings;
+    var modified = false, dbug = 0, hostname, us = µb.userSettings;
 
     var cookieAttr = function(cookie, name) {
 
@@ -1670,7 +1670,8 @@
       }
     }
 
-    dbug && console.log('[HEADERS] (Incoming' + (requestUrl===originalUrl ? ')' : '-redirect)'), requestUrl);
+    dbug && console.log('[HEADERS] (Incoming' +
+      (requestUrl===originalUrl ? ')' : '-redirect)'), requestUrl);
 
     var originalHostname = µb.URI.hostnameFromURI(originalUrl);
 
