@@ -29,7 +29,7 @@
 
 /******************************************************************************/
 
-let resizeFrame = function() {
+const resizeFrame = function() {
     let navRect = document.getElementById('dashboard-nav').getBoundingClientRect();
     let viewRect = document.documentElement.getBoundingClientRect();
     document.getElementById('iframe').style.setProperty(
@@ -38,7 +38,7 @@ let resizeFrame = function() {
     );
 };
 
-let loadDashboardPanel = function() {
+const loadDashboardPanel = function() {
     let pane = window.location.hash.slice(1);
     if ( pane === '' ) {
         pane = vAPI.localStorage.getItem('dashboardLastVisitedPane');
@@ -55,7 +55,7 @@ let loadDashboardPanel = function() {
     tabButton.toggleClass('selected', true);
 };
 
-let onTabClickHandler = function(e) {
+const onTabClickHandler = function(e) {
     let url = window.location.href,
         pos = url.indexOf('#');
     if ( pos !== -1 ) {
@@ -75,9 +75,19 @@ vAPI.messaging.send('dashboard', { what: 'canUpdateShortcuts' }, response => {
 });
 
 resizeFrame();
+loadDashboardPanel();
+
 window.addEventListener('resize', resizeFrame);
 uDom('.tabButton').on('click', onTabClickHandler);
-loadDashboardPanel();
+
+// https://github.com/uBlockOrigin/uBlock-issues/issues/468
+//   See https://github.com/WICG/page-lifecycle
+document.addEventListener('freeze', ( ) => {
+    uDom('.tabButton').off('click', onTabClickHandler);
+});
+document.addEventListener('resume', ( ) => {
+    uDom('.tabButton').on('click', onTabClickHandler);
+});
 
 /******************************************************************************/
 
