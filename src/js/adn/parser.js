@@ -313,7 +313,7 @@
         elem.tagName === 'IFRAME' && elem.hasAttribute('src')
           ? elem.getAttribute('src') : elem);
 
-      console.log("PARSER.process", vAPI.prefs.logEvents);
+      //console.log("PARSER.process", vAPI.prefs.logEvents);
 
       switch (elem.tagName) {
 

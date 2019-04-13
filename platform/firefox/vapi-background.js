@@ -2167,12 +2167,8 @@ var httpObserver = {
         });
 
         // 'Content-Security-Policy' MUST come last in the array. Need to
-        // revised this eventually.
+        // revise this eventually.
         var value = channel.contentLength;
-
-        // if ( value !== -1 ) { // ADN
-        //     responseHeaders.push({ name: 'Content-Length', value: value });
-        // }
 
         if ( requestType.endsWith('_frame') ) {
             value = this.getResponseHeader(channel, 'Content-Security-Policy');

@@ -42,8 +42,8 @@ vAPI.randomToken = function() {
 };
 
 vAPI.sessionId = vAPI.randomToken();
-vAPI.chrome = true;
 vAPI.setTimeout = vAPI.setTimeout || self.setTimeout.bind(self);
+vAPI.chrome = true;
 
 /******************************************************************************/
 

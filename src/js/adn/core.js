@@ -772,7 +772,7 @@
       delete admap[pages[i]];
     }
 
-    admap = {}; // redundant
+    admap = {}; // redundant, remove
   }
 
   var millis = function () {
@@ -1040,8 +1040,6 @@
 
     var vaultOpen = typeof getExtPageTabId('vault.html') !== 'undefined';
     if (vaultOpen || isPopupOpen()) {
-
-      log('[*******VAULT-OPEN] ');
 
       // if vault/menu is open, send the new ad
       var json = adsForUI(ad.pageUrl);
@@ -1659,7 +1657,7 @@
 
   var blockIncomingCookies = exports.blockIncomingCookies = function (headers, requestUrl, originalUrl) {
 
-    var modified = false, dbug = 0, hostname, us = µb.userSettings;
+    var modified = false, dbug = 1, hostname, us = µb.userSettings;
 
     var cookieAttr = function(cookie, name) {
 
@@ -1817,7 +1815,11 @@
   };
 
   var verifyFirefoxSetting = exports.verifyFirefoxSetting = function () {
+
+      if (typeof browser === 'undefined') return; // if not firefox
+
       var trackingProtectionMode = browser.privacy.websites.trackingProtectionMode.get({});
+
       trackingProtectionMode.then((got) => {
         // console.log("FF:", got.value);
         var notes = notifications,
@@ -1968,7 +1970,7 @@
 
     visitedURLs.clear(); // user visits #1214
 
-    log('[CLEAR] ' + pre + ' ads cleared');
+    log('[CLEAR] ' + pre + ' ads cleared', admap);
   };
 
   exports.importAds = function (request) {
