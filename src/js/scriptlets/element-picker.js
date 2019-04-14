@@ -342,7 +342,7 @@ const resourceURLFromElement = function(elem) {
         }
         if ( typeof elem.srcset === 'string' && elem.srcset !== '' ) {
             const ss = [];
-            for ( let s of elem.srcset.split(/\s*,\s+/) ) {
+            for ( let s of elem.srcset.split(',') ) {
                 const pos = s.indexOf(' ');
                 if ( pos !== -1 ) { s = s.slice(0, pos); }
                 const parsedURL = new URL(s, document.baseURI);
@@ -469,10 +469,6 @@ const netFilter1stSources = {
        'img': 'src',
     'object': 'data',
      'video': 'src'
-};
-
-const netFilter2ndSources = {
-       'img': 'srcset'
 };
 
 const filterTypes = {
@@ -750,8 +746,13 @@ const filterToDOMInterface = (function() {
             let srcProp = netFilter1stSources[elem.localName];
             let src = elem[srcProp];
             if ( typeof src !== 'string' || src.length === 0 ) {
-                srcProp = netFilter2ndSources[elem.localName];
-                src = elem[srcProp];
+                if (
+                    typeof elem.srcset === 'string' &&
+                    elem.srcset !== '' &&
+                    typeof elem.currentSrc === 'string'
+                ) {
+                    src = elem.currentSrc;
+                }
             }
             if ( src && reFilter.test(src) ) {
                 out.push({
