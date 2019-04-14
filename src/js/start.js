@@ -67,7 +67,7 @@ var onAllReady = function() {
     // https://github.com/chrisaljoudi/uBlock/issues/184
     // Check for updates not too far in the future.
     µb.assets.addObserver(µb.assetObserver.bind(µb));
-    µb.scheduleAssetUpdater(µb.userSettings.autoUpdate ? 7 * 60 * 1000 : 0);
+    µb.scheduleAssetUpdater(µb.userSettings.autoUpdate ? 5 * 60 * 1000 : 0);
 
     // vAPI.cloud is optional.
     if ( µb.cloudStorageSupported ) {
