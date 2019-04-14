@@ -2690,7 +2690,7 @@ FilterContainer.prototype.getFilterCount = function() {
 
 /******************************************************************************/
 
-FilterContainer.prototype.benchmark = function() {
+FilterContainer.prototype.benchmark = function(action) {
     µb.loadBenchmarkDataset().then(requests => {
         if ( Array.isArray(requests) === false || requests.length === 0 ) {
             console.info('No requests found to benchmark');
@@ -2698,19 +2698,44 @@ FilterContainer.prototype.benchmark = function() {
         }
         console.info(`Benchmarking staticNetFilteringEngine.matchString()...`);
         const fctxt = µb.filteringContext.duplicate();
-        let blockCount = 0;
+        let expected, recorded;
+        if ( action === 1 ) {
+            try {
+                expected = JSON.parse(
+                    vAPI.localStorage.getItem('FilterContainer.benchmark.results')
+                );
+            } catch(ex) {
+            }
+        }
+        if ( action === 2 ) {
+            recorded = [];
+        }
         const t0 = self.performance.now();
-        for ( const request of requests ) {
+        for ( let i = 0; i < requests.length; i++ ) {
+            const request = requests[i];
             fctxt.setURL(request.url);
             fctxt.setDocOriginFromURL(request.frameUrl);
             fctxt.setType(request.cpt);
-            if ( this.matchString(fctxt) === 1 ) { blockCount += 1; }
+            const r = this.matchString(fctxt);
+            if ( recorded !== undefined ) { recorded.push(r); }
+            if ( expected !== undefined && r !== expected[i] ) {
+                throw 'Mismatch with reference results';
+            }
         }
         const t1 = self.performance.now();
         const dur = t1 - t0;
         console.info(`Evaluated ${requests.length} requests in ${dur.toFixed(0)} ms`);
-        console.info(`\tBlocked: ${blockCount}`);
         console.info(`\tAverage: ${(dur / requests.length).toFixed(3)} ms per request`);
+        if ( expected !== undefined ) {
+            console.info(`\tBlocked: ${expected.reduce((n,r)=>{return r===1?n+1:n;},0)}`);
+            console.info(`\tExcepted: ${expected.reduce((n,r)=>{return r===2?n+1:n;},0)}`);
+        }
+        if ( recorded !== undefined ) {
+            vAPI.localStorage.setItem(
+                'FilterContainer.benchmark.results',
+                JSON.stringify(recorded)
+            );
+        }
     });
     return 'ok';
 };
