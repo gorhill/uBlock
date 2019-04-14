@@ -80,15 +80,6 @@ loadDashboardPanel();
 window.addEventListener('resize', resizeFrame);
 uDom('.tabButton').on('click', onTabClickHandler);
 
-// https://github.com/uBlockOrigin/uBlock-issues/issues/468
-//   See https://github.com/WICG/page-lifecycle
-document.addEventListener('freeze', ( ) => {
-    uDom('.tabButton').off('click', onTabClickHandler);
-});
-document.addEventListener('resume', ( ) => {
-    uDom('.tabButton').on('click', onTabClickHandler);
-});
-
 /******************************************************************************/
 
 })();
