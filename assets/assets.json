@@ -461,7 +461,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "ITA: EasyList Italy",
-		"lang": "it",
+		"lang": "it lij",
 		"contentURL": "https://easylist-downloads.adblockplus.org/easylistitaly.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=96"
 	},
