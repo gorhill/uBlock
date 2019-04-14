@@ -321,7 +321,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "BGR: Bulgarian Adblock list",
-		"lang": "bg",
+		"lang": "bg mk",
 		"contentURL": "https://stanev.org/abp/adblock_bg.txt",
 		"supportURL": "https://stanev.org/abp/"
 	},
@@ -397,7 +397,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "FRA: EasyList Liste FR",
-		"lang": "ar fr",
+		"lang": "ar br fr oc",
 		"contentURL": "https://easylist-downloads.adblockplus.org/liste_fr.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=91"
 	},
@@ -524,7 +524,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "NLD: EasyList Dutch",
-		"lang": "nl",
+		"lang": "af fy nl",
 		"contentURL": "https://easylist-downloads.adblockplus.org/easylistdutch.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=100"
 	},
@@ -576,7 +576,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "RUS: RU AdList",
-		"lang": "be ru uk",
+		"lang": "be kk ru uk uz",
 		"contentURL": "https://easylist-downloads.adblockplus.org/advblock+cssfixes.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=102",
 		"instructionURL": "https://forums.lanik.us/viewtopic.php?f=102&t=22512"
@@ -586,7 +586,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "RUS: AdGuard Russian filter",
-		"lang": "be ru uk",
+		"lang": "be kk ru uk uz",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/1.txt",
 		"supportURL": "https://forum.adguard.com/forumdisplay.php?69-%D0%A4%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D1%8B-Adguard",
 		"instructionURL": "https://kb.adguard.com/ru/general/adguard-ad-filters#russian"
@@ -596,7 +596,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "spa: EasyList Spanish",
-		"lang": "es",
+		"lang": "an ast ca es eu gl",
 		"contentURL": "https://easylist-downloads.adblockplus.org/easylistspanish.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=103"
 	},
@@ -605,7 +605,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "spa, por: AdGuard Spanish/Portuguese filter",
-		"lang": "es pt",
+		"lang": "an ast ca es eu gl pt",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/9.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
 		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
