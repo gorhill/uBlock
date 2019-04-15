@@ -1286,7 +1286,7 @@ const FilterBucket = class {
                     FilterPlainPrefix1.trieableStringFromArgs(fdata)
                 );
             }
-            if ( this.plainPrefix1Count === 7 ) {
+            if ( this.plainPrefix1Count === 3 ) {
                 this.plainPrefix1Trie = FilterBucket.trieContainer.createOne();
                 this._transferTrieable(
                     this.plainPrefix1Id,
@@ -2863,6 +2863,23 @@ FilterContainer.prototype.benchmark = function(action) {
         }
     });
     return 'ok';
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.bucketHistogram = function() {
+    const results = [];
+    for ( const [ bits, category ] of this.categories ) {
+        for ( const [ th, f ] of category ) {
+            if ( f instanceof FilterBucket === false ) { continue; }
+            const token = µBlock.urlTokenizer.stringFromTokenHash(th);
+            results.push({ bits, token, size: f.size, f });
+        }
+    }
+    results.sort((a, b) => {
+        return b.size - a.size;
+    });
+    console.log(results);
 };
 
 /******************************************************************************/

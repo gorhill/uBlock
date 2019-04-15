@@ -75,6 +75,19 @@
         return th;
     },
 
+    stringFromTokenHash: function(th) {
+        if ( th === 0 ) { return ''; }
+        if ( th === 63 ) { return '*'; }
+        if ( th === 62 ) { return '.'; }
+        const chars = '0123456789%abcdefghijklmnopqrstuvwxyz';
+        let s = '';
+        while ( th > 0 ) {
+            s = `${chars.charAt((th & 0b111111)-1)}${s}`;
+            th /= 64;
+        }
+        return s;
+    },
+
     // https://github.com/chrisaljoudi/uBlock/issues/1118
     // We limit to a maximum number of tokens.
 
