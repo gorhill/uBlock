@@ -173,14 +173,17 @@
             ')\\('
         ].join(''));
 
-        const reEscapeRegex = /[.*+?^${}()|[\]\\]/g,
-            reNeedScope = /^\s*[+>~]/,
-            reIsDanglingSelector = /(?:[+>~]\s*|\s+)$/;
+        const reEatBackslashes = /\\([()])/g;
+        const reEscapeRegex = /[.*+?^${}()|[\]\\]/g;
+        const reNeedScope = /^\s*[+>~]/;
+        const reIsDanglingSelector = /(?:[+>~]\s*|\s+)$/;
 
         const regexToRawValue = new Map();
         let lastProceduralSelector = '',
             lastProceduralSelectorCompiled;
 
+        // When dealing with literal text, we must first eat _some_
+        // backslash characters.
         const compileText = function(s) {
             const match = reParseRegexLiteral.exec(s);
             let regexDetails;
@@ -191,7 +194,8 @@
                     regexDetails = [ regexDetails, match[2] ];
                 }
             } else {
-                regexDetails = s.replace(reEscapeRegex, '\\$&');
+                regexDetails = s.replace(reEatBackslashes, '$1')
+                                .replace(reEscapeRegex, '\\$&');
                 regexToRawValue.set(regexDetails, s);
             }
             return regexDetails;
