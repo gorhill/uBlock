@@ -1475,6 +1475,7 @@ const FilterParser = function() {
     this.reHasUnicode = /[^\x00-\x7F]/;
     this.reWebsocketAny = /^ws[s*]?(?::\/?\/?)?\*?$/;
     this.reBadCSP = /(?:^|;)\s*report-(?:to|uri)\b/;
+    this.reIsWildcarded = /[\^\*]/;
     this.domainOpt = '';
     this.noTokenHash = µb.urlTokenizer.tokenHashFromString('*');
     this.unsupportedTypeBit = this.bitFromType('unsupported');
@@ -1545,6 +1546,7 @@ FilterParser.prototype.reset = function() {
     this.tokenBeg = 0;
     this.types = 0;
     this.important = 0;
+    this.wildcarded = false;
     this.unsupported = false;
     return this;
 };
@@ -1866,6 +1868,8 @@ FilterParser.prototype.parse = function(raw) {
         this.anchor = 0;
     }
 
+    this.wildcarded = this.reIsWildcarded.test(s);
+
     // This might look weird but we gain memory footprint by not going through
     // toLowerCase(), at least on Chromium. Because copy-on-write?
 
@@ -1892,6 +1896,7 @@ var reRegexBadSuffix = /^([^\\]\.|\\[dw]|[([{}?*]|$)/;
 
 var badTokens = new Set([
     'com',
+    'google',
     'http',
     'https',
     'icon',
@@ -1966,7 +1971,7 @@ FilterParser.prototype.makeToken = function() {
     if ( this.f === '*' ) { return; }
 
     let matches = null;
-    if ( (this.anchor & 0x4) !== 0 && this.f.indexOf('*') === -1 ) {
+    if ( (this.anchor & 0x4) !== 0 && this.wildcarded === false ) {
         matches = reHostnameToken.exec(this.f);
     }
     if ( matches === null ) {
@@ -1983,7 +1988,6 @@ FilterParser.prototype.makeToken = function() {
 /******************************************************************************/
 
 const FilterContainer = function() {
-    this.reIsGeneric = /[\^\*]/;
     this.filterParser = new FilterParser();
     this.urlTokenizer = µb.urlTokenizer;
     this.noTokenHash = this.urlTokenizer.tokenHashFromString('*');
@@ -2277,7 +2281,7 @@ FilterContainer.prototype.compile = function(raw, writer) {
         fdata = FilterGenericHnAndRightAnchored.compile(parsed);
     } else if ( parsed.anchor === 0x4 ) {
         if (
-            this.reIsGeneric.test(parsed.f) === false &&
+            parsed.wildcarded === false &&
             parsed.tokenHash !== parsed.noTokenHash &&
             parsed.tokenBeg === 0
         ) {
@@ -2285,10 +2289,7 @@ FilterContainer.prototype.compile = function(raw, writer) {
         } else {
             fdata = FilterGenericHnAnchored.compile(parsed);
         }
-    } else if (
-        this.reIsGeneric.test(parsed.f) ||
-        parsed.tokenHash === parsed.noTokenHash
-    ) {
+    } else if ( parsed.wildcarded || parsed.tokenHash === parsed.noTokenHash ) {
         fdata = FilterGeneric.compile(parsed);
     } else if ( parsed.anchor === 0x2 ) {
         fdata = FilterPlainLeftAnchored.compile(parsed);
