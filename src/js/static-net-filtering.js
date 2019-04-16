@@ -2885,6 +2885,52 @@ FilterContainer.prototype.bucketHistogram = function() {
 
 /******************************************************************************/
 
+FilterContainer.prototype.filterClassHistogram = function() {
+    const filterClassDetails = new Map();
+
+    for ( let i = 0; i < filterClasses.length; i++ ) {
+        filterClassDetails.set(i, { name: filterClasses[i].name, count: 0, });
+    }
+    // Artificial classes to report content of tries
+    filterClassDetails.set(1000, { name: 'FilterPrefix1Trie', count: 0, });
+    filterClassDetails.set(1001, { name: 'FilterHnAnchoredTrie', count: 0, });
+
+    const countFilter = function(f) {
+        if ( f instanceof Object === false ) { return; }
+        filterClassDetails.get(f.fid).count += 1;
+        if ( f.wrapped ) {
+            countFilter(f.wrapped);
+        }
+    };
+
+    for ( const category of this.categories.values() ) {
+        for ( const f of category.values() ) {
+            countFilter(f);
+            if ( f instanceof FilterBucket ) {
+                for ( const g of f.filters ) { countFilter(g); }
+                if ( f.plainPrefix1Trie !== null ) {
+                    filterClassDetails.get(1000).count += f.plainPrefix1Trie.size;
+                }
+                if ( f.plainHnAnchoredTrie !== null ) {
+                    filterClassDetails.get(1001).count += f.plainHnAnchoredTrie.size;
+                }
+                continue;
+            }
+            if ( f instanceof FilterPair ) {
+                countFilter(f.f1);
+                countFilter(f.f2);
+                continue;
+            }
+        }
+    }
+    const results = Array.from(filterClassDetails.values()).sort((a, b) => {
+        return b.count - a.count;
+    });
+    console.log(results);
+};
+
+/******************************************************************************/
+
 return new FilterContainer();
 
 /******************************************************************************/
