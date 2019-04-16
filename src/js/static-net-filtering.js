@@ -235,7 +235,6 @@ const isHnAnchored = (function() {
     };
 })();
 
-
 /*******************************************************************************
 
     Each filter class will register itself in the map. A filter class
@@ -244,43 +243,10 @@ const isHnAnchored = (function() {
     IMPORTANT: any change which modifies the mapping will have to be
     reflected with µBlock.systemSettings.compiledMagic.
 
-    As of 2019-04-13:
-
-        Filter classes histogram with default filter lists:
-
-        {"FilterPlainHnAnchored" => 12619}
-        {"FilterPlainPrefix1" => 8743}
-        {"FilterGenericHnAnchored" => 5231}
-        {"FilterOriginHit" => 4149}
-        {"FilterPair" => 2381}
-        {"FilterBucket" => 1940}
-        {"FilterPlainHostname" => 1612}
-        {"FilterOriginHitSet" => 1430}
-        {"FilterPlainLeftAnchored" => 799}
-        {"FilterGeneric" => 588}
-        {"FilterPlain" => 510}
-        {"FilterOriginMiss" => 299}
-        {"FilterDataHolder" => 280}
-        {"FilterOriginMissSet" => 150}
-        {"FilterTrue" => 130}
-        {"FilterRegex" => 124}
-        {"FilterPlainRightAnchored" => 110}
-        {"FilterGenericHnAndRightAnchored" => 95}
-        {"FilterHostnameDict" => 59}
-        {"FilterPlainPrefix0" => 29}
-        {"FilterExactMatch" => 5}
-        {"FilterOriginMixedSet" => 3}
-
-        Observations:
-        - No need for FilterPlainPrefix0.
-        - FilterPlainHnAnchored and FilterPlainPrefix1 are good candidates
-          for storing in a plain string trie.
-
-**/
+*/
 
 const filterClasses = [];
 let   filterClassIdGenerator = 0;
-const filterClassHistogram = new Map();
 
 const registerFilterClass = function(ctor) {
     let fid = filterClassIdGenerator++;
@@ -289,8 +255,6 @@ const registerFilterClass = function(ctor) {
 };
 
 const filterFromCompiledData = function(args) {
-    //const ctor = filterClasses[args[0]].name;
-    //filterClassHistogram.set(ctor, (filterClassHistogram.get(ctor) || 0) + 1);
     return filterClasses[args[0]].load(args);
 };
 
@@ -1165,38 +1129,6 @@ registerFilterClass(FilterHostnameDict);
 
 /******************************************************************************/
 
-// Some buckets can grow quite large, and finding a hit in these buckets
-// may end up being expensive. After considering various solutions, the one
-// retained is to promote hit filters to a smaller index, so that next time
-// they can be looked-up faster.
-
-// key=  10000 ad           count=660
-// key=  10000 ads          count=433
-// key=  10001 google       count=277
-// key=1000000 2mdn         count=267
-// key=  10000 social       count=240
-// key=  10001 pagead2      count=166
-// key=  10000 twitter      count=122
-// key=  10000 doubleclick  count=118
-// key=  10000 facebook     count=114
-// key=  10000 share        count=113
-// key=  10000 google       count=106
-// key=  10001 code         count=103
-// key=  11000 doubleclick  count=100
-// key=1010001 g            count=100
-// key=  10001 js           count= 89
-// key=  10000 adv          count= 88
-// key=  10000 youtube      count= 61
-// key=  10000 plugins      count= 60
-// key=  10001 partner      count= 59
-// key=  10000 ico          count= 57
-// key= 110001 ssl          count= 57
-// key=  10000 banner       count= 53
-// key=  10000 footer       count= 51
-// key=  10000 rss          count= 51
-
-/******************************************************************************/
-
 const FilterPair = class {
     constructor(a, b) {
         this.f1 = a;
@@ -2022,8 +1954,6 @@ FilterContainer.prototype.reset = function() {
     this.cbRegister = undefined;
     this.thRegister = undefined;
     this.fRegister = null;
-
-    filterClassHistogram.clear();
 };
 
 /******************************************************************************/
@@ -2883,7 +2813,41 @@ FilterContainer.prototype.bucketHistogram = function() {
     console.log(results);
 };
 
-/******************************************************************************/
+/*******************************************************************************
+
+    As of 2019-04-13:
+
+        Filter classes histogram with default filter lists:
+
+        {"FilterPlainHnAnchored" => 12619}
+        {"FilterPlainPrefix1" => 8743}
+        {"FilterGenericHnAnchored" => 5231}
+        {"FilterOriginHit" => 4149}
+        {"FilterPair" => 2381}
+        {"FilterBucket" => 1940}
+        {"FilterPlainHostname" => 1612}
+        {"FilterOriginHitSet" => 1430}
+        {"FilterPlainLeftAnchored" => 799}
+        {"FilterGeneric" => 588}
+        {"FilterPlain" => 510}
+        {"FilterOriginMiss" => 299}
+        {"FilterDataHolder" => 280}
+        {"FilterOriginMissSet" => 150}
+        {"FilterTrue" => 130}
+        {"FilterRegex" => 124}
+        {"FilterPlainRightAnchored" => 110}
+        {"FilterGenericHnAndRightAnchored" => 95}
+        {"FilterHostnameDict" => 59}
+        {"FilterPlainPrefix0" => 29}
+        {"FilterExactMatch" => 5}
+        {"FilterOriginMixedSet" => 3}
+
+        Observations:
+        - No need for FilterPlainPrefix0.
+        - FilterPlainHnAnchored and FilterPlainPrefix1 are good candidates
+          for storing in a plain string trie.
+
+*/
 
 FilterContainer.prototype.filterClassHistogram = function() {
     const filterClassDetails = new Map();
