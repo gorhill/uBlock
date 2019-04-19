@@ -100,7 +100,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Växla blockering av poppuppfönster för den här webbplatsen",
+    "message": "Växla blockering av popup-fönster för den här webbplatsen",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
@@ -140,11 +140,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Klicka för att blockera externa typsnitt på den här webbplatsen",
+    "message": "Klicka för att blockera fjärrtypsnitt på den här webbplatsen",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Klicka för att inte längre blockera externa typsnitt på den här webbplatsen",
+    "message": "Klicka för att inte längre blockera fjärrtypsnitt på den här webbplatsen",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
@@ -156,7 +156,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
-    "message": "Globala regler: denna kolumn avser regler som gäller alla sidor.",
+    "message": "Globala regler: den här kolumnen avser regler som gäller för alla webbplatser.",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
@@ -200,7 +200,7 @@
     "description": ""
   },
   "popup3pFrameRulePrompt": {
-    "message": "tredjepartsramar",
+    "message": "tredjepartramar",
     "description": ""
   },
   "popupHitDomainCountPrompt": {
@@ -336,7 +336,7 @@
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
-    "message": "Uppdatera filterlistor automatiskt.",
+    "message": "Uppdatera filterlistor automatiskt",
     "description": "A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow": {
@@ -344,11 +344,11 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll": {
-    "message": "Rensa all cache",
+    "message": "Rensa alla cachar",
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
-    "message": "Tolka och applicera kosmetiska filter.",
+    "message": "Tolka och tillämpa kosmetiska filter",
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
@@ -380,7 +380,7 @@
     "description": "English: Ads"
   },
   "3pGroupPrivacy": {
-    "message": "Sekretess",
+    "message": "Integritet",
     "description": "English: Privacy"
   },
   "3pGroupMalware": {
@@ -392,7 +392,7 @@
     "description": "The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose": {
-    "message": "Mångsidig",
+    "message": "Mångsidiga",
     "description": "English: Multipurpose"
   },
   "3pGroupRegions": {
@@ -496,7 +496,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Vitlistans direktiv dikterar på vilka webbplatser uBlock Origin ska inaktiveras. En artikel per rad. Ogiltiga direktiv kommer tyst att ignoreras och kommenteras ut.",
+    "message": "Vitlistans direktiv dikterar på vilka webbplatser uBlock Origin ska inaktiveras. En post per rad. Ogiltiga direktiv kommer tyst att ignoreras och kommenteras ut.",
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
@@ -656,7 +656,7 @@
     "description": "Label for the type selector"
   },
   "loggerStaticFilteringHeader": {
-    "message": "Statisk filter",
+    "message": "Statiskt filter",
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
@@ -708,11 +708,11 @@
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
-    "message": "Bevara poster från de {{input}} sista minuterna",
+    "message": "Bevara poster från de {{input}} senaste minuterna",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "Bevara högst {{input}} sidladdningar per flik",
+    "message": "Bevara högst {{input}} sidinläsningar per flik",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
@@ -800,7 +800,7 @@
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Återställ fabriksinställningar",
+    "message": "Återställ till standardinställningarna...",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
@@ -808,11 +808,11 @@
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {
-    "message": "Datan gick inte att läsa eller är ogiltig",
+    "message": "Datan kunde inte läsas eller är ogiltig",
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
-    "message": "Alla dina inställningar kommer att raderas, och uBlock₀ kommer att starta om.\n\nÅterställ uBlock₀ till fabriksinställningar?",
+    "message": "Alla dina inställningar kommer att tas bort och uBlock₀ kommer att starta om.\n\nÅterställ uBlock₀ till fabriksinställningar?",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
@@ -840,7 +840,7 @@
     "description": "English: {{value}} hours ago"
   },
   "elapsedOneDayAgo": {
-    "message": "en dag sen",
+    "message": "en dag sedan",
     "description": "English: a day ago"
   },
   "elapsedManyDaysAgo": {
@@ -848,11 +848,11 @@
     "description": "English: {{value}} days ago"
   },
   "showDashboardButton": {
-    "message": "Visa kontrollpanel",
+    "message": "Visa kontrollpanelen",
     "description": "Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
-    "message": "Visa nätverksbegäranslogg",
+    "message": "Show Logger",
     "description": "Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
@@ -860,7 +860,7 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1": {
-    "message": "uBlock Origin har förhindrat följande sida från att ladda:",
+    "message": "uBlock Origin har förhindrat följande sida från att läsas in:",
     "description": "English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2": {
@@ -880,11 +880,11 @@
     "description": "English: Go back"
   },
   "docblockedClose": {
-    "message": "Stäng detta fönster",
+    "message": "Stäng det här fönstret",
     "description": "English: Close this window"
   },
   "docblockedProceed": {
-    "message": "Avaktivera strikt blockering av {{hostname}}",
+    "message": "Inaktivera strikt blockering av {{hostname}}",
     "description": "English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary": {

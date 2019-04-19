@@ -628,7 +628,7 @@
     "description": "Label to identify a context field (typically a hostname)"
   },
   "loggerEntryDetailsRootContext": {
-    "message": "Root context",
+    "message": "Wurzelkontext",
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
@@ -720,7 +720,7 @@
     "description": "A logger setting"
   },
   "loggerSettingPerEntryLineCount": {
-    "message": "{{input}} Zeilen pro Eintrag in der ausklappbaren Tabelle verwenden",
+    "message": "{{input}} Zeilen pro Element im vertikal erweiterten Modus verwenden",
     "description": "A logger setting"
   },
   "loggerSettingHideColumnsPrompt": {
@@ -944,7 +944,7 @@
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "Gesperrten Bildlauf umschalten",
+    "message": "Bildlauf sperren\/entsperren",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
