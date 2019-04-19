@@ -41,70 +41,101 @@
 // Benchmark for string-based tokens vs. safe-integer token values:
 //   https://gorhill.github.io/obj-vs-set-vs-map/tokenize-to-str-vs-to-int.html
 
-µBlock.urlTokenizer = {
-    setURL: function(url) {
+µBlock.urlTokenizer = new (class {
+    constructor() {
+        this._chars = '0123456789%abcdefghijklmnopqrstuvwxyz';
+        this._validTokenChars = new Uint8Array(128);
+        for ( let i = 0, n = this._chars.length; i < n; i++ ) {
+            this._validTokenChars[this._chars.charCodeAt(i)] = i + 1;
+        }
+
+        this._charsEx = '0123456789%abcdefghijklmnopqrstuvwxyz*.';
+        this._validTokenCharsEx = new Uint8Array(128);
+        for ( let i = 0, n = this._charsEx.length; i < n; i++ ) {
+            this._validTokenCharsEx[this._charsEx.charCodeAt(i)] = i + 1;
+        }
+
+        this.dotTokenHash = this.tokenHashFromString('.');
+        this.anyTokenHash = this.tokenHashFromString('..');
+        this.anyHTTPSTokenHash = this.tokenHashFromString('..https');
+        this.anyHTTPTokenHash = this.tokenHashFromString('..http');
+        this.noTokenHash = this.tokenHashFromString('*');
+
+        this._urlIn = '';
+        this._urlOut = '';
+        this._tokenized = false;
+        this._tokens = [ 0 ];
+    }
+
+    setURL(url) {
         if ( url !== this._urlIn ) {
             this._urlIn = url;
             this._urlOut = url.toLowerCase();
             this._tokenized = false;
         }
         return this._urlOut;
-    },
+    }
 
     // Tokenize on demand.
-    getTokens: function() {
-        if ( this._tokenized === false ) {
-            this._tokenize();
-            this._tokenized = true;
+    getTokens() {
+        if ( this._tokenized ) { return this._tokens; }
+        let i = this._tokenize();
+        i = this._appendTokenAt(i, this.anyTokenHash, 0);
+        if ( this._urlOut.startsWith('https://') ) {
+            i = this._appendTokenAt(i, this.anyHTTPSTokenHash, 0);
+        } else if ( this._urlOut.startsWith('http://') ) {
+            i = this._appendTokenAt(i, this.anyHTTPTokenHash, 0);
         }
+        i = this._appendTokenAt(i, this.noTokenHash, 0);
+        this._tokens[i] = 0;
+        this._tokenized = true;
         return this._tokens;
-    },
+    }
 
-    tokenHashFromString: function(s) {
-        var l = s.length;
+    _appendTokenAt(i, th, ti) {
+        this._tokens[i+0] = th;
+        this._tokens[i+1] = ti;
+        return i + 2;
+    }
+
+    tokenHashFromString(s) {
+        const l = s.length;
         if ( l === 0 ) { return 0; }
-        if ( l === 1 ) {
-            if ( s === '*' ) { return 63; }
-            if ( s === '.' ) { return 62; }
-        }
-        var vtc = this._validTokenChars,
-            th = vtc[s.charCodeAt(0)];
-        for ( var i = 1; i !== 8 && i !== l; i++ ) {
+        const vtc = this._validTokenCharsEx;
+        let th = vtc[s.charCodeAt(0)];
+        for ( let i = 1; i !== 8 && i !== l; i++ ) {
             th = th * 64 + vtc[s.charCodeAt(i)];
         }
         return th;
-    },
+    }
 
-    stringFromTokenHash: function(th) {
+    stringFromTokenHash(th) {
         if ( th === 0 ) { return ''; }
-        if ( th === 63 ) { return '*'; }
-        if ( th === 62 ) { return '.'; }
-        const chars = '0123456789%abcdefghijklmnopqrstuvwxyz';
         let s = '';
         while ( th > 0 ) {
-            s = `${chars.charAt((th & 0b111111)-1)}${s}`;
+            s = `${this._charsEx.charAt((th & 0b111111)-1)}${s}`;
             th /= 64;
         }
         return s;
-    },
+    }
 
     // https://github.com/chrisaljoudi/uBlock/issues/1118
     // We limit to a maximum number of tokens.
 
-    _tokenize: function() {
-        var tokens = this._tokens,
-            url = this._urlOut,
-            l = url.length;
-        if ( l === 0 ) { tokens[0] = 0; return; }
+    _tokenize() {
+        const tokens = this._tokens;
+        let url = this._urlOut;
+        let l = url.length;
+        if ( l === 0 ) { return 0; }
         if ( l > 2048 ) {
             url = url.slice(0, 2048);
             l = 2048;
         }
-        var i = 0, j = 0, v, n, ti, th,
-            vtc = this._validTokenChars;
+        const vtc = this._validTokenChars;
+        let i = 0, j = 0, v, n, ti, th;
         for (;;) {
             for (;;) {
-                if ( i === l ) { tokens[j] = 0; return; }
+                if ( i === l ) { return j; }
                 v = vtc[url.charCodeAt(i++)];
                 if ( v !== 0 ) { break; }
             }
@@ -117,25 +148,12 @@
                 th = th * 64 + v;
                 n += 1;
             }
-            tokens[j++] = th;
-            tokens[j++] = ti;
+            tokens[j+0] = th;
+            tokens[j+1] = ti;
+            j += 2;
         }
-    },
-
-    _urlIn: '',
-    _urlOut: '',
-    _tokenized: false,
-    _tokens: [ 0 ],
-    _validTokenChars: (function() {
-        var vtc = new Uint8Array(128),
-            chars = '0123456789%abcdefghijklmnopqrstuvwxyz',
-            i = chars.length;
-        while ( i-- ) {
-            vtc[chars.charCodeAt(i)] = i + 1;
-        }
-        return vtc;
-    })()
-};
+    }
+})();
 
 /******************************************************************************/
 

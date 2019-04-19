@@ -46,29 +46,29 @@ const STRIE_CHAR1_SLOT  = STRIE_TRIE0_SLOT + 3;         //  67 / 268
 const STRIE_TRIE0_START = STRIE_TRIE0_SLOT + 4 << 2;    //       272
 
 
-const STrieContainer = function(details) {
-    if ( details instanceof Object === false ) { details = {}; }
-    const len = (details.byteLength || 0) + STRIE_PAGE_SIZE-1 & ~(STRIE_PAGE_SIZE-1);
-    this.buf = new Uint8Array(Math.max(len, 131072));
-    this.buf32 = new Uint32Array(this.buf.buffer);
-    this.buf32[STRIE_TRIE0_SLOT] = STRIE_TRIE0_START;
-    this.buf32[STRIE_TRIE1_SLOT] = this.buf32[STRIE_TRIE0_SLOT];
-    this.buf32[STRIE_CHAR0_SLOT] = details.char0 || 65536;
-    this.buf32[STRIE_CHAR1_SLOT] = this.buf32[STRIE_CHAR0_SLOT];
-};
+const STrieContainer = class {
 
-STrieContainer.prototype = {
+    constructor(details) {
+        if ( details instanceof Object === false ) { details = {}; }
+        const len = (details.byteLength || 0) + STRIE_PAGE_SIZE-1 & ~(STRIE_PAGE_SIZE-1);
+        this.buf = new Uint8Array(Math.max(len, 131072));
+        this.buf32 = new Uint32Array(this.buf.buffer);
+        this.buf32[STRIE_TRIE0_SLOT] = STRIE_TRIE0_START;
+        this.buf32[STRIE_TRIE1_SLOT] = this.buf32[STRIE_TRIE0_SLOT];
+        this.buf32[STRIE_CHAR0_SLOT] = details.char0 || 65536;
+        this.buf32[STRIE_CHAR1_SLOT] = this.buf32[STRIE_CHAR0_SLOT];
+    }
 
     //--------------------------------------------------------------------------
     // Public methods
     //--------------------------------------------------------------------------
 
-    reset: function() {
+    reset() {
         this.buf32[STRIE_TRIE1_SLOT] = this.buf32[STRIE_TRIE0_SLOT];
         this.buf32[STRIE_CHAR1_SLOT] = this.buf32[STRIE_CHAR0_SLOT];
-    },
+    }
 
-    matches: function(iroot, a, al) {
+    matches(iroot, a, al) {
         const ar = a.length;
         const char0 = this.buf32[STRIE_CHAR0_SLOT];
         let icell = iroot;
@@ -102,9 +102,9 @@ STrieContainer.prototype = {
             if ( icell === 0 || this.buf32[icell+2] === 0 ) { return al; }
             if ( al === ar ) { return -1; }
         }
-    },
+    }
 
-    createOne: function(args) {
+    createOne(args) {
         if ( Array.isArray(args) ) {
             return new this.STrieRef(this, args[0], args[1]);
         }
@@ -118,13 +118,13 @@ STrieContainer.prototype = {
         this.buf32[iroot+1] = 0;
         this.buf32[iroot+2] = 0;
         return new this.STrieRef(this, iroot, 0);
-    },
+    }
 
-    compileOne: function(trieRef) {
+    compileOne(trieRef) {
         return [ trieRef.iroot, trieRef.size ];
-    },
+    }
 
-    add: function(iroot, s) {
+    add(iroot, s) {
         const lschar = s.length;
         if ( lschar === 0 ) { return 0; }
         let ischar = 0;
@@ -221,26 +221,17 @@ STrieContainer.prototype = {
             }
             return 1;
         }
-    },
+    }
 
-    optimize: function() {
+    optimize() {
         this.shrinkBuf();
         return {
             byteLength: this.buf.byteLength,
             char0: this.buf32[STRIE_CHAR0_SLOT],
         };
-    },
+    }
 
-    fromIterable: function(hostnames, add) {
-        if ( add === undefined ) { add = 'add'; }
-        const trieRef = this.createOne();
-        for ( const hn of hostnames ) {
-            trieRef[add](hn);
-        }
-        return trieRef;
-    },
-
-    serialize: function(encoder) {
+    serialize(encoder) {
         if ( encoder instanceof Object ) {
             return encoder.encode(
                 this.buf32.buffer,
@@ -254,9 +245,9 @@ STrieContainer.prototype = {
                 this.buf32[STRIE_CHAR1_SLOT] + 3 >>> 2
             )
         );
-    },
+    }
 
-    unserialize: function(selfie, decoder) {
+    unserialize(selfie, decoder) {
         const shouldDecode = typeof selfie === 'string';
         let byteLength = shouldDecode
             ? decoder.decodeSize(selfie)
@@ -272,23 +263,13 @@ STrieContainer.prototype = {
         } else {
             this.buf32.set(selfie);
         }
-    },
-
-    //--------------------------------------------------------------------------
-    // Class to hold reference to a specific trie
-    //--------------------------------------------------------------------------
-
-    STrieRef: function(container, iroot, size) {
-        this.container = container;
-        this.iroot = iroot;
-        this.size = size;
-    },
+    }
 
     //--------------------------------------------------------------------------
     // Private methods
     //--------------------------------------------------------------------------
 
-    addCell: function(idown, iright, v) {
+    addCell(idown, iright, v) {
         let icell = this.buf32[STRIE_TRIE1_SLOT];
         this.buf32[STRIE_TRIE1_SLOT] = icell + 12;
         icell >>>= 2;
@@ -296,9 +277,9 @@ STrieContainer.prototype = {
         this.buf32[icell+1] = iright;
         this.buf32[icell+2] = v;
         return icell;
-    },
+    }
 
-    addSegment: function(segment) {
+    addSegment(segment) {
         const lsegchar = segment.length;
         if ( lsegchar === 0 ) { return 0; }
         let char1 = this.buf32[STRIE_CHAR1_SLOT];
@@ -309,9 +290,9 @@ STrieContainer.prototype = {
         } while ( i !== lsegchar );
         this.buf32[STRIE_CHAR1_SLOT] = char1;
         return (lsegchar << 24) | isegchar;
-    },
+    }
 
-    growBuf: function(trieGrow, charGrow) {
+    growBuf(trieGrow, charGrow) {
         const char0 = Math.max(
             (this.buf32[STRIE_TRIE1_SLOT] + trieGrow + STRIE_PAGE_SIZE-1) & ~(STRIE_PAGE_SIZE-1),
             this.buf32[STRIE_CHAR0_SLOT]
@@ -322,16 +303,16 @@ STrieContainer.prototype = {
             this.buf.length
         );
         this.resizeBuf(bufLen, char0);
-    },
+    }
 
-    shrinkBuf: function() {
+    shrinkBuf() {
         const char0 = this.buf32[STRIE_TRIE1_SLOT] + 24;
         const char1 = char0 + this.buf32[STRIE_CHAR1_SLOT] - this.buf32[STRIE_CHAR0_SLOT];
         const bufLen = char1 + 256;
         this.resizeBuf(bufLen, char0);
-    },
+    }
 
-    resizeBuf: function(bufLen, char0) {
+    resizeBuf(bufLen, char0) {
         bufLen = bufLen + STRIE_PAGE_SIZE-1 & ~(STRIE_PAGE_SIZE-1);
         if (
             bufLen === this.buf.length &&
@@ -375,23 +356,35 @@ STrieContainer.prototype = {
             this.buf32[STRIE_CHAR0_SLOT] = char0;
             this.buf32[STRIE_CHAR1_SLOT] = char0 + charDataLen;
         }
-    },
+    }
 };
 
-/******************************************************************************/
+/*******************************************************************************
 
-STrieContainer.prototype.STrieRef.prototype = {
-    add: function(pattern) {
+    Class to hold reference to a specific trie
+
+*/
+
+STrieContainer.prototype.STrieRef = class {
+    constructor(container, iroot, size) {
+        this.container = container;
+        this.iroot = iroot;
+        this.size = size;
+    }
+
+    add(pattern) {
         if ( this.container.add(this.iroot, pattern) === 1 ) {
             this.size += 1;
             return true;
         }
         return false;
-    },
-    matches: function(a, al) {
+    }
+
+    matches(a, al) {
         return this.container.matches(this.iroot, a, al);
-    },
-    [Symbol.iterator]: function() {
+    }
+
+    [Symbol.iterator]() {
         return {
             value: undefined,
             done: false,
@@ -441,5 +434,5 @@ STrieContainer.prototype.STrieRef.prototype = {
             forks: [],
             textDecoder: new TextDecoder()
         };
-    },
+    }
 };
