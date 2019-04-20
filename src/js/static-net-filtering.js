@@ -1190,7 +1190,8 @@ const FilterJustOrigin = class {
         return {
             raw: '*',
             regex: '^',
-            compiled: this.h
+            compiled: this.h,
+            opts: `domain=${this.h}`,
         };
     }
 
@@ -1213,11 +1214,10 @@ const FilterHTTPSJustOrigin = class extends FilterJustOrigin {
     }
 
     logData() {
-        return {
-            raw: '|https://',
-            regex: '^https://',
-            compiled: this.h
-        };
+        const out = super.logData();
+        out.raw = '|https://';
+        out.regex = '^https://';
+        return out;
     }
 
     static load(args) {
@@ -1235,11 +1235,10 @@ const FilterHTTPJustOrigin = class extends FilterJustOrigin {
     }
 
     logData() {
-        return {
-            raw: '|http://',
-            regex: '^http://',
-            compiled: this.h
-        };
+        const out = super.logData();
+        out.raw = '|https://';
+        out.regex = '^https://';
+        return out;
     }
 
     static load(args) {
@@ -1258,8 +1257,6 @@ const FilterPair = class {
     }
 
     get size() {
-        if ( this.f1 === undefined && this.f2 === undefined ) { return 0; }
-        if ( this.f1 === undefined || this.f2 === undefined ) { return 1; }
         return 2;
     }
 
@@ -2928,6 +2925,11 @@ FilterContainer.prototype.bucketHistogram = function() {
     const results = [];
     for ( const [ bits, category ] of this.categories ) {
         for ( const [ th, f ] of category ) {
+            if ( f instanceof FilterPair ) {
+                const token = µBlock.urlTokenizer.stringFromTokenHash(th);
+                results.push({ bits: bits.toString(16), token, size: f.size, f });
+                continue;
+            }
             if ( f instanceof FilterBucket ) {
                 const token = µBlock.urlTokenizer.stringFromTokenHash(th);
                 results.push({ bits: bits.toString(16), token, size: f.size, f });
