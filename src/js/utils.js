@@ -530,7 +530,7 @@
 
 /******************************************************************************/
 
-// Custom base128 encoder/decoder
+// Custom base64 encoder/decoder
 //
 // TODO:
 //   Could expand the LZ4 codec API to be able to return UTF8-safe string
@@ -541,163 +541,85 @@
 //   JSON string. The fallback can be removed once min supported version is
 //   above 59.
 
-µBlock.base128 = {
-    encode: function(arrbuf, arrlen) {
-        if (
-            vAPI.webextFlavor.soup.has('chromium') &&
-            vAPI.webextFlavor.major < 60
-        ) {
-            return this.encodeJSON(arrbuf);
+µBlock.base64 = new (class {
+    constructor() {
+        this.valToDigit = new Uint8Array(64);
+        this.digitToVal = new Uint8Array(128);
+        const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz@%";
+        for ( let i = 0, n = chars.length; i < n; i++ ) {
+            const c = chars.charCodeAt(i);
+            this.valToDigit[i] = c;
+            this.digitToVal[c] = i;
         }
-        return this.encodeBase128(arrbuf, arrlen);
-    },
-    encodeBase128: function(arrbuf, arrlen) {
-        const inbuf = new Uint8Array(arrbuf, 0, arrlen);
-        const inputLength = arrlen;
-        let _7cnt = Math.floor(inputLength / 7);
-        let outputLength = _7cnt * 8;
-        let _7rem = inputLength % 7;
-        if ( _7rem !== 0 ) {
-            outputLength += 1 + _7rem;
-        }
+        this.magic = 'Base64_1';
+    }
+
+    encode(arrbuf, arrlen) {
+        const inputLength = arrlen >>> 2;
+        const inbuf = new Uint32Array(arrbuf, 0, inputLength);
+        const outputLength = this.magic.length + 7 + inputLength * 7;
         const outbuf = new Uint8Array(outputLength);
-        let msbits, v;
-        let i = 0, j = 0;
-        while ( _7cnt--  ) {
-            v = inbuf[i+0];
-            msbits  = (v & 0x80) >>> 7;
-            outbuf[j+1] = v & 0x7F;
-            v = inbuf[i+1];
-            msbits |= (v & 0x80) >>> 6;
-            outbuf[j+2] = v & 0x7F;
-            v = inbuf[i+2];
-            msbits |= (v & 0x80) >>> 5;
-            outbuf[j+3] = v & 0x7F;
-            v = inbuf[i+3];
-            msbits |= (v & 0x80) >>> 4;
-            outbuf[j+4] = v & 0x7F;
-            v = inbuf[i+4];
-            msbits |= (v & 0x80) >>> 3;
-            outbuf[j+5] = v & 0x7F;
-            v = inbuf[i+5];
-            msbits |= (v & 0x80) >>> 2;
-            outbuf[j+6] = v & 0x7F;
-            v = inbuf[i+6];
-            msbits |= (v & 0x80) >>> 1;
-            outbuf[j+7] = v & 0x7F;
-            outbuf[j+0] = msbits;
-            i += 7; j += 8;
+        let j = 0;
+        for ( let i = 0; i < this.magic.length; i++ ) {
+            outbuf[j++] = this.magic.charCodeAt(i);
         }
-        if ( _7rem > 0 ) {
-            msbits = 0;
-            for ( let ir = 0; ir < _7rem; ir++ ) {
-                v = inbuf[i+ir];
-                msbits |= (v & 0x80) >>> (7 - ir);
-                outbuf[j+ir+1] = v & 0x7F;
-            }
-            outbuf[j+0] = msbits;
+        let v = inputLength;
+        do {
+            outbuf[j++] = this.valToDigit[v & 0b111111];
+            v >>>= 6;
+        } while ( v !== 0 );
+        outbuf[j++] = 0x20 /* ' ' */;
+        for ( let i = 0; i < inputLength; i++ ) {
+            v = inbuf[i];
+            do {
+                outbuf[j++] = this.valToDigit[v & 0b111111];
+                v >>>= 6;
+            } while ( v !== 0 );
+            outbuf[j++] = 0x20 /* ' ' */;
         }
         const textDecoder = new TextDecoder();
-        return textDecoder.decode(outbuf);
-    },
-    encodeJSON: function(arrbuf) {
-        return JSON.stringify(Array.from(new Uint32Array(arrbuf)));
-    },
-    // TODO:
-    //   Surprisingly, there does not seem to be any performance gain when
-    //   first converting the input string into a Uint8Array through
-    //   TextEncoder. Investigate again to confirm original findings and
-    //   to find out whether results have changed. Not using TextEncoder()
-    //   to create an intermediate input buffer lower peak memory usage
-    //   at selfie load time.
-    //
-    //   const textEncoder = new TextEncoder();
-    //   const inbuf = textEncoder.encode(instr);
-    //   const inputLength = inbuf.byteLength;
-    decode: function(instr, arrbuf) {
-        if ( instr.length === 0 ) { return; }
-        if ( instr.charCodeAt(0) === 0x5B /* '[' */ ) {
-            const outbuf = this.decodeJSON(instr, arrbuf);
-            if ( outbuf !== undefined ) {
-                return outbuf;
-            }
+        return textDecoder.decode(new Uint8Array(outbuf.buffer, 0, j));
+    }
+
+    decode(instr, arrbuf) {
+        if ( instr.startsWith(this.magic) === false ) {
+            throw new Error('Invalid µBlock.base64 encoding');
         }
-        if (
-            vAPI.webextFlavor.soup.has('chromium') &&
-            vAPI.webextFlavor.major < 60
-        ) {
-            throw new Error('Unexpected µBlock.base128 encoding');
-        }
-        return this.decodeBase128(instr, arrbuf);
-    },
-    decodeBase128: function(instr, arrbuf) {
         const inputLength = instr.length;
-        let _8cnt = inputLength >>> 3;
-        let outputLength = _8cnt * 7;
-        let _8rem = inputLength % 8;
-        if ( _8rem !== 0 ) {
-            outputLength += _8rem - 1;
-        }
         const outbuf = arrbuf instanceof ArrayBuffer === false
-            ? new Uint8Array(outputLength)
-            : new Uint8Array(arrbuf);
-        let msbits;
-        let i = 0, j = 0;
-        while ( _8cnt-- ) {
-            msbits = instr.charCodeAt(i+0);
-            outbuf[j+0] = msbits << 7 & 0x80 | instr.charCodeAt(i+1);
-            outbuf[j+1] = msbits << 6 & 0x80 | instr.charCodeAt(i+2);
-            outbuf[j+2] = msbits << 5 & 0x80 | instr.charCodeAt(i+3);
-            outbuf[j+3] = msbits << 4 & 0x80 | instr.charCodeAt(i+4);
-            outbuf[j+4] = msbits << 3 & 0x80 | instr.charCodeAt(i+5);
-            outbuf[j+5] = msbits << 2 & 0x80 | instr.charCodeAt(i+6);
-            outbuf[j+6] = msbits << 1 & 0x80 | instr.charCodeAt(i+7);
-            i += 8; j += 7;
+            ? new Uint32Array(this.decodeSize(instr))
+            : new Uint32Array(arrbuf);
+        let i = instr.indexOf(' ', this.magic.length) + 1;
+        if ( i === -1 ) {
+            throw new Error('Invalid µBlock.base64 encoding');
         }
-        if ( _8rem > 1 ) {
-            msbits = instr.charCodeAt(i+0);
-            for ( let ir = 1; ir < _8rem; ir++ ) {
-                outbuf[j+ir-1] = msbits << (8-ir) & 0x80 | instr.charCodeAt(i+ir);
+        let j = 0;
+        for (;;) {
+            if ( i === inputLength ) { break; }
+            let v = 0, l = 0;
+            for (;;) {
+                const c = instr.charCodeAt(i++);
+                if ( c === 0x20 /* ' ' */ ) { break; }
+                v += this.digitToVal[c] << l;
+                l += 6;
             }
+            outbuf[j++] = v;
         }
         return outbuf;
-    },
-    decodeJSON: function(instr, arrbuf) {
-        let buf;
-        try {
-            buf = JSON.parse(instr);
-        } catch (ex) {
+    }
+
+    decodeSize(instr) {
+        if ( instr.startsWith(this.magic) === false ) { return 0; }
+        let v = 0, l = 0, i = this.magic.length;
+        for (;;) {
+            const c = instr.charCodeAt(i++);
+            if ( c === 0x20 /* ' ' */ ) { break; }
+            v += this.digitToVal[c] << l;
+            l += 6;
         }
-        if ( Array.isArray(buf) === false ) { return; }
-        const outbuf = arrbuf instanceof ArrayBuffer === false
-            ? new Uint32Array(buf.length << 2)
-            : new Uint32Array(arrbuf);
-        outbuf.set(buf);
-        return new Uint8Array(outbuf.buffer);
-    },
-    decodeSize: function(instr) {
-        if ( instr.length === 0 ) { return 0; }
-        if ( instr.charCodeAt(0) === 0x5B /* '[' */ ) {
-            let buf;
-            try {
-                buf = JSON.parse(instr);
-            } catch (ex) {
-            }
-            if ( Array.isArray(buf) ) {
-                return buf.length << 2;
-            }
-        }
-        if (
-            vAPI.webextFlavor.soup.has('chromium') &&
-            vAPI.webextFlavor.major < 60
-        ) {
-            throw new Error('Unexpected µBlock.base128 encoding');
-        }
-        const size = (instr.length >>> 3) * 7;
-        const rem = instr.length & 7;
-        return rem === 0 ? size : size + rem - 1;
-    },
-};
+        return v << 2;
+    }
+})();
 
 /******************************************************************************/
 

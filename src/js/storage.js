@@ -1036,7 +1036,7 @@
     return this.assets.get(
         'compiled/' + this.pslAssetKey
     ).then(details =>
-        publicSuffixList.fromSelfie(details.content, µBlock.base128)
+        publicSuffixList.fromSelfie(details.content, µBlock.base64)
     ).catch(reason => {
         console.info(reason);
         return false;
@@ -1054,7 +1054,7 @@
     publicSuffixList.parse(content, punycode.toASCII);
     this.assets.put(
         'compiled/' + this.pslAssetKey,
-        publicSuffixList.toSelfie(µBlock.base128)
+        publicSuffixList.toSelfie(µBlock.base64)
     );
 };
 

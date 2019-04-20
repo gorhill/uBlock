@@ -2246,15 +2246,15 @@ FilterContainer.prototype.toSelfie = function(path) {
     return Promise.all([
         µBlock.assets.put(
             `${path}/FilterHostnameDict.trieContainer`,
-            FilterHostnameDict.trieContainer.serialize(µBlock.base128)
+            FilterHostnameDict.trieContainer.serialize(µBlock.base64)
         ),
         µBlock.assets.put(
             `${path}/FilterOrigin.trieContainer`,
-            filterOrigin.trieContainer.serialize(µBlock.base128)
+            filterOrigin.trieContainer.serialize(µBlock.base64)
         ),
         µBlock.assets.put(
             `${path}/FilterBucket.trieContainer`,
-            FilterBucket.trieContainer.serialize(µBlock.base128)
+            FilterBucket.trieContainer.serialize(µBlock.base64)
         ),
         µBlock.assets.put(
             `${path}/main`,
@@ -2276,27 +2276,24 @@ FilterContainer.prototype.toSelfie = function(path) {
 
 FilterContainer.prototype.fromSelfie = function(path) {
     return Promise.all([
-        µBlock.assets.get(`${path}/FilterHostnameDict.trieContainer`).then(details => {
+        µBlock.assets.get(`${path}/FilterHostnameDict.trieContainer`).then(details =>
             FilterHostnameDict.trieContainer.unserialize(
                 details.content,
-                µBlock.base128
-            );
-            return true;
-        }),
-        µBlock.assets.get(`${path}/FilterOrigin.trieContainer`).then(details => {
+                µBlock.base64
+            )
+        ),
+        µBlock.assets.get(`${path}/FilterOrigin.trieContainer`).then(details =>
             filterOrigin.trieContainer.unserialize(
                 details.content,
-                µBlock.base128
-            );
-            return true;
-        }),
-        µBlock.assets.get(`${path}/FilterBucket.trieContainer`).then(details => {
+                µBlock.base64
+            )
+        ),
+        µBlock.assets.get(`${path}/FilterBucket.trieContainer`).then(details =>
             FilterBucket.trieContainer.unserialize(
                 details.content,
-                µBlock.base128
-            );
-            return true;
-        }),
+                µBlock.base64
+            )
+        ),
         µBlock.assets.get(`${path}/main`).then(details => {
             let selfie;
             try {
@@ -2869,7 +2866,9 @@ FilterContainer.prototype.benchmark = function(action) {
             if ( expected !== undefined && r !== expected[i] ) {
                 console.log('Mismatch with reference results:');
                 console.log(`\tExpected ${expected[i]}, got ${r}:`);
-                console.log(`\turl=${fctxt.url} docOrigin=${fctxt.getDocOrigin()}`);
+                console.log(`\ttype=${fctxt.type}`);
+                console.log(`\turl=${fctxt.url}`);
+                console.log(`\tdocOrigin=${fctxt.getDocOrigin()}`);
             }
         }
         const t1 = self.performance.now();

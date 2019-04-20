@@ -252,8 +252,8 @@ const STrieContainer = class {
         let byteLength = shouldDecode
             ? decoder.decodeSize(selfie)
             : selfie.length << 2;
+        if ( byteLength === 0 ) { return false; }
         byteLength = byteLength + STRIE_PAGE_SIZE-1 & ~(STRIE_PAGE_SIZE-1);
-        if ( byteLength === 0 ) { return; }
         if ( byteLength > this.buf.length ) {
             this.buf = new Uint8Array(byteLength);
             this.buf32 = new Uint32Array(this.buf.buffer);
@@ -263,6 +263,7 @@ const STrieContainer = class {
         } else {
             this.buf32.set(selfie);
         }
+        return true;
     }
 
     //--------------------------------------------------------------------------
