@@ -34,7 +34,7 @@ self.uBlockDashboard = self.uBlockDashboard || {};
 
 self.uBlockDashboard.mergeNewLines = function(text, newText) {
     // Step 1: build dictionary for existing lines.
-    const fromDict = Object.create(null);
+    const fromDict = new Map();
     let lineBeg = 0;
     let textEnd = text.length;
     while ( lineBeg < textEnd ) {
@@ -45,17 +45,15 @@ self.uBlockDashboard.mergeNewLines = function(text, newText) {
                 lineEnd = textEnd;
             }
         }
-        let line = text.slice(lineBeg, lineEnd).trim();
+        const line = text.slice(lineBeg, lineEnd).trim();
         lineBeg = lineEnd + 1;
-        if ( line.length === 0 ) {
-            continue;
-        }
+        if ( line.length === 0 ) { continue; }
         const hash = line.slice(0, 8);
-        const bucket = fromDict[hash];
+        const bucket = fromDict.get(hash);
         if ( bucket === undefined ) {
-            fromDict[hash] = line;
+            fromDict.set(hash, line);
         } else if ( typeof bucket === 'string' ) {
-            fromDict[hash] = [bucket, line];
+            fromDict.set(hash, [ bucket, line ]);
         } else /* if ( Array.isArray(bucket) ) */ {
             bucket.push(line);
         }
@@ -73,7 +71,7 @@ self.uBlockDashboard.mergeNewLines = function(text, newText) {
                 lineEnd = textEnd;
             }
         }
-        let line = newText.slice(lineBeg, lineEnd).trim();
+        const line = newText.slice(lineBeg, lineEnd).trim();
         lineBeg = lineEnd + 1;
         if ( line.length === 0 ) {
             if ( out[out.length - 1] !== '' ) {
@@ -81,7 +79,7 @@ self.uBlockDashboard.mergeNewLines = function(text, newText) {
             }
             continue;
         }
-        const bucket = fromDict[line.slice(0, 8)];
+        const bucket = fromDict.get(line.slice(0, 8));
         if ( bucket === undefined ) {
             out.push(line);
             continue;
@@ -96,7 +94,11 @@ self.uBlockDashboard.mergeNewLines = function(text, newText) {
         }
     }
 
-    return text.trim() + '\n' + out.join('\n');
+    const append = out.join('\n').trim();
+    if ( text !== '' && append !== '' ) {
+        text += '\n\n';
+    }
+    return text + append;
 };
 
 /******************************************************************************/
