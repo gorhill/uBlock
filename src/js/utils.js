@@ -672,31 +672,26 @@
             return datasetPromise;
         }
 
-        datasetPromise = new Promise(resolve => {
-            console.info(`Loading benchmark dataset...`);
-            const url = vAPI.getURL('/assets/requests.json');
-            µBlock.assets.fetchText(url, details => {
-                if ( details.error !== undefined ) {
-                    datasetPromise = undefined;
-                    console.info(`Not found: ${url}`);
-                    resolve();
-                    return;
+        console.info(`Loading benchmark dataset...`);
+        const url = vAPI.getURL('/assets/requests.json');
+        datasetPromise = µBlock.assets.fetchText(url).then(details => {
+            console.info(`Parsing benchmark dataset...`);
+            const requests = [];
+            const lineIter = new µBlock.LineIterator(details.content);
+            while ( lineIter.eot() === false ) {
+                let request;
+                try {
+                    request = JSON.parse(lineIter.next());
+                } catch(ex) {
                 }
-                console.info(`Parsing benchmark dataset...`);
-                const requests = [];
-                const lineIter = new µBlock.LineIterator(details.content);
-                while ( lineIter.eot() === false ) {
-                    let request;
-                    try {
-                        request = JSON.parse(lineIter.next());
-                    } catch(ex) {
-                    }
-                    if ( request instanceof Object === false ) { continue; }
-                    if ( !request.frameUrl || !request.url ) { continue; }
-                    requests.push(request);
-                }
-                resolve(requests);
-            });
+                if ( request instanceof Object === false ) { continue; }
+                if ( !request.frameUrl || !request.url ) { continue; }
+                requests.push(request);
+            }
+            return requests;
+        }).catch(details => {
+            console.info(`Not found: ${details.url}`);
+            datasetPromise = undefined;
         });
 
         return datasetPromise;

@@ -67,10 +67,10 @@ api.fetchText = function(url, onLoad, onError) {
     let actualUrl = isExternal ? url : vAPI.getURL(url);
 
     // https://github.com/gorhill/uBlock/issues/2592
-    // Force browser cache to be bypassed, but only for resources which have
-    // been fetched more than one hour ago.
+    //   Force browser cache to be bypassed, but only for resources which have
+    //   been fetched more than one hour ago.
     if ( isExternal ) {
-        const queryValue = '_=' + Math.floor(Date.now() / 7200000);
+        const queryValue = `_=${Math.floor(Date.now() / 3600000) % 12}`;
         if ( actualUrl.indexOf('?') === -1 ) {
             actualUrl += '?';
         } else {
@@ -82,6 +82,9 @@ api.fetchText = function(url, onLoad, onError) {
     if ( typeof onError !== 'function' ) {
         onError = onLoad;
     }
+
+    return new Promise((resolve, reject) => {
+    // Start of executor
 
     const timeoutAfter = µBlock.hiddenSettings.assetFetchTimeout * 1000 || 30000;
     const xhr = new XMLHttpRequest();
@@ -99,6 +102,20 @@ api.fetchText = function(url, onLoad, onError) {
         }
     };
 
+    const onResolve = function(details) {
+        if ( onLoad instanceof Function ) {
+            onLoad(details);
+        }
+        resolve(details);
+    };
+
+    const onReject = function(details) {
+        if ( onError instanceof Function ) {
+            onError(details);
+        }
+        reject(details);
+    };
+
     // https://github.com/gorhill/uMatrix/issues/15
     const onLoadEvent = function() {
         cleanup();
@@ -110,21 +127,21 @@ api.fetchText = function(url, onLoad, onError) {
             statusText: this.statusText || ''
         };
         if ( details.statusCode < 200 || details.statusCode >= 300 ) {
-            return onError.call(null, details);
+            return onReject(details);
         }
         // consider an empty result to be an error
         if ( stringIsNotEmpty(this.responseText) === false ) {
-            return onError.call(null, details);
+            return onReject(details);
         }
         // we never download anything else than plain text: discard if response
         // appears to be a HTML document: could happen when server serves
         // some kind of error page I suppose
         const text = this.responseText.trim();
         if ( text.startsWith('<') && text.endsWith('>') ) {
-            return onError.call(null, details);
+            return onReject(details);
         }
         details.content = this.responseText;
-        onLoad(details);
+        onResolve(details);
     };
 
     const onErrorEvent = function() {
@@ -134,7 +151,7 @@ api.fetchText = function(url, onLoad, onError) {
             type: 'error',
             text: errorCantConnectTo.replace('{{msg}}', actualUrl)
         });
-        onError({ url, content: '' });
+        onReject({ url, content: '' });
     };
 
     const onTimeout = function() {
@@ -167,6 +184,9 @@ api.fetchText = function(url, onLoad, onError) {
     } catch (e) {
         onErrorEvent.call(xhr);
     }
+
+    // End of executor
+    });
 };
 
 /******************************************************************************/

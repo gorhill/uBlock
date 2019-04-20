@@ -49,7 +49,7 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 /******************************************************************************/
 
 let hashFromAdvancedSettings = function(raw) {
-    return raw.trim().replace(/\s+/g, '|');
+    return raw.trim().replace(/[ \t]+/g, ' ').replace(/\s*[\n\r]+\s*/g, '\n');
 };
 
 /******************************************************************************/

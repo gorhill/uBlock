@@ -988,41 +988,37 @@
 
 /******************************************************************************/
 
-µBlock.loadRedirectResources = function(updatedContent) {
-    let content = '';
+µBlock.loadRedirectResources = function() {
+    return this.redirectEngine.resourcesFromSelfie().then(success => {
+        if ( success === true ) { return; }
 
-    const onDone = ( ) => {
+        const fetchPromises = [ this.assets.get('ublock-resources') ];
+
+        const userResourcesLocation = this.hiddenSettings.userResourcesLocation;
+        if ( userResourcesLocation !== 'unset' ) {
+            for ( const url of userResourcesLocation.split(/\s+/) ) {
+                fetchPromises.push(this.assets.fetchText(url));
+            }
+        }
+
+        return Promise.all(fetchPromises);
+    }).then(results => {
+        if ( Array.isArray(results) === false ) { return; }
+
+        let content = '';
+
+        for ( const result of results ) {
+            if (
+                result instanceof Object === false ||
+                typeof result.content !== 'string' ||
+                result.content === ''
+            ) {
+                continue;
+            }
+            content += '\n\n' + result.content;
+        }
+
         this.redirectEngine.resourcesFromString(content);
-    };
-
-    const onUserResourcesLoaded = details => {
-        if ( details.content !== '' ) {
-            content += '\n\n' + details.content;
-        }
-        onDone();
-    };
-
-    const onResourcesLoaded = details => {
-        if ( details.content !== '' ) {
-            content = details.content;
-        }
-        if ( this.hiddenSettings.userResourcesLocation === 'unset' ) {
-            return onDone();
-        }
-        this.assets.fetchText(
-            this.hiddenSettings.userResourcesLocation,
-            onUserResourcesLoaded
-        );
-    };
-
-    if ( typeof updatedContent === 'string' && updatedContent.length !== 0 ) {
-        return onResourcesLoaded({ content: updatedContent });
-    }
-
-    this.redirectEngine.resourcesFromSelfie().then(success => {
-        if ( success !== true ) {
-            this.assets.get('ublock-resources', onResourcesLoaded);
-        }
     });
 };
 
@@ -1353,9 +1349,6 @@
             }
         } else if ( details.assetKey === 'ublock-resources' ) {
             this.redirectEngine.invalidateResourcesSelfie();
-            if ( cached ) {
-                this.loadRedirectResources(details.content);
-            }
         }
         vAPI.messaging.broadcast({
             what: 'assetUpdated',
