@@ -83,7 +83,7 @@ api.fetchText = function(url, onLoad, onError) {
         onError = onLoad;
     }
 
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
     // Start of executor
 
     const timeoutAfter = µBlock.hiddenSettings.assetFetchTimeout * 1000 || 30000;
@@ -104,16 +104,16 @@ api.fetchText = function(url, onLoad, onError) {
 
     const onResolve = function(details) {
         if ( onLoad instanceof Function ) {
-            onLoad(details);
+            return onLoad(details);
         }
         resolve(details);
     };
 
     const onReject = function(details) {
         if ( onError instanceof Function ) {
-            onError(details);
+            return onError(details);
         }
-        reject(details);
+        resolve(details);
     };
 
     // https://github.com/gorhill/uMatrix/issues/15
