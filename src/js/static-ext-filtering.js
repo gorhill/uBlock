@@ -467,7 +467,7 @@
             return µb.cosmeticFilteringEngine.discardedCount +
                    µb.scriptletFilteringEngine.discardedCount +
                    µb.htmlFilteringEngine.discardedCount;
-        }
+        },
     };
 
     //--------------------------------------------------------------------------
@@ -664,6 +664,8 @@
         };
 
         const entryPoint = function(raw) {
+            entryPoint.pseudoclass = false;
+
             const extendedSyntax = reExtendedSyntax.test(raw);
             if ( isValidCSSSelector(raw) && extendedSyntax === false ) {
                 return raw;
@@ -672,18 +674,18 @@
             // We  rarely reach this point -- majority of selectors are plain
             // CSS selectors.
 
-            let matches, operator;
+            let matches;
 
-            // Supported Adguard/ABP advanced selector syntax: will translate into
-            // uBO's syntax before further processing.
+            // Supported Adguard/ABP advanced selector syntax: will translate
+            // into uBO's syntax before further processing.
             // Mind unsupported advanced selector syntax, such as ABP's
             // `-abp-properties`.
-            // Note: extended selector syntax has been deprecated in ABP, in favor
-            // of the procedural one (i.e. `:operator(...)`). See
-            // https://issues.adblockplus.org/ticket/5287
+            // Note: extended selector syntax has been deprecated in ABP, in
+            // favor of the procedural one (i.e. `:operator(...)`).
+            // See https://issues.adblockplus.org/ticket/5287
             if ( extendedSyntax ) {
                 while ( (matches = reExtendedSyntaxParser.exec(raw)) !== null ) {
-                    operator = normalizedExtendedSyntaxOperators.get(matches[1]);
+                    const operator = normalizedExtendedSyntaxOperators.get(matches[1]);
                     if ( operator === undefined ) { return; }
                     raw = raw.slice(0, matches.index) +
                           operator + '(' + matches[3] + ')' +
@@ -692,8 +694,7 @@
                 return entryPoint(raw);
             }
 
-            let selector = raw,
-                pseudoclass, style;
+            let selector = raw, pseudoclass, style;
 
             // `:style` selector?
             if ( (matches = reStyleSelector.exec(selector)) !== null ) {
@@ -709,23 +710,16 @@
             }
 
             if ( style !== undefined || pseudoclass !== undefined ) {
-                if ( isValidCSSSelector(selector) === false ) {
-                    return;
-                }
+                if ( isValidCSSSelector(selector) === false ) { return; }
                 if ( pseudoclass !== undefined ) {
                     selector += pseudoclass;
                 }
                 if ( style !== undefined ) {
                     if ( isValidStyleProperty(style) === false ) { return; }
-                    return JSON.stringify({
-                        raw: raw,
-                        style: [ selector, style ]
-                    });
+                    return JSON.stringify({ raw, style: [ selector, style ] });
                 }
-                return JSON.stringify({
-                    raw: raw,
-                    pseudoclass: true
-                });
+                entryPoint.pseudoclass = true;
+                return JSON.stringify({ raw, pseudoclass: true });
             }
 
             // Procedural selector?
@@ -734,6 +728,8 @@
                 return compiled;
             }
         };
+
+        entryPoint.pseudoclass = false;
 
         return entryPoint;
     })();

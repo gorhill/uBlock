@@ -596,7 +596,14 @@ FilterContainer.prototype.compileGenericHideSelector = function(
     // - Bad syntax
     // - Procedural filters (can't be generic): the compiled version of
     //   a procedural selector is NEVER equal to its raw version.
-    if ( compiled === undefined || compiled !== selector ) {
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/464
+    //   Pseudoclass-based selectors can be compiled, but are also valid
+    //   plain selectors.
+    if (
+        compiled === undefined ||
+        compiled !== selector &&
+        µb.staticExtFilteringEngine.compileSelector.pseudoclass !== true
+    ) {
         const who = writer.properties.get('assetKey') || '?';
         µb.logger.writeOne({
             realm: 'message',
