@@ -50,7 +50,6 @@ const AnyParty    = 0 << 2;
 const FirstParty  = 1 << 2;
 const ThirdParty  = 2 << 2;
 
-const AnyType = 0 << 4;
 const typeNameToTypeValue = {
            'no_type':  0 << 4,
         'stylesheet':  1 << 4,
@@ -101,7 +100,6 @@ const typeValueToTypeName = {
     20: 'unsupported'
 };
 
-const AnyTypeAnyParty = AnyType | AnyParty;
 const BlockImportant = BlockAction | Important;
 
 // ABP filters: https://adblockplus.org/en/filters
@@ -2663,7 +2661,7 @@ FilterContainer.prototype.realmMatchString = function(
     partyBits
 ) {
     let bucket;
-    let catBits = realmBits | AnyTypeAnyParty;
+    let catBits = realmBits;
     if ( (bucket = this.categories.get(catBits)) ) {
         if ( this.matchTokens(bucket) ) {
             this.catbitsRegister = catBits;
@@ -2671,7 +2669,7 @@ FilterContainer.prototype.realmMatchString = function(
         }
     }
     if ( partyBits !== 0 ) {
-        catBits = realmBits | AnyType | partyBits;
+        catBits = realmBits | partyBits;
         if ( (bucket = this.categories.get(catBits)) ) {
             if ( this.matchTokens(bucket) ) {
                 this.catbitsRegister = catBits;
@@ -2680,7 +2678,7 @@ FilterContainer.prototype.realmMatchString = function(
         }
     }
     if ( typeBits !== 0 ) {
-        catBits = realmBits | AnyParty | typeBits;
+        catBits = realmBits | typeBits;
         if ( (bucket = this.categories.get(catBits)) ) {
             if ( this.matchTokens(bucket) ) {
                 this.catbitsRegister = catBits;
@@ -2758,7 +2756,7 @@ FilterContainer.prototype.matchStringExactType = function(fctxt, requestType) {
         return 1;
     }
     // Block filters
-    if ( this.realmMatchString(BlockAction, typeBits, partyBits) ) {
+    if ( this.realmMatchStringExactType(BlockAction, typeBits, partyBits) ) {
         // Exception filters
         if ( this.realmMatchStringExactType(AllowAction, typeBits, partyBits) ) {
             return 2;
