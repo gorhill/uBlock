@@ -440,11 +440,11 @@ PageStore.prototype.toggleNetFilteringSwitch = function(url, scope, state) {
 /******************************************************************************/
 
 PageStore.prototype.injectLargeMediaElementScriptlet = function() {
-    this.largeMediaTimer = null;
-    µb.scriptlets.injectDeep(
-        this.tabId,
-        'load-large-media-interactive'
-    );
+    vAPI.tabs.injectScript(this.tabId, {
+        file: '/js/scriptlets/load-large-media-interactive.js',
+        allFrames: true,
+        runAt: 'document_idle',
+    });
     µb.contextMenu.update(this.tabId);
 };
 
@@ -714,10 +714,10 @@ PageStore.prototype.filterLargeMediaElement = function(fctxt, size) {
 
     this.largeMediaCount += 1;
     if ( this.largeMediaTimer === null ) {
-        this.largeMediaTimer = vAPI.setTimeout(
-            this.injectLargeMediaElementScriptlet.bind(this),
-            500
-        );
+        this.largeMediaTimer = vAPI.setTimeout(( ) => {
+            this.largeMediaTimer = null;
+            this.injectLargeMediaElementScriptlet();
+        }, 500);
     }
 
     if ( µb.logger.enabled ) {

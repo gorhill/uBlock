@@ -907,10 +907,13 @@ const injectCSP = function(fctxt, pageStore, responseHeaders) {
 //   "Block elements by size"
 
 const foilLargeMediaElement = function(fctxt, pageStore, responseHeaders) {
-    const i = headerIndexFromName('content-length', responseHeaders);
-    if ( i === -1 ) { return; }
+    let size = 0;
+    if ( µBlock.userSettings.largeMediaSize !== 0 ) {
+        const i = headerIndexFromName('content-length', responseHeaders);
+        if ( i === -1 ) { return; }
+        size = parseInt(responseHeaders[i].value, 10) || 0;
+    }
 
-    const size = parseInt(responseHeaders[i].value, 10) || 0;
     const result = pageStore.filterLargeMediaElement(fctxt, size);
     if ( result === 0 ) { return; }
 
