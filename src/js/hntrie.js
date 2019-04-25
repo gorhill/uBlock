@@ -407,6 +407,8 @@ HNTrieContainer.prototype = {
         this.container = container;
         this.iroot = iroot;
         this.size = size;
+        this.last = -1;
+        this.needle = '';
     },
 
     //--------------------------------------------------------------------------
@@ -548,6 +550,8 @@ HNTrieContainer.prototype = {
 HNTrieContainer.prototype.HNTrieRef.prototype = {
     add: function(hn) {
         if ( this.container.setNeedle(hn).add(this.iroot) === 1 ) {
+            this.last = -1;
+            this.needle = '';
             this.size += 1;
             return true;
         }
@@ -555,6 +559,8 @@ HNTrieContainer.prototype.HNTrieRef.prototype = {
     },
     addJS: function(hn) {
         if ( this.container.setNeedle(hn).addJS(this.iroot) === 1 ) {
+            this.last = -1;
+            this.needle = '';
             this.size += 1;
             return true;
         }
@@ -562,19 +568,33 @@ HNTrieContainer.prototype.HNTrieRef.prototype = {
     },
     addWASM: function(hn) {
         if ( this.container.setNeedle(hn).addWASM(this.iroot) === 1 ) {
+            this.last = -1;
+            this.needle = '';
             this.size += 1;
             return true;
         }
         return false;
     },
     matches: function(needle) {
-        return this.container.setNeedle(needle).matches(this.iroot);
+        if ( needle !== this.needle ) {
+            this.needle = needle;
+            this.last = this.container.setNeedle(needle).matches(this.iroot);
+        }
+        return this.last;
     },
     matchesJS: function(needle) {
-        return this.container.setNeedle(needle).matchesJS(this.iroot);
+        if ( needle !== this.needle ) {
+            this.needle = needle;
+            this.last = this.container.setNeedle(needle).matchesJS(this.iroot);
+        }
+        return this.last;
     },
     matchesWASM: function(needle) {
-        return this.container.setNeedle(needle).matchesWASM(this.iroot);
+        if ( needle !== this.needle ) {
+            this.needle = needle;
+            this.last = this.container.setNeedle(needle).matchesWASM(this.iroot);
+        }
+        return this.last;
     },
     [Symbol.iterator]: function() {
         return {
