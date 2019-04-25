@@ -123,43 +123,42 @@ const HNTRIE_CHAR0_SLOT  = HNTRIE_TRIE0_SLOT + 2;         //  66 / 264
 const HNTRIE_CHAR1_SLOT  = HNTRIE_TRIE0_SLOT + 3;         //  67 / 268
 const HNTRIE_TRIE0_START = HNTRIE_TRIE0_SLOT + 4 << 2;    //       272
 
+const HNTrieContainer = class {
 
-const HNTrieContainer = function(details) {
-    if ( details instanceof Object === false ) { details = {}; }
-    let len = (details.byteLength || 0) + HNTRIE_PAGE_SIZE-1 & ~(HNTRIE_PAGE_SIZE-1);
-    this.buf = new Uint8Array(Math.max(len, 131072));
-    this.buf32 = new Uint32Array(this.buf.buffer);
-    this.needle = '';
-    this.buf32[HNTRIE_TRIE0_SLOT] = HNTRIE_TRIE0_START;
-    this.buf32[HNTRIE_TRIE1_SLOT] = this.buf32[HNTRIE_TRIE0_SLOT];
-    this.buf32[HNTRIE_CHAR0_SLOT] = details.char0 || 65536;
-    this.buf32[HNTRIE_CHAR1_SLOT] = this.buf32[HNTRIE_CHAR0_SLOT];
-    this.wasmInstancePromise = null;
-    this.wasmMemory = null;
-    this.readyToUse();
-};
-
-HNTrieContainer.prototype = {
+    constructor(details) {
+        if ( details instanceof Object === false ) { details = {}; }
+        let len = (details.byteLength || 0) + HNTRIE_PAGE_SIZE-1 & ~(HNTRIE_PAGE_SIZE-1);
+        this.buf = new Uint8Array(Math.max(len, 131072));
+        this.buf32 = new Uint32Array(this.buf.buffer);
+        this.needle = '';
+        this.buf32[HNTRIE_TRIE0_SLOT] = HNTRIE_TRIE0_START;
+        this.buf32[HNTRIE_TRIE1_SLOT] = this.buf32[HNTRIE_TRIE0_SLOT];
+        this.buf32[HNTRIE_CHAR0_SLOT] = details.char0 || 65536;
+        this.buf32[HNTRIE_CHAR1_SLOT] = this.buf32[HNTRIE_CHAR0_SLOT];
+        this.wasmInstancePromise = null;
+        this.wasmMemory = null;
+        this.readyToUse();
+    }
 
     //--------------------------------------------------------------------------
     // Public methods
     //--------------------------------------------------------------------------
 
-    reset: function() {
+    reset() {
         this.buf32[HNTRIE_TRIE1_SLOT] = this.buf32[HNTRIE_TRIE0_SLOT];
         this.buf32[HNTRIE_CHAR1_SLOT] = this.buf32[HNTRIE_CHAR0_SLOT];
-    },
+    }
 
-    readyToUse: function() {
+    readyToUse() {
         if ( HNTrieContainer.wasmModulePromise instanceof Promise === false ) {
             return Promise.resolve();
         }
         return HNTrieContainer.wasmModulePromise.then(
             module => this.initWASM(module)
         );
-    },
+    }
 
-    setNeedle: function(needle) {
+    setNeedle(needle) {
         if ( needle !== this.needle ) {
             const buf = this.buf;
             let i = needle.length;
@@ -171,9 +170,9 @@ HNTrieContainer.prototype = {
             this.needle = needle;
         }
         return this;
-    },
+    }
 
-    matchesJS: function(iroot) {
+    matchesJS(iroot) {
         const char0 = this.buf32[HNTRIE_CHAR0_SLOT];
         let ineedle = this.buf[255];
         let icell = iroot;
@@ -214,11 +213,9 @@ HNTrieContainer.prototype = {
             }
         }
         return ineedle === 0 || this.buf[ineedle-1] === 0x2E ? ineedle : -1;
-    },
-    matchesWASM: null,
-    matches: null,
+    }
 
-    createOne: function(args) {
+    createOne(args) {
         if ( Array.isArray(args) ) {
             return new this.HNTrieRef(this, args[0], args[1]);
         }
@@ -232,13 +229,13 @@ HNTrieContainer.prototype = {
         this.buf32[iroot+1] = 0;
         this.buf32[iroot+2] = 0;
         return new this.HNTrieRef(this, iroot, 0);
-    },
+    }
 
-    compileOne: function(trieRef) {
+    compileOne(trieRef) {
         return [ trieRef.iroot, trieRef.size ];
-    },
+    }
 
-    addJS: function(iroot) {
+    addJS(iroot) {
         let lhnchar = this.buf[255];
         if ( lhnchar === 0 ) { return 0; }
         let icell = iroot;
@@ -334,28 +331,26 @@ HNTrieContainer.prototype = {
             }
             return 1;
         }
-    },
-    addWASM: null,
-    add: null,
+    }
 
-    optimize: function() {
+    optimize() {
         this.shrinkBuf();
         return {
             byteLength: this.buf.byteLength,
             char0: this.buf32[HNTRIE_CHAR0_SLOT],
         };
-    },
+    }
 
-    fromIterable: function(hostnames, add) {
+    fromIterable(hostnames, add) {
         if ( add === undefined ) { add = 'add'; }
         const trieRef = this.createOne();
         for ( const hn of hostnames ) {
             trieRef[add](hn);
         }
         return trieRef;
-    },
+    }
 
-    serialize: function(encoder) {
+    serialize(encoder) {
         if ( encoder instanceof Object ) {
             return encoder.encode(
                 this.buf32.buffer,
@@ -369,9 +364,9 @@ HNTrieContainer.prototype = {
                 this.buf32[HNTRIE_CHAR1_SLOT] + 3 >>> 2
             )
         );
-    },
+    }
 
-    unserialize: function(selfie, decoder) {
+    unserialize(selfie, decoder) {
         this.needle = '';
         const shouldDecode = typeof selfie === 'string';
         let byteLength = shouldDecode
@@ -397,25 +392,13 @@ HNTrieContainer.prototype = {
             this.buf32.set(selfie);
         }
         return true;
-    },
-
-    //--------------------------------------------------------------------------
-    // Class to hold reference to a specific trie
-    //--------------------------------------------------------------------------
-
-    HNTrieRef: function(container, iroot, size) {
-        this.container = container;
-        this.iroot = iroot;
-        this.size = size;
-        this.last = -1;
-        this.needle = '';
-    },
+    }
 
     //--------------------------------------------------------------------------
     // Private methods
     //--------------------------------------------------------------------------
 
-    addCell: function(idown, iright, v) {
+    addCell(idown, iright, v) {
         let icell = this.buf32[HNTRIE_TRIE1_SLOT];
         this.buf32[HNTRIE_TRIE1_SLOT] = icell + 12;
         icell >>>= 2;
@@ -423,9 +406,9 @@ HNTrieContainer.prototype = {
         this.buf32[icell+1] = iright;
         this.buf32[icell+2] = v;
         return icell;
-    },
+    }
 
-    addSegment: function(lsegchar) {
+    addSegment(lsegchar) {
         if ( lsegchar === 0 ) { return 0; }
         let char1 = this.buf32[HNTRIE_CHAR1_SLOT];
         const isegchar = char1 - this.buf32[HNTRIE_CHAR0_SLOT];
@@ -435,9 +418,9 @@ HNTrieContainer.prototype = {
         } while ( i !== 0 );
         this.buf32[HNTRIE_CHAR1_SLOT] = char1;
         return (lsegchar << 24) | isegchar;
-    },
+    }
 
-    growBuf: function(trieGrow, charGrow) {
+    growBuf(trieGrow, charGrow) {
         const char0 = Math.max(
             (this.buf32[HNTRIE_TRIE1_SLOT] + trieGrow + HNTRIE_PAGE_SIZE-1) & ~(HNTRIE_PAGE_SIZE-1),
             this.buf32[HNTRIE_CHAR0_SLOT]
@@ -448,18 +431,18 @@ HNTrieContainer.prototype = {
             this.buf.length
         );
         this.resizeBuf(bufLen, char0);
-    },
+    }
 
-    shrinkBuf: function() {
+    shrinkBuf() {
         // Can't shrink WebAssembly.Memory
         if ( this.wasmMemory !== null ) { return; }
         const char0 = this.buf32[HNTRIE_TRIE1_SLOT] + 24;
         const char1 = char0 + this.buf32[HNTRIE_CHAR1_SLOT] - this.buf32[HNTRIE_CHAR0_SLOT];
         const bufLen = char1 + 256;
         this.resizeBuf(bufLen, char0);
-    },
+    }
 
-    resizeBuf: function(bufLen, char0) {
+    resizeBuf(bufLen, char0) {
         bufLen = bufLen + HNTRIE_PAGE_SIZE-1 & ~(HNTRIE_PAGE_SIZE-1);
         if (
             bufLen === this.buf.length &&
@@ -510,9 +493,9 @@ HNTrieContainer.prototype = {
             this.buf32[HNTRIE_CHAR0_SLOT] = char0;
             this.buf32[HNTRIE_CHAR1_SLOT] = char0 + charDataLen;
         }
-    },
+    }
 
-    initWASM: function(module) {
+    initWASM(module) {
         if ( module instanceof WebAssembly.Module === false ) {
             return Promise.resolve(null);
         }
@@ -529,9 +512,10 @@ HNTrieContainer.prototype = {
             );
             this.wasmInstancePromise.then(instance => {
                 this.wasmMemory = memory;
-                const pageCount = this.buf.byteLength + HNTRIE_PAGE_SIZE-1 >>> 16;
-                if ( pageCount > 1 ) {
-                    memory.grow(pageCount - 1);
+                const curPageCount = memory.buffer.byteLength >>> 16;
+                const newPageCount = this.buf.byteLength + HNTRIE_PAGE_SIZE-1 >>> 16;
+                if ( newPageCount > curPageCount ) {
+                    memory.grow(newPageCount - curPageCount);
                 }
                 const buf = new Uint8Array(memory.buffer);
                 buf.set(this.buf);
@@ -542,13 +526,30 @@ HNTrieContainer.prototype = {
             });
         }
         return this.wasmInstancePromise;
-    },
+    }
 };
 
-/******************************************************************************/
+HNTrieContainer.prototype.matches = HNTrieContainer.prototype.matchesJS;
+HNTrieContainer.prototype.matchesWASM = null;
 
-HNTrieContainer.prototype.HNTrieRef.prototype = {
-    add: function(hn) {
+HNTrieContainer.prototype.add = HNTrieContainer.prototype.addJS;
+HNTrieContainer.prototype.addWASM = null;
+
+/*******************************************************************************
+
+    Class to hold reference to a specific trie
+
+*/
+
+HNTrieContainer.prototype.HNTrieRef = class {
+
+    constructor(container, iroot, size) {
+        this.container = container;
+        this.iroot = iroot;
+        this.size = size;
+    }
+
+    add(hn) {
         if ( this.container.setNeedle(hn).add(this.iroot) === 1 ) {
             this.last = -1;
             this.needle = '';
@@ -556,8 +557,9 @@ HNTrieContainer.prototype.HNTrieRef.prototype = {
             return true;
         }
         return false;
-    },
-    addJS: function(hn) {
+    }
+
+    addJS(hn) {
         if ( this.container.setNeedle(hn).addJS(this.iroot) === 1 ) {
             this.last = -1;
             this.needle = '';
@@ -565,8 +567,9 @@ HNTrieContainer.prototype.HNTrieRef.prototype = {
             return true;
         }
         return false;
-    },
-    addWASM: function(hn) {
+    }
+
+    addWASM(hn) {
         if ( this.container.setNeedle(hn).addWASM(this.iroot) === 1 ) {
             this.last = -1;
             this.needle = '';
@@ -574,29 +577,33 @@ HNTrieContainer.prototype.HNTrieRef.prototype = {
             return true;
         }
         return false;
-    },
-    matches: function(needle) {
+    }
+
+    matches(needle) {
         if ( needle !== this.needle ) {
             this.needle = needle;
             this.last = this.container.setNeedle(needle).matches(this.iroot);
         }
         return this.last;
-    },
-    matchesJS: function(needle) {
+    }
+
+    matchesJS(needle) {
         if ( needle !== this.needle ) {
             this.needle = needle;
             this.last = this.container.setNeedle(needle).matchesJS(this.iroot);
         }
         return this.last;
-    },
-    matchesWASM: function(needle) {
+    }
+
+    matchesWASM(needle) {
         if ( needle !== this.needle ) {
             this.needle = needle;
             this.last = this.container.setNeedle(needle).matchesWASM(this.iroot);
         }
         return this.last;
-    },
-    [Symbol.iterator]: function() {
+    }
+
+    [Symbol.iterator]() {
         return {
             value: undefined,
             done: false,
@@ -646,8 +653,11 @@ HNTrieContainer.prototype.HNTrieRef.prototype = {
             forks: [],
             textDecoder: new TextDecoder()
         };
-    },
+    }
 };
+
+HNTrieContainer.prototype.HNTrieRef.prototype.last = -1;
+HNTrieContainer.prototype.HNTrieRef.prototype.needle = '';
 
 /******************************************************************************/
 
@@ -661,10 +671,6 @@ HNTrieContainer.prototype.HNTrieRef.prototype = {
 
 (function() {
     HNTrieContainer.wasmModulePromise = null;
-
-    // Default to javascript version.
-    HNTrieContainer.prototype.matches = HNTrieContainer.prototype.matchesJS;
-    HNTrieContainer.prototype.add = HNTrieContainer.prototype.addJS;
 
     if (
         typeof WebAssembly !== 'object' ||
