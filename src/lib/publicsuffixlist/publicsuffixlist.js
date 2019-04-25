@@ -580,7 +580,7 @@ const enableWASM = (function() {
                 { imports: { memory: memory } }
             );
         }).then(({ instance }) => {
-            const curPageCount = memory.buffer.byteLength;
+            const curPageCount = memory.buffer.byteLength >>> 16;
             const newPageCount = pslBuffer8 !== undefined
                 ? pslBuffer8.byteLength + 0xFFFF >>> 16
                 : 0;
