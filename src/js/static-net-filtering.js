@@ -102,6 +102,8 @@ const typeValueToTypeName = {
 
 const BlockImportant = BlockAction | Important;
 
+const reIsWildcarded = /[\^\*]/;
+
 // ABP filters: https://adblockplus.org/en/filters
 // regex tester: http://regex101.com/
 
@@ -110,10 +112,39 @@ const BlockImportant = BlockAction | Important;
 // See the following as short-lived registers, used during evaluation. They are
 // valid until the next evaluation.
 
-let pageHostnameRegister = '',
-    requestHostnameRegister = '';
-//var filterRegister = null;
-//var categoryRegister = '';
+let pageHostnameRegister = '';
+let requestHostnameRegister = '';
+
+/******************************************************************************/
+
+// First character of match must be within the hostname part of the url.
+//
+// https://github.com/gorhill/uBlock/issues/1929
+//   Match only hostname label boundaries.
+
+const isHnAnchored = (( ) => {
+    let lastLen = 0, lastBeg = -1, lastEnd = -1;
+
+    return (url, matchStart) => {
+        const len = requestHostnameRegister.length;
+        if ( len !== lastLen || url.endsWith('://', lastBeg) === false ) {
+            lastBeg = len !== 0 ? url.indexOf('://') : -1;
+            if ( lastBeg !== -1 ) {
+                lastBeg += 3;
+                lastEnd = lastBeg + len;
+            } else {
+                lastEnd = -1;
+            }
+        }
+        return matchStart < lastEnd && (
+            matchStart === lastBeg ||
+            matchStart > lastBeg &&
+                url.charCodeAt(matchStart - 1) === 0x2E /* '.' */
+        );
+    };
+})();
+
+/******************************************************************************/
 
 // Local helpers
 
@@ -203,27 +234,6 @@ const toLogDataInternal = function(categoryBits, tokenHash, filter) {
     }
     return logData;
 };
-
-// First character of match must be within the hostname part of the url.
-//
-// https://github.com/gorhill/uBlock/issues/1929
-//   Match only hostname label boundaries.
-const isHnAnchored = (function() {
-    let hostname = '';
-    let beg = -1, end = -1;
-
-    return function(url, matchStart) {
-        if ( requestHostnameRegister !== hostname ) {
-            const hn = requestHostnameRegister;
-            beg = hn !== '' ? url.indexOf(hn) : -1;
-            end = beg !== -1 ? beg + hn.length : -1;
-            hostname = hn;
-        }
-        if ( matchStart < beg || matchStart >= end ) { return false; }
-        return matchStart === beg ||
-               url.charCodeAt(matchStart - 1) === 0x2E /* '.' */;
-    };
-})();
 
 /*******************************************************************************
 
@@ -536,6 +546,52 @@ FilterPlainHnAnchored.prototype.trieableId = 1;
 
 registerFilterClass(FilterPlainHnAnchored);
 
+/*******************************************************************************
+
+    Filters with only one single occurrence of wildcard `*`
+
+*/
+
+const FilterWildcard1 = class {
+    constructor(s0, s1) {
+        this.s0 = s0;
+        this.s1 = s1;
+    }
+
+    match(url) {
+        const pos = url.indexOf(this.s0);
+        return pos !== -1 && url.indexOf(this.s1, pos + this.s0.length) !== -1;
+    }
+
+    logData() {
+        return {
+            raw: `${this.s0}*${this.s1}`,
+            regex: rawToRegexStr(`${this.s0}*${this.s1}`, 0),
+            compiled: this.compile()
+        };
+    }
+
+    compile() {
+        return [ this.fid, this.s0, this.s1 ];
+    }
+
+    static compile(details) {
+        if ( details.anchor !== 0 ) { return; }
+        const s = details.f;
+        let pos = s.indexOf('*');
+        if ( pos === -1 ) { return; }
+        if ( reIsWildcarded.test(s.slice(pos + 1)) ) { return; }
+        if ( reIsWildcarded.test(s.slice(0, pos)) ) { return; }
+        return [ FilterWildcard1.fid, s.slice(0, pos), s.slice(pos + 1) ];
+    }
+
+    static load(args) {
+        return new FilterWildcard1(args[1], args[2]);
+    }
+};
+
+registerFilterClass(FilterWildcard1);
+
 /******************************************************************************/
 
 const FilterGeneric = class {
@@ -571,6 +627,8 @@ const FilterGeneric = class {
     }
 
     static compile(details) {
+        const compiled = FilterWildcard1.compile(details);
+        if ( compiled !== undefined ) { return compiled; }
         return [ FilterGeneric.fid, details.f, details.anchor ];
     }
 
@@ -582,6 +640,117 @@ const FilterGeneric = class {
 FilterGeneric.prototype.re = null;
 
 registerFilterClass(FilterGeneric);
+
+/*******************************************************************************
+
+    Hostname-anchored filters with only one occurrence of wildcard `*`
+
+*/
+
+const FilterWildcard1HnAnchored = class {
+    constructor(s0, s1) {
+        this.s0 = s0;
+        this.s1 = s1;
+    }
+
+    match(url) {
+        const pos = url.indexOf(this.s0);
+        return pos !== -1 &&
+               isHnAnchored(url, pos) &&
+               url.indexOf(this.s1, pos + this.s0.length) !== -1;
+    }
+
+    logData() {
+        return {
+            raw: `||${this.s0}*${this.s1}`,
+            regex: rawToRegexStr(`${this.s0}*${this.s1}`, 0),
+            compiled: this.compile()
+        };
+    }
+
+    compile() {
+        return [ this.fid, this.s0, this.s1 ];
+    }
+
+    static compile(details) {
+        if ( (details.anchor & 0x0b001) !== 0 ) { return; }
+        const s = details.f;
+        let pos = s.indexOf('*');
+        if ( pos === -1 ) { return; }
+        if ( reIsWildcarded.test(s.slice(pos + 1)) ) { return; }
+        const needSeparator =
+            pos !== 0 && s.charCodeAt(pos - 1) === 0x5E /* '^' */;
+        if ( needSeparator ) { pos -= 1; }
+        if ( reIsWildcarded.test(s.slice(0, pos)) ) { return; }
+        if ( needSeparator ) {
+            return FilterWildcard2HnAnchored.compile(details, pos);
+        }
+        return [
+            FilterWildcard1HnAnchored.fid,
+            s.slice(0, pos),
+            s.slice(pos + 1),
+        ];
+    }
+
+    static load(args) {
+        return new FilterWildcard1HnAnchored(args[1], args[2]);
+    }
+};
+
+registerFilterClass(FilterWildcard1HnAnchored);
+
+/*******************************************************************************
+
+    Hostname-anchored filters with one occurrence of the wildcard
+    sequence `^*` and no other wildcard-equivalent character
+
+*/
+
+const FilterWildcard2HnAnchored = class {
+    constructor(s0, s1) {
+        this.s0 = s0;
+        this.s1 = s1;
+    }
+
+    match(url) {
+        const pos0 = url.indexOf(this.s0);
+        if ( pos0 === -1 || isHnAnchored(url, pos0) === false ) {
+            return false;
+        }
+        const pos1 = pos0 + this.s0.length;
+        const pos2 = url.indexOf(this.s1, pos1);
+        return pos2 !== -1 &&
+               this.reSeparators.test(url.slice(pos1, pos2));
+    }
+
+    logData() {
+        return {
+            raw: `||${this.s0}^*${this.s1}`,
+            regex: rawToRegexStr(`${this.s0}^*${this.s1}`, 0),
+            compiled: this.compile()
+        };
+    }
+
+    compile() {
+        return [ this.fid, this.s0, this.s1 ];
+    }
+
+    static compile(details, pos) {
+        return [
+            FilterWildcard2HnAnchored.fid,
+            details.f.slice(0, pos),
+            details.f.slice(pos + 2),
+        ];
+    }
+
+    static load(args) {
+        return new FilterWildcard2HnAnchored(args[1], args[2]);
+    }
+};
+
+FilterWildcard2HnAnchored.prototype.reSeparators = /[^0-9a-z.%_-]/;
+
+registerFilterClass(FilterWildcard2HnAnchored);
 
 /******************************************************************************/
 
@@ -610,6 +779,8 @@ const FilterGenericHnAnchored = class {
     }
 
     static compile(details) {
+        const compiled = FilterWildcard1HnAnchored.compile(details);
+        if ( compiled !== undefined ) { return compiled; }
         return [ FilterGenericHnAnchored.fid, details.f ];
     }
 
@@ -1377,7 +1548,10 @@ const FilterBucket = class {
                 return true;
             }
         }
-        if ( this.plainHnAnchoredTrie !== null && isHnAnchored(url, tokenBeg) ) {
+        if (
+            this.plainHnAnchoredTrie !== null &&
+            isHnAnchored(url, tokenBeg)
+        ) {
             const pos = this.plainHnAnchoredTrie.matches(url, tokenBeg);
             if ( pos !== -1 ) {
                 this.plainHnAnchoredFilter.s = url.slice(tokenBeg, pos);
@@ -1524,7 +1698,6 @@ const FilterParser = function() {
     this.reHasUnicode = /[^\x00-\x7F]/;
     this.reWebsocketAny = /^ws[s*]?(?::\/?\/?)?\*?$/;
     this.reBadCSP = /(?:^|;)\s*report-(?:to|uri)\b/;
-    this.reIsWildcarded = /[\^\*]/;
     this.domainOpt = '';
     this.noTokenHash = µb.urlTokenizer.noTokenHash;
     this.unsupportedTypeBit = this.bitFromType('unsupported');
@@ -1917,7 +2090,7 @@ FilterParser.prototype.parse = function(raw) {
         this.anchor = 0;
     }
 
-    this.wildcarded = this.reIsWildcarded.test(s);
+    this.wildcarded = reIsWildcarded.test(s);
 
     // This might look weird but we gain memory footprint by not going through
     // toLowerCase(), at least on Chromium. Because copy-on-write?
@@ -2984,6 +3157,36 @@ FilterContainer.prototype.bucketHistogram = function() {
         - No need for FilterPlainPrefix0.
         - FilterPlainHnAnchored and FilterPlainPrefix1 are good candidates
           for storing in a plain string trie.
+
+    As of 2019-04-25:
+
+        {"FilterPlainHnAnchored" => 11078}
+        {"FilterPlainPrefix1" => 7195}
+        {"FilterPrefix1Trie" => 5720}
+        {"FilterOriginHit" => 3561}
+        {"FilterWildcard2HnAnchored" => 2943}
+        {"FilterPair" => 2391}
+        {"FilterBucket" => 1922}
+        {"FilterWildcard1HnAnchored" => 1910}
+        {"FilterHnAnchoredTrie" => 1586}
+        {"FilterPlainHostname" => 1391}
+        {"FilterOriginHitSet" => 1155}
+        {"FilterPlain" => 634}
+        {"FilterWildcard1" => 423}
+        {"FilterGenericHnAnchored" => 389}
+        {"FilterOriginMiss" => 302}
+        {"FilterGeneric" => 163}
+        {"FilterOriginMissSet" => 150}
+        {"FilterRegex" => 124}
+        {"FilterPlainRightAnchored" => 110}
+        {"FilterGenericHnAndRightAnchored" => 95}
+        {"FilterHostnameDict" => 59}
+        {"FilterPlainLeftAnchored" => 30}
+        {"FilterJustOrigin" => 22}
+        {"FilterHTTPJustOrigin" => 19}
+        {"FilterHTTPSJustOrigin" => 18}
+        {"FilterExactMatch" => 5}
+        {"FilterOriginMixedSet" => 3}
 
 */
 
