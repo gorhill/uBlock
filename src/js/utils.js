@@ -65,6 +65,9 @@
         this._urlOut = '';
         this._tokenized = false;
         this._tokens = [ 0 ];
+
+        this.knownTokens = new Uint8Array(65536);
+        this.resetKnownTokens();
     }
 
     setURL(url) {
@@ -74,6 +77,15 @@
             this._tokenized = false;
         }
         return this._urlOut;
+    }
+
+    resetKnownTokens() {
+        this.knownTokens.fill(0);
+        this.knownTokens[this.dotTokenHash & 0xFFFF] = 1;
+        this.knownTokens[this.anyTokenHash & 0xFFFF] = 1;
+        this.knownTokens[this.anyHTTPSTokenHash & 0xFFFF] = 1;
+        this.knownTokens[this.anyHTTPTokenHash & 0xFFFF] = 1;
+        this.knownTokens[this.noTokenHash & 0xFFFF] = 1;
     }
 
     // Tokenize on demand.
@@ -90,12 +102,6 @@
         this._tokens[i] = 0;
         this._tokenized = true;
         return this._tokens;
-    }
-
-    _appendTokenAt(i, th, ti) {
-        this._tokens[i+0] = th;
-        this._tokens[i+1] = ti;
-        return i + 2;
     }
 
     tokenHashFromString(s) {
@@ -119,8 +125,25 @@
         return s;
     }
 
+    toSelfie() {
+        return µBlock.base64.encode(
+            this.knownTokens.buffer,
+            this.knownTokens.byteLength
+        );
+    }
+
+    fromSelfie(selfie) {
+        return µBlock.base64.decode(selfie, this.knownTokens.buffer);
+    }
+
     // https://github.com/chrisaljoudi/uBlock/issues/1118
     // We limit to a maximum number of tokens.
+
+    _appendTokenAt(i, th, ti) {
+        this._tokens[i+0] = th;
+        this._tokens[i+1] = ti;
+        return i + 2;
+    }
 
     _tokenize() {
         const tokens = this._tokens;
@@ -131,6 +154,7 @@
             url = url.slice(0, 2048);
             l = 2048;
         }
+        const knownTokens = this.knownTokens;
         const vtc = this._validTokenChars;
         let i = 0, j = 0, v, n, ti, th;
         for (;;) {
@@ -148,9 +172,11 @@
                 th = th * 64 + v;
                 n += 1;
             }
-            tokens[j+0] = th;
-            tokens[j+1] = ti;
-            j += 2;
+            if ( knownTokens[th & 0xFFFF] !== 0 ) {
+                tokens[j+0] = th;
+                tokens[j+1] = ti;
+                j += 2;
+            }
         }
     }
 })();

@@ -797,7 +797,7 @@ const FilterWildcard2HnAnchored = class {
     }
 };
 
-FilterWildcard2HnAnchored.prototype.reSeparators = /[^0-9a-z.%_-]/;
+FilterWildcard2HnAnchored.prototype.reSeparators = /[^\w%.-]/;
 
 registerFilterClass(FilterWildcard2HnAnchored);
 
@@ -2163,7 +2163,7 @@ const reGoodToken = /[%0-9a-z]{2,}/g;
 const reRegexToken = /[%0-9A-Za-z]{2,}/g;
 const reRegexTokenAbort = /[([]/;
 const reRegexBadPrefix = /(^|[^\\]\.|[*?{}\\])$/;
-const reRegexBadSuffix = /^([^\\]\.|\\[dw]|[([{}?*]|$)/;
+const reRegexBadSuffix = /^([^\\]\.|\\[dw]|[([{}?*.]|$)/;
 
 const badTokens = new Set([
     'com',
@@ -2296,6 +2296,7 @@ FilterContainer.prototype.reset = function() {
     this.categories = new Map();
     this.dataFilters = new Map();
     this.filterParser.reset();
+    this.urlTokenizer.resetKnownTokens();
 
     // This will invalidate all tries
     FilterHostnameDict.reset();
@@ -2317,6 +2318,7 @@ FilterContainer.prototype.freeze = function() {
     const filterDataHolderId = FilterDataHolder.fid;
     const redirectTypeValue = typeNameToTypeValue.redirect;
     const unserialize = µb.CompiledLineIO.unserialize;
+    const knownTokens = this.urlTokenizer.knownTokens;
 
     for ( const line of this.goodFilters ) {
         if ( this.badFilters.has(line) ) {
@@ -2348,6 +2350,7 @@ FilterContainer.prototype.freeze = function() {
                 entry.next = bucket;
             }
             this.dataFilters.set(tokenHash, entry);
+            knownTokens[tokenHash & 0xFFFF] = 1;
             continue;
         }
 
@@ -2393,6 +2396,8 @@ FilterContainer.prototype.freeze = function() {
             entry.add(fdata);
             continue;
         }
+
+        knownTokens[tokenHash & 0xFFFF] = 1;
 
         if ( entry === undefined ) {
             bucket.set(tokenHash, filterFromCompiledData(fdata));
@@ -2484,6 +2489,7 @@ FilterContainer.prototype.toSelfie = function(path) {
                 discardedCount: this.discardedCount,
                 categories: categoriesToSelfie(this.categories),
                 dataFilters: dataFiltersToSelfie(this.dataFilters),
+                urlTokenizer: this.urlTokenizer.toSelfie(),
             })
         )
     ]);
@@ -2525,6 +2531,7 @@ FilterContainer.prototype.fromSelfie = function(path) {
             this.allowFilterCount = selfie.allowFilterCount;
             this.blockFilterCount = selfie.blockFilterCount;
             this.discardedCount = selfie.discardedCount;
+            this.urlTokenizer.fromSelfie(selfie.urlTokenizer);
             for ( const [ catbits, bucket ] of selfie.categories ) {
                 const tokenMap = new Map();
                 for ( const [ token, fdata ] of bucket ) {
@@ -2742,8 +2749,8 @@ FilterContainer.prototype.matchAndFetchData = function(dataType, requestURL, out
         toAdd = new Map(),
         toRemove = new Map();
 
-    let tokenHashes = this.urlTokenizer.getTokens(),
-        i = 0;
+    const tokenHashes = this.urlTokenizer.getTokens();
+    let i = 0;
     while ( i < 32 ) {
         let tokenHash = tokenHashes[i++];
         if ( tokenHash === 0 ) { break; }
