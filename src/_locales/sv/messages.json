@@ -648,7 +648,7 @@
     "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
-    "message": "Sammanhang:",
+    "message": "Innehåll:",
     "description": "Label for the context selector"
   },
   "loggerURLFilteringTypeLabel": {
@@ -852,7 +852,7 @@
     "description": "Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
-    "message": "Show Logger",
+    "message": "Visa loggaren",
     "description": "Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
