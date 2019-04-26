@@ -553,14 +553,23 @@ registerFilterClass(FilterPlainHnAnchored);
 */
 
 const FilterWildcard1 = class {
-    constructor(s0, s1) {
+    constructor(s0, s1, tokenBeg) {
         this.s0 = s0;
         this.s1 = s1;
+        this.tokenBeg = tokenBeg;
     }
 
-    match(url) {
-        const pos = url.indexOf(this.s0);
-        return pos !== -1 && url.indexOf(this.s1, pos + this.s0.length) !== -1;
+    match(url, tokenBeg) {
+        if ( this.tokenBeg >= 0 ) {
+            const s0Beg = tokenBeg - this.tokenBeg;
+            return s0Beg >= 0 &&
+                   url.startsWith(this.s0, s0Beg) &&
+                   url.indexOf(this.s1, s0Beg + this.s0.length) !== -1;
+        }
+        const s1Beg = tokenBeg + this.tokenBeg;
+        return s1Beg > 0 &&
+               url.startsWith(this.s1, s1Beg) &&
+               url.lastIndexOf(this.s0, s1Beg) !== -1;
     }
 
     logData() {
@@ -572,21 +581,29 @@ const FilterWildcard1 = class {
     }
 
     compile() {
-        return [ this.fid, this.s0, this.s1 ];
+        return [ this.fid, this.s0, this.s1, this.tokenBeg ];
     }
 
     static compile(details) {
+        if ( this.token === '*' ) { return; }
         if ( details.anchor !== 0 ) { return; }
         const s = details.f;
         let pos = s.indexOf('*');
         if ( pos === -1 ) { return; }
         if ( reIsWildcarded.test(s.slice(pos + 1)) ) { return; }
         if ( reIsWildcarded.test(s.slice(0, pos)) ) { return; }
-        return [ FilterWildcard1.fid, s.slice(0, pos), s.slice(pos + 1) ];
+        return [
+            FilterWildcard1.fid,
+            s.slice(0, pos),
+            s.slice(pos + 1),
+            details.tokenBeg < pos
+                ? details.tokenBeg
+                : pos + 1 - details.tokenBeg,
+        ];
     }
 
     static load(args) {
-        return new FilterWildcard1(args[1], args[2]);
+        return new FilterWildcard1(args[1], args[2], args[3]);
     }
 };
 
@@ -648,16 +665,26 @@ registerFilterClass(FilterGeneric);
 */
 
 const FilterWildcard1HnAnchored = class {
-    constructor(s0, s1) {
+    constructor(s0, s1, tokenBeg) {
         this.s0 = s0;
         this.s1 = s1;
+        this.tokenBeg = tokenBeg;
     }
 
-    match(url) {
-        const pos = url.indexOf(this.s0);
-        return pos !== -1 &&
-               isHnAnchored(url, pos) &&
-               url.indexOf(this.s1, pos + this.s0.length) !== -1;
+    match(url, tokenBeg) {
+        if ( this.tokenBeg >= 0 ) {
+            const s0Beg = tokenBeg - this.tokenBeg;
+            return s0Beg >= 0 &&
+                   url.startsWith(this.s0, s0Beg) &&
+                   isHnAnchored(url, s0Beg) &&
+                   url.indexOf(this.s1, s0Beg + this.s0.length) !== -1;
+        }
+        const s1Beg = tokenBeg + this.tokenBeg;
+        if ( s1Beg < 0 || url.startsWith(this.s1, s1Beg) === false ) {
+            return false;
+        }
+        const s0Beg = url.lastIndexOf(this.s0, s1Beg);
+        return s0Beg !== -1 && isHnAnchored(url, s0Beg);
     }
 
     logData() {
@@ -669,10 +696,11 @@ const FilterWildcard1HnAnchored = class {
     }
 
     compile() {
-        return [ this.fid, this.s0, this.s1 ];
+        return [ this.fid, this.s0, this.s1, this.tokenBeg ];
     }
 
     static compile(details) {
+        if ( this.token === '*' ) { return; }
         if ( (details.anchor & 0x0b001) !== 0 ) { return; }
         const s = details.f;
         let pos = s.indexOf('*');
@@ -689,11 +717,14 @@ const FilterWildcard1HnAnchored = class {
             FilterWildcard1HnAnchored.fid,
             s.slice(0, pos),
             s.slice(pos + 1),
+            details.tokenBeg < pos
+                ? details.tokenBeg
+                : pos + 1 - details.tokenBeg,
         ];
     }
 
     static load(args) {
-        return new FilterWildcard1HnAnchored(args[1], args[2]);
+        return new FilterWildcard1HnAnchored(args[1], args[2], args[3]);
     }
 };
 
@@ -707,20 +738,35 @@ registerFilterClass(FilterWildcard1HnAnchored);
 */
 
 const FilterWildcard2HnAnchored = class {
-    constructor(s0, s1) {
+    constructor(s0, s1, tokenBeg) {
         this.s0 = s0;
         this.s1 = s1;
+        this.tokenBeg = tokenBeg;
     }
 
-    match(url) {
-        const pos0 = url.indexOf(this.s0);
-        if ( pos0 === -1 || isHnAnchored(url, pos0) === false ) {
-            return false;
+    match(url, tokenBeg) {
+        let s0End, s1Beg;
+        if ( this.tokenBeg >= 0 ) {
+            const s0Beg = tokenBeg - this.tokenBeg;
+            if ( s0Beg < 0 || url.startsWith(this.s0, s0Beg) === false ) {
+                return false;
+            }
+            if ( isHnAnchored(url, s0Beg) === false ) { return false; }
+            s0End = s0Beg + this.s0.length;
+            s1Beg = url.indexOf(this.s1, s0End);
+            if ( s1Beg === -1 ) { return false; }
+        } else {
+            s1Beg = tokenBeg + this.tokenBeg;
+            if ( s1Beg < 0 || url.startsWith(this.s1, s1Beg) === false ) {
+                return false;
+            }
+            const s0Beg = url.lastIndexOf(this.s0, s1Beg);
+            if ( s0Beg === -1 || isHnAnchored(url, s0Beg) === false ) {
+                return false;
+            }
+            s0End = s0Beg + this.s0.length;
         }
-        const pos1 = pos0 + this.s0.length;
-        const pos2 = url.indexOf(this.s1, pos1);
-        return pos2 !== -1 &&
-               this.reSeparators.test(url.slice(pos1, pos2));
+        return this.reSeparators.test(url.slice(s0End, s1Beg));
     }
 
     logData() {
@@ -732,7 +778,7 @@ const FilterWildcard2HnAnchored = class {
     }
 
     compile() {
-        return [ this.fid, this.s0, this.s1 ];
+        return [ this.fid, this.s0, this.s1, this.tokenBeg ];
     }
 
     static compile(details, pos) {
@@ -740,11 +786,14 @@ const FilterWildcard2HnAnchored = class {
             FilterWildcard2HnAnchored.fid,
             details.f.slice(0, pos),
             details.f.slice(pos + 2),
+            details.tokenBeg < pos
+                ? details.tokenBeg
+                : pos + 2 - details.tokenBeg,
         ];
     }
 
     static load(args) {
-        return new FilterWildcard2HnAnchored(args[1], args[2]);
+        return new FilterWildcard2HnAnchored(args[1], args[2], args[3]);
     }
 };
 
