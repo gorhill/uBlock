@@ -223,8 +223,9 @@ vAPI.browserSettings = (function() {
                 }
                 switch ( setting ) {
                 case 'prefetching':
+                    const enabled = !!details[setting];
                     try {
-                        if ( !!details[setting] ) {
+                        if ( enabled ) {
                             chrome.privacy.network.networkPredictionEnabled.clear({
                                 scope: 'regular'
                             }, vAPI.resetLastError);
@@ -236,6 +237,9 @@ vAPI.browserSettings = (function() {
                         }
                     } catch(ex) {
                         console.error(ex);
+                    }
+                    if ( vAPI.prefetching instanceof Function ) {
+                        vAPI.prefetching(enabled);
                     }
                     break;
 

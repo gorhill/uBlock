@@ -195,3 +195,39 @@ vAPI.net.onBeforeReady = vAPI.net.onBeforeReady || (function() {
 })();
 
 /******************************************************************************/
+
+// https://github.com/uBlockOrigin/uBlock-issues/issues/548
+//   Use `X-DNS-Prefetch-Control` to workaround Chromium's disregard of the
+//   setting "Predict network actions to improve page load performance".
+
+vAPI.prefetching = (function() {
+    let listening = false;
+
+    const onHeadersReceived = function(details) {
+        details.responseHeaders.push({
+            name: 'X-DNS-Prefetch-Control',
+            value: 'off'
+        });
+        return { responseHeaders: details.responseHeaders };
+    };
+
+    return state => {
+        const wr = chrome.webRequest;
+        if ( state && listening ) {
+            wr.onHeadersReceived.removeListener(onHeadersReceived);
+            listening = false;
+        } else if ( !state && !listening ) {
+            wr.onHeadersReceived.addListener(
+                onHeadersReceived,
+                {
+                    urls: [ 'http://*/*', 'https://*/*' ],
+                    types: [ 'main_frame', 'sub_frame' ]
+                },
+                [ 'blocking', 'responseHeaders' ]
+            );
+            listening = true;
+        }
+    };
+})();
+
+/******************************************************************************/
