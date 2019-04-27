@@ -946,11 +946,9 @@ const filterOrigin = new (class {
         return FilterOriginMixedSet.compile(domainOpt, wrapped);
     }
 
-    logData(f, arg1, arg2) {
-        const out = f.wrapped.logData();
-        out.compiled = [ f.fid, arg1, out.compiled ];
+    logData(out, domainOpt) {
         if ( out.opts !== undefined ) { out.opts += ','; }
-        out.opts = `domain=${arg2 || arg1}`;
+        out.opts = `domain=${domainOpt}`;
         return out;
     }
 
@@ -1000,7 +998,9 @@ const FilterOriginHit = class {
     }
 
     logData() {
-        return filterOrigin.logData(this, this.hostname);
+        const out = this.wrapped.logData();
+        out.compiled = [ this.fid, this.hostname, out.compiled ];
+        return filterOrigin.logData(out, this.hostname);
     }
 
     compile() {
@@ -1041,7 +1041,9 @@ const FilterOriginMiss = class {
     }
 
     logData() {
-        return filterOrigin.logData(this, this.hostname, `~${this.hostname}`);
+        const out = this.wrapped.logData();
+        out.compiled = [ this.fid, this.hostname, out.compiled ];
+        return filterOrigin.logData(out, `~${this.hostname}`);
     }
 
     compile() {
@@ -1086,7 +1088,9 @@ const FilterOriginHitSet = class {
     }
 
     logData() {
-        return filterOrigin.logData(this, this.domainOpt);
+        const out = this.wrapped.logData();
+        out.compiled = [ this.fid, this.domainOpt, null, out.compiled ];
+        return filterOrigin.logData(out, this.domainOpt);
     }
 
     compile() {
@@ -1139,7 +1143,9 @@ const FilterOriginMissSet = class {
     }
 
     logData() {
-        return filterOrigin.logData(this, this.domainOpt);
+        const out = this.wrapped.logData();
+        out.compiled = [ this.fid, this.domainOpt, null, out.compiled ];
+        return filterOrigin.logData(out, this.domainOpt);
     }
 
     compile() {
@@ -1206,7 +1212,9 @@ const FilterOriginMixedSet = class {
     }
 
     logData() {
-        return filterOrigin.logData(this, this.domainOpt);
+        const out = this.wrapped.logData();
+        out.compiled = [ this.fid, this.domainOpt, null, null, out.compiled ];
+        return filterOrigin.logData(out, this.domainOpt);
     }
 
     compile() {
