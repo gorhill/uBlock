@@ -81,11 +81,15 @@
 
     resetKnownTokens() {
         this.knownTokens.fill(0);
-        this.knownTokens[this.dotTokenHash & 0xFFFF] = 1;
-        this.knownTokens[this.anyTokenHash & 0xFFFF] = 1;
-        this.knownTokens[this.anyHTTPSTokenHash & 0xFFFF] = 1;
-        this.knownTokens[this.anyHTTPTokenHash & 0xFFFF] = 1;
-        this.knownTokens[this.noTokenHash & 0xFFFF] = 1;
+        this.addKnownToken(this.dotTokenHash);
+        this.addKnownToken(this.anyTokenHash);
+        this.addKnownToken(this.anyHTTPSTokenHash);
+        this.addKnownToken(this.anyHTTPTokenHash);
+        this.addKnownToken(this.noTokenHash);
+    }
+
+    addKnownToken(th) {
+        this.knownTokens[th & 0xFFFF ^ th >>> 16] = 1;
     }
 
     // Tokenize on demand.
@@ -172,7 +176,7 @@
                 th = th * 64 + v;
                 n += 1;
             }
-            if ( knownTokens[th & 0xFFFF] !== 0 ) {
+            if ( knownTokens[th & 0xFFFF ^ th >>> 16] !== 0 ) {
                 tokens[j+0] = th;
                 tokens[j+1] = ti;
                 j += 2;

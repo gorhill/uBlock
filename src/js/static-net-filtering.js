@@ -2326,7 +2326,6 @@ FilterContainer.prototype.freeze = function() {
     const filterDataHolderId = FilterDataHolder.fid;
     const redirectTypeValue = typeNameToTypeValue.redirect;
     const unserialize = µb.CompiledLineIO.unserialize;
-    const knownTokens = this.urlTokenizer.knownTokens;
 
     for ( const line of this.goodFilters ) {
         if ( this.badFilters.has(line) ) {
@@ -2358,7 +2357,7 @@ FilterContainer.prototype.freeze = function() {
                 entry.next = bucket;
             }
             this.dataFilters.set(tokenHash, entry);
-            knownTokens[tokenHash & 0xFFFF] = 1;
+            this.urlTokenizer.addKnownToken(tokenHash);
             continue;
         }
 
@@ -2405,7 +2404,7 @@ FilterContainer.prototype.freeze = function() {
             continue;
         }
 
-        knownTokens[tokenHash & 0xFFFF] = 1;
+        this.urlTokenizer.addKnownToken(tokenHash);
 
         if ( entry === undefined ) {
             bucket.set(tokenHash, filterFromCompiledData(fdata));
