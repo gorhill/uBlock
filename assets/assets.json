@@ -417,8 +417,8 @@
 		"off": true,
 		"title": "HUN: hufilter",
 		"lang": "hu",
-		"contentURL": "https://raw.githubusercontent.com/szpeter80/hufilter/master/hufilter.txt",
-		"supportURL": "https://github.com/szpeter80/hufilter"
+		"contentURL": "https://raw.githubusercontent.com/hufilter/hufilter/master/hufilter.txt",
+		"supportURL": "https://github.com/hufilter/hufilter"
 	},
 	"IDN-0": {
 		"content": "filters",
