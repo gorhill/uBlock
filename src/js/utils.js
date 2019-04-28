@@ -49,17 +49,15 @@
             this._validTokenChars[this._chars.charCodeAt(i)] = i + 1;
         }
 
-        this._charsEx = '0123456789%abcdefghijklmnopqrstuvwxyz*.';
-        this._validTokenCharsEx = new Uint8Array(128);
-        for ( let i = 0, n = this._charsEx.length; i < n; i++ ) {
-            this._validTokenCharsEx[this._charsEx.charCodeAt(i)] = i + 1;
-        }
-
-        this.dotTokenHash = this.tokenHashFromString('.');
-        this.anyTokenHash = this.tokenHashFromString('..');
-        this.anyHTTPSTokenHash = this.tokenHashFromString('..https');
-        this.anyHTTPTokenHash = this.tokenHashFromString('..http');
-        this.noTokenHash = this.tokenHashFromString('*');
+        // Four upper bits of token hash are reserved for built-in predefined
+        // token hashes, which should never end up being used when tokenizing
+        // any arbitrary string.
+             this.dotTokenHash = 0x10000000;
+             this.anyTokenHash = 0x20000000;
+        this.anyHTTPSTokenHash = 0x30000000;
+         this.anyHTTPTokenHash = 0x40000000;
+              this.noTokenHash = 0x50000000;
+           this.emptyTokenHash = 0xF0000000;
 
         this._urlIn = '';
         this._urlOut = '';
@@ -110,23 +108,18 @@
 
     tokenHashFromString(s) {
         const l = s.length;
-        if ( l === 0 ) { return 0; }
-        const vtc = this._validTokenCharsEx;
+        if ( l === 0 ) { return this.emptyTokenHash; }
+        const vtc = this._validTokenChars;
         let th = vtc[s.charCodeAt(0)];
-        for ( let i = 1; i !== 8 && i !== l; i++ ) {
-            th = th * 64 + vtc[s.charCodeAt(i)];
+        for ( let i = 1; i !== 7 && i !== l; i++ ) {
+            th = th << 4 ^ vtc[s.charCodeAt(i)];
         }
         return th;
     }
 
     stringFromTokenHash(th) {
         if ( th === 0 ) { return ''; }
-        let s = '';
-        while ( th > 0 ) {
-            s = `${this._charsEx.charAt((th & 0b111111)-1)}${s}`;
-            th /= 64;
-        }
-        return s;
+        return th.toString(16);
     }
 
     toSelfie() {
@@ -153,7 +146,7 @@
         const tokens = this._tokens;
         let url = this._urlOut;
         let l = url.length;
-        if ( l === 0 ) { return 0; }
+        if ( l === 0 ) { return this.emptyTokenHash; }
         if ( l > 2048 ) {
             url = url.slice(0, 2048);
             l = 2048;
@@ -172,8 +165,8 @@
                 if ( i === l ) { break; }
                 v = vtc[url.charCodeAt(i++)];
                 if ( v === 0 ) { break; }
-                if ( n === 8 ) { continue; }
-                th = th * 64 + v;
+                if ( n === 7 ) { continue; }
+                th = th << 4 ^ v;
                 n += 1;
             }
             if ( knownTokens[th & 0xFFFF ^ th >>> 16] !== 0 ) {
