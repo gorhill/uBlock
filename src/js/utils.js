@@ -600,11 +600,25 @@
             } while ( v !== 0 );
             outbuf[j++] = 0x20 /* ' ' */;
         }
+        if ( typeof TextDecoder === 'undefined' ) {
+            return JSON.stringify(
+                Array.from(new Uint32Array(outbuf.buffer, 0, j >>> 2))
+            );
+        }
         const textDecoder = new TextDecoder();
         return textDecoder.decode(new Uint8Array(outbuf.buffer, 0, j));
     }
 
     decode(instr, arrbuf) {
+        if (  instr.charCodeAt(0) === 0x5B /* '[' */ ) {
+            const inbuf = Array.isArray(instr);
+            if ( arrbuf instanceof ArrayBuffer === false ) {
+                return new Uint32Array(inbuf);
+            }
+            const outbuf = new Uint32Array(arrbuf);
+            outbuf.set(inbuf);
+            return outbuf;
+        }
         if ( instr.startsWith(this.magic) === false ) {
             throw new Error('Invalid µBlock.base64 encoding');
         }
