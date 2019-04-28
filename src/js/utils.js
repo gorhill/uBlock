@@ -611,7 +611,7 @@
 
     decode(instr, arrbuf) {
         if (  instr.charCodeAt(0) === 0x5B /* '[' */ ) {
-            const inbuf = Array.isArray(instr);
+            const inbuf = JSON.parse(instr);
             if ( arrbuf instanceof ArrayBuffer === false ) {
                 return new Uint32Array(inbuf);
             }
