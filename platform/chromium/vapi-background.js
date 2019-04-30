@@ -1044,6 +1044,7 @@ vAPI.messaging.broadcast = function(message) {
 
 vAPI.warSecret = (function() {
     let lastSecretTime = 0;
+    let lastSecretPtr = 0;
 
     const generateSecret = ( ) => {
         lastSecretTime = Date.now();
@@ -1073,15 +1074,13 @@ vAPI.warSecret = (function() {
     );
 
     return ( ) => {
-        const n = Math.min(
-            Math.floor((Date.now() - lastSecretTime) / 1000),
-            secrets.length
-        );
-        for ( let i = 0; i < n; i++ ) {
-            secrets.pop();
-            secrets.unshift(generateSecret());
+        const now = Date.now();
+        if ( (now - lastSecretTime) >= 1000 ) {
+            lastSecretPtr = (lastSecretPtr + 1) % secrets.length;
+            secrets[lastSecretPtr] = generateSecret();
+            lastSecretTime = now;
         }
-        return `?secret=${secrets[0]}`;
+        return `?secret=${secrets[lastSecretPtr]}`;
     };
 })();
 
