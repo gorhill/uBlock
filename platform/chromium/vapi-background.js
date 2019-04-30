@@ -1057,12 +1057,12 @@ vAPI.warSecret = (function() {
 
     const guard = function(details) {
         const url = details.url;
-        for ( let i = 0, n = secrets.length; i < n; i++ ) {
-            if ( url.indexOf(`?secret=${secrets[i]}`) !== -1 ) {
-                return;
-            }
+        const r = secrets.every(secret => {
+            return url.indexOf(`?secret=${secret}`) === -1;
+        });
+        if ( r ) {
+            return { redirectUrl: root };
         }
-        return { redirectUrl: root };
     };
 
     chrome.webRequest.onBeforeRequest.addListener(
