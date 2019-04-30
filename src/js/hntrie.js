@@ -181,14 +181,12 @@ const HNTrieContainer = class {
             if ( ineedle === 0 ) { return -1; }
             ineedle -= 1;
             let c = this.buf[ineedle];
-            let v, i0, diff;
+            let v, i0;
             // find first segment with a first-character match
             for (;;) {
                 v = this.buf32[icell+2];
                 i0 = char0 + (v & 0x00FFFFFF);
-                diff = this.buf[i0] - c;
-                if ( diff === 0 ) { break; }
-                if ( diff > 0 ) { return -1; }
+                if ( this.buf[i0] === c ) { break; }
                 icell = this.buf32[icell+0];
                 if ( icell === 0 ) { return -1; }
             }
@@ -256,7 +254,7 @@ const HNTrieContainer = class {
         }
         //
         const char0 = this.buf32[HNTRIE_CHAR0_SLOT];
-        let iprevious = iroot, diff, inext;
+        let inext;
         // find a matching cell: move down
         for (;;) {
             const vseg = this.buf32[icell+2];
@@ -265,38 +263,21 @@ const HNTrieContainer = class {
                 // remainder is at label boundary? if yes, no need to add
                 // the rest since the shortest match is always reported
                 if ( this.buf[lhnchar-1] === 0x2E /* '.' */ ) { return -1; }
-                iprevious = icell;
                 icell = this.buf32[icell+1];
                 continue;
             }
             let isegchar0 = char0 + (vseg & 0x00FFFFFF);
             // if first character is no match, move to next descendant
-            diff = this.buf[isegchar0] - this.buf[lhnchar-1];
-            // current cell character greater than target character: insert
-            // a new node before current cell
-            if ( diff > 0 ) {
-                const inew = this.addCell(icell, 0, this.addSegment(lhnchar));
-                if ( icell === this.buf32[iprevious+0] ) {
-                    this.buf32[iprevious+0] = inew;
-                } else /* if ( icell === this.buf32[iprevious+1] ) */ {
-                    this.buf32[iprevious+1] = inew;
-                }
-                return 1;
-            }
-            // current cell character lesser than target character: keep
-            // looking
-            if ( diff !== 0 ) {
+            if ( this.buf[isegchar0] !== this.buf[lhnchar-1] ) {
                 inext = this.buf32[icell+0];
-                // no match found: insert a new leaf descendant
                 if ( inext === 0 ) {
                     this.buf32[icell+0] = this.addCell(0, 0, this.addSegment(lhnchar));
                     return 1;
                 }
-                iprevious = icell;
                 icell = inext;
                 continue;
             }
-            // current cell character matches: 1st character was tested
+            // 1st character was tested
             let isegchar = 1;
             lhnchar -= 1;
             // find 1st mismatch in rest of segment
@@ -305,8 +286,7 @@ const HNTrieContainer = class {
                 for (;;) {
                     if ( isegchar === lsegchar ) { break; }
                     if ( lhnchar === 0 ) { break; }
-                    diff = this.buf[isegchar0+isegchar] - this.buf[lhnchar-1];
-                    if ( diff !== 0 ) { break; }
+                    if ( this.buf[isegchar0+isegchar] !== this.buf[lhnchar-1] ) { break; }
                     isegchar += 1;
                     lhnchar -= 1;
                 }
@@ -324,7 +304,6 @@ const HNTrieContainer = class {
                 // needle remainder: yes
                 else {
                     if ( inext !== 0 ) {
-                        iprevious = icell;
                         icell = inext;
                         continue;
                     }
@@ -347,19 +326,14 @@ const HNTrieContainer = class {
                     this.buf32[icell+1],
                     lsegchar - isegchar << 24 | isegchar0 + isegchar
                 );
+                this.buf32[icell+1] = inext;
                 // needle remainder: no = need boundary cell
                 if ( lhnchar === 0 ) {
                     this.buf32[icell+1] = this.addCell(0, inext, 0);
                 }
                 // needle remainder: yes = need new cell for remaining characters
                 else {
-                    const isegment = this.addSegment(lhnchar);
-                    if ( diff > 0 ) {
-                        this.buf32[icell+1] = this.addCell(inext, 0, isegment);
-                    } else {
-                        this.buf32[icell+1] = inext;
-                        this.buf32[inext+0] = this.addCell(0, 0, isegment);
-                    }
+                    this.buf32[inext+0] = this.addCell(0, 0, this.addSegment(lhnchar));
                 }
             }
             return 1;
