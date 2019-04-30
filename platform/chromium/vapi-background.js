@@ -1035,22 +1035,33 @@ vAPI.messaging.broadcast = function(message) {
 
 // https://github.com/gorhill/uBlock/issues/3474
 // https://github.com/gorhill/uBlock/issues/2823
-// - foil ability of web pages to identify uBO through
+//   Foil ability of web pages to identify uBO through
 //   its web accessible resources.
 // https://github.com/gorhill/uBlock/issues/3497
-// - prevent web pages from interfering with uBO's element picker
+//   Prevent web pages from interfering with uBO's element picker
+// https://github.com/uBlockOrigin/uBlock-issues/issues/550
+//   A specific secret can be used for at most one second.
 
-(function() {
-    vAPI.warSecret =
-        Math.floor(Math.random() * 982451653 + 982451653).toString(36) +
-        Math.floor(Math.random() * 982451653 + 982451653).toString(36);
+vAPI.warSecret = (function() {
+    let lastSecretTime = 0;
 
-    var key = 'secret=' + vAPI.warSecret;
-    var root = vAPI.getURL('/');
-    var guard = function(details) {
-        if ( details.url.indexOf(key) === -1 ) {
-            return { redirectUrl: root };
+    const generateSecret = ( ) => {
+        lastSecretTime = Date.now();
+        return Math.floor(Math.random() * 982451653 + 982451653).toString(36) +
+               Math.floor(Math.random() * 982451653 + 982451653).toString(36);
+    };
+
+    const secrets = [ generateSecret(), generateSecret(), generateSecret() ];
+    const root = vAPI.getURL('/');
+
+    const guard = function(details) {
+        const url = details.url;
+        for ( let i = 0, n = secrets.length; i < n; i++ ) {
+            if ( url.indexOf(`?secret=${secrets[i]}`) !== -1 ) {
+                return;
+            }
         }
+        return { redirectUrl: root };
     };
 
     chrome.webRequest.onBeforeRequest.addListener(
@@ -1060,6 +1071,18 @@ vAPI.messaging.broadcast = function(message) {
         },
         [ 'blocking' ]
     );
+
+    return ( ) => {
+        const n = Math.min(
+            Math.floor((Date.now() - lastSecretTime) / 1000),
+            secrets.length
+        );
+        for ( let i = 0; i < n; i++ ) {
+            secrets.pop();
+            secrets.unshift(generateSecret());
+        }
+        return `?secret=${secrets[0]}`;
+    };
 })();
 
 vAPI.net = {

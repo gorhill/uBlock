@@ -64,7 +64,7 @@ const warResolve = (function() {
         };
 
         µBlock.assets.fetchText(
-            `/web_accessible_resources/imported.txt?secret=${vAPI.warSecret}`,
+            `/web_accessible_resources/imported.txt${vAPI.warSecret()}`,
             onPairsLoaded
         );
     };
@@ -105,7 +105,7 @@ RedirectEntry.prototype.toURL = function(fctxt) {
             fctxt.url.startsWith('https:')
         )
     ) {
-        return this.warURL + '?secret=' + vAPI.warSecret;
+        return `${this.warURL}${vAPI.warSecret()}`;
     }
     if ( this.data.startsWith('data:') === false ) {
         if ( this.mime.indexOf(';') === -1 ) {
