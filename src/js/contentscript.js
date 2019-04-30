@@ -395,217 +395,253 @@ vAPI.DOMFilterer = (function() {
 
     // 'P' stands for 'Procedural'
 
-    const PSelectorHasTextTask = function(task) {
-        let arg0 = task[1], arg1;
-        if ( Array.isArray(task[1]) ) {
-            arg1 = arg0[1]; arg0 = arg0[0];
-        }
-        this.needle = new RegExp(arg0, arg1);
-    };
-    PSelectorHasTextTask.prototype.exec = function(input) {
-        const output = [];
-        for ( const node of input ) {
-            if ( this.needle.test(node.textContent) ) {
-                output.push(node);
+    const PSelectorHasTextTask = class {
+        constructor(task) {
+            let arg0 = task[1], arg1;
+            if ( Array.isArray(task[1]) ) {
+                arg1 = arg0[1]; arg0 = arg0[0];
             }
+            this.needle = new RegExp(arg0, arg1);
         }
-        return output;
-    };
-
-    const PSelectorIfTask = function(task) {
-        this.pselector = new PSelector(task[1]);
-    };
-    PSelectorIfTask.prototype.target = true;
-    PSelectorIfTask.prototype.exec = function(input) {
-        const output = [];
-        for ( const node of input ) {
-            if ( this.pselector.test(node) === this.target ) {
-                output.push(node);
-            }
-        }
-        return output;
-    };
-
-    const PSelectorIfNotTask = function(task) {
-        PSelectorIfTask.call(this, task);
-        this.target = false;
-    };
-    PSelectorIfNotTask.prototype = Object.create(PSelectorIfTask.prototype);
-    PSelectorIfNotTask.prototype.constructor = PSelectorIfNotTask;
-
-    const PSelectorMatchesCSSTask = function(task) {
-        this.name = task[1].name;
-        let arg0 = task[1].value, arg1;
-        if ( Array.isArray(arg0) ) {
-            arg1 = arg0[1]; arg0 = arg0[0];
-        }
-        this.value = new RegExp(arg0, arg1);
-    };
-    PSelectorMatchesCSSTask.prototype.pseudo = null;
-    PSelectorMatchesCSSTask.prototype.exec = function(input) {
-        const output = [];
-        for ( const node of input ) {
-            const style = window.getComputedStyle(node, this.pseudo);
-            if ( style === null ) { return null; } /* FF */
-            if ( this.value.test(style[this.name]) ) {
-                output.push(node);
-            }
-        }
-        return output;
-    };
-
-    const PSelectorMatchesCSSAfterTask = function(task) {
-        PSelectorMatchesCSSTask.call(this, task);
-        this.pseudo = ':after';
-    };
-    PSelectorMatchesCSSAfterTask.prototype = Object.create(PSelectorMatchesCSSTask.prototype);
-    PSelectorMatchesCSSAfterTask.prototype.constructor = PSelectorMatchesCSSAfterTask;
-
-    const PSelectorMatchesCSSBeforeTask = function(task) {
-        PSelectorMatchesCSSTask.call(this, task);
-        this.pseudo = ':before';
-    };
-    PSelectorMatchesCSSBeforeTask.prototype = Object.create(PSelectorMatchesCSSTask.prototype);
-    PSelectorMatchesCSSBeforeTask.prototype.constructor = PSelectorMatchesCSSBeforeTask;
-
-    const PSelectorSpathTask = function(task) {
-        this.spath = task[1];
-    };
-    PSelectorSpathTask.prototype.exec = function(input) {
-        const output = [];
-        for ( let node of input ) {
-            const parent = node.parentElement;
-            if ( parent === null ) { continue; }
-            let pos = 1;
-            for (;;) {
-                node = node.previousElementSibling;
-                if ( node === null ) { break; }
-                pos += 1;
-            }
-            const nodes = parent.querySelectorAll(
-                ':scope > :nth-child(' + pos + ')' + this.spath
-            );
-            for ( const node of nodes ) {
-                output.push(node);
-            }
-        }
-        return output;
-    };
-
-    const PSelectorWatchAttrs = function(task) {
-        this.observer = null;
-        this.observed = new WeakSet();
-        this.observerOptions = {
-            attributes: true,
-            subtree: true,
-        };
-        const attrs = task[1];
-        if ( Array.isArray(attrs) && attrs.length !== 0 ) {
-            this.observerOptions.attributeFilter = task[1];
-        }
-    };
-    // TODO: Is it worth trying to re-apply only the current selector?
-    PSelectorWatchAttrs.prototype.handler = function() {
-        const filterer =
-            vAPI.domFilterer && vAPI.domFilterer.proceduralFilterer;
-        if ( filterer instanceof Object ) {
-            filterer.onDOMChanged([ null ]);
-        }
-    };
-    PSelectorWatchAttrs.prototype.exec = function(input) {
-        if ( input.length === 0 ) { return input; }
-        if ( this.observer === null ) {
-            this.observer = new MutationObserver(this.handler);
-        }
-        for ( const node of input ) {
-            if ( this.observed.has(node) ) { continue; }
-            this.observer.observe(node, this.observerOptions);
-            this.observed.add(node);
-        }
-        return input;
-    };
-
-    const PSelectorXpathTask = function(task) {
-        this.xpe = document.createExpression(task[1], null);
-        this.xpr = null;
-    };
-    PSelectorXpathTask.prototype.exec = function(input) {
-        const output = [];
-        for ( const node of input ) {
-            this.xpr = this.xpe.evaluate(
-                node,
-                XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
-                this.xpr
-            );
-            let j = this.xpr.snapshotLength;
-            while ( j-- ) {
-                const node = this.xpr.snapshotItem(j);
-                if ( node.nodeType === 1 ) {
+        exec(input) {
+            const output = [];
+            for ( const node of input ) {
+                if ( this.needle.test(node.textContent) ) {
                     output.push(node);
                 }
             }
+            return output;
         }
-        return output;
     };
 
-    const PSelector = function(o) {
-        if ( PSelector.prototype.operatorToTaskMap === undefined ) {
-            PSelector.prototype.operatorToTaskMap = new Map([
-                [ ':has', PSelectorIfTask ],
-                [ ':has-text', PSelectorHasTextTask ],
-                [ ':if', PSelectorIfTask ],
-                [ ':if-not', PSelectorIfNotTask ],
-                [ ':matches-css', PSelectorMatchesCSSTask ],
-                [ ':matches-css-after', PSelectorMatchesCSSAfterTask ],
-                [ ':matches-css-before', PSelectorMatchesCSSBeforeTask ],
-                [ ':not', PSelectorIfNotTask ],
-                [ ':spath', PSelectorSpathTask ],
-                [ ':watch-attrs', PSelectorWatchAttrs ],
-                [ ':xpath', PSelectorXpathTask ],
-            ]);
+    const PSelectorIfTask = class {
+        constructor(task) {
+            this.pselector = new PSelector(task[1]);
         }
-        this.budget = 200; // I arbitrary picked a 1/5 second
-        this.raw = o.raw;
-        this.cost = 0;
-        this.lastAllowanceTime = 0;
-        this.selector = o.selector;
-        this.tasks = [];
-        const tasks = o.tasks;
-        if ( !tasks ) { return; }
-        for ( const task of tasks ) {
-            this.tasks.push(new (this.operatorToTaskMap.get(task[0]))(task));
+        exec(input) {
+            const output = [];
+            for ( const node of input ) {
+                if ( this.pselector.test(node) === this.target ) {
+                    output.push(node);
+                }
+            }
+            return output;
+        }
+    };
+    PSelectorIfTask.prototype.target = true;
+
+    const PSelectorIfNotTask = class extends PSelectorIfTask {
+        constructor(task) {
+            super(task);
+            this.target = false;
+        }
+    };
+
+    const PSelectorMatchesCSSTask = class {
+        constructor(task) {
+            this.name = task[1].name;
+            let arg0 = task[1].value, arg1;
+            if ( Array.isArray(arg0) ) {
+                arg1 = arg0[1]; arg0 = arg0[0];
+            }
+            this.value = new RegExp(arg0, arg1);
+        }
+        exec(input) {
+            const output = [];
+            for ( const node of input ) {
+                const style = window.getComputedStyle(node, this.pseudo);
+                if ( style === null ) { return null; } /* FF */
+                if ( this.value.test(style[this.name]) ) {
+                    output.push(node);
+                }
+            }
+            return output;
+        }
+    };
+    PSelectorMatchesCSSTask.prototype.pseudo = null;
+
+    const PSelectorMatchesCSSAfterTask = class extends PSelectorMatchesCSSTask {
+        constructor(task) {
+            super(task);
+            this.pseudo = ':after';
+        }
+    };
+
+    const PSelectorMatchesCSSBeforeTask = class extends PSelectorMatchesCSSTask {
+        constructor(task) {
+            super(task);
+            this.pseudo = ':before';
+        }
+    };
+
+    const PSelectorNthAncestorTask = class {
+        constructor(task) {
+            this.nth = task[1];
+        }
+        exec(input) {
+            const output = [];
+            for ( let node of input ) {
+                let nth = this.nth;
+                for (;;) {
+                    node = node.parentElement;
+                    if ( node === null ) { break; }
+                    nth -= 1;
+                    if ( nth !== 0 ) { continue; }
+                    output.push(node);
+                    break;
+                }
+            }
+            return output;
+        }
+    };
+
+    const PSelectorSpathTask = class {
+        constructor(task) {
+            this.spath = task[1];
+        }
+        exec(input) {
+            const output = [];
+            for ( let node of input ) {
+                const parent = node.parentElement;
+                if ( parent === null ) { continue; }
+                let pos = 1;
+                for (;;) {
+                    node = node.previousElementSibling;
+                    if ( node === null ) { break; }
+                    pos += 1;
+                }
+                const nodes = parent.querySelectorAll(
+                    ':scope > :nth-child(' + pos + ')' + this.spath
+                );
+                for ( const node of nodes ) {
+                    output.push(node);
+                }
+            }
+            return output;
+        }
+    };
+
+    const PSelectorWatchAttrs = class {
+        constructor(task) {
+            this.observer = null;
+            this.observed = new WeakSet();
+            this.observerOptions = {
+                attributes: true,
+                subtree: true,
+            };
+            const attrs = task[1];
+            if ( Array.isArray(attrs) && attrs.length !== 0 ) {
+                this.observerOptions.attributeFilter = task[1];
+            }
+        }
+        // TODO: Is it worth trying to re-apply only the current selector?
+        handler() {
+            const filterer =
+                vAPI.domFilterer && vAPI.domFilterer.proceduralFilterer;
+            if ( filterer instanceof Object ) {
+                filterer.onDOMChanged([ null ]);
+            }
+        }
+        exec(input) {
+            if ( input.length === 0 ) { return input; }
+            if ( this.observer === null ) {
+                this.observer = new MutationObserver(this.handler);
+            }
+            for ( const node of input ) {
+                if ( this.observed.has(node) ) { continue; }
+                this.observer.observe(node, this.observerOptions);
+                this.observed.add(node);
+            }
+            return input;
+        }
+    };
+
+    const PSelectorXpathTask = class {
+        constructor(task) {
+            this.xpe = document.createExpression(task[1], null);
+            this.xpr = null;
+        }
+        exec(input) {
+            const output = [];
+            for ( const node of input ) {
+                this.xpr = this.xpe.evaluate(
+                    node,
+                    XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
+                    this.xpr
+                );
+                let j = this.xpr.snapshotLength;
+                while ( j-- ) {
+                    const node = this.xpr.snapshotItem(j);
+                    if ( node.nodeType === 1 ) {
+                        output.push(node);
+                    }
+                }
+            }
+            return output;
+        }
+    };
+
+    const PSelector = class {
+        constructor(o) {
+            if ( PSelector.prototype.operatorToTaskMap === undefined ) {
+                PSelector.prototype.operatorToTaskMap = new Map([
+                    [ ':has', PSelectorIfTask ],
+                    [ ':has-text', PSelectorHasTextTask ],
+                    [ ':if', PSelectorIfTask ],
+                    [ ':if-not', PSelectorIfNotTask ],
+                    [ ':matches-css', PSelectorMatchesCSSTask ],
+                    [ ':matches-css-after', PSelectorMatchesCSSAfterTask ],
+                    [ ':matches-css-before', PSelectorMatchesCSSBeforeTask ],
+                    [ ':not', PSelectorIfNotTask ],
+                    [ ':nth-ancestor', PSelectorNthAncestorTask ],
+                    [ ':spath', PSelectorSpathTask ],
+                    [ ':watch-attrs', PSelectorWatchAttrs ],
+                    [ ':xpath', PSelectorXpathTask ],
+                ]);
+            }
+            this.budget = 200; // I arbitrary picked a 1/5 second
+            this.raw = o.raw;
+            this.cost = 0;
+            this.lastAllowanceTime = 0;
+            this.selector = o.selector;
+            this.tasks = [];
+            const tasks = o.tasks;
+            if ( !tasks ) { return; }
+            for ( const task of tasks ) {
+                this.tasks.push(new (this.operatorToTaskMap.get(task[0]))(task));
+            }
+        }
+        prime(input) {
+            const root = input || document;
+            if ( this.selector !== '' ) {
+                return root.querySelectorAll(this.selector);
+            }
+            return [ root ];
+        }
+        exec(input) {
+            let nodes = this.prime(input);
+            for ( const task of this.tasks ) {
+                if ( nodes.length === 0 ) { break; }
+                nodes = task.exec(nodes);
+            }
+            return nodes;
+        }
+        test(input) {
+            const nodes = this.prime(input);
+            const AA = [ null ];
+            for ( const node of nodes ) {
+                AA[0] = node;
+                let aa = AA;
+                for ( const task of this.tasks ) {
+                    aa = task.exec(aa);
+                    if ( aa.length === 0 ) { break; }
+                }
+                if ( aa.length !== 0 ) { return true; }
+            }
+            return false;
         }
     };
     PSelector.prototype.operatorToTaskMap = undefined;
-    PSelector.prototype.prime = function(input) {
-        const root = input || document;
-        if ( this.selector !== '' ) {
-            return root.querySelectorAll(this.selector);
-        }
-        return [ root ];
-    };
-    PSelector.prototype.exec = function(input) {
-        let nodes = this.prime(input);
-        for ( const task of this.tasks ) {
-            if ( nodes.length === 0 ) { break; }
-            nodes = task.exec(nodes);
-        }
-        return nodes;
-    };
-    PSelector.prototype.test = function(input) {
-        const nodes = this.prime(input);
-        const AA = [ null ];
-        for ( const node of nodes ) {
-            AA[0] = node;
-            let aa = AA;
-            for ( const task of this.tasks ) {
-                aa = task.exec(aa);
-                if ( aa.length === 0 ) { break; }
-            }
-            if ( aa.length !== 0 ) { return true; }
-        }
-        return false;
-    };
 
     const DOMProceduralFilterer = function(domFilterer) {
         this.domFilterer = domFilterer;

@@ -167,6 +167,7 @@
                 'matches-css-after',
                 'matches-css-before',
                 'not',
+                'nth-ancestor',
                 'watch-attrs',
                 'xpath'
                 ].join('|'),
@@ -240,6 +241,13 @@
             }
         };
 
+        const compileNthAncestorSelector = function(s) {
+            const n = parseInt(s, 10);
+            if ( isNaN(n) === false && n >= 1 && n < 256 ) {
+                return n;
+            }
+        };
+
         const compileSpathExpression = function(s) {
             if ( isValidCSSSelector('*' + s) ) {
                 return s;
@@ -282,6 +290,7 @@
             [ ':matches-css-after', compileCSSDeclaration ],
             [ ':matches-css-before', compileCSSDeclaration ],
             [ ':not', compileNotSelector ],
+            [ ':nth-ancestor', compileNthAncestorSelector ],
             [ ':spath', compileSpathExpression ],
             [ ':watch-attrs', compileAttrList ],
             [ ':xpath', compileXpathExpression ]
@@ -305,42 +314,45 @@
                 switch ( task[0] ) {
                 case ':has':
                 case ':if':
-                    raw.push(':has', '(', decompile(task[1]), ')');
+                    raw.push(`:has(${decompile(task[1])})`);
                     break;
                 case ':has-text':
                     if ( Array.isArray(task[1]) ) {
-                        value = '/' + task[1][0] + '/' + task[1][1];
+                        value = `/${task[1][0]}/${task[1][1]}`;
                     } else {
                         value = regexToRawValue.get(task[1]);
                         if ( value === undefined ) {
-                            value = '/' + task[1] + '/';
+                            value = `/${task[1]}/`;
                         }
                     }
-                    raw.push(task[0], '(', value, ')');
+                    raw.push(`:has-text(${value})`);
                     break;
                 case ':matches-css':
                 case ':matches-css-after':
                 case ':matches-css-before':
                     if ( Array.isArray(task[1].value) ) {
-                        value = '/' + task[1].value[0] + '/' + task[1].value[1];
+                        value = `/${task[1].value[0]}/${task[1].value[1]}`;
                     } else {
                         value = regexToRawValue.get(task[1].value);
                         if ( value === undefined ) {
-                            value = '/' + task[1].value + '/';
+                            value = `/${task[1].value}/`;
                         }
                     }
-                    raw.push(task[0], '(', task[1].name, ': ', value, ')');
+                    raw.push(`${task[0]}(${task[1].name}: ${value})`);
                     break;
                 case ':not':
                 case ':if-not':
-                    raw.push(':not', '(', decompile(task[1]), ')');
+                    raw.push(`:not(${decompile(task[1])})`);
+                    break;
+                case ':nth-ancestor':
+                    raw.push(`:nth-ancestor(${task[1]})`);
                     break;
                 case ':spath':
                     raw.push(task[1]);
                     break;
                 case ':watch-attrs':
                 case ':xpath':
-                    raw.push(task[0], '(', task[1], ')');
+                    raw.push(`${task[0]}(${task[1]})`);
                     break;
                 }
             }
