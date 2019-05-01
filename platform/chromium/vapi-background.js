@@ -1043,24 +1043,19 @@ vAPI.messaging.broadcast = function(message) {
 //   A specific secret can be used for at most one second.
 
 vAPI.warSecret = (function() {
-    let lastSecretTime = 0;
-    let lastSecretPtr = 0;
-
     const generateSecret = ( ) => {
-        lastSecretTime = Date.now();
         return Math.floor(Math.random() * 982451653 + 982451653).toString(36) +
                Math.floor(Math.random() * 982451653 + 982451653).toString(36);
     };
 
-    const secrets = [ generateSecret(), generateSecret(), generateSecret() ];
     const root = vAPI.getURL('/');
+    const secrets = [ generateSecret(), generateSecret(), generateSecret() ];
+    let lastSecretPtr = 0;
+    let lastSecretTime = Date.now();
 
     const guard = function(details) {
         const url = details.url;
-        const r = secrets.every(secret => {
-            return url.indexOf(`?secret=${secret}`) === -1;
-        });
-        if ( r ) {
+        if ( secrets.every(secret => url.indexOf(`?secret=${secret}`) === -1) ) {
             return { redirectUrl: root };
         }
     };
