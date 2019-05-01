@@ -137,7 +137,7 @@ const µBlock = (function() { // jshint ignore:line
 
         // Read-only
         systemSettings: {
-            compiledMagic: 13,  // Increase when compiled format changes
+            compiledMagic: 14,  // Increase when compiled format changes
             selfieMagic: 14     // Increase when selfie format changes
         },
 

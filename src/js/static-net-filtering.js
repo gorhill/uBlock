@@ -1067,14 +1067,14 @@ registerFilterClass(FilterOriginMiss);
 /******************************************************************************/
 
 const FilterOriginHitSet = class {
-    constructor(domainOpt, oneOf, wrapped) {
+    constructor(domainOpt, wrapped, oneOf = null) {
         this.domainOpt = domainOpt.length < 128
             ? domainOpt
             : µb.stringDeduplicater.lookup(domainOpt);
+        this.wrapped = filterFromCompiledData(wrapped);
         this.oneOf = oneOf !== null
             ? filterOrigin.trieContainer.createOne(oneOf)
             : null;
-        this.wrapped = wrapped;
     }
 
     match(url, tokenBeg) {
@@ -1089,31 +1089,28 @@ const FilterOriginHitSet = class {
 
     logData() {
         const out = this.wrapped.logData();
-        out.compiled = [ this.fid, this.domainOpt, null, out.compiled ];
+        out.compiled = [ this.fid, this.domainOpt, out.compiled ];
         return filterOrigin.logData(out, this.domainOpt);
     }
 
     compile() {
-        return [
+        const out = [
             this.fid,
             this.domainOpt,
-            this.oneOf !== null
-                ? filterOrigin.trieContainer.compileOne(this.oneOf)
-                : null,
-            this.wrapped.compile()
+            this.wrapped.compile(),
         ];
+        if ( this.oneOf !== null ) { 
+            out.push(filterOrigin.trieContainer.compileOne(this.oneOf));
+        }
+        return out;
     }
 
     static compile(domainOpt, wrapped) {
-        return [ FilterOriginHitSet.fid, domainOpt, null, wrapped ];
+        return [ FilterOriginHitSet.fid, domainOpt, wrapped ];
     }
 
     static load(args) {
-        return new FilterOriginHitSet(
-            args[1],
-            args[2],
-            filterFromCompiledData(args[3])
-        );
+        return new FilterOriginHitSet(...args.slice(1));
     }
 };
 
@@ -1122,14 +1119,14 @@ registerFilterClass(FilterOriginHitSet);
 /******************************************************************************/
 
 const FilterOriginMissSet = class {
-    constructor(domainOpt, noneOf, wrapped) {
+    constructor(domainOpt, wrapped, noneOf = null) {
         this.domainOpt = domainOpt.length < 128
             ? domainOpt
             : µb.stringDeduplicater.lookup(domainOpt);
+        this.wrapped = filterFromCompiledData(wrapped);
         this.noneOf = noneOf !== null
             ? filterOrigin.trieContainer.createOne(noneOf)
             : null;
-        this.wrapped = wrapped;
     }
 
     match(url, tokenBeg) {
@@ -1144,31 +1141,28 @@ const FilterOriginMissSet = class {
 
     logData() {
         const out = this.wrapped.logData();
-        out.compiled = [ this.fid, this.domainOpt, null, out.compiled ];
+        out.compiled = [ this.fid, this.domainOpt, out.compiled ];
         return filterOrigin.logData(out, this.domainOpt);
     }
 
     compile() {
-        return [
+        const out = [
             this.fid,
             this.domainOpt,
-            this.noneOf !== null
-                ? filterOrigin.trieContainer.compileOne(this.noneOf)
-                : null,
-            this.wrapped.compile()
+            this.wrapped.compile(),
         ];
+        if ( this.noneOf !== null ) {
+            out.push(filterOrigin.trieContainer.compileOne(this.noneOf));
+        }
+        return out;
     }
 
     static compile(domainOpt, wrapped) {
-        return [ FilterOriginMissSet.fid, domainOpt, null, wrapped ];
+        return [ FilterOriginMissSet.fid, domainOpt, wrapped ];
     }
 
     static load(args) {
-        return new FilterOriginMissSet(
-            args[1],
-            args[2],
-            filterFromCompiledData(args[3])
-        );
+        return new FilterOriginMissSet(...args.slice(1));
     }
 };
 
@@ -1177,17 +1171,17 @@ registerFilterClass(FilterOriginMissSet);
 /******************************************************************************/
 
 const FilterOriginMixedSet = class {
-    constructor(domainOpt, oneOf, noneOf, wrapped) {
+    constructor(domainOpt, wrapped, oneOf = null, noneOf = null) {
         this.domainOpt = domainOpt.length < 128
             ? domainOpt
             : µb.stringDeduplicater.lookup(domainOpt);
+        this.wrapped = filterFromCompiledData(wrapped);
         this.oneOf = oneOf !== null
             ? filterOrigin.trieContainer.createOne(oneOf)
             : null;
         this.noneOf = noneOf !== null
             ? filterOrigin.trieContainer.createOne(noneOf)
             : null;
-        this.wrapped = wrapped;
     }
 
     init() {
@@ -1213,35 +1207,31 @@ const FilterOriginMixedSet = class {
 
     logData() {
         const out = this.wrapped.logData();
-        out.compiled = [ this.fid, this.domainOpt, null, null, out.compiled ];
+        out.compiled = [ this.fid, this.domainOpt, out.compiled ];
         return filterOrigin.logData(out, this.domainOpt);
     }
 
     compile() {
-        return [
+        const out = [
             this.fid,
             this.domainOpt,
-            this.oneOf !== null
-                ? filterOrigin.trieContainer.compileOne(this.oneOf)
-                : null,
-            this.noneOf !== null
-                ? filterOrigin.trieContainer.compileOne(this.noneOf)
-                : null,
-            this.wrapped.compile()
+            this.wrapped.compile(),
         ];
+        if ( this.oneOf !== null ) {
+            out.push(
+                filterOrigin.trieContainer.compileOne(this.oneOf),
+                filterOrigin.trieContainer.compileOne(this.noneOf)
+            );
+        }
+        return out;
     }
 
     static compile(domainOpt, wrapped) {
-        return [ FilterOriginMixedSet.fid, domainOpt, null, null, wrapped ];
+        return [ FilterOriginMixedSet.fid, domainOpt, wrapped ];
     }
 
     static load(args) {
-        return new FilterOriginMixedSet(
-            args[1],
-            args[2],
-            args[3],
-            filterFromCompiledData(args[4])
-        );
+        return new FilterOriginMixedSet(...args.slice(1));
     }
 };
 
@@ -2744,27 +2734,33 @@ FilterContainer.prototype.fromCompiledContent = function(reader) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.matchAndFetchData = function(dataType, requestURL, out, outlog) {
+FilterContainer.prototype.matchAndFetchData = function(
+    dataType,
+    requestURL,
+    out,
+    outlog
+) {
     if ( this.dataFilters.size === 0 ) { return; }
 
-    let url = this.urlTokenizer.setURL(requestURL);
+    const url = this.urlTokenizer.setURL(requestURL);
 
-    pageHostnameRegister = requestHostnameRegister = µb.URI.hostnameFromURI(url);
+    pageHostnameRegister = requestHostnameRegister =
+        µb.URI.hostnameFromURI(url);
 
     // We need to visit ALL the matching filters.
-    let toAddImportant = new Map(),
-        toAdd = new Map(),
-        toRemove = new Map();
+    const toAddImportant = new Map();
+    const toAdd = new Map();
+    const toRemove = new Map();
 
     const tokenHashes = this.urlTokenizer.getTokens();
     let i = 0;
     while ( i < 32 ) {
-        let tokenHash = tokenHashes[i++];
+        const tokenHash = tokenHashes[i++];
         if ( tokenHash === 0 ) { break; }
-        let tokenOffset = tokenHashes[i++];
+        const tokenOffset = tokenHashes[i++];
         let entry = this.dataFilters.get(tokenHash);
         while ( entry !== undefined ) {
-            let f = entry.filter;
+            const f = entry.filter;
             if ( f.match(url, tokenOffset) === true ) {
                 if ( entry.categoryBits & 0x001 ) {
                     toRemove.set(f.dataStr, entry);
@@ -2779,7 +2775,7 @@ FilterContainer.prototype.matchAndFetchData = function(dataType, requestURL, out
     }
     let entry = this.dataFilters.get(this.noTokenHash);
     while ( entry !== undefined ) {
-        let f = entry.filter;
+        const f = entry.filter;
         if ( f.match(url) === true ) {
             if ( entry.categoryBits & 0x001 ) {
                 toRemove.set(f.dataStr, entry);
@@ -2795,11 +2791,11 @@ FilterContainer.prototype.matchAndFetchData = function(dataType, requestURL, out
     if ( toAddImportant.size === 0 && toAdd.size === 0 ) { return; }
 
     // Remove entries overriden by other filters.
-    for ( let key of toAddImportant.keys() ) {
+    for ( const key of toAddImportant.keys() ) {
         toAdd.delete(key);
         toRemove.delete(key);
     }
-    for ( let key of toRemove.keys() ) {
+    for ( const key of toRemove.keys() ) {
         if ( key === '' ) {
             toAdd.clear();
             break;
@@ -2807,7 +2803,7 @@ FilterContainer.prototype.matchAndFetchData = function(dataType, requestURL, out
         toAdd.delete(key);
     }
 
-    for ( let entry of toAddImportant ) {
+    for ( const entry of toAddImportant ) {
         out.push(entry[0]);
         if ( outlog === undefined ) { continue; }
         let logData = entry[1].logData();
@@ -2815,7 +2811,7 @@ FilterContainer.prototype.matchAndFetchData = function(dataType, requestURL, out
         logData.result = 1;
         outlog.push(logData);
     }
-    for ( let entry of toAdd ) {
+    for ( const entry of toAdd ) {
         out.push(entry[0]);
         if ( outlog === undefined ) { continue; }
         let logData = entry[1].logData();
@@ -2824,8 +2820,8 @@ FilterContainer.prototype.matchAndFetchData = function(dataType, requestURL, out
         outlog.push(logData);
     }
     if ( outlog !== undefined ) {
-        for ( let entry of toRemove.values()) {
-            let logData = entry.logData();
+        for ( const entry of toRemove.values()) {
+            const logData = entry.logData();
             logData.source = 'static';
             logData.result = 2;
             outlog.push(logData);
