@@ -1049,15 +1049,18 @@ vAPI.warSecret = (function() {
     };
 
     const root = vAPI.getURL('/');
-    const secrets = [ generateSecret(), generateSecret(), generateSecret() ];
-    let lastSecretPtr = 0;
-    let lastSecretTime = Date.now();
+    const secrets = [];
+    let lastSecretTime = 0;
 
     const guard = function(details) {
         const url = details.url;
-        if ( secrets.every(secret => url.indexOf(`?secret=${secret}`) === -1) ) {
+        const pos = secrets.findIndex(secret =>
+            url.lastIndexOf(`?secret=${secret}`) !== -1
+        );
+        if ( pos === -1 ) {
             return { redirectUrl: root };
         }
+        secrets.splice(pos, 1);
     };
 
     chrome.webRequest.onBeforeRequest.addListener(
@@ -1069,13 +1072,17 @@ vAPI.warSecret = (function() {
     );
 
     return ( ) => {
-        const now = Date.now();
-        if ( (now - lastSecretTime) >= 1000 ) {
-            lastSecretPtr = (lastSecretPtr + 1) % secrets.length;
-            secrets[lastSecretPtr] = generateSecret();
-            lastSecretTime = now;
+        if ( secrets.length !== 0 ) {
+            if ( (Date.now() - lastSecretTime) > 5000 ) {
+                secrets.splice(0);
+            } else if ( secrets.length > 256 ) {
+                secrets.splice(0, secrets.length - 192);
+            }
         }
-        return `?secret=${secrets[lastSecretPtr]}`;
+        lastSecretTime = Date.now();
+        const secret = generateSecret();
+        secrets.push(secret);
+        return `?secret=${secret}`;
     };
 })();
 
