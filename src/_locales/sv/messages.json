@@ -564,7 +564,7 @@
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
-    "message": "Pausa loggen (ignorera all inkommande data)",
+    "message": "Pausa loggaren (kassera alla inkommande data)",
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {
@@ -576,11 +576,11 @@
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
-    "message": "filtrera logginnehåll",
+    "message": "filtrera loggarens innehåll",
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
-    "message": "Loggfiltreralternativ",
+    "message": "Loggarens filtreringsalternativ",
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {
@@ -704,7 +704,7 @@
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
-    "message": "Loggposter som inte uppfyller alla tre villkoren nedan kommer automatiskt att förkastas:",
+    "message": "Loggarens poster som inte uppfyller alla tre villkoren nedan kommer automatiskt att kasseras:",
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
