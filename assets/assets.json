@@ -264,15 +264,6 @@
 		"contentURL": "https://someonewhocares.org/hosts/hosts",
 		"supportURL": "https://someonewhocares.org/hosts/"
 	},
-	"energized-blugo": {
-		"content": "filters",
-		"group": "multipurpose",
-		"updateAfter": 11,
-		"off": true,
-		"title": "Energized Blu Go Protection",
-		"contentURL": "https://raw.githubusercontent.com/EnergizedProtection/block/master/bluGo/formats/filter",
-		"supportURL": "https://github.com/AdroitAdorKhan/EnergizedProtection"
-	},
 	"hphosts": {
 		"content": "filters",
 		"group": "multipurpose",
