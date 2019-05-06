@@ -610,6 +610,20 @@ HNTrieContainer.prototype.HNTrieRef = class {
         return this.last;
     }
 
+    dump() {
+        let hostnames = Array.from(this);
+        if ( String.prototype.padStart instanceof Function ) {
+            const maxlen = Math.min(
+                hostnames.reduce((maxlen, hn) => Math.max(maxlen, hn.length), 0),
+                64
+            );
+            hostnames = hostnames.map(hn => hn.padStart(maxlen));
+        }
+        for ( const hn of hostnames ) {
+            console.log(hn);
+        }
+    }
+
     [Symbol.iterator]() {
         return {
             value: undefined,

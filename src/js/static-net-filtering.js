@@ -1737,10 +1737,8 @@ const FilterParser = function() {
     this.reBadDomainOptChars = /[*+?^${}()[\]\\]/;
     this.reHostnameRule1 = /^[0-9a-z][0-9a-z.-]*[0-9a-z]$/i;
     this.reHostnameRule2 = /^[0-9a-z][0-9a-z.-]*[0-9a-z]\^?$/i;
-    this.reCleanupHostnameRule2 = /\^$/g;
     this.reCanTrimCarets1 = /^[^*]*$/;
     this.reCanTrimCarets2 = /^\^?[^^]+[^^][^^]+\^?$/;
-    this.reHasUppercase = /[A-Z]/;
     this.reIsolateHostname = /^(\*?\.)?([^\x00-\x24\x26-\x2C\x2F\x3A-\x5E\x60\x7B-\x7F]+)(.*)/;
     this.reHasUnicode = /[^\x00-\x7F]/;
     this.reWebsocketAny = /^ws[s*]?(?::\/?\/?)?\*?$/;
@@ -1990,18 +1988,18 @@ FilterParser.prototype.parse = function(raw) {
     // important!
     this.reset();
 
-    var s = this.raw = raw;
+    let s = this.raw = raw;
 
     // plain hostname? (from HOSTS file)
     if ( this.reHostnameRule1.test(s) ) {
-        this.f = s;
+        this.f = s.toLowerCase();
         this.hostnamePure = true;
         this.anchor |= 0x4;
         return this;
     }
 
     // element hiding filter?
-    var pos = s.indexOf('#');
+    let pos = s.indexOf('#');
     if ( pos !== -1 ) {
         var c = s.charAt(pos + 1);
         if ( c === '#' || c === '@' ) {
@@ -2093,7 +2091,10 @@ FilterParser.prototype.parse = function(raw) {
         // A filter can't be a pure-hostname one if there is a domain or csp
         // option present.
         if ( this.reHostnameRule2.test(s) ) {
-            this.f = s.replace(this.reCleanupHostnameRule2, '');
+            if ( s.charCodeAt(s.length - 1) === 0x5E /* '^' */ ) {
+                s = s.slice(0, -1);
+            }
+            this.f = s.toLowerCase();
             this.hostnamePure = true;
             return this;
         }
@@ -2138,11 +2139,7 @@ FilterParser.prototype.parse = function(raw) {
     }
 
     this.wildcarded = reIsWildcarded.test(s);
-
-    // This might look weird but we gain memory footprint by not going through
-    // toLowerCase(), at least on Chromium. Because copy-on-write?
-
-    this.f = this.reHasUppercase.test(s) ? s.toLowerCase() : s;
+    this.f = s.toLowerCase();
 
     return this;
 };

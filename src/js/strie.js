@@ -385,6 +385,12 @@ STrieContainer.prototype.STrieRef = class {
         return this.container.matches(this.iroot, a, al);
     }
 
+    dump() {
+        for ( const s of this ) {
+            console.log(s);
+        }
+    }
+
     [Symbol.iterator]() {
         return {
             value: undefined,
@@ -408,8 +414,8 @@ STrieContainer.prototype.STrieRef = class {
                     let i0 = this.container.buf32[STRIE_CHAR0_SLOT] + (v & 0x00FFFFFF);
                     const i1 = i0 + (v >>> 24);
                     while ( i0 < i1 ) {
-                        this.charPtr -= 1;
                         this.charBuf[this.charPtr] = this.container.buf[i0];
+                        this.charPtr += 1;
                         i0 += 1;
                     }
                     this.icell = this.container.buf32[this.icell+1];
@@ -424,14 +430,14 @@ STrieContainer.prototype.STrieRef = class {
             },
             toPattern: function() {
                 this.value = this.textDecoder.decode(
-                    new Uint8Array(this.charBuf.buffer, this.charPtr)
+                    new Uint8Array(this.charBuf.buffer, 0, this.charPtr)
                 );
                 return this;
             },
             container: this.container,
             icell: this.iroot,
             charBuf: new Uint8Array(256),
-            charPtr: 256,
+            charPtr: 0,
             forks: [],
             textDecoder: new TextDecoder()
         };
