@@ -32,7 +32,7 @@
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "Otseteed",
+    "message": "Kiirklahvid",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -204,7 +204,7 @@
     "description": ""
   },
   "popupHitDomainCountPrompt": {
-    "message": "domeene ühendatud",
+    "message": "ühendatud domeene",
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
@@ -372,7 +372,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Seadmes",
+    "message": "Sisseehitatud",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -408,7 +408,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "Üks URL rea kohta. Vigased URLid jäetakse taustal vahele.",
+    "message": "Üks URL rea kohta. Vigaseid URLe eiratakse hoiatuseta.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -428,7 +428,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Üks filter rea kohta. Filtriks võib olla tavaline domeenilist või Adblock Plusiga-ühilduv filter. Märgiga <code>!<\/code> algavaid ridu eiratakse.",
+    "message": "Üks filter rea kohta. Filtriks võib olla tavaline hostinimi või Adblock Plusiga ühilduv filter. Märgiga <code>!<\/code> algavaid ridu eiratakse.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -940,7 +940,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Kirjuta otsetee",
+    "message": "Kirjuta kiirklahv",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
