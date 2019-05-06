@@ -1259,18 +1259,38 @@ const showDialog = function(options) {
 
 /******************************************************************************/
 
+// https://www.reddit.com/r/uBlockOrigin/comments/bktxtb/scrolling_doesnt_work/emn901o
+//   Override 'fixed' position property on body element if present.
+
 const zap = function() {
     if ( targetElements.length === 0 ) { return; }
+
+    const getStyleValue = function(elem, prop) {
+        const style = window.getComputedStyle(elem);
+        return style ? style[prop] : '';
+    };
+
     let elem = targetElements[0];
-    const style = window.getComputedStyle(elem);
     // Heuristic to detect scroll-locking: remove such lock when detected.
-    if ( parseInt(style.zIndex, 10) >= 1000 || style.position === 'fixed' ) {
-        document.body.style.setProperty('overflow', 'auto', 'important');
-        document.documentElement.style.setProperty('overflow', 'auto', 'important');
+    if (
+        parseInt(getStyleValue(elem, 'zIndex'), 10) >= 1000 ||
+        getStyleValue(elem, 'position') === 'fixed'
+    ) {
+        const doc = document;
+        if ( getStyleValue(doc.body, 'overflowY') === 'hidden' ) {
+            doc.body.style.setProperty('overflow', 'auto', 'important');
+        }
+        if ( getStyleValue(doc.body, 'position') === 'fixed' ) {
+            doc.body.style.setProperty('position', 'static', 'important');
+        }
+        if ( getStyleValue(doc.documentElement, 'overflowY') === 'hidden' ) {
+            doc.documentElement.style.setProperty('overflow', 'auto', 'important');
+        }
     }
+
     elem.parentNode.removeChild(elem);
     elem = elementFromPoint();
-    highlightElements(elem ? [elem] : []);
+    highlightElements(elem ? [ elem ] : []);
 };
 
 /******************************************************************************/
