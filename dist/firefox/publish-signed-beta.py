@@ -161,7 +161,7 @@ with zipfile.ZipFile(raw_xpi_filepath, 'r') as zipin:
             data = zipin.read(item.filename)
             if item.filename == 'manifest.json':
                 manifest = json.loads(bytes.decode(data))
-                manifest['applications']['gecko']['update_url'] = 'https://raw.githubusercontent.com/{0}/{1}/master/dist/firefox/updates.json'.format(github_owner, github_repo)
+                manifest['browser_specific_settings']['gecko']['update_url'] = 'https://raw.githubusercontent.com/{0}/{1}/master/dist/firefox/updates.json'.format(github_owner, github_repo)
                 data = json.dumps(manifest, indent=2, separators=(',', ': '), sort_keys=True).encode()
             zipout.writestr(item, data)
 
