@@ -32,7 +32,7 @@
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "快捷鍵",
+    "message": "快速鍵",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {

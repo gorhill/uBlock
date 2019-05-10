@@ -36,7 +36,7 @@
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
-    "message": "uBlock₀ — Logg för nätverksbegäran",
+    "message": "uBlock₀ — Loggaren",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
@@ -96,7 +96,7 @@
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "Öppna loggen",
+    "message": "Öppna loggaren",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
@@ -556,11 +556,11 @@
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
-    "message": "uBlock Origin wiki: Loggning",
+    "message": "uBlock Origin wiki: Loggaren",
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
-    "message": "Rensa loggen",
+    "message": "Rensa loggaren",
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
@@ -568,11 +568,11 @@
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {
-    "message": "Fortsätt loggen",
+    "message": "Fortsätt loggaren",
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "Växla loggningsfiltrering",
+    "message": "Växla loggarens filtrering",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
