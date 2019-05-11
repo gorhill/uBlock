@@ -42,135 +42,160 @@
         }
     };
 
-    const PSelectorHasTextTask = function(task) {
-        let arg0 = task[1], arg1;
-        if ( Array.isArray(task[1]) ) {
-            arg1 = arg0[1]; arg0 = arg0[0];
-        }
-        this.needle = new RegExp(arg0, arg1);
-    };
-    PSelectorHasTextTask.prototype.exec = function(input) {
-        const output = [];
-        for ( const node of input ) {
-            if ( this.needle.test(node.textContent) ) {
-                output.push(node);
+    const PSelectorHasTextTask = class {
+        constructor(task) {
+            let arg0 = task[1], arg1;
+            if ( Array.isArray(task[1]) ) {
+                arg1 = arg0[1]; arg0 = arg0[0];
             }
+            this.needle = new RegExp(arg0, arg1);
         }
-        return output;
-    };
-
-    const PSelectorIfTask = function(task) {
-        this.pselector = new PSelector(task[1]);
-    };
-    PSelectorIfTask.prototype.target = true;
-    Object.defineProperty(PSelectorIfTask.prototype, 'invalid', {
-        get: function() {
-            return this.pselector.invalid;
-        }
-    });
-    PSelectorIfTask.prototype.exec = function(input) {
-        const output = [];
-        for ( const node of input ) {
-            if ( this.pselector.test(node) === this.target ) {
-                output.push(node);
-            }
-        }
-        return output;
-    };
-
-    const PSelectorIfNotTask = function(task) {
-        PSelectorIfTask.call(this, task);
-        this.target = false;
-    };
-    PSelectorIfNotTask.prototype = Object.create(PSelectorIfTask.prototype);
-    PSelectorIfNotTask.prototype.constructor = PSelectorIfNotTask;
-
-    const PSelectorXpathTask = function(task) {
-        this.xpe = task[1];
-    };
-    PSelectorXpathTask.prototype.exec = function(input) {
-        const output = [];
-        const xpe = docRegister.createExpression(this.xpe, null);
-        let xpr = null;
-        for ( const node of input ) {
-            xpr = xpe.evaluate(
-                node,
-                XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
-                xpr
-            );
-            let j = xpr.snapshotLength;
-            while ( j-- ) {
-                const node = xpr.snapshotItem(j);
-                if ( node.nodeType === 1 ) {
+        exec(input) {
+            const output = [];
+            for ( const node of input ) {
+                if ( this.needle.test(node.textContent) ) {
                     output.push(node);
                 }
             }
+            return output;
         }
-        return output;
     };
 
-    const PSelector = function(o) {
-        if ( PSelector.prototype.operatorToTaskMap === undefined ) {
-            PSelector.prototype.operatorToTaskMap = new Map([
-                [ ':has', PSelectorIfTask ],
-                [ ':has-text', PSelectorHasTextTask ],
-                [ ':if', PSelectorIfTask ],
-                [ ':if-not', PSelectorIfNotTask ],
-                [ ':not', PSelectorIfNotTask ],
-                [ ':xpath', PSelectorXpathTask ]
-            ]);
+    const PSelectorIfTask = class {
+        constructor(task) {
+            this.pselector = new PSelector(task[1]);
         }
-        this.raw = o.raw;
-        this.selector = o.selector;
-        this.tasks = [];
-        if ( !o.tasks ) { return; }
-        for ( const task of o.tasks ) {
-            const ctor = this.operatorToTaskMap.get(task[0]);
-            if ( ctor === undefined ) {
-                this.invalid = true;
-                break;
+        exec(input) {
+            const output = [];
+            for ( const node of input ) {
+                if ( this.pselector.test(node) === this.target ) {
+                    output.push(node);
+                }
             }
-            const pselector = new ctor(task);
-            if ( pselector instanceof PSelectorIfTask && pselector.invalid ) {
-                this.invalid = true;
-                break;
+            return output;
+        }
+        get invalid() {
+            return this.pselector.invalid;
+        }
+    };
+    PSelectorIfTask.prototype.target = true;
+
+    const PSelectorIfNotTask = class extends PSelectorIfTask {
+        constructor(task) {
+            super.call(task);
+            this.target = false;
+        }
+    };
+
+    const PSelectorNthAncestorTask = class {
+        constructor(task) {
+            this.nth = task[1];
+        }
+        exec(input) {
+            const output = [];
+            for ( let node of input ) {
+                let nth = this.nth;
+                for (;;) {
+                    node = node.parentElement;
+                    if ( node === null ) { break; }
+                    nth -= 1;
+                    if ( nth !== 0 ) { continue; }
+                    output.push(node);
+                    break;
+                }
             }
-            this.tasks.push(pselector);
+            return output;
         }
     };
-    PSelector.prototype.operatorToTaskMap = undefined;
-    PSelector.prototype.invalid = false;
-    PSelector.prototype.prime = function(input) {
-        const root = input || docRegister;
-        if ( this.selector !== '' ) {
-            return root.querySelectorAll(this.selector);
+
+    const PSelectorXpathTask = class {
+        constructor(task) {
+            this.xpe = task[1];
         }
-        return [ root ];
-    };
-    PSelector.prototype.exec = function(input) {
-        if ( this.invalid ) { return []; }
-        let nodes = this.prime(input);
-        for ( const task of this.tasks ) {
-            if ( nodes.length === 0 ) { break; }
-            nodes = task.exec(nodes);
+        exec(input) {
+            const output = [];
+            const xpe = docRegister.createExpression(this.xpe, null);
+            let xpr = null;
+            for ( const node of input ) {
+                xpr = xpe.evaluate(
+                    node,
+                    XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
+                    xpr
+                );
+                let j = xpr.snapshotLength;
+                while ( j-- ) {
+                    const node = xpr.snapshotItem(j);
+                    if ( node.nodeType === 1 ) {
+                        output.push(node);
+                    }
+                }
+            }
+            return output;
         }
-        return nodes;
     };
-    PSelector.prototype.test = function(input) {
-        if ( this.invalid ) { return false; }
-        const nodes = this.prime(input);
-        const AA = [ null ];
-        for ( const node of nodes ) {
-            AA[0] = node;
-            let aa = AA;
+
+    const PSelector = class {
+        constructor(o) {
+            this.raw = o.raw;
+            this.selector = o.selector;
+            this.tasks = [];
+            if ( !o.tasks ) { return; }
+            for ( const task of o.tasks ) {
+                const ctor = this.operatorToTaskMap.get(task[0]);
+                if ( ctor === undefined ) {
+                    this.invalid = true;
+                    break;
+                }
+                const pselector = new ctor(task);
+                if ( pselector instanceof PSelectorIfTask && pselector.invalid ) {
+                    this.invalid = true;
+                    break;
+                }
+                this.tasks.push(pselector);
+            }
+        }
+        prime(input) {
+            const root = input || docRegister;
+            if ( this.selector !== '' ) {
+                return root.querySelectorAll(this.selector);
+            }
+            return [ root ];
+        }
+        exec(input) {
+            if ( this.invalid ) { return []; }
+            let nodes = this.prime(input);
             for ( const task of this.tasks ) {
-                aa = task.exec(aa);
-                if ( aa.length === 0 ) { break; }
+                if ( nodes.length === 0 ) { break; }
+                nodes = task.exec(nodes);
             }
-            if ( aa.length !== 0 ) { return true; }
+            return nodes;
         }
-        return false;
+        test(input) {
+            if ( this.invalid ) { return false; }
+            const nodes = this.prime(input);
+            const AA = [ null ];
+            for ( const node of nodes ) {
+                AA[0] = node;
+                let aa = AA;
+                for ( const task of this.tasks ) {
+                    aa = task.exec(aa);
+                    if ( aa.length === 0 ) { break; }
+                }
+                if ( aa.length !== 0 ) { return true; }
+            }
+            return false;
+        }
     };
+    PSelector.prototype.operatorToTaskMap = new Map([
+        [ ':has', PSelectorIfTask ],
+        [ ':has-text', PSelectorHasTextTask ],
+        [ ':if', PSelectorIfTask ],
+        [ ':if-not', PSelectorIfNotTask ],
+        [ ':not', PSelectorIfNotTask ],
+        [ ':nth-ancestor', PSelectorNthAncestorTask ],
+        [ ':xpath', PSelectorXpathTask ]
+    ]);
+    PSelector.prototype.invalid = false;
 
     const logOne = function(details, exception, selector) {
         µBlock.filteringContext
