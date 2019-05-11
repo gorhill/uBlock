@@ -773,7 +773,7 @@ const injectCSP = function(fctxt, pageStore, responseHeaders) {
     const builtinDirectives = [];
 
     if ( pageStore.filterScripting(fctxt, true) === 1 ) {
-        builtinDirectives.push("script-src http: https:");
+        builtinDirectives.push(µBlock.cspNoScripting);
         if ( loggerEnabled ) {
             fctxt.setRealm('network').setType('scripting').toLogger();
         }
@@ -788,9 +788,9 @@ const injectCSP = function(fctxt, pageStore, responseHeaders) {
         fctxt2.setDocOriginFromURL(fctxt.url);
         const result = pageStore.filterRequest(fctxt2);
         if ( result === 1 ) {
-            builtinDirectives.push("script-src 'unsafe-eval' * blob: data:");
+            builtinDirectives.push(µBlock.cspNoInlineScript);
         }
-        if ( result !== 0 && loggerEnabled ) {
+        if ( result === 2 && loggerEnabled ) {
             fctxt2.setRealm('network').toLogger();
         }
     }
@@ -799,14 +799,14 @@ const injectCSP = function(fctxt, pageStore, responseHeaders) {
     // - Use a CSP to also forbid inline fonts if remote fonts are blocked.
     fctxt.type = 'inline-font';
     if ( pageStore.filterRequest(fctxt) === 1 ) {
-        builtinDirectives.push('font-src *');
+        builtinDirectives.push(µBlock.cspNoInlineFont);
         if ( loggerEnabled ) {
             fctxt.setRealm('network').toLogger();
         }
     }
 
     if ( builtinDirectives.length !== 0 ) {
-        cspSubsets[0] = builtinDirectives.join('; ');
+        cspSubsets[0] = builtinDirectives.join(', ');
     }
 
     // ======== filter-based policies

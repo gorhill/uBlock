@@ -183,6 +183,10 @@ const µBlock = (function() { // jshint ignore:line
         epickerEprom: null,
 
         scriptlets: {},
+
+        cspNoInlineScript: "script-src 'unsafe-eval' * blob: data:",
+        cspNoScripting: 'script-src http: https:',
+        cspNoInlineFont: 'font-src *',
     };
 
 })();

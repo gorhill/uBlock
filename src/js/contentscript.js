@@ -197,6 +197,72 @@ vAPI.SafeAnimationFrame.prototype = {
 /******************************************************************************/
 /******************************************************************************/
 
+// https://github.com/uBlockOrigin/uBlock-issues/issues/552
+//   Listen and report CSP violations so that blocked resources through CSP
+//   are properly reported in the logger.
+
+{
+    const events = new Set();
+    let timer;
+
+    const send = function() {
+        vAPI.messaging.send(
+            'scriptlets',
+            {
+                what: 'securityPolicyViolation',
+                type: 'net',
+                docURL: document.location.href,
+                violations: Array.from(events),
+            },
+            response => {
+                if ( response === true ) { return; }
+                stop();
+            }
+        );
+        events.clear();
+    };
+
+    const sendAsync = function() {
+        if ( timer !== undefined ) { return; }
+        timer = self.requestIdleCallback(
+            ( ) => { timer = undefined; send(); },
+            { timeout: 2000 }
+        );
+    };
+
+    const listener = function(ev) {
+        if ( ev.isTrusted !== true ) { return; }
+        if ( ev.disposition !== 'enforce' ) { return; }
+        events.add(JSON.stringify({
+            url: ev.blockedURL || ev.blockedURI,
+            policy: ev.originalPolicy,
+            directive: ev.effectiveDirective || ev.violatedDirective,
+        }));
+        sendAsync();
+    };
+
+    const stop = function() {
+        events.clear();
+        if ( timer !== undefined ) {
+            self.cancelIdleCallback(timer);
+            timer = undefined;
+        }
+        document.removeEventListener('securitypolicyviolation', listener);
+        vAPI.shutdown.remove(stop);
+    };
+
+    document.addEventListener('securitypolicyviolation', listener);
+    vAPI.shutdown.add(stop);
+
+    // We need to call at least once to find out whether we really need to
+    // listen to CSP violations.
+    sendAsync();
+}
+
+/******************************************************************************/
+/******************************************************************************/
+/******************************************************************************/
+
 vAPI.domWatcher = (function() {
 
     const addedNodeLists = [];
@@ -343,7 +409,7 @@ vAPI.domWatcher = (function() {
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.matchesProp = (function() {
+vAPI.matchesProp = (( ) => {
     const docElem = document.documentElement;
     if ( typeof docElem.matches !== 'function' ) {
         if ( typeof docElem.mozMatchesSelector === 'function' ) {

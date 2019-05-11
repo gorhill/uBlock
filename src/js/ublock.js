@@ -555,14 +555,6 @@ var matchBucket = function(url, hostname, bucket, start) {
     });
 };
 
-µBlock.logInlineScript = function(tabId, frameId) {
-    vAPI.tabs.injectScript(tabId, {
-        frameId: frameId,
-        file: '/js/scriptlets/inlinescript-logger.js',
-        runAt: 'document_end'
-    });
-};
-
 /******************************************************************************/
 
 µBlock.scriptlets = (function() {

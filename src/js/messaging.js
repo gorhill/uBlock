@@ -567,11 +567,8 @@ var onMessage = function(request, sender, callback) {
         if ( µb.canInjectScriptletsNow === false ) {
             response.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
         }
-        if ( µb.logger.enabled ) {
-            if ( response.noCosmeticFiltering !== true ) {
-                µb.logCosmeticFilters(tabId, frameId);
-            }
-            µb.logInlineScript(tabId, frameId);
+        if ( µb.logger.enabled && response.noCosmeticFiltering !== true ) {
+            µb.logCosmeticFilters(tabId, frameId);
         }
         break;
 
@@ -1362,7 +1359,98 @@ const logCosmeticFilters = function(tabId, details) {
 
 /******************************************************************************/
 
-var onMessage = function(request, sender, callback) {
+const logCSPViolations = function(pageStore, request) {
+    if ( µb.logger.enabled === false || pageStore === null ) {
+        return false;
+    }
+    if ( request.violations.length === 0 ) {
+        return true;
+    }
+
+    const fctxt = µb.filteringContext.duplicate();
+    fctxt.fromTabId(pageStore.tabId)
+         .setRealm('network')
+         .setDocOriginFromURL(request.docURL)
+         .setURL(request.docURL);
+
+    let cspData = pageStore.extraData.get('cspData');
+    if ( cspData === undefined ) {
+        cspData = new Map();
+
+        const policies = [];
+        const logData = [];
+        µb.staticNetFilteringEngine.matchAndFetchData(
+            'csp',
+            request.docURL,
+            policies,
+            logData
+        );
+        for ( let i = 0; i < policies.length; i++ ) {
+            cspData.set(policies[i], logData[i]);
+        }
+        
+        fctxt.type = 'inline-script';
+        fctxt.filter = undefined;
+        if ( pageStore.filterRequest(fctxt) === 1 ) {
+            cspData.set(µb.cspNoInlineScript, fctxt.filter);
+        }
+
+        fctxt.type = 'script';
+        fctxt.filter = undefined;
+        if ( pageStore.filterScripting(fctxt, true) === 1 ) {
+            cspData.set(µb.cspNoScripting, fctxt.filter);
+        }
+    
+        fctxt.type = 'inline-font';
+        fctxt.filter = undefined;
+        if ( pageStore.filterRequest(fctxt) === 1 ) {
+            cspData.set(µb.cspNoInlineFont, fctxt.filter);
+        }
+
+        if ( cspData.size === 0 ) { return false; }
+
+        pageStore.extraData.set('cspData', cspData);
+    }
+
+    const typeMap = logCSPViolations.policyDirectiveToTypeMap;
+    for ( const json of request.violations ) {
+        const violation = JSON.parse(json);
+        let type = typeMap.get(violation.directive);
+        if ( type === undefined ) { continue; }
+        const logData = cspData.get(violation.policy);
+        if ( logData === undefined ) { continue; }
+        if ( /^[\w.+-]+:\/\//.test(violation.url) === false ) {
+            violation.url = request.docURL;
+            if ( type === 'script' ) { type = 'inline-script'; }
+            else if ( type === 'font' ) { type = 'inline-font'; }
+        }
+        fctxt.setURL(violation.url)
+             .setType(type)
+             .setFilter(logData)
+             .toLogger();
+    }
+
+    return true;
+};
+
+logCSPViolations.policyDirectiveToTypeMap = new Map([
+    [ 'img-src', 'image' ],
+    [ 'connect-src', 'xmlhttprequest' ],
+    [ 'font-src', 'font' ],
+    [ 'frame-src', 'sub_frame' ],
+    [ 'media-src', 'media' ],
+    [ 'object-src', 'object' ],
+    [ 'script-src', 'script' ],
+    [ 'script-src-attr', 'script' ],
+    [ 'script-src-elem', 'script' ],
+    [ 'style-src', 'stylesheet' ],
+    [ 'style-src-attr', 'stylesheet' ],
+    [ 'style-src-elem', 'stylesheet' ],
+]);
+
+/******************************************************************************/
+
+const onMessage = function(request, sender, callback) {
     const tabId = sender && sender.tab ? sender.tab.id : 0;
     const pageStore = µb.pageStoreFromTabId(tabId);
 
@@ -1373,7 +1461,7 @@ var onMessage = function(request, sender, callback) {
     }
 
     // Sync
-    var response;
+    let response;
 
     switch ( request.what ) {
     case 'domSurveyTransientReport':
@@ -1409,6 +1497,10 @@ var onMessage = function(request, sender, callback) {
 
     case 'logCosmeticFilteringData':
         logCosmeticFilters(tabId, request);
+        break;
+
+    case 'securityPolicyViolation':
+        response = logCSPViolations(pageStore, request);
         break;
 
     case 'temporarilyAllowLargeMediaElement':

@@ -221,11 +221,12 @@ const pageStoreJunkyardMax = 10;
 /******************************************************************************/
 
 const PageStore = function(tabId, context) {
-    this.init(tabId, context);
+    this.extraData = new Map();
     this.journal = [];
     this.journalTimer = null;
     this.journalLastCommitted = this.journalLastUncommitted = undefined;
     this.journalLastUncommittedURL = undefined;
+    this.init(tabId, context);
 };
 
 /******************************************************************************/
@@ -276,6 +277,7 @@ PageStore.prototype.init = function(tabId, context) {
     this.largeMediaTimer = null;
     this.netFilteringCache = NetFilteringResultCache.factory();
     this.internalRedirectionCount = 0;
+    this.extraData.clear();
 
     // The current filtering context is cloned because:
     // - We may be called with or without the current context having been
