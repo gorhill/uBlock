@@ -82,7 +82,7 @@ const µBlock = (function() { // jshint ignore:line
             externalLists: [],
             firewallPaneMinimized: true,
             hyperlinkAuditingDisabled: true,
-            ignoreGenericCosmeticFilters: false,
+            ignoreGenericCosmeticFilters: vAPI.webextFlavor.soup.has('mobile'),
             largeMediaSize: 50,
             parseAllABPHideFilters: true,
             prefetchingDisabled: true,

@@ -186,11 +186,11 @@ const onVersionReady = function(lastVersion) {
     // If unused, just comment out for when we need to compare versions in the
     // future.
     const intFromVersion = function(s) {
-        let parts = s.match(/(?:^|\.|b|rc)\d+/g);
+        const parts = s.match(/(?:^|\.|b|rc)\d+/g);
         if ( parts === null ) { return 0; }
         let vint = 0;
         for ( let i = 0; i < 4; i++ ) {
-            let pstr = parts[i] || '';
+            const pstr = parts[i] || '';
             let pint;
             if ( pstr === '' ) {
                 pint = 0;
@@ -206,7 +206,7 @@ const onVersionReady = function(lastVersion) {
         return vint;
     };
 
-    let lastVersionInt = intFromVersion(lastVersion);
+    const lastVersionInt = intFromVersion(lastVersion);
 
     if ( lastVersionInt <= 1016021007 ) {
         µb.sessionSwitches.toggle('no-scripting', 'behind-the-scene', 2);
@@ -262,13 +262,6 @@ const onUserSettingsReady = function(fetched) {
     µb.sessionURLFiltering.assign(µb.permanentURLFiltering);
     µb.permanentSwitches.fromString(fetched.hostnameSwitchesString);
     µb.sessionSwitches.assign(µb.permanentSwitches);
-
-    // https://github.com/gorhill/uBlock/issues/1892
-    // For first installation on a battery-powered device, disable generic
-    // cosmetic filtering.
-    if ( µb.firstInstall && vAPI.webextFlavor.soup.has('mobile') ) {
-        userSettings.ignoreGenericCosmeticFilters = true;
-    }
 };
 
 /******************************************************************************/
