@@ -585,7 +585,7 @@ const FilterWildcard1 = class {
     }
 
     static compile(details) {
-        if ( this.token === '*' ) { return; }
+        if ( details.token === '*' ) { return; }
         if ( details.anchor !== 0 ) { return; }
         const s = details.f;
         let pos = s.indexOf('*');
@@ -700,7 +700,7 @@ const FilterWildcard1HnAnchored = class {
     }
 
     static compile(details) {
-        if ( this.token === '*' ) { return; }
+        if ( details.token === '*' ) { return; }
         if ( (details.anchor & 0x0b001) !== 0 ) { return; }
         const s = details.f;
         let pos = s.indexOf('*');
