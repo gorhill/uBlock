@@ -216,38 +216,26 @@ const fromCosmeticFilter = function(details) {
                 break;
             // Specific cosmetic filtering
             case 8:
-                if ( exception !== ((fargs[1] & 0b0001) !== 0) ) { break; }
-                isProcedural = (fargs[1] & 0b0010) !== 0;
+            // HTML filtering
+            case 64:
+                if ( exception !== ((fargs[2] & 0b01) !== 0) ) { break; }
+                isProcedural = (fargs[2] & 0b10) !== 0;
                 if (
                     isProcedural === false && fargs[3] !== selector ||
                     isProcedural && JSON.parse(fargs[3]).raw !== selector
                 ) {
                     break;
                 }
-                if ( hostnameMatches(fargs[2]) ) {
-                    found = fargs[2] + prefix + selector;
+                if ( hostnameMatches(fargs[1]) ) {
+                    found = fargs[1] + prefix + selector;
                 }
                 break;
             // Scriptlet injection
             case 32:
-                if ( exception !== ((fargs[1] & 0b0001) !== 0) ) { break; }
+                if ( exception !== ((fargs[2] & 1) !== 0) ) { break; }
                 if ( fargs[3] !== selector ) { break; }
-                if ( hostnameMatches(fargs[2]) ) {
-                    found = fargs[2] + prefix + selector;
-                }
-                break;
-            // HTML filtering
-            case 64: // CSS selector
-            case 65: // procedural
-                if ( exception !== ((fargs[1] & 0b0001) !== 0) ) { break; }
-                if (
-                    fargs[0] === 64 && fargs[3] !== selector ||
-                    fargs[0] === 65 && JSON.parse(fargs[3]).raw !== selector
-                ) {
-                    break;
-                }
-                if ( hostnameMatches(fargs[2]) ) {
-                    found = fargs[2] + prefix + selector;
+                if ( hostnameMatches(fargs[1]) ) {
+                    found = fargs[1] + prefix + selector;
                 }
                 break;
             }

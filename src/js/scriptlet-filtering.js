@@ -33,7 +33,7 @@
 
     let acceptedCount = 0,
         discardedCount = 0,
-        scriptletDB = new µb.staticExtFilteringEngine.HostnameBasedDB();
+        scriptletDB = new µb.staticExtFilteringEngine.HostnameBasedDB(1);
 
     const api = {
         get acceptedCount() {
@@ -241,6 +241,7 @@
 
     api.freeze = function() {
         duplicates.clear();
+        scriptletDB.collectGarbage();
     };
 
     api.compile = function(parsed, writer) {
@@ -251,7 +252,7 @@
 
         if ( parsed.hostnames.length === 0 ) {
             if ( parsed.exception ) {
-                writer.push([ 32, 0 | 0b0001, '', parsed.suffix ]);
+                writer.push([ 32, '', 1, parsed.suffix ]);
             }
             return;
         }
@@ -265,14 +266,14 @@
             if ( negated ) {
                 hn = hn.slice(1);
             }
-            let hash = µb.staticExtFilteringEngine.compileHostnameToHash(hn);
+            let kind = 0;
             if ( parsed.exception ) {
                 if ( negated ) { continue; }
-                hash |= 0b0001;
+                kind |= 1;
             } else if ( negated ) {
-                hash |= 0b0001;
+                kind |= 1;
             }
-            writer.push([ 32, hash, hn, parsed.suffix ]);
+            writer.push([ 32, hn, kind, parsed.suffix ]);
         }
     };
 
@@ -295,10 +296,7 @@
             duplicates.add(fingerprint);
             const args = reader.args();
             if ( args.length < 4 ) { continue; }
-            scriptletDB.add(
-                args[1],
-                { hostname: args[2], token: args[3].slice(4, -1) }
-            );
+            scriptletDB.store(args[1], args[2], args[3].slice(4, -1));
         }
     };
 
@@ -320,48 +318,36 @@
             return;
         }
 
-        const domain = request.domain;
-        const entity = request.entity;
+        const scriptlets = new Set();
+        const exceptions = exceptionsRegister;
 
-        const entries = [];
-        const domainHash = µb.staticExtFilteringEngine.makeHash(domain);
-        if ( domainHash !== 0 ) {
-            scriptletDB.retrieve(domainHash, hostname, entries);
+        scriptletDB.retrieve(
+            hostname,
+            [ scriptlets, exceptions ]
+        );
+        if ( request.entity !== '' ) {
+            scriptletDB.retrieve(
+                `${hostname.slice(0, -request.domain)}${request.entity}`,
+                [ scriptlets, exceptions ]
+            );
         }
-        const entityHash = µb.staticExtFilteringEngine.makeHash(entity);
-        if ( entityHash !== 0 ) {
-            scriptletDB.retrieve(entityHash, entity, entries);
-        }
-        scriptletDB.retrieve(0, hostname, entries);
-        for ( const entry of entries ) {
-            lookupScriptlet(entry.token, reng, scriptletsRegister);
+
+        for ( const token of scriptlets ) {
+            lookupScriptlet(token, reng, scriptletsRegister);
         }
 
         if ( scriptletsRegister.size === 0 ) { return; }
 
-        // Collect exception filters.
-        entries.length = 0;
-        if ( domainHash !== 0 ) {
-            scriptletDB.retrieve(domainHash | 0b0001, hostname, entries);
-        }
-        if ( entityHash !== 0 ) {
-            scriptletDB.retrieve(entityHash | 0b0001, entity, entries);
-        }
-        scriptletDB.retrieve(0 | 0b0001, hostname, entries);
-        for ( const entry of entries ) {
-            exceptionsRegister.add(entry.token);
-        }
-
         // Return an array of scriptlets, and log results if needed. 
         const out = [];
         const loggerEnabled = µb.logger.enabled;
-        for ( const entry of scriptletsRegister ) {
-            const isException = exceptionsRegister.has(entry[0]);
+        for ( const [ token, code ] of scriptletsRegister ) {
+            const isException = exceptionsRegister.has(token);
             if ( isException === false ) {
-                out.push(entry[1]);
+                out.push(code);
             }
             if ( loggerEnabled ) {
-                logOne(isException, entry[0], request);
+                logOne(isException, token, request);
             }
         }
 
@@ -408,7 +394,7 @@
     };
 
     api.fromSelfie = function(selfie) {
-        scriptletDB = new µb.staticExtFilteringEngine.HostnameBasedDB(selfie);
+        scriptletDB = new µb.staticExtFilteringEngine.HostnameBasedDB(1, selfie);
     };
 
     return api;

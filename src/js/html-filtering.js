@@ -28,7 +28,7 @@
     const pselectors = new Map();
     const duplicates = new Set();
 
-    let filterDB = new µb.staticExtFilteringEngine.HostnameBasedDB(),
+    let filterDB = new µb.staticExtFilteringEngine.HostnameBasedDB(2),
         acceptedCount = 0,
         discardedCount = 0,
         docRegister;
@@ -207,7 +207,7 @@
             .setDocOriginFromURL(details.url)
             .setFilter({
                 source: 'cosmetic',
-                raw: (exception === 0 ? '##' : '#@#') + '^' + selector
+                raw: `${exception === 0 ? '##' : '#@#'}^${selector}`
             })
             .toLogger();
     };
@@ -261,6 +261,7 @@
 
     api.freeze = function() {
         duplicates.clear();
+        filterDB.collectGarbage();
     };
 
     api.compile = function(parsed, writer) {
@@ -283,16 +284,14 @@
 
         for ( const hn of parsed.hostnames ) {
             if ( hn.charCodeAt(0) === 0x7E /* '~' */ ) { continue; }
-            let hash = µb.staticExtFilteringEngine.compileHostnameToHash(hn);
+            let kind = 0;
             if ( parsed.exception ) {
-                hash |= 0b0001;
+                kind |= 0b01;
             }
-            writer.push([
-                compiled.charCodeAt(0) !== 0x7B /* '{' */ ? 64 : 65,
-                hash,
-                hn,
-                compiled
-            ]);
+            if ( compiled.charCodeAt(0) === 0x7B /* '{' */ ) {
+                kind |= 0b10;
+            }
+            writer.push([ 64, hn, kind, compiled ]);
         }
     };
 
@@ -312,11 +311,7 @@
             }
             duplicates.add(fingerprint);
             const args = reader.args();
-            filterDB.add(args[1], {
-                type: args[0],
-                hostname: args[2],
-                selector: args[3]
-            });
+            filterDB.store(args[1], args[2], args[3]);
         }
     };
 
@@ -332,62 +327,58 @@
             return;
         }
 
-        const toRemoveArray = [];
-        const domainHash = µb.staticExtFilteringEngine.makeHash(details.domain);
-        if ( domainHash !== 0 ) {
-            filterDB.retrieve(domainHash, hostname, toRemoveArray);
-        }
-        const entity = details.entity;
-        const entityHash = µb.staticExtFilteringEngine.makeHash(entity);
-        if ( entityHash !== 0 ) {
-            filterDB.retrieve(entityHash, entity, toRemoveArray);
-        }
-        filterDB.retrieve(0, hostname, toRemoveArray);
-        if ( toRemoveArray.length === 0 ) { return; }
+        const plains = new Set();
+        const procedurals = new Set();
+        const exceptions = new Set();
 
-        let notToRemoveArray = [];
-        if ( domainHash !== 0 ) {
-            filterDB.retrieve(domainHash | 0b0001, hostname, notToRemoveArray);
+        filterDB.retrieve(
+            hostname,
+            [ plains, exceptions, procedurals, exceptions ]
+        );
+        if ( details.entity !== '' ) {
+            filterDB.retrieve(
+                `${hostname.slice(0, -details.domain)}${details.entity}`,
+                [ plains, exceptions, procedurals, exceptions ]
+            );
         }
-        if ( entityHash !== 0 ) {
-            filterDB.retrieve(entityHash | 0b0001, entity, notToRemoveArray);
-        }
-        filterDB.retrieve(0 | 0b0001, hostname, notToRemoveArray);
-        if ( notToRemoveArray.length === 0 ) {
-            return toRemoveArray;
+    
+        if ( plains.size === 0 && procedurals.size === 0 ) { return; }
+
+        const out = { plains, procedurals };
+
+        if ( exceptions.size === 0 ) {
+            return out;
         }
 
-        const toRemoveMap = new Map();
-        for ( const entry of toRemoveArray ) {
-            toRemoveMap.set(entry.selector, entry);
-        }
-        for ( const entry of notToRemoveArray ) {
-            if ( toRemoveMap.has(entry.selector) === false ) { continue; }
-            toRemoveMap.delete(entry.selector);
-            if ( µb.logger.enabled === false ) { continue; }
-            let selector = entry.selector;
-            if ( entry.type === 65 ) {
-                selector = JSON.parse(selector).raw;
+        for ( const selector of exceptions ) {
+            if ( plains.has(selector) ) {
+                plains.delete(selector);
+                logOne(details, 1, selector);
+                continue;
             }
-            logOne(details, 1, selector);
+            if ( procedurals.has(selector) ) {
+                procedurals.delete(selector);
+                logOne(details, 1, JSON.parse(selector).raw);
+                continue;
+            }
         }
 
-        if ( toRemoveMap.size === 0 ) { return; }
-        return Array.from(toRemoveMap.values());
+        if ( plains.size !== 0 || procedurals.size !== 0 ) {
+            return out;
+        }
     };
 
     api.apply = function(doc, details) {
         docRegister = doc;
         let modified = false;
-        for ( const entry of details.selectors ) {
-            if ( entry.type === 64 ) {
-                if ( applyCSSSelector(details, entry.selector) ) {
-                    modified = true;
-                }
-            } else /* if ( entry.type === 65 ) */ {
-                if ( applyProceduralSelector(details, entry.selector) ) {
-                    modified = true;
-                }
+        for ( const selector of details.selectors.plains ) {
+            if ( applyCSSSelector(details, selector) ) {
+                modified = true;
+            }
+        }
+        for ( const selector of details.selectors.procedurals ) {
+            if ( applyProceduralSelector(details, selector) ) {
+                modified = true;
             }
         }
 
@@ -400,7 +391,7 @@
     };
 
     api.fromSelfie = function(selfie) {
-        filterDB = new µb.staticExtFilteringEngine.HostnameBasedDB(selfie);
+        filterDB = new µb.staticExtFilteringEngine.HostnameBasedDB(2, selfie);
         pselectors.clear();
     };
 
