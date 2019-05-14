@@ -305,11 +305,14 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/572
     //   Extract best possible hostname.
     let deshn = des;
-    const pos = deshn.lastIndexOf('*');
+    let pos = deshn.lastIndexOf('*');
     if ( pos !== -1 ) {
         deshn = deshn.slice(pos + 1);
-        if ( deshn.charCodeAt(0) === 0x2E /* '.' */  ) {
-            deshn = deshn.replace(/\.+/, '');
+        pos = deshn.indexOf('.');
+        if ( pos !== -1 ) {
+            deshn = deshn.slice(pos + 1);
+        } else {
+            deshn = '';
         }
     }
 
@@ -334,7 +337,7 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
             srchns = option.slice(7).split('|');
             continue;
         }
-        if ( option === 'first-party' || option === '1p' ) {
+        if ( (option === 'first-party' || option === '1p') && deshn !== '' ) {
             srchns.push(µBlock.URI.domainFromHostname(deshn) || deshn);
             continue;
         }
