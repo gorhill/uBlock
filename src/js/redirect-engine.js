@@ -315,7 +315,7 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
 
     const pattern =
             des
-                .replace(/\*/, '[\\w.%-]*')
+                .replace(/\*/g, '[\\w.%-]*')
                 .replace(/\./g, '\\.') +
             matches[2]
                 .replace(/[.+?{}()|[\]\/\\]/g, '\\$&')
