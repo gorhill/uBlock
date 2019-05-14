@@ -289,10 +289,8 @@ RedirectEngine.prototype.addRule = function(src, des, type, pattern, redirect) {
 /******************************************************************************/
 
 RedirectEngine.prototype.fromCompiledRule = function(line) {
-    var fields = line.split('\t');
-    if ( fields.length !== 5 ) {
-        return;
-    }
+    const fields = line.split('\t');
+    if ( fields.length !== 5 ) { return; }
     this.addRule(fields[0], fields[1], fields[2], fields[3], fields[4]);
 };
 
@@ -302,24 +300,42 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
     const matches = this.reFilterParser.exec(line);
     if ( matches === null || matches.length !== 4 ) { return; }
 
-    let des = matches[1] || '';
-    const pattern = (des + matches[2]).replace(/[.+?{}()|[\]\/\\]/g, '\\$&')
-                                      .replace(/\^/g, '[^\\w.%-]')
-                                      .replace(/\*/g, '.*?');
+    const des = matches[1] || '';
+
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/572
+    //   Extract best possible hostname.
+    let deshn = des;
+    const pos = deshn.lastIndexOf('*');
+    if ( pos !== -1 ) {
+        deshn = deshn.slice(pos + 1);
+        if ( deshn.charCodeAt(0) === 0x2E /* '.' */  ) {
+            deshn = deshn.replace(/\.+/, '');
+        }
+    }
+
+    const pattern =
+            des
+                .replace(/\*/, '[\\w.%-]*')
+                .replace(/\./g, '\\.') +
+            matches[2]
+                .replace(/[.+?{}()|[\]\/\\]/g, '\\$&')
+                .replace(/\^/g, '[^\\w.%-]')
+                .replace(/\*/g, '.*?');
+
     let type,
         redirect = '',
-        srcs = [];
+        srchns = [];
     for ( const option of matches[3].split(',') ) {
         if ( option.startsWith('redirect=') ) {
             redirect = option.slice(9);
             continue;
         }
         if ( option.startsWith('domain=') ) {
-            srcs = option.slice(7).split('|');
+            srchns = option.slice(7).split('|');
             continue;
         }
         if ( option === 'first-party' || option === '1p' ) {
-            srcs.push(µBlock.URI.domainFromHostname(des) || des);
+            srchns.push(µBlock.URI.domainFromHostname(deshn) || deshn);
             continue;
         }
         // One and only one type must be specified.
@@ -336,19 +352,19 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
     // Need one single type -- not negated.
     if ( type === undefined ) { return; }
 
-    if ( des === '' ) {
-        des = '*';
+    if ( deshn === '' ) {
+        deshn = '*';
     }
 
-    if ( srcs.length === 0 ) {
-        srcs.push('*');
+    if ( srchns.length === 0 ) {
+        srchns.push('*');
     }
 
     const out = [];
-    for ( const src of srcs ) {
-        if ( src === '' ) { continue; }
-        if ( src.startsWith('~') ) { continue; }
-        out.push(src + '\t' + des + '\t' + type + '\t' + pattern + '\t' + redirect);
+    for ( const srchn of srchns ) {
+        if ( srchn === '' ) { continue; }
+        if ( srchn.startsWith('~') ) { continue; }
+        out.push(srchn + '\t' + deshn + '\t' + type + '\t' + pattern + '\t' + redirect);
     }
 
     return out;
@@ -356,7 +372,7 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
 
 /******************************************************************************/
 
-RedirectEngine.prototype.reFilterParser = /^(?:\|\|([^\/:?#^*]+)|\*)([^$]+)\$([^$]+)$/;
+RedirectEngine.prototype.reFilterParser = /^(?:\|\|([^\/:?#^]+)|\*)([^$]+)\$([^$]+)$/;
 
 RedirectEngine.prototype.supportedTypes = new Map([
     [ 'css', 'stylesheet' ],
