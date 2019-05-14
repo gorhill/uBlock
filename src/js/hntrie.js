@@ -40,8 +40,8 @@
   For example, `www.abc.com` is deemed matching `abc.com`, because the former
   is a subdomain of the latter. The opposite is of course not true.
 
-  The resulting read-only tries created as a result of using hnTrieManager are
-  simply just typed arrays filled with integers. The matching algorithm is
+  The resulting read-only tries created as a result of using HNTrieContainer
+  are simply just typed arrays filled with integers. The matching algorithm is
   just a matter of reading/comparing these integers, and further using them as
   indices in the array as a way to move around in the trie.
 
