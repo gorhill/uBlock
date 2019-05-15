@@ -670,6 +670,7 @@ FilterContainer.prototype.skipGenericCompiledContent = function(reader) {
         // hash,  example.com, .promoted-tweet
         // hash,  example.*, .promoted-tweet
         case 8:
+            this.duplicateBuster.add(fingerprint);
             this.specificFilters.store(args[1], args[2], args[3]);
             break;
 
@@ -1004,11 +1005,14 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
             );
         }
 
-        // Apply exceptions.
-        for ( const exception of exceptionSet ) {
-            specificSet.delete(exception);
-            proceduralSet.delete(exception);
+        if ( exceptionSet.size !== 0 ) {
+            out.exceptionFilters = Array.from(exceptionSet);
+            for ( const exception of exceptionSet ) {
+                specificSet.delete(exception);
+                proceduralSet.delete(exception);
+            }
         }
+
         if ( specificSet.size !== 0 ) {
             out.declarativeFilters = Array.from(specificSet);
         }
