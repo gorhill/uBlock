@@ -1,24 +1,24 @@
 <!-- [![Build Status](https://travis-ci.org/dhowe/AdNauseam.svg)](https://travis-ci.org/dhowe/AdNauseam) -->
-<a href="http://www.gnu.org/licenses/gpl-3.0.en.html"><img src="https://img.shields.io/badge/license-GPL-orange.svg" alt="gpl license"></a> [![Gitter](https://badges.gitter.im/dhowe/AdNauseam.svg)](https://gitter.im/dhowe/AdNauseam?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+<a href="https://www.gnu.org/licenses/gpl-3.0.en.html"><img src="https://img.shields.io/badge/license-GPL-orange.svg" alt="gpl license"></a> [![Gitter](https://badges.gitter.im/dhowe/AdNauseam.svg)](https://gitter.im/dhowe/AdNauseam?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-Install [AdNauseam](http://adnauseam.io) for [Firefox](https://addons.mozilla.org/en-US/firefox/addon/adnauseam), [Opera](https://addons.opera.com/en/extensions/details/adnauseam-2) or [Chrome](https://github.com/dhowe/AdNauseam/wiki/Install-AdNauseam-on-Chrome-Without-Google's-P)
+Install [AdNauseam](https://adnauseam.io) for [Firefox](https://addons.mozilla.org/en-US/firefox/addon/adnauseam), [Opera](https://addons.opera.com/en/extensions/details/adnauseam-2) or [Chrome](https://github.com/dhowe/AdNauseam/wiki/Install-AdNauseam-on-Chrome-Without-Google's-Permission)
 <div align="left">
-  <a href="http://adnauseam.io">
+  <a href="https://adnauseam.io">
     <img src="https://rednoise.org/images/adnauseam.png" width="150px"/>
   </a>
 </div>
 
-[AdNauseam](http://adnauseam.io) is a lightweight browser extension that blends software tool and artware intervention to actively fight back against tracking by advertising networks. AdNauseam works like an ad-blocker (it is built atop [uBlock Origin](https://github.com/gorhill/uBlock)) to silently simulate clicks on each blocked ad, confusing trackers as to one's real interests. At the same time, AdNauseam serves as a means of amplifying discontent with advertising networks that disregard privacy and enable bulk surveillance.
+[AdNauseam](https://adnauseam.io) is a lightweight browser extension that blends software tool and artware intervention to actively fight back against tracking by advertising networks. AdNauseam works like an ad-blocker (it is built atop [uBlock Origin](https://github.com/gorhill/uBlock)) to silently simulate clicks on each blocked ad, confusing trackers as to one's real interests. At the same time, AdNauseam serves as a means of amplifying discontent with advertising networks that disregard privacy and enable bulk surveillance.
 
-We conceptualize AdNauseam as a software system that serves ethical, political, and expressive ends. In light of the industry's failure to address the excesses of network tracking, AdNauseam allows individual users to take matters into their own hands, offering active defense against surveillance, profiling and potential discrimination. The software thus represents a similar approach to that of <a href="http://cs.nyu.edu/trackmenot" target="_blank">TrackMeNot</a>, relocating power in the hands of individual users, rather than vast commercial entities. For further information on this approach, please see <a href="http://cs.nyu.edu/trackmenot/resources/trackmenot2009.pdf" target="_blank">this paper</a>.
+We conceptualize AdNauseam as a software system that serves ethical, political, and expressive ends. In light of the industry's failure to address the excesses of network tracking, AdNauseam allows individual users to take matters into their own hands, offering active defense against surveillance, profiling and potential discrimination. The software thus represents a similar approach to that of <a href="https://cs.nyu.edu/trackmenot" target="_blank">TrackMeNot</a>, relocating power in the hands of individual users, rather than vast commercial entities. For further information on this approach, please see <a href="https://cs.nyu.edu/trackmenot/resources/trackmenot2009.pdf" target="_blank">this paper</a>.
 
 
 #### About the project
 --------
 
-* Web Site:         http://adnauseam.io
-* Authors:          [Daniel C. Howe](http://rednoise.org/daniel), [Helen Nissenbaum](https://www.nyu.edu/projects/nissenbaum/) and [Mushon Zer-Aviv](http://mushon.com)
-* Developers:       [Daniel C. Howe](http://rednoise.org/daniel) and [Sally Chen](https://github.com/cqx931)
+* Web Site:         https://adnauseam.io
+* Authors:          [Daniel C. Howe](https://rednoise.org/daniel), [Helen Nissenbaum](https://www.nyu.edu/projects/nissenbaum/) and [Mushon Zer-Aviv](http://mushon.com)
+* Developers:       [Daniel C. Howe](https://rednoise.org/daniel) and [Sally Chen](https://github.com/cqx931)
 * License:          GPLv3 (see included [LICENSE.txt](https://github.com/dhowe/AdNauseam/blob/master/LICENSE.txt) file for full license)
 * Github Repo:      https://github.com/dhowe/adnauseam/
 * Bug Tracker:      https://github.com/dhowe/adnauseam/issues
