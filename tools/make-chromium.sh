@@ -47,9 +47,9 @@ rm $DES/js/vapi-usercss.real.js
 rm $DES/js/vapi-usercss.pseudo.js
 
 # Chrome store-specific
-cp -R $DES/_locales/nb $DES/_locales/no
+[[ -e $DES/_locales/nb ]] && cp -R $DES/_locales/nb $DES/_locales/no
 
-echo "*** AdNauseam.chromium: Generating web accessible resources..."
+printf "*** AdNauseam.chromium: Generating web accessible resources...\n"
 cp -R src/web_accessible_resources $DES/
 python3 tools/import-war.py $DES/
 

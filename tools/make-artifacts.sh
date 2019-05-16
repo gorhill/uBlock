@@ -6,11 +6,11 @@ OPERA=/Applications/Opera.app/Contents/MacOS/Opera
 
 CHROME_PEM=./adnauseam.chromium.pem
 
-# before running, check that above programs exist, as well as that 'webext' cmd exists
-# if not, exit with error
+# before running, check that above programs exist, as well as that 'webext'
+# cmd exists - if not, exit with error
 command "${CHROME}" --version || { echo >&2 "Chrome is not installed."; exit 1; }
 command "${FIREFOX}" -v || { echo >&2 "Firefox is not installed."; exit 1; }
-command "${OPERA}" --version || { echo >&2 "Opera is not installed."; exit 1; }
+printf "Opera " && command "${OPERA}" --version || { echo >&2 "Opera is not installed."; exit 1; }
 hash web-ext 2>/dev/null || { echo >&2 "Webext is not installed. Please do npm install --global web-ext."; exit 1; }
 
 
@@ -34,7 +34,7 @@ rm -rf ${DES}/*
 if [ -f $CHROME_PEM ]; then  # do we have the signing key?
   "${CHROME}" "${CHROME_OPTS}" "--pack-extension-key $CHROME_PEM"
   mv ${DES}/adnauseam.chromium.crx ${ARTS}/adnauseam-${VERSION}.chromium.crx
-  echo "*** AdNauseam::Chromium: Signed with local .pem\\n"
+  echo "*** AdNauseam.chromium: Signed with local .pem\\n"
 else
   "${CHROME}" "${CHROME_OPTS}"
   mv ${DES}/adnauseam.chromium.crx ${ARTS}/adnauseam-${VERSION}.chromium-UNSIGNED.crx
@@ -45,26 +45,28 @@ fi
 # OPERA
 ./tools/make-opera.sh
 "${OPERA}" "${OPERA_OPTS}"
-mv ${DES}/adnauseam.opera.nex ${ARTS}/adnauseam-${VERSION}.opera.nex
+mv ${DES}/adnauseam.opera.crx ${ARTS}/adnauseam-${VERSION}.opera.crx
+
+
+# FIREFOX-legacy
+# ./tools/make-legacy.sh
+# pushd ${DES}/adnauseam.firefox
+# jpm xpi
+# popd
+# cp ${DES}/adnauseam.firefox/null.xpi ${ARTS}/adnauseam-${VERSION}.firefox-legacy.xpi
 
 
 # FIREFOX
-./tools/make-firefox.sh
-pushd ${DES}/adnauseam.firefox
-jpm xpi
-popd
-cp ${DES}/adnauseam.firefox/null.xpi ${ARTS}/adnauseam-${VERSION}.firefox-legacy.xpi
-
-
-# WEBEXT
-./tools/make-webext.sh all
+./tools/make-firefox.sh all
 web-ext build -s ${DES}/adnauseam.webext -a ${ARTS}
 mv ${ARTS}/adnauseam-${VERSION}.zip ${ARTS}/adnauseam-${VERSION}.firefox.zip
+
 
 # CHROME-RAW
 cd ${DES}
 zip -9 -r -q --exclude=*.DS_Store* ../../artifacts/adnauseam-${VERSION}.chromium.zip adnauseam.chromium
 cd -
+
 
 # NO PEMS
 mv ${DES}/*.pem /tmp

@@ -731,7 +731,7 @@ onBeforeMaybeSpuriousCSPReport.textDecoder = undefined;
 
 var onHeadersReceived = function(details) {
     // Do not interfere with behind-the-scene requests.
-    var ad, result, dbug = 0; //ADN
+    var ad, result, dbug = 1; //ADN
     let tabId = details.tabId;
     let µb = µBlock,
         requestType = details.type,
@@ -744,7 +744,7 @@ var onHeadersReceived = function(details) {
       // ADN: handle incoming cookies for our visits (ignore in ff for now)
       if (vAPI.chrome && µb.userSettings.noIncomingCookies) {
 
-          dbug && console.log('onHeadersReceived: ', requestType, details.url);
+          dbug && console.log('onHeadersReceived: ', requestType, details.url, details.responseHeaders);
 
           // ADN
           ad = µb.adnauseam.lookupAd(details.url, details.requestId);

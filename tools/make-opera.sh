@@ -4,12 +4,12 @@
 
 hash jq 2>/dev/null || { echo; echo >&2 "Error: this script requires jq (https://stedolan.github.io/jq/), but it's not installed"; exit 1; }
 
-echo "*** AdNauseam.Opera: Creating opera package"
-echo "*** AdNauseam.Opera: Copying files"
+echo "*** AdNauseam.opera: Creating opera package"
+echo "*** AdNauseam.opera: Copying files"
 
 DES=dist/build/adnauseam.opera
 
-rm -r $DES
+rm -rf $DES
 mkdir -p $DES
 
 VERSION=`jq .version manifest.json` # top-level adnauseam manifest
@@ -22,11 +22,6 @@ cp -R src/css $DES/
 cp -R src/img $DES/
 cp -R src/js $DES/
 cp -R src/lib $DES/
-
-#mkdir -p $DES/_locales
-#cp -R src/_locales/en $DES/_locales
-#cp -R src/_locales/zh_CN $DES/_locales
-#cp -R src/_locales/zh_TW $DES/_locales
 
 cp src/*.html $DES/
 cp platform/chromium/*.html $DES/
@@ -59,7 +54,7 @@ sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
 rm $DES/js/adn/tests.js
 rm -R $DES/lib/qunit
 
-echo "*** AdNauseam.Opera: Package Done."
+echo "*** AdNauseam.opera: Package Done."
 echo
 # python tools/make-webext-meta.py $DES/  ADN: user our own version
 
@@ -68,7 +63,7 @@ echo
 #rm -r $DES/_locales/mr
 #rm -r $DES/_locales/ta
 
-echo "*** AdNauseam.opera: Generating web accessible resources..."
+printf "*** AdNauseam.opera: Generating web accessible resources...\n"
 cp -R src/web_accessible_resources $DES/
 python3 tools/import-war.py $DES/
 # grep version $DES/manifest.json

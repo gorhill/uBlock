@@ -1657,7 +1657,7 @@
 
   var blockIncomingCookies = exports.blockIncomingCookies = function (headers, requestUrl, originalUrl) {
 
-    var modified = false, dbug = 0, hostname, us = µb.userSettings;
+    var modified = false, dbug = 1, hostname, us = µb.userSettings;
 
     var cookieAttr = function(cookie, name) {
 

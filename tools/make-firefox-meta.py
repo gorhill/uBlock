@@ -15,21 +15,19 @@ version = ''
 with open(os.path.join(proj_dir, 'dist', 'version')) as f:
     version = f.read().strip()
 
-firefox_manifest = {}
-firefox_manifest_file = os.path.join(build_dir, 'manifest.json')
-with open(firefox_manifest_file) as f2:
-    firefox_manifest = json.load(f2)
+webext_manifest = {}
+webext_manifest_file = os.path.join(build_dir, 'manifest.json')
+with open(webext_manifest_file, encoding='utf-8') as f2:
+    webext_manifest = json.load(f2)
 
-match = re.search('^(\d+\.\d+\.\d+)(\.\d+)$', version)
-if not match:
-    # https://bugzilla.mozilla.org/show_bug.cgi?id=1459007
-    # By design Firefox opens the sidebar with new installation of
-    # uBO when sidebar_action is present in the manifest.
-    # Remove sidebarAction support for stable release of uBO.
-    del firefox_manifest['sidebar_action']
+webext_manifest['version'] = version
 
-firefox_manifest['version'] = version
+match = re.search('^\d+\.\d+\.\d+\.\d+$', version)
+if match:
+    webext_manifest['name'] += ' development build'
+    webext_manifest['short_name'] += ' dev build'
+    webext_manifest['browser_action']['default_title'] += ' dev build'
 
-with open(firefox_manifest_file, 'w') as f2:
-    json.dump(firefox_manifest, f2, indent=2, separators=(',', ': '), sort_keys=True)
+with open(webext_manifest_file, mode='w', encoding='utf-8') as f2:
+    json.dump(webext_manifest, f2, indent=2, separators=(',', ': '), sort_keys=True)
     f2.write('\n')
