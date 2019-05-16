@@ -1,10 +1,10 @@
 #!/bin/sh
 
-FIREFOX_BIN=/Applications/FirefoxDeveloperEdition.app/Contents/MacOS/firefox-bin
+FIREFOX_BIN=/Applications/Firefox.app/Contents/MacOS/firefox-bin
 
 set -e
 
-tools/make-firefox.sh
+tools/make-firefox-legacy.sh
 
 cd dist/build/adnauseam.firefox
 
