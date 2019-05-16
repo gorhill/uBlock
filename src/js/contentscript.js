@@ -709,18 +709,17 @@ vAPI.DOMFilterer = (function() {
     };
     PSelector.prototype.operatorToTaskMap = undefined;
 
-    const DOMProceduralFilterer = function(domFilterer) {
-        this.domFilterer = domFilterer;
-        this.domIsReady = false;
-        this.domIsWatched = false;
-        this.mustApplySelectors = false;
-        this.selectors = new Map();
-        this.hiddenNodes = new Set();
-    };
+    const DOMProceduralFilterer = class {
+        constructor(domFilterer) {
+            this.domFilterer = domFilterer;
+            this.domIsReady = false;
+            this.domIsWatched = false;
+            this.mustApplySelectors = false;
+            this.selectors = new Map();
+            this.hiddenNodes = new Set();
+        }
 
-    DOMProceduralFilterer.prototype = {
-
-        addProceduralSelectors: function(aa) {
+        addProceduralSelectors(aa) {
             const addedSelectors = [];
             let mustCommit = this.domIsWatched;
             for ( let i = 0, n = aa.length; i < n; i++ ) {
@@ -757,9 +756,9 @@ vAPI.DOMFilterer = (function() {
                     procedural: addedSelectors
                 });
             }
-        },
+        }
 
-        commitNow: function() {
+        commitNow() {
             if ( this.selectors.size === 0 || this.domIsReady === false ) {
                 return;
             }
@@ -804,18 +803,18 @@ vAPI.DOMFilterer = (function() {
                 this.domFilterer.unhideNode(node);
             }
             //console.timeEnd('procedural selectors/dom layout changed');
-        },
+        }
 
-        createProceduralFilter: function(o) {
+        createProceduralFilter(o) {
             return new PSelector(o);
-        },
+        }
 
-        onDOMCreated: function() {
+        onDOMCreated() {
             this.domIsReady = true;
             this.domFilterer.commitNow();
-        },
+        }
 
-        onDOMChanged: function(addedNodes, removedNodes) {
+        onDOMChanged(addedNodes, removedNodes) {
             if ( this.selectors.size === 0 ) { return; }
             this.mustApplySelectors =
                 this.mustApplySelectors ||
@@ -869,7 +868,7 @@ vAPI.DOMFilterer = (function() {
 
         onDOMChanged() {
             if ( super.onDOMChanged instanceof Function ) {
-                super.onDOMChanged(arguments);
+                super.onDOMChanged.apply(this, arguments);
             }
             this.proceduralFilterer.onDOMChanged.apply(
                 this.proceduralFilterer,

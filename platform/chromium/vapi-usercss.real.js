@@ -59,7 +59,7 @@ vAPI.userStylesheet = {
 
 vAPI.DOMFilterer = class {
     constructor() {
-        this.commitTimer = new vAPI.SafeAnimationFrame(( ) => this.commitNow);
+        this.commitTimer = new vAPI.SafeAnimationFrame(this.commitNow.bind(this));
         this.domIsReady = document.readyState !== 'loading';
         this.disabled = false;
         this.listeners = [];
