@@ -2,7 +2,7 @@
 
 set -e
 
-tools/make-webext.sh
+tools/make-firefox.sh
 
 pushd dist/build/adnauseam.webext
 

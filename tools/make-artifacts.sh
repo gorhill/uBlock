@@ -1,7 +1,7 @@
 #!/bin/sh
 
 CHROME=/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
-FIREFOX=/Applications/FirefoxNightly.app/Contents/MacOS/firefox-bin
+FIREFOX=/Applications/Firefox.app/Contents/MacOS/firefox-bin
 OPERA=/Applications/Opera.app/Contents/MacOS/Opera
 
 CHROME_PEM=./adnauseam.chromium.pem
