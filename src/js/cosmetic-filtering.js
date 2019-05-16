@@ -843,22 +843,22 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
 
     //console.time('cosmeticFilteringEngine.retrieveGenericSelectors');
 
-    let simpleSelectors = this.setRegister0,
-        complexSelectors = this.setRegister1;
+    const simpleSelectors = this.setRegister0;
+    const complexSelectors = this.setRegister1;
 
-    let cacheEntry = this.selectorCache.get(request.hostname),
-        previousHits = cacheEntry && cacheEntry.cosmetic || this.setRegister2;
+    const cacheEntry = this.selectorCache.get(request.hostname);
+    const previousHits = cacheEntry && cacheEntry.cosmetic || this.setRegister2;
 
-    for ( let type in this.lowlyGeneric ) {
-        let entry = this.lowlyGeneric[type];
-        let selectors = request[entry.canonical];
+    for ( const type in this.lowlyGeneric ) {
+        const entry = this.lowlyGeneric[type];
+        const selectors = request[entry.canonical];
         if ( Array.isArray(selectors) === false ) { continue; }
         for ( let selector of selectors ) {
             if ( entry.simple.has(selector) === false ) { continue; }
-            let bucket = entry.complex.get(selector);
+            const bucket = entry.complex.get(selector);
             if ( bucket !== undefined ) {
                 if ( Array.isArray(bucket) ) {
-                    for ( selector of bucket ) {
+                    for ( const selector of bucket ) {
                         if ( previousHits.has(selector) === false ) {
                             complexSelectors.add(selector);
                         }
@@ -877,26 +877,39 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
 
     // Apply exceptions: it is the responsibility of the caller to provide
     // the exceptions to be applied.
+    const excepted = [];
     if ( Array.isArray(request.exceptions) ) {
-        for ( let exception of request.exceptions ) {
-            simpleSelectors.delete(exception);
-            complexSelectors.delete(exception);
+        for ( const exception of request.exceptions ) {
+            if (
+                simpleSelectors.delete(exception) ||
+                complexSelectors.delete(exception)
+            ) {
+                excepted.push(exception);
+            }
         }
     }
 
-    if ( simpleSelectors.size === 0 && complexSelectors.size === 0 ) {
+    if (
+        simpleSelectors.size === 0 &&
+        complexSelectors.size === 0 &&
+        excepted.length === 0
+    ) {
         return;
     }
 
-    let out = {
+    const out = {
         simple: Array.from(simpleSelectors),
         complex: Array.from(complexSelectors),
-        injected: ''
+        injected: '',
+        excepted,
     };
 
     // Cache and inject (if user stylesheets supported) looked-up low generic
     // cosmetic filters.
-    if ( typeof request.hostname === 'string' && request.hostname !== '' ) {
+    if (
+        (typeof request.hostname === 'string' && request.hostname !== '') &&
+        (out.simple.length !== 0 || out.complex.length !== 0)
+    ) {
         this.addToSelectorCache({
             cost: request.surveyCost || 0,
             hostname: request.hostname,
@@ -913,7 +926,7 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
         request.tabId !== undefined &&
         request.frameId !== undefined
     ) {
-        let injected = [];
+        const injected = [];
         if ( out.simple.length !== 0 ) {
             injected.push(out.simple.join(',\n'));
             out.simple = [];
@@ -964,6 +977,7 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
         domain: request.domain,
         declarativeFilters: [],
         exceptionFilters: [],
+        exceptedFilters: [],
         hideNodeAttr: this.randomAlphaToken(),
         hideNodeStyleSheetInjected: false,
         highGenericHideSimple: '',
@@ -1008,8 +1022,13 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
         if ( exceptionSet.size !== 0 ) {
             out.exceptionFilters = Array.from(exceptionSet);
             for ( const exception of exceptionSet ) {
-                specificSet.delete(exception);
-                proceduralSet.delete(exception);
+                if (
+                    specificSet.delete(exception) ||
+                    proceduralSet.delete(exception)
+                ) {
+                    out.exceptedFilters.push(exception);
+                }
+                
             }
         }
 
@@ -1034,7 +1053,7 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
                 const entry = this.highlyGeneric[type];
                 let str = entry.mru.lookup(exceptionHash);
                 if ( str === undefined ) {
-                    str = { s: entry.str };
+                    str = { s: entry.str, excepted: [] };
                     let genericSet = entry.dict;
                     let hit = false;
                     for ( const exception of exceptionSet ) {
@@ -1042,14 +1061,20 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
                     }
                     if ( hit ) {
                         genericSet = new Set(entry.dict);
-                        for ( let exception of exceptionSet ) {
-                            genericSet.delete(exception);
+                        for ( const exception of exceptionSet ) {
+                            if ( genericSet.delete(exception) ) {
+                                str.excepted.push(exception);
+                            }
                         }
                         str.s = Array.from(genericSet).join(',\n');
                     }
                     entry.mru.add(exceptionHash, str);
                 }
                 out[entry.canonical] = str.s;
+                if ( str.excepted.length !== 0 ) {
+                    out.exceptedFilters.push(...str.excepted);
+                }
+
             }
         }
 

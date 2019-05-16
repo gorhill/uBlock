@@ -57,31 +57,31 @@ vAPI.userStylesheet = {
 
 /******************************************************************************/
 
-vAPI.DOMFilterer = function() {
-    this.commitTimer = new vAPI.SafeAnimationFrame(this.commitNow.bind(this));
-    this.domIsReady = document.readyState !== 'loading';
-    this.disabled = false;
-    this.listeners = [];
-    this.filterset = new Set();
-    this.excludedNodeSet = new WeakSet();
-    this.addedCSSRules = new Set();
+vAPI.DOMFilterer = class {
+    constructor() {
+        this.commitTimer = new vAPI.SafeAnimationFrame(( ) => this.commitNow);
+        this.domIsReady = document.readyState !== 'loading';
+        this.disabled = false;
+        this.listeners = [];
+        this.filterset = new Set();
+        this.excludedNodeSet = new WeakSet();
+        this.addedCSSRules = new Set();
+        this.exceptedCSSRules = [];
+        this.reOnlySelectors = /\n\{[^\n]+/g;
 
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/167
-    //   By the time the DOMContentLoaded is fired, the content script might
-    //   have been disconnected from the background page. Unclear why this
-    //   would happen, so far seems to be a Chromium-specific behavior at
-    //   launch time.
-    if ( this.domIsReady !== true ) {
-        document.addEventListener('DOMContentLoaded', ( ) => {
-            if ( vAPI instanceof Object === false ) { return; }
-            this.domIsReady = true;
-            this.commit();
-        });
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/167
+        //   By the time the DOMContentLoaded is fired, the content script might
+        //   have been disconnected from the background page. Unclear why this
+        //   would happen, so far seems to be a Chromium-specific behavior at
+        //   launch time.
+        if ( this.domIsReady !== true ) {
+            document.addEventListener('DOMContentLoaded', ( ) => {
+                if ( vAPI instanceof Object === false ) { return; }
+                this.domIsReady = true;
+                this.commit();
+            });
+        }
     }
-};
-
-vAPI.DOMFilterer.prototype = {
-    reOnlySelectors: /\n\{[^\n]+/g,
 
     // Here we will deal with:
     // - Injecting low priority user styles;
@@ -92,11 +92,11 @@ vAPI.DOMFilterer.prototype = {
     //   process. Another approach would be to have vAPI.SafeAnimationFrame
     //   register a shutdown job: to evaluate. For now I will keep the fix
     //   trivial.
-    commitNow: function() {
+    commitNow() {
         this.commitTimer.clear();
         if ( vAPI instanceof Object === false ) { return; }
-        let userStylesheet = vAPI.userStylesheet;
-        for ( let entry of this.addedCSSRules ) {
+        const userStylesheet = vAPI.userStylesheet;
+        for ( const entry of this.addedCSSRules ) {
             if (
                 this.disabled === false &&
                 entry.lazy &&
@@ -109,25 +109,25 @@ vAPI.DOMFilterer.prototype = {
         }
         this.addedCSSRules.clear();
         userStylesheet.apply();
-    },
+    }
 
-    commit: function(commitNow) {
+    commit(commitNow) {
         if ( commitNow ) {
             this.commitTimer.clear();
             this.commitNow();
         } else {
             this.commitTimer.start();
         }
-    },
+    }
 
-    addCSSRule: function(selectors, declarations, details) {
+    addCSSRule(selectors, declarations, details) {
         if ( selectors === undefined ) { return; }
-        var selectorsStr = Array.isArray(selectors)
+        const selectorsStr = Array.isArray(selectors)
                 ? selectors.join(',\n')
                 : selectors;
         if ( selectorsStr.length === 0 ) { return; }
         if ( details === undefined ) { details = {}; }
-        var entry = {
+        const entry = {
             selectors: selectorsStr,
             declarations,
             lazy: details.lazy === true,
@@ -148,64 +148,71 @@ vAPI.DOMFilterer.prototype = {
                 declarative: [ [ selectorsStr, declarations ] ]
             });
         }
-    },
+    }
 
-    addListener: function(listener) {
+    exceptCSSRules(exceptions) {
+        if ( exceptions.length === 0 ) { return; }
+        this.exceptedCSSRules.push(...exceptions);
+        if ( this.hasListeners() ) {
+            this.triggerListeners({ exceptions });
+        }
+    }
+
+    addListener(listener) {
         if ( this.listeners.indexOf(listener) !== -1 ) { return; }
         this.listeners.push(listener);
-    },
+    }
 
-    removeListener: function(listener) {
-        var pos = this.listeners.indexOf(listener);
+    removeListener(listener) {
+        const pos = this.listeners.indexOf(listener);
         if ( pos === -1 ) { return; }
         this.listeners.splice(pos, 1);
-    },
+    }
 
-    hasListeners: function() {
+    hasListeners() {
         return this.listeners.length !== 0;
-    },
+    }
 
-    triggerListeners: function(changes) {
-        var i = this.listeners.length;
-        while ( i-- ) {
-            this.listeners[i].onFiltersetChanged(changes);
+    triggerListeners(changes) {
+        for ( const listener of this.listeners ) {
+            listener.onFiltersetChanged(changes);
         }
-    },
+    }
 
-    excludeNode: function(node) {
+    excludeNode(node) {
         this.excludedNodeSet.add(node);
         this.unhideNode(node);
-    },
+    }
 
-    unexcludeNode: function(node) {
+    unexcludeNode(node) {
         this.excludedNodeSet.delete(node);
-    },
+    }
 
-    hideNode: function(node) {
+    hideNode(node) {
         if ( this.excludedNodeSet.has(node) ) { return; }
         if ( this.hideNodeAttr === undefined ) { return; }
         node.setAttribute(this.hideNodeAttr, '');
         if ( this.hideNodeStyleSheetInjected === false ) {
             this.hideNodeStyleSheetInjected = true;
             this.addCSSRule(
-                '[' + this.hideNodeAttr + ']',
+                `[${this.hideNodeAttr}]`,
                 'display:none!important;'
             );
         }
-    },
+    }
 
-    unhideNode: function(node) {
+    unhideNode(node) {
         if ( this.hideNodeAttr === undefined ) { return; }
         node.removeAttribute(this.hideNodeAttr);
-    },
+    }
 
-    toggle: function(state, callback) {
+    toggle(state, callback) {
         if ( state === undefined ) { state = this.disabled; }
         if ( state !== this.disabled ) { return; }
         this.disabled = !state;
-        var userStylesheet = vAPI.userStylesheet;
-        for ( var entry of this.filterset ) {
-            var rule = entry.selectors + '\n{' + entry.declarations + '}';
+        const userStylesheet = vAPI.userStylesheet;
+        for ( const entry of this.filterset ) {
+            const rule = `${entry.selectors}\n{${entry.declarations}}`;
             if ( this.disabled ) {
                 userStylesheet.remove(rule);
             } else {
@@ -213,38 +220,35 @@ vAPI.DOMFilterer.prototype = {
             }
         }
         userStylesheet.apply(callback);
-    },
+    }
 
-    getAllSelectors_: function(all) {
-        var out = {
-            declarative: []
+    getAllSelectors_(all) {
+        const out = {
+            declarative: [],
+            exceptions: this.exceptedCSSRules,
         };
-        var selectors;
-        for ( var entry of this.filterset ) {
-            selectors = entry.selectors;
+        for ( const entry of this.filterset ) {
+            let selectors = entry.selectors;
             if ( all !== true && this.hideNodeAttr !== undefined ) {
                 selectors = selectors
-                                .replace('[' + this.hideNodeAttr + ']', '')
+                                .replace(`[${this.hideNodeAttr}]`, '')
                                 .replace(/^,\n|,\n$/gm, '');
                 if ( selectors === '' ) { continue; }
             }
             out.declarative.push([ selectors, entry.declarations ]);
         }
         return out;
-    },
+    }
 
-    getFilteredElementCount: function() {
-        let details = this.getAllSelectors_(true);
+    getFilteredElementCount() {
+        const details = this.getAllSelectors_(true);
         if ( Array.isArray(details.declarative) === false ) { return 0; }
-        let selectors = details.declarative.reduce(function(acc, entry) {
-            acc.push(entry[0]);
-            return acc;
-        }, []);
+        const selectors = details.declarative.map(entry => entry[0]);
         if ( selectors.length === 0 ) { return 0; }
         return document.querySelectorAll(selectors.join(',\n')).length;
-    },
+    }
 
-    getAllSelectors: function() {
+    getAllSelectors() {
         return this.getAllSelectors_(false);
     }
 };

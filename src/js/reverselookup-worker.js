@@ -186,6 +186,7 @@ const fromCosmeticFilter = function(details) {
             // Lowly generic cosmetic filters
             case 0: // simple id-based
                 if (
+                    exception === false &&
                     fargs[1] === selector.slice(1) &&
                     selector.charAt(0) === '#'
                 ) {
@@ -194,6 +195,7 @@ const fromCosmeticFilter = function(details) {
                 break;
             case 2: // simple class-based
                 if (
+                    exception === false &&
                     fargs[1] === selector.slice(1) &&
                     selector.charAt(0) === '.'
                 ) {
@@ -202,7 +204,7 @@ const fromCosmeticFilter = function(details) {
                 break;
             case 1: // complex id-based
             case 3: // complex class-based
-                if ( fargs[2] === selector ) {
+                if ( exception === false && fargs[2] === selector ) {
                     found = prefix + selector;
                 }
                 break;

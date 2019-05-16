@@ -622,13 +622,13 @@ const viewPort = (function() {
         if ( filter !== undefined ) {
             if ( typeof filter.source === 'string' ) {
                 filteringType = filter.source;
-                divcl.add(filteringType);
             }
             if ( filteringType === 'static' ) {
                 divcl.add('canLookup');
                 div.setAttribute('data-filter', filter.compiled);
             } else if ( filteringType === 'cosmetic' ) {
                 divcl.add('canLookup');
+                divcl.toggle('isException', filter.raw.startsWith('#@#'));
             }
         }
         span = div.children[1];
@@ -1503,7 +1503,7 @@ const reloadTab = function(ev) {
         text = trch[1].textContent;
         if (
             (text !== '') &&
-            (trcl.contains('cosmetic') || trcl.contains('static'))
+            (trcl.contains('cosmeticRealm') || trcl.contains('networkRealm'))
         ) {
             rows[0].children[1].textContent = text;
         } else {

@@ -1352,7 +1352,7 @@ const logCosmeticFilters = function(tabId, details) {
          .setDocOriginFromURL(details.frameURL)
          .setFilter(filter);
     for ( const selector of details.matchedSelectors.sort() ) {
-        filter.raw = '##' + selector;
+        filter.raw = selector;
         fctxt.toLogger();
     }
 };

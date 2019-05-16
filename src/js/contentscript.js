@@ -825,66 +825,60 @@ vAPI.DOMFilterer = (function() {
         }
     };
 
-    const DOMFiltererBase = vAPI.DOMFilterer;
+    const DOMFilterer = class extends vAPI.DOMFilterer {
+        constructor() {
+            super();
+            this.exceptions = [];
+            this.proceduralFilterer = new DOMProceduralFilterer(this);
+            this.hideNodeAttr = undefined;
+            this.hideNodeStyleSheetInjected = false;
+            if ( vAPI.domWatcher instanceof Object ) {
+                vAPI.domWatcher.addListener(this);
+            }
+        }
 
-    const domFilterer = function() {
-        DOMFiltererBase.call(this);
-        this.exceptions = [];
-        this.proceduralFilterer = new DOMProceduralFilterer(this);
-        this.hideNodeAttr = undefined;
-        this.hideNodeStyleSheetInjected = false;
+        commitNow() {
+            super.commitNow();
+            this.proceduralFilterer.commitNow();
+        }
 
-        // May or may not exist: cache locally since this may be called often.
-        this.baseOnDOMChanged = DOMFiltererBase.prototype.onDOMChanged;
+        addProceduralSelectors(aa) {
+            this.proceduralFilterer.addProceduralSelectors(aa);
+        }
 
-        if ( vAPI.domWatcher instanceof Object ) {
-            vAPI.domWatcher.addListener(this);
+        createProceduralFilter(o) {
+            return this.proceduralFilterer.createProceduralFilter(o);
+        }
+
+        getAllSelectors() {
+            const out = super.getAllSelectors();
+            out.procedural = Array.from(this.proceduralFilterer.selectors.values());
+            return out;
+        }
+
+        getAllExceptionSelectors() {
+            return this.exceptions.join(',\n');
+        }
+
+        onDOMCreated() {
+            if ( super.onDOMCreated instanceof Function ) {
+                super.onDOMCreated();
+            }
+            this.proceduralFilterer.onDOMCreated();
+        }
+
+        onDOMChanged() {
+            if ( super.onDOMChanged instanceof Function ) {
+                super.onDOMChanged(arguments);
+            }
+            this.proceduralFilterer.onDOMChanged.apply(
+                this.proceduralFilterer,
+                arguments
+            );
         }
     };
-    domFilterer.prototype = Object.create(DOMFiltererBase.prototype);
-    domFilterer.prototype.constructor = domFilterer;
 
-    domFilterer.prototype.commitNow = function() {
-        DOMFiltererBase.prototype.commitNow.call(this);
-        this.proceduralFilterer.commitNow();
-    };
-
-    domFilterer.prototype.addProceduralSelectors = function(aa) {
-        this.proceduralFilterer.addProceduralSelectors(aa);
-    };
-
-    domFilterer.prototype.createProceduralFilter = function(o) {
-        return this.proceduralFilterer.createProceduralFilter(o);
-    };
-
-    domFilterer.prototype.getAllSelectors = function() {
-        const out = DOMFiltererBase.prototype.getAllSelectors.call(this);
-        out.procedural = Array.from(this.proceduralFilterer.selectors.values());
-        return out;
-    };
-
-    domFilterer.prototype.getAllExceptionSelectors = function() {
-        return this.exceptions.join(',\n');
-    };
-
-    domFilterer.prototype.onDOMCreated = function() {
-        if ( DOMFiltererBase.prototype.onDOMCreated !== undefined ) {
-            DOMFiltererBase.prototype.onDOMCreated.call(this);
-        }
-        this.proceduralFilterer.onDOMCreated();
-    };
-
-    domFilterer.prototype.onDOMChanged = function() {
-        if ( this.baseOnDOMChanged !== undefined ) {
-            this.baseOnDOMChanged.apply(this, arguments);
-        }
-        this.proceduralFilterer.onDOMChanged.apply(
-            this.proceduralFilterer,
-            arguments
-        );
-    };
-
-    return domFilterer;
+    return DOMFilterer;
 })();
 
 vAPI.domFilterer = new vAPI.DOMFilterer();
@@ -1340,6 +1334,10 @@ vAPI.domSurveyor = (function() {
                 );
                 mustCommit = true;
             }
+            selectors = result.excepted;
+            if ( Array.isArray(selectors) && selectors.length !== 0 ) {
+                domFilterer.exceptCSSRules(selectors);
+            }
         }
 
         if ( pendingNodes.stopped === false ) {
@@ -1524,6 +1522,7 @@ vAPI.bootstrap = (function() {
                 { injected: true }
             );
             domFilterer.addProceduralSelectors(cfeDetails.proceduralFilters);
+            domFilterer.exceptCSSRules(cfeDetails.exceptedFilters);
         }
 
         if ( cfeDetails.networkFilters.length !== 0 ) {
