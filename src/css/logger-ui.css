@@ -326,8 +326,14 @@ body[dir="rtl"] #vwRenderer .logEntry > div > span:first-child {
 #vwRenderer .logEntry > div.messageRealm[data-type="tabLoad"] > span:nth-of-type(2) {
     text-align: center;
     }
-#vwRenderer .logEntry > div.cosmeticRealm.isException > span:nth-of-type(2) {
-    text-decoration: line-through;
+#vwRenderer .logEntry > div.cosmeticRealm > span:nth-of-type(2) > span:first-of-type {
+    display: none;
+    }
+#vwRenderer .logEntry > div.cosmeticRealm > span:nth-of-type(2) > span:last-of-type {
+    pointer-events: none;
+    }
+#vwRenderer .logEntry > div.cosmeticRealm.isException > span:nth-of-type(2) > span:last-of-type {
+    text-decoration: line-through rgba(0,0,255,0.7);
     }
 #vwRenderer .logEntry > div > span:nth-of-type(3) {
     font: 12px monospace;

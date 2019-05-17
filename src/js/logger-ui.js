@@ -567,6 +567,19 @@ const viewPort = (function() {
 
     updateLayout();
 
+    const renderFilterToSpan = function(span, filter) {
+        if ( filter.charCodeAt(0) !== 0x23 /* '#' */ ) { return false; }
+        const match = /^#@?#/.exec(filter);
+        if ( match === null ) { return false; }
+        let child = document.createElement('span');
+        child.textContent = match[0];
+        span.appendChild(child);
+        child = document.createElement('span');
+        child.textContent = filter.slice(match[0].length);
+        span.appendChild(child);
+        return true;
+    };
+
     const renderToDiv = function(vwEntry, i) {
         if ( i >= filteredLoggerEntries.length ) {
             vwEntry.logEntry = undefined;
@@ -632,7 +645,9 @@ const viewPort = (function() {
             }
         }
         span = div.children[1];
-        span.textContent = cells[1];
+        if ( renderFilterToSpan(span, cells[1]) === false ) {
+            span.textContent = cells[1];
+        }
 
         // Event
         if ( cells[2] === '--' ) {
