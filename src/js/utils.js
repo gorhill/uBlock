@@ -378,40 +378,6 @@
 
 /******************************************************************************/
 
-// I want this helper to be self-maintained, callers must not worry about
-// this helper cleaning after itself by asking them to reset it when it is no
-// longer needed. A timer will be used for self-garbage-collect.
-// Cleaning up 10s after last hit sounds reasonable.
-
-µBlock.stringDeduplicater = {
-    strings: new Map(),
-    timer: undefined,
-    last: 0,
-
-    lookup: function(s) {
-        let t = this.strings.get(s);
-        if ( t === undefined ) {
-            t = this.strings.set(s, s).get(s);
-            if ( this.timer === undefined ) {
-                this.timer = vAPI.setTimeout(() => { this.cleanup(); }, 10000);
-            }
-        }
-        this.last = Date.now();
-        return t;
-    },
-
-    cleanup: function() {
-        if ( (Date.now() - this.last) < 10000 ) {
-            this.timer = vAPI.setTimeout(() => { this.cleanup(); }, 10000);
-        } else {
-            this.timer = undefined;
-            this.strings.clear();
-        }
-    }
-};
-
-/******************************************************************************/
-
 µBlock.openNewTab = function(details) {
     if ( details.url.startsWith('logger-ui.html') ) {
         if ( details.shiftKey ) {

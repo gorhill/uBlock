@@ -921,6 +921,9 @@ const filterOrigin = new (class {
         } catch(ex) {
         }
         this.trieContainer = new HNTrieContainer(trieDetails);
+        this.strSlots = [];
+        this.strToSlotId = new Map();
+        this.gcTimer = undefined;
     }
 
     compile(details, wrapped) {
@@ -946,6 +949,26 @@ const filterOrigin = new (class {
         return FilterOriginMixedSet.compile(domainOpt, wrapped);
     }
 
+    slotIdFromStr(s) {
+        let slotId = this.strToSlotId.get(s);
+        if ( slotId !== undefined ) { return slotId; }
+        slotId = this.strSlots.push(s) - 1;
+        this.strToSlotId.set(s, slotId);
+        if ( this.gcTimer !== undefined ) { return slotId; }
+        this.gcTimer = self.requestIdleCallback(
+            ( ) => {
+                this.gcTimer = undefined;
+                this.strToSlotId.clear();
+            },
+            { timeout: 5000 }
+        );
+        return slotId;
+    }
+
+    strFromSlotId(slotId) {
+        return this.strSlots[slotId];
+    }
+
     logData(out, domainOpt) {
         if ( out.opts !== undefined ) { out.opts += ','; }
         out.opts = `domain=${domainOpt}`;
@@ -957,7 +980,9 @@ const filterOrigin = new (class {
     }
 
     reset() {
-        return this.trieContainer.reset();
+        this.trieContainer.reset();
+        this.strSlots.length = 0;
+        this.strToSlotId.clear();
     }
 
     optimize() {
@@ -966,6 +991,7 @@ const filterOrigin = new (class {
             'FilterOrigin.trieDetails',
             JSON.stringify(trieDetails)
         );
+        this.strToSlotId.clear();
     }
 })();
 
@@ -991,7 +1017,10 @@ const FilterOriginHit = class {
             return false;
         }
         if ( haystack.endsWith(this.hostname) === false ) { return false; }
-        if ( offset !== 0 && haystack.charCodeAt(offset-1) !== 0x2E /* '.' */ ) {
+        if (
+            offset !== 0 &&
+            haystack.charCodeAt(offset-1) !== 0x2E /* '.' */
+        ) {
             return false;
         }
         return this.wrapped.match(url, tokenBeg);
@@ -1003,8 +1032,8 @@ const FilterOriginHit = class {
         return filterOrigin.logData(out, this.hostname);
     }
 
-    compile() {
-        return [ this.fid, this.hostname, this.wrapped.compile() ];
+    compile(toSelfie = false) {
+        return [ this.fid, this.hostname, this.wrapped.compile(toSelfie) ];
     }
 
     static compile(domainOpt, wrapped) {
@@ -1033,7 +1062,10 @@ const FilterOriginMiss = class {
         const haystack = pageHostnameRegister;
         if ( haystack.endsWith(this.hostname) ) {
             const offset = haystack.length - this.hostname.length;
-            if ( offset === 0 || haystack.charCodeAt(offset-1) === 0x2E /* '.' */ ) {
+            if (
+                offset === 0 ||
+                haystack.charCodeAt(offset-1) === 0x2E /* '.' */
+            ) {
                 return false;
             }
         }
@@ -1046,8 +1078,8 @@ const FilterOriginMiss = class {
         return filterOrigin.logData(out, `~${this.hostname}`);
     }
 
-    compile() {
-        return [ this.fid, this.hostname, this.wrapped.compile() ];
+    compile(toSelfie = false) {
+        return [ this.fid, this.hostname, this.wrapped.compile(toSelfie) ];
     }
 
     static compile(domainOpt, wrapped) {
@@ -1068,9 +1100,9 @@ registerFilterClass(FilterOriginMiss);
 
 const FilterOriginHitSet = class {
     constructor(domainOpt, wrapped, oneOf = null) {
-        this.domainOpt = domainOpt.length < 128
+        this.domainOpt = typeof domainOpt === 'number'
             ? domainOpt
-            : µb.stringDeduplicater.lookup(domainOpt);
+            : filterOrigin.slotIdFromStr(domainOpt);
         this.wrapped = filterFromCompiledData(wrapped);
         this.oneOf = oneOf !== null
             ? filterOrigin.trieContainer.createOne(oneOf)
@@ -1080,7 +1112,7 @@ const FilterOriginHitSet = class {
     match(url, tokenBeg) {
         if ( this.oneOf === null ) {
             this.oneOf = filterOrigin.trieContainer.fromIterable(
-                this.domainOpt.split('|')
+                filterOrigin.strFromSlotId(this.domainOpt).split('|')
             );
         }
         return this.oneOf.matches(pageHostnameRegister) !== -1 &&
@@ -1089,15 +1121,18 @@ const FilterOriginHitSet = class {
 
     logData() {
         const out = this.wrapped.logData();
-        out.compiled = [ this.fid, this.domainOpt, out.compiled ];
-        return filterOrigin.logData(out, this.domainOpt);
+        const domainOpt = filterOrigin.strFromSlotId(this.domainOpt);
+        out.compiled = [ this.fid, domainOpt, out.compiled ];
+        return filterOrigin.logData(out, domainOpt);
     }
 
-    compile() {
+    compile(toSelfie = false) {
         const out = [
             this.fid,
-            this.domainOpt,
-            this.wrapped.compile(),
+            toSelfie
+                ? this.domainOpt :
+                filterOrigin.strFromSlotId(this.domainOpt),
+            this.wrapped.compile(toSelfie),
         ];
         if ( this.oneOf !== null ) { 
             out.push(filterOrigin.trieContainer.compileOne(this.oneOf));
@@ -1120,9 +1155,9 @@ registerFilterClass(FilterOriginHitSet);
 
 const FilterOriginMissSet = class {
     constructor(domainOpt, wrapped, noneOf = null) {
-        this.domainOpt = domainOpt.length < 128
+        this.domainOpt = typeof domainOpt === 'number'
             ? domainOpt
-            : µb.stringDeduplicater.lookup(domainOpt);
+            : filterOrigin.slotIdFromStr(domainOpt);
         this.wrapped = filterFromCompiledData(wrapped);
         this.noneOf = noneOf !== null
             ? filterOrigin.trieContainer.createOne(noneOf)
@@ -1132,7 +1167,10 @@ const FilterOriginMissSet = class {
     match(url, tokenBeg) {
         if ( this.noneOf === null ) {
             this.noneOf = filterOrigin.trieContainer.fromIterable(
-                this.domainOpt.replace(/~/g, '').split('|')
+                filterOrigin
+                    .strFromSlotId(this.domainOpt)
+                    .replace(/~/g, '')
+                    .split('|')
             );
         }
         return this.noneOf.matches(pageHostnameRegister) === -1 &&
@@ -1141,15 +1179,18 @@ const FilterOriginMissSet = class {
 
     logData() {
         const out = this.wrapped.logData();
-        out.compiled = [ this.fid, this.domainOpt, out.compiled ];
-        return filterOrigin.logData(out, this.domainOpt);
+        const domainOpt = filterOrigin.strFromSlotId(this.domainOpt);
+        out.compiled = [ this.fid, domainOpt, out.compiled ];
+        return filterOrigin.logData(out, domainOpt);
     }
 
-    compile() {
+    compile(toSelfie = false) {
         const out = [
             this.fid,
-            this.domainOpt,
-            this.wrapped.compile(),
+            toSelfie
+                ? this.domainOpt
+                : filterOrigin.strFromSlotId(this.domainOpt),
+            this.wrapped.compile(toSelfie),
         ];
         if ( this.noneOf !== null ) {
             out.push(filterOrigin.trieContainer.compileOne(this.noneOf));
@@ -1172,9 +1213,9 @@ registerFilterClass(FilterOriginMissSet);
 
 const FilterOriginMixedSet = class {
     constructor(domainOpt, wrapped, oneOf = null, noneOf = null) {
-        this.domainOpt = domainOpt.length < 128
+        this.domainOpt = typeof domainOpt === 'number'
             ? domainOpt
-            : µb.stringDeduplicater.lookup(domainOpt);
+            : filterOrigin.slotIdFromStr(domainOpt);
         this.wrapped = filterFromCompiledData(wrapped);
         this.oneOf = oneOf !== null
             ? filterOrigin.trieContainer.createOne(oneOf)
@@ -1186,7 +1227,8 @@ const FilterOriginMixedSet = class {
 
     init() {
         const oneOf = [], noneOf = [];
-        for ( const hostname of this.domainOpt.split('|') ) {
+        const domainOpt = filterOrigin.strFromSlotId(this.domainOpt);
+        for ( const hostname of domainOpt.split('|') ) {
             if ( hostname.charCodeAt(0) === 0x7E /* '~' */ ) {
                 noneOf.push(hostname.slice(1));
             } else {
@@ -1207,15 +1249,18 @@ const FilterOriginMixedSet = class {
 
     logData() {
         const out = this.wrapped.logData();
-        out.compiled = [ this.fid, this.domainOpt, out.compiled ];
-        return filterOrigin.logData(out, this.domainOpt);
+        const domainOpt = filterOrigin.strFromSlotId(this.domainOpt);
+        out.compiled = [ this.fid, domainOpt, out.compiled ];
+        return filterOrigin.logData(out, domainOpt);
     }
 
-    compile() {
+    compile(toSelfie = false) {
         const out = [
             this.fid,
-            this.domainOpt,
-            this.wrapped.compile(),
+            toSelfie
+                ? this.domainOpt
+                : filterOrigin.strFromSlotId(this.domainOpt),
+            this.wrapped.compile(toSelfie),
         ];
         if ( this.oneOf !== null ) {
             out.push(
@@ -1265,8 +1310,13 @@ const FilterDataHolder = class {
         return out;
     }
 
-    compile() {
-        return [ this.fid, this.dataType, this.dataStr, this.wrapped.compile() ];
+    compile(toSelfie = false) {
+        return [
+            this.fid,
+            this.dataType,
+            this.dataStr,
+            this.wrapped.compile(toSelfie)
+        ];
     }
 
     static compile(details) {
@@ -1492,8 +1542,12 @@ const FilterPair = class {
         return this.f.logData();
     }
 
-    compile() {
-        return [ this.fid, this.f1.compile(), this.f2.compile() ];
+    compile(toSelfie = false) {
+        return [
+            this.fid,
+            this.f1.compile(toSelfie),
+            this.f2.compile(toSelfie)
+        ];
     }
 
     upgrade(a) {
@@ -1621,15 +1675,10 @@ const FilterBucket = class {
         return this.f.logData();
     }
 
-    compile() {
-        const compiled = [];
-        const filters = this.filters;
-        for ( let i = 0, n = filters.length; i < n; i++ ) {
-            compiled[i] = filters[i].compile();
-        }
+    compile(toSelfie = false) {
         return [
             this.fid,
-            compiled,
+            this.filters.map(filter => filter.compile(toSelfie)),
             this.plainPrefix1Trie !== null &&
                 FilterBucket.trieContainer.compileOne(this.plainPrefix1Trie),
             this.plainHnAnchoredTrie !== null &&
@@ -1688,16 +1737,14 @@ const FilterBucket = class {
 
     static load(args) {
         const bucket = new FilterBucket();
-        const compiledFilters = args[1];
-        const filters = bucket.filters;
-        for ( let i = 0, n = compiledFilters.length; i < n; i++ ) {
-            filters[i] = filterFromCompiledData(compiledFilters[i]);
-        }
+        bucket.filters = args[1].map(data => filterFromCompiledData(data));
         if ( Array.isArray(args[2]) ) {
-            bucket.plainPrefix1Trie = FilterBucket.trieContainer.createOne(args[2]);
+            bucket.plainPrefix1Trie =
+                FilterBucket.trieContainer.createOne(args[2]);
         }
         if ( Array.isArray(args[3]) ) {
-            bucket.plainHnAnchoredTrie = FilterBucket.trieContainer.createOne(args[3]);
+            bucket.plainHnAnchoredTrie =
+                FilterBucket.trieContainer.createOne(args[3]);
         }
         return bucket;
     }
@@ -2439,7 +2486,7 @@ FilterContainer.prototype.toSelfie = function(path) {
         for ( const [ catbits, bucket ] of categoryMap ) {
             const tokenEntries = [];
             for ( const [ token, filter ] of bucket ) {
-                tokenEntries.push([ token, filter.compile() ]);
+                tokenEntries.push([ token, filter.compile(true) ]);
             }
             selfie.push([ catbits, tokenEntries ]);
         }
@@ -2450,7 +2497,7 @@ FilterContainer.prototype.toSelfie = function(path) {
         const selfie = [];
         for ( let entry of dataFilters.values() ) {
             do {
-                selfie.push(entry.compile());
+                selfie.push(entry.compile(true));
                 entry = entry.next;
             } while ( entry !== undefined );
         }
@@ -2484,6 +2531,7 @@ FilterContainer.prototype.toSelfie = function(path) {
                 categories: categoriesToSelfie(this.categories),
                 dataFilters: dataFiltersToSelfie(this.dataFilters),
                 urlTokenizer: this.urlTokenizer.toSelfie(),
+                filterOriginStrSlots: filterOrigin.strSlots,
             })
         )
     ]);
@@ -2526,6 +2574,7 @@ FilterContainer.prototype.fromSelfie = function(path) {
             this.blockFilterCount = selfie.blockFilterCount;
             this.discardedCount = selfie.discardedCount;
             this.urlTokenizer.fromSelfie(selfie.urlTokenizer);
+            filterOrigin.strSlots = selfie.filterOriginStrSlots;
             for ( const [ catbits, bucket ] of selfie.categories ) {
                 const tokenMap = new Map();
                 for ( const [ token, fdata ] of bucket ) {
