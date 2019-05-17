@@ -19,15 +19,15 @@ Som standard är följande filterlistor laddade och tillämpade:
 Fler filterlistor finns tillgängliga att använda om du vill:
 
 - Fanboy’s Enhanced Tracking List
-- Dan Pollock’s hosts file
+- Dan Pollocks hosts-fil
 - hpHosts reklam- och spårarservrar
 - MVPS HOSTS
 - Spam404
 - med flera
 
-Givetvis gör fler aktiverade filter att minnesanvändningen blir högre. Men även efter att ha lagt till Fanboys två extra filterlistor och hpHosts reklam- och språrarservrar, använder uBlock₀ mindre minnesfotavtryck än andra populära blockare.
+Givetvis gör fler aktiverade filter att minnesanvändningen blir högre. Även efter att ha lagt till Fanboys två extra filterlistor och hpHosts reklam- och spårarservrar, använder ändå uBlock mindre minnesanvändning än andra populära reklamblockerare.
 
-Tänk på att genom att aktivera vissa av dessa extra filterlistor finns det större risk att webbplatser går sönder - särskilt de listor som i normala fall används som hosts-filer.
+Tänk på att genom att aktivera vissa av dessa extra filterlistor finns det större risk att webbplatser går sönder -- särskilt de listor som i normala fall används som hosts-fil.
 
 ***
 

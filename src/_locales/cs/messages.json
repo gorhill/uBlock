@@ -300,7 +300,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Blokovat multimediální prvky větší než {{input:number}} kB",
+    "message": "Blokovat multimediální prvky větší než {{input}} kB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {

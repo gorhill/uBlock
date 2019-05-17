@@ -300,7 +300,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Blokovať multimediálne prvky väčšie ako {{input:number}} kB",
+    "message": "Blokovať multimediálne prvky väčšie ako {{input:number}} KB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
