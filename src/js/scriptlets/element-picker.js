@@ -883,16 +883,15 @@ const filterToDOMInterface = (function() {
             const elem = item.elem;
             // https://github.com/gorhill/uBlock/issues/1629
             if ( elem === pickerRoot ) { continue; }
-            const style = elem.style;
             if (
                 (elem !== htmlElem) &&
                 (item.type === 'cosmetic' || item.type === 'network' && item.src !== undefined)
             ) {
-                item.display = style.getPropertyValue('display');
-                item.displayPriority = style.getPropertyPriority('display');
-                style.setProperty('display', 'none', 'important');
+                vAPI.domFilterer.hideNode(elem);
+                item.hidden = true;
             }
             if ( item.type === 'network' && item.style === 'background-image' ) {
+                const style = elem.style;
                 item.backgroundImage = style.getPropertyValue('background-image');
                 item.backgroundImagePriority = style.getPropertyPriority('background-image');
                 style.setProperty('background-image', 'none', 'important');
@@ -903,13 +902,9 @@ const filterToDOMInterface = (function() {
     const unapplyHide = function() {
         if ( lastResultset === undefined ) { return; }
         for ( const item of lastResultset ) {
-            if ( item.hasOwnProperty('display') ) {
-                item.elem.style.setProperty(
-                    'display',
-                    item.display,
-                    item.displayPriority
-                );
-                delete item.display;
+            if ( item.hidden === true ) {
+                vAPI.domFilterer.unhideNode(item.elem);
+                item.hidden = false;
             }
             if ( item.hasOwnProperty('backgroundImage') ) {
                 item.elem.style.setProperty(
