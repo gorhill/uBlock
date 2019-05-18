@@ -101,13 +101,6 @@ const renderUserFilters = function(first) {
 
 /******************************************************************************/
 
-const allFiltersApplyHandler = function() {
-    messaging.send('dashboard', { what: 'reloadAllFilters' });
-    uDom('#userFiltersApply').prop('disabled', true );
-};
-
-/******************************************************************************/
-
 const handleImportFilePicker = function() {
     // https://github.com/chrisaljoudi/uBlock/issues/1004
     // Support extraction of filters from ABP backup file
@@ -188,7 +181,8 @@ const applyChanges = function() {
         details => {
             if ( details.error ) { return; }
             cachedUserFilters = details.content.trim();
-            allFiltersApplyHandler();
+            userFiltersChanged(false);
+            messaging.send('dashboard', { what: 'reloadAllFilters' });
         }
     );
 };
