@@ -177,17 +177,19 @@ var matchBucket = function(url, hostname, bucket, start) {
 
 /******************************************************************************/
 
-µBlock.stringFromWhitelist = function(whitelist) {
-    var r = {};
-    var i, bucket;
-    for ( var key in whitelist ) {
-        bucket = whitelist[key];
-        i = bucket.length;
-        while ( i-- ) {
-            r[bucket[i]] = true;
+µBlock.arrayFromWhitelist = function(whitelist) {
+    const out = new Set();
+    for ( const key in whitelist ) {
+        const bucket = whitelist[key];
+        for ( const directive of bucket ) {
+            out.add(directive);
         }
     }
-    return Object.keys(r).sort(function(a,b){return a.localeCompare(b);}).join('\n');
+    return Array.from(out).sort((a, b) => a.localeCompare(b));
+};
+
+µBlock.stringFromWhitelist = function(whitelist) {
+    return this.arrayFromWhitelist(whitelist).join('\n');
 };
 
 /******************************************************************************/

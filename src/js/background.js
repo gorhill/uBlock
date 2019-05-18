@@ -57,16 +57,6 @@ const µBlock = (function() { // jshint ignore:line
         userResourcesLocation: 'unset'
     };
 
-    const whitelistDefault = [
-        'about-scheme',
-        'chrome-extension-scheme',
-        'chrome-scheme',
-        'moz-extension-scheme',
-        'opera-scheme',
-        'vivaldi-scheme',
-        'wyciwyg-scheme',   // Firefox's "What-You-Cache-Is-What-You-Get"
-    ];
-
     return {
         firstInstall: false,
 
@@ -126,7 +116,15 @@ const µBlock = (function() { // jshint ignore:line
         // Whitelist directives need to be loaded once the PSL is available
         netWhitelist: {},
         netWhitelistModifyTime: 0,
-        netWhitelistDefault: whitelistDefault.join('\n'),
+        netWhitelistDefault: [
+            'about-scheme',
+            'chrome-extension-scheme',
+            'chrome-scheme',
+            'moz-extension-scheme',
+            'opera-scheme',
+            'vivaldi-scheme',
+            'wyciwyg-scheme',   // Firefox's "What-You-Cache-Is-What-You-Get"
+        ],
 
         localSettings: {
             blockedRequestCount: 0,

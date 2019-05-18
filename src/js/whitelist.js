@@ -25,26 +25,42 @@
 
 /******************************************************************************/
 
-(function() {
+(( ) => {
+
+/******************************************************************************/
+
+const reComment = /^\s*#\s*/;
+
+const directiveFromLine = function(line) {
+    const match = reComment.exec(line);
+    return match === null
+        ? line.trim()
+        : line.slice(match.index + match[0].length).trim();
+};
 
 /******************************************************************************/
 
 CodeMirror.defineMode("ubo-whitelist-directives", function() {
-    var reComment = /^\s*#/,
-        reRegex = /^\/.+\/$/;
+    const reRegex = /^\/.+\/$/;
 
     return {
         token: function(stream) {
-            var line = stream.string.trim();
+            const line = stream.string.trim();
             stream.skipToEnd();
             if ( reBadHostname === undefined ) {
                 return null;
             }
             if ( reComment.test(line) ) {
-                return 'comment';
+                return whitelistDefaultSet.has(directiveFromLine(line))
+                    ? 'builtin comment'
+                    : 'comment';
             }
             if ( line.indexOf('/') === -1 ) {
-                return reBadHostname.test(line) ? 'error' : null;
+                if ( reBadHostname.test(line) ) { return 'error'; }
+                if ( whitelistDefaultSet.has(line.trim()) ) {
+                    return 'builtin';
+                }
+                return null;
             }
             if ( reRegex.test(line) ) {
                 try {
@@ -59,16 +75,18 @@ CodeMirror.defineMode("ubo-whitelist-directives", function() {
     };
 });
 
-var reBadHostname,
-    reHostnameExtractor;
+let reBadHostname;
+let reHostnameExtractor;
+let whitelistDefaultSet = new Set();
 
 /******************************************************************************/
 
-var messaging = vAPI.messaging,
-    cachedWhitelist = '',
-    noopFunc = function(){};
+const messaging = vAPI.messaging;
+const noopFunc = function(){};
 
-var cmEditor = new CodeMirror(
+let cachedWhitelist = '';
+
+const cmEditor = new CodeMirror(
     document.getElementById('whitelist'),
     {
         autofocus: true,
@@ -82,11 +100,11 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 
 /******************************************************************************/
 
-var whitelistChanged = function() {
-    var whitelistElem = uDom.nodeFromId('whitelist');
-    var bad = whitelistElem.querySelector('.cm-error') !== null;
-    var changedWhitelist = cmEditor.getValue().trim();
-    var changed = changedWhitelist !== cachedWhitelist;
+const whitelistChanged = function() {
+    const whitelistElem = uDom.nodeFromId('whitelist');
+    const bad = whitelistElem.querySelector('.cm-error') !== null;
+    const changedWhitelist = cmEditor.getValue().trim();
+    const changed = changedWhitelist !== cachedWhitelist;
     uDom.nodeFromId('whitelistApply').disabled = !changed || bad;
     uDom.nodeFromId('whitelistRevert').disabled = !changed;
     CodeMirror.commands.save = changed && !bad ? applyChanges : noopFunc;
@@ -96,15 +114,39 @@ cmEditor.on('changes', whitelistChanged);
 
 /******************************************************************************/
 
-var renderWhitelist = function() {
-    var onRead = function(details) {
-        var first = reBadHostname === undefined;
+const renderWhitelist = function() {
+    const onRead = details => {
+        const first = reBadHostname === undefined;
         if ( first ) {
             reBadHostname = new RegExp(details.reBadHostname);
             reHostnameExtractor = new RegExp(details.reHostnameExtractor);
+            whitelistDefaultSet = new Set(details.whitelistDefault);
         }
-        cachedWhitelist = details.whitelist.trim();
-        cmEditor.setValue(cachedWhitelist + '\n');
+        const toAdd = new Set(whitelistDefaultSet);
+        for ( const line of details.whitelist ) {
+            const directive = directiveFromLine(line);
+            if ( whitelistDefaultSet.has(directive) === false ) { continue; }
+            toAdd.delete(directive);
+            if ( toAdd.size === 0 ) { break; }
+        }
+        if ( toAdd.size !== 0 ) {
+            details.whitelist.push(...Array.from(toAdd).map(a => `# ${a}`));
+        }
+        details.whitelist.sort((a, b) => {
+            const ad = directiveFromLine(a);
+            const bd = directiveFromLine(b);
+            const abuiltin = whitelistDefaultSet.has(ad);
+            if ( abuiltin !== whitelistDefaultSet.has(bd) ) {
+                return abuiltin ? -1 : 1;
+            }
+            return ad.localeCompare(bd);
+        });
+        let whitelistStr = details.whitelist.join('\n').trim();
+        cachedWhitelist = whitelistStr;
+        if ( whitelistStr !== '' ) {
+            whitelistStr += '\n';
+        }
+        cmEditor.setValue(whitelistStr);
         if ( first ) {
             cmEditor.clearHistory();
         }
@@ -114,8 +156,8 @@ var renderWhitelist = function() {
 
 /******************************************************************************/
 
-var handleImportFilePicker = function() {
-    var fileReaderOnLoadHandler = function() {
+const handleImportFilePicker = function() {
+    const fileReaderOnLoadHandler = ( ) => {
         cmEditor.setValue(
             [
                 cmEditor.getValue().trim(),
@@ -123,18 +165,18 @@ var handleImportFilePicker = function() {
             ].join('\n').trim()
         );
     };
-    var file = this.files[0];
+    const file = this.files[0];
     if ( file === undefined || file.name === '' ) { return; }
     if ( file.type.indexOf('text') !== 0 ) { return; }
-    var fr = new FileReader();
+    const fr = new FileReader();
     fr.onload = fileReaderOnLoadHandler;
     fr.readAsText(file);
 };
 
 /******************************************************************************/
 
-var startImportFilePicker = function() {
-    var input = document.getElementById('importFilePicker');
+const startImportFilePicker = function() {
+    const input = document.getElementById('importFilePicker');
     // Reset to empty string, this will ensure an change event is properly
     // triggered if the user pick a file, even if it is the same as the last
     // one picked.
@@ -144,21 +186,22 @@ var startImportFilePicker = function() {
 
 /******************************************************************************/
 
-var exportWhitelistToFile = function() {
-    var val = cmEditor.getValue().trim();
+const exportWhitelistToFile = function() {
+    const val = cmEditor.getValue().trim();
     if ( val === '' ) { return; }
-    var filename = vAPI.i18n('whitelistExportFilename')
-        .replace('{{datetime}}', uBlockDashboard.dateNowToSensibleString())
-        .replace(/ +/g, '_');
+    const filename =
+        vAPI.i18n('whitelistExportFilename')
+            .replace('{{datetime}}', uBlockDashboard.dateNowToSensibleString())
+            .replace(/ +/g, '_');
     vAPI.download({
-        'url': 'data:text/plain;charset=utf-8,' + encodeURIComponent(val + '\n'),
+        'url': `data:text/plain;charset=utf-8,${encodeURIComponent(val + '\n')}`,
         'filename': filename
     });
 };
 
 /******************************************************************************/
 
-var applyChanges = function() {
+const applyChanges = function() {
     cachedWhitelist = cmEditor.getValue().trim();
     messaging.send(
         'dashboard',
@@ -170,19 +213,19 @@ var applyChanges = function() {
     );
 };
 
-var revertChanges = function() {
-    var content = cachedWhitelist;
+const revertChanges = function() {
+    let content = cachedWhitelist;
     if ( content !== '' ) { content += '\n'; }
     cmEditor.setValue(content);
 };
 
 /******************************************************************************/
 
-var getCloudData = function() {
+const getCloudData = function() {
     return cmEditor.getValue();
 };
 
-var setCloudData = function(data, append) {
+const setCloudData = function(data, append) {
     if ( typeof data !== 'string' ) { return; }
     if ( append ) {
         data = uBlockDashboard.mergeNewLines(cmEditor.getValue().trim(), data);

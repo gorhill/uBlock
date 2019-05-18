@@ -208,9 +208,11 @@ const onVersionReady = function(lastVersion) {
 
     const lastVersionInt = intFromVersion(lastVersion);
 
-    if ( lastVersionInt <= 1016021007 ) {
-        µb.sessionSwitches.toggle('no-scripting', 'behind-the-scene', 2);
-        µb.permanentSwitches.toggle('no-scripting', 'behind-the-scene', 2);
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/494
+    //   Remove useless per-site switches.
+    if ( lastVersionInt <= 1019003007 ) {
+        µb.sessionSwitches.toggle('no-scripting', 'behind-the-scene', 0);
+        µb.permanentSwitches.toggle('no-scripting', 'behind-the-scene', 0);
         µb.saveHostnameSwitches();
     }
 
@@ -347,13 +349,12 @@ const createDefaultProps = function() {
         'urlFilteringString': '',
         'hostnameSwitchesString': [
             'no-large-media: behind-the-scene false',
-            'no-scripting: behind-the-scene false'
         ].join('\n'),
         'lastRestoreFile': '',
         'lastRestoreTime': 0,
         'lastBackupFile': '',
         'lastBackupTime': 0,
-        'netWhitelist': µb.netWhitelistDefault,
+        'netWhitelist': µb.netWhitelistDefault.join('\n'),
         'selfieMagic': 0,
         'version': '0.0.0.0'
     };

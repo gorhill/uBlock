@@ -30,24 +30,17 @@
 
 /******************************************************************************/
 
-var µb = µBlock;
+const µb = µBlock;
 
 /******************************************************************************/
 
-var getDomainNames = function(targets) {
-    var out = [];
-    var µburi = µb.URI;
-    var target, domain;
-    for ( var i = 0; i < targets.length; i++ ) {
-        target = targets[i];
-        if ( target.indexOf('/') !== -1 ) {
-            domain = µburi.domainFromURI(target) || '';
-        } else {
-            domain = µburi.domainFromHostname(target) || target;
-        }
-        out.push(domain);
-    }
-    return out;
+const getDomainNames = function(targets) {
+    const µburi = µb.URI;
+    return targets.map(target =>
+        target.indexOf('/') !== -1
+            ? µburi.domainFromURI(target) || ''
+            : µburi.domainFromHostname(target) || target
+    );
 };
 
 /******************************************************************************/
@@ -128,7 +121,8 @@ const onMessage = function(request, sender, callback) {
 
     case 'getWhitelist':
         response = {
-            whitelist: µb.stringFromWhitelist(µb.netWhitelist),
+            whitelist: µb.arrayFromWhitelist(µb.netWhitelist),
+            whitelistDefault: µb.netWhitelistDefault,
             reBadHostname: µb.reWhitelistBadHostname.source,
             reHostnameExtractor: µb.reWhitelistHostnameExtractor.source
         };

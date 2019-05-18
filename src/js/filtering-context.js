@@ -91,7 +91,7 @@
                 µBlock.normalizePageURL(0, details.documentUrl)
             );
             this.setDocOrigin(origin).setTabOrigin(origin);
-        } else if ( this.type === 'sub_frame' ) {
+        } else if ( this.type.endsWith('_frame') ) {
             const origin = this.originFromURI(this.url);
             this.setDocOrigin(origin).setTabOrigin(origin);
         } else {
