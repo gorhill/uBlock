@@ -62,8 +62,8 @@ const SelectorCacheEntry = class {
     }
 
     addCosmetic(details) {
-        let selectors = details.selectors,
-            i = selectors.length || 0;
+        const selectors = details.selectors;
+        let i = selectors.length || 0;
         // https://github.com/gorhill/uBlock/issues/2011
         //   Avoiding seemingly pointless surveys only if they appear costly.
         if ( details.first && i === 0 ) {
@@ -90,8 +90,8 @@ const SelectorCacheEntry = class {
         if ( this.net.size < SelectorCacheEntry.netHighWaterMark ) {
             return;
         }
-        let dict = this.net;
-        let keys = Array.from(dict.keys()).sort(function(a, b) {
+        const dict = this.net;
+        const keys = Array.from(dict.keys()).sort(function(a, b) {
             return dict.get(b) - dict.get(a);
         }).slice(SelectorCacheEntry.netLowWaterMark);
         let i = keys.length;
@@ -146,7 +146,7 @@ const SelectorCacheEntry = class {
 
     retrieve(type, out) {
         this.lastAccessTime = Date.now();
-        let iterator = type === 'cosmetic' ? this.cosmetic : this.net.keys();
+        const iterator = type === 'cosmetic' ? this.cosmetic : this.net.keys();
         if ( Array.isArray(out) ) {
             this.retrieveToArray(iterator, out);
         } else {
@@ -200,9 +200,6 @@ const FilterContainer = function() {
     this.selectorCacheCountMin = 25;
     this.netSelectorCacheCountMax = SelectorCacheEntry.netHighWaterMark;
     this.selectorCacheTimer = null;
-
-    // generic exception filters
-    this.genericDonthideSet = new Set();
 
     // specific filters
     this.specificFilters = new µb.staticExtFilteringEngine.HostnameBasedDB(2);
@@ -269,9 +266,6 @@ FilterContainer.prototype.reset = function() {
     // generic filters
     this.hasGenericHide = false;
 
-    // generic exception filters
-    this.genericDonthideSet.clear();
-
     // hostname, entity-based filters
     this.specificFilters.clear();
 
@@ -311,7 +305,6 @@ FilterContainer.prototype.freeze = function() {
 
     this.frozen = true;
 };
-
 
 /******************************************************************************/
 
@@ -429,11 +422,17 @@ FilterContainer.prototype.compileGenericHideSelector = function(
     // https://github.com/uBlockOrigin/uBlock-issues/issues/464
     //   Pseudoclass-based selectors can be compiled, but are also valid
     //   plain selectors.
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/131
+    //   Support generic procedural filters as per advanced settings.
+    //   TODO: prevent double compilation.
     if (
         compiled === undefined ||
         compiled !== selector &&
         µb.staticExtFilteringEngine.compileSelector.pseudoclass !== true
     ) {
+        if ( µb.hiddenSettings.allowGenericProceduralFilters === true ) {
+            return this.compileSpecificSelector('', parsed, writer);
+        }
         const who = writer.properties.get('assetKey') || '?';
         µb.logger.writeOne({
             realm: 'message',
@@ -450,8 +449,8 @@ FilterContainer.prototype.compileGenericHideSelector = function(
         writer.push([
             type === 0x23 /* '#' */ ? 1 : 3,
             key.slice(1),
-            selector ]
-        );
+            selector
+        ]);
         return;
     }
 
@@ -493,7 +492,7 @@ FilterContainer.prototype.compileGenericUnhideSelector = function(
     writer
 ) {
     // Procedural cosmetic filters are acceptable as generic exception filters.
-    let compiled = µb.staticExtFilteringEngine.compileSelector(parsed.suffix);
+    const compiled = µb.staticExtFilteringEngine.compileSelector(parsed.suffix);
     if ( compiled === undefined ) {
         const who = writer.properties.get('assetKey') || '?';
         µb.logger.writeOne({
@@ -505,9 +504,12 @@ FilterContainer.prototype.compileGenericUnhideSelector = function(
     }
 
     // https://github.com/chrisaljoudi/uBlock/issues/497
-    //   All generic exception filters are put in the same bucket: they are
-    //   expected to be very rare.
-    writer.push([ 7 /* g1 */, compiled ]);
+    //   All generic exception filters are stored as hostname-based filter
+    //   whereas the hostname is the empty string (which matches all
+    //   hostnames). No distinction is made between declarative and
+    //   procedural selectors, since they really exist only to cancel
+    //   out other cosmetic filters.
+    writer.push([ 8, '', 0b01, compiled ]);
 };
 
 /******************************************************************************/
@@ -622,13 +624,6 @@ FilterContainer.prototype.fromCompiledContent = function(reader, options) {
             this.highlyGeneric.complex.dict.add(args[1]);
             break;
 
-        // https://github.com/chrisaljoudi/uBlock/issues/497
-        // Generic exception filters: expected to be a rare occurrence.
-        // #@#.tweet
-        case 7:
-            this.genericDonthideSet.add(args[1]);
-            break;
-
         // hash,  example.com, .promoted-tweet
         // hash,  example.*, .promoted-tweet
         case 8:
@@ -659,13 +654,6 @@ FilterContainer.prototype.skipGenericCompiledContent = function(reader) {
         const args = reader.args();
 
         switch ( args[0] ) {
-
-        // https://github.com/chrisaljoudi/uBlock/issues/497
-        // Generic exception filters: expected to be a rare occurrence.
-        case 7:
-            this.duplicateBuster.add(fingerprint);
-            this.genericDonthideSet.add(args[1]);
-            break;
 
         // hash,  example.com, .promoted-tweet
         // hash,  example.*, .promoted-tweet
@@ -707,7 +695,6 @@ FilterContainer.prototype.toSelfie = function() {
         lowlyGenericCCL: Array.from(this.lowlyGeneric.cl.complex),
         highSimpleGenericHideArray: Array.from(this.highlyGeneric.simple.dict),
         highComplexGenericHideArray: Array.from(this.highlyGeneric.complex.dict),
-        genericDonthideArray: Array.from(this.genericDonthideSet)
     };
 };
 
@@ -726,7 +713,6 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
     this.highlyGeneric.simple.str = selfie.highSimpleGenericHideArray.join(',\n');
     this.highlyGeneric.complex.dict = new Set(selfie.highComplexGenericHideArray);
     this.highlyGeneric.complex.str = selfie.highComplexGenericHideArray.join(',\n');
-    this.genericDonthideSet = new Set(selfie.genericDonthideArray);
     this.frozen = true;
 };
 
@@ -989,13 +975,6 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
     };
 
     if ( options.noCosmeticFiltering !== true ) {
-        // Exception cosmetic filters: prime with generic exception filters.
-        const exceptionSet = this.setRegister0;
-        // Genetic exceptions (should be extremely rare).
-        for ( let exception of this.genericDonthideSet ) {
-            exceptionSet.add(exception);
-        }
-
         const specificSet = this.setRegister1;
         // Cached cosmetic filters: these are always declarative.
         if ( cacheEntry !== undefined ) {
@@ -1006,6 +985,7 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
             }
         }
 
+        const exceptionSet = this.setRegister0;
         const proceduralSet = this.setRegister2;
 
         this.specificFilters.retrieve(

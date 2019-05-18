@@ -36,6 +36,7 @@ if ( vAPI.webextFlavor === undefined ) {
 const µBlock = (function() { // jshint ignore:line
 
     const hiddenSettingsDefault = {
+        allowGenericProceduralFilters: false,
         assetFetchTimeout: 30,
         autoCommentFilterTemplate: '{{date}} {{origin}}',
         autoUpdateAssetFetchPeriod: 120,
@@ -54,7 +55,7 @@ const µBlock = (function() { // jshint ignore:line
         selfieAfter: 3,
         strictBlockingBypassDuration: 120,
         suspendTabsUntilReady: 'unset',
-        userResourcesLocation: 'unset'
+        userResourcesLocation: 'unset',
     };
 
     return {
@@ -135,7 +136,7 @@ const µBlock = (function() { // jshint ignore:line
 
         // Read-only
         systemSettings: {
-            compiledMagic: 15,  // Increase when compiled format changes
+            compiledMagic: 16,  // Increase when compiled format changes
             selfieMagic: 16     // Increase when selfie format changes
         },
 
