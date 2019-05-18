@@ -240,8 +240,8 @@
     "description":"English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry":{
-    "message":"Block element",
-    "description":"English: Block element"
+    "message":"Block element...",
+    "description":"An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt":{
     "message":"Hide placeholders of blocked elements",
