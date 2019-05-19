@@ -862,24 +862,23 @@ const resetUserData = function() {
 
 // 3rd-party filters
 
-var prepListEntries = function(entries) {
-    var µburi = µb.URI;
-    var entry, hn;
-    for ( var k in entries ) {
+const prepListEntries = function(entries) {
+    const µburi = µb.URI;
+    for ( const k in entries ) {
         if ( entries.hasOwnProperty(k) === false ) { continue; }
-        entry = entries[k];
+        const entry = entries[k];
         if ( typeof entry.supportURL === 'string' && entry.supportURL !== '' ) {
             entry.supportName = µburi.hostnameFromURI(entry.supportURL);
         } else if ( typeof entry.homeURL === 'string' && entry.homeURL !== '' ) {
-            hn = µburi.hostnameFromURI(entry.homeURL);
-            entry.supportURL = 'http://' + hn + '/';
+            const hn = µburi.hostnameFromURI(entry.homeURL);
+            entry.supportURL = `http://${hn}/`;
             entry.supportName = µburi.domainFromHostname(hn);
         }
     }
 };
 
-var getLists = function(callback) {
-    var r = {
+const getLists = function(callback) {
+    const r = {
         autoUpdate: µb.userSettings.autoUpdate,
         available: null,
         cache: null,
@@ -887,16 +886,17 @@ var getLists = function(callback) {
         current: µb.availableFilterLists,
         externalLists: µb.userSettings.externalLists,
         ignoreGenericCosmeticFilters: µb.userSettings.ignoreGenericCosmeticFilters,
+        isUpdating: µb.assets.isUpdating(),
         netFilterCount: µb.staticNetFilteringEngine.getFilterCount(),
         parseCosmeticFilters: µb.userSettings.parseAllABPHideFilters,
         userFiltersPath: µb.userFiltersPath
     };
-    var onMetadataReady = function(entries) {
+    const onMetadataReady = function(entries) {
         r.cache = entries;
         prepListEntries(r.cache);
         callback(r);
     };
-    var onLists = function(lists) {
+    const onLists = function(lists) {
         r.available = lists;
         prepListEntries(r.available);
         µb.assets.metadata(onMetadataReady);
@@ -908,7 +908,7 @@ var getLists = function(callback) {
 
 // My rules
 
-var getRules = function() {
+const getRules = function() {
     return {
         permanentRules:
             µb.permanentFirewall.toArray().concat(
@@ -923,7 +923,7 @@ var getRules = function() {
     };
 };
 
-var modifyRuleset = function(details) {
+const modifyRuleset = function(details) {
     let swRuleset, hnRuleset, urlRuleset;
     if ( details.permanent ) {
         swRuleset = µb.permanentSwitches;
@@ -974,7 +974,7 @@ var modifyRuleset = function(details) {
 
 // Shortcuts pane
 
-let getShortcuts = function(callback) {
+const getShortcuts = function(callback) {
     if ( µb.canUseShortcuts === false ) {
         return callback([]);
     }
@@ -995,7 +995,7 @@ let getShortcuts = function(callback) {
     });
 };
 
-let setShortcut = function(details) {
+const setShortcut = function(details) {
     if  ( µb.canUpdateShortcuts === false ) { return; }
     if ( details.shortcut === undefined ) {
         vAPI.commands.reset(details.name);
@@ -1009,7 +1009,7 @@ let setShortcut = function(details) {
 
 /******************************************************************************/
 
-var onMessage = function(request, sender, callback) {
+const onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
     case 'backupUserData':

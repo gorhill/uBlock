@@ -299,6 +299,10 @@ const renderFilterLists = function(soft) {
         if ( !soft ) {
             filteringSettingsHash = hashFromCurrentFromSettings();
         }
+
+        // https://github.com/gorhill/uBlock/issues/2394
+        document.body.classList.toggle('updating', listDetails.isUpdating);
+
         renderWidgets();
     };
 

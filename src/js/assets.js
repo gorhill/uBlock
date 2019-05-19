@@ -916,15 +916,16 @@ api.rmrf = function() {
 /******************************************************************************/
 
 // Asset updater area.
-var updaterStatus,
+const updaterAssetDelayDefault = 120000;
+const updaterUpdated = [];
+const updaterFetched = new Set();
+
+let updaterStatus,
     updaterTimer,
-    updaterAssetDelayDefault = 120000,
     updaterAssetDelay = updaterAssetDelayDefault,
-    updaterUpdated = [],
-    updaterFetched = new Set(),
     noRemoteResources;
 
-var updateFirst = function() {
+const updateFirst = function() {
     // https://github.com/gorhill/uBlock/commit/126110c9a0a0630cd556f5cb215422296a961029
     //   Firefox extension reviewers do not want uBO/webext to fetch its own
     //   scriptlets/resources asset from the project's own repo (github.com).
@@ -939,31 +940,33 @@ var updateFirst = function() {
     }
     updaterStatus = 'updating';
     updaterFetched.clear();
-    updaterUpdated = [];
+    updaterUpdated.length = 0;
     fireNotification('before-assets-updated');
     updateNext();
 };
 
-var updateNext = function() {
-    var assetDict, cacheDict;
+const updateNext = function() {
+    let assetDict, cacheDict;
 
     // This will remove a cached asset when it's no longer in use.
-    var garbageCollectOne = function(assetKey) {
-        var cacheEntry = cacheDict[assetKey];
+    const garbageCollectOne = function(assetKey) {
+        const cacheEntry = cacheDict[assetKey];
         if ( cacheEntry && cacheEntry.readTime < assetCacheRegistryStartTime ) {
             assetCacheRemove(assetKey);
         }
     };
 
-    var findOne = function() {
-        var now = Date.now(),
-            assetEntry, cacheEntry;
-        for ( var assetKey in assetDict ) {
-            assetEntry = assetDict[assetKey];
+    const findOne = function() {
+        const now = Date.now();
+        for ( const assetKey in assetDict ) {
+            const assetEntry = assetDict[assetKey];
             if ( assetEntry.hasRemoteURL !== true ) { continue; }
             if ( updaterFetched.has(assetKey) ) { continue; }
-            cacheEntry = cacheDict[assetKey];
-            if ( cacheEntry && (cacheEntry.writeTime + assetEntry.updateAfter * 86400000) > now ) {
+            const cacheEntry = cacheDict[assetKey];
+            if (
+                cacheEntry &&
+                (cacheEntry.writeTime + assetEntry.updateAfter * 86400000) > now
+            ) {
                 continue;
             }
             // Update of user scripts/resources forbidden?
@@ -982,7 +985,7 @@ var updateNext = function() {
         }
     };
 
-    var updatedOne = function(details) {
+    const updatedOne = function(details) {
         if ( details.content !== '' ) {
             updaterUpdated.push(details.assetKey);
             if ( details.assetKey === 'assets.json' ) {
@@ -998,8 +1001,8 @@ var updateNext = function() {
         }
     };
 
-    var updateOne = function() {
-        var assetKey = findOne();
+    const updateOne = function() {
+        const assetKey = findOne();
         if ( assetKey === undefined ) {
             return updateDone();
         }
@@ -1020,20 +1023,20 @@ var updateNext = function() {
     });
 };
 
-var updateDone = function() {
-    var assetKeys = updaterUpdated.slice(0);
+const updateDone = function() {
+    const assetKeys = updaterUpdated.slice(0);
     updaterFetched.clear();
-    updaterUpdated = [];
+    updaterUpdated.length = 0;
     updaterStatus = undefined;
     updaterAssetDelay = updaterAssetDelayDefault;
     fireNotification('after-assets-updated', { assetKeys: assetKeys });
 };
 
 api.updateStart = function(details) {
-    var oldUpdateDelay = updaterAssetDelay,
-        newUpdateDelay = typeof details.delay === 'number' ?
-            details.delay :
-            updaterAssetDelayDefault;
+    const oldUpdateDelay = updaterAssetDelay;
+    const newUpdateDelay = typeof details.delay === 'number' ?
+        details.delay :
+        updaterAssetDelayDefault;
     updaterAssetDelay = Math.min(oldUpdateDelay, newUpdateDelay);
     if ( updaterStatus !== undefined ) {
         if ( newUpdateDelay < oldUpdateDelay ) {
@@ -1053,6 +1056,11 @@ api.updateStop = function() {
     if ( updaterStatus !== undefined ) {
         updateDone();
     }
+};
+
+api.isUpdating = function() {
+    return updaterStatus === 'updating' &&
+           updaterAssetDelay <= µBlock.hiddenSettings.manualUpdateAssetFetchPeriod;
 };
 
 /******************************************************************************/

@@ -40,6 +40,7 @@ const µBlock = (function() { // jshint ignore:line
         assetFetchTimeout: 30,
         autoCommentFilterTemplate: '{{date}} {{origin}}',
         autoUpdateAssetFetchPeriod: 120,
+        autoUpdateDelayAfterLaunch: 180,
         autoUpdatePeriod: 7,
         cacheStorageAPI: 'unset',
         cacheStorageCompression: true,
