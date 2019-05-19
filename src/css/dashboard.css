@@ -66,11 +66,31 @@ html, body {
     border-bottom: 1px solid white;
     }
 iframe {
-    margin: 0;
-    border: 0;
-    padding: 0;
     background-color: transparent;
+    border: 0;
+    margin: 0;
+    padding: 0;
     width: 100%;
+    }
+#unsavedWarning {
+    box-shadow: rgba(128,128,128,0.4) 0 4px 4px;
+    display: none;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 20;
+    }
+#unsavedWarning.on {
+    display: initial;
+    }
+#unsavedWarning > div:first-of-type {
+    background-color: #ffffcc;
+    padding: 0.5em;
+    }
+#unsavedWarning > div:last-of-type {
+    height: 100vh;
+    position: absolute;
+    width: 100vw;
     }
 
 body:not(.canUpdateShortcuts) .tabButton[href="#shortcuts.html"] {

@@ -238,6 +238,12 @@ self.cloud.onPull = setCloudData;
 
 /******************************************************************************/
 
+self.hasUnsavedData = function() {
+    return cmEditor.getValue().trim() !== cachedWhitelist;
+};
+
+/******************************************************************************/
+
 uDom('#importWhitelistFromFile').on('click', startImportFilePicker);
 uDom('#importFilePicker').on('change', handleImportFilePicker);
 uDom('#exportWhitelistToFile').on('click', exportWhitelistToFile);

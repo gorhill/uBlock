@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-(function() {
+(( ) => {
 
 /******************************************************************************/
 
@@ -329,7 +329,7 @@ const onFilterChanged = (function() {
         overlay = null,
         last = '';
 
-    let process = function() {
+    const process = function() {
         timer = undefined;
         if ( mergeView.editor().isClean(cleanEditToken) === false ) { return; }
         let filter = uDom.nodeFromSelector('#ruleFilter input').value;
@@ -359,7 +359,7 @@ const onFilterChanged = (function() {
 const onTextChanged = (function() {
     let timer;
 
-    let process = function(now) {
+    const process = function(now) {
         timer = undefined;
         const diff = document.getElementById('diff');
         let isClean = mergeView.editor().isClean(cleanEditToken);
@@ -470,6 +470,12 @@ self.cloud.onPull = function(data, append) {
         data,
         append ? '' : mergeView.editor().getValue().trim()
     );
+};
+
+/******************************************************************************/
+
+self.hasUnsavedData = function() {
+    return mergeView.editor().isClean(cleanEditToken) === false;
 };
 
 /******************************************************************************/
