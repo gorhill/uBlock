@@ -11,6 +11,18 @@
     "message": "uBlock₀ — Kontrollpanel",
     "description": "English: uBlock₀ — Dashboard"
   },
+  "dashboardUnsavedWarning": {
+    "message": "Varning! Du har inte sparat dina ändringar",
+    "description": "A warning in the dashboard when navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningStay": {
+    "message": "Stanna kvar",
+    "description": "Label for button to prevent navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningIgnore": {
+    "message": "Ignorera",
+    "description": "Label for button to ignore unsaved changes"
+  },
   "settingsPageName": {
     "message": "Inställningar",
     "description": "appears as tab name in dashboard"
@@ -241,7 +253,7 @@
   },
   "pickerContextMenuEntry": {
     "message": "Blockera element",
-    "description": "English: Block element"
+    "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
     "message": "Dölj platshållare för blockerade element",

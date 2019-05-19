@@ -11,6 +11,18 @@
     "message": "uBlock₀ — Dashboard",
     "description": "English: uBlock₀ — Dashboard"
   },
+  "dashboardUnsavedWarning": {
+    "message": "Attenzione! Ci sono delle modifiche non ancora salvate",
+    "description": "A warning in the dashboard when navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningStay": {
+    "message": "Aspetta",
+    "description": "Label for button to prevent navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningIgnore": {
+    "message": "Ignora",
+    "description": "Label for button to ignore unsaved changes"
+  },
   "settingsPageName": {
     "message": "Opzioni",
     "description": "appears as tab name in dashboard"
@@ -240,8 +252,8 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Blocca elemento",
-    "description": "English: Block element"
+    "message": "Blocca elemento...",
+    "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
     "message": "Nascondi lo spazio riservato agli elementi bloccati",
@@ -556,31 +568,31 @@
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
-    "message": "uBlock Wiki di Origine: il logger",
+    "message": "uBlock Origin Wiki: Registro",
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
-    "message": "Cancella logger",
+    "message": "Pulisci il registro",
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
-    "message": "Pausa logger (elimina tutti i dati in arrivo)",
+    "message": "Metti in pausa il registro (scarta tutti i dati in arrivo)",
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {
-    "message": "Riattiva logger",
+    "message": "Riattiva il registro",
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "Attiva \/ disattiva il filtro del logger",
+    "message": "Attiva o disattiva il filtraggio del registro",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
-    "message": "filtra voci del registro",
+    "message": "filtra il contenuto del registro",
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
-    "message": "Opzioni di filtraggio del logger",
+    "message": "Opzioni di filtraggio del registro",
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {
@@ -596,7 +608,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinAllowed": {
-    "message": "abilitato",
+    "message": "permesso",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {

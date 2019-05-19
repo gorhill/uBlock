@@ -11,6 +11,18 @@
     "message": "uBlock₀ — నియంత్రణా వేదిక",
     "description": "English: uBlock₀ — Dashboard"
   },
+  "dashboardUnsavedWarning": {
+    "message": "Warning! You have unsaved changes",
+    "description": "A warning in the dashboard when navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningStay": {
+    "message": "Stay",
+    "description": "Label for button to prevent navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningIgnore": {
+    "message": "Ignore",
+    "description": "Label for button to ignore unsaved changes"
+  },
   "settingsPageName": {
     "message": "ఐచ్చికాలు",
     "description": "appears as tab name in dashboard"
@@ -241,7 +253,7 @@
   },
   "pickerContextMenuEntry": {
     "message": "దీన్ని నిరోధించు",
-    "description": "English: Block element"
+    "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
     "message": "నిరోధించబడిన అంశాలయోక్క స్థానసంగ్రాహకాలను దాచుము",

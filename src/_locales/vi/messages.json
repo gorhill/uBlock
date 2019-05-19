@@ -11,6 +11,18 @@
     "message": "uBlock₀ — Bảng điều khiển",
     "description": "English: uBlock₀ — Dashboard"
   },
+  "dashboardUnsavedWarning": {
+    "message": "Warning! You have unsaved changes",
+    "description": "A warning in the dashboard when navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningStay": {
+    "message": "Stay",
+    "description": "Label for button to prevent navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningIgnore": {
+    "message": "Ignore",
+    "description": "Label for button to ignore unsaved changes"
+  },
   "settingsPageName": {
     "message": "Cấu hình",
     "description": "appears as tab name in dashboard"
@@ -241,7 +253,7 @@
   },
   "pickerContextMenuEntry": {
     "message": "Chặn phần tử",
-    "description": "English: Block element"
+    "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
     "message": "Ẩn các phần giữ chỗ của những phần tử bị chặn",

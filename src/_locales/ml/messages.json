@@ -11,6 +11,18 @@
     "message": "യുബ്ലോക്ക്ഒ - ഡാഷ്ബോര്‍ഡ്",
     "description": "English: uBlock₀ — Dashboard"
   },
+  "dashboardUnsavedWarning": {
+    "message": "Warning! You have unsaved changes",
+    "description": "A warning in the dashboard when navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningStay": {
+    "message": "Stay",
+    "description": "Label for button to prevent navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningIgnore": {
+    "message": "Ignore",
+    "description": "Label for button to ignore unsaved changes"
+  },
   "settingsPageName": {
     "message": "സെറ്റിംഗ്സ്",
     "description": "appears as tab name in dashboard"
@@ -241,7 +253,7 @@
   },
   "pickerContextMenuEntry": {
     "message": "എലമെന്‍ഡ് ബ്ലോക്ക് ചെയ്യുക",
-    "description": "English: Block element"
+    "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
     "message": "ബ്ലോക്ക് ചെയ്യപ്പെട്ട എലമെന്‍ഡുകള്‍ക്ക് പകരമായുള്ള പ്ലയ്സ്ഹോള്‍ഡറുകള്‍ മറയ്ക്കുക",

@@ -11,6 +11,18 @@
     "message": "uBlock₀ — لوحة التحكم",
     "description": "English: uBlock₀ — Dashboard"
   },
+  "dashboardUnsavedWarning": {
+    "message": "تنبيه! لديك تغييرات لم تقم بحفظها",
+    "description": "A warning in the dashboard when navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningStay": {
+    "message": "إبقى",
+    "description": "Label for button to prevent navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningIgnore": {
+    "message": "تجاهل",
+    "description": "Label for button to ignore unsaved changes"
+  },
   "settingsPageName": {
     "message": "الإعدادات",
     "description": "appears as tab name in dashboard"
@@ -240,8 +252,8 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "أحجب العنصر",
-    "description": "English: Block element"
+    "message": "إحجب العنصر",
+    "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
     "message": "اخفاء مكان العناصر المحجوبه",
