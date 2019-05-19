@@ -36,11 +36,12 @@ const µb = µBlock;
 
 const getDomainNames = function(targets) {
     const µburi = µb.URI;
-    return targets.map(target =>
-        target.indexOf('/') !== -1
+    return targets.map(target => {
+        if ( typeof target !== 'string' ) { return ''; }
+        return target.indexOf('/') !== -1
             ? µburi.domainFromURI(target) || ''
-            : µburi.domainFromHostname(target) || target
-    );
+            : µburi.domainFromHostname(target) || target;
+    });
 };
 
 /******************************************************************************/

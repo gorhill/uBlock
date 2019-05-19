@@ -1070,6 +1070,7 @@ const reloadTab = function(ev) {
 
 (function() {
     const reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
+    const reSchemeOnly = /^[\w-]+:$/;
     const staticFilterTypes = {
         'beacon': 'other',
         'doc': 'document',
@@ -1148,12 +1149,16 @@ const reloadTab = function(ev) {
         }
         let value = selectValue('select.static.url');
         if ( value !== '' ) {
-            if ( value.slice(-1) === '/' ) {
-                value += '*';
-            } else if ( /[/?]/.test(value) === false ) {
-                value += '^';
+            if ( reSchemeOnly.test(value) ) {
+                value = `|${value}`;
+            } else {
+                if ( value.endsWith('/') ) {
+                    value += '*';
+                } else if ( /[/?]/.test(value) === false ) {
+                    value += '^';
+                }
+                value = `||${value}`;
             }
-            value = '||' + value;
         }
         filter += value;
         value = selectValue('select.static.type');
@@ -1401,12 +1406,13 @@ const reloadTab = function(ev) {
 
     // Build list of candidate URLs
     const createTargetURLs = function(url) {
-        const urls = [];
         const matches = reRFC3986.exec(url);
-        if ( matches === null || !matches[1] || !matches[2] ) {
-            return urls;
+        if ( matches === null ) { return []; }
+        if ( typeof matches[2] !== 'string' || matches[2].length === 0 ) {
+            return [ matches[1] ];
         }
         // Shortest URL for a valid URL filtering rule
+        const urls = [];
         const rootURL = matches[1] + matches[2];
         urls.unshift(rootURL);
         const path = matches[3] || '';
@@ -1587,6 +1593,11 @@ const reloadTab = function(ev) {
     const fillDynamicPane = function() {
         if ( targetRow.classList.contains('cosmeticRealm') ) { return; }
 
+        // https://github.com/gorhill/uBlock/issues/2469
+        if ( targetURLs.length === 0 || reSchemeOnly.test(targetURLs[0]) ) {
+            return;
+        }
+
         // Fill context selector
         let select = selectNode('select.dynamic.origin');
         fillOriginSelect(select, targetPageHostname, targetPageDomain);
@@ -1604,15 +1615,16 @@ const reloadTab = function(ev) {
         // Fill entries
         const menuEntryTemplate = dialog.querySelector('.dynamic .toolbar .entry');
         const tbody = dialog.querySelector('.dynamic .entries');
-        for ( let i = 0; i < targetURLs.length; i++ ) {
-            const url = targetURLs[i];
+        for ( const targetURL of  targetURLs ) {
             const menuEntry = menuEntryTemplate.cloneNode(true);
-            menuEntry.children[0].setAttribute('data-url', url);
-            menuEntry.children[1].textContent = shortenLongString(url, 128);
+            menuEntry.children[0].setAttribute('data-url', targetURL);
+            menuEntry.children[1].textContent = shortenLongString(targetURL, 128);
             tbody.appendChild(menuEntry);
         }
 
         colorize();
+
+        uDom('#modalOverlayContainer [data-pane="dynamic"]').removeClass('hide');
     };
 
     const fillOriginSelect = function(select, hostname, domain) {
@@ -1682,8 +1694,8 @@ const reloadTab = function(ev) {
             case '{{url}}':
                 select = document.createElement('select');
                 select.className = 'static url';
-                for ( let i = 0, n = targetURLs.length; i < n; i++ ) {
-                    const value = targetURLs[i].replace(/^[a-z-]+:\/\//, '');
+                for ( const targetURL of targetURLs ) {
+                    const value = targetURL.replace(/^[a-z-]+:\/\//, '');
                     option = document.createElement('option');
                     option.setAttribute('value', value);
                     option.textContent = shortenLongString(value, 128);
@@ -1772,7 +1784,11 @@ const reloadTab = function(ev) {
             'loggerUI',
             {
                 what: 'getDomainNames',
-                targets: [targetURLs[0], targetPageHostname, targetFrameHostname]
+                targets: [
+                    targetURLs[0],
+                    targetPageHostname,
+                    targetFrameHostname
+                ]
             },
             fillDialog
         );
