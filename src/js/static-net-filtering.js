@@ -75,7 +75,25 @@ const typeNameToTypeValue = {
             'webrtc': 19 << 4,
        'unsupported': 20 << 4
 };
+
 const otherTypeBitValue = typeNameToTypeValue.other;
+
+// All network request types to bitmap
+//   bring origin to 0 (from 4 -- see typeNameToTypeValue)
+//   left-shift 1 by the above-calculated value
+//   subtract 1 to set all type bits
+const allNetworkTypesBits =
+    (1 << (otherTypeBitValue >>> 4)) - 1;
+    
+const allTypesBits =
+    allNetworkTypesBits |
+    1 << (typeNameToTypeValue['popup'] >>> 4) - 1 |
+    1 << (typeNameToTypeValue['main_frame'] >>> 4) - 1 |
+    1 << (typeNameToTypeValue['inline-font'] >>> 4) - 1 |
+    1 << (typeNameToTypeValue['inline-script'] >>> 4) - 1;
+
+const unsupportedTypeBit =
+    1 << (typeNameToTypeValue['unsupported'] >>> 4) - 1;
 
 const typeValueToTypeName = {
      1: 'stylesheet',
@@ -1792,12 +1810,6 @@ const FilterParser = function() {
     this.reBadCSP = /(?:^|;)\s*report-(?:to|uri)\b/;
     this.domainOpt = '';
     this.noTokenHash = µb.urlTokenizer.noTokenHash;
-    this.unsupportedTypeBit = this.bitFromType('unsupported');
-    // All network request types to bitmap
-    //   bring origin to 0 (from 4 -- see typeNameToTypeValue)
-    //   left-shift 1 by the above-calculated value
-    //   subtract 1 to set all type bits
-    this.allNetRequestTypeBits = (1 << (otherTypeBitValue >>> 4)) - 1;
     this.reset();
 };
 
@@ -1807,6 +1819,7 @@ const FilterParser = function() {
 //   Transpose `ping` into `other` for now.
 
 FilterParser.prototype.toNormalizedType = {
+               'all': 'all',
             'beacon': 'other',
                'css': 'stylesheet',
               'data': 'data',
@@ -1833,7 +1846,7 @@ FilterParser.prototype.toNormalizedType = {
                'xhr': 'xmlhttprequest',
     'xmlhttprequest': 'xmlhttprequest',
             'webrtc': 'unsupported',
-         'websocket': 'websocket'
+         'websocket': 'websocket',
 };
 
 /******************************************************************************/
@@ -1877,24 +1890,28 @@ FilterParser.prototype.bitFromType = function(type) {
 // Be ready to handle multiple negated types
 
 FilterParser.prototype.parseTypeOption = function(raw, not) {
-    var typeBit = this.bitFromType(this.toNormalizedType[raw]);
+    const typeBit = raw !== 'all'
+        ? this.bitFromType(this.toNormalizedType[raw])
+        : allTypesBits;
 
     if ( !not ) {
         this.types |= typeBit;
         return;
     }
 
-    // Non-discrete network types can't be negated.
-    if ( (typeBit & this.allNetRequestTypeBits) === 0 ) {
+    // Non-network types can only toggle themselves.
+    if ( (typeBit & allNetworkTypesBits) === 0 ) {
+        this.types &= ~typeBit;
         return;
     }
 
-    // Negated type: set all valid network request type bits to 1
+    // Negated network type: the first negation imply all network types are
+    // toggled on.
     if (
-        (typeBit & this.allNetRequestTypeBits) !== 0 &&
-        (this.types & this.allNetRequestTypeBits) === 0
+        (typeBit & allNetworkTypesBits) !== 0 &&
+        (this.types & allNetworkTypesBits) === 0
     ) {
-        this.types |= this.allNetRequestTypeBits;
+        this.types |= allNetworkTypesBits;
     }
     this.types &= ~typeBit;
 };
@@ -2080,8 +2097,8 @@ FilterParser.prototype.parse = function(raw) {
             // https://github.com/gorhill/uBlock/issues/2283
             //   Abort if type is only for unsupported types, otherwise
             //   toggle off `unsupported` bit.
-            if ( this.types & this.unsupportedTypeBit ) {
-                this.types &= ~this.unsupportedTypeBit;
+            if ( this.types & unsupportedTypeBit ) {
+                this.types &= ~unsupportedTypeBit;
                 if ( this.types === 0 ) {
                     this.unsupported = true;
                     return this;
@@ -2735,6 +2752,12 @@ FilterContainer.prototype.compileToAtomicFilter = function(
         return;
     }
 
+    // If all network types are set, just use `no_type`.
+    if ( (type & allNetworkTypesBits) === allNetworkTypesBits ) {
+        writer.push([ descBits, parsed.tokenHash, fdata ]);
+        type &= ~allNetworkTypesBits;
+    }
+
     // Specific type(s)
     let bitOffset = 1;
     do {
@@ -2748,9 +2771,9 @@ FilterContainer.prototype.compileToAtomicFilter = function(
     // Only static filter with an explicit type can be redirected. If we reach
     // this point, it's because there is one or more explicit type.
     if ( parsed.redirect ) {
-        let redirects = µb.redirectEngine.compileRuleFromStaticFilter(parsed.raw);
+        const redirects = µb.redirectEngine.compileRuleFromStaticFilter(parsed.raw);
         if ( Array.isArray(redirects) ) {
-            for ( let redirect of redirects ) {
+            for ( const redirect of redirects ) {
                 writer.push([ typeNameToTypeValue.redirect, redirect ]);
             }
         }
