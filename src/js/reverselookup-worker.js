@@ -117,6 +117,7 @@ const fromCosmeticFilter = function(details) {
     const prefix = match[0];
     const exception = prefix.charAt(1) === '@';
     const selector = details.rawFilter.slice(prefix.length);
+    const isHtmlFilter = prefix.endsWith('^');
 
     // The longer the needle, the lower the number of false positives.
     const needle = selector.match(/\w+/g).reduce(function(a, b) {
@@ -181,6 +182,9 @@ const fromCosmeticFilter = function(details) {
             if ( fargs[0] >= 0 && fargs[0] <= 5 && details.ignoreGeneric ) {
                 continue;
             }
+
+            // Do not confuse cosmetic filters with HTML ones.
+            if ( (fargs[0] === 64) !== isHtmlFilter ) { continue; }
 
             switch ( fargs[0] ) {
             // Lowly generic cosmetic filters
