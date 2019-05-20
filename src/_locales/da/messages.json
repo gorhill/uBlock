@@ -20,7 +20,7 @@
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Ignorer",
+    "message": "Ignorér",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
@@ -104,7 +104,7 @@
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Start element-vælger tilstand",
+    "message": "Start elementvælgertilstand",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
@@ -252,7 +252,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Blokér element",
+    "message": "Blokér element...",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
