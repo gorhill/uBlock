@@ -1872,6 +1872,7 @@ FilterParser.prototype.reset = function() {
     this.tokenHash = this.noTokenHash;
     this.tokenBeg = 0;
     this.types = 0;
+    this.notTypes = 0;
     this.important = 0;
     this.wildcarded = false;
     this.unsupported = false;
@@ -1894,26 +1895,11 @@ FilterParser.prototype.parseTypeOption = function(raw, not) {
         ? this.bitFromType(this.toNormalizedType[raw])
         : allTypesBits;
 
-    if ( !not ) {
+    if ( not ) {
+        this.notTypes |= typeBit;
+    } else {
         this.types |= typeBit;
-        return;
     }
-
-    // Non-network types can only toggle themselves.
-    if ( (typeBit & allNetworkTypesBits) === 0 ) {
-        this.types &= ~typeBit;
-        return;
-    }
-
-    // Negated network type: the first negation imply all network types are
-    // toggled on.
-    if (
-        (typeBit & allNetworkTypesBits) !== 0 &&
-        (this.types & allNetworkTypesBits) === 0
-    ) {
-        this.types |= allNetworkTypesBits;
-    }
-    this.types &= ~typeBit;
 };
 
 /******************************************************************************/
@@ -1952,11 +1938,10 @@ FilterParser.prototype.parseDomainOption = function(s) {
 
 FilterParser.prototype.parseOptions = function(s) {
     this.fopts = s;
-    var opts = s.split(',');
-    var opt, not;
+    const opts = s.split(',');
     for ( var i = 0; i < opts.length; i++ ) {
-        opt = opts[i];
-        not = opt.startsWith('~');
+        let opt = opts[i];
+        const not = opt.startsWith('~');
         if ( not ) {
             opt = opt.slice(1);
         }
@@ -2034,6 +2019,32 @@ FilterParser.prototype.parseOptions = function(s) {
         this.unsupported = true;
         break;
     }
+
+    // Negated network types? Toggle on all network type bits.
+    if ( (this.notTypes & allNetworkTypesBits) !== 0 ) {
+        this.types |= allNetworkTypesBits & ~this.notTypes;
+        if ( this.types === 0 ) {
+            this.unsupported = true;
+        }
+    }
+
+    // Negated non-network types can only toggle themselves.
+    if ( this.notTypes !== 0 ) {
+        this.types &= ~this.notTypes;
+        if ( this.types === 0 ) {
+            this.unsupported = true;
+        }
+    }
+
+    // https://github.com/gorhill/uBlock/issues/2283
+    //   Abort if type is only for unsupported types, otherwise
+    //   toggle off `unsupported` bit.
+    if ( this.types & unsupportedTypeBit ) {
+        this.types &= ~unsupportedTypeBit;
+        if ( this.types === 0 ) {
+            this.unsupported = true;
+        }
+    }
 };
 
 /*******************************************************************************
@@ -2094,16 +2105,7 @@ FilterParser.prototype.parse = function(raw) {
                 return this;
             }
             this.parseOptions(s.slice(pos + 1));
-            // https://github.com/gorhill/uBlock/issues/2283
-            //   Abort if type is only for unsupported types, otherwise
-            //   toggle off `unsupported` bit.
-            if ( this.types & unsupportedTypeBit ) {
-                this.types &= ~unsupportedTypeBit;
-                if ( this.types === 0 ) {
-                    this.unsupported = true;
-                    return this;
-                }
-            }
+            if ( this.unsupported ) { return this; }
             s = s.slice(0, pos);
         }
     }
@@ -2743,30 +2745,30 @@ FilterContainer.prototype.compileToAtomicFilter = function(
         writer.select(0);
     }
 
-    let descBits = parsed.action | parsed.important | parsed.party;
-    let type = parsed.types;
+    const descBits = parsed.action | parsed.important | parsed.party;
+    let typeBits = parsed.types;
 
     // Typeless
-    if ( type === 0 ) {
+    if ( typeBits === 0 ) {
         writer.push([ descBits, parsed.tokenHash, fdata ]);
         return;
     }
 
-    // If all network types are set, just use `no_type`.
-    if ( (type & allNetworkTypesBits) === allNetworkTypesBits ) {
+    // If all network types are set, create a typeless filter
+    if ( (typeBits & allNetworkTypesBits) === allNetworkTypesBits ) {
         writer.push([ descBits, parsed.tokenHash, fdata ]);
-        type &= ~allNetworkTypesBits;
+        typeBits &= ~allNetworkTypesBits;
     }
 
-    // Specific type(s)
+    // One filter per specific types
     let bitOffset = 1;
     do {
-        if ( type & 1 ) {
+        if ( typeBits & 1 ) {
             writer.push([ descBits | (bitOffset << 4), parsed.tokenHash, fdata ]);
         }
         bitOffset += 1;
-        type >>>= 1;
-    } while ( type !== 0 );
+        typeBits >>>= 1;
+    } while ( typeBits !== 0 );
 
     // Only static filter with an explicit type can be redirected. If we reach
     // this point, it's because there is one or more explicit type.
