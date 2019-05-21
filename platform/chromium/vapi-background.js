@@ -1021,12 +1021,13 @@ vAPI.messaging.setup = function(defaultHandler) {
 /******************************************************************************/
 
 vAPI.messaging.broadcast = function(message) {
-    var messageWrapper = {
-        broadcast: true,
-        msg: message
-    };
-    for ( var port of this.ports.values() ) {
-        port.postMessage(messageWrapper);
+    const messageWrapper = { broadcast: true, msg: message };
+    for ( const port of this.ports.values() ) {
+        try {
+            port.postMessage(messageWrapper);
+        } catch(ex) {
+            this.ports.delete(port.name);
+        }
     }
 };
 
