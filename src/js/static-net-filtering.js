@@ -3125,58 +3125,60 @@ FilterContainer.prototype.getFilterCount = function() {
 
 // action: 1=test, 2=record
 
-FilterContainer.prototype.benchmark = function(action) {
-    µb.loadBenchmarkDataset().then(requests => {
-        if ( Array.isArray(requests) === false || requests.length === 0 ) {
-            console.info('No requests found to benchmark');
-            return;
-        }
-        console.info(`Benchmarking staticNetFilteringEngine.matchString()...`);
-        const fctxt = µb.filteringContext.duplicate();
-        let expected, recorded;
-        if ( action === 1 ) {
-            try {
-                expected = JSON.parse(
-                    vAPI.localStorage.getItem('FilterContainer.benchmark.results')
-                );
-            } catch(ex) {
-            }
-        }
-        if ( action === 2 ) {
-            recorded = [];
-        }
-        const t0 = self.performance.now();
-        for ( let i = 0; i < requests.length; i++ ) {
-            const request = requests[i];
-            fctxt.setURL(request.url);
-            fctxt.setDocOriginFromURL(request.frameUrl);
-            fctxt.setType(request.cpt);
-            const r = this.matchString(fctxt);
-            if ( recorded !== undefined ) { recorded.push(r); }
-            if ( expected !== undefined && r !== expected[i] ) {
-                console.log('Mismatch with reference results:');
-                console.log(`\tExpected ${expected[i]}, got ${r}:`);
-                console.log(`\ttype=${fctxt.type}`);
-                console.log(`\turl=${fctxt.url}`);
-                console.log(`\tdocOrigin=${fctxt.getDocOrigin()}`);
-            }
-        }
-        const t1 = self.performance.now();
-        const dur = t1 - t0;
-        console.info(`Evaluated ${requests.length} requests in ${dur.toFixed(0)} ms`);
-        console.info(`\tAverage: ${(dur / requests.length).toFixed(3)} ms per request`);
-        if ( expected !== undefined ) {
-            console.info(`\tBlocked: ${expected.reduce((n,r)=>{return r===1?n+1:n;},0)}`);
-            console.info(`\tExcepted: ${expected.reduce((n,r)=>{return r===2?n+1:n;},0)}`);
-        }
-        if ( recorded !== undefined ) {
-            vAPI.localStorage.setItem(
-                'FilterContainer.benchmark.results',
-                JSON.stringify(recorded)
+FilterContainer.prototype.benchmark = async function(action) {
+    const requests = await µb.loadBenchmarkDataset();
+
+    if ( Array.isArray(requests) === false || requests.length === 0 ) {
+        console.info('No requests found to benchmark');
+        return;
+    }
+
+    console.info(`Benchmarking staticNetFilteringEngine.matchString()...`);
+    const fctxt = µb.filteringContext.duplicate();
+    let expected, recorded;
+    if ( action === 1 ) {
+        try {
+            expected = JSON.parse(
+                vAPI.localStorage.getItem('FilterContainer.benchmark.results')
             );
+        } catch(ex) {
         }
-    });
-    return 'ok';
+    }
+    if ( action === 2 ) {
+        recorded = [];
+    }
+
+    const t0 = self.performance.now();
+    for ( let i = 0; i < requests.length; i++ ) {
+        const request = requests[i];
+        fctxt.setURL(request.url);
+        fctxt.setDocOriginFromURL(request.frameUrl);
+        fctxt.setType(request.cpt);
+        const r = this.matchString(fctxt);
+        if ( recorded !== undefined ) { recorded.push(r); }
+        if ( expected !== undefined && r !== expected[i] ) {
+            console.log('Mismatch with reference results:');
+            console.log(`\tExpected ${expected[i]}, got ${r}:`);
+            console.log(`\ttype=${fctxt.type}`);
+            console.log(`\turl=${fctxt.url}`);
+            console.log(`\tdocOrigin=${fctxt.getDocOrigin()}`);
+        }
+    }
+    const t1 = self.performance.now();
+    const dur = t1 - t0;
+
+    console.info(`Evaluated ${requests.length} requests in ${dur.toFixed(0)} ms`);
+    console.info(`\tAverage: ${(dur / requests.length).toFixed(3)} ms per request`);
+    if ( expected !== undefined ) {
+        console.info(`\tBlocked: ${expected.reduce((n,r)=>{return r===1?n+1:n;},0)}`);
+        console.info(`\tExcepted: ${expected.reduce((n,r)=>{return r===2?n+1:n;},0)}`);
+    }
+    if ( recorded !== undefined ) {
+        vAPI.localStorage.setItem(
+            'FilterContainer.benchmark.results',
+            JSON.stringify(recorded)
+        );
+    }
 };
 
 /******************************************************************************-
