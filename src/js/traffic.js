@@ -169,7 +169,8 @@ const onBeforeRootFrameRequest = function(fctxt) {
 
     // Check for specific block
     if ( result === 0 ) {
-        result = snfe.matchStringExactType(fctxt, 'main_frame');
+        fctxt.type = 'main_frame';
+        result = snfe.matchString(fctxt, 0b0001);
         if ( result !== 0 || logEnabled ) {
             logData = snfe.toLogData();
         }
@@ -177,7 +178,8 @@ const onBeforeRootFrameRequest = function(fctxt) {
 
     // Check for generic block
     if ( result === 0 ) {
-        result = snfe.matchStringExactType(fctxt, 'no_type');
+        fctxt.type = 'no_type';
+        result = snfe.matchString(fctxt, 0b0001);
         if ( result !== 0 || logEnabled ) {
             logData = snfe.toLogData();
         }
@@ -196,6 +198,7 @@ const onBeforeRootFrameRequest = function(fctxt) {
     }
 
     // Log
+    fctxt.type = 'main_frame';
     const pageStore = µb.bindTabToPageStats(fctxt.tabId, 'beforeRequest');
     if ( pageStore ) {
         pageStore.journalAddRootFrame('uncommitted', requestURL);

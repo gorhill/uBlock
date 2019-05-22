@@ -657,10 +657,8 @@ vAPI.tabs.onPopupUpdated = (function() {
         // https://github.com/chrisaljoudi/uBlock/issues/1142
         //   Don't block if uBlock is turned off in popup's context
         if ( µb.getNetFilteringSwitch(targetURL) ) {
-            result = µb.staticNetFilteringEngine.matchStringExactType(
-                fctxt,
-                popupType
-            );
+            fctxt.type = popupType;
+            result = µb.staticNetFilteringEngine.matchString(fctxt, 0b0001);
             if ( result !== 0 ) {
                 fctxt.filter = µb.staticNetFilteringEngine.toLogData();
                 return result;

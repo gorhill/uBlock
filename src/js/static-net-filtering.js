@@ -26,7 +26,7 @@
 
 /******************************************************************************/
 
-µBlock.staticNetFilteringEngine = (function(){
+µBlock.staticNetFilteringEngine = (( ) => {
 
 /******************************************************************************/
 
@@ -1938,9 +1938,7 @@ FilterParser.prototype.parseDomainOption = function(s) {
 
 FilterParser.prototype.parseOptions = function(s) {
     this.fopts = s;
-    const opts = s.split(',');
-    for ( var i = 0; i < opts.length; i++ ) {
-        let opt = opts[i];
+    for ( let opt of s.split(/\s*,\s*/) ) {
         const not = opt.startsWith('~');
         if ( not ) {
             opt = opt.slice(1);
@@ -2021,14 +2019,10 @@ FilterParser.prototype.parseOptions = function(s) {
     }
 
     // Negated network types? Toggle on all network type bits.
-    if ( (this.notTypes & allNetworkTypesBits) !== 0 ) {
-        this.types |= allNetworkTypesBits & ~this.notTypes;
-        if ( this.types === 0 ) {
-            this.unsupported = true;
-        }
-    }
-
     // Negated non-network types can only toggle themselves.
+    if ( (this.notTypes & allNetworkTypesBits) !== 0 ) {
+        this.types |= allNetworkTypesBits;
+    }
     if ( this.notTypes !== 0 ) {
         this.types &= ~this.notTypes;
         if ( this.types === 0 ) {
@@ -2076,7 +2070,7 @@ FilterParser.prototype.parse = function(raw) {
     // element hiding filter?
     let pos = s.indexOf('#');
     if ( pos !== -1 ) {
-        var c = s.charAt(pos + 1);
+        const c = s.charAt(pos + 1);
         if ( c === '#' || c === '@' ) {
             console.error('static-net-filtering.js > unexpected cosmetic filters');
             this.elemHiding = true;
@@ -2137,7 +2131,7 @@ FilterParser.prototype.parse = function(raw) {
         // convert hostname to punycode if needed
         // https://github.com/gorhill/uBlock/issues/2599
         if ( this.reHasUnicode.test(s) ) {
-            var matches = this.reIsolateHostname.exec(s);
+            const matches = this.reIsolateHostname.exec(s);
             if ( matches ) {
                 s = (matches[1] !== undefined ? matches[1] : '') +
                     punycode.toASCII(matches[2]) +
@@ -2902,103 +2896,124 @@ FilterContainer.prototype.matchAndFetchData = function(
 
 /******************************************************************************/
 
-FilterContainer.prototype.matchTokens = function(bucket) {
-    // Hostname-only filters
-    let f = bucket.get(this.dotTokenHash);
-    if ( f !== undefined && f.match() === true ) {
-        this.tokenRegister = this.dotTokenHash;
-        this.filterRegister = f;
-        return true;
-    }
-
-    const url = this.urlRegister;
-    const tokenHashes = this.urlTokenizer.getTokens();
-    let i = 0;
-    for (;;) {
-        const tokenHash = tokenHashes[i];
-        if ( tokenHash === 0 ) { break; }
-        f = bucket.get(tokenHash);
-        if ( f !== undefined && f.match(url, tokenHashes[i+1]) === true ) {
-            this.tokenRegister = tokenHash;
-            this.filterRegister = f;
-            return true;
-        }
-        i += 2;
-    }
-
-    return false;
-};
-
-/******************************************************************************/
-
-FilterContainer.prototype.realmMatchStringExactType = function(
-    realmBits,
-    typeBits,
-    partyBits
-) {
-    let bucket;
-    let catBits = realmBits | typeBits;
-    if ( (bucket = this.categories.get(catBits)) ) {
-        if ( this.matchTokens(bucket) ) {
-            this.catbitsRegister = catBits;
-            return true;
-        }
-    }
-    if ( partyBits !== 0 ) {
-        catBits = realmBits | typeBits | partyBits;
-        if ( (bucket = this.categories.get(catBits)) ) {
-            if ( this.matchTokens(bucket) ) {
-                this.catbitsRegister = catBits;
-                return true;
-            }
-        }
-    }
-    return false;
-};
-
-/******************************************************************************/
-
 FilterContainer.prototype.realmMatchString = function(
     realmBits,
     typeBits,
     partyBits
 ) {
-    let bucket;
-    let catBits = realmBits;
-    if ( (bucket = this.categories.get(catBits)) ) {
-        if ( this.matchTokens(bucket) ) {
-            this.catbitsRegister = catBits;
-            return true;
-        }
+    const exactType = typeBits & 0x80000000;
+    typeBits &= 0x7FFFFFFF;
+
+    const catBits00 = realmBits;
+    const catBits01 = realmBits | typeBits;
+    const catBits10 = realmBits | partyBits;
+    const catBits11 = realmBits | typeBits | partyBits;
+
+    const bucket00 = exactType === 0
+        ? this.categories.get(catBits00) || null
+        : null;
+    const bucket01 = exactType !== 0 || typeBits !== 0
+        ? this.categories.get(catBits01) || null
+        : null;
+    const bucket10 = exactType === 0 && partyBits !== 0
+        ? this.categories.get(catBits10) || null
+        : null;
+    const bucket11 = (exactType !== 0 || typeBits !== 0) && partyBits !== 0
+        ? this.categories.get(catBits11) || null
+        : null;
+
+    if (
+        bucket00 === null && bucket01 === null &&
+        bucket10 === null && bucket11 === null
+    ) {
+        return false;
     }
-    if ( partyBits !== 0 ) {
-        catBits = realmBits | partyBits;
-        if ( (bucket = this.categories.get(catBits)) ) {
-            if ( this.matchTokens(bucket) ) {
-                this.catbitsRegister = catBits;
-                return true;
-            }
-        }
+
+    let catBits = 0;
+
+    // Pure hostname-based filters
+    let tokenHash = this.dotTokenHash;
+    let f;
+    if (
+        (bucket00 !== null) &&
+        (f = bucket00.get(tokenHash)) !== undefined &&
+        (f.match() === true)
+    ) {
+        catBits = catBits00;
+    } else if (
+        (bucket01 !== null) &&
+        (f = bucket01.get(tokenHash)) !== undefined &&
+        (f.match() === true)
+    ) {
+        catBits = catBits01;
+    } else if (
+        (bucket10 !== null) &&
+        (f = bucket10.get(tokenHash)) !== undefined &&
+        (f.match() === true)
+    ) {
+        catBits = catBits10;
+    } else if (
+        (bucket11 !== null) &&
+        (f = bucket11.get(tokenHash)) !== undefined &&
+        (f.match() === true)
+    ) {
+        catBits = catBits11;
+    } else {
+        f = undefined;
     }
-    if ( typeBits !== 0 ) {
-        catBits = realmBits | typeBits;
-        if ( (bucket = this.categories.get(catBits)) ) {
-            if ( this.matchTokens(bucket) ) {
-                this.catbitsRegister = catBits;
-                return true;
-            }
-        }
+    if ( f !== undefined ) {
+        this.catbitsRegister = catBits;
+        this.tokenRegister = tokenHash;
+        this.filterRegister = f;
+        return true;
     }
-    if ( typeBits !== 0 && partyBits !== 0 ) {
-        catBits = realmBits | typeBits | partyBits;
-        if ( (bucket = this.categories.get(catBits)) ) {
-            if ( this.matchTokens(bucket) ) {
-                this.catbitsRegister = catBits;
-                return true;
-            }
+
+    // Pattern-based filters
+    const url = this.urlRegister;
+    const tokenHashes = this.urlTokenizer.getTokens();
+    let i = 0, tokenBeg = 0;
+    for (;;) {
+        tokenHash = tokenHashes[i];
+        if ( tokenHash === 0 ) { return false; }
+        tokenBeg = tokenHashes[i+1];
+        if (
+            (bucket00 !== null) &&
+            (f = bucket00.get(tokenHash)) !== undefined &&
+            (f.match(url, tokenBeg) === true)
+        ) {
+            catBits = catBits00;
+            break;
         }
+        if (
+            (bucket01 !== null) &&
+            (f = bucket01.get(tokenHash)) !== undefined &&
+            (f.match(url, tokenBeg) === true)
+        ) {
+            catBits = catBits01;
+            break;
+        }
+        if (
+            (bucket10 !== null) &&
+            (f = bucket10.get(tokenHash)) !== undefined &&
+            (f.match(url, tokenBeg) === true)
+        ) {
+            catBits = catBits10;
+            break;
+        }
+        if (
+            (bucket11 !== null) &&
+            (f = bucket11.get(tokenHash)) !== undefined &&
+            (f.match(url, tokenBeg) === true)
+        ) {
+            catBits = catBits11;
+            break;
+        }
+        i += 2;
     }
-    return false;
+    this.catbitsRegister = catBits;
+    this.tokenRegister = tokenHash;
+    this.filterRegister = f;
+    return true;
 };
 
 /******************************************************************************/
@@ -3013,7 +3028,7 @@ FilterContainer.prototype.realmMatchString = function(
 //   User may want to override `generichide` exception filters.
 
 FilterContainer.prototype.matchStringGenericHide = function(requestURL) {
-    const typeBits = typeNameToTypeValue['generichide'];
+    const typeBits = typeNameToTypeValue['generichide'] | 0x80000000;
 
     // Prime tokenizer: we get a normalized URL in return.
     this.urlRegister = this.urlTokenizer.setURL(requestURL);
@@ -3024,9 +3039,9 @@ FilterContainer.prototype.matchStringGenericHide = function(requestURL) {
         µb.URI.hostnameFromURI(requestURL);
 
     // Exception filters
-    if ( this.realmMatchStringExactType(AllowAction, typeBits, FirstParty) ) {
+    if ( this.realmMatchString(AllowAction, typeBits, FirstParty) ) {
         // Important block filters.
-        if ( this.realmMatchStringExactType(BlockImportant, typeBits, FirstParty) ) {
+        if ( this.realmMatchString(BlockImportant, typeBits, FirstParty) ) {
             return 1;
         }
         return 2;
@@ -3040,47 +3055,24 @@ FilterContainer.prototype.matchStringGenericHide = function(requestURL) {
 // https://github.com/chrisaljoudi/uBlock/issues/116
 //   Some type of requests are exceptional, they need custom handling,
 //   not the generic handling.
+// https://github.com/chrisaljoudi/uBlock/issues/519
+//   Use exact type match for anything beyond `other`. Also, be prepared to
+//   support unknown types.
 
-FilterContainer.prototype.matchStringExactType = function(fctxt, requestType) {
-    const typeBits = typeNameToTypeValue[requestType];
-    if ( typeBits === undefined ) { return 0; }
-    const partyBits = fctxt.is3rdPartyToDoc() ? ThirdParty : FirstParty;
-
-    // Prime tokenizer: we get a normalized URL in return.
-    this.urlRegister = this.urlTokenizer.setURL(fctxt.url);
-    this.filterRegister = null;
-
-    // These registers will be used by various filters
-    pageHostnameRegister = fctxt.getDocHostname();
-    requestHostnameRegister = fctxt.getHostname();
-
-    // Important block filters.
-    if ( this.realmMatchStringExactType(BlockImportant, typeBits, partyBits) ) {
-        return 1;
-    }
-    // Block filters
-    if ( this.realmMatchStringExactType(BlockAction, typeBits, partyBits) ) {
-        // Exception filters
-        if ( this.realmMatchStringExactType(AllowAction, typeBits, partyBits) ) {
-            return 2;
-        }
-        return 1;
-    }
-    return 0;
-};
-
-/******************************************************************************/
-
-FilterContainer.prototype.matchString = function(fctxt) {
-    // https://github.com/chrisaljoudi/uBlock/issues/519
-    //   Use exact type match for anything beyond `other`
-    //   Also, be prepared to support unknown types
+FilterContainer.prototype.matchString = function(fctxt, modifiers = 0) {
     let typeBits = typeNameToTypeValue[fctxt.type];
-    if ( typeBits === undefined ) {
-         typeBits = otherTypeBitValue;
-    } else if ( typeBits === 0 || typeBits > otherTypeBitValue ) {
-        return this.matchStringExactType(fctxt, fctxt.type);
+    if ( modifiers === 0 ) {
+        if ( typeBits === undefined ) {
+            typeBits = otherTypeBitValue;
+        } else if ( typeBits === 0 || typeBits > otherTypeBitValue ) {
+            modifiers |= 0b0001;
+        }
     }
+    if ( (modifiers & 0b0001) !== 0 ) {
+        if ( typeBits === undefined ) { return 0; }
+        typeBits |= 0x80000000;
+    }
+
     const partyBits = fctxt.is3rdPartyToDoc() ? ThirdParty : FirstParty;
 
     // Prime tokenizer: we get a normalized URL in return.
