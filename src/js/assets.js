@@ -693,6 +693,10 @@ api.get = function(assetKey, options, callback) {
     } else if ( typeof callback !== 'function' ) {
         callback = noopfunc;
     }
+    // This can happen if the method was called as a thenable.
+    if ( options instanceof Object === false ) {
+        options = {};
+    }
 
     return new Promise(resolve => {
     // start of executor
