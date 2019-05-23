@@ -12,15 +12,15 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Warning! You have unsaved changes",
+    "message": "Uyarı! Kaydedilmemiş değişiklikleriniz var",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Stay",
+    "message": "Kal",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Ignore",
+    "message": "Yok say",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
@@ -252,7 +252,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Öge engelle",
+    "message": "Ögeyi engelle...",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -440,7 +440,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Her satırda bir süzgeç. Bir süzgeç yalın bir alan adı veya Adblock Plus uyumlu bir süzgeç olabilir. <code>!<\/code> ile başlayan satırlar yok sayılır.",
+    "message": "Her satırda bir süzgeç. Bir süzgeç yalın bir alan adı veya Adblock Plus uyumlu bir süzgeç olabilir. <code>!<\/code> ile başlayan satırlar yok sayılacaktır.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -508,7 +508,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Beyaz liste yönergeleri, uBlock₀'in devre dışı bırakılması gerektiği web sayfalarını belirler. Her satırda bir girdi. Geçersiz yönergeler sessizce yok sayılır ve yoruma dönüştürülür.",
+    "message": "Beyaz liste yönergeleri, uBlock₀'in devre dışı bırakılması gerektiği web sayfalarını belirler. Her satırda bir girdi. Geçersiz yönergeler sessizce yok sayılacak ve yoruma dönüştürülecektir.",
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
@@ -716,7 +716,7 @@
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
-    "message": "Aşağıdaki üç koşulu da sağlamayan günlükçü girdileri kendiliğinden yok sayılır:",
+    "message": "Aşağıdaki üç koşulu sağlamayan günlükçü girdileri kendiliğinden yok sayılacaktır:",
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
