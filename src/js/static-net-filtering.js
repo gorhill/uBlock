@@ -2910,106 +2910,99 @@ FilterContainer.prototype.realmMatchString = function(
     const catBits11 = realmBits | typeBits | partyBits;
 
     const bucket00 = exactType === 0
-        ? this.categories.get(catBits00) || null
-        : null;
+        ? this.categories.get(catBits00)
+        : undefined;
     const bucket01 = exactType !== 0 || typeBits !== 0
-        ? this.categories.get(catBits01) || null
-        : null;
+        ? this.categories.get(catBits01)
+        : undefined;
     const bucket10 = exactType === 0 && partyBits !== 0
-        ? this.categories.get(catBits10) || null
-        : null;
+        ? this.categories.get(catBits10)
+        : undefined;
     const bucket11 = (exactType !== 0 || typeBits !== 0) && partyBits !== 0
-        ? this.categories.get(catBits11) || null
-        : null;
+        ? this.categories.get(catBits11)
+        : undefined;
 
     if (
-        bucket00 === null && bucket01 === null &&
-        bucket10 === null && bucket11 === null
+        bucket00 === undefined && bucket01 === undefined &&
+        bucket10 === undefined && bucket11 === undefined
     ) {
         return false;
     }
 
-    let catBits = 0;
+    let catBits = 0, f;
 
     // Pure hostname-based filters
     let tokenHash = this.dotTokenHash;
-    let f;
     if (
-        (bucket00 !== null) &&
+        (bucket00 !== undefined) &&
         (f = bucket00.get(tokenHash)) !== undefined &&
         (f.match() === true)
     ) {
         catBits = catBits00;
     } else if (
-        (bucket01 !== null) &&
+        (bucket01 !== undefined) &&
         (f = bucket01.get(tokenHash)) !== undefined &&
         (f.match() === true)
     ) {
         catBits = catBits01;
     } else if (
-        (bucket10 !== null) &&
+        (bucket10 !== undefined) &&
         (f = bucket10.get(tokenHash)) !== undefined &&
         (f.match() === true)
     ) {
         catBits = catBits10;
     } else if (
-        (bucket11 !== null) &&
+        (bucket11 !== undefined) &&
         (f = bucket11.get(tokenHash)) !== undefined &&
         (f.match() === true)
     ) {
         catBits = catBits11;
-    } else {
-        f = undefined;
     }
-    if ( f !== undefined ) {
-        this.catbitsRegister = catBits;
-        this.tokenRegister = tokenHash;
-        this.filterRegister = f;
-        return true;
+    // Pattern-based filters
+    else {
+        const url = this.urlRegister;
+        const tokenHashes = this.urlTokenizer.getTokens();
+        let i = 0, tokenBeg = 0;
+        for (;;) {
+            tokenHash = tokenHashes[i];
+            if ( tokenHash === 0 ) { return false; }
+            tokenBeg = tokenHashes[i+1];
+            if (
+                (bucket00 !== undefined) &&
+                (f = bucket00.get(tokenHash)) !== undefined &&
+                (f.match(url, tokenBeg) === true)
+            ) {
+                catBits = catBits00;
+                break;
+            }
+            if (
+                (bucket01 !== undefined) &&
+                (f = bucket01.get(tokenHash)) !== undefined &&
+                (f.match(url, tokenBeg) === true)
+            ) {
+                catBits = catBits01;
+                break;
+            }
+            if (
+                (bucket10 !== undefined) &&
+                (f = bucket10.get(tokenHash)) !== undefined &&
+                (f.match(url, tokenBeg) === true)
+            ) {
+                catBits = catBits10;
+                break;
+            }
+            if (
+                (bucket11 !== undefined) &&
+                (f = bucket11.get(tokenHash)) !== undefined &&
+                (f.match(url, tokenBeg) === true)
+            ) {
+                catBits = catBits11;
+                break;
+            }
+            i += 2;
+        }
     }
 
-    // Pattern-based filters
-    const url = this.urlRegister;
-    const tokenHashes = this.urlTokenizer.getTokens();
-    let i = 0, tokenBeg = 0;
-    for (;;) {
-        tokenHash = tokenHashes[i];
-        if ( tokenHash === 0 ) { return false; }
-        tokenBeg = tokenHashes[i+1];
-        if (
-            (bucket00 !== null) &&
-            (f = bucket00.get(tokenHash)) !== undefined &&
-            (f.match(url, tokenBeg) === true)
-        ) {
-            catBits = catBits00;
-            break;
-        }
-        if (
-            (bucket01 !== null) &&
-            (f = bucket01.get(tokenHash)) !== undefined &&
-            (f.match(url, tokenBeg) === true)
-        ) {
-            catBits = catBits01;
-            break;
-        }
-        if (
-            (bucket10 !== null) &&
-            (f = bucket10.get(tokenHash)) !== undefined &&
-            (f.match(url, tokenBeg) === true)
-        ) {
-            catBits = catBits10;
-            break;
-        }
-        if (
-            (bucket11 !== null) &&
-            (f = bucket11.get(tokenHash)) !== undefined &&
-            (f.match(url, tokenBeg) === true)
-        ) {
-            catBits = catBits11;
-            break;
-        }
-        i += 2;
-    }
     this.catbitsRegister = catBits;
     this.tokenRegister = tokenHash;
     this.filterRegister = f;
