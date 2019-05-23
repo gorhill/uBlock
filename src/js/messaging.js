@@ -51,7 +51,11 @@ const onMessage = function(request, sender, callback) {
     switch ( request.what ) {
     case 'getAssetContent':
         // https://github.com/chrisaljoudi/uBlock/issues/417
-        µb.assets.get(request.url, { dontCache: true }, callback);
+        µb.assets.get(
+            request.url,
+            { dontCache: true, needSourceURL: true },
+            callback
+        );
         return;
 
     case 'listsFromNetFilter':

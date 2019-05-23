@@ -712,18 +712,30 @@ api.get = function(assetKey, options, callback) {
         contentURLs,
         contentURL;
 
-    const reportBack = function(content, err) {
-        const details = { assetKey: assetKey, content: content };
+    const reportBack = (content, err) => {
+        const details = { assetKey, content };
         if ( err ) {
             details.error = assetDetails.lastError = err;
         } else {
             assetDetails.lastError = undefined;
         }
+        if ( options.needSourceURL ) {
+            if (
+                contentURL === undefined &&
+                assetCacheRegistry instanceof Object &&
+                assetCacheRegistry[assetKey] instanceof Object
+            ) {
+                details.sourceURL = assetCacheRegistry[assetKey].remoteURL;
+            }
+            if ( reIsExternalPath.test(contentURL) ) {
+                details.sourceURL = contentURL;
+            }
+        }
         callback(details);
         resolve(details);
     };
 
-    const onContentNotLoaded = function() {
+    const onContentNotLoaded = ( ) => {
         let isExternal;
         while ( (contentURL = contentURLs.shift()) ) {
             isExternal = reIsExternalPath.test(contentURL);
@@ -741,7 +753,7 @@ api.get = function(assetKey, options, callback) {
         }
     };
 
-    const onContentLoaded = function(details) {
+    const onContentLoaded = details => {
         if ( stringIsNotEmpty(details.content) === false ) {
             onContentNotLoaded();
             return;
@@ -755,7 +767,7 @@ api.get = function(assetKey, options, callback) {
         reportBack(details.content);
     };
 
-    const onCachedContentLoaded = function(details) {
+    const onCachedContentLoaded = details => {
         if ( details.content !== '' ) {
             return reportBack(details.content);
         }
@@ -865,21 +877,21 @@ api.put = function(assetKey, content, callback) {
 /******************************************************************************/
 
 api.metadata = function(callback) {
-    var assetRegistryReady = false,
+    let assetRegistryReady = false,
         cacheRegistryReady = false;
 
-    var onReady = function() {
-        var assetDict = JSON.parse(JSON.stringify(assetSourceRegistry)),
-            cacheDict = assetCacheRegistry,
-            assetEntry, cacheEntry,
-            now = Date.now(), obsoleteAfter;
-        for ( var assetKey in assetDict ) {
-            assetEntry = assetDict[assetKey];
-            cacheEntry = cacheDict[assetKey];
+    const onReady = function() {
+        const assetDict = JSON.parse(JSON.stringify(assetSourceRegistry));
+        const cacheDict = assetCacheRegistry;
+        const now = Date.now();
+        for ( const assetKey in assetDict ) {
+            const assetEntry = assetDict[assetKey];
+            const cacheEntry = cacheDict[assetKey];
             if ( cacheEntry ) {
                 assetEntry.cached = true;
                 assetEntry.writeTime = cacheEntry.writeTime;
-                obsoleteAfter = cacheEntry.writeTime + assetEntry.updateAfter * 86400000;
+                const obsoleteAfter =
+                    cacheEntry.writeTime + assetEntry.updateAfter * 86400000;
                 assetEntry.obsolete = obsoleteAfter < now;
                 assetEntry.remoteURL = cacheEntry.remoteURL;
             } else if (
@@ -887,14 +899,13 @@ api.metadata = function(callback) {
                 assetEntry.contentURL.length !== 0
             ) {
                 assetEntry.writeTime = 0;
-                obsoleteAfter = 0;
                 assetEntry.obsolete = true;
             }
         }
         callback(assetDict);
     };
 
-    getAssetSourceRegistry(function() {
+    getAssetSourceRegistry(( ) => {
         assetRegistryReady = true;
         if ( cacheRegistryReady ) { onReady(); }
     });

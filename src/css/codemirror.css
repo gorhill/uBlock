@@ -31,6 +31,7 @@
     direction: ltr;
     display: flex;
     flex-shrink: 0;
+    font-size: 110%;
     justify-content: center;
     padding: 4px 8px;
     /* position: absolute; */
@@ -41,9 +42,12 @@
       -webkit-user-select: none;
     z-index: 1000;
     }
-.cm-search-widget .fa {
-    color: #888;
+.cm-search-widget .fa-icon {
+    fill: #888;
     font-size: 140%;
+    }
+.cm-search-widget .fa-icon:not(.fa-icon-ro):hover {
+    fill: #000;
     }
 .cm-search-widget-input {
     border: 1px solid gray;
@@ -69,6 +73,15 @@
     }
 .cm-search-widget .cm-search-widget-button:hover {
     color: #000;
+    }
+.cm-search-widget .sourceURL {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    position: absolute;
+    left: 0;
+    }
+.cm-search-widget .sourceURL[href=""] {
+    display: none;
     }
 
 .CodeMirror-merge-l-deleted {
