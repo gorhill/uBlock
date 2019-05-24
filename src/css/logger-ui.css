@@ -829,31 +829,25 @@ body.colorBlind  #netFilteringDialog > div.panes > .dynamic .entry > .action > .
     margin-bottom: 0;
     }
 
-#loggerSettingsDialog {
+#loggerStatsDialog .sortedEntries {
     display: flex;
     flex-direction: column;
+    font-size: smaller;
     }
-#loggerSettingsDialog > div {
-    padding-bottom: 1em;
+#loggerStatsDialog .sortedEntries > div {
+    display: flex;
     }
-#loggerSettingsDialog > div:last-of-type {
-    padding-bottom: 0;
+#loggerStatsDialog .sortedEntries > div > span:first-of-type {
+    flex-grow: 0;
+    flex-shrink: 0;
+    padding: 0 2em 0 0;
+    text-align: right;
+    width: 3em;
     }
-#loggerSettingsDialog ul {
-    padding: 0;
-    }
-body[dir="ltr"] #loggerSettingsDialog ul {
-    padding-left: 2em;
-    }
-body[dir="rtl"] #loggerSettingsDialog ul {
-    padding-right: 2em;
-    }
-#loggerSettingsDialog li {
-    list-style-type: none;
-    margin: 0.5em 0 0 0;
-    }
-#loggerSettingsDialog input {
-    max-width: 6em;
+#loggerStatsDialog .sortedEntries > div > span:last-of-type {
+    flex-grow: 1;
+    flex-shrink: 1;
+    white-space: pre;
     }
 
 #loggerExportDialog {
@@ -888,6 +882,33 @@ body[dir="rtl"] #loggerSettingsDialog ul {
     height: 60vh;
     padding: 0.5em;
     white-space: pre;
+    }
+
+#loggerSettingsDialog {
+    display: flex;
+    flex-direction: column;
+    }
+#loggerSettingsDialog > div {
+    padding-bottom: 1em;
+    }
+#loggerSettingsDialog > div:last-of-type {
+    padding-bottom: 0;
+    }
+#loggerSettingsDialog ul {
+    padding: 0;
+    }
+body[dir="ltr"] #loggerSettingsDialog ul {
+    padding-left: 2em;
+    }
+body[dir="rtl"] #loggerSettingsDialog ul {
+    padding-right: 2em;
+    }
+#loggerSettingsDialog li {
+    list-style-type: none;
+    margin: 0.5em 0 0 0;
+    }
+#loggerSettingsDialog input {
+    max-width: 6em;
     }
 
 .hide {

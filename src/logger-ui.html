@@ -70,8 +70,9 @@
                 </span>
             </div>
             <div>
+                <span id="loggerStats" class="button fa-icon">bar-chart</span>
                 <span id="loggerExport" class="button fa-icon">clipboard</span>
-                <span id="settings" class="button fa-icon">cog</span>
+                <span id="loggerSettings" class="button fa-icon">cog</span>
             </div>
         </div>
         <div class="vscrollable">
@@ -159,6 +160,27 @@
         <button id="createCosmeticFilters" class="custom important" type="button" data-i18n="pickerCreate"></button>
     </div>
 
+    <div id="loggerStatsDialog">
+        <div class="sortedEntries"></div>
+    </div>
+
+    <div id="loggerExportDialog">
+        <div class="options">
+            <div data-radio="format">
+                <span data-i18n="loggerExportFormatList" data-radio-item="list"></span>
+                <span data-i18n="loggerExportFormatTable" data-radio-item="table"></span>
+            </div>
+            <div data-radio="encoding">
+                <span data-i18n="loggerExportEncodePlain" data-radio-item="plain"></span>
+                <span data-i18n="loggerExportEncodeMarkdown" data-radio-item="markdown"></span>
+            </div>
+            <div>
+                <span data-i18n="genericCopyToClipboard" class="pushbutton"></span>
+            </div>
+        </div>
+        <textarea class="output" readonly spellcheck="false"></textarea>
+    </div>
+
     <div id="loggerSettingsDialog">
         <div><span data-i18n="loggerSettingDiscardPrompt"></span>
             <ul>
@@ -178,22 +200,6 @@
         <div><label data-i18n="loggerSettingPerEntryLineCount"><input type="number" min="2" max="6"></label></div>
     </div>
 
-    <div id="loggerExportDialog">
-        <div class="options">
-            <div data-radio="format">
-                <span data-i18n="loggerExportFormatList" data-radio-item="list"></span>
-                <span data-i18n="loggerExportFormatTable" data-radio-item="table"></span>
-            </div>
-            <div data-radio="encoding">
-                <span data-i18n="loggerExportEncodePlain" data-radio-item="plain"></span>
-                <span data-i18n="loggerExportEncodeMarkdown" data-radio-item="markdown"></span>
-            </div>
-            <div>
-                <span data-i18n="genericCopyToClipboard" class="pushbutton"></span>
-            </div>
-        </div>
-        <textarea class="output" readonly spellcheck="false"></textarea>
-    </div>
 </div>
 
 <script src="js/fa-icons.js"></script>

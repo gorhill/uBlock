@@ -263,6 +263,10 @@ const processLoggerEntries = function(response) {
 
     for ( const entry of entries ) {
         const unboxed = JSON.parse(entry);
+        if ( unboxed.filter instanceof Object ){
+            loggerStats.processFilter(unboxed.filter);
+        }
+        if ( netInspectorPaused ) { continue; }
         const parsed = parseLogEntry(unboxed);
         if (
             parsed.tabId !== undefined &&
@@ -384,7 +388,7 @@ const parseLogEntry = function(details) {
 
 /******************************************************************************/
 
-const viewPort = (function() {
+const viewPort = (( ) => {
     const vwRenderer = document.getElementById('vwRenderer');
     const vwScroller = document.getElementById('vwScroller');
     const vwVirtualContent = document.getElementById('vwVirtualContent');
@@ -802,14 +806,14 @@ const viewPort = (function() {
 
 /******************************************************************************/
 
-const updateCurrentTabTitle = (function() {
+const updateCurrentTabTitle = (( ) => {
     const i18nCurrentTab = vAPI.i18n('loggerCurrentTab');
 
     return function() {
         const select = uDom.nodeFromId('pageSelector');
         if ( select.value !== '_' || activeTabId === 0 ) { return; }
         const opt0 = select.querySelector('[value="_"]');
-        const opt1 = select.querySelector('[value="' + activeTabId + '"]');
+        const opt1 = select.querySelector(`[value="${activeTabId}"]`);
         let text = i18nCurrentTab;
         if ( opt1 !== null ) {
             text += ' / ' + opt1.textContent;
@@ -934,9 +938,7 @@ const onLogBufferRead = function(response) {
         pageSelectorFromURLHash();
     }
 
-    if ( netInspectorPaused === false ) {
-        processLoggerEntries(response);
-    }
+    processLoggerEntries(response);
 
     // Synchronize DOM with sent logger data
     document.body.classList.toggle(
@@ -955,7 +957,7 @@ const onLogBufferRead = function(response) {
 
 /******************************************************************************/
 
-const readLogBuffer = (function() {
+const readLogBuffer = (( ) => {
     let timer;
 
     const readLogBufferNow = function() {
@@ -1011,7 +1013,7 @@ const pageSelectorChanged = function() {
     pageSelectorFromURLHash();
 };
 
-const pageSelectorFromURLHash = (function() {
+const pageSelectorFromURLHash = (( ) => {
     let lastHash;
     let lastSelectedTabId;
 
@@ -1806,7 +1808,7 @@ const reloadTab = function(ev) {
 /******************************************************************************/
 /******************************************************************************/
 
-const rowFilterer = (function() {
+const rowFilterer = (( ) => {
     const userFilters = [];
     const builtinFilters = [];
 
@@ -2017,7 +2019,7 @@ const rowFilterer = (function() {
 // - Max number of entry per distinct tab
 // - Max entry age
 
-const rowJanitor = (function() {
+const rowJanitor = (( ) => {
     const tabIdToDiscard = new Set();
     const tabIdToLoadCountMap = new Map();
     const tabIdToEntryCountMap = new Map();
@@ -2226,7 +2228,7 @@ const toggleVCompactView = function() {
 
 /******************************************************************************/
 
-const popupManager = (function() {
+const popupManager = (( ) => {
     let realTabId = 0;
     let popup = null;
     let popupObserver = null;
@@ -2316,7 +2318,95 @@ const popupManager = (function() {
 
 /******************************************************************************/
 
-(function() {
+// Filter hit stats' MVP ("minimum viable product")
+//
+const loggerStats = (( ) => {
+    const filterHits = new Map();
+    let dialog;
+    let timer;
+
+    const makeRow = function() {
+        const div = document.createElement('div');
+        div.appendChild(document.createElement('span'));
+        div.appendChild(document.createElement('span'));
+        return div;
+    };
+
+    const fillRow = function(div, entry) {
+        div.children[0].textContent = entry[1].toLocaleString();
+        div.children[1].textContent = entry[0];
+    };
+
+    const updateList = function() {
+        const sortedHits = Array.from(filterHits).sort((a, b) => {
+            return b[1] - a[1];
+        });
+
+        const doc = document;
+        const parent = dialog.querySelector('.sortedEntries');
+        let i = 0;
+
+        // Reuse existing rows
+        for ( let iRow = 0; iRow < parent.childElementCount; iRow++ ) {
+            if ( i === sortedHits.length ) { break; }
+            fillRow(parent.children[iRow], sortedHits[i]);
+            i += 1;
+        }
+
+        // Append new rows
+        if ( i < sortedHits.length ) {
+            const list = doc.createDocumentFragment();
+            for ( ; i < sortedHits.length; i++ ) {
+                const div = makeRow();
+                fillRow(div, sortedHits[i]);
+                list.appendChild(div);
+            }
+            parent.appendChild(list);
+        }
+
+        // Remove extraneous rows
+        // [Should never happen at this point in this current
+        //  bare-bone implementation]
+    };
+
+    const toggleOn = function() {
+        dialog = modalDialog.create(
+            '#loggerStatsDialog',
+            ( ) => {
+                dialog = undefined;
+                if ( timer !== undefined ) {
+                    self.cancelIdleCallback(timer);
+                    timer = undefined;
+                }
+            }
+        );
+        updateList();
+        modalDialog.show();
+    };
+
+    uDom.nodeFromId('loggerStats').addEventListener('click', toggleOn);
+
+    return {
+        processFilter: function(filter) {
+            if ( filter.source !== 'static' && filter.source !== 'cosmetic' ) {
+                return;
+            }
+            filterHits.set(filter.raw, (filterHits.get(filter.raw) || 0) + 1);
+            if ( dialog === undefined || timer !== undefined ) { return; }
+            timer = self.requestIdleCallback(
+                ( ) => {
+                    timer = undefined;
+                    updateList();
+                },
+                { timeout: 2001 }
+            );
+        }
+    };
+})();
+
+/******************************************************************************/
+
+(( ) => {
     const lines = [];
     const options = {
         format: 'list',
@@ -2505,7 +2595,7 @@ const popupManager = (function() {
 //   - an option to discard immediately filtered out new entries
 //   - max entry count _per load_
 //
-const loggerSettings = (function() {
+const loggerSettings = (( ) => {
     const settings = {
         discard: {
             maxAge: 240,            // global
@@ -2611,7 +2701,7 @@ const loggerSettings = (function() {
         viewPort.updateLayout();
     };
 
-    uDom.nodeFromId('settings').addEventListener('click', toggleOn);
+    uDom.nodeFromId('loggerSettings').addEventListener('click', toggleOn);
 
     return settings;
 })();

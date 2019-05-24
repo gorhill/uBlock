@@ -44,6 +44,9 @@
     width: 1em;
     }
 
+.fa-icon > .fa-icon_bar-chart {
+    width: calc(1em * 2048 / 1792);
+    }
 .fa-icon > .fa-icon_eraser,
 .fa-icon > .fa-icon_film {
     width: calc(1em * 1920 / 1792);
