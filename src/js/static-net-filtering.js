@@ -1990,12 +1990,14 @@ FilterParser.prototype.parseOptions = function(s) {
             this.parsePartyOption(true, not);
             continue;
         }
-        if ( opt.startsWith('csp=') ) {
-            if ( opt.length > 4 && this.reBadCSP.test(opt) === false ) {
-                this.parseTypeOption('data', not);
-                this.dataType = 'csp';
-                this.dataStr = opt.slice(4).trim();
-            }
+        if (
+            opt.startsWith('csp=') &&
+            opt.length > 4 &&
+            this.reBadCSP.test(opt) === false
+        ) {
+            this.parseTypeOption('data', not);
+            this.dataType = 'csp';
+            this.dataStr = opt.slice(4).trim();
             continue;
         }
         if ( opt === 'csp' && this.action === AllowAction ) {
