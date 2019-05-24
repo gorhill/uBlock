@@ -2253,7 +2253,7 @@ FilterParser.prototype.makeToken = function() {
 /******************************************************************************/
 
 FilterParser.prototype.isJustOrigin = function() {
-    return this.datatype === undefined &&
+    return this.dataType === undefined &&
            this.redirect === false &&
            this.domainOpt !== '' &&
            /^(?:\*|https?:(?:\/\/)?)$/.test(this.f) &&
