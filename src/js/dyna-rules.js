@@ -68,7 +68,7 @@ let differ;
 // observer is necessary because there is no hook for uBO to overwrite
 // reliably the default title attribute assigned by CodeMirror.
 
-(function() {
+{
     const i18nCommitStr = vAPI.i18n('rulesCommit');
     const i18nRevertStr = vAPI.i18n('rulesRevert');
     const commitArrowSelector = '.CodeMirror-merge-copybuttons-left .CodeMirror-merge-copy-reverse:not([title="' + i18nCommitStr + '"])';
@@ -95,7 +95,7 @@ let differ;
         { attributes: true, attributeFilter: [ 'title' ], subtree: true }
     );
 
-})();
+}
 
 /******************************************************************************/
 
@@ -137,21 +137,26 @@ const updateOverlay = (function() {
 // - Minimum amount of text updated
 
 const rulesToDoc = function(clearHistory) {
-    for ( let key in unfilteredRules ) {
+    for ( const key in unfilteredRules ) {
         if ( unfilteredRules.hasOwnProperty(key) === false ) { continue; }
-        let doc = unfilteredRules[key].doc;
-        let rules = filterRules(key);
+        const doc = unfilteredRules[key].doc;
+        const rules = filterRules(key);
         if (
             doc.lineCount() === 1 && doc.getValue() === '' ||
             rules.length === 0
         ) {
-            doc.setValue(rules.length !== 0 ? rules.join('\n') : '');
+            doc.setValue(rules.length !== 0 ? rules.join('\n') + '\n' : '');
             continue;
         }
         if ( differ === undefined ) { differ = new diff_match_patch(); }
-        let beforeText = doc.getValue();
-        let afterText = rules.join('\n');
-        let diffs = differ.diff_main(beforeText, afterText);
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/593
+        //   Ensure the text content always ends with an empty line to avoid
+        //   spurious diff entries.
+        let beforeText = doc.getValue().trim();
+        if ( beforeText !== '' ) { beforeText += '\n'; }
+        let afterText = rules.join('\n').trim();
+        if ( afterText !== '' ) { afterText += '\n'; }
+        const diffs = differ.diff_main(beforeText, afterText);
         doc.startOperation();
         let i = diffs.length,
             iedit = beforeText.length;
@@ -199,13 +204,13 @@ const filterRules = function(key) {
 
 /******************************************************************************/
 
-const renderRules = (function() {
+const renderRules = (( ) => {
+    const reIsSwitchRule = /^[a-z-]+: /;
     let firstVisit = true;
-    let reIsSwitchRule = /^[a-z-]+: /;
 
     // Switches always listed at the top.
-    let customSort = (a, b) => {
-        let aIsSwitch = reIsSwitchRule.test(a);
+    const customSort = (a, b) => {
+        const aIsSwitch = reIsSwitchRule.test(a);
         if ( reIsSwitchRule.test(b) === aIsSwitch ) {
             return a.localeCompare(b);
         }
@@ -356,10 +361,10 @@ const onFilterChanged = (function() {
 
 /******************************************************************************/
 
-const onTextChanged = (function() {
+const onTextChanged = (( ) => {
     let timer;
 
-    const process = function(now) {
+    const process = now => {
         timer = undefined;
         const diff = document.getElementById('diff');
         let isClean = mergeView.editor().isClean(cleanEditToken);
@@ -373,10 +378,8 @@ const onTextChanged = (function() {
         }
         diff.classList.toggle('editing', isClean === false);
         diff.classList.toggle('dirty', mergeView.leftChunks().length !== 0);
-        document.getElementById('editSaveButton').classList.toggle(
-            'disabled',
-            isClean
-        );
+        document.getElementById('editSaveButton')
+                .classList.toggle('disabled', isClean);
         const input = document.querySelector('#ruleFilter input');
         if ( isClean ) {
             input.removeAttribute('disabled');
