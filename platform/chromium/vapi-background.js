@@ -775,8 +775,6 @@ vAPI.setIcon = (function() {
             case 'off':
                 iconPaths = { '16': 'img/adn_off_16.png', '32': 'img/adn_off_32.png'};
                 break;
-            default://on
-                iconPaths = { '16': 'img/adn_on_16.png', '32': 'img/adn_on_32.png' };
         }
 
         tabId = toChromiumTabId(tabId);
@@ -810,7 +808,7 @@ vAPI.setIcon = (function() {
                 tabId: tabId,
                 title: titleTemplate.replace(
                     '{badge}',
-                    iconStatus === 'on' ? (badge !== '' ? badge : '0') : 'off'
+                    iconStatus === 'onactive' ? (badge !== '' ? badge : '0') : 'off'
                 )
             });
         }
