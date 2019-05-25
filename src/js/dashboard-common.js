@@ -218,6 +218,21 @@ self.uBlockDashboard.patchCodeMirrorEditor = (function() {
 
 /******************************************************************************/
 
+self.uBlockDashboard.openOrSelectPage = function(url, options = {}) {
+    let ev;
+    if ( url instanceof MouseEvent ) {
+        ev = url;
+        url = ev.target.getAttribute('href');
+    } 
+    const details = Object.assign({ url, select: true, index: -1 }, options);
+    vAPI.messaging.send('default', { what: 'gotoURL', details });
+    if ( ev ) {
+        ev.preventDefault();
+    }
+};
+
+/******************************************************************************/
+
 // Open links in the proper window
 uDom('a').attr('target', '_blank');
 uDom('a[href*="dashboard.html"]').attr('target', '_parent');

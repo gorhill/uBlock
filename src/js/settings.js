@@ -21,30 +21,27 @@
 
 /* global uDom */
 
-/******************************************************************************/
-
-(function() {
-
 'use strict';
 
 /******************************************************************************/
 
-var messaging = vAPI.messaging;
+(( ) => {
 
 /******************************************************************************/
 
-var handleImportFilePicker = function() {
-    var file = this.files[0];
-    if ( file === undefined || file.name === '' ) {
-        return;
-    }
-    if ( file.type.indexOf('text') !== 0 ) {
-        return;
-    }
-    var filename = file.name;
+const messaging = vAPI.messaging;
 
-    var fileReaderOnLoadHandler = function() {
-        var userData;
+/******************************************************************************/
+
+const handleImportFilePicker = function() {
+    const file = this.files[0];
+    if ( file === undefined || file.name === '' ) { return; }
+    if ( file.type.indexOf('text') !== 0 ) { return; }
+
+    const filename = file.name;
+
+    const fileReaderOnLoadHandler = function() {
+        let userData;
         try {
             userData = JSON.parse(this.result);
             if ( typeof userData !== 'object' ) {
@@ -70,10 +67,10 @@ var handleImportFilePicker = function() {
             window.alert(vAPI.i18n('aboutRestoreDataError'));
             return;
         }
-        var time = new Date(userData.timeStamp);
-        var msg = vAPI.i18n('aboutRestoreDataConfirm')
-                      .replace('{{time}}', time.toLocaleString());
-        var proceed = window.confirm(msg);
+        const time = new Date(userData.timeStamp);
+        const msg = vAPI.i18n('aboutRestoreDataConfirm')
+                        .replace('{{time}}', time.toLocaleString());
+        const proceed = window.confirm(msg);
         if ( proceed ) {
             messaging.send(
                 'dashboard',
@@ -86,15 +83,15 @@ var handleImportFilePicker = function() {
         }
     };
 
-    var fr = new FileReader();
+    const fr = new FileReader();
     fr.onload = fileReaderOnLoadHandler;
     fr.readAsText(file);
 };
 
 /******************************************************************************/
 
-var startImportFilePicker = function() {
-    var input = document.getElementById('restoreFilePicker');
+const startImportFilePicker = function() {
+    const input = document.getElementById('restoreFilePicker');
     // Reset to empty string, this will ensure an change event is properly
     // triggered if the user pick a file, even if it is the same as the last
     // one picked.
@@ -104,8 +101,8 @@ var startImportFilePicker = function() {
 
 /******************************************************************************/
 
-var exportToFile = function() {
-    messaging.send('dashboard', { what: 'backupUserData' }, function(response) {
+const exportToFile = function() {
+    messaging.send('dashboard', { what: 'backupUserData' }, response => {
         if (
             response instanceof Object === false ||
             response.userData instanceof Object === false
@@ -123,7 +120,7 @@ var exportToFile = function() {
 
 /******************************************************************************/
 
-var onLocalDataReceived = function(details) {
+const onLocalDataReceived = function(details) {
     uDom('#localData > ul > li:nth-of-type(1)').text(
         vAPI.i18n('settingsStorageUsed')
             .replace(
@@ -132,8 +129,7 @@ var onLocalDataReceived = function(details) {
             )
     );
 
-    var elem, dt;
-    var timeOptions = {
+    const timeOptions = {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
@@ -142,18 +138,19 @@ var onLocalDataReceived = function(details) {
         minute: 'numeric',
         timeZoneName: 'short'
     };
-    var lastBackupFile = details.lastBackupFile || '';
+
+    const lastBackupFile = details.lastBackupFile || '';
     if ( lastBackupFile !== '' ) {
-        dt = new Date(details.lastBackupTime);
+        const dt = new Date(details.lastBackupTime);
         uDom('#localData > ul > li:nth-of-type(2) > ul > li:nth-of-type(1)').text(dt.toLocaleString('fullwide', timeOptions));
         //uDom('#localData > ul > li:nth-of-type(2) > ul > li:nth-of-type(2)').text(lastBackupFile);
         uDom('#localData > ul > li:nth-of-type(2)').css('display', '');
     }
 
-    var lastRestoreFile = details.lastRestoreFile || '';
-    elem = uDom('#localData > p:nth-of-type(3)');
+    const lastRestoreFile = details.lastRestoreFile || '';
+    uDom('#localData > p:nth-of-type(3)');
     if ( lastRestoreFile !== '' ) {
-        dt = new Date(details.lastRestoreTime);
+        const dt = new Date(details.lastRestoreTime);
         uDom('#localData > ul > li:nth-of-type(3) > ul > li:nth-of-type(1)').text(dt.toLocaleString('fullwide', timeOptions));
         uDom('#localData > ul > li:nth-of-type(3) > ul > li:nth-of-type(2)').text(lastRestoreFile);
         uDom('#localData > ul > li:nth-of-type(3)').css('display', '');
@@ -162,6 +159,7 @@ var onLocalDataReceived = function(details) {
     if ( details.cloudStorageSupported === false ) {
         uDom('#cloud-storage-enabled').attr('disabled', '');
     }
+
     if ( details.privacySettingsSupported === false ) {
         uDom('#prefetching-disabled').attr('disabled', '');
         uDom('#hyperlink-auditing-disabled').attr('disabled', '');
@@ -171,9 +169,9 @@ var onLocalDataReceived = function(details) {
 
 /******************************************************************************/
 
-var resetUserData = function() {
-    var msg = vAPI.i18n('aboutResetDataConfirm');
-    var proceed = window.confirm(msg);
+const resetUserData = function() {
+    const msg = vAPI.i18n('aboutResetDataConfirm');
+    const proceed = window.confirm(msg);
     if ( proceed ) {
         messaging.send('dashboard', { what: 'resetUserData' });
     }
@@ -181,7 +179,7 @@ var resetUserData = function() {
 
 /******************************************************************************/
 
-var synchronizeDOM = function() {
+const synchronizeDOM = function() {
     document.body.classList.toggle(
         'advancedUser',
         uDom.nodeFromId('advanced-user-enabled').checked === true
@@ -190,7 +188,7 @@ var synchronizeDOM = function() {
 
 /******************************************************************************/
 
-var changeUserSettings = function(name, value) {
+const changeUserSettings = function(name, value) {
     messaging.send(
         'dashboard',
         {
@@ -203,10 +201,10 @@ var changeUserSettings = function(name, value) {
 
 /******************************************************************************/
 
-var onInputChanged = function(ev) {
-    var input = ev.target;
-    var name = this.getAttribute('data-setting-name');
-    var value = input.value;
+const onInputChanged = function(ev) {
+    const input = ev.target;
+    const name = this.getAttribute('data-setting-name');
+    let value = input.value;
     if ( name === 'largeMediaSize' ) {
         value = Math.min(Math.max(Math.floor(parseInt(value, 10) || 0), 0), 1000000);
     }
@@ -221,7 +219,7 @@ var onInputChanged = function(ev) {
 // Workaround for:
 // https://github.com/gorhill/uBlock/issues/1448
 
-var onPreventDefault = function(ev) {
+const onPreventDefault = function(ev) {
     ev.target.focus();
     ev.preventDefault();
 };
@@ -230,7 +228,7 @@ var onPreventDefault = function(ev) {
 
 // TODO: use data-* to declare simple settings
 
-var onUserSettingsReceived = function(details) {
+const onUserSettingsReceived = function(details) {
     uDom('[data-setting-type="bool"]').forEach(function(uNode) {
         uNode.prop('checked', details[uNode.attr('data-setting-name')] === true)
              .on('change', function() {
@@ -262,10 +260,16 @@ var onUserSettingsReceived = function(details) {
 
 /******************************************************************************/
 
-uDom.onLoad(function() {
-    messaging.send('dashboard', { what: 'userSettings' }, onUserSettingsReceived);
-    messaging.send('dashboard', { what: 'getLocalData' }, onLocalDataReceived);
-});
+messaging.send('dashboard', { what: 'userSettings' }, onUserSettingsReceived);
+messaging.send('dashboard', { what: 'getLocalData' }, onLocalDataReceived);
+
+// https://github.com/uBlockOrigin/uBlock-issues/issues/591
+document.querySelector(
+    '[data-i18n-title="settingsAdvancedUserSettings"]'
+).addEventListener(
+    'click',
+    self.uBlockDashboard.openOrSelectPage
+);
 
 /******************************************************************************/
 
