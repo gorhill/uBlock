@@ -12,15 +12,15 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Warning! You have unsaved changes",
+    "message": "Varování! Máte neuložené změny",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Stay",
+    "message": "Zůstat",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Ignore",
+    "message": "Ignorovat",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
@@ -568,11 +568,11 @@
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
-    "message": "uBlock Origin wiki: The logger",
+    "message": "uBlock Origin wiki: Logger",
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
-    "message": "Clear logger",
+    "message": "Vyčistit logger",
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
@@ -584,7 +584,7 @@
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "Toggle logger filtering",
+    "message": "Přepnout filtrování loggeru",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
@@ -592,7 +592,7 @@
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
-    "message": "Logger filtering options",
+    "message": "Možnosti filtrování loggeru",
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {
@@ -628,7 +628,7 @@
     "description": "Label to identify a filter field"
   },
   "loggerEntryDetailsFilterList": {
-    "message": "Filter list",
+    "message": "Seznam filtrů",
     "description": "Label to identify a filter list field"
   },
   "loggerEntryDetailsRule": {
@@ -644,7 +644,7 @@
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
-    "message": "Partyness",
+    "message": "Strana",
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
@@ -752,7 +752,7 @@
     "description": "A label for the context column"
   },
   "loggerSettingHideColumnPartyness": {
-    "message": "{{input}} Partyness",
+    "message": "{{input}} strana",
     "description": "A label for the partyness column"
   },
   "loggerExportFormatList": {
