@@ -26,13 +26,13 @@
 
 /******************************************************************************/
 
-(function() {
+(( ) => {
 
 /******************************************************************************/
 /******************************************************************************/
 
-var chrome = self.chrome;
-var manifest = chrome.runtime.getManifest();
+const chrome = self.chrome;
+const manifest = chrome.runtime.getManifest();
 
 vAPI.cantWebsocket =
     chrome.webRequest.ResourceType instanceof Object === false  ||
@@ -61,7 +61,7 @@ vAPI.insertCSS = function(tabId, details) {
     return chrome.tabs.insertCSS(tabId, details, vAPI.resetLastError);
 };
 
-var noopFunc = function(){};
+const noopFunc = function(){};
 
 /******************************************************************************/
 
@@ -417,18 +417,23 @@ vAPI.tabs.get = function(tabId, callback) {
     });
 };
 
-/******************************************************************************/
+/*******************************************************************************
 
-// properties of the details object:
-//   url: 'URL', // the address that will be opened
-//   tabId: 1, // the tab is used if set, instead of creating a new one
-//   index: -1, // undefined: end of the list, -1: following tab, or after index
-//   active: false, // opens the tab in background - true and undefined: foreground
-//   select: true, // if a tab is already opened with that url, then select it instead of opening a new one
-//   popup: true // open in a new window
+    Properties of the details object:
+    - url: 'URL',    => the address that will be opened
+    - tabId: 1,      => the tab is used if set, instead of creating a new one
+    - index: -1,     => undefined: end of the list, -1: following tab, or
+                        after index
+    - active: false, => opens the tab in background - true and undefined:
+                        foreground
+    - select: true,  => if a tab is already opened with that url, then select
+                        it instead of opening a new one
+    - popup: true    => open in a new window
+
+*/
 
 vAPI.tabs.open = function(details) {
-    var targetURL = details.url;
+    let targetURL = details.url;
     if ( typeof targetURL !== 'string' || targetURL === '' ) {
         return null;
     }
@@ -439,43 +444,46 @@ vAPI.tabs.open = function(details) {
     }
 
     // dealing with Chrome's asynchronous API
-    var wrapper = function() {
+    const wrapper = ( ) => {
         if ( details.active === undefined ) {
             details.active = true;
         }
 
-        var subWrapper = function() {
-            var _details = {
+        const subWrapper = ( ) => {
+            const updateDetails = {
                 url: targetURL,
                 active: !!details.active
             };
 
             // Opening a tab from incognito window won't focus the window
             // in which the tab was opened
-            var focusWindow = function(tab) {
-                if ( tab.active && chrome.windows instanceof Object ) {
-                    chrome.windows.update(tab.windowId, { focused: true });
+            const focusWindow = tab => {
+                if ( tab.active && browser.windows instanceof Object ) {
+                    browser.windows.update(tab.windowId, { focused: true });
                 }
             };
 
             if ( !details.tabId ) {
                 if ( details.index !== undefined ) {
-                    _details.index = details.index;
+                    updateDetails.index = details.index;
                 }
-
-                chrome.tabs.create(_details, focusWindow);
+                browser.tabs.create(updateDetails, focusWindow);
                 return;
             }
 
             // update doesn't accept index, must use move
-            chrome.tabs.update(toChromiumTabId(details.tabId), _details, function(tab) {
-                // if the tab doesn't exist
-                if ( vAPI.lastError() ) {
-                    chrome.tabs.create(_details, focusWindow);
-                } else if ( details.index !== undefined ) {
-                    chrome.tabs.move(tab.id, {index: details.index});
+            browser.tabs.update(
+                toChromiumTabId(details.tabId),
+                updateDetails,
+                tab => {
+                    // if the tab doesn't exist
+                    if ( vAPI.lastError() ) {
+                        browser.tabs.create(updateDetails, focusWindow);
+                    } else if ( details.index !== undefined ) {
+                        browser.tabs.move(tab.id, { index: details.index });
+                    }
                 }
-            });
+            );
         };
 
         // Open in a standalone window
@@ -487,14 +495,14 @@ vAPI.tabs.open = function(details) {
         // position when specified. I found that further calling
         // windows.update again with the same position _may_ help.
         if ( details.popup === true && browser.windows instanceof Object ) {
-            const options = {
+            const createDetails = {
                 url: details.url,
                 type: 'popup',
             };
             if ( details.box instanceof Object ) {
-                Object.assign(options, details.box);
+                Object.assign(createDetails, details.box);
             }
-            browser.windows.create(options, win => {
+            browser.windows.create(createDetails, win => {
                 if ( win instanceof Object === false ) { return; }
                 if ( details.box instanceof Object === false ) { return; }
                 if (
@@ -516,7 +524,7 @@ vAPI.tabs.open = function(details) {
             return;
         }
 
-        vAPI.tabs.get(null, function(tab) {
+        vAPI.tabs.get(null, tab => {
             if ( tab ) {
                 details.index = tab.index + 1;
             } else {
@@ -543,29 +551,29 @@ vAPI.tabs.open = function(details) {
     }
 
     // https://developer.chrome.com/extensions/tabs#method-query
-    // "Note that fragment identifiers are not matched."
-    // It's a lie, fragment identifiers ARE matched. So we need to remove the
-    // fragment.
-    var pos = targetURL.indexOf('#'),
-        targetURLWithoutHash = pos === -1 ? targetURL : targetURL.slice(0, pos);
+    //   "Note that fragment identifiers are not matched."
+    //   It's a lie, fragment identifiers ARE matched. So we need to remove
+    //   the fragment.
+    const pos = targetURL.indexOf('#');
+    const targetURLWithoutHash = pos === -1
+        ? targetURL
+        : targetURL.slice(0, pos);
 
-    chrome.tabs.query({ url: targetURLWithoutHash }, function(tabs) {
-        void chrome.runtime.lastError;
-        var tab = Array.isArray(tabs) && tabs[0];
+    browser.tabs.query({ url: targetURLWithoutHash }, tabs => {
+        void browser.runtime.lastError;
+        const tab = Array.isArray(tabs) && tabs[0];
         if ( !tab ) {
             wrapper();
             return;
         }
-        var _details = {
-            active: true,
-            url: undefined
-        };
-        if ( targetURL !== tab.url ) {
-            _details.url = targetURL;
+        const updateDetails = { active: true };
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/592
+        if ( tab.url.startsWith(targetURL) === false ) {
+            updateDetails.url = targetURL;
         }
-        chrome.tabs.update(tab.id, _details, function(tab) {
-            if ( chrome.windows instanceof Object === false ) { return; }
-            chrome.windows.update(tab.windowId, { focused: true });
+        browser.tabs.update(tab.id, updateDetails, tab => {
+            if ( browser.windows instanceof Object === false ) { return; }
+            browser.windows.update(tab.windowId, { focused: true });
         });
     });
 };
