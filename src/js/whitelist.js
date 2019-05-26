@@ -157,19 +157,19 @@ const renderWhitelist = function() {
 /******************************************************************************/
 
 const handleImportFilePicker = function() {
-    const fileReaderOnLoadHandler = ( ) => {
-        cmEditor.setValue(
-            [
-                cmEditor.getValue().trim(),
-                this.result.trim()
-            ].join('\n').trim()
-        );
-    };
     const file = this.files[0];
     if ( file === undefined || file.name === '' ) { return; }
     if ( file.type.indexOf('text') !== 0 ) { return; }
     const fr = new FileReader();
-    fr.onload = fileReaderOnLoadHandler;
+    fr.onload = ev => {
+        if ( ev.type !== 'load' ) { return; }
+        cmEditor.setValue(
+            [
+                cmEditor.getValue().trim(),
+                fr.result.trim()
+            ].join('\n').trim()
+        );
+    };
     fr.readAsText(file);
 };
 
