@@ -365,15 +365,6 @@
 		],
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=90"
 	},
-	"DNK-0": {
-		"content": "filters",
-		"group": "regions",
-		"off": true,
-		"title": "DNK: Schacks Adblock Plus liste",
-		"lang": "da",
-		"contentURL": "https://adblock.dk/block.csv",
-		"supportURL": "https://henrik.schack.dk/adblock/"
-	},
 	"EST-0": {
 		"content": "filters",
 		"group": "regions",
