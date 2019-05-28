@@ -43,7 +43,7 @@ let simpleDeclarativeStr;
 const complexDeclarativeSet = new Set();
 let complexDeclarativeStr;
 const proceduralDict = new Map();
-const exceptionSet = new Set();
+const exceptionDict = new Map();
 let exceptionStr;
 const nodesToProcess = new Set();
 let shouldProcessDeclarativeComplex = false;
@@ -121,17 +121,17 @@ const processProcedural = function(out) {
 /******************************************************************************/
 
 const processExceptions = function(out) {
-    if ( exceptionSet.size === 0 ) { return; }
+    if ( exceptionDict.size === 0 ) { return; }
     if ( exceptionStr === undefined ) {
-        exceptionStr = Array.from(exceptionSet).join(',\n');
+        exceptionStr = Array.from(exceptionDict.keys()).join(',\n');
     }
     if ( document.querySelector(exceptionStr) === null ) { return; }
-    for ( const selector of exceptionSet ) {
+    for ( const [ selector, raw ] of exceptionDict ) {
         if ( document.querySelector(selector) === null ) { continue; }
-        out.push(`#@#${selector}`);
-        exceptionSet.delete(selector);
+        out.push(`#@#${raw}`);
+        exceptionDict.delete(selector);
         exceptionStr = undefined;
-        loggedSelectors.add(selector);
+        loggedSelectors.add(raw);
     }
 };
 
@@ -255,7 +255,12 @@ const handlers = {
         if ( Array.isArray(changes.exceptions) ) {
             for ( const selector of changes.exceptions ) {
                 if ( loggedSelectors.has(selector) ) { continue; }
-                exceptionSet.add(selector);
+                if ( selector.charCodeAt(0) === 0x7B /* '{' */ ) {
+                    const details = JSON.parse(selector);
+                    exceptionDict.set(details.style[0], details.raw);
+                } else {
+                    exceptionDict.set(selector, selector);
+                }
             }
             exceptionStr = undefined;
             shouldProcessExceptions = true;
@@ -290,7 +295,7 @@ const handlers = {
         if ( proceduralDict.size !== 0 ) {
             shouldProcessProcedural = true;
         }
-        if ( exceptionSet.size !== 0 ) {
+        if ( exceptionDict.size !== 0 ) {
             shouldProcessExceptions = true;
         }
         if ( shouldProcess() ) {
