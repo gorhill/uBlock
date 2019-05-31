@@ -53,7 +53,7 @@
     "unlimitedStorage",
     "webNavigation",
     "webRequest",
-    "webRequestBlocking",
+    "downloads",
     "<all_urls>",
     "management"
   ],
