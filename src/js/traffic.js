@@ -418,13 +418,18 @@ const onBeforeMaybeSpuriousCSPReport = (function() {
 // - CSP injection
 
 const onHeadersReceived = function(details) {
-    const fctxt = µBlock.filteringContext.fromWebrequestDetails(details);
-
-    // Do not interfere with behind-the-scene requests.
-    if ( fctxt.tabId < 0 ) { return; }
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/610
+    //   Process behind-the-scene requests in a special way.
+    if (
+        details.tabId < 0 &&
+        normalizeBehindTheSceneResponseHeaders(details) === false
+    ) {
+        return;
+    }
 
     const µb = µBlock;
-    const requestType = details.type;
+    const fctxt = µb.filteringContext.fromWebrequestDetails(details);
+    const requestType = fctxt.type;
     const isRootDoc = requestType === 'main_frame';
     const isDoc = isRootDoc || requestType === 'sub_frame';
 
@@ -492,6 +497,25 @@ const onHeadersReceived = function(details) {
 };
 
 const reMediaContentTypes = /^(?:audio|image|video)\//;
+
+/******************************************************************************/
+
+// https://github.com/uBlockOrigin/uBlock-issues/issues/610
+
+const normalizeBehindTheSceneResponseHeaders = function(details) {
+    if ( details.type !== 'xmlhttprequest' ) { return false; }
+    const headers = details.responseHeaders;
+    if ( Array.isArray(headers) === false ) { return false; }
+    const contentType = headerValueFromName('content-type', headers);
+    if ( contentType === '' ) { return false; }
+    if ( reMediaContentTypes.test(contentType) === false ) { return false; }
+    if ( contentType.startsWith('image') ) {
+        details.type = 'image';
+    } else {
+        details.type = 'media';
+    }
+    return true;
+};
 
 /*******************************************************************************
 
@@ -1028,7 +1052,13 @@ return {
                 'onHeadersReceived',
                 onHeadersReceived,
                 {
-                    types: [ 'main_frame', 'sub_frame', 'image', 'media' ],
+                    types: [
+                        'main_frame',
+                        'sub_frame',
+                        'image',
+                        'media',
+                        'xmlhttprequest',
+                    ],
                     urls: [ 'http://*/*', 'https://*/*' ],
                 },
                 [ 'blocking', 'responseHeaders' ]
