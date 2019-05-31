@@ -19,6 +19,7 @@ cp $SRC/cv/messages.json    $DES/cv/messages.json
 cp $SRC/da/messages.json    $DES/da/messages.json
 cp $SRC/de/messages.json    $DES/de/messages.json
 cp $SRC/el/messages.json    $DES/el/messages.json
+cp $SRC/en-GB/messages.json $DES/en_GB/messages.json
 cp $SRC/eo/messages.json    $DES/eo/messages.json
 cp $SRC/es-ES/messages.json $DES/es/messages.json
 cp $SRC/et/messages.json    $DES/et/messages.json
