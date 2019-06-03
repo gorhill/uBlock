@@ -504,16 +504,35 @@ var onMessage = function(request, sender, callback) {
         ) {
             break;
         }
+        const requestHostname = µb.URI.hostnameFromURI(request.url);
+        const noCosmeticFiltering = pageStore.noCosmeticFiltering === true;
         response = {
             collapseBlocked: µb.userSettings.collapseBlocked,
-            noCosmeticFiltering: pageStore.noCosmeticFiltering === true,
-            noGenericCosmeticFiltering:
-                pageStore.noGenericCosmeticFiltering === true
+            noCosmeticFiltering: noCosmeticFiltering,
+            noGenericCosmeticFiltering: noCosmeticFiltering
         };
+        // https://github.com/uBlockOrigin/uAssets/issues/5704
+        //   `generichide` must be evaluated in the frame context.
+        if ( noCosmeticFiltering === false ) {
+            const genericHide =
+                µb.staticNetFilteringEngine.matchStringGenericHide(null, request.url);
+            response.noGenericCosmeticFiltering = genericHide === 2;
+            if ( genericHide !== 0 && µb.logger.isEnabled() ) {
+                µb.logger.writeOne(
+                    tabId,
+                    'net',
+                    µb.staticNetFilteringEngine.toLogData(),
+                    'generichide',
+                    request.url,
+                    requestHostname,
+                    requestHostname
+                );
+            }
+        }
         request.tabId = tabId;
         request.frameId = frameId;
-        request.hostname = µb.URI.hostnameFromURI(request.url);
-        request.domain = µb.URI.domainFromHostname(request.hostname);
+        request.hostname = requestHostname;
+        request.domain = µb.URI.domainFromHostname(requestHostname);
         request.entity = µb.URI.entityFromDomain(request.domain);
         response.specificCosmeticFilters =
             µb.cosmeticFilteringEngine.retrieveDomainSelectors(request, response);
@@ -524,14 +543,11 @@ var onMessage = function(request, sender, callback) {
         break;
 
     case 'retrieveGenericCosmeticSelectors':
-        if ( pageStore && pageStore.getGenericCosmeticFilteringSwitch() ) {
-            request.tabId = tabId;
-            request.frameId = frameId;
-            response = {
-                result: µb.cosmeticFilteringEngine
-                          .retrieveGenericSelectors(request)
-            };
-        }
+        request.tabId = tabId;
+        request.frameId = frameId;
+        response = {
+            result: µb.cosmeticFilteringEngine.retrieveGenericSelectors(request)
+        };
         break;
 
     default:

@@ -316,32 +316,6 @@ PageStore.prototype.init = function(tabId, context) {
         );
     }
 
-    // Support `generichide` filter option.
-    this.noGenericCosmeticFiltering = this.noCosmeticFiltering;
-    if ( this.noGenericCosmeticFiltering !== true ) {
-        var result = µb.staticNetFilteringEngine.matchStringExactType(
-            this.createContextFromPage(),
-            tabContext.normalURL,
-            'generichide'
-        );
-        this.noGenericCosmeticFiltering = result === 2;
-        if (
-            result !== 0 &&
-            µb.logger.isEnabled() &&
-            context === 'tabCommitted'
-        ) {
-            µb.logger.writeOne(
-                tabId,
-                'net',
-                µb.staticNetFilteringEngine.toLogData(),
-                'generichide',
-                tabContext.rawURL,
-                this.tabHostname,
-                this.tabHostname
-            );
-        }
-    }
-
     return this;
 };
 
@@ -472,13 +446,6 @@ PageStore.prototype.getNetFilteringSwitch = function() {
 
 PageStore.prototype.getSpecificCosmeticFilteringSwitch = function() {
     return this.noCosmeticFiltering !== true;
-};
-
-/******************************************************************************/
-
-PageStore.prototype.getGenericCosmeticFilteringSwitch = function() {
-    return this.noGenericCosmeticFiltering !== true &&
-           this.noCosmeticFiltering !== true;
 };
 
 /******************************************************************************/
