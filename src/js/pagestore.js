@@ -310,28 +310,6 @@ PageStore.prototype.init = function(tabId, context) {
              .toLogger();
     }
 
-    // Support `generichide` filter option.
-    this.noGenericCosmeticFiltering = masterSwitch !== true;
-    if ( this.noGenericCosmeticFiltering !== true ) {
-        this.noGenericCosmeticFiltering = this.noCosmeticFiltering;
-        if ( this.noGenericCosmeticFiltering !== true ) {
-            let result = µb.staticNetFilteringEngine.matchStringGenericHide(
-                tabContext.normalURL
-            );
-            this.noGenericCosmeticFiltering = result === 2;
-            if (
-                result !== 0 &&
-                µb.logger.enabled &&
-                context === 'tabCommitted'
-            ) {
-                fctxt.setRealm('network')
-                     .setType('generichide')
-                     .setFilter(µb.staticNetFilteringEngine.toLogData())
-                     .toLogger();
-            }
-        }
-    }
-
     return this;
 };
 
@@ -427,11 +405,6 @@ PageStore.prototype.getNetFilteringSwitch = function() {
 
 PageStore.prototype.getSpecificCosmeticFilteringSwitch = function() {
     return this.noCosmeticFiltering !== true;
-};
-
-PageStore.prototype.getGenericCosmeticFilteringSwitch = function() {
-    return this.noGenericCosmeticFiltering !== true &&
-           this.noCosmeticFiltering !== true;
 };
 
 PageStore.prototype.toggleNetFilteringSwitch = function(url, scope, state) {
