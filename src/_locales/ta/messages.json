@@ -232,11 +232,11 @@
     "description": "English: Pick"
   },
   "pickerQuit": {
-    "message": "வெளியேறு",
+    "message": "முற்றிலும் வெளியேறு",
     "description": "English: Quit"
   },
   "pickerPreview": {
-    "message": "முன்னோட்டம் பார்",
+    "message": "முன்னோட்டம்",
     "description": "Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters": {
@@ -828,7 +828,7 @@
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
-    "message": "{{url}} இணைக்க முடியவில்லை",
+    "message": "பிணையத்தில் பிழை: {{msg}}",
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
@@ -836,15 +836,15 @@
     "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo": {
-    "message": "ஒரு நிமிடத்திற்கு முன்பு",
+    "message": "ஒரு நிமிடம் முன்பு",
     "description": "English: a minute ago"
   },
   "elapsedManyMinutesAgo": {
-    "message": "{{value}} நிமிடங்களுக்கு முன்பு",
+    "message": "{{value}} நிமிடம் முன்பு",
     "description": "English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo": {
-    "message": "ஒரு மணிநேரத்திற்கு முன்பு",
+    "message": "ஒரு மணி நேரம் முன்பு",
     "description": "English: an hour ago"
   },
   "elapsedManyHoursAgo": {
@@ -852,11 +852,11 @@
     "description": "English: {{value}} hours ago"
   },
   "elapsedOneDayAgo": {
-    "message": "ஒரு நாளைக்கு முன்பு",
+    "message": "ஒரு நாள் முன்பு",
     "description": "English: a day ago"
   },
   "elapsedManyDaysAgo": {
-    "message": "{{value}} நாட்கள் முன்பு",
+    "message": "{{value}} நாள் முன்பு",
     "description": "English: {{value}} days ago"
   },
   "showDashboardButton": {

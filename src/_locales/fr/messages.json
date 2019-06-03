@@ -280,7 +280,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Activer les fonctionnalités avancées (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>À lire<\/a>, page en Anglais)",
+    "message": "Activer les fonctionnalités avancées (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>À lire<\/a>)",
     "description": ""
   },
   "settingsAdvancedUserSettings": {
@@ -568,7 +568,7 @@
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
-    "message": "Page Wiki (en Anglais) uBlock Origin : Le journal",
+    "message": "Page Wiki uBlock Origin : Le journal",
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
@@ -772,23 +772,23 @@
     "description": "Label for radio-button to pick export text format"
   },
   "aboutChangelog": {
-    "message": "Journal des changements (en Anglais)",
+    "message": "Journal des changements",
     "description": ""
   },
   "aboutWiki": {
-    "message": "Documentation (en Anglais)",
+    "message": "Documentation",
     "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
-    "message": "Support (en Anglais)",
+    "message": "Support",
     "description": "A link for where to get support"
   },
   "aboutIssues": {
-    "message": "Suivi des problèmes (en Anglais)",
+    "message": "Suivi des problèmes",
     "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
-    "message": "Code Source (Licence GPLv3, en Anglais)",
+    "message": "Code Source (Licence GPLv3)",
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
