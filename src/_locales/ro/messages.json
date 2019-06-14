@@ -572,15 +572,15 @@
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
-    "message": "Golește jurnalierul",
+    "message": "Şterge logger-ul",
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
-    "message": "Oprește jurnalierul (nu mai înregistrează)",
+    "message": "Oprește logger-ul(ignoră tot traficul primit)",
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {
-    "message": "Pornește jurnalierul",
+    "message": "Pornește logger-ul",
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
