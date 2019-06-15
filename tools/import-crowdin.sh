@@ -13,6 +13,7 @@ cp $SRC/ar/messages.json    $DES/ar/messages.json
 cp $SRC/az/messages.json    $DES/az/messages.json
 cp $SRC/bg/messages.json    $DES/bg/messages.json
 cp $SRC/bn/messages.json    $DES/bn/messages.json
+cp $SRC/bs/messages.json    $DES/bs/messages.json
 cp $SRC/ca/messages.json    $DES/ca/messages.json
 cp $SRC/cs/messages.json    $DES/cs/messages.json
 cp $SRC/cv/messages.json    $DES/cv/messages.json
@@ -81,6 +82,7 @@ DES=./dist/description
 cp $SRC/ar/description.txt    $DES/description-ar.txt
 cp $SRC/bg/description.txt    $DES/description-bg.txt
 cp $SRC/bn/description.txt    $DES/description-bn.txt
+cp $SRC/bs/description.txt    $DES/description-bs.txt
 cp $SRC/ca/description.txt    $DES/description-ca.txt
 cp $SRC/cs/description.txt    $DES/description-cs.txt
 cp $SRC/cv/description.txt    $DES/description-cv.txt
