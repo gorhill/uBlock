@@ -20,13 +20,14 @@ firefox_manifest_file = os.path.join(build_dir, 'manifest.json')
 with open(firefox_manifest_file) as f2:
     firefox_manifest = json.load(f2)
 
-match = re.search('^(\d+\.\d+\.\d+)(\.\d+)$', version)
-if not match:
-    # https://bugzilla.mozilla.org/show_bug.cgi?id=1459007
-    # By design Firefox opens the sidebar with new installation of
-    # uBO when sidebar_action is present in the manifest.
-    # Remove sidebarAction support for stable release of uBO.
-    del firefox_manifest['sidebar_action']
+if 'sidebar_action' in firefox_manifest:
+    match = re.search('^(\d+\.\d+\.\d+)(\.\d+)$', version)
+    if not match:
+        # https://bugzilla.mozilla.org/show_bug.cgi?id=1459007
+        # By design Firefox opens the sidebar with new installation of
+        # uBO when sidebar_action is present in the manifest.
+        # Remove sidebarAction support for stable release of uBO.
+        del firefox_manifest['sidebar_action']
 
 firefox_manifest['version'] = version
 
