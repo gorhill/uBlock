@@ -91,8 +91,12 @@ There is also a development version if you want to test uBlock Origin with the l
 
 uBlock Origin is compatible with [SeaMonkey](http://www.seamonkey-project.org/), [Pale Moon](https://www.palemoon.org/), and possibly other browsers based on Firefox: for installation, see [Install / Firefox legacy](https://github.com/gorhill/uBlock/blob/master/dist/README.md#firefox-legacy).
 
-Thanks to Debian contributor [Sean Whitton](https://wiki.debian.org/SeanWhitton), users of Debian 9 or later or Ubuntu 16.04 or later may simply
-`apt-get install xul-ext-ublock-origin`.
+uBO mat also be installable as a [Debian package](https://packages.debian.org/stable/source/ublock-origin):
+
+- Firefox 56-: `apt-get install xul-ext-ublock-origin`
+- Firefox 55+: `apt-get install webext-ublock-origin`
+
+There is no guarantee the package will be available on your specific platform -- in which case, you will have to install from [Firefox Add-ons web site](https://addons.mozilla.org/addon/ublock-origin/).
 
 #### Microsoft Edge
 
