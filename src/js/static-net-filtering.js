@@ -20,7 +20,7 @@
 */
 
 /* jshint bitwise: false */
-/* global punycode, HNTrieContainer, STrieContainer */
+/* global punycode, HNTrieContainer */
 
 'use strict';
 
@@ -130,6 +130,7 @@ const reIsWildcarded = /[\^\*]/;
 // See the following as short-lived registers, used during evaluation. They are
 // valid until the next evaluation.
 
+let urlRegister = '';
 let pageHostnameRegister = '';
 let requestHostnameRegister = '';
 
@@ -311,13 +312,12 @@ registerFilterClass(FilterTrue);
 /******************************************************************************/
 
 const FilterPlain = class {
-    constructor(s, tokenBeg) {
+    constructor(s) {
         this.s = s;
-        this.tokenBeg = tokenBeg;
     }
 
     match(url, tokenBeg) {
-        return url.startsWith(this.s, tokenBeg - this.tokenBeg);
+        return url.startsWith(this.s, tokenBeg);
     }
 
     logData() {
@@ -332,56 +332,55 @@ const FilterPlain = class {
         return [ this.fid, this.s, this.tokenBeg ];
     }
 
+    addToTrie(trie) {
+        trie.add(this.s, this.tokenBeg);
+    }
+
     static compile(details) {
         return [ FilterPlain.fid, details.f, details.tokenBeg ];
     }
 
     static load(args) {
-        return new FilterPlain(args[1], args[2]);
+        if ( args[2] === 0 ) {
+            return new FilterPlain(args[1]);
+        }
+        if ( args[2] === 1 ) {
+            return new FilterPlain1(args[1]);
+        }
+        return new FilterPlainX(args[1], args[2]);
+    }
+
+    static addToTrie(args, trie) {
+        trie.add(args[1], args[2]);
     }
 };
+
+FilterPlain.trieableId = 0;
+FilterPlain.prototype.trieableId = FilterPlain.trieableId;
+FilterPlain.prototype.tokenBeg = 0;
 
 registerFilterClass(FilterPlain);
 
-/******************************************************************************/
 
-const FilterPlainPrefix1 = class {
-    constructor(s) {
-        this.s = s;
-    }
-
+const FilterPlain1 = class extends FilterPlain {
     match(url, tokenBeg) {
         return url.startsWith(this.s, tokenBeg - 1);
     }
-
-    logData() {
-        return {
-            raw: rawToPlainStr(this.s, 0),
-            regex: rawToRegexStr(this.s, 0),
-            compiled: this.compile()
-        };
-    }
-
-    compile() {
-        return [ this.fid, this.s ];
-    }
-
-    static compile(details) {
-        return [ FilterPlainPrefix1.fid, details.f ];
-    }
-
-    static load(args) {
-        return new FilterPlainPrefix1(args[1]);
-    }
-
-    static trieableStringFromArgs(args) {
-        return args[1];
-    }
 };
 
-FilterPlainPrefix1.prototype.trieableId = 0;
+FilterPlain1.prototype.tokenBeg = 1;
 
-registerFilterClass(FilterPlainPrefix1);
+
+const FilterPlainX = class extends FilterPlain {
+    constructor(s, tokenBeg) {
+        super(s);
+        this.tokenBeg = tokenBeg;
+    }
+
+    match(url, tokenBeg) {
+        return url.startsWith(this.s, tokenBeg - this.tokenBeg);
+    }
+};
 
 /******************************************************************************/
 
@@ -538,31 +537,53 @@ const FilterPlainHnAnchored = class {
     logData() {
         return {
             raw: `||${this.s}`,
-            regex: rawToRegexStr(this.s, 0),
+            regex: rawToRegexStr(this.s, this.tokenBeg),
             compiled: this.compile()
         };
     }
 
     compile() {
-        return [ this.fid, this.s ];
+        return [ this.fid, this.s, this.tokenBeg ];
+    }
+
+    addToTrie(trie) {
+        trie.add(this.s, this.tokenBeg);
     }
 
     static compile(details) {
-        return [ FilterPlainHnAnchored.fid, details.f ];
+        return [ FilterPlainHnAnchored.fid, details.f, details.tokenBeg ];
     }
 
     static load(args) {
-        return new FilterPlainHnAnchored(args[1]);
+        if ( args[2] === 0 ) {
+            return new FilterPlainHnAnchored(args[1]);
+        }
+        return new FilterPlainHnAnchoredX(args[1], args[2]);
     }
 
-    static trieableStringFromArgs(args) {
-        return args[1];
+    static addToTrie(args, trie) {
+        trie.add(args[1], args[2]);
     }
 };
 
-FilterPlainHnAnchored.prototype.trieableId = 1;
+FilterPlainHnAnchored.trieableId = 1;
+FilterPlainHnAnchored.prototype.trieableId = FilterPlainHnAnchored.trieableId;
+FilterPlainHnAnchored.prototype.tokenBeg = 0;
 
 registerFilterClass(FilterPlainHnAnchored);
+
+
+const FilterPlainHnAnchoredX = class extends FilterPlainHnAnchored {
+    constructor(s, tokenBeg) {
+        super(s);
+        this.tokenBeg = tokenBeg;
+    }
+
+    match(url, tokenBeg) {
+        const beg = tokenBeg - this.tokenBeg;
+        return url.startsWith(this.s, beg) && isHnAnchored(url, beg);
+    }
+};
 
 /*******************************************************************************
 
@@ -1605,12 +1626,13 @@ const FilterBucket = class {
             this.filters.push(a, b, c);
             this._countTrieable();
         }
+        this.trieResult = 0;
     }
 
     get size() {
         let size = this.filters.length;
-        if ( this.plainPrefix1Trie !== null ) {
-            size += this.plainPrefix1Trie.size;
+        if ( this.plainTrie !== null ) {
+            size += this.plainTrie.size;
         }
         if ( this.plainHnAnchoredTrie !== null ) {
             size += this.plainHnAnchoredTrie.size;
@@ -1619,39 +1641,26 @@ const FilterBucket = class {
     }
 
     add(fdata) {
-        if ( fdata[0] === this.plainPrefix1Id ) {
-            if ( this.plainPrefix1Trie !== null ) {
-                return this.plainPrefix1Trie.add(
-                    FilterPlainPrefix1.trieableStringFromArgs(fdata)
-                );
+        const fclass = filterClasses[fdata[0]];
+        if ( fclass.trieableId === 0 ) {
+            if ( this.plainTrie !== null ) {
+                return fclass.addToTrie(fdata, this.plainTrie);
             }
-            if ( this.plainPrefix1Count === 3 ) {
-                this.plainPrefix1Trie = FilterBucket.trieContainer.createOne();
-                this._transferTrieable(
-                    this.plainPrefix1Id,
-                    this.plainPrefix1Trie
-                );
-                return this.plainPrefix1Trie.add(
-                    FilterPlainPrefix1.trieableStringFromArgs(fdata)
-                );
+            if ( this.plainCount === 3 ) {
+                this.plainTrie = FilterBucket.trieContainer.createOne();
+                this._transferTrieable(0, this.plainTrie);
+                return fclass.addToTrie(fdata, this.plainTrie);
             }
-            this.plainPrefix1Count += 1;
+            this.plainCount += 1;
         }
-        if ( fdata[0] === this.plainHnAnchoredId ) {
+        if ( fclass.trieableId === 1 ) {
             if ( this.plainHnAnchoredTrie !== null ) {
-                return this.plainHnAnchoredTrie.add(
-                    FilterPlainHnAnchored.trieableStringFromArgs(fdata)
-                );
+                return fclass.addToTrie(fdata, this.plainHnAnchoredTrie);
             }
             if ( this.plainHnAnchoredCount === 3 ) {
                 this.plainHnAnchoredTrie = FilterBucket.trieContainer.createOne();
-                this._transferTrieable(
-                    this.plainHnAnchoredId,
-                    this.plainHnAnchoredTrie
-                );
-                return this.plainHnAnchoredTrie.add(
-                    FilterPlainHnAnchored.trieableStringFromArgs(fdata)
-                );
+                this._transferTrieable(1, this.plainHnAnchoredTrie);
+                return fclass.addToTrie(fdata, this.plainHnAnchoredTrie);
             }
             this.plainHnAnchoredCount += 1;
         }
@@ -1659,22 +1668,21 @@ const FilterBucket = class {
     }
 
     match(url, tokenBeg) {
-        if ( this.plainPrefix1Trie !== null ) {
-            const pos = this.plainPrefix1Trie.matches(url, tokenBeg - 1);
+        if ( this.plainTrie !== null ) {
+            const pos = this.plainTrie.matches(url, tokenBeg);
             if ( pos !== -1 ) {
-                this.plainPrefix1Filter.s = url.slice(tokenBeg - 1, pos);
-                this.f = this.plainPrefix1Filter;
+                this.trieResult = pos;
+                this.f = this.plainFilter;
+                this.f.tokenBeg = tokenBeg - (pos >>> 16);
                 return true;
             }
         }
-        if (
-            this.plainHnAnchoredTrie !== null &&
-            isHnAnchored(url, tokenBeg)
-        ) {
+        if ( this.plainHnAnchoredTrie !== null ) {
             const pos = this.plainHnAnchoredTrie.matches(url, tokenBeg);
-            if ( pos !== -1 ) {
-                this.plainHnAnchoredFilter.s = url.slice(tokenBeg, pos);
+            if ( pos !== -1 && isHnAnchored(url, pos >>> 16) ) {
+                this.trieResult = pos;
                 this.f = this.plainHnAnchoredFilter;
+                this.f.tokenBeg = tokenBeg - (pos >>> 16);
                 return true;
             }
         }
@@ -1690,6 +1698,15 @@ const FilterBucket = class {
     }
 
     logData() {
+        if (
+            this.f === this.plainFilter ||
+            this.f === this.plainHnAnchoredFilter
+        ) {
+            this.f.s = urlRegister.slice(
+                this.trieResult >>> 16,
+                this.trieResult & 0xFFFF
+            );
+        }
         return this.f.logData();
     }
 
@@ -1697,8 +1714,8 @@ const FilterBucket = class {
         return [
             this.fid,
             this.filters.map(filter => filter.compile(toSelfie)),
-            this.plainPrefix1Trie !== null &&
-                FilterBucket.trieContainer.compileOne(this.plainPrefix1Trie),
+            this.plainTrie !== null &&
+                FilterBucket.trieContainer.compileOne(this.plainTrie),
             this.plainHnAnchoredTrie !== null &&
                 FilterBucket.trieContainer.compileOne(this.plainHnAnchoredTrie),
         ];
@@ -1706,21 +1723,22 @@ const FilterBucket = class {
 
     _countTrieable() {
         for ( const f of this.filters ) {
-            if ( f.fid === this.plainPrefix1Id ) {
-                this.plainPrefix1Count += 1;
-            } else if ( f.fid === this.plainHnAnchoredId ) {
+            if ( f.trieableId === 0 ) {
+                this.plainCount += 1;
+            } else if ( f.trieableId === 1 ) {
                 this.plainHnAnchoredCount += 1;
             }
         }
     }
 
-    _transferTrieable(fid, trie) {
-        let i = this.filters.length;
+    _transferTrieable(trieableId, trie) {
+        const filters = this.filters;
+        let i = filters.length;
         while ( i-- ) {
-            const f = this.filters[i];
-            if ( f.fid !== fid || f.s.length > 255 ) { continue; }
-            trie.add(f.s);
-            this.filters.splice(i, 1);
+            const f = filters[i];
+            if ( f.trieableId !== trieableId || f.s.length > 255 ) { continue; }
+            f.addToTrie(trie);
+            filters.splice(i, 1);
         }
     }
 
@@ -1757,7 +1775,7 @@ const FilterBucket = class {
         const bucket = new FilterBucket();
         bucket.filters = args[1].map(data => filterFromCompiledData(data));
         if ( Array.isArray(args[2]) ) {
-            bucket.plainPrefix1Trie =
+            bucket.plainTrie =
                 FilterBucket.trieContainer.createOne(args[2]);
         }
         if ( Array.isArray(args[3]) ) {
@@ -1771,17 +1789,15 @@ const FilterBucket = class {
 FilterBucket.prototype.f = null;
 FilterBucket.prototype.promoted = 0;
 
-FilterBucket.prototype.plainPrefix1Id = FilterPlainPrefix1.fid;
-FilterBucket.prototype.plainPrefix1Count = 0;
-FilterBucket.prototype.plainPrefix1Trie = null;
-FilterBucket.prototype.plainPrefix1Filter = new FilterPlainPrefix1('');
+FilterBucket.prototype.plainCount = 0;
+FilterBucket.prototype.plainTrie = null;
+FilterBucket.prototype.plainFilter = new FilterPlainX('', 0);
 
-FilterBucket.prototype.plainHnAnchoredId = FilterPlainHnAnchored.fid;
 FilterBucket.prototype.plainHnAnchoredCount = 0;
 FilterBucket.prototype.plainHnAnchoredTrie = null;
-FilterBucket.prototype.plainHnAnchoredFilter = new FilterPlainHnAnchored('');
+FilterBucket.prototype.plainHnAnchoredFilter = new FilterPlainHnAnchoredX('', 0);
 
-FilterBucket.trieContainer = (function() {
+FilterBucket.trieContainer = (( ) => {
     let trieDetails;
     try {
         trieDetails = JSON.parse(
@@ -1789,7 +1805,7 @@ FilterBucket.trieContainer = (function() {
         );
     } catch(ex) {
     }
-    return new STrieContainer(trieDetails);
+    return new µBlock.BidiTrieContainer(trieDetails);
 })();
 
 registerFilterClass(FilterBucket);
@@ -2215,7 +2231,6 @@ FilterParser.prototype.parse = function(raw) {
 // These "bad tokens" are collated manually.
 
 // Hostname-anchored with no wildcard always have a token index of 0.
-const reHostnameToken = /^[0-9a-z]+/;
 const reGoodToken = /[%0-9a-z]{2,}/g;
 const reRegexToken = /[%0-9A-Za-z]{2,}/g;
 const reRegexTokenAbort = /[([]/;
@@ -2298,13 +2313,7 @@ FilterParser.prototype.makeToken = function() {
 
     if ( this.f === '*' ) { return; }
 
-    let matches = null;
-    if ( (this.anchor & 0x4) !== 0 && this.wildcarded === false ) {
-        matches = reHostnameToken.exec(this.f);
-    }
-    if ( matches === null ) {
-        matches = this.findFirstGoodToken();
-    }
+    let matches = this.findFirstGoodToken();
     if ( matches !== null ) {
         this.token = matches[0];
         this.tokenHash = µb.urlTokenizer.tokenHashFromString(this.token);
@@ -2361,7 +2370,6 @@ FilterContainer.prototype.reset = function() {
     FilterBucket.reset();
 
     // Runtime registers
-    this.urlRegister = '';
     this.catbitsRegister = 0;
     this.tokenRegister = 0;
     this.filterRegister = null;
@@ -2673,8 +2681,7 @@ FilterContainer.prototype.compile = function(raw, writer) {
     } else if ( parsed.anchor === 0x4 ) {
         if (
             parsed.wildcarded === false &&
-            parsed.tokenHash !== parsed.noTokenHash &&
-            parsed.tokenBeg === 0
+            parsed.tokenHash !== parsed.noTokenHash
         ) {
             fdata = FilterPlainHnAnchored.compile(parsed);
         } else {
@@ -2704,8 +2711,6 @@ FilterContainer.prototype.compile = function(raw, writer) {
         fdata = FilterPlainRightAnchored.compile(parsed);
     } else if ( parsed.anchor === 0x3 ) {
         fdata = FilterExactMatch.compile(parsed);
-    } else if ( parsed.tokenBeg === 1 ) {
-        fdata = FilterPlainPrefix1.compile(parsed);
     } else {
         fdata = FilterPlain.compile(parsed);
     }
@@ -2962,7 +2967,7 @@ FilterContainer.prototype.realmMatchString = function(
     }
     // Pattern-based filters
     else {
-        const url = this.urlRegister;
+        const url = urlRegister;
         const tokenHashes = this.urlTokenizer.getTokens();
         let i = 0, tokenBeg = 0;
         for (;;) {
@@ -3026,7 +3031,7 @@ FilterContainer.prototype.matchStringGenericHide = function(requestURL) {
     const typeBits = typeNameToTypeValue['generichide'] | 0x80000000;
 
     // Prime tokenizer: we get a normalized URL in return.
-    this.urlRegister = this.urlTokenizer.setURL(requestURL);
+    urlRegister = this.urlTokenizer.setURL(requestURL);
     this.filterRegister = null;
 
     // These registers will be used by various filters
@@ -3071,7 +3076,7 @@ FilterContainer.prototype.matchString = function(fctxt, modifiers = 0) {
     const partyBits = fctxt.is3rdPartyToDoc() ? ThirdParty : FirstParty;
 
     // Prime tokenizer: we get a normalized URL in return.
-    this.urlRegister = this.urlTokenizer.setURL(fctxt.url);
+    urlRegister = this.urlTokenizer.setURL(fctxt.url);
     this.filterRegister = null;
 
     // These registers will be used by various filters
@@ -3173,6 +3178,20 @@ FilterContainer.prototype.benchmark = async function(action) {
             'FilterContainer.benchmark.results',
             JSON.stringify(recorded)
         );
+    }
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.test = function(docURL, type, url) {
+    const fctxt = µb.filteringContext.duplicate();
+    fctxt.setDocOriginFromURL(docURL);
+    fctxt.setType(type);
+    fctxt.setURL(url);
+    const r = this.matchString(fctxt);
+    console.log(`${r}`);
+    if ( r !== 0 ) {
+        console.log(this.toLogData());
     }
 };
 
@@ -3316,8 +3335,8 @@ FilterContainer.prototype.filterClassHistogram = function() {
         filterClassDetails.set(i, { name: filterClasses[i].name, count: 0, });
     }
     // Artificial classes to report content of tries
-    filterClassDetails.set(1000, { name: 'FilterPrefix1Trie', count: 0, });
-    filterClassDetails.set(1001, { name: 'FilterHnAnchoredTrie', count: 0, });
+    filterClassDetails.set(1000, { name: 'FilterPlainTrie', count: 0, });
+    filterClassDetails.set(1001, { name: 'FilterPlainHnAnchoredTrie', count: 0, });
 
     const countFilter = function(f) {
         if ( f instanceof Object === false ) { return; }
@@ -3332,8 +3351,8 @@ FilterContainer.prototype.filterClassHistogram = function() {
             countFilter(f);
             if ( f instanceof FilterBucket ) {
                 for ( const g of f.filters ) { countFilter(g); }
-                if ( f.plainPrefix1Trie !== null ) {
-                    filterClassDetails.get(1000).count += f.plainPrefix1Trie.size;
+                if ( f.plainTrie !== null ) {
+                    filterClassDetails.get(1000).count += f.plainTrie.size;
                 }
                 if ( f.plainHnAnchoredTrie !== null ) {
                     filterClassDetails.get(1001).count += f.plainHnAnchoredTrie.size;
