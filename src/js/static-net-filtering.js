@@ -20,7 +20,7 @@
 */
 
 /* jshint bitwise: false */
-/* global punycode, HNTrieContainer */
+/* global punycode */
 
 'use strict';
 
@@ -959,7 +959,7 @@ const filterOrigin = new (class {
             );
         } catch(ex) {
         }
-        this.trieContainer = new HNTrieContainer(trieDetails);
+        this.trieContainer = new µBlock.HNTrieContainer(trieDetails);
         this.strSlots = [];
         this.strToSlotId = new Map();
         this.gcTimer = undefined;
@@ -1452,7 +1452,7 @@ const FilterHostnameDict = class {
     }
 };
 
-FilterHostnameDict.trieContainer = (function() {
+FilterHostnameDict.trieContainer = (( ) => {
     let trieDetails;
     try {
         trieDetails = JSON.parse(
@@ -1460,7 +1460,7 @@ FilterHostnameDict.trieContainer = (function() {
         );
     } catch(ex) {
     }
-    return new HNTrieContainer(trieDetails);
+    return new µBlock.HNTrieContainer(trieDetails);
 })();
 
 registerFilterClass(FilterHostnameDict);
@@ -1816,8 +1816,8 @@ registerFilterClass(FilterBucket);
 const FilterParser = function() {
     this.cantWebsocket = vAPI.cantWebsocket;
     this.reBadDomainOptChars = /[*+?^${}()[\]\\]/;
-    this.reHostnameRule1 = /^[0-9a-z][0-9a-z.-]*[0-9a-z]$/i;
-    this.reHostnameRule2 = /^[0-9a-z][0-9a-z.-]*[0-9a-z]\^?$/i;
+    this.reHostnameRule1 = /^\w[\w.-]*[a-z]$/i;
+    this.reHostnameRule2 = /^\w[\w.-]*[a-z]\^?$/i;
     this.reCanTrimCarets1 = /^[^*]*$/;
     this.reCanTrimCarets2 = /^\^?[^^]+[^^][^^]+\^?$/;
     this.reIsolateHostname = /^(\*?\.)?([^\x00-\x24\x26-\x2C\x2F\x3A-\x5E\x60\x7B-\x7F]+)(.*)/;
@@ -1879,8 +1879,8 @@ FilterParser.prototype.reset = function() {
     this.thirdParty = false;
     this.party = AnyParty;
     this.fopts = '';
-    this.hostnamePure = false;
     this.domainOpt = '';
+    this.isPureHostname = false;
     this.isRegex = false;
     this.raw = '';
     this.redirect = false;
@@ -2080,7 +2080,7 @@ FilterParser.prototype.parse = function(raw) {
     // plain hostname? (from HOSTS file)
     if ( this.reHostnameRule1.test(s) ) {
         this.f = s.toLowerCase();
-        this.hostnamePure = true;
+        this.isPureHostname = true;
         this.anchor |= 0x4;
         return this;
     }
@@ -2173,7 +2173,7 @@ FilterParser.prototype.parse = function(raw) {
                 s = s.slice(0, -1);
             }
             this.f = s.toLowerCase();
-            this.hostnamePure = true;
+            this.isPureHostname = true;
             return this;
         }
     }
@@ -2651,7 +2651,7 @@ FilterContainer.prototype.compile = function(raw, writer) {
     // https://github.com/chrisaljoudi/uBlock/issues/665
     // Create a dict keyed on request type etc.
     if (
-        parsed.hostnamePure &&
+        parsed.isPureHostname &&
         parsed.domainOpt === '' &&
         parsed.dataType === undefined
     ) {
@@ -2665,7 +2665,7 @@ FilterContainer.prototype.compile = function(raw, writer) {
     let fdata;
     if ( parsed.isRegex ) {
         fdata = FilterRegex.compile(parsed);
-    } else if ( parsed.hostnamePure ) {
+    } else if ( parsed.isPureHostname ) {
         fdata = FilterPlainHostname.compile(parsed);
     } else if ( parsed.f === '*' ) {
         if ( parsed.isJustOrigin() ) {
