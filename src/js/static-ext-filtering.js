@@ -166,6 +166,7 @@
                 'matches-css',
                 'matches-css-after',
                 'matches-css-before',
+                'min-text-length',
                 'not',
                 'nth-ancestor',
                 'watch-attrs',
@@ -231,6 +232,14 @@
             return compile(s);
         };
 
+        const compileInteger = function(s, min = 0, max = 0x7FFFFFFF) {
+            if ( /^\d+$/.test(s) === false ) { return; }
+            const n = parseInt(s, 10);
+            if ( n >= min && n < max ) {
+                return n;
+            }
+        };
+
         const compileNotSelector = function(s) {
             // https://github.com/uBlockOrigin/uBlock-issues/issues/341#issuecomment-447603588
             //   Reject instances of :not() filters for which the argument is
@@ -242,10 +251,7 @@
         };
 
         const compileNthAncestorSelector = function(s) {
-            const n = parseInt(s, 10);
-            if ( isNaN(n) === false && n >= 1 && n < 256 ) {
-                return n;
-            }
+            return compileInteger(s, 1, 256);
         };
 
         const compileSpathExpression = function(s) {
@@ -289,6 +295,7 @@
             [ ':matches-css', compileCSSDeclaration ],
             [ ':matches-css-after', compileCSSDeclaration ],
             [ ':matches-css-before', compileCSSDeclaration ],
+            [ ':min-text-length', compileInteger ],
             [ ':not', compileNotSelector ],
             [ ':nth-ancestor', compileNthAncestorSelector ],
             [ ':spath', compileSpathExpression ],
@@ -344,12 +351,11 @@
                 case ':if-not':
                     raw.push(`:not(${decompile(task[1])})`);
                     break;
-                case ':nth-ancestor':
-                    raw.push(`:nth-ancestor(${task[1]})`);
-                    break;
                 case ':spath':
                     raw.push(task[1]);
                     break;
+                case ':min-text-length':
+                case ':nth-ancestor':
                 case ':watch-attrs':
                 case ':xpath':
                     raw.push(`${task[0]}(${task[1]})`);

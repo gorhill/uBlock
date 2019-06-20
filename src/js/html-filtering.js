@@ -82,8 +82,23 @@
 
     const PSelectorIfNotTask = class extends PSelectorIfTask {
         constructor(task) {
-            super.call(task);
+            super(task);
             this.target = false;
+        }
+    };
+
+    const PSelectorMinTextLengthTask = class {
+        constructor(task) {
+            this.min = task[1];
+        }
+        exec(input) {
+            const output = [];
+            for ( const node of input ) {
+                if ( node.textContent.length >= this.min ) {
+                    output.push(node);
+                }
+            }
+            return output;
         }
     };
 
@@ -191,6 +206,7 @@
         [ ':has-text', PSelectorHasTextTask ],
         [ ':if', PSelectorIfTask ],
         [ ':if-not', PSelectorIfNotTask ],
+        [ ':min-text-length', PSelectorMinTextLengthTask ],
         [ ':not', PSelectorIfNotTask ],
         [ ':nth-ancestor', PSelectorNthAncestorTask ],
         [ ':xpath', PSelectorXpathTask ]
