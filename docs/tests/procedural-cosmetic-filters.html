@@ -35,6 +35,9 @@
         top: 0;
         width: 100%;
     }
+    .tile > code {
+        align-self: center;
+    }
     .pass {
         background-color: green;
     }
@@ -126,6 +129,16 @@
 <div id="a12" class="tile">
     <div class="pass"><div class="fail"><a>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna<b>aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</b>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</a></div></div>
     <code>#pcf #a12 .fail:min-text-length(300)</code>
+    </div>
+
+<div id="a13" class="tile">
+    <div class="pass"><a><b></b></a><div class="fail"></div></div>
+    <code>#pcf #a13 .pass > a:has(b) + .fail</code>
+    </div>
+
+<div id="a14" class="tile">
+    <div class="pass"><a><b></b></a><div class="fail"><a><b></b></a></div></div>
+    <code>#pcf #a14 .pass > a:has(b) + .fail:has(b)</code>
     </div>
 
 </div>
