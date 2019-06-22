@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf-8">
 <title>Procedural cosmetic filters</title>
 <style>
     .filters {
@@ -25,7 +26,7 @@
         justify-content: center;
     }
     .tile > div {
-        height: 100px;
+        height: 50px;
         position: relative;
     }
     .tile > div > div {
@@ -139,6 +140,20 @@
 <div id="a14" class="tile">
     <div class="pass"><a><b></b></a><div class="fail"><a><b></b></a></div></div>
     <code>#pcf #a14 .pass > a:has(b) + .fail:has(b)</code>
+    </div>
+
+<div id="a15" class="tile">
+    <div class="pass"><div class="pass"><a><b class="ok"></b></a></div></div>
+    <code>#pcf #a15 .pass:watch-attrs(class) > .fail:has(b.notok)</code>
+    <script>
+        self.setTimeout(( ) =>
+            {
+                document.querySelector('#a15 .pass > .pass').className = 'fail';
+                document.querySelector('#a15 .pass > .fail b.ok').className = 'notok';
+            },
+            500
+        );
+    </script>
     </div>
 
 </div>
