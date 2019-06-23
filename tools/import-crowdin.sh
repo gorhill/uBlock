@@ -89,6 +89,7 @@ cp $SRC/cv/description.txt    $DES/description-cv.txt
 cp $SRC/da/description.txt    $DES/description-da.txt
 cp $SRC/de/description.txt    $DES/description-de.txt
 cp $SRC/el/description.txt    $DES/description-el.txt
+cp $SRC/en-GB/description.txt $DES/description-en_GB.txt
 cp $SRC/eo/description.txt    $DES/description-eo.txt
 cp $SRC/es-ES/description.txt $DES/description-es.txt
 cp $SRC/et/description.txt    $DES/description-et.txt
