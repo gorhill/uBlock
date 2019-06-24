@@ -202,7 +202,8 @@ vAPI.SafeAnimationFrame.prototype = {
 //   are properly reported in the logger.
 
 {
-    const events = new Set();
+    const newEvents = new Set();
+    const allEvents = new Set();
     let timer;
 
     const send = function() {
@@ -212,14 +213,17 @@ vAPI.SafeAnimationFrame.prototype = {
                 what: 'securityPolicyViolation',
                 type: 'net',
                 docURL: document.location.href,
-                violations: Array.from(events),
+                violations: Array.from(newEvents),
             },
             response => {
                 if ( response === true ) { return; }
                 stop();
             }
         );
-        events.clear();
+        for ( const event of newEvents ) {
+            allEvents.add(event);
+        }
+        newEvents.clear();
     };
 
     const sendAsync = function() {
@@ -233,16 +237,19 @@ vAPI.SafeAnimationFrame.prototype = {
     const listener = function(ev) {
         if ( ev.isTrusted !== true ) { return; }
         if ( ev.disposition !== 'enforce' ) { return; }
-        events.add(JSON.stringify({
+        const json = JSON.stringify({
             url: ev.blockedURL || ev.blockedURI,
             policy: ev.originalPolicy,
             directive: ev.effectiveDirective || ev.violatedDirective,
-        }));
+        });
+        if ( allEvents.has(json) ) { return; }
+        newEvents.add(json);
         sendAsync();
     };
 
     const stop = function() {
-        events.clear();
+        newEvents.clear();
+        allEvents.clear();
         if ( timer !== undefined ) {
             self.cancelIdleCallback(timer);
             timer = undefined;
