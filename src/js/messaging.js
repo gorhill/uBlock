@@ -762,9 +762,9 @@ const µb = µBlock;
 
 // Settings
 
-var getLocalData = function(callback) {
-    var onStorageInfoReady = function(bytesInUse) {
-        var o = µb.restoreBackupSettings;
+const getLocalData = function(callback) {
+    const onStorageInfoReady = function(bytesInUse) {
+        const o = µb.restoreBackupSettings;
         callback({
             storageUsed: bytesInUse,
             lastRestoreFile: o.lastRestoreFile,
@@ -779,13 +779,15 @@ var getLocalData = function(callback) {
     µb.getBytesInUse(onStorageInfoReady);
 };
 
-var backupUserData = function(callback) {
-    var userData = {
+const backupUserData = function(callback) {
+    const userData = {
         timeStamp: Date.now(),
         version: vAPI.app.version,
         userSettings: µb.userSettings,
         selectedFilterLists: µb.selectedFilterLists,
         hiddenSettings: µb.hiddenSettings,
+        whitelist: µb.arrayFromWhitelist(µb.netWhitelist),
+        // String representation eventually to be deprecated
         netWhitelist: µb.stringFromWhitelist(µb.netWhitelist),
         dynamicFilteringString: µb.permanentFirewall.toString(),
         urlFilteringString: µb.permanentURLFiltering.toString(),
@@ -793,9 +795,9 @@ var backupUserData = function(callback) {
         userFilters: ''
     };
 
-    var onUserFiltersReady = function(details) {
+    const onUserFiltersReady = function(details) {
         userData.userFilters = details.content;
-        var filename = vAPI.i18n('aboutBackupFilename')
+        const filename = vAPI.i18n('aboutBackupFilename')
             .replace('{{datetime}}', µb.dateNowToSensibleString())
             .replace(/ +/g, '_');
         µb.restoreBackupSettings.lastBackupFile = filename;
@@ -829,9 +831,19 @@ const restoreUserData = function(request) {
                 userData.hiddenSettingsString || ''
             );
         }
+        // Whitelist directives can be represented as an array or as a
+        // (eventually to be deprecated) string.
+        let whitelist = userData.whitelist;
+        if (
+            Array.isArray(whitelist) === false &&
+            typeof userData.netWhitelist === 'string' &&
+            userData.netWhitelist !== ''
+        ) {
+            whitelist = userData.netWhitelist.split('\n');
+        }
         vAPI.storage.set({
             hiddenSettings: hiddenSettings,
-            netWhitelist: userData.netWhitelist || '',
+            netWhitelist: whitelist || [],
             dynamicFilteringString: userData.dynamicFilteringString || '',
             urlFilteringString: userData.urlFilteringString || '',
             hostnameSwitchesString: userData.hostnameSwitchesString || '',

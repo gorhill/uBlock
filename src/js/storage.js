@@ -238,7 +238,7 @@
 
 µBlock.saveWhitelist = function() {
     vAPI.storage.set({
-        netWhitelist: this.stringFromWhitelist(this.netWhitelist)
+        netWhitelist: this.arrayFromWhitelist(this.netWhitelist)
     });
     this.netWhitelistModifyTime = Date.now();
 };
@@ -1194,8 +1194,11 @@
             binNotEmpty = true;
         }
 
-        if ( typeof data.netWhitelist === 'string' ) {
-            bin.netWhitelist = data.netWhitelist;
+        if ( Array.isArray(data.whitelist) ) {
+            bin.netWhitelist = data.whitelist;
+            binNotEmpty = true;
+        } else if ( typeof data.netWhitelist === 'string' ) {
+            bin.netWhitelist = data.netWhitelist.split('\n');
             binNotEmpty = true;
         }
 

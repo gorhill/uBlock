@@ -116,7 +116,7 @@ const µBlock = (function() { // jshint ignore:line
 
         // https://github.com/chrisaljoudi/uBlock/issues/180
         // Whitelist directives need to be loaded once the PSL is available
-        netWhitelist: {},
+        netWhitelist: new Map(),
         netWhitelistModifyTime: 0,
         netWhitelistDefault: [
             'about-scheme',

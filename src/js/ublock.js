@@ -24,29 +24,30 @@
 /******************************************************************************/
 /******************************************************************************/
 
-(function(){
+// *****************************************************************************
+// start of local namespace
 
-/******************************************************************************/
+{
 
 // https://github.com/chrisaljoudi/uBlock/issues/405
 // Be more flexible with whitelist syntax
 
 // Any special regexp char will be escaped
-var whitelistDirectiveEscape = /[-\/\\^$+?.()|[\]{}]/g;
+const whitelistDirectiveEscape = /[-\/\\^$+?.()|[\]{}]/g;
 
 // All `*` will be expanded into `.*`
-var whitelistDirectiveEscapeAsterisk = /\*/g;
+const whitelistDirectiveEscapeAsterisk = /\*/g;
 
 // Remember encountered regexps for reuse.
-var directiveToRegexpMap = new Map();
+const directiveToRegexpMap = new Map();
 
 // Probably manually entered whitelist directive
-var isHandcraftedWhitelistDirective = function(directive) {
+const isHandcraftedWhitelistDirective = function(directive) {
     return directive.startsWith('/') && directive.endsWith('/') ||
            directive.indexOf('/') !== -1 && directive.indexOf('*') !== -1;
 };
 
-var matchDirective = function(url, hostname, directive) {
+const matchDirective = function(url, hostname, directive) {
     // Directive is a plain hostname.
     if ( directive.indexOf('/') === -1 ) {
         return hostname.endsWith(directive) &&
@@ -54,13 +55,16 @@ var matchDirective = function(url, hostname, directive) {
                hostname.charAt(hostname.length - directive.length - 1) === '.');
     }
     // Match URL exactly.
-    if ( directive.startsWith('/') === false && directive.indexOf('*') === -1 ) {
+    if (
+        directive.startsWith('/') === false &&
+        directive.indexOf('*') === -1
+    ) {
         return url === directive;
     }
     // Transpose into a regular expression.
-    var re = directiveToRegexpMap.get(directive);
+    let re = directiveToRegexpMap.get(directive);
     if ( re === undefined ) {
-        var reStr;
+        let reStr;
         if ( directive.startsWith('/') && directive.endsWith('/') ) {
             reStr = directive.slice(1, -1);
         } else {
@@ -73,9 +77,9 @@ var matchDirective = function(url, hostname, directive) {
     return re.test(url);
 };
 
-var matchBucket = function(url, hostname, bucket, start) {
+const matchBucket = function(url, hostname, bucket, start) {
     if ( bucket ) {
-        for ( var i = start || 0, n = bucket.length; i < n; i++ ) {
+        for ( let i = start || 0, n = bucket.length; i < n; i++ ) {
             if ( matchDirective(url, hostname, bucket[i]) ) {
                 return i;
             }
@@ -84,23 +88,20 @@ var matchBucket = function(url, hostname, bucket, start) {
     return -1;
 };
 
-// https://www.youtube.com/watch?v=RL2W_XK-UJ4&list=PLhPp-QAUKF_hRMjWsYvvdazGw0qIjtSXJ
-
 /******************************************************************************/
 
 µBlock.getNetFilteringSwitch = function(url) {
-    var targetHostname = this.URI.hostnameFromURI(url),
-        key = targetHostname,
-        pos;
+    const hostname = this.URI.hostnameFromURI(url);
+    let key = hostname;
     for (;;) {
-        if ( matchBucket(url, targetHostname, this.netWhitelist[key]) !== -1 ) {
+        if ( matchBucket(url, hostname, this.netWhitelist.get(key)) !== -1 ) {
             return false;
         }
-        pos = key.indexOf('.');
+        const pos = key.indexOf('.');
         if ( pos === -1 ) { break; }
         key = key.slice(pos + 1);
     }
-    if ( matchBucket(url, targetHostname, this.netWhitelist['//']) !== -1 ) {
+    if ( matchBucket(url, hostname, this.netWhitelist.get('//')) !== -1 ) {
         return false;
     }
     return true;
@@ -109,7 +110,7 @@ var matchBucket = function(url, hostname, bucket, start) {
 /******************************************************************************/
 
 µBlock.toggleNetFilteringSwitch = function(url, scope, newState) {
-    var currentState = this.getNetFilteringSwitch(url);
+    const currentState = this.getNetFilteringSwitch(url);
     if ( newState === undefined ) {
         newState = !currentState;
     }
@@ -117,58 +118,59 @@ var matchBucket = function(url, hostname, bucket, start) {
         return currentState;
     }
 
-    var netWhitelist = this.netWhitelist,
-        pos = url.indexOf('#'),
-        targetURL = pos !== -1 ? url.slice(0, pos) : url,
-        targetHostname = this.URI.hostnameFromURI(targetURL),
-        key = targetHostname,
-        directive = scope === 'page' ? targetURL : targetHostname;
+    const netWhitelist = this.netWhitelist;
+    const pos = url.indexOf('#');
+    let targetURL = pos !== -1 ? url.slice(0, pos) : url;
+    const targetHostname = this.URI.hostnameFromURI(targetURL);
+    let key = targetHostname;
+    let directive = scope === 'page' ? targetURL : targetHostname;
 
     // Add to directive list
     if ( newState === false ) {
-        if ( netWhitelist[key] === undefined ) {
-            netWhitelist[key] = [];
+        let bucket = netWhitelist.get(key);
+        if ( bucket === undefined ) {
+            bucket = [];
+            netWhitelist.set(key, bucket);
         }
-        netWhitelist[key].push(directive);
+        bucket.push(directive);
         this.saveWhitelist();
         return true;
     }
 
-    // Remove from directive list whatever causes current URL to be whitelisted
-    var bucket, i;
+    // Remove all directives which cause current URL to be whitelisted
     for (;;) {
-        bucket = netWhitelist[key];
+        const bucket = netWhitelist.get(key);
         if ( bucket !== undefined ) {
-            i = undefined;
+            let i;
             for (;;) {
                 i = matchBucket(targetURL, targetHostname, bucket, i);
                 if ( i === -1 ) { break; }
                 directive = bucket.splice(i, 1)[0];
                 if ( isHandcraftedWhitelistDirective(directive) ) {
-                    netWhitelist['#'].push('# ' + directive);
+                    netWhitelist.get('#').push(`# ${directive}`);
                 }
             }
             if ( bucket.length === 0 ) {
-                delete netWhitelist[key];
+                netWhitelist.delete(key);
             }
         }
-        pos = key.indexOf('.');
+        const pos = key.indexOf('.');
         if ( pos === -1 ) { break; }
         key = key.slice(pos + 1);
     }
-    bucket = netWhitelist['//'];
+    const bucket = netWhitelist.get('//');
     if ( bucket !== undefined ) {
-        i = undefined;
+        let i;
         for (;;) {
             i = matchBucket(targetURL, targetHostname, bucket, i);
             if ( i === -1 ) { break; }
             directive = bucket.splice(i, 1)[0];
             if ( isHandcraftedWhitelistDirective(directive) ) {
-                netWhitelist['#'].push('# ' + directive);
+                netWhitelist.get('#').push(`# ${directive}`);
             }
         }
         if ( bucket.length === 0 ) {
-            delete netWhitelist['//'];
+            netWhitelist.delete('//');
         }
     }
     this.saveWhitelist();
@@ -179,8 +181,7 @@ var matchBucket = function(url, hostname, bucket, start) {
 
 µBlock.arrayFromWhitelist = function(whitelist) {
     const out = new Set();
-    for ( const key in whitelist ) {
-        const bucket = whitelist[key];
+    for ( const bucket of whitelist.values() ) {
         for ( const directive of bucket ) {
             out.add(directive);
         }
@@ -194,25 +195,23 @@ var matchBucket = function(url, hostname, bucket, start) {
 
 /******************************************************************************/
 
-µBlock.whitelistFromString = function(s) {
-    var whitelist = Object.create(null),
-        lineIter = new this.LineIterator(s),
-        line, matches, key, directive, re;
+µBlock.whitelistFromArray = function(lines) {
+    const whitelist = new Map();
 
     // Comment bucket must always be ready to be used.
-    whitelist['#'] = [];
+    whitelist.set('#', []);
 
     // New set of directives, scrap cached data.
     directiveToRegexpMap.clear();
 
-    while ( !lineIter.eot() ) {
-        line = lineIter.next().trim();
+    for ( let line of lines ) {
+        line = line.trim();
 
         // https://github.com/gorhill/uBlock/issues/171
         // Skip empty lines
-        if ( line === '' ) {
-            continue;
-        }
+        if ( line === '' ) { continue; }
+
+        let key, directive;
 
         // Don't throw out commented out lines: user might want to fix them
         if ( line.startsWith('#') ) {
@@ -229,11 +228,15 @@ var matchBucket = function(url, hostname, bucket, start) {
             }
         }
         // Regex-based (ensure it is valid)
-        else if ( line.length > 2 && line.startsWith('/') && line.endsWith('/') ) {
+        else if (
+            line.length > 2 &&
+            line.startsWith('/') &&
+            line.endsWith('/')
+        ) {
             key = '//';
             directive = line;
             try {
-                re = new RegExp(directive.slice(1, -1));
+                const re = new RegExp(directive.slice(1, -1));
                 directiveToRegexpMap.set(directive, re);
             } catch(ex) {
                 key = '#';
@@ -244,7 +247,7 @@ var matchBucket = function(url, hostname, bucket, start) {
         // label (or else it would be just impossible to make an efficient
         // dict.
         else {
-            matches = this.reWhitelistHostnameExtractor.exec(line);
+            const matches = this.reWhitelistHostnameExtractor.exec(line);
             if ( !matches || matches.length !== 2 ) {
                 key = '#';
                 directive = '# ' + line;
@@ -260,21 +263,28 @@ var matchBucket = function(url, hostname, bucket, start) {
 
         // Be sure this stays fixed:
         // https://github.com/chrisaljoudi/uBlock/issues/185
-        if ( whitelist[key] === undefined ) {
-            whitelist[key] = [];
+        let bucket = whitelist.get(key);
+        if ( bucket === undefined ) {
+            bucket = [];
+            whitelist.set(key, bucket);
         }
-        whitelist[key].push(directive);
+        bucket.push(directive);
     }
     return whitelist;
+};
+
+µBlock.whitelistFromString = function(s) {
+    return this.whitelistFromArray(s.split('\n'));
 };
 
 // https://github.com/gorhill/uBlock/issues/3717
 µBlock.reWhitelistBadHostname = /[^a-z0-9.\-_\[\]:]/;
 µBlock.reWhitelistHostnameExtractor = /([a-z0-9.\-_\[\]]+)(?::[\d*]+)?\/(?:[^\x00-\x20\/]|$)[^\x00-\x20]*$/;
 
-/******************************************************************************/
+// end of local namespace
+// *****************************************************************************
 
-})();
+}
 
 /******************************************************************************/
 /******************************************************************************/
@@ -391,7 +401,7 @@ var matchBucket = function(url, hostname, bucket, start) {
 // https://www.reddit.com/r/uBlockOrigin/comments/8524cf/my_custom_scriptlets_doesnt_work_what_am_i_doing/
 
 µBlock.changeHiddenSettings = function(hs) {
-    var mustReloadResources =
+    const mustReloadResources =
         hs.userResourcesLocation !== this.hiddenSettings.userResourcesLocation;
     this.hiddenSettings = hs;
     this.saveHiddenSettings();
@@ -522,7 +532,7 @@ var matchBucket = function(url, hostname, bucket, start) {
         );
         break;
     case 'no-large-media':
-        var pageStore = this.pageStoreFromTabId(details.tabId);
+        const pageStore = this.pageStoreFromTabId(details.tabId);
         if ( pageStore !== null ) {
             pageStore.temporarilyAllowLargeMediaElements(!details.state);
         }
@@ -560,43 +570,44 @@ var matchBucket = function(url, hostname, bucket, start) {
 /******************************************************************************/
 
 µBlock.scriptlets = (function() {
-    var pendingEntries = new Map();
+    const pendingEntries = new Map();
 
-    var Entry = function(tabId, scriptlet, callback) {
-        this.tabId = tabId;
-        this.scriptlet = scriptlet;
-        this.callback = callback;
-        this.timer = vAPI.setTimeout(this.service.bind(this), 1000);
-    };
-
-    Entry.prototype.service = function(response) {
-        if ( this.timer !== null ) {
-            clearTimeout(this.timer);
-            this.timer = null;
+    const Entry = class {
+        constructor(tabId, scriptlet, callback) {
+            this.tabId = tabId;
+            this.scriptlet = scriptlet;
+            this.callback = callback;
+            this.timer = vAPI.setTimeout(this.service.bind(this), 1000);
         }
-        pendingEntries.delete(makeKey(this.tabId, this.scriptlet));
-        this.callback(response);
+        service(response) {
+            if ( this.timer !== null ) {
+                clearTimeout(this.timer);
+                this.timer = null;
+            }
+            pendingEntries.delete(makeKey(this.tabId, this.scriptlet));
+            this.callback(response);
+        }
     };
 
-    var makeKey = function(tabId, scriptlet) {
+    const makeKey = function(tabId, scriptlet) {
         return tabId + ' ' + scriptlet;
     };
 
-    var report = function(tabId, scriptlet, response) {
-        var key = makeKey(tabId, scriptlet);
-        var entry = pendingEntries.get(key);
+    const report = function(tabId, scriptlet, response) {
+        const key = makeKey(tabId, scriptlet);
+        const entry = pendingEntries.get(key);
         if ( entry === undefined ) { return; }
         entry.service(response);
     };
 
-    var inject = function(tabId, scriptlet, callback) {
+    const inject = function(tabId, scriptlet, callback) {
         if ( typeof callback === 'function' ) {
             if ( vAPI.isBehindTheSceneTabId(tabId) ) {
                 callback();
                 return;
             }
-            var key = makeKey(tabId, scriptlet),
-                entry = pendingEntries.get(key);
+            const key = makeKey(tabId, scriptlet);
+            const entry = pendingEntries.get(key);
             if ( entry !== undefined ) {
                 if ( callback !== entry.callback ) {
                     callback();
@@ -611,7 +622,7 @@ var matchBucket = function(url, hostname, bucket, start) {
     };
 
     // TODO: think about a callback mechanism.
-    var injectDeep = function(tabId, scriptlet) {
+    const injectDeep = function(tabId, scriptlet) {
         vAPI.tabs.injectScript(tabId, {
             file: '/js/scriptlets/' + scriptlet + '.js',
             allFrames: true

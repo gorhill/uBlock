@@ -50,7 +50,10 @@ const handleImportFilePicker = function() {
             if ( typeof userData.userSettings !== 'object' ) {
                 throw 'Invalid';
             }
-            if ( typeof userData.netWhitelist !== 'string' ) {
+            if (
+                Array.isArray(userData.whitelist) === false &&
+                typeof userData.netWhitelist !== 'string'
+            ) {
                 throw 'Invalid';
             }
             if (

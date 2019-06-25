@@ -239,7 +239,10 @@ const onVersionReady = function(lastVersion) {
 // gorhill 2014-12-15: not anymore
 
 const onNetWhitelistReady = function(netWhitelistRaw) {
-    µb.netWhitelist = µb.whitelistFromString(netWhitelistRaw);
+    if ( typeof netWhitelistRaw === 'string' ) {
+        netWhitelistRaw = netWhitelistRaw.split('\n');
+    }
+    µb.netWhitelist = µb.whitelistFromArray(netWhitelistRaw);
     µb.netWhitelistModifyTime = Date.now();
 };
 
@@ -358,7 +361,7 @@ const createDefaultProps = function() {
         'lastRestoreTime': 0,
         'lastBackupFile': '',
         'lastBackupTime': 0,
-        'netWhitelist': µb.netWhitelistDefault.join('\n'),
+        'netWhitelist': µb.netWhitelistDefault,
         'selfieMagic': 0,
         'version': '0.0.0.0'
     };
