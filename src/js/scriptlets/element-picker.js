@@ -296,7 +296,7 @@ const mergeStrings = function(urls) {
             if ( diff[0] !== 0 ) {
                 result.push('*');
             } else {
-                result.push(diff[1].charAt(0));
+                result.push(diff[1].replace(/\n+/g, ''));
             }
         }
         // Keep usage of wildcards to a sane level, too many of them can cause
@@ -343,6 +343,7 @@ const resourceURLFromElement = function(elem) {
         if ( typeof elem.srcset === 'string' && elem.srcset !== '' ) {
             const ss = [];
             for ( let s of elem.srcset.split(',') ) {
+                s = s.trim();
                 const pos = s.indexOf(' ');
                 if ( pos !== -1 ) { s = s.slice(0, pos); }
                 const parsedURL = new URL(s, document.baseURI);
