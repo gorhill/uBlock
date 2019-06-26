@@ -20,6 +20,9 @@
     },
     "launch-logger": {
       "description": "__MSG_popupTipLog__"
+    },
+    "toggle-blocking-profile": {
+      "description": "__MSG_toggleBlockingProfile__"
     }
   },
   "content_scripts": [
