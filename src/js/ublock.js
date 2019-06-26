@@ -24,10 +24,10 @@
 /******************************************************************************/
 /******************************************************************************/
 
+{
+
 // *****************************************************************************
 // start of local namespace
-
-{
 
 // https://github.com/chrisaljoudi/uBlock/issues/405
 // Be more flexible with whitelist syntax
@@ -451,20 +451,39 @@ const matchBucket = function(url, hostname, bucket, start) {
 // (but not really) redundant rules led to this issue.
 
 µBlock.toggleFirewallRule = function(details) {
-    let requestType = details.requestType;
+    let { srcHostname, desHostname, requestType, action } = details;
 
-    if ( details.action !== 0 ) {
-        this.sessionFirewall.setCell(details.srcHostname, details.desHostname, requestType, details.action);
+    if ( action !== 0 ) {
+        this.sessionFirewall.setCell(
+            srcHostname,
+            desHostname,
+            requestType,
+            action
+        );
     } else {
-        this.sessionFirewall.unsetCell(details.srcHostname, details.desHostname, requestType);
+        this.sessionFirewall.unsetCell(
+            srcHostname,
+            desHostname,
+            requestType
+        );
     }
 
     // https://github.com/chrisaljoudi/uBlock/issues/731#issuecomment-73937469
     if ( details.persist ) {
-        if ( details.action !== 0 ) {
-            this.permanentFirewall.setCell(details.srcHostname, details.desHostname, requestType, details.action);
+        if ( action !== 0 ) {
+            this.permanentFirewall.setCell(
+                srcHostname,
+                desHostname,
+                requestType,
+                action
+            );
         } else {
-            this.permanentFirewall.unsetCell(details.srcHostname, details.desHostname, requestType, details.action);
+            this.permanentFirewall.unsetCell(
+                srcHostname,
+                desHostname,
+                requestType,
+                action
+            );
         }
         this.savePermanentFirewallRules();
     }
@@ -473,10 +492,14 @@ const matchBucket = function(url, hostname, bucket, start) {
     // Flush all cached `net` cosmetic filters if we are dealing with a
     // collapsible type: any of the cached entries could be a resource on the
     // target page.
-    let srcHostname = details.srcHostname;
     if (
         (srcHostname !== '*') &&
-        (requestType === '*' || requestType === 'image' || requestType === '3p' || requestType === '3p-frame')
+        (
+            requestType === '*' ||
+            requestType === 'image' ||
+            requestType === '3p' ||
+            requestType === '3p-frame'
+        )
     ) {
         srcHostname = '*';
     }
@@ -635,3 +658,5 @@ const matchBucket = function(url, hostname, bucket, start) {
         report: report
     };
 })();
+
+/******************************************************************************/

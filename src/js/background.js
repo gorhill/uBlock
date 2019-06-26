@@ -42,6 +42,7 @@ const µBlock = (function() { // jshint ignore:line
         autoUpdateAssetFetchPeriod: 120,
         autoUpdateDelayAfterLaunch: 180,
         autoUpdatePeriod: 7,
+        blockingProfiles: '11111 11101 00001',
         cacheStorageAPI: 'unset',
         cacheStorageCompression: true,
         cacheControlForFirefox1376932: 'no-cache, no-store, must-revalidate',

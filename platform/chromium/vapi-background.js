@@ -607,7 +607,7 @@ vAPI.tabs.remove = function(tabId) {
 
 /******************************************************************************/
 
-vAPI.tabs.reload = function(tabId, bypassCache) {
+vAPI.tabs.reload = function(tabId, bypassCache = false) {
     tabId = toChromiumTabId(tabId);
     if ( tabId === 0 ) { return; }
 
