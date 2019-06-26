@@ -963,6 +963,10 @@
     "message": "Salin ke papan klip",
     "description": "Label for buttons used to copy something to the clipboard"
   },
+  "toggleBlockingProfile": {
+    "message": "Toggle blocking profile",
+    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  },
   "dummy": {
     "message": "Entri ini harus menjadi yang terakhir",
     "description": "so we dont need to deal with comma for last entry"

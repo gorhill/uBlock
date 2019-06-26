@@ -20,7 +20,7 @@
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Rời khỏi",
+    "message": "Bỏ qua",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
@@ -252,7 +252,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Chặn phần tử",
+    "message": "Chặn phần tử...",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -962,6 +962,10 @@
   "genericCopyToClipboard": {
     "message": "Sao chép vào bảng tạm",
     "description": "Label for buttons used to copy something to the clipboard"
+  },
+  "toggleBlockingProfile": {
+    "message": "Bật tắt hồ sơ chặn",
+    "description": "Label for keyboard shortcut used to toggle blocking profile"
   },
   "dummy": {
     "message": "Đây là mục cuối",

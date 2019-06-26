@@ -963,6 +963,10 @@
     "message": "複製到剪貼簿",
     "description": "Label for buttons used to copy something to the clipboard"
   },
+  "toggleBlockingProfile": {
+    "message": "切換封鎖設定檔",
+    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  },
   "dummy": {
     "message": "此條目須為最後一個",
     "description": "so we dont need to deal with comma for last entry"
