@@ -967,6 +967,10 @@
     "message": "Превключване на профила за блокиране",
     "description": "Label for keyboard shortcut used to toggle blocking profile"
   },
+  "relaxBlockingMode": {
+    "message": "Отпуснат режим на блокиране",
+    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
   "dummy": {
     "message": "Това поле трябва да бъде последното",
     "description": "so we dont need to deal with comma for last entry"

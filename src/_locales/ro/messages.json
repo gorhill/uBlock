@@ -967,6 +967,10 @@
     "message": "Comutați profilul de blocare",
     "description": "Label for keyboard shortcut used to toggle blocking profile"
   },
+  "relaxBlockingMode": {
+    "message": "Relaxați modul de blocare",
+    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
   "dummy": {
     "message": "Aceasta intrare trebuie sa fie ultima",
     "description": "so we dont need to deal with comma for last entry"

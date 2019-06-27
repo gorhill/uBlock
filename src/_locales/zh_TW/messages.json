@@ -967,6 +967,10 @@
     "message": "切換封鎖設定檔",
     "description": "Label for keyboard shortcut used to toggle blocking profile"
   },
+  "relaxBlockingMode": {
+    "message": "放寬封鎖量模式",
+    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
   "dummy": {
     "message": "此條目須為最後一個",
     "description": "so we dont need to deal with comma for last entry"

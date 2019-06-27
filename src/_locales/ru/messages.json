@@ -967,6 +967,10 @@
     "message": "Переключение профиля блокировки",
     "description": "Label for keyboard shortcut used to toggle blocking profile"
   },
+  "relaxBlockingMode": {
+    "message": "Ослабленный режим блокировки",
+    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
   "dummy": {
     "message": "Эта запись должна быть последней",
     "description": "so we dont need to deal with comma for last entry"

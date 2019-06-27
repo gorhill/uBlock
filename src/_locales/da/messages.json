@@ -967,6 +967,10 @@
     "message": "Slå blokeringsprofil til\/fra",
     "description": "Label for keyboard shortcut used to toggle blocking profile"
   },
+  "relaxBlockingMode": {
+    "message": "Lemp blokeringstilstand",
+    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
   "dummy": {
     "message": "Denne post skal være den sidste",
     "description": "so we dont need to deal with comma for last entry"

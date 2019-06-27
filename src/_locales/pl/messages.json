@@ -967,6 +967,10 @@
     "message": "Przełącz profil blokowania",
     "description": "Label for keyboard shortcut used to toggle blocking profile"
   },
+  "relaxBlockingMode": {
+    "message": "Rozluźnij tryb blokowania",
+    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
   "dummy": {
     "message": "Ten wpis musi być ostatni",
     "description": "so we dont need to deal with comma for last entry"
