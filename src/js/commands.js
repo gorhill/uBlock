@@ -38,7 +38,7 @@
 
 if ( µBlock.canUseShortcuts === false ) { return; }
 
-const toggleBlockingProfile = function(tab) {
+const relaxBlockingMode = function(tab) {
     if (
         tab instanceof Object === false ||
         tab.id <= 0
@@ -169,8 +169,8 @@ vAPI.commands.onCommand.addListener(command => {
             });
         });
         break;
-    case 'toggle-blocking-profile':
-        vAPI.tabs.get(null, toggleBlockingProfile);
+    case 'relax-blocking-mode':
+        vAPI.tabs.get(null, relaxBlockingMode);
         break;
     default:
         break;

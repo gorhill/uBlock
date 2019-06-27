@@ -22,7 +22,7 @@
       "description": "__MSG_popupTipLog__"
     },
     "toggle-blocking-profile": {
-      "description": "__MSG_toggleBlockingProfile__"
+      "description": "__MSG_relaxBlockingMode__"
     }
   },
   "content_scripts": [
