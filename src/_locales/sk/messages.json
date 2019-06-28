@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Konečne efektívny blokovač, ktorý nezaťažuje CPU a pamäť.",
+    "message": "Konečne efektívny blokovač. Nezaťažuje CPU ani pamäť.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
@@ -968,7 +968,7 @@
     "description": "Label for keyboard shortcut used to toggle blocking profile"
   },
   "relaxBlockingMode": {
-    "message": "Relax blocking mode",
+    "message": "Zmierniť režim blokovania",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "dummy": {
