@@ -29,7 +29,7 @@
 		"group": "default",
 		"title": "AdNauseam filters",
 		"contentURL": [
-			"https://raw.githubusercontent.com/dhowe/uAssets/master/filters/adnauseam.txt",
+			"https://raw.githubusercontent.com/dhowe/AdNauseam/master/filters/adnauseam.txt",
 			"assets/ublock/adnauseam.txt"
 		],
 		"supportURL": "https://github.com/dhowe/adnauseam/issues"

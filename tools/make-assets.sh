@@ -26,11 +26,14 @@ cp -R ../uAssets/thirdparties/mirror1.malwaredomains.com         $DES/thirdparti
 cp -R ../uAssets/thirdparties/pgl.yoyo.org                       $DES/thirdparties/
 cp -R ../uAssets/thirdparties/publicsuffix.org                   $DES/thirdparties/
 cp -R ../uAssets/thirdparties/www.malwaredomainlist.com          $DES/thirdparties/
-cp -R ../uAssets/thirdparties/www.eff.org                        $DES/thirdparties/ # ADN
+
+cp -R ./thirdparties/www.eff.org                                 $DES/thirdparties/ # ADN
 
 mkdir $DES/ublock
 cp -R ../uAssets/filters/*                                       $DES/ublock/
 # Optional filter lists: do not include in package
 rm    $DES/ublock/annoyances.txt 2> /dev/null
+
+cp -R ./filters/adnauseam.txt                                    $DES/ublock/ # ADN
 
 echo "done."

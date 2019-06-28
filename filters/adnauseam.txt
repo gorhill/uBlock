@@ -1,0 +1,577 @@
+
+# Generics (any page)
+##*[class^="google_ads"]
+##*[id^="google_ads"]
+##*[class^="img_ad"]
+##*[class^="adsby"]
+##iframe[src*="mellowads"]
+##*[class*="Advert"]
+
+# Generic exceptions
+tweakers.net#@#*[class*="Advert"]
+
+# Google map ads on Search
+google.*##.mnr-c.rl-qs-crs-t._Db > ._gt:has(._mB)
+
+###google_image_div
+
+# generichide-rules (#1466 etc)
+trustedreviews.com##*[class^="ad-"]
+textmechanic.com##*[class^="google_ads"]
+textmechanic.com##*[class^="img_ad"]
+textmechanic.com##*[class^="adsby"]
+freebitcoin.win##iframe[src*="coinad"]
+freebitcoin.win##iframe[src*="mellowads"]
+rockpapershotgun.com##*[id^="google_ads"]
+
+search.yahoo.com##.layoutMiddle
+search.yahoo.com##.kr5yi684e6
+search.yahoo.com###right
+search.yahoo.com##.compTitle.fc-4th
+
+gearslutz.com###noticesContainer
+
+theglobeandmail.com##*[class*="ad-wrapper"]
+
+# www.telegraph.co.uk
+##.premium-promo--wrapper
+
+apply.hkbn.net###promotionBannerId
+
+www.spacious.hk##.page__commercial_display_banner_box__content
+
+##img[src*="/adserve/"]
+##img[src*="ads.guava-affiliate.com"]
+##img[src*="display-ad/"]
+
+inc.com##.teads-inread
+
+www.ask.com##.tsrc_SAS
+www.ask.com###megaLabel
+www.ask.com###csaBottom
+
+www.startpage.com###adBlock
+www.startpage.com##*[id^="spon_"]
+##*[id^="sponsored"]
+
+google.com###adBlock > .ad.a_
+
+www.zam.com##.ad
+##.GoogleActiveViewClass
+
+haaretz.co.il##.modal-wrapper--dark.modal-wrapper--fixed.modal-wrapper
+haaretz.co.il###top_banners
+haaretz.co.il###maavaronWrapper
+
+facebook.com##.ego_unit:has(div.uiScaledImageContainer)
+facebook.com##._5hn6
+
+##.promotion-carousel
+##*[id^="teads"]
+##*[class*="teads"]
+gizmodo.com#@#*[class*="teads"]
+
+si.com#@#.ad
+si.com#@#.mobile-ad
+si.com#@#.cm-ad
+
+# piratebay
+##iframe[src*="adxprt"]
+##iframe[src*="exoclick.com"]
+##iframe[src*="thepiratebay.org/static/"]
+piratebay.com##img[src*="exdynsrv.com"]
+www.thepiratebay.org###sky-banner
+www.thepiratebay.org###sky-center
+
+# tvpad.ca
+##img[src*="https://tvpad.ca/media/"]
+
+# marinetraffic.com
+##.home-page.has-ad-space.container-fluid > .upper.row > .hidden-print.vertical-offset-5 > .mtseventwentyeight > a[href^="/en/p/plans"] > img[src="/img/upper_02.gif"]
+
+# abclinuxu.cz
+##a[href*="bbelements.com"]
+
+# asiaxpat
+##.AdBanner
+###pnlStripBanner
+
+# carbon-ads
+##.carbon-wrap
+##.carbon-poweredby
+
+asiaxpat.com##.header_in1
+asiaxpat.com##.megaBanner
+asiaxpat.com###pnlClassReplaced
+asiaxpat.com##.main_content_rit
+asiaxpat.com###BusyBox6
+asiaxpat.com##.renaud
+hongkong.asiaxpat.com###fade
+hongkong.asiaxpat.com###light
+
+# various torrent sites
+##iframe[src*="wwwpromoter.com"]
+
+# documentaryheaven
+##iframe[src*="cse.google.com"]
+
+# columbiagreenemedia.com
+columbiagreenemedia.com###sawyer_container
+
+##iframe[src*=‘/ad/']
+
+# 163.com
+##.head-ad
+##DIV[id*="IndexFlashBg"]
+163.com##.mod_zheye
+##iframe[src*='kaolaad']
+163.com##iframe[src*='jd.com']
+##iframe[src*='g.163.com']
+163.com##a[href*='AID']
+##a[href*='kaolaad']
+
+www.pinterest.com##div[data-test-signup="true"]
+www.pinterest.com##div[data-test-giftwrap="true"]
+
+# pandora
+pandora.com##*[id*="ad1"]
+
+# root.cz
+root.cz##.owl-stage-outer
+root.cz##.promo
+
+# sohu.com
+sohu.com##DIV[class^="ad_"]
+sohu.com##DIV[id^="ad_"]
+sohu.com##DIV[id^="beans_"]
+##DIV[class^="TurnAD"]
+##iframe[src*='taobaocdn']
+##span[id^="_AdSame"]
+
+# sina.com
+##.sinaad-toolkit-box
+##iframe[src*='sinaads']
+##iframe[src*='2mdn']
+
+# Twitch
+##iframe[src*="imasdk.googleapis.com/js"]
+
+# qq.com
+qq.com##iframe[src*='gtimg']
+##iframe[src*='tanx']
+##DIV[class="l_qq_com"]
+##a[href*='srd.simba.taobao.com']
+
+# zol.com.cn
+##DIV[class*="zmall-ad"]
+##iframe[src*='zol.com.cn/ad/']
+zol.com.cn##DIV[class="ad-box"]
+
+# Fortune.com
+##div[id^="outbrain_widget"]
+##img[src*='dianomi.com/img/']
+##iframe[src*="gobankingrates.com"]
+fortune.com##.ob-strip-layout.ob-widget
+fortune.com##._6yv0lClM
+fortune.com##._21UDzFnr
+fortune.com##._3sDrBk7f
+fortune.com##.small-12.column:nth-of-type(9) > .row
+fortune.com##.small-12.column > .row:nth-of-type(2) > .small-12.column > .row > .large-3.medium-6.small-12.column
+
+＃ baidu.com
+##.ad-imax
+##.search-aside-adWrap
+##DIV[class^="baidu-adv"]
+##DIV[id*='BAIDU_SSP'] > iframe
+##img[src*="ubmcmm.baidustatic"]
+@@||pos.baidu.com$subdocument,domain=music.baidu.com
+
+##DIV[id*="adcontent"]
+##DIV[class*="advert"]
+
+##.advert
+##DIV[class^="ads_inline"]
+##DIV[id="ads_speedbump"]
+mediapost.com##img[src*="ced.sascdn"]
+
+forbes.com##div[id*='ads']
+##DIV[class*="header_ad_container"] > div
+##DIV[class*="rec-ad"]
+
+fmovies.is##.mgline
+
+www.pcmag.com##.deal-widget
+pcmag.com##*[class*="flite"]
+pcmag.com##DIV[id*="pcmedia"]
+pcmag.com##img[src*="ziffty"]
+
+www.sfgate.com##.dealnews
+
+theatlantic.com###tl_main_single
+
+# creativebloq.com
+creativebloq.com##iframe[width="160px"][height="600px"]
+
+# reuters.com (first 2 are cosmetic exceptions)
+reuters.com#@#iframe[id^="google_ads_iframe"]
+reuters.com#@#div[id^="google_ads_iframe_"]
+reuters.com##.CanvasAd_container_sZDIL
+
+# wmoov.com
+##a[href*='adsfactor']
+##a[href*='adnxs']
+##iframe[class*='af_space']
+##DIV[id*='aswift']
+##DIV[id*='Zedo-Ad']
+##DIV[id*='MAXI_CRZ']
+##DIV[id*='ucfad']
+##DIV[id*='movie_ad']
+
+computerworld.com###superadunit
+
+foxnews.com###sponsored-stories
+
+time.com##.ab-banner
+
+wsj.com##DIV[class*="nativo-placement"]
+wsj.com##IFRAME[id*="_mN_dy"]
+wsj.com##DIV[class*="sponsoredSections"]
+
+mingpao.com##iframe[src*="serving-sys.com"]
+mingpao.com##iframe[src*="inskin"]
+mingpao.com##DIV[id*="mainrightad"]
+mingpao.com##DIV[id*="adsense"]
+mingpao.com##DIV[id="tt-wrapper"]
+mingpao.com##DIV[id*="bannerd_ad_container"]
+mingpao.com##DIV[style="visibility: visible;"]
+mingpao.com##image[id*="bg"]
+
+bitcoinist.net###colorbox
+bitcoinist.net###cboxOverlay
+bitcoinist.net##iframe[src*='coinser']
+bitcoinist.net##a[href*='ads']
+bitcoinist.net##a[href*='bitstarz']
+
+usatoday.com##DIV#module-position-8
+usatoday.com##DIV.taboola-sidebar-content
+usatoday.com##section#module-position-8
+
+# popups on kickass-top.com
+*$third-party,popup,domain=kickass-top.com
+
+dev.opera.com##.gsc-adBlock
+
+www.pcmag.com###campaign_261312_lightbox
+
+batmanstream.com##iframe[src*="bannerflow"]
+
+cnn.com##div[id*='skinImgDiv']
+cnn.com##*[class^="Promo"]
+cnn.com##*[class$="promo"]
+##*[class^="Ad_"]
+
+www.jobsnhire.com##div[class*="teads"]
+www.jobsnhire.com##span[id*="GGADad"]
+www.jobsnhire.com##span[id*="ad_is"]
+
+www.pcworld.com##div[class*="related-promo-wrapper"]
+www.pcworld.com##aside[class*="nativo-promo"]
+www.pcworld.com##div[id*="amazon-bottom-widget"]
+www.pcworld.com##div[id*="content-recommender"]
+www.pcworld.com##div[id*="network"]
+
+www.overclockers.ru###topbanners > .citi_ban
+www.overclockers.ru###uhi > table > tbody > tr > td:nth-of-type(1)
+www.overclockers.ru###g-yap-R-139088-14 > .yap-adv
+www.overclockers.ru##img[src^="/images/HP_"]
+##div[id^="yandex_ad"]
+
+# gocurrycracker.com
+##*[id^="amzn_assoc_ad"]
+##iframe[src*="amazon-adsystem.com"]
+##.gqsvbds-single
+
+# startribune.com
+startribune.com##.ad-mod
+
+# mrfreeat33.com
+##a[href*="track.flexlinkspro.com"]
+##a[href*="bluehost.com/track"]
+##a[href*="click.tunnelbear.com/aff"]
+www.mrfreeat33.com##img[src*="i2.wp.com/content.flexlinks.com/sharedimages/products"]
+
+stackoverflow.com#@#.adsbox
+
+# radikal.ru (video)
+radikal.ru##div[id^="DIV_DA_ADP"]
+##div[id^="advertur_"]
+##iframe[id^="advertur_"]
+##iframe[src^="//octoclick.net"]
+##img[src*="delivery.clickganic.com"]
+optoclick.net##.vjs-poster
+
+# convert2mp3
+##iframe[src*="ads/ad"]
+##iframe[src*="liveadexchanger"]
+##a[href*="liveadexchanger"]
+
+# dailymotion.com
+dailymotion.com##.gwd-page-content
+dailymotion.com##.gwd-page-container
+
+# mac-torrent-download.net
+@@||www.googletagmanager.com^$script,domain=mac-torrent-download.net
+mac-torrent-download.net##.ad-box > a > img
+mac-torrent-download.net##div > .textwidget
+mac-torrent-download.net##.ad-kijisita
+mac-torrent-download.net##iframe[class*="it-client"]
+mac-torrent-download.net##div > .ad-box.round-btn-parent
+mac-torrent-download.net###sidebar > .ad-box
+mac-torrent-download.net#@#.ad-box
+mac-torrent-download.net##.ad-box > .img-center > div:has(script)
+
+# last.fm
+last.fm##.related-ads
+last.fm##.video-ad
+last.fm##.lastfm-ad
+
+# common ad in cz
+##div[id^="bmone"]
+
+www.28hse.com###universal_banner_sq_ads
+
+coinmarketcap.com###enjoin-header
+
+# markdown2pdf.com
+##.imgBannerLink
+markdown2pdf.com##.it-client
+
+#neoseeker.com
+||as.casalemedia.com^$script,domain=www.neoseeker.com
+neoseeker.com##.wrapper > .creative
+neoseeker.com###stitialv2
+neoseeker.com###leaderboardTop.section-ad
+
+theguardian.com##.adverts--within-unbranded .badge
+theguardian.com##.paidfor-container .badge
+theguardian.com##.paid-content .badge
+
+hk.yahoo.com###adive_vm
+
+weather.com##.wx-adWrapper
+
+# adbtc.top
+##iframe[src*="-ads.com"]
+##iframe[src*="neon.today"]
+
+bitcohitz.com###wcfloatDiv
+bitcohitz.com##*[id^="sticky-banner"]
+bitcohitz.com##.foot_banners
+
+dailyfreebits.com##*[id^="sticky-banner"]
+
+bitcoin.treasurebits.net##[id^="data_"]
+bitcoin.treasurebits.net##iframe[src="about:blank"]
+
+9anime.to##*[src*="inc"]
+9anime.to##*[class*="crop"]
+9anime.to##*[src*="interbuzznews"]
+9anime.to##*[href*="revrtb"]
+##################### Blocking rules ########################
+
+# 4archive.prg
+||rawybznxrp.bid/^
+||exosrv.com^
+|https://$script,domain=4archive.org|4chanarchives.cu.cc|randomarchive.com|thebarchive.com
+
+# 10tv.nana10.co.il
+||advsnx.net^$important,third-party
+
+#coinmarketcap.com
+||ctnet2.in^$third-party,important
+
+# crunchyroll.com
+||v.fwmrm.net^$important,third-party,domain=crunchyroll.com
+
+# functionalclam.com
+||functionalclam.com^$third-party
+
+# pinterest
+||pinterest.*##div:nth-of-type(2) > div:nth-of-type(2) > div
+
+# Blocking rules below here
+||images.sohu.com/bill/s2015/jscript/lib/sjs/matrix/ad/form/bigView.js^$important
+||teads.tv^$important,third-party,domain=mingpao.com
+
+# radikal.ru (video)
+||laim.tv^$important,third-party
+
+# abcnews.com
+||s.abcnews.com/assets/js/prebid.min.js^$important
+||googleadservices.com/pagead/conversion.js^$important
+
+# adage.com
+||gaia.adage.com/assets/js/min/adBlockDetector.js^$important,script,first-party
+
+# www.batmanstream.com
+||adbetnet.advertserve.com^$important,domain=batmanstream.com
+
+# bing.com
+||www.bing.com/rms/rms%20answers%20Identity%20SnrWindowsLiveConnectBootstrap/jc,nj/bf587ad6/f1d86b5a.js^$important
+
+#Washington Post
+||washingtonpost.com/wp-stat/advertising/pseudo-static/^$important
+
+#nbcnews
+||cdn.krxd.net$domain=www.nbcnews.com^$important
+
+#latimes
+||tribdss.com^$third-party^$important
+
+#Malware
+||rtax.criteo.com^$important
+||b3.mookie1.com^$important
+
+#securityaffairs.co
+||contextual.media.net^
+
+#SoundCloud
+||soundcloud.com/audio-ad?
+
+#Trackers[Verified]
+||scorecardresearch.com^$third-party
+||assets.adobedtm.com^third-party
+||postrelease.com^
+||grvcdn.com/moth-min.js
+||pointroll.com^
+||effectivemeasure.net^
+||advertising.com^
+||adnxs.com^
+||revsci.net^
+||pubmatic.com/
+||gravity.com^*/beacons/
+/mbox.orig.js^$important
+/tacoda.^$important
+/tacoda_^$important
+
+# Trackers added according to better.fyi/trackers^$important
+||tiqcdn.com^$important
+||ak.sail-horizon.com^$important
+||s.ntv.io^$important
+||plugin.mediavoice.com^$important
+||sync.go.sonobi.com/us.gif^$important
+
+# Tracking pixel
+||ad.turn.com/server/pixel.htm^$important
+||atpixel.alephd.com/post_adtech$image^$important
+||cache.btrll.com/default/Pix-1x1.gif^$important
+
+# Ad Tag
+||o.aolcdn.com/ads/adchoices.png^$important
+||tpc.googlesyndication.com/pagead/images/x_button^$important
+||googleads.g.doubleclick.net/pagead/images/abg/icon^$important
+
+# Rubicon tracking section
+||rubiconproject.com/beacon^$important
+||tap-secure.rubiconproject.com^$important
+||secure-assets.rubiconproject.com^$important
+||pixel.rubiconproject.com^$important
+
+# Wired
+||wired.com/cns/services.min.js
+
+# Twitch
+||innovid.com^$important
+||pubads.g.doubleclick.net/gampad/ads$important,xmlhttprequest,domain=imasdk.googleapis.com
+||gcdn.2mdn.net/videoplayback^$important
+
+# google
+||googleads.g.doubleclick.net/pagead/gen^$important
+||pagead2.googlesyndication.com/pagead/gen^$important
+||g.doubleclick.net/pcs/view?^$important
+||pagead2.googlesyndication.com/activeview?avi=^$important
+||google.com/ads/measurement/l?^$important
+
+||cdn.dynamicyield.com/api/*/api_static.js^$important
+||cdn.dynamicyield.com/api/*/api_dynamic.js^$important
+
+||cdn.krxd.net/userdata/get^$important
+||beacon.krxd.net/^$important
+||cdn.krxd.net/controltag^$important
+
+||facebook.com/ajax/bz^$important
+
+# panopticlick
+||eviltracker.net^$important
+||trackersimulator.org^$important
+
+# crunchyroll.com
+||v.fwmrm.net^$important,third-party,domain=crunchyroll.com
+
+||functionalclam.com^$third-party
+
+# observer.com
+||wibbitz.com$domain=observer.com
+
+# 9anime
+||9anime.is/$script
+||9anime.to/$script
+||exdynsrv.com^$third-party
+||bebi.com^$third-party
+
+# nowbitco.in
+||czilladx.com/serve/*.js^
+
+# dailyfreebits.com
+||serve.czilladx.com^$third-party
+||coinad.com^$third-party
+||bitraffic.com^$third-party
+||p3.adhitzads.com^
+||coinad.com/ads^
+
+# cnbc.com
+||ads-pd.nbcuni.com^
+
+##################### Exceptions below here ########################
+
+# Requests that influence visual ads
+
+# From DisabledBlockingRules[Blocking rules from EasyPrivacy]
+@@||googletagservices.com/tag/js/gpt.js
+@@||amazon-adsystem.com/aax2/amzn_ads.js
+@@||stats.g.doubleclick.net^
+@@||googleadservices.com^$third-party
+@@||pixanalytics.com^$third-party
+@@||widgets.outbrain.com/outbrain.js^
+@@||adsafeprotected.com
+@@||serving-sys.com^$third-party
+
+# Reference Only
+@@||pagead2.googlesyndication.com/pagead/osd.js
+@@||ads.pubmatic.com/AdServer/js/showad.js
+@@||geo-um.btrll.com/v1/map_pixel
+
+# google icon images
+@@||ssl.gstatic.com/gb/images/
+@@||ssl.gstatic.com/images/
+
+# pikabu.ru
+@@||an.yandex.ru^$third-party,domain=pikabu.ru
+
+# pandora
+@@||www.pandora.com^
+
+# cisco
+@@||tiqcdn.com$third-party,domain=cisco.com
+
+# tmp solution for issue #1348
+#@#[href*="base64"]
+#@#[href*="data:"]
+#@#[src*="base64"]
+#@#[src*="blob:"]
+#@#[src*="data:"]
+#@#[style*="base64"]
+#@#[style*="blob:"]
+
+# rockpapershotgun
+||cdn.gamer-network.net/plugins/dfp$domain=rockpapershotgun.com

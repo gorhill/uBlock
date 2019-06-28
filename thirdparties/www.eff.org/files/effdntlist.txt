@@ -1,0 +1,51 @@
+! Homepage: https://eff.org/dnt-policy
+! Title: EFF DNT Policy Whitelist
+! Expires: 5 days
+! Last Scanned: Sun Jan  1 03:16:53 PST 2017
+!
+! EFF generates this whitelist by scanning the Alexa top 
+! 1 million to see if a compliant Do Not Track policy is 
+! posted at /.well-known/dnt-policy.txt. EFF has no way 
+! of verifying if the domain actually complies with the 
+! policy. The whitelist is updated with each scan.
+!
+! Note that this filter list will only
+! be effective if you enable the DNT=1
+! header in your browser (Privacy Badger
+! does this automatically).
+!
+! report problems, comments, requests to
+! dnt-policy@eff.org
+!
+!=========================================
+
+@@||99designs.community^$third-party
+@@||act.eff.org^$third-party
+@@||algolianet.com^$third-party
+@@||asweetlife.org^$third-party
+@@||avatars.discourse.org^$third-party
+@@||circleforum.squarespace.com^$third-party
+@@||codepoints.net^$third-party
+@@||do-not-tracker.org^$third-party
+@@||do-not-track.org^$third-party
+@@||duckduckgo.com^$third-party
+@@||duckduckhack.com^$third-party
+@@||eff.org^$third-party
+@@||elyotherm.fr^$third-party
+@@||eve.community^$third-party
+@@||firstpartysimulator.net^$third-party
+@@||firstpartysimulator.org^$third-party
+@@||geeek.org^$third-party
+@@||getfirehawk.com^$third-party
+@@||hitmanforum.com^$third-party
+@@||itsgoingdown.org^$third-party
+@@||linuxsecrets.com^$third-party
+@@||login.persona.org^$third-party
+@@||medium.com^$third-party
+@@||meta.discourse.org^$third-party
+@@||persona.org^$third-party
+@@||safenetforum.org^$third-party
+@@||thefitrv.com^$third-party
+@@||try.discourse.org^$third-party
+@@||twittercommunity.com^$third-party
+@@||wpstagecoach.com^$third-party
