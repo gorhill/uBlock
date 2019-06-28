@@ -25,30 +25,28 @@ mkdir ${ARTS}
 rm -rf ${DES}/*
 
 
-# CHROME
+# CHROME (ZIP)
 printf '%s' "*** Target -> "
 command "${CHROME}" --version || { echo >&2 "Chrome is not installed."; exit 1; }
 ./tools/make-chromium.sh
+cd ${DES}
+zip -9 -r -q --exclude=*.DS_Store* ../../artifacts/adnauseam-${VERSION}.chromium.zip adnauseam.chromium
+cd -
 
-# OPERA
+
+# OPERA (CRX)
 printf "*** Target -> Opera " && command "${OPERA}" --version || { echo >&2 "Opera is not installed."; exit 1; }
 ./tools/make-opera.sh
 "${OPERA}" "${OPERA_OPTS}"
 mv ${DES}/adnauseam.opera.crx ${ARTS}/adnauseam-${VERSION}.opera.crx
 
 
-# FIREFOX
+# FIREFOX (ZIP)
 printf '%s' "*** Target -> "
 command "${FIREFOX}" -v || { echo >&2 "Firefox is not installed."; exit 1; }
 ./tools/make-firefox.sh all
 web-ext build -s ${DES}/adnauseam.firefox -a ${ARTS}
 mv ${ARTS}/adnauseam-${VERSION}.zip ${ARTS}/adnauseam-${VERSION}.firefox.zip
-
-
-# CHROME-RAW
-cd ${DES}
-zip -9 -r -q --exclude=*.DS_Store* ../../artifacts/adnauseam-${VERSION}.chromium.zip adnauseam.chromium
-cd -
 
 
 # NO PEMS
