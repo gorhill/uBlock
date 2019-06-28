@@ -56,14 +56,7 @@ rm -R $DES/lib/qunit
 
 echo "*** AdNauseam.opera: Package Done."
 echo
-# python tools/make-webext-meta.py $DES/  ADN: user our own version
 
-#rm -r $DES/_locales/cv
-#rm -r $DES/_locales/hi
-#rm -r $DES/_locales/mr
-#rm -r $DES/_locales/ta
-
-printf "*** AdNauseam.opera: Generating web accessible resources...\n"
+# printf "*** AdNauseam.opera: Generating web accessible resources...\n"
 cp -R src/web_accessible_resources $DES/
 python3 tools/import-war.py $DES/
-# grep version $DES/manifest.json

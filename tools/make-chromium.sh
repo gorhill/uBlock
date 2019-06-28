@@ -60,9 +60,6 @@ sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
 rm $DES/js/adn/tests.js
 rm -R $DES/lib/qunit
 
-#echo "*** uBlock0.chromium: Generating meta..."
-#python tools/make-chromium-meta.py $DES/
-
 if [ "$1" = all ]; then
     echo "*** AdNauseam.chromium: Creating package..."
     pushd $(dirname $DES/) > /dev/null

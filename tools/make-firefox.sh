@@ -6,7 +6,7 @@ set -e
 echo "*** AdNauseam.firefox: Creating web store package"
 echo "*** AdNauseam.firefox: Copying files"
 
-DES=dist/build/adnauseam.webext
+DES=dist/build/adnauseam.firefox
 rm -rf $DES
 mkdir -p $DES/webextension
 
@@ -52,10 +52,6 @@ rm $DES/img/icon_128.png
 rm $DES/js/adn/tests.js
 rm -R $DES/lib/qunit
 
-echo "*** AdNauseam.firefox: Generating meta..."
-# python tools/make-webext-meta.py $DES/     ADN: use our own version
-#
-
 sed -i '' "s/\"{version}\"/${VERSION}/" $DES/manifest.json
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
@@ -67,7 +63,7 @@ python3 tools/import-war.py $DES/
 if [ "$1" = all ]; then
     echo "*** AdNauseam.firefox: Creating package..."
     pushd $(dirname $DES/) > /dev/null
-    zip adnauseam.webext.zip -qr $(basename $DES/)/*
+    zip adnauseam.firefox.zip -qr $(basename $DES/)/*
     popd > /dev/null
 fi
 
