@@ -2077,6 +2077,13 @@ FilterParser.prototype.parse = function(raw) {
 
     let s = this.raw = raw;
 
+    // Filters which are a single alphanumeric character are discarded
+    // as unsupported.
+    if ( s.length === 1 && /[0-9a-z]/i.test(s) ) {
+        this.unsupported = true;
+        return this;
+    }
+
     // plain hostname? (from HOSTS file)
     if ( this.reHostnameRule1.test(s) ) {
         this.f = s.toLowerCase();
