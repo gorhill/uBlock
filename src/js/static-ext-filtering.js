@@ -68,9 +68,9 @@
         parsed.suffix = '';
     };
 
-    const isValidCSSSelector = (function() {
-        var div = document.createElement('div'),
-            matchesFn;
+    const isValidCSSSelector = (( ) => {
+        const div = document.createElement('div');
+        let matchesFn;
         // Keep in mind:
         //   https://github.com/gorhill/uBlock/issues/693
         //   https://github.com/gorhill/uBlock/issues/1955
@@ -95,11 +95,11 @@
         }
         // Quick regex-based validation -- most cosmetic filters are of the
         // simple form and in such case a regex is much faster.
-        var reSimple = /^[#.][\w-]+$/;
-        return function(s) {
+        const reSimple = /^[#.][\w-]+$/;
+        return s => {
             if ( reSimple.test(s) ) { return true; }
             try {
-                matchesFn(s + ', ' + s + ':not(#foo)');
+                matchesFn(`${s}, ${s}:not(#foo)`);
             } catch (ex) {
                 return false;
             }
@@ -152,7 +152,7 @@
         return hostnames;
     };
 
-    const compileProceduralSelector = (function() {
+    const compileProceduralSelector = (( ) => {
         const reProceduralOperator = new RegExp([
             '^(?:',
                 [
@@ -178,8 +178,9 @@
 
         const reEatBackslashes = /\\([()])/g;
         const reEscapeRegex = /[.*+?^${}()|[\]\\]/g;
-        const reNeedScope = /^\s*[+>~]/;
-        const reIsDanglingSelector = /(?:[+>~]\s*|\s+)$/;
+        const reNeedScope = /^\s*>/;
+        const reIsDanglingSelector = /[+>~\s]\s*$/;
+        const reIsSiblingSelector = /^\s*[+~]/;
 
         const regexToRawValue = new Map();
         let lastProceduralSelector = '',
@@ -226,9 +227,9 @@
 
         const compileConditionalSelector = function(s) {
             // https://github.com/AdguardTeam/ExtendedCss/issues/31#issuecomment-302391277
-            // Prepend `:scope ` if needed.
+            //   Prepend `:scope ` if needed.
             if ( reNeedScope.test(s) ) {
-                s = ':scope ' + s;
+                s = `:scope ${s}`;
             }
             return compile(s);
         };
@@ -367,7 +368,7 @@
             return raw.join('');
         };
 
-        const compile = function(raw) {
+        const compile = function(raw, root = false) {
             if ( raw === '' ) { return; }
             let prefix = '',
                 tasks = [];
@@ -436,16 +437,31 @@
             // At least one task found: nothing should be left to parse.
             if ( tasks.length === 0 ) {
                 prefix = raw;
-                tasks = undefined;
             } else if ( opPrefixBeg < n ) {
                 const spath = compileSpathExpression(raw.slice(opPrefixBeg));
                 if ( spath === undefined ) { return; }
                 tasks.push([ ':spath', spath ]);
             }
             // https://github.com/NanoAdblocker/NanoCore/issues/1#issuecomment-354394894
+            // https://www.reddit.com/r/uBlockOrigin/comments/c6iem5/
+            //   Convert sibling-selector prefix into :spath operator, but
+            //   only if context is not the root.
             if ( prefix !== '' ) {
                 if ( reIsDanglingSelector.test(prefix) ) { prefix += '*'; }
-                if ( isValidCSSSelector(prefix) === false ) { return; }
+                if ( isValidCSSSelector(prefix) === false ) {
+                    if (
+                        root ||
+                        reIsSiblingSelector.test(prefix) === false ||
+                        compileSpathExpression(prefix) === undefined
+                    ) {
+                        return;
+                    }
+                    tasks.unshift([ ':spath', prefix ]);
+                    prefix = '';
+                }
+            }
+            if ( tasks.length === 0 ) {
+                tasks = undefined;
             }
             return { selector: prefix, tasks: tasks };
         };
@@ -455,7 +471,7 @@
                 return lastProceduralSelectorCompiled;
             }
             lastProceduralSelector = raw;
-            let compiled = compile(raw);
+            let compiled = compile(raw, true);
             if ( compiled !== undefined ) {
                 compiled.raw = decompile(compiled);
                 compiled = JSON.stringify(compiled);
@@ -717,8 +733,8 @@
             }
 
             // Procedural selector?
-            let compiled;
-            if ( (compiled = compileProceduralSelector(raw)) ) {
+            const compiled = compileProceduralSelector(raw);
+            if ( compiled !== undefined ) {
                 return compiled;
             }
         };

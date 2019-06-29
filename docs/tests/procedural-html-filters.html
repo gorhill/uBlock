@@ -128,17 +128,17 @@
     <code>^#phf #a11 .pass > a:has(b) + .fail:has(b)</code>
     </div>
 
-</div>
-
 <div id="a12" class="tile">
     <div class="pass"><div class="fail"></div><a></a><b></b></div>
     <code>^#phf #a12 .fail:has(+ a)</code>
     </div>
 
 <div id="a13" class="tile">
-    <div class="pass"><div class="fail"></div><a></a><b></b></div>
-    <code>^#phf #a13 .fail:has(~ b)</code>
+    <div class="pass"><div class="fail"></div><a><b></b></a></div>
+    <code>^#phf #a13 .fail:has(~ a:has(b))</code>
     </div>
+
+</div>
 
 <script>
     const hostname = self.location.hostname;

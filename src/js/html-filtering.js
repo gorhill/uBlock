@@ -169,10 +169,8 @@
         }
         prime(input) {
             const root = input || docRegister;
-            if ( this.selector !== '' ) {
-                return root.querySelectorAll(this.selector);
-            }
-            return [ root ];
+            if ( this.selector === '' ) { return [ root ]; }
+            return root.querySelectorAll(this.selector);
         }
         exec(input) {
             if ( this.invalid ) { return []; }

@@ -660,10 +660,8 @@ vAPI.DOMFilterer = (function() {
         }
         prime(input) {
             const root = input || document;
-            if ( this.selector !== '' ) {
-                return root.querySelectorAll(this.selector);
-            }
-            return [ root ];
+            if ( this.selector === '' ) { return [ root ]; }
+            return root.querySelectorAll(this.selector);
         }
         exec(input) {
             let nodes = this.prime(input);
