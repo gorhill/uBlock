@@ -153,22 +153,38 @@ const regexFromURLFilteringResult = function(result) {
 
 // Emphasize hostname in URL, as this is what matters in uMatrix's rules.
 
-const nodeFromURL = function(url, re) {
+const nodeFromURL = function(parent, url, re) {
+    const fragment = document.createDocumentFragment();
     if ( re instanceof RegExp === false ) {
-        return document.createTextNode(url);
+        fragment.textContent = url;
+    } else {
+        const matches = re.exec(url);
+        if ( matches === null || matches[0].length === 0 ) {
+            fragment.textContent = url;
+        } else {
+            if ( matches.index !== 0 ) {
+                fragment.appendChild(
+                    document.createTextNode(url.slice(0, matches.index))
+                );
+            }
+            const b = document.createElement('b');
+            b.textContent = url.slice(matches.index, re.lastIndex);
+            fragment.appendChild(b);
+            if ( re.lastIndex !== url.length ) {
+                fragment.appendChild(
+                    document.createTextNode(url.slice(re.lastIndex))
+                );
+            }
+        }
     }
-    const matches = re.exec(url);
-    if ( matches === null || matches[0].length === 0 ) {
-        return document.createTextNode(url);
+    if ( /^https?:\/\//.test(url) ) {
+        const a = document.createElement('a');
+        a.setAttribute('href', url);
+        a.setAttribute('target', '_blank');
+        fragment.appendChild(a);
     }
-    const node = renderedURLTemplate.cloneNode(true);
-    node.childNodes[0].textContent = url.slice(0, matches.index);
-    node.childNodes[1].textContent = url.slice(matches.index, re.lastIndex);
-    node.childNodes[2].textContent = url.slice(re.lastIndex);
-    return node;
+    parent.appendChild(fragment);
 };
-
-const renderedURLTemplate = document.querySelector('#renderedURLTemplate > span');
 
 /******************************************************************************/
 
@@ -703,8 +719,7 @@ const viewPort = (( ) => {
         } else if ( filteringType === 'dynamicUrl' ) {
             re = regexFromURLFilteringResult(filter.rule.join(' '));
         }
-        span = div.children[6];
-        span.appendChild(nodeFromURL(cells[6], re));
+        nodeFromURL(div.children[6], cells[6], re);
 
         return div;
     };
