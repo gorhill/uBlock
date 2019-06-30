@@ -704,6 +704,8 @@
     };
 
     const onFilterListsReady = lists => {
+        this.availableFilterLists = lists;
+
         vAPI.net.suspend();
         this.redirectEngine.reset();
         this.staticExtFilteringEngine.reset();
