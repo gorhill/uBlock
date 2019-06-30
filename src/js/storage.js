@@ -660,6 +660,8 @@
         this.staticNetFilteringEngine.freeze();
         this.staticExtFilteringEngine.freeze();
         this.redirectEngine.freeze();
+        vAPI.net.unsuspend();
+
         vAPI.storage.set({ 'availableFilterLists': this.availableFilterLists });
 
         vAPI.messaging.broadcast({
@@ -702,8 +704,7 @@
     };
 
     const onFilterListsReady = lists => {
-        this.availableFilterLists = lists;
-
+        vAPI.net.suspend();
         this.redirectEngine.reset();
         this.staticExtFilteringEngine.reset();
         this.staticNetFilteringEngine.reset();

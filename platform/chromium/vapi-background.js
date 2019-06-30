@@ -1049,9 +1049,9 @@ vAPI.messaging.broadcast = function(message) {
 // https://github.com/gorhill/uBlock/issues/3497
 //   Prevent web pages from interfering with uBO's element picker
 // https://github.com/uBlockOrigin/uBlock-issues/issues/550
-//   A specific secret can be used for at most one second.
+//   Support using a new secret for every network request.
 
-vAPI.warSecret = (function() {
+vAPI.warSecret = (( ) => {
     const generateSecret = ( ) => {
         return Math.floor(Math.random() * 982451653 + 982451653).toString(36) +
                Math.floor(Math.random() * 982451653 + 982451653).toString(36);
@@ -1072,7 +1072,7 @@ vAPI.warSecret = (function() {
         secrets.splice(pos, 1);
     };
 
-    chrome.webRequest.onBeforeRequest.addListener(
+    browser.webRequest.onBeforeRequest.addListener(
         guard,
         {
             urls: [ root + 'web_accessible_resources/*' ]
@@ -1095,59 +1095,106 @@ vAPI.warSecret = (function() {
     };
 })();
 
-vAPI.net = {
-    listenerMap: new WeakMap(),
-    // legacy Chromium understands only these network request types.
-    validTypes: (function() {
-        let types = new Set([
-            'main_frame',
-            'sub_frame',
-            'stylesheet',
-            'script',
-            'image',
-            'object',
-            'xmlhttprequest',
-            'other'
-        ]);
-        let wrrt = browser.webRequest.ResourceType;
-        if ( wrrt instanceof Object ) {
-            for ( let typeKey in wrrt ) {
+/******************************************************************************/
+
+vAPI.Net = class {
+    constructor() {
+        this.validTypes = new Set();
+        {
+            const wrrt = browser.webRequest.ResourceType;
+            for ( const typeKey in wrrt ) {
                 if ( wrrt.hasOwnProperty(typeKey) ) {
-                    types.add(wrrt[typeKey]);
+                    this.validTypes.add(wrrt[typeKey]);
                 }
             }
         }
+        this.suspendableListener = undefined;
+        this.listenerMap = new WeakMap();
+        this.suspendDepth = 0;
+
+        browser.webRequest.onBeforeRequest.addListener(
+            details => {
+                this.normalizeDetails(details);
+                if ( this.suspendDepth === 0 ) {
+                    if ( this.suspendableListener === undefined ) { return; }
+                    return this.suspendableListener(details);
+                }
+                if ( details.tabId < 0 ) { return; }
+                return this.suspendOneRequest(details);
+            },
+            this.denormalizeFilters({ urls: [ 'http://*/*', 'https://*/*' ] }),
+            [ 'blocking' ]
+        );
+    }
+    normalizeDetails(/* details */) {
+    }
+    denormalizeFilters(filters) {
+        const urls = filters.urls || [ '<all_urls>' ];
+        let types = filters.types;
+        if ( Array.isArray(types) ) {
+            types = this.denormalizeTypes(types);
+        }
+        if (
+            (this.validTypes.has('websocket')) &&
+            (types === undefined || types.indexOf('websocket') !== -1) &&
+            (urls.indexOf('<all_urls>') === -1)
+        ) {
+            if ( urls.indexOf('ws://*/*') === -1 ) {
+                urls.push('ws://*/*');
+            }
+            if ( urls.indexOf('wss://*/*') === -1 ) {
+                urls.push('wss://*/*');
+            }
+        }
+        return { types, urls };
+    }
+    denormalizeTypes(types) {
         return types;
-    })(),
-    denormalizeFilters: null,
-    normalizeDetails: null,
-    addListener: function(which, clientListener, filters, options) {
-        if ( typeof this.denormalizeFilters === 'function' ) {
-            filters = this.denormalizeFilters(filters);
-        }
-        let actualListener;
-        if ( typeof this.normalizeDetails === 'function' ) {
-            actualListener = function(details) {
-                vAPI.net.normalizeDetails(details);
-                return clientListener(details);
-            };
-            this.listenerMap.set(clientListener, actualListener);
-        }
+    }
+    addListener(which, clientListener, filters, options) {
+        const actualFilters = this.denormalizeFilters(filters);
+        const actualListener = this.makeNewListenerProxy(clientListener);
         browser.webRequest[which].addListener(
-            actualListener || clientListener,
-            filters,
+            actualListener,
+            actualFilters,
             options
         );
-    },
-    removeListener: function(which, clientListener) {
-        let actualListener = this.listenerMap.get(clientListener);
-        if ( actualListener !== undefined ) {
-            this.listenerMap.delete(clientListener);
+    }
+    setSuspendableListener(listener) {
+        this.suspendableListener = listener;
+    }
+    removeListener(which, clientListener) {
+        const actualListener = this.listenerMap.get(clientListener);
+        if ( actualListener === undefined ) { return; }
+        this.listenerMap.delete(clientListener);
+        browser.webRequest[which].removeListener(actualListener);
+    }
+    makeNewListenerProxy(clientListener) {
+        const actualListener = details => {
+            this.normalizeDetails(details);
+            return clientListener(details);
+        };
+        this.listenerMap.set(clientListener, actualListener);
+        return actualListener;
+    }
+    suspendOneRequest() {
+    }
+    unsuspendAllRequests() {
+    }
+    suspend(force = false) {
+        if ( this.canSuspend() || force ) {
+            this.suspendDepth += 1;
         }
-        browser.webRequest[which].removeListener(
-            actualListener || clientListener
-        );
-    },
+    }
+    unsuspend() {
+        if ( this.suspendDepth === 0 ) { return; }
+        this.suspendDepth -= 1;
+        if ( this.suspendDepth !== 0 ) { return; }
+        this.unsuspendAllRequests(this.suspendableListener);
+    }
+    canSuspend() {
+        return false;
+    }
 };
 
 /******************************************************************************/

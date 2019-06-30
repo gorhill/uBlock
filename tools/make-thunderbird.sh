@@ -24,9 +24,9 @@ cp platform/chromium/*.html             $DES/
 cp platform/chromium/*.json             $DES/
 cp LICENSE.txt                          $DES/
 
-cp platform/thunderbird/manifest.json      $DES/
-cp platform/thunderbird/vapi-webrequest.js $DES/js/
-cp platform/firefox/vapi-usercss.js        $DES/js/
+cp platform/thunderbird/manifest.json   $DES/
+cp platform/firefox/vapi-webrequest.js  $DES/js/
+cp platform/firefox/vapi-usercss.js     $DES/js/
 
 echo "*** uBlock0.thunderbird: concatenating content scripts"
 cat $DES/js/vapi-usercss.js > /tmp/contentscript.js

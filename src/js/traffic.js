@@ -25,7 +25,7 @@
 
 // Start isolation from global scope
 
-µBlock.webRequest = (function() {
+µBlock.webRequest = (( ) => {
 
 /******************************************************************************/
 
@@ -1028,26 +1028,20 @@ const strictBlockBypasser = {
 /******************************************************************************/
 
 return {
-    start: (function() {
+    start: (( ) => {
+        vAPI.net = new vAPI.Net();
+
         if (
-            vAPI.net.onBeforeReady instanceof Object &&
-            (
-                vAPI.net.onBeforeReady.experimental !== true &&
-                µBlock.hiddenSettings.suspendTabsUntilReady !== 'no' ||
-                vAPI.net.onBeforeReady.experimental &&
-                µBlock.hiddenSettings.suspendTabsUntilReady === 'yes'
-            )
+            vAPI.net.canSuspend() &&
+            µBlock.hiddenSettings.suspendTabsUntilReady !== 'no' ||
+            vAPI.net.canSuspend() !== true &&
+            µBlock.hiddenSettings.suspendTabsUntilReady === 'yes'
         ) {
-            vAPI.net.onBeforeReady.start();
+            vAPI.net.suspend(true);
         }
 
         return function() {
-            vAPI.net.addListener(
-                'onBeforeRequest',
-                onBeforeRequest,
-                { urls: [ 'http://*/*', 'https://*/*' ] },
-                [ 'blocking' ]
-            );
+            vAPI.net.setSuspendableListener(onBeforeRequest);
             vAPI.net.addListener(
                 'onHeadersReceived',
                 onHeadersReceived,
@@ -1074,9 +1068,7 @@ return {
                     [ 'blocking', 'requestBody' ]
                 );
             }
-            if ( vAPI.net.onBeforeReady instanceof Object ) {
-                vAPI.net.onBeforeReady.stop(onBeforeRequest);
-            }
+            vAPI.net.unsuspend();
         };
     })(),
 
