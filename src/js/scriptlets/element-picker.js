@@ -990,13 +990,17 @@ const filterToDOMInterface = (( ) => {
                     cssSelectors.add(item.raw);
                 }
             }
-            vAPI.domFilterer.addCSSRule(
-                Array.from(cssSelectors),
-                'display:none!important;'
-            );
-            vAPI.domFilterer.addProceduralSelectors(
-                Array.from(proceduralSelectors)
-            );
+            if ( cssSelectors.size !== 0 ) {
+                vAPI.domFilterer.addCSSRule(
+                    Array.from(cssSelectors),
+                    'display:none!important;'
+                );
+            }
+            if ( proceduralSelectors.size !== 0 ) {
+                vAPI.domFilterer.addProceduralSelectors(
+                    Array.from(proceduralSelectors)
+                );
+            }
         });
     };
 
