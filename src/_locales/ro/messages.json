@@ -252,7 +252,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Blochează elementul",
+    "message": "Blochează elementul...",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -312,7 +312,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Blochează elementele media mai mari de {{input}} kB",
+    "message": "Blochează elementele media mai mari de {{input}} KB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -796,7 +796,7 @@
     "description": "English: Contributors"
   },
   "aboutDependencies": {
-    "message": "Dependențe externe (compatible GPLv3):",
+    "message": "Dependențe externe (compatibile GPLv3):",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
