@@ -299,9 +299,6 @@ var toChromiumTabId = function(tabId) {
 /******************************************************************************/
 
 vAPI.tabs.registerListeners = function() {
-    var onNavigationClient = this.onNavigation || noopFunc;
-    var onUpdatedClient = this.onUpdated || noopFunc;
-
     // https://developer.chrome.com/extensions/webNavigation
     // [onCreatedNavigationTarget ->]
     //  onBeforeNavigate ->
@@ -315,74 +312,71 @@ vAPI.tabs.registerListeners = function() {
     // properly setup if network requests are fired from within the tab.
     // Example: Chromium + case #6 at
     //          http://raymondhill.net/ublock/popup.html
-    var reGoodForWebRequestAPI = /^https?:\/\//;
+    const reGoodForWebRequestAPI = /^https?:\/\//;
 
     // https://forums.lanik.us/viewtopic.php?f=62&t=32826
     //   Chromium-based browsers: sanitize target URL. I've seen data: URI with
     //   newline characters in standard fields, possibly as a way of evading
     //   filters. As per spec, there should be no whitespaces in a data: URI's
     //   standard fields.
-    var sanitizeURL = function(url) {
+    const sanitizeURL = function(url) {
         if ( url.startsWith('data:') === false ) { return url; }
-        var pos = url.indexOf(',');
+        const pos = url.indexOf(',');
         if ( pos === -1 ) { return url; }
-        var s = url.slice(0, pos);
+        const s = url.slice(0, pos);
         if ( s.search(/\s/) === -1 ) { return url; }
         return s.replace(/\s+/, '') + url.slice(pos);
     };
 
-    var onCreatedNavigationTarget = function(details) {
+    browser.webNavigation.onCreatedNavigationTarget.addListener(details => {
         if ( typeof details.url !== 'string' ) {
             details.url = '';
         }
         if ( reGoodForWebRequestAPI.test(details.url) === false ) {
             details.frameId = 0;
             details.url = sanitizeURL(details.url);
-            onNavigationClient(details);
+            if ( this.onNavigation ) {
+                this.onNavigation(details);
+            }
         }
-        if ( typeof vAPI.tabs.onPopupCreated === 'function' ) {
+        if ( vAPI.tabs.onPopupCreated ) {
             vAPI.tabs.onPopupCreated(
                 details.tabId,
                 details.sourceTabId
             );
         }
-    };
+    });
 
-    var onCommitted = function(details) {
+    browser.webNavigation.onCommitted.addListener(details => {
         details.url = sanitizeURL(details.url);
-        onNavigationClient(details);
-    };
-
-    var onActivated = function(details) {
-        if ( vAPI.contextMenu instanceof Object ) {
-            vAPI.contextMenu.onMustUpdate(details.tabId);
+        if ( this.onNavigation ) {
+            this.onNavigation(details);
         }
-    };
+    });
 
     // https://github.com/gorhill/uBlock/issues/3073
-    // - Fall back to `tab.url` when `changeInfo.url` is not set.
-    var onUpdated = function(tabId, changeInfo, tab) {
+    //   Fall back to `tab.url` when `changeInfo.url` is not set.
+    browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         if ( typeof changeInfo.url !== 'string' ) {
             changeInfo.url = tab && tab.url;
         }
         if ( changeInfo.url ) {
             changeInfo.url = sanitizeURL(changeInfo.url);
         }
-        onUpdatedClient(tabId, changeInfo, tab);
-    };
+        if ( this.onUpdated ) {
+            this.onUpdated(tabId, changeInfo, tab);
+        }
+    });
 
-    chrome.webNavigation.onCommitted.addListener(onCommitted);
-    // Not supported on Firefox WebExtensions yet.
-    if ( chrome.webNavigation.onCreatedNavigationTarget instanceof Object ) {
-        chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTarget);
-    }
-    chrome.tabs.onActivated.addListener(onActivated);
-    chrome.tabs.onUpdated.addListener(onUpdated);
+    browser.tabs.onActivated.addListener(( ) => {
+        if ( vAPI.contextMenu ) {
+            vAPI.contextMenu.onMustUpdate();
+        }
+    });
 
-    if ( typeof this.onClosed === 'function' ) {
-        chrome.tabs.onRemoved.addListener(this.onClosed);
-    }
-
+    browser.tabs.onRemoved.addListener((tabId, details) => {
+        this.onClosed(tabId, details);
+    });
 };
 
 /******************************************************************************/
@@ -395,7 +389,7 @@ vAPI.tabs.get = function(tabId, callback) {
     if ( tabId === null ) {
         chrome.tabs.query(
             { active: true, currentWindow: true },
-            function(tabs) {
+            tabs => {
                 void chrome.runtime.lastError;
                 callback(
                     Array.isArray(tabs) && tabs.length !== 0 ? tabs[0] : null

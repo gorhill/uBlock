@@ -23,7 +23,7 @@
 
 /******************************************************************************/
 
-µBlock.contextMenu = (function() {
+µBlock.contextMenu = (( ) => {
 
 /******************************************************************************/
 
@@ -35,7 +35,7 @@ if ( vAPI.contextMenu === undefined ) {
 
 /******************************************************************************/
 
-var onBlockElement = function(details, tab) {
+const onBlockElement = function(details, tab) {
     if ( tab === undefined ) { return; }
     if ( /^https?:\/\//.test(tab.url) === false ) { return; }
     let tagName = details.tagName || '';
@@ -62,7 +62,7 @@ var onBlockElement = function(details, tab) {
 
 /******************************************************************************/
 
-var onTemporarilyAllowLargeMediaElements = function(details, tab) {
+const onTemporarilyAllowLargeMediaElements = function(details, tab) {
     if ( tab === undefined ) { return; }
     let pageStore = µBlock.pageStoreFromTabId(tab.id);
     if ( pageStore === null ) { return; }
@@ -71,7 +71,7 @@ var onTemporarilyAllowLargeMediaElements = function(details, tab) {
 
 /******************************************************************************/
 
-var onEntryClicked = function(details, tab) {
+const onEntryClicked = function(details, tab) {
     if ( details.menuItemId === 'uBlock0-blockElement' ) {
         return onBlockElement(details, tab);
     }
@@ -82,7 +82,7 @@ var onEntryClicked = function(details, tab) {
 
 /******************************************************************************/
 
-var menuEntries = [
+const menuEntries = [
     {
         id: 'uBlock0-blockElement',
         title: vAPI.i18n('pickerContextMenuEntry'),
@@ -97,9 +97,11 @@ var menuEntries = [
 
 /******************************************************************************/
 
-var update = function(tabId) {
+let currentBits = 0;
+
+const update = function(tabId = undefined) {
     let newBits = 0;
-    if ( µBlock.userSettings.contextMenuEnabled && tabId !== null ) {
+    if ( µBlock.userSettings.contextMenuEnabled && tabId !== undefined ) {
         let pageStore = µBlock.pageStoreFromTabId(tabId);
         if ( pageStore && pageStore.getNetFilteringSwitch() ) {
             newBits |= 0x01;
@@ -120,25 +122,26 @@ var update = function(tabId) {
     vAPI.contextMenu.setEntries(usedEntries, onEntryClicked);
 };
 
-var currentBits = 0;
-
-vAPI.contextMenu.onMustUpdate = update;
-
 /******************************************************************************/
 
-return {
-    update: function(tabId) {
-        if ( µBlock.userSettings.contextMenuEnabled && tabId === undefined ) {
-            vAPI.tabs.get(null, function(tab) {
-                if ( tab ) {
-                    update(tab.id);
-                }
-            });
-            return;
-        }
-        update(tabId);
+// https://github.com/uBlockOrigin/uBlock-issues/issues/151
+//   For unknown reasons, the currently active tab will not be successfully
+//   looked up after closing a window.
+
+vAPI.contextMenu.onMustUpdate = function(tabId = undefined) {
+    if ( µBlock.userSettings.contextMenuEnabled === false ) {
+        return update();
     }
+    if ( tabId !== undefined ) {
+        return update(tabId);
+    }
+    vAPI.tabs.get(null, tab => {
+        if ( tab instanceof Object === false ) { return; }
+        update(tab.id);
+    });
 };
+
+return { update: vAPI.contextMenu.onMustUpdate };
 
 /******************************************************************************/
 

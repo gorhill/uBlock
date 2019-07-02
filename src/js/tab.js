@@ -524,10 +524,9 @@ vAPI.tabs.onUpdated = function(tabId, changeInfo, tab) {
 /******************************************************************************/
 
 vAPI.tabs.onClosed = function(tabId) {
-    if (  vAPI.isBehindTheSceneTabId(tabId) ) {
-        return;
-    }
+    if (  vAPI.isBehindTheSceneTabId(tabId) ) { return; }
     µb.unbindTabFromPageStats(tabId);
+    µb.contextMenu.update();
 };
 
 /******************************************************************************/
