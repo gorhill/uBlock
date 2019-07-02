@@ -246,9 +246,11 @@ const toBlockDocResult = function(url, hostname, logData) {
 
     // https://github.com/chrisaljoudi/uBlock/issues/1128
     // https://github.com/chrisaljoudi/uBlock/issues/1212
-    // Relax the rule: verify that the match is completely before the path part
-    return (match.index + match[0].length) <=
-           (url.indexOf(hostname) + hostname.length + 1);
+    //   Verify that the end of the match is anchored to the end of the
+    //   hostname.
+    const end = match.index + match[0].length -
+                url.indexOf(hostname) - hostname.length;
+    return end === 0 || end === 1;
 };
 
 /******************************************************************************/
