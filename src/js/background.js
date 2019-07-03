@@ -48,6 +48,7 @@ const µBlock = (function() { // jshint ignore:line
         cacheControlForFirefox1376932: 'no-cache, no-store, must-revalidate',
         consoleLogLevel: 'unset',
         debugScriptlets: false,
+        debugScriptletInjector: false,
         disableWebAssembly: false,
         ignoreRedirectFilters: false,
         ignoreScriptInjectFilters: false,

@@ -210,7 +210,7 @@
             let pos = args.indexOf(',');
             if ( pos === -1 ) { pos = args.length; }
             const arg = args.slice(0, pos).trim().replace(reEscapeScriptArg, '\\$&');
-            content = content.replace('{{' + i + '}}', arg);
+            content = content.replace(`{{${i}}}`, arg);
             args = args.slice(pos + 1).trim();
             i++;
         }
@@ -227,7 +227,7 @@
             .setDocOriginFromURL(details.url)
             .setFilter({
                 source: 'cosmetic',
-                raw: (isException ? '#@#' : '##') + '+js(' + token + ')'
+                raw: (isException ? '#@#' : '##') + `+js(${token})`
             })
             .toLogger();
     };
@@ -356,6 +356,10 @@
 
         if ( out.length === 0 ) { return; }
 
+        if ( µb.hiddenSettings.debugScriptlets ) {
+            out.unshift('debugger');
+        }
+
         return out.join('\n');
     };
 
@@ -375,7 +379,7 @@
         const scriptlets = µb.scriptletFilteringEngine.retrieve(request);
         if ( scriptlets === undefined ) { return; }
         let code = contentscriptCode.assemble(request.hostname, scriptlets);
-        if ( µb.hiddenSettings.debugScriptlets ) {
+        if ( µb.hiddenSettings.debugScriptletInjector ) {
             code = 'debugger;\n' + code;
         }
         vAPI.tabs.injectScript(

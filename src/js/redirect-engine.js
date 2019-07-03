@@ -65,6 +65,9 @@ const immutableResources = new Map([
         alias: 'ampproject.org/v0.js',
         inject: false
     } ],
+    [ 'bab-defuser.js', {
+        alias: 'nobab.js',
+    } ],
     [ 'chartbeat.js', {
         alias: 'static.chartbeat.com/chartbeat.js',
         inject: false
@@ -127,6 +130,14 @@ const immutableResources = new Map([
         alias: 'd3pkae9owd2lcf.cloudfront.net/mb105.js',
         inject: false
     } ],
+    [ 'nano-setInterval-booster.js', {
+        alias: 'nano-sib.js',
+        redirect: false
+    } ],
+    [ 'nano-setTimeout-booster.js', {
+        alias: 'nano-stb.js',
+        redirect: false
+    } ],
     [ 'noeval-silent.js', {
         alias: 'silent-noeval.js',
     } ],
@@ -165,8 +176,20 @@ const immutableResources = new Map([
     [ 'set-constant.js', {
         redirect: false
     } ],
+    [ 'setInterval-defuser.js', {
+        alias: 'sid.js',
+        redirect: false
+    } ],
+    [ 'setInterval-logger.js', {
+        alias: 'sil.js',
+        redirect: false
+    } ],
     [ 'setTimeout-defuser.js', {
-        alias: 'stod.js',
+        alias: 'std.js',
+        redirect: false
+    } ],
+    [ 'setTimeout-logger.js', {
+        alias: 'stl.js',
         redirect: false
     } ],
     [ 'webrtc-if.js', {
@@ -680,7 +703,7 @@ RedirectEngine.prototype.loadBuiltinResources = function() {
             const match = /^\/web_accessible_resources\/([^?]+)/.exec(result.url);
             if ( match === null ) { continue; }
             const name = match[1];
-            const content = result.content.replace(/^\/\*[\S\s]+?\*\/\s*/, '');
+            const content = result.content.replace(/^\/\*[\S\s]+?\n\*\/\s*/, '');
             const details = immutableResources.get(name);
             const entry = RedirectEntry.fromSelfie({
                 mime: mimeFromName(name),
