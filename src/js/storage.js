@@ -987,9 +987,11 @@
 
 µBlock.loadRedirectResources = function() {
     return this.redirectEngine.resourcesFromSelfie().then(success => {
-        if ( success === true ) { return; }
+        if ( success === true ) { return true; }
 
-        const fetchPromises = [ this.assets.get('ublock-resources') ];
+        const fetchPromises = [
+            this.redirectEngine.loadBuiltinResources()
+        ];
 
         const userResourcesLocation = this.hiddenSettings.userResourcesLocation;
         if ( userResourcesLocation !== 'unset' ) {
@@ -1000,11 +1002,11 @@
 
         return Promise.all(fetchPromises);
     }).then(results => {
-        if ( Array.isArray(results) === false ) { return; }
+        if ( Array.isArray(results) === false ) { return results; }
 
         let content = '';
-
-        for ( const result of results ) {
+        for ( let i = 1; i < results.length; i++ ) {
+            const result = results[i];
             if (
                 result instanceof Object === false ||
                 typeof result.content !== 'string' ||
@@ -1016,6 +1018,11 @@
         }
 
         this.redirectEngine.resourcesFromString(content);
+        this.redirectEngine.selfieFromResources();
+        return true;
+    }).catch(reason => {
+        log.info(reason);
+        return false;
     });
 };
 
@@ -1109,9 +1116,12 @@
             µb.redirectEngine.fromSelfie('selfie/redirectEngine'),
             µb.staticExtFilteringEngine.fromSelfie('selfie/staticExtFilteringEngine'),
             µb.staticNetFilteringEngine.fromSelfie('selfie/staticNetFilteringEngine'),
-        ]).then(results =>
-            results.reduce((acc, v) => acc && v, true)
-        ).catch(reason => {
+        ]).then(results => {
+            if ( results.reduce((acc, v) => acc && v, true) ) {
+                return µb.loadRedirectResources();
+            }
+            return false;
+        }).catch(reason => {
             log.info(reason);
             return false;
         });

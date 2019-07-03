@@ -177,15 +177,9 @@ const onCommandShortcutsReady = function(commandShortcuts) {
 const onVersionReady = function(lastVersion) {
     if ( lastVersion === vAPI.app.version ) { return; }
 
-    // Since AMO does not allow updating resources.txt, force a reload when a
-    // new version is detected, as resources.txt may have changed since last
-    // release. This will be done only for release versions of Firefox.
-    if (
-        vAPI.webextFlavor.soup.has('firefox') &&
-        vAPI.webextFlavor.soup.has('devbuild') === false
-    ) {
-        µb.redirectEngine.invalidateResourcesSelfie();
-    }
+    // Since built-in resources may have changed since last version, we
+    // force a reload of all resources.
+    µb.redirectEngine.invalidateResourcesSelfie();
 
     // If unused, just comment out for when we need to compare versions in the
     // future.
@@ -320,7 +314,6 @@ const onFirstFetchReady = function(fetched) {
     µb.loadPublicSuffixList().then(( ) => {
         onPSLReady();
     });
-    µb.loadRedirectResources();
 };
 
 /******************************************************************************/

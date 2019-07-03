@@ -23,52 +23,166 @@
 
 /******************************************************************************/
 
-µBlock.redirectEngine = (function(){
+µBlock.redirectEngine = (( ) => {
 
 /******************************************************************************/
 /******************************************************************************/
 
-const warResolve = (function() {
-    let warPairs = [];
+const immutableResources = new Map([
+    [ '1x1.gif', {
+        alias: '1x1-transparent.gif',
+        inject: false
+    } ],
+    [ '2x2.png', {
+        alias: '2x2-transparent.png',
+        inject: false
+    } ],
+    [ '3x2.png', {
+        alias: '3x2-transparent.png',
+        inject: false
+    } ],
+    [ '32x32.png', {
+        alias: '32x32-transparent.png',
+        inject: false
+    } ],
+    [ 'abort-current-inline-script.js', {
+        alias: 'acis.js',
+        redirect: false
+    } ],
+    [ 'abort-on-property-read.js', {
+        alias: 'aopr.js',
+        redirect: false
+    } ],
+    [ 'abort-on-property-write.js', {
+        alias: 'aopw.js',
+        redirect: false
+    } ],
+    [ 'addthis_widget.js', {
+        alias: 'addthis.com/addthis_widget.js',
+        inject: false
+    } ],
+    [ 'ampproject_v0.js', {
+        alias: 'ampproject.org/v0.js',
+        inject: false
+    } ],
+    [ 'chartbeat.js', {
+        alias: 'static.chartbeat.com/chartbeat.js',
+        inject: false
+    } ],
+    [ 'amazon_ads.js', {
+        alias: 'amazon-adsystem.com/aax2/amzn_ads.js',
+        inject: false
+    } ],
+    [ 'disqus_embed.js', {
+        alias: 'disqus.com/embed.js',
+        inject: false
+    } ],
+    [ 'disqus_forums_embed.js', {
+        alias: 'disqus.com/forums/*/embed.js',
+        inject: false
+    } ],
+    [ 'doubleclick_instream_ad_status.js', {
+        alias: 'doubleclick.net/instream/ad_status.js',
+        inject: false
+    } ],
+    [ 'fookadblock.js', {
+        alias: 'fuckadblock.js-3.2.0',
+    } ],
+    [ 'google-analytics_analytics.js', {
+        alias: 'google-analytics.com/analytics.js',
+        inject: false
+    } ],
+    [ 'google-analytics_cx_api.js', {
+        alias: 'google-analytics.com/cx/api.js',
+        inject: false
+    } ],
+    [ 'google-analytics_ga.js', {
+        alias: 'google-analytics.com/ga.js',
+        inject: false
+    } ],
+    [ 'google-analytics_inpage_linkid.js', {
+        alias: 'google-analytics.com/inpage_linkid.js',
+        inject: false
+    } ],
+    [ 'googlesyndication_adsbygoogle.js', {
+        alias: 'googlesyndication.com/adsbygoogle.js',
+        inject: false
+    } ],
+    [ 'googletagmanager_gtm.js', {
+        alias: 'googletagmanager.com/gtm.js',
+        inject: false
+    } ],
+    [ 'googletagservices_gpt.js', {
+        alias: 'googletagservices.com/gpt.js',
+        inject: false
+    } ],
+    [ 'hd-main.js', {
+        inject: false
+    } ],
+    [ 'ligatus_angular-tag.js', {
+        alias: 'ligatus.com/*/angular-tag.js',
+        inject: false
+    } ],
+    [ 'monkeybroker.js', {
+        alias: 'd3pkae9owd2lcf.cloudfront.net/mb105.js',
+        inject: false
+    } ],
+    [ 'noeval-silent.js', {
+        alias: 'silent-noeval.js',
+    } ],
+    [ 'noop-0.1s.mp3', {
+        alias: 'noopmp3-0.1s',
+        inject: false
+    } ],
+    [ 'noop-1s.mp4', {
+        alias: 'noopmp4-1s',
+        inject: false
+    } ],
+    [ 'noop.html', {
+        alias: 'noopframe',
+        inject: false
+    } ],
+    [ 'noop.js', {
+        alias: 'noopjs',
+    } ],
+    [ 'noop.txt', {
+        alias: 'nooptext',
+    } ],
+    [ 'outbrain-widget.js', {
+        alias: 'widgets.outbrain.com/outbrain.js',
+        inject: false
+    } ],
+    [ 'popads.js', {
+        alias: 'popads.net.js',
+    } ],
+    [ 'popads-dummy.js', {
+        alias: 'popads-dummy.js',
+    } ],
+    [ 'scorecardresearch_beacon.js', {
+        alias: 'scorecardresearch.com/beacon.js',
+        inject: false
+    } ],
+    [ 'set-constant.js', {
+        redirect: false
+    } ],
+    [ 'setTimeout-defuser.js', {
+        alias: 'stod.js',
+        redirect: false
+    } ],
+    [ 'webrtc-if.js', {
+        redirect: false
+    } ],
+]);
 
-    const onPairsReady = function() {
-        const reng = µBlock.redirectEngine;
-        for ( let i = 0; i < warPairs.length; i += 2 ) {
-            const resource = reng.resources.get(warPairs[i+0]);
-            if ( resource === undefined ) { continue; }
-            resource.warURL = vAPI.getURL(
-                '/web_accessible_resources/' + warPairs[i+1]
-            );
-        }
-        reng.selfieFromResources();
-    };
-
-    return function() {
-        if ( vAPI.warSecret === undefined || warPairs.length !== 0 ) {
-            return onPairsReady();
-        }
-
-        const onPairsLoaded = function(details) {
-            const marker = '>>>>>';
-            const pos = details.content.indexOf(marker);
-            if ( pos === -1 ) { return; }
-            const pairs = details.content.slice(pos + marker.length)
-                                      .trim()
-                                      .split('\n');
-            if ( (pairs.length & 1) !== 0 ) { return; }
-            for ( let i = 0; i < pairs.length; i++ ) {
-                pairs[i] = pairs[i].trim();
-            }
-            warPairs = pairs;
-            onPairsReady();
-        };
-
-        µBlock.assets.fetchText(
-            `/web_accessible_resources/imported.txt${vAPI.warSecret()}`,
-            onPairsLoaded
-        );
-    };
-})();
+const mimeMap = {
+     gif: 'image/gif',
+    html: 'text/html',
+      js: 'application/javascript',
+     mp3: 'audio/mp3',
+     mp4: 'video/mp4',
+     png: 'image/png',
+     txt: 'text/plain',
+};
 
 // https://github.com/gorhill/uBlock/issues/3639
 // https://github.com/EFForg/https-everywhere/issues/14961
@@ -107,6 +221,7 @@ RedirectEntry.prototype.toURL = function(fctxt) {
     ) {
         return `${this.warURL}${vAPI.warSecret()}`;
     }
+    if ( this.data === undefined ) { return; }
     if ( this.data.startsWith('data:') === false ) {
         if ( this.mime.indexOf(';') === -1 ) {
             this.data = 'data:' + this.mime + ';base64,' + btoa(this.data);
@@ -134,9 +249,11 @@ RedirectEntry.prototype.toContent = function() {
 /******************************************************************************/
 
 RedirectEntry.fromFields = function(mime, lines) {
-    var r = new RedirectEntry();
+    const r = new RedirectEntry();
     r.mime = mime;
-    r.data = lines.join(mime.indexOf(';') !== -1 ? '' : '\n');
+    r.data = µBlock.orphanizeString(
+        lines.join(mime.indexOf(';') !== -1 ? '' : '\n')
+    );
     return r;
 };
 
@@ -474,12 +591,13 @@ RedirectEngine.prototype.resourceContentFromName = function(name, mime) {
 // https://github.com/uBlockOrigin/uAssets/commit/deefe875551197d655f79cb540e62dfc17c95f42
 //   Consider 'none' a reserved keyword, to be used to disable redirection.
 
-RedirectEngine.prototype.resourcesFromString = function(text) {
-    let fields, encoded,
-        reNonEmptyLine = /\S/,
-        lineIter = new µBlock.LineIterator(text);
-
-    this.resources = new Map();
+RedirectEngine.prototype.resourcesFromString = function(
+    text,
+    override = true
+) {
+    const lineIter = new µBlock.LineIterator(text);
+    const reNonEmptyLine = /\S/;
+    let fields, encoded;
 
     while ( lineIter.eot() === false ) {
         let line = lineIter.next();
@@ -500,10 +618,15 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
         }
 
         // No more data, add the resource.
-        this.resources.set(
-            fields[0],
-            RedirectEntry.fromFields(fields[1], fields.slice(2))
-        );
+        if (
+            this.resources.has(fields[0]) === false ||
+            override !== false
+        ) {
+            this.resources.set(
+                fields[0],
+                RedirectEntry.fromFields(fields[1], fields.slice(2))
+            );
+        }
 
         fields = undefined;
     }
@@ -516,10 +639,68 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
         );
     }
 
-    warResolve();
-
     this.modifyTime = Date.now();
 };
+
+/******************************************************************************/
+
+RedirectEngine.prototype.loadBuiltinResources = function() {
+    this.resources = new Map();
+    const mimeFromName = function(name) {
+        const match = /\.([^.]+)$/.exec(name);
+        if ( match !== null ) {
+            return mimeMap[match[1]];
+        }
+    };
+    const fetches = [
+        µBlock.assets.get('ublock-resources'),
+    ];
+    for ( const [ name, details ] of immutableResources ) {
+        if ( details.inject !== false ) {
+            fetches.push(
+                µBlock.assets.fetchText(
+                    `/web_accessible_resources/${name}${vAPI.warSecret()}`
+                )
+            );
+            continue;
+        }
+        const entry = RedirectEntry.fromSelfie({
+            mime: mimeFromName(name),
+            warURL: vAPI.getURL(`/web_accessible_resources/${name}`),
+        });
+        this.resources.set(name, entry);
+        if ( details.alias !== undefined ) {
+            this.resources.set(details.alias, entry);
+        }
+    }
+    return Promise.all(fetches).then(results => {
+        // Immutable resources
+        for ( let i = 1; i < results.length; i++ ) {
+            const result = results[i];
+            const match = /^\/web_accessible_resources\/([^?]+)/.exec(result.url);
+            if ( match === null ) { continue; }
+            const name = match[1];
+            const content = result.content.replace(/^\/\*[\S\s]+?\*\/\s*/, '');
+            const details = immutableResources.get(name);
+            const entry = RedirectEntry.fromSelfie({
+                mime: mimeFromName(name),
+                data: content,
+                warURL: details.redirect !== false
+                    ? vAPI.getURL(`/web_accessible_resources/${name}`)
+                    : undefined,
+            });
+            this.resources.set(name, entry);
+            if ( details.alias !== undefined ) {
+                this.resources.set(details.alias, entry);
+            }
+        }
+        // Mutable resources
+        const content = results[0].content;
+        if ( typeof content === 'string' && content.length !== 0 ) {
+            this.resourcesFromString(content, false);
+        }
+    });
+}; 
 
 /******************************************************************************/
 
