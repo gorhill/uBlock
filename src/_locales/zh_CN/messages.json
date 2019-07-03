@@ -268,7 +268,7 @@
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
-    "message": "当适用时改进右键菜单",
+    "message": "添加“屏蔽元素”到右键菜单",
     "description": "English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt": {
