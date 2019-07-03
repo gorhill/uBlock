@@ -21,8 +21,21 @@
 
 (function() {
     'use strict';
+    let needle = '{{1}}';
+    if ( needle === '' || needle === '{{1}}' ) {
+        needle = '.?';
+    } else if ( needle.slice(0,1) === '/' && needle.slice(-1) === '/' ) {
+        needle = needle.slice(1,-1);
+    } else {
+        needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+    needle = new RegExp(needle);
     window.eval = new Proxy(window.eval, {          // jshint ignore: line
-        apply: function() {
+        apply: function(target, thisArg, args) {
+            const a = args[0];
+            if ( needle.test(a.toString()) === false ) {
+                return target.apply(thisArg, args);
+            }
         }
     });
 })();

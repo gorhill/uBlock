@@ -76,7 +76,7 @@
         }
         const prop = chain.slice(0, pos);
         let v = owner[prop];
-        chain = chain.slice(pos + 1); 
+        chain = chain.slice(pos + 1);
         if ( v !== undefined ) {
             makeProxy(v, chain);
             return;

@@ -138,6 +138,11 @@ const immutableResources = new Map([
         alias: 'nano-stb.js',
         redirect: false
     } ],
+    [ 'noeval.js', {
+    } ],
+    [ 'noeval-if.js', {
+        redirect: false
+    } ],
     [ 'noeval-silent.js', {
         alias: 'silent-noeval.js',
     } ],
