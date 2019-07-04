@@ -57,6 +57,14 @@ const immutableResources = new Map([
         alias: 'aopw.js',
         redirect: false
     } ],
+    [ 'addEventListener-defuser.js', {
+        alias: 'aeld.js',
+        redirect: false
+    } ],
+    [ 'addEventListener-logger.js', {
+        alias: 'aell.js',
+        redirect: false
+    } ],
     [ 'addthis_widget.js', {
         alias: 'addthis.com/addthis_widget.js',
         inject: false
@@ -174,6 +182,10 @@ const immutableResources = new Map([
     [ 'popads-dummy.js', {
         alias: 'popads-dummy.js',
     } ],
+    [ 'remove-attr.js', {
+        alias: 'ra.js',
+        redirect: false
+    } ],
     [ 'scorecardresearch_beacon.js', {
         alias: 'scorecardresearch.com/beacon.js',
         inject: false
@@ -199,6 +211,8 @@ const immutableResources = new Map([
     } ],
     [ 'webrtc-if.js', {
         redirect: false
+    } ],
+    [ 'window.open-defuser.js', {
     } ],
 ]);
 
