@@ -87,7 +87,7 @@ const µBlock = (function() { // jshint ignore:line
         },
 
         hiddenSettingsDefault: hiddenSettingsDefault,
-        hiddenSettings: (function() {
+        hiddenSettings: (( ) => {
             const out = Object.assign({}, hiddenSettingsDefault);
             const json = vAPI.localStorage.getItem('immediateHiddenSettings');
             if ( typeof json !== 'string' ) { return out; }

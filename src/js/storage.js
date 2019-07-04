@@ -120,9 +120,6 @@
                         : 'unset';
             }
         }
-        if ( vAPI.localStorage.getItem('immediateHiddenSettings') === null ) {
-            this.saveImmediateHiddenSettings();
-        }
         self.log.verbosity = this.hiddenSettings.consoleLogLevel;
         resolve();
     });
