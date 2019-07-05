@@ -210,7 +210,9 @@
     }
     if ( Object.keys(toSave).length !== 0 ) {
         vAPI.localStorage.setItem(
-            'immediateHiddenSettings', JSON.stringify(toSave));
+            'immediateHiddenSettings',
+            JSON.stringify(toSave)
+        );
     } else {
         vAPI.localStorage.removeItem('immediateHiddenSettings');
     }
