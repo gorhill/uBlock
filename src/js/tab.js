@@ -19,21 +19,12 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-// https://github.com/gorhill/uBlock/issues/2720
-
-/******************************************************************************/
-/******************************************************************************/
-
-(function() {
-
 'use strict';
 
 /******************************************************************************/
-
-var µb = µBlock;
+/******************************************************************************/
 
 // https://github.com/gorhill/httpswitchboard/issues/303
-// Some kind of trick going on here:
 //   Any scheme other than 'http' and 'https' is remapped into a fake
 //   URL which trick the rest of µBlock into being able to process an
 //   otherwise unmanageable scheme. µBlock needs web page to have a proper
@@ -42,10 +33,7 @@ var µb = µBlock;
 //   hostname. This way, for a specific scheme you can create scope with
 //   rules which will apply only to that scheme.
 
-/******************************************************************************/
-/******************************************************************************/
-
-µb.normalizePageURL = function(tabId, pageURL) {
+µBlock.normalizePageURL = function(tabId, pageURL) {
     if ( tabId < 0 ) {
         return 'http://behind-the-scene/';
     }
@@ -63,7 +51,7 @@ var µb = µBlock;
         fakeHostname = uri.path + '.' + fakeHostname;
     }
 
-    return 'http://' + fakeHostname + '/';
+    return `http://${fakeHostname}/`;
 };
 
 /******************************************************************************/
@@ -127,48 +115,54 @@ housekeep itself.
 
 */
 
-µb.tabContextManager = (function() {
-    var tabContexts = new Map();
+µBlock.tabContextManager = (( ) => {
+    const µb = µBlock;
+    const tabContexts = new Map();
 
     // https://github.com/chrisaljoudi/uBlock/issues/1001
     // This is to be used as last-resort fallback in case a tab is found to not
     // be bound while network requests are fired for the tab.
-    var mostRecentRootDocURL = '';
-    var mostRecentRootDocURLTimestamp = 0;
+    let mostRecentRootDocURL = '';
+    let mostRecentRootDocURLTimestamp = 0;
 
-    var popupCandidates = new Map();
+    const popupCandidates = new Map();
 
-    var PopupCandidate = function(targetTabId, openerTabId) {
-        this.targetTabId = targetTabId;
-        this.opener = {
-            tabId: openerTabId,
-            popunder: false,
-            trustedURL: openerTabId === µb.mouseEventRegister.tabId ?
-                µb.mouseEventRegister.url :
-                ''
-        };
-        this.selfDestructionTimer = null;
-        this.launchSelfDestruction();
-    };
-
-    PopupCandidate.prototype.destroy = function() {
-        if ( this.selfDestructionTimer !== null ) {
-            clearTimeout(this.selfDestructionTimer);
+    const PopupCandidate = class {
+        constructor(targetTabId, openerTabId) {
+            this.targetTabId = targetTabId;
+            this.opener = {
+                tabId: openerTabId,
+                popunder: false,
+                trustedURL: openerTabId === µb.mouseEventRegister.tabId
+                    ? µb.mouseEventRegister.url
+                    : ''
+            };
+            this.selfDestructionTimer = null;
+            this.launchSelfDestruction();
         }
-        popupCandidates.delete(this.targetTabId);
-    };
 
-    PopupCandidate.prototype.launchSelfDestruction = function() {
-        if ( this.selfDestructionTimer !== null ) {
-            clearTimeout(this.selfDestructionTimer);
+        destroy() {
+            if ( this.selfDestructionTimer !== null ) {
+                clearTimeout(this.selfDestructionTimer);
+            }
+            popupCandidates.delete(this.targetTabId);
         }
-        this.selfDestructionTimer = vAPI.setTimeout(this.destroy.bind(this), 10000);
+
+        launchSelfDestruction() {
+            if ( this.selfDestructionTimer !== null ) {
+                clearTimeout(this.selfDestructionTimer);
+            }
+            this.selfDestructionTimer = vAPI.setTimeout(
+                ( ) => this.destroy(),
+                10000
+            );
+        }
     };
 
-    var popupCandidateTest = function(targetTabId) {
-        for ( var entry of popupCandidates ) {
-            var tabId = entry[0];
-            var candidate = entry[1];
+    const popupCandidateTest = function(targetTabId) {
+        for ( const entry of popupCandidates ) {
+            const tabId = entry[0];
+            const candidate = entry[1];
             if (
                 targetTabId !== tabId &&
                 targetTabId !== candidate.opener.tabId
@@ -190,7 +184,7 @@ housekeep itself.
     };
 
     vAPI.tabs.onPopupCreated = function(targetTabId, openerTabId) {
-        var popup = popupCandidates.get(targetTabId);
+        const popup = popupCandidates.get(targetTabId);
         if ( popup === undefined ) {
             popupCandidates.set(
                 targetTabId,
@@ -200,17 +194,17 @@ housekeep itself.
         popupCandidateTest(targetTabId);
     };
 
-    var gcPeriod = 10 * 60 * 1000;
+    const gcPeriod = 10 * 60 * 1000;
 
     // A pushed entry is removed from the stack unless it is committed with
     // a set time.
-    var StackEntry = function(url, commit) {
+    const StackEntry = function(url, commit) {
         this.url = url;
         this.committed = commit;
         this.tstamp = Date.now();
     };
 
-    var TabContext = function(tabId) {
+    const TabContext = function(tabId) {
         this.tabId = tabId;
         this.stack = [];
         this.rawURL =
@@ -238,16 +232,14 @@ housekeep itself.
 
     TabContext.prototype.onTab = function(tab) {
         if ( tab ) {
-            this.gcTimer = vAPI.setTimeout(this.onGC.bind(this), gcPeriod);
+            this.gcTimer = vAPI.setTimeout(( ) => this.onGC(), gcPeriod);
         } else {
             this.destroy();
         }
     };
 
     TabContext.prototype.onGC = function() {
-        if ( vAPI.isBehindTheSceneTabId(this.tabId) ) {
-            return;
-        }
+        if ( vAPI.isBehindTheSceneTabId(this.tabId) ) { return; }
         // https://github.com/gorhill/uBlock/issues/1713
         // For unknown reasons, Firefox's setTimeout() will sometimes
         // causes the callback function to be called immediately, bypassing
@@ -258,7 +250,7 @@ housekeep itself.
         }
         this.onGCBarrier = true;
         this.gcTimer = null;
-        vAPI.tabs.get(this.tabId, this.onTab.bind(this));
+        vAPI.tabs.get(this.tabId, tab => { this.onTab(tab); });
         this.onGCBarrier = false;
     };
 
@@ -271,11 +263,9 @@ housekeep itself.
         }
         this.commitTimer = null;
         // Remove uncommitted entries at the top of the stack.
-        var i = this.stack.length;
+        let i = this.stack.length;
         while ( i-- ) {
-            if ( this.stack[i].committed ) {
-                break;
-            }
+            if ( this.stack[i].committed ) { break; }
         }
         // https://github.com/gorhill/uBlock/issues/300
         // If no committed entry was found, fall back on the bottom-most one
@@ -295,10 +285,8 @@ housekeep itself.
     // contexts, as the behind-the-scene context is permanent -- so we do not
     // want to flush it.
     TabContext.prototype.autodestroy = function() {
-        if ( vAPI.isBehindTheSceneTabId(this.tabId) ) {
-            return;
-        }
-        this.gcTimer = vAPI.setTimeout(this.onGC.bind(this), gcPeriod);
+        if ( vAPI.isBehindTheSceneTabId(this.tabId) ) { return; }
+        this.gcTimer = vAPI.setTimeout(( ) => this.onGC(), gcPeriod);
     };
 
     // Update just force all properties to be updated to match the most recent
@@ -313,7 +301,7 @@ housekeep itself.
             this.rootDomain = '';
             return;
         }
-        var stackEntry = this.stack[this.stack.length - 1];
+        const stackEntry = this.stack[this.stack.length - 1];
         this.rawURL = stackEntry.url;
         this.normalURL = µb.normalizePageURL(this.tabId, this.rawURL);
         this.origin = µb.URI.originFromURI(this.normalURL);
@@ -328,7 +316,7 @@ housekeep itself.
         if ( vAPI.isBehindTheSceneTabId(this.tabId) ) {
             return;
         }
-        var count = this.stack.length;
+        const count = this.stack.length;
         if ( count !== 0 && this.stack[count - 1].url === url ) {
             return;
         }
@@ -338,7 +326,7 @@ housekeep itself.
         if ( this.commitTimer !== null ) {
             clearTimeout(this.commitTimer);
         }
-        this.commitTimer = vAPI.setTimeout(this.onCommit.bind(this), 500);
+        this.commitTimer = vAPI.setTimeout(( ) => this.onCommit(), 500);
     };
 
     // This tells that the url is definitely the one to be associated with the
@@ -347,10 +335,8 @@ housekeep itself.
     TabContext.prototype.commit = function(url) {
         if ( vAPI.isBehindTheSceneTabId(this.tabId) ) { return; }
         if ( this.stack.length !== 0 ) {
-            var top = this.stack[this.stack.length - 1];
-            if ( top.url === url && top.committed ) {
-                return false;
-            }
+            const top = this.stack[this.stack.length - 1];
+            if ( top.url === url && top.committed ) { return false; }
         }
         this.stack = [new StackEntry(url, true)];
         this.update();
@@ -364,7 +350,11 @@ housekeep itself.
         // https://github.com/chrisaljoudi/uBlock/issues/1078
         // Use both the raw and normalized URLs.
         this.netFiltering = µb.getNetFilteringSwitch(this.normalURL);
-        if ( this.netFiltering && this.rawURL !== this.normalURL && this.rawURL !== '' ) {
+        if (
+            this.netFiltering &&
+            this.rawURL !== this.normalURL &&
+            this.rawURL !== ''
+        ) {
             this.netFiltering = µb.getNetFilteringSwitch(this.rawURL);
         }
         this.netFilteringReadTime = Date.now();
@@ -373,8 +363,8 @@ housekeep itself.
 
     // These are to be used for the API of the tab context manager.
 
-    var push = function(tabId, url) {
-        var entry = tabContexts.get(tabId);
+    const push = function(tabId, url) {
+        let entry = tabContexts.get(tabId);
         if ( entry === undefined ) {
             entry = new TabContext(tabId);
             entry.autodestroy();
@@ -386,14 +376,14 @@ housekeep itself.
     };
 
     // Find a tab context for a specific tab.
-    var lookup = function(tabId) {
+    const lookup = function(tabId) {
         return tabContexts.get(tabId) || null;
     };
 
     // Find a tab context for a specific tab. If none is found, attempt to
     // fix this. When all fail, the behind-the-scene context is returned.
-    var mustLookup = function(tabId) {
-        var entry = tabContexts.get(tabId);
+    const mustLookup = function(tabId) {
+        const entry = tabContexts.get(tabId);
         if ( entry !== undefined ) {
             return entry;
         }
@@ -401,7 +391,10 @@ housekeep itself.
         // Google Hangout popup opens without a root frame. So for now we will
         // just discard that best-guess root frame if it is too far in the
         // future, at which point it ceases to be a "best guess".
-        if ( mostRecentRootDocURL !== '' && mostRecentRootDocURLTimestamp + 500 < Date.now() ) {
+        if (
+            mostRecentRootDocURL !== '' &&
+            mostRecentRootDocURLTimestamp + 500 < Date.now()
+        ) {
             mostRecentRootDocURL = '';
         }
         // https://github.com/chrisaljoudi/uBlock/issues/1001
@@ -423,8 +416,8 @@ housekeep itself.
 
     // https://github.com/gorhill/uBlock/issues/1735
     //   Filter for popups if actually committing.
-    var commit = function(tabId, url) {
-        var entry = tabContexts.get(tabId);
+    const commit = function(tabId, url) {
+        let entry = tabContexts.get(tabId);
         if ( entry === undefined ) {
             entry = push(tabId, url);
         } else if ( entry.commit(url) ) {
@@ -433,12 +426,12 @@ housekeep itself.
         return entry;
     };
 
-    var exists = function(tabId) {
+    const exists = function(tabId) {
         return tabContexts.get(tabId) !== undefined;
     };
 
     // Behind-the-scene tab context
-    (function() {
+    {
         const entry = new TabContext(vAPI.noTabId);
         entry.stack.push(new StackEntry('', true));
         entry.rawURL = '';
@@ -446,30 +439,32 @@ housekeep itself.
         entry.origin = µb.URI.originFromURI(entry.normalURL);
         entry.rootHostname = µb.URI.hostnameFromURI(entry.origin);
         entry.rootDomain = µb.URI.domainFromHostname(entry.rootHostname);
-    })();
+    }
 
     // Context object, typically to be used to feed filtering engines.
-    var contextJunkyard = [];
-    var Context = function(tabId) {
-        this.init(tabId);
-    };
-    Context.prototype.init = function(tabId) {
-        var tabContext = lookup(tabId);
-        this.rootHostname = tabContext.rootHostname;
-        this.rootDomain = tabContext.rootDomain;
-        this.pageHostname =
-        this.pageDomain =
-        this.requestURL =
-        this.origin =
-        this.requestHostname =
-        this.requestDomain = '';
-        return this;
-    };
-    Context.prototype.dispose = function() {
-        contextJunkyard.push(this);
+    const contextJunkyard = [];
+    const Context = class {
+        constructor(tabId) {
+            this.init(tabId);
+        }
+        init(tabId) {
+            const tabContext = lookup(tabId);
+            this.rootHostname = tabContext.rootHostname;
+            this.rootDomain = tabContext.rootDomain;
+            this.pageHostname =
+            this.pageDomain =
+            this.requestURL =
+            this.origin =
+            this.requestHostname =
+            this.requestDomain = '';
+            return this;
+        }
+        dispose() {
+            contextJunkyard.push(this);
+        }
     };
 
-    var createContext = function(tabId) {
+    const createContext = function(tabId) {
         if ( contextJunkyard.length ) {
             return contextJunkyard.pop().init(tabId);
         }
@@ -493,6 +488,7 @@ housekeep itself.
 // content has changed.
 
 vAPI.tabs.onNavigation = function(details) {
+    const µb = µBlock;
     if ( details.frameId === 0 ) {
         µb.tabContextManager.commit(details.tabId, details.url);
         let pageStore = µb.bindTabToPageStats(details.tabId, 'tabCommitted');
@@ -517,16 +513,16 @@ vAPI.tabs.onNavigation = function(details) {
 vAPI.tabs.onUpdated = function(tabId, changeInfo, tab) {
     if ( !tab.url || tab.url === '' ) { return; }
     if ( !changeInfo.url ) { return; }
-    µb.tabContextManager.commit(tabId, changeInfo.url);
-    µb.bindTabToPageStats(tabId, 'tabUpdated');
+    µBlock.tabContextManager.commit(tabId, changeInfo.url);
+    µBlock.bindTabToPageStats(tabId, 'tabUpdated');
 };
 
 /******************************************************************************/
 
 vAPI.tabs.onClosed = function(tabId) {
     if (  vAPI.isBehindTheSceneTabId(tabId) ) { return; }
-    µb.unbindTabFromPageStats(tabId);
-    µb.contextMenu.update();
+    µBlock.unbindTabFromPageStats(tabId);
+    µBlock.contextMenu.update();
 };
 
 /******************************************************************************/
@@ -553,7 +549,8 @@ vAPI.tabs.onClosed = function(tabId) {
 // c: close opener
 // d: close target
 
-vAPI.tabs.onPopupUpdated = (function() {
+vAPI.tabs.onPopupUpdated = (( ) => {
+    const µb = µBlock;
     // The same context object will be reused everytime. This also allows to
     // remember whether a popup or popunder was matched.
     const fctxt = µBlock.filteringContext.setFilter(undefined);
@@ -839,17 +836,17 @@ vAPI.tabs.registerListeners();
 
 // Create an entry for the tab if it doesn't exist.
 
-µb.bindTabToPageStats = function(tabId, context) {
+µBlock.bindTabToPageStats = function(tabId, context) {
     this.updateToolbarIcon(tabId, 0x03);
 
     // Do not create a page store for URLs which are of no interests
-    if ( µb.tabContextManager.exists(tabId) === false ) {
+    if ( this.tabContextManager.exists(tabId) === false ) {
         this.unbindTabFromPageStats(tabId);
         return null;
     }
 
     // Reuse page store if one exists: this allows to guess if a tab is a popup
-    var pageStore = this.pageStores.get(tabId);
+    let pageStore = this.pageStores.get(tabId);
 
     // Tab is not bound
     if ( pageStore === undefined ) {
@@ -885,45 +882,59 @@ vAPI.tabs.registerListeners();
 
 /******************************************************************************/
 
-µb.unbindTabFromPageStats = function(tabId) {
+µBlock.unbindTabFromPageStats = function(tabId) {
     //console.debug('µBlock> unbindTabFromPageStats(%d)', tabId);
-    var pageStore = this.pageStores.get(tabId);
-    if ( pageStore !== undefined ) {
-        pageStore.dispose();
-        this.pageStores.delete(tabId);
-        this.pageStoresToken = Date.now();
-    }
+    const pageStore = this.pageStores.get(tabId);
+    if ( pageStore === undefined ) { return; }
+    pageStore.dispose();
+    this.pageStores.delete(tabId);
+    this.pageStoresToken = Date.now();
 };
 
 /******************************************************************************/
 
-µb.pageStoreFromTabId = function(tabId) {
+µBlock.pageStoreFromTabId = function(tabId) {
     return this.pageStores.get(tabId) || null;
 };
 
-µb.mustPageStoreFromTabId = function(tabId) {
+µBlock.mustPageStoreFromTabId = function(tabId) {
     return this.pageStores.get(tabId) || this.pageStores.get(vAPI.noTabId);
 };
 
 /******************************************************************************/
 
 // Permanent page store for behind-the-scene requests. Must never be removed.
+//
+// https://github.com/uBlockOrigin/uBlock-issues/issues/651
+//   The whitelist status of the tabless page store will be determined by
+//   the document context (if present) of the network request.
 
-(function() {
-    const pageStore = µb.PageStore.factory(vAPI.noTabId);
-    µb.pageStores.set(pageStore.tabId, pageStore);
+{
+    const NoPageStore = class extends µBlock.PageStore {
+        getNetFilteringSwitch(fctxt) {
+            if ( fctxt.docId === 0 ) {
+                const docOrigin = fctxt.getDocOrigin();
+                if ( docOrigin ) {
+                    return µBlock.getNetFilteringSwitch(docOrigin);
+                }
+            }
+            return super.getNetFilteringSwitch();
+        }
+    };
+    const pageStore = new NoPageStore(vAPI.noTabId);
+    µBlock.pageStores.set(pageStore.tabId, pageStore);
     pageStore.title = vAPI.i18n('logBehindTheScene');
-})();
+}
 
 /******************************************************************************/
 
 // Update visual of extension icon.
 
-µb.updateToolbarIcon = (function() {
-    let tabIdToDetails = new Map();
+µBlock.updateToolbarIcon = (( ) => {
+    const tabIdToDetails = new Map();
 
-    let updateBadge = function(tabId) {
-        let parts = tabIdToDetails.get(tabId);
+    const updateBadge = function(tabId) {
+        const parts = tabIdToDetails.get(tabId);
         tabIdToDetails.delete(tabId);
 
         let state = 0;
@@ -963,24 +974,24 @@ vAPI.tabs.registerListeners();
 
 /******************************************************************************/
 
-µb.updateTitle = (function() {
-    var tabIdToTimer = new Map();
-    var delay = 499;
+µBlock.updateTitle = (( ) => {
+    const tabIdToTimer = new Map();
+    const delay = 499;
 
-    var tryAgain = function(entry) {
+    const tryAgain = function(entry) {
         if ( entry.count === 1 ) { return false; }
         entry.count -= 1;
         tabIdToTimer.set(
             entry.tabId,
-            vAPI.setTimeout(updateTitle.bind(null, entry), delay)
+            vAPI.setTimeout(( ) => { updateTitle(entry); }, delay)
         );
         return true;
     };
 
-    var onTabReady = function(entry, tab) {
+    const onTabReady = function(entry, tab) {
         if ( !tab ) { return; }
-        var µb = µBlock;
-        var pageStore = µb.pageStoreFromTabId(entry.tabId);
+        const µb = µBlock;
+        const pageStore = µb.pageStoreFromTabId(entry.tabId);
         if ( pageStore === null ) { return; }
         // Firefox needs this: if you detach a tab, the new tab won't have
         // its rawURL set. Concretely, this causes the logger to report an
@@ -991,21 +1002,21 @@ vAPI.tabs.registerListeners();
         if ( !tab.title && tryAgain(entry) ) { return; }
         // https://github.com/gorhill/uMatrix/issues/225
         // Sometimes title changes while page is loading.
-        var settled = tab.title && tab.title === pageStore.title;
+        const settled = tab.title && tab.title === pageStore.title;
         pageStore.title = tab.title || tab.url || '';
         if ( !settled ) {
             tryAgain(entry);
         }
     };
 
-    var updateTitle = function(entry) {
+    const updateTitle = function(entry) {
         tabIdToTimer.delete(entry.tabId);
         vAPI.tabs.get(entry.tabId, onTabReady.bind(null, entry));
     };
 
     return function(tabId) {
         if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
-        var timer = tabIdToTimer.get(tabId);
+        const timer = tabIdToTimer.get(tabId);
         if ( timer !== undefined ) {
             clearTimeout(timer);
         }
@@ -1021,41 +1032,40 @@ vAPI.tabs.registerListeners();
 
 /******************************************************************************/
 
-// Stale page store entries janitor
 // https://github.com/chrisaljoudi/uBlock/issues/455
+//   Stale page store entries janitor
 
-var pageStoreJanitorPeriod = 15 * 60 * 1000;
-var pageStoreJanitorSampleAt = 0;
-var pageStoreJanitorSampleSize = 10;
+{
+    const pageStoreJanitorPeriod = 15 * 60 * 1000;
+    let pageStoreJanitorSampleAt = 0;
+    let pageStoreJanitorSampleSize = 10;
 
-var pageStoreJanitor = function() {
-    var vapiTabs = vAPI.tabs;
-    var tabIds = Array.from(µb.pageStores.keys()).sort();
-    var checkTab = function(tabId) {
-        vapiTabs.get(tabId, function(tab) {
-            if ( !tab ) {
-                µb.unbindTabFromPageStats(tabId);
-            }
-        });
+    const pageStoreJanitor = function() {
+        const tabIds = Array.from(µBlock.pageStores.keys()).sort();
+        const checkTab = tabId => {
+            vAPI.tabs.get(tabId, tab => {
+                if ( tab ) { return; }
+                µBlock.unbindTabFromPageStats(tabId);
+            });
+        };
+        if ( pageStoreJanitorSampleAt >= tabIds.length ) {
+            pageStoreJanitorSampleAt = 0;
+        }
+        const n = Math.min(
+            pageStoreJanitorSampleAt + pageStoreJanitorSampleSize,
+            tabIds.length
+        );
+        for ( let i = pageStoreJanitorSampleAt; i < n; i++ ) {
+            const tabId = tabIds[i];
+            if ( vAPI.isBehindTheSceneTabId(tabId) ) { continue; }
+            checkTab(tabId);
+        }
+        pageStoreJanitorSampleAt = n;
+
+        vAPI.setTimeout(pageStoreJanitor, pageStoreJanitorPeriod);
     };
-    if ( pageStoreJanitorSampleAt >= tabIds.length ) {
-        pageStoreJanitorSampleAt = 0;
-    }
-    var n = Math.min(pageStoreJanitorSampleAt + pageStoreJanitorSampleSize, tabIds.length);
-    for ( var i = pageStoreJanitorSampleAt; i < n; i++ ) {
-        var tabId = tabIds[i];
-        if ( vAPI.isBehindTheSceneTabId(tabId) ) { continue; }
-        checkTab(tabId);
-    }
-    pageStoreJanitorSampleAt = n;
 
     vAPI.setTimeout(pageStoreJanitor, pageStoreJanitorPeriod);
-};
-
-vAPI.setTimeout(pageStoreJanitor, pageStoreJanitorPeriod);
-
-/******************************************************************************/
-
-})();
+}
 
 /******************************************************************************/
