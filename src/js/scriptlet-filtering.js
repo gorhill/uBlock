@@ -171,22 +171,23 @@
         };
     })();
 
-    const normalizeRawToken = function(raw) {
-        let rawEnd = raw.length;
-        let end = raw.indexOf(',');
+    const normalizeRawFilter = function(rawFilter) {
+        let rawToken = rawFilter.slice(4, -1);
+        let rawEnd = rawToken.length;
+        let end = rawToken.indexOf(',');
         if ( end === -1 ) {
             end = rawEnd;
         }
-        let token = raw.slice(0, end).trim();
+        let token = rawToken.slice(0, end).trim();
         let normalized = token.endsWith('.js') ? token.slice(0, -3) : token;
         let beg = end + 1;
         while ( beg < rawEnd ) {
-            end = raw.indexOf(',', beg);
+            end = rawToken.indexOf(',', beg);
             if ( end === -1 ) { end = rawEnd; }
-            normalized += ', ' + raw.slice(beg, end).trim();
+            normalized += ', ' + rawToken.slice(beg, end).trim();
             beg = end + 1;
         }
-        return normalized;
+        return `+js(${normalized})`;
     };
 
     const lookupScriptlet = function(rawToken, reng, toInject) {
@@ -270,7 +271,7 @@
         writer.select(1001);
 
         // Only exception filters are allowed to be global.
-        const normalized = normalizeRawToken(parsed.suffix);
+        const normalized = normalizeRawFilter(parsed.suffix);
 
         if ( parsed.hostnames.length === 0 ) {
             if ( parsed.exception ) {
