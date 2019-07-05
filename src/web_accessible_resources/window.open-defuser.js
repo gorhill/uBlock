@@ -22,7 +22,7 @@
 (function() {
     'use strict';
     let result = parseInt('{{1}}', 10);
-    result = isNaN(result) || result !== 0;
+    result = isNaN(result) === false && result === 0;
     let needle = '{{2}}';
     if ( needle === '' || needle === '{{2}}' ) {
         needle = '.?';
