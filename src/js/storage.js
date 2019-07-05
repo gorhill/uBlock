@@ -197,14 +197,23 @@
 // through the vAPI.localStorage. Add/remove settings as needed.
 
 µBlock.saveImmediateHiddenSettings = function() {
-    vAPI.localStorage.setItem(
-        'immediateHiddenSettings',
-        JSON.stringify({
-                  consoleLogLevel: this.hiddenSettings.consoleLogLevel,
-               disableWebAssembly: this.hiddenSettings.disableWebAssembly,
-            suspendTabsUntilReady: this.hiddenSettings.suspendTabsUntilReady,
-        })
-    );
+    const props = [
+        'consoleLogLevel',
+        'disableWebAssembly',
+        'suspendTabsUntilReady',
+    ];
+    const toSave = {};
+    for ( const prop of props ) {
+        if ( this.hiddenSettings[prop] !== this.hiddenSettingsDefault[prop] ) {
+            toSave[prop] = this.hiddenSettings[prop];
+        }
+    }
+    if ( Object.keys(toSave).length !== 0 ) {
+        vAPI.localStorage.setItem(
+            'immediateHiddenSettings', JSON.stringify(toSave));
+    } else {
+        vAPI.localStorage.removeItem('immediateHiddenSettings');
+    }
 };
 
 /******************************************************************************/
