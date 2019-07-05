@@ -170,23 +170,45 @@
             }
         };
     })();
-    
+
+    const normalizeRawToken = function(raw) {
+        let rawEnd = raw.length;
+        let end = raw.indexOf(',');
+        if ( end === -1 ) {
+            end = rawEnd;
+        }
+        let token = raw.slice(0, end).trim();
+        let normalized = token.endsWith('.js') ? token.slice(0, -3) : token;
+        let beg = end + 1;
+        while ( beg < rawEnd ) {
+            end = raw.indexOf(',', beg);
+            if ( end === -1 ) { end = rawEnd; }
+            normalized += ', ' + raw.slice(beg, end).trim();
+            beg = end + 1;
+        }
+        return normalized;
+    };
+
     const lookupScriptlet = function(raw, reng, toInject) {
-        if ( toInject.has(raw) ) { return; }
+        const normalized = normalizeRawToken(raw);
+        if ( toInject.has(normalized) ) { return; }
         if ( scriptletCache.resetTime < reng.modifyTime ) {
             scriptletCache.reset();
         }
-        let content = scriptletCache.lookup(raw);
+        let content = scriptletCache.lookup(normalized);
         if ( content === undefined ) {
-            const pos = raw.indexOf(',');
+            const pos = normalized.indexOf(',');
             let token, args;
             if ( pos === -1 ) {
-                token = raw;
+                token = normalized;
             } else {
-                token = raw.slice(0, pos).trim();
-                args = raw.slice(pos + 1).trim();
+                token = normalized.slice(0, pos).trim();
+                args = normalized.slice(pos + 1).trim();
             }
-            content = reng.resourceContentFromName(token, 'application/javascript');
+            content = reng.resourceContentFromName(
+                `${token}.js`,
+                'application/javascript'
+            );
             if ( !content ) { return; }
             if ( args ) {
                 content = patchScriptlet(content, args);
@@ -196,9 +218,9 @@
                 'try {\n' +
                     content + '\n' +
                 '} catch ( e ) { }';
-            scriptletCache.add(raw, content);
+            scriptletCache.add(normalized, content);
         }
-        toInject.set(raw, content);
+        toInject.set(normalized, content);
     };
 
     // Fill template placeholders. Return falsy if:
@@ -332,22 +354,29 @@
             );
         }
 
-        for ( const token of scriptlets ) {
-            lookupScriptlet(token, reng, scriptletsRegister);
+        for ( const rawToken of scriptlets ) {
+            lookupScriptlet(rawToken, reng, scriptletsRegister);
         }
 
         if ( scriptletsRegister.size === 0 ) { return; }
 
-        // Return an array of scriptlets, and log results if needed. 
+        // Normalize dictionary of exceptions
+        // TODO: Eventually remove this code when normalied token usage is
+        //       widespread and it can safely becomes the only valid syntax.
+        for ( const rawToken of exceptions ) {
+            exceptions.add(normalizeRawToken(rawToken));
+        }
+
+        // Return an array of scriptlets, and log results if needed.
         const out = [];
         const loggerEnabled = µb.logger.enabled;
-        for ( const [ token, code ] of scriptletsRegister ) {
-            const isException = exceptionsRegister.has(token);
+        for ( const [ normalized, code ] of scriptletsRegister ) {
+            const isException = exceptions.has(normalized);
             if ( isException === false ) {
                 out.push(code);
             }
             if ( loggerEnabled ) {
-                logOne(isException, token, request);
+                logOne(isException, normalized, request);
             }
         }
 
