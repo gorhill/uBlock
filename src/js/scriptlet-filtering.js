@@ -189,21 +189,20 @@
         return normalized;
     };
 
-    const lookupScriptlet = function(raw, reng, toInject) {
-        const normalized = normalizeRawToken(raw);
-        if ( toInject.has(normalized) ) { return; }
+    const lookupScriptlet = function(rawToken, reng, toInject) {
+        if ( toInject.has(rawToken) ) { return; }
         if ( scriptletCache.resetTime < reng.modifyTime ) {
             scriptletCache.reset();
         }
-        let content = scriptletCache.lookup(normalized);
+        let content = scriptletCache.lookup(rawToken);
         if ( content === undefined ) {
-            const pos = normalized.indexOf(',');
+            const pos = rawToken.indexOf(',');
             let token, args;
             if ( pos === -1 ) {
-                token = normalized;
+                token = rawToken;
             } else {
-                token = normalized.slice(0, pos).trim();
-                args = normalized.slice(pos + 1).trim();
+                token = rawToken.slice(0, pos).trim();
+                args = rawToken.slice(pos + 1).trim();
             }
             content = reng.resourceContentFromName(
                 `${token}.js`,
@@ -218,9 +217,9 @@
                 'try {\n' +
                     content + '\n' +
                 '} catch ( e ) { }';
-            scriptletCache.add(normalized, content);
+            scriptletCache.add(rawToken, content);
         }
-        toInject.set(normalized, content);
+        toInject.set(rawToken, content);
     };
 
     // Fill template placeholders. Return falsy if:
@@ -271,10 +270,11 @@
         writer.select(1001);
 
         // Only exception filters are allowed to be global.
+        const normalized = normalizeRawToken(parsed.suffix);
 
         if ( parsed.hostnames.length === 0 ) {
             if ( parsed.exception ) {
-                writer.push([ 32, '', 1, parsed.suffix ]);
+                writer.push([ 32, '', 1, normalized ]);
             }
             return;
         }
@@ -295,7 +295,7 @@
             } else if ( negated ) {
                 kind |= 1;
             }
-            writer.push([ 32, hn, kind, parsed.suffix ]);
+            writer.push([ 32, hn, kind, normalized ]);
         }
     };
 
@@ -360,23 +360,16 @@
 
         if ( scriptletsRegister.size === 0 ) { return; }
 
-        // Normalize dictionary of exceptions
-        // TODO: Eventually remove this code when normalized token usage is
-        //       widespread and it can safely becomes the only valid syntax.
-        for ( const rawToken of exceptions ) {
-            exceptions.add(normalizeRawToken(rawToken));
-        }
-
         // Return an array of scriptlets, and log results if needed.
         const out = [];
         const loggerEnabled = µb.logger.enabled;
-        for ( const [ normalized, code ] of scriptletsRegister ) {
-            const isException = exceptions.has(normalized);
+        for ( const [ rawToken, code ] of scriptletsRegister ) {
+            const isException = exceptions.has(rawToken);
             if ( isException === false ) {
                 out.push(code);
             }
             if ( loggerEnabled ) {
-                logOne(isException, normalized, request);
+                logOne(isException, rawToken, request);
             }
         }
 
