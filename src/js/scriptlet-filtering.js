@@ -361,7 +361,7 @@
         if ( scriptletsRegister.size === 0 ) { return; }
 
         // Normalize dictionary of exceptions
-        // TODO: Eventually remove this code when normalied token usage is
+        // TODO: Eventually remove this code when normalized token usage is
         //       widespread and it can safely becomes the only valid syntax.
         for ( const rawToken of exceptions ) {
             exceptions.add(normalizeRawToken(rawToken));
