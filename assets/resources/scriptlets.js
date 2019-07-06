@@ -684,7 +684,7 @@
 
 
 // https://github.com/uBlockOrigin/uAssets/issues/58
-/// gpt-defuser.js application/javascript
+/// gpt-defuser.js
 (function() {
     'use strict';
     const noopfn = function() {
