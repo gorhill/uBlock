@@ -557,11 +557,11 @@ body[dir="rtl"] #modalOverlay > div > div:nth-of-type(2) {
     text-align: center;
     }
 #netFilteringDialog > .preview > * {
-    background-color: white;
     max-width: 100%;
     max-height: 20vh;
     }
 #netFilteringDialog > .preview > span {
+    background-color: white;
     cursor: pointer;
     padding: 0.5em;
     }
