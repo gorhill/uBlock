@@ -268,7 +268,7 @@
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
-    "message": "當適用時改進右鍵選單",
+    "message": "使用階層式內容功能表",
     "description": "English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt": {
