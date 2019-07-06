@@ -28,7 +28,7 @@
 /******************************************************************************/
 /******************************************************************************/
 
-const immutableResources = new Map([
+const redirectableResources = new Map([
     [ '1x1.gif', {
         alias: '1x1-transparent.gif',
         inject: false
@@ -44,26 +44,6 @@ const immutableResources = new Map([
     [ '32x32.png', {
         alias: '32x32-transparent.png',
         inject: false
-    } ],
-    [ 'abort-current-inline-script.js', {
-        alias: 'acis.js',
-        redirect: false
-    } ],
-    [ 'abort-on-property-read.js', {
-        alias: 'aopr.js',
-        redirect: false
-    } ],
-    [ 'abort-on-property-write.js', {
-        alias: 'aopw.js',
-        redirect: false
-    } ],
-    [ 'addEventListener-defuser.js', {
-        alias: 'aeld.js',
-        redirect: false
-    } ],
-    [ 'addEventListener-logger.js', {
-        alias: 'aell.js',
-        redirect: false
     } ],
     [ 'addthis_widget.js', {
         alias: 'addthis.com/addthis_widget.js',
@@ -138,18 +118,7 @@ const immutableResources = new Map([
         alias: 'd3pkae9owd2lcf.cloudfront.net/mb105.js',
         inject: false
     } ],
-    [ 'nano-setInterval-booster.js', {
-        alias: 'nano-sib.js',
-        redirect: false
-    } ],
-    [ 'nano-setTimeout-booster.js', {
-        alias: 'nano-stb.js',
-        redirect: false
-    } ],
     [ 'noeval.js', {
-    } ],
-    [ 'noeval-if.js', {
-        redirect: false
     } ],
     [ 'noeval-silent.js', {
         alias: 'silent-noeval.js',
@@ -182,35 +151,9 @@ const immutableResources = new Map([
     [ 'popads-dummy.js', {
         alias: 'popads-dummy.js',
     } ],
-    [ 'remove-attr.js', {
-        alias: 'ra.js',
-        redirect: false
-    } ],
     [ 'scorecardresearch_beacon.js', {
         alias: 'scorecardresearch.com/beacon.js',
         inject: false
-    } ],
-    [ 'set-constant.js', {
-        redirect: false
-    } ],
-    [ 'setInterval-defuser.js', {
-        alias: 'sid.js',
-        redirect: false
-    } ],
-    [ 'setInterval-logger.js', {
-        alias: 'sil.js',
-        redirect: false
-    } ],
-    [ 'setTimeout-defuser.js', {
-        alias: 'std.js',
-        redirect: false
-    } ],
-    [ 'setTimeout-logger.js', {
-        alias: 'stl.js',
-        redirect: false
-    } ],
-    [ 'webrtc-if.js', {
-        redirect: false
     } ],
     [ 'window.open-defuser.js', {
     } ],
@@ -224,6 +167,13 @@ const mimeMap = {
      mp4: 'video/mp4',
      png: 'image/png',
      txt: 'text/plain',
+};
+
+const mimeFromName = function(name) {
+    const match = /\.([^.]+)$/.exec(name);
+    if ( match !== null ) {
+        return mimeMap[match[1]];
+    }
 };
 
 // https://github.com/gorhill/uBlock/issues/3639
@@ -278,8 +228,8 @@ RedirectEntry.prototype.toURL = function(fctxt) {
 
 RedirectEntry.prototype.toContent = function() {
     if ( this.data.startsWith('data:') ) {
-        var pos = this.data.indexOf(',');
-        var base64 = this.data.endsWith(';base64', pos);
+        const pos = this.data.indexOf(',');
+        const base64 = this.data.endsWith(';base64', pos);
         this.data = this.data.slice(pos + 1);
         if ( base64 ) {
             this.data = atob(this.data);
@@ -290,19 +240,17 @@ RedirectEntry.prototype.toContent = function() {
 
 /******************************************************************************/
 
-RedirectEntry.fromFields = function(mime, lines) {
+RedirectEntry.fromContent = function(mime, content) {
     const r = new RedirectEntry();
     r.mime = mime;
-    r.data = µBlock.orphanizeString(
-        lines.join(mime.indexOf(';') !== -1 ? '' : '\n')
-    );
+    r.data = content;
     return r;
 };
 
 /******************************************************************************/
 
 RedirectEntry.fromSelfie = function(selfie) {
-    var r = new RedirectEntry();
+    const r = new RedirectEntry();
     r.mime = selfie.mime;
     r.data = selfie.data;
     r.warURL = selfie.warURL;
@@ -313,6 +261,7 @@ RedirectEntry.fromSelfie = function(selfie) {
 /******************************************************************************/
 
 const RedirectEngine = function() {
+    this.aliases = new Map();
     this.resources = new Map();
     this.reset();
     this.resourceNameRegister = '';
@@ -337,7 +286,7 @@ RedirectEngine.prototype.freeze = function() {
 /******************************************************************************/
 
 RedirectEngine.prototype.toBroaderHostname = function(hostname) {
-    var pos = hostname.indexOf('.');
+    const pos = hostname.indexOf('.');
     if ( pos !== -1 ) {
         return hostname.slice(pos + 1);
     }
@@ -395,7 +344,7 @@ RedirectEngine.prototype.lookupToken = function(entries, reqURL) {
 RedirectEngine.prototype.toURL = function(fctxt) {
     let token = this.lookup(fctxt);
     if ( token === undefined ) { return; }
-    let entry = this.resources.get(token);
+    const entry = this.resources.get(this.aliases.get(token) || token);
     if ( entry !== undefined ) {
         return entry.toURL(fctxt);
     }
@@ -404,8 +353,9 @@ RedirectEngine.prototype.toURL = function(fctxt) {
 /******************************************************************************/
 
 RedirectEngine.prototype.matches = function(context) {
-    var token = this.lookup(context);
-    return token !== undefined && this.resources.has(token);
+    const token = this.lookup(context);
+    return token !== undefined &&
+           this.resources.has(this.aliases.get(token) || token);
 };
 
 /******************************************************************************/
@@ -414,14 +364,14 @@ RedirectEngine.prototype.addRule = function(src, des, type, pattern, redirect) {
     this.ruleSources.add(src);
     this.ruleDestinations.add(des);
     this.ruleTypes.add(type);
-    var key = src + ' ' + des + ' ' + type,
+    const key = `${src} ${des} ${type}`,
         entries = this.rules.get(key);
     if ( entries === undefined ) {
         this.rules.set(key, [ { tok: redirect, pat: pattern } ]);
         this.modifyTime = Date.now();
         return;
     }
-    var entry;
+    let entry;
     for ( var i = 0, n = entries.length; i < n; i++ ) {
         entry = entries[i];
         if ( redirect === entry.tok ) { break; }
@@ -430,12 +380,12 @@ RedirectEngine.prototype.addRule = function(src, des, type, pattern, redirect) {
         entries.push({ tok: redirect, pat: pattern });
         return;
     }
-    var p = entry.pat;
+    let p = entry.pat;
     if ( p instanceof RegExp ) {
         p = p.source;
     }
     // Duplicate?
-    var pos = p.indexOf(pattern);
+    let pos = p.indexOf(pattern);
     if ( pos !== -1 ) {
         if ( pos === 0 || p.charAt(pos - 1) === '|' ) {
             pos += pattern.length;
@@ -526,7 +476,7 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
     for ( const srchn of srchns ) {
         if ( srchn === '' ) { continue; }
         if ( srchn.startsWith('~') ) { continue; }
-        out.push(srchn + '\t' + deshn + '\t' + type + '\t' + pattern + '\t' + redirect);
+        out.push(`${srchn}\t${deshn}\t${type}\t${pattern}\t${redirect}`);
     }
 
     return out;
@@ -603,8 +553,11 @@ RedirectEngine.prototype.fromSelfie = function(path) {
 /******************************************************************************/
 
 RedirectEngine.prototype.resourceURIFromName = function(name, mime) {
-    var entry = this.resources.get(name);
-    if ( entry && (mime === undefined || entry.mime.startsWith(mime)) ) {
+    const entry = this.resources.get(this.aliases.get(name) || name);
+    if (
+        (entry !== undefined) &&
+        (mime === undefined || entry.mime.startsWith(mime))
+    ) {
         return entry.toURL();
     }
 };
@@ -612,15 +565,8 @@ RedirectEngine.prototype.resourceURIFromName = function(name, mime) {
 /******************************************************************************/
 
 RedirectEngine.prototype.resourceContentFromName = function(name, mime) {
-    var entry;
-    for (;;) {
-        entry = this.resources.get(name);
-        if ( entry === undefined ) { return; }
-        if ( entry.mime.startsWith('alias/') === false ) {
-            break;
-        }
-        name = entry.mime.slice(6);
-    }
+    const entry = this.resources.get(this.aliases.get(name) || name);
+    if ( entry === undefined ) { return; }
     if ( mime === undefined || entry.mime.startsWith(mime) ) {
         return entry.toContent();
     }
@@ -633,24 +579,38 @@ RedirectEngine.prototype.resourceContentFromName = function(name, mime) {
 // https://github.com/uBlockOrigin/uAssets/commit/deefe875551197d655f79cb540e62dfc17c95f42
 //   Consider 'none' a reserved keyword, to be used to disable redirection.
 
-RedirectEngine.prototype.resourcesFromString = function(
-    text,
-    override = true
-) {
-    const lineIter = new µBlock.LineIterator(text);
+RedirectEngine.prototype.resourcesFromString = function(text) {
+    const lineIter = new µBlock.LineIterator(removeTopCommentBlock(text));
     const reNonEmptyLine = /\S/;
-    let fields, encoded;
+    let fields, encoded, details;
 
     while ( lineIter.eot() === false ) {
         let line = lineIter.next();
         if ( line.startsWith('#') ) { continue; }
+        if ( line.startsWith('// ') ) { continue; }
 
         if ( fields === undefined ) {
-            let head = line.trim().split(/\s+/);
-            if ( head.length !== 2 ) { continue; }
-            if ( head[0] === 'none' ) { continue; }
-            encoded = head[1].indexOf(';') !== -1;
-            fields = head;
+            if ( line.startsWith('/// ') ) {
+                const name = line.slice(4).trim();
+                fields = [ name, mimeFromName(name) ];
+            } else {
+                const head = line.trim().split(/\s+/);
+                if ( head.length !== 2 ) { continue; }
+                if ( head[0] === 'none' ) { continue; }
+                encoded = head[1].indexOf(';') !== -1;
+                fields = head;
+            }
+            continue;
+        }
+
+        if ( line.startsWith('/// ') ) {
+            if ( details === undefined ) {
+                details = {};
+            }
+            const [ prop, value ] = line.slice(4).trim().split(/\s+/);
+            if ( value !== undefined ) {
+                details[prop] = value;
+            }
             continue;
         }
 
@@ -659,45 +619,62 @@ RedirectEngine.prototype.resourcesFromString = function(
             continue;
         }
 
+        const name = fields[0];
+        const mime = fields[1];
+        const content = µBlock.orphanizeString(
+            fields.slice(2).join(encoded ? '' : '\n')
+        );
+
         // No more data, add the resource.
-        if (
-            this.resources.has(fields[0]) === false ||
-            override !== false
-        ) {
-            this.resources.set(
-                fields[0],
-                RedirectEntry.fromFields(fields[1], fields.slice(2))
-            );
+        this.resources.set(
+            name,
+            RedirectEntry.fromContent(mime, content)
+        );
+
+        if ( details instanceof Object && details.alias ) {
+            this.aliases.set(details.alias, name);
         }
 
         fields = undefined;
+        details = undefined;
     }
 
     // Process pending resource data.
     if ( fields !== undefined ) {
-        this.resources.set(
-            fields[0],
-            RedirectEntry.fromFields(fields[1], fields.slice(2))
+        const name = fields[0];
+        const mime = fields[1];
+        const content = µBlock.orphanizeString(
+            fields.slice(2).join(encoded ? '' : '\n')
         );
+        this.resources.set(
+            name,
+            RedirectEntry.fromContent(mime, content)
+        );
+        if ( details instanceof Object && details.alias ) {
+            this.aliases.set(details.alias, name);
+        }
     }
 
     this.modifyTime = Date.now();
+};
+
+const removeTopCommentBlock = function(text) {
+    return text.replace(/^\/\*[\S\s]+?\n\*\/\s*/, '');
 };
 
 /******************************************************************************/
 
 RedirectEngine.prototype.loadBuiltinResources = function() {
     this.resources = new Map();
-    const mimeFromName = function(name) {
-        const match = /\.([^.]+)$/.exec(name);
-        if ( match !== null ) {
-            return mimeMap[match[1]];
-        }
-    };
+    this.aliases = new Map();
     const fetches = [
-        µBlock.assets.get('ublock-resources'),
+        µBlock.assets.fetchText('/assets/resources/scriptlets.js'),
     ];
-    for ( const [ name, details ] of immutableResources ) {
+
+    // TODO: remove once usage of uBO 1.20.4 is widespread.
+    µBlock.assets.remove('ublock-resources');
+
+    for ( const [ name, details ] of redirectableResources ) {
         if ( details.inject !== false ) {
             fetches.push(
                 µBlock.assets.fetchText(
@@ -712,48 +689,48 @@ RedirectEngine.prototype.loadBuiltinResources = function() {
         });
         this.resources.set(name, entry);
         if ( details.alias !== undefined ) {
-            this.resources.set(details.alias, entry);
+            this.aliases.set(details.alias, name);
         }
     }
+
     return Promise.all(fetches).then(results => {
-        // Immutable resources
+        // Built-in redirectable resources
         for ( let i = 1; i < results.length; i++ ) {
             const result = results[i];
             const match = /^\/web_accessible_resources\/([^?]+)/.exec(result.url);
             if ( match === null ) { continue; }
             const name = match[1];
-            const content = result.content.replace(/^\/\*[\S\s]+?\n\*\/\s*/, '');
-            const details = immutableResources.get(name);
+            const content = removeTopCommentBlock(result.content);
+            const details = redirectableResources.get(name);
             const entry = RedirectEntry.fromSelfie({
                 mime: mimeFromName(name),
                 data: content,
-                warURL: details.redirect !== false
-                    ? vAPI.getURL(`/web_accessible_resources/${name}`)
-                    : undefined,
+                warURL: vAPI.getURL(`/web_accessible_resources/${name}`),
             });
             this.resources.set(name, entry);
             if ( details.alias !== undefined ) {
-                this.resources.set(details.alias, entry);
+                this.aliases.set(details.alias, name);
             }
         }
-        // Mutable resources
+        // Additional resources
         const content = results[0].content;
         if ( typeof content === 'string' && content.length !== 0 ) {
-            this.resourcesFromString(content, false);
+            this.resourcesFromString(content);
         }
     });
 }; 
 
 /******************************************************************************/
 
-const resourcesSelfieVersion = 3;
+const resourcesSelfieVersion = 4;
 
 RedirectEngine.prototype.selfieFromResources = function() {
     µBlock.assets.put(
         'compiled/redirectEngine/resources',
         JSON.stringify({
             version: resourcesSelfieVersion,
-            resources: Array.from(this.resources)
+            aliases: Array.from(this.aliases),
+            resources: Array.from(this.resources),
         })
     );
 };
@@ -774,6 +751,7 @@ RedirectEngine.prototype.resourcesFromSelfie = function() {
         ) {
             return false;
         }
+        this.aliases = new Map(selfie.aliases);
         this.resources = new Map();
         for ( const [ token, entry ] of selfie.resources ) {
             this.resources.set(token, RedirectEntry.fromSelfie(entry));

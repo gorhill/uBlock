@@ -1094,11 +1094,6 @@ const onMessage = function(request, sender, callback) {
     case 'purgeCache':
         µb.assets.purge(request.assetKey);
         µb.assets.remove('compiled/' + request.assetKey);
-        // https://github.com/gorhill/uBlock/pull/2314#issuecomment-278716960
-        if ( request.assetKey === 'ublock-filters' ) {
-            µb.assets.purge('ublock-resources');
-            µb.redirectEngine.invalidateResourcesSelfie();
-        }
         break;
 
     case 'readHiddenSettings':

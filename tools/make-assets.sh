@@ -13,8 +13,7 @@ if [ -n "${TRAVIS_TAG}" ]; then
 fi
 
 rm -rf $DES
-mkdir $DES
-cp ./assets/assets.json $DES/
+cp -R ./assets $DES/
 
 if [ -f ./tmp/requests.json.gz ]; then
     gunzip -c ./tmp/requests.json.gz > $DES/requests.json
@@ -31,5 +30,6 @@ mkdir $DES/ublock
 cp -R ../uAssets/filters/*                                       $DES/ublock/
 # Optional filter lists: do not include in package
 rm    $DES/ublock/annoyances.txt
+rm    $DES/ublock/resources.txt
 
 echo "done."

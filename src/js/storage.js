@@ -1327,14 +1327,9 @@
                 return;
             }
         }
-        // https://github.com/gorhill/uBlock/issues/2594
+        // This asset is deprecated.
         if ( details.assetKey === 'ublock-resources' ) {
-            if (
-                this.hiddenSettings.ignoreRedirectFilters === true &&
-                this.hiddenSettings.ignoreScriptInjectFilters === true
-            ) {
-                return;
-            }
+            return;
         }
         return true;
     }
@@ -1367,8 +1362,6 @@
             if ( cached ) {
                 this.compilePublicSuffixList(details.content);
             }
-        } else if ( details.assetKey === 'ublock-resources' ) {
-            this.redirectEngine.invalidateResourcesSelfie();
         }
         vAPI.messaging.broadcast({
             what: 'assetUpdated',
@@ -1395,6 +1388,10 @@
     // Reload all filter lists if needed.
     if ( topic === 'after-assets-updated' ) {
         if ( details.assetKeys.length !== 0 ) {
+            // https://github.com/gorhill/uBlock/pull/2314#issuecomment-278716960
+            if ( this.hiddenSettings.userResourcesLocation !== 'unset' ) {
+                this.redirectEngine.invalidateResourcesSelfie();
+            }
             this.loadFilterLists();
         }
         if ( this.userSettings.autoUpdate ) {
