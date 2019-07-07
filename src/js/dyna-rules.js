@@ -152,8 +152,10 @@ const rulesToDoc = function(clearHistory) {
         // https://github.com/uBlockOrigin/uBlock-issues/issues/593
         //   Ensure the text content always ends with an empty line to avoid
         //   spurious diff entries.
-        let beforeText = doc.getValue().trim();
-        if ( beforeText !== '' ) { beforeText += '\n'; }
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/657
+        //   Diff against unmodified beforeText so that the last newline can
+        //   be reported in the diff and thus appended if needed.
+        let beforeText = doc.getValue();
         let afterText = rules.join('\n').trim();
         if ( afterText !== '' ) { afterText += '\n'; }
         const diffs = differ.diff_main(beforeText, afterText);
