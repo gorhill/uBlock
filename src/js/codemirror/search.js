@@ -160,11 +160,14 @@
         );
     }
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/658
+    //   Modified to backslash-escape ONLY widely-used control characters.
     function parseString(string) {
         return string.replace(/\\(.)/g, function(_, ch) {
             if (ch === "n") return "\n";
             if (ch === "r") return "\r";
-            return ch;
+            if (ch === 't') return '\t';
+            return _;
         });
     }
 
