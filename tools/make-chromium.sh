@@ -68,4 +68,3 @@ if [ "$1" = all ]; then
 fi
 
 echo "*** AdNauseam.chromium: Package done."
-echo

@@ -25,10 +25,20 @@ mkdir ${ARTS}
 rm -rf ${DES}/*
 
 
-# CHROME (ZIP)
+# CHROME (ZIP/CRX)
 printf '%s' "*** Target -> "
 command "${CHROME}" --version || { echo >&2 "Chrome is not installed."; exit 1; }
 ./tools/make-chromium.sh
+if [ -f $CHROME_PEM ]; then  # do we have the signing key?
+  "${CHROME}" "${CHROME_OPTS}" "--pack-extension-key $CHROME_PEM" > /dev/null 2>&1
+  mv ${DES}/adnauseam.chromium.crx ${ARTS}/adnauseam-${VERSION}.chromium.crx
+  echo "*** AdNauseam.chromium: Signed with local .pem\\n"
+else
+  "${CHROME}" "${CHROME_OPTS}"
+  mv ${DES}/adnauseam.chromium.crx ${ARTS}/adnauseam-${VERSION}.chromium-UNSIGNED.crx
+  echo "WARN: NO .pem key found for Chrome build\\n"
+fi
+#cp ${DES}/adnauseam.chromium.crx ${ARTS}/adnauseam-${VERSION}.chromium.crx
 cd ${DES}
 zip -9 -r -q --exclude=*.DS_Store* ../../artifacts/adnauseam-${VERSION}.chromium.zip adnauseam.chromium
 cd -
