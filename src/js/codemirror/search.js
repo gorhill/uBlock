@@ -167,6 +167,7 @@
             if (ch === "n") return "\n";
             if (ch === "r") return "\r";
             if (ch === 't') return '\t';
+            if (ch === '\\') return '\\';
             return _;
         });
     }
