@@ -129,6 +129,7 @@ CodeMirror.defineMode('ubo-dynamic-filtering', ( ) => {
                 ) {
                     return skipToEnd(stream, 'error');
                 }
+                return null;
             }
             // URL rule
             if ( /[^a-z_-]+/.test(token) || invalidURLRuleTypes.has(token) ) {
