@@ -1610,6 +1610,9 @@ const reloadTab = function(ev) {
     const fillDynamicPane = function() {
         if ( targetRow.classList.contains('cosmeticRealm') ) { return; }
 
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/662#issuecomment-509220702
+        if ( targetType === 'doc' ) { return; }
+
         // https://github.com/gorhill/uBlock/issues/2469
         if ( targetURLs.length === 0 || reSchemeOnly.test(targetURLs[0]) ) {
             return;

@@ -38,7 +38,7 @@ CodeMirror.defineMode('ubo-dynamic-filtering', ( ) => {
         'true',
         'false',
     ]);
-    const validTypes = new Set([
+    const validHnRuleTypes = new Set([
         '*',
         '3p',
         'image',
@@ -46,6 +46,10 @@ CodeMirror.defineMode('ubo-dynamic-filtering', ( ) => {
         '1p-script',
         '3p-script',
         '3p-frame',
+    ]);
+    const invalidURLRuleTypes = new Set([
+        'doc',
+        'main_frame',
     ]);
     const validActions = new Set([
         'block',
@@ -110,19 +114,25 @@ CodeMirror.defineMode('ubo-dynamic-filtering', ( ) => {
         }
         // Field 3
         if ( tokens.length === 3 ) {
+            // Switch rule
             if ( isSwitchRule(tokens[0]) ) {
                 if ( validSwitcheStates.has(token) === false ) {
                     return skipToEnd(stream, 'error');
                 }
                 return null;
             }
+            // Hostname rule
             if ( isURLRule(tokens[1]) === false ) {
                 if (
                     tokens[1] !== '*' && token !== '*' ||
-                    tokens[1] === '*' && validTypes.has(token) === false
+                    tokens[1] === '*' && validHnRuleTypes.has(token) === false
                 ) {
                     return skipToEnd(stream, 'error');
                 }
+            }
+            // URL rule
+            if ( /[^a-z_-]+/.test(token) || invalidURLRuleTypes.has(token) ) {
+                return skipToEnd(stream, 'error');
             }
             return null;
         }
