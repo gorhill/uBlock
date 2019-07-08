@@ -22,11 +22,21 @@
     web page context.
 */
 
+// The lines below are skipped by the resource parser. Purpose is clean
+// jshinting.
+(function() {
+// >>>> start of private namespace
+'use strict';
+// This a private safe available for use by all injected scriptlets.
+const uBOSafe = new Map();  // jshint ignore: line
+
+
+
+
 
 /// abort-current-inline-script.js
 /// alias acis.js
 (function() {
-    'use strict';
     const target = '{{1}}';
     if ( target === '' || target === '{{1}}' ) { return; }
     const needle = '{{2}}';
@@ -88,7 +98,6 @@
 /// abort-on-property-read.js
 /// alias aopr.js
 (function() {
-    'use strict';
     const magic = String.fromCharCode(Date.now() % 26 + 97) +
                   Math.floor(Math.random() * 982451653 + 982451653).toString(36);
     const abort = function() {
@@ -143,7 +152,6 @@
 /// abort-on-property-write.js
 /// alias aopw.js
 (function() {
-    'use strict';
     const magic = String.fromCharCode(Date.now() % 26 + 97) +
                   Math.floor(Math.random() * 982451653 + 982451653).toString(36);
     let prop = '{{1}}';
@@ -176,7 +184,6 @@
 /// addEventListener-defuser.js
 /// alias aeld.js
 (function() {
-    'use strict';
     let needle1 = '{{1}}';
     if ( needle1 === '' || needle1 === '{{1}}' ) {
         needle1 = '.?';
@@ -216,7 +223,6 @@
 /// addEventListener-logger.js
 /// alias aell.js
 (function() {
-    'use strict';
     const log = console.log.bind(console);
     self.EventTarget.prototype.addEventListener = new Proxy(
         self.EventTarget.prototype.addEventListener,
@@ -235,7 +241,6 @@
 /// nano-setInterval-booster.js
 /// alias nano-sib.js
 (function() {
-    'use strict';
     let needle = '{{1}}';
     let delay = parseInt('{{2}}', 10);
     let boost = parseFloat('{{3}}');
@@ -275,7 +280,6 @@
 /// nano-setTimeout-booster.js
 /// alias nano-stb.js
 (function() {
-    'use strict';
     let needle = '{{1}}';
     let delay = parseInt('{{2}}', 10);
     let boost = parseFloat('{{3}}');
@@ -314,7 +318,6 @@
 
 /// noeval-if.js
 (function() {
-    'use strict';
     let needle = '{{1}}';
     if ( needle === '' || needle === '{{1}}' ) {
         needle = '.?';
@@ -338,7 +341,6 @@
 /// remove-attr.js
 /// alias ra.js
 (function() {
-    'use strict';
     const token = '{{1}}';
     if ( token === '' || token === '{{1}}' ) { return; }
     const tokens = token.split(/\s*\|\s*/);
@@ -370,7 +372,6 @@
 
 /// set-constant.js
 (function() {
-    'use strict';
     const thisScript = document.currentScript;
     let cValue = '{{2}}';
     if ( cValue === 'undefined' ) {
@@ -452,7 +453,6 @@
 /// setInterval-defuser.js
 /// alias sid.js
 (function() {
-    'use strict';
     let needle = '{{1}}';
     const delay = parseInt('{{2}}', 10);
     if ( needle === '' || needle === '{{1}}' ) {
@@ -479,7 +479,6 @@
 /// setInterval-logger.js
 /// alias sil.js
 (function() {
-    'use strict';
     const log = console.log.bind(console);
     window.setInterval = new Proxy(window.setInterval, {
         apply: function(target, thisArg, args) {
@@ -495,7 +494,6 @@
 /// setTimeout-defuser.js
 /// alias std.js
 (function() {
-    'use strict';
     let needle = '{{1}}';
     const delay = parseInt('{{2}}', 10);
     if ( needle === '' || needle === '{{1}}' ) {
@@ -522,7 +520,6 @@
 /// setTimeout-logger.js
 /// alias stl.js
 (function() {
-    'use strict';
     const log = console.log.bind(console);
     window.setTimeout = new Proxy(window.setTimeout, {
         apply: function(target, thisArg, args) {
@@ -537,7 +534,6 @@
 
 /// webrtc-if.js
 (function() {
-    'use strict';
     let good = '{{1}}';
     if ( good.startsWith('/') && good.endsWith('/') ) {
         good = good.slice(1, -1);
@@ -607,7 +603,6 @@
 // https://github.com/gorhill/uBlock/issues/1228
 /// window.name-defuser
 (function() {
-    'use strict';
     if ( window === window.top ) {
         window.name = '';
     }
@@ -619,7 +614,6 @@
 // as a stock tool in uBO's popup panel.
 /// overlay-buster.js
 (function() {
-    'use strict';
     if ( window !== window.top ) {
         return;
     }
@@ -676,7 +670,6 @@
 // https://github.com/uBlockOrigin/uAssets/issues/8
 /// alert-buster.js
 (function() {
-    'use strict';
     window.alert = function(a) {
         console.info(a);
     };
@@ -686,7 +679,6 @@
 // https://github.com/uBlockOrigin/uAssets/issues/58
 /// gpt-defuser.js
 (function() {
-    'use strict';
     const noopfn = function() {
     };
     let props = '_resetGPT resetGPT resetAndLoadGPTRecovery _resetAndLoadGPTRecovery setupGPT setupGPTuo';
@@ -708,7 +700,6 @@
 // Prevent web pages from using RTCPeerConnection(), and report attempts in console.
 /// nowebrtc.js
 (function() {
-    'use strict';
     var rtcName = window.RTCPeerConnection ? 'RTCPeerConnection' : (
         window.webkitRTCPeerConnection ? 'webkitRTCPeerConnection' : ''
     );
@@ -744,7 +735,6 @@
 // https://github.com/uBlockOrigin/uAssets/issues/88
 /// golem.de.js
 (function() {
-    'use strict';
     const rael = window.addEventListener;
     window.addEventListener = function(a, b) {
         rael(...arguments);
@@ -767,7 +757,6 @@
 // https://www.reddit.com/r/chrome/comments/58eix6/ublock_origin_not_working_on_certain_sites/
 /// upmanager-defuser.js
 (function() {
-    'use strict';
     var onerror = window.onerror;
     window.onerror = function(msg, source, lineno, colno, error) {
         if ( typeof msg === 'string' && msg.indexOf('upManager') !== -1 ) {
@@ -784,7 +773,6 @@
 // https://github.com/uBlockOrigin/uAssets/issues/110
 /// smartadserver.com.js
 (function() {
-    'use strict';
     Object.defineProperties(window, {
         SmartAdObject: { value: function(){} },
         SmartAdServerAjax: { value: function(){} },
@@ -797,7 +785,6 @@
 // https://github.com/uBlockOrigin/uAssets/issues/883
 /// adfly-defuser.js
 (function() {
-    'use strict';
     // Based on AdsBypasser
     // License:
     //   https://github.com/adsbypasser/adsbypasser/blob/master/LICENSE
@@ -861,7 +848,6 @@
 // https://github.com/uBlockOrigin/uAssets/issues/913
 /// disable-newtab-links.js
 (function() {
-    'use strict';
     document.addEventListener('click', function(ev) {
         var target = ev.target;
         while ( target !== null ) {
@@ -878,7 +864,6 @@
 
 /// damoh-defuser.js
 (function() {
-    'use strict';
     var handled = new WeakSet();
     var asyncTimer;
     var cleanVideo = function() {
@@ -907,7 +892,6 @@
 // https://github.com/uBlockOrigin/uAssets/pull/3517
 /// twitch-videoad.js
 (function() {
-    'use strict';
     if ( /(^|\.)twitch\.tv$/.test(document.location.hostname) === false ) { return; }
     var realFetch = window.fetch;
     window.fetch = function(input) {
@@ -924,7 +908,6 @@
 // https://github.com/uBlockOrigin/uAssets/issues/2912
 /// fingerprint2.js
 (function() {
-    'use strict';
     let fp2 = function(){};
     fp2.prototype = {
         get: function(cb) {
@@ -938,7 +921,6 @@
 // https://github.com/NanoAdblocker/NanoFilters/issues/149
 /// cookie-remover.js
 (function() {
-    'use strict';
     let needle = '{{1}}',
         reName = /./;
     if ( /^\/.+\/$/.test(needle) ) {
@@ -972,4 +954,12 @@
     };
     removeCookie();
     window.addEventListener('beforeunload', removeCookie);
+})();
+
+
+
+
+
+// These lines below are skipped by the resource parser.
+// <<<< end of private namespace
 })();

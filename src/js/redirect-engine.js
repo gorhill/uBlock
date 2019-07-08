@@ -149,7 +149,6 @@ const redirectableResources = new Map([
         alias: 'popads.net.js',
     } ],
     [ 'popads-dummy.js', {
-        alias: 'popads-dummy.js',
     } ],
     [ 'scorecardresearch_beacon.js', {
         alias: 'scorecardresearch.com/beacon.js',
@@ -159,20 +158,22 @@ const redirectableResources = new Map([
     } ],
 ]);
 
-const mimeMap = {
-     gif: 'image/gif',
-    html: 'text/html',
-      js: 'application/javascript',
-     mp3: 'audio/mp3',
-     mp4: 'video/mp4',
-     png: 'image/png',
-     txt: 'text/plain',
-};
+const extToMimeMap = new Map([
+    [  'gif', 'image/gif' ],
+    [ 'html', 'text/html' ],
+    [   'js', 'application/javascript' ],
+    [  'mp3', 'audio/mp3' ],
+    [  'mp4', 'video/mp4' ],
+    [  'png', 'image/png' ],
+    [  'txt', 'text/plain' ],
+]);
+
+const validMimes = new Set(extToMimeMap.values());
 
 const mimeFromName = function(name) {
     const match = /\.([^.]+)$/.exec(name);
     if ( match !== null ) {
-        return mimeMap[match[1]];
+        return extToMimeMap.get(match[1]);
     }
 };
 
@@ -590,16 +591,24 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
         if ( line.startsWith('// ') ) { continue; }
 
         if ( fields === undefined ) {
+            if ( line === '' ) { continue; }
+            // Modern parser
             if ( line.startsWith('/// ') ) {
                 const name = line.slice(4).trim();
                 fields = [ name, mimeFromName(name) ];
-            } else {
-                const head = line.trim().split(/\s+/);
-                if ( head.length !== 2 ) { continue; }
-                if ( head[0] === 'none' ) { continue; }
-                encoded = head[1].indexOf(';') !== -1;
-                fields = head;
+                continue;
             }
+            // Legacy parser
+            const head = line.trim().split(/\s+/);
+            if ( head.length !== 2 ) { continue; }
+            if ( head[0] === 'none' ) { continue; }
+            let pos = head[1].indexOf(';');
+            if ( pos === -1 ) { pos = head[1].length; }
+            if ( validMimes.has(head[1].slice(0, pos)) === false ) {
+                continue;
+            }
+            encoded = head[1].indexOf(';') !== -1;
+            fields = head;
             continue;
         }
 
@@ -619,7 +628,7 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
             continue;
         }
 
-        const name = fields[0];
+        const name = this.aliases.get(fields[0]) || fields[0];
         const mime = fields[1];
         const content = µBlock.orphanizeString(
             fields.slice(2).join(encoded ? '' : '\n')

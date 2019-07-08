@@ -66,7 +66,7 @@
     // Consequently, the programmatic-injection code path is taken only with
     // Chromium-based browsers.
 
-    const contentscriptCode = (function() {
+    const contentscriptCode = (( ) => {
         const parts = [
             '(',
             function(hostname, scriptlets) {
@@ -76,7 +76,7 @@
                 ) {
                     return;
                 }
-                let injectScriptlets = function(d) {
+                const injectScriptlets = function(d) {
                     let script;
                     try {
                         script = d.createElement('script');
@@ -94,17 +94,17 @@
                     }
                 };
                 injectScriptlets(document);
-                let processIFrame = function(iframe) {
-                    let src = iframe.src;
+                const processIFrame = function(iframe) {
+                    const src = iframe.src;
                     if ( /^https?:\/\//.test(src) === false ) {
                         injectScriptlets(iframe.contentDocument);
                     }
                 };
                 let observerTimer,
                     observerLists = [];
-                let observerAsync = function() {
-                    for ( let nodelist of observerLists ) {
-                        for ( let node of nodelist ) {
+                const observerAsync = function() {
+                    for ( const nodelist of observerLists ) {
+                        for ( const node of nodelist ) {
                             if ( node.nodeType !== 1 ) { continue; }
                             if ( node.parentElement === null ) { continue; }
                             if ( node.localName === 'iframe' ) {
@@ -112,7 +112,7 @@
                             }
                             if ( node.childElementCount === 0 ) { continue; }
                             let iframes = node.querySelectorAll('iframe');
-                            for ( let iframe of iframes ) {
+                            for ( const iframe of iframes ) {
                                 processIFrame(iframe);
                             }
                         }
@@ -120,17 +120,17 @@
                     observerLists = [];
                     observerTimer = undefined;
                 };
-                let ready = function(ev) {
+                const ready = function(ev) {
                     if ( ev !== undefined ) {
                         window.removeEventListener(ev.type, ready);
                     }
-                    let iframes = document.getElementsByTagName('iframe');
+                    const iframes = document.getElementsByTagName('iframe');
                     if ( iframes.length !== 0 ) {
                         observerLists.push(iframes);
                         observerTimer = setTimeout(observerAsync, 1);
                     }
-                    let observer = new MutationObserver(function(mutations) {
-                        for ( let mutation of mutations ) {
+                    const observer = new MutationObserver(function(mutations) {
+                        for ( const mutation of mutations ) {
                             if ( mutation.addedNodes.length !== 0 ) {
                                 observerLists.push(mutation.addedNodes);
                             }
@@ -380,8 +380,23 @@
         if ( out.length === 0 ) { return; }
 
         if ( µb.hiddenSettings.debugScriptlets ) {
-            out.unshift('debugger');
+            out.unshift('debugger;');
         }
+
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/156
+        //   Provide a private Map() object available for use by all
+        //   scriptlets.
+        out.unshift(
+            '(function() {',
+            '// >>>> start of private namespace',
+            'const uBOSafe = new Map();',
+            '',
+        );
+        out.push(
+            '',
+            '// <<<< end of private namespace',
+            '})();',
+        );
 
         return out.join('\n');
     };
