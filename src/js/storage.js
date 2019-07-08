@@ -1389,7 +1389,10 @@
     if ( topic === 'after-assets-updated' ) {
         if ( details.assetKeys.length !== 0 ) {
             // https://github.com/gorhill/uBlock/pull/2314#issuecomment-278716960
-            if ( this.hiddenSettings.userResourcesLocation !== 'unset' ) {
+            if (
+                this.hiddenSettings.userResourcesLocation !== 'unset' ||
+                vAPI.webextFlavor.soup.has('devbuild')
+            ) {
                 this.redirectEngine.invalidateResourcesSelfie();
             }
             this.loadFilterLists();
