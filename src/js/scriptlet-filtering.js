@@ -205,8 +205,15 @@
                 token = rawToken.slice(0, pos).trim();
                 args = rawToken.slice(pos + 1).trim();
             }
+            // TODO: The alias lookup can be removed once scriptlet resources
+            //       with obsolete name are converted to their new name.
+            if ( reng.aliases.has(token) ) {
+                token = reng.aliases.get(token);
+            } else {
+                token = `${token}.js`;
+            }
             content = reng.resourceContentFromName(
-                `${token}.js`,
+                token,
                 'application/javascript'
             );
             if ( !content ) { return; }
