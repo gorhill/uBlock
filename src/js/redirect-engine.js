@@ -53,9 +53,6 @@ const redirectableResources = new Map([
         alias: 'ampproject.org/v0.js',
         inject: false
     } ],
-    [ 'bab-defuser.js', {
-        alias: 'nobab.js',
-    } ],
     [ 'chartbeat.js', {
         alias: 'static.chartbeat.com/chartbeat.js',
         inject: false
@@ -75,9 +72,6 @@ const redirectableResources = new Map([
     [ 'doubleclick_instream_ad_status.js', {
         alias: 'doubleclick.net/instream/ad_status.js',
         inject: false
-    } ],
-    [ 'fookadblock.js', {
-        alias: 'fuckadblock.js-3.2.0',
     } ],
     [ 'google-analytics_analytics.js', {
         alias: 'google-analytics.com/analytics.js',
@@ -122,6 +116,12 @@ const redirectableResources = new Map([
     } ],
     [ 'noeval-silent.js', {
         alias: 'silent-noeval.js',
+    } ],
+    [ 'nobab.js', {
+        alias: 'bab-defuser.js',
+    } ],
+    [ 'nofab.js', {
+        alias: 'fuckadblock.js-3.2.0',
     } ],
     [ 'noop-0.1s.mp3', {
         alias: 'noopmp3-0.1s',
@@ -731,7 +731,7 @@ RedirectEngine.prototype.loadBuiltinResources = function() {
 
 /******************************************************************************/
 
-const resourcesSelfieVersion = 4;
+const resourcesSelfieVersion = 5;
 
 RedirectEngine.prototype.selfieFromResources = function() {
     µBlock.assets.put(
