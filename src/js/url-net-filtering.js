@@ -340,8 +340,11 @@ URLNetFiltering.prototype.fromString = function(text) {
 
 URLNetFiltering.prototype.validateRuleParts = function(parts) {
     if ( parts.length !== 4 ) { return; }
-    if ( parts[1].indexOf('://') === -1 ) { return; }
-    if ( /[^a-z_-]+/.test(parts[2]) || knownInvalidTypes.has(parts[2]) ) {
+    if ( parts[1].indexOf('://') <= 0 ) { return; }
+    if (
+        /[^a-z_-]/.test(parts[2]) && parts[2] !== '*' ||
+        knownInvalidTypes.has(parts[2])
+    ) {
         return;
     }
     if ( nameToActionMap.hasOwnProperty(parts[3]) === false ) { return; }

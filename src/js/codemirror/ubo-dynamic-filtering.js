@@ -65,7 +65,7 @@ CodeMirror.defineMode('ubo-dynamic-filtering', ( ) => {
     };
 
     const isURLRule = ( ) => {
-        return /^[\w-_]+:\/\/[^/]+\//.test(tokens[1]);
+        return tokens[1].indexOf('://') > 0;
     };
 
     const skipToEnd = (stream, style = null) => {
@@ -132,7 +132,10 @@ CodeMirror.defineMode('ubo-dynamic-filtering', ( ) => {
                 return null;
             }
             // URL rule
-            if ( /[^a-z_-]+/.test(token) || invalidURLRuleTypes.has(token) ) {
+            if (
+                /[^a-z_-]/.test(token) && token !== '*' ||
+                invalidURLRuleTypes.has(token)
+            ) {
                 return skipToEnd(stream, 'error');
             }
             return null;
