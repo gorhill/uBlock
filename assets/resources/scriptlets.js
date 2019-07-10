@@ -238,6 +238,17 @@ const uBOSafe = new Map();  // jshint ignore: line
 })();
 
 
+// Imported from:
+// https://github.com/NanoAdblocker/NanoFilters/blob/1f3be7211bb0809c5106996f52564bf10c4525f7/NanoFiltersSource/NanoResources.txt#L126
+//
+// Speed up or down setInterval, 3 optional arguments.
+//      The payload matcher, a string literal or a JavaScript RegExp, defaults
+//      to match all.
+// delayMatcher
+//      The delay matcher, an integer, defaults to 1000.
+// boostRatio - The delay multiplier when there is a match, 0.5 speeds up by
+//      2 times and 2 slows down by 2 times, defaults to 0.05 or speed up
+//      20 times. Speed up and down both cap at 50 times.
 /// nano-setInterval-booster.js
 /// alias nano-sib.js
 (function() {
@@ -277,6 +288,18 @@ const uBOSafe = new Map();  // jshint ignore: line
 })();
 
 
+// Imported from:
+// https://github.com/NanoAdblocker/NanoFilters/blob/1f3be7211bb0809c5106996f52564bf10c4525f7/NanoFiltersSource/NanoResources.txt#L82
+//
+// Speed up or down setTimeout, 3 optional arguments.
+// funcMatcher
+//      The payload matcher, a string literal or a JavaScript RegExp, defaults
+//      to match all.
+// delayMatcher
+//      The delay matcher, an integer, defaults to 1000.
+// boostRatio - The delay multiplier when there is a match, 0.5 speeds up by
+//      2 times and 2 slows down by 2 times, defaults to 0.05 or speed up
+//      20 times. Speed up and down both cap at 50 times.
 /// nano-setTimeout-booster.js
 /// alias nano-stb.js
 (function() {
