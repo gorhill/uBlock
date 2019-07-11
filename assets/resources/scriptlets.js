@@ -605,9 +605,9 @@ const uBOSafe = new Map();  // jshint ignore: line
             apply: function(target, thisArg, args) {
                 if ( isGoodConfig(target, args[1]) === false ) {
                     log(args[1]);
-                    return target.apply(thisArg, args.slice(0, 1));
+                    return Reflect.apply(target, thisArg, args.slice(0, 1));
                 }
-                return target.apply(thisArg, args);
+                return Reflect.apply(target, thisArg, args);
             },
         });
     window[rtcName] =
@@ -615,9 +615,9 @@ const uBOSafe = new Map();  // jshint ignore: line
             construct: function(target, args) {
                 if ( isGoodConfig(target, args[0]) === false ) {
                     log(args[0]);
-                    return new target();
+                    return Reflect.construct(target);
                 }
-                return new target(...args);
+                return Reflect.construct(target, args);
             }
         });
 })();
