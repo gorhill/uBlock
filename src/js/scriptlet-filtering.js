@@ -396,7 +396,6 @@
         out.unshift(
             '(function() {',
             '// >>>> start of private namespace',
-            'const uBOSafe = new Map();',
             '',
         );
         out.push(

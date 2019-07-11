@@ -27,8 +27,6 @@
 (function() {
 // >>>> start of private namespace
 'use strict';
-// This a private safe available for use by all injected scriptlets.
-const uBOSafe = new Map();  // jshint ignore: line
 
 
 
