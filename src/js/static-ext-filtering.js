@@ -516,14 +516,14 @@
             this.nBits = nBits;
             this.timer = undefined;
             this.strToIdMap = new Map();
-            if ( selfie !== undefined ) {
-                this.fromSelfie(selfie);
-                return;
-            }
             this.hostnameToSlotIdMap = new Map();
             this.hostnameSlots = [];
             this.strSlots = [];
             this.size = 0;
+            if ( selfie !== undefined ) {
+                this.fromSelfie(selfie);
+                return;
+            }
         }
 
         store(hn, bits, s) {
