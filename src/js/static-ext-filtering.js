@@ -522,7 +522,6 @@
             this.size = 0;
             if ( selfie !== undefined ) {
                 this.fromSelfie(selfie);
-                return;
             }
         }
 
