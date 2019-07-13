@@ -158,7 +158,7 @@ a.external-link {
 .custom-check input[type="checkbox"]:checked + label::before,
 .custom-check #lists input[type="checkbox"]:not(#effListInput):checked:before,
 .custom-check ul li input[type="radio"]:checked + label::before{
-  background: #0076FF url(../img/check.svg) -2px -0px no-repeat;
+  background: #0076FF url(../img/check.svg) -2px -3px no-repeat;
   color: black;
   content: "";
   font-size: 0.8em;
