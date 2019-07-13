@@ -651,7 +651,6 @@
     api.compileSelector = (function() {
         const reAfterBeforeSelector = /^(.+?)(::?after|::?before|::[a-z-]+)$/;
         const reStyleSelector = /^(.+?):style\((.+?)\)$/;
-        const reStyleBad = /url\(/;
         const reExtendedSyntax = /\[-(?:abp|ext)-[a-z-]+=(['"])(?:.+?)(?:\1)\]/;
         const reExtendedSyntaxParser = /\[-(?:abp|ext)-([a-z-]+)=(['"])(.+?)\2\]/;
         const div = document.createElement('div');
@@ -671,6 +670,8 @@
             div.style.cssText = '';
             return true;
         };
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/668
+        const reStyleBad = /url\(|\\/i;
 
         const entryPoint = function(raw) {
             entryPoint.pseudoclass = false;
