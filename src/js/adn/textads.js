@@ -38,9 +38,9 @@
     /***************************** Functions ******************************/
 
     var bingText = function (dom) {
-
+      console.log("Bing TEXT AD")
       var ads = [],
-      divs = $find(dom,'div.sb_add');
+      divs = $find(dom,'ul li');
 
       for (var i = 0; i < divs.length; i++) {
 
@@ -49,7 +49,7 @@
 
         title = $find(idiv, 'h2 a');
         site = $find(idiv, 'div.b_attribution cite');
-        text = $find(idiv, 'div.b_caption p');
+        text = $find(idiv, 'div > p');
 
         if (text.length && site.length && title.length) {
 
@@ -156,7 +156,7 @@
 
     var googleText = function (li) {
 
-      var ad, title = $find(li, 'h3 a[onmousedown]'),
+      var ad, title = $find(li, 'h3'),
         text = $find(li, '.ads-creative'),
         site = $find(li, '.ads-visurl cite');
 
@@ -353,7 +353,7 @@
       name: 'yahoo',
       domain: /^.*\.yahoo\.com/i
     }, {
-      selector: 'li.b_ad',
+      selector: 'li.adbDef, li.b_ad',
       handler: bingText,
       name: 'bing',
       domain: /^.*\.bing\.com/i

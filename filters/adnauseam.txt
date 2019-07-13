@@ -54,7 +54,10 @@ www.startpage.com###adBlock
 www.startpage.com##*[id^="spon_"]
 ##*[id^="sponsored"]
 
-google.com###adBlock > .ad.a_
+www.google.com###adBlock > .ad.a_
+www.google.com##.ads-ad
+www.google.com###tads
+www.google.com##tadsb
 
 www.zam.com##.ad
 ##.GoogleActiveViewClass
@@ -226,6 +229,9 @@ reuters.com##.CanvasAd_container_sZDIL
 ##DIV[id*='MAXI_CRZ']
 ##DIV[id*='ucfad']
 ##DIV[id*='movie_ad']
+
+##bing.com
+www.bing.com##.adbDef
 
 computerworld.com###superadunit
 
