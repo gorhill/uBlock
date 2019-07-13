@@ -772,6 +772,9 @@ vAPI.setIcon = (function() {
             case 'onactive':
                 iconPaths = { '16': 'img/adn_active_16.png', '32': 'img/adn_active_32.png'};
                 break;
+            case 'on':
+                iconPaths = { '16': 'img/adn_on_16.png', '32': 'img/adn_on_32.png'};
+                break;
             case 'off':
                 iconPaths = { '16': 'img/adn_off_16.png', '32': 'img/adn_off_32.png'};
                 break;
