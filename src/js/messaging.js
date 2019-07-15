@@ -583,6 +583,7 @@ var onMessage = function(request, sender, callback) {
         request.entity = µb.URI.entityFromDomain(request.domain);
         response.specificCosmeticFilters =
             µb.cosmeticFilteringEngine.retrieveSpecificSelectors(request, response);
+        response.prefs = µb.adnauseam.contentPrefs(pageStore.tabHostname); // ADN
         if ( µb.canInjectScriptletsNow === false ) {
             response.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
         }
