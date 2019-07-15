@@ -581,9 +581,14 @@ var onMessage = function(request, sender, callback) {
         request.hostname = µb.URI.hostnameFromURI(request.url);
         request.domain = µb.URI.domainFromHostname(request.hostname);
         request.entity = µb.URI.entityFromDomain(request.domain);
-        response.specificCosmeticFilters =
-            µb.cosmeticFilteringEngine.retrieveSpecificSelectors(request, response);
         response.prefs = µb.adnauseam.contentPrefs(pageStore.tabHostname); // ADN
+
+        if(!response.prefs.hidingDisabled) { // ADN
+           response.specificCosmeticFilters =
+            µb.cosmeticFilteringEngine.retrieveSpecificSelectors(request, response);
+        }
+
+
         if ( µb.canInjectScriptletsNow === false ) {
             response.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
         }
