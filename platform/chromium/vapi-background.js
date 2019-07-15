@@ -761,7 +761,7 @@ vAPI.setIcon = (function() {
     return function(tabId, iconStatus, badge) {
 
         var iconPaths; // ADN
-
+        
         switch(iconStatus) { // ADN
             case 'dnt':
                 iconPaths = { '16': 'img/adn_dnt_on_16.png', '32': 'img/adn_dnt_on_32.png' };
@@ -811,7 +811,7 @@ vAPI.setIcon = (function() {
                 tabId: tabId,
                 title: titleTemplate.replace(
                     '{badge}',
-                    iconStatus === 'onactive' ? (badge !== '' ? badge : '0') : 'off'
+                    iconStatus.indexOf('on') > -1 || iconStatus.indexOf('dnt') > -1  ? (badge !== '' ? badge : '0') : 'off'
                 )
             });
         }

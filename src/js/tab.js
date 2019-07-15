@@ -816,7 +816,7 @@ vAPI.tabs.onPopupUpdated = (function() {
 
         // Blocked
         if ( µb.userSettings.showIconBadge ) {
-            µb.updateToolbarIcon(openerTabId, 0x02);
+            µb.updateToolbarIcon(openerTabId);
         }
 
         // It is a popup, block and remove the tab.
@@ -840,7 +840,7 @@ vAPI.tabs.registerListeners();
 // Create an entry for the tab if it doesn't exist.
 
 µb.bindTabToPageStats = function(tabId, context) {
-    this.updateToolbarIcon(tabId, 0x03);
+    this.updateToolbarIcon(tabId);
 
     // Do not create a page store for URLs which are of no interests
     if ( µb.tabContextManager.exists(tabId) === false ) {
