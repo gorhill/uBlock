@@ -1012,6 +1012,7 @@
   }
 
   function findAdById(id) {
+    if (gAdSets == undefined || gAdSets == null) return
 
     for (var i = 0, j = gAdSets.length; i < j; i++) {
 
