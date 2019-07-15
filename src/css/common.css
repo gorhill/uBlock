@@ -155,16 +155,20 @@ a.external-link {
   cursor:pointer;
   border-radius: 3px;
 }
-.custom-check input[type="checkbox"]:checked + label::before,
+.custom-check input[type="checkbox"]:not(#effListInput):checked + label::before,
 .custom-check #lists input[type="checkbox"]:not(#effListInput):checked:before,
 .custom-check ul li input[type="radio"]:checked + label::before{
-  background: #0076FF url(../img/check.svg) -2px -3px no-repeat;
+  background: #0076FF url(../img/check.svg) -2px 0px no-repeat;
   color: black;
   content: "";
   font-size: 0.8em;
   text-align: center;
   line-height: 12px;
 }
+.custom-check input#effListInput:checked + label::before{
+  background: grey url(../img/check.svg) -2px -3px no-repeat;
+}
+
 .custom-check input[type="checkbox"] + label::before{
   background-image: none;
 }
