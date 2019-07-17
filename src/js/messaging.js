@@ -1175,14 +1175,14 @@ var getLoggerData = function(details, activeTabId, callback) {
         dntDomains: µb.userSettings.dntDomains, // ADN
         tabIdsToken: µb.pageStoresToken
     };
-    if ( µb.pageStoresToken !== details.tabIdsToken ) {
+    // if ( µb.pageStoresToken !== details.tabIdsToken ) { // tmp fix for logger
         for ( let entry of µb.pageStores ) {
             let pageStore = entry[1];
             if ( pageStore.rawURL.startsWith(extensionOriginURL) ) { continue; }
             tabIds.set(entry[0], pageStore.title);
         }
         response.tabIds = Array.from(tabIds);
-    }
+    // }
     if ( activeTabId ) {
         let pageStore = µb.pageStoreFromTabId(activeTabId);
         if (

@@ -226,10 +226,7 @@ body #netInspector td {
     font: 1em FontAwesome;
     }
 #netInspector tr.tab:not(.canMtx) {
-    opacity: 0.3;
-    }
-#netInspector tr.tab:not(.canMtx):hover {
-    opacity: 0.7;
+    opacity: 1;
     }
 #netInspector tr.tab:not(.canMtx) > td:nth-of-type(2):before {
     content: '\f00d';
