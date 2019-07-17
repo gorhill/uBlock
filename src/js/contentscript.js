@@ -1388,6 +1388,12 @@ vAPI.domSurveyor = (function() {
             vAPI.domFilterer = null;
             vAPI.domSurveyor = null;
         } else {
+          // ADN
+          var nodes = document.querySelectorAll(response.specificCosmeticFilters.injectedHideFilters);
+          for ( var node of nodes ) {
+              vAPI.adCheck && vAPI.adCheck(node);
+          }
+
             var domFilterer = vAPI.domFilterer;
             if ( response.noGenericCosmeticFiltering || cfeDetails.noDOMSurveying ) {
                 vAPI.domSurveyor = null;

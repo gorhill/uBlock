@@ -49,6 +49,8 @@ inc.com##.teads-inread
 www.ask.com##.tsrc_SAS
 www.ask.com###megaLabel
 www.ask.com###csaBottom
+www.ask.com##.TopAdsPartial
+www.ask.com##.BottomAdsPartial
 
 www.startpage.com###adBlock
 www.startpage.com##*[id^="spon_"]
@@ -232,6 +234,7 @@ reuters.com##.CanvasAd_container_sZDIL
 
 ##bing.com
 www.bing.com##.adbDef
+www.bing.com##.b_ad
 
 computerworld.com###superadunit
 

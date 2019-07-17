@@ -61,7 +61,7 @@
           ads.push(ad);
 
         } else {
-          console.warn('[TEXTADS] bingTextHandler.fail: ', divs[i]); //title, site, text);
+          console.warn('[TEXTADS] bingTextHandler.fail: ', divs[i], title, site, text); //title, site, text);
         }
 
       }
@@ -128,35 +128,41 @@
       return [ad];
     }
 
-    var askText = function (dom) { // TODO: not working
+    var askText = function (dom) {
+      var ads = [],
+        divs = $find(dom, 'div[id^="e"][data-bg=true]');
 
-      var title = $find(dom, 'a.test_titleLink.d_'),
-        site = $find(dom, 'a.test_domainLink.e_'),
-        text1 = $find(dom, 'span.descText'),
-        text2 = $find(dom, 'span.v_'),
-        text;
+        for (var i = 0; i < divs.length; i++) {
 
-      text = $text(text1) + (text2 && text2.length ? $text(text2) : '');
+          var title, site, text,
+            idiv = divs[i];
 
-      if (text.length && site.length && title.length) {
+          title = $find(idiv, 'div:nth-child(1) a');
+          site = $find(idiv, 'div:nth-child(2) a');
+          text = $find(idiv, 'span:nth-child(3)');
 
-        var ad = vAPI.adParser.createAd('ask', $attr(title, 'href'), {
-          title: $text(title),
-          site: $text(site),
-          text: text
-        });
+          if (text.length && site.length && title.length) {
 
-      } else {
+            var ad = vAPI.adParser.createAd('ask', $attr(title, 'href'), {
+              title: $text(title),
+              text: $text(text),
+              site: $text(site)
+            });
 
-        console.warn('[TEXTADS] askTextHandler.fail: ', text, site, document.URL, document.title);
-      }
+            ads.push(ad);
 
-      return [ad];
+          } else {
+
+            console.warn('[TEXTADS] askTextHandler.fail: ', divs[i], title.length, site.length, text.length); //title, site, text);
+          }
+        }
+
+      return ads;
     }
 
     var googleText = function (li) {
 
-      var ad, title = $find(li, 'h3 a[onmousedown]'),
+      var ad, title = $find(li, '.ad_cclk a:nth-child(2)'), // title must contains href
         text = $find(li, '.ads-creative'),
         site = $find(li, '.ads-visurl cite');
 
@@ -169,8 +175,7 @@
         });
 
       } else {
-
-        console.warn('[TEXTADS] googleTextHandler.fail: ', text, site, document.URL, document.title);
+        console.warn('[TEXTADS] googleTextHandler.fail: ', $text(title), $text(text), $text(site));
       }
 
       return [ad];
@@ -333,7 +338,7 @@
       name: 'google',
       domain: googleRegex
     }, {
-      selector: '.ad.a_',
+      selector: '#adBlock',
       handler: askText, // not working
       name: 'ask',
       domain: /^.*\.ask\.com$/i
