@@ -51,6 +51,7 @@ www.ask.com###megaLabel
 www.ask.com###csaBottom
 www.ask.com##.TopAdsPartial
 www.ask.com##.BottomAdsPartial
+www.google.com###adBlock
 
 www.startpage.com###adBlock
 www.startpage.com##*[id^="spon_"]
