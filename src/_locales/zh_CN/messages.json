@@ -112,7 +112,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "是否禁止此网站的所有弹出窗口",
+    "message": "是否禁止此网站弹出任何窗口",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
