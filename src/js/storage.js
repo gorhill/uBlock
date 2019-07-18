@@ -1188,11 +1188,14 @@
         const bin = {};
         let binNotEmpty = false;
 
-        // Allows an admin to set their own 'assets.json' file, with their own
-        // set of stock assets.
-        if ( typeof data.assetsBootstrapLocation === 'string' ) {
-            bin.assetsBootstrapLocation = data.assetsBootstrapLocation;
-            binNotEmpty = true;
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/666
+        //   Allows an admin to set their own 'assets.json' file, with their
+        //   own set of stock assets.
+        if (
+            typeof data.assetsBootstrapLocation === 'string' &&
+            data.assetsBootstrapLocation !== ''
+        ) {
+            µBlock.assetsBootstrapLocation = data.assetsBootstrapLocation;
         }
 
         if ( typeof data.userSettings === 'object' ) {

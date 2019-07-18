@@ -155,7 +155,7 @@ const µBlock = (function() { // jshint ignore:line
         // Allows to fully customize uBO's assets, typically set through admin
         // settings. The content of 'assets.json' will also tell which filter
         // lists to enable by default when uBO is first installed.
-        assetsBootstrapLocation: 'assets/assets.json',
+        assetsBootstrapLocation: undefined,
 
         userFiltersPath: 'user-filters',
         pslAssetKey: 'public_suffix_list.dat',

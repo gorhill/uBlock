@@ -23,7 +23,7 @@
 
 /******************************************************************************/
 
-µBlock.assets = (function() {
+µBlock.assets = (( ) => {
 
 /******************************************************************************/
 
@@ -36,7 +36,7 @@ const api = {};
 
 /******************************************************************************/
 
-var observers = [];
+const observers = [];
 
 api.addObserver = function(observer) {
     if ( observers.indexOf(observer) === -1 ) {
@@ -45,16 +45,16 @@ api.addObserver = function(observer) {
 };
 
 api.removeObserver = function(observer) {
-    var pos;
+    let pos;
     while ( (pos = observers.indexOf(observer)) !== -1 ) {
         observers.splice(pos, 1);
     }
 };
 
-var fireNotification = function(topic, details) {
-    var result, r;
-    for ( var i = 0; i < observers.length; i++ ) {
-        r = observers[i](topic, details);
+const fireNotification = function(topic, details) {
+    let result;
+    for ( const observer of observers ) {
+        const r = observer(topic, details);
         if ( r !== undefined ) { result = r; }
     }
     return result;
@@ -414,7 +414,7 @@ const updateAssetSourceRegistry = function(json, silent) {
     saveAssetSourceRegistry();
 };
 
-const getAssetSourceRegistry = function(callback) {
+const getAssetSourceRegistry = function() {
     if ( assetSourceRegistryPromise === undefined ) {
         assetSourceRegistryPromise = µBlock.cacheStorage.get(
             'assetSourceRegistry'
@@ -424,34 +424,33 @@ const getAssetSourceRegistry = function(callback) {
                 bin.assetSourceRegistry instanceof Object
             ) {
                 assetSourceRegistry = bin.assetSourceRegistry;
-                return;
+                return assetSourceRegistry;
             }
-            return new Promise(resolve => {
-                api.fetchText(
-                    µBlock.assetsBootstrapLocation || 'assets/assets.json',
-                    details => {
-                        updateAssetSourceRegistry(details.content, true);
-                        resolve();
-                    }
-                );
+            return api.fetchText(
+                µBlock.assetsBootstrapLocation || 'assets/assets.json'
+            ).then(details => {
+                return details.content !== ''
+                    ? details
+                    : api.fetchText('assets/assets.json');
+            }).then(details => {
+                updateAssetSourceRegistry(details.content, true);
+                return assetSourceRegistry;
             });
         });
     }
 
-    assetSourceRegistryPromise.then(( ) => {
-        callback(assetSourceRegistry);
-    });
+    return assetSourceRegistryPromise;
 };
 
 api.registerAssetSource = function(assetKey, details) {
-    getAssetSourceRegistry(function() {
+    getAssetSourceRegistry().then(( ) => {
         registerAssetSource(assetKey, details);
         saveAssetSourceRegistry(true);
     });
 };
 
 api.unregisterAssetSource = function(assetKey) {
-    getAssetSourceRegistry(function() {
+    getAssetSourceRegistry().then(( ) => {
         unregisterAssetSource(assetKey);
         saveAssetSourceRegistry(true);
     });
@@ -771,7 +770,7 @@ api.get = function(assetKey, options, callback) {
         if ( details.content !== '' ) {
             return reportBack(details.content);
         }
-        getAssetSourceRegistry(function(registry) {
+        getAssetSourceRegistry().then(registry => {
             assetDetails = registry[assetKey] || {};
             if ( typeof assetDetails.contentURL === 'string' ) {
                 contentURLs = [ assetDetails.contentURL ];
@@ -792,12 +791,12 @@ api.get = function(assetKey, options, callback) {
 /******************************************************************************/
 
 const getRemote = function(assetKey, callback) {
-   var assetDetails = {},
-        contentURLs,
-        contentURL;
+    let assetDetails = {};
+    let contentURLs;
+    let contentURL;
 
-    var reportBack = function(content, err) {
-        var details = { assetKey: assetKey, content: content };
+    const reportBack = function(content, err) {
+        const details = { assetKey: assetKey, content: content };
         if ( err ) {
             details.error = assetDetails.lastError = err;
         } else {
@@ -806,7 +805,7 @@ const getRemote = function(assetKey, callback) {
         callback(details);
     };
 
-    var onRemoteContentLoaded = function(details) {
+    const onRemoteContentLoaded = function(details) {
         if ( stringIsNotEmpty(details.content) === false ) {
             registerAssetSource(assetKey, { error: { time: Date.now(), error: 'No content' } });
             tryLoading();
@@ -820,8 +819,8 @@ const getRemote = function(assetKey, callback) {
         reportBack(details.content);
     };
 
-    var onRemoteContentError = function(details) {
-        var text = details.statusText;
+    const onRemoteContentError = function(details) {
+        let text = details.statusText;
         if ( details.statusCode === 0 ) {
             text = 'network error';
         }
@@ -829,7 +828,7 @@ const getRemote = function(assetKey, callback) {
         tryLoading();
     };
 
-    var tryLoading = function() {
+    const tryLoading = function() {
         while ( (contentURL = contentURLs.shift()) ) {
             if ( reIsExternalPath.test(contentURL) ) { break; }
         }
@@ -843,7 +842,7 @@ const getRemote = function(assetKey, callback) {
         }
     };
 
-    getAssetSourceRegistry(function(registry) {
+    getAssetSourceRegistry().then(registry => {
         assetDetails = registry[assetKey] || {};
         if ( typeof assetDetails.contentURL === 'string' ) {
             contentURLs = [ assetDetails.contentURL ];
@@ -877,9 +876,6 @@ api.put = function(assetKey, content, callback) {
 /******************************************************************************/
 
 api.metadata = function(callback) {
-    let assetRegistryReady = false,
-        cacheRegistryReady = false;
-
     const onReady = function() {
         const assetDict = JSON.parse(JSON.stringify(assetSourceRegistry));
         const cacheDict = assetCacheRegistry;
@@ -905,15 +901,12 @@ api.metadata = function(callback) {
         callback(assetDict);
     };
 
-    getAssetSourceRegistry(( ) => {
-        assetRegistryReady = true;
-        if ( cacheRegistryReady ) { onReady(); }
-    });
-
-    getAssetCacheRegistry().then(( ) => {
-        cacheRegistryReady = true;
-        if ( assetRegistryReady ) { onReady(); }
-    });
+    Promise.all([
+        getAssetSourceRegistry(),
+        getAssetCacheRegistry(),
+    ]).then(
+        ( ) => onReady()
+    );
 };
 
 /******************************************************************************/
@@ -1025,15 +1018,12 @@ const updateNext = function() {
         getRemote(assetKey, updatedOne);
     };
 
-    getAssetSourceRegistry(function(dict) {
-        assetDict = dict;
-        if ( !cacheDict ) { return; }
-        updateOne();
-    });
-
-    getAssetCacheRegistry().then(dict => {
-        cacheDict = dict;
-        if ( !assetDict ) { return; }
+    Promise.all([
+        getAssetSourceRegistry(),
+        getAssetCacheRegistry(),
+    ]).then(results => {
+        assetDict = results[0];
+        cacheDict = results[1];
         updateOne();
     });
 };
