@@ -912,7 +912,7 @@ vAPI.tabs.registerListeners();
 {
     const NoPageStore = class extends µBlock.PageStore {
         getNetFilteringSwitch(fctxt) {
-            if ( fctxt.docId === 0 ) {
+            if ( fctxt && fctxt.docId === 0 ) {
                 const docOrigin = fctxt.getDocOrigin();
                 if ( docOrigin ) {
                     return µBlock.getNetFilteringSwitch(docOrigin);
