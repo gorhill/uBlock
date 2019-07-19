@@ -440,7 +440,7 @@ const onHeadersReceived = function(details) {
         if ( isRootDoc === false ) { return; }
         pageStore = µb.bindTabToPageStats(fctxt.tabId, 'beforeRequest');
     }
-    if ( pageStore.getNetFilteringSwitch() === false ) { return; }
+    if ( pageStore.getNetFilteringSwitch(fctxt) === false ) { return; }
 
     // Keep in mind response headers will be modified in-place if needed, so
     // `details.responseHeaders` will always point to the modified response
