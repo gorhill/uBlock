@@ -338,10 +338,10 @@ vAPI.Tabs = class {
 
     get(tabId, callback) {
         if ( tabId === null ) {
-            chrome.tabs.query(
+            browser.tabs.query(
                 { active: true, currentWindow: true },
                 tabs => {
-                    void chrome.runtime.lastError;
+                    void browser.runtime.lastError;
                     callback(
                         Array.isArray(tabs) && tabs.length !== 0
                             ? tabs[0]
@@ -358,8 +358,8 @@ vAPI.Tabs = class {
             return;
         }
 
-        chrome.tabs.get(tabId, function(tab) {
-            void chrome.runtime.lastError;
+        browser.tabs.get(tabId, function(tab) {
+            void browser.runtime.lastError;
             callback(tab);
         });
     }
@@ -541,21 +541,21 @@ vAPI.Tabs = class {
             targetURL = vAPI.getURL(targetURL);
         }
 
-        chrome.tabs.update(tabId, { url: targetURL }, vAPI.resetLastError);
+        browser.tabs.update(tabId, { url: targetURL }, vAPI.resetLastError);
     }
 
     remove(tabId) {
         tabId = toChromiumTabId(tabId);
         if ( tabId === 0 ) { return; }
 
-        chrome.tabs.remove(tabId, vAPI.resetLastError);
+        browser.tabs.remove(tabId, vAPI.resetLastError);
     }
 
     reload(tabId, bypassCache = false) {
         tabId = toChromiumTabId(tabId);
         if ( tabId === 0 ) { return; }
 
-        chrome.tabs.reload(
+        browser.tabs.reload(
             tabId,
             { bypassCache: bypassCache === true },
             vAPI.resetLastError
@@ -566,26 +566,33 @@ vAPI.Tabs = class {
         tabId = toChromiumTabId(tabId);
         if ( tabId === 0 ) { return; }
 
-        chrome.tabs.update(tabId, { active: true }, function(tab) {
-            void chrome.runtime.lastError;
+        browser.tabs.update(tabId, { active: true }, function(tab) {
+            void browser.runtime.lastError;
             if ( !tab ) { return; }
-            if ( chrome.windows instanceof Object === false ) { return; }
-            chrome.windows.update(tab.windowId, { focused: true });
+            if ( browser.windows instanceof Object === false ) { return; }
+            browser.windows.update(tab.windowId, { focused: true });
         });
     }
 
     injectScript(tabId, details, callback) {
         const onScriptExecuted = function() {
             // https://code.google.com/p/chromium/issues/detail?id=410868#c8
-            void chrome.runtime.lastError;
+            void browser.runtime.lastError;
             if ( typeof callback === 'function' ) {
                 callback.apply(null, arguments);
             }
         };
         if ( tabId ) {
-            chrome.tabs.executeScript(toChromiumTabId(tabId), details, onScriptExecuted);
+            browser.tabs.executeScript(
+                toChromiumTabId(tabId),
+                details,
+                onScriptExecuted
+            );
         } else {
-            chrome.tabs.executeScript(details, onScriptExecuted);
+            browser.tabs.executeScript(
+                details,
+                onScriptExecuted
+            );
         }
     }
 
