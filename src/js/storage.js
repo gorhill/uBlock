@@ -1330,10 +1330,6 @@
                 return;
             }
         }
-        // This asset is deprecated.
-        if ( details.assetKey === 'ublock-resources' ) {
-            return;
-        }
         return true;
     }
 
