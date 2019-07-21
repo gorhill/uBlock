@@ -275,10 +275,6 @@ vAPI.browserSettings = (function() {
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.tabs = {};
-
-/******************************************************************************/
-
 vAPI.isBehindTheSceneTabId = function(tabId) {
     return tabId < 0;
 };
@@ -286,166 +282,104 @@ vAPI.isBehindTheSceneTabId = function(tabId) {
 vAPI.unsetTabId = 0;
 vAPI.noTabId = -1;      // definitely not any existing tab
 
-/******************************************************************************/
-
 // To remove when tabId-as-integer has been tested enough.
 
-var toChromiumTabId = function(tabId) {
-    return typeof tabId === 'number' && !isNaN(tabId) && tabId > 0 ?
-        tabId :
-        0;
+const toChromiumTabId = function(tabId) {
+    return typeof tabId === 'number' && isNaN(tabId) === false
+        ? tabId
+        : 0;
 };
 
-/******************************************************************************/
+// https://developer.chrome.com/extensions/webNavigation
+// https://developer.chrome.com/extensions/tabs
 
-vAPI.tabs.registerListeners = function() {
-    // https://developer.chrome.com/extensions/webNavigation
-    // [onCreatedNavigationTarget ->]
-    //  onBeforeNavigate ->
-    //  onCommitted ->
-    //  onDOMContentLoaded ->
-    //  onCompleted
-
-    // The chrome.webRequest.onBeforeRequest() won't be called for everything
-    // else than `http`/`https`. Thus, in such case, we will bind the tab as
-    // early as possible in order to increase the likelihood of a context
-    // properly setup if network requests are fired from within the tab.
-    // Example: Chromium + case #6 at
-    //          http://raymondhill.net/ublock/popup.html
-    const reGoodForWebRequestAPI = /^https?:\/\//;
-
-    // https://forums.lanik.us/viewtopic.php?f=62&t=32826
-    //   Chromium-based browsers: sanitize target URL. I've seen data: URI with
-    //   newline characters in standard fields, possibly as a way of evading
-    //   filters. As per spec, there should be no whitespaces in a data: URI's
-    //   standard fields.
-    const sanitizeURL = function(url) {
-        if ( url.startsWith('data:') === false ) { return url; }
-        const pos = url.indexOf(',');
-        if ( pos === -1 ) { return url; }
-        const s = url.slice(0, pos);
-        if ( s.search(/\s/) === -1 ) { return url; }
-        return s.replace(/\s+/, '') + url.slice(pos);
-    };
-
-    browser.webNavigation.onCreatedNavigationTarget.addListener(details => {
-        if ( typeof details.url !== 'string' ) {
-            details.url = '';
-        }
-        if ( reGoodForWebRequestAPI.test(details.url) === false ) {
-            details.frameId = 0;
-            details.url = sanitizeURL(details.url);
-            if ( this.onNavigation ) {
+vAPI.Tabs = class {
+    constructor() {
+        browser.webNavigation.onCreatedNavigationTarget.addListener(details => {
+            if ( typeof details.url !== 'string' ) {
+                details.url = '';
+            }
+            if ( /^https?:\/\//.test(details.url) === false ) {
+                details.frameId = 0;
+                details.url = this.sanitizeURL(details.url);
                 this.onNavigation(details);
             }
-        }
-        if ( vAPI.tabs.onPopupCreated ) {
-            vAPI.tabs.onPopupCreated(
+            this.onCreated(
                 details.tabId,
                 details.sourceTabId
             );
-        }
-    });
+        });
 
-    browser.webNavigation.onCommitted.addListener(details => {
-        details.url = sanitizeURL(details.url);
-        if ( this.onNavigation ) {
+        browser.webNavigation.onCommitted.addListener(details => {
+            details.url = this.sanitizeURL(details.url);
             this.onNavigation(details);
-        }
-    });
+        });
 
-    // https://github.com/gorhill/uBlock/issues/3073
-    //   Fall back to `tab.url` when `changeInfo.url` is not set.
-    browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-        if ( typeof changeInfo.url !== 'string' ) {
-            changeInfo.url = tab && tab.url;
-        }
-        if ( changeInfo.url ) {
-            changeInfo.url = sanitizeURL(changeInfo.url);
-        }
-        if ( this.onUpdated ) {
-            this.onUpdated(tabId, changeInfo, tab);
-        }
-    });
-
-    browser.tabs.onActivated.addListener(( ) => {
-        if ( vAPI.contextMenu ) {
-            vAPI.contextMenu.onMustUpdate();
-        }
-    });
-
-    browser.tabs.onRemoved.addListener((tabId, details) => {
-        this.onClosed(tabId, details);
-    });
-};
-
-/******************************************************************************/
-
-// Caller must be prepared to deal with nil tab argument.
-
-// https://code.google.com/p/chromium/issues/detail?id=410868#c8
-
-vAPI.tabs.get = function(tabId, callback) {
-    if ( tabId === null ) {
-        chrome.tabs.query(
-            { active: true, currentWindow: true },
-            tabs => {
-                void chrome.runtime.lastError;
-                callback(
-                    Array.isArray(tabs) && tabs.length !== 0 ? tabs[0] : null
-                );
+        // https://github.com/gorhill/uBlock/issues/3073
+        //   Fall back to `tab.url` when `changeInfo.url` is not set.
+        browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+            if ( typeof changeInfo.url !== 'string' ) {
+                changeInfo.url = tab && tab.url;
             }
-        );
-        return;
+            if ( changeInfo.url ) {
+                changeInfo.url = this.sanitizeURL(changeInfo.url);
+            }
+            this.onUpdated(tabId, changeInfo, tab);
+        });
+
+        browser.tabs.onActivated.addListener((tabId, details) => {
+            this.onActivated(tabId, details);
+        });
+
+        browser.tabs.onRemoved.addListener((tabId, details) => {
+            this.onClosed(tabId, details);
+        });
+     }
+
+    get(tabId, callback) {
+        if ( tabId === null ) {
+            chrome.tabs.query(
+                { active: true, currentWindow: true },
+                tabs => {
+                    void chrome.runtime.lastError;
+                    callback(
+                        Array.isArray(tabs) && tabs.length !== 0
+                            ? tabs[0]
+                            : null
+                    );
+                }
+            );
+            return;
+        }
+
+        tabId = toChromiumTabId(tabId);
+        if ( tabId === 0 ) {
+            callback(null);
+            return;
+        }
+
+        chrome.tabs.get(tabId, function(tab) {
+            void chrome.runtime.lastError;
+            callback(tab);
+        });
     }
 
-    tabId = toChromiumTabId(tabId);
-    if ( tabId === 0 ) {
-        callback(null);
-        return;
-    }
+    // Properties of the details object:
+    // - url: 'URL',    => the address that will be opened
+    // - index: -1,     => undefined: end of the list, -1: following tab, or
+    //                     after index
+    // - active: false, => opens the tab in background - true and undefined:
+    //                     foreground
+    // - popup: true    => open in a new window
 
-    chrome.tabs.get(tabId, function(tab) {
-        void chrome.runtime.lastError;
-        callback(tab);
-    });
-};
-
-/*******************************************************************************
-
-    Properties of the details object:
-    - url: 'URL',    => the address that will be opened
-    - tabId: 1,      => the tab is used if set, instead of creating a new one
-    - index: -1,     => undefined: end of the list, -1: following tab, or
-                        after index
-    - active: false, => opens the tab in background - true and undefined:
-                        foreground
-    - select: true,  => if a tab is already opened with that url, then select
-                        it instead of opening a new one
-    - popup: true    => open in a new window
-
-*/
-
-vAPI.tabs.open = function(details) {
-    let targetURL = details.url;
-    if ( typeof targetURL !== 'string' || targetURL === '' ) {
-        return null;
-    }
-
-    // extension pages
-    if ( /^[\w-]{2,}:/.test(targetURL) !== true ) {
-        targetURL = vAPI.getURL(targetURL);
-    }
-
-    // dealing with Chrome's asynchronous API
-    const wrapper = ( ) => {
+    create(url, details) {
         if ( details.active === undefined ) {
             details.active = true;
         }
 
         const subWrapper = ( ) => {
             const updateDetails = {
-                url: targetURL,
+                url: url,
                 active: !!details.active
             };
 
@@ -527,121 +461,162 @@ vAPI.tabs.open = function(details) {
 
             subWrapper();
         });
-    };
-
-    if ( !details.select ) {
-        wrapper();
-        return;
     }
 
-    // https://github.com/gorhill/uBlock/issues/3053#issuecomment-332276818
-    // - Do not try to lookup uBO's own pages with FF 55 or less.
-    if (
-        vAPI.webextFlavor.soup.has('firefox') &&
-        vAPI.webextFlavor.major < 56
-    ) {
-        wrapper();
-        return;
-    }
+    // Properties of the details object:
+    // - url: 'URL',    => the address that will be opened
+    // - tabId: 1,      => the tab is used if set, instead of creating a new one
+    // - index: -1,     => undefined: end of the list, -1: following tab, or
+    //                     after index
+    // - active: false, => opens the tab in background - true and undefined:
+    //                     foreground
+    // - select: true,  => if a tab is already opened with that url, then select
+    //                     it instead of opening a new one
+    // - popup: true    => open in a new window
 
-    // https://developer.chrome.com/extensions/tabs#method-query
-    //   "Note that fragment identifiers are not matched."
-    //   It's a lie, fragment identifiers ARE matched. So we need to remove
-    //   the fragment.
-    const pos = targetURL.indexOf('#');
-    const targetURLWithoutHash = pos === -1
-        ? targetURL
-        : targetURL.slice(0, pos);
+    open(details) {
+        let targetURL = details.url;
+        if ( typeof targetURL !== 'string' || targetURL === '' ) {
+            return null;
+        }
 
-    browser.tabs.query({ url: targetURLWithoutHash }, tabs => {
-        void browser.runtime.lastError;
-        const tab = Array.isArray(tabs) && tabs[0];
-        if ( !tab ) {
-            wrapper();
+        // extension pages
+        if ( /^[\w-]{2,}:/.test(targetURL) !== true ) {
+            targetURL = vAPI.getURL(targetURL);
+        }
+
+        if ( !details.select ) {
+            this.create(targetURL, details);
             return;
         }
-        const updateDetails = { active: true };
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/592
-        if ( tab.url.startsWith(targetURL) === false ) {
-            updateDetails.url = targetURL;
+
+        // https://github.com/gorhill/uBlock/issues/3053#issuecomment-332276818
+        //   Do not try to lookup uBO's own pages with FF 55 or less.
+        if (
+            vAPI.webextFlavor.soup.has('firefox') &&
+            vAPI.webextFlavor.major < 56
+        ) {
+            this.create(targetURL, details);
+            return;
         }
-        browser.tabs.update(tab.id, updateDetails, tab => {
-            if ( browser.windows instanceof Object === false ) { return; }
-            browser.windows.update(tab.windowId, { focused: true });
+
+        // https://developer.chrome.com/extensions/tabs#method-query
+        //   "Note that fragment identifiers are not matched."
+        //   It's a lie, fragment identifiers ARE matched. So we need to remove
+        //   the fragment.
+        const pos = targetURL.indexOf('#');
+        const targetURLWithoutHash = pos === -1
+            ? targetURL
+            : targetURL.slice(0, pos);
+
+        browser.tabs.query({ url: targetURLWithoutHash }, tabs => {
+            void browser.runtime.lastError;
+            const tab = Array.isArray(tabs) && tabs[0];
+            if ( !tab ) {
+                this.create(targetURL, details);
+                return;
+            }
+            const updateDetails = { active: true };
+            // https://github.com/uBlockOrigin/uBlock-issues/issues/592
+            if ( tab.url.startsWith(targetURL) === false ) {
+                updateDetails.url = targetURL;
+            }
+            browser.tabs.update(tab.id, updateDetails, tab => {
+                if ( browser.windows instanceof Object === false ) { return; }
+                browser.windows.update(tab.windowId, { focused: true });
+            });
         });
-    });
-};
-
-/******************************************************************************/
-
-// Replace the URL of a tab. Noop if the tab does not exist.
-
-vAPI.tabs.replace = function(tabId, url) {
-    tabId = toChromiumTabId(tabId);
-    if ( tabId === 0 ) { return; }
-
-    var targetURL = url;
-
-    // extension pages
-    if ( /^[\w-]{2,}:/.test(targetURL) !== true ) {
-        targetURL = vAPI.getURL(targetURL);
     }
 
-    chrome.tabs.update(tabId, { url: targetURL }, vAPI.resetLastError);
-};
+    // Replace the URL of a tab. Noop if the tab does not exist.
 
-/******************************************************************************/
+    replace(tabId, url) {
+        tabId = toChromiumTabId(tabId);
+        if ( tabId === 0 ) { return; }
 
-vAPI.tabs.remove = function(tabId) {
-    tabId = toChromiumTabId(tabId);
-    if ( tabId === 0 ) { return; }
+        let targetURL = url;
 
-    chrome.tabs.remove(tabId, vAPI.resetLastError);
-};
-
-/******************************************************************************/
-
-vAPI.tabs.reload = function(tabId, bypassCache = false) {
-    tabId = toChromiumTabId(tabId);
-    if ( tabId === 0 ) { return; }
-
-    chrome.tabs.reload(
-        tabId,
-        { bypassCache: bypassCache === true },
-        vAPI.resetLastError
-    );
-};
-
-/******************************************************************************/
-
-// Select a specific tab.
-
-vAPI.tabs.select = function(tabId) {
-    tabId = toChromiumTabId(tabId);
-    if ( tabId === 0 ) { return; }
-
-    chrome.tabs.update(tabId, { active: true }, function(tab) {
-        void chrome.runtime.lastError;
-        if ( !tab ) { return; }
-        if ( chrome.windows instanceof Object === false ) { return; }
-        chrome.windows.update(tab.windowId, { focused: true });
-    });
-};
-
-/******************************************************************************/
-
-vAPI.tabs.injectScript = function(tabId, details, callback) {
-    var onScriptExecuted = function() {
-        // https://code.google.com/p/chromium/issues/detail?id=410868#c8
-        void chrome.runtime.lastError;
-        if ( typeof callback === 'function' ) {
-            callback.apply(null, arguments);
+        // extension pages
+        if ( /^[\w-]{2,}:/.test(targetURL) !== true ) {
+            targetURL = vAPI.getURL(targetURL);
         }
-    };
-    if ( tabId ) {
-        chrome.tabs.executeScript(toChromiumTabId(tabId), details, onScriptExecuted);
-    } else {
-        chrome.tabs.executeScript(details, onScriptExecuted);
+
+        chrome.tabs.update(tabId, { url: targetURL }, vAPI.resetLastError);
+    }
+
+    remove(tabId) {
+        tabId = toChromiumTabId(tabId);
+        if ( tabId === 0 ) { return; }
+
+        chrome.tabs.remove(tabId, vAPI.resetLastError);
+    }
+
+    reload(tabId, bypassCache = false) {
+        tabId = toChromiumTabId(tabId);
+        if ( tabId === 0 ) { return; }
+
+        chrome.tabs.reload(
+            tabId,
+            { bypassCache: bypassCache === true },
+            vAPI.resetLastError
+        );
+    }
+
+    select(tabId) {
+        tabId = toChromiumTabId(tabId);
+        if ( tabId === 0 ) { return; }
+
+        chrome.tabs.update(tabId, { active: true }, function(tab) {
+            void chrome.runtime.lastError;
+            if ( !tab ) { return; }
+            if ( chrome.windows instanceof Object === false ) { return; }
+            chrome.windows.update(tab.windowId, { focused: true });
+        });
+    }
+
+    injectScript(tabId, details, callback) {
+        const onScriptExecuted = function() {
+            // https://code.google.com/p/chromium/issues/detail?id=410868#c8
+            void chrome.runtime.lastError;
+            if ( typeof callback === 'function' ) {
+                callback.apply(null, arguments);
+            }
+        };
+        if ( tabId ) {
+            chrome.tabs.executeScript(toChromiumTabId(tabId), details, onScriptExecuted);
+        } else {
+            chrome.tabs.executeScript(details, onScriptExecuted);
+        }
+    }
+
+    // https://forums.lanik.us/viewtopic.php?f=62&t=32826
+    //   Chromium-based browsers: sanitize target URL. I've seen data: URI with
+    //   newline characters in standard fields, possibly as a way of evading
+    //   filters. As per spec, there should be no whitespaces in a data: URI's
+    //   standard fields.
+
+    sanitizeURL(url) {
+        if ( url.startsWith('data:') === false ) { return url; }
+        const pos = url.indexOf(',');
+        if ( pos === -1 ) { return url; }
+        const s = url.slice(0, pos);
+        if ( s.search(/\s/) === -1 ) { return url; }
+        return s.replace(/\s+/, '') + url.slice(pos);
+    }
+
+    onActivated(/* details */) {
+    }
+
+    onClosed(/* tabId, details */) {
+    }
+
+    onCreated(/* openedTabId, openerTabId */) {
+    }
+
+    onNavigation(/* details */) {
+    }
+
+    onUpdated(/* tabId, changeInfo, tab */) {
     }
 };
 
