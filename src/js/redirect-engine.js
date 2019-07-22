@@ -177,14 +177,6 @@ const mimeFromName = function(name) {
     }
 };
 
-// https://github.com/gorhill/uBlock/issues/3639
-// https://github.com/EFForg/https-everywhere/issues/14961
-// https://bugs.chromium.org/p/chromium/issues/detail?id=111700
-//   Do not redirect to a WAR if the platform suffers from spurious redirect
-//   conflicts, and the request to redirect is not `https:`.
-//   This special handling code can removed once the Chromium issue is fixed.
-const suffersSpuriousRedirectConflicts = vAPI.webextFlavor.soup.has('chromium');
-
 /******************************************************************************/
 /******************************************************************************/
 
@@ -206,11 +198,7 @@ RedirectEntry.prototype.toURL = function(fctxt) {
     if (
         this.warURL !== undefined &&
         fctxt instanceof Object &&
-        fctxt.type !== 'xmlhttprequest' &&
-        (
-            suffersSpuriousRedirectConflicts === false ||
-            fctxt.url.startsWith('https:')
-        )
+        fctxt.type !== 'xmlhttprequest'
     ) {
         return `${this.warURL}${vAPI.warSecret()}`;
     }
