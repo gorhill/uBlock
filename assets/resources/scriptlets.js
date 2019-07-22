@@ -115,7 +115,7 @@
         }
         const prop = chain.slice(0, pos);
         let v = owner[prop];
-        chain = chain.slice(pos + 1); 
+        chain = chain.slice(pos + 1);
         if ( v ) {
             makeProxy(v, chain);
             return;
@@ -707,7 +707,7 @@
     while ( props.length ) {
         var prop = props.pop();
         if ( typeof window[prop] === 'function' ) {
-            window[prop] = noopfn; 
+            window[prop] = noopfn;
         } else {
             Object.defineProperty(window, prop, {
                 get: function() { return noopfn; },
