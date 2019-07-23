@@ -24,6 +24,8 @@ freebitcoin.win##iframe[src*="coinad"]
 freebitcoin.win##iframe[src*="mellowads"]
 rockpapershotgun.com##*[id^="google_ads"]
 
+www.nytimes.com##.e12j3pa50
+
 search.yahoo.com##.layoutMiddle
 search.yahoo.com##.kr5yi684e6
 search.yahoo.com###right
