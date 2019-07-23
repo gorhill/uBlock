@@ -23,7 +23,7 @@
 
 /******************************************************************************/
 
-(function() {
+(( ) => {
 
 /******************************************************************************/
 
@@ -42,23 +42,13 @@ const simpleDeclarativeSet = new Set();
 let simpleDeclarativeStr;
 const complexDeclarativeSet = new Set();
 let complexDeclarativeStr;
+const declarativeStyleDict = new Map();
+let declarativeStyleStr;
 const proceduralDict = new Map();
 const exceptionDict = new Map();
 let exceptionStr;
 const nodesToProcess = new Set();
-let shouldProcessDeclarativeComplex = false;
-let shouldProcessProcedural = false;
-let shouldProcessExceptions = false;
 const loggedSelectors = new Set();
-
-/******************************************************************************/
-
-const shouldProcess = function() {
-    return nodesToProcess.size !== 0 ||
-           shouldProcessDeclarativeComplex ||
-           shouldProcessProcedural ||
-           shouldProcessExceptions;
-};
 
 /******************************************************************************/
 
@@ -108,6 +98,26 @@ const processDeclarativeComplex = function(out) {
 
 /******************************************************************************/
 
+const processDeclarativeStyle = function(out) {
+    if ( declarativeStyleDict.size === 0 ) { return; }
+    if ( declarativeStyleStr === undefined ) {
+        declarativeStyleStr = Array.from(declarativeStyleDict.keys())
+                                   .join(',\n');
+    }
+    if ( document.querySelector(declarativeStyleStr) === null ) { return; }
+    for ( const [ selector, style ] of declarativeStyleDict ) {
+        if ( document.querySelector(selector) === null ) { continue; }
+        const raw = `##${selector}:style(${style})`;
+        out.push(raw);
+        declarativeStyleDict.delete(selector);
+        declarativeStyleStr = undefined;
+        loggedSelectors.add(raw);
+        if ( declarativeStyleDict.size === 0 ) { return; }
+    }
+};
+
+/******************************************************************************/
+
 const processProcedural = function(out) {
     if ( proceduralDict.size === 0 ) { return; }
     for ( const entry of proceduralDict ) {
@@ -137,33 +147,32 @@ const processExceptions = function(out) {
 
 /******************************************************************************/
 
-const processTimer = new vAPI.SafeAnimationFrame(() => {
+const processTimer = new vAPI.SafeAnimationFrame(( ) => {
     //console.time('dom logger/scanning for matches');
     processTimer.clear();
+    if ( nodesToProcess.size === 0 ) { return; }
+
+    if ( nodesToProcess.size !== 1 && nodesToProcess.has(document) ) {
+        nodesToProcess.clear();
+        nodesToProcess.add(document);
+    }
+
     const toLog = [];
-    if ( nodesToProcess.size !== 0 && simpleDeclarativeSet.size !== 0 ) {
-        if ( nodesToProcess.size !== 1 && nodesToProcess.has(document) ) {
-            nodesToProcess.clear();
-            nodesToProcess.add(document);
-        }
+    if ( simpleDeclarativeSet.size !== 0 ) {
         for ( const node of nodesToProcess ) {
             processDeclarativeSimple(node, toLog);
         }
-        nodesToProcess.clear();
     }
-    if ( shouldProcessDeclarativeComplex ) {
-        processDeclarativeComplex(toLog);
-        shouldProcessDeclarativeComplex = false;
-    }
-    if ( shouldProcessProcedural ) {
-        processProcedural(toLog);
-        shouldProcessProcedural = false;
-    }
-    if ( shouldProcessExceptions ) {
-        processExceptions(toLog);
-        shouldProcessExceptions = false;
-    }
+
+    processDeclarativeComplex(toLog);
+    processDeclarativeStyle(toLog);
+    processProcedural(toLog);
+    processExceptions(toLog);
+
+    nodesToProcess.clear();
+
     if ( toLog.length === 0 ) { return; }
+
     vAPI.messaging.send(
         'scriptlets',
         {
@@ -179,20 +188,13 @@ const processTimer = new vAPI.SafeAnimationFrame(() => {
 /******************************************************************************/
 
 const attributeObserver = new MutationObserver(mutations => {
-    if ( simpleDeclarativeSet.size !== 0 ) {
-        for ( const mutation of mutations ) {
-            const node = mutation.target;
-            if ( node.nodeType !== 1 ) { continue; }
-            nodesToProcess.add(node);
-        }
+    if ( nodesToProcess.has(document) ) { return; }
+    for ( const mutation of mutations ) {
+        const node = mutation.target;
+        if ( node.nodeType !== 1 ) { continue; }
+        nodesToProcess.add(node);
     }
-    if ( complexDeclarativeSet.size !== 0 ) {
-        shouldProcessDeclarativeComplex = true;
-    }
-    if ( proceduralDict.size !== 0 ) {
-        shouldProcessProcedural = true;
-    }
-    if ( shouldProcess() ) {
+    if ( nodesToProcess.size !== 0 ) {
         processTimer.start(100);
     }
 });
@@ -202,13 +204,11 @@ const attributeObserver = new MutationObserver(mutations => {
 const handlers = {
     onFiltersetChanged: function(changes) {
         //console.time('dom logger/filterset changed');
-        const simpleSizeBefore = simpleDeclarativeSet.size,
-            complexSizeBefore = complexDeclarativeSet.size,
-            logNow = [];
         for ( const entry of (changes.declarative || []) ) {
             for ( let selector of entry[0].split(',\n') ) {
                 if ( entry[1] !== 'display:none!important;' ) {
-                    logNow.push(`##${selector}:style(${entry[1]})`);
+                    declarativeStyleDict.set(selector, entry[1]);
+                    declarativeStyleStr = undefined;
                     continue;
                 }
                 if ( reHasPseudoClass.test(selector) ) {
@@ -226,23 +226,6 @@ const handlers = {
                 }
             }
         }
-        if ( logNow.length !== 0 ) {
-            vAPI.messaging.send(
-                'scriptlets',
-                {
-                    what: 'logCosmeticFilteringData',
-                    frameURL: window.location.href,
-                    frameHostname: window.location.hostname,
-                    matchedSelectors: logNow
-                }
-            );
-        }
-        if ( simpleDeclarativeSet.size !== simpleSizeBefore ) {
-            nodesToProcess.add(document.documentElement);
-        }
-        if ( complexDeclarativeSet.size !== complexSizeBefore ) {
-            shouldProcessDeclarativeComplex = true;
-        }
         if (
             Array.isArray(changes.procedural) &&
             changes.procedural.length !== 0
@@ -250,7 +233,6 @@ const handlers = {
             for ( const selector of changes.procedural ) {
                 proceduralDict.set(selector.raw, selector);
             }
-            shouldProcessProcedural = true;
         }
         if ( Array.isArray(changes.exceptions) ) {
             for ( const selector of changes.exceptions ) {
@@ -263,11 +245,10 @@ const handlers = {
                 }
             }
             exceptionStr = undefined;
-            shouldProcessExceptions = true;
         }
-        if ( shouldProcess() ) {
-            processTimer.start(1);
-        }
+        nodesToProcess.clear();
+        nodesToProcess.add(document);
+        processTimer.start(1);
         //console.timeEnd('dom logger/filterset changed');
     },
 
@@ -281,24 +262,12 @@ const handlers = {
     },
 
     onDOMChanged: function(addedNodes) {
-        // This is to guard against runaway job queue. I suspect this could
-        // occur on slower devices.
-        if ( simpleDeclarativeSet.size !== 0 ) {
-            for ( const node of addedNodes ) {
-                if ( node.parentNode === null ) { continue; }
-                nodesToProcess.add(node);
-            }
+        if ( nodesToProcess.has(document) ) { return; }
+        for ( const node of addedNodes ) {
+            if ( node.parentNode === null ) { continue; }
+            nodesToProcess.add(node);
         }
-        if ( complexDeclarativeSet.size !== 0 ) {
-            shouldProcessDeclarativeComplex = true;
-        }
-        if ( proceduralDict.size !== 0 ) {
-            shouldProcessProcedural = true;
-        }
-        if ( exceptionDict.size !== 0 ) {
-            shouldProcessExceptions = true;
-        }
-        if ( shouldProcess() ) {
+        if ( nodesToProcess.size !== 0 ) {
             processTimer.start(100);
         }
     }
