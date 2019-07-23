@@ -396,12 +396,12 @@
         out.unshift(
             '(function() {',
             '// >>>> start of private namespace',
-            '',
+            ''
         );
         out.push(
             '',
             '// <<<< end of private namespace',
-            '})();',
+            '})();'
         );
 
         return out.join('\n');
