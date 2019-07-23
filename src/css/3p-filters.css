@@ -3,8 +3,15 @@
     100% { transform: rotate(360deg); -webkit-transform: rotate(360deg); }
     }
 /*ADN*/
-#options li:nth-child(2), #options li:nth-child(3){
+#options li:nth-child(3), #options li:nth-child(4){
   display: none;
+}
+#options li:nth-child(2) {
+  margin-left:1em;
+}
+#options li:nth-child(2) input{
+  /* auto-update filter lists */
+    margin-right: 0.6em;
 }
 ul {
     list-style-type: none;
@@ -20,6 +27,7 @@ ul.root {
     }
 #options li {
     margin-bottom: 0.5em;
+    margin-left:0 !important;
     }
 #listsOfBlockedHostsPrompt {
     cursor: pointer;
@@ -70,7 +78,7 @@ body.hideUnused #listsOfBlockedHostsPrompt:before {
     display: none;
     }
 .listEntry > * {
-    margin-right: 0.5em;
+    margin-right: 0.3em;
     unicode-bidi: embed;
     }
 .listEntry.toRemove > input[type="checkbox"] {

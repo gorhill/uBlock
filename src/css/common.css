@@ -809,7 +809,7 @@ body[dir=rtl] #lists {
 li.listEntry {
     font-size: 14px;
     margin: 0 auto 0 auto;
-    margin-left: 3em;
+    margin-left: 2em;
     margin-right: 0em;
     text-indent: -2em;
     }
