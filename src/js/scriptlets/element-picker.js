@@ -698,6 +698,7 @@ const filtersFrom = function(x, y) {
 const filterToDOMInterface = (( ) => {
     const reHnAnchorPrefix = '^[\\w-]+://(?:[^/?#]+\\.)?';
     const reCaret = '(?:[^%.0-9a-z_-]|$)';
+    const rePseudoElements = /::?(?:after|before)$/;
 
     // Net filters: we need to lookup manually -- translating into a foolproof
     // CSS selector is just not possible.
@@ -795,11 +796,16 @@ const filterToDOMInterface = (( ) => {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/389
     //   Test filter using comma-separated list to better detect invalid CSS
     //   selectors.
+    //
+    // https://github.com/gorhill/uBlock/issues/2515
+    //   Remove trailing pseudo-element when querying.
     const fromPlainCosmeticFilter = function(raw) {
         let elems;
         try {
             document.documentElement.matches(`${raw},\na`);
-            elems = document.querySelectorAll(raw);
+            elems = document.querySelectorAll(
+                raw.replace(rePseudoElements, '')
+            );
         }
         catch (e) {
             return;
@@ -814,20 +820,24 @@ const filterToDOMInterface = (( ) => {
 
     // https://github.com/gorhill/uBlock/issues/1772
     //   Handle procedural cosmetic filters.
+    //
+    // https://github.com/gorhill/uBlock/issues/2515
+    //   Remove trailing pseudo-element when querying.
     const fromCompiledCosmeticFilter = function(raw) {
         if ( typeof raw !== 'string' ) { return; }
-        let o;
+        let elems;
         try {
-            o = JSON.parse(raw);
+            const o = JSON.parse(raw);
+            if ( o.style ) {
+                elems = document.querySelectorAll(
+                    o.style[0].replace(rePseudoElements, '')
+                );
+                lastAction = o.style[0] + ' {' + o.style[1] + '}';
+            } else if ( o.tasks ) {
+                elems = vAPI.domFilterer.createProceduralFilter(o).exec();
+            }
         } catch(ex) {
             return;
-        }
-        let elems;
-        if ( o.style ) {
-            elems = document.querySelectorAll(o.style[0]);
-            lastAction = o.style[0] + ' {' + o.style[1] + '}';
-        } else if ( o.tasks ) {
-            elems = vAPI.domFilterer.createProceduralFilter(o).exec();
         }
         if ( !elems ) { return; }
         const out = [];
