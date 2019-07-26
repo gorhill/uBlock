@@ -327,9 +327,26 @@ vAPI.Tabs = class {
             this.onUpdated(tabId, changeInfo, tab);
         });
 
-        browser.tabs.onActivated.addListener((tabId, details) => {
-            this.onActivated(tabId, details);
+        browser.tabs.onActivated.addListener(details => {
+            this.onActivated(details);
         });
+
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/151
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/680#issuecomment-515215220
+        if ( browser.windows instanceof Object ) {
+            browser.windows.onFocusChanged.addListener(windowId => {
+                if ( windowId === browser.windows.WINDOW_ID_NONE ) { return; }
+                browser.tabs.query({ active: true, windowId }, tabs => {
+                    if ( Array.isArray(tabs) === false ) { return; }
+                    if ( tabs.length === 0 ) { return; }
+                    const tab = tabs[0];
+                    this.onActivated({
+                        tabId: tab.id,
+                        windowId: tab.windowId,
+                    });
+                });
+            });
+        }
 
         browser.tabs.onRemoved.addListener((tabId, details) => {
             this.onClosed(tabId, details);
