@@ -36,8 +36,6 @@ if (
 }
 
 const reHasCSSCombinators = /[ >+~]/;
-const reHasPseudoClass = /:+(?:after|before)$/;
-const sanitizedSelectors = new Map();
 const simpleDeclarativeSet = new Set();
 let simpleDeclarativeStr;
 const complexDeclarativeSet = new Set();
@@ -52,10 +50,39 @@ const loggedSelectors = new Set();
 
 /******************************************************************************/
 
+const rePseudoElements = /::?(?:after|before)$/;
+
+const safeMatchSelector = function(selector, context) {
+    const safeSelector = rePseudoElements.test(selector)
+        ? selector.replace(rePseudoElements, '')
+        : selector;
+    return context.matches(safeSelector);
+};
+
+const safeQuerySelector = function(selector, context = document) {
+    const safeSelector = rePseudoElements.test(selector)
+        ? selector.replace(rePseudoElements, '')
+        : selector;
+    return context.querySelector(safeSelector);
+};
+
+const safeGroupSelectors = function(selectors) {
+    const arr = Array.isArray(selectors)
+        ? selectors
+        : Array.from(selectors);
+    return arr.map(s => {
+        return rePseudoElements.test(s)
+            ? s.replace(rePseudoElements, '')
+            : s;
+    }).join(',\n');
+};
+
+/******************************************************************************/
+
 const processDeclarativeSimple = function(node, out) {
     if ( simpleDeclarativeSet.size === 0 ) { return; }
     if ( simpleDeclarativeStr === undefined ) {
-        simpleDeclarativeStr = Array.from(simpleDeclarativeSet).join(',\n');
+        simpleDeclarativeStr = safeGroupSelectors(simpleDeclarativeSet);
     }
     if (
         (node === document || node.matches(simpleDeclarativeStr) === false) &&
@@ -65,16 +92,15 @@ const processDeclarativeSimple = function(node, out) {
     }
     for ( const selector of simpleDeclarativeSet ) {
         if (
-            (node === document || node.matches(selector) === false) &&
-            (node.querySelector(selector) === null)
+            (node === document || safeMatchSelector(selector, node) === false) &&
+            (safeQuerySelector(selector, node) === null)
         ) {
             continue;
         }
-        out.push(`##${sanitizedSelectors.get(selector) || selector}`);
+        out.push(`##${selector}`);
         simpleDeclarativeSet.delete(selector);
         simpleDeclarativeStr = undefined;
         loggedSelectors.add(selector);
-        if ( simpleDeclarativeSet.size === 0 ) { return; }
     }
 };
 
@@ -83,16 +109,15 @@ const processDeclarativeSimple = function(node, out) {
 const processDeclarativeComplex = function(out) {
     if ( complexDeclarativeSet.size === 0 ) { return; }
     if ( complexDeclarativeStr === undefined ) {
-        complexDeclarativeStr = Array.from(complexDeclarativeSet).join(',\n');
+        complexDeclarativeStr = safeGroupSelectors(complexDeclarativeSet);
     }
     if ( document.querySelector(complexDeclarativeStr) === null ) { return; }
     for ( const selector of complexDeclarativeSet ) {
-        if ( document.querySelector(selector) === null ) { continue; }
-        out.push(`##${sanitizedSelectors.get(selector) || selector}`);
+        if ( safeQuerySelector(selector) === null ) { continue; }
+        out.push(`##${selector}`);
         complexDeclarativeSet.delete(selector);
         complexDeclarativeStr = undefined;
         loggedSelectors.add(selector);
-        if ( complexDeclarativeSet.size === 0 ) { return; }
     }
 };
 
@@ -101,18 +126,16 @@ const processDeclarativeComplex = function(out) {
 const processDeclarativeStyle = function(out) {
     if ( declarativeStyleDict.size === 0 ) { return; }
     if ( declarativeStyleStr === undefined ) {
-        declarativeStyleStr = Array.from(declarativeStyleDict.keys())
-                                   .join(',\n');
+        declarativeStyleStr = safeGroupSelectors(declarativeStyleDict.keys());
     }
     if ( document.querySelector(declarativeStyleStr) === null ) { return; }
     for ( const [ selector, style ] of declarativeStyleDict ) {
-        if ( document.querySelector(selector) === null ) { continue; }
+        if ( safeQuerySelector(selector) === null ) { continue; }
         const raw = `##${selector}:style(${style})`;
         out.push(raw);
         declarativeStyleDict.delete(selector);
         declarativeStyleStr = undefined;
         loggedSelectors.add(raw);
-        if ( declarativeStyleDict.size === 0 ) { return; }
     }
 };
 
@@ -124,7 +147,6 @@ const processProcedural = function(out) {
         if ( entry[1].test() === false ) { continue; }
         out.push(`##${entry[1].raw}`);
         proceduralDict.delete(entry[0]);
-        if ( proceduralDict.size === 0 ) { break; }
     }
 };
 
@@ -133,11 +155,11 @@ const processProcedural = function(out) {
 const processExceptions = function(out) {
     if ( exceptionDict.size === 0 ) { return; }
     if ( exceptionStr === undefined ) {
-        exceptionStr = Array.from(exceptionDict.keys()).join(',\n');
+        exceptionStr = safeGroupSelectors(exceptionDict.keys());
     }
     if ( document.querySelector(exceptionStr) === null ) { return; }
     for ( const [ selector, raw ] of exceptionDict ) {
-        if ( document.querySelector(selector) === null ) { continue; }
+        if ( safeQuerySelector(selector) === null ) { continue; }
         out.push(`#@#${raw}`);
         exceptionDict.delete(selector);
         exceptionStr = undefined;
@@ -210,11 +232,6 @@ const handlers = {
                     declarativeStyleDict.set(selector, entry[1]);
                     declarativeStyleStr = undefined;
                     continue;
-                }
-                if ( reHasPseudoClass.test(selector) ) {
-                    const sanitized = selector.replace(reHasPseudoClass, '');
-                    sanitizedSelectors.set(sanitized, selector);
-                    selector = sanitized;
                 }
                 if ( loggedSelectors.has(selector) ) { continue; }
                 if ( reHasCSSCombinators.test(selector) ) {
