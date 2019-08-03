@@ -303,7 +303,7 @@ RedirectEngine.prototype.lookup = function(fctxt) {
     for (;;) {
         if ( this.ruleSources.has(src) ) {
             for ( let i = 0; i < n; i++ ) {
-                const entries = this.rules.get(src + ' ' + desAll[i] + ' ' + type);
+                const entries = this.rules.get(`${src} ${desAll[i]} ${type}`);
                 if ( entries && this.lookupToken(entries, reqURL) ) {
                     return this.resourceNameRegister;
                 }
@@ -414,14 +414,18 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
         }
     }
 
-    const pattern =
+    const path = matches[2] || '';
+    let pattern =
             des
                 .replace(/\*/g, '[\\w.%-]*')
                 .replace(/\./g, '\\.') +
-            matches[2]
+            path
                 .replace(/[.+?{}()|[\]\/\\]/g, '\\$&')
                 .replace(/\^/g, '[^\\w.%-]')
                 .replace(/\*/g, '.*?');
+    if ( pattern === '' ) {
+        pattern = '^';
+    }
 
     let type,
         redirect = '',
@@ -429,6 +433,10 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
     for ( const option of matches[3].split(',') ) {
         if ( option.startsWith('redirect=') ) {
             redirect = option.slice(9);
+            continue;
+        }
+        if ( option.startsWith('redirect-rule=') ) {
+            redirect = option.slice(14);
             continue;
         }
         if ( option.startsWith('domain=') ) {
@@ -468,12 +476,14 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
         out.push(`${srchn}\t${deshn}\t${type}\t${pattern}\t${redirect}`);
     }
 
+    if ( out.length === 0 ) { return; }
+
     return out;
 };
 
 /******************************************************************************/
 
-RedirectEngine.prototype.reFilterParser = /^(?:\|\|([^\/:?#^]+)|\*)([^$]+)\$([^$]+)$/;
+RedirectEngine.prototype.reFilterParser = /^(?:\|\|([^\/:?#^]+)|\*)([^$]+)?\$([^$]+)$/;
 
 RedirectEngine.prototype.supportedTypes = new Map([
     [ 'css', 'stylesheet' ],
