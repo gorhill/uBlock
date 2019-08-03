@@ -434,6 +434,9 @@ bitcoin.treasurebits.net##iframe[src="about:blank"]
 #Washington Post
 ||washingtonpost.com/wp-stat/advertising/pseudo-static/^$important
 
+#hdrezka.horse
+||braun634.com^$domain=hdrezka.horse
+
 #nbcnews
 ||cdn.krxd.net$domain=www.nbcnews.com^$important
 
