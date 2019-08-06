@@ -319,8 +319,8 @@ stackoverflow.com#@#.adsbox
 
 # radikal.ru (video)
 radikal.ru##div[id^="DIV_DA_ADP"]
-##div[id^="advertur_"]
-##iframe[id^="advertur_"]
+radikal.ru##div[id^="advertur_"]
+radikal.ru##iframe[id^="advertur_"]
 ##iframe[src^="//octoclick.net"]
 ##img[src*="delivery.clickganic.com"]
 optoclick.net##.vjs-poster
