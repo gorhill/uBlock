@@ -62,6 +62,90 @@ const fireNotification = function(topic, details) {
 
 /******************************************************************************/
 
+api.fetch = function(url, options = {}) {
+    return new Promise((resolve, reject) => {
+    // Start of executor
+
+    const timeoutAfter = µBlock.hiddenSettings.assetFetchTimeout * 1000 || 30000;
+    const xhr = new XMLHttpRequest();
+    let contentLoaded = 0;
+    let timeoutTimer;
+
+    const cleanup = function() {
+        xhr.removeEventListener('load', onLoadEvent);
+        xhr.removeEventListener('error', onErrorEvent);
+        xhr.removeEventListener('abort', onErrorEvent);
+        xhr.removeEventListener('progress', onProgressEvent);
+        if ( timeoutTimer !== undefined ) {
+            clearTimeout(timeoutTimer);
+            timeoutTimer = undefined;
+        }
+    };
+
+    // https://github.com/gorhill/uMatrix/issues/15
+    const onLoadEvent = function() {
+        cleanup();
+        // xhr for local files gives status 0, but actually succeeds
+        const details = {
+            url,
+            content: '',
+            statusCode: this.status || 200,
+            statusText: this.statusText || ''
+        };
+        if ( details.statusCode < 200 || details.statusCode >= 300 ) {
+            return reject(details);
+        }
+        details.content = this.response;
+        resolve(details);
+    };
+
+    const onErrorEvent = function() {
+        cleanup();
+        µBlock.logger.writeOne({
+            realm: 'message',
+            type: 'error',
+            text: errorCantConnectTo.replace('{{msg}}', url)
+        });
+        reject({ url, content: '' });
+    };
+
+    const onTimeout = function() {
+        xhr.abort();
+    };
+
+    // https://github.com/gorhill/uBlock/issues/2526
+    // - Timeout only when there is no progress.
+    const onProgressEvent = function(ev) {
+        if ( ev.loaded === contentLoaded ) { return; }
+        contentLoaded = ev.loaded;
+        if ( timeoutTimer !== undefined ) {
+            clearTimeout(timeoutTimer); 
+        }
+        timeoutTimer = vAPI.setTimeout(onTimeout, timeoutAfter);
+    };
+
+    // Be ready for thrown exceptions:
+    // I am pretty sure it used to work, but now using a URL such as
+    // `file:///` on Chromium 40 results in an exception being thrown.
+    try {
+        xhr.open('get', url, true);
+        xhr.addEventListener('load', onLoadEvent);
+        xhr.addEventListener('error', onErrorEvent);
+        xhr.addEventListener('abort', onErrorEvent);
+        xhr.addEventListener('progress', onProgressEvent);
+        xhr.responseType = options.responseType || 'text';
+        xhr.send();
+        timeoutTimer = vAPI.setTimeout(onTimeout, timeoutAfter);
+    } catch (e) {
+        onErrorEvent.call(xhr);
+    }
+
+    // End of executor
+    });
+};
+
+/******************************************************************************/
+
 api.fetchText = function(url, onLoad, onError) {
     const isExternal = reIsExternalPath.test(url);
     let actualUrl = isExternal ? url : vAPI.getURL(url);
@@ -91,109 +175,36 @@ api.fetchText = function(url, onLoad, onError) {
         onError = onLoad;
     }
 
-    return new Promise(resolve => {
-    // Start of executor
-
-    const timeoutAfter = µBlock.hiddenSettings.assetFetchTimeout * 1000 || 30000;
-    const xhr = new XMLHttpRequest();
-    let contentLoaded = 0;
-    let timeoutTimer;
-
-    const cleanup = function() {
-        xhr.removeEventListener('load', onLoadEvent);
-        xhr.removeEventListener('error', onErrorEvent);
-        xhr.removeEventListener('abort', onErrorEvent);
-        xhr.removeEventListener('progress', onProgressEvent);
-        if ( timeoutTimer !== undefined ) {
-            clearTimeout(timeoutTimer);
-            timeoutTimer = undefined;
-        }
-    };
-
     const onResolve = function(details) {
         if ( onLoad instanceof Function ) {
             return onLoad(details);
         }
-        resolve(details);
+        return details;
     };
 
     const onReject = function(details) {
+        details.content = '';
         if ( onError instanceof Function ) {
             return onError(details);
         }
-        resolve(details);
+        return details;
     };
 
-    // https://github.com/gorhill/uMatrix/issues/15
-    const onLoadEvent = function() {
-        cleanup();
-        // xhr for local files gives status 0, but actually succeeds
-        const details = {
-            url,
-            content: '',
-            statusCode: this.status || 200,
-            statusText: this.statusText || ''
-        };
-        if ( details.statusCode < 200 || details.statusCode >= 300 ) {
-            return onReject(details);
-        }
+    return api.fetch(url).then(details => {
         // consider an empty result to be an error
-        if ( stringIsNotEmpty(this.responseText) === false ) {
+        if ( stringIsNotEmpty(details.content) === false ) {
             return onReject(details);
         }
         // we never download anything else than plain text: discard if response
         // appears to be a HTML document: could happen when server serves
         // some kind of error page I suppose
-        const text = this.responseText.trim();
+        const text = details.content.trim();
         if ( text.startsWith('<') && text.endsWith('>') ) {
             return onReject(details);
         }
-        details.content = this.responseText;
-        onResolve(details);
-    };
-
-    const onErrorEvent = function() {
-        cleanup();
-        µBlock.logger.writeOne({
-            realm: 'message',
-            type: 'error',
-            text: errorCantConnectTo.replace('{{msg}}', actualUrl)
-        });
-        onReject({ url, content: '' });
-    };
-
-    const onTimeout = function() {
-        xhr.abort();
-    };
-
-    // https://github.com/gorhill/uBlock/issues/2526
-    // - Timeout only when there is no progress.
-    const onProgressEvent = function(ev) {
-        if ( ev.loaded === contentLoaded ) { return; }
-        contentLoaded = ev.loaded;
-        if ( timeoutTimer !== undefined ) {
-            clearTimeout(timeoutTimer); 
-        }
-        timeoutTimer = vAPI.setTimeout(onTimeout, timeoutAfter);
-    };
-
-    // Be ready for thrown exceptions:
-    // I am pretty sure it used to work, but now using a URL such as
-    // `file:///` on Chromium 40 results in an exception being thrown.
-    try {
-        xhr.open('get', actualUrl, true);
-        xhr.addEventListener('load', onLoadEvent);
-        xhr.addEventListener('error', onErrorEvent);
-        xhr.addEventListener('abort', onErrorEvent);
-        xhr.addEventListener('progress', onProgressEvent);
-        xhr.responseType = 'text';
-        xhr.send();
-        timeoutTimer = vAPI.setTimeout(onTimeout, timeoutAfter);
-    } catch (e) {
-        onErrorEvent.call(xhr);
-    }
-
-    // End of executor
+        return onResolve(details);
+    }).catch(details => {
+        return onReject(details);
     });
 };
 
