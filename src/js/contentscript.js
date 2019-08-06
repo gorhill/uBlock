@@ -1314,6 +1314,16 @@ vAPI.domSurveyor = (function() {
 (function bootstrap() {
 
     var bootstrapPhase2 = function(ev) {
+        // ADN
+        vAPI.domFilterer.filterset.forEach(function(c){
+          var nodes = document.querySelectorAll(c.selectors);
+          for ( var node of nodes ) {
+              // console.log("BootstrapPhase2 Adcheck:", node)
+              vAPI.adCheck && vAPI.adCheck(node);
+          }
+        //  TODO:  proceduralFilters ?
+        })
+
         // This can happen on Firefox. For instance:
         // https://github.com/gorhill/uBlock/issues/1893
         if ( window.location === null ) { return; }
@@ -1375,6 +1385,7 @@ vAPI.domSurveyor = (function() {
     };
 
     var bootstrapPhase1 = function(response) {
+
         if (response && response.prefs) vAPI.prefs = response.prefs; // ADN
         // cosmetic filtering engine aka 'cfe'
         var cfeDetails = response && response.specificCosmeticFilters;
@@ -1388,11 +1399,7 @@ vAPI.domSurveyor = (function() {
             vAPI.domFilterer = null;
             vAPI.domSurveyor = null;
         } else {
-          // ADN
-          var nodes = document.querySelectorAll(response.specificCosmeticFilters.injectedHideFilters);
-          for ( var node of nodes ) {
-              vAPI.adCheck && vAPI.adCheck(node);
-          }
+
 
             var domFilterer = vAPI.domFilterer;
             if ( response.noGenericCosmeticFiltering || cfeDetails.noDOMSurveying ) {
