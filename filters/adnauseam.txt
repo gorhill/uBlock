@@ -268,6 +268,9 @@ usatoday.com##DIV#module-position-8
 usatoday.com##DIV.taboola-sidebar-content
 usatoday.com##section#module-position-8
 
+# flashback.org
+flashback.org##.adcontainer
+
 # popups on kickass-top.com
 *$third-party,popup,domain=kickass-top.com
 
