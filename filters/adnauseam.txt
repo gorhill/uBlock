@@ -419,6 +419,8 @@ bitcoin.treasurebits.net##iframe[src="about:blank"]
 ||images.sohu.com/bill/s2015/jscript/lib/sjs/matrix/ad/form/bigView.js^$important
 ||teads.tv^$important,third-party,domain=mingpao.com
 
+||amazon-adsystem.com^$subdocument
+
 # radikal.ru (video)
 ||laim.tv^$important,third-party
 
