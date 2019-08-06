@@ -75,9 +75,10 @@ facebook.com##.ego_unit:has(div.uiScaledImageContainer)
 facebook.com##._5hn6
 
 ##.promotion-carousel
-##*[id^="teads"]
-##*[class*="teads"]
-gizmodo.com#@#*[class*="teads"]
+
+# scmp.com
+www.scmp.com##*[id^="teads"]
+www.scmp.com##*[class*="teads"]
 
 si.com#@#.ad
 si.com#@#.mobile-ad
