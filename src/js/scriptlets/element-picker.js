@@ -1040,7 +1040,7 @@ const userFilterFromCandidate = function(callback) {
 
         // Cosmetic filter?
         if ( v.startsWith('##') ) {
-            callback(hostname + v);
+            callback(hostname + v, true);
             return;
         }
 
@@ -1188,8 +1188,8 @@ const onDialogClicked = function(ev) {
         // We have to exit from preview mode: this guarantees matching elements
         // will be found for the candidate filter.
         filterToDOMInterface.preview(false);
-        userFilterFromCandidate(filter => {
-            if ( !filter ) { return; }
+        userFilterFromCandidate((filter = undefined, isCosmetic = false) => {
+            if ( filter === undefined ) { return; }
             vAPI.messaging.send(
                 'elementPicker',
                 {
@@ -1197,7 +1197,8 @@ const onDialogClicked = function(ev) {
                     autoComment: true,
                     filters: filter,
                     origin: window.location.origin,
-                    pageDomain: window.location.hostname
+                    pageDomain: window.location.hostname,
+                    killCache: isCosmetic === false,
                 }
             );
             filterToDOMInterface.preview(rawFilterFromTextarea(), true);

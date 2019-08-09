@@ -468,6 +468,12 @@
         this.redirectEngine.freeze();
         this.staticExtFilteringEngine.freeze();
         this.selfieManager.destroy();
+
+        // https://www.reddit.com/r/uBlockOrigin/comments/cj7g7m/
+        // https://www.reddit.com/r/uBlockOrigin/comments/cnq0bi/
+        if ( options.killCache ) {
+            browser.webRequest.handlerBehaviorChanged();
+        }
     };
 
     const onLoaded = details => {
