@@ -409,6 +409,7 @@ const matchBucket = function(url, hostname, bucket, start) {
         this.redirectEngine.invalidateResourcesSelfie();
         this.loadRedirectResources();
     }
+    this.fireDOMEvent('hiddenSettingsChanged');
 };
 
 /******************************************************************************/
@@ -506,6 +507,10 @@ const matchBucket = function(url, hostname, bucket, start) {
 
     // https://github.com/chrisaljoudi/uBlock/issues/420
     this.cosmeticFilteringEngine.removeFromSelectorCache(srcHostname, 'net');
+
+    if ( requestType.startsWith('3p') ) {
+        this.updateToolbarIcon(details.tabId, 0b100);
+    }
 };
 
 /******************************************************************************/
@@ -548,6 +553,9 @@ const matchBucket = function(url, hostname, bucket, start) {
 
     // Take action if needed
     switch ( details.name ) {
+    case 'no-scripting':
+        this.updateToolbarIcon(details.tabId, 0b100);
+        break;
     case 'no-cosmetic-filtering':
         this.scriptlets.injectDeep(
             details.tabId,
@@ -573,6 +581,28 @@ const matchBucket = function(url, hostname, bucket, start) {
     if ( changed ) {
         this.saveHostnameSwitches();
     }
+};
+
+/******************************************************************************/
+
+µBlock.blockingModeFromHostname = function(hn) {
+    let bits = 0;
+    if ( this.sessionSwitches.evaluateZ('no-scripting', hn) ) {
+        bits |= 0b00000010;
+    }
+    if ( this.userSettings.advancedUserEnabled ) {
+        const fw = this.sessionFirewall;
+        if ( fw.evaluateCellZY(hn, '*', '3p') === 1 ) {
+            bits |= 0b00000100;
+        }
+        if ( fw.evaluateCellZY(hn, '*', '3p-script') === 1 ) {
+            bits |= 0b00001000;
+        }
+        if ( fw.evaluateCellZY(hn, '*', '3p-frame') === 1 ) {
+            bits |= 0b00010000;
+        }
+    }
+    return bits;
 };
 
 /******************************************************************************/

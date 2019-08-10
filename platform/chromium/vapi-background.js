@@ -661,28 +661,25 @@ vAPI.Tabs = class {
 // https://github.com/uBlockOrigin/uBlock-issues/issues/32
 //   Ensure ImageData for toolbar icon is valid before use.
 
-vAPI.setIcon = (function() {
-    const browserAction = chrome.browserAction,
-        titleTemplate =
-            chrome.runtime.getManifest().browser_action.default_title +
-            ' ({badge})';
+vAPI.setIcon = (( ) => {
+    const browserAction = chrome.browserAction;
+    const  titleTemplate =
+        browser.runtime.getManifest().browser_action.default_title +
+        ' ({badge})';
     const icons = [
-        {
-            path: { '16': 'img/icon_16-off.png', '32': 'img/icon_32-off.png' }
-        },
-        {
-            path: { '16': 'img/icon_16.png', '32': 'img/icon_32.png' }
-        }
+        { path: { '16': 'img/icon_16-off.png', '32': 'img/icon_32-off.png' } },
+        { path: { '16':     'img/icon_16.png', '32':     'img/icon_32.png' } },
     ];
 
-    (function() {
+    (( ) => {
         if ( browserAction.setIcon === undefined ) { return; }
 
-        // The global badge background color.
+        // The global badge text and background color.
         if ( browserAction.setBadgeBackgroundColor !== undefined ) {
-            browserAction.setBadgeBackgroundColor({
-                color: [ 0x66, 0x66, 0x66, 0xFF ]
-            });
+            browserAction.setBadgeBackgroundColor({ color: '#666666' });
+        }
+        if ( browserAction.setBadgeTextColor !== undefined ) {
+            browserAction.setBadgeTextColor({ color: '#FFFFFF' });
         }
 
         // As of 2018-05, benchmarks show that only Chromium benefits for sure
@@ -698,7 +695,7 @@ vAPI.setIcon = (function() {
 
         const imgs = [];
         for ( let i = 0; i < icons.length; i++ ) {
-            let path = icons[i].path;
+            const path = icons[i].path;
             for ( const key in path ) {
                 if ( path.hasOwnProperty(key) === false ) { continue; }
                 imgs.push({ i: i, p: key });
@@ -719,10 +716,10 @@ vAPI.setIcon = (function() {
             for ( const img of imgs ) {
                 if ( img.r.complete === false ) { return; }
             }
-            let ctx = document.createElement('canvas').getContext('2d');
-            let iconData = [ null, null ];
+            const ctx = document.createElement('canvas').getContext('2d');
+            const iconData = [ null, null ];
             for ( const img of imgs ) {
-                let w = img.r.naturalWidth, h = img.r.naturalHeight;
+                const w = img.r.naturalWidth, h = img.r.naturalHeight;
                 ctx.width = w; ctx.height = h;
                 ctx.clearRect(0, 0, w, h);
                 ctx.drawImage(img.r, 0, 0);
@@ -753,16 +750,23 @@ vAPI.setIcon = (function() {
         }
     })();
 
-    var onTabReady = function(tab, state, badge, parts) {
+    const onTabReady = function(tab, details) {
         if ( vAPI.lastError() || !tab ) { return; }
 
+        const { parts, state, badge, color } = details;
+
         if ( browserAction.setIcon !== undefined ) {
-            if ( parts === undefined || (parts & 0x01) !== 0 ) {
+            if ( parts === undefined || (parts & 0b001) !== 0 ) {
                 browserAction.setIcon(
                     Object.assign({ tabId: tab.id }, icons[state])
                 );
             }
-            browserAction.setBadgeText({ tabId: tab.id, text: badge });
+            if ( (parts & 0b010) !== 0 ) {
+                browserAction.setBadgeText({ tabId: tab.id, text: badge });
+            }
+            if ( (parts & 0b100) !== 0 ) {
+                browserAction.setBadgeBackgroundColor({ tabId: tab.id, color });
+            }
         }
 
         if ( browserAction.setTitle !== undefined ) {
@@ -778,14 +782,13 @@ vAPI.setIcon = (function() {
 
     // parts: bit 0 = icon
     //        bit 1 = badge
+    //        bit 2 = badge color
 
-    return function(tabId, state, badge, parts) {
+    return function(tabId, details) {
         tabId = toChromiumTabId(tabId);
         if ( tabId === 0 ) { return; }
 
-        chrome.tabs.get(tabId, function(tab) {
-            onTabReady(tab, state, badge, parts);
-        });
+        browser.tabs.get(tabId, tab => onTabReady(tab, details));
 
         if ( vAPI.contextMenu instanceof Object ) {
             vAPI.contextMenu.onMustUpdate(tabId);

@@ -39,12 +39,7 @@
 if ( µBlock.canUseShortcuts === false ) { return; }
 
 const relaxBlockingMode = function(tab) {
-    if (
-        tab instanceof Object === false ||
-        tab.id <= 0
-    ) {
-        return;
-    }
+    if ( tab instanceof Object === false || tab.id <= 0 ) { return; }
 
     const µb = µBlock;
     const normalURL = µb.normalizePageURL(tab.id, tab.url);
@@ -52,27 +47,7 @@ const relaxBlockingMode = function(tab) {
     if ( µb.getNetFilteringSwitch(normalURL) === false ) { return; }
 
     const hn = µb.URI.hostnameFromURI(normalURL);
-
-    // Construct current blocking profile
-    const ssw = µb.sessionSwitches;
-    const sfw = µb.sessionFirewall;
-    let currentProfile = 0;
-
-    if ( ssw.evaluateZ('no-scripting', hn) ) {
-        currentProfile |= 0b00000010;
-    }
-    if ( µb.userSettings.advancedUserEnabled ) {
-        if ( sfw.evaluateCellZY(hn, '*', '3p') === 1 ) {
-            currentProfile |= 0b00000100;
-        }
-        if ( sfw.evaluateCellZY(hn, '*', '3p-script') === 1 ) {
-            currentProfile |= 0b00001000;
-        }
-        if ( sfw.evaluateCellZY(hn, '*', '3p-frame') === 1 ) {
-            currentProfile |= 0b00010000;
-        }
-    }
-
+    const currentProfile = µb.blockingModeFromHostname(hn);
     const profiles = [];
     for ( const s of µb.hiddenSettings.blockingProfiles.split(/\s+/) ) {
         const v = parseInt(s, 2);

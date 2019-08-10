@@ -425,6 +425,7 @@ var onMessage = function(request, sender, callback) {
             request.srcHostname,
             'net'
         );
+        µb.updateToolbarIcon(request.tabId, 0b100);
         response = popupDataFromTabId(request.tabId);
         break;
 
@@ -462,7 +463,7 @@ var onMessage = function(request, sender, callback) {
         pageStore = µb.pageStoreFromTabId(request.tabId);
         if ( pageStore ) {
             pageStore.toggleNetFilteringSwitch(request.url, request.scope, request.state);
-            µb.updateToolbarIcon(request.tabId, 0x03);
+            µb.updateToolbarIcon(request.tabId, 0b111);
         }
         break;
 

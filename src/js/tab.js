@@ -342,7 +342,7 @@
 
         // Blocked
         if ( µb.userSettings.showIconBadge ) {
-            µb.updateToolbarIcon(openerTabId, 0x02);
+            µb.updateToolbarIcon(openerTabId, 0b010);
         }
 
         // It is a popup, block and remove the tab.
@@ -859,7 +859,7 @@ vAPI.tabs = new vAPI.Tabs();
 // Create an entry for the tab if it doesn't exist.
 
 µBlock.bindTabToPageStats = function(tabId, context) {
-    this.updateToolbarIcon(tabId, 0x03);
+    this.updateToolbarIcon(tabId, 0b111);
 
     // Do not create a page store for URLs which are of no interests
     if ( this.tabContextManager.exists(tabId) === false ) {
@@ -954,6 +954,24 @@ vAPI.tabs = new vAPI.Tabs();
 
 µBlock.updateToolbarIcon = (( ) => {
     const tabIdToDetails = new Map();
+    const blockingProfileColors = [
+        '#666666',
+        '#E7552C',
+        '#F69454',
+        '#008DCB',
+    ];
+
+    self.addEventListener(
+        'hiddenSettingsChanged',
+        ( ) => {
+            const colors = µBlock.hiddenSettings.blockingProfileColors;
+            if ( /^#[0-9a-f]{6}(\s#[0-9a-f]{6}){3}$/i.test(colors) === false ) {
+                return;
+            }
+            blockingProfileColors.length = 0;
+            blockingProfileColors.push(...colors.split(/\s+/));
+        }
+    );
 
     const updateBadge = function(tabId) {
         const µb = µBlock;
@@ -962,26 +980,40 @@ vAPI.tabs = new vAPI.Tabs();
 
         let state = 0;
         let badge = '';
+        let color = blockingProfileColors[0];
 
         let pageStore = µb.pageStoreFromTabId(tabId);
         if ( pageStore !== null ) {
             state = pageStore.getNetFilteringSwitch() ? 1 : 0;
             if (
                 state === 1 &&
-                µb.userSettings.showIconBadge &&
-                pageStore.perLoadBlockedRequestCount
+                µb.userSettings.showIconBadge
             ) {
-                badge = µb.formatCount(pageStore.perLoadBlockedRequestCount);
+                if ( (parts & 0b010) !== 0 && pageStore.perLoadBlockedRequestCount ) {
+                    badge = µb.formatCount(pageStore.perLoadBlockedRequestCount);
+                }
+                if ( (parts & 0b100) !== 0 ) {
+                    let profile = µb.blockingModeFromHostname(pageStore.tabHostname);
+                    if ( (profile & 0b00000010) !== 0 ) {
+                        color = blockingProfileColors[3];
+                    } else if ( (profile & 0b00000100) !== 0 ) {
+                        color = blockingProfileColors[2];
+                    } else if ( (profile & 0b00011000) !== 0 ) {
+                        color = blockingProfileColors[1];
+                    }
+                }
             }
         }
 
-        vAPI.setIcon(tabId, state, badge, parts);
+        vAPI.setIcon(tabId, { parts, state, badge, color });
     };
 
     // parts: bit 0 = icon
     //        bit 1 = badge
+    //        bit 2 = badge color
 
-    return function(tabId, newParts = 0b11) {
+    return function(tabId, newParts = 0b111) {
+        if ( typeof tabId !== 'number' ) { return; }
         if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
         let currentParts = tabIdToDetails.get(tabId);
         if ( currentParts === newParts ) { return; }

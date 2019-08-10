@@ -122,6 +122,7 @@
         }
         self.log.verbosity = this.hiddenSettings.consoleLogLevel;
         resolve();
+        this.fireDOMEvent('hiddenSettingsChanged');
     });
 
     // <<<< end of executor
