@@ -954,24 +954,6 @@ vAPI.tabs = new vAPI.Tabs();
 
 µBlock.updateToolbarIcon = (( ) => {
     const tabIdToDetails = new Map();
-    const blockingProfileColors = [
-        '#666666',
-        '#E7552C',
-        '#F69454',
-        '#008DCB',
-    ];
-
-    self.addEventListener(
-        'hiddenSettingsChanged',
-        ( ) => {
-            const colors = µBlock.hiddenSettings.blockingProfileColors;
-            if ( /^#[0-9a-f]{6}(\s#[0-9a-f]{6}){3}$/i.test(colors) === false ) {
-                return;
-            }
-            blockingProfileColors.length = 0;
-            blockingProfileColors.push(...colors.split(/\s+/));
-        }
-    );
 
     const updateBadge = function(tabId) {
         const µb = µBlock;
@@ -980,7 +962,7 @@ vAPI.tabs = new vAPI.Tabs();
 
         let state = 0;
         let badge = '';
-        let color = blockingProfileColors[0];
+        let color = '#666';
 
         let pageStore = µb.pageStoreFromTabId(tabId);
         if ( pageStore !== null ) {
@@ -993,13 +975,13 @@ vAPI.tabs = new vAPI.Tabs();
                     badge = µb.formatCount(pageStore.perLoadBlockedRequestCount);
                 }
                 if ( (parts & 0b100) !== 0 ) {
-                    let profile = µb.blockingModeFromHostname(pageStore.tabHostname);
-                    if ( (profile & 0b00000010) !== 0 ) {
-                        color = blockingProfileColors[3];
-                    } else if ( (profile & 0b00000100) !== 0 ) {
-                        color = blockingProfileColors[2];
-                    } else if ( (profile & 0b00011000) !== 0 ) {
-                        color = blockingProfileColors[1];
+                    const currentBits = µb.blockingModeFromHostname(pageStore.tabHostname);
+                    let max = 0;
+                    for ( const profile of µb.liveBlockingProfiles ) {
+                        const v = currentBits & (profile.bits & ~1);
+                        if ( v < max ) { break; }
+                        color = profile.color;
+                        max = v;
                     }
                 }
             }

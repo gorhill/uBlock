@@ -47,27 +47,21 @@ const relaxBlockingMode = function(tab) {
     if ( µb.getNetFilteringSwitch(normalURL) === false ) { return; }
 
     const hn = µb.URI.hostnameFromURI(normalURL);
-    const currentProfile = µb.blockingModeFromHostname(hn);
-    const profiles = [];
-    for ( const s of µb.hiddenSettings.blockingProfiles.split(/\s+/) ) {
-        const v = parseInt(s, 2);
-        if ( isNaN(v) ) { continue; }
-        profiles.push(v);
-    }
-    let newProfile;
-    for ( const profile of profiles ) {
-        if ( (currentProfile & profile & 0b11111110) !== currentProfile ) {
-            newProfile = profile;
+    const curProfileBits = µb.blockingModeFromHostname(hn);
+    let newProfileBits;
+    for ( const profile of µb.liveBlockingProfiles ) {
+        if ( (curProfileBits & profile.bits & ~1) !== curProfileBits ) {
+            newProfileBits = profile.bits;
             break;
         }
     }
 
     // TODO: Reset to original blocking profile?
-    if ( newProfile === undefined ) { return; }
+    if ( newProfileBits === undefined ) { return; }
 
     if (
-        (currentProfile & 0b00000010) !== 0 &&
-        (newProfile & 0b00000010) === 0
+        (curProfileBits & 0b00000010) !== 0 &&
+        (newProfileBits & 0b00000010) === 0
     ) {
         µb.toggleHostnameSwitch({
             name: 'no-scripting',
@@ -77,8 +71,8 @@ const relaxBlockingMode = function(tab) {
     }
     if ( µb.userSettings.advancedUserEnabled ) {
         if (
-            (currentProfile & 0b00000100) !== 0 &&
-            (newProfile & 0b00000100) === 0
+            (curProfileBits & 0b00000100) !== 0 &&
+            (newProfileBits & 0b00000100) === 0
         ) {
             µb.toggleFirewallRule({
                 srcHostname: hn,
@@ -88,8 +82,8 @@ const relaxBlockingMode = function(tab) {
             });
         }
         if (
-            (currentProfile & 0b00001000) !== 0 &&
-            (newProfile & 0b00001000) === 0
+            (curProfileBits & 0b00001000) !== 0 &&
+            (newProfileBits & 0b00001000) === 0
         ) {
             µb.toggleFirewallRule({
                 srcHostname: hn,
@@ -99,8 +93,8 @@ const relaxBlockingMode = function(tab) {
             });
         }
         if (
-            (currentProfile & 0b00010000) !== 0 &&
-            (newProfile & 0b00010000) === 0
+            (curProfileBits & 0b00010000) !== 0 &&
+            (newProfileBits & 0b00010000) === 0
         ) {
             µb.toggleFirewallRule({
                 srcHostname: hn,
@@ -111,7 +105,7 @@ const relaxBlockingMode = function(tab) {
         }
     }
 
-    if ( newProfile & 0b00000001 ) {
+    if ( newProfileBits & 0b00000001 ) {
         vAPI.tabs.reload(tab.id);
     }
 };

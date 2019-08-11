@@ -42,8 +42,7 @@ const µBlock = (function() { // jshint ignore:line
         autoUpdateAssetFetchPeriod: 120,
         autoUpdateDelayAfterLaunch: 180,
         autoUpdatePeriod: 7,
-        blockingProfiles: '11101 11001 00001',
-        blockingProfileColors: '#666666 #E7552C #F69454 #008DCB',
+        blockingProfiles: '11111/#F00 11011/#C0F 11001/#00F 00001',
         cacheStorageAPI: 'unset',
         cacheStorageCompression: true,
         cacheControlForFirefox1376932: 'no-cache, no-store, must-revalidate',
@@ -191,6 +190,8 @@ const µBlock = (function() { // jshint ignore:line
         cspNoInlineScript: "script-src 'unsafe-eval' * blob: data:",
         cspNoScripting: 'script-src http: https:',
         cspNoInlineFont: 'font-src *',
+
+        liveBlockingProfiles: [],
     };
 
 })();

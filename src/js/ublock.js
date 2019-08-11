@@ -605,6 +605,30 @@ const matchBucket = function(url, hostname, bucket, start) {
     return bits;
 };
 
+µBlock.parseBlockingProfiles = (( ) => {
+    const parse = function() {
+        const s = µBlock.hiddenSettings.blockingProfiles;
+        const profiles = [];
+        s.split(/\s+/).forEach(s => {
+            let pos = s.indexOf('/');
+            if ( pos === -1 ) {
+                pos = s.length;
+            }
+            const bits = parseInt(s.slice(0, pos), 2);
+            if ( isNaN(bits) ) { return; }
+            const color = s.slice(pos + 1);
+            profiles.push({ bits, color: color !== '' ? color : '#666' });
+        });
+        µBlock.liveBlockingProfiles = profiles;
+    };
+
+    parse();
+
+    self.addEventListener('hiddenSettingsChanged', ( ) => { parse(); });
+
+    return parse;
+})();
+
 /******************************************************************************/
 
 // https://github.com/NanoMeow/QuickReports/issues/6#issuecomment-414516623
