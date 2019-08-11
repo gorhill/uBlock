@@ -724,7 +724,7 @@
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "Zachovat nejvýše {{input}} načtení stránky pro list",
+    "message": "Zachovat nejvýše {{input}} načtení stránky pro kartu",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {

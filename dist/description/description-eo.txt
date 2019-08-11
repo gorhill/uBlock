@@ -11,7 +11,7 @@ Fleksebla, ĝi estas pli ol "reklamo-blokilo": ĝi ankaŭ povas legi kaj krei fi
 Rekte el la kesto, la jenaj filtriloj estas ŝarĝitaj kaj efikigitaj:
 
 - EasyList
-- Listo de reklamaj serviloj de Peter Lowe
+- Listo de Peter Lowe de reklamaj serviloj
 - EasyPrivacy
 - Domajnoj kun fiprogramaro
 
