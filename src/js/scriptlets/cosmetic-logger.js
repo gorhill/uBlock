@@ -50,7 +50,7 @@ const loggedSelectors = new Set();
 
 /******************************************************************************/
 
-const rePseudoElements = /::?(?:after|before)$/;
+const rePseudoElements = /:(?::?after|:?before|:[a-z-]+)$/;
 
 const safeMatchSelector = function(selector, context) {
     const safeSelector = rePseudoElements.test(selector)

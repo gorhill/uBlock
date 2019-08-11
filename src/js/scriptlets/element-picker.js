@@ -698,7 +698,7 @@ const filtersFrom = function(x, y) {
 const filterToDOMInterface = (( ) => {
     const reHnAnchorPrefix = '^[\\w-]+://(?:[^/?#]+\\.)?';
     const reCaret = '(?:[^%.0-9a-z_-]|$)';
-    const rePseudoElements = /::?(?:after|before)$/;
+    const rePseudoElements = /:(?::?after|:?before|:[a-z-]+)$/;
 
     // Net filters: we need to lookup manually -- translating into a foolproof
     // CSS selector is just not possible.
