@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body style="font: 14px sans-serif">
+<h1>Benchmark of hostname-lookup from small to medium set:<br>Set, RegExp, HNTrie</h1>
+<p><a href="./.">Back</a></p>
+<p>&nbsp;</p>
+<p><button id="createBenchmark">Creation</button> <button id="lookupBenchmark">Lookup</button></p>
+<div id="results-0" style="white-space:pre;font-family:mono"></div>
+<div id="results-1" style="white-space:pre;font-family:mono"></div>
+<div id="results-2" style="white-space:pre;font-family:mono"></div>
+<div id="results-3" style="white-space:pre;font-family:mono"></div>
+<div id="results-4" style="white-space:pre;font-family:mono"></div>
+<div id="results-5" style="white-space:pre;font-family:mono"></div>
+<div id="results-6" style="white-space:pre;font-family:mono"></div>
+
+<script src="https://rawcdn.githack.com/gorhill/uBlock/e83ffde5af29bd44ae529c5a60e2506970e7af34/src/js/hntrie.js"></script>
+<script src="https://rawcdn.githack.com/gorhill/uBlock/c3b0fd31f64bd7ffecdd282fb1208fe07aac3eb0/src/js/hntrie.js"></script>
+<script src="https://rawcdn.githack.com/gorhill/uBlock/1b6fea16da81d1df3e2efd5a31894f71ea04dbb1/src/js/hntrie.js"></script>
+<!-- <script src="../../src/js/hntrie.js"></script> -->
+<script src="hostname-pool.js"></script>
+
+<script src="https://cdn.jsdelivr.net/lodash/4.17.2/lodash.min.js"></script>
+<script src="https://cdn.jsdelivr.net/platform.js/1.3.3/platform.js"></script>
+<script src="https://cdn.jsdelivr.net/benchmarkjs/2.1.2/benchmark.js"></script>
+<script>
+const randomHostname = function() {
+    return hostnamePool[Math.floor(Math.random() * hostnamePool.length)];
+};
+
+const randomNeedle = function() {
+    let needle = randomHostname();
+    const pos = needle.lastIndexOf('.');
+    if ( pos !== -1 ) {
+        needle = Math.random().toString(36).slice(2) + needle.slice(pos);
+    }
+    if ( Math.random() < 0.5 ) {
+        needle = Math.random().toString(36).slice(2, 6) + '.' + needle;
+    }
+    return needle;
+};
+
+// Create "domain=" sets of all sizes (from 2 to 1024 at most)
+const domainOpts = (function() {
+    const domainOpts = [];
+    let n = 2;
+    while ( n <= 1024 ) {
+        const domainOpt = [];
+        for ( let i = 0; i < n; i++ ) {
+            domainOpt.push(randomHostname());
+        }
+        domainOpts.push(domainOpt.join('|'));
+        n += (n >>> 1);
+    }
+    return domainOpts;
+})();
+
+/******************************************************************************/
+
+var setBasedDictCreate = function(domainOpt) {
+    // Only one hostname
+    if ( domainOpt.indexOf('|') === -1 ) {
+        if ( domainOpt.startsWith('~') ) {
+            return domainOpt.slice(1);
+        }
+        return domainOpt;
+    }
+
+    // Multiple hostnames: use a dictionary.
+    var hostnames = domainOpt.split('|');
+    var i, hostname, dict;
+
+    // First find out whether we have a homogeneous dictionary
+    var hit = false, miss = false;
+    i = hostnames.length;
+    while ( i-- ) {
+        if ( hostnames[i].startsWith('~') ) {
+            miss = true;
+            if ( hit ) { break; }
+        } else {
+            hit = true;
+            if ( miss ) { break; }
+        }
+    }
+
+    // Heterogenous dictionary: this can happen, though VERY rarely.
+    // Spotted one occurrence in EasyList Lite (cjxlist.txt):
+    //   domain=photobucket.com|~secure.photobucket.com
+    if ( hit && miss ) {
+        dict = new Map();
+        i = hostnames.length;
+        while ( i-- ) {
+            hostname = hostnames[i];
+            if ( hostname.startsWith('~') ) {
+                dict.set(hostname.slice(1), false);
+            } else {
+                dict.set(hostname, true);
+            }
+        }
+        return dict;
+    }
+
+    // Homogeneous dictionary.
+    if ( hit ) {
+        return new Set(hostnames);
+    }
+
+    dict = new Set();
+    i = hostnames.length;
+    while ( i-- ) {
+        dict.add(hostnames[i].slice(1));
+    }
+
+    return dict;
+};
+
+var setBasedDictTest = function(haystack, needle) {
+    var pos;
+    for (;;) {
+        if ( haystack.has(needle) ) { return true; }
+        pos = needle.indexOf('.');
+        if ( pos === -1 ) { break; }
+        needle = needle.slice(pos + 1);
+    }
+    return false;
+};
+
+/******************************************************************************/
+
+var regexBasedDictCreate = function(domainOpt) {
+    // Only one hostname
+    if ( domainOpt.indexOf('|') === -1 ) {
+        if ( domainOpt.startsWith('~') ) {
+            return domainOpt.slice(1);
+        }
+        return domainOpt;
+    }
+
+    // Many hostnames.
+    var re;
+
+    // Must be in dictionary (none negated).
+    if ( domainOpt.indexOf('~') === -1 ) {  // all non-negated
+        re = new RegExp('(?:^|\\.)(?:' + domainOpt.replace(/\./g, '\\.') + ')$');
+        re.exec('');
+        return re;
+    }
+
+    // Must not be in dictionary (all negated).
+    if ( reDomainOptAllNegated.test(domainOpt) ) {
+        re = new RegExp('(?:^|\\.)(?:' + domainOpt.replace(/~/g, '').replace(/\./g, '\\.') + ')$');
+        re.exec('');
+        return re;
+    }
+
+    // Heterogenous dictionary: this can happen, though VERY rarely.
+    // Spotted one occurrence in EasyList Lite (cjxlist.txt):
+    //   domain=photobucket.com|~secure.photobucket.com
+    var hostnames = domainOpt.split('|'),
+        i = hostnames.length,
+        dict = new Map(),
+        hostname;
+    while ( i-- ) {
+        hostname = hostnames[i];
+        if ( hostname.startsWith('~') ) {
+            dict.set(hostname.slice(1), false);
+        } else {
+            dict.set(hostname, true);
+        }
+    }
+    return dict;
+};
+var reDomainOptAllNegated = /^~(?:[^\|~]+\|~)+[^\|~]+$/;
+
+var regexBasedDictTest = function(haystack, needle) {
+    return haystack.test(needle);
+};
+
+/******************************************************************************/
+
+var oldTrieBasedDictCreate = function(domainOpt) {
+    return HNTrieBuilder.fromDomainOpt(domainOpt);
+}
+
+var oldTrieBasedDictTest = function(haystack, needle) {
+    return haystack.matches(needle);
+};
+
+/******************************************************************************/
+
+var trieBasedDictCreate = function(domainOpt) {
+    return hnTrieManager.fromDomainOpt(domainOpt);
+}
+
+var trieBasedDictTest = function(haystack, needle) {
+    return haystack.matchesJS(needle);
+};
+
+var trieBasedDictTestWASM = function(haystack, needle) {
+    return haystack.matchesWASM(needle);
+};
+
+/******************************************************************************/
+
+const hnBigTrieJS = new HNTrieContainer();
+const hnBigTrieWASM = new HNTrieContainer();
+
+const bigtrieBasedDictCreateJS = function(domainOpt) {
+    return hnBigTrieJS.fromIterable(domainOpt.split('|'), 'addJS');
+}
+
+const bigtrieBasedDictTestJS = function(haystack, needle) {
+    return haystack.matchesJS(needle);
+};
+
+const bigtrieBasedDictCreateWASM = function(domainOpt) {
+    return hnBigTrieWASM.fromIterable(domainOpt.split('|'), 'addWASM');
+}
+
+const bigtrieBasedDictTestWASM = function(haystack, needle) {
+    return haystack.matchesWASM(needle);
+};
+
+/******************************************************************************/
+
+const gBenchmarks = [ null ];
+let gWhich;
+
+/******************************************************************************/
+
+function stdout(which, text) {
+    if ( which > 0 ) {
+        which = ((which - 1) % 3) + 1;
+    }
+    var r = document.querySelector('#results-' + which);
+    if ( text === '' ) {
+        r.innerHTML = '';
+    } else {
+        r.innerHTML += text;
+    }
+}
+
+function doBenchmark(which) {
+    stdout(0, '');
+    stdout(0, 'Benchmarking, the higher ops/sec the better.\n');
+    stdout(0, Benchmark.platform.toString() + '.');
+    stdout(0, '\n\n');
+    stdout(1, '');
+    stdout(2, '');
+    stdout(3, '');
+    gWhich = which;
+    gBenchmarks[gWhich].run({ 'async': true });
+}
+
+function nextBenchmark() {
+    stdout(gWhich, 'Done.\n\n');
+    gWhich += 1;
+    var bms = gBenchmarks[gWhich];
+    if ( bms ) {
+        bms.run({ 'async': true });
+    }
+}
+
+function exitBenchmark() {
+    stdout(gWhich, 'Done.\n\n');
+}
+
+/******************************************************************************/
+
+function initBenchmarks() {
+    gBenchmarks.push((function() {
+        let dicts = [];
+
+        const createDict = function(fn) {
+            for ( let i = 0; i < domainOpts.length; i++ ) {
+                dicts[i] = fn(domainOpts[i]);
+            }
+        };
+
+        var bms = new Benchmark.Suite();
+        bms
+            .add('  -                 Set-based', function() {
+                createDict(setBasedDictCreate);
+                })
+            .add('  -               Regex-based', function() {
+                createDict(regexBasedDictCreate);
+                })
+            .add('  -      Trie-based (1st-gen)', function() {
+                createDict(oldTrieBasedDictCreate);
+                })
+            .add('  -      Trie-based (2nd-gen)', function() {
+                hnTrieManager.reset();
+                createDict(trieBasedDictCreate);
+                })
+            .add('  -   Trie-based JS (3rd-gen)', function() {
+                hnBigTrieJS.reset();
+                createDict(bigtrieBasedDictCreateJS);
+                })
+            .on('start', function() {
+                dicts = [];
+                stdout(gWhich, '');
+                stdout(gWhich, 'Create dictionaries\n');
+                })
+            .on('cycle', function(event) {
+                stdout(gWhich, String(event.target) + '\n');
+                })
+            .on('complete', exitBenchmark);
+
+        if ( hnBigTrieWASM.addWASM !== null ) {
+            bms.add('  - Trie-based WASM (3rd-gen)', function() {
+                hnBigTrieWASM.reset();
+                createDict(bigtrieBasedDictCreateWASM);
+            })
+        }
+
+        return bms;
+    })());
+
+    const lookupCount = 100;
+
+    gBenchmarks.push((function() {
+        const bms = new Benchmark.Suite();
+        const needles = [];
+
+        let setDicts;
+        let regexDicts;
+        let oldTrieDicts;
+        let newTrieDicts;
+        let bigTrieDicts;
+        let results;
+
+        const lookupDict = function(dicts, fn) {
+            for ( let i = 0; i < needles.length; i++ ) {
+                const needle = needles[i];
+                for ( const dict of dicts ) {
+                    results[i] = fn(dict, needle);
+                }
+            }
+        };
+
+        bms
+            .add('  -                 Set-based', function() {
+                lookupDict(setDicts, setBasedDictTest);
+                })
+            .add('  -               Regex-based', function() {
+                lookupDict(regexDicts, regexBasedDictTest);
+                })
+            .add('  -      Trie-based (1st-gen)', function() {
+                lookupDict(oldTrieDicts, oldTrieBasedDictTest);
+                })
+            .on('start', function() {
+                for ( let i = 0; i < lookupCount; i++ ) {
+                    needles[i] = randomNeedle();
+                }
+                setDicts = [];
+                regexDicts = [];
+                oldTrieDicts = []
+                newTrieDicts = []
+                bigTrieDicts = []
+                results = [];
+                hnTrieManager.reset();
+                for ( const domainOpt of domainOpts ) {
+                    setDicts.push(setBasedDictCreate(domainOpt));
+                    regexDicts.push(regexBasedDictCreate(domainOpt));
+                    oldTrieDicts.push(oldTrieBasedDictCreate(domainOpt));
+                    newTrieDicts.push(trieBasedDictCreate(domainOpt));
+                    bigTrieDicts.push(bigtrieBasedDictCreateJS(domainOpt));
+                }
+
+                stdout(gWhich, '');
+                stdout(gWhich, 'Test ' + lookupCount + ' needles against ' + domainOpts.length + ' dictionaries of hostnames\n');
+               })
+            .on('cycle', function(event) {
+                stdout(gWhich, String(event.target) + '\n');
+                })
+            .on('complete', ( ) => {
+                setDicts = regexDicts = oldTrieDicts = newTrieDicts = results = undefined;
+                hnTrieManager.reset();
+                exitBenchmark();
+                });
+
+        bms.add('  -   Trie-based JS (2nd-gen)', function() {
+            lookupDict(newTrieDicts, trieBasedDictTest);
+            })
+        if ( hnTrieManager.matchesWASM !== null ) {
+            bms.add('  - Trie-based WASM (2nd-gen)', function() {
+                lookupDict(newTrieDicts, trieBasedDictTestWASM);
+            })
+        }
+        bms.add('  -   Trie-based JS (3rd-gen)', function() {
+            lookupDict(newTrieDicts, bigtrieBasedDictTestJS);
+            })
+        if ( hnBigTrieWASM.matchesWASM !== null ) {
+            bms.add('  - Trie-based WASM (3rd-gen)', function() {
+                lookupDict(bigTrieDicts, bigtrieBasedDictTestWASM);
+            })
+        }
+
+        return bms;
+    })());
+}
+
+/******************************************************************************/
+
+Promise.all([
+    hnTrieManager.readyToUse(),
+    hnBigTrieJS.readyToUse(),
+    hnBigTrieWASM.readyToUse(),
+]).then(( ) => {
+    initBenchmarks();
+});
+
+document.getElementById('createBenchmark').onclick = function() {
+    doBenchmark(1);
+};
+document.getElementById('lookupBenchmark').onclick = function() {
+    doBenchmark(2);
+};
+</script>
+</body>
+</html>

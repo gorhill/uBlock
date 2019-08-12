@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2018 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ Naming convention from https://en.wikipedia.org/wiki/URI_scheme#Examples
 
 /******************************************************************************/
 
-var punycode = self.punycode;
+const punycode = self.punycode;
 
 // Favorite regex tool: http://regex101.com/
 
@@ -46,15 +46,15 @@ var punycode = self.punycode;
 // <http://jsperf.com/old-uritools-vs-new-uritools>
 // Performance improvements welcomed.
 // jsperf: <http://jsperf.com/old-uritools-vs-new-uritools>
-var reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
+const reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
 
 // Derived
-var reSchemeFromURI          = /^[^:\/?#]+:/;
-var reAuthorityFromURI       = /^(?:[^:\/?#]+:)?(\/\/[^\/?#]+)/;
-var reOriginFromURI          = /^(?:[^:\/?#]+:)\/\/(?:[^\/?#]+)?/;
-var reCommonHostnameFromURL  = /^https?:\/\/([0-9a-z_][0-9a-z._-]*[0-9a-z])\//;
-var rePathFromURI            = /^(?:[^:\/?#]+:)?(?:\/\/[^\/?#]*)?([^?#]*)/;
-var reMustNormalizeHostname  = /[^0-9a-z._-]/;
+const reSchemeFromURI          = /^[^:\/?#]+:/;
+const reAuthorityFromURI       = /^(?:[^:\/?#]+:)?(\/\/[^\/?#]+)/;
+const reOriginFromURI          = /^(?:[^:\/?#]+:)\/\/[^\/?#]+/;
+const reCommonHostnameFromURL  = /^https?:\/\/([0-9a-z_][0-9a-z._-]*[0-9a-z])\//;
+const rePathFromURI            = /^(?:[^:\/?#]+:)?(?:\/\/[^\/?#]*)?([^?#]*)/;
+const reMustNormalizeHostname  = /[^0-9a-z._-]/;
 
 // These are to parse authority field, not parsed by above official regex
 // IPv6 is seen as an exception: a non-compatible IPv6 is first tried, and
@@ -64,20 +64,20 @@ var reMustNormalizeHostname  = /[^0-9a-z._-]/;
 // https://github.com/gorhill/httpswitchboard/issues/211
 // "While a hostname may not contain other characters, such as the
 // "underscore character (_), other DNS names may contain the underscore"
-var reHostPortFromAuthority  = /^(?:[^@]*@)?([^:]*)(:\d*)?$/;
-var reIPv6PortFromAuthority  = /^(?:[^@]*@)?(\[[0-9a-f:]*\])(:\d*)?$/i;
+const reHostPortFromAuthority  = /^(?:[^@]*@)?([^:]*)(:\d*)?$/;
+const reIPv6PortFromAuthority  = /^(?:[^@]*@)?(\[[0-9a-f:]*\])(:\d*)?$/i;
 
-var reHostFromNakedAuthority = /^[0-9a-z._-]+[0-9a-z]$/i;
-var reHostFromAuthority      = /^(?:[^@]*@)?([^:]+)(?::\d*)?$/;
-var reIPv6FromAuthority      = /^(?:[^@]*@)?(\[[0-9a-f:]+\])(?::\d*)?$/i;
+const reHostFromNakedAuthority = /^[0-9a-z._-]+[0-9a-z]$/i;
+const reHostFromAuthority      = /^(?:[^@]*@)?([^:]+)(?::\d*)?$/;
+const reIPv6FromAuthority      = /^(?:[^@]*@)?(\[[0-9a-f:]+\])(?::\d*)?$/i;
 
 // Coarse (but fast) tests
-var reValidHostname          = /^([a-z\d]+(-*[a-z\d]+)*)(\.[a-z\d]+(-*[a-z\d])*)*$/;
-var reIPAddressNaive         = /^\d+\.\d+\.\d+\.\d+$|^\[[\da-zA-Z:]+\]$/;
+const reValidHostname          = /^([a-z\d]+(-*[a-z\d]+)*)(\.[a-z\d]+(-*[a-z\d])*)*$/;
+const reIPAddressNaive         = /^\d+\.\d+\.\d+\.\d+$|^\[[\da-zA-Z:]+\]$/;
 
 /******************************************************************************/
 
-var reset = function(o) {
+const reset = function(o) {
     o.scheme = '';
     o.hostname = '';
     o._ipv4 = undefined;
@@ -89,7 +89,7 @@ var reset = function(o) {
     return o;
 };
 
-var resetAuthority = function(o) {
+const resetAuthority = function(o) {
     o.hostname = '';
     o._ipv4 = undefined;
     o._ipv6 = undefined;
@@ -101,7 +101,7 @@ var resetAuthority = function(o) {
 
 // This will be exported
 
-var URI = {
+const URI = {
     scheme:      '',
     authority:   '',
     hostname:    '',
@@ -143,7 +143,7 @@ URI.set = function(uri) {
     if ( uri === undefined ) {
         return reset(URI);
     }
-    var matches = reRFC3986.exec(uri);
+    let matches = reRFC3986.exec(uri);
     if ( !matches ) {
         return reset(URI);
     }
@@ -200,7 +200,7 @@ URI.assemble = function(bits) {
     if ( bits === undefined ) {
         bits = this.allBits;
     }
-    var s = [];
+    const s = [];
     if ( this.scheme && (bits & this.schemeBit) ) {
         s.push(this.scheme, ':');
     }
@@ -225,27 +225,23 @@ URI.assemble = function(bits) {
 /******************************************************************************/
 
 URI.originFromURI = function(uri) {
-    var matches = reOriginFromURI.exec(uri);
+    const matches = reOriginFromURI.exec(uri);
     return matches !== null ? matches[0].toLowerCase() : '';
 };
 
 /******************************************************************************/
 
 URI.schemeFromURI = function(uri) {
-    var matches = reSchemeFromURI.exec(uri);
-    if ( !matches ) {
-        return '';
-    }
+    const matches = reSchemeFromURI.exec(uri);
+    if ( !matches ) { return ''; }
     return matches[0].slice(0, -1).toLowerCase();
 };
 
 /******************************************************************************/
 
 URI.authorityFromURI = function(uri) {
-    var matches = reAuthorityFromURI.exec(uri);
-    if ( !matches ) {
-        return '';
-    }
+    const matches = reAuthorityFromURI.exec(uri);
+    if ( !matches ) { return ''; }
     return matches[1].slice(2).toLowerCase();
 };
 
@@ -259,11 +255,11 @@ URI.authorityFromURI = function(uri) {
 //   Revisit punycode dependency when above issue is fixed in Firefox.
 
 URI.hostnameFromURI = function(uri) {
-    var matches = reCommonHostnameFromURL.exec(uri);
+    let matches = reCommonHostnameFromURL.exec(uri);
     if ( matches !== null ) { return matches[1]; }
     matches = reAuthorityFromURI.exec(uri);
     if ( matches === null ) { return ''; }
-    var authority = matches[1].slice(2);
+    const authority = matches[1].slice(2);
     // Assume very simple authority (most common case for µBlock)
     if ( reHostFromNakedAuthority.test(authority) ) {
         return authority.toLowerCase();
@@ -273,7 +269,7 @@ URI.hostnameFromURI = function(uri) {
         matches = reIPv6FromAuthority.exec(authority);
         if ( matches === null ) { return ''; }
     }
-    var hostname = matches[1];
+    let hostname = matches[1];
     while ( hostname.endsWith('.') ) {
         hostname = hostname.slice(0, -1);
     }
@@ -286,18 +282,6 @@ URI.hostnameFromURI = function(uri) {
 /******************************************************************************/
 
 URI.domainFromHostname = function(hostname) {
-    let entry = domainCache.get(hostname);
-    if ( entry !== undefined ) {
-        entry.tstamp = Date.now();
-        return entry.domain;
-    }
-    if ( reIPAddressNaive.test(hostname) === false ) {
-        return domainCacheAdd(hostname, psl.getDomain(hostname));
-    }
-    return domainCacheAdd(hostname, hostname);
-};
-
-URI.domainFromHostnameNoCache = function(hostname) {
     return reIPAddressNaive.test(hostname) ? hostname : psl.getDomain(hostname);
 };
 
@@ -307,99 +291,26 @@ URI.domain = function() {
 
 // It is expected that there is higher-scoped `publicSuffixList` lingering
 // somewhere. Cache it. See <https://github.com/gorhill/publicsuffixlist.js>.
-var psl = publicSuffixList;
+const psl = publicSuffixList;
 
 /******************************************************************************/
 
 URI.entityFromDomain = function(domain) {
-    var pos = domain.indexOf('.');
+    const pos = domain.indexOf('.');
     return pos !== -1 ? domain.slice(0, pos) + '.*' : '';
 };
 
 /******************************************************************************/
 
 URI.pathFromURI = function(uri) {
-    var matches = rePathFromURI.exec(uri);
+    const matches = rePathFromURI.exec(uri);
     return matches !== null ? matches[1] : '';
 };
 
 /******************************************************************************/
 
-// Trying to alleviate the worries of looking up too often the domain name from
-// a hostname. With a cache, uBlock benefits given that it deals with a
-// specific set of hostnames within a narrow time span -- in other words, I
-// believe probability of cache hit are high in uBlock.
-
-var domainCache = new Map();
-var domainCacheCountLowWaterMark = 40;
-var domainCacheCountHighWaterMark = 60;
-var domainCacheEntryJunkyardMax =
-    domainCacheCountHighWaterMark - domainCacheCountLowWaterMark;
-
-var DomainCacheEntry = function(domain) {
-    this.init(domain);
-};
-
-DomainCacheEntry.prototype.init = function(domain) {
-    this.domain = domain;
-    this.tstamp = Date.now();
-    return this;
-};
-
-DomainCacheEntry.prototype.dispose = function() {
-    this.domain = '';
-    if ( domainCacheEntryJunkyard.length < domainCacheEntryJunkyardMax ) {
-        domainCacheEntryJunkyard.push(this);
-    }
-};
-
-var domainCacheEntryFactory = function(domain) {
-    return domainCacheEntryJunkyard.length !== 0 ?
-        domainCacheEntryJunkyard.pop().init(domain) :
-        new DomainCacheEntry(domain);
-};
-
-var domainCacheEntryJunkyard = [];
-
-var domainCacheAdd = function(hostname, domain) {
-    var entry = domainCache.get(hostname);
-    if ( entry !== undefined ) {
-        entry.tstamp = Date.now();
-    } else {
-        domainCache.set(hostname, domainCacheEntryFactory(domain));
-        if ( domainCache.size === domainCacheCountHighWaterMark ) {
-            domainCachePrune();
-        }
-    }
-    return domain;
-};
-
-var domainCacheEntrySort = function(a, b) {
-    return domainCache.get(b).tstamp - domainCache.get(a).tstamp;
-};
-
-var domainCachePrune = function() {
-    var hostnames = Array.from(domainCache.keys())
-                         .sort(domainCacheEntrySort)
-                         .slice(domainCacheCountLowWaterMark);
-    var i = hostnames.length;
-    while ( i-- ) {
-        var hostname = hostnames[i];
-        domainCache.get(hostname).dispose();
-        domainCache.delete(hostname);
-    }
-};
-
-window.addEventListener('publicSuffixList', function() {
-    domainCache.clear();
-});
-
-/******************************************************************************/
-
 URI.domainFromURI = function(uri) {
-    if ( !uri ) {
-        return '';
-    }
+    if ( !uri ) { return ''; }
     return this.domainFromHostname(this.hostnameFromURI(uri));
 };
 
@@ -409,7 +320,7 @@ URI.isNetworkURI = function(uri) {
     return reNetworkURI.test(uri);
 };
 
-var reNetworkURI = /^(?:ftps?|https?|wss?):\/\//;
+const reNetworkURI = /^(?:ftps?|https?|wss?):\/\//;
 
 /******************************************************************************/
 
@@ -417,7 +328,7 @@ URI.isNetworkScheme = function(scheme) {
     return reNetworkScheme.test(scheme);
 };
 
-var reNetworkScheme = /^(?:ftps?|https?|wss?)$/;
+const reNetworkScheme = /^(?:ftps?|https?|wss?)$/;
 
 /******************************************************************************/
 
@@ -434,23 +345,19 @@ URI.normalizedURI = function() {
 /******************************************************************************/
 
 URI.rootURL = function() {
-    if ( !this.hostname ) {
-        return '';
-    }
+    if ( !this.hostname ) { return ''; }
     return this.assemble(this.schemeBit | this.hostnameBit);
 };
 
 /******************************************************************************/
 
 URI.isValidHostname = function(hostname) {
-    var r;
     try {
-        r = reValidHostname.test(hostname);
+        return reValidHostname.test(hostname);
     }
     catch (e) {
-        return false;
     }
-    return r;
+    return false;
 };
 
 /******************************************************************************/
@@ -462,15 +369,13 @@ URI.parentHostnameFromHostname = function(hostname) {
     // `example.org` => `example.org`
     // `www.example.org` => `example.org`
     // `tomato.www.example.org` => `example.org`
-    var domain = this.domainFromHostname(hostname);
+    const domain = this.domainFromHostname(hostname);
 
     // `locahost` === `` => bye
     // `example.org` === `example.org` => bye
     // `www.example.org` !== `example.org` => stay
     // `tomato.www.example.org` !== `example.org` => stay
-    if ( domain === '' || domain === hostname ) {
-        return undefined;
-    }
+    if ( domain === '' || domain === hostname ) { return; }
 
     // Parent is hostname minus first label
     return hostname.slice(hostname.indexOf('.') + 1);
@@ -486,22 +391,17 @@ URI.parentHostnamesFromHostname = function(hostname) {
     // the list of hostnames by making it reusable (junkyard etc.) and which
     // has its own element counter property in order to avoid memory
     // alloc/dealloc.
-    var domain = this.domainFromHostname(hostname);
+    const domain = this.domainFromHostname(hostname);
     if ( domain === '' || domain === hostname ) {
         return [];
     }
-    var nodes = [];
-    var pos;
+    const nodes = [];
     for (;;) {
-        pos = hostname.indexOf('.');
-        if ( pos < 0 ) {
-            break;
-        }
+        const pos = hostname.indexOf('.');
+        if ( pos < 0 ) { break; }
         hostname = hostname.slice(pos + 1);
         nodes.push(hostname);
-        if ( hostname === domain ) {
-            break;
-        }
+        if ( hostname === domain ) { break; }
     }
     return nodes;
 };
@@ -512,7 +412,7 @@ URI.parentHostnamesFromHostname = function(hostname) {
 // ordered from self up to domain inclusively.
 
 URI.allHostnamesFromHostname = function(hostname) {
-    var nodes = this.parentHostnamesFromHostname(hostname);
+    const nodes = this.parentHostnamesFromHostname(hostname);
     nodes.unshift(hostname);
     return nodes;
 };

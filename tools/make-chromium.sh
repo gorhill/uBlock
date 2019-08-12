@@ -65,6 +65,11 @@ if [ "$1" = all ]; then
     pushd $(dirname $DES/) > /dev/null
     zip artifacts/adnauseam.chromium.zip -qr $(basename $DES/)/*
     popd > /dev/null
+elif [ -n "$1" ]; then
+    echo "*** uBlock0.chromium: Creating versioned package..."
+    pushd $(dirname $DES/) > /dev/null
+    zip uBlock0_"$1".chromium.zip -qr $(basename $DES/)/*
+    popd > /dev/null
 fi
 
 echo "*** AdNauseam.chromium: Package done."

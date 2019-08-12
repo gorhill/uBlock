@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2018 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -32,11 +32,11 @@
 // the code here does *only* what I need, and nothing more, and with a lot
 // of assumption on passed parameters, etc. I grow it on a per-need-basis only.
 
-var uDom = (function() {
+const uDom = (function() {
 
 /******************************************************************************/
 
-var DOMList = function() {
+const DOMList = function() {
     this.nodes = [];
 };
 
@@ -54,7 +54,7 @@ Object.defineProperty(
 
 /******************************************************************************/
 
-var DOMListFactory = function(selector, context) {
+const DOMListFactory = function(selector, context) {
     var r = new DOMList();
     if ( typeof selector === 'string' ) {
         selector = selector.trim();
@@ -92,7 +92,7 @@ DOMListFactory.nodeFromSelector = function(selector) {
 
 /******************************************************************************/
 
-var addNodeToList = function(list, node) {
+const addNodeToList = function(list, node) {
     if ( node ) {
         list.nodes.push(node);
     }
@@ -101,7 +101,7 @@ var addNodeToList = function(list, node) {
 
 /******************************************************************************/
 
-var addNodeListToList = function(list, nodelist) {
+const addNodeListToList = function(list, nodelist) {
     if ( nodelist ) {
         var n = nodelist.length;
         for ( var i = 0; i < n; i++ ) {
@@ -113,14 +113,14 @@ var addNodeListToList = function(list, nodelist) {
 
 /******************************************************************************/
 
-var addListToList = function(list, other) {
+const addListToList = function(list, other) {
     list.nodes = list.nodes.concat(other.nodes);
     return list;
 };
 
 /******************************************************************************/
 
-var addSelectorToList = function(list, selector, context) {
+const addSelectorToList = function(list, selector, context) {
     var p = context || document;
     var r = p.querySelectorAll(selector);
     var n = r.length;
@@ -128,18 +128,6 @@ var addSelectorToList = function(list, selector, context) {
         list.nodes.push(r[i]);
     }
     return list;
-};
-
-/******************************************************************************/
-
-var nodeInNodeList = function(node, nodeList) {
-    var i = nodeList.length;
-    while ( i-- ) {
-        if ( nodeList[i] === node ) {
-            return true;
-        }
-    }
-    return false;
 };
 
 /******************************************************************************/
@@ -529,7 +517,7 @@ DOMList.prototype.text = function(text) {
 
 /******************************************************************************/
 
-var toggleClass = function(node, className, targetState) {
+const toggleClass = function(node, className, targetState) {
     var tokenList = node.classList;
     if ( tokenList instanceof DOMTokenList === false ) {
         return;
@@ -603,9 +591,9 @@ DOMList.prototype.toggleClasses = function(classNames, targetState) {
 
 /******************************************************************************/
 
-var listenerEntries = [];
+const listenerEntries = [];
 
-var ListenerEntry = function(target, type, capture, callback) {
+const ListenerEntry = function(target, type, capture, callback) {
     this.target = target;
     this.type = type;
     this.capture = capture;
@@ -621,14 +609,22 @@ ListenerEntry.prototype.dispose = function() {
 
 /******************************************************************************/
 
-var makeEventHandler = function(selector, callback) {
+const makeEventHandler = function(selector, callback) {
     return function(event) {
-        var dispatcher = event.currentTarget;
-        if ( !dispatcher || typeof dispatcher.querySelectorAll !== 'function' ) {
+        const dispatcher = event.currentTarget;
+        if (
+            dispatcher instanceof HTMLElement === false ||
+            typeof dispatcher.querySelectorAll !== 'function'
+        ) {
             return;
         }
-        var receiver = event.target;
-        if ( nodeInNodeList(receiver, dispatcher.querySelectorAll(selector)) ) {
+        const receiver = event.target;
+        const ancestor = receiver.closest(selector);
+        if (
+            ancestor === receiver &&
+            ancestor !== dispatcher &&
+            dispatcher.contains(ancestor)
+        ) {
             callback.call(receiver, event);
         }
     };
@@ -642,9 +638,10 @@ DOMList.prototype.on = function(etype, selector, callback) {
         callback = makeEventHandler(selector, callback);
     }
 
-    var i = this.nodes.length;
-    while ( i-- ) {
-        listenerEntries.push(new ListenerEntry(this.nodes[i], etype, selector !== undefined, callback));
+    for ( const node of this.nodes ) {
+        listenerEntries.push(
+            new ListenerEntry(node, etype, selector !== undefined, callback)
+        );
     }
     return this;
 };
@@ -672,20 +669,6 @@ DOMList.prototype.trigger = function(etype) {
     }
     return this;
 };
-
-/******************************************************************************/
-
-// Cleanup
-
-var onBeforeUnload = function() {
-    var entry;
-    while ( (entry = listenerEntries.pop()) ) {
-        entry.dispose();
-    }
-    window.removeEventListener('beforeunload', onBeforeUnload);
-};
-
-window.addEventListener('beforeunload', onBeforeUnload);
 
 /******************************************************************************/
 

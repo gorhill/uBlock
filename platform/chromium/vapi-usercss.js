@@ -30,7 +30,7 @@
 
 if ( typeof vAPI === 'object' ) {
     vAPI.supportsUserStylesheets =
-        /\bChrom(?:e|ium)\/(?:6[6789]|[789]|1\d\d)/.test(navigator.userAgent);
+        /\bChrom(?:e|ium)\/(?:5\d|6[012345])\b/.test(navigator.userAgent) === false;
 }
 
 

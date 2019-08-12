@@ -25,13 +25,13 @@
 
 /******************************************************************************/
 
-(function() {
+(( ) => {
 
 /******************************************************************************/
 
-var messaging = vAPI.messaging;
+const messaging = vAPI.messaging;
 
-var mergeView = new CodeMirror.MergeView(
+const mergeView = new CodeMirror.MergeView(
     document.querySelector('.codeMirrorMergeContainer'),
     {
         allowEditingOriginals: true,
@@ -50,15 +50,52 @@ mergeView.leftOriginal().setOption('readOnly', 'nocursor');
 
 uBlockDashboard.patchCodeMirrorEditor(mergeView.editor());
 
-var unfilteredRules = {
+const unfilteredRules = {
     orig: { doc: mergeView.leftOriginal(), rules: [] },
     edit: { doc: mergeView.editor(), rules: [] }
 };
 
-var cleanEditToken = 0;
-var cleanEditText = '';
+let cleanEditToken = 0;
+let cleanEditText = '';
 
-var differ;
+let differ;
+
+/******************************************************************************/
+
+// The following code is to take care of properly internationalizing
+// the tooltips of the arrows used by the CodeMirror merge view. These
+// are hard-coded by CodeMirror ("Push to left", "Push to right"). An
+// observer is necessary because there is no hook for uBO to overwrite
+// reliably the default title attribute assigned by CodeMirror.
+
+{
+    const i18nCommitStr = vAPI.i18n('rulesCommit');
+    const i18nRevertStr = vAPI.i18n('rulesRevert');
+    const commitArrowSelector = '.CodeMirror-merge-copybuttons-left .CodeMirror-merge-copy-reverse:not([title="' + i18nCommitStr + '"])';
+    const revertArrowSelector = '.CodeMirror-merge-copybuttons-left .CodeMirror-merge-copy:not([title="' + i18nRevertStr + '"])';
+
+    uDom.nodeFromSelector('.CodeMirror-merge-scrolllock')
+        .setAttribute('title', vAPI.i18n('genericMergeViewScrollLock'));
+
+    const translate = function() {
+        let elems = document.querySelectorAll(commitArrowSelector);
+        for ( const elem of elems ) {
+            elem.setAttribute('title', i18nCommitStr);
+        }
+        elems = document.querySelectorAll(revertArrowSelector);
+        for ( const elem of elems ) {
+            elem.setAttribute('title', i18nRevertStr);
+        }
+    };
+
+    const mergeGapObserver = new MutationObserver(translate);
+
+    mergeGapObserver.observe(
+        uDom.nodeFromSelector('.CodeMirror-merge-copybuttons-left'),
+        { attributes: true, attributeFilter: [ 'title' ], subtree: true }
+    );
+
+}
 
 /******************************************************************************/
 
@@ -66,7 +103,7 @@ var differ;
 // https://github.com/codemirror/CodeMirror/blob/3e1bb5fff682f8f6cbfaef0e56c61d62403d4798/addon/search/search.js#L22
 // ... and modified as needed.
 
-var updateOverlay = (function() {
+const updateOverlay = (function() {
     let reFilter;
     let mode = {
         token: function(stream) {
@@ -99,22 +136,27 @@ var updateOverlay = (function() {
 // - Scroll position preserved
 // - Minimum amount of text updated
 
-var rulesToDoc = function(clearHistory) {
-    for ( let key in unfilteredRules ) {
+const rulesToDoc = function(clearHistory) {
+    for ( const key in unfilteredRules ) {
         if ( unfilteredRules.hasOwnProperty(key) === false ) { continue; }
-        let doc = unfilteredRules[key].doc;
-        let rules = filterRules(key);
+        const doc = unfilteredRules[key].doc;
+        const rules = filterRules(key);
         if (
             doc.lineCount() === 1 && doc.getValue() === '' ||
             rules.length === 0
         ) {
-            doc.setValue(rules.length !== 0 ? rules.join('\n') : '');
+            doc.setValue(rules.length !== 0 ? rules.join('\n') + '\n' : '');
             continue;
         }
         if ( differ === undefined ) { differ = new diff_match_patch(); }
-        let beforeText = doc.getValue();
-        let afterText = rules.join('\n');
-        let diffs = differ.diff_main(beforeText, afterText);
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/593
+        //   Ensure the text content always ends with an empty line to avoid
+        //   spurious diff entries.
+        let beforeText = doc.getValue().trim();
+        if ( beforeText !== '' ) { beforeText += '\n'; }
+        let afterText = rules.join('\n').trim();
+        if ( afterText !== '' ) { afterText += '\n'; }
+        const diffs = differ.diff_main(beforeText, afterText);
         doc.startOperation();
         let i = diffs.length,
             iedit = beforeText.length;
@@ -145,7 +187,7 @@ var rulesToDoc = function(clearHistory) {
 
 /******************************************************************************/
 
-var filterRules = function(key) {
+const filterRules = function(key) {
     let rules = unfilteredRules[key].rules;
     let filter = uDom.nodeFromSelector('#ruleFilter input').value;
     if ( filter !== '' ) {
@@ -162,13 +204,13 @@ var filterRules = function(key) {
 
 /******************************************************************************/
 
-var renderRules = (function() {
+const renderRules = (( ) => {
+    const reIsSwitchRule = /^[a-z-]+: /;
     let firstVisit = true;
-    let reIsSwitchRule = /^[a-z-]+: /;
 
     // Switches always listed at the top.
-    let customSort = (a, b) => {
-        let aIsSwitch = reIsSwitchRule.test(a);
+    const customSort = (a, b) => {
+        const aIsSwitch = reIsSwitchRule.test(a);
         if ( reIsSwitchRule.test(b) === aIsSwitch ) {
             return a.localeCompare(b);
         }
@@ -191,7 +233,7 @@ var renderRules = (function() {
 
 /******************************************************************************/
 
-var applyDiff = function(permanent, toAdd, toRemove) {
+const applyDiff = function(permanent, toAdd, toRemove) {
     messaging.send(
         'dashboard',
         {
@@ -261,7 +303,7 @@ function handleImportFilePicker() {
 
 /******************************************************************************/
 
-var startImportFilePicker = function() {
+const startImportFilePicker = function() {
     let input = document.getElementById('importFilePicker');
     // Reset to empty string, this will ensure an change event is properly
     // triggered if the user pick a file, even if it is the same as the last
@@ -287,12 +329,12 @@ function exportUserRulesToFile() {
 
 /******************************************************************************/
 
-var onFilterChanged = (function() {
+const onFilterChanged = (function() {
     let timer,
         overlay = null,
         last = '';
 
-    let process = function() {
+    const process = function() {
         timer = undefined;
         if ( mergeView.editor().isClean(cleanEditToken) === false ) { return; }
         let filter = uDom.nodeFromSelector('#ruleFilter input').value;
@@ -319,13 +361,13 @@ var onFilterChanged = (function() {
 
 /******************************************************************************/
 
-var onTextChanged = (function() {
+const onTextChanged = (( ) => {
     let timer;
 
-    let process = function(now) {
+    const process = now => {
         timer = undefined;
+        const diff = document.getElementById('diff');
         let isClean = mergeView.editor().isClean(cleanEditToken);
-        let diff = document.getElementById('diff');
         if (
             now &&
             isClean === false &&
@@ -336,11 +378,9 @@ var onTextChanged = (function() {
         }
         diff.classList.toggle('editing', isClean === false);
         diff.classList.toggle('dirty', mergeView.leftChunks().length !== 0);
-        document.getElementById('editSaveButton').classList.toggle(
-            'disabled',
-            isClean
-        );
-        let input = document.querySelector('#ruleFilter input');
+        document.getElementById('editSaveButton')
+                .classList.toggle('disabled', isClean);
+        const input = document.querySelector('#ruleFilter input');
         if ( isClean ) {
             input.removeAttribute('disabled');
             CodeMirror.commands.save = undefined;
@@ -358,7 +398,7 @@ var onTextChanged = (function() {
 
 /******************************************************************************/
 
-var revertAllHandler = function() {
+const revertAllHandler = function() {
     let toAdd = [], toRemove = [];
     let left = mergeView.leftOriginal(),
         edit = mergeView.editor();
@@ -379,7 +419,7 @@ var revertAllHandler = function() {
 
 /******************************************************************************/
 
-var commitAllHandler = function() {
+const commitAllHandler = function() {
     let toAdd = [], toRemove = [];
     let left = mergeView.leftOriginal(),
         edit = mergeView.editor();
@@ -400,7 +440,7 @@ var commitAllHandler = function() {
 
 /******************************************************************************/
 
-var editSaveHandler = function() {
+const editSaveHandler = function() {
     let editor = mergeView.editor();
     let editText = editor.getValue().trim();
     if ( editText === cleanEditText ) {
@@ -433,6 +473,12 @@ self.cloud.onPull = function(data, append) {
         data,
         append ? '' : mergeView.editor().getValue().trim()
     );
+};
+
+/******************************************************************************/
+
+self.hasUnsavedData = function() {
+    return mergeView.editor().isClean(cleanEditToken) === false;
 };
 
 /******************************************************************************/

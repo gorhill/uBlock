@@ -2,12 +2,15 @@
 <html>
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=yes">
 <title></title>
 <link rel="stylesheet" href="css/common.css" type="text/css">
+<link rel="stylesheet" href="css/fa-icons.css" type="text/css">
 <link rel="stylesheet" type="text/css" href="css/document-blocked.css">
 </head>
 <body>
-<a href="https://github.com/gorhill/uBlock/wiki/Strict-blocking" target="_blank"><div id="warningSign"><span class="fa">&#xf071;</span></div></a>
+<div id="warningSign"><a class="fa-icon" href="https://github.com/gorhill/uBlock/wiki/Strict-blocking" target="_blank">exclamation-triangle</a></div>
+
 <div>
     <p data-i18n="docblockedPrompt1"></p>
     <div id="theURL" class="collapsed">
@@ -19,7 +22,7 @@
 <div>
     <p data-i18n="docblockedPrompt2"></p>
     <p id="why" class="code"></p><!--
- --><span id="whyex" style="display: none;"><span data-i18n="docblockedFoundIn"></span> <span></span></span>
+ --><p id="whyex" style="display: none;"><span data-i18n="docblockedFoundIn"></span> <span></span></p>
     </div>
 
 <div>
@@ -52,6 +55,7 @@
     </span>
 </div>
 
+<script src="js/fa-icons.js"></script>
 <script src="js/vapi.js"></script>
 <script src="js/vapi-common.js"></script>
 <script src="js/vapi-client.js"></script>

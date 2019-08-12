@@ -65,6 +65,12 @@ if [ "$1" = all ]; then
     pushd $(dirname $DES/) > /dev/null
     zip adnauseam.firefox.zip -qr $(basename $DES/)/*
     popd > /dev/null
+elif [ -n "$1" ]; then
+    echo "*** uBlock0.firefox: Creating versioned package..."
+    pushd $DES > /dev/null
+    zip ../$(basename $DES).xpi -qr *
+    popd > /dev/null
+    mv "$BLDIR"/uBlock0.firefox.xpi "$BLDIR"/uBlock0_"$1".firefox.xpi
 fi
 
 echo "*** AdNauseam.firefox: Package done."

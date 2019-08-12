@@ -27,6 +27,42 @@
   need to generate a script which is compatible with the output of the
   diff_match_patch, as expected by CodeMirror.
 
+  2018-12-20 gorhill:
+  There was an issue causing the wrong diff data to be issued, for instance
+  when diff-ing these two URLs on a character granularity basis (failure
+  point is marked):
+                                                                                                                          |
+  /articles/5c1a7aae1854f30006cb26f7/lede/1545239527833-shutterstock_726   01757 2-copy.jpeg?crop=0.8889xw%3A0.9988xh%3B0.1089xw%2C0xh&resize=650%3A*&output-quality=55
+  /articles/5c1a*   1854f30006cb2*  /lede/15452*       -shutterstock_*     017*  2-copy.jpeg?crop=0.*   xw%3A*      h%3B0.0*  xw%2C0xh&resize=650%3A*&output-quality=55
+  /articles/5c1aaea91854f30006cb2f1e/lede/1545253629235-shutterstock_106399017   2-copy.jpeg?crop=0.7749xw%3A1     xh%3B0.0391xw%2C0xh&resize=650%3A*&output-quality=55
+                                                                                                                          |
+
+  Investigating, I found what appears to be the original source on which the
+  code below is based:
+  - "An O(ND) Difference Algorithm for C#" by Matthias Hertel
+  - http://www.mathertel.de/Diff/ViewSrc.aspx
+  - https://github.com/mathertel
+
+  There was a difference; code had been commented out in the original source:
+  http://www.mathertel.de/Diff/DiffTest.aspx?oldfile=Diff.cs.v1&newfile=Diff.cs.v2
+
+  The developer noted:
+  > There have been overlapping boxes; that where analyzed partial differently.
+  > One return-point is enough.
+
+  After applying the changes to the code below, the problematic diff-ing went
+  away:
+                                                                                                                          |
+  /articles/5c1a7aae1854f30006cb26f7/lede/1545239527833-shutterstock_726   01757 2-copy.jpeg?crop=0.8889xw%3A0.9988xh%3B0.1089xw%2C0xh&resize=650%3A*&output-quality=55
+  /articles/5c1a*   1854f30006cb2*  /lede/15452*       -shutterstock_*     017*  2-copy.jpeg?crop=0.*  9xw%3A*     xh%3B0.*   xw%2C0xh&resize=650%3A*&output-quality=55
+  /articles/5c1aaea91854f30006cb2f1e/lede/1545253629235-shutterstock_106399017   2-copy.jpeg?crop=0.7749xw%3A1     xh%3B0.0391xw%2C0xh&resize=650%3A*&output-quality=55
+                                                                                                                          |
+
+  So I will assume this was the issue.
+
+  TODO:
+  - Apply other changes which were applied to the original code
+  
 **/
 
 'use strict';
@@ -121,7 +157,7 @@
             var snake = this.snake(astart, aend, bstart, bend);
 
             this.lcs(astart, snake.x, bstart, snake.y);
-            this.lcs(snake.u, aend, snake.v, bend);
+            this.lcs(snake.x, aend, snake.y, bend);
         }
     };
 
@@ -167,8 +203,8 @@
                     return {
                         x: down[k],
                         y: down[k] - k,
-                        u: up[k],
-                        v: up[k] - k,
+                    //    u: up[k],
+                    //    v: up[k] - k,
                     };
                 }
             }
@@ -195,8 +231,8 @@
                     return {
                         x: down[k],
                         y: down[k] - k,
-                        u: up[k],
-                        v: up[k] - k,
+                    //    u: up[k],
+                    //    v: up[k] - k,
                     };
                 }
             }

@@ -1,0 +1,101 @@
+.fa-icon {
+    align-items: center;
+    background-color: transparent;
+    border: 0;
+    display: inline-flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0.1em;
+    position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+    }
+.fa-icon > * {
+    pointer-events: none;
+    }
+.fa-icon.disabled,
+.disabled > .fa-icon,
+.fa-icon[disabled],
+[disabled] > .fa-icon {
+    color: #000;
+    fill: #000;
+    opacity: 0.25;
+    stroke: #888;
+    pointer-events: none;
+    }
+.fa-icon > .fa-icon-badge,
+.fa-icon.disabled > .fa-icon-badge {
+    visibility: hidden;
+    }
+.fa-icon.fa-icon-badged > .fa-icon-badge {
+    bottom: -20%;
+    display: inline-block;
+    font: 60% sans-serif;
+    left: calc(100% - 0.2em);
+    position: absolute;
+    visibility: visible;
+    }
+.fa-icon.fa-icon-vflipped {
+    transform: scale(1, -1);
+    }
+
+.fa-icon > svg {
+    height: 1em;
+    width: 1em;
+    }
+
+.fa-icon > .fa-icon_bar-chart {
+    width: calc(1em * 2048 / 1792);
+    }
+.fa-icon > .fa-icon_eraser,
+.fa-icon > .fa-icon_film {
+    width: calc(1em * 1920 / 1792);
+    }
+.fa-icon > .fa-icon_code {
+    width: calc(1em * 1830 / 1792);
+    }
+.fa-icon > .fa-icon_exclamation-triangle {
+    width: calc(1em * 1794 / 1792);
+    }
+.fa-icon > .fa-icon_clipboard,
+.fa-icon > .fa-icon_external-link,
+.fa-icon > .fa-icon_eye-dropper,
+.fa-icon > .fa-icon_eye-slash,
+.fa-icon > .fa-icon_files-o,
+.fa-icon > .fa-icon_list-alt {
+    width: calc(1em * 1792 / 1792);
+    }
+.fa-icon > .fa-icon_font,
+.fa-icon > .fa-icon_search {
+    width: calc(1em * 1664 / 1792);
+    }
+.fa-icon > .fa-icon_home {
+    width: calc(1em * 1612 / 1792);
+    }
+.fa-icon > .fa-icon_cog,
+.fa-icon > .fa-icon_floppy-o,
+.fa-icon > .fa-icon_info-circle,
+.fa-icon > .fa-icon_pause-circle-o,
+.fa-icon > .fa-icon_play-circle-o,
+.fa-icon > .fa-icon_power-off,
+.fa-icon > .fa-icon_refresh,
+.fa-icon > .fa-icon_sliders {
+    width: calc(1em * 1536 / 1792);
+    }
+.fa-icon > .fa-icon_filter {
+    width: calc(1em * 1410 / 1792);
+    }
+.fa-icon > .fa-icon_times {
+    width: calc(1em * 1188 / 1792);
+    }
+.fa-icon > .fa-icon_angle-up,
+.fa-icon > .fa-icon_double-angle-up,
+.fa-icon > .fa-icon_lock {
+    width: calc(1em *  1152 / 1792);
+    }
+.fa-icon > .fa-icon_double-angle-left {
+    width: calc(1em *  966 / 1792);
+    }
+.fa-icon > .fa-icon_bolt {
+    width: calc(1em *  896 / 1792);
+    }

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body style="font: 14px sans-serif">
+<h1>Benchmark of hostname-lookup from small to large set:<br>Set, HNTrie</h1>
+<p><a href="./.">Back</a></p>
+<p>&nbsp;</p>
+<p><button id="createBenchmark">Creation</button> <button id="lookupBenchmark">Lookup</button></p>
+<div id="results-0" style="white-space:pre;font-family:mono"></div>
+<div id="results-1" style="white-space:pre;font-family:mono"></div>
+<div id="results-2" style="white-space:pre;font-family:mono"></div>
+<div id="results-3" style="white-space:pre;font-family:mono"></div>
+<div id="results-4" style="white-space:pre;font-family:mono"></div>
+<div id="results-5" style="white-space:pre;font-family:mono"></div>
+<div id="results-6" style="white-space:pre;font-family:mono"></div>
+
+<script src="https://rawcdn.githack.com/gorhill/uBlock/1b6fea16da81d1df3e2efd5a31894f71ea04dbb1/src/js/hntrie.js"></script>
+<!-- <script src="../../src/js/hntrie.js"></script> -->
+<script src="hostname-pool.js"></script>
+
+<script src="https://cdn.jsdelivr.net/lodash/4.17.2/lodash.min.js"></script>
+<script src="https://cdn.jsdelivr.net/platform.js/1.3.3/platform.js"></script>
+<script src="https://cdn.jsdelivr.net/benchmarkjs/2.1.2/benchmark.js"></script>
+<script>
+const randomHostname = function() {
+    return hostnamePool[Math.floor(Math.random() * hostnamePool.length)];
+};
+
+const randomNeedle = function() {
+    let needle = randomHostname();
+    const pos = needle.lastIndexOf('.');
+    if ( pos !== -1 ) {
+        needle = Math.random().toString(36).slice(2) + needle.slice(pos);
+    }
+    if ( Math.random() < 0.5 ) {
+        needle = Math.random().toString(36).slice(2, 6) + '.' + needle;
+    }
+    return needle;
+};
+
+// Create hostname dictionary of all sizes (from 2 to 1024 at most)
+const hostnameLists = (function() {
+    const dicts = [];
+    let n = hostnamePool.length;
+    while ( n > 1 ) {
+        const dict = [];
+        for ( let i = 0; i < n; i++ ) {
+            dict.push(randomHostname());
+        }
+        dicts.unshift(dict);
+        n = n >>> 2;
+    }
+    return dicts;
+})();
+
+/******************************************************************************/
+
+var setBasedDictCreate = function(hostnames) {
+    return new Set(hostnames);
+};
+
+var setBasedDictTest = function(haystack, needle) {
+    for (;;) {
+        if ( haystack.has(needle) ) { return true; }
+        const pos = needle.indexOf('.');
+        if ( pos === -1 ) { break; }
+        needle = needle.slice(pos + 1);
+    }
+    return false;
+};
+
+/******************************************************************************/
+
+const hnBigTrieJS = new HNTrieContainer();
+const hnBigTrieWASM = new HNTrieContainer();
+
+const trieBasedDictCreateJS = function(hostnames) {
+    return hnBigTrieJS.fromIterable(hostnames, 'addJS');
+}
+
+const trieBasedDictTest = function(haystack, needle) {
+    return haystack.matchesJS(needle);
+};
+
+const trieBasedDictCreateWASM = function(hostnames) {
+    return hnBigTrieWASM.fromIterable(hostnames, 'addWASM');
+}
+
+const trieBasedDictTestWASM = function(haystack, needle) {
+    return haystack.matchesWASM(needle);
+};
+
+/******************************************************************************/
+
+const gBenchmarks = [ null ];
+let gWhich;
+
+/******************************************************************************/
+
+function stdout(which, text) {
+    if ( which > 0 ) {
+        which = ((which - 1) % 3) + 1;
+    }
+    var r = document.querySelector('#results-' + which);
+    if ( text === '' ) {
+        r.innerHTML = '';
+    } else {
+        r.innerHTML += text;
+    }
+}
+
+function doBenchmark(which) {
+    stdout(0, '');
+    stdout(0, 'Benchmarking, the higher ops/sec the better.\n');
+    stdout(0, Benchmark.platform.toString() + '.');
+    stdout(0, '\n\n');
+    stdout(1, '');
+    stdout(2, '');
+    stdout(3, '');
+    gWhich = which;
+    gBenchmarks[gWhich].run({ 'async': true });
+}
+
+function nextBenchmark() {
+    stdout(gWhich, 'Done.\n\n');
+    gWhich += 1;
+    var bms = gBenchmarks[gWhich];
+    if ( bms ) {
+        bms.run({ 'async': true });
+    }
+}
+
+function exitBenchmark() {
+    stdout(gWhich, 'Done.\n\n');
+}
+
+/******************************************************************************/
+
+function initBenchmarks() {
+    gBenchmarks.push((function() {
+        let dicts = [];
+        let bigTrieDictsSerialized;
+
+        const createDict = function(fn) {
+            const out = [];
+            for ( let i = 0; i < hostnameLists.length; i++ ) {
+                out[i] = fn(hostnameLists[i]);
+            }
+            return out;
+        };
+
+        var bms = new Benchmark.Suite();
+        bms.add('  -                         Set-based', function() {
+            dicts = createDict(setBasedDictCreate);
+        }).add('  -           Trie-based JS (3rd-gen)', function() {
+            hnBigTrieJS.reset();
+            dicts = createDict(trieBasedDictCreateJS);
+        });
+        if ( hnBigTrieWASM.addWASM !== null ) {
+            bms.add('  -         Trie-based WASM (3rd-gen)', function() {
+                hnBigTrieWASM.reset();
+                dicts = createDict(trieBasedDictCreateWASM);
+            });
+        }
+        bms.add('  - Trie-based unserialized (3rd-gen)', function() {
+            hnBigTrieJS.reset();
+            hnBigTrieJS.unserialize(bigTrieDictsSerialized);
+        }).on('start', function() {
+            hnBigTrieJS.reset();
+            createDict(trieBasedDictCreateJS);
+            bigTrieDictsSerialized = hnBigTrieJS.serialize();
+            stdout(gWhich, '');
+            stdout(gWhich, 'Create dictionaries\n');
+        }).on('cycle', function(event) {
+            stdout(gWhich, String(event.target) + '\n');
+        }).on('complete', function() {
+            dicts = [];
+            bigTrieDictsSerialized = undefined;
+            exitBenchmark();
+        });
+
+        return bms;
+    })());
+
+    const lookupCount = 100;
+
+    gBenchmarks.push((function() {
+        const bms = new Benchmark.Suite();
+        const needles = [];
+
+        let setDicts = [];
+        let bigTrieDicts = [];
+        let results;
+
+        const lookupDict = function(dicts, fn) {
+            for ( let i = 0; i < needles.length; i++ ) {
+                const needle = needles[i];
+                for ( const dict of dicts ) {
+                    results[i] = fn(dict, needle);
+                }
+            }
+        };
+
+        bms.add('  -                     Set-based', function() {
+            lookupDict(setDicts, setBasedDictTest);
+        }).add('  -       Trie-based JS (3rd-gen)', function() {
+            lookupDict(bigTrieDicts, trieBasedDictTest);
+        });
+        if ( hnBigTrieWASM.matchesWASM !== null ) {
+            bms.add('  -     Trie-based WASM (3rd-gen)', function() {
+                lookupDict(bigTrieDicts, trieBasedDictTestWASM);
+                })
+        }
+        bms.on('start', function() {
+                for ( let i = 0; i < lookupCount; i++ ) {
+                    needles[i] = randomNeedle();
+                }
+                setDicts = [];
+                bigTrieDicts = [];
+                results = [];
+                hnBigTrieJS.reset();
+                for ( const hostnameList of hostnameLists ) {
+                    setDicts.push(setBasedDictCreate(hostnameList));
+                    bigTrieDicts.push(trieBasedDictCreateJS(hostnameList));
+                }
+                hnBigTrieJS.optimize();
+                stdout(gWhich, '');
+                stdout(
+                    gWhich,
+                    'Test ' + lookupCount +
+                    ' needles against ' + setDicts.length +
+                    ' dictionaries with size between ' + hostnameLists[0].length +
+                    ' and ' + hostnameLists[hostnameLists.length-1].length +
+                    ' hostnames\n'
+                );
+            }).on('cycle', function(event) {
+                    stdout(gWhich, String(event.target) + '\n');
+            }).on('complete', ( ) => {
+                setDicts = bigTrieDicts = results = [];
+                hnBigTrieJS.reset();
+                exitBenchmark();
+            });
+
+        return bms;
+    })());
+}
+
+/******************************************************************************/
+
+Promise.all([
+    hnBigTrieJS.readyToUse(),
+    hnBigTrieWASM.readyToUse()
+]).then(( ) => {
+    initBenchmarks();
+});
+
+document.getElementById('createBenchmark').onclick = function() {
+    doBenchmark(1);
+};
+document.getElementById('lookupBenchmark').onclick = function() {
+    doBenchmark(2);
+};
+</script>
+</body>
+</html>

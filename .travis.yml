@@ -4,7 +4,8 @@ env:
   matrix:
   - BROWSER=chromium EXT=zip
   - BROWSER=firefox EXT=xpi
-script: ./tools/make-${BROWSER}.sh all
+  - BROWSER=thunderbird EXT=xpi
+script: "./tools/make-${BROWSER}.sh ${TRAVIS_TAG}"
 deploy:
   provider: releases
   prerelease: true

@@ -25,43 +25,46 @@
 
 /******************************************************************************/
 
-(function() {
+(( ) => {
 
 /******************************************************************************/
 
-var messaging = vAPI.messaging;
-var details = {};
+const messaging = vAPI.messaging;
+let details = {};
 
-(function() {
-    var matches = /details=([^&]+)/.exec(window.location.search);
-    if ( matches === null ) {
-        return;
+{
+    const matches = /details=([^&]+)/.exec(window.location.search);
+    if ( matches !== null ) {
+        details = JSON.parse(atob(matches[1]));
     }
-    details = JSON.parse(atob(matches[1]));
-})();
+}
 
 /******************************************************************************/
 
-(function() {
-    var onReponseReady = function(response) {
+messaging.send(
+    'documentBlocked',
+    {
+        what: 'listsFromNetFilter',
+        compiledFilter: details.fc,
+        rawFilter: details.fs
+    },
+    response => {
         if ( response instanceof Object === false ) { return; }
 
         let lists;
-        for ( let rawFilter in response ) {
+        for ( const rawFilter in response ) {
             if ( response.hasOwnProperty(rawFilter) === false ) { continue; }
             lists = response[rawFilter];
             break;
         }
-        
-        if ( Array.isArray(lists) === false || lists.length === 0 ) {
-            return;
-        }
 
-        let parent = uDom.nodeFromSelector('#whyex > span:nth-of-type(2)');
-        for ( let list of lists ) {
-            let elem = document.querySelector('#templates .filterList')
-                               .cloneNode(true);
-            let source = elem.querySelector('.filterListSource');
+        if ( Array.isArray(lists) === false || lists.length === 0 ) { return; }
+
+        const parent = uDom.nodeFromSelector('#whyex > span:nth-of-type(2)');
+        for ( const list of lists ) {
+            const elem = document.querySelector('#templates .filterList')
+                                 .cloneNode(true);
+            const source = elem.querySelector('.filterListSource');
             source.href += encodeURIComponent(list.assetKey);
             source.textContent = list.title;
             if (
@@ -74,74 +77,15 @@ var details = {};
             parent.appendChild(elem);
         }
         uDom.nodeFromId('whyex').style.removeProperty('display');
-    };
-
-    messaging.send(
-        'documentBlocked',
-        {
-            what: 'listsFromNetFilter',
-            compiledFilter: details.fc,
-            rawFilter: details.fs
-        },
-        onReponseReady
-    );
-})();
-
-/******************************************************************************/
-
-var getTargetHostname = function() {
-    var hostname = details.hn;
-    var elem = document.querySelector('#proceed select');
-    if ( elem !== null ) {
-        hostname = elem.value;
     }
-    return hostname;
-};
+);
 
 /******************************************************************************/
 
-var proceedToURL = function() {
-    window.location.replace(details.url);
-};
-
-/******************************************************************************/
-
-var proceedTemporary = function() {
-    messaging.send(
-        'documentBlocked',
-        {
-            what: 'temporarilyWhitelistDocument',
-            hostname: getTargetHostname()
-        },
-        proceedToURL
-    );
-};
-
-/******************************************************************************/
-
-var proceedPermanent = function() {
-    messaging.send(
-        'documentBlocked',
-        {
-            what: 'toggleHostnameSwitch',
-            name: 'no-strict-blocking',
-            hostname: getTargetHostname(),
-            deep: true,
-            state: true,
-            persist: true
-        },
-        proceedToURL
-    );
-};
-
-/******************************************************************************/
-
-(function() {
-    var matches = /^(.*)\{\{hostname\}\}(.*)$/.exec(vAPI.i18n('docblockedProceed'));
-    if ( matches === null ) {
-        return;
-    }
-    var proceed = uDom('#templates .proceed').clone();
+(( ) => {
+    const matches = /^(.*)\{\{hostname\}\}(.*)$/.exec(vAPI.i18n('docblockedProceed'));
+    if ( matches === null ) { return; }
+    const proceed = uDom('#templates .proceed').clone();
     proceed.descendants('span:nth-of-type(1)').text(matches[1]);
     proceed.descendants('span:nth-of-type(4)').text(matches[2]);
 
@@ -168,20 +112,18 @@ uDom.nodeFromId('why').textContent = details.fs;
 // Parse URL to extract as much useful information as possible. This is useful
 // to assist the user in deciding whether to navigate to the web page.
 
-(function() {
-    if ( typeof URL !== 'function' ) {
-        return;
-    }
+(( ) => {
+    if ( typeof URL !== 'function' ) { return; }
 
-    var reURL = /^https?:\/\//;
+    const reURL = /^https?:\/\//;
 
-    var liFromParam = function(name, value) {
+    const liFromParam = function(name, value) {
         if ( value === '' ) {
             value = name;
             name = '';
         }
-        var li = document.createElement('li');
-        var span = document.createElement('span');
+        const li = document.createElement('li');
+        let span = document.createElement('span');
         span.textContent = name;
         li.appendChild(span);
         if ( name !== '' && value !== '' ) {
@@ -189,7 +131,7 @@ uDom.nodeFromId('why').textContent = details.fs;
         }
         span = document.createElement('span');
         if ( reURL.test(value) ) {
-            var a = document.createElement('a');
+            const a = document.createElement('a');
             a.href = a.textContent = value;
             span.appendChild(a);
         } else {
@@ -199,7 +141,7 @@ uDom.nodeFromId('why').textContent = details.fs;
         return li;
     };
 
-    var safeDecodeURIComponent = function(s) {
+    const safeDecodeURIComponent = function(s) {
         try {
             s = decodeURIComponent(s);
         } catch (ex) {
@@ -207,33 +149,29 @@ uDom.nodeFromId('why').textContent = details.fs;
         return s;
     };
 
-    var renderParams = function(parentNode, rawURL) {
-        var a = document.createElement('a');
+    const renderParams = function(parentNode, rawURL) {
+        const a = document.createElement('a');
         a.href = rawURL;
-        if ( a.search.length === 0 ) {
-            return false;
-        }
+        if ( a.search.length === 0 ) { return false; }
 
-        var pos = rawURL.indexOf('?');
-        var li = liFromParam(
+        let pos = rawURL.indexOf('?');
+        const li = liFromParam(
             vAPI.i18n('docblockedNoParamsPrompt'),
             rawURL.slice(0, pos)
         );
         parentNode.appendChild(li);
 
-        var params = a.search.slice(1).split('&');
-        var param, name, value, ul;
-        for ( var i = 0; i < params.length; i++ ) {
-            param = params[i];
-            pos = param.indexOf('=');
+        const params = a.search.slice(1).split('&');
+        for ( const param of params ) {
+            let pos = param.indexOf('=');
             if ( pos === -1 ) {
                 pos = param.length;
             }
-            name = safeDecodeURIComponent(param.slice(0, pos));
-            value = safeDecodeURIComponent(param.slice(pos + 1));
-            li = liFromParam(name, value);
+            const name = safeDecodeURIComponent(param.slice(0, pos));
+            const value = safeDecodeURIComponent(param.slice(pos + 1));
+            const li = liFromParam(name, value);
             if ( reURL.test(value) ) {
-                ul = document.createElement('ul');
+                const ul = document.createElement('ul');
                 renderParams(ul, value);
                 li.appendChild(ul);
             }
@@ -246,12 +184,12 @@ uDom.nodeFromId('why').textContent = details.fs;
         return;
     }
 
-    var toggler = document.createElement('span');
+    const toggler = document.createElement('span');
     toggler.className = 'fa';
     uDom('#theURL > p').append(toggler);
 
     uDom(toggler).on('click', function() {
-        var cl = uDom.nodeFromId('theURL').classList;
+        const cl = uDom.nodeFromId('theURL').classList;
         cl.toggle('collapsed');
         vAPI.localStorage.setItem(
             'document-blocked-expand-url',
@@ -267,13 +205,66 @@ uDom.nodeFromId('why').textContent = details.fs;
 
 /******************************************************************************/
 
+// https://www.reddit.com/r/uBlockOrigin/comments/breeux/close_this_window_doesnt_work_on_firefox/
+
 if ( window.history.length > 1 ) {
-    uDom('#back').on('click', function() { window.history.back(); });
+    uDom('#back').on(
+        'click',
+        ( ) => {
+            window.history.back();
+        }
+    );
     uDom('#bye').css('display', 'none');
 } else {
-    uDom('#bye').on('click', function() { window.close(); });
+    uDom('#bye').on(
+        'click',
+        ( ) => {
+            messaging.send(
+                'documentBlocked',
+                { what: 'closeThisTab', }
+            );
+        }
+    );
     uDom('#back').css('display', 'none');
 }
+
+/******************************************************************************/
+
+const getTargetHostname = function() {
+    const elem = document.querySelector('#proceed select');
+    if ( elem === null ) { return details.hn; }
+    return elem.value;
+};
+
+const proceedToURL = function() {
+    window.location.replace(details.url);
+};
+
+const proceedTemporary = function() {
+    messaging.send(
+        'documentBlocked',
+        {
+            what: 'temporarilyWhitelistDocument',
+            hostname: getTargetHostname()
+        },
+        proceedToURL
+    );
+};
+
+const proceedPermanent = function() {
+    messaging.send(
+        'documentBlocked',
+        {
+            what: 'toggleHostnameSwitch',
+            name: 'no-strict-blocking',
+            hostname: getTargetHostname(),
+            deep: true,
+            state: true,
+            persist: true
+        },
+        proceedToURL
+    );
+};
 
 uDom('#proceedTemporary').attr('href', details.url).on('click', proceedTemporary);
 uDom('#proceedPermanent').attr('href', details.url).on('click', proceedPermanent);

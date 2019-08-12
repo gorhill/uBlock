@@ -11,6 +11,18 @@
     "message": "uBlock₀ — 控制台",
     "description": "English: uBlock₀ — Dashboard"
   },
+  "dashboardUnsavedWarning": {
+    "message": "警告！變更尚未儲存。",
+    "description": "A warning in the dashboard when navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningStay": {
+    "message": "不離開",
+    "description": "Label for button to prevent navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningIgnore": {
+    "message": "忽略變更",
+    "description": "Label for button to ignore unsaved changes"
+  },
   "settingsPageName": {
     "message": "設定",
     "description": "appears as tab name in dashboard"
@@ -20,7 +32,7 @@
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
-    "message": "自訂過濾規則",
+    "message": "自訂靜態過濾規則",
     "description": "appears as tab name in dashboard"
   },
   "rulesPageName": {
@@ -36,7 +48,7 @@
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
-    "message": "uBlock₀ — 連線請求記錄工具",
+    "message": "uBlock₀ — 記錄器",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
@@ -44,7 +56,7 @@
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
-    "message": "uBlock₀ — 資源檢視工具",
+    "message": "uBlock₀ — 資源檢視器",
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
@@ -96,7 +108,7 @@
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "開啟連線請求記錄工具",
+    "message": "開啟記錄器",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
@@ -241,7 +253,7 @@
   },
   "pickerContextMenuEntry": {
     "message": "阻擋元素",
-    "description": "English: Block element"
+    "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
     "message": "隱藏已阻擋元素的佔位元素",
@@ -300,7 +312,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "封鎖超過 {{input:number}} kB 的媒體元素",
+    "message": "封鎖超過 {{input}} KB 的媒體元素",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -372,7 +384,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "內置",
+    "message": "內建",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -388,7 +400,7 @@
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {
-    "message": "騷擾",
+    "message": "惱人的",
     "description": "The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose": {
@@ -404,7 +416,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "匯入…",
+    "message": "匯入⋯",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -543,28 +555,120 @@
     "message": "目前分頁",
     "description": "Appears in the logger's tab selector"
   },
-  "logFilterPrompt": {
-    "message": "過濾日誌項目",
-    "description": "English: filter log entries"
+  "loggerReloadTip": {
+    "message": "重新載入分頁內容",
+    "description": "Tooltip for the reload button in the logger page"
   },
-  "logMaxEntriesTip": {
-    "message": "最大日誌項目數量",
-    "description": "Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  "loggerDomInspectorTip": {
+    "message": "切換 DOM 檢測器",
+    "description": "Tooltip for the DOM inspector button in the logger page"
+  },
+  "loggerPopupPanelTip": {
+    "message": "開閉彈出式面板",
+    "description": "Tooltip for the popup panel button in the logger page"
+  },
+  "loggerInfoTip": {
+    "message": "uBlock Origin wiki：記錄器",
+    "description": "Tooltip for the top-right info label in the logger page"
+  },
+  "loggerClearTip": {
+    "message": "清除記錄",
+    "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
+  },
+  "loggerPauseTip": {
+    "message": "暫停記錄（丟棄所有傳入資料）",
+    "description": "Tooltip for the pause button in the logger page"
+  },
+  "loggerUnpauseTip": {
+    "message": "取消暫停記錄",
+    "description": "Tooltip for the play button in the logger page"
+  },
+  "loggerRowFiltererButtonTip": {
+    "message": "開閉記錄篩選",
+    "description": "Tooltip for the row filterer button in the logger page"
+  },
+  "logFilterPrompt": {
+    "message": "篩選記錄條目",
+    "description": "Placeholder string for logger output filtering input field"
+  },
+  "loggerRowFiltererBuiltinTip": {
+    "message": "記錄篩選設定",
+    "description": "Tooltip for the button to bring up logger output filtering options"
+  },
+  "loggerRowFiltererBuiltinNot": {
+    "message": "非",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinEventful": {
+    "message": "已套用規則",
+    "description": "A keyword in the built-in row filtering expression: all items corresponding to uBO doing something (blocked, allowed, redirected, etc.)"
+  },
+  "loggerRowFiltererBuiltinBlocked": {
+    "message": "已封鎖",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinAllowed": {
+    "message": "已允許",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltin1p": {
+    "message": "第一方",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltin3p": {
+    "message": "第三方",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerEntryDetailsHeader": {
+    "message": "詳細資料",
+    "description": "Small header to identify the 'Details' pane for a specific logger entry"
+  },
+  "loggerEntryDetailsFilter": {
+    "message": "過濾規則",
+    "description": "Label to identify a filter field"
+  },
+  "loggerEntryDetailsFilterList": {
+    "message": "過濾規則清單",
+    "description": "Label to identify a filter list field"
+  },
+  "loggerEntryDetailsRule": {
+    "message": "規則",
+    "description": "Label to identify a rule field"
+  },
+  "loggerEntryDetailsContext": {
+    "message": "上下文",
+    "description": "Label to identify a context field (typically a hostname)"
+  },
+  "loggerEntryDetailsRootContext": {
+    "message": "根上下文",
+    "description": "Label to identify a root context field (typically a hostname)"
+  },
+  "loggerEntryDetailsPartyness": {
+    "message": "第一方\/第三方",
+    "description": "Label to identify a field providing partyness information"
+  },
+  "loggerEntryDetailsType": {
+    "message": "類型",
+    "description": "Label to identify the type of an entry"
+  },
+  "loggerEntryDetailsURL": {
+    "message": "網址",
+    "description": "Label to identify the URL of an entry"
+  },
+  "loggerURLFilteringHeader": {
+    "message": "網址規則",
+    "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
-    "message": "情境：",
+    "message": "上下文：",
     "description": "Label for the context selector"
   },
   "loggerURLFilteringTypeLabel": {
     "message": "類型：",
     "description": "Label for the type selector"
   },
-  "loggerURLFilteringHeader": {
-    "message": "動態網址過濾",
-    "description": "Small header to identify the dynamic URL filtering section"
-  },
   "loggerStaticFilteringHeader": {
-    "message": "靜態過濾",
+    "message": "靜態過濾規則",
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
@@ -611,6 +715,62 @@
     "message": "無法在任何啟用的過濾清單中，找到靜態過濾規則 <code>{{filter}}<\/code>",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
+  "loggerSettingDiscardPrompt": {
+    "message": "不符合以下任一狀況的記錄將會被自動清除：",
+    "description": "Logger setting: A sentence to describe the purpose of the settings below"
+  },
+  "loggerSettingPerEntryMaxAge": {
+    "message": "最多保留 {{input}} 分鐘以內的記錄",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerTabMaxLoads": {
+    "message": "每個分頁最多保留 {{input}} 次內容加載產生的記錄",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerTabMaxEntries": {
+    "message": "每個分頁最多保留 {{input}} 條記錄",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerEntryLineCount": {
+    "message": "在垂直延展模式中每條記錄顯示 {{input}} 行",
+    "description": "A logger setting"
+  },
+  "loggerSettingHideColumnsPrompt": {
+    "message": "隱藏欄位：",
+    "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
+  },
+  "loggerSettingHideColumnTime": {
+    "message": "{{input}} 時間",
+    "description": "A label for the time column"
+  },
+  "loggerSettingHideColumnFilter": {
+    "message": "{{input}} 過濾規則",
+    "description": "A label for the filter or rule column"
+  },
+  "loggerSettingHideColumnContext": {
+    "message": "{{input}} 上下文",
+    "description": "A label for the context column"
+  },
+  "loggerSettingHideColumnPartyness": {
+    "message": "{{input}} 第一方\/第三方",
+    "description": "A label for the partyness column"
+  },
+  "loggerExportFormatList": {
+    "message": "清單",
+    "description": "Label for radio-button to pick export format"
+  },
+  "loggerExportFormatTable": {
+    "message": "表格",
+    "description": "Label for radio-button to pick export format"
+  },
+  "loggerExportEncodePlain": {
+    "message": "純文字",
+    "description": "Label for radio-button to pick export text format"
+  },
+  "loggerExportEncodeMarkdown": {
+    "message": "Markdown",
+    "description": "Label for radio-button to pick export text format"
+  },
   "aboutChangelog": {
     "message": "更新日誌",
     "description": ""
@@ -634,6 +794,10 @@
   "aboutContributors": {
     "message": "貢獻者",
     "description": "English: Contributors"
+  },
+  "aboutDependencies": {
+    "message": "外部相依套件（與 GPLv3 相容）：",
+    "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
     "message": "備份到檔案…",
@@ -700,7 +864,7 @@
     "description": "Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
-    "message": "顯示連線請求記錄工具",
+    "message": "顯示記錄器",
     "description": "Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
@@ -788,8 +952,16 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "鍵入快速鍵",
+    "message": "輸入捷徑",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
+  },
+  "genericMergeViewScrollLock": {
+    "message": "切換是否啟用同步捲動",
+    "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
+  },
+  "genericCopyToClipboard": {
+    "message": "複製到剪貼簿",
+    "description": "Label for buttons used to copy something to the clipboard"
   },
   "dummy": {
     "message": "此條目須為最後一個",

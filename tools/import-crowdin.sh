@@ -68,8 +68,8 @@ cp $SRC/zh-TW/adnauseam.json $DES/zh_TW/adnauseam.json
 
 cp $SRC/ar/description.txt    $DES/ar/description.txt
 cp $SRC/bg/description.txt    $DES/bg/description.txt
-cp $SRC/bn/description.txt    $DES/bn/description.txt 
-cp $SRC/ca/description.txt    $DES/ca/description.txt 
+cp $SRC/bn/description.txt    $DES/bn/description.txt
+cp $SRC/ca/description.txt    $DES/ca/description.txt
 cp $SRC/cs/description.txt    $DES/cs/description.txt
 cp $SRC/cv/description.txt    $DES/cv/description.txt
 cp $SRC/da/description.txt    $DES/da/description.txt

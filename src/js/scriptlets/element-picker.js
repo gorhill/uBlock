@@ -272,104 +272,111 @@ var highlightElements = function(elems, force) {
 
 /******************************************************************************/
 
+const mergeStrings = function(urls) {
+    if ( urls.length === 0 ) { return ''; }
+    if (
+        urls.length === 1 ||
+        self.diff_match_patch instanceof Function === false
+    ) {
+        return urls[0];
+    }
+    const differ = new self.diff_match_patch();
+    let merged = urls[0];
+    for ( let i = 1; i < urls.length; i++ ) {
+        // The differ works at line granularity: we insert a linefeed after
+        // each character to trick the differ to work at character granularity.
+        const diffs = differ.diff_main(
+            //urls[i].replace(/.(?=.)/g, '$&\n'),
+            //merged.replace(/.(?=.)/g, '$&\n')
+            urls[i].split('').join('\n'),
+            merged.split('').join('\n')
+        );
+        const result = [];
+        for ( const diff of diffs ) {
+            if ( diff[0] !== 0 ) {
+                result.push('*');
+            } else {
+                result.push(diff[1].charAt(0));
+            }
+        }
+        // Keep usage of wildcards to a sane level, too many of them can cause
+        // high overhead filters
+        merged =
+            result.join('')
+                .replace(/\*+$/, '')
+                .replace(/\*{2,}/g, '*')
+                .replace(/([^*]{1,2}\*)(?:[^*]{1,2}\*)+/g, '$1');
+    }
+    return merged;
+};
+
+/******************************************************************************/
+
 // https://github.com/gorhill/uBlock/issues/1897
 // Ignore `data:` URI, they can't be handled by an HTTP observer.
 
-var backgroundImageURLFromElement = function(elem) {
-    var style = window.getComputedStyle(elem),
-        bgImg = style.backgroundImage || '',
-        matches = /^url\((["']?)([^"']+)\1\)$/.exec(bgImg),
-        url = matches !== null && matches.length === 3 ? matches[2] : '';
+const backgroundImageURLFromElement = function(elem) {
+    const style = window.getComputedStyle(elem);
+    const bgImg = style.backgroundImage || '';
+    const matches = /^url\((["']?)([^"']+)\1\)$/.exec(bgImg);
+    const url = matches !== null && matches.length === 3 ? matches[2] : '';
     return url.lastIndexOf('data:', 0) === -1 ? url.slice(0, 1024) : '';
 };
 
 /******************************************************************************/
 
 // https://github.com/gorhill/uBlock/issues/1725#issuecomment-226479197
-// Limit returned string to 1024 characters.
-// Also, return only URLs which will be seen by an HTTP observer.
+//   Limit returned string to 1024 characters.
+//   Also, return only URLs which will be seen by an HTTP observer.
 
-var resourceURLFromElement = function(elem) {
-    var tagName = elem.localName, s;
-    if (
-        (s = netFilter1stSources[tagName]) ||
-        (s = netFilter2ndSources[tagName])
-    ) {
-        s = elem[s];
-        if ( typeof s === 'string' && /^https?:\/\//.test(s) ) {
-            return s.slice(0, 1024);
+const resourceURLFromElement = function(elem) {
+    const tagName = elem.localName;
+    const prop = netFilter1stSources[tagName];
+    if ( prop ) {
+        let src = '';
+        {
+            let s = elem[prop];
+            if ( typeof s === 'string' && /^https?:\/\//.test(s) ) {
+                src = s.slice(0, 1024);
+            }
         }
+        if ( typeof elem.srcset === 'string' && elem.srcset !== '' ) {
+            const ss = [];
+            for ( let s of elem.srcset.split(',') ) {
+                const pos = s.indexOf(' ');
+                if ( pos !== -1 ) { s = s.slice(0, pos); }
+                const parsedURL = new URL(s, document.baseURI);
+                if ( parsedURL.pathname.length > 1 ) {
+                    ss.push(parsedURL.href);
+                }
+            }
+            if ( ss.length !== 0 ) {
+                if ( src !== '' ) {
+                    ss.push(src);
+                }
+                src = mergeStrings(ss);
+            }
+        }
+        return src;
     }
     return backgroundImageURLFromElement(elem);
 };
 
 /******************************************************************************/
 
-var netFilterFromUnion = (function() {
-    var reTokenizer = /[^0-9a-z%*]+|[0-9a-z%]+|\*/gi;
-    var a = document.createElement('a');
+const netFilterFromUnion = function(toMergeURL, out) {
+    const parsedURL = new URL(toMergeURL, document.baseURI);
 
-    return function(to, out) {
-        a.href= to;
-        to = a.pathname + a.search;
-        var from = lastNetFilterUnion;
+    toMergeURL = parsedURL.pathname + parsedURL.search;
 
-        // Reset reference filter when dealing with unrelated URLs
-        if ( from === '' || a.host === '' || a.host !== lastNetFilterHostname ) {
-            lastNetFilterHostname = a.host;
-            lastNetFilterUnion = to;
-            vAPI.messaging.send(
-                'elementPicker',
-                {
-                    what: 'elementPickerEprom',
-                    lastNetFilterSession: lastNetFilterSession,
-                    lastNetFilterHostname: lastNetFilterHostname,
-                    lastNetFilterUnion: lastNetFilterUnion
-                }
-            );
-            return;
-        }
-
-        // Related URLs
-        lastNetFilterHostname = a.host;
-
-        var fromTokens = from.match(reTokenizer);
-        var toTokens = to.match(reTokenizer);
-        var toCount = toTokens.length, toIndex = 0;
-        var fromToken, pos;
-
-        for ( var fromIndex = 0; fromIndex < fromTokens.length; fromIndex += 1 ) {
-            fromToken = fromTokens[fromIndex];
-            if ( fromToken === '*' ) {
-                continue;
-            }
-            pos = toTokens.indexOf(fromToken, toIndex);
-            if ( pos === -1 ) {
-                fromTokens[fromIndex] = '*';
-                continue;
-            }
-            if ( pos !== toIndex ) {
-                fromTokens.splice(fromIndex, 0, '*');
-                fromIndex += 1;
-            }
-            toIndex = pos + 1;
-            if ( toIndex === toCount ) {
-                fromTokens = fromTokens.slice(0, fromIndex + 1);
-                break;
-            }
-        }
-        from = fromTokens.join('').replace(/\*\*+/g, '*');
-        if ( from !== '/*' && from !== to ) {
-            var filter = '||' + lastNetFilterHostname + from;
-            if ( out.indexOf(filter) === -1 ) {
-                out.push(filter);
-            }
-        } else {
-            from = to;
-        }
-        lastNetFilterUnion = from;
-
-        // Remember across element picker sessions
+    // Reset reference filter when dealing with unrelated URLs
+    if (
+        lastNetFilterUnion === '' ||
+        parsedURL.host === '' ||
+        parsedURL.host !== lastNetFilterHostname
+    ) {
+        lastNetFilterHostname = parsedURL.host;
+        lastNetFilterUnion = toMergeURL;
         vAPI.messaging.send(
             'elementPicker',
             {
@@ -379,39 +386,59 @@ var netFilterFromUnion = (function() {
                 lastNetFilterUnion: lastNetFilterUnion
             }
         );
-    };
-})();
+        return;
+    }
+
+    // Related URLs
+    lastNetFilterHostname = parsedURL.host;
+
+    let mergedURL = mergeStrings([ toMergeURL, lastNetFilterUnion ]);
+    if ( mergedURL !== '/*' && mergedURL !== toMergeURL ) {
+        const filter = '||' + lastNetFilterHostname + mergedURL;
+        if ( out.indexOf(filter) === -1 ) {
+            out.push(filter);
+        }
+    } else {
+        mergedURL = toMergeURL;
+    }
+    lastNetFilterUnion = mergedURL;
+
+    // Remember across element picker sessions
+    vAPI.messaging.send(
+        'elementPicker',
+        {
+            what: 'elementPickerEprom',
+            lastNetFilterSession: lastNetFilterSession,
+            lastNetFilterHostname: lastNetFilterHostname,
+            lastNetFilterUnion: lastNetFilterUnion
+        }
+    );
+};
 
 /******************************************************************************/
 
 // Extract the best possible net filter, i.e. as specific as possible.
 
-var netFilterFromElement = function(elem) {
-    if ( elem === null ) {
-        return 0;
-    }
-    if ( elem.nodeType !== 1 ) {
-        return 0;
-    }
-    var src = resourceURLFromElement(elem);
-    if ( src === '' ) {
-        return 0;
-    }
+const netFilterFromElement = function(elem) {
+    if ( elem === null ) { return 0; }
+    if ( elem.nodeType !== 1 ) { return 0; }
+    let src = resourceURLFromElement(elem);
+    if ( src === '' ) { return 0; }
 
     if ( candidateElements.indexOf(elem) === -1 ) {
         candidateElements.push(elem);
     }
 
-    var candidates = netFilterCandidates;
-    var len = candidates.length;
+    const candidates = netFilterCandidates;
+    const len = candidates.length;
 
     // Remove fragment
-    var pos = src.indexOf('#');
+    let pos = src.indexOf('#');
     if ( pos !== -1 ) {
         src = src.slice(0, pos);
     }
 
-    var filter = src.replace(/^https?:\/\//, '||');
+    const filter = src.replace(/^https?:\/\//, '||');
 
     if ( bestCandidateFilter === null ) {
         bestCandidateFilter = {
@@ -435,7 +462,7 @@ var netFilterFromElement = function(elem) {
     return candidates.length - len;
 };
 
-var netFilter1stSources = {
+const netFilter1stSources = {
      'audio': 'src',
      'embed': 'src',
     'iframe': 'src',
@@ -444,11 +471,7 @@ var netFilter1stSources = {
      'video': 'src'
 };
 
-var netFilter2ndSources = {
-       'img': 'srcset'
-};
-
-var filterTypes = {
+const filterTypes = {
      'audio': 'media',
      'embed': 'object',
     'iframe': 'subdocument',
@@ -491,7 +514,7 @@ var cosmeticFilterFromElement = function(elem) {
     }
 
     // Tag name
-    let tagName = elem.localName;
+    const tagName = elem.localName;
 
     // Use attributes if still no selector found.
     // https://github.com/gorhill/uBlock/issues/1901
@@ -512,7 +535,18 @@ var cosmeticFilterFromElement = function(elem) {
         case 'img':
             v = elem.getAttribute('src');
             if ( v && v.length !== 0 ) {
-                attributes.push({ k: 'src', v: v.trim().slice(0, 1024) });
+                v = v.trim();
+                if ( v.startsWith('data:') ) {
+                    let pos = v.indexOf(',');
+                    if ( pos !== -1 ) {
+                        v = v.slice(0, pos + 1);
+                    }
+                } else if ( v.startsWith('blob:') ) {
+                    v = new URL(v.slice(5));
+                    v.pathname = '';
+                    v = 'blob:' + v.href;
+                }
+                attributes.push({ k: 'src', v: v.slice(0, 256) });
                 break;
             }
             v = elem.getAttribute('alt');
@@ -540,7 +574,7 @@ var cosmeticFilterFromElement = function(elem) {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/17
     //   If selector is ambiguous at this point, add the element name to
     //   further narrow it down.
-    let parentNode = elem.parentNode;
+    const parentNode = elem.parentNode;
     if (
         selector === '' ||
         safeQuerySelectorAll(parentNode, cssScope + selector).length > 1
@@ -666,20 +700,20 @@ var filtersFrom = function(x, y) {
     TODO: need to be revised once I implement chained cosmetic operators.
 
 */
-var filterToDOMInterface = (function() {
+const filterToDOMInterface = (function() {
     // Net filters: we need to lookup manually -- translating into a foolproof
     // CSS selector is just not possible.
-    var fromNetworkFilter = function(filter) {
-        var out = [];
+    const fromNetworkFilter = function(filter) {
+        const out = [];
         // https://github.com/chrisaljoudi/uBlock/issues/945
         // Transform into a regular expression, this allows the user to edit and
         // insert wildcard(s) into the proposed filter.
-        var reStr = '';
+        let reStr = '';
         if ( filter.length > 1 && filter.charAt(0) === '/' && filter.slice(-1) === '/' ) {
             reStr = filter.slice(1, -1);
         }
         else {
-            var rePrefix = '', reSuffix = '';
+            let rePrefix = '', reSuffix = '';
             if ( filter.slice(0, 2) === '||' ) {
                 filter = filter.replace('||', '');
             } else {
@@ -696,7 +730,7 @@ var filterToDOMInterface = (function() {
                     filter.replace(/[.+?${}()|[\]\\]/g, '\\$&').replace(/[\*^]+/g, '.*') +
                     reSuffix;
         }
-        var reFilter = null;
+        let reFilter = null;
         try {
             reFilter = new RegExp(reStr);
         }
@@ -705,19 +739,20 @@ var filterToDOMInterface = (function() {
         }
 
         // Lookup by tag names.
-        var src1stProps = netFilter1stSources;
-        var src2ndProps = netFilter2ndSources;
-        var srcProp, src;
-        var elems = document.querySelectorAll(Object.keys(src1stProps).join()),
-            iElem = elems.length,
-            elem;
-        while ( iElem-- ) {
-            elem = elems[iElem];
-            srcProp = src1stProps[elem.localName];
-            src = elem[srcProp];
+        let elems = document.querySelectorAll(
+            Object.keys(netFilter1stSources).join()
+        );
+        for ( const elem of elems ) {
+            let srcProp = netFilter1stSources[elem.localName];
+            let src = elem[srcProp];
             if ( typeof src !== 'string' || src.length === 0 ) {
-                srcProp = src2ndProps[elem.localName];
-                src = elem[srcProp];
+                if (
+                    typeof elem.srcset === 'string' &&
+                    elem.srcset !== '' &&
+                    typeof elem.currentSrc === 'string'
+                ) {
+                    src = elem.currentSrc;
+                }
             }
             if ( src && reFilter.test(src) ) {
                 out.push({
@@ -730,10 +765,7 @@ var filterToDOMInterface = (function() {
         }
 
         // Find matching background image in current set of candidate elements.
-        elems = candidateElements;
-        iElem = elems.length;
-        while ( iElem-- ) {
-            elem = elems[iElem];
+        for ( const elem of candidateElements ) {
             if ( reFilter.test(backgroundImageURLFromElement(elem)) ) {
                 out.push({
                     type: 'network',
@@ -752,32 +784,38 @@ var filterToDOMInterface = (function() {
     // ways to compose a valid href to the same effective URL. One idea is to
     // normalize all a[href] on the page, but for now I will wait and see, as I
     // prefer to refrain from tampering with the page content if I can avoid it.
-    var fromPlainCosmeticFilter = function(filter) {
-        var elems;
+    //
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/389
+    //   Test filter using comma-separated list to better detect invalid CSS
+    //   selectors.
+    const fromPlainCosmeticFilter = function(filter) {
+        let elems;
         try {
+            document.documentElement.matches(`${filter},\na`);
             elems = document.querySelectorAll(filter);
         }
         catch (e) {
             return;
         }
-        var out = [], iElem = elems.length;
-        while ( iElem-- ) {
-            out.push({ type: 'cosmetic', elem: elems[iElem]});
+        const out = [];
+        for ( const elem of elems ) {
+            if ( elem === pickerRoot ) { continue; }
+            out.push({ type: 'cosmetic', elem });
         }
         return out;
     };
 
     // https://github.com/gorhill/uBlock/issues/1772
     // Handle procedural cosmetic filters.
-    var fromCompiledCosmeticFilter = function(raw) {
+    const fromCompiledCosmeticFilter = function(raw) {
         if ( typeof raw !== 'string' ) { return; }
-        var o;
+        let o;
         try {
             o = JSON.parse(raw);
         } catch(ex) {
             return;
         }
-        var elems;
+        let elems;
         if ( o.style ) {
             elems = document.querySelectorAll(o.style[0]);
             lastAction = o.style[0] + ' {' + o.style[1] + '}';
@@ -785,21 +823,21 @@ var filterToDOMInterface = (function() {
             elems = vAPI.domFilterer.createProceduralFilter(o).exec();
         }
         if ( !elems ) { return; }
-        var out = [];
-        for ( var i = 0, n = elems.length; i < n; i++ ) {
-            out.push({ type: 'cosmetic', elem: elems[i] });
+        const out = [];
+        for ( const elem of elems ) {
+            out.push({ type: 'cosmetic', elem });
         }
         return out;
     };
 
-    var lastFilter,
+    let lastFilter,
         lastResultset,
         lastAction,
         appliedStyleTag,
         applied = false,
         previewing = false;
 
-    var queryAll = function(filter, callback) {
+    const queryAll = function(filter, callback) {
         filter = filter.trim();
         if ( filter === lastFilter ) {
             callback(lastResultset);
@@ -820,7 +858,7 @@ var filterToDOMInterface = (function() {
             callback(lastResultset);
             return;
         }
-        var selector = filter.slice(2);
+        const selector = filter.slice(2);
         lastResultset = fromPlainCosmeticFilter(selector);
         if ( lastResultset ) {
             if ( previewing ) { apply(); }
@@ -839,27 +877,21 @@ var filterToDOMInterface = (function() {
         );
     };
 
-    var applyHide = function() {
-        var htmlElem = document.documentElement,
-            items = lastResultset,
-            item, elem, style;
-        for ( var i = 0, n = items.length; i < n; i++ ) {
-            item = items[i];
-            elem = item.elem;
+    const applyHide = function() {
+        const htmlElem = document.documentElement;
+        for ( const item of lastResultset ) {
+            const elem = item.elem;
             // https://github.com/gorhill/uBlock/issues/1629
-            if ( elem === pickerRoot ) {
-                continue;
-            }
-            style = elem.style;
+            if ( elem === pickerRoot ) { continue; }
             if (
                 (elem !== htmlElem) &&
                 (item.type === 'cosmetic' || item.type === 'network' && item.src !== undefined)
             ) {
-                item.display = style.getPropertyValue('display');
-                item.displayPriority = style.getPropertyPriority('display');
-                style.setProperty('display', 'none', 'important');
+                vAPI.domFilterer.hideNode(elem);
+                item.hidden = true;
             }
             if ( item.type === 'network' && item.style === 'background-image' ) {
+                const style = elem.style;
                 item.backgroundImage = style.getPropertyValue('background-image');
                 item.backgroundImagePriority = style.getPropertyPriority('background-image');
                 style.setProperty('background-image', 'none', 'important');
@@ -867,17 +899,12 @@ var filterToDOMInterface = (function() {
         }
     };
 
-    var unapplyHide = function() {
-        var items = lastResultset, item;
-        for ( var i = 0, n = items.length; i < n; i++ ) {
-            item = items[i];
-            if ( item.hasOwnProperty('display') ) {
-                item.elem.style.setProperty(
-                    'display',
-                    item.display,
-                    item.displayPriority
-                );
-                delete item.display;
+    const unapplyHide = function() {
+        if ( lastResultset === undefined ) { return; }
+        for ( const item of lastResultset ) {
+            if ( item.hidden === true ) {
+                vAPI.domFilterer.unhideNode(item.elem);
+                item.hidden = false;
             }
             if ( item.hasOwnProperty('backgroundImage') ) {
                 item.elem.style.setProperty(
@@ -890,14 +917,14 @@ var filterToDOMInterface = (function() {
         }
     };
 
-    var unapplyStyle = function() {
+    const unapplyStyle = function() {
         if ( !appliedStyleTag || appliedStyleTag.parentNode === null ) {
             return;
         }
         appliedStyleTag.parentNode.removeChild(appliedStyleTag);
     };
 
-    var applyStyle = function() {
+    const applyStyle = function() {
         if ( !appliedStyleTag ) {
             appliedStyleTag = document.createElement('style');
             appliedStyleTag.setAttribute('type', 'text/css');
@@ -908,13 +935,11 @@ var filterToDOMInterface = (function() {
         }
     };
 
-    var apply = function() {
+    const apply = function() {
         if ( applied ) {
             unapply();
         }
-        if ( lastResultset === undefined ) {
-            return;
-        }
+        if ( lastResultset === undefined ) { return; }
         if ( typeof lastAction === 'string' ) {
             applyStyle();
         } else {
@@ -923,10 +948,8 @@ var filterToDOMInterface = (function() {
         applied = true;
     };
 
-    var unapply = function() {
-        if ( !applied ) {
-            return;
-        }
+    const unapply = function() {
+        if ( !applied ) { return; }
         if ( typeof lastAction === 'string' ) {
             unapplyStyle();
         } else {
@@ -935,13 +958,12 @@ var filterToDOMInterface = (function() {
         applied = false;
     };
 
-    var preview = function(filter) {
+    const preview = function(filter) {
         previewing = filter !== false;
         if ( previewing ) {
-            queryAll(filter, function(items) {
-                if ( items !== undefined ) {
-                    apply();
-                }
+            queryAll(filter, items => {
+                if ( items === undefined ) { return; }
+                apply();
             });
         } else {
             unapply();
@@ -958,8 +980,8 @@ var filterToDOMInterface = (function() {
 
 /******************************************************************************/
 
-var userFilterFromCandidate = function(callback) {
-    var v = rawFilterFromTextarea();
+const userFilterFromCandidate = function(callback) {
+    let v = rawFilterFromTextarea();
     filterToDOMInterface.set(v, function(items) {
         if ( !items || items.length === 0 ) {
             callback();
@@ -968,7 +990,7 @@ var userFilterFromCandidate = function(callback) {
 
         // https://github.com/gorhill/uBlock/issues/738
         // Trim dots.
-        var hostname = window.location.hostname;
+        let hostname = window.location.hostname;
         if ( hostname.slice(-1) === '.' ) {
             hostname = hostname.slice(0, -1);
         }
@@ -980,14 +1002,14 @@ var userFilterFromCandidate = function(callback) {
         }
 
         // Assume net filter
-        var opts = [];
+        const opts = [];
 
         // If no domain included in filter, we need domain option
         if ( v.lastIndexOf('||', 0) === -1 ) {
             opts.push('domain=' + hostname);
         }
 
-        var item = items[0];
+        const item = items[0];
         if ( item.opts ) {
             opts.push(item.opts);
         }
@@ -1002,12 +1024,13 @@ var userFilterFromCandidate = function(callback) {
 
 /******************************************************************************/
 
-var onCandidateChanged = (function() {
-    var process = function(items) {
-        var elems = [], valid = items !== undefined;
+const onCandidateChanged = (function() {
+    const process = function(items) {
+        const elems = [];
+        const valid = items !== undefined;
         if ( valid ) {
-            for ( var i = 0; i < items.length; i++ ) {
-                elems.push(items[i].elem);
+            for ( const item of items ) {
+                elems.push(item.elem);
             }
         }
         pickerBody.querySelector('#resultsetCount').textContent = valid ?
@@ -1025,7 +1048,7 @@ var onCandidateChanged = (function() {
 
 /******************************************************************************/
 
-var candidateFromFilterChoice = function(filterChoice) {
+const candidateFromFilterChoice = function(filterChoice) {
     let slot = filterChoice.slot;
     let filters = filterChoice.filters;
     let filter = filters[slot];
@@ -1088,7 +1111,7 @@ var candidateFromFilterChoice = function(filterChoice) {
 
 /******************************************************************************/
 
-var filterChoiceFromEvent = function(ev) {
+const filterChoiceFromEvent = function(ev) {
     var li = ev.target;
     var isNetFilter = li.textContent.slice(0, 2) !== '##';
     var r = {
@@ -1105,7 +1128,7 @@ var filterChoiceFromEvent = function(ev) {
 
 /******************************************************************************/
 
-var onDialogClicked = function(ev) {
+const onDialogClicked = function(ev) {
     if ( ev.isTrusted === false ) { return; }
 
     // If the dialog is hidden, clicking on it force it to become visible.
@@ -1124,12 +1147,13 @@ var onDialogClicked = function(ev) {
         filterToDOMInterface.preview(false);
         userFilterFromCandidate(function(filter) {
             if ( !filter ) { return; }
-            var d = new Date();
             vAPI.messaging.send(
                 'elementPicker',
                 {
                     what: 'createUserFilter',
-                    filters: '! ' + d.toLocaleString() + ' ' + window.location.href + '\n' + filter,
+                    autoComment: true,
+                    filters: filter,
+                    origin: window.location.origin,
                     pageDomain: window.location.hostname
                 }
             );
@@ -1167,7 +1191,7 @@ var onDialogClicked = function(ev) {
 
 /******************************************************************************/
 
-var removeAllChildren = function(parent) {
+const removeAllChildren = function(parent) {
     while ( parent.firstChild ) {
         parent.removeChild(parent.firstChild);
     }
@@ -1175,10 +1199,7 @@ var removeAllChildren = function(parent) {
 
 /******************************************************************************/
 
-// TODO: for convenience I could provide a small set of net filters instead
-// of just a single one. Truncating the right-most part of the path etc.
-
-var showDialog = function(options) {
+const showDialog = function(options) {
     pausePicker();
 
     options = options || {};
@@ -1189,17 +1210,20 @@ var showDialog = function(options) {
     dialog.classList.remove('hide');
 
     // Create lists of candidate filters
-    var populate = function(src, des) {
-        var root = dialog.querySelector(des);
-        var ul = root.querySelector('ul');
+    const populate = function(src, des) {
+        const root = dialog.querySelector(des);
+        const ul = root.querySelector('ul');
         removeAllChildren(ul);
-        var li;
-        for ( var i = 0; i < src.length; i++ ) {
-            li = document.createElement('li');
+        for ( let i = 0; i < src.length; i++ ) {
+            const li = document.createElement('li');
             li.textContent = src[i];
             ul.appendChild(li);
         }
-        root.style.display = src.length !== 0 ? '' : 'none';
+        if ( src.length !== 0 ) {
+            root.style.removeProperty('display');
+        } else {
+            root.style.setProperty('display', 'none', 'important');
+        }
     };
 
     populate(netFilterCandidates, '#netFilters');
@@ -1218,7 +1242,7 @@ var showDialog = function(options) {
         return;
     }
 
-    var filterChoice = {
+    const filterChoice = {
         filters: bestCandidateFilter.filters,
         slot: bestCandidateFilter.slot,
         modifier: options.modifier || false
@@ -1230,18 +1254,38 @@ var showDialog = function(options) {
 
 /******************************************************************************/
 
-var zap = function() {
+// https://www.reddit.com/r/uBlockOrigin/comments/bktxtb/scrolling_doesnt_work/emn901o
+//   Override 'fixed' position property on body element if present.
+
+const zap = function() {
     if ( targetElements.length === 0 ) { return; }
-    var elem = targetElements[0],
-        style = window.getComputedStyle(elem);
+
+    const getStyleValue = function(elem, prop) {
+        const style = window.getComputedStyle(elem);
+        return style ? style[prop] : '';
+    };
+
+    let elem = targetElements[0];
     // Heuristic to detect scroll-locking: remove such lock when detected.
-    if ( parseInt(style.zIndex, 10) >= 1000 || style.position === 'fixed' ) {
-        document.body.style.setProperty('overflow', 'auto', 'important');
-        document.documentElement.style.setProperty('overflow', 'auto', 'important');
+    if (
+        parseInt(getStyleValue(elem, 'zIndex'), 10) >= 1000 ||
+        getStyleValue(elem, 'position') === 'fixed'
+    ) {
+        const doc = document;
+        if ( getStyleValue(doc.body, 'overflowY') === 'hidden' ) {
+            doc.body.style.setProperty('overflow', 'auto', 'important');
+        }
+        if ( getStyleValue(doc.body, 'position') === 'fixed' ) {
+            doc.body.style.setProperty('position', 'static', 'important');
+        }
+        if ( getStyleValue(doc.documentElement, 'overflowY') === 'hidden' ) {
+            doc.documentElement.style.setProperty('overflow', 'auto', 'important');
+        }
     }
+
     elem.parentNode.removeChild(elem);
     elem = elementFromPoint();
-    highlightElements(elem ? [elem] : []);
+    highlightElements(elem ? [ elem ] : []);
 };
 
 /******************************************************************************/
@@ -1258,32 +1302,33 @@ var elementFromPoint = (function() {
             return null;
         }
         if ( !pickerRoot ) { return null; }
-        pickerRoot.style.pointerEvents = 'none';
+        pickerRoot.style.setProperty('pointer-events', 'none', 'important');
         var elem = document.elementFromPoint(x, y);
         if ( elem === document.body || elem === document.documentElement ) {
             elem = null;
         }
-        pickerRoot.style.pointerEvents = '';
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/380
+        pickerRoot.style.setProperty('pointer-events', 'auto', 'important');
         return elem;
     };
 })();
 
 /******************************************************************************/
 
-var onSvgHovered = (function() {
-    var timer = null;
-    var mx = 0, my = 0;
+const onSvgHovered = (function() {
+    let timer;
+    let mx = 0, my = 0;
 
-    var onTimer = function() {
-        timer = null;
-        var elem = elementFromPoint(mx, my);
+    const onTimer = function() {
+        timer = undefined;
+        const elem = elementFromPoint(mx, my);
         highlightElements(elem ? [elem] : []);
     };
 
     return function onMove(ev) {
         mx = ev.clientX;
         my = ev.clientY;
-        if ( timer === null ) {
+        if ( timer === undefined ) {
             timer = vAPI.setTimeout(onTimer, 40);
         }
     };
@@ -1394,7 +1439,10 @@ var onSvgClicked = function(ev) {
     if ( filtersFrom(ev.clientX, ev.clientY) === 0 ) {
         return;
     }
-    showDialog({ show: ev.type === 'touch' });
+    showDialog({
+        show: ev.type === 'touch',
+        modifier: ev.ctrlKey
+    });
 };
 
 /******************************************************************************/
@@ -1492,11 +1540,11 @@ var stopPicker = function() {
 
 /******************************************************************************/
 
-var startPicker = function(details) {
+const startPicker = function(details) {
     pickerRoot.addEventListener('load', stopPicker);
 
-    let frameDoc = pickerRoot.contentDocument;
-    let parsedDom = (new DOMParser()).parseFromString(
+    const frameDoc = pickerRoot.contentDocument;
+    const parsedDom = (new DOMParser()).parseFromString(
         details.frameContent,
         'text/html'
     );
@@ -1510,7 +1558,7 @@ var startPicker = function(details) {
     //   Remove the already declared inline style tag: we will create a new
     //   one based on the removed one, and replace the old one.
     let style = parsedDom.querySelector('style');
-    let styleText = style.textContent;
+    const styleText = style.textContent;
     style.parentNode.removeChild(style);
     style = frameDoc.createElement('style');
     style.textContent = styleText;
@@ -1544,7 +1592,7 @@ var startPicker = function(details) {
     pickerRoot.contentWindow.focus();
 
     // Restore net filter union data if it originate from the same URL.
-    let eprom = details.eprom || null;
+    const eprom = details.eprom || null;
     if ( eprom !== null && eprom.lastNetFilterSession === lastNetFilterSession ) {
         lastNetFilterHostname = eprom.lastNetFilterHostname || '';
         lastNetFilterUnion = eprom.lastNetFilterUnion || '';
@@ -1563,11 +1611,11 @@ var startPicker = function(details) {
     }
 
     // No mouse position available, use suggested target
-    let target = details.target || '';
-    let pos = target.indexOf('\t');
+    const target = details.target || '';
+    const pos = target.indexOf('\t');
     if ( pos === -1 ) { return; }
 
-    let srcAttrMap = {
+    const srcAttrMap = {
         'a': 'href',
         'audio': 'src',
         'embed': 'src',
@@ -1575,20 +1623,21 @@ var startPicker = function(details) {
         'img': 'src',
         'video': 'src',
     };
-    let tagName = target.slice(0, pos);
-    let url = target.slice(pos + 1);
-    let attr = srcAttrMap[tagName];
-    if ( attr === undefined ) {
-        return;
-    }
-    let elems = document.querySelectorAll(tagName + '[' + attr + ']');
-    let i = elems.length;
-    let elem, src;
-    while ( i-- ) {
-        elem = elems[i];
-        src = elem[attr];
-        if ( typeof src !== 'string' || src === '' ) { continue; }
-        if ( src !== url ) { continue; }
+    const tagName = target.slice(0, pos);
+    const url = target.slice(pos + 1);
+    const attr = srcAttrMap[tagName];
+    if ( attr === undefined ) { return; }
+    const elems = document.getElementsByTagName(tagName);
+    for ( const elem of elems  ) {
+        if ( elem === pickerRoot ) { continue; }
+        const src = elem[attr];
+        if ( typeof src !== 'string' ) { continue; }
+        if (
+            (src !== url) &&
+            (src !== '' || url !== 'about:blank')
+        ) {
+            continue;
+        }
         elem.scrollIntoView({
             behavior: 'smooth',
             block: 'start'
@@ -1604,7 +1653,7 @@ var startPicker = function(details) {
 
 /******************************************************************************/
 
-var bootstrapPicker = function() {
+const bootstrapPicker = function() {
     pickerRoot.removeEventListener('load', bootstrapPicker);
     vAPI.shutdown.add(stopPicker);
     vAPI.messaging.send(
@@ -1619,7 +1668,7 @@ var bootstrapPicker = function() {
 pickerRoot = document.createElement('iframe');
 pickerRoot.id = vAPI.sessionId;
 
-var pickerCSSStyle = [
+const pickerCSSStyle = [
     'background: transparent',
     'border: 0',
     'border-radius: 0',
@@ -1642,13 +1691,19 @@ var pickerCSSStyle = [
 ].join(' !important;');
 pickerRoot.style.cssText = pickerCSSStyle;
 
-var pickerCSS1 = [
-    '#' + pickerRoot.id + ' {',
+// https://github.com/uBlockOrigin/uBlock-issues/issues/393
+//   This needs to be injected as an inline style, *never* as a user styles,
+//   hence why it's not added above as part of the pickerCSSStyle
+//   properties.
+pickerRoot.style.setProperty('pointer-events', 'auto', 'important');
+
+const pickerCSS1 = [
+    `#${pickerRoot.id} {`,
         pickerCSSStyle,
     '}'
 ].join('\n');
-var pickerCSS2 = [
-    '[' + pickerRoot.id + '-clickblind] {',
+const pickerCSS2 = [
+    `[${pickerRoot.id}-clickblind] {`,
         'pointer-events: none !important;',
     '}'
 ].join('\n');

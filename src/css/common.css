@@ -958,3 +958,31 @@ body[dir="rtl"] button.custom.iconifiable > .fa {
         display: none;
         }
     }
+
+.ubo-icon {
+    align-items: center;
+    background-color: transparent;
+    border: 0;
+    display: inline-flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0.1em;
+    position: relative;
+    }
+.ubo-icon > * {
+    pointer-events: none;
+    }
+.ubo-icon.disabled,
+.disabled > .ubo-icon,
+.ubo-icon[disabled],
+[disabled] > .ubo-icon {
+    color: #000;
+    fill: #000;
+    opacity: 0.25;
+    stroke: #888;
+    pointer-events: none;
+    }
+.ubo-icon > svg {
+    height: 1em;
+    width: 1em;
+    }

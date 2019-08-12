@@ -1,36 +1,36 @@
-En effektiv blocker: Bruger kun lidt hukommelse og CPU, men kan alligevel indlæse og anvende langt flere filtre end andre populære blockere.
+En effektiv blocker: Forbruger kun lidt hukommelse og CPU, men kan alligevel indlæse og håndhæve tusindvis flere filtre end andre populære blockers.
 
-Illustreret oversigt over effektiviteten: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+Illustreret oversigt over dens effektivitet: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Anvendelse: Den store tænd-sluk-knap i pop op-vinduet bruges til permanent at deaktivere/aktivere uBlock på det aktuelle websted. Dette gælder kun for det aktuelle websted; det er ikke en global afbryderknap.
+Anvendelse: Den store slå til/fra knap i popup-vinduet benyttes til permanent at deaktivere/aktivere uBlock på det aktuelle websted. Dette gælder kun for det aktuelle websted, det er ikke en global til/fra-knap.
 
 ***
 
-Fleksibel og mere end en "ad blocker": den kan også læse og oprette filtre fra hosts-filer.
+Fleksibel og mere end en "annonce-blocker": Den kan også læse og oprette filtre fra værtsfiler.
 
-Fra starten bliver disse filterlister indlæst og anvendt:
+Helt fra starten indlæses og håndhæves flg. filterlister:
 
 - EasyList
 - Peter Lowe’s Ad server list
 - EasyPrivacy
 - Malware-domæner
 
-Flere lister er tilgængelige hvis du ønsker det:
+Du kan, om ønsket, vælge fra flere tilgængelige lister:
 
 - Fanboy’s Enhanced Tracking List
-- Dan Pollock’s hosts fil
--Hphosts's annonce og sporings servere
+- Dan Pollocks værtsfil
+-Hphosts' annonce- og sporingsservere
 - MVPS HOSTS
 - Spam404
-- Og mange andre
+- Og mange flere
 
-Selvfølgelig vil flere aktive filtre betyde højere hukommelsesforbrug. Men selv efter tilføjelse af Fanboys to ekstra lister, samt hpHosts’s Ad and tracking servers, har uBlock stadig et lavere hukommelsesforbrug end andre meget populære blockere derude.
+Jo flere aktive filtre, desto højere hukommelsesforbrug, selvfølgelig. Selv efter tilføjelse af Fanboys to ekstra lister samt hpHosts’ annonce- og sporingsservere har uBlock imidlertid stadig et lavere hukommelsesforbrug end andre meget populære blockere.
 
-Vær desuden opmærksom på, at hvis du vælger nogle af disse ekstra lister, kan det øge risikoen for, at webstedet ikke bliver vist korrekt – især for de lister, der normalt anvendes som hosts-fil.
+Vær også opmærksom på, at vælger du nogle af disse ekstra lister, kan det øge risikoen for fejlviste websteder – især for de lister, som normalt anvendes som hosts-fil.
 
 ***
 
-Uden de forudindstillede lister med filtre er denne udvidelse intet. Hvis du nogensinde virkelig ønsker at bidrage med noget, så tænk på de mennesker der arbejder hårdt for at vedligeholde de filterlister du bruger, som alle blev stillet gratis til rådighed for alle.
+Uden forvalgslisterne med filtre er denne udvidelse intet værd. Hvis du nogensinde virkelig ønsker at bidrage med noget, så tænk på de personer, som arbejder hårdt for at vedligeholdede filterlisterne, du benytter - lister, som alle frit kan anvende.
 
 ***
 
@@ -38,12 +38,10 @@ Gratis.
 Open source med offentlig licens (GPLv3)
 Til brugere, af brugere.
 
-Bidragydere på Github: https://github.com/gorhill/uBlock/graphs/contributors
-Bidragydere på Crowdin: https://crowdin.net/project/ublock
+Bidragsydere på Github: https://github.com/gorhill/uBlock/graphs/contributors
+Bidragsydere på Crowdin: https://crowdin.net/project/ublock
 
 ***
 
-Dette er en tidlig version. Hav dette i tankerne når du skriver en anmeldelse.
-
-Projekt ændringslog:
+Projektændringslog:
 https://github.com/gorhill/uBlock/releases

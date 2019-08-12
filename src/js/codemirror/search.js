@@ -51,19 +51,6 @@
         };
     }
 
-    var searchWidgetHtml =
-        '<div class="cm-search-widget">' +
-            '<span class="fa">&#xf002;</span>&ensp;' +
-            '<span>' +
-                '<input type="text" size="20">' +
-                '<span class="cm-search-widget-count">' +
-                    '<span><!-- future use --></span><span>0</span>' +
-                '</span>' +
-            '</span>&ensp;' +
-            '<span class="cm-search-widget-up cm-search-widget-button fa">&#xf077;</span>&ensp;' +
-            '<span class="cm-search-widget-down cm-search-widget-button fa">&#xf078;</span>&ensp;' +
-        '</div>';
-
     function searchWidgetKeydownHandler(cm, ev) {
         var keyName = CodeMirror.keyName(ev);
         if ( !keyName ) { return; }
@@ -125,10 +112,9 @@
         this.query = null;
         this.overlay = null;
         this.panel = null;
-        this.widget = null;
-        var domParser = new DOMParser();
-        var doc = domParser.parseFromString(searchWidgetHtml, 'text/html');
-        this.widget = document.adoptNode(doc.body.firstElementChild);
+        const widgetParent =
+            document.querySelector('.cm-search-widget-template').cloneNode(true);
+        this.widget = widgetParent.children[0];
         this.widget.addEventListener('keydown', searchWidgetKeydownHandler.bind(null, cm));
         this.widget.addEventListener('input', searchWidgetInputHandler.bind(null, cm));
         this.widget.addEventListener('mousedown', searchWidgetClickHandler.bind(null, cm));
@@ -142,7 +128,7 @@
     // We want the search widget to behave as if the focus was on the
     // CodeMirror editor.
 
-    var reSearchCommands = /^(?:find|findNext|findPrev|newlineAndIndent)$/;
+    const reSearchCommands = /^(?:find|findNext|findPrev|newlineAndIndent)$/;
 
     function widgetCommandHandler(cm, command) {
         if ( reSearchCommands.test(command) === false ) { return false; }
@@ -170,7 +156,7 @@
         return cm.getSearchCursor(
             query,
             pos,
-            {caseFold: queryCaseInsensitive(query), multiline: true}
+            { caseFold: queryCaseInsensitive(query), multiline: false }
         );
     }
 
@@ -209,13 +195,17 @@
             }
             state.annotate = cm.showMatchesOnScrollbar(
                 state.query,
-                queryCaseInsensitive(state.query)
+                queryCaseInsensitive(state.query),
+                { multiline: false }
             );
-            var count = state.annotate.matches.length;
+            let count = state.annotate.matches.length;
             state.widget
                  .querySelector('.cm-search-widget-count > span:nth-of-type(2)')
                  .textContent = count > 1000 ? '1000+' : count;
             state.widget.setAttribute('data-query', state.queryText);
+            // Ensure the caret is visible
+            let input = state.widget.querySelector('.cm-search-widget-input > input');
+            input.selectionStart = input.selectionStart;
         }
     }
 
@@ -308,6 +298,28 @@
     function findPrevCommand(cm) {
         var state = getSearchState(cm);
         if ( state.query ) { return findNext(cm, -1); }
+    }
+
+    {
+        const searchWidgetTemplate =
+            '<div class="cm-search-widget-template" style="display:none;">' +
+              '<div class="cm-search-widget">' +
+                '<span class="fa-icon fa-icon-ro">search</span>&ensp;' +
+                '<span class="cm-search-widget-input">' +
+                  '<input type="text">' +
+                  '<span class="cm-search-widget-count">' +
+                    '<span><!-- future use --></span><span>0</span>' +
+                  '</span>' +
+                '</span>&ensp;' +
+                '<span class="cm-search-widget-up cm-search-widget-button fa-icon">angle-up</span>&ensp;' +
+                '<span class="cm-search-widget-down cm-search-widget-button fa-icon fa-icon-vflipped">angle-up</span>&ensp;' +
+                '<a class="fa-icon sourceURL" href>external-link</a>' +
+              '</div>' +
+            '</div>';
+        const domParser = new DOMParser();
+        const doc = domParser.parseFromString(searchWidgetTemplate, 'text/html');
+        const widgetTemplate = document.adoptNode(doc.body.firstElementChild);
+        document.body.appendChild(widgetTemplate);
     }
 
     CodeMirror.commands.find = findCommand;

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="lib/codemirror/lib/codemirror.css">
 <link rel="stylesheet" href="lib/codemirror/addon/search/matchesonscrollbar.css">
 <link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/fa-icons.css">
 <link rel="stylesheet" href="css/codemirror.css">
 <link rel="stylesheet" href="lib/codemirror/lib/pastel-on-dark.css">
 <style>
@@ -17,6 +18,11 @@ body {
 #content {
     height: 100vh;
     width: 100vw;
+    }
+
+/* https://github.com/uBlockOrigin/uBlock-issues/issues/292 */
+.CodeMirror-wrap pre {
+    word-break: break-all;
     }
 </style>
 </head>
@@ -34,6 +40,7 @@ body {
 <script src="js/codemirror/search.js"></script>
 <script src="js/codemirror/ubo-static-filtering.js"></script>
 
+<script src="js/fa-icons.js"></script>
 <script src="js/vapi.js"></script>
 <script src="js/vapi-common.js"></script>
 <script src="js/vapi-client.js"></script>

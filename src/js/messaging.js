@@ -30,35 +30,32 @@
 
 /******************************************************************************/
 
-var µb = µBlock;
+const µb = µBlock;
 
 /******************************************************************************/
 
-var getDomainNames = function(targets) {
-    var out = [];
-    var µburi = µb.URI;
-    var target, domain;
-    for ( var i = 0; i < targets.length; i++ ) {
-        target = targets[i];
-        if ( target.indexOf('/') !== -1 ) {
-            domain = µburi.domainFromURI(target) || '';
-        } else {
-            domain = µburi.domainFromHostname(target) || target;
-        }
-        out.push(domain);
-    }
-    return out;
+const getDomainNames = function(targets) {
+    const µburi = µb.URI;
+    return targets.map(target => {
+        if ( typeof target !== 'string' ) { return ''; }
+        return target.indexOf('/') !== -1
+            ? µburi.domainFromURI(target) || ''
+            : µburi.domainFromHostname(target) || target;
+    });
 };
 
 /******************************************************************************/
 
-var onMessage = function(request, sender, callback) {
-
+const onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
     case 'getAssetContent':
         // https://github.com/chrisaljoudi/uBlock/issues/417
-        µb.assets.get(request.url, { dontCache: true }, callback);
+        µb.assets.get(
+            request.url,
+            { dontCache: true, needSourceURL: true },
+            callback
+        );
         return;
 
     case 'listsFromNetFilter':
@@ -85,7 +82,7 @@ var onMessage = function(request, sender, callback) {
         break;
     }
 
-    var tabId = sender && sender.tab ? sender.tab.id : 0;
+    const tabId = sender && sender.tab ? sender.tab.id : 0;
 
     // Sync
     var response;
@@ -104,7 +101,7 @@ var onMessage = function(request, sender, callback) {
         break;
 
     case 'createUserFilter':
-        µb.appendUserFilters(request.filters);
+        µb.appendUserFilters(request.filters, request);
         // https://github.com/gorhill/uBlock/issues/1786
         µb.cosmeticFilteringEngine.removeFromSelectorCache(request.pageDomain);
         break;
@@ -141,8 +138,9 @@ var onMessage = function(request, sender, callback) {
 
     case 'getWhitelist':
         response = {
+            whitelist: µb.arrayFromWhitelist(µb.netWhitelist),
             dntEnabled: µb.adnauseam.dnt.enabled(),
-            whitelist: µb.stringFromWhitelist(µb.netWhitelist),
+            whitelistDefault: µb.netWhitelistDefault,
             reBadHostname: µb.reWhitelistBadHostname.source,
             reHostnameExtractor: µb.reWhitelistHostnameExtractor.source
         };
@@ -518,8 +516,8 @@ var onMessage = function(request, sender, callback) {
     }
 
     // Sync
-    var µb = µBlock,
-        response,
+    const µb = µBlock;
+    let response,
         tabId, frameId,
         pageStore = null;
 
@@ -548,9 +546,8 @@ var onMessage = function(request, sender, callback) {
 
     case 'shouldRenderNoscriptTags':
         if ( pageStore === null ) { break; }
-        let tabContext = µb.tabContextManager.lookup(tabId);
-        if ( tabContext === null ) { break; }
-        if ( pageStore.filterScripting(tabContext.rootHostname, undefined) ) {
+        const fctxt = µb.filteringContext.fromTabId(tabId);
+        if ( pageStore.filterScripting(fctxt, undefined) ) {
             vAPI.tabs.injectScript(
                 tabId,
                 {
@@ -570,12 +567,29 @@ var onMessage = function(request, sender, callback) {
         ) {
             break;
         }
+        const noCosmeticFiltering = pageStore.noCosmeticFiltering === true;
         response = {
             collapseBlocked: µb.userSettings.collapseBlocked,
-            noCosmeticFiltering: pageStore.noCosmeticFiltering === true,
-            noGenericCosmeticFiltering:
-                pageStore.noGenericCosmeticFiltering === true
+            noCosmeticFiltering,
+            noGenericCosmeticFiltering: noCosmeticFiltering,
         };
+        // https://github.com/uBlockOrigin/uAssets/issues/5704
+        //   `generichide` must be evaluated in the frame context.
+        if ( noCosmeticFiltering === false ) {
+            const genericHide =
+                µb.staticNetFilteringEngine.matchStringGenericHide(request.url);
+            response.noGenericCosmeticFiltering = genericHide === 2;
+            if ( genericHide !== 0 && µb.logger.enabled ) {
+                µBlock.filteringContext
+                    .duplicate()
+                    .fromTabId(tabId)
+                    .setURL(request.url)
+                    .setRealm('network')
+                    .setType('generichide')
+                    .setFilter(µb.staticNetFilteringEngine.toLogData())
+                    .toLogger();
+            }
+        }
         request.tabId = tabId;
         request.frameId = frameId;
         request.hostname = µb.URI.hostnameFromURI(request.url);
@@ -584,28 +598,28 @@ var onMessage = function(request, sender, callback) {
         response.prefs = µb.adnauseam.contentPrefs(pageStore.tabHostname); // ADN
 
         if(!response.prefs.hidingDisabled) { // ADN
-           response.specificCosmeticFilters =
-            µb.cosmeticFilteringEngine.retrieveSpecificSelectors(request, response);
+          response.specificCosmeticFilters =
+              µb.cosmeticFilteringEngine.retrieveSpecificSelectors(
+                  request,
+                  response
+              );
         }
 
 
         if ( µb.canInjectScriptletsNow === false ) {
             response.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
         }
-        if ( response.noCosmeticFiltering !== true ) {
+        if ( µb.logger.enabled && response.noCosmeticFiltering !== true ) {
             µb.logCosmeticFilters(tabId, frameId);
         }
         break;
 
     case 'retrieveGenericCosmeticSelectors':
-        if ( pageStore && pageStore.getGenericCosmeticFilteringSwitch() ) {
-            request.tabId = tabId;
-            request.frameId = frameId;
-            response = {
-                result: µb.cosmeticFilteringEngine
-                          .retrieveGenericSelectors(request)
-            };
-        }
+        request.tabId = tabId;
+        request.frameId = frameId;
+        response = {
+            result: µb.cosmeticFilteringEngine.retrieveGenericSelectors(request)
+        };
         break;
 
     default:
@@ -630,15 +644,13 @@ vAPI.messaging.listen('contentscript', onMessage);
 
 /******************************************************************************/
 
-var µb = µBlock;
+const onMessage = function(request, sender, callback) {
+    const µb = µBlock;
 
-/******************************************************************************/
-
-var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
     case 'elementPickerArguments':
-        var xhr = new XMLHttpRequest();
+        const xhr = new XMLHttpRequest();
         xhr.open('GET', 'epicker.html', true);
         xhr.overrideMimeType('text/html;charset=utf-8');
         xhr.responseType = 'text';
@@ -654,8 +666,8 @@ var onMessage = function(request, sender, callback) {
                 cosmeticFilters: vAPI.i18n('pickerCosmeticFilters'),
                 cosmeticFiltersHint: vAPI.i18n('pickerCosmeticFiltersHint')
             };
-            var reStrings = /\{\{(\w+)\}\}/g;
-            var replacer = function(a0, string) {
+            const reStrings = /\{\{(\w+)\}\}/g;
+            const replacer = function(a0, string) {
                 return i18n[string];
             };
 
@@ -679,7 +691,7 @@ var onMessage = function(request, sender, callback) {
     }
 
     // Sync
-    var response;
+    let response;
 
     switch ( request.what ) {
     case 'elementPickerEprom':
@@ -770,7 +782,7 @@ vAPI.messaging.listen('cloudWidget', onMessage);
 
 /******************************************************************************/
 
-var µb = µBlock;
+const µb = µBlock;
 
 /******************************************************************************/
 
@@ -823,17 +835,21 @@ var backupUserData = function(callback) {
     µb.assets.get(µb.userFiltersPath, onUserFiltersReady);
 };
 
-var restoreUserData = function(request) {
-    var userData = request.userData;
+const restoreUserData = function(request) {
+    const userData = request.userData;
 
-    var restart = function() {
+    const restart = function() {
         vAPI.app.restart();
     };
 
-    var onAllRemoved = function() {
+    let countdown = 2;
+
+    const onAllRemoved = function() {
+        countdown -= 1;
+        if ( countdown !== 0 ) { return; }
         µBlock.saveLocalSettings();
         vAPI.storage.set(userData.userSettings);
-        var hiddenSettings = userData.hiddenSettings;
+        let hiddenSettings = userData.hiddenSettings;
         if ( hiddenSettings instanceof Object === false ) {
             hiddenSettings = µBlock.hiddenSettingsFromString(
                 userData.hiddenSettingsString || ''
@@ -864,7 +880,7 @@ var restoreUserData = function(request) {
 
     // If we are going to restore all, might as well wipe out clean local
     // storage
-    µb.cacheStorage.clear();
+    µb.cacheStorage.clear().then(( ) => { onAllRemoved(); });
     vAPI.storage.clear(onAllRemoved);
     vAPI.localStorage.removeItem('immediateHiddenSettings');
 };
@@ -872,17 +888,17 @@ var restoreUserData = function(request) {
 // Remove all stored data but keep global counts, people can become
 // quite attached to numbers
 
-var resetUserData = function() {
+const resetUserData = function() {
     let count = 3;
-    let countdown = ( ) => {
+    const countdown = ( ) => {
         count -= 1;
         if ( count === 0 ) {
             vAPI.app.restart();
         }
     };
-    µb.cacheStorage.clear(countdown); // 1
-    vAPI.storage.clear(countdown);    // 2
-    µb.saveLocalSettings(countdown);  // 3
+    µb.cacheStorage.clear().then(( ) => countdown());   // 1
+    vAPI.storage.clear(countdown);                      // 2
+    µb.saveLocalSettings(countdown);                    // 3
     vAPI.localStorage.removeItem('immediateHiddenSettings');
 };
 
@@ -890,24 +906,23 @@ var resetUserData = function() {
 
 // 3rd-party filters
 
-var prepListEntries = function(entries) {
-    var µburi = µb.URI;
-    var entry, hn;
-    for ( var k in entries ) {
+const prepListEntries = function(entries) {
+    const µburi = µb.URI;
+    for ( const k in entries ) {
         if ( entries.hasOwnProperty(k) === false ) { continue; }
-        entry = entries[k];
+        const entry = entries[k];
         if ( typeof entry.supportURL === 'string' && entry.supportURL !== '' ) {
             entry.supportName = µburi.hostnameFromURI(entry.supportURL);
         } else if ( typeof entry.homeURL === 'string' && entry.homeURL !== '' ) {
-            hn = µburi.hostnameFromURI(entry.homeURL);
-            entry.supportURL = 'http://' + hn + '/';
+            const hn = µburi.hostnameFromURI(entry.homeURL);
+            entry.supportURL = `http://${hn}/`;
             entry.supportName = µburi.domainFromHostname(hn);
         }
     }
 };
 
-var getLists = function(callback) {
-    var r = {
+const getLists = function(callback) {
+    const r = {
         autoUpdate: µb.userSettings.autoUpdate,
         available: null,
         cache: null,
@@ -915,23 +930,24 @@ var getLists = function(callback) {
         current: µb.availableFilterLists,
         externalLists: µb.userSettings.externalLists,
         ignoreGenericCosmeticFilters: µb.userSettings.ignoreGenericCosmeticFilters,
+        isUpdating: µb.assets.isUpdating(),
         netFilterCount: µb.staticNetFilteringEngine.getFilterCount(),
         parseCosmeticFilters: µb.userSettings.parseAllABPHideFilters,
         userFiltersPath: µb.userFiltersPath
     };
-    var onMetadataReady = function(entries) {
+    const onMetadataReady = function(entries) {
         r.cache = entries;
         prepListEntries(r.cache);
         callback(r);
     };
-    var appendNotifications = function(r) { // ADN
+    const appendNotifications = function(r) { // ADN
 
-      var listKeys = Object.keys(r.available),
+      let listKeys = Object.keys(r.available),
         notes = µb.adnauseam.getNotifications();
 
       // check each list for an associated notification
       listKeys.forEach(function(url) {
-        for (var i = 0; i < Notifications.length; i++) {
+        for (let i = 0; i < Notifications.length; i++) {
           if (Notifications[i].listUrl === url) {
             µb.adnauseam.verifySetting(Notifications[i], r.available[url].off);
           }
@@ -939,7 +955,7 @@ var getLists = function(callback) {
       });
       r.notifications = notes;
     };
-    var onLists = function(lists) {
+    const onLists = function(lists) {
         r.available = lists;
         prepListEntries(r.available);
         appendNotifications(r); // ADN
@@ -954,7 +970,7 @@ var getLists = function(callback) {
 
 // My rules
 
-var getRules = function() {
+const getRules = function() {
     return {
         permanentRules:
             µb.permanentFirewall.toArray().concat(
@@ -969,7 +985,7 @@ var getRules = function() {
     };
 };
 
-var modifyRuleset = function(details) {
+const modifyRuleset = function(details) {
     let swRuleset, hnRuleset, urlRuleset;
     if ( details.permanent ) {
         swRuleset = µb.permanentSwitches;
@@ -1020,7 +1036,7 @@ var modifyRuleset = function(details) {
 
 // Shortcuts pane
 
-let getShortcuts = function(callback) {
+const getShortcuts = function(callback) {
     if ( µb.canUseShortcuts === false ) {
         return callback([]);
     }
@@ -1041,7 +1057,7 @@ let getShortcuts = function(callback) {
     });
 };
 
-let setShortcut = function(details) {
+const setShortcut = function(details) {
     if  ( µb.canUpdateShortcuts === false ) { return; }
     if ( details.shortcut === undefined ) {
         vAPI.commands.reset(details.name);
@@ -1055,7 +1071,7 @@ let setShortcut = function(details) {
 
 /******************************************************************************/
 
-var onMessage = function(request, sender, callback) {
+const onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
     case 'backupUserData':
@@ -1159,32 +1175,32 @@ vAPI.messaging.listen('dashboard', onMessage);
 
 /******************************************************************************/
 
-var µb = µBlock,
-    extensionOriginURL = vAPI.getURL('');
+const µb = µBlock;
+const extensionOriginURL = vAPI.getURL('');
 
 /******************************************************************************/
 
-var getLoggerData = function(details, activeTabId, callback) {
-    let tabIds = new Map();
-    let response = {
+const getLoggerData = function(details, activeTabId, callback) {
+    const response = {
         colorBlind: µb.userSettings.colorBlindFriendly,
         entries: µb.logger.readAll(details.ownerId),
         maxEntries: µb.userSettings.requestLogMaxEntries,
         activeTabId: activeTabId,
-        tabIds: Array.from(tabIds),
+        tabIdsToken: µb.pageStoresToken,
         dntDomains: µb.userSettings.dntDomains, // ADN
-        tabIdsToken: µb.pageStoresToken
+        tooltips: µb.userSettings.tooltipsDisabled === false
     };
-    // if ( µb.pageStoresToken !== details.tabIdsToken ) { // tmp fix for logger
-        for ( let entry of µb.pageStores ) {
-            let pageStore = entry[1];
+    if ( µb.pageStoresToken !== details.tabIdsToken ) {
+        const tabIds = new Map();
+        for ( const entry of µb.pageStores ) {
+            const pageStore = entry[1];
             if ( pageStore.rawURL.startsWith(extensionOriginURL) ) { continue; }
             tabIds.set(entry[0], pageStore.title);
         }
         response.tabIds = Array.from(tabIds);
     // }
     if ( activeTabId ) {
-        let pageStore = µb.pageStoreFromTabId(activeTabId);
+        const pageStore = µb.pageStoreFromTabId(activeTabId);
         if (
             pageStore === null ||
             pageStore.rawURL.startsWith(extensionOriginURL)
@@ -1192,44 +1208,67 @@ var getLoggerData = function(details, activeTabId, callback) {
             response.activeTabId = undefined;
         }
     }
+    if ( details.popupLoggerBoxChanged && browser.windows instanceof Object ) {
+        browser.tabs.query(
+            { url: vAPI.getURL('/logger-ui.html?popup=1') },
+            tabs => {
+                if ( Array.isArray(tabs) === false ) { return; }
+                if ( tabs.length === 0 ) { return; }
+                browser.windows.get(tabs[0].windowId, win => {
+                    if ( win instanceof Object === false ) { return; }
+                    vAPI.localStorage.setItem(
+                        'popupLoggerBox',
+                        JSON.stringify({
+                            left: win.left,
+                            top: win.top,
+                            width: win.width,
+                            height: win.height,
+                        })
+                    );
+                });
+            }
+        );
+    }
     callback(response);
 };
 
 /******************************************************************************/
 
-var getURLFilteringData = function(details) {
-    var colors = {};
-    var response = {
+const getURLFilteringData = function(details) {
+    const colors = {};
+    const response = {
         dirty: false,
         colors: colors
     };
-    var suf = µb.sessionURLFiltering;
-    var puf = µb.permanentURLFiltering;
-    var urls = details.urls,
-        context = details.context,
-        type = details.type;
-    var url, colorEntry;
-    var i = urls.length;
-    while ( i-- ) {
-        url = urls[i];
-        colorEntry = colors[url] = { r: 0, own: false };
+    const suf = µb.sessionURLFiltering;
+    const puf = µb.permanentURLFiltering;
+    const urls = details.urls;
+    const context = details.context;
+    const type = details.type;
+    for ( const url of urls ) {
+        const colorEntry = colors[url] = { r: 0, own: false };
         if ( suf.evaluateZ(context, url, type).r !== 0 ) {
             colorEntry.r = suf.r;
-            colorEntry.own = suf.r !== 0 && suf.context === context && suf.url === url && suf.type === type;
+            colorEntry.own = suf.r !== 0 &&
+                             suf.context === context &&
+                             suf.url === url &&
+                             suf.type === type;
         }
-        if ( response.dirty ) {
-            continue;
-        }
+        if ( response.dirty ) { continue; }
         puf.evaluateZ(context, url, type);
-        response.dirty = colorEntry.own !== (puf.r !== 0 && puf.context === context && puf.url === url && puf.type === type);
+        response.dirty = colorEntry.own !== (
+            puf.r !== 0 &&
+            puf.context === context &&
+            puf.url === url &&
+            puf.type === type
+        );
     }
     return response;
 };
 
 /******************************************************************************/
 
-var onMessage = function(request, sender, callback) {
-    var response;
+const onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
     case 'readAll':
@@ -1245,6 +1284,14 @@ var onMessage = function(request, sender, callback) {
         });
         return;
 
+    default:
+        break;
+    }
+
+    // Sync
+    let response;
+
+    switch ( request.what ) {
     case 'releaseView':
             if ( request.ownerId === µb.logger.ownerId ) {
                 µb.logger.ownerId = undefined;
@@ -1289,11 +1336,13 @@ vAPI.messaging.listen('loggerUI', onMessage);
 
 // channel: documentBlocked
 
-(function() {
+(( ) => {
 
 /******************************************************************************/
 
-var onMessage = function(request, sender, callback) {
+const onMessage = function(request, sender, callback) {
+    const tabId = sender && sender.tab ? sender.tab.id : 0;
+
     // Async
     switch ( request.what ) {
     default:
@@ -1301,11 +1350,15 @@ var onMessage = function(request, sender, callback) {
     }
 
     // Sync
-    var response;
+    let response;
 
     switch ( request.what ) {
+    case 'closeThisTab':
+        vAPI.tabs.remove(tabId);
+        break;
+
     case 'temporarilyWhitelistDocument':
-        µBlock.webRequest.temporarilyWhitelistDocument(request.hostname);
+        µBlock.webRequest.strictBlockBypass(request.hostname);
         break;
 
     default:
@@ -1330,15 +1383,15 @@ vAPI.messaging.listen('documentBlocked', onMessage);
 
 /******************************************************************************/
 
-let µb = µBlock;
-let broadcastTimers = new Map();
+const µb = µBlock;
+const broadcastTimers = new Map();
 
 /******************************************************************************/
 
-var domSurveyFinalReport = function(tabId) {
+const domSurveyFinalReport = function(tabId) {
     broadcastTimers.delete(tabId + '-domSurveyReport');
 
-    let pageStore = µb.pageStoreFromTabId(tabId);
+    const pageStore = µb.pageStoreFromTabId(tabId);
     if ( pageStore === null ) { return; }
 
     vAPI.messaging.broadcast({
@@ -1351,33 +1404,119 @@ var domSurveyFinalReport = function(tabId) {
 
 /******************************************************************************/
 
-var logCosmeticFilters = function(tabId, details) {
-    if ( µb.logger.isEnabled() === false ) {
-        return;
-    }
+const logCosmeticFilters = function(tabId, details) {
+    if ( µb.logger.enabled === false ) { return; }
 
-    var selectors = details.matchedSelectors;
-
-    selectors.sort();
-
-    for ( var i = 0; i < selectors.length; i++ ) {
-        µb.logger.writeOne(
-            tabId,
-            'cosmetic',
-            { source: 'cosmetic', raw: '##' + selectors[i] },
-            'dom',
-            details.frameURL,
-            null,
-            details.frameHostname
-        );
+    const filter = { source: 'cosmetic', raw: '' };
+    const fctxt = µb.filteringContext.duplicate();
+    fctxt.fromTabId(tabId)
+         .setRealm('cosmetic')
+         .setType('dom')
+         .setURL(details.frameURL)
+         .setDocOriginFromURL(details.frameURL)
+         .setFilter(filter);
+    for ( const selector of details.matchedSelectors.sort() ) {
+        filter.raw = selector;
+        fctxt.toLogger();
     }
 };
 
 /******************************************************************************/
 
-var onMessage = function(request, sender, callback) {
-    let tabId = sender && sender.tab ? sender.tab.id : 0;
-    let pageStore = µb.pageStoreFromTabId(tabId);
+const logCSPViolations = function(pageStore, request) {
+    if ( µb.logger.enabled === false || pageStore === null ) {
+        return false;
+    }
+    if ( request.violations.length === 0 ) {
+        return true;
+    }
+
+    const fctxt = µb.filteringContext.duplicate();
+    fctxt.fromTabId(pageStore.tabId)
+         .setRealm('network')
+         .setDocOriginFromURL(request.docURL)
+         .setURL(request.docURL);
+
+    let cspData = pageStore.extraData.get('cspData');
+    if ( cspData === undefined ) {
+        cspData = new Map();
+
+        const policies = [];
+        const logData = [];
+        µb.staticNetFilteringEngine.matchAndFetchData(
+            'csp',
+            request.docURL,
+            policies,
+            logData
+        );
+        for ( let i = 0; i < policies.length; i++ ) {
+            cspData.set(policies[i], logData[i]);
+        }
+
+        fctxt.type = 'inline-script';
+        fctxt.filter = undefined;
+        if ( pageStore.filterRequest(fctxt) === 1 ) {
+            cspData.set(µb.cspNoInlineScript, fctxt.filter);
+        }
+
+        fctxt.type = 'script';
+        fctxt.filter = undefined;
+        if ( pageStore.filterScripting(fctxt, true) === 1 ) {
+            cspData.set(µb.cspNoScripting, fctxt.filter);
+        }
+
+        fctxt.type = 'inline-font';
+        fctxt.filter = undefined;
+        if ( pageStore.filterRequest(fctxt) === 1 ) {
+            cspData.set(µb.cspNoInlineFont, fctxt.filter);
+        }
+
+        if ( cspData.size === 0 ) { return false; }
+
+        pageStore.extraData.set('cspData', cspData);
+    }
+
+    const typeMap = logCSPViolations.policyDirectiveToTypeMap;
+    for ( const json of request.violations ) {
+        const violation = JSON.parse(json);
+        let type = typeMap.get(violation.directive);
+        if ( type === undefined ) { continue; }
+        const logData = cspData.get(violation.policy);
+        if ( logData === undefined ) { continue; }
+        if ( /^[\w.+-]+:\/\//.test(violation.url) === false ) {
+            violation.url = request.docURL;
+            if ( type === 'script' ) { type = 'inline-script'; }
+            else if ( type === 'font' ) { type = 'inline-font'; }
+        }
+        fctxt.setURL(violation.url)
+             .setType(type)
+             .setFilter(logData)
+             .toLogger();
+    }
+
+    return true;
+};
+
+logCSPViolations.policyDirectiveToTypeMap = new Map([
+    [ 'img-src', 'image' ],
+    [ 'connect-src', 'xmlhttprequest' ],
+    [ 'font-src', 'font' ],
+    [ 'frame-src', 'sub_frame' ],
+    [ 'media-src', 'media' ],
+    [ 'object-src', 'object' ],
+    [ 'script-src', 'script' ],
+    [ 'script-src-attr', 'script' ],
+    [ 'script-src-elem', 'script' ],
+    [ 'style-src', 'stylesheet' ],
+    [ 'style-src-attr', 'stylesheet' ],
+    [ 'style-src-elem', 'stylesheet' ],
+]);
+
+/******************************************************************************/
+
+const onMessage = function(request, sender, callback) {
+    const tabId = sender && sender.tab ? sender.tab.id : 0;
+    const pageStore = µb.pageStoreFromTabId(tabId);
 
     // Async
     switch ( request.what ) {
@@ -1386,7 +1525,7 @@ var onMessage = function(request, sender, callback) {
     }
 
     // Sync
-    var response;
+    let response;
 
     switch ( request.what ) {
     case 'domSurveyTransientReport':
@@ -1407,8 +1546,25 @@ var onMessage = function(request, sender, callback) {
         }
         break;
 
+    case 'inlinescriptFound':
+        if ( µb.logger.enabled && pageStore !== null ) {
+            const fctxt = µb.filteringContext.duplicate();
+            fctxt.fromTabId(tabId)
+                .setType('inline-script')
+                .setURL(request.docURL)
+                .setDocOriginFromURL(request.docURL);
+            if ( pageStore.filterRequest(fctxt) === 0 ) {
+                fctxt.setRealm('network').toLogger();
+            }
+        }
+        break;
+
     case 'logCosmeticFilteringData':
         logCosmeticFilters(tabId, request);
+        break;
+
+    case 'securityPolicyViolation':
+        response = logCSPViolations(pageStore, request);
         break;
 
     case 'temporarilyAllowLargeMediaElement':

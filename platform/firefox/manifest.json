@@ -1,10 +1,4 @@
 {
-  "applications": {
-    "gecko": {
-      "id": "uBlock0@raymondhill.net",
-      "strict_min_version": "55.0"
-    }
-  },
   "author": "All uBlock Origin contributors",
   "background": {
     "page": "background.html"
@@ -17,6 +11,12 @@
     },
     "default_title": "uBlock Origin",
     "default_popup": "popup.html"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "uBlock0@raymondhill.net",
+      "strict_min_version": "55.0"
+    }
   },
   "commands": {
     "launch-element-zapper": {
@@ -74,6 +74,7 @@
     "privacy",
     "storage",
     "tabs",
+    "unlimitedStorage",
     "webNavigation",
     "webRequest",
     "webRequestBlocking",

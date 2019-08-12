@@ -27,13 +27,6 @@ projdir = os.path.split(os.path.abspath(__file__))[0]
 while not os.path.isdir(os.path.join(projdir, '.git')):
     projdir = os.path.normpath(os.path.join(projdir, '..'))
 
-cs_extension_id = 'cgbcahbpdhpcegmbfconppldiemgcoii'
-tmpdir = tempfile.TemporaryDirectory()
-raw_zip_filename = 'uBlock0.chromium.zip'
-raw_zip_filepath = os.path.join(tmpdir.name, raw_zip_filename)
-github_owner = 'gorhill'
-github_repo = 'uBlock'
-
 # We need a version string to work with
 if len(sys.argv) >= 2 and sys.argv[1]:
     version = sys.argv[1]
@@ -43,6 +36,13 @@ version.strip()
 if not re.search('^\d+\.\d+\.\d+(b|rc)\d+$', version):
     print('Error: Invalid version string.')
     exit(1)
+
+cs_extension_id = 'cgbcahbpdhpcegmbfconppldiemgcoii'
+tmpdir = tempfile.TemporaryDirectory()
+raw_zip_filename = 'uBlock0_' + version + '.chromium.zip'
+raw_zip_filepath = os.path.join(tmpdir.name, raw_zip_filename)
+github_owner = 'gorhill'
+github_repo = 'uBlock'
 
 # Load/save auth secrets
 # The build directory is excluded from git

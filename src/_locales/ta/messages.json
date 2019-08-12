@@ -11,6 +11,18 @@
     "message": "uBlock₀ - நிர்வாக மையம்",
     "description": "English: uBlock₀ — Dashboard"
   },
+  "dashboardUnsavedWarning": {
+    "message": "Warning! You have unsaved changes",
+    "description": "A warning in the dashboard when navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningStay": {
+    "message": "Stay",
+    "description": "Label for button to prevent navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningIgnore": {
+    "message": "பொருட்படுத்தாதே",
+    "description": "Label for button to ignore unsaved changes"
+  },
   "settingsPageName": {
     "message": "அமைப்புகள்",
     "description": "appears as tab name in dashboard"
@@ -32,7 +44,7 @@
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "Shortcuts",
+    "message": "குறுக்குவழிகள்",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -44,11 +56,11 @@
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
-    "message": "uBlock₀ — Asset viewer",
+    "message": "uBlock -- உடைமை பார்வையாளர்",
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
-    "message": "Advanced settings",
+    "message": "மேம்பட்ட அமைப்புகள்",
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
@@ -56,11 +68,11 @@
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Click to disable uBlock₀ for this site.\n\nCtrl+click to disable uBlock₀ only on this page.",
+    "message": "இந்த வலைத்தளத்திற்கு uBlock முடக்க, கிளிக் செய்யவும்.\n\nuBlockகை இந்த வலைத்தளத்திற்கு முடக்க Ctrl+click செய்யவும்.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Click to enable uBlock₀ for this site.",
+    "message": "இந்த வலைத்தளத்திற்கு uBlockகை செயல்படுத்த கிளிக் செய்க.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -88,7 +100,7 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Enter element zapper mode",
+    "message": "பகுதி தெரிவு முறைமை உள்ளிடவும்",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
@@ -172,7 +184,7 @@
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {
-    "message": "அனைத்து",
+    "message": "அனைத்தும்",
     "description": ""
   },
   "popupImageRulePrompt": {
@@ -204,7 +216,7 @@
     "description": ""
   },
   "popupHitDomainCountPrompt": {
-    "message": "இணைக்கப்பட்டுள்ள ஆள்களங்கள்",
+    "message": "ஆள்களங்கள் இணைக்கப்பட்டுள்ளது",
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
@@ -220,11 +232,11 @@
     "description": "English: Pick"
   },
   "pickerQuit": {
-    "message": "வெளியேறு",
+    "message": "முற்றிலும் வெளியேறு",
     "description": "English: Quit"
   },
   "pickerPreview": {
-    "message": "முன்னோட்டம் பார்",
+    "message": "முன்னோட்டம்",
     "description": "Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters": {
@@ -241,7 +253,7 @@
   },
   "pickerContextMenuEntry": {
     "message": "உறுப்பை தடு",
-    "description": "English: Block element"
+    "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
     "message": "தடுக்கப்பட்ட உறுப்புகளின் பெட்டிகளை மறை",
@@ -300,7 +312,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Block media elements larger than {{input:number}} kB",
+    "message": "Block media elements larger than {{input}} KB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -420,7 +432,7 @@
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Updating...",
+    "message": "புதுப்பிக்கிறது...",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -468,11 +480,11 @@
     "description": "Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave": {
-    "message": "சேமிக்கும்",
+    "message": "சேமி",
     "description": "Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard": {
-    "message": "நிராகரிக்கபடும்",
+    "message": "நிராகரி",
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
@@ -496,7 +508,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "uBlock₀ முடக்கப்பட வேண்டிய இடங்களாக நீங்கள் குறிக்கும் வழங்கிப்பெயர்கள். ஒரு வரிக்கு ஒரு பெயர் மட்டுமே. தவறான வழங்கிப்பெயர்கள் அமைதியாகப் புறக்கணிக்கப்படும்.",
+    "message": "எந்தெந்தப் பக்கங்களில் uBlock₀ முடக்கப்பட வேண்டுமென்பதை அனுமதிப்பட்ட கட்டளைகள் ஆணையிடுகின்றன. வரிக்கு ஒரு இடுகை மட்டுமே. தவறான கட்டளைகள் அமைதியாகப் புறக்கணிக்கப்படும்.",
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
@@ -532,24 +544,120 @@
     "description": "English: Filter"
   },
   "logAll": {
-    "message": "அனைத்து",
+    "message": "அனைத்தும்",
     "description": "Appears in the logger's tab selector"
   },
   "logBehindTheScene": {
-    "message": "திறக்கப்பட்ட இ.தளங்களின் பின்னால் நடப்பவை",
+    "message": "இ.தளங்களின் பின்னால் நடப்பவை",
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
     "message": "Current tab",
     "description": "Appears in the logger's tab selector"
   },
+  "loggerReloadTip": {
+    "message": "Reload the tab content",
+    "description": "Tooltip for the reload button in the logger page"
+  },
+  "loggerDomInspectorTip": {
+    "message": "Toggle the DOM inspector",
+    "description": "Tooltip for the DOM inspector button in the logger page"
+  },
+  "loggerPopupPanelTip": {
+    "message": "Toggle the popup panel",
+    "description": "Tooltip for the popup panel button in the logger page"
+  },
+  "loggerInfoTip": {
+    "message": "uBlock Origin wiki: The logger",
+    "description": "Tooltip for the top-right info label in the logger page"
+  },
+  "loggerClearTip": {
+    "message": "Clear logger",
+    "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
+  },
+  "loggerPauseTip": {
+    "message": "Pause logger (discard all incoming data)",
+    "description": "Tooltip for the pause button in the logger page"
+  },
+  "loggerUnpauseTip": {
+    "message": "Unpause logger",
+    "description": "Tooltip for the play button in the logger page"
+  },
+  "loggerRowFiltererButtonTip": {
+    "message": "Toggle logger filtering",
+    "description": "Tooltip for the row filterer button in the logger page"
+  },
   "logFilterPrompt": {
     "message": "பதிகை உருப்படிகளை வடிகட்டு",
-    "description": "English: filter log entries"
+    "description": "Placeholder string for logger output filtering input field"
   },
-  "logMaxEntriesTip": {
-    "message": "பதிகை உருப்படிகளின் அதிகபட்ச எண்ணிக்கை",
-    "description": "Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  "loggerRowFiltererBuiltinTip": {
+    "message": "Logger filtering options",
+    "description": "Tooltip for the button to bring up logger output filtering options"
+  },
+  "loggerRowFiltererBuiltinNot": {
+    "message": "Not",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinEventful": {
+    "message": "eventful",
+    "description": "A keyword in the built-in row filtering expression: all items corresponding to uBO doing something (blocked, allowed, redirected, etc.)"
+  },
+  "loggerRowFiltererBuiltinBlocked": {
+    "message": "blocked",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinAllowed": {
+    "message": "allowed",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltin1p": {
+    "message": "1st-party",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltin3p": {
+    "message": "மூன்றாம் தரப்பு",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerEntryDetailsHeader": {
+    "message": "விவரங்கள்",
+    "description": "Small header to identify the 'Details' pane for a specific logger entry"
+  },
+  "loggerEntryDetailsFilter": {
+    "message": "வடிகட்டி",
+    "description": "Label to identify a filter field"
+  },
+  "loggerEntryDetailsFilterList": {
+    "message": "Filter list",
+    "description": "Label to identify a filter list field"
+  },
+  "loggerEntryDetailsRule": {
+    "message": "Rule",
+    "description": "Label to identify a rule field"
+  },
+  "loggerEntryDetailsContext": {
+    "message": "Context",
+    "description": "Label to identify a context field (typically a hostname)"
+  },
+  "loggerEntryDetailsRootContext": {
+    "message": "வேர் சூழல்",
+    "description": "Label to identify a root context field (typically a hostname)"
+  },
+  "loggerEntryDetailsPartyness": {
+    "message": "Partyness",
+    "description": "Label to identify a field providing partyness information"
+  },
+  "loggerEntryDetailsType": {
+    "message": "வகை",
+    "description": "Label to identify the type of an entry"
+  },
+  "loggerEntryDetailsURL": {
+    "message": "இணைய முகவரி",
+    "description": "Label to identify the URL of an entry"
+  },
+  "loggerURLFilteringHeader": {
+    "message": "மாறுநிலை உரலி வடிகட்டல்",
+    "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
     "message": "சூழல்:",
@@ -558,10 +666,6 @@
   "loggerURLFilteringTypeLabel": {
     "message": "வகை:",
     "description": "Label for the type selector"
-  },
-  "loggerURLFilteringHeader": {
-    "message": "மாறுநிலை உரலி வடிகட்டல்",
-    "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerStaticFilteringHeader": {
     "message": "நிலையான வடிகட்டுதல்",
@@ -572,7 +676,7 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
-    "message": "தடு",
+    "message": "முடக்கு",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAllow": {
@@ -611,6 +715,62 @@
     "message": "Static filter <code>{{filter}}<\/code> could not be found in any of the currently enabled filter lists",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
+  "loggerSettingDiscardPrompt": {
+    "message": "Logger entries which do not fulfill all three conditions below will be automatically discarded:",
+    "description": "Logger setting: A sentence to describe the purpose of the settings below"
+  },
+  "loggerSettingPerEntryMaxAge": {
+    "message": "Preserve entries from the last {{input}} minutes",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerTabMaxLoads": {
+    "message": "Preserve at most {{input}} page loads per tab",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerTabMaxEntries": {
+    "message": "Preserve at most {{input}} entries per tab",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerEntryLineCount": {
+    "message": "Use {{input}} lines per entry in vertically expanded mode",
+    "description": "A logger setting"
+  },
+  "loggerSettingHideColumnsPrompt": {
+    "message": "நெடுவரிசைகளை மறை:",
+    "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
+  },
+  "loggerSettingHideColumnTime": {
+    "message": "{{input}} நேரம்",
+    "description": "A label for the time column"
+  },
+  "loggerSettingHideColumnFilter": {
+    "message": "{{input}} வடிகட்டி\/சட்டம்",
+    "description": "A label for the filter or rule column"
+  },
+  "loggerSettingHideColumnContext": {
+    "message": "{{input}} சூழல்",
+    "description": "A label for the context column"
+  },
+  "loggerSettingHideColumnPartyness": {
+    "message": "{{input}} Partyness",
+    "description": "A label for the partyness column"
+  },
+  "loggerExportFormatList": {
+    "message": "பட்டியல்",
+    "description": "Label for radio-button to pick export format"
+  },
+  "loggerExportFormatTable": {
+    "message": "பொருளடக்கம்",
+    "description": "Label for radio-button to pick export format"
+  },
+  "loggerExportEncodePlain": {
+    "message": "வெற்று",
+    "description": "Label for radio-button to pick export text format"
+  },
+  "loggerExportEncodeMarkdown": {
+    "message": "Markdown",
+    "description": "Label for radio-button to pick export text format"
+  },
   "aboutChangelog": {
     "message": "நிரல் மாற்றம் மற்றும் வெளியீடுகளின் பதிவு",
     "description": ""
@@ -635,6 +795,10 @@
     "message": "பங்களிப்பாளர்கள்",
     "description": "English: Contributors"
   },
+  "aboutDependencies": {
+    "message": "External dependencies (GPLv3-compatible):",
+    "description": "Shown in the About pane"
+  },
   "aboutBackupDataButton": {
     "message": "கோப்பிற்கு காப்பு பிரதி எடு",
     "description": "Text for button to create a backup of all settings"
@@ -648,23 +812,23 @@
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Reset to default settings...",
+    "message": "இயல்புநிலை அமைப்புகளை மீட்டெடு...",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
-    "message": "All your settings will be overwritten using data backed up on {{time}}, and uBlock₀ will restart.\n\nOverwrite all existing settings using backed up data?",
+    "message": "உங்கள் எல்லா அமைப்புகளும் காப்புப் பதிவைப் {{time}} பயன்படுத்தி மேலெழுதப்படும், பிறகு uBlock மறுதொடக்கம்.\n\nகாப்புப்பட்ட தரவைப் பயன்படுத்தி உள்ள எல்லா அமைப்புகளையும் மேலெழுதவா?",
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {
-    "message": "The data could not be read or is invalid",
+    "message": "தகவலை படிக்க முடியவில்லை அல்லது தவறானது",
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
-    "message": "All your settings will be removed, and uBlock₀ will restart.\n\nReset uBlock₀ to factory settings?",
+    "message": "உங்கள் எல்லா அமைப்புகளும் அகற்றப்படும், பிறகு uBlock மீண்டும் தொடங்கும்.\n\nuBlockகை தொழிற்சாலை அமைப்புகளை மீட்டமைக்கவ?",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
-    "message": "{{url}} இணைக்க முடியவில்லை",
+    "message": "பிணையத்தில் பிழை: {{msg}}",
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
@@ -672,15 +836,15 @@
     "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo": {
-    "message": "ஒரு நிமிடத்திற்கு முன்பு",
+    "message": "ஒரு நிமிடம் முன்பு",
     "description": "English: a minute ago"
   },
   "elapsedManyMinutesAgo": {
-    "message": "{{value}} நிமிடங்களுக்கு முன்பு",
+    "message": "{{value}} நிமிடம் முன்பு",
     "description": "English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo": {
-    "message": "ஒரு மணிநேரத்திற்கு முன்பு",
+    "message": "ஒரு மணி நேரம் முன்பு",
     "description": "English: an hour ago"
   },
   "elapsedManyHoursAgo": {
@@ -688,11 +852,11 @@
     "description": "English: {{value}} hours ago"
   },
   "elapsedOneDayAgo": {
-    "message": "ஒரு நாளைக்கு முன்பு",
+    "message": "ஒரு நாள் முன்பு",
     "description": "English: a day ago"
   },
   "elapsedManyDaysAgo": {
-    "message": "{{value}} நாட்கள் முன்பு",
+    "message": "{{value}} நாள் முன்பு",
     "description": "English: {{value}} days ago"
   },
   "showDashboardButton": {
@@ -708,7 +872,7 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1": {
-    "message": "uBlock Origin has prevented the following page from loading:",
+    "message": "uBlock Origin பின்வரும் பக்கத்தை ஏற்றுவதில் இருந்து தடுத்தது:",
     "description": "English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2": {
@@ -764,7 +928,7 @@
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
-    "message": "Warning! Change these advanced settings at your own risk.",
+    "message": "எச்சரிக்கை! இந்த மேம்பட்ட அமைப்புகளை உங்கள் சொந்த ஆபத்தில் மாற்றவும்.",
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {
@@ -772,7 +936,7 @@
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Apply changes",
+    "message": "மாற்றங்களைச் செயல்படுத்து",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
@@ -788,8 +952,16 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Type a shortcut",
+    "message": "குறுக்குவழியைத் தட்டச்சு செய்க",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
+  },
+  "genericMergeViewScrollLock": {
+    "message": "ஸ்க்ரோலிங் பூட்டு மாற்று",
+    "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
+  },
+  "genericCopyToClipboard": {
+    "message": "இடைநிலைப் பலகைக்கு நகலெடுக்கவும்",
+    "description": "Label for buttons used to copy something to the clipboard"
   },
   "dummy": {
     "message": "This entry must be the last one",

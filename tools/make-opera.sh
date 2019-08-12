@@ -54,6 +54,17 @@ sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
 rm $DES/js/adn/tests.js
 rm -R $DES/lib/qunit
 
+# Removing WASM modules until I receive an answer from Opera people: Opera's
+# uploader issue an error for hntrie.wasm and this prevents me from
+# updating uBO in the Opera store. The modules are unused anyway for
+# Chromium- based browsers.
+rm $DES/js/wasm/*.wasm
+rm $DES/js/wasm/*.wat
+rm $DES/lib/lz4/*.wasm
+rm $DES/lib/lz4/*.wat
+rm $DES/lib/publicsuffixlist/wasm/*.wasm
+rm $DES/lib/publicsuffixlist/wasm/*.wat
+
 echo "*** AdNauseam.opera: Package Done."
 echo
 

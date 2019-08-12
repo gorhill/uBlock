@@ -11,6 +11,18 @@
     "message": "uBlock₀ — Kontrollpanel",
     "description": "English: uBlock₀ — Dashboard"
   },
+  "dashboardUnsavedWarning": {
+    "message": "Varning! Du har inte sparat dina ändringar",
+    "description": "A warning in the dashboard when navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningStay": {
+    "message": "Stanna kvar",
+    "description": "Label for button to prevent navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningIgnore": {
+    "message": "Ignorera",
+    "description": "Label for button to ignore unsaved changes"
+  },
   "settingsPageName": {
     "message": "Inställningar",
     "description": "appears as tab name in dashboard"
@@ -32,11 +44,11 @@
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "Genvägar",
+    "message": "Kortkommandon",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
-    "message": "uBlock₀ — Logg för nätverksbegäran",
+    "message": "uBlock₀ — Loggaren",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
@@ -44,7 +56,7 @@
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
-    "message": "uBlock₀ — Asset viewer",
+    "message": "uBlock₀ — Tillgångsvisare",
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
@@ -52,11 +64,11 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Klick: avaktivera\/aktivera uBlock₀ för denna hemsida permanent.\n\nCtrl+klick: avaktivera uBlock₀ endast för denna sida.",
+    "message": "Klick: inaktivera\/aktivera uBlock₀ för hela webbplatsen.\n\nCtrl+klick: inaktivera uBlock₀ endast för den här sidan.",
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Klicka för att inaktivera uBlock₀ för den här webbplatsen.\n\nCtrl + klicka för att inaktivera uBlock₀ för enbart den här sidan.",
+    "message": "Klicka för att inaktivera uBlock₀ för hela webbplatsen.\n\nCtrl+klicka för att inaktivera uBlock₀ enbart för den här sidan.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
@@ -68,7 +80,7 @@
     "description": "English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt": {
-    "message": "på denna sida",
+    "message": "på den här sidan",
     "description": "English: on this page"
   },
   "popupBlockedStats": {
@@ -96,11 +108,11 @@
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "Öppna loggen",
+    "message": "Öppna loggaren",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Växla blockering av popup-fönster för denna sida",
+    "message": "Växla blockering av popup-fönster för den här webbplatsen",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
@@ -112,7 +124,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Växla blockering av stora medieelement för denna sida",
+    "message": "Växla blockering av stora medieelement för den här webbplatsen",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
@@ -124,7 +136,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Växla kosmetiska filter för denna sida",
+    "message": "Växla kosmetiska filter för den här webbplatsen",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
@@ -136,15 +148,15 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Växla blockering för hämtning av typsnitt på sidan",
+    "message": "Växla blockeringen av fjärrtypsnitt på den här webbplatsen",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Klicka för att blockera externa typsnitt på den här webbplatsen",
+    "message": "Klicka för att blockera fjärrtypsnitt på den här webbplatsen",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Klicka för att inte längre blockera externa typsnitt på den här webbplatsen",
+    "message": "Klicka för att inte längre blockera fjärrtypsnitt på den här webbplatsen",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
@@ -152,15 +164,15 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Klicka för att inte längre inaktivera JavaScript på den här webbplatsen",
+    "message": "Klicka för att aktivera JavaScript på den här webbplatsen",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
-    "message": "Globala regler: denna kolumn avser regler som gäller alla sidor.",
+    "message": "Globala regler: den här kolumnen avser regler som gäller för alla webbplatser.",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Lokala regler: denna kolumn avser regler som endast gäller denna sida.\nLokala regler överskrider globala regler.",
+    "message": "Lokala regler: den här kolumnen avser endast regler som gäller för den aktuella webbplatsen.\nLokala regler åsidosätter globala regler.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -184,7 +196,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "Tredjeparts-css\/bilder",
+    "message": "CSS\/bilder från tredjepart",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -196,11 +208,11 @@
     "description": ""
   },
   "popup3pScriptRulePrompt": {
-    "message": "tredjepartsskript",
+    "message": "tredjepartskript",
     "description": ""
   },
   "popup3pFrameRulePrompt": {
-    "message": "tredjepartsramar",
+    "message": "tredjepartramar",
     "description": ""
   },
   "popupHitDomainCountPrompt": {
@@ -208,7 +220,7 @@
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
-    "message": "{{count}} av {{total}}",
+    "message": "{{count}} utav {{total}}",
     "description": "appears in popup"
   },
   "pickerCreate": {
@@ -228,7 +240,7 @@
     "description": "Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters": {
-    "message": "Nätfilter",
+    "message": "Nätverksfilter",
     "description": "English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters": {
@@ -241,7 +253,7 @@
   },
   "pickerContextMenuEntry": {
     "message": "Blockera element",
-    "description": "English: Block element"
+    "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
     "message": "Dölj platshållare för blockerade element",
@@ -252,11 +264,11 @@
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "Inaktivera tipsrutor",
+    "message": "Inaktivera verktygstips",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
-    "message": "Utnyttja kontextmenyn där så är lämpligt",
+    "message": "Använd innehållsmenyn där det är lämpligt",
     "description": "English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt": {
@@ -300,7 +312,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Blockera medieelement större än {{input:number}} kB",
+    "message": "Blockera medieelement större än {{input}} KB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -336,7 +348,7 @@
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
-    "message": "Uppdatera filterlistor automatiskt.",
+    "message": "Uppdatera filterlistor automatiskt",
     "description": "A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow": {
@@ -344,11 +356,11 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll": {
-    "message": "Rensa all cache",
+    "message": "Rensa alla cachar",
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
-    "message": "Tolka och applicera kosmetiska filter.",
+    "message": "Tolka och tillämpa kosmetiska filter",
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
@@ -360,7 +372,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Allmänna kosmetiska filter är de kosmetiska filter som är menade att användas på alla webbplatser.<p>Även om de hanteras effektivt av uBlock₀ så kan generiska kosmetiska filter bidra till en högre minnes- och processoranvändning på vissa webbplatser, särskilt stora och långlivade.<p>Aktiverar du den här inställning så eliminerar du den extra minnes- och processoranvändningen som allmänna kosmetiska filter medför och minskar också minnesanvändningen för själva uBlock₀.<p>Det rekommenderas att du aktiverar denna inställning på mindre kraftfulla enheter.",
+    "message": "<p>Allmänna kosmetiska filter är de kosmetiska filter som är menade att användas på alla webbplatser.<p>Även om de hanteras effektivt av uBlock₀ så kan generiska kosmetiska filter bidra till en högre minnes- och processoranvändning på vissa webbplatser, särskilt stora och långlivade.<p>Aktiverar du den här inställning så eliminerar du den extra minnes- och processoranvändningen som allmänna kosmetiska filter medför och minskar också minnesanvändningen för själva uBlock₀.<p>Det rekommenderas att du aktiverar den här inställningen på mindre kraftfulla enheter.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -380,19 +392,19 @@
     "description": "English: Ads"
   },
   "3pGroupPrivacy": {
-    "message": "Sekretess",
+    "message": "Integritet",
     "description": "English: Privacy"
   },
   "3pGroupMalware": {
-    "message": "Malware",
+    "message": "Domäner med skadlig kod (malware)",
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {
-    "message": "Störande objekt",
+    "message": "Störande",
     "description": "The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose": {
-    "message": "Universalfilter",
+    "message": "Mångsidiga",
     "description": "English: Multipurpose"
   },
   "3pGroupRegions": {
@@ -408,7 +420,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "En webbadress per rad. Rader med prefixet &lsquo;!&rsquo; kommer att ignoreras. Ogiltiga webbadresser kommer också ignoreras.",
+    "message": "En webbadress per rad. Ogiltiga webbadresser kommer inte att aviseras.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -416,7 +428,7 @@
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "Senast uppdaterad: {{ago}}\nTryck för att påtvinga en uppdatering.",
+    "message": "Senast uppdaterad: {{ago}}\nKlicka för att påtvinga en uppdatering.",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
@@ -428,7 +440,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Ett filter per rad. Ett filter kan vara ett vanligt värdnamn eller ett Adblock Plus-kompatibelt filter. Rader med prefixet &lsquo;!&rsquo; kommer att ignoreras.",
+    "message": "Ett filter per rad. Ett filter kan vara ett vanligt värdnamn eller ett Adblock Plus-kompatibelt filter. Rader med prefixet <code>!<\/code> kommer att ignoreras.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -492,11 +504,11 @@
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
-    "message": "Regelsyntax: <code>källa destination typ åtgärd<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>full dokumentation<\/a>).",
+    "message": "Regelsyntax: <code>källa mål typ åtgärd<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>full dokumentation<\/a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Vitlistans direktiv dikterar på vilka webbplatser uBlock Origin ska inaktiveras. En artikel per rad. Ogiltiga direktiv kommer tyst att ignoreras och kommenteras ut.",
+    "message": "Vitlistans direktiv dikterar på vilka webbplatser uBlock Origin ska inaktiveras. En post per rad. Ogiltiga direktiv kommer tyst att ignoreras och kommenteras ut.",
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
@@ -536,35 +548,127 @@
     "description": "Appears in the logger's tab selector"
   },
   "logBehindTheScene": {
-    "message": "Under huven",
+    "message": "Bakom kulissen",
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
     "message": "Aktuell flik",
     "description": "Appears in the logger's tab selector"
   },
-  "logFilterPrompt": {
-    "message": "filtrera loggposter",
-    "description": "English: filter log entries"
+  "loggerReloadTip": {
+    "message": "Uppdatera flikinnehåll",
+    "description": "Tooltip for the reload button in the logger page"
   },
-  "logMaxEntriesTip": {
-    "message": "Maximalt antal loggposter",
-    "description": "Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  "loggerDomInspectorTip": {
+    "message": "Växla DOM-inspektören",
+    "description": "Tooltip for the DOM inspector button in the logger page"
+  },
+  "loggerPopupPanelTip": {
+    "message": "Växla popup-panelen",
+    "description": "Tooltip for the popup panel button in the logger page"
+  },
+  "loggerInfoTip": {
+    "message": "uBlock Origin wiki: Loggaren",
+    "description": "Tooltip for the top-right info label in the logger page"
+  },
+  "loggerClearTip": {
+    "message": "Rensa loggaren",
+    "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
+  },
+  "loggerPauseTip": {
+    "message": "Pausa loggaren (kassera alla inkommande data)",
+    "description": "Tooltip for the pause button in the logger page"
+  },
+  "loggerUnpauseTip": {
+    "message": "Fortsätt loggaren",
+    "description": "Tooltip for the play button in the logger page"
+  },
+  "loggerRowFiltererButtonTip": {
+    "message": "Växla loggarens filtrering",
+    "description": "Tooltip for the row filterer button in the logger page"
+  },
+  "logFilterPrompt": {
+    "message": "filtrera loggarens innehåll",
+    "description": "Placeholder string for logger output filtering input field"
+  },
+  "loggerRowFiltererBuiltinTip": {
+    "message": "Loggarens filtreringsalternativ",
+    "description": "Tooltip for the button to bring up logger output filtering options"
+  },
+  "loggerRowFiltererBuiltinNot": {
+    "message": "Inte",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinEventful": {
+    "message": "händelserikt",
+    "description": "A keyword in the built-in row filtering expression: all items corresponding to uBO doing something (blocked, allowed, redirected, etc.)"
+  },
+  "loggerRowFiltererBuiltinBlocked": {
+    "message": "blockerad",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinAllowed": {
+    "message": "tillåten",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltin1p": {
+    "message": "Förstapart",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltin3p": {
+    "message": "Tredjepart",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerEntryDetailsHeader": {
+    "message": "Detaljer",
+    "description": "Small header to identify the 'Details' pane for a specific logger entry"
+  },
+  "loggerEntryDetailsFilter": {
+    "message": "Filter",
+    "description": "Label to identify a filter field"
+  },
+  "loggerEntryDetailsFilterList": {
+    "message": "Filterlista",
+    "description": "Label to identify a filter list field"
+  },
+  "loggerEntryDetailsRule": {
+    "message": "Regel",
+    "description": "Label to identify a rule field"
+  },
+  "loggerEntryDetailsContext": {
+    "message": "Innehåll",
+    "description": "Label to identify a context field (typically a hostname)"
+  },
+  "loggerEntryDetailsRootContext": {
+    "message": "Rotinnehåll",
+    "description": "Label to identify a root context field (typically a hostname)"
+  },
+  "loggerEntryDetailsPartyness": {
+    "message": "Partsrelation",
+    "description": "Label to identify a field providing partyness information"
+  },
+  "loggerEntryDetailsType": {
+    "message": "Typ",
+    "description": "Label to identify the type of an entry"
+  },
+  "loggerEntryDetailsURL": {
+    "message": "Webbadress",
+    "description": "Label to identify the URL of an entry"
+  },
+  "loggerURLFilteringHeader": {
+    "message": "Webbadressregel",
+    "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
-    "message": "Sammanhang:",
+    "message": "Innehåll:",
     "description": "Label for the context selector"
   },
   "loggerURLFilteringTypeLabel": {
     "message": "Typ:",
     "description": "Label for the type selector"
   },
-  "loggerURLFilteringHeader": {
-    "message": "Dynamisk adressfiltrering",
-    "description": "Small header to identify the dynamic URL filtering section"
-  },
   "loggerStaticFilteringHeader": {
-    "message": "Statisk filtrering",
+    "message": "Statiskt filter",
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
@@ -592,7 +696,7 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin": {
-    "message": "var som helst",
+    "message": "från var som helst",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant": {
@@ -608,8 +712,64 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Det statiska filtret <code>{{filter}}<\/code> kunde inte hittas i någon av aktiverade aktuella filterlistorna",
+    "message": "Det statiska filtret <code>{{filter}}<\/code> kunde inte hittas i någon av de filterlistor som för närvarande är aktiverade",
     "description": "Message to show when a filter cannot be found in any filter lists"
+  },
+  "loggerSettingDiscardPrompt": {
+    "message": "Loggarens poster som inte uppfyller alla tre villkoren nedan kommer automatiskt att kasseras:",
+    "description": "Logger setting: A sentence to describe the purpose of the settings below"
+  },
+  "loggerSettingPerEntryMaxAge": {
+    "message": "Bevara poster från de {{input}} senaste minuterna",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerTabMaxLoads": {
+    "message": "Bevara högst {{input}} sidinläsningar per flik",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerTabMaxEntries": {
+    "message": "Bevara högst {{input}} poster per flik",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerEntryLineCount": {
+    "message": "Använd {{input}} rader per inmatning i vertikalt expanderat läge",
+    "description": "A logger setting"
+  },
+  "loggerSettingHideColumnsPrompt": {
+    "message": "Dölj kolumner:",
+    "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
+  },
+  "loggerSettingHideColumnTime": {
+    "message": "{{input}} Tid",
+    "description": "A label for the time column"
+  },
+  "loggerSettingHideColumnFilter": {
+    "message": "{{input}} Filter\/regel",
+    "description": "A label for the filter or rule column"
+  },
+  "loggerSettingHideColumnContext": {
+    "message": "{{input}} Innehåll",
+    "description": "A label for the context column"
+  },
+  "loggerSettingHideColumnPartyness": {
+    "message": "{{input}} Partsrelation",
+    "description": "A label for the partyness column"
+  },
+  "loggerExportFormatList": {
+    "message": "Lista",
+    "description": "Label for radio-button to pick export format"
+  },
+  "loggerExportFormatTable": {
+    "message": "Tabell",
+    "description": "Label for radio-button to pick export format"
+  },
+  "loggerExportEncodePlain": {
+    "message": "Enkel",
+    "description": "Label for radio-button to pick export text format"
+  },
+  "loggerExportEncodeMarkdown": {
+    "message": "Markdown",
+    "description": "Label for radio-button to pick export text format"
   },
   "aboutChangelog": {
     "message": "Ändringslogg",
@@ -635,12 +795,16 @@
     "message": "Bidragsgivare",
     "description": "English: Contributors"
   },
+  "aboutDependencies": {
+    "message": "Externa beroenden (GPLv3-kompatibla):",
+    "description": "Shown in the About pane"
+  },
   "aboutBackupDataButton": {
     "message": "Säkerhetskopiera till fil",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
-    "message": "min-ublock-backup_{{datetime}}.txt",
+    "message": "min-ublock-sakerhetskopia_{{datetime}}.txt",
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
@@ -648,7 +812,7 @@
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Återställ fabriksinställningar",
+    "message": "Återställ till standardinställningarna...",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
@@ -656,11 +820,11 @@
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {
-    "message": "Datan gick inte att läsa eller är ogiltig",
+    "message": "Datan kunde inte läsas eller är ogiltig",
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
-    "message": "Alla dina inställningar kommer att raderas, och uBlock₀ kommer att starta om.\n\nÅterställ uBlock₀ till fabriksinställningar?",
+    "message": "Alla dina inställningar kommer att tas bort och uBlock₀ kommer att starta om.\n\nÅterställ uBlock₀ till fabriksinställningar?",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
@@ -688,19 +852,19 @@
     "description": "English: {{value}} hours ago"
   },
   "elapsedOneDayAgo": {
-    "message": "en dag sen",
+    "message": "en dag sedan",
     "description": "English: a day ago"
   },
   "elapsedManyDaysAgo": {
-    "message": "{{value}} dagar sen",
+    "message": "{{value}} dagar sedan",
     "description": "English: {{value}} days ago"
   },
   "showDashboardButton": {
-    "message": "Visa kontrollpanel",
+    "message": "Visa kontrollpanelen",
     "description": "Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
-    "message": "Visa nätverksbegäranslogg",
+    "message": "Visa loggaren",
     "description": "Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
@@ -708,11 +872,11 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1": {
-    "message": "uBlock Origin har förhindrat följande sida från att ladda:",
+    "message": "uBlock Origin har förhindrat följande sida från att läsas in:",
     "description": "English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2": {
-    "message": "P.g.a. följande filter",
+    "message": "På grund av följande filter",
     "description": "English: Because of the following filter"
   },
   "docblockedNoParamsPrompt": {
@@ -728,11 +892,11 @@
     "description": "English: Go back"
   },
   "docblockedClose": {
-    "message": "Stäng detta fönster",
+    "message": "Stäng det här fönstret",
     "description": "English: Close this window"
   },
   "docblockedProceed": {
-    "message": "Avaktivera strikt blockering av {{hostname}}",
+    "message": "Inaktivera strikt blockering av {{hostname}}",
     "description": "English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary": {
@@ -752,7 +916,7 @@
     "description": "tooltip"
   },
   "cloudPullAndMerge": {
-    "message": "Importera från molnlagring och slå ihop med aktuella inställningar",
+    "message": "Importera från molnlagring och sammanfoga med aktuella inställningar",
     "description": "tooltip"
   },
   "cloudNoData": {
@@ -788,8 +952,16 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Ange en genväg",
+    "message": "Ange ett kortkommando",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
+  },
+  "genericMergeViewScrollLock": {
+    "message": "Växla rullningslås",
+    "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
+  },
+  "genericCopyToClipboard": {
+    "message": "Kopiera till urklipp",
+    "description": "Label for buttons used to copy something to the clipboard"
   },
   "dummy": {
     "message": "This entry must be the last one",

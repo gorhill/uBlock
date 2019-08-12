@@ -83,6 +83,7 @@ html#ublock0-epicker,
     padding: 2px !important;
     resize: none !important;
     width: 100% !important;
+    word-break: break-all !important;
 }
 #ublock0-epicker #resultsetCount {
     background-color: #aaa !important;
@@ -179,9 +180,23 @@ html#ublock0-epicker,
     width: calc(40% - 4px) !important;
 }
 #ublock0-epicker body.paused > aside {
-    opacity: 0.1 !important;
+    opacity: 0.1;
     visibility: visible !important;
     z-index: 100 !important;
+}
+/**
+    https://github.com/gorhill/uBlock/issues/3449
+    https://github.com/uBlockOrigin/uBlock-issues/issues/55
+**/
+@keyframes startDialog {
+  0% { opacity: 1.0; }
+  60% { opacity: 1.0; }
+  100% { opacity: 0.1; }
+}
+#ublock0-epicker body.paused > aside:not(:hover):not(.show) {
+    animation-duration: 1.6s !important;
+    animation-name: startDialog !important;
+    animation-timing-function: linear !important;
 }
 #ublock0-epicker body.paused > aside:hover {
     opacity: 1 !important;
