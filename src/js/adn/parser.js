@@ -55,6 +55,8 @@
 
     var findBgImage = function (elem) {
 
+      logP("findBgImage", elem)
+
        var attribute =  elem.style.backgroundImage ? elem.style.backgroundImage : elem.style.background;
 
        if (attribute !== undefined && clickableParent(elem)) {
@@ -326,15 +328,18 @@
         break;
 
       default: // other tag-types
+        // If element is body/html don't check children, it doens't make sense to check the whole document
+        if (elem.tagName == "BODY" || elem.tagName == "HTML") {
+          findBgImage(elem);
+          return;
+        }
 
         logP('Checking children of', elem);
         var imgs = elem.querySelectorAll('img');
         if (imgs.length) {
-
           findImageAds(imgs);
         }
         else {
-
           findBgImage(elem) || logP('No images in children of', elem);
         }
 

@@ -75,9 +75,10 @@ facebook.com##.ego_unit:has(div.uiScaledImageContainer)
 facebook.com##._5hn6
 
 ##.promotion-carousel
-##*[id^="teads"]
-##*[class*="teads"]
-gizmodo.com#@#*[class*="teads"]
+
+# scmp.com
+www.scmp.com##*[id^="teads"]
+www.scmp.com##*[class*="teads"]
 
 si.com#@#.ad
 si.com#@#.mobile-ad
@@ -268,6 +269,9 @@ usatoday.com##DIV#module-position-8
 usatoday.com##DIV.taboola-sidebar-content
 usatoday.com##section#module-position-8
 
+# flashback.org
+flashback.org##.adcontainer
+
 # popups on kickass-top.com
 *$third-party,popup,domain=kickass-top.com
 
@@ -316,8 +320,8 @@ stackoverflow.com#@#.adsbox
 
 # radikal.ru (video)
 radikal.ru##div[id^="DIV_DA_ADP"]
-##div[id^="advertur_"]
-##iframe[id^="advertur_"]
+radikal.ru##div[id^="advertur_"]
+radikal.ru##iframe[id^="advertur_"]
 ##iframe[src^="//octoclick.net"]
 ##img[src*="delivery.clickganic.com"]
 optoclick.net##.vjs-poster
@@ -414,6 +418,8 @@ bitcoin.treasurebits.net##iframe[src="about:blank"]
 # Blocking rules below here
 ||images.sohu.com/bill/s2015/jscript/lib/sjs/matrix/ad/form/bigView.js^$important
 ||teads.tv^$important,third-party,domain=mingpao.com
+
+||amazon-adsystem.com^$subdocument
 
 # radikal.ru (video)
 ||laim.tv^$important,third-party

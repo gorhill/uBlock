@@ -103,12 +103,13 @@ vAPI.DOMFilterer.prototype = {
                     entry.selectors + '\n{' + entry.declarations + '}'
                 );
 
-            } 
-            // Adcheck
-            var nodes = document.querySelectorAll(entry.selectors + '');
-            for ( var node of nodes ) {
-               vAPI.adCheck && vAPI.adCheck(node);
             }
+            // AdNauseam: Duplicates?
+            // var nodes = document.querySelectorAll(entry.selectors + '');
+            // for ( var node of nodes ) {
+            //    console.log("Dom Filterer, commit now")
+            //    vAPI.adCheck && vAPI.adCheck(node);
+            // }
 
         }
 
@@ -139,11 +140,11 @@ vAPI.DOMFilterer.prototype = {
             lazy: details.lazy === true,
             injected: details.injected === true
         };
-        
+
         this.addedCSSRules.add(entry);
         this.filterset.add(entry);
 
-         // ADN adCheck
+         // ADN adCheck: core
         var nodes = document.querySelectorAll(selectorsStr);
         for ( var node of nodes ) {
             vAPI.adCheck && vAPI.adCheck(node);
@@ -199,7 +200,7 @@ vAPI.DOMFilterer.prototype = {
     hideNode: function(node) {
         if ( this.excludedNodeSet.has(node) ) { return; }
         if ( this.hideNodeAttr === undefined ) { return; }
-        
+
         node.setAttribute(this.hideNodeAttr, '');
         if ( this.hideNodeStyleSheetInjected === false ) {
             this.hideNodeStyleSheetInjected = true;
