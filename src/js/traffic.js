@@ -705,7 +705,6 @@ const onHeadersReceived = function(details) {
     if (!result) {
 
       // ADN: if this was an allowed exception block cookies
-      var pageStore = µBlock.pageStoreFromTabId(details.tabId),
           modified = pageStore && µBlock.adnauseam.checkAllowedException
               (details.responseHeaders, details.url, pageStore.rawURL);
 
@@ -1227,8 +1226,7 @@ vAPI.net.onBeforeSendHeaders = {   // ADN
   callback: onBeforeSendHeaders
 };
 
-vAPI.net.registerListeners();
-
+// vAPI.net.registerListeners();
 
 const strictBlockBypasser = {
     hostnameToDeadlineMap: new Map(),
