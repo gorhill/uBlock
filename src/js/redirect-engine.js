@@ -273,7 +273,6 @@ const RedirectEngine = function() {
 
 RedirectEngine.prototype.reset = function() {
     this.rules = new Map();
-    this.ruleTypes = new Set();
     this.ruleSources = new Set();
     this.ruleDestinations = new Set();
     this.modifyTime = Date.now();
@@ -384,7 +383,6 @@ RedirectEngine.prototype.toURL = function(fctxt) {
 RedirectEngine.prototype.addRule = function(src, des, type, pattern, redirect) {
     this.ruleSources.add(src);
     this.ruleDestinations.add(des);
-    this.ruleTypes.add(type);
     const key = `${src} ${des} ${type}`,
         entries = this.rules.get(key);
     if ( entries === undefined ) {
@@ -475,6 +473,10 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
             redirect = 'empty';
             continue;
         }
+        if ( option === 'mp4' ) {
+            redirect = 'noopmp4-1s';
+            continue;
+        }
         if ( option.startsWith('domain=') ) {
             srchns = option.slice(7).split('|');
             continue;
@@ -496,8 +498,13 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
 
     // Need one single type -- not negated.
     if ( type === undefined ) {
-        if ( redirect !== 'empty' ) { return; }
-        type = '*';
+        if ( redirect === 'empty' ) {
+            type = '*';
+        } else if ( redirect === 'noopmp4-1s' ) {
+            type = 'media';
+        } else {
+            return;
+        }
     }
 
     if ( deshn === '' ) {
@@ -562,7 +569,6 @@ RedirectEngine.prototype.toSelfie = function(path) {
         `${path}/main`,
         JSON.stringify({
             rules: rules,
-            ruleTypes: Array.from(this.ruleTypes),
             ruleSources: Array.from(this.ruleSources),
             ruleDestinations: Array.from(this.ruleDestinations)
         })
@@ -580,7 +586,6 @@ RedirectEngine.prototype.fromSelfie = function(path) {
         }
         if ( selfie instanceof Object === false ) { return false; }
         this.rules = new Map(selfie.rules);
-        this.ruleTypes = new Set(selfie.ruleTypes);
         this.ruleSources = new Set(selfie.ruleSources);
         this.ruleDestinations = new Set(selfie.ruleDestinations);
         this.modifyTime = Date.now();

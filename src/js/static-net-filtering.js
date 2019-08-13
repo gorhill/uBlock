@@ -2011,7 +2011,7 @@ FilterParser.prototype.parseOptions = function(s) {
             continue;
         }
         // Used by Adguard, purpose is unclear -- just ignore for now.
-        if ( opt === 'empty' ) {
+        if ( opt === 'empty' || opt === 'mp4' ) {
             if ( this.redirect !== 0 ) {
                 this.unsupported = true;
                 break;
