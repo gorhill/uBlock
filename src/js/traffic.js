@@ -483,14 +483,16 @@ const onHeadersReceived = function(details) {
     //   Use `no-cache` instead of `no-cache, no-store, must-revalidate`, this
     //   allows Firefox's offline mode to work as expected.
     if ( (filteredHTML || modifiedHeaders) && dontCacheResponseHeaders ) {
-        let i = headerIndexFromName('cache-control', responseHeaders);
         let cacheControl = µb.hiddenSettings.cacheControlForFirefox1376932;
-        if ( i !== -1 ) {
-            responseHeaders[i].value = cacheControl;
-        } else {
-            responseHeaders.push({ name: 'Cache-Control', value: cacheControl });
+        if ( cacheControl !== 'unset' ) {
+            let i = headerIndexFromName('cache-control', responseHeaders);
+            if ( i !== -1 ) {
+                responseHeaders[i].value = cacheControl;
+            } else {
+                responseHeaders.push({ name: 'Cache-Control', value: cacheControl });
+            }
+            modifiedHeaders = true;
         }
-        modifiedHeaders = true;
     }
 
     if ( modifiedHeaders ) {
