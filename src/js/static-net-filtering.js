@@ -2012,6 +2012,11 @@ FilterParser.prototype.parseOptions = function(s) {
         }
         // Used by Adguard, purpose is unclear -- just ignore for now.
         if ( opt === 'empty' ) {
+            if ( this.redirect !== 0 ) {
+                this.unsupported = true;
+                break;
+            }
+            this.redirect = 1;
             continue;
         }
         // https://github.com/uBlockOrigin/uAssets/issues/192

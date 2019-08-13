@@ -56,14 +56,14 @@ const redirectableResources = new Map([
     [ 'addthis_widget.js', {
         alias: 'addthis.com/addthis_widget.js',
     } ],
+    [ 'amazon_ads.js', {
+        alias: 'amazon-adsystem.com/aax2/amzn_ads.js',
+    } ],
     [ 'ampproject_v0.js', {
         alias: 'ampproject.org/v0.js',
     } ],
     [ 'chartbeat.js', {
         alias: 'static.chartbeat.com/chartbeat.js',
-    } ],
-    [ 'amazon_ads.js', {
-        alias: 'amazon-adsystem.com/aax2/amzn_ads.js',
     } ],
     [ 'disqus_embed.js', {
         alias: 'disqus.com/embed.js',
@@ -73,6 +73,9 @@ const redirectableResources = new Map([
     } ],
     [ 'doubleclick_instream_ad_status.js', {
         alias: 'doubleclick.net/instream/ad_status.js',
+    } ],
+    [ 'empty', {
+        data: 'text',   // Important!
     } ],
     [ 'google-analytics_analytics.js', {
         alias: 'google-analytics.com/analytics.js',
@@ -165,6 +168,15 @@ const extToMimeMap = new Map([
     [  'txt', 'text/plain' ],
 ]);
 
+const typeToMimeMap = new Map([
+    [     'main_frame', 'text/html' ],
+    [          'other', 'text/plain' ],
+    [         'script', 'application/javascript' ],
+    [     'stylesheet', 'text/css' ],
+    [      'sub_frame', 'text/html' ],
+    [ 'xmlhttprequest', 'text/plain' ],
+]);
+
 const validMimes = new Set(extToMimeMap.values());
 
 const mimeFromName = function(name) {
@@ -177,67 +189,67 @@ const mimeFromName = function(name) {
 /******************************************************************************/
 /******************************************************************************/
 
-const RedirectEntry = function() {
-    this.mime = '';
-    this.data = '';
-    this.warURL = undefined;
-};
-
-/******************************************************************************/
-
-// Prevent redirection to web accessible resources when the request is
-// of type 'xmlhttprequest', because XMLHttpRequest.responseURL would
-// cause leakage of extension id. See:
-// - https://stackoverflow.com/a/8056313
-// - https://bugzilla.mozilla.org/show_bug.cgi?id=998076
-
-RedirectEntry.prototype.toURL = function(fctxt, asDataURI = false) {
-    if (
-        this.warURL !== undefined &&
-        asDataURI !== true &&
-        fctxt instanceof Object &&
-        fctxt.type !== 'xmlhttprequest'
-    ) {
-        return `${this.warURL}${vAPI.warSecret()}`;
+const RedirectEntry = class {
+    constructor() {
+        this.mime = '';
+        this.data = '';
+        this.warURL = undefined;
     }
-    if ( this.data === undefined ) { return; }
-    if ( this.data.startsWith('data:') === false ) {
-        this.data = `data:${this.mime};base64,${btoa(this.data)}`;
-    }
-    return this.data;
-};
 
-/******************************************************************************/
+    // Prevent redirection to web accessible resources when the request is
+    // of type 'xmlhttprequest', because XMLHttpRequest.responseURL would
+    // cause leakage of extension id. See:
+    // - https://stackoverflow.com/a/8056313
+    // - https://bugzilla.mozilla.org/show_bug.cgi?id=998076
 
-RedirectEntry.prototype.toContent = function() {
-    if ( this.data.startsWith('data:') ) {
-        const pos = this.data.indexOf(',');
-        const base64 = this.data.endsWith(';base64', pos);
-        this.data = this.data.slice(pos + 1);
-        if ( base64 ) {
-            this.data = atob(this.data);
+    toURL(fctxt, asDataURI = false) {
+        if (
+            this.warURL !== undefined &&
+            asDataURI !== true &&
+            fctxt instanceof Object &&
+            fctxt.type !== 'xmlhttprequest'
+        ) {
+            return `${this.warURL}${vAPI.warSecret()}`;
         }
+        if ( this.data === undefined ) { return; }
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/701
+        if ( this.data === '' ) {
+            const mime = typeToMimeMap.get(fctxt.type);
+            if ( mime === undefined ) { return; }
+            return `data:${mime},`;
+        }
+        if ( this.data.startsWith('data:') === false ) {
+            this.data = `data:${this.mime};base64,${btoa(this.data)}`;
+        }
+        return this.data;
     }
-    return this.data;
-};
 
-/******************************************************************************/
+    toContent() {
+        if ( this.data.startsWith('data:') ) {
+            const pos = this.data.indexOf(',');
+            const base64 = this.data.endsWith(';base64', pos);
+            this.data = this.data.slice(pos + 1);
+            if ( base64 ) {
+                this.data = atob(this.data);
+            }
+        }
+        return this.data;
+    }
 
-RedirectEntry.fromContent = function(mime, content) {
-    const r = new RedirectEntry();
-    r.mime = mime;
-    r.data = content;
-    return r;
-};
+    static fromContent(mime, content) {
+        const r = new RedirectEntry();
+        r.mime = mime;
+        r.data = content;
+        return r;
+    }
 
-/******************************************************************************/
-
-RedirectEntry.fromSelfie = function(selfie) {
-    const r = new RedirectEntry();
-    r.mime = selfie.mime;
-    r.data = selfie.data;
-    r.warURL = selfie.warURL;
-    return r;
+    static fromSelfie(selfie) {
+        const r = new RedirectEntry();
+        r.mime = selfie.mime;
+        r.data = selfie.data;
+        r.warURL = selfie.warURL;
+        return r;
+    }
 };
 
 /******************************************************************************/
@@ -248,7 +260,13 @@ const RedirectEngine = function() {
     this.resources = new Map();
     this.reset();
     this.resourceNameRegister = '';
-    this._desAll = []; // re-use better than re-allocate
+
+    // Internal use
+    this._missedQueryHash = '';
+    this._src = '';
+    this._srcAll = [ '*' ];
+    this._des = '';
+    this._desAll = [ '*' ];
 };
 
 /******************************************************************************/
@@ -278,35 +296,60 @@ RedirectEngine.prototype.toBroaderHostname = function(hostname) {
 
 /******************************************************************************/
 
-RedirectEngine.prototype.lookup = function(fctxt) {
-    const type = fctxt.type;
-    if ( this.ruleTypes.has(type) === false ) { return; }
-    const desAll = this._desAll;
-    const reqURL = fctxt.url;
-    let src = fctxt.getDocHostname();
-    let des = fctxt.getHostname();
-    let n = 0;
+RedirectEngine.prototype.decomposeHostname = function(hn, dict, out) {
+    let i = 0;
     for (;;) {
-        if ( this.ruleDestinations.has(des) ) {
-            desAll[n] = des; n += 1;
+        if ( dict.has(hn) ) {
+            out[i] = hn; i += 1;
         }
-        des = this.toBroaderHostname(des);
-        if ( des === '' ) { break; }
+        hn = this.toBroaderHostname(hn);
+        if ( hn === '' ) { break; }
     }
-    if ( n === 0 ) { return; }
-    for (;;) {
-        if ( this.ruleSources.has(src) ) {
-            for ( let i = 0; i < n; i++ ) {
-                const entries = this.rules.get(`${src} ${desAll[i]} ${type}`);
-                if ( entries === undefined ) { continue; }
+    out.length = i;
+};
+
+/******************************************************************************/
+
+RedirectEngine.prototype.lookup = function(fctxt) {
+    const src = fctxt.getDocHostname();
+    const des = fctxt.getHostname();
+    const type = fctxt.type;
+    const queryHash = `${src} ${des} ${type}`;
+    if ( queryHash === this._missedQueryHash ) {
+        return;
+    }
+    if ( src !== this._src ) {
+        this._src = src;
+        this.decomposeHostname(src, this.ruleSources, this._srcAll);
+    }
+    if ( this._srcAll.length === 0 ) {
+        this._missedQueryHash = queryHash;
+        return;
+    }
+    if ( des !== this._des ) {
+        this._des = des;
+        this.decomposeHostname(des, this.ruleDestinations, this._desAll);
+    }
+    if ( this._desAll.length === 0 ) {
+        this._missedQueryHash = queryHash;
+        return;
+    }
+    const reqURL = fctxt.url;
+    for ( const src of this._srcAll ) {
+        for ( const des of this._desAll ) {
+            let entries = this.rules.get(`${src} ${des} ${type}`);
+            if ( entries !== undefined ) {
                 const rule = this.lookupRule(entries, reqURL);
-                if ( rule === undefined ) { continue; }
-                return rule;
+                if ( rule !== undefined ) { return rule; }
+            }
+            entries = this.rules.get(`${src} ${des} *`);
+            if ( entries !== undefined ) {
+                const rule = this.lookupRule(entries, reqURL);
+                if ( rule !== undefined ) { return rule; }
             }
         }
-        src = this.toBroaderHostname(src);
-        if ( src === '' ) { break; }
     }
+    this._missedQueryHash = queryHash;
 };
 
 RedirectEngine.prototype.lookupRule = function(entries, reqURL) {
@@ -428,6 +471,10 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
             redirect = option.slice(14);
             continue;
         }
+        if ( option === 'empty' ) {
+            redirect = 'empty';
+            continue;
+        }
         if ( option.startsWith('domain=') ) {
             srchns = option.slice(7).split('|');
             continue;
@@ -448,7 +495,10 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
     if ( redirect === '' ) { return; }
 
     // Need one single type -- not negated.
-    if ( type === undefined ) { return; }
+    if ( type === undefined ) {
+        if ( redirect !== 'empty' ) { return; }
+        type = '*';
+    }
 
     if ( deshn === '' ) {
         deshn = '*';
@@ -649,11 +699,11 @@ const removeTopCommentBlock = function(text) {
 /******************************************************************************/
 
 RedirectEngine.prototype.loadBuiltinResources = function() {
-    this.resources = new Map();
-    this.aliases = new Map();
-
     // TODO: remove once usage of uBO 1.20.4 is widespread.
     µBlock.assets.remove('ublock-resources');
+
+    this.resources = new Map();
+    this.aliases = new Map();
 
     const fetches = [
         µBlock.assets.fetchText(
