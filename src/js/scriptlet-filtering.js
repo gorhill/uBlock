@@ -230,17 +230,26 @@
         toInject.set(rawToken, content);
     };
 
-    // Fill template placeholders. Return falsy if:
-    // - At least one argument contains anything else than /\w/ and `.`
-
+    // Fill-in scriptlet argument placeholders.
     const patchScriptlet = function(content, args) {
+        let s = args;
+        let len = s.length;
+        let beg = 0, pos = 0;
         let i = 1;
-        while ( args !== '' ) {
-            let pos = args.indexOf(',');
-            if ( pos === -1 ) { pos = args.length; }
-            const arg = args.slice(0, pos).trim().replace(reEscapeScriptArg, '\\$&');
-            content = content.replace(`{{${i}}}`, arg);
-            args = args.slice(pos + 1).trim();
+        while ( beg < len ) {
+            pos = s.indexOf(',', pos);
+            // Escaped comma? If so, skip.
+            if ( pos > 0 && s.charCodeAt(pos - 1) === 0x5C /* '\\' */ ) {
+                s = s.slice(0, pos - 1) + s.slice(pos);
+                len -= 1;
+                continue;
+            }
+            if ( pos === -1 ) { pos = len; }
+            content = content.replace(
+                `{{${i}}}`,
+                s.slice(beg, pos).trim().replace(reEscapeScriptArg, '\\$&')
+            );
+            beg = pos = pos + 1;
             i++;
         }
         return content;
