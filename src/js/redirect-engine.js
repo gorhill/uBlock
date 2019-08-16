@@ -201,6 +201,8 @@ const RedirectEntry = class {
     // cause leakage of extension id. See:
     // - https://stackoverflow.com/a/8056313
     // - https://bugzilla.mozilla.org/show_bug.cgi?id=998076
+    // https://www.reddit.com/r/uBlockOrigin/comments/cpxm1v/
+    //   User-supplied resources may already be base64 encoded.
 
     toURL(fctxt, asDataURI = false) {
         if (
@@ -219,7 +221,11 @@ const RedirectEntry = class {
             return `data:${mime},`;
         }
         if ( this.data.startsWith('data:') === false ) {
-            this.data = `data:${this.mime};base64,${btoa(this.data)}`;
+            if ( this.mime.indexOf(';') === -1 ) {
+                this.data = `data:${this.mime};base64,${btoa(this.data)}`;
+            } else {
+                this.data = `data:${this.mime},${this.data}`;
+            }
         }
         return this.data;
     }

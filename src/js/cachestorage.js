@@ -56,7 +56,7 @@
 
     // Default to webext storage. Wrapped into promises if the API does not
     // support returning promises.
-    const promisified = (function() {
+    const promisified = (( ) => {
         try {
             return browser.storage.local.get('_') instanceof Promise;
         }
@@ -394,19 +394,19 @@
             if ( keys.length === 0 ) { return callback(); }
             getDb().then(db => {
                 if ( !db ) { return callback(); }
-                let finish = ( ) => {
+                const finish = ( ) => {
                     if ( callback === undefined ) { return; }
                     let cb = callback;
                     callback = undefined;
                     cb();
                 };
                 try {
-                    let transaction = db.transaction(STORAGE_NAME, 'readwrite');
+                    const transaction = db.transaction(STORAGE_NAME, 'readwrite');
                     transaction.oncomplete =
                     transaction.onerror =
                     transaction.onabort = finish;
-                    let table = transaction.objectStore(STORAGE_NAME);
-                    for ( let key of keys ) {
+                    const table = transaction.objectStore(STORAGE_NAME);
+                    for ( const key of keys ) {
                         table.delete(key);
                     }
                 } catch (ex) {
@@ -420,7 +420,7 @@
                 callback = noopfn;
             }
             getDb().then(db => {
-                let transaction = db.transaction(STORAGE_NAME, 'readwrite');
+                const transaction = db.transaction(STORAGE_NAME, 'readwrite');
                 transaction.oncomplete =
                 transaction.onerror =
                 transaction.onabort = ( ) => {
