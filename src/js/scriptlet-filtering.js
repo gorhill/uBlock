@@ -27,8 +27,6 @@
     const µb = µBlock,
         duplicates = new Set(),
         scriptletCache = new µb.MRUCache(32),
-        scriptletsRegister = new Map(),
-        exceptionsRegister = new Set(),
         reEscapeScriptArg = /[\\'"]/g;
 
     let acceptedCount = 0,
@@ -289,6 +287,11 @@
         // Only exception filters are allowed to be global.
         const normalized = normalizeRawFilter(parsed.suffix);
 
+        // Tokenless is meaningful only for exception filters.
+        if ( normalized === '+js()' && parsed.exception === false ) {
+            return;
+        }
+
         if ( parsed.hostnames.length === 0 ) {
             if ( parsed.exception ) {
                 writer.push([ 32, '', 1, normalized ]);
@@ -358,7 +361,7 @@
         }
 
         const scriptlets = new Set();
-        const exceptions = exceptionsRegister;
+        const exceptions = new Set();
 
         scriptletDB.retrieve(
             hostname,
@@ -370,17 +373,27 @@
                 [ scriptlets, exceptions ]
             );
         }
+        if ( scriptlets.size === 0 ) { return; }
 
-        for ( const rawToken of scriptlets ) {
-            lookupScriptlet(rawToken, reng, scriptletsRegister);
+        const loggerEnabled = µb.logger.enabled;
+
+        // Wholly disable scriptlet injection?
+        if ( exceptions.has('') ) {
+            if ( loggerEnabled ) {
+                logOne(true, '', request);
+            }
+            return;
         }
 
-        if ( scriptletsRegister.size === 0 ) { return; }
+        const scriptletToCodeMap = new Map();
+        for ( const rawToken of scriptlets ) {
+            lookupScriptlet(rawToken, reng, scriptletToCodeMap);
+        }
+        if ( scriptletToCodeMap.size === 0 ) { return; }
 
         // Return an array of scriptlets, and log results if needed.
         const out = [];
-        const loggerEnabled = µb.logger.enabled;
-        for ( const [ rawToken, code ] of scriptletsRegister ) {
+        for ( const [ rawToken, code ] of scriptletToCodeMap ) {
             const isException = exceptions.has(rawToken);
             if ( isException === false ) {
                 out.push(code);
@@ -389,9 +402,6 @@
                 logOne(isException, rawToken, request);
             }
         }
-
-        scriptletsRegister.clear();
-        exceptionsRegister.clear();
 
         if ( out.length === 0 ) { return; }
 
@@ -452,6 +462,38 @@
 
     api.fromSelfie = function(selfie) {
         scriptletDB = new µb.staticExtFilteringEngine.HostnameBasedDB(1, selfie);
+    };
+
+    api.benchmark = async function() {
+        const requests = await µb.loadBenchmarkDataset();
+        if ( Array.isArray(requests) === false || requests.length === 0 ) {
+            console.info('No requests found to benchmark');
+            return;
+        }
+        console.info('Benchmarking scriptletFilteringEngine.retrieve()...');
+        const details = {
+            domain: '',
+            entity: '',
+            hostname: '',
+            tabId: 0,
+            url: '',
+        };
+        let count = 0;
+        const t0 = self.performance.now();
+        for ( let i = 0; i < requests.length; i++ ) {
+            const request = requests[i];
+            if ( request.cpt !== 'document' ) { continue; }
+            count += 1;
+            details.url = request.url;
+            details.hostname = µb.URI.hostnameFromURI(request.url);
+            details.domain = µb.URI.domainFromHostname(details.hostname);
+            details.entity = µb.URI.entityFromDomain(details.domain);
+            void this.retrieve(details);
+        }
+        const t1 = self.performance.now();
+        const dur = t1 - t0;
+        console.info(`Evaluated ${count} requests in ${dur.toFixed(0)} ms`);
+        console.info(`\tAverage: ${(dur / count).toFixed(3)} ms per request`);
     };
 
     return api;
