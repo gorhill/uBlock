@@ -21,7 +21,7 @@
     "launch-logger": {
       "description": "__MSG_popupTipLog__"
     },
-    "toggle-blocking-profile": {
+    "relax-blocking-mode": {
       "description": "__MSG_relaxBlockingMode__"
     }
   },
