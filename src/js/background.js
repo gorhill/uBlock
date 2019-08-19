@@ -192,6 +192,7 @@ const µBlock = (function() { // jshint ignore:line
         cspNoInlineFont: 'font-src *',
 
         liveBlockingProfiles: [],
+        blockingProfileColorCache: new Map(),
     };
 
 })();

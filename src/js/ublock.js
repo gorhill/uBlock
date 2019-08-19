@@ -620,6 +620,7 @@ const matchBucket = function(url, hostname, bucket, start) {
             profiles.push({ bits, color: color !== '' ? color : '#666' });
         });
         µBlock.liveBlockingProfiles = profiles;
+        µBlock.blockingProfileColorCache.clear();
     };
 
     parse();

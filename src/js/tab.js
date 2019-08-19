@@ -953,10 +953,27 @@ vAPI.tabs = new vAPI.Tabs();
 // Update visual of extension icon.
 
 µBlock.updateToolbarIcon = (( ) => {
+    const µb = µBlock;
     const tabIdToDetails = new Map();
 
-    const updateBadge = function(tabId) {
-        const µb = µBlock;
+    const computeBadgeColor = (bits) => {
+        let color = µb.blockingProfileColorCache.get(bits);
+        if ( color !== undefined ) { return color; }
+        let max = 0;
+        for ( const profile of µb.liveBlockingProfiles ) {
+            const v = bits & (profile.bits & ~1);
+            if ( v < max ) { break; }
+            color = profile.color;
+            max = v;
+        }
+        if ( color === undefined ) {
+            color = '#666';
+        }
+        µb.blockingProfileColorCache.set(bits, color);
+        return color;
+    };
+
+    const updateBadge = (tabId) => {
         const parts = tabIdToDetails.get(tabId);
         tabIdToDetails.delete(tabId);
 
@@ -967,22 +984,16 @@ vAPI.tabs = new vAPI.Tabs();
         let pageStore = µb.pageStoreFromTabId(tabId);
         if ( pageStore !== null ) {
             state = pageStore.getNetFilteringSwitch() ? 1 : 0;
-            if (
-                state === 1 &&
-                µb.userSettings.showIconBadge
-            ) {
+            if ( state === 1 && µb.userSettings.showIconBadge ) {
                 if ( (parts & 0b010) !== 0 && pageStore.perLoadBlockedRequestCount ) {
-                    badge = µb.formatCount(pageStore.perLoadBlockedRequestCount);
+                    badge = µb.formatCount(
+                        pageStore.perLoadBlockedRequestCount
+                    );
                 }
                 if ( (parts & 0b100) !== 0 ) {
-                    const currentBits = µb.blockingModeFromHostname(pageStore.tabHostname);
-                    let max = 0;
-                    for ( const profile of µb.liveBlockingProfiles ) {
-                        const v = currentBits & (profile.bits & ~1);
-                        if ( v < max ) { break; }
-                        color = profile.color;
-                        max = v;
-                    }
+                    color = computeBadgeColor(
+                        µb.blockingModeFromHostname(pageStore.tabHostname)
+                    );
                 }
             }
         }
