@@ -391,6 +391,36 @@
 })();
 
 
+/// raf-if.js
+(function() {
+    let needle = '{{1}}';
+    const not = needle.charAt(0) === '!';
+    if ( not ) { needle = needle.slice(1); }
+    if ( needle === '' || needle === '{{1}}' ) {
+        needle = '.?';
+    } else if ( needle.startsWith('/') && needle.endsWith('/') ) {
+        needle = needle.slice(1,-1);
+    } else {
+        needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+    const log = needle === '.?' && not === false ? console.log : undefined;
+    needle = new RegExp(needle);
+    window.requestAnimationFrame = new Proxy(window.setTimeout, {
+        apply: function(target, thisArg, args) {
+            const a = args[0];
+            const s = a.toString();
+            if ( log !== undefined ) {
+                log('uBO: requestAnimationFrame("%s")', s);
+            }
+            if ( needle.test(s) === not ) {
+                args[0] = function(){};
+            }
+            return target.apply(thisArg, args);
+        }
+    });
+})();
+
+
 /// set-constant.js
 /// alias set.js
 (function() {
