@@ -405,7 +405,7 @@
     }
     const log = needle === '.?' && not === false ? console.log : undefined;
     needle = new RegExp(needle);
-    window.requestAnimationFrame = new Proxy(window.setTimeout, {
+    window.requestAnimationFrame = new Proxy(window.requestAnimationFrame, {
         apply: function(target, thisArg, args) {
             const a = args[0];
             const s = a.toString();
