@@ -407,12 +407,10 @@
     needle = new RegExp(needle);
     window.requestAnimationFrame = new Proxy(window.requestAnimationFrame, {
         apply: function(target, thisArg, args) {
-            const a = args[0];
-            const s = a.toString();
+            const a = String(args[0]);
             if ( log !== undefined ) {
-                log('uBO: requestAnimationFrame("%s")', s);
-            }
-            if ( needle.test(s) === not ) {
+                log('uBO: requestAnimationFrame("%s")', a);
+            } else if ( needle.test(a) === not ) {
                 args[0] = function(){};
             }
             return target.apply(thisArg, args);
@@ -528,15 +526,36 @@
 })();
 
 
-/// setInterval-logger.js
-/// alias sil.js
+/// setInterval-if.js
+/// alias siif.js
 (function() {
-    const log = console.log.bind(console);
+    let needle = '{{1}}';
+    const not = needle.charAt(0) === '!';
+    if ( not ) { needle = needle.slice(1); }
+    const delay = parseInt('{{2}}', 10);
+    if ( needle === '' || needle === '{{1}}' ) {
+        needle = '.?';
+    } else if ( needle.startsWith('/') && needle.endsWith('/') ) {
+        needle = needle.slice(1,-1);
+    } else {
+        needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+    const log = not === false && needle === '.?' && isNaN(delay)
+        ? console.log
+        : undefined;
+    needle = new RegExp(needle);
     window.setInterval = new Proxy(window.setInterval, {
         apply: function(target, thisArg, args) {
-            const a = args[0];
+            const a = String(args[0]);
             const b = args[1];
-            log('uBO: setInterval("%s", %s)', a.toString(), b);
+            if ( log !== undefined ) {
+                log('uBO: setInterval("%s", %s)', a, b);
+            } else if (
+                (isNaN(delay) || b === delay) &&
+                needle.test(a) === not
+            ) {
+                args[0] = function(){};
+            }
             return target.apply(thisArg, args);
         }
     });
@@ -569,15 +588,36 @@
 })();
 
 
-/// setTimeout-logger.js
-/// alias stl.js
+/// setTimeout-if.js
+/// alias stif.js
 (function() {
-    const log = console.log.bind(console);
+    let needle = '{{1}}';
+    const not = needle.charAt(0) === '!';
+    if ( not ) { needle = needle.slice(1); }
+    const delay = parseInt('{{2}}', 10);
+    if ( needle === '' || needle === '{{1}}' ) {
+        needle = '.?';
+    } else if ( needle.startsWith('/') && needle.endsWith('/') ) {
+        needle = needle.slice(1,-1);
+    } else {
+        needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+    const log = not === false && needle === '.?' && isNaN(delay)
+        ? console.log
+        : undefined;
+    needle = new RegExp(needle);
     window.setTimeout = new Proxy(window.setTimeout, {
         apply: function(target, thisArg, args) {
-            const a = args[0];
+            const a = String(args[0]);
             const b = args[1];
-            log('uBO: setTimeout("%s", %s)', a.toString(), b);
+            if ( log !== undefined ) {
+                log('uBO: setTimeout("%s", %s)', a, b);
+            } else if (
+                (isNaN(delay) || b === delay) &&
+                needle.test(a) === not
+            ) {
+                args[0] = function(){};
+            }
             return target.apply(thisArg, args);
         }
     });
