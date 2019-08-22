@@ -241,20 +241,20 @@ const SEGMENT_INFO = 2;
     add(iroot, a, i = 0) {
         const aR = a.length;
         if ( aR === 0 ) { return 0; }
-        let icell = iroot;
-        // special case: first node in trie
-        if ( this.buf32[icell+SEGMENT_INFO] === 0 ) {
-            this.buf32[icell+SEGMENT_INFO] = this.addSegment(a, i, aR);
-            return this.addLeft(icell, a, i);
-        }
         // grow buffer if needed
         if (
             (this.buf32[CHAR0_SLOT] - this.buf32[TRIE1_SLOT]) < MIN_FREE_CELL_BYTE_LENGTH ||
-            (this.buf.length - this.buf32[CHAR1_SLOT]) < 256
+            (this.buf.length - this.buf32[CHAR1_SLOT]) < aR
         ) {
-            this.growBuf(MIN_FREE_CELL_BYTE_LENGTH, 256);
+            this.growBuf(MIN_FREE_CELL_BYTE_LENGTH, aR);
         }
         const buf32 = this.buf32;
+        let icell = iroot;
+        // special case: first node in trie
+        if ( buf32[icell+SEGMENT_INFO] === 0 ) {
+            buf32[icell+SEGMENT_INFO] = this.addSegment(a, i, aR);
+            return this.addLeft(icell, a, i);
+        }
         const buf8 = this.buf;
         const char0 = buf32[CHAR0_SLOT];
         let al = i;
