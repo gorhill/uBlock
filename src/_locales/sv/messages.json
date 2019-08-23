@@ -48,7 +48,7 @@
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
-    "message": "uBlock₀ — Loggare",
+    "message": "uBlock₀ — Loggaren",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
