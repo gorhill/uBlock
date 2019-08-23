@@ -244,9 +244,9 @@ const SEGMENT_INFO = 2;
         // grow buffer if needed
         if (
             (this.buf32[CHAR0_SLOT] - this.buf32[TRIE1_SLOT]) < MIN_FREE_CELL_BYTE_LENGTH ||
-            (this.buf.length - this.buf32[CHAR1_SLOT]) < aR
+            (this.buf.length - this.buf32[CHAR1_SLOT]) < 256
         ) {
-            this.growBuf(MIN_FREE_CELL_BYTE_LENGTH, aR);
+            this.growBuf(MIN_FREE_CELL_BYTE_LENGTH, 256);
         }
         const buf32 = this.buf32;
         let icell = iroot;

@@ -333,7 +333,9 @@ const FilterPlain = class {
     }
 
     addToTrie(trie) {
+        if ( this.s.length > 255 ) { return false; }
         trie.add(this.s, this.tokenBeg);
+        return true;
     }
 
     static compile(details) {
@@ -351,7 +353,9 @@ const FilterPlain = class {
     }
 
     static addToTrie(args, trie) {
+        if ( args[1].length > 255 ) { return false; }
         trie.add(args[1], args[2]);
+        return true;
     }
 };
 
@@ -547,7 +551,9 @@ const FilterPlainHnAnchored = class {
     }
 
     addToTrie(trie) {
+        if ( this.s.length > 255 ) { return false; }
         trie.add(this.s, this.tokenBeg);
+        return true;
     }
 
     static compile(details) {
@@ -562,7 +568,9 @@ const FilterPlainHnAnchored = class {
     }
 
     static addToTrie(args, trie) {
+        if ( args[1].length > 255 ) { return false; }
         trie.add(args[1], args[2]);
+        return true;
     }
 };
 
@@ -1644,25 +1652,24 @@ const FilterBucket = class {
         const fclass = filterClasses[fdata[0]];
         if ( fclass.trieableId === 0 ) {
             if ( this.plainTrie !== null ) {
-                return fclass.addToTrie(fdata, this.plainTrie);
-            }
-            if ( this.plainCount === 3 ) {
+                if ( fclass.addToTrie(fdata, this.plainTrie) ) { return; }
+            } else if ( this.plainCount < 3 ) {
+                this.plainCount += 1;
+            } else {
                 this.plainTrie = FilterBucket.trieContainer.createOne();
                 this._transferTrieable(0, this.plainTrie);
-                return fclass.addToTrie(fdata, this.plainTrie);
+                if ( fclass.addToTrie(fdata, this.plainTrie) ) { return; }
             }
-            this.plainCount += 1;
-        }
-        if ( fclass.trieableId === 1 ) {
+        } else if ( fclass.trieableId === 1 ) {
             if ( this.plainHnAnchoredTrie !== null ) {
-                return fclass.addToTrie(fdata, this.plainHnAnchoredTrie);
-            }
-            if ( this.plainHnAnchoredCount === 3 ) {
+                if ( fclass.addToTrie(fdata, this.plainHnAnchoredTrie) ) { return; }
+            } else if ( this.plainHnAnchoredCount < 3 ) {
+                this.plainHnAnchoredCount += 1;
+            } else {
                 this.plainHnAnchoredTrie = FilterBucket.trieContainer.createOne();
                 this._transferTrieable(1, this.plainHnAnchoredTrie);
-                return fclass.addToTrie(fdata, this.plainHnAnchoredTrie);
+                if ( fclass.addToTrie(fdata, this.plainHnAnchoredTrie) ) { return; }
             }
-            this.plainHnAnchoredCount += 1;
         }
         this.filters.push(filterFromCompiledData(fdata));
     }
@@ -1736,8 +1743,8 @@ const FilterBucket = class {
         let i = filters.length;
         while ( i-- ) {
             const f = filters[i];
-            if ( f.trieableId !== trieableId || f.s.length > 255 ) { continue; }
-            f.addToTrie(trie);
+            if ( f.trieableId !== trieableId ) { continue; }
+            if ( f.addToTrie(trie) === false ) { continue; }
             filters.splice(i, 1);
         }
     }
@@ -1764,7 +1771,7 @@ const FilterBucket = class {
     }
 
     static optimize() {
-        const trieDetails = this.trieContainer.optimize();
+        const trieDetails = FilterBucket.trieContainer.optimize();
         vAPI.localStorage.setItem(
             'FilterBucket.trieDetails',
             JSON.stringify(trieDetails)
