@@ -266,13 +266,6 @@ const RedirectEngine = function() {
     this.resources = new Map();
     this.reset();
     this.resourceNameRegister = '';
-
-    // Internal use
-    this._missedQueryHash = '';
-    this._src = '';
-    this._srcAll = [ '*' ];
-    this._des = '';
-    this._desAll = [ '*' ];
 };
 
 /******************************************************************************/
@@ -281,7 +274,16 @@ RedirectEngine.prototype.reset = function() {
     this.rules = new Map();
     this.ruleSources = new Set();
     this.ruleDestinations = new Set();
+    this.resetCache();
     this.modifyTime = Date.now();
+};
+
+RedirectEngine.prototype.resetCache = function() {
+    this._missedQueryHash = '';
+    this._src = '';
+    this._srcAll = [ '*' ];
+    this._des = '';
+    this._desAll = [ '*' ];
 };
 
 /******************************************************************************/
@@ -594,6 +596,7 @@ RedirectEngine.prototype.fromSelfie = function(path) {
         this.rules = new Map(selfie.rules);
         this.ruleSources = new Set(selfie.ruleSources);
         this.ruleDestinations = new Set(selfie.ruleDestinations);
+        this.resetCache();
         this.modifyTime = Date.now();
         return true;
     });
