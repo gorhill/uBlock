@@ -530,9 +530,12 @@
 /// alias siif.js
 (function() {
     let needle = '{{1}}';
-    const not = needle.charAt(0) === '!';
-    if ( not ) { needle = needle.slice(1); }
-    const delay = parseInt('{{2}}', 10);
+    const needleNot = needle.charAt(0) === '!';
+    if ( needleNot ) { needle = needle.slice(1); }
+    let delay = '{{2}}';
+    const delayNot = delay.charAt(0) === '!';
+    if ( delayNot ) { delay = delay.slice(1); }
+    delay = parseInt(delay, 10);
     if ( needle === '' || needle === '{{1}}' ) {
         needle = '.?';
     } else if ( needle.startsWith('/') && needle.endsWith('/') ) {
@@ -540,7 +543,8 @@
     } else {
         needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
-    const log = not === false && needle === '.?' && isNaN(delay)
+    const log = needleNot === false && needle === '.?' &&
+                delayNot === false && isNaN(delay)
         ? console.log
         : undefined;
     needle = new RegExp(needle);
@@ -551,8 +555,11 @@
             if ( log !== undefined ) {
                 log('uBO: setInterval("%s", %s)', a, b);
             } else if (
-                (isNaN(delay) || b === delay) &&
-                needle.test(a) === not
+                (
+                    isNaN(delay) && (delayNot || needleNot) ||
+                    isNaN(delay) === false && (b === delay) === delayNot
+                ) &&
+                (needle.test(a) === needleNot)
             ) {
                 args[0] = function(){};
             }
@@ -592,9 +599,12 @@
 /// alias stif.js
 (function() {
     let needle = '{{1}}';
-    const not = needle.charAt(0) === '!';
-    if ( not ) { needle = needle.slice(1); }
-    const delay = parseInt('{{2}}', 10);
+    const needleNot = needle.charAt(0) === '!';
+    if ( needleNot ) { needle = needle.slice(1); }
+    let delay = '{{2}}';
+    const delayNot = delay.charAt(0) === '!';
+    if ( delayNot ) { delay = delay.slice(1); }
+    delay = parseInt(delay, 10);
     if ( needle === '' || needle === '{{1}}' ) {
         needle = '.?';
     } else if ( needle.startsWith('/') && needle.endsWith('/') ) {
@@ -602,7 +612,8 @@
     } else {
         needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
-    const log = not === false && needle === '.?' && isNaN(delay)
+    const log = needleNot === false && needle === '.?' &&
+                delayNot === false && isNaN(delay)
         ? console.log
         : undefined;
     needle = new RegExp(needle);
@@ -613,8 +624,11 @@
             if ( log !== undefined ) {
                 log('uBO: setTimeout("%s", %s)', a, b);
             } else if (
-                (isNaN(delay) || b === delay) &&
-                needle.test(a) === not
+                (
+                    isNaN(delay) && (delayNot || needleNot) ||
+                    isNaN(delay) === false && (b === delay) === delayNot
+                ) &&
+                (needle.test(a) === needleNot)
             ) {
                 args[0] = function(){};
             }
