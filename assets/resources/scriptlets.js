@@ -543,7 +543,7 @@
     } else {
         needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
-    const log = needleNot === false && needle === '.?' &&
+    const log = needleNot === false && needle === '' &&
                 delayNot === false && isNaN(delay)
         ? console.log
         : undefined;
@@ -616,7 +616,7 @@
     } else {
         needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
-    const log = needleNot === false && needle === '.?' &&
+    const log = needleNot === false && needle === '' &&
                 delayNot === false && isNaN(delay)
         ? console.log
         : undefined;
