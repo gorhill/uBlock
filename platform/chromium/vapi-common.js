@@ -43,7 +43,7 @@ vAPI.webextFlavor = {
     soup: new Set()
 };
 
-(function() {
+(( ) => {
     const ua = navigator.userAgent;
     const flavor = vAPI.webextFlavor;
     const soup = flavor.soup;

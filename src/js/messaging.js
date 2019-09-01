@@ -24,15 +24,22 @@
 
 'use strict';
 
-// Default handler
-
-(function() {
+// https://github.com/uBlockOrigin/uBlock-issues/issues/710
+//   Listeners have a name and a "privileged" status.
+//   The nameless default handler is always deemed "privileged".
+//   Messages from privileged ports must never relayed to listeners
+//   which are not privileged.
 
 /******************************************************************************/
+/******************************************************************************/
+
+// Default handler
+//      priviledged
+
+{
+// >>>>> start of local scope
 
 const µb = µBlock;
-
-/******************************************************************************/
 
 const getDomainNames = function(targets) {
     const µburi = µb.URI;
@@ -43,8 +50,6 @@ const getDomainNames = function(targets) {
             : µburi.domainFromHostname(target) || target;
     });
 };
-
-/******************************************************************************/
 
 const onMessage = function(request, sender, callback) {
     // Async
@@ -82,8 +87,6 @@ const onMessage = function(request, sender, callback) {
         break;
     }
 
-    const tabId = sender && sender.tab ? sender.tab.id : 0;
-
     // Sync
     var response;
 
@@ -93,17 +96,13 @@ const onMessage = function(request, sender, callback) {
         break;
 
     case 'compileCosmeticFilterSelector':
-        response = µb.staticExtFilteringEngine.compileSelector(request.selector);
-        break;
-
-    case 'cosmeticFiltersInjected':
-        µb.cosmeticFilteringEngine.addToSelectorCache(request);
+        response = µb.staticExtFilteringEngine.compileSelector(
+            request.selector
+        );
         break;
 
     case 'createUserFilter':
-        µb.appendUserFilters(request.filters, request);
-        // https://github.com/gorhill/uBlock/issues/1786
-        µb.cosmeticFilteringEngine.removeFromSelectorCache(request.pageDomain);
+        µb.createUserFilters(request);
         break;
 
     case 'forceUpdateAssets':
@@ -143,13 +142,6 @@ const onMessage = function(request, sender, callback) {
         µb.openNewTab(request.details);
         break;
 
-    case 'mouseClick':
-        µb.mouseEventRegister.tabId = tabId;
-        µb.mouseEventRegister.x = request.x;
-        µb.mouseEventRegister.y = request.y;
-        µb.mouseEventRegister.url = request.url;
-        break;
-
     case 'reloadTab':
         if ( vAPI.isBehindTheSceneTabId(request.tabId) === false ) {
             vAPI.tabs.reload(request.tabId, request.bypassCache === true);
@@ -157,10 +149,6 @@ const onMessage = function(request, sender, callback) {
                 vAPI.tabs.select(request.tabId);
             }
         }
-        break;
-
-    case 'scriptletResponse':
-        µb.scriptlets.report(tabId, request.scriptlet, request.response);
         break;
 
     case 'setWhitelist':
@@ -185,51 +173,43 @@ const onMessage = function(request, sender, callback) {
 
 vAPI.messaging.setup(onMessage);
 
-/******************************************************************************/
-
-})();
-
-/******************************************************************************/
-/******************************************************************************/
-
-// channel: popupPanel
-
-(function() {
+// <<<<< end of local scope
+}
 
 /******************************************************************************/
-
-var µb = µBlock;
-
 /******************************************************************************/
 
-var getHostnameDict = function(hostnameToCountMap) {
-    var r = Object.create(null),
-        domainEntry,
-        domainFromHostname = µb.URI.domainFromHostname,
-        domain, blockCount, allowCount,
-        hostname, counts;
+// Channel:
+//      popupPanel
+//      privileged
+
+{
+// >>>>> start of local scope
+
+const µb = µBlock;
+
+const getHostnameDict = function(hostnameToCountMap) {
+    const r = Object.create(null);
+    const domainFromHostname = µb.URI.domainFromHostname;
     // Note: destructuring assignment not supported before Chromium 49.
-    for ( var entry of hostnameToCountMap ) {
-        hostname = entry[0];
+    for ( const [ hostname, hnCounts ] of hostnameToCountMap ) {
         if ( r[hostname] !== undefined ) { continue; }
-        domain = domainFromHostname(hostname) || hostname;
-        counts = hostnameToCountMap.get(domain) || 0;
-        blockCount = counts & 0xFFFF;
-        allowCount = counts >>> 16 & 0xFFFF;
+        const domain = domainFromHostname(hostname) || hostname;
+        const dnCounts = hostnameToCountMap.get(domain) || 0;
+        let blockCount = dnCounts & 0xFFFF;
+        let allowCount = dnCounts >>> 16 & 0xFFFF;
         if ( r[domain] === undefined ) {
-            domainEntry = r[domain] = {
+            r[domain] = {
                 domain: domain,
                 blockCount: blockCount,
                 allowCount: allowCount,
                 totalBlockCount: blockCount,
                 totalAllowCount: allowCount
             };
-        } else {
-            domainEntry = r[domain];
         }
-        counts = entry[1];
-        blockCount = counts & 0xFFFF;
-        allowCount = counts >>> 16 & 0xFFFF;
+        const domainEntry = r[domain];
+        blockCount = hnCounts & 0xFFFF;
+        allowCount = hnCounts >>> 16 & 0xFFFF;
         domainEntry.totalBlockCount += blockCount;
         domainEntry.totalAllowCount += allowCount;
         if ( hostname === domain ) { continue; }
@@ -244,9 +224,7 @@ var getHostnameDict = function(hostnameToCountMap) {
     return r;
 };
 
-/******************************************************************************/
-
-var getFirewallRules = function(srcHostname, desHostnames) {
+const getFirewallRules = function(srcHostname, desHostnames) {
     var r = {};
     var df = µb.sessionFirewall;
     r['/ * *'] = df.lookupRuleData('*', '*', '*');
@@ -256,32 +234,38 @@ var getFirewallRules = function(srcHostname, desHostnames) {
     r['/ * 1p-script'] = df.lookupRuleData('*', '*', '1p-script');
     r['/ * 3p-script'] = df.lookupRuleData('*', '*', '3p-script');
     r['/ * 3p-frame'] = df.lookupRuleData('*', '*', '3p-frame');
-    if ( typeof srcHostname !== 'string' ) {
-        return r;
-    }
+    if ( typeof srcHostname !== 'string' ) { return r; }
 
     r['. * *'] = df.lookupRuleData(srcHostname, '*', '*');
     r['. * image'] = df.lookupRuleData(srcHostname, '*', 'image');
     r['. * 3p'] = df.lookupRuleData(srcHostname, '*', '3p');
-    r['. * inline-script'] = df.lookupRuleData(srcHostname, '*', 'inline-script');
+    r['. * inline-script'] = df.lookupRuleData(srcHostname,
+        '*',
+        'inline-script'
+    );
     r['. * 1p-script'] = df.lookupRuleData(srcHostname, '*', '1p-script');
     r['. * 3p-script'] = df.lookupRuleData(srcHostname, '*', '3p-script');
     r['. * 3p-frame'] = df.lookupRuleData(srcHostname, '*', '3p-frame');
 
-    for ( var desHostname in desHostnames ) {
-        r['/ ' + desHostname + ' *'] = df.lookupRuleData('*', desHostname, '*');
-        r['. ' + desHostname + ' *'] = df.lookupRuleData(srcHostname, desHostname, '*');
+    for ( const desHostname in desHostnames ) {
+        r[`/ ${desHostname} *`] = df.lookupRuleData(
+            '*',
+            desHostname,
+            '*'
+        );
+        r[`. ${desHostname} *`] = df.lookupRuleData(
+            srcHostname,
+            desHostname,
+            '*'
+        );
     }
     return r;
 };
 
-/******************************************************************************/
-
-var popupDataFromTabId = function(tabId, tabTitle) {
-    let tabContext = µb.tabContextManager.mustLookup(tabId),
-        rootHostname = tabContext.rootHostname;
-
-    let r = {
+const popupDataFromTabId = function(tabId, tabTitle) {
+    const tabContext = µb.tabContextManager.mustLookup(tabId);
+    const rootHostname = tabContext.rootHostname;
+    const r = {
         advancedUserEnabled: µb.userSettings.advancedUserEnabled,
         appName: vAPI.app.name,
         appVersion: vAPI.app.version,
@@ -305,13 +289,13 @@ var popupDataFromTabId = function(tabId, tabTitle) {
         tooltipsDisabled: µb.userSettings.tooltipsDisabled
     };
 
-    let pageStore = µb.pageStoreFromTabId(tabId);
+    const pageStore = µb.pageStoreFromTabId(tabId);
     if ( pageStore ) {
         // https://github.com/gorhill/uBlock/issues/2105
-        //   Be sure to always include the current page's hostname -- it might
-        //   not be present when the page itself is pulled from the browser's
-        //   short-term memory cache. This needs to be done before calling
-        //   getHostnameDict().
+        //   Be sure to always include the current page's hostname -- it
+        //   might not be present when the page itself is pulled from the
+        //   browser's short-term memory cache. This needs to be done
+        //   before calling getHostnameDict().
         if (
             pageStore.hostnameToCountMap.has(rootHostname) === false &&
             µb.URI.isNetworkURI(tabContext.rawURL)
@@ -325,14 +309,29 @@ var popupDataFromTabId = function(tabId, tabTitle) {
         r.contentLastModified = pageStore.contentLastModified;
         r.firewallRules = getFirewallRules(rootHostname, r.hostnameDict);
         r.canElementPicker = µb.URI.isNetworkURI(r.rawURL);
-        r.noPopups = µb.sessionSwitches.evaluateZ('no-popups', rootHostname);
+        r.noPopups = µb.sessionSwitches.evaluateZ(
+            'no-popups',
+            rootHostname
+        );
         r.popupBlockedCount = pageStore.popupBlockedCount;
-        r.noCosmeticFiltering = µb.sessionSwitches.evaluateZ('no-cosmetic-filtering', rootHostname);
-        r.noLargeMedia = µb.sessionSwitches.evaluateZ('no-large-media', rootHostname);
+        r.noCosmeticFiltering = µb.sessionSwitches.evaluateZ(
+            'no-cosmetic-filtering',
+            rootHostname
+        );
+        r.noLargeMedia = µb.sessionSwitches.evaluateZ(
+            'no-large-media',
+            rootHostname
+        );
         r.largeMediaCount = pageStore.largeMediaCount;
-        r.noRemoteFonts = µb.sessionSwitches.evaluateZ('no-remote-fonts', rootHostname);
+        r.noRemoteFonts = µb.sessionSwitches.evaluateZ(
+            'no-remote-fonts',
+            rootHostname
+        );
         r.remoteFontCount = pageStore.remoteFontCount;
-        r.noScripting = µb.sessionSwitches.evaluateZ('no-scripting', rootHostname);
+        r.noScripting = µb.sessionSwitches.evaluateZ(
+            'no-scripting',
+            rootHostname
+        );
     } else {
         r.hostnameDict = {};
         r.firewallRules = getFirewallRules();
@@ -352,9 +351,7 @@ var popupDataFromTabId = function(tabId, tabTitle) {
     return r;
 };
 
-/******************************************************************************/
-
-var popupDataFromRequest = function(request, callback) {
+const popupDataFromRequest = function(request, callback) {
     if ( request.tabId ) {
         callback(popupDataFromTabId(request.tabId, ''));
         return;
@@ -372,10 +369,8 @@ var popupDataFromRequest = function(request, callback) {
     });
 };
 
-/******************************************************************************/
-
-var onMessage = function(request, sender, callback) {
-    var pageStore;
+const onMessage = function(request, sender, callback) {
+    let pageStore;
 
     // Async
     switch ( request.what ) {
@@ -388,7 +383,7 @@ var onMessage = function(request, sender, callback) {
     }
 
     // Sync
-    var response;
+    let response;
 
     switch ( request.what ) {
     case 'getPopupLazyData':
@@ -462,7 +457,11 @@ var onMessage = function(request, sender, callback) {
     case 'toggleNetFiltering':
         pageStore = µb.pageStoreFromTabId(request.tabId);
         if ( pageStore ) {
-            pageStore.toggleNetFilteringSwitch(request.url, request.scope, request.state);
+            pageStore.toggleNetFilteringSwitch(
+                request.url,
+                request.scope,
+                request.state
+            );
             µb.updateToolbarIcon(request.tabId, 0b111);
         }
         break;
@@ -474,22 +473,28 @@ var onMessage = function(request, sender, callback) {
     callback(response);
 };
 
-vAPI.messaging.listen('popupPanel', onMessage);
+vAPI.messaging.listen({
+    name: 'popupPanel',
+    listener: onMessage,
+    privileged: true,
+});
+
+// <<<<< end of local scope
+}
 
 /******************************************************************************/
-
-})();
-
-/******************************************************************************/
 /******************************************************************************/
 
-// channel: contentscript
+// Channel:
+//      contentscript
+//      unprivileged
 
-(function() {
+{
+// >>>>> start of local scope
 
-/******************************************************************************/
+const µb = µBlock;
 
-var onMessage = function(request, sender, callback) {
+const onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
     default:
@@ -497,7 +502,6 @@ var onMessage = function(request, sender, callback) {
     }
 
     // Sync
-    const µb = µBlock;
     let response,
         tabId, frameId,
         pageStore = null;
@@ -509,6 +513,10 @@ var onMessage = function(request, sender, callback) {
     }
 
     switch ( request.what ) {
+    case 'cosmeticFiltersInjected':
+        µb.cosmeticFilteringEngine.addToSelectorCache(request);
+        break;
+
     case 'getCollapsibleBlockedRequests':
         response = {
             id: request.id,
@@ -523,6 +531,13 @@ var onMessage = function(request, sender, callback) {
         ) {
             pageStore.getBlockedResources(request, response);
         }
+        break;
+
+    case 'mouseClick':
+        µb.mouseEventRegister.tabId = tabId;
+        µb.mouseEventRegister.x = request.x;
+        µb.mouseEventRegister.y = request.y;
+        µb.mouseEventRegister.url = request.url;
         break;
 
     case 'shouldRenderNoscriptTags':
@@ -604,20 +619,23 @@ var onMessage = function(request, sender, callback) {
     callback(response);
 };
 
-vAPI.messaging.listen('contentscript', onMessage);
+vAPI.messaging.listen({
+    name: 'contentscript',
+    listener: onMessage,
+});
+
+// <<<<< end of local scope
+}
 
 /******************************************************************************/
-
-})();
-
-/******************************************************************************/
 /******************************************************************************/
 
-// channel: elementPicker
+// Channel:
+//      elementPicker
+//      unprivileged
 
-(function() {
-
-/******************************************************************************/
+{
+// >>>>> start of local scope
 
 const onMessage = function(request, sender, callback) {
     const µb = µBlock;
@@ -669,6 +687,12 @@ const onMessage = function(request, sender, callback) {
     let response;
 
     switch ( request.what ) {
+    // https://github.com/gorhill/uBlock/issues/3497
+    //   This needs to be removed once issue is fixed.
+    case 'createUserFilter':
+        µb.createUserFilters(request);
+        break;
+
     case 'elementPickerEprom':
         µb.epickerEprom = request;
         break;
@@ -680,22 +704,25 @@ const onMessage = function(request, sender, callback) {
     callback(response);
 };
 
-vAPI.messaging.listen('elementPicker', onMessage);
+vAPI.messaging.listen({
+    name: 'elementPicker',
+    listener: onMessage,
+});
+
+// <<<<< end of local scope
+}
 
 /******************************************************************************/
-
-})();
-
-/******************************************************************************/
 /******************************************************************************/
 
-// channel: cloudWidget
+// Channel:
+//      cloudWidget
+//      privileged
 
-(function() {
+{
+// >>>>> start of local scope
 
-/******************************************************************************/
-
-var onMessage = function(request, sender, callback) {
+const onMessage = function(request, sender, callback) {
     // Cloud storage support is optional.
     if ( µBlock.cloudStorageSupported !== true ) {
         callback();
@@ -726,7 +753,7 @@ var onMessage = function(request, sender, callback) {
     }
 
     // Sync
-    var response;
+    let response;
 
     switch ( request.what ) {
     // For when cloud storage is disabled.
@@ -742,27 +769,28 @@ var onMessage = function(request, sender, callback) {
     callback(response);
 };
 
-vAPI.messaging.listen('cloudWidget', onMessage);
+vAPI.messaging.listen({
+    name: 'cloudWidget',
+    listener: onMessage,
+    privileged: true,
+});
+
+// <<<<< end of local scope
+}
 
 /******************************************************************************/
-
-})();
-
-/******************************************************************************/
 /******************************************************************************/
 
-// channel: dashboard
+// Channel:
+//      dashboard
+//      privileged
 
-(function() {
-
-/******************************************************************************/
+{
+// >>>>> start of local scope
 
 const µb = µBlock;
 
-/******************************************************************************/
-
 // Settings
-
 const getLocalData = function(callback) {
     const onStorageInfoReady = function(bytesInUse) {
         const o = µb.restoreBackupSettings;
@@ -874,7 +902,6 @@ const restoreUserData = function(request) {
 
 // Remove all stored data but keep global counts, people can become
 // quite attached to numbers
-
 const resetUserData = function() {
     let count = 3;
     const countdown = ( ) => {
@@ -889,10 +916,7 @@ const resetUserData = function() {
     vAPI.localStorage.removeItem('immediateHiddenSettings');
 };
 
-/******************************************************************************/
-
 // 3rd-party filters
-
 const prepListEntries = function(entries) {
     const µburi = µb.URI;
     for ( const k in entries ) {
@@ -935,10 +959,7 @@ const getLists = function(callback) {
     µb.getAvailableLists(onLists);
 };
 
-/******************************************************************************/
-
 // My rules
-
 const getRules = function() {
     return {
         permanentRules:
@@ -1001,10 +1022,7 @@ const modifyRuleset = function(details) {
     }
 };
 
-/******************************************************************************/
-
 // Shortcuts pane
-
 const getShortcuts = function(callback) {
     if ( µb.canUseShortcuts === false ) {
         return callback([]);
@@ -1037,8 +1055,6 @@ const setShortcut = function(details) {
     }
     vAPI.storage.set({ commandShortcuts: Array.from(µb.commandShortcuts) });
 };
-
-/******************************************************************************/
 
 const onMessage = function(request, sender, callback) {
     // Async
@@ -1124,25 +1140,27 @@ const onMessage = function(request, sender, callback) {
     callback(response);
 };
 
-vAPI.messaging.listen('dashboard', onMessage);
+vAPI.messaging.listen({
+    name: 'dashboard',
+    listener: onMessage,
+    privileged: true,
+});
+
+// <<<<< end of local scope
+}
 
 /******************************************************************************/
-
-})();
-
-/******************************************************************************/
 /******************************************************************************/
 
-// channel: loggerUI
+// Channel:
+//      loggerUI
+//      privileged
 
-(function() {
-
-/******************************************************************************/
+{
+// >>>>> start of local scope
 
 const µb = µBlock;
 const extensionOriginURL = vAPI.getURL('');
-
-/******************************************************************************/
 
 const getLoggerData = function(details, activeTabId, callback) {
     const response = {
@@ -1195,8 +1213,6 @@ const getLoggerData = function(details, activeTabId, callback) {
     callback(response);
 };
 
-/******************************************************************************/
-
 const getURLFilteringData = function(details) {
     const colors = {};
     const response = {
@@ -1228,8 +1244,6 @@ const getURLFilteringData = function(details) {
     }
     return response;
 };
-
-/******************************************************************************/
 
 const onMessage = function(request, sender, callback) {
     // Async
@@ -1288,20 +1302,24 @@ const onMessage = function(request, sender, callback) {
     callback(response);
 };
 
-vAPI.messaging.listen('loggerUI', onMessage);
+vAPI.messaging.listen({
+    name: 'loggerUI',
+    listener: onMessage,
+    privileged: true,
+});
+
+// <<<<< end of local scope
+}
 
 /******************************************************************************/
-
-})();
-
-/******************************************************************************/
 /******************************************************************************/
 
-// channel: documentBlocked
+// Channel:
+//      documentBlocked
+//      privileged
 
-(( ) => {
-
-/******************************************************************************/
+{
+// >>>>> start of local scope
 
 const onMessage = function(request, sender, callback) {
     const tabId = sender && sender.tab ? sender.tab.id : 0;
@@ -1331,25 +1349,27 @@ const onMessage = function(request, sender, callback) {
     callback(response);
 };
 
-vAPI.messaging.listen('documentBlocked', onMessage);
+vAPI.messaging.listen({
+    name: 'documentBlocked',
+    listener: onMessage,
+    privileged: true,
+});
+
+// <<<<< end of local scope
+}
 
 /******************************************************************************/
-
-})();
-
-/******************************************************************************/
 /******************************************************************************/
 
-// channel: scriptlets
+// Channel:
+//      scriptlets
+//      unprivileged
 
-(function() {
-
-/******************************************************************************/
+{
+// >>>>> start of local scope
 
 const µb = µBlock;
 const broadcastTimers = new Map();
-
-/******************************************************************************/
 
 const domSurveyFinalReport = function(tabId) {
     broadcastTimers.delete(tabId + '-domSurveyReport');
@@ -1364,8 +1384,6 @@ const domSurveyFinalReport = function(tabId) {
         scriptCount: pageStore.scriptCount,
     });
 };
-
-/******************************************************************************/
 
 const logCosmeticFilters = function(tabId, details) {
     if ( µb.logger.enabled === false ) { return; }
@@ -1383,8 +1401,6 @@ const logCosmeticFilters = function(tabId, details) {
         fctxt.toLogger();
     }
 };
-
-/******************************************************************************/
 
 const logCSPViolations = function(pageStore, request) {
     if ( µb.logger.enabled === false || pageStore === null ) {
@@ -1475,8 +1491,6 @@ logCSPViolations.policyDirectiveToTypeMap = new Map([
     [ 'style-src-elem', 'stylesheet' ],
 ]);
 
-/******************************************************************************/
-
 const onMessage = function(request, sender, callback) {
     const tabId = sender && sender.tab ? sender.tab.id : 0;
     const pageStore = µb.pageStoreFromTabId(tabId);
@@ -1491,6 +1505,10 @@ const onMessage = function(request, sender, callback) {
     let response;
 
     switch ( request.what ) {
+    case 'applyFilterListSelection':
+        response = µb.applyFilterListSelection(request);
+        break;
+
     case 'domSurveyTransientReport':
         if ( pageStore !== null ) {
             if ( request.filteredElementCount ) {
@@ -1499,11 +1517,11 @@ const onMessage = function(request, sender, callback) {
             if ( request.scriptCount ) {
                 pageStore.scriptCount += request.scriptCount;
             }
-            let broadcastKey = tabId + '-domSurveyReport';
+            const broadcastKey = `${tabId}-domSurveyReport`;
             if ( broadcastTimers.has(broadcastKey) === false ) {
                 broadcastTimers.set(broadcastKey, vAPI.setTimeout(
                     ( ) => { domSurveyFinalReport(tabId); },
-                    53
+                    103
                 ));
             }
         }
@@ -1525,6 +1543,10 @@ const onMessage = function(request, sender, callback) {
     case 'logCosmeticFilteringData':
         logCosmeticFilters(tabId, request);
         break;
+
+    case 'reloadAllFilters':
+        µb.loadFilterLists();
+        return;
 
     case 'securityPolicyViolation':
         response = logCSPViolations(pageStore, request);
@@ -1549,11 +1571,13 @@ const onMessage = function(request, sender, callback) {
     callback(response);
 };
 
-vAPI.messaging.listen('scriptlets', onMessage);
+vAPI.messaging.listen({
+    name: 'scriptlets',
+    listener: onMessage,
+});
 
-/******************************************************************************/
-
-})();
+// <<<<< end of local scope
+}
 
 
 /******************************************************************************/

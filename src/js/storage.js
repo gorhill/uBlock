@@ -422,8 +422,6 @@
     return this.assets.get(this.userFiltersPath, callback);
 };
 
-/******************************************************************************/
-
 µBlock.appendUserFilters = function(filters, options) {
     filters = filters.trim();
     if ( filters.length === 0 ) { return; }
@@ -498,6 +496,12 @@
     };
 
     this.loadUserFilters(onLoaded);
+};
+
+µBlock.createUserFilters = function(details) {
+    this.appendUserFilters(details.filters, details);
+    // https://github.com/gorhill/uBlock/issues/1786
+    this.cosmeticFilteringEngine.removeFromSelectorCache(details.pageDomain);
 };
 
 /******************************************************************************/

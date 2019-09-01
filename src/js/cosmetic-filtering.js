@@ -750,8 +750,8 @@ FilterContainer.prototype.addToSelectorCache = function(details) {
 /******************************************************************************/
 
 FilterContainer.prototype.removeFromSelectorCache = function(
-    targetHostname,
-    type
+    targetHostname = '*',
+    type = undefined
 ) {
     let targetHostnameLength = targetHostname.length;
     for ( let entry of this.selectorCache ) {
