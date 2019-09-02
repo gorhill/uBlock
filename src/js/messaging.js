@@ -95,12 +95,6 @@ const onMessage = function(request, sender, callback) {
         response = µb.applyFilterListSelection(request);
         break;
 
-    case 'compileCosmeticFilterSelector':
-        response = µb.staticExtFilteringEngine.compileSelector(
-            request.selector
-        );
-        break;
-
     case 'createUserFilter':
         µb.createUserFilters(request);
         break;
@@ -687,6 +681,12 @@ const onMessage = function(request, sender, callback) {
     let response;
 
     switch ( request.what ) {
+    case 'compileCosmeticFilterSelector':
+        response = µb.staticExtFilteringEngine.compileSelector(
+            request.selector
+        );
+        break;
+
     // https://github.com/gorhill/uBlock/issues/3497
     //   This needs to be removed once issue is fixed.
     case 'createUserFilter':
