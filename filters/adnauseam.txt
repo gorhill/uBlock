@@ -109,6 +109,9 @@ www.thepiratebay.org###sky-center
 ##.carbon-wrap
 ##.carbon-poweredby
 
+# cpomagazine
+cpomagazine.com##[id*="cpoma"]
+
 asiaxpat.com##.header_in1
 asiaxpat.com##.megaBanner
 asiaxpat.com###pnlClassReplaced
