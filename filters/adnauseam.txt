@@ -332,6 +332,7 @@ optoclick.net##.vjs-poster
 ##a[href*="liveadexchanger"]
 
 # dailymotion.com
+||dmxleo.dailymotion.com/cdn/manifest/video/x*$domain=www.dailymotion.com
 dailymotion.com##.gwd-page-content
 dailymotion.com##.gwd-page-container
 
