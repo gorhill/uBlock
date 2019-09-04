@@ -26,7 +26,8 @@
 
 /******************************************************************************/
 
-(( ) => {
+{
+// >>>>> start of local scope
 
 /******************************************************************************/
 /******************************************************************************/
@@ -65,32 +66,35 @@ const noopFunc = function(){};
 
 /******************************************************************************/
 
-vAPI.app = (function() {
-    let version = manifest.version;
-    let match = /(\d+\.\d+\.\d+)(?:\.(\d+))?/.exec(version);
-    if ( match && match[2] ) {
-        let v = parseInt(match[2], 10);
-        version = match[1] + (v < 100 ? 'b' + v : 'rc' + (v - 100));
-    }
+vAPI.app = {
+    name: manifest.name.replace(/ dev\w+ build/, ''),
+    version: (( ) => {
+        let version = manifest.version;
+        const match = /(\d+\.\d+\.\d+)(?:\.(\d+))?/.exec(version);
+        if ( match && match[2] ) {
+            const v = parseInt(match[2], 10);
+            version = match[1] + (v < 100 ? 'b' + v : 'rc' + (v - 100));
+        }
+        return version;
+    })(),
 
-    return {
-        name: manifest.name.replace(/ dev\w+ build/, ''),
-        version: version
-    };
-})();
-
-/******************************************************************************/
-
-vAPI.app.restart = function() {
-    chrome.runtime.reload();
+    restart: function() {
+        browser.runtime.reload();
+    },
 };
+
+// https://github.com/uBlockOrigin/uBlock-issues/issues/717
+//   Prevent the extensions from being restarted mid-session.
+browser.runtime.onUpdateAvailable.addListener(( ) => {
+    void 0;
+});
 
 /******************************************************************************/
 /******************************************************************************/
 
 // chrome.storage.local.get(null, function(bin){ console.debug('%o', bin); });
 
-vAPI.storage = chrome.storage.local;
+vAPI.storage = browser.storage.local;
 
 /******************************************************************************/
 /******************************************************************************/
@@ -217,7 +221,7 @@ vAPI.browserSettings = (function() {
         },
 
         set: function(details) {
-            for ( var setting in details ) {
+            for ( const setting in details ) {
                 if ( details.hasOwnProperty(setting) === false ) {
                     continue;
                 }
@@ -1222,11 +1226,10 @@ vAPI.contextMenu = chrome.contextMenus && {
     onMustUpdate: function() {},
     setEntries: function(entries, callback) {
         entries = entries || [];
-        var n = Math.max(this._entries.length, entries.length),
-            oldEntryId, newEntry;
-        for ( var i = 0; i < n; i++ ) {
-            oldEntryId = this._entries[i];
-            newEntry = entries[i];
+        let n = Math.max(this._entries.length, entries.length);
+        for ( let i = 0; i < n; i++ ) {
+            const oldEntryId = this._entries[i];
+            const newEntry = entries[i];
             if ( oldEntryId && newEntry ) {
                 if ( newEntry.id !== oldEntryId ) {
                     chrome.contextMenus.remove(oldEntryId);
@@ -1277,8 +1280,8 @@ vAPI.commands = chrome.commands;
 
 vAPI.adminStorage = chrome.storage.managed && {
     getItem: function(key, callback) {
-        var onRead = function(store) {
-            var data;
+        const onRead = function(store) {
+            let data;
             if (
                 !chrome.runtime.lastError &&
                 typeof store === 'object' &&
@@ -1513,6 +1516,7 @@ vAPI.cloud = (function() {
 /******************************************************************************/
 /******************************************************************************/
 
-})();
+// <<<<< end of local scope
+}
 
 /******************************************************************************/
