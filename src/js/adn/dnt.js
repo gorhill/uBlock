@@ -7,7 +7,7 @@
 
   var exports = {};
 
-  // var firewall = exports.firewall = new µb.Firewall();
+  var firewall = exports.firewall = new µb.Firewall();
 
   exports.shutdown = function () {
 

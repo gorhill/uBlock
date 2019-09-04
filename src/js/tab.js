@@ -841,7 +841,7 @@ vAPI.tabs.registerListeners();
 // Create an entry for the tab if it doesn't exist.
 
 µb.bindTabToPageStats = function(tabId, context) {
-    this.updateToolbarIcon(tabId);
+    µb.updateToolbarIcon(tabId);
 
     // Do not create a page store for URLs which are of no interests
     if ( µb.tabContextManager.exists(tabId) === false ) {
@@ -855,6 +855,7 @@ vAPI.tabs.registerListeners();
     // Tab is not bound
     if ( pageStore === undefined ) {
         this.updateTitle(tabId);
+        console.log(this.PageStore)
         pageStore = this.PageStore.factory(tabId, context);
         this.pageStores.set(tabId, pageStore);
         this.pageStoresToken = Date.now();
@@ -910,17 +911,29 @@ vAPI.tabs.registerListeners();
 
 // Permanent page store for behind-the-scene requests. Must never be removed.
 
-(function() {
-    const pageStore = µb.PageStore.factory(vAPI.noTabId);
-    µb.pageStores.set(pageStore.tabId, pageStore);
+{
+    const NoPageStore = class extends µBlock.PageStore {
+        getNetFilteringSwitch(fctxt) {
+            if ( fctxt && fctxt.docId === 0 ) {
+                const docOrigin = fctxt.getDocOrigin();
+                if ( docOrigin ) {
+                    return µBlock.getNetFilteringSwitch(docOrigin);
+                }
+            }
+            return super.getNetFilteringSwitch();
+        }
+    };
+    const pageStore = new NoPageStore(vAPI.noTabId);
+    µBlock.pageStores.set(pageStore.tabId, pageStore);
     pageStore.title = vAPI.i18n('logBehindTheScene');
-})();
+}
 
 /******************************************************************************/
 
 // Update visual of extension icon.
 
 µb.updateToolbarIcon = (function() {
+
     let tabIdToDetails = new Map();
 
     let updateBadge = function(tabId, isClick) {

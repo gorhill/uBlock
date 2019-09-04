@@ -610,6 +610,7 @@ const onHeadersReceived = function(details) {
     const isDoc = isRootDoc || requestType === 'sub_frame';
 
     //ADN
+    const tabId = details.tabId;
    if (vAPI.isBehindTheSceneTabId(tabId)) {
 
      // ADN: handle incoming cookies for our visits (ignore in ff for now)

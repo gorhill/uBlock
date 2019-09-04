@@ -363,7 +363,6 @@ const createDefaultProps = function() {
         ].join('\n'),
         'urlFilteringString': '',
         'hostnameSwitchesString': [
-<<<<<<< HEAD
             'no-large-media: behind-the-scene false'
         ].join('\n'),
         'lastRestoreFile': '',

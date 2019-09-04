@@ -199,7 +199,7 @@ vAPI.i18n.render = function(context) {
         if ( textBefore !== '' ) {
             safeTextToDOM(textBefore, fragment);
         }
-        fragment= fragment.replace(/uBlock₀/g, 'AdNauseam');
+        // fragment= fragment.replace(/uBlock₀/g, 'AdNauseam');
         elem.appendChild(fragment);
 
     }
