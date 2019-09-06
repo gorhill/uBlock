@@ -78,6 +78,27 @@ vAPI.app = {
         return version;
     })(),
 
+    intFromVersion: function(s) {
+        const parts = s.match(/(?:^|\.|b|rc)\d+/g);
+        if ( parts === null ) { return 0; }
+        let vint = 0;
+        for ( let i = 0; i < 4; i++ ) {
+            const pstr = parts[i] || '';
+            let pint;
+            if ( pstr === '' ) {
+                pint = 0;
+            } else if ( pstr.startsWith('.') || pstr.startsWith('b') ) {
+                pint = parseInt(pstr.slice(1), 10);
+            } else if ( pstr.startsWith('rc') ) {
+                pint = parseInt(pstr.slice(2), 10) + 100;
+            } else {
+                pint = parseInt(pstr, 10);
+            }
+            vint = vint * 1000 + pint;
+        }
+        return vint;
+    },
+
     restart: function() {
         browser.runtime.reload();
     },
@@ -85,8 +106,10 @@ vAPI.app = {
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/717
 //   Prevent the extensions from being restarted mid-session.
-browser.runtime.onUpdateAvailable.addListener(( ) => {
-    void 0;
+browser.runtime.onUpdateAvailable.addListener(details => {
+    const toInt = vAPI.app.intFromVersion;
+    if ( toInt(details.version) > toInt(vAPI.app.version) ) { return; }
+    browser.runtime.reload();
 });
 
 /******************************************************************************/
