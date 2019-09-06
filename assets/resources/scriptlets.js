@@ -391,7 +391,8 @@
 })();
 
 
-/// raf-if.js
+/// requestAnimationFrame-if.js
+/// alias raf-if.js
 (function() {
     let needle = '{{1}}';
     const not = needle.charAt(0) === '!';
