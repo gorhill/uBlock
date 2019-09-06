@@ -26,10 +26,6 @@
 /******************************************************************************/
 /******************************************************************************/
 
-(function(self) {
-
-/******************************************************************************/
-
 vAPI.T0 = Date.now();
 
 /******************************************************************************/
@@ -65,10 +61,10 @@ vAPI.webextFlavor = {
 
     // Asynchronous
     if (
-        self.browser instanceof Object &&
-        typeof self.browser.runtime.getBrowserInfo === 'function'
+        browser instanceof Object &&
+        typeof browser.runtime.getBrowserInfo === 'function'
     ) {
-        self.browser.runtime.getBrowserInfo().then(info => {
+        browser.runtime.getBrowserInfo().then(info => {
             flavor.major = parseInt(info.version, 10) || 60;
             soup.add(info.vendor.toLowerCase())
                 .add(info.name.toLowerCase());
@@ -77,7 +73,7 @@ vAPI.webextFlavor = {
             }
             dispatch();
         });
-        if ( self.browser.runtime.getURL('').startsWith('moz-extension://') ) {
+        if ( browser.runtime.getURL('').startsWith('moz-extension://') ) {
             soup.add('mozilla')
                 .add('firefox')
                 .add('user_stylesheet')
@@ -120,11 +116,8 @@ vAPI.webextFlavor = {
 /******************************************************************************/
 
 vAPI.download = function(details) {
-    if ( !details.url ) {
-        return;
-    }
-
-    var a = document.createElement('a');
+    if ( !details.url ) { return; }
+    const a = document.createElement('a');
     a.href = details.url;
     a.setAttribute('download', details.filename || '');
     a.setAttribute('type', 'text/plain');
@@ -205,10 +198,6 @@ vAPI.localStorage = {
         }
     }
 };
-
-/******************************************************************************/
-
-})(this);
 
 
 
