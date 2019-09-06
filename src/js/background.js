@@ -52,6 +52,7 @@ const µBlock = (function() { // jshint ignore:line
         disableWebAssembly: false,
         ignoreRedirectFilters: false,
         ignoreScriptInjectFilters: false,
+        loggerPopupType: 'popup',
         manualUpdateAssetFetchPeriod: 500,
         popupFontSize: 'unset',
         requestJournalProcessPeriod: 1000,

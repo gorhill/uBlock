@@ -386,8 +386,8 @@
                 !this.userSettings.alwaysDetachLogger
             );
         }
-        details.popup = this.userSettings.alwaysDetachLogger;
-        if ( details.popup ) {
+        if ( this.userSettings.alwaysDetachLogger ) {
+            details.popup = this.hiddenSettings.loggerPopupType;
             const url = new URL(vAPI.getURL(details.url));
             url.searchParams.set('popup', '1');
             details.url = url.href;

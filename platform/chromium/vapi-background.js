@@ -387,11 +387,11 @@ vAPI.Tabs = class {
 
     // Properties of the details object:
     // - url: 'URL',    => the address that will be opened
-    // - index: -1,     => undefined: end of the list, -1: following tab, or
-    //                     after index
-    // - active: false, => opens the tab in background - true and undefined:
-    //                     foreground
-    // - popup: true    => open in a new window
+    // - index: -1,     => undefined: end of the list, -1: following tab,
+    //                     or after index
+    // - active: false, => opens the tab... in background: true,
+    //                     foreground: undefined
+    // - popup: 'popup' => open in a new window
 
     create(url, details) {
         if ( details.active === undefined ) {
@@ -443,10 +443,10 @@ vAPI.Tabs = class {
         // For some reasons, some platforms do not honor the left,top
         // position when specified. I found that further calling
         // windows.update again with the same position _may_ help.
-        if ( details.popup === true && browser.windows instanceof Object ) {
+        if ( details.popup !== undefined && browser.windows instanceof Object ) {
             const createDetails = {
                 url: details.url,
-                type: 'popup',
+                type: details.popup,
             };
             if ( details.box instanceof Object ) {
                 Object.assign(createDetails, details.box);
