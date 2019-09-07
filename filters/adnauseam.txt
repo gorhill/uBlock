@@ -6,7 +6,6 @@
 ##*[class^="adsby"]
 ##iframe[src*="mellowads"]
 ##*[class*="Advert"]
-##*[id*="Advert"]
 
 # Generic exceptions
 tweakers.net#@#*[class*="Advert"]
