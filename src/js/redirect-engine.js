@@ -279,7 +279,6 @@ RedirectEngine.prototype.reset = function() {
 };
 
 RedirectEngine.prototype.resetCache = function() {
-    this._missedQueryHash = '';
     this._src = '';
     this._srcAll = [ '*' ];
     this._des = '';
@@ -321,26 +320,16 @@ RedirectEngine.prototype.lookup = function(fctxt) {
     const src = fctxt.getDocHostname();
     const des = fctxt.getHostname();
     const type = fctxt.type;
-    const queryHash = `${src} ${des} ${type}`;
-    if ( queryHash === this._missedQueryHash ) {
-        return;
-    }
     if ( src !== this._src ) {
         this._src = src;
         this.decomposeHostname(src, this.ruleSources, this._srcAll);
     }
-    if ( this._srcAll.length === 0 ) {
-        this._missedQueryHash = queryHash;
-        return;
-    }
+    if ( this._srcAll.length === 0 ) { return; }
     if ( des !== this._des ) {
         this._des = des;
         this.decomposeHostname(des, this.ruleDestinations, this._desAll);
     }
-    if ( this._desAll.length === 0 ) {
-        this._missedQueryHash = queryHash;
-        return;
-    }
+    if ( this._desAll.length === 0 ) { return; }
     const reqURL = fctxt.url;
     for ( const src of this._srcAll ) {
         for ( const des of this._desAll ) {
@@ -356,7 +345,6 @@ RedirectEngine.prototype.lookup = function(fctxt) {
             }
         }
     }
-    this._missedQueryHash = queryHash;
 };
 
 RedirectEngine.prototype.lookupRule = function(entries, reqURL) {
