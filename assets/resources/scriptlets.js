@@ -236,6 +236,61 @@
 })();
 
 
+/// json-prune.js
+(function() {
+    const log = console.log.bind(console);
+    const rawPrunePaths = '{{1}}';
+    const rawNeedlePaths = '{{2}}';
+    const prunePaths = rawPrunePaths !== '{{1}}' && rawPrunePaths !== ''
+        ? rawPrunePaths.split(/ +/)
+        : [];
+    const needlePaths = rawNeedlePaths !== '{{2}}' && rawNeedlePaths !== ''
+        ? rawNeedlePaths.split(/ +/)
+        : [];
+    const findOwner = function(root, path) {
+        let owner = root;
+        let chain = path;
+        for (;;) {
+            if ( owner instanceof Object === false ) { return; }
+            const pos = chain.indexOf('.');
+            if ( pos === -1 ) {
+                return owner.hasOwnProperty(chain)
+                    ? [ owner, chain ]
+                    : undefined;
+            }
+            const prop = chain.slice(0, pos);
+            if ( owner.hasOwnProperty(prop) === false ) { return; }
+            owner = owner[prop];
+            chain = chain.slice(pos + 1);
+        }
+    };
+    const mustProcess = function(root) {
+        for ( const needlePath of needlePaths ) {
+            const details = findOwner(root, needlePath);
+            if ( details === undefined ) { return false; }
+        }
+        return true;
+    };
+    JSON.parse = new Proxy(JSON.parse, {
+        apply: function() {
+            const r = Reflect.apply(...arguments);
+            if ( prunePaths.length === 0 ) {
+                log(location.hostname, r);
+                return r;
+            }
+            if ( mustProcess(r) === false ) { return r; }
+            for ( const path of prunePaths ) {
+                const details = findOwner(r, path);
+                if ( details !== undefined ) {
+                    delete details[0][details[1]];
+                }
+            }
+            return r;
+        },
+    });
+})();
+
+
 // Imported from:
 // https://github.com/NanoAdblocker/NanoFilters/blob/1f3be7211bb0809c5106996f52564bf10c4525f7/NanoFiltersSource/NanoResources.txt#L126
 //
