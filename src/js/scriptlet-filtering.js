@@ -369,7 +369,7 @@
         );
         if ( request.entity !== '' ) {
             scriptletDB.retrieve(
-                `${hostname.slice(0, -request.domain)}${request.entity}`,
+                `${hostname.slice(0, -request.domain.length)}${request.entity}`,
                 [ scriptlets, exceptions ]
             );
         }

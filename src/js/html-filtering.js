@@ -356,7 +356,7 @@
         );
         if ( details.entity !== '' ) {
             filterDB.retrieve(
-                `${hostname.slice(0, -details.domain)}${details.entity}`,
+                `${hostname.slice(0, -details.domain.length)}${details.entity}`,
                 [ plains, exceptions, procedurals, exceptions ]
             );
         }
