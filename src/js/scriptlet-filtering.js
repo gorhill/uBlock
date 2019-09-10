@@ -342,6 +342,10 @@
         }
     };
 
+    const scriptlets$ = new Set();
+    const exceptions$ = new Set();
+    const scriptletToCodeMap$ = new Map();
+
     api.retrieve = function(request) {
         if ( scriptletDB.size === 0 ) { return; }
         if ( µb.hiddenSettings.ignoreScriptInjectFilters ) { return; }
@@ -360,41 +364,41 @@
             return;
         }
 
-        const scriptlets = new Set();
-        const exceptions = new Set();
+        scriptlets$.clear();
+        exceptions$.clear();
 
         scriptletDB.retrieve(
             hostname,
-            [ scriptlets, exceptions ]
+            [ scriptlets$, exceptions$ ]
         );
         if ( request.entity !== '' ) {
             scriptletDB.retrieve(
                 `${hostname.slice(0, -request.domain.length)}${request.entity}`,
-                [ scriptlets, exceptions ]
+                [ scriptlets$, exceptions$ ]
             );
         }
-        if ( scriptlets.size === 0 ) { return; }
+        if ( scriptlets$.size === 0 ) { return; }
 
         const loggerEnabled = µb.logger.enabled;
 
         // Wholly disable scriptlet injection?
-        if ( exceptions.has('') ) {
+        if ( exceptions$.has('') ) {
             if ( loggerEnabled ) {
                 logOne(true, '', request);
             }
             return;
         }
 
-        const scriptletToCodeMap = new Map();
-        for ( const rawToken of scriptlets ) {
-            lookupScriptlet(rawToken, reng, scriptletToCodeMap);
+        scriptletToCodeMap$.clear();
+        for ( const rawToken of scriptlets$ ) {
+            lookupScriptlet(rawToken, reng, scriptletToCodeMap$);
         }
-        if ( scriptletToCodeMap.size === 0 ) { return; }
+        if ( scriptletToCodeMap$.size === 0 ) { return; }
 
         // Return an array of scriptlets, and log results if needed.
         const out = [];
-        for ( const [ rawToken, code ] of scriptletToCodeMap ) {
-            const isException = exceptions.has(rawToken);
+        for ( const [ rawToken, code ] of scriptletToCodeMap$ ) {
+            const isException = exceptions$.has(rawToken);
             if ( isException === false ) {
                 out.push(code);
             }
