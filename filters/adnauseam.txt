@@ -200,6 +200,7 @@ fortune.com##.small-12.column > .row:nth-of-type(2) > .small-12.column > .row > 
 
 ##DIV[id*="adcontent"]
 ##DIV[class*="advert"]
+##*[id*="Advert"]
 
 ##.advert
 ##DIV[class^="ads_inline"]
