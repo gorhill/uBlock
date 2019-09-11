@@ -104,14 +104,6 @@ vAPI.app = {
     },
 };
 
-// https://github.com/uBlockOrigin/uBlock-issues/issues/717
-//   Prevent the extensions from being restarted mid-session.
-browser.runtime.onUpdateAvailable.addListener(details => {
-    const toInt = vAPI.app.intFromVersion;
-    if ( toInt(details.version) > toInt(vAPI.app.version) ) { return; }
-    browser.runtime.reload();
-});
-
 /******************************************************************************/
 /******************************************************************************/
 

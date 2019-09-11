@@ -50,6 +50,7 @@ const µBlock = (function() { // jshint ignore:line
         debugScriptlets: false,
         debugScriptletInjector: false,
         disableWebAssembly: false,
+        extensionUpdateForceReload: false,
         ignoreRedirectFilters: false,
         ignoreScriptInjectFilters: false,
         loggerPopupType: 'popup',

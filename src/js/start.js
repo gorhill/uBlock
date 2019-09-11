@@ -25,15 +25,15 @@
 
 // Load all: executed once.
 
-µBlock.restart = (function() {
-
-/******************************************************************************/
+{
+// >>>>> start of local scope
 
 const µb = µBlock;
 
 /******************************************************************************/
 
 vAPI.app.onShutdown = function() {
+    const µb = µBlock;
     µb.staticFilteringReverseLookup.shutdown();
     µb.assets.updateStop();
     µb.staticNetFilteringEngine.reset();
@@ -52,7 +52,7 @@ vAPI.app.onShutdown = function() {
 // - Initialize internal state with maybe already existing tabs.
 // - Schedule next update operation.
 
-var onAllReady = function() {
+const onAllReady = function() {
     µb.webRequest.start();
 
     // Ensure that the resources allocated for decompression purpose (likely
@@ -86,6 +86,18 @@ var onAllReady = function() {
     µb.contextMenu.update(null);
     µb.firstInstall = false;
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/717
+    //   Prevent the extensions from being restarted mid-session.
+    browser.runtime.onUpdateAvailable.addListener(details => {
+        const toInt = vAPI.app.intFromVersion;
+        if (
+            µBlock.hiddenSettings.extensionUpdateForceReload === true ||
+            toInt(details.version) <= toInt(vAPI.app.version)
+        ) {
+            vAPI.app.restart();
+        }
+    });
+
     log.info(`All ready ${Date.now()-vAPI.T0} ms after launch`);
 };
 
@@ -96,8 +108,8 @@ var onAllReady = function() {
 // in already opened web pages, to remove whatever nuisance could make it to
 // the web pages before uBlock was ready.
 
-let initializeTabs = function() {
-    let handleScriptResponse = function(tabId, results) {
+const initializeTabs = function() {
+    const handleScriptResponse = function(tabId, results) {
         if (
             Array.isArray(results) === false ||
             results.length === 0 ||
@@ -106,10 +118,10 @@ let initializeTabs = function() {
             return;
         }
         // Inject dclarative content scripts programmatically.
-        let manifest = chrome.runtime.getManifest();
+        const manifest = chrome.runtime.getManifest();
         if ( manifest instanceof Object === false ) { return; }
-        for ( let contentScript of manifest.content_scripts ) {
-            for ( let file of contentScript.js ) {
+        for ( const contentScript of manifest.content_scripts ) {
+            for ( const file of contentScript.js ) {
                 vAPI.tabs.injectScript(tabId, {
                     file: file,
                     allFrames: contentScript.all_frames,
@@ -118,8 +130,8 @@ let initializeTabs = function() {
             }
         }
     };
-    let bindToTabs = function(tabs) {
-        for ( let tab of tabs  ) {
+    const bindToTabs = function(tabs) {
+        for ( const tab of tabs  ) {
             µb.tabContextManager.commit(tab.id, tab.url);
             µb.bindTabToPageStats(tab.id);
             // https://github.com/chrisaljoudi/uBlock/issues/129
@@ -241,7 +253,7 @@ const onUserSettingsReady = function(fetched) {
 // Housekeeping, as per system setting changes
 
 const onSystemSettingsReady = function(fetched) {
-    var mustSaveSystemSettings = false;
+    let mustSaveSystemSettings = false;
     if ( fetched.compiledMagic !== µb.systemSettings.compiledMagic ) {
         µb.assets.remove(/^compiled\//);
         mustSaveSystemSettings = true;
@@ -367,17 +379,10 @@ const onAdminSettingsRestored = function() {
 
 /******************************************************************************/
 
-return function() {
-    // https://github.com/gorhill/uBlock/issues/531
-    µb.restoreAdminSettings().then(( ) => {
-        onAdminSettingsRestored();
-    });
-};
+// https://github.com/gorhill/uBlock/issues/531
+µb.restoreAdminSettings().then(( ) => {
+    onAdminSettingsRestored();
+});
 
-/******************************************************************************/
-
-})();
-
-/******************************************************************************/
-
-µBlock.restart();
+// <<<<< end of local scope
+}
