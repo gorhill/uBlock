@@ -118,6 +118,7 @@ asiaxpat.com###pnlClassReplaced
 asiaxpat.com##.main_content_rit
 asiaxpat.com###BusyBox6
 asiaxpat.com##.renaud
+asiaxpat.com##.row-banner-target
 hongkong.asiaxpat.com###fade
 hongkong.asiaxpat.com###light
 
