@@ -254,12 +254,18 @@ const handlers = {
         if ( Array.isArray(changes.exceptions) ) {
             for ( const selector of changes.exceptions ) {
                 if ( loggedSelectors.has(selector) ) { continue; }
-                if ( selector.charCodeAt(0) === 0x7B /* '{' */ ) {
-                    const details = JSON.parse(selector);
-                    exceptionDict.set(details.style[0], details.raw);
-                } else {
+                if ( selector.charCodeAt(0) !== 0x7B /* '{' */ ) {
                     exceptionDict.set(selector, selector);
+                    continue;
                 }
+                const details = JSON.parse(selector);
+                if ( Array.isArray(details.style) ) {
+                    exceptionDict.set(details.style[0], details.raw);
+                    continue;
+                }
+                // TODO:
+                // Handling of procedural cosmetic exception filters
+                // not implemented.
             }
             exceptionStr = undefined;
         }
