@@ -775,15 +775,18 @@ vAPI.setIcon = (( ) => {
         const { parts, state, badge, color } = details;
 
         if ( browserAction.setIcon !== undefined ) {
-            if ( parts === undefined || (parts & 0b001) !== 0 ) {
+            if ( parts === undefined || (parts & 0b0001) !== 0 ) {
                 browserAction.setIcon(
                     Object.assign({ tabId: tab.id }, icons[state])
                 );
             }
-            if ( (parts & 0b010) !== 0 ) {
-                browserAction.setBadgeText({ tabId: tab.id, text: badge });
+            if ( (parts & 0b0010) !== 0 ) {
+                browserAction.setBadgeText({
+                    tabId: tab.id,
+                    text: (parts & 0b1000) === 0 ? badge : ''
+                });
             }
-            if ( (parts & 0b100) !== 0 ) {
+            if ( (parts & 0b0100) !== 0 ) {
                 browserAction.setBadgeBackgroundColor({ tabId: tab.id, color });
             }
         }
@@ -800,8 +803,9 @@ vAPI.setIcon = (( ) => {
     };
 
     // parts: bit 0 = icon
-    //        bit 1 = badge
+    //        bit 1 = badge text
     //        bit 2 = badge color
+    //        bit 3 = hide badge
 
     return function(tabId, details) {
         tabId = toChromiumTabId(tabId);

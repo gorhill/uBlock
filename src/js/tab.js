@@ -974,7 +974,7 @@ vAPI.tabs = new vAPI.Tabs();
     };
 
     const updateBadge = (tabId) => {
-        const parts = tabIdToDetails.get(tabId);
+        let parts = tabIdToDetails.get(tabId);
         tabIdToDetails.delete(tabId);
 
         let state = 0;
@@ -984,13 +984,13 @@ vAPI.tabs = new vAPI.Tabs();
         let pageStore = µb.pageStoreFromTabId(tabId);
         if ( pageStore !== null ) {
             state = pageStore.getNetFilteringSwitch() ? 1 : 0;
-            if ( state === 1 && µb.userSettings.showIconBadge ) {
-                if ( (parts & 0b010) !== 0 && pageStore.perLoadBlockedRequestCount ) {
+            if ( state === 1 ) {
+                if ( (parts & 0b0010) !== 0 && pageStore.perLoadBlockedRequestCount ) {
                     badge = µb.formatCount(
                         pageStore.perLoadBlockedRequestCount
                     );
                 }
-                if ( (parts & 0b100) !== 0 ) {
+                if ( (parts & 0b0100) !== 0 ) {
                     color = computeBadgeColor(
                         µb.blockingModeFromHostname(pageStore.tabHostname)
                     );
@@ -998,14 +998,20 @@ vAPI.tabs = new vAPI.Tabs();
             }
         }
 
+        // https://www.reddit.com/r/uBlockOrigin/comments/d33d37/
+        if ( µb.userSettings.showIconBadge === false ) {
+            parts |= 0b1000;
+        }
+
         vAPI.setIcon(tabId, { parts, state, badge, color });
     };
 
     // parts: bit 0 = icon
-    //        bit 1 = badge
+    //        bit 1 = badge text
     //        bit 2 = badge color
+    //        bit 3 = hide badge
 
-    return function(tabId, newParts = 0b111) {
+    return function(tabId, newParts = 0b0111) {
         if ( typeof tabId !== 'number' ) { return; }
         if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
         let currentParts = tabIdToDetails.get(tabId);
