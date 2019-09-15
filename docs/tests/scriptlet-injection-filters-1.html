@@ -162,21 +162,21 @@ time. When you try a filter, ensure the result is what is expected.</p>
     const hostname = self.location.hostname;
     const fragment = document.createDocumentFragment();
     const filters = [
-        [ [ '!bad' ], 'GGGG' ],
-        [ [ 'good' ], 'GGGG' ],
-        [ [ '', '!33' ], 'GRRG' ],
-        [ [ '', '66' ], 'GRRG' ],
-        [ [ '!bad', '!33' ], 'GGRG' ],
-        [ [ 'good', '66' ], 'GGRG' ],
-        [ [ '!bad', '33' ], 'GGGR' ],
-        [ [ 'good', '!66' ], 'GGGR' ],
-        [ [ 'bad', '!33' ], 'GRRR' ],
-        [ [ '!good', '66' ], 'GRRR' ],
+        [ [ 'bad' ], 'GGGG' ],
+        [ [ '!good' ], 'GGGG' ],
+        [ [ '', '33' ], 'GRRG' ],
+        [ [ '', '!66' ], 'GRRG' ],
+        [ [ 'bad', '33' ], 'GRGG' ],
+        [ [ '!good', '!66' ], 'GRGG' ],
+        [ [ 'bad', '!33' ], 'RGGG' ],
+        [ [ '!good', '66' ], 'RGGG' ],
+        [ [ '!bad', '33' ], 'RRRG' ],
+        [ [ 'good', '!66' ], 'RRRG' ],
     ];
     for ( const [ args, result ] of filters ) {
         const tr = document.createElement('tr');
         let td = document.createElement('td');
-        td.textContent = `${hostname}##+js(stif, ${args.join(', ')})`;
+        td.textContent = `${hostname}##+js(nostif, ${args.join(', ')})`;
         tr.appendChild(td);
         td = document.createElement('td');
         for ( let i = 0; i < result.length; i++ ) {

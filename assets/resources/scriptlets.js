@@ -582,8 +582,8 @@
 })();
 
 
-/// setInterval-if.js
-/// alias siif.js
+/// no-setInterval-if.js
+/// alias nosiif.js
 (function() {
     let needle = '{{1}}';
     const needleNot = needle.charAt(0) === '!';
@@ -611,14 +611,12 @@
             let defuse = false;
             if ( log !== undefined ) {
                 log('uBO: setInterval("%s", %s)', a, b);
-            } else if ( needle === '' && needleNot || isNaN(delay) && delayNot ) {
-                defuse = true;
             } else if ( isNaN(delay) ) {
-                defuse = reNeedle.test(a) === needleNot;
+                defuse = reNeedle.test(a) !== needleNot;
             } else if ( needle === '' ) {
-                defuse = (b === delay) === delayNot;
-            } else if ( reNeedle.test(a) === needleNot || (b === delay) === delayNot ) {
-                defuse = true;
+                defuse = (b === delay) !== delayNot;
+            } else {
+                defuse = reNeedle.test(a) !== needleNot && (b === delay) !== delayNot;
             }
             if ( defuse ) {
                 args[0] = function(){};
@@ -655,8 +653,8 @@
 })();
 
 
-/// setTimeout-if.js
-/// alias stif.js
+/// no-setTimeout-if.js
+/// alias nostif.js
 (function() {
     let needle = '{{1}}';
     const needleNot = needle.charAt(0) === '!';
@@ -684,14 +682,12 @@
             let defuse = false;
             if ( log !== undefined ) {
                 log('uBO: setTimeout("%s", %s)', a, b);
-            } else if ( needle === '' && needleNot || isNaN(delay) && delayNot ) {
-                defuse = true;
             } else if ( isNaN(delay) ) {
-                defuse = reNeedle.test(a) === needleNot;
+                defuse = reNeedle.test(a) !== needleNot;
             } else if ( needle === '' ) {
-                defuse = (b === delay) === delayNot;
-            } else if ( reNeedle.test(a) === needleNot || (b === delay) === delayNot ) {
-                defuse = true;
+                defuse = (b === delay) !== delayNot;
+            } else {
+                defuse = reNeedle.test(a) !== needleNot && (b === delay) !== delayNot;
             }
             if ( defuse ) {
                 args[0] = function(){};
