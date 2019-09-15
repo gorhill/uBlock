@@ -58,9 +58,10 @@ const onMessage = function(request, sender, callback) {
         // https://github.com/chrisaljoudi/uBlock/issues/417
         µb.assets.get(
             request.url,
-            { dontCache: true, needSourceURL: true },
-            callback
-        );
+            { dontCache: true, needSourceURL: true }
+        ).then(result => {
+            callback(result);
+        });
         return;
 
     case 'listsFromNetFilter':
@@ -791,24 +792,18 @@ vAPI.messaging.listen({
 const µb = µBlock;
 
 // Settings
-const getLocalData = function(callback) {
-    const onStorageInfoReady = function(bytesInUse) {
-        const o = µb.restoreBackupSettings;
-        callback({
-            storageUsed: bytesInUse,
-            lastRestoreFile: o.lastRestoreFile,
-            lastRestoreTime: o.lastRestoreTime,
-            lastBackupFile: o.lastBackupFile,
-            lastBackupTime: o.lastBackupTime,
-            cloudStorageSupported: µb.cloudStorageSupported,
-            privacySettingsSupported: µb.privacySettingsSupported
-        });
-    };
-
-    µb.getBytesInUse(onStorageInfoReady);
+const getLocalData = async function() {
+    const data = Object.assign({}, µb.restoreBackupSettings);
+    data.storageUsed = await µb.getBytesInUse();
+    return data;
 };
 
-const backupUserData = function(callback) {
+const backupUserData = async function() {
+    const [ userFilters, localData ] = await Promise.all([
+        µb.loadUserFilters(),
+        getLocalData(),
+    ]);
+
     const userData = {
         timeStamp: Date.now(),
         version: vAPI.app.version,
@@ -821,23 +816,17 @@ const backupUserData = function(callback) {
         dynamicFilteringString: µb.permanentFirewall.toString(),
         urlFilteringString: µb.permanentURLFiltering.toString(),
         hostnameSwitchesString: µb.permanentSwitches.toString(),
-        userFilters: ''
+        userFilters: userFilters.content,
     };
 
-    const onUserFiltersReady = function(details) {
-        userData.userFilters = details.content;
-        const filename = vAPI.i18n('aboutBackupFilename')
-            .replace('{{datetime}}', µb.dateNowToSensibleString())
-            .replace(/ +/g, '_');
-        µb.restoreBackupSettings.lastBackupFile = filename;
-        µb.restoreBackupSettings.lastBackupTime = Date.now();
-        vAPI.storage.set(µb.restoreBackupSettings);
-        getLocalData(function(localData) {
-            callback({ localData: localData, userData: userData });
-        });
-    };
+    const filename = vAPI.i18n('aboutBackupFilename')
+        .replace('{{datetime}}', µb.dateNowToSensibleString())
+        .replace(/ +/g, '_');
+    µb.restoreBackupSettings.lastBackupFile = filename;
+    µb.restoreBackupSettings.lastBackupTime = Date.now();
+    vAPI.storage.set(µb.restoreBackupSettings);
 
-    µb.assets.get(µb.userFiltersPath, onUserFiltersReady);
+    return { localData, userData };
 };
 
 const restoreUserData = function(request) {
@@ -881,7 +870,7 @@ const restoreUserData = function(request) {
             lastBackupFile: '',
             lastBackupTime: 0
         });
-        µb.assets.put(µb.userFiltersPath, userData.userFilters);
+        µb.saveUserFilters(userData.userFilters);
         if ( Array.isArray(userData.selectedFilterLists) ) {
             µb.saveSelectedFilterLists(userData.selectedFilterLists, restart);
         } else {
@@ -902,18 +891,17 @@ const restoreUserData = function(request) {
 
 // Remove all stored data but keep global counts, people can become
 // quite attached to numbers
-const resetUserData = function() {
-    let count = 3;
-    const countdown = ( ) => {
-        count -= 1;
-        if ( count === 0 ) {
-            vAPI.app.restart();
-        }
-    };
-    µb.cacheStorage.clear().then(( ) => countdown());   // 1
-    vAPI.storage.clear(countdown);                      // 2
-    µb.saveLocalSettings(countdown);                    // 3
+const resetUserData = async function() {
     vAPI.localStorage.removeItem('immediateHiddenSettings');
+
+    await Promise.all([
+        µb.cacheStorage.clear(),
+        vAPI.storage.clear(),
+    ]);
+
+    await µb.saveLocalSettings();
+
+    vAPI.app.restart();
 };
 
 // 3rd-party filters
@@ -932,7 +920,7 @@ const prepListEntries = function(entries) {
     }
 };
 
-const getLists = function(callback) {
+const getLists = async function(callback) {
     const r = {
         autoUpdate: µb.userSettings.autoUpdate,
         available: null,
@@ -946,17 +934,15 @@ const getLists = function(callback) {
         parseCosmeticFilters: µb.userSettings.parseAllABPHideFilters,
         userFiltersPath: µb.userFiltersPath
     };
-    const onMetadataReady = function(entries) {
-        r.cache = entries;
-        prepListEntries(r.cache);
-        callback(r);
-    };
-    const onLists = function(lists) {
-        r.available = lists;
-        prepListEntries(r.available);
-        µb.assets.metadata(onMetadataReady);
-    };
-    µb.getAvailableLists(onLists);
+    const [ lists, metadata ] = await Promise.all([
+        µb.getAvailableLists(),
+        µb.assets.metadata(),
+    ]);
+    r.available = lists;
+    prepListEntries(r.available);
+    r.cache = metadata;
+    prepListEntries(r.cache);
+    callback(r);
 };
 
 // My rules
@@ -1060,29 +1046,37 @@ const onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
     case 'backupUserData':
-        return backupUserData(callback);
+        return backupUserData().then(data => {
+            callback(data);
+        });
 
     case 'getLists':
         return getLists(callback);
 
     case 'getLocalData':
-        return getLocalData(callback);
+        return getLocalData().then(localData => {
+            callback(localData);
+        });
 
     case 'getShortcuts':
         return getShortcuts(callback);
 
     case 'readUserFilters':
-        return µb.loadUserFilters(callback);
+        return µb.loadUserFilters().then(result => {
+            callback(result);
+        });
 
     case 'writeUserFilters':
-        return µb.saveUserFilters(request.content, callback);
+        return µb.saveUserFilters(request.content).then(result => {
+            callback(result);
+        });
 
     default:
         break;
     }
 
     // Sync
-    var response;
+    let response;
 
     switch ( request.what ) {
     case 'canUpdateShortcuts':

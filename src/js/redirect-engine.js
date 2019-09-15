@@ -573,21 +573,20 @@ RedirectEngine.prototype.toSelfie = function(path) {
 
 /******************************************************************************/
 
-RedirectEngine.prototype.fromSelfie = function(path) {
-    return µBlock.assets.get(`${path}/main`).then(details => {
-        let selfie;
-        try {
-            selfie = JSON.parse(details.content);
-        } catch (ex) {
-        }
-        if ( selfie instanceof Object === false ) { return false; }
-        this.rules = new Map(selfie.rules);
-        this.ruleSources = new Set(selfie.ruleSources);
-        this.ruleDestinations = new Set(selfie.ruleDestinations);
-        this.resetCache();
-        this.modifyTime = Date.now();
-        return true;
-    });
+RedirectEngine.prototype.fromSelfie = async function(path) {
+    const result = await µBlock.assets.get(`${path}/main`);
+    let selfie;
+    try {
+        selfie = JSON.parse(result.content);
+    } catch (ex) {
+    }
+    if ( selfie instanceof Object === false ) { return false; }
+    this.rules = new Map(selfie.rules);
+    this.ruleSources = new Set(selfie.ruleSources);
+    this.ruleDestinations = new Set(selfie.ruleDestinations);
+    this.resetCache();
+    this.modifyTime = Date.now();
+    return true;
 };
 
 /******************************************************************************/
@@ -788,29 +787,26 @@ RedirectEngine.prototype.selfieFromResources = function() {
     );
 };
 
-RedirectEngine.prototype.resourcesFromSelfie = function() {
-    return µBlock.assets.get(
-        'compiled/redirectEngine/resources'
-    ).then(details => {
-        let selfie;
-        try {
-            selfie = JSON.parse(details.content);
-        } catch(ex) {
-        }
-        if (
-            selfie instanceof Object === false ||
-            selfie.version !== resourcesSelfieVersion ||
-            Array.isArray(selfie.resources) === false
-        ) {
-            return false;
-        }
-        this.aliases = new Map(selfie.aliases);
-        this.resources = new Map();
-        for ( const [ token, entry ] of selfie.resources ) {
-            this.resources.set(token, RedirectEntry.fromSelfie(entry));
-        }
-        return true;
-    });
+RedirectEngine.prototype.resourcesFromSelfie = async function() {
+    const result = await µBlock.assets.get('compiled/redirectEngine/resources');
+    let selfie;
+    try {
+        selfie = JSON.parse(result.content);
+    } catch(ex) {
+    }
+    if (
+        selfie instanceof Object === false ||
+        selfie.version !== resourcesSelfieVersion ||
+        Array.isArray(selfie.resources) === false
+    ) {
+        return false;
+    }
+    this.aliases = new Map(selfie.aliases);
+    this.resources = new Map();
+    for ( const [ token, entry ] of selfie.resources ) {
+        this.resources.set(token, RedirectEntry.fromSelfie(entry));
+    }
+    return true;
 };
 
 RedirectEngine.prototype.invalidateResourcesSelfie = function() {

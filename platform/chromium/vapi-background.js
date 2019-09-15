@@ -43,6 +43,15 @@ vAPI.lastError = function() {
     return chrome.runtime.lastError;
 };
 
+vAPI.apiIsPromisified = (( ) => {
+    try {
+        return browser.storage.local.get('_') instanceof Promise;
+    }
+    catch(ex) {
+    }
+    return false;
+})();
+
 // https://github.com/gorhill/uBlock/issues/875
 // https://code.google.com/p/chromium/issues/detail?id=410868#c8
 //   Must not leave `lastError` unchecked.
@@ -107,9 +116,83 @@ vAPI.app = {
 /******************************************************************************/
 /******************************************************************************/
 
-// chrome.storage.local.get(null, function(bin){ console.debug('%o', bin); });
-
-vAPI.storage = browser.storage.local;
+vAPI.storage = (( ) => {
+    if ( vAPI.apiIsPromisified ) {
+        return browser.storage.local;
+    }
+    return {
+        clear: function(callback) {
+            if ( callback !== undefined ) {
+                return browser.storage.local.clear(...arguments);
+            }
+            return new Promise((resolve, reject) => {
+                browser.storage.local.clear(( ) => {
+                    const lastError = browser.runtime.lastError;
+                    if ( lastError instanceof Object ) {
+                        return reject(lastError);
+                    }
+                    resolve();
+                });
+            });
+        },
+        get: function(keys, callback) {
+            if ( callback !== undefined ) {
+                return browser.storage.local.get(...arguments);
+            }
+            return new Promise((resolve, reject) => {
+                browser.storage.local.get(keys, result => {
+                    const lastError = browser.runtime.lastError;
+                    if ( lastError instanceof Object ) {
+                        return reject(lastError);
+                    }
+                    resolve(result);
+                });
+            });
+        },
+        getBytesInUse: function(keys, callback) {
+            if ( callback !== undefined ) {
+                return browser.storage.local.getBytesInUse(...arguments);
+            }
+            return new Promise((resolve, reject) => {
+                browser.storage.local.getBytesInUse(keys, result => {
+                    const lastError = browser.runtime.lastError;
+                    if ( lastError instanceof Object ) {
+                        return reject(lastError);
+                    }
+                    resolve(result);
+                });
+            });
+        },
+        remove: function(keys, callback) {
+            if ( callback !== undefined ) {
+                return browser.storage.local.remove(...arguments);
+            }
+            return new Promise((resolve, reject) => {
+                browser.storage.local.remove(keys, ( ) => {
+                    const lastError = browser.runtime.lastError;
+                    if ( lastError instanceof Object ) {
+                        return reject(lastError);
+                    }
+                    resolve();
+                });
+            });
+        },
+        set: function(items, callback) {
+            if ( callback !== undefined ) {
+                return browser.storage.local.set(...arguments);
+            }
+            return new Promise((resolve, reject) => {
+                browser.storage.local.set(items, ( ) => {
+                    const lastError = browser.runtime.lastError;
+                    if ( lastError instanceof Object ) {
+                        return reject(lastError);
+                    }
+                    resolve();
+                });
+            });
+        },
+    };
+})();
 
 /******************************************************************************/
 /******************************************************************************/
@@ -1286,7 +1369,7 @@ vAPI.commands = chrome.commands;
 /******************************************************************************/
 
 // https://github.com/gorhill/uBlock/issues/531
-// Storage area dedicated to admin settings. Read-only.
+//   Storage area dedicated to admin settings. Read-only.
 
 // https://github.com/gorhill/uBlock/commit/43a5ed735b95a575a9339b6e71a1fcb27a99663b#commitcomment-13965030
 // Not all Chromium-based browsers support managed storage. Merely testing or
@@ -1297,26 +1380,48 @@ vAPI.commands = chrome.commands;
 // https://github.com/gorhill/uBlock/issues/900
 // Also, UC Browser: http://www.upsieutoc.com/image/WXuH
 
-vAPI.adminStorage = chrome.storage.managed && {
-    getItem: function(key, callback) {
-        const onRead = function(store) {
+vAPI.adminStorage = (( ) => {
+    if ( browser.storage.managed instanceof Object === false ) {
+        return {
+            getItem: function() {
+                return Promise.resolve();
+            },
+        };
+    }
+    const managedStorage = vAPI.apiIsPromisified
+        ? browser.storage.managed
+        : {
+            get: function(keys) {
+                return new Promise((resolve, reject) => {
+                    browser.storage.managed.get(keys, result => {
+                        const lastError = browser.runtime.lastError;
+                        if ( lastError instanceof Object ) {
+                            return reject(lastError);
+                        }
+                        resolve(result);
+                    });
+                });
+            },
+        };
+    return {
+        getItem: async function(key) {
+            let bin;
+            try {
+                bin = await managedStorage.get(key);
+            } catch(ex) {
+            }
             let data;
             if (
-                !chrome.runtime.lastError &&
-                typeof store === 'object' &&
-                store !== null
+                chrome.runtime.lastError instanceof Object === false &&
+                bin instanceof Object
             ) {
-                data = store[key];
+                data = bin[key];
             }
-            callback(data);
-        };
-        try {
-            chrome.storage.managed.get(key, onRead);
-        } catch (ex) {
-            callback();
+            return data;
         }
-    }
-};
+    };
+})();
+
 
 /******************************************************************************/
 /******************************************************************************/

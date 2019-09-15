@@ -25,8 +25,8 @@
 
 // Load all: executed once.
 
-{
-// >>>>> start of local scope
+(async ( ) => {
+// >>>>> start of private scope
 
 const µb = µBlock;
 
@@ -97,8 +97,6 @@ const onAllReady = function() {
             vAPI.app.restart();
         }
     });
-
-    log.info(`All ready ${Date.now()-vAPI.T0} ms after launch`);
 };
 
 /******************************************************************************/
@@ -148,27 +146,6 @@ const initializeTabs = function() {
     };
 
     browser.tabs.query({ url: '<all_urls>' }, bindToTabs);
-};
-
-/******************************************************************************/
-
-// Filtering engines dependencies:
-// - PSL
-
-const onPSLReady = function() {
-    log.info(`PSL ready ${Date.now()-vAPI.T0} ms after launch`);
-
-    µb.selfieManager.load().then(valid => {
-        if ( valid === true ) {
-            log.info(`Selfie ready ${Date.now()-vAPI.T0} ms after launch`);
-            onAllReady();
-            return;
-        }
-        µb.loadFilterLists(( ) => {
-            log.info(`Filter lists ready ${Date.now()-vAPI.T0} ms after launch`);
-            onAllReady();
-        });
-    });
 };
 
 /******************************************************************************/
@@ -226,8 +203,6 @@ const onNetWhitelistReady = function(netWhitelistRaw) {
 // User settings are in memory
 
 const onUserSettingsReady = function(fetched) {
-    log.info(`User settings ready ${Date.now()-vAPI.T0} ms after launch`);
-
     const userSettings = µb.userSettings;
 
     fromFetch(userSettings, fetched);
@@ -271,8 +246,6 @@ const onSystemSettingsReady = function(fetched) {
 /******************************************************************************/
 
 const onFirstFetchReady = function(fetched) {
-    log.info(`First fetch ready ${Date.now()-vAPI.T0} ms after launch`);
-
     // https://github.com/uBlockOrigin/uBlock-issues/issues/507
     //   Firefox-specific: somehow `fetched` is undefined under certain
     //   circumstances even though we asked to load with default values.
@@ -291,10 +264,6 @@ const onFirstFetchReady = function(fetched) {
     onNetWhitelistReady(fetched.netWhitelist);
     onVersionReady(fetched.version);
     onCommandShortcutsReady(fetched.commandShortcuts);
-
-    µb.loadPublicSuffixList().then(( ) => {
-        onPSLReady();
-    });
 };
 
 /******************************************************************************/
@@ -347,42 +316,45 @@ const createDefaultProps = function() {
 
 /******************************************************************************/
 
-const onHiddenSettingsReady = function() {
-    return µb.cacheStorage.select(
-        µb.hiddenSettings.cacheStorageAPI
-    ).then(backend => {
-        log.info(`Backend storage for cache will be ${backend}`);
-    });
-};
-
-/******************************************************************************/
-
-// TODO(seamless migration):
-// Eventually selected filter list keys will be loaded as a fetchable
-// property. Until then we need to handle backward and forward
-// compatibility, this means a special asynchronous call to load selected
-// filter lists.
-
-const onAdminSettingsRestored = function() {
+try {
+    // https://github.com/gorhill/uBlock/issues/531
+    await µb.restoreAdminSettings();
     log.info(`Admin settings ready ${Date.now()-vAPI.T0} ms after launch`);
 
-    Promise.all([
-        µb.loadHiddenSettings().then(( ) =>
-            onHiddenSettingsReady()
-        ),
-        µb.loadSelectedFilterLists(),
-    ]).then(( ) => {
-        log.info(`List selection ready ${Date.now()-vAPI.T0} ms after launch`);
-        vAPI.storage.get(createDefaultProps(), onFirstFetchReady);
-    });
-};
+    await µb.loadHiddenSettings();
+    log.info(`Hidden settings ready ${Date.now()-vAPI.T0} ms after launch`);
 
-/******************************************************************************/
+    const cacheBackend = await µb.cacheStorage.select(
+        µb.hiddenSettings.cacheStorageAPI
+    );
+    log.info(`Backend storage for cache will be ${cacheBackend}`);
 
-// https://github.com/gorhill/uBlock/issues/531
-µb.restoreAdminSettings().then(( ) => {
-    onAdminSettingsRestored();
-});
+    await Promise.all([
+        µb.loadSelectedFilterLists().then(( ) => {
+            log.info(`List selection ready ${Date.now()-vAPI.T0} ms after launch`);
+        }),
+        vAPI.storage.get(createDefaultProps()).then(fetched => {
+            log.info(`First fetch ready ${Date.now()-vAPI.T0} ms after launch`);
+            onFirstFetchReady(fetched);
+        }),
+        µb.loadPublicSuffixList().then(( ) => {
+            log.info(`PSL ready ${Date.now()-vAPI.T0} ms after launch`);
+        }),
+    ]);
 
-// <<<<< end of local scope
+    const selfieIsValid = await µb.selfieManager.load();
+    if ( selfieIsValid === true ) {
+        log.info(`Selfie ready ${Date.now()-vAPI.T0} ms after launch`);
+    } else {
+        await µb.loadFilterLists();
+        log.info(`Filter lists ready ${Date.now()-vAPI.T0} ms after launch`);
+    }
+} catch (ex) {
+    console.trace(ex);
 }
+
+onAllReady();
+log.info(`All ready ${Date.now()-vAPI.T0} ms after launch`);
+
+// <<<<< end of private scope
+})();
