@@ -376,7 +376,7 @@ const saveAssetSourceRegistry = (( ) => {
     let timer;
     const save = function() {
         timer = undefined;
-        µBlock.cacheStorage.set({ assetSourceRegistry: assetSourceRegistry });
+        µBlock.cacheStorage.set({ assetSourceRegistry });
     };
     return function(lazily) {
         if ( timer !== undefined ) {
@@ -533,7 +533,7 @@ const assetCacheWrite = async function(assetKey, details) {
         entry.remoteURL = details.url;
     }
     µBlock.cacheStorage.set({
-        cacheDict,
+        assetCacheRegistry,
         [`cache/${assetKey}`]: content
     });
 
