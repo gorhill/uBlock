@@ -829,64 +829,59 @@ const backupUserData = async function() {
     return { localData, userData };
 };
 
-const restoreUserData = function(request) {
+const restoreUserData = async function(request) {
     const userData = request.userData;
 
-    const restart = function() {
-        vAPI.app.restart();
-    };
-
-    let countdown = 2;
-
-    const onAllRemoved = function() {
-        countdown -= 1;
-        if ( countdown !== 0 ) { return; }
-        µBlock.saveLocalSettings();
-        vAPI.storage.set(userData.userSettings);
-        let hiddenSettings = userData.hiddenSettings;
-        if ( hiddenSettings instanceof Object === false ) {
-            hiddenSettings = µBlock.hiddenSettingsFromString(
-                userData.hiddenSettingsString || ''
-            );
-        }
-        // Whitelist directives can be represented as an array or as a
-        // (eventually to be deprecated) string.
-        let whitelist = userData.whitelist;
-        if (
-            Array.isArray(whitelist) === false &&
-            typeof userData.netWhitelist === 'string' &&
-            userData.netWhitelist !== ''
-        ) {
-            whitelist = userData.netWhitelist.split('\n');
-        }
-        vAPI.storage.set({
-            hiddenSettings: hiddenSettings,
-            netWhitelist: whitelist || [],
-            dynamicFilteringString: userData.dynamicFilteringString || '',
-            urlFilteringString: userData.urlFilteringString || '',
-            hostnameSwitchesString: userData.hostnameSwitchesString || '',
-            lastRestoreFile: request.file || '',
-            lastRestoreTime: Date.now(),
-            lastBackupFile: '',
-            lastBackupTime: 0
-        });
-        µb.saveUserFilters(userData.userFilters);
-        if ( Array.isArray(userData.selectedFilterLists) ) {
-            µb.saveSelectedFilterLists(userData.selectedFilterLists, restart);
-        } else {
-            restart();
-        }
-    };
-
     // https://github.com/chrisaljoudi/uBlock/issues/1102
-    // Ensure all currently cached assets are flushed from storage AND memory.
+    //   Ensure all currently cached assets are flushed from storage AND memory.
     µb.assets.rmrf();
 
     // If we are going to restore all, might as well wipe out clean local
-    // storage
-    µb.cacheStorage.clear().then(( ) => { onAllRemoved(); });
-    vAPI.storage.clear(onAllRemoved);
+    // storages
     vAPI.localStorage.removeItem('immediateHiddenSettings');
+    await Promise.all([
+        µb.cacheStorage.clear(),
+        vAPI.storage.clear(),
+    ]);
+
+    // Restore block stats
+    µBlock.saveLocalSettings();
+
+    // Restore user data
+    vAPI.storage.set(userData.userSettings);
+    let hiddenSettings = userData.hiddenSettings;
+    if ( hiddenSettings instanceof Object === false ) {
+        hiddenSettings = µBlock.hiddenSettingsFromString(
+            userData.hiddenSettingsString || ''
+        );
+    }
+    // Whitelist directives can be represented as an array or as a
+    // (eventually to be deprecated) string.
+    let whitelist = userData.whitelist;
+    if (
+        Array.isArray(whitelist) === false &&
+        typeof userData.netWhitelist === 'string' &&
+        userData.netWhitelist !== ''
+    ) {
+        whitelist = userData.netWhitelist.split('\n');
+    }
+    vAPI.storage.set({
+        hiddenSettings: hiddenSettings,
+        netWhitelist: whitelist || [],
+        dynamicFilteringString: userData.dynamicFilteringString || '',
+        urlFilteringString: userData.urlFilteringString || '',
+        hostnameSwitchesString: userData.hostnameSwitchesString || '',
+        lastRestoreFile: request.file || '',
+        lastRestoreTime: Date.now(),
+        lastBackupFile: '',
+        lastBackupTime: 0
+    });
+    µb.saveUserFilters(userData.userFilters);
+    if ( Array.isArray(userData.selectedFilterLists) ) {
+         await µb.saveSelectedFilterLists(userData.selectedFilterLists);
+    }
+
+    vAPI.app.restart();
 };
 
 // Remove all stored data but keep global counts, people can become

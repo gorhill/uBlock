@@ -120,7 +120,7 @@
 // This way the new default values in the future will properly apply for those
 // which were not modified by the user.
 
-µBlock.saveHiddenSettings = function(callback) {
+µBlock.saveHiddenSettings = function() {
     const bin = { hiddenSettings: {} };
     for ( const prop in this.hiddenSettings ) {
         if (
@@ -130,7 +130,7 @@
             bin.hiddenSettings[prop] = this.hiddenSettings[prop];
         }
     }
-    vAPI.storage.set(bin, callback);
+    vAPI.storage.set(bin);
     this.saveImmediateHiddenSettings();
     self.log.verbosity = this.hiddenSettings.consoleLogLevel;
 };
@@ -260,11 +260,7 @@
     this.saveSelectedFilterLists(this.autoSelectRegionalFilterLists(lists));
 };
 
-µBlock.saveSelectedFilterLists = function(newKeys, append, callback) {
-    if ( typeof append === 'function' ) {
-        callback = append;
-        append = false;
-    }
+µBlock.saveSelectedFilterLists = function(newKeys, append = false) {
     const oldKeys = this.selectedFilterLists.slice();
     if ( append ) {
         newKeys = newKeys.concat(oldKeys);
@@ -278,12 +274,12 @@
     }
     newKeys = Array.from(newSet);
     this.selectedFilterLists = newKeys;
-    vAPI.storage.set({ selectedFilterLists: newKeys }, callback);
+    return vAPI.storage.set({ selectedFilterLists: newKeys });
 };
 
 /******************************************************************************/
 
-µBlock.applyFilterListSelection = function(details, callback) {
+µBlock.applyFilterListSelection = function(details) {
     let selectedListKeySet = new Set(this.selectedFilterLists);
     let externalLists = this.userSettings.externalLists;
 
@@ -360,9 +356,6 @@
         vAPI.storage.set({ externalLists: externalLists });
     }
     this.saveSelectedFilterLists(result);
-    if ( typeof callback === 'function' ) {
-        callback(result);
-    }
 };
 
 /******************************************************************************/
@@ -1032,16 +1025,17 @@
 // be generated if the user doesn't change his filter lists selection for
 // some set time.
 
-µBlock.selfieManager = (function() {
+µBlock.selfieManager = (( ) => {
     const µb = µBlock;
-    let timer;
+    let createTimer;
+    let destroyTimer;
 
     // As of 2018-05-31:
     //   JSON.stringify-ing ourselves results in a better baseline
     //   memory usage at selfie-load time. For some reasons.
 
-    const create = function() {
-        Promise.all([
+    const create = async function() {
+        await Promise.all([
             µb.assets.put(
                 'selfie/main',
                 JSON.stringify({
@@ -1052,9 +1046,8 @@
             µb.redirectEngine.toSelfie('selfie/redirectEngine'),
             µb.staticExtFilteringEngine.toSelfie('selfie/staticExtFilteringEngine'),
             µb.staticNetFilteringEngine.toSelfie('selfie/staticNetFilteringEngine'),
-        ]).then(( ) => {
-            µb.lz4Codec.relinquish();
-        });
+        ]);
+        µb.lz4Codec.relinquish();
     };
 
     const load = async function() {
@@ -1096,19 +1089,30 @@
     };
 
     const destroy = function() {
-        if ( timer !== undefined ) {
-            clearTimeout(timer);
-            timer = undefined;
-        }
         µb.cacheStorage.remove('selfie'); // TODO: obsolete, remove eventually.
         µb.assets.remove(/^selfie\//);
-        timer = vAPI.setTimeout(( ) => {
-            timer = undefined;
+        createTimer = vAPI.setTimeout(( ) => {
+            createTimer = undefined;
             create();
         }, µb.hiddenSettings.selfieAfter * 60000);
     };
 
-    return { load, destroy };
+    const destroyAsync = function() {
+        if ( destroyTimer !== undefined ) { return; }
+        if ( createTimer !== undefined ) {
+            clearTimeout(createTimer);
+            createTimer = undefined;
+        }
+        destroyTimer = vAPI.setTimeout(
+            ( ) => {
+                destroyTimer = undefined;
+                destroy();
+            },
+            1019
+        );
+    };
+
+    return { load, destroy: destroyAsync };
 })();
 
 /******************************************************************************/
