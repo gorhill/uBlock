@@ -128,17 +128,16 @@ const update = function(tabId = undefined) {
 //   For unknown reasons, the currently active tab will not be successfully
 //   looked up after closing a window.
 
-vAPI.contextMenu.onMustUpdate = function(tabId = undefined) {
+vAPI.contextMenu.onMustUpdate = async function(tabId = undefined) {
     if ( µBlock.userSettings.contextMenuEnabled === false ) {
         return update();
     }
     if ( tabId !== undefined ) {
         return update(tabId);
     }
-    vAPI.tabs.get(null, tab => {
-        if ( tab instanceof Object === false ) { return; }
-        update(tab.id);
-    });
+    const tab = await vAPI.tabs.getCurrent();
+    if ( tab instanceof Object === false ) { return; }
+    update(tab.id);
 };
 
 return { update: vAPI.contextMenu.onMustUpdate };

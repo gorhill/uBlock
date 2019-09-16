@@ -106,7 +106,7 @@ const onAllReady = function() {
 // in already opened web pages, to remove whatever nuisance could make it to
 // the web pages before uBlock was ready.
 
-const initializeTabs = function() {
+const initializeTabs = async function() {
     const handleScriptResponse = function(tabId, results) {
         if (
             Array.isArray(results) === false ||
@@ -128,24 +128,21 @@ const initializeTabs = function() {
             }
         }
     };
-    const bindToTabs = function(tabs) {
-        for ( const tab of tabs  ) {
-            µb.tabContextManager.commit(tab.id, tab.url);
-            µb.bindTabToPageStats(tab.id);
-            // https://github.com/chrisaljoudi/uBlock/issues/129
-            //   Find out whether content scripts need to be injected
-            //   programmatically. This may be necessary for web pages which
-            //   were loaded before uBO launched.
-            if ( /^https?:\/\//.test(tab.url) === false ) { continue; }
-            vAPI.tabs.injectScript(
-                tab.id,
-                { file: 'js/scriptlets/should-inject-contentscript.js' },
-                handleScriptResponse.bind(null, tab.id)
-            );
-        }
-    };
-
-    browser.tabs.query({ url: '<all_urls>' }, bindToTabs);
+    const tabs = await vAPI.tabs.query({ url: '<all_urls>' });
+    for ( const tab of tabs  ) {
+        µb.tabContextManager.commit(tab.id, tab.url);
+        µb.bindTabToPageStats(tab.id);
+        // https://github.com/chrisaljoudi/uBlock/issues/129
+        //   Find out whether content scripts need to be injected
+        //   programmatically. This may be necessary for web pages which
+        //   were loaded before uBO launched.
+        if ( /^https?:\/\//.test(tab.url) === false ) { continue; }
+        vAPI.tabs.injectScript(
+            tab.id,
+            { file: 'js/scriptlets/should-inject-contentscript.js' },
+            handleScriptResponse.bind(null, tab.id)
+        );
+    }
 };
 
 /******************************************************************************/

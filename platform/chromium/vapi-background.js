@@ -43,15 +43,6 @@ vAPI.lastError = function() {
     return chrome.runtime.lastError;
 };
 
-vAPI.apiIsPromisified = (( ) => {
-    try {
-        return browser.storage.local.get('_') instanceof Promise;
-    }
-    catch(ex) {
-    }
-    return false;
-})();
-
 // https://github.com/gorhill/uBlock/issues/875
 // https://code.google.com/p/chromium/issues/detail?id=410868#c8
 //   Must not leave `lastError` unchecked.
@@ -116,83 +107,7 @@ vAPI.app = {
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.storage = (( ) => {
-    if ( vAPI.apiIsPromisified ) {
-        return browser.storage.local;
-    }
-    return {
-        clear: function(callback) {
-            if ( callback !== undefined ) {
-                return browser.storage.local.clear(...arguments);
-            }
-            return new Promise((resolve, reject) => {
-                browser.storage.local.clear(( ) => {
-                    const lastError = browser.runtime.lastError;
-                    if ( lastError instanceof Object ) {
-                        return reject(lastError);
-                    }
-                    resolve();
-                });
-            });
-        },
-        get: function(keys, callback) {
-            if ( callback !== undefined ) {
-                return browser.storage.local.get(...arguments);
-            }
-            return new Promise((resolve, reject) => {
-                browser.storage.local.get(keys, result => {
-                    const lastError = browser.runtime.lastError;
-                    if ( lastError instanceof Object ) {
-                        return reject(lastError);
-                    }
-                    resolve(result);
-                });
-            });
-        },
-        getBytesInUse: function(keys, callback) {
-            if ( callback !== undefined ) {
-                return browser.storage.local.getBytesInUse(...arguments);
-            }
-            return new Promise((resolve, reject) => {
-                browser.storage.local.getBytesInUse(keys, result => {
-                    const lastError = browser.runtime.lastError;
-                    if ( lastError instanceof Object ) {
-                        return reject(lastError);
-                    }
-                    resolve(result);
-                });
-            });
-        },
-        remove: function(keys, callback) {
-            if ( callback !== undefined ) {
-                return browser.storage.local.remove(...arguments);
-            }
-            return new Promise((resolve, reject) => {
-                browser.storage.local.remove(keys, ( ) => {
-                    const lastError = browser.runtime.lastError;
-                    if ( lastError instanceof Object ) {
-                        return reject(lastError);
-                    }
-                    resolve();
-                });
-            });
-        },
-        set: function(items, callback) {
-            if ( callback !== undefined ) {
-                return browser.storage.local.set(...arguments);
-            }
-            return new Promise((resolve, reject) => {
-                browser.storage.local.set(items, ( ) => {
-                    const lastError = browser.runtime.lastError;
-                    if ( lastError instanceof Object ) {
-                        return reject(lastError);
-                    }
-                    resolve();
-                });
-            });
-        },
-    };
-})();
+vAPI.storage = webext.storage.local;
 
 /******************************************************************************/
 /******************************************************************************/
@@ -211,7 +126,7 @@ vAPI.storage = (( ) => {
 //   Do not mess up with existing settings if not assigning them stricter
 //   values.
 
-vAPI.browserSettings = (function() {
+vAPI.browserSettings = (( ) => {
     // Not all platforms support `chrome.privacy`.
     if ( chrome.privacy instanceof Object === false ) { return; }
 
@@ -384,9 +299,8 @@ vAPI.isBehindTheSceneTabId = function(tabId) {
 vAPI.unsetTabId = 0;
 vAPI.noTabId = -1;      // definitely not any existing tab
 
-// To remove when tabId-as-integer has been tested enough.
-
-const toChromiumTabId = function(tabId) {
+// To ensure we always use a good tab id
+const toTabId = function(tabId) {
     return typeof tabId === 'number' && isNaN(tabId) === false
         ? tabId
         : 0;
@@ -436,17 +350,12 @@ vAPI.Tabs = class {
         // https://github.com/uBlockOrigin/uBlock-issues/issues/151
         // https://github.com/uBlockOrigin/uBlock-issues/issues/680#issuecomment-515215220
         if ( browser.windows instanceof Object ) {
-            browser.windows.onFocusChanged.addListener(windowId => {
+            browser.windows.onFocusChanged.addListener(async windowId => {
                 if ( windowId === browser.windows.WINDOW_ID_NONE ) { return; }
-                browser.tabs.query({ active: true, windowId }, tabs => {
-                    if ( Array.isArray(tabs) === false ) { return; }
-                    if ( tabs.length === 0 ) { return; }
-                    const tab = tabs[0];
-                    this.onActivated({
-                        tabId: tab.id,
-                        windowId: tab.windowId,
-                    });
-                });
+                const tabs = await vAPI.tabs.query({ active: true, windowId });
+                if ( tabs.length === 0 ) { return; }
+                const tab = tabs[0];
+                this.onActivated({ tabId: tab.id, windowId: tab.windowId });
             });
         }
 
@@ -455,32 +364,33 @@ vAPI.Tabs = class {
         });
      }
 
-    get(tabId, callback) {
+    async get(tabId) {
         if ( tabId === null ) {
-            browser.tabs.query(
-                { active: true, currentWindow: true },
-                tabs => {
-                    void browser.runtime.lastError;
-                    callback(
-                        Array.isArray(tabs) && tabs.length !== 0
-                            ? tabs[0]
-                            : null
-                    );
-                }
-            );
-            return;
+            return this.getCurrent();
         }
-
-        tabId = toChromiumTabId(tabId);
-        if ( tabId === 0 ) {
-            callback(null);
-            return;
+        if ( tabId <= 0 ) { return null; }
+        let tab;
+        try {
+            tab = await webext.tabs.get(tabId);
         }
+        catch(reason) {
+        }
+        return tab instanceof Object ? tab : null;
+    }
 
-        browser.tabs.get(tabId, function(tab) {
-            void browser.runtime.lastError;
-            callback(tab);
-        });
+    async getCurrent() {
+        const tabs = await this.query({ active: true, currentWindow: true });
+        return tabs.length !== 0 ? tabs[0] : null;
+    }
+
+    async query(queryInfo) {
+        let tabs;
+        try {
+            tabs = await webext.tabs.query(queryInfo);
+        }
+        catch(reason) {
+        }
+        return Array.isArray(tabs) ? tabs : [];
     }
 
     // Properties of the details object:
@@ -491,12 +401,12 @@ vAPI.Tabs = class {
     //                     foreground: undefined
     // - popup: 'popup' => open in a new window
 
-    create(url, details) {
+    async create(url, details) {
         if ( details.active === undefined ) {
             details.active = true;
         }
 
-        const subWrapper = ( ) => {
+        const subWrapper = async ( ) => {
             const updateDetails = {
                 url: url,
                 active: !!details.active
@@ -505,8 +415,8 @@ vAPI.Tabs = class {
             // Opening a tab from incognito window won't focus the window
             // in which the tab was opened
             const focusWindow = tab => {
-                if ( tab.active && browser.windows instanceof Object ) {
-                    browser.windows.update(tab.windowId, { focused: true });
+                if ( tab.active && vAPI.windows instanceof Object ) {
+                    vAPI.windows.update(tab.windowId, { focused: true });
                 }
             };
 
@@ -519,29 +429,27 @@ vAPI.Tabs = class {
             }
 
             // update doesn't accept index, must use move
-            browser.tabs.update(
-                toChromiumTabId(details.tabId),
-                updateDetails,
-                tab => {
-                    // if the tab doesn't exist
-                    if ( vAPI.lastError() ) {
-                        browser.tabs.create(updateDetails, focusWindow);
-                    } else if ( details.index !== undefined ) {
-                        browser.tabs.move(tab.id, { index: details.index });
-                    }
-                }
+            const tab = await vAPI.tabs.update(
+                toTabId(details.tabId),
+                updateDetails
             );
+            // if the tab doesn't exist
+            if ( tab === null ) {
+                browser.tabs.create(updateDetails, focusWindow);
+            } else if ( details.index !== undefined ) {
+                browser.tabs.move(tab.id, { index: details.index });
+            }
         };
 
         // Open in a standalone window
         //
         // https://github.com/uBlockOrigin/uBlock-issues/issues/168#issuecomment-413038191
-        //   Not all platforms support browser.windows API.
+        //   Not all platforms support vAPI.windows.
         //
         // For some reasons, some platforms do not honor the left,top
         // position when specified. I found that further calling
         // windows.update again with the same position _may_ help.
-        if ( details.popup !== undefined && browser.windows instanceof Object ) {
+        if ( details.popup !== undefined && vAPI.windows instanceof Object ) {
             const createDetails = {
                 url: details.url,
                 type: details.popup,
@@ -549,19 +457,18 @@ vAPI.Tabs = class {
             if ( details.box instanceof Object ) {
                 Object.assign(createDetails, details.box);
             }
-            browser.windows.create(createDetails, win => {
-                if ( win instanceof Object === false ) { return; }
-                if ( details.box instanceof Object === false ) { return; }
-                if (
-                    win.left === details.box.left &&
-                    win.top === details.box.top
-                ) {
-                    return;
-                }
-                browser.windows.update(win.id, {
-                    left: details.box.left,
-                    top: details.box.top
-                });
+            const win = await vAPI.windows.create(createDetails);
+            if ( win === null ) { return; }
+            if ( details.box instanceof Object === false ) { return; }
+            if (
+                win.left === details.box.left &&
+                win.top === details.box.top
+            ) {
+                return;
+            }
+            vAPI.windows.update(win.id, {
+                left: details.box.left,
+                top: details.box.top
             });
             return;
         }
@@ -571,15 +478,13 @@ vAPI.Tabs = class {
             return;
         }
 
-        vAPI.tabs.get(null, tab => {
-            if ( tab ) {
-                details.index = tab.index + 1;
-            } else {
-                delete details.index;
-            }
-
-            subWrapper();
-        });
+        const tab = await vAPI.tabs.getCurrent();
+        if ( tab !== null ) {
+            details.index = tab.index + 1;
+        } else {
+            details.index = undefined;
+        }
+        subWrapper();
     }
 
     // Properties of the details object:
@@ -593,7 +498,7 @@ vAPI.Tabs = class {
     //                     it instead of opening a new one
     // - popup: true    => open in a new window
 
-    open(details) {
+    async open(details) {
         let targetURL = details.url;
         if ( typeof targetURL !== 'string' || targetURL === '' ) {
             return null;
@@ -628,29 +533,35 @@ vAPI.Tabs = class {
             ? targetURL
             : targetURL.slice(0, pos);
 
-        browser.tabs.query({ url: targetURLWithoutHash }, tabs => {
-            void browser.runtime.lastError;
-            const tab = Array.isArray(tabs) && tabs[0];
-            if ( !tab ) {
-                this.create(targetURL, details);
-                return;
-            }
-            const updateDetails = { active: true };
-            // https://github.com/uBlockOrigin/uBlock-issues/issues/592
-            if ( tab.url.startsWith(targetURL) === false ) {
-                updateDetails.url = targetURL;
-            }
-            browser.tabs.update(tab.id, updateDetails, tab => {
-                if ( browser.windows instanceof Object === false ) { return; }
-                browser.windows.update(tab.windowId, { focused: true });
-            });
-        });
+        const tabs = await vAPI.tabs.query({ url: targetURLWithoutHash });
+        if ( tabs.length === 0 ) {
+            this.create(targetURL, details);
+            return;
+        }
+        let tab = tabs[0];
+        const updateDetails = { active: true };
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/592
+        if ( tab.url.startsWith(targetURL) === false ) {
+            updateDetails.url = targetURL;
+        }
+        tab = await vAPI.tabs.update(tab.id, updateDetails);
+        if ( vAPI.windows instanceof Object === false ) { return; }
+        vAPI.windows.update(tab.windowId, { focused: true });
+    }
+
+    async update() {
+        let tab;
+        try {
+            tab = await webext.tabs.update(...arguments);
+        }
+        catch (reason) {
+        }
+        return tab instanceof Object ? tab : null;
     }
 
     // Replace the URL of a tab. Noop if the tab does not exist.
-
     replace(tabId, url) {
-        tabId = toChromiumTabId(tabId);
+        tabId = toTabId(tabId);
         if ( tabId === 0 ) { return; }
 
         let targetURL = url;
@@ -660,18 +571,17 @@ vAPI.Tabs = class {
             targetURL = vAPI.getURL(targetURL);
         }
 
-        browser.tabs.update(tabId, { url: targetURL }, vAPI.resetLastError);
+        vAPI.tabs.update(tabId, { url: targetURL });
     }
 
     remove(tabId) {
-        tabId = toChromiumTabId(tabId);
+        tabId = toTabId(tabId);
         if ( tabId === 0 ) { return; }
-
         browser.tabs.remove(tabId, vAPI.resetLastError);
     }
 
     reload(tabId, bypassCache = false) {
-        tabId = toChromiumTabId(tabId);
+        tabId = toTabId(tabId);
         if ( tabId === 0 ) { return; }
 
         browser.tabs.reload(
@@ -681,16 +591,13 @@ vAPI.Tabs = class {
         );
     }
 
-    select(tabId) {
-        tabId = toChromiumTabId(tabId);
+    async select(tabId) {
+        tabId = toTabId(tabId);
         if ( tabId === 0 ) { return; }
-
-        browser.tabs.update(tabId, { active: true }, function(tab) {
-            void browser.runtime.lastError;
-            if ( !tab ) { return; }
-            if ( browser.windows instanceof Object === false ) { return; }
-            browser.windows.update(tab.windowId, { focused: true });
-        });
+        const tab = await vAPI.tabs.update(tabId, { active: true });
+        if ( tab === null ) { return; }
+        if ( vAPI.windows instanceof Object === false ) { return; }
+        vAPI.windows.update(tab.windowId, { focused: true });
     }
 
     injectScript(tabId, details, callback) {
@@ -703,7 +610,7 @@ vAPI.Tabs = class {
         };
         if ( tabId ) {
             browser.tabs.executeScript(
-                toChromiumTabId(tabId),
+                toTabId(tabId),
                 details,
                 onScriptExecuted
             );
@@ -745,6 +652,41 @@ vAPI.Tabs = class {
     onUpdated(/* tabId, changeInfo, tab */) {
     }
 };
+
+/******************************************************************************/
+/******************************************************************************/
+
+if ( browser.windows instanceof Object ) {
+    vAPI.windows = {
+        get: async function() {
+            let win;
+            try {
+                win = await webext.windows.get(...arguments);
+            }
+            catch (reason) {
+            }
+            return win instanceof Object ? win : null;
+        },
+        create: async function() {
+            let win;
+            try {
+                win = await webext.windows.create(...arguments);
+            }
+            catch (reason) {
+            }
+            return win instanceof Object ? win : null;
+        },
+        update: async function() {
+            let win;
+            try {
+                win = await webext.windows.update(...arguments);
+            }
+            catch (reason) {
+            }
+            return win instanceof Object ? win : null;
+        },
+    };
+}
 
 /******************************************************************************/
 /******************************************************************************/
@@ -852,8 +794,17 @@ vAPI.setIcon = (( ) => {
         }
     })();
 
-    const onTabReady = function(tab, details) {
-        if ( vAPI.lastError() || !tab ) { return; }
+    // parts: bit 0 = icon
+    //        bit 1 = badge text
+    //        bit 2 = badge color
+    //        bit 3 = hide badge
+
+    return async function(tabId, details) {
+        tabId = toTabId(tabId);
+        if ( tabId === 0 ) { return; }
+
+        const tab = await vAPI.tabs.get(tabId);
+        if ( tab === null ) { return; }
 
         const { parts, state, badge, color } = details;
 
@@ -883,18 +834,6 @@ vAPI.setIcon = (( ) => {
                 )
             });
         }
-    };
-
-    // parts: bit 0 = icon
-    //        bit 1 = badge text
-    //        bit 2 = badge color
-    //        bit 3 = hide badge
-
-    return function(tabId, details) {
-        tabId = toChromiumTabId(tabId);
-        if ( tabId === 0 ) { return; }
-
-        browser.tabs.get(tabId, tab => onTabReady(tab, details));
 
         if ( vAPI.contextMenu instanceof Object ) {
             vAPI.contextMenu.onMustUpdate(tabId);
@@ -1381,47 +1320,26 @@ vAPI.commands = chrome.commands;
 // Also, UC Browser: http://www.upsieutoc.com/image/WXuH
 
 vAPI.adminStorage = (( ) => {
-    if ( browser.storage.managed instanceof Object === false ) {
+    if ( webext.storage.managed instanceof Object === false ) {
         return {
             getItem: function() {
                 return Promise.resolve();
             },
         };
     }
-    const managedStorage = vAPI.apiIsPromisified
-        ? browser.storage.managed
-        : {
-            get: function(keys) {
-                return new Promise((resolve, reject) => {
-                    browser.storage.managed.get(keys, result => {
-                        const lastError = browser.runtime.lastError;
-                        if ( lastError instanceof Object ) {
-                            return reject(lastError);
-                        }
-                        resolve(result);
-                    });
-                });
-            },
-        };
     return {
         getItem: async function(key) {
             let bin;
             try {
-                bin = await managedStorage.get(key);
+                bin = await webext.storage.managed.get(key);
             } catch(ex) {
             }
-            let data;
-            if (
-                chrome.runtime.lastError instanceof Object === false &&
-                bin instanceof Object
-            ) {
-                data = bin[key];
+            if ( bin instanceof Object ) {
+                return bin[key];
             }
-            return data;
         }
     };
 })();
-
 
 /******************************************************************************/
 /******************************************************************************/

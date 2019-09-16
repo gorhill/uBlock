@@ -128,36 +128,37 @@ const relaxBlockingMode = (( ) => {
     };
 })();
 
-vAPI.commands.onCommand.addListener(command => {
+vAPI.commands.onCommand.addListener(async command => {
     const µb = µBlock;
 
     switch ( command ) {
     case 'launch-element-picker':
-    case 'launch-element-zapper':
-        vAPI.tabs.get(null, tab => {
-            if ( tab instanceof Object === false ) { return; }
-            µb.mouseEventRegister.x = µb.mouseEventRegister.y = -1;
-            µb.elementPickerExec(
-                tab.id,
-                undefined,
-                command === 'launch-element-zapper'
-            );
+    case 'launch-element-zapper': {
+        const tab = await vAPI.tabs.getCurrent();
+        if ( tab instanceof Object === false ) { return; }
+        µb.mouseEventRegister.x = µb.mouseEventRegister.y = -1;
+        µb.elementPickerExec(
+            tab.id,
+            undefined,
+            command === 'launch-element-zapper'
+        );
+        break;
+    }
+    case 'launch-logger': {
+        const tab = await vAPI.tabs.getCurrent();
+        if ( tab instanceof Object === false ) { return; }
+        const hash = tab.url.startsWith(vAPI.getURL(''))
+            ? ''
+            : `#_+${tab.id}`;
+        µb.openNewTab({
+            url: `logger-ui.html${hash}`,
+            select: true,
+            index: -1
         });
         break;
-    case 'launch-logger':
-        vAPI.tabs.get(null, tab => {
-            const hash = tab.url.startsWith(vAPI.getURL(''))
-                ? ''
-                : `#_+${tab.id}`;
-            µb.openNewTab({
-                url: `logger-ui.html${hash}`,
-                select: true,
-                index: -1
-            });
-        });
-        break;
+    }
     case 'relax-blocking-mode':
-        vAPI.tabs.get(null, relaxBlockingMode);
+        relaxBlockingMode(await vAPI.tabs.getCurrent());
         break;
     default:
         break;

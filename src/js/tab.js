@@ -542,19 +542,18 @@ housekeep itself.
         }
     };
 
-    TabContext.prototype.onGC = function() {
+    TabContext.prototype.onGC = async function() {
         if ( vAPI.isBehindTheSceneTabId(this.tabId) ) { return; }
         // https://github.com/gorhill/uBlock/issues/1713
         // For unknown reasons, Firefox's setTimeout() will sometimes
         // causes the callback function to be called immediately, bypassing
         // the main event loop. For now this should prevent uBO from crashing
         // as a result of the bad setTimeout() behavior.
-        if ( this.onGCBarrier ) {
-            return;
-        }
+        if ( this.onGCBarrier ) { return; }
         this.onGCBarrier = true;
         this.gcTimer = null;
-        vAPI.tabs.get(this.tabId, tab => { this.onTab(tab); });
+        const tab = await vAPI.tabs.get(this.tabId);
+        this.onTab(tab);
         this.onGCBarrier = false;
     };
 
@@ -1065,9 +1064,10 @@ vAPI.tabs = new vAPI.Tabs();
         }
     };
 
-    const updateTitle = function(entry) {
+    const updateTitle = async function(entry) {
         tabIdToTimer.delete(entry.tabId);
-        vAPI.tabs.get(entry.tabId, onTabReady.bind(null, entry));
+        const tab = await vAPI.tabs.get(entry.tabId);
+        onTabReady(entry, tab);
     };
 
     return function(tabId) {
@@ -1098,11 +1098,10 @@ vAPI.tabs = new vAPI.Tabs();
 
     const pageStoreJanitor = function() {
         const tabIds = Array.from(µBlock.pageStores.keys()).sort();
-        const checkTab = tabId => {
-            vAPI.tabs.get(tabId, tab => {
-                if ( tab ) { return; }
-                µBlock.unbindTabFromPageStats(tabId);
-            });
+        const checkTab = async tabId => {
+            const tab = await vAPI.tabs.get(tabId);
+            if ( tab ) { return; }
+            µBlock.unbindTabFromPageStats(tabId);
         };
         if ( pageStoreJanitorSampleAt >= tabIds.length ) {
             pageStoreJanitorSampleAt = 0;

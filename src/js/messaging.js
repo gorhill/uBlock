@@ -346,22 +346,20 @@ const popupDataFromTabId = function(tabId, tabTitle) {
     return r;
 };
 
-const popupDataFromRequest = function(request, callback) {
+const popupDataFromRequest = async function(request) {
     if ( request.tabId ) {
-        callback(popupDataFromTabId(request.tabId, ''));
-        return;
+        return popupDataFromTabId(request.tabId, '');
     }
 
     // Still no target tab id? Use currently selected tab.
-    vAPI.tabs.get(null, function(tab) {
-        var tabId = '';
-        var tabTitle = '';
-        if ( tab ) {
-            tabId = tab.id;
-            tabTitle = tab.title || '';
-        }
-        callback(popupDataFromTabId(tabId, tabTitle));
-    });
+    const tab = await vAPI.tabs.getCurrent();
+    let tabId = '';
+    let tabTitle = '';
+    if ( tab instanceof Object ) {
+        tabId = tab.id;
+        tabTitle = tab.title || '';
+    }
+    return popupDataFromTabId(tabId, tabTitle);
 };
 
 const onMessage = function(request, sender, callback) {
@@ -370,7 +368,9 @@ const onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
     case 'getPopupData':
-        popupDataFromRequest(request, callback);
+        popupDataFromRequest(request).then(popupData => {
+            callback(popupData);
+        });
         return;
 
     default:
@@ -1151,7 +1151,7 @@ vAPI.messaging.listen({
 const µb = µBlock;
 const extensionOriginURL = vAPI.getURL('');
 
-const getLoggerData = function(details, activeTabId, callback) {
+const getLoggerData = async function(details, activeTabId, callback) {
     const response = {
         colorBlind: µb.userSettings.colorBlindFriendly,
         entries: µb.logger.readAll(details.ownerId),
@@ -1178,26 +1178,20 @@ const getLoggerData = function(details, activeTabId, callback) {
             response.activeTabId = undefined;
         }
     }
-    if ( details.popupLoggerBoxChanged && browser.windows instanceof Object ) {
-        browser.tabs.query(
-            { url: vAPI.getURL('/logger-ui.html?popup=1') },
-            tabs => {
-                if ( Array.isArray(tabs) === false ) { return; }
-                if ( tabs.length === 0 ) { return; }
-                browser.windows.get(tabs[0].windowId, win => {
-                    if ( win instanceof Object === false ) { return; }
-                    vAPI.localStorage.setItem(
-                        'popupLoggerBox',
-                        JSON.stringify({
-                            left: win.left,
-                            top: win.top,
-                            width: win.width,
-                            height: win.height,
-                        })
-                    );
-                });
-            }
-        );
+    if ( details.popupLoggerBoxChanged && vAPI.windows instanceof Object ) {
+        const tabs = await vAPI.tabs.query({
+            url: vAPI.getURL('/logger-ui.html?popup=1')
+        });
+        if ( tabs.length !== 0 ) {
+            const win = await vAPI.windows.get(tabs[0].windowId);
+            if ( win === null ) { return; }
+            vAPI.localStorage.setItem('popupLoggerBox', JSON.stringify({
+                left: win.left,
+                top: win.top,
+                width: win.width,
+                height: win.height,
+            }));
+        }
     }
     callback(response);
 };
@@ -1242,10 +1236,9 @@ const onMessage = function(request, sender, callback) {
             µb.logger.ownerId !== undefined &&
             µb.logger.ownerId !== request.ownerId
         ) {
-            callback({ unavailable: true });
-            return;
+            return callback({ unavailable: true });
         }
-        vAPI.tabs.get(null, function(tab) {
+        vAPI.tabs.getCurrent().then(tab => {
             getLoggerData(request, tab && tab.id, callback);
         });
         return;
