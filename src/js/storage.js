@@ -255,7 +255,8 @@
         return;
     }
 
-    // Select default filter lists if first-time launch.
+    // https://github.com/gorhill/uBlock/issues/747
+    //   Select default filter lists if first-time launch.
     const lists = await this.assets.metadata();
     this.saveSelectedFilterLists(this.autoSelectRegionalFilterLists(lists));
 };

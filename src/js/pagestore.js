@@ -394,7 +394,7 @@ const PageStore = class {
     }
 
     injectLargeMediaElementScriptlet() {
-        vAPI.tabs.injectScript(this.tabId, {
+        vAPI.tabs.executeScript(this.tabId, {
             file: '/js/scriptlets/load-large-media-interactive.js',
             allFrames: true,
             runAt: 'document_idle',

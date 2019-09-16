@@ -65,8 +65,6 @@ const µBlock = (function() { // jshint ignore:line
     };
 
     return {
-        firstInstall: false,
-
         userSettings: {
             advancedUserEnabled: false,
             alwaysDetachLogger: true,

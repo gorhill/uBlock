@@ -58,10 +58,6 @@ window.addEventListener('webextFlavor', function() {
         vAPI.webextFlavor.soup.has('user_stylesheet');
 }, { once: true });
 
-vAPI.insertCSS = function(tabId, details) {
-    return chrome.tabs.insertCSS(tabId, details, vAPI.resetLastError);
-};
-
 const noopFunc = function(){};
 
 /******************************************************************************/
@@ -364,6 +360,16 @@ vAPI.Tabs = class {
         });
      }
 
+    async executeScript() {
+        let result;
+        try {
+            result = await webext.tabs.executeScript(...arguments);
+        }
+        catch(reason) {
+        }
+        return Array.isArray(result) ? result : [];
+    }
+
     async get(tabId) {
         if ( tabId === null ) {
             return this.getCurrent();
@@ -383,6 +389,14 @@ vAPI.Tabs = class {
         return tabs.length !== 0 ? tabs[0] : null;
     }
 
+    async insertCSS() {
+        try {
+            await webext.tabs.insertCSS(...arguments);
+        }
+        catch(reason) {
+        }
+    }
+
     async query(queryInfo) {
         let tabs;
         try {
@@ -391,6 +405,14 @@ vAPI.Tabs = class {
         catch(reason) {
         }
         return Array.isArray(tabs) ? tabs : [];
+    }
+
+    async removeCSS() {
+        try {
+            await webext.tabs.removeCSS(...arguments);
+        }
+        catch(reason) {
+        }
     }
 
     // Properties of the details object:
@@ -598,28 +620,6 @@ vAPI.Tabs = class {
         if ( tab === null ) { return; }
         if ( vAPI.windows instanceof Object === false ) { return; }
         vAPI.windows.update(tab.windowId, { focused: true });
-    }
-
-    injectScript(tabId, details, callback) {
-        const onScriptExecuted = function() {
-            // https://code.google.com/p/chromium/issues/detail?id=410868#c8
-            void browser.runtime.lastError;
-            if ( typeof callback === 'function' ) {
-                callback.apply(null, arguments);
-            }
-        };
-        if ( tabId ) {
-            browser.tabs.executeScript(
-                toTabId(tabId),
-                details,
-                onScriptExecuted
-            );
-        } else {
-            browser.tabs.executeScript(
-                details,
-                onScriptExecuted
-            );
-        }
     }
 
     // https://forums.lanik.us/viewtopic.php?f=62&t=32826
@@ -984,29 +984,20 @@ vAPI.messaging = {
             if ( msg.add ) {
                 details.runAt = 'document_start';
             }
-            let countdown = 0;
-            const countdownHandler = function() {
-                void chrome.runtime.lastError;
-                countdown -= 1;
-                if ( countdown === 0 && typeof callback === 'function' ) {
-                    callback();
-                }
-            };
+            const promises = [];
             for ( const cssText of msg.add ) {
-                countdown += 1;
                 details.code = cssText;
-                browser.tabs.insertCSS(tabId, details, countdownHandler);
+                promises.push(vAPI.tabs.insertCSS(tabId, details));
             }
-            if ( typeof chrome.tabs.removeCSS === 'function' ) {
+            if ( typeof webext.tabs.removeCSS === 'function' ) {
                 for ( const cssText of msg.remove ) {
-                    countdown += 1;
                     details.code = cssText;
-                    browser.tabs.removeCSS(tabId, details, countdownHandler);
+                    promises.push(vAPI.tabs.removeCSS(tabId, details));
                 }
             }
-            if ( countdown === 0 && typeof callback === 'function' ) {
+            Promise.all(promises).then(( ) => {
                 callback();
-            }
+            });
             break;
         }
     },

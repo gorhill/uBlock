@@ -94,6 +94,22 @@ const webext = {    // jshint ignore:line
                 });
             });
         },
+        executeScript: function() {
+            return new Promise(resolve => {
+                chrome.tabs.executeScript(...arguments, result => {
+                    void chrome.runtime.lastError;
+                    resolve(result);
+                });
+            });
+        },
+        insertCSS: function() {
+            return new Promise(resolve => {
+                chrome.tabs.insertCSS(...arguments, ( ) => {
+                    void chrome.runtime.lastError;
+                    resolve();
+                });
+            });
+        },
         query: function() {
             return new Promise(resolve => {
                 chrome.tabs.query(...arguments, tabs => {
@@ -113,7 +129,7 @@ const webext = {    // jshint ignore:line
     },
 
     windows: {
-        get: async function() {
+        get: function() {
             return new Promise(resolve => {
                 chrome.windows.get(...arguments, win => {
                     void chrome.runtime.lastError;
@@ -121,7 +137,7 @@ const webext = {    // jshint ignore:line
                 });
             });
         },
-        create: async function() {
+        create: function() {
             return new Promise(resolve => {
                 chrome.windows.create(...arguments, win => {
                     void chrome.runtime.lastError;
@@ -129,7 +145,7 @@ const webext = {    // jshint ignore:line
                 });
             });
         },
-        update: async function() {
+        update: function() {
             return new Promise(resolve => {
                 chrome.windows.update(...arguments, win => {
                     void chrome.runtime.lastError;
@@ -139,6 +155,18 @@ const webext = {    // jshint ignore:line
         },
     },
 };
+
+// https://bugs.chromium.org/p/chromium/issues/detail?id=608854
+if ( chrome.tabs.removeCSS instanceof Function ) {
+    webext.tabs.removeCSS = function() {
+        return new Promise(resolve => {
+            chrome.tabs.removeCSS(...arguments, ( ) => {
+                void chrome.runtime.lastError;
+                resolve();
+            });
+        });
+    };
+}
 
 if ( chrome.storage.managed instanceof Object ) {
     webext.storage.managed = {

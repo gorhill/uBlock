@@ -386,7 +386,7 @@ const onMessage = function(request, sender, callback) {
         if ( pageStore !== null ) {
             pageStore.hiddenElementCount = 0;
             pageStore.scriptCount = 0;
-            vAPI.tabs.injectScript(request.tabId, {
+            vAPI.tabs.executeScript(request.tabId, {
                 allFrames: true,
                 file: '/js/scriptlets/dom-survey.js',
                 runAt: 'document_end'
@@ -539,14 +539,11 @@ const onMessage = function(request, sender, callback) {
         if ( pageStore === null ) { break; }
         const fctxt = µb.filteringContext.fromTabId(tabId);
         if ( pageStore.filterScripting(fctxt, undefined) ) {
-            vAPI.tabs.injectScript(
-                tabId,
-                {
-                    file: '/js/scriptlets/noscript-spoof.js',
-                    frameId: frameId,
-                    runAt: 'document_end'
-                }
-            );
+            vAPI.tabs.executeScript(tabId, {
+                file: '/js/scriptlets/noscript-spoof.js',
+                frameId: frameId,
+                runAt: 'document_end'
+            });
         }
         break;
 

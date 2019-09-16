@@ -414,7 +414,7 @@ const matchBucket = function(url, hostname, bucket, start) {
 
 /******************************************************************************/
 
-µBlock.elementPickerExec = function(tabId, targetElement, zap) {
+µBlock.elementPickerExec = async function(tabId, targetElement, zap) {
     if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
 
     this.epickerTarget = targetElement || '';
@@ -422,27 +422,20 @@ const matchBucket = function(url, hostname, bucket, start) {
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/40
     //   The element picker needs this library
-    vAPI.tabs.injectScript(
-        tabId,
-        {
-            file: '/lib/diff/swatinem_diff.js',
-            runAt: 'document_end'
-        }
-    );
+    vAPI.tabs.executeScript(tabId, {
+        file: '/lib/diff/swatinem_diff.js',
+        runAt: 'document_end'
+    });
+
+    await vAPI.tabs.executeScript(tabId, {
+        file: '/js/scriptlets/element-picker.js',
+        runAt: 'document_end'
+    });
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/168
     //   Force activate the target tab once the element picker has been
     //   injected.
-    vAPI.tabs.injectScript(
-        tabId,
-        {
-            file: '/js/scriptlets/element-picker.js',
-            runAt: 'document_end'
-        },
-        ( ) => {
-            vAPI.tabs.select(tabId);
-        }
-    );
+    vAPI.tabs.select(tabId);
 };
 
 /******************************************************************************/
@@ -638,7 +631,7 @@ const matchBucket = function(url, hostname, bucket, start) {
 //   cosmetic filters.
 
 µBlock.logCosmeticFilters = function(tabId, frameId) {
-    vAPI.tabs.injectScript(tabId, {
+    vAPI.tabs.executeScript(tabId, {
         file: '/js/scriptlets/cosmetic-logger.js',
         frameId: frameId,
         runAt: 'document_start'
@@ -694,15 +687,15 @@ const matchBucket = function(url, hostname, bucket, start) {
             }
             pendingEntries.set(key, new Entry(tabId, scriptlet, callback));
         }
-        vAPI.tabs.injectScript(tabId, {
-            file: '/js/scriptlets/' + scriptlet + '.js'
+        vAPI.tabs.executeScript(tabId, {
+            file: `/js/scriptlets/${scriptlet}.js`
         });
     };
 
     // TODO: think about a callback mechanism.
     const injectDeep = function(tabId, scriptlet) {
-        vAPI.tabs.injectScript(tabId, {
-            file: '/js/scriptlets/' + scriptlet + '.js',
+        vAPI.tabs.executeScript(tabId, {
+            file: `/js/scriptlets/${scriptlet}.js`,
             allFrames: true
         });
     };

@@ -922,7 +922,7 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
             out.complex = [];
         }
         out.injected = injected.join(',\n');
-        vAPI.insertCSS(request.tabId, {
+        vAPI.tabs.insertCSS(request.tabId, {
             code: out.injected + '\n{display:none!important;}',
             cssOrigin: 'user',
             frameId: request.frameId,
@@ -1105,11 +1105,11 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
         };
         if ( out.injectedHideFilters.length !== 0 ) {
             details.code = out.injectedHideFilters + '\n{display:none!important;}';
-            vAPI.insertCSS(request.tabId, details);
+            vAPI.tabs.insertCSS(request.tabId, details);
         }
         if ( out.networkFilters.length !== 0 ) {
             details.code = out.networkFilters + '\n{display:none!important;}';
-            vAPI.insertCSS(request.tabId, details);
+            vAPI.tabs.insertCSS(request.tabId, details);
             out.networkFilters = '';
         }
     }

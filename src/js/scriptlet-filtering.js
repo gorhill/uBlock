@@ -449,15 +449,12 @@
         if ( µb.hiddenSettings.debugScriptletInjector ) {
             code = 'debugger;\n' + code;
         }
-        vAPI.tabs.injectScript(
-            details.tabId,
-            {
-                code: code,
-                frameId: details.frameId,
-                matchAboutBlank: false,
-                runAt: 'document_start'
-            }
-        );
+        vAPI.tabs.executeScript(details.tabId, {
+            code: code,
+            frameId: details.frameId,
+            matchAboutBlank: false,
+            runAt: 'document_start'
+        });
     };
 
     api.toSelfie = function() {

@@ -48,87 +48,20 @@ vAPI.app.onShutdown = function() {
 
 /******************************************************************************/
 
-// Final initialization steps after all needed assets are in memory.
-// - Initialize internal state with maybe already existing tabs.
-// - Schedule next update operation.
-
-const onAllReady = function() {
-    µb.webRequest.start();
-
-    // Ensure that the resources allocated for decompression purpose (likely
-    // large buffers) are garbage-collectable immediately after launch.
-    // Otherwise I have observed that it may take quite a while before the
-    // garbage collection of these resources kicks in. Relinquishing as soon
-    // as possible ensure minimal memory usage baseline.
-    µb.lz4Codec.relinquish();
-
-    initializeTabs();
-
-    // https://github.com/chrisaljoudi/uBlock/issues/184
-    //   Check for updates not too far in the future.
-    µb.assets.addObserver(µb.assetObserver.bind(µb));
-    µb.scheduleAssetUpdater(
-        µb.userSettings.autoUpdate
-            ? µb.hiddenSettings.autoUpdateDelayAfterLaunch * 1000
-            : 0
-    );
-
-    // vAPI.cloud is optional.
-    if ( µb.cloudStorageSupported ) {
-        vAPI.cloud.start([
-            'tpFiltersPane',
-            'myFiltersPane',
-            'myRulesPane',
-            'whitelistPane'
-        ]);
-    }
-
-    µb.contextMenu.update(null);
-    µb.firstInstall = false;
-
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/717
-    //   Prevent the extensions from being restarted mid-session.
-    browser.runtime.onUpdateAvailable.addListener(details => {
-        const toInt = vAPI.app.intFromVersion;
-        if (
-            µBlock.hiddenSettings.extensionUpdateForceReload === true ||
-            toInt(details.version) <= toInt(vAPI.app.version)
-        ) {
-            vAPI.app.restart();
-        }
-    });
-};
-
-/******************************************************************************/
-
 // This is called only once, when everything has been loaded in memory after
 // the extension was launched. It can be used to inject content scripts
 // in already opened web pages, to remove whatever nuisance could make it to
 // the web pages before uBlock was ready.
 
 const initializeTabs = async function() {
-    const handleScriptResponse = function(tabId, results) {
-        if (
-            Array.isArray(results) === false ||
-            results.length === 0 ||
-            results[0] !== true
-        ) {
-            return;
-        }
-        // Inject dclarative content scripts programmatically.
-        const manifest = chrome.runtime.getManifest();
-        if ( manifest instanceof Object === false ) { return; }
-        for ( const contentScript of manifest.content_scripts ) {
-            for ( const file of contentScript.js ) {
-                vAPI.tabs.injectScript(tabId, {
-                    file: file,
-                    allFrames: contentScript.all_frames,
-                    runAt: contentScript.run_at
-                });
-            }
-        }
-    };
+    const manifest = browser.runtime.getManifest();
+    if ( manifest instanceof Object === false ) { return; }
+
     const tabs = await vAPI.tabs.query({ url: '<all_urls>' });
+    const toCheck = [];
+    const checker = {
+        file: 'js/scriptlets/should-inject-contentscript.js'
+    };
     for ( const tab of tabs  ) {
         µb.tabContextManager.commit(tab.id, tab.url);
         µb.bindTabToPageStats(tab.id);
@@ -136,12 +69,27 @@ const initializeTabs = async function() {
         //   Find out whether content scripts need to be injected
         //   programmatically. This may be necessary for web pages which
         //   were loaded before uBO launched.
-        if ( /^https?:\/\//.test(tab.url) === false ) { continue; }
-        vAPI.tabs.injectScript(
-            tab.id,
-            { file: 'js/scriptlets/should-inject-contentscript.js' },
-            handleScriptResponse.bind(null, tab.id)
+        toCheck.push(
+            /^https?:\/\//.test(tab.url)
+                ? vAPI.tabs.executeScript(tab.id, checker)
+                : false
         );
+    }
+    const results = await Promise.all(toCheck);
+    for ( let i = 0; i < results.length; i++ ) {
+        const result = results[i];
+        if ( result.length === 0 || result[0] !== true ) { continue; }
+        // Inject dclarative content scripts programmatically.
+        const tabId = tabs[i].id;
+        for ( const contentScript of manifest.content_scripts ) {
+            for ( const file of contentScript.js ) {
+                vAPI.tabs.executeScript(tabId, {
+                    file: file,
+                    allFrames: contentScript.all_frames,
+                    runAt: contentScript.run_at
+                });
+            }
+        }
     }
 };
 
@@ -250,9 +198,6 @@ const onFirstFetchReady = function(fetched) {
         fetched = createDefaultProps();
     }
 
-    // https://github.com/gorhill/uBlock/issues/747
-    µb.firstInstall = fetched.version === '0.0.0.0';
-
     // Order is important -- do not change:
     onSystemSettingsReady(fetched);
     fromFetch(µb.localSettings, fetched);
@@ -350,7 +295,53 @@ try {
     console.trace(ex);
 }
 
-onAllReady();
+// Final initialization steps after all needed assets are in memory.
+
+µb.webRequest.start();
+
+// Ensure that the resources allocated for decompression purpose (likely
+// large buffers) are garbage-collectable immediately after launch.
+// Otherwise I have observed that it may take quite a while before the
+// garbage collection of these resources kicks in. Relinquishing as soon
+// as possible ensure minimal memory usage baseline.
+µb.lz4Codec.relinquish();
+
+// Initialize internal state with maybe already existing tabs.
+initializeTabs();
+
+// https://github.com/chrisaljoudi/uBlock/issues/184
+//   Check for updates not too far in the future.
+µb.assets.addObserver(µb.assetObserver.bind(µb));
+µb.scheduleAssetUpdater(
+    µb.userSettings.autoUpdate
+        ? µb.hiddenSettings.autoUpdateDelayAfterLaunch * 1000
+        : 0
+);
+
+// vAPI.cloud is optional.
+if ( µb.cloudStorageSupported ) {
+    vAPI.cloud.start([
+        'tpFiltersPane',
+        'myFiltersPane',
+        'myRulesPane',
+        'whitelistPane'
+    ]);
+}
+
+µb.contextMenu.update(null);
+
+// https://github.com/uBlockOrigin/uBlock-issues/issues/717
+//   Prevent the extensions from being restarted mid-session.
+browser.runtime.onUpdateAvailable.addListener(details => {
+    const toInt = vAPI.app.intFromVersion;
+    if (
+        µBlock.hiddenSettings.extensionUpdateForceReload === true ||
+        toInt(details.version) <= toInt(vAPI.app.version)
+    ) {
+        vAPI.app.restart();
+    }
+});
+
 log.info(`All ready ${Date.now()-vAPI.T0} ms after launch`);
 
 // <<<<< end of private scope
