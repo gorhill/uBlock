@@ -1,4 +1,4 @@
-filbert.cc##.google_image_div
+||http://widgets.wp.com/platform.js, domain=filbert.cc
 
 # Generics (any page)
 ##*[class^="google_ads"]
