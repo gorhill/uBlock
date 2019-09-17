@@ -1,3 +1,4 @@
+filbert.cc##.google_image_div
 
 # Generics (any page)
 ##*[class^="google_ads"]
