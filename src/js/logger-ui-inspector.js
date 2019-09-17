@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-(function() {
+(( ) => {
 
 /******************************************************************************/
 
@@ -385,9 +385,15 @@ const startDialog = (function() {
         ev.stopPropagation();
 
         if ( target.id === 'createCosmeticFilters' ) {
-            messaging.send('loggerUI', { what: 'createUserFilter', filters: textarea.value });
+            messaging.send('loggerUI', {
+                what: 'createUserFilter',
+                filters: textarea.value,
+            });
             // Force a reload for the new cosmetic filter(s) to take effect
-            messaging.send('loggerUI', { what: 'reloadTab', tabId: inspectedTabId });
+            messaging.send('loggerUI', {
+                what: 'reloadTab',
+                tabId: inspectedTabId,
+            });
             return stop();
         }
     };
@@ -561,8 +567,8 @@ const injectInspector = function() {
     inspectedTabId = tabId;
     messaging.send('loggerUI', {
         what: 'scriptlet',
-        tabId: tabId,
-        scriptlet: 'dom-inspector'
+        tabId,
+        scriptlet: 'dom-inspector',
     });
 };
 

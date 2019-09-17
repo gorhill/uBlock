@@ -195,15 +195,12 @@ const processTimer = new vAPI.SafeAnimationFrame(( ) => {
 
     if ( toLog.length === 0 ) { return; }
 
-    vAPI.messaging.send(
-        'scriptlets',
-        {
-            what: 'logCosmeticFilteringData',
-            frameURL: window.location.href,
-            frameHostname: window.location.hostname,
-            matchedSelectors: toLog,
-        }
-    );
+    vAPI.messaging.send('scriptlets', {
+        what: 'logCosmeticFilteringData',
+        frameURL: window.location.href,
+        frameHostname: window.location.hostname,
+        matchedSelectors: toLog,
+    });
     //console.timeEnd('dom logger/scanning for matches');
 });
 

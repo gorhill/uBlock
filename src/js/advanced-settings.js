@@ -25,12 +25,11 @@
 
 /******************************************************************************/
 
-(function() {
+(( ) => {
 // >>>> Start of private namespace
 
 /******************************************************************************/
 
-const messaging = vAPI.messaging;
 const noopFunc = function(){};
 
 let beforeHash = '';
@@ -57,18 +56,19 @@ const hashFromAdvancedSettings = function(raw) {
 
 // This is to give a visual hint that the content of user blacklist has changed.
 
-const advancedSettingsChanged = (function () {
-    let timer = null;
+const advancedSettingsChanged = (( ) => {
+    let timer;
 
     const handler = ( ) => {
-        timer = null;
-        let changed = hashFromAdvancedSettings(cmEditor.getValue()) !== beforeHash;
+        timer = undefined;
+        const changed =
+            hashFromAdvancedSettings(cmEditor.getValue()) !== beforeHash;
         uDom.nodeFromId('advancedSettingsApply').disabled = !changed;
         CodeMirror.commands.save = changed ? applyChanges : noopFunc;
     };
 
     return function() {
-        if ( timer !== null ) { clearTimeout(timer); }
+        if ( timer !== undefined ) { clearTimeout(timer); }
         timer = vAPI.setTimeout(handler, 100);
     };
 })();
@@ -77,42 +77,40 @@ cmEditor.on('changes', advancedSettingsChanged);
 
 /******************************************************************************/
 
-const renderAdvancedSettings = function(first) {
-    const onRead = function(raw) {
-        beforeHash = hashFromAdvancedSettings(raw);
-        let pretty = [],
-            whitespaces = '                                ',
-            lines = raw.split('\n'),
-            max = 0;
-        for ( let line of lines ) {
-            let pos = line.indexOf(' ');
-            if ( pos > max ) { max = pos; }
-        }
-        for ( let line of lines ) {
-            let pos = line.indexOf(' ');
-            pretty.push(whitespaces.slice(0, max - pos) + line);
-        }
-        cmEditor.setValue(pretty.join('\n') + '\n');
-        if ( first ) {
-            cmEditor.clearHistory();
-        }
-        advancedSettingsChanged();
-        cmEditor.focus();
-    };
-    messaging.send('dashboard', { what: 'readHiddenSettings' }, onRead);
+const renderAdvancedSettings = async function(first) {
+    const raw = await vAPI.messaging.send('dashboard', {
+        what: 'readHiddenSettings',
+    });
+
+    beforeHash = hashFromAdvancedSettings(raw);
+    let pretty = [],
+        whitespaces = '                                ',
+        lines = raw.split('\n'),
+        max = 0;
+    for ( let line of lines ) {
+        let pos = line.indexOf(' ');
+        if ( pos > max ) { max = pos; }
+    }
+    for ( let line of lines ) {
+        let pos = line.indexOf(' ');
+        pretty.push(whitespaces.slice(0, max - pos) + line);
+    }
+    cmEditor.setValue(pretty.join('\n') + '\n');
+    if ( first ) {
+        cmEditor.clearHistory();
+    }
+    advancedSettingsChanged();
+    cmEditor.focus();
 };
 
 /******************************************************************************/
 
-const applyChanges = function() {
-    messaging.send(
-        'dashboard',
-        {
-            what: 'writeHiddenSettings',
-            content: cmEditor.getValue()
-        },
-        renderAdvancedSettings
-    );
+const applyChanges = async function() {
+    await vAPI.messaging.send('dashboard', {
+        what: 'writeHiddenSettings',
+        content: cmEditor.getValue(),
+    });
+    renderAdvancedSettings();
 };
 
 /******************************************************************************/
@@ -121,10 +119,9 @@ uDom.nodeFromId('advancedSettings').addEventListener(
     'input',
     advancedSettingsChanged
 );
-uDom.nodeFromId('advancedSettingsApply').addEventListener(
-    'click',
-    applyChanges
-);
+uDom.nodeFromId('advancedSettingsApply').addEventListener('click', ( ) => {
+    applyChanges();
+});
 
 renderAdvancedSettings(true);
 

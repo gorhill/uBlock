@@ -49,37 +49,15 @@
 
     const scriptTags = document.querySelectorAll('script[src]');
 
-    let filteredElementCount = 0;
+    let elementCount = 0;
     if ( vAPI.domFilterer ) {
-        filteredElementCount = vAPI.domFilterer.getFilteredElementCount();
+        elementCount = vAPI.domFilterer.getFilteredElementCount();
     }
 
-    vAPI.messaging.send(
-        'scriptlets',
-        {
-            what: 'domSurveyTransientReport',
-            filteredElementCount: filteredElementCount,
-            scriptCount: inlineScriptCount + scriptTags.length,
-        }
-    );
+    // IMPORTANT: This is returned to the injector, so this MUST be
+    //            the last statement.
+    return {
+        elementCount,
+        scriptCount: inlineScriptCount + scriptTags.length,
+    };
 })();
-
-
-
-
-
-
-
-
-/*******************************************************************************
-
-    DO NOT:
-    - Remove the following code
-    - Add code beyond the following code
-    Reason:
-    - https://github.com/gorhill/uBlock/pull/3721
-    - uBO never uses the return value from injected content scripts
-
-**/
-
-void 0;

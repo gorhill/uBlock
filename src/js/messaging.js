@@ -362,11 +362,35 @@ const popupDataFromRequest = async function(request) {
     return popupDataFromTabId(tabId, tabTitle);
 };
 
+const getDOMStats = async function(tabId) {
+    const results = await vAPI.tabs.executeScript(tabId, {
+        allFrames: true,
+        file: '/js/scriptlets/dom-survey.js',
+        runAt: 'document_end',
+    });
+
+    let elementCount = 0;
+    let scriptCount = 0;
+    results.forEach(result => {
+        if ( result instanceof Object === false ) { return; }
+        elementCount += result.elementCount;
+        scriptCount += result.scriptCount;
+    });
+
+    return { elementCount, scriptCount };
+};
+
 const onMessage = function(request, sender, callback) {
     let pageStore;
 
     // Async
     switch ( request.what ) {
+    case 'getPopupLazyData':
+        getDOMStats(request.tabId).then(results => {
+            callback(results);
+        });
+        return;
+
     case 'getPopupData':
         popupDataFromRequest(request).then(popupData => {
             callback(popupData);
@@ -381,19 +405,6 @@ const onMessage = function(request, sender, callback) {
     let response;
 
     switch ( request.what ) {
-    case 'getPopupLazyData':
-        pageStore = µb.pageStoreFromTabId(request.tabId);
-        if ( pageStore !== null ) {
-            pageStore.hiddenElementCount = 0;
-            pageStore.scriptCount = 0;
-            vAPI.tabs.executeScript(request.tabId, {
-                allFrames: true,
-                file: '/js/scriptlets/dom-survey.js',
-                runAt: 'document_end'
-            });
-        }
-        break;
-
     case 'hasPopupContentChanged':
         pageStore = µb.pageStoreFromTabId(request.tabId);
         var lastModified = pageStore ? pageStore.contentLastModified : 0;
@@ -792,14 +803,13 @@ const µb = µBlock;
 const getLocalData = async function() {
     const data = Object.assign({}, µb.restoreBackupSettings);
     data.storageUsed = await µb.getBytesInUse();
+    data.cloudStorageSupported = µb.cloudStorageSupported;
+    data.privacySettingsSupported = µb.privacySettingsSupported;
     return data;
 };
 
 const backupUserData = async function() {
-    const [ userFilters, localData ] = await Promise.all([
-        µb.loadUserFilters(),
-        getLocalData(),
-    ]);
+    const userFilters = await µb.loadUserFilters();
 
     const userData = {
         timeStamp: Date.now(),
@@ -822,6 +832,8 @@ const backupUserData = async function() {
     µb.restoreBackupSettings.lastBackupFile = filename;
     µb.restoreBackupSettings.lastBackupTime = Date.now();
     vAPI.storage.set(µb.restoreBackupSettings);
+
+    const localData = await getLocalData();
 
     return { localData, userData };
 };
@@ -1348,21 +1360,6 @@ vAPI.messaging.listen({
 // >>>>> start of local scope
 
 const µb = µBlock;
-const broadcastTimers = new Map();
-
-const domSurveyFinalReport = function(tabId) {
-    broadcastTimers.delete(tabId + '-domSurveyReport');
-
-    const pageStore = µb.pageStoreFromTabId(tabId);
-    if ( pageStore === null ) { return; }
-
-    vAPI.messaging.broadcast({
-        what: 'domSurveyFinalReport',
-        tabId: tabId,
-        affectedElementCount: pageStore.hiddenElementCount,
-        scriptCount: pageStore.scriptCount,
-    });
-};
 
 const logCosmeticFilters = function(tabId, details) {
     if ( µb.logger.enabled === false ) { return; }
@@ -1486,24 +1483,6 @@ const onMessage = function(request, sender, callback) {
     switch ( request.what ) {
     case 'applyFilterListSelection':
         response = µb.applyFilterListSelection(request);
-        break;
-
-    case 'domSurveyTransientReport':
-        if ( pageStore !== null ) {
-            if ( request.filteredElementCount ) {
-                pageStore.hiddenElementCount += request.filteredElementCount;
-            }
-            if ( request.scriptCount ) {
-                pageStore.scriptCount += request.scriptCount;
-            }
-            const broadcastKey = `${tabId}-domSurveyReport`;
-            if ( broadcastTimers.has(broadcastKey) === false ) {
-                broadcastTimers.set(broadcastKey, vAPI.setTimeout(
-                    ( ) => { domSurveyFinalReport(tabId); },
-                    103
-                ));
-            }
-        }
         break;
 
     case 'inlinescriptFound':

@@ -114,44 +114,45 @@ cmEditor.on('changes', whitelistChanged);
 
 /******************************************************************************/
 
-const renderWhitelist = function() {
-    const onRead = details => {
-        const first = reBadHostname === undefined;
-        if ( first ) {
-            reBadHostname = new RegExp(details.reBadHostname);
-            reHostnameExtractor = new RegExp(details.reHostnameExtractor);
-            whitelistDefaultSet = new Set(details.whitelistDefault);
+const renderWhitelist = async function() {
+    const details = await messaging.send('dashboard', {
+        what: 'getWhitelist',
+    });
+
+    const first = reBadHostname === undefined;
+    if ( first ) {
+        reBadHostname = new RegExp(details.reBadHostname);
+        reHostnameExtractor = new RegExp(details.reHostnameExtractor);
+        whitelistDefaultSet = new Set(details.whitelistDefault);
+    }
+    const toAdd = new Set(whitelistDefaultSet);
+    for ( const line of details.whitelist ) {
+        const directive = directiveFromLine(line);
+        if ( whitelistDefaultSet.has(directive) === false ) { continue; }
+        toAdd.delete(directive);
+        if ( toAdd.size === 0 ) { break; }
+    }
+    if ( toAdd.size !== 0 ) {
+        details.whitelist.push(...Array.from(toAdd).map(a => `# ${a}`));
+    }
+    details.whitelist.sort((a, b) => {
+        const ad = directiveFromLine(a);
+        const bd = directiveFromLine(b);
+        const abuiltin = whitelistDefaultSet.has(ad);
+        if ( abuiltin !== whitelistDefaultSet.has(bd) ) {
+            return abuiltin ? -1 : 1;
         }
-        const toAdd = new Set(whitelistDefaultSet);
-        for ( const line of details.whitelist ) {
-            const directive = directiveFromLine(line);
-            if ( whitelistDefaultSet.has(directive) === false ) { continue; }
-            toAdd.delete(directive);
-            if ( toAdd.size === 0 ) { break; }
-        }
-        if ( toAdd.size !== 0 ) {
-            details.whitelist.push(...Array.from(toAdd).map(a => `# ${a}`));
-        }
-        details.whitelist.sort((a, b) => {
-            const ad = directiveFromLine(a);
-            const bd = directiveFromLine(b);
-            const abuiltin = whitelistDefaultSet.has(ad);
-            if ( abuiltin !== whitelistDefaultSet.has(bd) ) {
-                return abuiltin ? -1 : 1;
-            }
-            return ad.localeCompare(bd);
-        });
-        let whitelistStr = details.whitelist.join('\n').trim();
-        cachedWhitelist = whitelistStr;
-        if ( whitelistStr !== '' ) {
-            whitelistStr += '\n';
-        }
-        cmEditor.setValue(whitelistStr);
-        if ( first ) {
-            cmEditor.clearHistory();
-        }
-    };
-    messaging.send('dashboard', { what: 'getWhitelist' }, onRead);
+        return ad.localeCompare(bd);
+    });
+    let whitelistStr = details.whitelist.join('\n').trim();
+    cachedWhitelist = whitelistStr;
+    if ( whitelistStr !== '' ) {
+        whitelistStr += '\n';
+    }
+    cmEditor.setValue(whitelistStr);
+    if ( first ) {
+        cmEditor.clearHistory();
+    }
 };
 
 /******************************************************************************/
@@ -201,16 +202,13 @@ const exportWhitelistToFile = function() {
 
 /******************************************************************************/
 
-const applyChanges = function() {
+const applyChanges = async function() {
     cachedWhitelist = cmEditor.getValue().trim();
-    messaging.send(
-        'dashboard',
-        {
-            what: 'setWhitelist',
-            whitelist: cachedWhitelist
-        },
-        renderWhitelist
-    );
+    await messaging.send('dashboard', {
+        what: 'setWhitelist',
+        whitelist: cachedWhitelist,
+    });
+    renderWhitelist();
 };
 
 const revertChanges = function() {
@@ -247,7 +245,7 @@ self.hasUnsavedData = function() {
 uDom('#importWhitelistFromFile').on('click', startImportFilePicker);
 uDom('#importFilePicker').on('change', handleImportFilePicker);
 uDom('#exportWhitelistToFile').on('click', exportWhitelistToFile);
-uDom('#whitelistApply').on('click', applyChanges);
+uDom('#whitelistApply').on('click', ( ) => { applyChanges(); });
 uDom('#whitelistRevert').on('click', revertChanges);
 
 renderWhitelist();

@@ -306,7 +306,11 @@ const renderFilterLists = function(soft) {
         renderWidgets();
     };
 
-    messaging.send('dashboard', { what: 'getLists' }, onListsReceived);
+    messaging.send('dashboard', {
+        what: 'getLists',
+    }).then(details => {
+        onListsReceived(details);
+    });
 };
 
 /******************************************************************************/
@@ -402,7 +406,10 @@ const onPurgeClicked = function(ev) {
     const listKey = liEntry.attr('data-listkey');
     if ( !listKey ) { return; }
 
-    messaging.send('dashboard', { what: 'purgeCache', assetKey: listKey });
+    messaging.send('dashboard', {
+        what: 'purgeCache',
+        assetKey: listKey,
+    });
 
     // If the cached version is purged, the installed version must be assumed
     // to be obsolete.
@@ -419,17 +426,17 @@ const onPurgeClicked = function(ev) {
 
 /******************************************************************************/
 
-const selectFilterLists = function(callback) {
+const selectFilterLists = async function() {
     // Cosmetic filtering switch
     messaging.send('dashboard', {
         what: 'userSettings',
         name: 'parseAllABPHideFilters',
-        value: document.getElementById('parseCosmeticFilters').checked
+        value: document.getElementById('parseCosmeticFilters').checked,
     });
     messaging.send('dashboard', {
         what: 'userSettings',
         name: 'ignoreGenericCosmeticFilters',
-        value: document.getElementById('ignoreGenericCosmeticFilters').checked
+        value: document.getElementById('ignoreGenericCosmeticFilters').checked,
     });
 
     // Filter lists to select
@@ -454,67 +461,53 @@ const selectFilterLists = function(callback) {
     externalListsElem.value = '';
     uDom.nodeFromId('importLists').checked = false;
 
-    messaging.send(
-        'dashboard',
-        {
-            what: 'applyFilterListSelection',
-            toSelect: toSelect,
-            toImport: toImport,
-            toRemove: toRemove
-        },
-        callback
-    );
+    await messaging.send('dashboard', {
+        what: 'applyFilterListSelection',
+        toSelect: toSelect,
+        toImport: toImport,
+        toRemove: toRemove,
+    });
+
     filteringSettingsHash = hashFromCurrentFromSettings();
 };
 
 /******************************************************************************/
 
-const buttonApplyHandler = function() {
+const buttonApplyHandler = async function() {
     uDom('#buttonApply').removeClass('enabled');
-    selectFilterLists(( ) => {
-        messaging.send('dashboard', { what: 'reloadAllFilters' });
-    });
     renderWidgets();
+    await selectFilterLists();
+    messaging.send('dashboard', { what: 'reloadAllFilters' });
 };
 
 /******************************************************************************/
 
-const buttonUpdateHandler = function() {
-    selectFilterLists(( ) => {
-        document.body.classList.add('updating');
-        messaging.send('dashboard', { what: 'forceUpdateAssets' });
-        renderWidgets();
-    });
+const buttonUpdateHandler = async function() {
+    await selectFilterLists();
+    document.body.classList.add('updating');
     renderWidgets();
+    messaging.send('dashboard', { what: 'forceUpdateAssets' });
 };
 
 /******************************************************************************/
 
-const buttonPurgeAllHandler = function(ev) {
+const buttonPurgeAllHandler = async function(hard) {
     uDom('#buttonPurgeAll').removeClass('enabled');
-    messaging.send(
-        'dashboard',
-        {
-            what: 'purgeAllCaches',
-            hard: ev.ctrlKey && ev.shiftKey
-        },
-        ( ) => {
-            renderFilterLists(true);
-        }
-    );
+    await messaging.send('dashboard', {
+        what: 'purgeAllCaches',
+        hard,
+    });
+    renderFilterLists(true);
 };
 
 /******************************************************************************/
 
 const autoUpdateCheckboxChanged = function() {
-    messaging.send(
-        'dashboard',
-        {
-            what: 'userSettings',
-            name: 'autoUpdate',
-            value: this.checked
-        }
-    );
+    messaging.send('dashboard', {
+        what: 'userSettings',
+        name: 'autoUpdate',
+        value: this.checked,
+    });
 };
 
 /******************************************************************************/
@@ -675,9 +668,11 @@ self.hasUnsavedData = function() {
 uDom('#autoUpdate').on('change', autoUpdateCheckboxChanged);
 uDom('#parseCosmeticFilters').on('change', onFilteringSettingsChanged);
 uDom('#ignoreGenericCosmeticFilters').on('change', onFilteringSettingsChanged);
-uDom('#buttonApply').on('click', buttonApplyHandler);
-uDom('#buttonUpdate').on('click', buttonUpdateHandler);
-uDom('#buttonPurgeAll').on('click', buttonPurgeAllHandler);
+uDom('#buttonApply').on('click', ( ) => { buttonApplyHandler(); });
+uDom('#buttonUpdate').on('click', ( ) => { buttonUpdateHandler(); });
+uDom('#buttonPurgeAll').on('click', ev => {
+    buttonPurgeAllHandler(ev.ctrlKey && ev.shiftKey);
+});
 uDom('#lists').on('change', '.listEntry > input', onFilteringSettingsChanged);
 uDom('#lists').on('click', '.listEntry > a.remove', onRemoveExternalList);
 uDom('#lists').on('click', 'span.cache', onPurgeClicked);

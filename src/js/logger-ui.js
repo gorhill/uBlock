@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-(function() {
+(( ) => {
 
 /******************************************************************************/
 
@@ -975,7 +975,7 @@ const onLogBufferRead = function(response) {
 const readLogBuffer = (( ) => {
     let timer;
 
-    const readLogBufferNow = function() {
+    const readLogBufferNow = async function() {
         if ( logger.ownerId === undefined ) { return; }
 
         const msg = {
@@ -1002,11 +1002,11 @@ const readLogBuffer = (( ) => {
             msg.popupLoggerBoxChanged = true;
         }
 
-        vAPI.messaging.send('loggerUI', msg, response => {
-            timer = undefined;
-            onLogBufferRead(response);
-            readLogBufferLater();
-        });
+        const response = await vAPI.messaging.send('loggerUI', msg);
+
+        timer = undefined;
+        onLogBufferRead(response);
+        readLogBufferLater();
     };
 
     const readLogBufferLater = function() {
@@ -1078,7 +1078,7 @@ const reloadTab = function(ev) {
     messaging.send('loggerUI', {
         what: 'reloadTab',
         tabId: tabId,
-        bypassCache: ev && (ev.ctrlKey || ev.metaKey || ev.shiftKey)
+        bypassCache: ev && (ev.ctrlKey || ev.metaKey || ev.shiftKey),
     });
 };
 
@@ -1144,17 +1144,14 @@ const reloadTab = function(ev) {
         }
     };
 
-    const colorize = function() {
-        messaging.send(
-            'loggerUI',
-            {
-                what: 'getURLFilteringData',
-                context: selectValue('select.dynamic.origin'),
-                urls: targetURLs,
-                type: uglyTypeFromSelector('dynamic')
-            },
-            onColorsReady
-        );
+    const colorize = async function() {
+        const response = await messaging.send('loggerUI', {
+            what: 'getURLFilteringData',
+            context: selectValue('select.dynamic.origin'),
+            urls: targetURLs,
+            type: uglyTypeFromSelector('dynamic'),
+        });
+        onColorsReady(response);
     };
 
     const parseStaticInputs = function() {
@@ -1228,16 +1225,13 @@ const reloadTab = function(ev) {
             }
             createdStaticFilters[value] = true;
             if ( value !== '' ) {
-                messaging.send(
-                    'loggerUI',
-                    {
-                        what: 'createUserFilter',
-                        autoComment: true,
-                        filters: value,
-                        origin: targetPageDomain,
-                        pageDomain: targetPageDomain,
-                    }
-                );
+                messaging.send('loggerUI', {
+                    what: 'createUserFilter',
+                    autoComment: true,
+                    filters: value,
+                    origin: targetPageDomain,
+                    pageDomain: targetPageDomain,
+                });
             }
             updateWidgets();
             ev.stopPropagation();
@@ -1246,16 +1240,14 @@ const reloadTab = function(ev) {
 
         // Save url filtering rule(s)
         if ( target.id === 'saveRules' ) {
-                messaging.send(
-                'loggerUI',
-                {
-                    what: 'saveURLFilteringRules',
-                    context: selectValue('select.dynamic.origin'),
-                    urls: targetURLs,
-                    type: uglyTypeFromSelector('dynamic')
-                },
-                colorize
-            );
+            messaging.send('loggerUI', {
+                what: 'saveURLFilteringRules',
+                context: selectValue('select.dynamic.origin'),
+                urls: targetURLs,
+                type: uglyTypeFromSelector('dynamic'),
+            }).then(( ) => {
+                colorize();
+            });
             ev.stopPropagation();
             return;
         }
@@ -1264,100 +1256,86 @@ const reloadTab = function(ev) {
 
         // Remove url filtering rule
         if ( tcl.contains('action') ) {
-            messaging.send(
-                'loggerUI',
-                {
-                    what: 'setURLFilteringRule',
-                    context: selectValue('select.dynamic.origin'),
-                    url: target.getAttribute('data-url'),
-                    type: uglyTypeFromSelector('dynamic'),
-                    action: 0,
-                    persist: persist
-                },
-                colorize
-            );
+            messaging.send('loggerUI', {
+                what: 'setURLFilteringRule',
+                context: selectValue('select.dynamic.origin'),
+                url: target.getAttribute('data-url'),
+                type: uglyTypeFromSelector('dynamic'),
+                action: 0,
+                persist: persist,
+            }).then(( ) => {
+                colorize();
+            });
             ev.stopPropagation();
             return;
         }
 
         // add "allow" url filtering rule
         if ( tcl.contains('allow') ) {
-            messaging.send(
-                'loggerUI',
-                {
-                    what: 'setURLFilteringRule',
-                    context: selectValue('select.dynamic.origin'),
-                    url: target.parentNode.getAttribute('data-url'),
-                    type: uglyTypeFromSelector('dynamic'),
-                    action: 2,
-                    persist: persist
-                },
-                colorize
-            );
+            messaging.send('loggerUI', {
+                what: 'setURLFilteringRule',
+                context: selectValue('select.dynamic.origin'),
+                url: target.parentNode.getAttribute('data-url'),
+                type: uglyTypeFromSelector('dynamic'),
+                action: 2,
+                persist: persist,
+            }).then(( ) => {
+                colorize();
+            });
             ev.stopPropagation();
             return;
         }
 
         // add "block" url filtering rule
         if ( tcl.contains('noop') ) {
-            messaging.send(
-                'loggerUI',
-                {
-                    what: 'setURLFilteringRule',
-                    context: selectValue('select.dynamic.origin'),
-                    url: target.parentNode.getAttribute('data-url'),
-                    type: uglyTypeFromSelector('dynamic'),
-                    action: 3,
-                    persist: persist
-                },
-                colorize
-            );
+            messaging.send('loggerUI', {
+                what: 'setURLFilteringRule',
+                context: selectValue('select.dynamic.origin'),
+                url: target.parentNode.getAttribute('data-url'),
+                type: uglyTypeFromSelector('dynamic'),
+                action: 3,
+                persist: persist,
+            }).then(( ) => {
+                colorize();
+            });
             ev.stopPropagation();
             return;
         }
 
         // add "block" url filtering rule
         if ( tcl.contains('block') ) {
-            messaging.send(
-                'loggerUI',
-                {
-                    what: 'setURLFilteringRule',
-                    context: selectValue('select.dynamic.origin'),
-                    url: target.parentNode.getAttribute('data-url'),
-                    type: uglyTypeFromSelector('dynamic'),
-                    action: 1,
-                    persist: persist
-                },
-                colorize
-            );
+            messaging.send('loggerUI', {
+                what: 'setURLFilteringRule',
+                context: selectValue('select.dynamic.origin'),
+                url: target.parentNode.getAttribute('data-url'),
+                type: uglyTypeFromSelector('dynamic'),
+                action: 1,
+                persist: persist,
+            }).then(( ) => {
+                colorize();
+            });
             ev.stopPropagation();
             return;
         }
 
         // Force a reload of the tab
         if ( tcl.contains('reload') ) {
-            messaging.send(
-                'loggerUI',
-                {
-                    what: 'reloadTab',
-                    tabId: targetTabId
-                }
-            );
+            messaging.send('loggerUI', {
+                what: 'reloadTab',
+                tabId: targetTabId,
+            });
             ev.stopPropagation();
             return;
         }
 
         // Hightlight corresponding element in target web page
         if ( tcl.contains('picker') ) {
-            messaging.send(
-                'loggerUI',
-                {
-                    what: 'launchElementPicker',
-                    tabId: targetTabId,
-                    targetURL: 'img\t' + targetURLs[0],
-                    select: true
-                }
-            );
+            messaging.send('loggerUI', {
+                what: 'launchElementPicker',
+                tabId: targetTabId,
+                targetURL: 'img\t' + targetURLs[0],
+                select: true,
+            });
             ev.stopPropagation();
             return;
         }
@@ -1450,7 +1428,7 @@ const reloadTab = function(ev) {
         return urls;
     };
 
-    const fillSummaryPaneFilterList = function(rows) {
+    const fillSummaryPaneFilterList = async function(rows) {
         const rawFilter = targetRow.children[1].textContent;
         const compiledFilter = targetRow.getAttribute('data-filter');
 
@@ -1509,25 +1487,19 @@ const reloadTab = function(ev) {
         };
 
         if ( targetRow.classList.contains('networkRealm') ) {
-            messaging.send(
-                'loggerUI',
-                {
-                    what: 'listsFromNetFilter',
-                    compiledFilter: compiledFilter,
-                    rawFilter: rawFilter
-                },
-                handleResponse
-            );
+            const response = await messaging.send('loggerUI', {
+                what: 'listsFromNetFilter',
+                compiledFilter: compiledFilter,
+                rawFilter: rawFilter,
+            });
+            handleResponse(response);
         } else if ( targetRow.classList.contains('cosmeticRealm') ) {
-            messaging.send(
-                'loggerUI',
-                {
-                    what: 'listsFromCosmeticFilter',
-                    url: targetRow.children[6].textContent,
-                    rawFilter: rawFilter,
-                },
-                handleResponse
-            );
+            const response = await messaging.send('loggerUI', {
+                what: 'listsFromCosmeticFilter',
+                url: targetRow.children[6].textContent,
+                rawFilter: rawFilter,
+            });
+            handleResponse(response);
         }
     };
 
@@ -1789,7 +1761,7 @@ const reloadTab = function(ev) {
         modalDialog.show();
     };
 
-    const toggleOn = function(ev) {
+    const toggleOn = async function(ev) {
         targetRow = ev.target.closest('.canDetails');
         if ( targetRow === null ) { return; }
         ev.stopPropagation();
@@ -1800,24 +1772,21 @@ const reloadTab = function(ev) {
         targetFrameHostname = targetRow.getAttribute('data-dochn') || '';
 
         // We need the root domain names for best user experience.
-        messaging.send(
-            'loggerUI',
-            {
-                what: 'getDomainNames',
-                targets: [
-                    targetURLs[0],
-                    targetPageHostname,
-                    targetFrameHostname
-                ]
-            },
-            fillDialog
-        );
+        const domains = await messaging.send('loggerUI', {
+            what: 'getDomainNames',
+            targets: [
+                targetURLs[0],
+                targetPageHostname,
+                targetFrameHostname
+            ],
+        });
+        fillDialog(domains);
     };
 
     uDom('#netInspector').on(
         'click',
         '.canDetails > span:nth-of-type(2),.canDetails > span:nth-of-type(3),.canDetails > span:nth-of-type(5)',
-        toggleOn
+        ev => { toggleOn(ev); }
     );
 })();
 
@@ -2766,10 +2735,10 @@ const grabView = function() {
 
 const releaseView = function() {
     if ( logger.ownerId === undefined ) { return; }
-    vAPI.messaging.send(
-        'loggerUI',
-        { what: 'releaseView', ownerId: logger.ownerId }
-    );
+    vAPI.messaging.send('loggerUI', {
+        what: 'releaseView',
+        ownerId: logger.ownerId,
+    });
     logger.ownerId = undefined;
 };
 

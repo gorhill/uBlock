@@ -207,19 +207,15 @@ vAPI.SafeAnimationFrame.prototype = {
     let timer;
 
     const send = function() {
-        vAPI.messaging.send(
-            'scriptlets',
-            {
-                what: 'securityPolicyViolation',
-                type: 'net',
-                docURL: document.location.href,
-                violations: Array.from(newEvents),
-            },
-            response => {
-                if ( response === true ) { return; }
-                stop();
-            }
-        );
+        vAPI.messaging.send('scriptlets', {
+            what: 'securityPolicyViolation',
+            type: 'net',
+            docURL: document.location.href,
+            violations: Array.from(newEvents),
+        }).then(response => {
+            if ( response === true ) { return; }
+            stop();
+        });
         for ( const event of newEvents ) {
             allEvents.add(event);
         }
@@ -230,7 +226,7 @@ vAPI.SafeAnimationFrame.prototype = {
         if ( timer !== undefined ) { return; }
         timer = self.requestIdleCallback(
             ( ) => { timer = undefined; send(); },
-            { timeout: 2000 }
+            { timeout: 2063 }
         );
     };
 
@@ -908,7 +904,8 @@ vAPI.domCollapser = (function() {
     // https://github.com/chrisaljoudi/uBlock/issues/174
     //   Do not remove fragment from src URL
     const onProcessed = function(response) {
-        if ( !response ) { // This happens if uBO is disabled or restarted.
+        // This happens if uBO is disabled or restarted.
+        if ( response instanceof Object === false ) {
             toCollapse.clear();
             return;
         }
@@ -964,29 +961,27 @@ vAPI.domCollapser = (function() {
         }
 
         if ( selectors.length !== 0 ) {
-            messaging.send(
-                'contentscript',
-                {
-                    what: 'cosmeticFiltersInjected',
-                    type: 'net',
-                    hostname: window.location.hostname,
-                    selectors: selectors
-                }
-            );
+            messaging.send('contentscript', {
+                what: 'cosmeticFiltersInjected',
+                type: 'net',
+                hostname: window.location.hostname,
+                selectors,
+            });
         }
     };
 
     const send = function() {
         processTimer = undefined;
         toCollapse.set(resquestIdGenerator, toProcess);
-        const msg = {
+        messaging.send('contentscript', {
             what: 'getCollapsibleBlockedRequests',
             id: resquestIdGenerator,
             frameURL: window.location.href,
             resources: toFilter,
-            hash: cachedBlockedSetHash
-        };
-        messaging.send('contentscript', msg, onProcessed);
+            hash: cachedBlockedSetHash,
+        }).then(response => {
+            onProcessed(response);
+        });
         toProcess = [];
         toFilter = [];
         resquestIdGenerator += 1;
@@ -1256,18 +1251,16 @@ vAPI.domSurveyor = (function() {
         //console.info(`domSurveyor> Surveyed ${processed} nodes in ${(t1-t0).toFixed(2)} ms`);
         // Phase 2: Ask main process to lookup relevant cosmetic filters.
         if ( ids.length !== 0 || classes.length !== 0 ) {
-            messaging.send(
-                'contentscript',
-                {
-                    what: 'retrieveGenericCosmeticSelectors',
-                    hostname: hostname,
-                    ids: ids,
-                    classes: classes,
-                    exceptions: domFilterer.exceptions,
-                    cost: surveyCost
-                },
-                surveyPhase3
-            );
+            messaging.send('contentscript', {
+                what: 'retrieveGenericCosmeticSelectors',
+                hostname,
+                ids,
+                classes,
+                exceptions: domFilterer.exceptions,
+                cost: surveyCost,
+            }).then(response => {
+                surveyPhase3(response);
+            });
         } else {
             surveyPhase3(null);
         }
@@ -1408,10 +1401,9 @@ vAPI.bootstrap = (function() {
         if ( window.location === null ) { return; }
         if ( vAPI instanceof Object === false ) { return; }
 
-        vAPI.messaging.send(
-            'contentscript',
-            { what: 'shouldRenderNoscriptTags' }
-        );
+        vAPI.messaging.send('contentscript', {
+            what: 'shouldRenderNoscriptTags',
+        });
 
         if ( vAPI.domWatcher instanceof Object ) {
             vAPI.domWatcher.start();
@@ -1437,15 +1429,12 @@ vAPI.bootstrap = (function() {
             while ( elem !== null && elem.localName !== 'a' ) {
                 elem = elem.parentElement;
             }
-            vAPI.messaging.send(
-                'contentscript',
-                {
-                    what: 'mouseClick',
-                    x: ev.clientX,
-                    y: ev.clientY,
-                    url: elem !== null && ev.isTrusted !== false ? elem.href : ''
-                }
-            );
+            vAPI.messaging.send('contentscript', {
+                what: 'mouseClick',
+                x: ev.clientX,
+                y: ev.clientY,
+                url: elem !== null && ev.isTrusted !== false ? elem.href : '',
+            });
         };
 
         document.addEventListener('mousedown', onMouseClick, true);
@@ -1546,16 +1535,14 @@ vAPI.bootstrap = (function() {
     };
 
     return function() {
-        vAPI.messaging.send(
-            'contentscript',
-            {
-                what: 'retrieveContentScriptParameters',
-                url: window.location.href,
-                isRootFrame: window === window.top,
-                charset: document.characterSet,
-            },
-            bootstrapPhase1
-        );
+        vAPI.messaging.send('contentscript', {
+            what: 'retrieveContentScriptParameters',
+            url: window.location.href,
+            isRootFrame: window === window.top,
+            charset: document.characterSet,
+        }).then(response => {
+            bootstrapPhase1(response);
+        });
     };
 })();
 

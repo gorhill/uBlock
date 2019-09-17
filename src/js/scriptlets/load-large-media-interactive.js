@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2015-2018 Raymond Hill
+    Copyright (C) 2015-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,11 +19,11 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+'use strict';
+
 /******************************************************************************/
 
-(function() {
-
-'use strict';
+(( ) => {
 
 /******************************************************************************/
 
@@ -34,19 +34,18 @@ if ( typeof vAPI !== 'object' || vAPI.loadLargeMediaInteractive === true ) {
 
 /******************************************************************************/
 
-var largeMediaElementAttribute = 'data-' + vAPI.sessionId;
-var largeMediaElementSelector =
+const largeMediaElementAttribute = 'data-' + vAPI.sessionId;
+const largeMediaElementSelector =
     ':root audio[' + largeMediaElementAttribute + '],\n' +
     ':root   img[' + largeMediaElementAttribute + '],\n' +
     ':root video[' + largeMediaElementAttribute + ']';
 
 /******************************************************************************/
 
-var mediaNotLoaded = function(elem) {
-    var src = elem.getAttribute('src') || '';
-    if ( src === '' ) {
-        return false;
-    }
+const mediaNotLoaded = function(elem) {
+    const src = elem.getAttribute('src') || '';
+    if ( src === '' ) { return false; }
+
     switch ( elem.localName ) {
     case 'audio':
     case 'video':
@@ -55,7 +54,7 @@ var mediaNotLoaded = function(elem) {
         if ( elem.naturalWidth !== 0 || elem.naturalHeight !== 0 ) {
             break;
         }
-        var style = window.getComputedStyle(elem);
+        const style = window.getComputedStyle(elem);
         // For some reason, style can be null with Pale Moon.
         return style !== null ?
             style.getPropertyValue('display') !== 'none' :
@@ -74,7 +73,7 @@ var mediaNotLoaded = function(elem) {
 // https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement
 // https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement
 
-var surveyMissingMediaElements = function() {
+const surveyMissingMediaElements = function() {
     var largeMediaElementCount = 0;
     var elems = document.querySelectorAll('audio,img,video');
     var i = elems.length, elem;
@@ -95,7 +94,7 @@ if ( surveyMissingMediaElements() === 0 ) {
 vAPI.loadLargeMediaInteractive = true;
 
 // Insert custom style tag.
-var styleTag = document.createElement('style');
+let styleTag = document.createElement('style');
 styleTag.setAttribute('type', 'text/css');
 styleTag.textContent = [
     largeMediaElementSelector + ' {',
@@ -114,10 +113,10 @@ document.head.appendChild(styleTag);
 
 /******************************************************************************/
 
-var stayOrLeave = (function() {
-    var timer = null;
+const stayOrLeave = (( ) => {
+    let timer = null;
 
-    var timeoutHandler = function(leaveNow) {
+    const timeoutHandler = function(leaveNow) {
         timer = null;
         if ( leaveNow !== true ) {
             if ( 
@@ -151,15 +150,26 @@ var stayOrLeave = (function() {
 
 /******************************************************************************/
 
-var onMouseClick = function(ev) {
-    if ( ev.button !== 0 ) {
-        return;
-    }
+const loadImage = async function(elem) {
+    const src = elem.getAttribute('src');
+    elem.removeAttribute('src');
 
-    var elem = ev.target;
-    if ( elem.matches(largeMediaElementSelector) === false ) {
-        return;
-    }
+    await vAPI.messaging.send('scriptlets', {
+        what: 'temporarilyAllowLargeMediaElement',
+    });
+
+    elem.setAttribute('src', src);
+    elem.removeAttribute(largeMediaElementAttribute);
+    stayOrLeave();
+};
+
+/******************************************************************************/
+
+const onMouseClick = function(ev) {
+    if ( ev.button !== 0 ) { return; }
+
+    const elem = ev.target;
+    if ( elem.matches(largeMediaElementSelector) === false ) { return; }
 
     if ( mediaNotLoaded(elem) === false ) {
         elem.removeAttribute(largeMediaElementAttribute);
@@ -167,20 +177,7 @@ var onMouseClick = function(ev) {
         return;
     }
 
-    var src = elem.getAttribute('src');
-    elem.removeAttribute('src');
-
-    var onLargeMediaElementAllowed = function() {
-        elem.setAttribute('src', src);
-        elem.removeAttribute(largeMediaElementAttribute);
-        stayOrLeave();
-    };
-
-    vAPI.messaging.send(
-        'scriptlets',
-        { what: 'temporarilyAllowLargeMediaElement' },
-        onLargeMediaElementAllowed
-    );
+    loadImage(elem);
 
     ev.preventDefault();
     ev.stopPropagation();
@@ -190,8 +187,8 @@ document.addEventListener('click', onMouseClick, true);
 
 /******************************************************************************/
 
-var onLoad = function(ev) {
-    var elem = ev.target;
+const onLoad = function(ev) {
+    const elem = ev.target;
     if ( elem.hasAttribute(largeMediaElementAttribute) ) {
         elem.removeAttribute(largeMediaElementAttribute);
         stayOrLeave();
@@ -202,8 +199,8 @@ document.addEventListener('load', onLoad, true);
 
 /******************************************************************************/
 
-var onLoadError = function(ev) {
-    var elem = ev.target;
+const onLoadError = function(ev) {
+    const elem = ev.target;
     if ( mediaNotLoaded(elem) ) {
         elem.setAttribute(largeMediaElementAttribute, '');
     }

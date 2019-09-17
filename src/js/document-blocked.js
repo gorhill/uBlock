@@ -41,44 +41,42 @@ let details = {};
 
 /******************************************************************************/
 
-messaging.send(
-    'documentBlocked',
-    {
+(async ( ) => {
+    const response = await messaging.send('documentBlocked', {
         what: 'listsFromNetFilter',
         compiledFilter: details.fc,
-        rawFilter: details.fs
-    },
-    response => {
-        if ( response instanceof Object === false ) { return; }
+        rawFilter: details.fs,
+    });
+    if ( response instanceof Object === false ) { return; }
 
-        let lists;
-        for ( const rawFilter in response ) {
-            if ( response.hasOwnProperty(rawFilter) === false ) { continue; }
+    let lists;
+    for ( const rawFilter in response ) {
+        if ( response.hasOwnProperty(rawFilter) ) {
             lists = response[rawFilter];
             break;
         }
-
-        if ( Array.isArray(lists) === false || lists.length === 0 ) { return; }
-
-        const parent = uDom.nodeFromSelector('#whyex > span:nth-of-type(2)');
-        for ( const list of lists ) {
-            const elem = document.querySelector('#templates .filterList')
-                                 .cloneNode(true);
-            const source = elem.querySelector('.filterListSource');
-            source.href += encodeURIComponent(list.assetKey);
-            source.textContent = list.title;
-            if (
-                typeof list.supportURL === 'string' &&
-                list.supportURL !== ''
-            ) {
-                elem.querySelector('.filterListSupport')
-                    .setAttribute('href', list.supportURL);
-            }
-            parent.appendChild(elem);
-        }
-        uDom.nodeFromId('whyex').style.removeProperty('display');
     }
-);
+
+    if ( Array.isArray(lists) === false || lists.length === 0 ) { return; }
+
+    const parent = uDom.nodeFromSelector('#whyex > span:nth-of-type(2)');
+    for ( const list of lists ) {
+        const elem = document.querySelector('#templates .filterList')
+                             .cloneNode(true);
+        const source = elem.querySelector('.filterListSource');
+        source.href += encodeURIComponent(list.assetKey);
+        source.textContent = list.title;
+        if (
+            typeof list.supportURL === 'string' &&
+            list.supportURL !== ''
+        ) {
+            elem.querySelector('.filterListSupport')
+                .setAttribute('href', list.supportURL);
+        }
+        parent.appendChild(elem);
+    }
+    uDom.nodeFromId('whyex').style.removeProperty('display');
+})();
 
 /******************************************************************************/
 
@@ -219,10 +217,9 @@ if ( window.history.length > 1 ) {
     uDom('#bye').on(
         'click',
         ( ) => {
-            messaging.send(
-                'documentBlocked',
-                { what: 'closeThisTab', }
-            );
+            messaging.send('documentBlocked', {
+                what: 'closeThisTab',
+            });
         }
     );
     uDom('#back').css('display', 'none');
@@ -240,30 +237,24 @@ const proceedToURL = function() {
     window.location.replace(details.url);
 };
 
-const proceedTemporary = function() {
-    messaging.send(
-        'documentBlocked',
-        {
-            what: 'temporarilyWhitelistDocument',
-            hostname: getTargetHostname()
-        },
-        proceedToURL
-    );
+const proceedTemporary = async function() {
+    await messaging.send('documentBlocked', {
+        what: 'temporarilyWhitelistDocument',
+        hostname: getTargetHostname(),
+    });
+    proceedToURL();
 };
 
-const proceedPermanent = function() {
-    messaging.send(
-        'documentBlocked',
-        {
-            what: 'toggleHostnameSwitch',
-            name: 'no-strict-blocking',
-            hostname: getTargetHostname(),
-            deep: true,
-            state: true,
-            persist: true
-        },
-        proceedToURL
-    );
+const proceedPermanent = async function() {
+    await messaging.send('documentBlocked', {
+        what: 'toggleHostnameSwitch',
+        name: 'no-strict-blocking',
+        hostname: getTargetHostname(),
+        deep: true,
+        state: true,
+        persist: true,
+    });
+    proceedToURL();
 };
 
 uDom('#proceedTemporary').attr('href', details.url).on('click', proceedTemporary);

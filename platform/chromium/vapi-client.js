@@ -137,10 +137,10 @@ vAPI.messaging = {
 
         // Response to specific message previously sent
         if ( details.auxProcessId ) {
-            const listener = this.pending.get(details.auxProcessId);
-            if ( listener !== undefined ) {
+            const resolver = this.pending.get(details.auxProcessId);
+            if ( resolver !== undefined ) {
                 this.pending.delete(details.auxProcessId);
-                listener(details.msg);
+                resolver(details.msg);
                 return;
             }
         }
@@ -222,10 +222,8 @@ vAPI.messaging = {
         if ( this.pending.size !== 0 ) {
             const pending = this.pending;
             this.pending = new Map();
-            for ( const callback of pending.values() ) {
-                if ( typeof callback === 'function' ) {
-                    callback(null);
-                }
+            for ( const resolver of pending.values() ) {
+                resolver();
             }
         }
     },
@@ -264,7 +262,7 @@ vAPI.messaging = {
         return this.port !== null ? this.port : this.createPort();
     },
 
-    send: function(channelName, message, callback) {
+    send: function(channelName, msg) {
         // Too large a gap between the last request and the last response means
         // the main process is no longer reachable: memory leaks and bad
         // performance become a risk -- especially for long-lived, dynamic
@@ -274,19 +272,14 @@ vAPI.messaging = {
         }
         const port = this.getPort();
         if ( port === null ) {
-            if ( typeof callback === 'function' ) { callback(); }
-            return;
+            return Promise.resolve();
         }
-        let auxProcessId;
-        if ( callback ) {
-            auxProcessId = this.auxProcessId++;
-            this.pending.set(auxProcessId, callback);
-        }
-        port.postMessage({
-            channelName: channelName,
-            auxProcessId: auxProcessId,
-            msg: message
+        const auxProcessId = this.auxProcessId++;
+        const promise = new Promise(resolve => {
+            this.pending.set(auxProcessId, resolve);
         });
+        port.postMessage({ channelName, auxProcessId, msg });
+        return promise;
     },
 
     connectTo: function(from, to, handler) {

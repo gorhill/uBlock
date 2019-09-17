@@ -21,14 +21,14 @@
 
 'use strict';
 
-(function() {
+(( ) => {
 
     // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/manifest.json/commands#Shortcut_values
-    let validStatus0Keys = new Map([
+    const validStatus0Keys = new Map([
         [ 'alt', 'Alt' ],
         [ 'control', 'Ctrl' ],
     ]);
-    let validStatus1Keys = new Map([
+    const validStatus1Keys = new Map([
         [ 'a', 'A' ],
         [ 'b', 'B' ],
         [ 'c', 'C' ],
@@ -93,42 +93,43 @@
         [ 'shift', 'Shift' ],
     ]);
 
-    let commandNameFromElement = function(elem) {
+    const commandNameFromElement = function(elem) {
         while ( elem !== null ) {
-            let name = elem.getAttribute('data-name');
+            const name = elem.getAttribute('data-name');
             if ( typeof name === 'string' && name !== '' ) { return name; }
             elem = elem.parentElement;
         }
     };
 
-    let captureShortcut = function(ev) {
-        let input = ev.target;
-        let name = commandNameFromElement(input);
+    const captureShortcut = function(ev) {
+        const input = ev.target;
+        const name = commandNameFromElement(input);
         if ( name === undefined ) { return; }
 
-        let before = input.value;
-        let after = new Set();
+        const before = input.value;
+        const after = new Set();
         let status = 0;
 
-        let updateCapturedShortcut = function() {
+        const updateCapturedShortcut = function() {
             return (input.value = Array.from(after).join('+'));
         };
 
-        let blurHandler = function() {
+        const blurHandler = function() {
             input.removeEventListener('blur', blurHandler, true);
             input.removeEventListener('keydown', keydownHandler, true);
             input.removeEventListener('keyup', keyupHandler, true);
             if ( status === 2 ) {
-                vAPI.messaging.send(
-                    'dashboard',
-                    { what: 'setShortcut', name: name, shortcut: updateCapturedShortcut() }
-                );
+                vAPI.messaging.send('dashboard', {
+                    what: 'setShortcut',
+                    name,
+                    shortcut: updateCapturedShortcut(),
+                });
             } else {
                 input.value = before;
             }
         };
 
-        let keydownHandler = function(ev) {
+        const keydownHandler = function(ev) {
             ev.preventDefault();
             ev.stopImmediatePropagation();
             if ( ev.code === 'Escape' ) {
@@ -136,7 +137,7 @@
                 return;
             }
             if ( status === 0 ) {
-                let keyName = validStatus0Keys.get(ev.key.toLowerCase());
+                const keyName = validStatus0Keys.get(ev.key.toLowerCase());
                 if ( keyName !== undefined ) {
                     after.add(keyName);
                     updateCapturedShortcut();
@@ -161,11 +162,11 @@
             }
         };
 
-        let keyupHandler = function(ev) {
+        const keyupHandler = function(ev) {
             ev.preventDefault();
             ev.stopImmediatePropagation();
             if ( status !== 1 ) { return; }
-            let keyName = validStatus0Keys.get(ev.key.toLowerCase());
+            const keyName = validStatus0Keys.get(ev.key.toLowerCase());
             if ( keyName !== undefined && after.has(keyName) ) {
                 after.clear();
                 updateCapturedShortcut();
@@ -185,29 +186,29 @@
         input.addEventListener('keyup', keyupHandler, true);
     };
 
-    let resetShortcut = function(ev) {
-        let name = commandNameFromElement(ev.target);
+    const resetShortcut = function(ev) {
+        const name = commandNameFromElement(ev.target);
         if ( name === undefined ) { return; }
 
-        let input = document.querySelector('[data-name="' + name + '"] input');
+        const input = document.querySelector('[data-name="' + name + '"] input');
         if ( input === null ) { return; }
         input.value = '';
-        vAPI.messaging.send(
-            'dashboard',
-            { what: 'setShortcut', name: name }
-        );
+        vAPI.messaging.send('dashboard', {
+            what: 'setShortcut',
+            name,
+        });
     };
 
-    let onShortcutsReady = function(commands) {
+    const onShortcutsReady = function(commands) {
         if ( Array.isArray(commands) === false ) { return; }
-        let template = document.querySelector('#templates .commandEntry');
-        let tbody = document.querySelector('.commandEntries tbody');
-        for ( let command of commands ) {
+        const template = document.querySelector('#templates .commandEntry');
+        const tbody = document.querySelector('.commandEntries tbody');
+        for ( const command of commands ) {
             if ( command.description === '' ) { continue; }
-            let tr = template.cloneNode(true);
+            const tr = template.cloneNode(true);
             tr.setAttribute('data-name', command.name);
             tr.querySelector('.commandDesc').textContent = command.description;
-            let input = tr.querySelector('.commandShortcut input');
+            const input = tr.querySelector('.commandShortcut input');
             input.setAttribute('data-name', command.name);
             input.value = command.shortcut;
             input.addEventListener('focus', captureShortcut);
@@ -216,6 +217,9 @@
         }
     };
 
-    vAPI.messaging.send('dashboard', { what: 'getShortcuts' }, onShortcutsReady);
-
+    vAPI.messaging.send('dashboard', {
+        what: 'getShortcuts',
+    }).then(commands => {
+        onShortcutsReady(commands);
+    });
 })();
