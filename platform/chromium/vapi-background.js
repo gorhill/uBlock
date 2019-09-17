@@ -1004,44 +1004,43 @@ vAPI.messaging = {
 
     // Use a wrapper to avoid closure and to allow reuse.
     CallbackWrapper: class {
-        constructor(messaging, port, request) {
+        constructor(messaging, port, msgId) {
             this.messaging = messaging;
             this.callback = this.proxy.bind(this); // bind once
-            this.init(port, request);
+            this.init(port, msgId);
         }
-        init(port, request) {
+        init(port, msgId) {
             this.port = port;
-            this.request = request;
+            this.msgId = msgId;
             return this;
         }
         proxy(response) {
             // https://github.com/chrisaljoudi/uBlock/issues/383
             if ( this.messaging.ports.has(this.port.name) ) {
                 this.port.postMessage({
-                    auxProcessId: this.request.auxProcessId,
-                    channelName: this.request.channelName,
-                    msg: response !== undefined ? response : null
+                    msgId: this.msgId,
+                    msg: response !== undefined ? response : null,
                 });
             }
             // Store for reuse
-            this.port = this.request = null;
+            this.port = null;
             this.messaging.callbackWrapperJunkyard.push(this);
         }
     },
 
     callbackWrapperJunkyard: [],
 
-    callbackWrapperFactory: function(port, request) {
+    callbackWrapperFactory: function(port, msgId) {
         return this.callbackWrapperJunkyard.length !== 0
-            ? this.callbackWrapperJunkyard.pop().init(port, request)
-            : new this.CallbackWrapper(this, port, request);
+            ? this.callbackWrapperJunkyard.pop().init(port, msgId)
+            : new this.CallbackWrapper(this, port, msgId);
     },
 
     onPortMessage: function(request, port) {
         // prepare response
         let callback = this.NOOPFUNC;
-        if ( request.auxProcessId !== undefined ) {
-            callback = this.callbackWrapperFactory(port, request).callback;
+        if ( request.msgId !== undefined ) {
+            callback = this.callbackWrapperFactory(port, request.msgId).callback;
         }
 
         // Content process to main process: framework handler.

@@ -80,7 +80,7 @@ vAPI.messaging = {
     channels: new Map(),
     connections: new Map(),
     pending: new Map(),
-    auxProcessId: 1,
+    msgIdGenerator: 1,
     shuttingDown: false,
 
     Connection: function(handler, details) {
@@ -136,10 +136,10 @@ vAPI.messaging = {
         }
 
         // Response to specific message previously sent
-        if ( details.auxProcessId ) {
-            const resolver = this.pending.get(details.auxProcessId);
+        if ( details.msgId !== undefined ) {
+            const resolver = this.pending.get(details.msgId);
             if ( resolver !== undefined ) {
-                this.pending.delete(details.auxProcessId);
+                this.pending.delete(details.msgId);
                 resolver(details.msg);
                 return;
             }
@@ -274,11 +274,11 @@ vAPI.messaging = {
         if ( port === null ) {
             return Promise.resolve();
         }
-        const auxProcessId = this.auxProcessId++;
+        const msgId = this.msgIdGenerator++;
         const promise = new Promise(resolve => {
-            this.pending.set(auxProcessId, resolve);
+            this.pending.set(msgId, resolve);
         });
-        port.postMessage({ channelName, auxProcessId, msg });
+        port.postMessage({ channelName, msgId, msg });
         return promise;
     },
 
