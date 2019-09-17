@@ -695,6 +695,12 @@ api.get = async function(assetKey, options = {}) {
             ? await api.fetchFilterList(contentURL)
             : await api.fetchText(contentURL);
         if ( details.content === '' ) { continue; }
+        if ( reIsExternalPath.test(contentURL) && options.dontCache !== true ) {
+            assetCacheWrite(assetKey, {
+                content: details.content,
+                url: contentURL,
+            });
+        }
         return reportBack(details.content, contentURL);
     }
     return reportBack('', '', 'ENOTFOUND');

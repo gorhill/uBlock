@@ -268,9 +268,9 @@
     }
     const newSet = new Set(newKeys);
     // Purge unused filter lists from cache.
-    for ( let i = 0, n = oldKeys.length; i < n; i++ ) {
-        if ( newSet.has(oldKeys[i]) === false ) {
-            this.removeFilterList(oldKeys[i]);
+    for ( const oldKey of oldKeys ) {
+        if ( newSet.has(oldKey) === false ) {
+            this.removeFilterList(oldKey);
         }
     }
     newKeys = Array.from(newSet);
