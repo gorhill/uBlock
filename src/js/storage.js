@@ -1281,7 +1281,7 @@
     };
 
     // this.getAvailableLists(onListsReady);
-//};
+})();
 
 /******************************************************************************/
 
@@ -1303,7 +1303,7 @@
 
     this.assets.put(compiledPath, compiled);
 };*/
-})();
+
 
 /******************************************************************************/
 
@@ -1340,10 +1340,13 @@
                         details.assetKey,
                         details.content
                     );
+                    var compiled = this.compileFilters(details.content);
                     this.assets.put(
                         'compiled/' + details.assetKey,
-                        this.compileFilters(details.content)
+                        compiled
                     );
+                    // ADN: Need to tell core that are lists have updated
+                    µBlock.adnauseam.onListUpdated(details.assetKey, compiled);
                 }
             } else {
                 this.removeCompiledFilterList(details.assetKey);
@@ -1364,6 +1367,7 @@
             cached: cached
 
         });
+
         // https://github.com/gorhill/uBlock/issues/2585
         // Whenever an asset is overwritten, the current selfie is quite
         // likely no longer valid.
