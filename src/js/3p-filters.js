@@ -326,7 +326,7 @@ const renderWidgets = function() {
     );
     uDom('#buttonUpdate').toggleClass(
         'disabled',
-        document.querySelector('body:not(.updating) #lists .listEntry.obsolete > input[type="checkbox"]:checked') === null
+        document.querySelector('body:not(.updating) #lists .listEntry.obsolete:not(.toRemove) > input[type="checkbox"]:checked') === null
     );
 };
 
@@ -475,8 +475,8 @@ const selectFilterLists = async function() {
 
 const buttonApplyHandler = async function() {
     uDom('#buttonApply').removeClass('enabled');
-    renderWidgets();
     await selectFilterLists();
+    renderWidgets();
     messaging.send('dashboard', { what: 'reloadAllFilters' });
 };
 
