@@ -437,8 +437,8 @@ housekeep itself.
             this.opener = {
                 tabId: openerTabId,
                 popunder: false,
-                trustedURL: openerTabId === µb.mouseEventRegister.tabId
-                    ? µb.mouseEventRegister.url
+                trustedURL: openerTabId === µb.maybeGoodPopup.tabId
+                    ? µb.maybeGoodPopup.url
                     : ''
             };
             this.selfDestructionTimer = null;

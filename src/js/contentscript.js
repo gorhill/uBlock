@@ -1417,23 +1417,25 @@ vAPI.bootstrap = (function() {
             return;
         }
 
-        // To send mouse coordinates to main process, as the chrome API fails
-        // to provide the mouse position to context menu listeners.
-        // https://github.com/chrisaljoudi/uBlock/issues/1143
-        // Also, find a link under the mouse, to try to avoid confusing new tabs
-        // as nuisance popups.
-        // Ref.: https://developer.mozilla.org/en-US/docs/Web/Events/contextmenu
+        // To be used by element picker/zapper.
+        vAPI.mouseClick = { x: -1, y: -1 };
 
         const onMouseClick = function(ev) {
+            if ( ev.isTrusted === false ) { return; }
+            vAPI.mouseClick.x = ev.clientX;
+            vAPI.mouseClick.y = ev.clientY;
+
+            // https://github.com/chrisaljoudi/uBlock/issues/1143
+            //   Find a link under the mouse, to try to avoid confusing new tabs
+            //   as nuisance popups.
             let elem = ev.target;
             while ( elem !== null && elem.localName !== 'a' ) {
                 elem = elem.parentElement;
             }
+            if ( elem === null ) { return; }
             vAPI.messaging.send('contentscript', {
-                what: 'mouseClick',
-                x: ev.clientX,
-                y: ev.clientY,
-                url: elem !== null && ev.isTrusted !== false ? elem.href : '',
+                what: 'maybeGoodPopup',
+                url: elem.href || '',
             });
         };
 

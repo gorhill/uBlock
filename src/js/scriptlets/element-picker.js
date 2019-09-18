@@ -1636,8 +1636,12 @@ const startPicker = function(details) {
     highlightElements([], true);
 
     // Try using mouse position
-    if ( details.clientX !== -1 ) {
-        if ( filtersFrom(details.clientX, details.clientY) !== 0 ) {
+    if (
+        details.mouse &&
+        typeof vAPI.mouseClick.x === 'number' &&
+        vAPI.mouseClick.x > 0
+    ) {
+        if ( filtersFrom(vAPI.mouseClick.x, vAPI.mouseClick.y) !== 0 ) {
             showDialog();
             return;
         }

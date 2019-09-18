@@ -57,6 +57,7 @@ const onBlockElement = function(details, tab) {
         }
     }
 
+    µBlock.epickerArgs.mouse = true;
     µBlock.elementPickerExec(tab.id, tagName + '\t' + src);
 };
 

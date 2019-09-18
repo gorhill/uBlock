@@ -174,16 +174,17 @@ const µBlock = (function() { // jshint ignore:line
 
         apiErrorCount: 0,
 
-        mouseEventRegister: {
-            tabId: '',
-            x: -1,
-            y: -1,
-            url: ''
+        maybeGoodPopup: {
+            tabId: 0,
+            url: '',
         },
 
-        epickerTarget: '',
-        epickerZap: false,
-        epickerEprom: null,
+        epickerArgs: {
+            eprom: null,
+            mouse: false,
+            target: '',
+            zap: false,
+        },
 
         scriptlets: {},
 

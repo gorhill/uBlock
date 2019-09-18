@@ -129,7 +129,7 @@ const onMessage = function(request, sender, callback) {
 
     case 'launchElementPicker':
         // Launched from some auxiliary pages, clear context menu coords.
-        µb.mouseEventRegister.x = µb.mouseEventRegister.y = -1;
+        µb.epickerArgs.mouse = false;
         µb.elementPickerExec(request.tabId, request.targetURL, request.zap);
         break;
 
@@ -539,11 +539,9 @@ const onMessage = function(request, sender, callback) {
         }
         break;
 
-    case 'mouseClick':
-        µb.mouseEventRegister.tabId = tabId;
-        µb.mouseEventRegister.x = request.x;
-        µb.mouseEventRegister.y = request.y;
-        µb.mouseEventRegister.url = request.url;
+    case 'maybeGoodPopup':
+        µb.maybeGoodPopup.tabId = tabId;
+        µb.maybeGoodPopup.url = request.url;
         break;
 
     case 'shouldRenderNoscriptTags':
@@ -669,15 +667,13 @@ const onMessage = function(request, sender, callback) {
 
             callback({
                 frameContent: this.responseText.replace(reStrings, replacer),
-                target: µb.epickerTarget,
-                clientX: µb.mouseEventRegister.x,
-                clientY: µb.mouseEventRegister.y,
-                zap: µb.epickerZap,
-                eprom: µb.epickerEprom
+                target: µb.epickerArgs.target,
+                mouse: µb.epickerArgs.mouse,
+                zap: µb.epickerArgs.zap,
+                eprom: µb.epickerArgs.eprom,
             });
 
-            µb.epickerTarget = '';
-            µb.mouseEventRegister.x = µb.mouseEventRegister.y = -1;
+            µb.epickerArgs.target = '';
         };
         xhr.send();
         return;
@@ -703,7 +699,7 @@ const onMessage = function(request, sender, callback) {
         break;
 
     case 'elementPickerEprom':
-        µb.epickerEprom = request;
+        µb.epickerArgs.eprom = request;
         break;
 
     default:

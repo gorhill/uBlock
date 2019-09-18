@@ -136,7 +136,7 @@ vAPI.commands.onCommand.addListener(async command => {
     case 'launch-element-zapper': {
         const tab = await vAPI.tabs.getCurrent();
         if ( tab instanceof Object === false ) { return; }
-        µb.mouseEventRegister.x = µb.mouseEventRegister.y = -1;
+        µb.epickerArgs.mouse = false;
         µb.elementPickerExec(
             tab.id,
             undefined,
