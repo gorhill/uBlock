@@ -25,14 +25,16 @@
 // the promisification of uBO progress.
 
 const webext = {    // jshint ignore:line
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage
     storage: {
+        // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage/local
         local: {
             clear: function() {
                 return new Promise((resolve, reject) => {
                     chrome.storage.local.clear(( ) => {
                         const lastError = chrome.runtime.lastError;
                         if ( lastError instanceof Object ) {
-                            return reject(lastError);
+                            return reject(lastError.message);
                         }
                         resolve();
                     });
@@ -43,7 +45,7 @@ const webext = {    // jshint ignore:line
                     chrome.storage.local.get(...arguments, result => {
                         const lastError = chrome.runtime.lastError;
                         if ( lastError instanceof Object ) {
-                            return reject(lastError);
+                            return reject(lastError.message);
                         }
                         resolve(result);
                     });
@@ -54,7 +56,7 @@ const webext = {    // jshint ignore:line
                     chrome.storage.local.getBytesInUse(...arguments, result => {
                         const lastError = chrome.runtime.lastError;
                         if ( lastError instanceof Object ) {
-                            return reject(lastError);
+                            return reject(lastError.message);
                         }
                         resolve(result);
                     });
@@ -65,7 +67,7 @@ const webext = {    // jshint ignore:line
                     chrome.storage.local.remove(...arguments, ( ) => {
                         const lastError = chrome.runtime.lastError;
                         if ( lastError instanceof Object ) {
-                            return reject(lastError);
+                            return reject(lastError.message);
                         }
                         resolve();
                     });
@@ -76,7 +78,7 @@ const webext = {    // jshint ignore:line
                     chrome.storage.local.set(...arguments, ( ) => {
                         const lastError = chrome.runtime.lastError;
                         if ( lastError instanceof Object ) {
-                            return reject(lastError);
+                            return reject(lastError.message);
                         }
                         resolve();
                     });
@@ -84,7 +86,7 @@ const webext = {    // jshint ignore:line
             },
         },
     },
-
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs
     tabs: {
         get: function() {
             return new Promise(resolve => {
@@ -127,7 +129,7 @@ const webext = {    // jshint ignore:line
             });
         },
     },
-
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/windows
     windows: {
         get: function() {
             return new Promise(resolve => {
@@ -156,6 +158,73 @@ const webext = {    // jshint ignore:line
     },
 };
 
+// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage/sync
+if ( chrome.storage.sync instanceof Object ) {
+    webext.storage.sync = {
+        QUOTA_BYTES: chrome.storage.sync.QUOTA_BYTES,
+        QUOTA_BYTES_PER_ITEM: chrome.storage.sync.QUOTA_BYTES_PER_ITEM,
+        MAX_ITEMS: chrome.storage.sync.MAX_ITEMS,
+        MAX_WRITE_OPERATIONS_PER_HOUR: chrome.storage.sync.MAX_WRITE_OPERATIONS_PER_HOUR,
+        MAX_WRITE_OPERATIONS_PER_MINUTE: chrome.storage.sync.MAX_WRITE_OPERATIONS_PER_MINUTE,
+
+        clear: function() {
+            return new Promise((resolve, reject) => {
+                chrome.storage.sync.clear(( ) => {
+                    const lastError = chrome.runtime.lastError;
+                    if ( lastError instanceof Object ) {
+                        return reject(lastError.message);
+                    }
+                    resolve();
+                });
+            });
+        },
+        get: function() {
+            return new Promise((resolve, reject) => {
+                chrome.storage.sync.get(...arguments, result => {
+                    const lastError = chrome.runtime.lastError;
+                    if ( lastError instanceof Object ) {
+                        return reject(lastError.message);
+                    }
+                    resolve(result);
+                });
+            });
+        },
+        getBytesInUse: function() {
+            return new Promise((resolve, reject) => {
+                chrome.storage.sync.getBytesInUse(...arguments, result => {
+                    const lastError = chrome.runtime.lastError;
+                    if ( lastError instanceof Object ) {
+                        return reject(lastError.message);
+                    }
+                    resolve(result);
+                });
+            });
+        },
+        remove: function() {
+            return new Promise((resolve, reject) => {
+                chrome.storage.sync.remove(...arguments, ( ) => {
+                    const lastError = chrome.runtime.lastError;
+                    if ( lastError instanceof Object ) {
+                        return reject(lastError.message);
+                    }
+                    resolve();
+                });
+            });
+        },
+        set: function() {
+            return new Promise((resolve, reject) => {
+                chrome.storage.sync.set(...arguments, ( ) => {
+                    const lastError = chrome.runtime.lastError;
+                    if ( lastError instanceof Object ) {
+                        return reject(lastError.message);
+                    }
+                    resolve();
+                });
+            });
+        },
+    };
+}
+
 // https://bugs.chromium.org/p/chromium/issues/detail?id=608854
 if ( chrome.tabs.removeCSS instanceof Function ) {
     webext.tabs.removeCSS = function() {
@@ -168,6 +237,7 @@ if ( chrome.tabs.removeCSS instanceof Function ) {
     };
 }
 
+// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage/managed
 if ( chrome.storage.managed instanceof Object ) {
     webext.storage.managed = {
         get: function() {
@@ -175,7 +245,7 @@ if ( chrome.storage.managed instanceof Object ) {
                 chrome.storage.local.get(...arguments, result => {
                     const lastError = chrome.runtime.lastError;
                     if ( lastError instanceof Object ) {
-                        return reject(lastError);
+                        return reject(lastError.message);
                     }
                     resolve(result);
                 });

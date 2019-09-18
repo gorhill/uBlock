@@ -318,16 +318,6 @@ initializeTabs();
         : 0
 );
 
-// vAPI.cloud is optional.
-if ( µb.cloudStorageSupported ) {
-    vAPI.cloud.start([
-        'tpFiltersPane',
-        'myFiltersPane',
-        'myRulesPane',
-        'whitelistPane'
-    ]);
-}
-
 µb.contextMenu.update(null);
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/717

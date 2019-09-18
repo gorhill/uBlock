@@ -77,7 +77,7 @@ const onMessage = function(request, sender, callback) {
         return;
 
     case 'reloadAllFilters':
-        µb.loadFilterLists();
+        µb.loadFilterLists().then(( ) => { callback(); });
         return;
 
     case 'scriptlet':
@@ -752,10 +752,14 @@ const onMessage = function(request, sender, callback) {
         return;
 
     case 'cloudPull':
-        return vAPI.cloud.pull(request.datakey, callback);
+        return vAPI.cloud.pull(request.datakey).then(result => {
+            callback(result);
+        });
 
     case 'cloudPush':
-        return vAPI.cloud.push(request.datakey, request.data, callback);
+        return vAPI.cloud.push(request.datakey, request.data).then(result => {
+            callback(result);
+        });
 
     default:
         break;

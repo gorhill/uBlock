@@ -32,22 +32,22 @@
 /******************************************************************************/
 /******************************************************************************/
 
-const chrome = self.chrome;
-const manifest = chrome.runtime.getManifest();
+const browser = self.browser;
+const manifest = browser.runtime.getManifest();
 
 vAPI.cantWebsocket =
-    chrome.webRequest.ResourceType instanceof Object === false  ||
-    chrome.webRequest.ResourceType.WEBSOCKET !== 'websocket';
+    browser.webRequest.ResourceType instanceof Object === false  ||
+    browser.webRequest.ResourceType.WEBSOCKET !== 'websocket';
 
 vAPI.lastError = function() {
-    return chrome.runtime.lastError;
+    return browser.runtime.lastError;
 };
 
 // https://github.com/gorhill/uBlock/issues/875
 // https://code.google.com/p/chromium/issues/detail?id=410868#c8
 //   Must not leave `lastError` unchecked.
 vAPI.resetLastError = function() {
-    void chrome.runtime.lastError;
+    void browser.runtime.lastError;
 };
 
 vAPI.supportsUserStylesheets = vAPI.webextFlavor.soup.has('user_stylesheet');
@@ -109,7 +109,7 @@ vAPI.storage = webext.storage.local;
 /******************************************************************************/
 
 // https://github.com/gorhill/uMatrix/issues/234
-// https://developer.chrome.com/extensions/privacy#property-network
+// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/privacy/network
 
 // 2015-08-12: Wrapped Chrome API in try-catch statements. I had a fluke
 // event in which it appeared Chrome 46 decided to restart uBlock (for
@@ -123,8 +123,8 @@ vAPI.storage = webext.storage.local;
 //   values.
 
 vAPI.browserSettings = (( ) => {
-    // Not all platforms support `chrome.privacy`.
-    if ( chrome.privacy instanceof Object === false ) { return; }
+    // Not all platforms support `browser.privacy`.
+    if ( browser.privacy instanceof Object === false ) { return; }
 
     return {
         // Whether the WebRTC-related privacy API is crashy is an open question
@@ -181,19 +181,19 @@ vAPI.browserSettings = (( ) => {
             // crash.
             if ( this.webRTCSupported !== true ) { return; }
 
-            const cp = chrome.privacy;
-            const cpn = cp.network;
+            const bp = browser.privacy;
+            const bpn = bp.network;
 
             // Older version of Chromium do not support this setting, and is
             // marked as "deprecated" since Chromium 48.
-            if ( typeof cpn.webRTCMultipleRoutesEnabled === 'object' ) {
+            if ( typeof bpn.webRTCMultipleRoutesEnabled === 'object' ) {
                 try {
                     if ( setting ) {
-                        cpn.webRTCMultipleRoutesEnabled.clear({
+                        bpn.webRTCMultipleRoutesEnabled.clear({
                             scope: 'regular'
                         }, vAPI.resetLastError);
                     } else {
-                        cpn.webRTCMultipleRoutesEnabled.set({
+                        bpn.webRTCMultipleRoutesEnabled.set({
                             value: false,
                             scope: 'regular'
                         }, vAPI.resetLastError);
@@ -204,10 +204,10 @@ vAPI.browserSettings = (( ) => {
             }
 
             // This setting became available in Chromium 48.
-            if ( typeof cpn.webRTCIPHandlingPolicy === 'object' ) {
+            if ( typeof bpn.webRTCIPHandlingPolicy === 'object' ) {
                 try {
                     if ( setting ) {
-                        cpn.webRTCIPHandlingPolicy.clear({
+                        bpn.webRTCIPHandlingPolicy.clear({
                             scope: 'regular'
                         }, vAPI.resetLastError);
                     } else {
@@ -216,7 +216,7 @@ vAPI.browserSettings = (( ) => {
                         // https://github.com/gorhill/uBlock/issues/3009
                         //   Firefox currently works differently, use
                         //   `default_public_interface_only` for now.
-                        cpn.webRTCIPHandlingPolicy.set({
+                        bpn.webRTCIPHandlingPolicy.set({
                             value: vAPI.webextFlavor.soup.has('chromium')
                                 ? 'disable_non_proxied_udp'
                                 : 'default_public_interface_only',
@@ -239,11 +239,11 @@ vAPI.browserSettings = (( ) => {
                     const enabled = !!details[setting];
                     try {
                         if ( enabled ) {
-                            chrome.privacy.network.networkPredictionEnabled.clear({
+                            browser.privacy.network.networkPredictionEnabled.clear({
                                 scope: 'regular'
                             }, vAPI.resetLastError);
                         } else {
-                            chrome.privacy.network.networkPredictionEnabled.set({
+                            browser.privacy.network.networkPredictionEnabled.set({
                                 value: false,
                                 scope: 'regular'
                             }, vAPI.resetLastError);
@@ -259,11 +259,11 @@ vAPI.browserSettings = (( ) => {
                 case 'hyperlinkAuditing':
                     try {
                         if ( !!details[setting] ) {
-                            chrome.privacy.websites.hyperlinkAuditingEnabled.clear({
+                            browser.privacy.websites.hyperlinkAuditingEnabled.clear({
                                 scope: 'regular'
                             }, vAPI.resetLastError);
                         } else {
-                            chrome.privacy.websites.hyperlinkAuditingEnabled.set({
+                            browser.privacy.websites.hyperlinkAuditingEnabled.set({
                                 value: false,
                                 scope: 'regular'
                             }, vAPI.resetLastError);
@@ -302,8 +302,8 @@ const toTabId = function(tabId) {
         : 0;
 };
 
-// https://developer.chrome.com/extensions/webNavigation
-// https://developer.chrome.com/extensions/tabs
+// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/webNavigation
+// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs
 
 vAPI.Tabs = class {
     constructor() {
@@ -546,10 +546,9 @@ vAPI.Tabs = class {
             return;
         }
 
-        // https://developer.chrome.com/extensions/tabs#method-query
+        // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs/query#Parameters
         //   "Note that fragment identifiers are not matched."
-        //   It's a lie, fragment identifiers ARE matched. So we need to remove
-        //   the fragment.
+        //   Fragment identifiers ARE matched -- we need to remove the fragment.
         const pos = targetURL.indexOf('#');
         const targetURLWithoutHash = pos === -1
             ? targetURL
@@ -706,7 +705,7 @@ if ( browser.windows instanceof Object ) {
 //   Ensure ImageData for toolbar icon is valid before use.
 
 vAPI.setIcon = (( ) => {
-    const browserAction = chrome.browserAction;
+    const browserAction = browser.browserAction;
     const  titleTemplate =
         browser.runtime.getManifest().browser_action.default_title +
         ' ({badge})';
@@ -841,7 +840,7 @@ vAPI.setIcon = (( ) => {
     };
 })();
 
-chrome.browserAction.onClicked.addListener(function(tab) {
+browser.browserAction.onClicked.addListener(function(tab) {
     vAPI.tabs.open({
         select: true,
         url: 'popup.html?tabId=' + tab.id + '&responsive=1'
@@ -1245,11 +1244,11 @@ vAPI.Net = class {
 // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/contextMenus#Browser_compatibility
 //   Firefox for Android does no support browser.contextMenus.
 
-vAPI.contextMenu = chrome.contextMenus && {
+vAPI.contextMenu = browser.contextMenus && {
     _callback: null,
     _entries: [],
     _createEntry: function(entry) {
-        chrome.contextMenus.create(
+        browser.contextMenus.create(
             JSON.parse(JSON.stringify(entry)),
             vAPI.resetLastError
         );
@@ -1263,12 +1262,12 @@ vAPI.contextMenu = chrome.contextMenus && {
             const newEntry = entries[i];
             if ( oldEntryId && newEntry ) {
                 if ( newEntry.id !== oldEntryId ) {
-                    chrome.contextMenus.remove(oldEntryId);
+                    browser.contextMenus.remove(oldEntryId);
                     this._createEntry(newEntry);
                     this._entries[i] = newEntry.id;
                 }
             } else if ( oldEntryId && !newEntry ) {
-                chrome.contextMenus.remove(oldEntryId);
+                browser.contextMenus.remove(oldEntryId);
             } else if ( !oldEntryId && newEntry ) {
                 this._createEntry(newEntry);
                 this._entries[i] = newEntry.id;
@@ -1280,10 +1279,10 @@ vAPI.contextMenu = chrome.contextMenus && {
             return;
         }
         if ( n !== 0 && callback !== null ) {
-            chrome.contextMenus.onClicked.addListener(callback);
+            browser.contextMenus.onClicked.addListener(callback);
             this._callback = callback;
         } else if ( n === 0 && this._callback !== null ) {
-            chrome.contextMenus.onClicked.removeListener(this._callback);
+            browser.contextMenus.onClicked.removeListener(this._callback);
             this._callback = null;
         }
     }
@@ -1292,7 +1291,7 @@ vAPI.contextMenu = chrome.contextMenus && {
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.commands = chrome.commands;
+vAPI.commands = browser.commands;
 
 /******************************************************************************/
 /******************************************************************************/
@@ -1334,26 +1333,34 @@ vAPI.adminStorage = (( ) => {
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.cloud = (function() {
-    // Not all platforms support `chrome.storage.sync`.
-    if ( chrome.storage.sync instanceof Object === false ) {
-        return;
-    }
+// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage/sync
 
-    let chunkCountPerFetch = 16; // Must be a power of 2
+vAPI.cloud = (( ) => {
+    // Not all platforms support `webext.storage.sync`.
+    if ( webext.storage.sync instanceof Object === false ) { return; }
 
-    // Mind chrome.storage.sync.MAX_ITEMS (512 at time of writing)
-    let maxChunkCountPerItem = Math.floor(512 * 0.75) & ~(chunkCountPerFetch - 1);
+    // Currently, only Chromium supports the following constants -- these
+    // values will be assumed for platforms which do not define them.
+    // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/storage/sync
+    //   > You can store up to 100KB of data using this API
+    const MAX_ITEMS =
+        webext.storage.sync.MAX_ITEMS || 512;
+    const QUOTA_BYTES =
+        webext.storage.sync.QUOTA_BYTES || 102400;
+    const QUOTA_BYTES_PER_ITEM =
+        webext.storage.sync.QUOTA_BYTES_PER_ITEM || 8192;
 
-    // Mind chrome.storage.sync.QUOTA_BYTES_PER_ITEM (8192 at time of writing)
+    const chunkCountPerFetch = 16; // Must be a power of 2
+    const maxChunkCountPerItem = Math.floor(MAX_ITEMS * 0.75) & ~(chunkCountPerFetch - 1);
+
     // https://github.com/gorhill/uBlock/issues/3006
-    //  For Firefox, we will use a lower ratio to allow for more overhead for
-    //  the infrastructure. Unfortunately this leads to less usable space for
-    //  actual data, but all of this is provided for free by browser vendors,
-    //  so we need to accept and deal with these limitations.
-    let evalMaxChunkSize = function() {
+    //   For Firefox, we will use a lower ratio to allow for more overhead for
+    //   the infrastructure. Unfortunately this leads to less usable space for
+    //   actual data, but all of this is provided for free by browser vendors,
+    //   so we need to accept and deal with these limitations.
+    const evalMaxChunkSize = function() {
         return Math.floor(
-            (chrome.storage.sync.QUOTA_BYTES_PER_ITEM || 8192) *
+            QUOTA_BYTES_PER_ITEM *
             (vAPI.webextFlavor.soup.has('firefox') ? 0.6 : 0.75)
         );
     };
@@ -1366,13 +1373,9 @@ vAPI.cloud = (function() {
         maxChunkSize = evalMaxChunkSize();
     }, { once: true });
 
-    // Mind chrome.storage.sync.QUOTA_BYTES (128 kB at time of writing)
-    // Firefox:
-    // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/storage/sync
-    // > You can store up to 100KB of data using this API/
-    let maxStorageSize = chrome.storage.sync.QUOTA_BYTES || 102400;
+    const maxStorageSize = QUOTA_BYTES;
 
-    let options = {
+    const options = {
         defaultDeviceName: window.navigator.platform,
         deviceName: vAPI.localStorage.getItem('deviceName') || ''
     };
@@ -1384,34 +1387,32 @@ vAPI.cloud = (function() {
     // good thing given chrome.storage.sync.MAX_WRITE_OPERATIONS_PER_MINUTE
     // and chrome.storage.sync.MAX_WRITE_OPERATIONS_PER_HOUR.
 
-    let getCoarseChunkCount = function(dataKey, callback) {
-        let bin = {};
+    const getCoarseChunkCount = async function(dataKey) {
+        const keys = {};
         for ( let i = 0; i < maxChunkCountPerItem; i += 16 ) {
-            bin[dataKey + i.toString()] = '';
+            keys[dataKey + i.toString()] = '';
         }
-
-        chrome.storage.sync.get(bin, function(bin) {
-            if ( chrome.runtime.lastError ) {
-                return callback(0, chrome.runtime.lastError.message);
-            }
-
-            let chunkCount = 0;
-            for ( let i = 0; i < maxChunkCountPerItem; i += 16 ) {
-                if ( bin[dataKey + i.toString()] === '' ) { break; }
-                chunkCount = i + 16;
-            }
-
-            callback(chunkCount);
-        });
+        let bin;
+        try {
+            bin = await webext.storage.sync.get(keys);
+        } catch (reason) {
+            return reason;
+        }
+        let chunkCount = 0;
+        for ( let i = 0; i < maxChunkCountPerItem; i += 16 ) {
+            if ( bin[dataKey + i.toString()] === '' ) { break; }
+            chunkCount = i + 16;
+        }
+        return chunkCount;
     };
 
-    let deleteChunks = function(dataKey, start) {
-        let keys = [];
+    const deleteChunks = function(dataKey, start) {
+        const keys = [];
 
         // No point in deleting more than:
         // - The max number of chunks per item
         // - The max number of chunks per storage limit
-        let n = Math.min(
+        const n = Math.min(
             maxChunkCountPerItem,
             Math.ceil(maxStorageSize / maxChunkSize)
         );
@@ -1419,14 +1420,11 @@ vAPI.cloud = (function() {
             keys.push(dataKey + i.toString());
         }
         if ( keys.length !== 0 ) {
-            chrome.storage.sync.remove(keys);
+            webext.storage.sync.remove(keys);
         }
     };
 
-    let start = function(/* dataKeys */) {
-    };
-
-    let push = function(dataKey, data, callback) {
+    const push = async function(dataKey, data) {
 
         let bin = {
             'source': options.deviceName || options.defaultDeviceName,
@@ -1435,7 +1433,7 @@ vAPI.cloud = (function() {
             'size': 0
         };
         bin.size = JSON.stringify(bin).length;
-        let item = JSON.stringify(bin);
+        const item = JSON.stringify(bin);
 
         // Chunkify taking into account QUOTA_BYTES_PER_ITEM:
         //   https://developer.chrome.com/extensions/storage#property-sync
@@ -1449,84 +1447,77 @@ vAPI.cloud = (function() {
         }
         bin[dataKey + chunkCount.toString()] = ''; // Sentinel
 
-        chrome.storage.sync.set(bin, function() {
-            let errorStr;
-            if ( chrome.runtime.lastError ) {
-                errorStr = chrome.runtime.lastError.message;
-                // https://github.com/gorhill/uBlock/issues/3006#issuecomment-332597677
-                // - Delete all that was pushed in case of failure.
-                // - It's unknown whether such issue applies only to Firefox:
-                //   until such cases are reported for other browsers, we will
-                //   reset the (now corrupted) content of the cloud storage
-                //   only on Firefox.
-                if ( vAPI.webextFlavor.soup.has('firefox') ) {
-                    chunkCount = 0;
-                }
-            }
-            callback(errorStr);
+        let result;
+        let errorStr;
+        try {
+            result = await webext.storage.sync.set(bin);
+        } catch (reason) {
+            errorStr = reason;
+        }
 
-            // Remove potentially unused trailing chunks
-            deleteChunks(dataKey, chunkCount);
-        });
+        // https://github.com/gorhill/uBlock/issues/3006#issuecomment-332597677
+        // - Delete all that was pushed in case of failure.
+        // - It's unknown whether such issue applies only to Firefox:
+        //   until such cases are reported for other browsers, we will
+        //   reset the (now corrupted) content of the cloud storage
+        //   only on Firefox.
+        if ( errorStr !== undefined && vAPI.webextFlavor.soup.has('firefox') ) {
+            chunkCount = 0;
+        }
+
+        // Remove potentially unused trailing chunks
+        deleteChunks(dataKey, chunkCount);
+
+        return errorStr;
     };
 
-    let pull = function(dataKey, callback) {
+    const pull = async function(dataKey) {
 
-        let assembleChunks = function(bin) {
-            if ( chrome.runtime.lastError ) {
-                callback(null, chrome.runtime.lastError.message);
-                return;
-            }
+        const result = await getCoarseChunkCount(dataKey);
+        if ( typeof result !== 'number' ) {
+            return result;
+        }
+        const chunkKeys = {};
+        for ( let i = 0; i < result; i++ ) {
+            chunkKeys[dataKey + i.toString()] = '';
+        }
 
-            // Assemble chunks into a single string.
-            // https://www.reddit.com/r/uMatrix/comments/8lc9ia/my_rules_tab_hangs_with_cloud_storage_support/
-            //   Explicit sentinel is not necessarily present: this can
-            //   happen when the number of chunks is a multiple of
-            //   chunkCountPerFetch. Hence why we must also test against
-            //   undefined.
-            let json = [], jsonSlice;
-            let i = 0;
-            for (;;) {
-                jsonSlice = bin[dataKey + i.toString()];
-                if ( jsonSlice === '' || jsonSlice === undefined ) { break; }
-                json.push(jsonSlice);
-                i += 1;
-            }
+        let bin;
+        try {
+            bin = await webext.storage.sync.get(chunkKeys);
+        } catch (reason) {
+            return reason;
+        }
 
-            let entry = null;
-            try {
-                entry = JSON.parse(json.join(''));
-            } catch(ex) {
-            }
-            callback(entry);
-        };
-
-        let fetchChunks = function(coarseCount, errorStr) {
-            if ( coarseCount === 0 || typeof errorStr === 'string' ) {
-                callback(null, errorStr);
-                return;
-            }
-
-            let bin = {};
-            for ( let i = 0; i < coarseCount; i++ ) {
-                bin[dataKey + i.toString()] = '';
-            }
-
-            chrome.storage.sync.get(bin, assembleChunks);
-        };
-
-        getCoarseChunkCount(dataKey, fetchChunks);
+        // Assemble chunks into a single string.
+        // https://www.reddit.com/r/uMatrix/comments/8lc9ia/my_rules_tab_hangs_with_cloud_storage_support/
+        //   Explicit sentinel is not necessarily present: this can
+        //   happen when the number of chunks is a multiple of
+        //   chunkCountPerFetch. Hence why we must also test against
+        //   undefined.
+        let json = [], jsonSlice;
+        let i = 0;
+        for (;;) {
+            jsonSlice = bin[dataKey + i.toString()];
+            if ( jsonSlice === '' || jsonSlice === undefined ) { break; }
+            json.push(jsonSlice);
+            i += 1;
+        }
+        let entry = null;
+        try {
+            entry = JSON.parse(json.join(''));
+        } catch(ex) {
+        }
+        return entry;
     };
 
-    let getOptions = function(callback) {
+    const getOptions = function(callback) {
         if ( typeof callback !== 'function' ) { return; }
         callback(options);
     };
 
-    let setOptions = function(details, callback) {
-        if ( typeof details !== 'object' || details === null ) {
-            return;
-        }
+    const setOptions = function(details, callback) {
+        if ( typeof details !== 'object' || details === null ) { return; }
 
         if ( typeof details.deviceName === 'string' ) {
             vAPI.localStorage.setItem('deviceName', details.deviceName);
@@ -1536,13 +1527,7 @@ vAPI.cloud = (function() {
         getOptions(callback);
     };
 
-    return {
-        start: start,
-        push: push,
-        pull: pull,
-        getOptions: getOptions,
-        setOptions: setOptions
-    };
+    return { push, pull, getOptions, setOptions };
 })();
 
 /******************************************************************************/
