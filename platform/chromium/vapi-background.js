@@ -39,17 +39,6 @@ vAPI.cantWebsocket =
     browser.webRequest.ResourceType instanceof Object === false  ||
     browser.webRequest.ResourceType.WEBSOCKET !== 'websocket';
 
-vAPI.lastError = function() {
-    return browser.runtime.lastError;
-};
-
-// https://github.com/gorhill/uBlock/issues/875
-// https://code.google.com/p/chromium/issues/detail?id=410868#c8
-//   Must not leave `lastError` unchecked.
-vAPI.resetLastError = function() {
-    void browser.runtime.lastError;
-};
-
 vAPI.supportsUserStylesheets = vAPI.webextFlavor.soup.has('user_stylesheet');
 // The real actual webextFlavor value may not be set in stone, so listen
 // for possible future changes.
@@ -57,8 +46,6 @@ window.addEventListener('webextFlavor', function() {
     vAPI.supportsUserStylesheets =
         vAPI.webextFlavor.soup.has('user_stylesheet');
 }, { once: true });
-
-const noopFunc = function(){};
 
 /******************************************************************************/
 
@@ -111,20 +98,14 @@ vAPI.storage = webext.storage.local;
 // https://github.com/gorhill/uMatrix/issues/234
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/privacy/network
 
-// 2015-08-12: Wrapped Chrome API in try-catch statements. I had a fluke
-// event in which it appeared Chrome 46 decided to restart uBlock (for
-// unknown reasons) and again for unknown reasons the browser acted as if
-// uBlock did not declare the `privacy` permission in its manifest, putting
-// uBlock in a bad, non-functional state -- because call to `chrome.privacy`
-// API threw an exception.
-
 // https://github.com/gorhill/uBlock/issues/2048
 //   Do not mess up with existing settings if not assigning them stricter
 //   values.
 
 vAPI.browserSettings = (( ) => {
     // Not all platforms support `browser.privacy`.
-    if ( browser.privacy instanceof Object === false ) { return; }
+    const bp = webext.privacy;
+    if ( bp instanceof Object === false ) { return; }
 
     return {
         // Whether the WebRTC-related privacy API is crashy is an open question
@@ -181,75 +162,42 @@ vAPI.browserSettings = (( ) => {
             // crash.
             if ( this.webRTCSupported !== true ) { return; }
 
-            const bp = browser.privacy;
             const bpn = bp.network;
 
-            // Older version of Chromium do not support this setting, and is
-            // marked as "deprecated" since Chromium 48.
-            if ( typeof bpn.webRTCMultipleRoutesEnabled === 'object' ) {
-                try {
-                    if ( setting ) {
-                        bpn.webRTCMultipleRoutesEnabled.clear({
-                            scope: 'regular'
-                        }, vAPI.resetLastError);
-                    } else {
-                        bpn.webRTCMultipleRoutesEnabled.set({
-                            value: false,
-                            scope: 'regular'
-                        }, vAPI.resetLastError);
-                    }
-                } catch(ex) {
-                    console.error(ex);
-                }
-            }
-
-            // This setting became available in Chromium 48.
-            if ( typeof bpn.webRTCIPHandlingPolicy === 'object' ) {
-                try {
-                    if ( setting ) {
-                        bpn.webRTCIPHandlingPolicy.clear({
-                            scope: 'regular'
-                        }, vAPI.resetLastError);
-                    } else {
-                        // https://github.com/uBlockOrigin/uAssets/issues/333#issuecomment-289426678
-                        //   Leverage virtuous side-effect of strictest setting.
-                        // https://github.com/gorhill/uBlock/issues/3009
-                        //   Firefox currently works differently, use
-                        //   `default_public_interface_only` for now.
-                        bpn.webRTCIPHandlingPolicy.set({
-                            value: vAPI.webextFlavor.soup.has('chromium')
-                                ? 'disable_non_proxied_udp'
-                                : 'default_public_interface_only',
-                            scope: 'regular'
-                        }, vAPI.resetLastError);
-                    }
-                } catch(ex) {
-                    console.error(ex);
-                }
+            if ( setting ) {
+                bpn.webRTCIPHandlingPolicy.clear({
+                    scope: 'regular',
+                });
+            } else {
+                // https://github.com/uBlockOrigin/uAssets/issues/333#issuecomment-289426678
+                //   Leverage virtuous side-effect of strictest setting.
+                // https://github.com/gorhill/uBlock/issues/3009
+                //   Firefox currently works differently, use
+                //   `default_public_interface_only` for now.
+                bpn.webRTCIPHandlingPolicy.set({
+                    value: vAPI.webextFlavor.soup.has('chromium')
+                        ? 'disable_non_proxied_udp'
+                        : 'default_public_interface_only',
+                    scope: 'regular',
+                });
             }
         },
 
         set: function(details) {
             for ( const setting in details ) {
-                if ( details.hasOwnProperty(setting) === false ) {
-                    continue;
-                }
+                if ( details.hasOwnProperty(setting) === false ) { continue; }
                 switch ( setting ) {
                 case 'prefetching':
                     const enabled = !!details[setting];
-                    try {
-                        if ( enabled ) {
-                            browser.privacy.network.networkPredictionEnabled.clear({
-                                scope: 'regular'
-                            }, vAPI.resetLastError);
-                        } else {
-                            browser.privacy.network.networkPredictionEnabled.set({
-                                value: false,
-                                scope: 'regular'
-                            }, vAPI.resetLastError);
-                        }
-                    } catch(ex) {
-                        console.error(ex);
+                    if ( enabled ) {
+                        bp.network.networkPredictionEnabled.clear({
+                            scope: 'regular',
+                        });
+                    } else {
+                        bp.network.networkPredictionEnabled.set({
+                            value: false,
+                            scope: 'regular',
+                        });
                     }
                     if ( vAPI.prefetching instanceof Function ) {
                         vAPI.prefetching(enabled);
@@ -257,19 +205,15 @@ vAPI.browserSettings = (( ) => {
                     break;
 
                 case 'hyperlinkAuditing':
-                    try {
-                        if ( !!details[setting] ) {
-                            browser.privacy.websites.hyperlinkAuditingEnabled.clear({
-                                scope: 'regular'
-                            }, vAPI.resetLastError);
-                        } else {
-                            browser.privacy.websites.hyperlinkAuditingEnabled.set({
-                                value: false,
-                                scope: 'regular'
-                            }, vAPI.resetLastError);
-                        }
-                    } catch(ex) {
-                        console.error(ex);
+                    if ( !!details[setting] ) {
+                        bp.websites.hyperlinkAuditingEnabled.clear({
+                            scope: 'regular',
+                        });
+                    } else {
+                        bp.websites.hyperlinkAuditingEnabled.set({
+                            value: false,
+                            scope: 'regular',
+                        });
                     }
                     break;
 
@@ -595,21 +539,27 @@ vAPI.Tabs = class {
         vAPI.tabs.update(tabId, { url: targetURL });
     }
 
-    remove(tabId) {
+    async remove(tabId) {
         tabId = toTabId(tabId);
         if ( tabId === 0 ) { return; }
-        browser.tabs.remove(tabId, vAPI.resetLastError);
+        try {
+            await webext.tabs.remove(tabId);
+        }
+        catch (reason) {
+        }
     }
 
-    reload(tabId, bypassCache = false) {
+    async reload(tabId, bypassCache = false) {
         tabId = toTabId(tabId);
         if ( tabId === 0 ) { return; }
-
-        browser.tabs.reload(
-            tabId,
-            { bypassCache: bypassCache === true },
-            vAPI.resetLastError
-        );
+        try {
+            await webext.tabs.reload(
+                tabId,
+                { bypassCache: bypassCache === true }
+            );
+        }
+        catch (reason) {
+        }
     }
 
     async select(tabId) {
@@ -861,7 +811,7 @@ vAPI.messaging = {
     listeners: new Map(),
     defaultHandler: null,
     PRIVILEGED_URL: vAPI.getURL(''),
-    NOOPFUNC: noopFunc,
+    NOOPFUNC: function(){},
     UNHANDLED: 'vAPI.messaging.notHandled',
 
     listen: function(details) {
@@ -1256,10 +1206,7 @@ vAPI.contextMenu = browser.contextMenus && {
     _callback: null,
     _entries: [],
     _createEntry: function(entry) {
-        browser.contextMenus.create(
-            JSON.parse(JSON.stringify(entry)),
-            vAPI.resetLastError
-        );
+        webext.menus.create(JSON.parse(JSON.stringify(entry)));
     },
     onMustUpdate: function() {},
     setEntries: function(entries, callback) {
@@ -1270,12 +1217,12 @@ vAPI.contextMenu = browser.contextMenus && {
             const newEntry = entries[i];
             if ( oldEntryId && newEntry ) {
                 if ( newEntry.id !== oldEntryId ) {
-                    browser.contextMenus.remove(oldEntryId);
+                    webext.menus.remove(oldEntryId);
                     this._createEntry(newEntry);
                     this._entries[i] = newEntry.id;
                 }
             } else if ( oldEntryId && !newEntry ) {
-                browser.contextMenus.remove(oldEntryId);
+                webext.menus.remove(oldEntryId);
             } else if ( !oldEntryId && newEntry ) {
                 this._createEntry(newEntry);
                 this._entries[i] = newEntry.id;
@@ -1287,10 +1234,10 @@ vAPI.contextMenu = browser.contextMenus && {
             return;
         }
         if ( n !== 0 && callback !== null ) {
-            browser.contextMenus.onClicked.addListener(callback);
+            webext.menus.onClicked.addListener(callback);
             this._callback = callback;
         } else if ( n === 0 && this._callback !== null ) {
-            browser.contextMenus.onClicked.removeListener(this._callback);
+            webext.menus.onClicked.removeListener(this._callback);
             this._callback = null;
         }
     }

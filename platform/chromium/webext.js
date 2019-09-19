@@ -24,139 +24,107 @@
 // `webext` is a promisified api of `chrome`. Entries are added as
 // the promisification of uBO progress.
 
-const webext = {    // jshint ignore:line
+const webext = (( ) => {        // jshint ignore:line
+// >>>>> start of private scope
+
+const promisifyNoFail = function(thisArg, fnName, outFn = r => r) {
+    const fn = thisArg[fnName];
+    return function() {
+        return new Promise(resolve => {
+            fn.call(thisArg, ...arguments, function() {
+                void chrome.runtime.lastError;
+                resolve(outFn(...arguments));
+            });
+        });
+    };
+};
+
+const promisify = function(thisArg, fnName) {
+    const fn = thisArg[fnName];
+    return function() {
+        return new Promise((resolve, reject) => {
+            fn.call(thisArg, ...arguments, function() {
+                const lastError = chrome.runtime.lastError;
+                if ( lastError instanceof Object ) {
+                    return reject(lastError.message);
+                }
+                resolve(...arguments);
+            });
+        });
+    };
+};
+
+const webext = {
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/menus
+    menus: {
+        create: function() {
+            return chrome.contextMenus.create(...arguments, ( ) => {
+                void chrome.runtime.lastError;
+            });
+        },
+        onClicked: chrome.contextMenus.onClicked,
+        remove: promisifyNoFail(chrome.contextMenus, 'remove'),
+    },
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/privacy
+    privacy: {
+    },
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage
     storage: {
         // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage/local
         local: {
-            clear: function() {
-                return new Promise((resolve, reject) => {
-                    chrome.storage.local.clear(( ) => {
-                        const lastError = chrome.runtime.lastError;
-                        if ( lastError instanceof Object ) {
-                            return reject(lastError.message);
-                        }
-                        resolve();
-                    });
-                });
-            },
-            get: function() {
-                return new Promise((resolve, reject) => {
-                    chrome.storage.local.get(...arguments, result => {
-                        const lastError = chrome.runtime.lastError;
-                        if ( lastError instanceof Object ) {
-                            return reject(lastError.message);
-                        }
-                        resolve(result);
-                    });
-                });
-            },
-            getBytesInUse: function() {
-                return new Promise((resolve, reject) => {
-                    chrome.storage.local.getBytesInUse(...arguments, result => {
-                        const lastError = chrome.runtime.lastError;
-                        if ( lastError instanceof Object ) {
-                            return reject(lastError.message);
-                        }
-                        resolve(result);
-                    });
-                });
-            },
-            remove: function() {
-                return new Promise((resolve, reject) => {
-                    chrome.storage.local.remove(...arguments, ( ) => {
-                        const lastError = chrome.runtime.lastError;
-                        if ( lastError instanceof Object ) {
-                            return reject(lastError.message);
-                        }
-                        resolve();
-                    });
-                });
-            },
-            set: function() {
-                return new Promise((resolve, reject) => {
-                    chrome.storage.local.set(...arguments, ( ) => {
-                        const lastError = chrome.runtime.lastError;
-                        if ( lastError instanceof Object ) {
-                            return reject(lastError.message);
-                        }
-                        resolve();
-                    });
-                });
-            },
+            clear: promisify(chrome.storage.local, 'clear'),
+            get: promisify(chrome.storage.local, 'get'),
+            getBytesInUse: promisify(chrome.storage.local, 'getBytesInUse'),
+            remove: promisify(chrome.storage.local, 'remove'),
+            set: promisify(chrome.storage.local, 'set'),
         },
     },
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs
     tabs: {
-        get: function() {
-            return new Promise(resolve => {
-                chrome.tabs.get(...arguments, tab => {
-                    void chrome.runtime.lastError;
-                    resolve(tab instanceof Object ? tab : null);
-                });
-            });
-        },
-        executeScript: function() {
-            return new Promise(resolve => {
-                chrome.tabs.executeScript(...arguments, result => {
-                    void chrome.runtime.lastError;
-                    resolve(result);
-                });
-            });
-        },
-        insertCSS: function() {
-            return new Promise(resolve => {
-                chrome.tabs.insertCSS(...arguments, ( ) => {
-                    void chrome.runtime.lastError;
-                    resolve();
-                });
-            });
-        },
-        query: function() {
-            return new Promise(resolve => {
-                chrome.tabs.query(...arguments, tabs => {
-                    void chrome.runtime.lastError;
-                    resolve(Array.isArray(tabs) ? tabs : []);
-                });
-            });
-        },
-        update: function() {
-            return new Promise(resolve => {
-                chrome.tabs.update(...arguments, tab => {
-                    void chrome.runtime.lastError;
-                    resolve(tab instanceof Object ? tab : null);
-                });
-            });
-        },
+        get: promisifyNoFail(chrome.tabs, 'get', tab => tab instanceof Object ? tab : null),
+        executeScript: promisifyNoFail(chrome.tabs, 'executeScript'),
+        insertCSS: promisifyNoFail(chrome.tabs, 'insertCSS'),
+        query: promisifyNoFail(chrome.tabs, 'query', tabs => Array.isArray(tabs) ? tabs : []),
+        reload: promisifyNoFail(chrome.tabs, 'reload'),
+        remove: promisifyNoFail(chrome.tabs, 'remove'),
+        update: promisifyNoFail(chrome.tabs, 'update', tab => tab instanceof Object ? tab : null),
     },
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/windows
     windows: {
-        get: function() {
-            return new Promise(resolve => {
-                chrome.windows.get(...arguments, win => {
-                    void chrome.runtime.lastError;
-                    resolve(win instanceof Object ? win : null);
-                });
-            });
-        },
-        create: function() {
-            return new Promise(resolve => {
-                chrome.windows.create(...arguments, win => {
-                    void chrome.runtime.lastError;
-                    resolve(win instanceof Object ? win : null);
-                });
-            });
-        },
-        update: function() {
-            return new Promise(resolve => {
-                chrome.windows.update(...arguments, win => {
-                    void chrome.runtime.lastError;
-                    resolve(win instanceof Object ? win : null);
-                });
-            });
-        },
+        get: promisifyNoFail(chrome.windows, 'get', win => win instanceof Object ? win : null),
+        create: promisifyNoFail(chrome.windows, 'create', win => win instanceof Object ? win : null),
+        update: promisifyNoFail(chrome.windows, 'update', win => win instanceof Object ? win : null),
     },
 };
+
+// browser.privacy entries
+{
+    const settings = [
+        // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/privacy/network
+        [ 'network', 'networkPredictionEnabled' ],
+        [ 'network', 'webRTCIPHandlingPolicy' ],
+        // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/privacy/websites
+        [ 'websites', 'hyperlinkAuditingEnabled' ],
+    ];
+    for ( const [ category, setting ] of settings ) {
+        let categoryEntry = webext.privacy[category];
+        if ( categoryEntry instanceof Object === false ) {
+            categoryEntry = webext.privacy[category] = {};
+        }
+        const settingEntry = categoryEntry[setting] = {};
+        const thisArg = chrome.privacy[category][setting];
+        settingEntry.clear = promisifyNoFail(thisArg, 'clear');
+        settingEntry.get = promisifyNoFail(thisArg, 'get');
+        settingEntry.set = promisifyNoFail(thisArg, 'set');
+    }
+}
+
+// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage/managed
+if ( chrome.storage.managed instanceof Object ) {
+    webext.storage.managed = {
+        get: promisify(chrome.storage.managed, 'get'),
+    };
+}
 
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage/sync
 if ( chrome.storage.sync instanceof Object ) {
@@ -167,89 +135,20 @@ if ( chrome.storage.sync instanceof Object ) {
         MAX_WRITE_OPERATIONS_PER_HOUR: chrome.storage.sync.MAX_WRITE_OPERATIONS_PER_HOUR,
         MAX_WRITE_OPERATIONS_PER_MINUTE: chrome.storage.sync.MAX_WRITE_OPERATIONS_PER_MINUTE,
 
-        clear: function() {
-            return new Promise((resolve, reject) => {
-                chrome.storage.sync.clear(( ) => {
-                    const lastError = chrome.runtime.lastError;
-                    if ( lastError instanceof Object ) {
-                        return reject(lastError.message);
-                    }
-                    resolve();
-                });
-            });
-        },
-        get: function() {
-            return new Promise((resolve, reject) => {
-                chrome.storage.sync.get(...arguments, result => {
-                    const lastError = chrome.runtime.lastError;
-                    if ( lastError instanceof Object ) {
-                        return reject(lastError.message);
-                    }
-                    resolve(result);
-                });
-            });
-        },
-        getBytesInUse: function() {
-            return new Promise((resolve, reject) => {
-                chrome.storage.sync.getBytesInUse(...arguments, result => {
-                    const lastError = chrome.runtime.lastError;
-                    if ( lastError instanceof Object ) {
-                        return reject(lastError.message);
-                    }
-                    resolve(result);
-                });
-            });
-        },
-        remove: function() {
-            return new Promise((resolve, reject) => {
-                chrome.storage.sync.remove(...arguments, ( ) => {
-                    const lastError = chrome.runtime.lastError;
-                    if ( lastError instanceof Object ) {
-                        return reject(lastError.message);
-                    }
-                    resolve();
-                });
-            });
-        },
-        set: function() {
-            return new Promise((resolve, reject) => {
-                chrome.storage.sync.set(...arguments, ( ) => {
-                    const lastError = chrome.runtime.lastError;
-                    if ( lastError instanceof Object ) {
-                        return reject(lastError.message);
-                    }
-                    resolve();
-                });
-            });
-        },
+        clear: promisify(chrome.storage.sync, 'clear'),
+        get: promisify(chrome.storage.sync, 'get'),
+        getBytesInUse: promisify(chrome.storage.sync, 'getBytesInUse'),
+        remove: promisify(chrome.storage.sync, 'remove'),
+        set: promisify(chrome.storage.sync, 'set'),
     };
 }
 
 // https://bugs.chromium.org/p/chromium/issues/detail?id=608854
 if ( chrome.tabs.removeCSS instanceof Function ) {
-    webext.tabs.removeCSS = function() {
-        return new Promise(resolve => {
-            chrome.tabs.removeCSS(...arguments, ( ) => {
-                void chrome.runtime.lastError;
-                resolve();
-            });
-        });
-    };
+    webext.tabs.removeCSS = promisifyNoFail(chrome.tabs, 'removeCSS');
 }
 
-// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage/managed
-if ( chrome.storage.managed instanceof Object ) {
-    webext.storage.managed = {
-        get: function() {
-            return new Promise((resolve, reject) => {
-                chrome.storage.local.get(...arguments, result => {
-                    const lastError = chrome.runtime.lastError;
-                    if ( lastError instanceof Object ) {
-                        return reject(lastError.message);
-                    }
-                    resolve(result);
-                });
-            });
-        },
-    };
-}
+return webext;
+
+// <<<<< end of private scope
+})();
