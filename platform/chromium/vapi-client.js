@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-present The uBlock Origin authors
+    Copyright (C) 2014-2015 The uBlock Origin authors
     Copyright (C) 2015-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
@@ -117,7 +117,7 @@ vAPI.messaging = {
         // Unhandled messages
         this.extensions.every(ext => ext.canProcessMessage(details) !== true);
     },
-    messageListenerCallback: null,
+    messageListenerBound: null,
 
     canDestroyPort: function() {
         return this.pending.size === 0 &&
@@ -151,7 +151,7 @@ vAPI.messaging = {
         const port = this.port;
         if ( port !== null ) {
             port.disconnect();
-            port.onMessage.removeListener(this.messageListenerCallback);
+            port.onMessage.removeListener(this.messageListenerBound);
             port.onDisconnect.removeListener(this.disconnectListenerBound);
             this.port = null;
         }
@@ -168,8 +168,8 @@ vAPI.messaging = {
 
     createPort: function() {
         if ( this.shuttingDown ) { return null; }
-        if ( this.messageListenerCallback === null ) {
-            this.messageListenerCallback = this.messageListener.bind(this);
+        if ( this.messageListenerBound === null ) {
+            this.messageListenerBound = this.messageListener.bind(this);
             this.disconnectListenerBound = this.disconnectListener.bind(this);
             this.portPollerBound = this.portPoller.bind(this);
         }
@@ -184,7 +184,7 @@ vAPI.messaging = {
             vAPI.shutdown.exec();
             return null;
         }
-        this.port.onMessage.addListener(this.messageListenerCallback);
+        this.port.onMessage.addListener(this.messageListenerBound);
         this.port.onDisconnect.addListener(this.disconnectListenerBound);
         this.portTimerDelay = 10000;
         if ( this.portTimer === null ) {
