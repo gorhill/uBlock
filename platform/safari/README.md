@@ -1,7 +1,7 @@
 # Safari platform
 
 The Safari platform does not support the WebExtensions
-framwork and thus is no longer supported. Consequently
+framework and thus is no longer supported. Consequently
 the code base has been removed.
 
 The last commit which contains the code is
