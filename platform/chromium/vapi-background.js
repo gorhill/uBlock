@@ -939,10 +939,10 @@ vAPI.messaging = {
         switch ( msg.what ) {
         case 'connectionAccepted':
         case 'connectionRefused': {
-            const { port: toPort } = this.ports.get(msg.fromToken);
+            const toPort = this.ports.get(msg.fromToken);
             if ( toPort !== undefined ) {
                 msg.tabId = tabId;
-                toPort.postMessage(request);
+                toPort.port.postMessage(request);
             } else {
                 msg.what = 'connectionBroken';
                 port.postMessage(request);
@@ -952,24 +952,32 @@ vAPI.messaging = {
         case 'connectionRequested':
             msg.tabId = tabId;
             for ( const { port: toPort } of this.ports.values() ) {
+                if ( toPort === port ) { continue; }
                 toPort.postMessage(request);
             }
             break;
         case 'connectionBroken':
         case 'connectionCheck':
         case 'connectionMessage': {
-            const { port: toPort } = this.ports.get(
+            const toPort = this.ports.get(
                 port.name === msg.fromToken ? msg.toToken : msg.fromToken
             );
             if ( toPort !== undefined ) {
                 msg.tabId = tabId;
-                toPort.postMessage(request);
+                toPort.port.postMessage(request);
             } else {
                 msg.what = 'connectionBroken';
                 port.postMessage(request);
             }
             break;
         }
+        case 'extendClient':
+            vAPI.tabs.executeScript(tabId, {
+                file: '/js/vapi-client-extra.js',
+            }).then(( ) => {
+                callback();
+            });
+            break;
         case 'userCSS':
             if ( tabId === undefined ) { break; }
             const details = {
@@ -1043,7 +1051,7 @@ vAPI.messaging = {
         }
 
         // Content process to main process: framework handler.
-        if ( request.channelName === 'vapi' ) {
+        if ( request.channel === 'vapi' ) {
             this.onFrameworkMessage(request, port, callback);
             return;
         }
@@ -1052,7 +1060,7 @@ vAPI.messaging = {
         const fromDetails = this.ports.get(port.name);
         if ( fromDetails === undefined ) { return; }
 
-        const listenerDetails = this.listeners.get(request.channelName);
+        const listenerDetails = this.listeners.get(request.channel);
         let r = this.UNHANDLED;
         if (
             (listenerDetails !== undefined) &&

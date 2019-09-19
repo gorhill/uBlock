@@ -24,6 +24,7 @@
 /******************************************************************************/
 
 (( ) => {
+// >>>>>>>> start of private namespace
 
 /******************************************************************************/
 
@@ -295,21 +296,28 @@ const handlers = {
 
 /******************************************************************************/
 
-const onMessage = function(msg) {
-    if ( msg.what === 'loggerDisabled' ) {
-        processTimer.clear();
-        attributeObserver.disconnect();
-        vAPI.domFilterer.removeListener(handlers);
-        vAPI.domWatcher.removeListener(handlers);
-        vAPI.messaging.removeChannelListener('domLogger', onMessage);
+(async ( ) => {
+    // Dynamically add broadcast listening abilities.
+    if ( vAPI.broadcastListener instanceof Object === false ) {
+        await vAPI.messaging.send('vapi', { what: 'extendClient' });
     }
-};
-vAPI.messaging.addChannelListener('domLogger', onMessage);
+    const broadcastListener = msg => {
+        if ( msg.what === 'loggerDisabled' ) {
+            processTimer.clear();
+            attributeObserver.disconnect();
+            vAPI.domFilterer.removeListener(handlers);
+            vAPI.domWatcher.removeListener(handlers);
+            vAPI.broadcastListener.remove(broadcastListener);
+        }
+    };
+    vAPI.broadcastListener.add(broadcastListener);
+})();
 
 vAPI.domWatcher.addListener(handlers);
 
 /******************************************************************************/
 
+// <<<<<<<< end of private namespace
 })();
 
 

@@ -817,8 +817,9 @@ FilterContainer.prototype.pruneSelectorCacheAsync = function() {
 /******************************************************************************/
 
 FilterContainer.prototype.randomAlphaToken = function() {
-    return String.fromCharCode(Date.now() % 26 + 97) +
-           Math.floor(Math.random() * 982451653 + 982451653).toString(36);
+    const now = Date.now();
+    return String.fromCharCode(now % 26 + 97) +
+           Math.floor((1 + Math.random()) * now).toString(36);
 };
 
 /******************************************************************************/

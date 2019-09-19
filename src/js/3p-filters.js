@@ -38,7 +38,9 @@ let hideUnusedSet = new Set();
 
 /******************************************************************************/
 
-const onMessage = function(msg) {
+const messaging = vAPI.messaging;
+
+vAPI.broadcastListener.add(msg => {
     switch ( msg.what ) {
     case 'assetUpdated':
         updateAssetStatus(msg);
@@ -53,10 +55,7 @@ const onMessage = function(msg) {
     default:
         break;
     }
-};
-
-const messaging = vAPI.messaging;
-messaging.addChannelListener('dashboard', onMessage);
+});
 
 /******************************************************************************/
 
