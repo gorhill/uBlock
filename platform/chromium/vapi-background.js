@@ -1202,7 +1202,7 @@ vAPI.Net = class {
 // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/contextMenus#Browser_compatibility
 //   Firefox for Android does no support browser.contextMenus.
 
-vAPI.contextMenu = browser.contextMenus && {
+vAPI.contextMenu = webext.menus && {
     _callback: null,
     _entries: [],
     _createEntry: function(entry) {
