@@ -297,6 +297,7 @@ try {
 
 // Final initialization steps after all needed assets are in memory.
 
+// Start network observers.
 µb.webRequest.start();
 
 // Ensure that the resources allocated for decompression purpose (likely
@@ -318,10 +319,12 @@ initializeTabs();
         : 0
 );
 
-µb.contextMenu.update(null);
+// Force an update of the context menu according to the currently
+// active tab.
+µb.contextMenu.update();
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/717
-//   Prevent the extensions from being restarted mid-session.
+//   Prevent the extension from being restarted mid-session.
 browser.runtime.onUpdateAvailable.addListener(details => {
     const toInt = vAPI.app.intFromVersion;
     if (
