@@ -1045,52 +1045,63 @@
                 })
             ),
             µb.redirectEngine.toSelfie('selfie/redirectEngine'),
-            µb.staticExtFilteringEngine.toSelfie('selfie/staticExtFilteringEngine'),
-            µb.staticNetFilteringEngine.toSelfie('selfie/staticNetFilteringEngine'),
+            µb.staticExtFilteringEngine.toSelfie(
+                'selfie/staticExtFilteringEngine'
+            ),
+            µb.staticNetFilteringEngine.toSelfie(
+                'selfie/staticNetFilteringEngine'
+            ),
         ]);
         µb.lz4Codec.relinquish();
     };
 
+    const loadMain = async function() {
+        const details = await µb.assets.get('selfie/main');
+        if (
+            details instanceof Object === false ||
+            typeof details.content !== 'string' ||
+            details.content === ''
+        ) {
+            return false;
+        }
+        let selfie;
+        try {
+            selfie = JSON.parse(details.content);
+        } catch(ex) {
+        }
+        if (
+            selfie instanceof Object === false ||
+            selfie.magic !== µb.systemSettings.selfieMagic
+        ) {
+            return false;
+        }
+        µb.availableFilterLists = selfie.availableFilterLists;
+        return true;
+    };
+
     const load = async function() {
         if ( destroyTimer !== undefined ) {
-            return Promise.resolve(false);
+            return false;
         }
-
-        return Promise.all([
-            µb.assets.get('selfie/main').then(details => {
-                if (
-                    details instanceof Object === false ||
-                    typeof details.content !== 'string' ||
-                    details.content === ''
-                ) {
-                    return false;
-                }
-                let selfie;
-                try {
-                    selfie = JSON.parse(details.content);
-                } catch(ex) {
-                }
-                if (
-                    selfie instanceof Object === false ||
-                    selfie.magic !== µb.systemSettings.selfieMagic
-                ) {
-                    return false;
-                }
-                µb.availableFilterLists = selfie.availableFilterLists;
-                return true;
-            }),
-            µb.redirectEngine.fromSelfie('selfie/redirectEngine'),
-            µb.staticExtFilteringEngine.fromSelfie('selfie/staticExtFilteringEngine'),
-            µb.staticNetFilteringEngine.fromSelfie('selfie/staticNetFilteringEngine'),
-        ]).then(results => {
-            if ( results.reduce((acc, v) => acc && v, true) ) {
+        try {
+            const results = await Promise.all([
+                loadMain(),
+                µb.redirectEngine.fromSelfie('selfie/redirectEngine'),
+                µb.staticExtFilteringEngine.fromSelfie(
+                    'selfie/staticExtFilteringEngine'
+                ),
+                µb.staticNetFilteringEngine.fromSelfie(
+                    'selfie/staticNetFilteringEngine'
+                ),
+            ]);
+            if ( results.every(v => v) ) {
                 return µb.loadRedirectResources();
             }
-            return false;
-        }).catch(reason => {
+        }
+        catch (reason) {
             log.info(reason);
-            return false;
-        });
+        }
+        return false;
     };
 
     const destroy = function() {
