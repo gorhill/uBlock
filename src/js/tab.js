@@ -887,6 +887,7 @@ vAPI.tabs = new vAPI.Tabs();
     // https://github.com/chrisaljoudi/uBlock/issues/516
     //   If context is 'beforeRequest', do not rebind, wait for confirmation.
     if ( context === 'beforeRequest' ) {
+        pageStore.netFilteringCache.empty();
         return pageStore;
     }
 
