@@ -52,7 +52,7 @@ vAPI.webextFlavor = {
     soup.add('ublock').add('webext');
 
     // Whether this is a dev build.
-    if ( /^\d+\.\d+\.\d+\D/.test(chrome.runtime.getManifest().version) ) {
+    if ( /^\d+\.\d+\.\d+\D/.test(browser.runtime.getManifest().version) ) {
         soup.add('devbuild');
     }
 
@@ -127,11 +127,11 @@ vAPI.download = function(details) {
 
 /******************************************************************************/
 
-vAPI.getURL = chrome.runtime.getURL;
+vAPI.getURL = browser.runtime.getURL;
 
 /******************************************************************************/
 
-vAPI.i18n = chrome.i18n.getMessage;
+vAPI.i18n = browser.i18n.getMessage;
 
 // http://www.w3.org/International/questions/qa-scripts#directions
 document.body.setAttribute(

@@ -174,7 +174,7 @@ vAPI.messaging = {
             this.portPollerBound = this.portPoller.bind(this);
         }
         try {
-            this.port = chrome.runtime.connect({name: vAPI.sessionId}) || null;
+            this.port = browser.runtime.connect({name: vAPI.sessionId}) || null;
         } catch (ex) {
             this.port = null;
         }

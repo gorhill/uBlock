@@ -109,7 +109,7 @@ const onMessage = function(request, sender, callback) {
 
     case 'getAppData':
         response = {
-            name: chrome.runtime.getManifest().name,
+            name: browser.runtime.getManifest().name,
             version: vAPI.app.version
         };
         break;

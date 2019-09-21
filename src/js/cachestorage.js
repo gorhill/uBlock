@@ -39,7 +39,7 @@
 // indexedDB.
 
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1371255
-//   Firefox-specific: we use indexedDB because chrome.storage.local() has
+//   Firefox-specific: we use indexedDB because browser.storage.local() has
 //   poor performance in Firefox.
 // https://github.com/uBlockOrigin/uBlock-issues/issues/328
 //   Use IndexedDB for Chromium as well, to take advantage of LZ4
