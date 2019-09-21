@@ -1052,6 +1052,10 @@
     };
 
     const load = async function() {
+        if ( destroyTimer !== undefined ) {
+            return Promise.resolve(false);
+        }
+
         return Promise.all([
             µb.assets.get('selfie/main').then(details => {
                 if (
