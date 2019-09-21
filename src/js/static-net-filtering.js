@@ -68,12 +68,13 @@ const typeNameToTypeValue = {
           'popunder': 12 << 4,
         'main_frame': 13 << 4,  // start of 1st-party-only behavorial filtering
        'generichide': 14 << 4,
-       'inline-font': 15 << 4,
-     'inline-script': 16 << 4,
-              'data': 17 << 4,  // special: a generic data holder
-          'redirect': 18 << 4,
-            'webrtc': 19 << 4,
-       'unsupported': 20 << 4
+      'specifichide': 15 << 4,
+       'inline-font': 16 << 4,
+     'inline-script': 17 << 4,
+              'data': 18 << 4,  // special: a generic data holder
+          'redirect': 19 << 4,
+            'webrtc': 20 << 4,
+       'unsupported': 21 << 4,
 };
 
 const otherTypeBitValue = typeNameToTypeValue.other;
@@ -110,12 +111,13 @@ const typeValueToTypeName = {
     12: 'popunder',
     13: 'document',
     14: 'generichide',
-    15: 'inline-font',
-    16: 'inline-script',
-    17: 'data',
-    18: 'redirect',
-    19: 'webrtc',
-    20: 'unsupported'
+    15: 'specifichide',
+    16: 'inline-font',
+    17: 'inline-script',
+    18: 'data',
+    19: 'redirect',
+    20: 'webrtc',
+    21: 'unsupported'
 };
 
 const BlockImportant = BlockAction | Important;
@@ -1848,11 +1850,11 @@ FilterParser.prototype.toNormalizedType = {
               'data': 'data',
                'doc': 'main_frame',
           'document': 'main_frame',
-          'elemhide': 'generichide',
               'font': 'font',
              'frame': 'sub_frame',
       'genericblock': 'unsupported',
        'generichide': 'generichide',
+             'ghide': 'generichide',
              'image': 'image',
        'inline-font': 'inline-font',
      'inline-script': 'inline-script',
@@ -1864,6 +1866,8 @@ FilterParser.prototype.toNormalizedType = {
           'popunder': 'popunder',
              'popup': 'popup',
             'script': 'script',
+      'specifichide': 'specifichide',
+             'shide': 'specifichide',
         'stylesheet': 'stylesheet',
        'subdocument': 'sub_frame',
                'xhr': 'xmlhttprequest',
@@ -2017,7 +2021,8 @@ FilterParser.prototype.parseOptions = function(s) {
             this.dataStr = '';
             continue;
         }
-        // Used by Adguard, purpose is unclear -- just ignore for now.
+        // Used by Adguard:
+        // https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters?aid=16593#empty-modifier
         if ( opt === 'empty' || opt === 'mp4' ) {
             if ( this.redirect !== 0 ) {
                 this.unsupported = true;
@@ -2029,6 +2034,13 @@ FilterParser.prototype.parseOptions = function(s) {
         // https://github.com/uBlockOrigin/uAssets/issues/192
         if ( opt === 'badfilter' ) {
             this.badFilter = true;
+            continue;
+        }
+        // https://www.reddit.com/r/uBlockOrigin/comments/d6vxzj/
+        //   Add support for `elemhide`. Rarely used but it happens.
+        if ( opt === 'elemhide' || opt === 'ehide' ) {
+            this.parseTypeOption('specifichide', not);
+            this.parseTypeOption('generichide', not);
             continue;
         }
         // Unrecognized filter option: ignore whole filter.
@@ -3055,17 +3067,19 @@ FilterContainer.prototype.realmMatchString = function(
 //   filter if and only if there was a hit on an exception filter.
 // https://github.com/gorhill/uBlock/issues/2103
 //   User may want to override `generichide` exception filters.
+// https://www.reddit.com/r/uBlockOrigin/comments/d6vxzj/
+//   Add support for `specifichide`.
 
-FilterContainer.prototype.matchStringGenericHide = function(requestURL) {
-    const typeBits = typeNameToTypeValue['generichide'] | 0x80000000;
+FilterContainer.prototype.matchStringElementHide = function(type, url) {
+    const typeBits = typeNameToTypeValue[`${type}hide`] | 0x80000000;
 
     // Prime tokenizer: we get a normalized URL in return.
-    urlRegister = this.urlTokenizer.setURL(requestURL);
+    urlRegister = this.urlTokenizer.setURL(url);
     this.filterRegister = null;
 
     // These registers will be used by various filters
     pageHostnameRegister = requestHostnameRegister =
-        µb.URI.hostnameFromURI(requestURL);
+        µb.URI.hostnameFromURI(url);
 
     // Exception filters
     if ( this.realmMatchString(AllowAction, typeBits, FirstParty) ) {

@@ -500,6 +500,98 @@ vAPI.messaging.listen({
 
 const µb = µBlock;
 
+const retrieveContentScriptParameters = function(senderDetails, request) {
+    const { url, tabId, frameId } = senderDetails;
+    if ( url === undefined || tabId === undefined || frameId === undefined ) {
+        return;
+    }
+    if ( request.url !== url ) { return; }
+    const pageStore = µb.pageStoreFromTabId(tabId);
+    if ( pageStore === null || pageStore.getNetFilteringSwitch() === false ) {
+        return;
+    }
+
+    const noCosmeticFiltering = pageStore.noCosmeticFiltering === true;
+
+    const response = {
+        collapseBlocked: µb.userSettings.collapseBlocked,
+        noCosmeticFiltering,
+        noGenericCosmeticFiltering: noCosmeticFiltering,
+        noSpecificCosmeticFiltering: noCosmeticFiltering,
+    };
+
+    // https://github.com/uBlockOrigin/uAssets/issues/5704
+    //   `generichide` must be evaluated in the frame context.
+    if ( noCosmeticFiltering === false ) {
+        const genericHide =
+            µb.staticNetFilteringEngine.matchStringElementHide(
+                'generic',
+                request.url
+            );
+        response.noGenericCosmeticFiltering = genericHide === 2;
+        if ( genericHide !== 0 && µb.logger.enabled ) {
+            µBlock.filteringContext
+                .duplicate()
+                .fromTabId(tabId)
+                .setURL(request.url)
+                .setRealm('network')
+                .setType('generichide')
+                .setFilter(µb.staticNetFilteringEngine.toLogData())
+                .toLogger();
+        }
+    }
+
+    request.tabId = tabId;
+    request.frameId = frameId;
+    request.hostname = µb.URI.hostnameFromURI(request.url);
+    request.domain = µb.URI.domainFromHostname(request.hostname);
+    request.entity = µb.URI.entityFromDomain(request.domain);
+
+    // https://www.reddit.com/r/uBlockOrigin/comments/d6vxzj/
+    //   Add support for `specifichide`.
+    if ( noCosmeticFiltering === false ) {
+        const specificHide =
+            µb.staticNetFilteringEngine.matchStringElementHide(
+                'specific',
+                request.url
+            );
+        response.noSpecificCosmeticFiltering = specificHide === 2;
+        if ( specificHide !== 0 && µb.logger.enabled ) {
+            µBlock.filteringContext
+                .duplicate()
+                .fromTabId(tabId)
+                .setURL(request.url)
+                .setRealm('network')
+                .setType('specifichide')
+                .setFilter(µb.staticNetFilteringEngine.toLogData())
+                .toLogger();
+        }
+    }
+
+    // Cosmetic filtering can be effectively disabled when both specific and
+    // generic cosmetic filtering are disabled.
+    if (
+        noCosmeticFiltering === false &&
+        response.noGenericCosmeticFiltering &&
+        response.noSpecificCosmeticFiltering
+    ) {
+        response.noCosmeticFiltering = true;
+    }
+
+    response.specificCosmeticFilters =
+        µb.cosmeticFilteringEngine.retrieveSpecificSelectors(request, response);
+
+    if ( µb.canInjectScriptletsNow === false ) {
+        response.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
+    }
+
+    if ( µb.logger.enabled && response.noCosmeticFiltering !== true ) {
+        µb.logCosmeticFilters(tabId, frameId);
+    }
+
+    return response;
+};
+
 const onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
@@ -507,16 +599,11 @@ const onMessage = function(request, sender, callback) {
         break;
     }
 
-    // Sync
-    let response,
-        tabId, frameId,
-        pageStore = null;
+    const senderDetails = µb.getMessageSenderDetails(sender);
+    const pageStore = µb.pageStoreFromTabId(senderDetails.tabId);
 
-    if ( sender && sender.tab ) {
-        tabId = sender.tab.id;
-        frameId = sender.frameId;
-        pageStore = µb.pageStoreFromTabId(tabId);
-    }
+    // Sync
+    let response;
 
     switch ( request.what ) {
     case 'cosmeticFiltersInjected':
@@ -528,88 +615,42 @@ const onMessage = function(request, sender, callback) {
             id: request.id,
             hash: request.hash,
             netSelectorCacheCountMax:
-                µb.cosmeticFilteringEngine.netSelectorCacheCountMax
+                µb.cosmeticFilteringEngine.netSelectorCacheCountMax,
         };
         if (
             µb.userSettings.collapseBlocked &&
-            pageStore &&
-            pageStore.getNetFilteringSwitch()
+            pageStore && pageStore.getNetFilteringSwitch()
         ) {
             pageStore.getBlockedResources(request, response);
         }
         break;
 
     case 'maybeGoodPopup':
-        µb.maybeGoodPopup.tabId = tabId;
+        µb.maybeGoodPopup.tabId = senderDetails.tabId;
         µb.maybeGoodPopup.url = request.url;
         break;
 
     case 'shouldRenderNoscriptTags':
         if ( pageStore === null ) { break; }
-        const fctxt = µb.filteringContext.fromTabId(tabId);
+        const fctxt = µb.filteringContext.fromTabId(senderDetails.tabId);
         if ( pageStore.filterScripting(fctxt, undefined) ) {
-            vAPI.tabs.executeScript(tabId, {
+            vAPI.tabs.executeScript(senderDetails.tabId, {
                 file: '/js/scriptlets/noscript-spoof.js',
-                frameId: frameId,
-                runAt: 'document_end'
+                frameId: senderDetails.frameId,
+                runAt: 'document_end',
             });
         }
         break;
 
     case 'retrieveContentScriptParameters':
-        if (
-            pageStore === null ||
-            pageStore.getNetFilteringSwitch() === false ||
-            !request.url
-        ) {
-            break;
-        }
-        const noCosmeticFiltering = pageStore.noCosmeticFiltering === true;
-        response = {
-            collapseBlocked: µb.userSettings.collapseBlocked,
-            noCosmeticFiltering,
-            noGenericCosmeticFiltering: noCosmeticFiltering,
-        };
-        // https://github.com/uBlockOrigin/uAssets/issues/5704
-        //   `generichide` must be evaluated in the frame context.
-        if ( noCosmeticFiltering === false ) {
-            const genericHide =
-                µb.staticNetFilteringEngine.matchStringGenericHide(request.url);
-            response.noGenericCosmeticFiltering = genericHide === 2;
-            if ( genericHide !== 0 && µb.logger.enabled ) {
-                µBlock.filteringContext
-                    .duplicate()
-                    .fromTabId(tabId)
-                    .setURL(request.url)
-                    .setRealm('network')
-                    .setType('generichide')
-                    .setFilter(µb.staticNetFilteringEngine.toLogData())
-                    .toLogger();
-            }
-        }
-        request.tabId = tabId;
-        request.frameId = frameId;
-        request.hostname = µb.URI.hostnameFromURI(request.url);
-        request.domain = µb.URI.domainFromHostname(request.hostname);
-        request.entity = µb.URI.entityFromDomain(request.domain);
-        response.specificCosmeticFilters =
-            µb.cosmeticFilteringEngine.retrieveSpecificSelectors(
-                request,
-                response
-            );
-        if ( µb.canInjectScriptletsNow === false ) {
-            response.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
-        }
-        if ( µb.logger.enabled && response.noCosmeticFiltering !== true ) {
-            µb.logCosmeticFilters(tabId, frameId);
-        }
+        response = retrieveContentScriptParameters(senderDetails, request);
         break;
 
     case 'retrieveGenericCosmeticSelectors':
-        request.tabId = tabId;
-        request.frameId = frameId;
+        request.tabId = senderDetails.tabId;
+        request.frameId = senderDetails.frameId;
         response = {
-            result: µb.cosmeticFilteringEngine.retrieveGenericSelectors(request)
+            result: µb.cosmeticFilteringEngine.retrieveGenericSelectors(request),
         };
         break;
 

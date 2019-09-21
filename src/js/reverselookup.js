@@ -170,8 +170,16 @@ const fromCosmeticFilter = async function(details, callback) {
         id: id,
         domain: µBlock.URI.domainFromHostname(hostname),
         hostname: hostname,
-        ignoreGeneric: µBlock.staticNetFilteringEngine
-                             .matchStringGenericHide(details.url) === 2,
+        ignoreGeneric:
+            µBlock.staticNetFilteringEngine.matchStringElementHide(
+                'generic',
+                details.url
+            ) === 2,
+        ignoreSpecific:
+            µBlock.staticNetFilteringEngine.matchStringElementHide(
+                'specific',
+                details.url
+            ) === 2,
         rawFilter: details.rawFilter
     });
 };

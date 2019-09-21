@@ -33,7 +33,7 @@ if ( vAPI.webextFlavor === undefined ) {
 
 /******************************************************************************/
 
-const µBlock = (function() { // jshint ignore:line
+const µBlock = (( ) => { // jshint ignore:line
 
     const hiddenSettingsDefault = {
         allowGenericProceduralFilters: false,
@@ -84,7 +84,7 @@ const µBlock = (function() { // jshint ignore:line
             requestLogMaxEntries: 1000,
             showIconBadge: true,
             tooltipsDisabled: false,
-            webrtcIPAddressHidden: false
+            webrtcIPAddressHidden: false,
         },
 
         hiddenSettingsDefault: hiddenSettingsDefault,
@@ -133,22 +133,22 @@ const µBlock = (function() { // jshint ignore:line
 
         localSettings: {
             blockedRequestCount: 0,
-            allowedRequestCount: 0
+            allowedRequestCount: 0,
         },
         localSettingsLastModified: 0,
         localSettingsLastSaved: 0,
 
         // Read-only
         systemSettings: {
-            compiledMagic: 18,  // Increase when compiled format changes
-            selfieMagic: 18     // Increase when selfie format changes
+            compiledMagic: 19,  // Increase when compiled format changes
+            selfieMagic: 19,    // Increase when selfie format changes
         },
 
         restoreBackupSettings: {
             lastRestoreFile: '',
             lastRestoreTime: 0,
             lastBackupFile: '',
-            lastBackupTime: 0
+            lastBackupTime: 0,
         },
 
         commandShortcuts: new Map(),

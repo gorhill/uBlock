@@ -44,7 +44,7 @@
   optional.
 
   The static extended filtering engine also offers parsing capabilities which
-  are available to all other specialized fitlering engines. For example,
+  are available to all other specialized filtering engines. For example,
   cosmetic and html filtering can ask the extended filtering engine to
   compile/validate selectors.
 
@@ -303,7 +303,7 @@
             [ ':nth-ancestor', compileNthAncestorSelector ],
             [ ':spath', compileSpathExpression ],
             [ ':watch-attr', compileAttrList ],
-            [ ':xpath', compileXpathExpression ]
+            [ ':xpath', compileXpathExpression ],
         ]);
 
         // https://github.com/gorhill/uBlock/issues/2793#issuecomment-333269387
@@ -517,7 +517,11 @@
             this.timer = undefined;
             this.strToIdMap = new Map();
             this.hostnameToSlotIdMap = new Map();
-            this.hostnameSlots = [];
+            // Avoid heterogeneous arrays. Thus:
+            this.hostnameSlots = [];        // array of integers
+            // IMPORTANT: initialize with an empty array because -0 is NOT < 0.
+            this.hostnameSlotsEx = [ [] ];  // Array of arrays of integers
+            // Array of strings (selectors and pseudo-selectors)
             this.strSlots = [];
             this.size = 0;
             if ( selfie !== undefined ) {
@@ -543,24 +547,27 @@
                 this.hostnameSlots.push(strId);
                 return;
             }
-            const bucket = this.hostnameSlots[iHn];
-            if ( Array.isArray(bucket) ) {
-                bucket.push(strId);
-            } else {
-                this.hostnameSlots[iHn] = [ bucket, strId ];
+            if ( iHn < 0 ) {
+                this.hostnameSlotsEx[-iHn].push(strId);
+                return;
             }
+            const strIdEx = -this.hostnameSlotsEx.length;
+            this.hostnameToSlotIdMap.set(hn, strIdEx);
+            this.hostnameSlotsEx.push([ this.hostnameSlots[iHn], strId ]);
+            this.hostnameSlots[iHn] = strIdEx;
         }
 
         clear() {
             this.hostnameToSlotIdMap.clear();
             this.hostnameSlots.length = 0;
+            this.hostnameSlotsEx.length = 1;    // IMPORTANT: 1, not 0
             this.strSlots.length = 0;
             this.strToIdMap.clear();
             this.size = 0;
         }
 
-        collectGarbage(async = false) {
-            if ( async === false ) {
+        collectGarbage(later = false) {
+            if ( later === false ) {
                 if ( this.timer !== undefined ) {
                     self.cancelIdleCallback(this.timer);
                     this.timer = undefined;
@@ -578,23 +585,39 @@
             );
         }
 
-        retrieve(hostname, out) {
+        // modifiers = 1: return only specific items
+        // modifiers = 2: return only generic items
+        //
+        retrieve(hostname, out, modifiers = 0) {
+            if ( modifiers === 2 ) {
+                hostname = '';
+            }
             const mask = out.length - 1; // out.length must be power of two
             for (;;) {
                 const filterId = this.hostnameToSlotIdMap.get(hostname);
                 if ( filterId !== undefined ) {
-                    const bucket = this.hostnameSlots[filterId];
-                    if ( Array.isArray(bucket) ) {
-                        for ( const id of bucket ) {
-                            out[id & mask].add(this.strSlots[id >>> this.nBits]);
+                    if ( filterId < 0 ) {
+                        const bucket = this.hostnameSlotsEx[-filterId];
+                        for ( const strId of bucket ) {
+                            out[strId & mask].add(
+                                this.strSlots[strId >>> this.nBits]
+                            );
                         }
                     } else {
-                        out[bucket & mask].add(this.strSlots[bucket >>> this.nBits]);
+                        const strId = this.hostnameSlots[filterId];
+                        out[strId & mask].add(
+                            this.strSlots[strId >>> this.nBits]
+                        );
                     }
                 }
                 if ( hostname === '' ) { break; }
                 const pos = hostname.indexOf('.');
-                hostname = pos !== -1 ? hostname.slice(pos + 1) : '';
+                if ( pos === -1 ) {
+                    if ( modifiers === 1 ) { break; }
+                    hostname = '';
+                } else {
+                    hostname = hostname.slice(pos + 1);
+                }
             }
         }
 
@@ -602,6 +625,7 @@
             return {
                 hostnameToSlotIdMap: Array.from(this.hostnameToSlotIdMap),
                 hostnameSlots: this.hostnameSlots,
+                hostnameSlotsEx: this.hostnameSlotsEx,
                 strSlots: this.strSlots,
                 size: this.size
             };
@@ -610,6 +634,7 @@
         fromSelfie(selfie) {
             this.hostnameToSlotIdMap = new Map(selfie.hostnameToSlotIdMap);
             this.hostnameSlots = selfie.hostnameSlots;
+            this.hostnameSlotsEx = selfie.hostnameSlotsEx;
             this.strSlots = selfie.strSlots;
             this.size = selfie.size;
         }
