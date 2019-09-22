@@ -80,9 +80,6 @@
 
 µBlock.onPopupUpdated = (( ) => {
     const µb = µBlock;
-    // The same context object will be reused everytime. This also allows to
-    // remember whether a popup or popunder was matched.
-    const fctxt = µBlock.filteringContext.setFilter(undefined);
 
     // https://github.com/gorhill/uBlock/commit/1d448b85b2931412508aa01bf899e0b6f0033626#commitcomment-14944764
     //   See if two URLs are different, disregarding scheme -- because the
@@ -104,7 +101,12 @@
         return b !== a;
     };
 
-    const popupMatch = function(openerURL, targetURL, popupType) {
+    const popupMatch = function(
+        fctxt,
+        openerURL,
+        targetURL,
+        popupType
+    ) {
         fctxt.setTabOriginFromURL(openerURL)
              .setDocOriginFromURL(openerURL)
              .setURL(targetURL)
@@ -193,7 +195,12 @@
         return 0;
     };
 
-    const mapPopunderResult = function(popunderURL, popunderHostname, result) {
+    const mapPopunderResult = function(
+        fctxt,
+        popunderURL,
+        popunderHostname,
+        result
+    ) {
         if (
             fctxt.filter === undefined ||
             fctxt.filter !== 'static' ||
@@ -222,8 +229,12 @@
             : 0;
     };
 
-    const popunderMatch = function(openerURL, targetURL) {
-        let result = popupMatch(targetURL, openerURL, 'popunder');
+    const popunderMatch = function(
+        fctxt,
+        openerURL,
+        targetURL
+    ) {
+        let result = popupMatch(fctxt, targetURL, openerURL, 'popunder');
         if ( result === 1 ) { return result; }
 
         // https://github.com/gorhill/uBlock/issues/1010#issuecomment-186824878
@@ -237,9 +248,10 @@
         if ( popunderHostname === '' ) { return 0; }
 
         result = mapPopunderResult(
+            fctxt,
             popunderURL,
             popunderHostname,
-            popupMatch(targetURL, popunderURL, 'popup')
+            popupMatch(fctxt, targetURL, popunderURL, 'popup')
         );
         if ( result !== 0 ) { return result; }
 
@@ -249,9 +261,10 @@
         if ( popunderURL === '' ) { return 0; }
 
         return mapPopunderResult(
+            fctxt,
             popunderURL,
             popunderHostname,
-            popupMatch(targetURL, popunderURL, 'popup')
+            popupMatch(fctxt, targetURL, popunderURL, 'popup')
         );
     };
 
@@ -292,18 +305,21 @@
             }
         }
 
+        // MUST be reset before code below is called.
+        const fctxt = µb.filteringContext.duplicate();
+
         // Popup test.
         let popupType = 'popup',
             result = 0;
         // https://github.com/gorhill/uBlock/issues/2919
         // - If the target tab matches a clicked link, assume it's legit.
         if ( areDifferentURLs(targetURL, openerDetails.trustedURL) ) {
-            result = popupMatch(openerURL, targetURL, 'popup');
+            result = popupMatch(fctxt, openerURL, targetURL, 'popup');
         }
 
         // Popunder test.
         if ( result === 0 && openerDetails.popunder ) {
-            result = popunderMatch(openerURL, targetURL);
+            result = popunderMatch(fctxt, openerURL, targetURL);
             if ( result === 1 ) {
                 popupType = 'popunder';
             }
@@ -328,9 +344,7 @@
         }
 
         // Not blocked
-        if ( result !== 1 ) {
-            return;
-        }
+        if ( result !== 1 ) { return; }
 
         // Only if a popup was blocked do we report it in the dynamic
         // filtering pane.
