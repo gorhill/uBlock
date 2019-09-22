@@ -130,13 +130,15 @@ const processDeclarativeStyle = function(out) {
         declarativeStyleStr = safeGroupSelectors(declarativeStyleDict.keys());
     }
     if ( document.querySelector(declarativeStyleStr) === null ) { return; }
-    for ( const [ selector, style ] of declarativeStyleDict ) {
+    for ( const selector of declarativeStyleDict.keys() ) {
         if ( safeQuerySelector(selector) === null ) { continue; }
-        const raw = `##${selector}:style(${style})`;
-        out.push(raw);
+        for ( const style of declarativeStyleDict.get(selector) ) {
+            const raw = `##${selector}:style(${style})`;
+            out.push(raw);
+            loggedSelectors.add(raw);
+        }
         declarativeStyleDict.delete(selector);
         declarativeStyleStr = undefined;
-        loggedSelectors.add(raw);
     }
 };
 
@@ -227,8 +229,13 @@ const handlers = {
         for ( const entry of (changes.declarative || []) ) {
             for ( let selector of entry[0].split(',\n') ) {
                 if ( entry[1] !== 'display:none!important;' ) {
-                    declarativeStyleDict.set(selector, entry[1]);
                     declarativeStyleStr = undefined;
+                    const styles = declarativeStyleDict.get(selector);
+                    if ( styles === undefined ) {
+                        declarativeStyleDict.set(selector, [ entry[1] ]);
+                        continue;
+                    }
+                    styles.push(entry[1]);
                     continue;
                 }
                 if ( loggedSelectors.has(selector) ) { continue; }
