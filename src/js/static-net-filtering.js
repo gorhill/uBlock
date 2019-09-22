@@ -63,18 +63,20 @@ const typeNameToTypeValue = {
               'font':  7 << 4,
              'media':  8 << 4,
          'websocket':  9 << 4,
-             'other': 10 << 4,
-             'popup': 11 << 4,  // start of behavorial filtering
-          'popunder': 12 << 4,
-        'main_frame': 13 << 4,  // start of 1st-party-only behavorial filtering
-       'generichide': 14 << 4,
-      'specifichide': 15 << 4,
-       'inline-font': 16 << 4,
-     'inline-script': 17 << 4,
-              'data': 18 << 4,  // special: a generic data holder
-          'redirect': 19 << 4,
-            'webrtc': 20 << 4,
-       'unsupported': 21 << 4,
+            'beacon': 10 << 4,
+              'ping': 10 << 4,
+             'other': 11 << 4,
+             'popup': 12 << 4,  // start of behavorial filtering
+          'popunder': 13 << 4,
+        'main_frame': 14 << 4,  // start of 1st-party-only behavorial filtering
+       'generichide': 15 << 4,
+      'specifichide': 16 << 4,
+       'inline-font': 17 << 4,
+     'inline-script': 18 << 4,
+              'data': 19 << 4,  // special: a generic data holder
+          'redirect': 20 << 4,
+            'webrtc': 21 << 4,
+       'unsupported': 22 << 4,
 };
 
 const otherTypeBitValue = typeNameToTypeValue.other;
@@ -106,18 +108,54 @@ const typeValueToTypeName = {
      7: 'font',
      8: 'media',
      9: 'websocket',
-    10: 'other',
-    11: 'popup',
-    12: 'popunder',
-    13: 'document',
-    14: 'generichide',
-    15: 'specifichide',
-    16: 'inline-font',
-    17: 'inline-script',
-    18: 'data',
-    19: 'redirect',
-    20: 'webrtc',
-    21: 'unsupported'
+    10: 'ping',
+    11: 'other',
+    12: 'popup',
+    13: 'popunder',
+    14: 'document',
+    15: 'generichide',
+    16: 'specifichide',
+    17: 'inline-font',
+    18: 'inline-script',
+    19: 'data',
+    20: 'redirect',
+    21: 'webrtc',
+    22: 'unsupported',
+};
+
+// https://github.com/gorhill/uBlock/issues/1493
+//   Transpose `ping` into `other` for now.
+const toNormalizedType = {
+               'all': 'all',
+            'beacon': 'ping',
+               'css': 'stylesheet',
+              'data': 'data',
+               'doc': 'main_frame',
+          'document': 'main_frame',
+              'font': 'font',
+             'frame': 'sub_frame',
+      'genericblock': 'unsupported',
+       'generichide': 'generichide',
+             'ghide': 'generichide',
+             'image': 'image',
+       'inline-font': 'inline-font',
+     'inline-script': 'inline-script',
+             'media': 'media',
+            'object': 'object',
+ 'object-subrequest': 'object',
+             'other': 'other',
+              'ping': 'ping',
+          'popunder': 'popunder',
+             'popup': 'popup',
+            'script': 'script',
+      'specifichide': 'specifichide',
+             'shide': 'specifichide',
+        'stylesheet': 'stylesheet',
+       'subdocument': 'sub_frame',
+               'xhr': 'xmlhttprequest',
+    'xmlhttprequest': 'xmlhttprequest',
+            'webrtc': 'unsupported',
+         'websocket': 'websocket',
 };
 
 const BlockImportant = BlockAction | Important;
@@ -239,9 +277,9 @@ const toLogDataInternal = function(categoryBits, tokenHash, filter) {
         opts.push('important');
     }
     if ( categoryBits & 0x008 ) {
-        opts.push('third-party');
+        opts.push('3p');
     } else if ( categoryBits & 0x004 ) {
-        opts.push('first-party');
+        opts.push('1p');
     }
     const type = categoryBits & 0x1F0;
     if ( type !== 0 && type !== typeNameToTypeValue.data ) {
@@ -1840,44 +1878,6 @@ const FilterParser = function() {
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/1493
-//   Transpose `ping` into `other` for now.
-
-FilterParser.prototype.toNormalizedType = {
-               'all': 'all',
-            'beacon': 'other',
-               'css': 'stylesheet',
-              'data': 'data',
-               'doc': 'main_frame',
-          'document': 'main_frame',
-              'font': 'font',
-             'frame': 'sub_frame',
-      'genericblock': 'unsupported',
-       'generichide': 'generichide',
-             'ghide': 'generichide',
-             'image': 'image',
-       'inline-font': 'inline-font',
-     'inline-script': 'inline-script',
-             'media': 'media',
-            'object': 'object',
- 'object-subrequest': 'object',
-             'other': 'other',
-              'ping': 'other',
-          'popunder': 'popunder',
-             'popup': 'popup',
-            'script': 'script',
-      'specifichide': 'specifichide',
-             'shide': 'specifichide',
-        'stylesheet': 'stylesheet',
-       'subdocument': 'sub_frame',
-               'xhr': 'xmlhttprequest',
-    'xmlhttprequest': 'xmlhttprequest',
-            'webrtc': 'unsupported',
-         'websocket': 'websocket',
-};
-
-/******************************************************************************/
-
 FilterParser.prototype.reset = function() {
     this.action = BlockAction;
     this.anchor = 0;
@@ -1919,7 +1919,7 @@ FilterParser.prototype.bitFromType = function(type) {
 
 FilterParser.prototype.parseTypeOption = function(raw, not) {
     const typeBit = raw !== 'all'
-        ? this.bitFromType(this.toNormalizedType[raw])
+        ? this.bitFromType(toNormalizedType[raw])
         : allTypesBits;
 
     if ( not ) {
@@ -1978,7 +1978,7 @@ FilterParser.prototype.parseOptions = function(s) {
             this.parsePartyOption(true, not);
             continue;
         }
-        if ( this.toNormalizedType.hasOwnProperty(opt) ) {
+        if ( toNormalizedType.hasOwnProperty(opt) ) {
             this.parseTypeOption(opt, not);
             continue;
         }

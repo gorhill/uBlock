@@ -66,14 +66,6 @@
 
             let type = details.type;
 
-            // https://github.com/gorhill/uBlock/issues/1493
-            // Chromium 49+/WebExtensions support a new request type: `ping`,
-            // which is fired as a result of using `navigator.sendBeacon`.
-            if ( type === 'ping' ) {
-                details.type = 'beacon';
-                return;
-            }
-
             if ( type === 'imageset' ) {
                 details.type = 'image';
                 return;

@@ -1089,13 +1089,11 @@ const reloadTab = function(ev) {
     const reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
     const reSchemeOnly = /^[\w-]+:$/;
     const staticFilterTypes = {
-        'beacon': 'other',
+        'beacon': 'ping',
         'doc': 'document',
         'css': 'stylesheet',
         'frame': 'subdocument',
-        'ping': 'other',
         'object_subrequest': 'object',
-        'xhr': 'xmlhttprequest'
     };
     const createdStaticFilters = {};
 
@@ -1182,7 +1180,7 @@ const reloadTab = function(ev) {
         value = selectValue('select.static.origin');
         if ( value !== '' ) {
             if ( value === targetDomain ) {
-                options.push('first-party');
+                options.push('1p');
             } else {
                 options.push('domain=' + value);
             }
