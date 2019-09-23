@@ -602,7 +602,7 @@ vAPI.Tabs = class {
 /******************************************************************************/
 /******************************************************************************/
 
-if ( browser.windows instanceof Object ) {
+if ( webext.windows instanceof Object ) {
     vAPI.windows = {
         get: async function() {
             let win;
@@ -637,6 +637,52 @@ if ( browser.windows instanceof Object ) {
 /******************************************************************************/
 /******************************************************************************/
 
+if ( webext.browserAction instanceof Object ) {
+    vAPI.browserAction = {
+        setTitle: async function() {
+            try {
+                await webext.browserAction.setTitle(...arguments);
+            }
+            catch (reason) {
+            }
+        },
+    };
+    // Not supported on Firefox for Android
+    if ( webext.browserAction.setIcon ) {
+        vAPI.browserAction.setBadgeTextColor = async function() {
+            try {
+                await webext.browserAction.setBadgeTextColor(...arguments);
+            }
+            catch (reason) {
+            }
+        };
+        vAPI.browserAction.setBadgeBackgroundColor = async function() {
+            try {
+                await webext.browserAction.setBadgeBackgroundColor(...arguments);
+            }
+            catch (reason) {
+            }
+        };
+        vAPI.browserAction.setBadgeText = async function() {
+            try {
+                await webext.browserAction.setBadgeText(...arguments);
+            }
+            catch (reason) {
+            }
+        };
+        vAPI.browserAction.setIcon = async function() {
+            try {
+                await webext.browserAction.setIcon(...arguments);
+            }
+            catch (reason) {
+            }
+        };
+    }
+}
+
+/******************************************************************************/
+/******************************************************************************/
+
 // Must read: https://code.google.com/p/chromium/issues/detail?id=410868#c8
 
 // https://github.com/chrisaljoudi/uBlock/issues/19
@@ -652,7 +698,7 @@ if ( browser.windows instanceof Object ) {
 //   Ensure ImageData for toolbar icon is valid before use.
 
 vAPI.setIcon = (( ) => {
-    const browserAction = webext.browserAction;
+    const browserAction = vAPI.browserAction;
     const  titleTemplate =
         browser.runtime.getManifest().browser_action.default_title +
         ' ({badge})';

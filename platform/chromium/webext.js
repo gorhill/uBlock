@@ -59,7 +59,6 @@ const promisify = function(thisArg, fnName) {
 const webext = {
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/browserAction
     browserAction: {
-        onClicked: chrome.browserAction.onClicked,
         setBadgeBackgroundColor: promisifyNoFail(chrome.browserAction, 'setBadgeBackgroundColor'),
         setBadgeText: promisifyNoFail(chrome.browserAction, 'setBadgeText'),
         setIcon: promisifyNoFail(chrome.browserAction, 'setIcon'),
