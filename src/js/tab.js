@@ -103,12 +103,13 @@
 
     const popupMatch = function(
         fctxt,
-        openerURL,
+        rootOpenerURL,
+        localOpenerURL,
         targetURL,
-        popupType
+        popupType = 'popup'
     ) {
-        fctxt.setTabOriginFromURL(openerURL)
-             .setDocOriginFromURL(openerURL)
+        fctxt.setTabOriginFromURL(rootOpenerURL)
+             .setDocOriginFromURL(localOpenerURL || rootOpenerURL)
              .setURL(targetURL)
              .setType('popup');
         let result;
@@ -231,10 +232,17 @@
 
     const popunderMatch = function(
         fctxt,
-        openerURL,
+        rootOpenerURL,
+        localOpenerURL,
         targetURL
     ) {
-        let result = popupMatch(fctxt, targetURL, openerURL, 'popunder');
+        let result = popupMatch(
+            fctxt,
+            targetURL,
+            undefined,
+            rootOpenerURL,
+            'popunder'
+        );
         if ( result === 1 ) { return result; }
 
         // https://github.com/gorhill/uBlock/issues/1010#issuecomment-186824878
@@ -243,7 +251,7 @@
         //   a broad one, we will consider the opener tab to be a popunder tab.
         //   For now, a "broad" filter is one which does not touch any part of
         //   the hostname part of the opener URL.
-        let popunderURL = openerURL,
+        let popunderURL = rootOpenerURL,
             popunderHostname = µb.URI.hostnameFromURI(popunderURL);
         if ( popunderHostname === '' ) { return 0; }
 
@@ -251,7 +259,7 @@
             fctxt,
             popunderURL,
             popunderHostname,
-            popupMatch(fctxt, targetURL, popunderURL, 'popup')
+            popupMatch(fctxt, targetURL, undefined, popunderURL)
         );
         if ( result !== 0 ) { return result; }
 
@@ -264,7 +272,7 @@
             fctxt,
             popunderURL,
             popunderHostname,
-            popupMatch(fctxt, targetURL, popunderURL, 'popup')
+            popupMatch(fctxt, targetURL, undefined, popunderURL)
         );
     };
 
@@ -273,8 +281,11 @@
         const openerTabId = openerDetails.tabId;
         let tabContext = µb.tabContextManager.lookup(openerTabId);
         if ( tabContext === null ) { return; }
-        const openerURL = tabContext.rawURL;
-        if ( openerURL === '' ) { return; }
+        const rootOpenerURL = tabContext.rawURL;
+        if ( rootOpenerURL === '' ) { return; }
+        const localOpenerURL = openerDetails.frameId !== 0
+            ? openerDetails.frameURL
+            : undefined;
 
         // Popup details.
         tabContext = µb.tabContextManager.lookup(targetTabId);
@@ -283,21 +294,20 @@
         if ( targetURL === '' ) { return; }
 
         // https://github.com/gorhill/uBlock/issues/341
-        // Allow popups if uBlock is turned off in opener's context.
-        if ( µb.getNetFilteringSwitch(openerURL) === false ) { return; }
+        //   Allow popups if uBlock is turned off in opener's context.
+        if ( µb.getNetFilteringSwitch(rootOpenerURL) === false ) { return; }
 
         // https://github.com/gorhill/uBlock/issues/1538
         if (
-            µb.getNetFilteringSwitch(µb.normalizePageURL(
-                openerTabId,
-                openerURL)
+            µb.getNetFilteringSwitch(
+                µb.normalizePageURL(openerTabId, rootOpenerURL)
             ) === false
         ) {
             return;
         }
 
-        // If the page URL is that of our "blocked page" URL, extract the URL of
-        // the page which was blocked.
+        // If the page URL is that of our "blocked page" URL, extract the URL
+        // of the page which was blocked.
         if ( targetURL.startsWith(vAPI.getURL('document-blocked.html')) ) {
             const matches = /details=([^&]+)/.exec(targetURL);
             if ( matches !== null ) {
@@ -314,12 +324,12 @@
         // https://github.com/gorhill/uBlock/issues/2919
         // - If the target tab matches a clicked link, assume it's legit.
         if ( areDifferentURLs(targetURL, openerDetails.trustedURL) ) {
-            result = popupMatch(fctxt, openerURL, targetURL, 'popup');
+            result = popupMatch(fctxt, rootOpenerURL, localOpenerURL, targetURL);
         }
 
         // Popunder test.
         if ( result === 0 && openerDetails.popunder ) {
-            result = popunderMatch(fctxt, openerURL, targetURL);
+            result = popunderMatch(fctxt, rootOpenerURL, localOpenerURL, targetURL);
             if ( result === 1 ) {
                 popupType = 'popunder';
             }
@@ -332,10 +342,10 @@
             if ( popupType === 'popup' ) {
                 fctxt.setURL(targetURL)
                      .setTabId(openerTabId)
-                     .setTabOriginFromURL(openerURL)
-                     .setDocOriginFromURL(openerURL);
+                     .setTabOriginFromURL(rootOpenerURL)
+                     .setDocOriginFromURL(localOpenerURL);
             } else {
-                fctxt.setURL(openerURL)
+                fctxt.setURL(rootOpenerURL)
                      .setTabId(targetTabId)
                      .setTabOriginFromURL(targetURL)
                      .setDocOriginFromURL(targetURL);
@@ -446,12 +456,15 @@ housekeep itself.
     const popupCandidates = new Map();
 
     const PopupCandidate = class {
-        constructor(targetTabId, openerTabId) {
-            this.targetTabId = targetTabId;
+        constructor(createDetails, openerDetails) {
+            this.targetTabId = createDetails.tabId;
             this.opener = {
-                tabId: openerTabId,
+                tabId: createDetails.sourceTabId,
+                tabURL: openerDetails[0].url,
+                frameId: createDetails.sourceFrameId,
+                frameURL: openerDetails[1].url,
                 popunder: false,
-                trustedURL: openerTabId === µb.maybeGoodPopup.tabId
+                trustedURL: createDetails.tabId === µb.maybeGoodPopup.tabId
                     ? µb.maybeGoodPopup.url
                     : ''
             };
@@ -477,10 +490,8 @@ housekeep itself.
         }
     };
 
-    const popupCandidateTest = function(targetTabId) {
-        for ( const entry of popupCandidates ) {
-            const tabId = entry[0];
-            const candidate = entry[1];
+    const popupCandidateTest = async function(targetTabId) {
+        for ( const [ tabId, candidate ] of popupCandidates ) {
             if (
                 targetTabId !== tabId &&
                 targetTabId !== candidate.opener.tabId
@@ -493,7 +504,8 @@ housekeep itself.
             if ( targetTabId === candidate.opener.tabId ) {
                 candidate.opener.popunder = true;
             }
-            if ( µb.onPopupUpdated(tabId, candidate.opener) === true ) {
+            const result = await µb.onPopupUpdated(tabId, candidate.opener);
+            if ( result === true ) {
                 candidate.destroy();
             } else {
                 candidate.launchSelfDestruction();
@@ -501,15 +513,32 @@ housekeep itself.
         }
     };
 
-    const onTabCreated = function(targetTabId, openerTabId) {
-        const popup = popupCandidates.get(targetTabId);
+    const onTabCreated = async function(createDetails) {
+        const { sourceTabId, sourceFrameId, tabId } = createDetails;
+        const popup = popupCandidates.get(tabId);
         if ( popup === undefined ) {
+            let openerDetails;
+            try {
+                openerDetails = await Promise.all([
+                    webext.webNavigation.getFrame({
+                        tabId: createDetails.sourceTabId,
+                        frameId: 0,
+                    }),
+                    webext.webNavigation.getFrame({
+                        tabId: sourceTabId,
+                        frameId: sourceFrameId,
+                    }),
+                ]);
+            }
+            catch (reason) {
+                return;
+            }
             popupCandidates.set(
-                targetTabId,
-                new PopupCandidate(targetTabId, openerTabId)
+                tabId,
+                new PopupCandidate(createDetails, openerDetails)
             );
         }
-        popupCandidateTest(targetTabId);
+        popupCandidateTest(tabId);
     };
 
     const gcPeriod = 10 * 60 * 1000;
@@ -818,9 +847,9 @@ vAPI.Tabs = class extends vAPI.Tabs {
         µBlock.contextMenu.update();
     }
 
-    onCreated(targetTabId, openerTabId) {
-        super.onCreated(targetTabId, openerTabId);
-        µBlock.tabContextManager.onTabCreated(targetTabId, openerTabId);
+    onCreated(details) {
+        super.onCreated(details);
+        µBlock.tabContextManager.onTabCreated(details);
     }
 
     // When the DOM content of root frame is loaded, this means the tab

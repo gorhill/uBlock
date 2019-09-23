@@ -260,10 +260,7 @@ vAPI.Tabs = class {
                 details.url = this.sanitizeURL(details.url);
                 this.onNavigation(details);
             }
-            this.onCreated(
-                details.tabId,
-                details.sourceTabId
-            );
+            this.onCreated(details);
         });
 
         browser.webNavigation.onCommitted.addListener(details => {
@@ -592,7 +589,7 @@ vAPI.Tabs = class {
     onClosed(/* tabId, details */) {
     }
 
-    onCreated(/* openedTabId, openerTabId */) {
+    onCreated(/* details */) {
     }
 
     onNavigation(/* details */) {
@@ -655,7 +652,7 @@ if ( browser.windows instanceof Object ) {
 //   Ensure ImageData for toolbar icon is valid before use.
 
 vAPI.setIcon = (( ) => {
-    const browserAction = browser.browserAction;
+    const browserAction = webext.browserAction;
     const  titleTemplate =
         browser.runtime.getManifest().browser_action.default_title +
         ' ({badge})';

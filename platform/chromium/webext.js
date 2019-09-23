@@ -32,7 +32,9 @@ const promisifyNoFail = function(thisArg, fnName, outFn = r => r) {
     return function() {
         return new Promise(resolve => {
             fn.call(thisArg, ...arguments, function() {
-                void chrome.runtime.lastError;
+                if ( chrome.runtime.lastError instanceof Object ) {
+                    void chrome.runtime.lastError.message;
+                }
                 resolve(outFn(...arguments));
             });
         });
@@ -55,6 +57,14 @@ const promisify = function(thisArg, fnName) {
 };
 
 const webext = {
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/browserAction
+    browserAction: {
+        onClicked: chrome.browserAction.onClicked,
+        setBadgeBackgroundColor: promisifyNoFail(chrome.browserAction, 'setBadgeBackgroundColor'),
+        setBadgeText: promisifyNoFail(chrome.browserAction, 'setBadgeText'),
+        setIcon: promisifyNoFail(chrome.browserAction, 'setIcon'),
+        setTitle: promisifyNoFail(chrome.browserAction, 'setTitle'),
+    },
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/menus
     menus: {
         create: function() {
@@ -88,6 +98,10 @@ const webext = {
         reload: promisifyNoFail(chrome.tabs, 'reload'),
         remove: promisifyNoFail(chrome.tabs, 'remove'),
         update: promisifyNoFail(chrome.tabs, 'update', tab => tab instanceof Object ? tab : null),
+    },
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/webNavigation
+    webNavigation: {
+        getFrame: promisify(chrome.webNavigation, 'getFrame'),
     },
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/windows
     windows: {
