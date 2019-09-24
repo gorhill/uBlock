@@ -334,6 +334,10 @@
         }
     };
 
+    api.getSession = function() {
+        return filterDB.session;
+    };
+
     api.retrieve = function(details) {
         const hostname = details.hostname;
 
@@ -350,6 +354,7 @@
         const procedurals = new Set();
         const exceptions = new Set();
 
+        filterDB.session.retrieve([ new Set(), exceptions ]);
         filterDB.retrieve(
             hostname,
             [ plains, exceptions, procedurals, exceptions ]

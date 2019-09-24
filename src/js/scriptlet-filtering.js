@@ -342,6 +342,10 @@
         }
     };
 
+    api.getSession = function() {
+        return scriptletDB.session;
+    };
+
     const scriptlets$ = new Set();
     const exceptions$ = new Set();
     const scriptletToCodeMap$ = new Map();
@@ -367,10 +371,8 @@
         scriptlets$.clear();
         exceptions$.clear();
 
-        scriptletDB.retrieve(
-            hostname,
-            [ scriptlets$, exceptions$ ]
-        );
+        scriptletDB.session.retrieve([ scriptlets$, exceptions$ ]);
+        scriptletDB.retrieve(hostname, [ scriptlets$, exceptions$ ]);
         if ( request.entity !== '' ) {
             scriptletDB.retrieve(
                 `${hostname.slice(0, -request.domain.length)}${request.entity}`,

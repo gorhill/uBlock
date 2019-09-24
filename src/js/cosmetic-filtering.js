@@ -826,6 +826,12 @@ FilterContainer.prototype.randomAlphaToken = function() {
 
 /******************************************************************************/
 
+FilterContainer.prototype.getSession = function() {
+    return this.specificFilters.session;
+};
+
+/******************************************************************************/
+
 FilterContainer.prototype.retrieveGenericSelectors = function(request) {
     if ( this.acceptedCount === 0 ) { return; }
     if ( !request.ids && !request.classes ) { return; }
@@ -990,12 +996,15 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
             }
         }
 
+        // Retrieve temporary filters
+        this.specificFilters.session.retrieve([ dummySet, exceptionSet ]);
+
         // Retrieve filters with a non-empty hostname
         this.specificFilters.retrieve(
             hostname,
             options.noSpecificCosmeticFiltering !== true
                 ? [ specificSet, exceptionSet, proceduralSet, exceptionSet ]
-                : [ dummySet, exceptionSet, dummySet, exceptionSet ],
+                : [ dummySet, exceptionSet ],
             1
         );
         // Retrieve filters with an empty hostname
@@ -1003,7 +1012,7 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
             hostname,
             options.noGenericCosmeticFiltering !== true
                 ? [ specificSet, exceptionSet, proceduralSet, exceptionSet ]
-                : [ dummySet, exceptionSet, dummySet, exceptionSet ],
+                : [ dummySet, exceptionSet ],
             2
         );
         // Retrieve filters with a non-empty entity
@@ -1012,7 +1021,7 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
                 `${hostname.slice(0, -request.domain.length)}${request.entity}`,
                 options.noSpecificCosmeticFiltering !== true
                     ? [ specificSet, exceptionSet, proceduralSet, exceptionSet ]
-                    : [ dummySet, exceptionSet, dummySet, exceptionSet ],
+                    : [ dummySet, exceptionSet ],
                 1
             );
         }

@@ -50,7 +50,7 @@
 
 **/
 
-µBlock.staticExtFilteringEngine = (function() {
+µBlock.staticExtFilteringEngine = (( ) => {
     const µb = µBlock;
     const reHasUnicode = /[^\x00-\x7F]/;
     const reParseRegexLiteral = /^\/(.+)\/([imu]+)?$/;
@@ -520,10 +520,45 @@
             // Avoid heterogeneous arrays. Thus:
             this.hostnameSlots = [];        // array of integers
             // IMPORTANT: initialize with an empty array because -0 is NOT < 0.
-            this.hostnameSlotsEx = [ [] ];  // Array of arrays of integers
+            this.hostnameSlotsEx = [ [] ];  // array of arrays of integers
             // Array of strings (selectors and pseudo-selectors)
             this.strSlots = [];
             this.size = 0;
+            // Temporary set
+            this.session = {
+                collection: new Map(),
+                add: function(bits, s) {
+                    const bucket = this.collection.get(bits);
+                    if ( bucket === undefined ) {
+                        this.collection.set(bits, new Set([ s ]));
+                    } else {
+                        bucket.add(s);
+                    }
+                },
+                remove: function(bits, s) {
+                    const bucket = this.collection.get(bits);
+                    if ( bucket === undefined ) { return; }
+                    bucket.delete(s);
+                    if ( bucket.size !== 0 ) { return; }
+                    this.collection.delete(bits);
+                },
+                retrieve(out) {
+                    const mask = out.length - 1;
+                    for ( const [ bits, bucket ] of this.collection ) {
+                        for ( const s of bucket ) {
+                            out[bits & mask].add(s);
+                        }
+                    }
+                },
+                has(bits, s) {
+                    const selectors = this.collection.get(bits);
+                    return selectors !== undefined && selectors.has(s);
+                },
+                clear() {
+                    this.collection.clear();
+                },
+            };
+
             if ( selfie !== undefined ) {
                 this.fromSelfie(selfie);
             }
@@ -673,7 +708,7 @@
     // https://github.com/uBlockOrigin/uBlock-issues/issues/89
     //   Do not discard unknown pseudo-elements.
 
-    api.compileSelector = (function() {
+    api.compileSelector = (( ) => {
         const reAfterBeforeSelector = /^(.+?)(::?after|::?before|::[a-z-]+)$/;
         const reStyleSelector = /^(.+?):style\((.+?)\)$/;
         const reExtendedSyntax = /\[-(?:abp|ext)-[a-z-]+=(['"])(?:.+?)(?:\1)\]/;

@@ -41,6 +41,7 @@ let filteredLoggerEntryVoidedCount = 0;
 let popupLoggerBox;
 let popupLoggerTooltips;
 let activeTabId = 0;
+let filterAuthorMode = false;
 let selectedTabId = 0;
 let netInspectorPaused = false;
 
@@ -64,7 +65,7 @@ const tabIdFromAttribute = function(elem) {
 
 // Current design allows for only one modal DOM-based dialog at any given time.
 //
-const modalDialog = (function() {
+const modalDialog = (( ) => {
     const overlay = uDom.nodeFromId('modalOverlay');
     const container = overlay.querySelector(
         ':scope > div > div:nth-of-type(1)'
@@ -949,6 +950,8 @@ const onLogBufferRead = function(response) {
         allTabIdsToken = response.tabIdsToken;
     }
 
+    filterAuthorMode = response.filterAuthorMode === true;
+
     if ( activeTabIdChanged ) {
         pageSelectorFromURLHash();
     }
@@ -1085,7 +1088,7 @@ const reloadTab = function(ev) {
 /******************************************************************************/
 /******************************************************************************/
 
-(function() {
+(( ) => {
     const reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
     const reSchemeOnly = /^[\w-]+:$/;
     const staticFilterTypes = {
@@ -1203,24 +1206,35 @@ const reloadTab = function(ev) {
         );
     };
 
-    const onClick = function(ev) {
+    const onClick = async function(ev) {
         const target = ev.target;
         const tcl = target.classList;
 
         // Select a mode
         if ( tcl.contains('header') ) {
-            dialog.setAttribute('data-pane', target.getAttribute('data-pane') );
             ev.stopPropagation();
+            dialog.setAttribute('data-pane', target.getAttribute('data-pane') );
             return;
         }
 
+        // Toggle temporary exception filter
+        if ( tcl.contains('exceptor') ) {
+            ev.stopPropagation();
+            const status = await messaging.send('loggerUI', {
+                what: 'toggleTemporaryException',
+                filter: filterFromTargetRow(),
+            });
+            const row = target.closest('div');
+            row.classList.toggle('exceptored', status);
+            return;
+        }
+        
         // Create static filter
         if ( target.id === 'createStaticFilter' ) {
+            ev.stopPropagation();
             const value = staticFilterNode().value;
             // Avoid duplicates
-            if ( createdStaticFilters.hasOwnProperty(value) ) {
-                return;
-            }
+            if ( createdStaticFilters.hasOwnProperty(value) ) { return; }
             createdStaticFilters[value] = true;
             if ( value !== '' ) {
                 messaging.send('loggerUI', {
@@ -1232,21 +1246,19 @@ const reloadTab = function(ev) {
                 });
             }
             updateWidgets();
-            ev.stopPropagation();
             return;
         }
 
         // Save url filtering rule(s)
         if ( target.id === 'saveRules' ) {
-            messaging.send('loggerUI', {
+            ev.stopPropagation();
+            await messaging.send('loggerUI', {
                 what: 'saveURLFilteringRules',
                 context: selectValue('select.dynamic.origin'),
                 urls: targetURLs,
                 type: uglyTypeFromSelector('dynamic'),
-            }).then(( ) => {
-                colorize();
             });
-            ev.stopPropagation();
+            colorize();
             return;
         }
 
@@ -1254,87 +1266,83 @@ const reloadTab = function(ev) {
 
         // Remove url filtering rule
         if ( tcl.contains('action') ) {
-            messaging.send('loggerUI', {
+            ev.stopPropagation();
+            await messaging.send('loggerUI', {
                 what: 'setURLFilteringRule',
                 context: selectValue('select.dynamic.origin'),
                 url: target.getAttribute('data-url'),
                 type: uglyTypeFromSelector('dynamic'),
                 action: 0,
                 persist: persist,
-            }).then(( ) => {
-                colorize();
             });
-            ev.stopPropagation();
+            colorize();
             return;
         }
 
         // add "allow" url filtering rule
         if ( tcl.contains('allow') ) {
-            messaging.send('loggerUI', {
+            ev.stopPropagation();
+            await messaging.send('loggerUI', {
                 what: 'setURLFilteringRule',
                 context: selectValue('select.dynamic.origin'),
                 url: target.parentNode.getAttribute('data-url'),
                 type: uglyTypeFromSelector('dynamic'),
                 action: 2,
                 persist: persist,
-            }).then(( ) => {
-                colorize();
             });
-            ev.stopPropagation();
+            colorize();
             return;
         }
 
         // add "block" url filtering rule
         if ( tcl.contains('noop') ) {
-            messaging.send('loggerUI', {
+            ev.stopPropagation();
+            await messaging.send('loggerUI', {
                 what: 'setURLFilteringRule',
                 context: selectValue('select.dynamic.origin'),
                 url: target.parentNode.getAttribute('data-url'),
                 type: uglyTypeFromSelector('dynamic'),
                 action: 3,
                 persist: persist,
-            }).then(( ) => {
-                colorize();
             });
-            ev.stopPropagation();
+            colorize();
             return;
         }
 
         // add "block" url filtering rule
         if ( tcl.contains('block') ) {
-            messaging.send('loggerUI', {
+            ev.stopPropagation();
+            await messaging.send('loggerUI', {
                 what: 'setURLFilteringRule',
                 context: selectValue('select.dynamic.origin'),
                 url: target.parentNode.getAttribute('data-url'),
                 type: uglyTypeFromSelector('dynamic'),
                 action: 1,
                 persist: persist,
-            }).then(( ) => {
-                colorize();
             });
-            ev.stopPropagation();
+            colorize();
             return;
         }
 
         // Force a reload of the tab
         if ( tcl.contains('reload') ) {
+            ev.stopPropagation();
             messaging.send('loggerUI', {
                 what: 'reloadTab',
                 tabId: targetTabId,
             });
-            ev.stopPropagation();
             return;
         }
 
         // Hightlight corresponding element in target web page
         if ( tcl.contains('picker') ) {
+            ev.stopPropagation();
             messaging.send('loggerUI', {
                 what: 'launchElementPicker',
                 tabId: targetTabId,
                 targetURL: 'img\t' + targetURLs[0],
                 select: true,
             });
-            ev.stopPropagation();
             return;
         }
     };
@@ -1426,6 +1434,37 @@ const reloadTab = function(ev) {
         return urls;
     };
 
+    const filterFromTargetRow = function() {
+        return targetRow.children[1].textContent;
+    };
+
+    const toSummaryPaneFilterNode = async function(receiver, filter) {
+        receiver.children[1].textContent = filter;
+        if ( filterAuthorMode !== true ) { return; }
+        const match = /#@?#/.exec(filter);
+        if ( match === null ) { return; }
+        const fragment = document.createDocumentFragment();
+        fragment.appendChild(document.createTextNode(match[0]));
+        const selector = filter.slice(match.index + match[0].length);
+        const span = document.createElement('span');
+        span.className = 'filter';
+        span.textContent = selector;
+        fragment.appendChild(span);
+        let isTemporaryException = false;
+        if ( match[0] === '#@#' ) {
+            isTemporaryException = await messaging.send('loggerUI', {
+                what: 'hasTemporaryException',
+                filter,
+            });
+            receiver.classList.toggle('exceptored', isTemporaryException);
+        }
+        if ( match[0] === '##' || isTemporaryException ) {
+            receiver.children[2].style.visibility = '';
+        }
+        receiver.children[1].textContent = '';
+        receiver.children[1].appendChild(fragment);
+    };
+
     const fillSummaryPaneFilterList = async function(rows) {
         const rawFilter = targetRow.children[1].textContent;
         const compiledFilter = targetRow.getAttribute('data-filter');
@@ -1468,7 +1507,7 @@ const reloadTab = function(ev) {
                 bestMatchFilter !== '' &&
                 Array.isArray(response[bestMatchFilter])
             ) {
-                rows[0].children[1].textContent = bestMatchFilter;
+                toSummaryPaneFilterNode(rows[0], bestMatchFilter);
                 rows[1].children[1].appendChild(nodeFromFilter(
                     bestMatchFilter,
                     response[bestMatchFilter]
@@ -1499,7 +1538,7 @@ const reloadTab = function(ev) {
             });
             handleResponse(response);
         }
-    };
+    } ;
 
     const fillSummaryPane = function() {
         const rows = dialog.querySelectorAll('.pane.details > div');
@@ -1508,12 +1547,12 @@ const reloadTab = function(ev) {
         const trch = tr.children;
         let text;
         // Filter and context
-        text = trch[1].textContent;
+        text = filterFromTargetRow();
         if (
             (text !== '') &&
             (trcl.contains('cosmeticRealm') || trcl.contains('networkRealm'))
         ) {
-            rows[0].children[1].textContent = text;
+            toSummaryPaneFilterNode(rows[0], text);
         } else {
             rows[0].style.display = 'none';
         }
@@ -1753,7 +1792,7 @@ const reloadTab = function(ev) {
         fillSummaryPane();
         fillDynamicPane();
         fillStaticPane();
-        dialog.addEventListener('click', onClick, true);
+        dialog.addEventListener('click', ev => { onClick(ev); }, true);
         dialog.addEventListener('change', onSelectChange, true);
         dialog.addEventListener('input', onInputChange, true);
         modalDialog.show();

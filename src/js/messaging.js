@@ -1203,10 +1203,11 @@ const extensionOriginURL = vAPI.getURL('');
 
 const getLoggerData = async function(details, activeTabId, callback) {
     const response = {
+        activeTabId,
         colorBlind: µb.userSettings.colorBlindFriendly,
         entries: µb.logger.readAll(details.ownerId),
+        filterAuthorMode: µb.hiddenSettings.filterAuthorMode,
         maxEntries: µb.userSettings.requestLogMaxEntries,
-        activeTabId: activeTabId,
         tabIdsToken: µb.pageStoresToken,
         tooltips: µb.userSettings.tooltipsDisabled === false
     };
@@ -1278,6 +1279,41 @@ const getURLFilteringData = function(details) {
     return response;
 };
 
+const compileTemporaryException = function(filter) {
+    const match = /#@?#/.exec(filter);
+    if ( match === null ) { return; }
+    let selector = filter.slice(match.index + match[0].length);
+    let session;
+    if ( selector.startsWith('+js') ) {
+        session = µb.scriptletFilteringEngine.getSession();
+        selector = selector.slice(4, -1).trim();
+    } else {
+        if ( selector.startsWith('^') ) {
+            session = µb.htmlFilteringEngine.getSession();
+            selector = selector.slice(1).trim();
+        } else {
+            session = µb.cosmeticFilteringEngine.getSession();
+        }
+        selector = µb.staticExtFilteringEngine.compileSelector(selector);
+    }
+    return { session, selector };
+};
+
+const toggleTemporaryException = function(details) {
+    const { session, selector } = compileTemporaryException(details.filter);
+    if ( session.has(1, selector) ) {
+        session.remove(1, selector);
+        return false;
+    }
+    session.add(1, selector);
+    return true;
+};
+
+const hasTemporaryException = function(details) {
+    const { session, selector } = compileTemporaryException(details.filter);
+    return session && session.has(1, selector);
+};
+
 const onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
@@ -1301,6 +1337,10 @@ const onMessage = function(request, sender, callback) {
     let response;
 
     switch ( request.what ) {
+    case 'hasTemporaryException':
+        response = hasTemporaryException(request);
+        break;
+
     case 'releaseView':
         if ( request.ownerId === µb.logger.ownerId ) {
             µb.logger.ownerId = undefined;
@@ -1325,6 +1365,10 @@ const onMessage = function(request, sender, callback) {
 
     case 'getURLFilteringData':
         response = getURLFilteringData(request);
+        break;
+
+    case 'toggleTemporaryException':
+        response = toggleTemporaryException(request);
         break;
 
     default:
