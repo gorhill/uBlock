@@ -24,14 +24,15 @@
 /******************************************************************************/
 
 µBlock.scriptletFilteringEngine = (function() {
-    const µb = µBlock,
-        duplicates = new Set(),
-        scriptletCache = new µb.MRUCache(32),
-        reEscapeScriptArg = /[\\'"]/g;
+    const µb = µBlock;
+    const duplicates = new Set();
+    const scriptletCache = new µb.MRUCache(32);
+    const reEscapeScriptArg = /[\\'"]/g;
 
-    let acceptedCount = 0,
-        discardedCount = 0,
-        scriptletDB = new µb.staticExtFilteringEngine.HostnameBasedDB(1);
+    const scriptletDB = new µb.staticExtFilteringEngine.HostnameBasedDB(1);
+    const sessionScriptletDB = new µb.staticExtFilteringEngine.SessionDB();
+    let acceptedCount = 0;
+    let discardedCount = 0;
 
     const api = {
         get acceptedCount() {
@@ -343,7 +344,7 @@
     };
 
     api.getSession = function() {
-        return scriptletDB.session;
+        return sessionScriptletDB;
     };
 
     const scriptlets$ = new Set();
@@ -371,7 +372,9 @@
         scriptlets$.clear();
         exceptions$.clear();
 
-        scriptletDB.session.retrieve([ scriptlets$, exceptions$ ]);
+        if ( sessionScriptletDB.isNotEmpty ) {
+            sessionScriptletDB.retrieve([ null, exceptions$ ]);
+        }
         scriptletDB.retrieve(hostname, [ scriptlets$, exceptions$ ]);
         if ( request.entity !== '' ) {
             scriptletDB.retrieve(
@@ -464,7 +467,7 @@
     };
 
     api.fromSelfie = function(selfie) {
-        scriptletDB = new µb.staticExtFilteringEngine.HostnameBasedDB(1, selfie);
+        scriptletDB.fromSelfie(selfie);
     };
 
     api.benchmark = async function() {

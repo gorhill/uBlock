@@ -204,6 +204,9 @@ const FilterContainer = function() {
     // specific filters
     this.specificFilters = new µb.staticExtFilteringEngine.HostnameBasedDB(2);
 
+    // temporary filters
+    this.sessionFilterDB = new µb.staticExtFilteringEngine.SessionDB();
+
     // low generic cosmetic filters, organized by id/class then simple/complex.
     this.lowlyGeneric = Object.create(null);
     this.lowlyGeneric.id = {
@@ -827,7 +830,7 @@ FilterContainer.prototype.randomAlphaToken = function() {
 /******************************************************************************/
 
 FilterContainer.prototype.getSession = function() {
-    return this.specificFilters.session;
+    return this.sessionFilterDB;
 };
 
 /******************************************************************************/
@@ -997,7 +1000,9 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
         }
 
         // Retrieve temporary filters
-        this.specificFilters.session.retrieve([ dummySet, exceptionSet ]);
+        if ( this.sessionFilterDB.isNotEmpty ) {
+            this.sessionFilterDB.retrieve([ null, exceptionSet ]);
+        }
 
         // Retrieve filters with a non-empty hostname
         this.specificFilters.retrieve(

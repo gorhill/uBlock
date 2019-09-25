@@ -28,10 +28,11 @@
     const pselectors = new Map();
     const duplicates = new Set();
 
-    let filterDB = new µb.staticExtFilteringEngine.HostnameBasedDB(2),
-        acceptedCount = 0,
-        discardedCount = 0,
-        docRegister;
+    const filterDB = new µb.staticExtFilteringEngine.HostnameBasedDB(2);
+    const sessionFilterDB = new µb.staticExtFilteringEngine.SessionDB();
+    let acceptedCount = 0;
+    let discardedCount = 0;
+    let docRegister;
 
     const api = {
         get acceptedCount() {
@@ -335,7 +336,7 @@
     };
 
     api.getSession = function() {
-        return filterDB.session;
+        return sessionFilterDB;
     };
 
     api.retrieve = function(details) {
@@ -354,7 +355,9 @@
         const procedurals = new Set();
         const exceptions = new Set();
 
-        filterDB.session.retrieve([ new Set(), exceptions ]);
+        if ( sessionFilterDB.isNotEmpty ) {
+            sessionFilterDB.retrieve([ null, exceptions ]);
+        }
         filterDB.retrieve(
             hostname,
             [ plains, exceptions, procedurals, exceptions ]
@@ -415,7 +418,7 @@
     };
 
     api.fromSelfie = function(selfie) {
-        filterDB = new µb.staticExtFilteringEngine.HostnameBasedDB(2, selfie);
+        filterDB.fromSelfie(selfie);
         pselectors.clear();
     };
 

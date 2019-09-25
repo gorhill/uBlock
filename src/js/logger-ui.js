@@ -1451,14 +1451,11 @@ const reloadTab = function(ev) {
         span.className = 'filter';
         span.textContent = selector;
         fragment.appendChild(span);
-        let isTemporaryException = false;
-        if ( match[0] === '#@#' ) {
-            isTemporaryException = await messaging.send('loggerUI', {
-                what: 'hasTemporaryException',
-                filter,
-            });
-            receiver.classList.toggle('exceptored', isTemporaryException);
-        }
+        const isTemporaryException = await messaging.send('loggerUI', {
+            what: 'hasTemporaryException',
+            filter,
+        });
+        receiver.classList.toggle('exceptored', isTemporaryException);
         if ( match[0] === '##' || isTemporaryException ) {
             receiver.children[2].style.visibility = '';
         }

@@ -511,7 +511,6 @@
     //--------------------------------------------------------------------------
 
     api.HostnameBasedDB = class {
-
         constructor(nBits, selfie = undefined) {
             this.nBits = nBits;
             this.timer = undefined;
@@ -524,41 +523,6 @@
             // Array of strings (selectors and pseudo-selectors)
             this.strSlots = [];
             this.size = 0;
-            // Temporary set
-            this.session = {
-                collection: new Map(),
-                add: function(bits, s) {
-                    const bucket = this.collection.get(bits);
-                    if ( bucket === undefined ) {
-                        this.collection.set(bits, new Set([ s ]));
-                    } else {
-                        bucket.add(s);
-                    }
-                },
-                remove: function(bits, s) {
-                    const bucket = this.collection.get(bits);
-                    if ( bucket === undefined ) { return; }
-                    bucket.delete(s);
-                    if ( bucket.size !== 0 ) { return; }
-                    this.collection.delete(bits);
-                },
-                retrieve(out) {
-                    const mask = out.length - 1;
-                    for ( const [ bits, bucket ] of this.collection ) {
-                        for ( const s of bucket ) {
-                            out[bits & mask].add(s);
-                        }
-                    }
-                },
-                has(bits, s) {
-                    const selectors = this.collection.get(bits);
-                    return selectors !== undefined && selectors.has(s);
-                },
-                clear() {
-                    this.collection.clear();
-                },
-            };
-
             if ( selfie !== undefined ) {
                 this.fromSelfie(selfie);
             }
@@ -672,6 +636,47 @@
             this.hostnameSlotsEx = selfie.hostnameSlotsEx;
             this.strSlots = selfie.strSlots;
             this.size = selfie.size;
+        }
+    };
+
+    api.SessionDB = class {
+        constructor() {
+            this.db = new Map();
+        }
+        add(bits, s) {
+            const bucket = this.db.get(bits);
+            if ( bucket === undefined ) {
+                this.db.set(bits, new Set([ s ]));
+            } else {
+                bucket.add(s);
+            }
+        }
+        remove(bits, s) {
+            const bucket = this.db.get(bits);
+            if ( bucket === undefined ) { return; }
+            bucket.delete(s);
+            if ( bucket.size !== 0 ) { return; }
+            this.db.delete(bits);
+        }
+        retrieve(out) {
+            const mask = out.length - 1;
+            for ( const [ bits, bucket ] of this.db ) {
+                const i = bits & mask;
+                if ( out[i] instanceof Object === false ) { continue; }
+                for ( const s of bucket ) {
+                    out[i].add(s);
+                }
+            }
+        }
+        has(bits, s) {
+            const selectors = this.db.get(bits);
+            return selectors !== undefined && selectors.has(s);
+        }
+        clear() {
+            this.db.clear();
+        }
+        get isNotEmpty() {
+            return this.db.size !== 0;
         }
     };
 
