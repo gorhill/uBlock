@@ -17,7 +17,7 @@ google.*##.mnr-c.rl-qs-crs-t._Db > ._gt:has(._mB)
 ###google_image_div
 
 ## Testing Use
-filbert.cc#@#.adsbygoogle
+#@#.adsbygoogle
 
 # generichide-rules (#1466 etc)
 trustedreviews.com##*[class^="ad-"]
