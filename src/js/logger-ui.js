@@ -1444,8 +1444,9 @@ const reloadTab = function(ev) {
         const match = /#@?#/.exec(filter);
         if ( match === null ) { return; }
         const fragment = document.createDocumentFragment();
-        fragment.appendChild(document.createTextNode(match[0]));
-        const selector = filter.slice(match.index + match[0].length);
+        const pos = match.index + match[0].length;
+        fragment.appendChild(document.createTextNode(filter.slice(0, pos)));
+        const selector = filter.slice(pos);
         const span = document.createElement('span');
         span.className = 'filter';
         span.textContent = selector;
