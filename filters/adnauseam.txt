@@ -16,7 +16,7 @@ google.*##.mnr-c.rl-qs-crs-t._Db > ._gt:has(._mB)
 # Google Advert
 ###google_image_div
 
-## Testing Use
+## Generic unhide for Google AdSense
 #@#.adsbygoogle
 
 # generichide-rules (#1466 etc)
