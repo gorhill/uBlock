@@ -517,9 +517,8 @@ var onMessage = function(request, sender, callback) {
         break;
     }
 
-    // Sync
-    var µb = µBlock,
-        response,
+    const µb = µBlock;
+    let response,
         tabId, frameId,
         pageStore = null;
 
@@ -548,9 +547,8 @@ var onMessage = function(request, sender, callback) {
 
     case 'shouldRenderNoscriptTags':
         if ( pageStore === null ) { break; }
-        let tabContext = µb.tabContextManager.lookup(tabId);
-        if ( tabContext === null ) { break; }
-        if ( pageStore.filterScripting(tabContext.rootHostname, undefined) ) {
+        const fctxt = µb.filteringContext.fromTabId.tabId;
+        if ( pageStore.filterScripting(fctxt, undefined) ) {
             vAPI.tabs.injectScript(
                 tabId,
                 {
@@ -598,15 +596,12 @@ var onMessage = function(request, sender, callback) {
         break;
 
     case 'retrieveGenericCosmeticSelectors':
-        if ( pageStore && pageStore.getGenericCosmeticFilteringSwitch() ) {
-            request.tabId = tabId;
-            request.frameId = frameId;
-            response = {
-                result: µb.cosmeticFilteringEngine
-                          .retrieveGenericSelectors(request)
-            };
-        }
-        break;
+      request.tabId = tabId;
+      request.frameId = frameId;
+      response = {
+          result: µb.cosmeticFilteringEngine.retrieveGenericSelectors(request),
+      };
+      break;
 
     default:
         return vAPI.messaging.UNHANDLED;

@@ -415,7 +415,7 @@ vAPI.DOMFilterer = class {
         this.excludedNodeSet.delete(node);
     }
 
-    hideNode: function(node) {
+    hideNode(node) {
       if (this.excludedNodeSet.has(node)) { return; }
       if (this.hideNodeAttr === undefined) { return; }
       if (this.hiddenNodeset.has(node)) { return; }
@@ -436,6 +436,7 @@ vAPI.DOMFilterer = class {
         this.hideNodeBatchProcessTimer.start();
         this.hiddenNodeObserver.observe(node, this.hiddenNodeObserverOptions);
     }
+  }
 
     unhideNode(node) {
         if ( this.hiddenNodeset.has(node) === false ) { return; }

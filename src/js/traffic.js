@@ -363,7 +363,7 @@ const onBeforeRootFrameRequest = function(fctxt) {
     }
 
     // ADN: Tell the core we have a new page
-    µb.adnauseam.onPageLoad(tabId, requestURL);
+    µb.adnauseam.onPageLoad(fctxt.tabId, requestURL);
 
     // ADN: return here if prefs say not to block
     if (µb.userSettings.blockingMalware === false) return;
@@ -609,8 +609,10 @@ const onHeadersReceived = function(details) {
     const isRootDoc = requestType === 'main_frame';
     const isDoc = isRootDoc || requestType === 'sub_frame';
 
-    //ADN
     const tabId = details.tabId;
+
+    let ad, result, dbug = 0; //ADN
+
    if (vAPI.isBehindTheSceneTabId(tabId)) {
 
      // ADN: handle incoming cookies for our visits (ignore in ff for now)
@@ -659,6 +661,10 @@ const onHeadersReceived = function(details) {
     const responseHeaders = details.responseHeaders;
 
     if ( requestType === 'image' || requestType === 'media' ) {
+        result = foilLargeMediaElement(fctxt,
+            pageStore,
+            responseHeaders);
+        return result
     }
 
     if ( isDoc === false ) { return; }
@@ -704,7 +710,6 @@ const onHeadersReceived = function(details) {
     }
     // ADN
     if (!result) {
-
       // ADN: if this was an allowed exception block cookies
           modified = pageStore && µBlock.adnauseam.checkAllowedException
               (details.responseHeaders, details.url, pageStore.rawURL);
