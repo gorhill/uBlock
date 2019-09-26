@@ -1282,21 +1282,18 @@ const getURLFilteringData = function(details) {
 const compileTemporaryException = function(filter) {
     const match = /#@?#/.exec(filter);
     if ( match === null ) { return; }
-    let selector = filter.slice(match.index + match[0].length);
+    let selector = filter.slice(match.index + match[0].length).trim();
     let session;
     if ( selector.startsWith('+js') ) {
         session = µb.scriptletFilteringEngine.getSession();
-        selector = selector.slice(4, -1).trim();
     } else {
         if ( selector.startsWith('^') ) {
             session = µb.htmlFilteringEngine.getSession();
-            selector = selector.slice(1).trim();
         } else {
             session = µb.cosmeticFilteringEngine.getSession();
         }
-        selector = µb.staticExtFilteringEngine.compileSelector(selector);
     }
-    return { session, selector };
+    return { session, selector: session.compile(selector) };
 };
 
 const toggleTemporaryException = function(details) {

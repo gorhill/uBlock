@@ -205,7 +205,13 @@ const FilterContainer = function() {
     this.specificFilters = new µb.staticExtFilteringEngine.HostnameBasedDB(2);
 
     // temporary filters
-    this.sessionFilterDB = new µb.staticExtFilteringEngine.SessionDB();
+    this.sessionFilterDB = new (
+        class extends µb.staticExtFilteringEngine.SessionDB {
+            compile(s) {
+                return µb.staticExtFilteringEngine.compileSelector(s);
+            }
+        }
+    )();
 
     // low generic cosmetic filters, organized by id/class then simple/complex.
     this.lowlyGeneric = Object.create(null);

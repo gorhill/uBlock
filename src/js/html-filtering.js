@@ -29,7 +29,14 @@
     const duplicates = new Set();
 
     const filterDB = new µb.staticExtFilteringEngine.HostnameBasedDB(2);
-    const sessionFilterDB = new µb.staticExtFilteringEngine.SessionDB();
+    const sessionFilterDB = new (
+        class extends µb.staticExtFilteringEngine.SessionDB {
+            compile(s) {
+                return µb.staticExtFilteringEngine.compileSelector(s.slice(1));
+            }
+        }
+    )();
+
     let acceptedCount = 0;
     let discardedCount = 0;
     let docRegister;

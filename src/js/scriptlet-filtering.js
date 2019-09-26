@@ -30,7 +30,14 @@
     const reEscapeScriptArg = /[\\'"]/g;
 
     const scriptletDB = new µb.staticExtFilteringEngine.HostnameBasedDB(1);
-    const sessionScriptletDB = new µb.staticExtFilteringEngine.SessionDB();
+    const sessionScriptletDB = new (
+        class extends µb.staticExtFilteringEngine.SessionDB {
+            compile(s) {
+                return s.slice(4, -1).trim();
+            }
+        }
+    )();
+
     let acceptedCount = 0;
     let discardedCount = 0;
 

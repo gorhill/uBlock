@@ -643,6 +643,9 @@
         constructor() {
             this.db = new Map();
         }
+        compile(s) {
+            return s;
+        }
         add(bits, s) {
             const bucket = this.db.get(bits);
             if ( bucket === undefined ) {
