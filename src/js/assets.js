@@ -264,7 +264,7 @@ api.fetchFilterList = async function(mainlistURL) {
                 );
                 lastIndex = reInclude.lastIndex;
             }
-            out.push(lastIndex === 0 ? content : content.slice(lastIndex).trim());
+            out.push(lastIndex === 0 ? content : content.slice(lastIndex));
         }
         return out;
     };
@@ -285,7 +285,7 @@ api.fetchFilterList = async function(mainlistURL) {
         url: mainlistURL,
         content: allParts.length === 1
             ? allParts[0]
-            : allParts.map(s => s.trim()).filter(s => s !== '').join('\n')
+            : allParts.map(s => s.trim()).filter(s => s !== '').join('\n') + '\n'
     };
 };
 
