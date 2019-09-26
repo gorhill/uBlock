@@ -884,7 +884,7 @@ const onMessage = function(request) {
 
 // Install DOM inspector widget
 
-const bootstrap = async function(ev) {
+const bootstrap = function(ev) {
     if ( ev ) {
         pickerRoot.removeEventListener(ev.type, bootstrap);
     }
@@ -934,22 +934,22 @@ const bootstrap = async function(ev) {
 
     // Dynamically add direct connection abilities so that we can establish
     // a direct, fast messaging connection to the logger.
-    if ( vAPI.MessagingConnection instanceof Function === false ) {
-        await vAPI.messaging.send('vapi', { what: 'extendClient' });
-    }
-    vAPI.MessagingConnection.connectTo('domInspector', 'loggerUI', msg => {
-        switch ( msg.what ) {
-        case 'connectionAccepted':
-            loggerConnectionId = msg.id;
-            start();
-            break;
-        case 'connectionBroken':
-            shutdown();
-            break;
-        case 'connectionMessage':
-            onMessage(msg.payload);
-            break;
-        }
+    vAPI.messaging.extend().then(extended => {
+        if ( extended !== true ) { return; }
+        vAPI.MessagingConnection.connectTo('domInspector', 'loggerUI', msg => {
+            switch ( msg.what ) {
+            case 'connectionAccepted':
+                loggerConnectionId = msg.id;
+                start();
+                break;
+            case 'connectionBroken':
+                shutdown();
+                break;
+            case 'connectionMessage':
+                onMessage(msg.payload);
+                break;
+            }
+        });
     });
 };
 

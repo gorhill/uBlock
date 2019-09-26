@@ -303,11 +303,8 @@ const handlers = {
 
 /******************************************************************************/
 
-(async ( ) => {
-    // Dynamically add broadcast listening abilities.
-    if ( vAPI.broadcastListener instanceof Object === false ) {
-        await vAPI.messaging.send('vapi', { what: 'extendClient' });
-    }
+vAPI.messaging.extend().then(extended => {
+    if ( extended !== true ) { return; }
     const broadcastListener = msg => {
         if ( msg.what === 'loggerDisabled' ) {
             processTimer.clear();
@@ -318,7 +315,7 @@ const handlers = {
         }
     };
     vAPI.broadcastListener.add(broadcastListener);
-})();
+});
 
 vAPI.domWatcher.addListener(handlers);
 

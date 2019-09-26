@@ -79,6 +79,7 @@ vAPI.messaging = {
     port: null,
     portTimer: null,
     portTimerDelay: 10000,
+    extended: undefined,
     extensions: [],
     msgIdGenerator: 1,
     pending: new Map(),
@@ -218,6 +219,19 @@ vAPI.messaging = {
         });
         port.postMessage({ channel, msgId, msg });
         return promise;
+    },
+
+    // Dynamically extend capabilities.
+    extend: function() {
+        if ( this.extended === undefined ) {
+            this.extended = vAPI.messaging.send('vapi', {
+                what: 'extendClient'
+            }).then(( ) => {
+                return vAPI instanceof Object && this.extensions.length !== 0;
+            }).catch(( ) => {
+            });
+        }
+        return this.extended;
     },
 };
 
