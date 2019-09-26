@@ -236,10 +236,11 @@ api.fetchFilterList = async function(mainlistURL) {
         const out = [];
         const reInclude = /^!#include +(\S+)/gm;
         for ( const result of results ) {
-            if ( result instanceof Object === false ) {
+            if ( typeof result === 'string' ) {
                 out.push(result);
                 continue;
             }
+            if ( result instanceof Object === false ) { continue; }
             const content = result.content;
             let lastIndex = 0;
             for (;;) {
@@ -256,10 +257,10 @@ api.fetchFilterList = async function(mainlistURL) {
                 if ( sublistURLs.has(subURL.href) ) { continue; }
                 sublistURLs.add(subURL.href);
                 out.push(
-                    content.slice(lastIndex, match.index).trim(),
-                    `\n! >>>>>>>> ${subURL.href}\n`,
+                    content.slice(lastIndex, match.index),
+                    `! >>>>>>>> ${subURL.href}`,
                     api.fetchText(subURL.href),
-                    `! <<<<<<<< ${subURL.href}\n`
+                    `! <<<<<<<< ${subURL.href}`
                 );
                 lastIndex = reInclude.lastIndex;
             }
@@ -282,7 +283,9 @@ api.fetchFilterList = async function(mainlistURL) {
     }
     return {
         url: mainlistURL,
-        content: allParts.join('')
+        content: allParts.length === 1
+            ? allParts[0]
+            : allParts.map(s => s.trim()).filter(s => s !== '').join('\n')
     };
 };
 
