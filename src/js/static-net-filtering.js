@@ -1372,9 +1372,9 @@ registerFilterClass(FilterOriginMixedSet);
 /******************************************************************************/
 
 const FilterDataHolder = class {
-    constructor(dataType, dataStr) {
+    constructor(dataType, data) {
         this.dataType = dataType;
-        this.dataStr = dataStr;
+        this.data = data;
         this.wrapped = undefined;
     }
 
@@ -1382,12 +1382,18 @@ const FilterDataHolder = class {
         return this.wrapped.match(url, tokenBeg);
     }
 
+    matchAndFetchData(type, url, tokenBeg, out) {
+        if ( this.dataType === type && this.match(url, tokenBeg) ) {
+            out.push(this);
+        }
+    }
+
     logData() {
         const out = this.wrapped.logData();
-        out.compiled = [ this.fid, this.dataType, this.dataStr, out.compiled ];
+        out.compiled = [ this.fid, this.dataType, this.data, out.compiled ];
         let opt = this.dataType;
-        if ( this.dataStr !== '' ) {
-            opt += `=${this.dataStr}`;
+        if ( this.data !== '' ) {
+            opt += `=${this.data}`;
         }
         if ( out.opts === undefined ) {
             out.opts = opt;
@@ -1401,13 +1407,13 @@ const FilterDataHolder = class {
         return [
             this.fid,
             this.dataType,
-            this.dataStr,
+            this.data,
             this.wrapped.compile(toSelfie)
         ];
     }
 
     static compile(details) {
-        return [ FilterDataHolder.fid, details.dataType, details.dataStr ];
+        return [ FilterDataHolder.fid, details.dataType, details.data ];
     }
 
     static load(args) {
@@ -1419,26 +1425,29 @@ const FilterDataHolder = class {
 
 registerFilterClass(FilterDataHolder);
 
-// Helper class for storing instances of FilterDataHolder.
+// Helper class for storing instances of FilterDataHolder which were found to
+// be a match.
 
-const FilterDataHolderEntry = class {
-    constructor(categoryBits, tokenHash, fdata) {
-        this.categoryBits = categoryBits;
-        this.tokenHash = tokenHash;
-        this.filter = filterFromCompiledData(fdata);
-        this.next = undefined;
+const FilterDataHolderResult = class {
+    constructor(bits, th, f) {
+        this.bits = bits;
+        this.th = th;
+        this.f = f;
+    }
+
+    get data() {
+        return this.f.data;
+    }
+
+    get result() {
+        return (this.bits & AllowAction) === 0 ? 1 : 2;
     }
 
     logData() {
-        return toLogDataInternal(this.categoryBits, this.tokenHash, this.filter);
-    }
-
-    compile() {
-        return [ this.categoryBits, this.tokenHash, this.filter.compile() ];
-    }
-
-    static load(data) {
-        return new FilterDataHolderEntry(data[0], data[1], data[2]);
+        const r = toLogDataInternal(this.bits, this.th, this.f);
+        r.source = 'static';
+        r.result = this.result;
+        return r;
     }
 };
 
@@ -1625,6 +1634,11 @@ const FilterPair = class {
         return false;
     }
 
+    matchAndFetchData(type, url, tokenBeg, out) {
+        this.f1.matchAndFetchData(type, url, tokenBeg, out);
+        this.f2.matchAndFetchData(type, url, tokenBeg, out);
+    }
+
     logData() {
         return this.f.logData();
     }
@@ -1742,6 +1756,12 @@ const FilterBucket = class {
             }
         }
         return false;
+    }
+
+    matchAndFetchData(type, url, tokenBeg, out) {
+        for ( const f of this.filters ) {
+            f.matchAndFetchData(type, url, tokenBeg, out);
+        }
     }
 
     logData() {
@@ -1883,7 +1903,7 @@ FilterParser.prototype.reset = function() {
     this.anchor = 0;
     this.badFilter = false;
     this.dataType = undefined;
-    this.dataStr = undefined;
+    this.data = undefined;
     this.elemHiding = false;
     this.f = '';
     this.firstParty = false;
@@ -2012,13 +2032,13 @@ FilterParser.prototype.parseOptions = function(s) {
         ) {
             this.parseTypeOption('data', not);
             this.dataType = 'csp';
-            this.dataStr = opt.slice(4).trim();
+            this.data = opt.slice(4).trim();
             continue;
         }
         if ( opt === 'csp' && this.action === AllowAction ) {
             this.parseTypeOption('data', not);
             this.dataType = 'csp';
-            this.dataStr = '';
+            this.data = '';
             continue;
         }
         // Used by Adguard:
@@ -2407,7 +2427,6 @@ FilterContainer.prototype.reset = function() {
 FilterContainer.prototype.freeze = function() {
     const filterPairId = FilterPair.fid;
     const filterBucketId = FilterBucket.fid;
-    const filterDataHolderId = FilterDataHolder.fid;
     const redirectTypeValue = typeNameToTypeValue.redirect;
     const unserialize = µb.CompiledLineIO.unserialize;
 
@@ -2430,20 +2449,6 @@ FilterContainer.prototype.freeze = function() {
         // Plain static filters.
         const tokenHash = args[1];
         const fdata = args[2];
-
-        // Special treatment: data-holding filters are stored separately
-        // because they require special matching algorithm (unlike other
-        // filters, ALL hits must be reported).
-        if ( fdata[0] === filterDataHolderId ) {
-            let entry = new FilterDataHolderEntry(bits, tokenHash, fdata);
-            let bucket = this.dataFilters.get(tokenHash);
-            if ( bucket !== undefined ) {
-                entry.next = bucket;
-            }
-            this.dataFilters.set(tokenHash, entry);
-            this.urlTokenizer.addKnownToken(tokenHash);
-            continue;
-        }
 
         let bucket = this.categories.get(bits);
         if ( bucket === undefined ) {
@@ -2543,17 +2548,6 @@ FilterContainer.prototype.toSelfie = function(path) {
         return selfie;
     };
 
-    const dataFiltersToSelfie = function(dataFilters) {
-        const selfie = [];
-        for ( let entry of dataFilters.values() ) {
-            do {
-                selfie.push(entry.compile(true));
-                entry = entry.next;
-            } while ( entry !== undefined );
-        }
-        return selfie;
-    };
-
     filterOrigin.optimize();
 
     return Promise.all([
@@ -2579,7 +2573,6 @@ FilterContainer.prototype.toSelfie = function(path) {
                 blockFilterCount: this.blockFilterCount,
                 discardedCount: this.discardedCount,
                 categories: categoriesToSelfie(this.categories),
-                dataFilters: dataFiltersToSelfie(this.dataFilters),
                 urlTokenizer: this.urlTokenizer.toSelfie(),
                 filterOriginStrSlots: filterOrigin.strSlots,
             })
@@ -2631,14 +2624,6 @@ FilterContainer.prototype.fromSelfie = function(path) {
                     tokenMap.set(token, filterFromCompiledData(fdata));
                 }
                 this.categories.set(catbits, tokenMap);
-            }
-            for ( const dataEntry of selfie.dataFilters ) {
-                const entry = FilterDataHolderEntry.load(dataEntry);
-                const bucket = this.dataFilters.get(entry.tokenHash);
-                if ( bucket !== undefined ) {
-                    entry.next = bucket;
-                }
-                this.dataFilters.set(entry.tokenHash, entry);
             }
             return true;
         }),
@@ -2847,99 +2832,109 @@ FilterContainer.prototype.fromCompiledContent = function(reader) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.matchAndFetchData = function(
-    dataType,
-    requestURL,
-    out,
-    outlog
+FilterContainer.prototype.realmMatchAndFetchData = function(
+    realmBits,
+    partyBits,
+    type,
+    out
 ) {
-    if ( this.dataFilters.size === 0 ) { return; }
+    const bits01 = realmBits | typeNameToTypeValue.data;
+    const bits11 = realmBits | typeNameToTypeValue.data | partyBits;
 
-    const url = this.urlTokenizer.setURL(requestURL);
+    const bucket01 = this.categories.get(bits01);
+    const bucket11 = partyBits !== 0
+        ? this.categories.get(bits11)
+        : undefined;
 
-    pageHostnameRegister = requestHostnameRegister =
-        µb.URI.hostnameFromURI(url);
+    if ( bucket01 === undefined && bucket11 === undefined ) { return false; }
 
-    // We need to visit ALL the matching filters.
-    const toAddImportant = new Map();
-    const toAdd = new Map();
-    const toRemove = new Map();
-
+    const url = urlRegister;
     const tokenHashes = this.urlTokenizer.getTokens();
-    let i = 0;
-    while ( i < 32 ) {
-        const tokenHash = tokenHashes[i++];
-        if ( tokenHash === 0 ) { break; }
-        const tokenOffset = tokenHashes[i++];
-        let entry = this.dataFilters.get(tokenHash);
-        while ( entry !== undefined ) {
-            const f = entry.filter;
-            if ( f.match(url, tokenOffset) === true ) {
-                if ( entry.categoryBits & 0x001 ) {
-                    toRemove.set(f.dataStr, entry);
-                } else if ( entry.categoryBits & 0x002 ) {
-                    toAddImportant.set(f.dataStr, entry);
-                } else {
-                    toAdd.set(f.dataStr, entry);
-                }
-            }
-            entry = entry.next;
-        }
-    }
-    let entry = this.dataFilters.get(this.noTokenHash);
-    while ( entry !== undefined ) {
-        const f = entry.filter;
-        if ( f.match(url) === true ) {
-            if ( entry.categoryBits & 0x001 ) {
-                toRemove.set(f.dataStr, entry);
-            } else if ( entry.categoryBits & 0x002 ) {
-                toAddImportant.set(f.dataStr, entry);
-            } else {
-                toAdd.set(f.dataStr, entry);
+    const filters = [];
+    let i = 0, tokenBeg = 0, f;
+    for (;;) {
+        const th = tokenHashes[i];
+        if ( th === 0 ) { return; }
+        tokenBeg = tokenHashes[i+1];
+        if (
+            (bucket01 !== undefined) &&
+            (f = bucket01.get(th)) !== undefined
+        ) {
+            filters.length = 0;
+            f.matchAndFetchData(type, url, tokenBeg, filters);
+            for ( f of filters ) {
+                out.set(f.data, new FilterDataHolderResult(bits01, th, f));
             }
         }
-        entry = entry.next;
+        if (
+            (bucket11 !== undefined) &&
+            (f = bucket11.get(th)) !== undefined
+        ) {
+            filters.length = 0;
+            f.matchAndFetchData(type, url, tokenBeg, filters);
+            for ( f of filters ) {
+                out.set(f.data, new FilterDataHolderResult(bits11, th, f));
+            }
+        }
+        i += 2;
     }
+};
 
-    if ( toAddImportant.size === 0 && toAdd.size === 0 ) { return; }
+/******************************************************************************/
 
-    // Remove entries overriden by other filters.
+FilterContainer.prototype.matchAndFetchData = function(fctxt, type) {
+    urlRegister = this.urlTokenizer.setURL(fctxt.url);
+    pageHostnameRegister = fctxt.getDocHostname();
+    requestHostnameRegister = fctxt.getHostname();
+
+    const partyBits = fctxt.is3rdPartyToDoc() ? ThirdParty : FirstParty;
+
+    const toAddImportant = new Map();
+    this.realmMatchAndFetchData(BlockImportant, partyBits, type, toAddImportant);
+
+    const toAdd = new Map();
+    this.realmMatchAndFetchData(BlockAction, partyBits, type, toAdd);
+
+    if ( toAddImportant.size === 0 && toAdd.size === 0 ) { return []; }
+
+    const toRemove = new Map();
+    this.realmMatchAndFetchData(AllowAction, partyBits, type, toRemove);
+
+    // Remove entries overriden by important block filters.
     for ( const key of toAddImportant.keys() ) {
         toAdd.delete(key);
         toRemove.delete(key);
     }
-    for ( const key of toRemove.keys() ) {
-        if ( key === '' ) {
+
+    // Special case, except-all:
+    // - Except-all applies only if there is at least one normal block filters.
+    // - Except-all does not apply to important block filters.
+    if ( toRemove.has('') ) {
+        if ( toAdd.size !== 0 ) {
             toAdd.clear();
-            break;
+            toRemove.forEach((v, k, m) => {
+                if ( k !== '' ) { m.delete(k); }
+            });
+        } else {
+            toRemove.clear();
         }
-        toAdd.delete(key);
+    }
+    // Remove excepted block filters and unused exception filters.
+    else {
+        for ( const key of toRemove.keys() ) {
+            if ( toAdd.has(key) ) {
+                toAdd.delete(key);
+            } else {
+                toRemove.delete(key);
+            }
+        }
     }
 
-    for ( const entry of toAddImportant ) {
-        out.push(entry[0]);
-        if ( outlog === undefined ) { continue; }
-        let logData = entry[1].logData();
-        logData.source = 'static';
-        logData.result = 1;
-        outlog.push(logData);
+    // Merge important and normal block filters
+    for ( const [ key, entry ] of toAddImportant ) {
+        toAdd.set(key, entry);
     }
-    for ( const entry of toAdd ) {
-        out.push(entry[0]);
-        if ( outlog === undefined ) { continue; }
-        let logData = entry[1].logData();
-        logData.source = 'static';
-        logData.result = 1;
-        outlog.push(logData);
-    }
-    if ( outlog !== undefined ) {
-        for ( const entry of toRemove.values()) {
-            const logData = entry.logData();
-            logData.source = 'static';
-            logData.result = 2;
-            outlog.push(logData);
-        }
-    }
+    return Array.from(toAdd.values()).concat(Array.from(toRemove.values()));
 };
 
 /******************************************************************************/

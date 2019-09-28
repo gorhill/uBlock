@@ -1478,18 +1478,13 @@ const logCSPViolations = function(pageStore, request) {
     if ( cspData === undefined ) {
         cspData = new Map();
 
-        const policies = [];
-        const logData = [];
-        µb.staticNetFilteringEngine.matchAndFetchData(
-            'csp',
-            request.docURL,
-            policies,
-            logData
-        );
-        for ( let i = 0; i < policies.length; i++ ) {
-            cspData.set(policies[i], logData[i]);
+        const staticDirectives =
+            µb.staticNetFilteringEngine.matchAndFetchData(fctxt, 'csp');
+        for ( const directive of staticDirectives ) {
+            if ( directive.result !== 1 ) { continue; }
+            cspData.set(directive.data, directive.logData());
         }
-        
+
         fctxt.type = 'inline-script';
         fctxt.filter = undefined;
         if ( pageStore.filterRequest(fctxt) === 1 ) {

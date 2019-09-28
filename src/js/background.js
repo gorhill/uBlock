@@ -142,7 +142,7 @@ const µBlock = (( ) => { // jshint ignore:line
         // Read-only
         systemSettings: {
             compiledMagic: 21,  // Increase when compiled format changes
-            selfieMagic: 21,    // Increase when selfie format changes
+            selfieMagic: 22,    // Increase when selfie format changes
         },
 
         restoreBackupSettings: {
