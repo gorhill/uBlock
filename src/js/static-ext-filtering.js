@@ -516,10 +516,8 @@
             this.timer = undefined;
             this.strToIdMap = new Map();
             this.hostnameToSlotIdMap = new Map();
-            // Avoid heterogeneous arrays. Thus:
-            this.hostnameSlots = [];        // array of integers
-            // IMPORTANT: initialize with an empty array because -0 is NOT < 0.
-            this.hostnameSlotsEx = [ [] ];  // array of arrays of integers
+            // Array of integer pairs
+            this.hostnameSlots = [];
             // Array of strings (selectors and pseudo-selectors)
             this.strSlots = [];
             this.size = 0;
@@ -540,26 +538,23 @@
                 }
             }
             const strId = iStr << this.nBits | bits;
-            const iHn = this.hostnameToSlotIdMap.get(hn);
+            let iHn = this.hostnameToSlotIdMap.get(hn);
             if ( iHn === undefined ) {
                 this.hostnameToSlotIdMap.set(hn, this.hostnameSlots.length);
-                this.hostnameSlots.push(strId);
+                this.hostnameSlots.push(strId, 0);
                 return;
             }
-            if ( iHn < 0 ) {
-                this.hostnameSlotsEx[-iHn].push(strId);
-                return;
+            // Add as last item.
+            while ( this.hostnameSlots[iHn+1] !== 0 ) {
+                iHn = this.hostnameSlots[iHn+1];
             }
-            const strIdEx = -this.hostnameSlotsEx.length;
-            this.hostnameToSlotIdMap.set(hn, strIdEx);
-            this.hostnameSlotsEx.push([ this.hostnameSlots[iHn], strId ]);
-            this.hostnameSlots[iHn] = strIdEx;
+            this.hostnameSlots[iHn+1] = this.hostnameSlots.length;
+            this.hostnameSlots.push(strId, 0);
         }
 
         clear() {
             this.hostnameToSlotIdMap.clear();
             this.hostnameSlots.length = 0;
-            this.hostnameSlotsEx.length = 1;    // IMPORTANT: 1, not 0
             this.strSlots.length = 0;
             this.strToIdMap.clear();
             this.size = 0;
@@ -593,21 +588,15 @@
             }
             const mask = out.length - 1; // out.length must be power of two
             for (;;) {
-                const filterId = this.hostnameToSlotIdMap.get(hostname);
-                if ( filterId !== undefined ) {
-                    if ( filterId < 0 ) {
-                        const bucket = this.hostnameSlotsEx[-filterId];
-                        for ( const strId of bucket ) {
-                            out[strId & mask].add(
-                                this.strSlots[strId >>> this.nBits]
-                            );
-                        }
-                    } else {
-                        const strId = this.hostnameSlots[filterId];
+                let iHn = this.hostnameToSlotIdMap.get(hostname);
+                if ( iHn !== undefined ) {
+                    do {
+                        const strId = this.hostnameSlots[iHn+0];
                         out[strId & mask].add(
                             this.strSlots[strId >>> this.nBits]
                         );
-                    }
+                        iHn = this.hostnameSlots[iHn+1];
+                    } while ( iHn !== 0 );
                 }
                 if ( hostname === '' ) { break; }
                 const pos = hostname.indexOf('.');
@@ -624,7 +613,6 @@
             return {
                 hostnameToSlotIdMap: Array.from(this.hostnameToSlotIdMap),
                 hostnameSlots: this.hostnameSlots,
-                hostnameSlotsEx: this.hostnameSlotsEx,
                 strSlots: this.strSlots,
                 size: this.size
             };
@@ -633,7 +621,6 @@
         fromSelfie(selfie) {
             this.hostnameToSlotIdMap = new Map(selfie.hostnameToSlotIdMap);
             this.hostnameSlots = selfie.hostnameSlots;
-            this.hostnameSlotsEx = selfie.hostnameSlotsEx;
             this.strSlots = selfie.strSlots;
             this.size = selfie.size;
         }
