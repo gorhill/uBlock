@@ -148,6 +148,7 @@ vAPI.SafeAnimationFrame = function(callback) {
 
 vAPI.SafeAnimationFrame.prototype = {
     start: function(delay) {
+        if ( vAPI instanceof Object === false ) { return; }
         if ( delay === undefined ) {
             if ( this.fid === undefined ) {
                 this.fid = requestAnimationFrame(( ) => { this.onRAF(); } );
@@ -1454,7 +1455,8 @@ vAPI.bootstrap = (function() {
     //   to try bootstrapping again later.
 
     const bootstrapPhase1 = function(response) {
-        if ( response === null ) { return; }
+        if ( response instanceof Object === false ) { return; }
+
         vAPI.bootstrap = undefined;
 
         // cosmetic filtering engine aka 'cfe'
