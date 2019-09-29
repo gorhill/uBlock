@@ -51,7 +51,8 @@ www.spacious.hk##.page__commercial_display_banner_box__content
 ##img[src*="ads.guava-affiliate.com"]
 ##img[src*="display-ad/"]
 
-inc.com##.teads-inread
+# teads inread video ads, found on inc.com and bbc.com
+.teads-inread
 
 www.ask.com##.tsrc_SAS
 www.ask.com###megaLabel
