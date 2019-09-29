@@ -247,12 +247,12 @@ const FilterContainer = function() {
     // is to prevent repeated allocation/deallocation overheads -- the
     // constructors/destructors of javascript Set/Map is assumed to be costlier
     // than just calling clear() on these.
-    this.simpleSet$ = new Set();
-    this.complexSet$ = new Set();
-    this.specificSet$ = new Set();
-    this.exceptionSet$ = new Set();
-    this.proceduralSet$ = new Set();
-    this.dummySet$ = new Set();
+    this.$simpleSet = new Set();
+    this.$complexSet = new Set();
+    this.$specificSet = new Set();
+    this.$exceptionSet = new Set();
+    this.$proceduralSet = new Set();
+    this.$dummySet = new Set();
 
     this.reset();
 };
@@ -847,11 +847,11 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
 
     //console.time('cosmeticFilteringEngine.retrieveGenericSelectors');
 
-    const simpleSelectors = this.simpleSet$;
-    const complexSelectors = this.complexSet$;
+    const simpleSelectors = this.$simpleSet;
+    const complexSelectors = this.$complexSet;
 
     const cacheEntry = this.selectorCache.get(request.hostname);
-    const previousHits = cacheEntry && cacheEntry.cosmetic || this.dummySet$;
+    const previousHits = cacheEntry && cacheEntry.cosmetic || this.$dummySet;
 
     for ( const type in this.lowlyGeneric ) {
         const entry = this.lowlyGeneric[type];
@@ -991,10 +991,10 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
     };
 
     if ( options.noCosmeticFiltering !== true ) {
-        const specificSet = this.specificSet$;
-        const proceduralSet = this.proceduralSet$;
-        const exceptionSet = this.exceptionSet$;
-        const dummySet = this.dummySet$;
+        const specificSet = this.$specificSet;
+        const proceduralSet = this.$proceduralSet;
+        const exceptionSet = this.$exceptionSet;
+        const dummySet = this.$dummySet;
 
         // Cached cosmetic filters: these are always declarative.
         if ( cacheEntry !== undefined ) {

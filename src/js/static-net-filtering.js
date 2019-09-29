@@ -170,9 +170,9 @@ const reIsWildcarded = /[\^\*]/;
 // See the following as short-lived registers, used during evaluation. They are
 // valid until the next evaluation.
 
-let urlRegister = '';
-let pageHostnameRegister = '';
-let requestHostnameRegister = '';
+let $requestURL = '';
+let $requestHostname = '';
+let $docHostname = '';
 
 /******************************************************************************/
 
@@ -185,7 +185,7 @@ const isHnAnchored = (( ) => {
     let lastLen = 0, lastBeg = -1, lastEnd = -1;
 
     return (url, matchStart) => {
-        const len = requestHostnameRegister.length;
+        const len = $requestHostname.length;
         if ( len !== lastLen || url.endsWith('://', lastBeg) === false ) {
             lastBeg = len !== 0 ? url.indexOf('://') : -1;
             if ( lastBeg !== -1 ) {
@@ -434,7 +434,7 @@ const FilterPlainHostname = class {
     }
 
     match() {
-        const haystack = requestHostnameRegister;
+        const haystack = $requestHostname;
         const needle = this.s;
         if ( haystack.endsWith(needle) === false ) { return false; }
         const offset = haystack.length - needle.length;
@@ -1097,7 +1097,7 @@ const FilterOriginHit = class {
     }
 
     match(url, tokenBeg) {
-        const haystack = pageHostnameRegister;
+        const haystack = $docHostname;
         const offset = haystack.length - this.hostname.length;
         if ( offset < 0 ) { return false; }
         if ( haystack.charCodeAt(offset) !== this.hostname.charCodeAt(0) ) {
@@ -1146,7 +1146,7 @@ const FilterOriginMiss = class {
     }
 
     match(url, tokenBeg) {
-        const haystack = pageHostnameRegister;
+        const haystack = $docHostname;
         if ( haystack.endsWith(this.hostname) ) {
             const offset = haystack.length - this.hostname.length;
             if (
@@ -1202,7 +1202,7 @@ const FilterOriginHitSet = class {
                 filterOrigin.strFromSlotId(this.domainOpt).split('|')
             );
         }
-        return this.oneOf.matches(pageHostnameRegister) !== -1 &&
+        return this.oneOf.matches($docHostname) !== -1 &&
                this.wrapped.match(url, tokenBeg);
     }
 
@@ -1260,7 +1260,7 @@ const FilterOriginMissSet = class {
                     .split('|')
             );
         }
-        return this.noneOf.matches(pageHostnameRegister) === -1 &&
+        return this.noneOf.matches($docHostname) === -1 &&
                this.wrapped.match(url, tokenBeg);
     }
 
@@ -1328,7 +1328,7 @@ const FilterOriginMixedSet = class {
 
     match(url, tokenBeg) {
         if ( this.oneOf === null ) { this.init(); }
-        let needle = pageHostnameRegister;
+        let needle = $docHostname;
         return this.oneOf.matches(needle) !== -1 &&
                this.noneOf.matches(needle) === -1 &&
                this.wrapped.match(url, tokenBeg);
@@ -1470,9 +1470,9 @@ const FilterHostnameDict = class {
     }
 
     match() {
-        const pos = this.dict.matches(requestHostnameRegister);
+        const pos = this.dict.matches($requestHostname);
         if ( pos === -1 ) { return false; }
-        this.h = requestHostnameRegister.slice(pos);
+        this.h = $requestHostname.slice(pos);
         return true;
     }
 
@@ -1542,9 +1542,9 @@ const FilterJustOrigin = class {
     }
 
     match() {
-        const pos = this.dict.matches(pageHostnameRegister);
+        const pos = this.dict.matches($docHostname);
         if ( pos === -1 ) { return false; }
-        this.h = pageHostnameRegister.slice(pos);
+        this.h = $docHostname.slice(pos);
         return true;
     }
 
@@ -1769,7 +1769,7 @@ const FilterBucket = class {
             this.f === this.plainFilter ||
             this.f === this.plainHnAnchoredFilter
         ) {
-            this.f.s = urlRegister.slice(
+            this.f.s = $requestURL.slice(
                 this.trieResult >>> 16,
                 this.trieResult & 0xFFFF
             );
@@ -2417,9 +2417,9 @@ FilterContainer.prototype.reset = function() {
     FilterBucket.reset();
 
     // Runtime registers
-    this.catbitsRegister = 0;
-    this.tokenRegister = 0;
-    this.filterRegister = null;
+    this.$catbits = 0;
+    this.$tokenHash = 0;
+    this.$filter = null;
 };
 
 /******************************************************************************/
@@ -2848,7 +2848,7 @@ FilterContainer.prototype.realmMatchAndFetchData = function(
 
     if ( bucket01 === undefined && bucket11 === undefined ) { return false; }
 
-    const url = urlRegister;
+    const url = $requestURL;
     const tokenHashes = this.urlTokenizer.getTokens();
     const filters = [];
     let i = 0, tokenBeg = 0, f;
@@ -2883,9 +2883,9 @@ FilterContainer.prototype.realmMatchAndFetchData = function(
 /******************************************************************************/
 
 FilterContainer.prototype.matchAndFetchData = function(fctxt, type) {
-    urlRegister = this.urlTokenizer.setURL(fctxt.url);
-    pageHostnameRegister = fctxt.getDocHostname();
-    requestHostnameRegister = fctxt.getHostname();
+    $requestURL = this.urlTokenizer.setURL(fctxt.url);
+    $docHostname = fctxt.getDocHostname();
+    $requestHostname = fctxt.getHostname();
 
     const partyBits = fctxt.is3rdPartyToDoc() ? ThirdParty : FirstParty;
 
@@ -3003,7 +3003,7 @@ FilterContainer.prototype.realmMatchString = function(
     }
     // Pattern-based filters
     else {
-        const url = urlRegister;
+        const url = $requestURL;
         const tokenHashes = this.urlTokenizer.getTokens();
         let i = 0, tokenBeg = 0;
         for (;;) {
@@ -3046,9 +3046,9 @@ FilterContainer.prototype.realmMatchString = function(
         }
     }
 
-    this.catbitsRegister = catBits;
-    this.tokenRegister = tokenHash;
-    this.filterRegister = f;
+    this.$catbits = catBits;
+    this.$tokenHash = tokenHash;
+    this.$filter = f;
     return true;
 };
 
@@ -3069,12 +3069,11 @@ FilterContainer.prototype.matchStringElementHide = function(type, url) {
     const typeBits = typeNameToTypeValue[`${type}hide`] | 0x80000000;
 
     // Prime tokenizer: we get a normalized URL in return.
-    urlRegister = this.urlTokenizer.setURL(url);
-    this.filterRegister = null;
+    $requestURL = this.urlTokenizer.setURL(url);
+    this.$filter = null;
 
     // These registers will be used by various filters
-    pageHostnameRegister = requestHostnameRegister =
-        µb.URI.hostnameFromURI(url);
+    $docHostname = $requestHostname = µb.URI.hostnameFromURI(url);
 
     // Exception filters
     if ( this.realmMatchString(AllowAction, typeBits, FirstParty) ) {
@@ -3114,12 +3113,12 @@ FilterContainer.prototype.matchString = function(fctxt, modifiers = 0) {
     const partyBits = fctxt.is3rdPartyToDoc() ? ThirdParty : FirstParty;
 
     // Prime tokenizer: we get a normalized URL in return.
-    urlRegister = this.urlTokenizer.setURL(fctxt.url);
-    this.filterRegister = null;
+    $requestURL = this.urlTokenizer.setURL(fctxt.url);
+    this.$filter = null;
 
     // These registers will be used by various filters
-    pageHostnameRegister = fctxt.getDocHostname();
-    requestHostnameRegister = fctxt.getHostname();
+    $docHostname = fctxt.getDocHostname();
+    $requestHostname = fctxt.getHostname();
 
     // Important block filters.
     if ( this.realmMatchString(BlockImportant, typeBits, partyBits) ) {
@@ -3139,17 +3138,21 @@ FilterContainer.prototype.matchString = function(fctxt, modifiers = 0) {
 /******************************************************************************/
 
 FilterContainer.prototype.toLogData = function() {
-    if ( this.filterRegister === null ) { return; }
+    if ( this.$filter === null ) { return; }
     const logData = toLogDataInternal(
-        this.catbitsRegister,
-        this.tokenRegister,
-        this.filterRegister
+        this.$catbits,
+        this.$tokenHash,
+        this.$filter
     );
     logData.source = 'static';
-    logData.tokenHash = this.tokenRegister;
-    logData.result = this.filterRegister === null
+    logData.tokenHash = this.$tokenHash;
+    logData.result = this.$filter === null
         ? 0
-        : (this.catbitsRegister & 1 ? 2 : 1);
+        : (
+            (this.$catbits & 1) !== 0
+                ? 2
+                : 1
+        );
     return logData;
 };
 
