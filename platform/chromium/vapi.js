@@ -62,7 +62,7 @@ if (
         self.vAPI instanceof Object === false || vAPI.uBO !== true
     )
 ) {
-    self.vAPI = { uBO: true };
+    vAPI = self.vAPI = { uBO: true };
 }
 
 
