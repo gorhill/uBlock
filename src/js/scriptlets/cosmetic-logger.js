@@ -46,6 +46,7 @@ let declarativeStyleStr;
 const proceduralDict = new Map();
 const exceptionDict = new Map();
 let exceptionStr;
+const proceduralExceptionDict = new Map();
 const nodesToProcess = new Set();
 const loggedSelectors = new Set();
 
@@ -172,6 +173,17 @@ const processExceptions = function(out) {
 
 /******************************************************************************/
 
+const processProceduralExceptions = function(out) {
+    if ( proceduralExceptionDict.size === 0 ) { return; }
+    for ( const exception of proceduralExceptionDict.values() ) {
+        if ( exception.test() === false ) { continue; }
+        out.push(`#@#${exception.raw}`);
+        proceduralExceptionDict.delete(exception.raw);
+    }
+};
+
+/******************************************************************************/
+
 const processTimer = new vAPI.SafeAnimationFrame(( ) => {
     //console.time('dom logger/scanning for matches');
     processTimer.clear();
@@ -193,6 +205,7 @@ const processTimer = new vAPI.SafeAnimationFrame(( ) => {
     processDeclarativeStyle(toLog);
     processProcedural(toLog);
     processExceptions(toLog);
+    processProceduralExceptions(toLog);
 
     nodesToProcess.clear();
 
@@ -268,9 +281,10 @@ const handlers = {
                     exceptionDict.set(details.style[0], details.raw);
                     continue;
                 }
-                // TODO:
-                // Handling of procedural cosmetic exception filters
-                // not implemented.
+                proceduralExceptionDict.set(
+                    details.raw,
+                    vAPI.domFilterer.createProceduralFilter(details)
+                );
             }
             exceptionStr = undefined;
         }

@@ -267,7 +267,7 @@ vAPI.SafeAnimationFrame.prototype = {
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.domWatcher = (function() {
+vAPI.domWatcher = (( ) => {
 
     const addedNodeLists = [];
     const removedNodeLists = [];
@@ -311,7 +311,8 @@ vAPI.domWatcher = (function() {
         //console.timeEnd('dom watcher/safe observer handler');
         if ( addedNodes.length === 0 && removedNodes === false ) { return; }
         for ( const listener of getListenerIterator() ) {
-            listener.onDOMChanged(addedNodes, removedNodes);
+            try { listener.onDOMChanged(addedNodes, removedNodes); }
+            catch (ex) { }
         }
         addedNodes.length = 0;
         removedNodes = false;
@@ -373,7 +374,8 @@ vAPI.domWatcher = (function() {
         listeners.push(listener);
         listenerIteratorDirty = true;
         if ( domIsReady !== true ) { return; }
-        listener.onDOMCreated();
+        try { listener.onDOMCreated(); }
+        catch (ex) { }
         startMutationObserver();
     };
 
@@ -401,7 +403,8 @@ vAPI.domWatcher = (function() {
     const start = function() {
         domIsReady = true;
         for ( const listener of getListenerIterator() ) {
-            listener.onDOMCreated();
+            try { listener.onDOMCreated(); }
+            catch (ex) { }
         }
         startMutationObserver();
     };
