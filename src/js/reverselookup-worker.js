@@ -49,6 +49,9 @@ const extractBlocks = function(content, begId, endId) {
 
 /******************************************************************************/
 
+// https://github.com/MajkiIT/polish-ads-filter/issues/14768#issuecomment-536006312
+//   Avoid reporting badfilter-ed filters.
+
 const fromNetFilter = function(details) {
     const lists = [];
     const compiledFilter = details.compiledFilter;
@@ -56,7 +59,7 @@ const fromNetFilter = function(details) {
     for ( const assetKey in listEntries ) {
         const entry = listEntries[assetKey];
         if ( entry === undefined ) { continue; }
-        const content = extractBlocks(entry.content, 0, 1000);
+        const content = extractBlocks(entry.content, 0, 0);
         let pos = 0;
         for (;;) {
             pos = content.indexOf(compiledFilter, pos);
