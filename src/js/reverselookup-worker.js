@@ -38,7 +38,7 @@ const extractBlocks = function(content, begId, endId) {
         const beg = match.index + match[0].length;
         const blockId = parseInt(match[1], 10);
         if ( blockId >= begId && blockId < endId ) {
-            var end = content.indexOf('#block-end-' + match[1], beg);
+            const end = content.indexOf('#block-end-' + match[1], beg);
             out.push(content.slice(beg, end));
             reBlockStart.lastIndex = end;
         }
@@ -59,7 +59,7 @@ const fromNetFilter = function(details) {
     for ( const assetKey in listEntries ) {
         const entry = listEntries[assetKey];
         if ( entry === undefined ) { continue; }
-        const content = extractBlocks(entry.content, 0, 0);
+        const content = extractBlocks(entry.content, 0, 1);
         let pos = 0;
         for (;;) {
             pos = content.indexOf(compiledFilter, pos);
