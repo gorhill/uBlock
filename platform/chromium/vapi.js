@@ -36,7 +36,7 @@ if ( self.browser instanceof Object ) {
 /******************************************************************************/
 
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1408996#c9
-var vAPI = window.vAPI; // jshint ignore:line
+var vAPI = self.vAPI; // jshint ignore:line
 
 // https://github.com/chrisaljoudi/uBlock/issues/464
 // https://github.com/chrisaljoudi/uBlock/issues/1528
@@ -50,15 +50,19 @@ var vAPI = window.vAPI; // jshint ignore:line
 //   Skip text/plain documents.
 
 if (
-    (document instanceof HTMLDocument ||
-      document instanceof XMLDocument &&
-      document.createElement('div') instanceof HTMLDivElement
+    (
+        document instanceof HTMLDocument ||
+        document instanceof XMLDocument &&
+        document.createElement('div') instanceof HTMLDivElement
     ) &&
-    (/^image\/|^text\/plain/.test(document.contentType || '') === false)
+    (
+        /^image\/|^text\/plain/.test(document.contentType || '') === false
+    ) &&
+    (
+        self.vAPI instanceof Object === false || vAPI.uBO !== true
+    )
 ) {
-    vAPI = window.vAPI = vAPI instanceof Object && vAPI.uBO === true
-        ? vAPI
-        : { uBO: true };
+    self.vAPI = { uBO: true };
 }
 
 

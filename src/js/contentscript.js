@@ -148,7 +148,7 @@ vAPI.SafeAnimationFrame = function(callback) {
 
 vAPI.SafeAnimationFrame.prototype = {
     start: function(delay) {
-        if ( vAPI instanceof Object === false ) { return; }
+        if ( self.vAPI instanceof Object === false ) { return; }
         if ( delay === undefined ) {
             if ( this.fid === undefined ) {
                 this.fid = requestAnimationFrame(( ) => { this.onRAF(); } );
@@ -1063,7 +1063,7 @@ vAPI.domCollapser = (function() {
 
     const domWatcherInterface = {
         onDOMCreated: function() {
-            if ( vAPI instanceof Object === false ) { return; }
+            if ( self.vAPI instanceof Object === false ) { return; }
             if ( vAPI.domCollapser instanceof Object === false ) {
                 if ( vAPI.domWatcher instanceof Object ) {
                     vAPI.domWatcher.removeListener(domWatcherInterface);
@@ -1343,11 +1343,11 @@ vAPI.domSurveyor = (function() {
     const domWatcherInterface = {
         onDOMCreated: function() {
             if (
-                vAPI instanceof Object === false ||
+                self.vAPI instanceof Object === false ||
                 vAPI.domSurveyor instanceof Object === false ||
                 vAPI.domFilterer instanceof Object === false
             ) {
-                if ( vAPI instanceof Object ) {
+                if ( self.vAPI instanceof Object ) {
                     if ( vAPI.domWatcher instanceof Object ) {
                         vAPI.domWatcher.removeListener(domWatcherInterface);
                     }
@@ -1400,7 +1400,7 @@ vAPI.bootstrap = (function() {
         // This can happen on Firefox. For instance:
         // https://github.com/gorhill/uBlock/issues/1893
         if ( window.location === null ) { return; }
-        if ( vAPI instanceof Object === false ) { return; }
+        if ( self.vAPI instanceof Object === false ) { return; }
 
         vAPI.messaging.send('contentscript', {
             what: 'shouldRenderNoscriptTags',

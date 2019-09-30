@@ -227,7 +227,8 @@ vAPI.messaging = {
             this.extended = vAPI.messaging.send('vapi', {
                 what: 'extendClient'
             }).then(( ) => {
-                return vAPI instanceof Object && this.extensions.length !== 0;
+                return self.vAPI instanceof Object &&
+                       this.extensions.length !== 0;
             }).catch(( ) => {
             });
         }
