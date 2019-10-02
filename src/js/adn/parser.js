@@ -335,18 +335,62 @@
         }
 
         logP('Checking children of', elem);
+
         var imgs = elem.querySelectorAll('img');
         if (imgs.length) {
           findImageAds(imgs);
         }
         else {
-          findBgImage(elem) || logP('No images in children of', elem);
+          logP('No img found, check other cases', elem);
+          // var iframes = elem.querySelectorAll("iframe")
+          // if (iframes.length > 0) {
+          //   logP('Iframe Found!', iframes);
+          //   for(var i = 0; i < iframes.length; i++) {
+          //     console.log(iframes[i])
+          //     process(iframes[i])
+          //   }
+          //   break;
+          // }
+          // if no img found within the element
+          findGoogleImageTextAd(elem) || findBgImage(elem) || logP('No images in children of', elem);
         }
 
         // and finally check for text ads
         vAPI.textAdParser.process(elem);
       }
     };
+
+    var findGoogleImageTextAd = function(elem){
+      // tmp solution, just get the image
+//       a#mys-content href
+// div.GoogleActiveViewElement
+// ->canvas.image background-Image
+
+      logP("[Parser] GoogleImageText")
+      var googleDisplayAd = elem.querySelector('.GoogleActiveViewElement');
+      if (!googleDisplayAd) return;
+
+      var img, src, link, targetURL;
+
+      if (elem.tagName == "A" && elem.id == "mys-content") {
+        link = elem
+      } else {
+        link = elem.querySelector('a#mys-content');
+      }
+
+      if (link && link.hasAttribute("href")) {
+        targetURL = link.getAttribute("href");
+      }
+
+      img = googleDisplayAd.querySelector('canvas.image');
+      if (img) {
+        var attribute = getComputedStyle(img).backgroundImage;
+        src = attribute.match(/\((.*?)\)/)[1].replace(/('|")/g,'');
+      }
+
+      if (img && src && targetURL) createImageAd(img, src, targetURL)
+
+    }
 
     var processIFrame = function () {
 
@@ -366,6 +410,7 @@
       else {
         logP('No images in iFrame');
       }
+      // process(doc);
     };
 
     var notifyAddon = function (ad) {
