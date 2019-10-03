@@ -64,8 +64,8 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Klik: trajno onemogućiti\/omogućiti uBlock₀  za ovaj sajt.\n\nCtrl+klik: onemogućiti µBlock₀  samo za ovu stranicu.",
-    "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message": "Klik: trajno onemogućiti/omogućiti uBlock₀  za ovaj sajt.\n\nCtrl+klik: onemogućiti µBlock₀  samo za ovu stranicu.",
+    "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
     "message": "Kliknite za onemogućiti uBlock₀ za ovaj sajt.\n\nCtrl+klik za onemogućiti uBlock₀ samo za ovu stranicu.",
@@ -112,7 +112,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Uključi\/isključi skočne prozore na ovoj stranici",
+    "message": "Uključi/isključi skočne prozore na ovoj stranici",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
@@ -136,7 +136,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Uključi\/isključi estestko filtriranje na ovoj stranici",
+    "message": "Uključi/isključi estestko filtriranje na ovoj stranici",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
@@ -148,7 +148,7 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Uključi\/isključi blokiranje udaljenih fontova za ovu stranicu",
+    "message": "Uključi/isključi blokiranje udaljenih fontova za ovu stranicu",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
@@ -196,7 +196,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "CSS\/slike trećih strana",
+    "message": "CSS/slike trećih strana",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -280,7 +280,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Ja sam napredni korisnik (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>obavezna literatura<\/a>)",
+    "message": "Ja sam napredni korisnik (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>obavezna literatura</a>)",
     "description": ""
   },
   "settingsAdvancedUserSettings": {
@@ -325,7 +325,7 @@
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Blokiraj CSP izvješća",
-    "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsStorageUsed": {
     "message": "Korišteno prostora: {{value}} bajtova",
@@ -340,7 +340,7 @@
     "description": "English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt": {
-    "message": "{{netFilterCount}} mrežni\/ih filter\/a ＋ {{cosmeticFilterCount}} estetski\/ih filter\/a iz:",
+    "message": "{{netFilterCount}} mrežni/ih filter/a ＋ {{cosmeticFilterCount}} estetski/ih filter/a iz:",
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
@@ -364,7 +364,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Ova opcija omogućava raščlambu i provođenje <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-kompatibilnih filtera sa &ldquo;elementima za skrivanje&rdquo; <\/a>. Ovi filteri su uglavnom estetski, oni služe za skrivanje elemenata na web-stranici koja se smatra da je vizualna smetnja, a koja ne može biti blokirana od strane mrežnih zahtjeva temeljenih na filtriranju.<\/p><p>Omogućavanje ove značajke povećava <i>uBlock₀ <\/i>memorijski otisak.<\/p>",
+    "message": "<p>Ova opcija omogućava raščlambu i provođenje <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">Adblock Plus-kompatibilnih filtera sa &ldquo;elementima za skrivanje&rdquo; </a>. Ovi filteri su uglavnom estetski, oni služe za skrivanje elemenata na web-stranici koja se smatra da je vizualna smetnja, a koja ne može biti blokirana od strane mrežnih zahtjeva temeljenih na filtriranju.</p><p>Omogućavanje ove značajke povećava <i>uBlock₀ </i>memorijski otisak.</p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -440,7 +440,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Jedan filter po retku. Filter može biti običan hostname ili filter kompatibilan sa Adblock Plus-om. Linije sa prefiksom <code>!<\/code> zanemarit će se.",
+    "message": "Jedan filter po retku. Filter može biti običan hostname ili filter kompatibilan sa Adblock Plus-om. Linije sa prefiksom <code>!</code> zanemarit će se.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -504,7 +504,7 @@
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
-    "message": "Pravila sintakse: <code>akcija tipa izvornog odredišta<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>sva dokumentacija<\/a>).",
+    "message": "Pravila sintakse: <code>akcija tipa izvornog odredišta</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>sva dokumentacija</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
@@ -560,11 +560,11 @@
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
-    "message": "Uključi\/Isključi DOM inspektor",
+    "message": "Uključi/Isključi DOM inspektor",
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "Uključi\/Isključi panel sa skočnim prozorima",
+    "message": "Uključi/Isključi panel sa skočnim prozorima",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
@@ -584,7 +584,7 @@
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "Uključi\/Isključi filtriranje zabilješki",
+    "message": "Uključi/Isključi filtriranje zabilješki",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
@@ -708,11 +708,11 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Statični filter <code>{{filter}}<\/code> pronađen u:",
+    "message": "Statični filter <code>{{filter}}</code> pronađen u:",
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Statični filter <code>{{filter}}<\/code> nije pronađen u trenutno uključenim listama filtera",
+    "message": "Statični filter <code>{{filter}}</code> nije pronađen u trenutno uključenim listama filtera",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
@@ -744,7 +744,7 @@
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
-    "message": "{{input}} Filter\/pravilo",
+    "message": "{{input}} Filter/pravilo",
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
@@ -840,7 +840,7 @@
     "description": "English: a minute ago"
   },
   "elapsedManyMinutesAgo": {
-    "message": "prije {{value}} minute\/a",
+    "message": "prije {{value}} minute/a",
     "description": "English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo": {
@@ -848,7 +848,7 @@
     "description": "English: an hour ago"
   },
   "elapsedManyHoursAgo": {
-    "message": "prije {{value}} sata\/i",
+    "message": "prije {{value}} sata/i",
     "description": "English: {{value}} hours ago"
   },
   "elapsedOneDayAgo": {
@@ -861,11 +861,11 @@
   },
   "showDashboardButton": {
     "message": "Prikaži kontrolnu ploču",
-    "description": "Firefox\/Fennec-specific: Show Dashboard"
+    "description": "Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
     "message": "Prikaži zapis mrežnih zahtjeva",
-    "description": "Firefox\/Fennec-specific: Show Logger"
+    "description": "Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
     "message": "isključen",
@@ -881,7 +881,7 @@
   },
   "docblockedNoParamsPrompt": {
     "message": "bez parametara",
-    "description": "label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
+    "description": "label to be used for the parameter-less URL: https://cloud.githubusercontent.com/assets/585534/9832014/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {
     "message": "Pronađeno u:",
@@ -956,7 +956,7 @@
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "Uključi\/Isključi zaključano pomicanje",
+    "message": "Uključi/Isključi zaključano pomicanje",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
@@ -964,7 +964,7 @@
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "toggleBlockingProfile": {
-    "message": "Uključi\/isključi profil za blokiranje",
+    "message": "Uključi/isključi profil za blokiranje",
     "description": "Label for keyboard shortcut used to toggle blocking profile"
   },
   "relaxBlockingMode": {

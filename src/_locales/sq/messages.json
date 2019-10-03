@@ -148,15 +148,15 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Ç/Bllokoj sistemin e shkronjave jashtë faqes",
+    "message": "Ç/Bllokoj modelet shkronjore të jashtme te faqja",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Bllokoj sistemin e shkronjave jashtë faqes",
+    "message": "Bllokoj modelet shkronjore të jashtme te faqja",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Zhbllokoj sistemin e shkronjave jashtë faqes",
+    "message": "Zhbllokoj modelet shkronjore të jashtme te faqja",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
@@ -316,7 +316,7 @@
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
-    "message": "Bllokoj sistemin e shkronjave jashtë faqes",
+    "message": "Bllokoj modelet shkronjore të jashtme",
     "description": ""
   },
   "settingsNoScriptingPrompt": {
@@ -492,7 +492,7 @@
     "description": ""
   },
   "rulesExport": {
-    "message": "Ruaj në skedar",
+    "message": "Eksportoj në skedar",
     "description": ""
   },
   "rulesDefaultFileName": {

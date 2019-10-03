@@ -64,8 +64,8 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "ക്ലിക്ക്: ഈ സൈറ്റില്‍ യുബ്ലോക്ക്ഒ ഡിസേബിള്‍\/എനെബിള്‍ ചെയ്യാന്‍.\nCtrl + ക്ലിക്ക്: ഈ പേജില്‍ യുബ്ലോക്ക്ഒ ഡിസേബിള്‍\/എനെബിള്‍ ചെയ്യാന്‍.",
-    "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message": "ക്ലിക്ക്: ഈ സൈറ്റില്‍ യുബ്ലോക്ക്ഒ ഡിസേബിള്‍/എനെബിള്‍ ചെയ്യാന്‍.\nCtrl + ക്ലിക്ക്: ഈ പേജില്‍ യുബ്ലോക്ക്ഒ ഡിസേബിള്‍/എനെബിള്‍ ചെയ്യാന്‍.",
+    "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
     "message": "Click to disable uBlock₀ for this site.\n\nCtrl+click to disable uBlock₀ only on this page.",
@@ -196,7 +196,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "മൂന്നാം പാര്‍ട്ടി സിഎസ്എസ്\/ ചിത്രങ്ങള്‍",
+    "message": "മൂന്നാം പാര്‍ട്ടി സിഎസ്എസ്/ ചിത്രങ്ങള്‍",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -280,7 +280,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "ഞാന്‍ ഒരു അഡ്വാന്‍സ്ഡ് യൂസര്‍ ആണ് (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'> വായിക്കേണ്ടത്<\/a>)",
+    "message": "ഞാന്‍ ഒരു അഡ്വാന്‍സ്ഡ് യൂസര്‍ ആണ് (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'> വായിക്കേണ്ടത്</a>)",
     "description": ""
   },
   "settingsAdvancedUserSettings": {
@@ -292,7 +292,7 @@
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
-    "message": "ഹൈപര്‍ ലിങ്ക് ഓഡിറ്റിങ്ങ്\/ബീക്കന്‍ ഡിസേബിള്‍ ചെയ്യുക",
+    "message": "ഹൈപര്‍ ലിങ്ക് ഓഡിറ്റിങ്ങ്/ബീക്കന്‍ ഡിസേബിള്‍ ചെയ്യുക",
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
@@ -325,7 +325,7 @@
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Block CSP reports",
-    "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsStorageUsed": {
     "message": "സ്റ്റോറേജ് ഉപയോഗം: {{value}} ബൈറ്റുകള്‍",
@@ -364,7 +364,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>This option enables the parsing and enforcing of <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters<\/a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.<\/p><p>Enabling this feature increases uBlock₀'s memory footprint.<\/p>",
+    "message": "<p>This option enables the parsing and enforcing of <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters</a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.</p><p>Enabling this feature increases uBlock₀'s memory footprint.</p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -504,7 +504,7 @@
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
-    "message": "നിയമത്തിന്‍റെ സിന്‍റ്റാക്സ്‌: <code> സോര്‍സ് ഡെസ്റ്റിനേഷന്‍ ടൈപ്പ് ആക്ഷന്‍<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'> മുഴുനീള പ്രമാണം<\/a>).",
+    "message": "നിയമത്തിന്‍റെ സിന്‍റ്റാക്സ്‌: <code> സോര്‍സ് ഡെസ്റ്റിനേഷന്‍ ടൈപ്പ് ആക്ഷന്‍</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'> മുഴുനീള പ്രമാണം</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
@@ -708,11 +708,11 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "സ്റ്റാറ്റിക് ഫില്‍ട്ടര്‍ <code>{{filter}}<\/code> ഇതില്‍ കണ്ടെത്തി:",
+    "message": "സ്റ്റാറ്റിക് ഫില്‍ട്ടര്‍ <code>{{filter}}</code> ഇതില്‍ കണ്ടെത്തി:",
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Static filter <code>{{filter}}<\/code> could not be found in any of the currently enabled filter lists",
+    "message": "Static filter <code>{{filter}}</code> could not be found in any of the currently enabled filter lists",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
@@ -744,7 +744,7 @@
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
-    "message": "{{input}} Filter\/rule",
+    "message": "{{input}} Filter/rule",
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
@@ -861,11 +861,11 @@
   },
   "showDashboardButton": {
     "message": "ഡാഷ്ബോര്‍ഡ് കാണിക്കുക",
-    "description": "Firefox\/Fennec-specific: Show Dashboard"
+    "description": "Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
     "message": "ലോഗ്ഗര്‍ കാണിക്കുക",
-    "description": "Firefox\/Fennec-specific: Show Logger"
+    "description": "Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
     "message": "ഓഫ്",
@@ -881,7 +881,7 @@
   },
   "docblockedNoParamsPrompt": {
     "message": "പാരാമീറ്ററുകള്‍ ഇല്ലാതെ",
-    "description": "label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
+    "description": "label to be used for the parameter-less URL: https://cloud.githubusercontent.com/assets/585534/9832014/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {
     "message": "ഇതില്‍ കണ്ടെത്തി:",
