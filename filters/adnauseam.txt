@@ -18,7 +18,7 @@ google.*##.mnr-c.rl-qs-crs-t._Db > ._gt:has(._mB)
 #@#.adsbygoogle
 # Generic hide for Google Ads
 ###google_image_div
-##ins[id*="aswift"]
+##ins[id*="aswift"] > iframe
 
 # generichide-rules (#1466 etc)
 trustedreviews.com##*[class^="ad-"]
