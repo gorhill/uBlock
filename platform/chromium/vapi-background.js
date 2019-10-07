@@ -1157,11 +1157,10 @@ vAPI.Net = class {
         browser.webRequest.onBeforeRequest.addListener(
             details => {
                 this.normalizeDetails(details);
-                if ( this.suspendDepth === 0 ) {
+                if ( this.suspendDepth === 0 || details.tabId < 0 ) {
                     if ( this.suspendableListener === undefined ) { return; }
                     return this.suspendableListener(details);
                 }
-                if ( details.tabId < 0 ) { return; }
                 return this.suspendOneRequest(details);
             },
             this.denormalizeFilters({ urls: [ 'http://*/*', 'https://*/*' ] }),

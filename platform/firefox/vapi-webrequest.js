@@ -115,7 +115,7 @@
                 resolve: undefined,
                 promise: undefined
             };
-            pending.promise = new Promise(function(resolve) {
+            pending.promise = new Promise(resolve => {
                 pending.resolve = resolve;
             });
             this.pendingRequests.push(pending);
