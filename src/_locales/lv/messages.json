@@ -12,7 +12,7 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Warning! You have unsaved changes",
+    "message": "Brīdinājums! Veiktās izmaiņas nav saglabātas",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -20,7 +20,7 @@
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Ignore",
+    "message": "Ignorēt",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
@@ -624,7 +624,7 @@
     "description": "Small header to identify the 'Details' pane for a specific logger entry"
   },
   "loggerEntryDetailsFilter": {
-    "message": "Filter",
+    "message": "Filtrs",
     "description": "Label to identify a filter field"
   },
   "loggerEntryDetailsFilterList": {
@@ -636,7 +636,7 @@
     "description": "Label to identify a rule field"
   },
   "loggerEntryDetailsContext": {
-    "message": "Context",
+    "message": "Konteksts",
     "description": "Label to identify a context field (typically a hostname)"
   },
   "loggerEntryDetailsRootContext": {
@@ -720,15 +720,15 @@
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
-    "message": "Preserve entries from the last {{input}} minutes",
+    "message": "Saglabāt pēdējo {{input}} minūšu ierakstus",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "Preserve at most {{input}} page loads per tab",
+    "message": "Saglabāt ne vairāk kā {{input}} lapu ielādes cilnē",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
-    "message": "Preserve at most {{input}} entries per tab",
+    "message": "Saglabāt ne vairāk kā {{input}} ierakstus cilnē",
     "description": "A logger setting"
   },
   "loggerSettingPerEntryLineCount": {
@@ -736,11 +736,11 @@
     "description": "A logger setting"
   },
   "loggerSettingHideColumnsPrompt": {
-    "message": "Hide columns:",
+    "message": "Paslēpt kolonnas:",
     "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
   },
   "loggerSettingHideColumnTime": {
-    "message": "{{input}} Time",
+    "message": "{{input}} Laiks",
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
@@ -748,7 +748,7 @@
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
-    "message": "{{input}} Context",
+    "message": "{{input}} Konteksts",
     "description": "A label for the context column"
   },
   "loggerSettingHideColumnPartyness": {
@@ -756,11 +756,11 @@
     "description": "A label for the partyness column"
   },
   "loggerExportFormatList": {
-    "message": "List",
+    "message": "Saraksts",
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportFormatTable": {
-    "message": "Table",
+    "message": "Tabula",
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportEncodePlain": {
@@ -960,7 +960,7 @@
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
-    "message": "Copy to clipboard",
+    "message": "Kopēt starpliktuvē",
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "toggleBlockingProfile": {

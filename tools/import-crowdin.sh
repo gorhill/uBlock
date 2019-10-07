@@ -6,7 +6,7 @@ echo "*** uBlock: Importing from Crowdin archive"
 
 SRC=~/Downloads/crowdin
 rm -r $SRC
-unzip -q ~/Downloads/ublock.zip -d $SRC
+unzip -q ~/Downloads/uBlock.zip -d $SRC
 
 DES=./src/_locales
 cp $SRC/ar/messages.json    $DES/ar/messages.json

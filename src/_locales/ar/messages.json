@@ -968,7 +968,7 @@
     "description": "Label for keyboard shortcut used to toggle blocking profile"
   },
   "relaxBlockingMode": {
-    "message": "Relax blocking mode",
+    "message": "وضع الحظر المتراخي",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "dummy": {
