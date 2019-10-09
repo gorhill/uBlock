@@ -29,6 +29,10 @@ freebitcoin.win##iframe[src*="coinad"]
 freebitcoin.win##iframe[src*="mellowads"]
 rockpapershotgun.com##*[id^="google_ads"]
 
+# spiegel.de
+spiegel.de##div[id*="google_ads_iframe"]
+spiegel.de##div[class*="Anzeige"]
+
 www.nytimes.com##.e12j3pa50
 
 search.yahoo.com##.layoutMiddle
