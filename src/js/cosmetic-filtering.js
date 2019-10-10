@@ -1371,7 +1371,8 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
     if (
         supportsUserStylesheets &&
         request.tabId !== undefined &&
-        request.frameId !== undefined
+        request.frameId !== undefined &&
+        !µb.adnauseam.contentPrefs(hostname).hidingDisabled // ADN Don't inject user stylesheets if hiding is disabled
     ) {
         let injectedHideFilters = [];
         if ( out.declarativeFilters.length !== 0 ) {
