@@ -342,17 +342,9 @@
         }
         else {
           logP('No img found, check other cases', elem);
-          // var iframes = elem.querySelectorAll("iframe")
-          // if (iframes.length > 0) {
-          //   logP('Iframe Found!', iframes);
-          //   for(var i = 0; i < iframes.length; i++) {
-          //     console.log(iframes[i])
-          //     process(iframes[i])
-          //   }
-          //   break;
-          // }
+
           // if no img found within the element
-          findGoogleImageTextAd(elem) || findBgImage(elem) || logP('No images in children of', elem);
+          findGoogleResponsiveDisplayAd(elem) || findBgImage(elem) || logP('No images in children of', elem);
         }
 
         // and finally check for text ads
@@ -360,17 +352,18 @@
       }
     };
 
-    var findGoogleImageTextAd = function(elem){
+    var findGoogleResponsiveDisplayAd = function(elem){
       // tmp solution, just get the image
-//       a#mys-content href
-// div.GoogleActiveViewElement
-// ->canvas.image background-Image
+      //       a#mys-content href
+      // div.GoogleActiveViewElement
+      // ->canvas.image background-Image
 
-      logP("[Parser] GoogleImageText")
       var googleDisplayAd = elem.querySelector('.GoogleActiveViewElement');
       if (!googleDisplayAd) return;
+      logP("[Parser] Google Responsive Display Ad")
 
       var img, src, link, targetURL;
+      img = googleDisplayAd.querySelector('canvas.image');
 
       if (elem.tagName == "A" && elem.id == "mys-content") {
         link = elem
@@ -380,15 +373,30 @@
 
       if (link && link.hasAttribute("href")) {
         targetURL = link.getAttribute("href");
+      } else if(link && !link.hasAttribute("href")){
+        var clickableElement = img;
+        // clickableElement.addEventListener("mousedown", function(){
+        //   console.log("Clicked by adnauseam!")
+        // })
+        // if no href, fake click event
+        if (document.createEvent) {
+            var ev = document.createEvent('HTMLEvents');
+            ev.initEvent('mousedown', true, false);
+            clickableElement.dispatchEvent(ev);
+        }
       }
 
-      img = googleDisplayAd.querySelector('canvas.image');
       if (img) {
         var attribute = getComputedStyle(img).backgroundImage;
         src = attribute.match(/\((.*?)\)/)[1].replace(/('|")/g,'');
+        if(!targetURL) targetURL = getTargetUrl(img);
       }
 
-      if (img && src && targetURL) createImageAd(img, src, targetURL)
+      if (img && src && targetURL){
+        createImageAd(img, src, targetURL)
+      } else {
+        logP("[Google Responsive Display Ad] Can't find element", img, src, targetURL)
+      }
 
     }
 
@@ -401,16 +409,13 @@
         logP('Ignored cross-domain iFrame', this.getAttribute('src'));
         return;
       }
-
       var imgs = doc.querySelectorAll('img');
       if (imgs.length) {
-
         findImageAds(imgs);
       }
       else {
         logP('No images in iFrame');
       }
-      // process(doc);
     };
 
     var notifyAddon = function (ad) {
