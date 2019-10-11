@@ -572,16 +572,6 @@
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=102",
 		"instructionURL": "https://forums.lanik.us/viewtopic.php?f=102&t=22512"
 	},
-	"RUS-2": {
-		"content": "filters",
-		"group": "regions",
-		"off": true,
-		"title": "RUS: AdGuard Russian",
-		"lang": "be kk ru uk uz",
-		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/1.txt",
-		"supportURL": "https://forum.adguard.com/forumdisplay.php?69-%D0%A4%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D1%8B-Adguard",
-		"instructionURL": "https://kb.adguard.com/ru/general/adguard-ad-filters#russian"
-	},
 	"spa-0": {
 		"content": "filters",
 		"group": "regions",
