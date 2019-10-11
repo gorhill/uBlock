@@ -116,6 +116,8 @@ Developer: [@el1t](https://github.com/el1t).
 
 Development version available at <https://github.com/el1t/uBlock-Safari#ublock-originfor-safari>.
 
+Warning: It is not possible for extensions like uBlock Origin to work with Safari 13+. See <https://github.com/el1t/uBlock-Safari/issues/158>.
+
 Note that issues specific to the Safari fork are the responsibility of the current maintainer, I have no control over the code base of the fork.
 
 #### Note for all browsers
