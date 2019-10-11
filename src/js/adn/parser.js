@@ -353,17 +353,17 @@
     };
 
     var findGoogleResponsiveDisplayAd = function(elem){
-      // tmp solution, just get the image
-      //       a#mys-content href
-      // div.GoogleActiveViewElement
-      // ->canvas.image background-Image
+      // a#mys-content href
+      //   div.GoogleActiveViewElement
+      //   -> canvas.image background-Image
+      //   -> div.title
+      //   -> div.row-container > .body
 
       var googleDisplayAd = elem.querySelector('.GoogleActiveViewElement');
       if (!googleDisplayAd) return;
       logP("[Parser] Google Responsive Display Ad")
 
       var img, src, link, targetURL;
-      img = googleDisplayAd.querySelector('canvas.image');
 
       if (elem.tagName == "A" && elem.id == "mys-content") {
         link = elem
@@ -386,16 +386,44 @@
         }
       }
 
+      img = googleDisplayAd.querySelector('canvas.image');
       if (img) {
         var attribute = getComputedStyle(img).backgroundImage;
         src = attribute.match(/\((.*?)\)/)[1].replace(/('|")/g,'');
         if(!targetURL) targetURL = getTargetUrl(img);
+      } else {
+        var title = googleDisplayAd.querySelector('.title > span'),
+            text = googleDisplayAd.querySelector('.row-container > .body > span');
+
+        // No img, trying to collect as text ad
+        if (title && text && targetURL) {
+
+          var ad = vAPI.adParser.createAd('Ads by google responsive display ad', targetURL, {
+            title: title.innerText,
+            text: text.innerText
+          });
+
+          if (ad) {
+
+            if (vAPI.prefs.logEvents) console.log('[PARSED] Responsive Text Ad', ad);
+            notifyAddon(ad);
+            return true;
+
+          } else {
+            warnP("Fail: Unable to create Ad", document.domain, targetUrl);
+          }
+
+          return;
+        } else {
+          logP("[Google Responsive Display Ad] Can't find element", title, text, targetURL);
+        }
+
       }
 
       if (img && src && targetURL){
-        createImageAd(img, src, targetURL)
+        createImageAd(img, src, targetURL);
       } else {
-        logP("[Google Responsive Display Ad] Can't find element", img, src, targetURL)
+        logP("[Google Responsive Display Ad] Can't find element", img, src, targetURL);
       }
 
     }
