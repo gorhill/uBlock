@@ -585,7 +585,7 @@
         }
         const inputLength = instr.length;
         const outbuf = arrbuf instanceof ArrayBuffer === false
-            ? new Uint32Array(this.decodeSize(instr))
+            ? new Uint32Array(this.decodeSize(instr) >> 2)
             : new Uint32Array(arrbuf);
         let i = instr.indexOf(' ', this.magic.length) + 1;
         if ( i === -1 ) {

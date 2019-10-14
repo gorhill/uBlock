@@ -194,6 +194,7 @@ const isHnAnchored = (( ) => {
             } else {
                 lastEnd = -1;
             }
+            lastLen = len;
         }
         return matchStart < lastEnd && (
             matchStart === lastBeg ||
