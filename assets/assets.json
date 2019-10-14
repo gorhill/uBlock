@@ -100,7 +100,7 @@
 		"content": "filters",
 		"group": "ads",
 		"off": true,
-		"title": "AdGuard Base List",
+		"title": "AdGuard Base List (w/o EasyList)",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/2_without_easylist.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
 		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
@@ -226,7 +226,7 @@
 		"content": "filters",
 		"group": "social",
 		"off": true,
-		"title": "Fanboy’s Annoyance List",
+		"title": "Fanboy’s Annoyance List (w/ Fanboy's Cookie and Social Blocking Lists)",
 		"contentURL": [
 			"https://easylist.to/easylist/fanboy-annoyance.txt",
 			"https://fanboy.co.nz/fanboy-annoyance.txt"
