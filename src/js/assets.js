@@ -475,19 +475,19 @@ const saveAssetCacheRegistry = (( ) => {
     return function(lazily) {
         if ( timer !== undefined ) { clearTimeout(timer); }
         if ( lazily ) {
-            timer = vAPI.setTimeout(save, 500);
+            timer = vAPI.setTimeout(save, 30000);
         } else {
             save();
         }
     };
 })();
 
-const assetCacheRead = async function(assetKey) {
+const assetCacheRead = async function(assetKey, updateReadTime = false) {
     const internalKey = `cache/${assetKey}`;
 
     const reportBack = function(content) {
         if ( content instanceof Blob ) { content = ''; }
-        let details = { assetKey: assetKey, content: content };
+        const details = { assetKey: assetKey, content: content };
         if ( content === '' ) { details.error = 'ENOTFOUND'; }
         return details;
     };
@@ -509,7 +509,10 @@ const assetCacheRead = async function(assetKey) {
     }
 
     entry.readTime = Date.now();
-    saveAssetCacheRegistry(true);
+    if ( updateReadTime ) {
+        saveAssetCacheRegistry(true);
+    }
+
     return reportBack(bin[internalKey]);
 };
 
@@ -676,7 +679,12 @@ api.get = async function(assetKey, options = {}) {
         return details;
     };
 
-    const details = await assetCacheRead(assetKey);
+    // Skip read-time property for non-updatable assets: the property is
+    // completely unused for such assets and thus there is no point incurring
+    // storage write overhead at launch when reading compiled or selfie assets.
+    const updateReadTime = /^(?:compiled|selfie)\//.test(assetKey) === false;
+
+    const details = await assetCacheRead(assetKey, updateReadTime);
     if ( details.content !== '' ) {
         return reportBack(details.content);
     }
