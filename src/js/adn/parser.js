@@ -365,6 +365,8 @@
 
       var img, src, link, targetURL;
 
+      img = googleDisplayAd.querySelector('canvas.image');
+
       if (elem.tagName == "A" && elem.id == "mys-content") {
         link = elem
       } else {
@@ -386,7 +388,6 @@
         }
       }
 
-      img = googleDisplayAd.querySelector('canvas.image');
       if (img) {
         var attribute = getComputedStyle(img).backgroundImage;
         src = attribute.match(/\((.*?)\)/)[1].replace(/('|")/g,'');
