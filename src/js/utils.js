@@ -146,7 +146,7 @@
         const tokens = this._tokens;
         let url = this._urlOut;
         let l = url.length;
-        if ( l === 0 ) { return this.emptyTokenHash; }
+        if ( l === 0 ) { return 0; }
         if ( l > 2048 ) {
             url = url.slice(0, 2048);
             l = 2048;
