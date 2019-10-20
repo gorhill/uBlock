@@ -123,6 +123,9 @@ www.thepiratebay.org###sky-center
 # cpomagazine
 cpomagazine.com##[id*="cpoma"]
 
+# delfi.lt
+delfi.lt###header-top-banner + *[class^="h"]
+
 asiaxpat.com##.header_in1
 asiaxpat.com##.megaBanner
 asiaxpat.com###pnlClassReplaced
