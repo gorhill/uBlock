@@ -221,7 +221,6 @@ const onBeforeRootFrameRequest = function(fctxt) {
         url: requestURL,
         hn: requestHostname,
         dn: fctxt.getDomain() || requestHostname,
-        fc: logData.compiled,
         fs: logData.raw
     }));
 
@@ -848,7 +847,7 @@ const injectCSP = function(fctxt, pageStore, responseHeaders) {
         µb.staticNetFilteringEngine.matchAndFetchData(fctxt, 'csp');
     for ( const directive of staticDirectives ) {
         if ( directive.result !== 1 ) { continue; }
-        cspSubsets.push(directive.data);
+        cspSubsets.push(directive.getData('csp'));
     }
 
     // URL filtering `allow` rules override static filtering.

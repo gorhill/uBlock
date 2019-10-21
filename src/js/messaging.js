@@ -66,14 +66,18 @@ const onMessage = function(request, sender, callback) {
 
     case 'listsFromNetFilter':
         µb.staticFilteringReverseLookup.fromNetFilter(
-            request.compiledFilter,
-            request.rawFilter,
-            callback
-        );
+            request.rawFilter
+        ).then(response => {
+            callback(response);
+        });
         return;
 
     case 'listsFromCosmeticFilter':
-        µb.staticFilteringReverseLookup.fromCosmeticFilter(request, callback);
+        µb.staticFilteringReverseLookup.fromCosmeticFilter(
+            request
+        ).then(response => {
+            callback(response);
+        });
         return;
 
     case 'reloadAllFilters':

@@ -44,7 +44,6 @@ let details = {};
 (async ( ) => {
     const response = await messaging.send('documentBlocked', {
         what: 'listsFromNetFilter',
-        compiledFilter: details.fc,
         rawFilter: details.fs,
     });
     if ( response instanceof Object === false ) { return; }

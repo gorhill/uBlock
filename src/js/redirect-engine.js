@@ -737,6 +737,9 @@ RedirectEngine.prototype.loadBuiltinResources = function() {
                 store(name, reader.result);
                 resolve();
             };
+            reader.onabort = reader.onerror = ( ) => {
+                resolve();
+            };
             reader.readAsDataURL(blob);
         });
     };
