@@ -172,7 +172,7 @@
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Reglas locales: las reglas en esta columna aplican solo al sitio actual.\nLas reglas locales anulan las reglas globales.",
+    "message": "Reglas locales: las reglas en esta columna se aplican solo al sitio actual.\nLas reglas locales anulan las reglas globales.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
