@@ -560,6 +560,8 @@ HNTrieContainer.prototype.HNTrieRef = class {
         this.container = container;
         this.iroot = iroot;
         this.size = size;
+        this.needle = '';
+        this.last = -1;
     }
 
     add(hn) {

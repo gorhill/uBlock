@@ -39,9 +39,9 @@ let messageId = 1;
 
 const onWorkerMessage = function(e) {
     const msg = e.data;
-    const callback = pendingResponses.get(msg.id);
+    const resolver = pendingResponses.get(msg.id);
     pendingResponses.delete(msg.id);
-    callback(msg.response);
+    resolver(msg.response);
 };
 
 /******************************************************************************/
@@ -55,6 +55,9 @@ const stopWorker = function() {
     worker.terminate();
     worker = null;
     needLists = true;
+    for ( const resolver of pendingResponses.values() ) {
+        resolver();
+    }
     pendingResponses.clear();
 };
 
@@ -127,36 +130,34 @@ const initWorker = function() {
 
 /******************************************************************************/
 
-const fromNetFilter = async function(compiledFilter, rawFilter, callback) {
-    if ( typeof callback !== 'function' ) {
-        return;
-    }
+const fromNetFilter = async function(rawFilter) {
+    if ( typeof rawFilter !== 'string' || rawFilter === '' ) { return; }
 
-    if ( compiledFilter === '' || rawFilter === '' ) {
-        callback();
+    const µb = µBlock;
+    const writer = new µb.CompiledLineIO.Writer();
+    if ( µb.staticNetFilteringEngine.compile(rawFilter, writer) === false ) {
         return;
     }
 
     await initWorker();
 
     const id = messageId++;
-    const message = {
+    worker.postMessage({
         what: 'fromNetFilter',
         id: id,
-        compiledFilter: compiledFilter,
+        compiledFilter: writer.last(),
         rawFilter: rawFilter
-    };
-    pendingResponses.set(id, callback);
-    worker.postMessage(message);
+    });
+
+    return new Promise(resolve => {
+        pendingResponses.set(id, resolve);
+    });
 };
 
 /******************************************************************************/
 
-const fromCosmeticFilter = async function(details, callback) {
-    if ( typeof callback !== 'function' ) { return; }
-
-    if ( details.rawFilter === '' ) {
-        callback();
+const fromCosmeticFilter = async function(details) {
+    if ( typeof details.rawFilter !== 'string' || details.rawFilter === '' ) {
         return;
     }
 
@@ -164,7 +165,7 @@ const fromCosmeticFilter = async function(details, callback) {
 
     const id = messageId++;
     const hostname = µBlock.URI.hostnameFromURI(details.url);
-    pendingResponses.set(id, callback);
+
     worker.postMessage({
         what: 'fromCosmeticFilter',
         id: id,
@@ -182,6 +183,11 @@ const fromCosmeticFilter = async function(details, callback) {
             ) === 2,
         rawFilter: details.rawFilter
     });
+
+    return new Promise(resolve => {
+        pendingResponses.set(id, resolve);
+    });
+
 };
 
 /******************************************************************************/

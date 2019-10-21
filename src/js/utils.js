@@ -48,7 +48,6 @@
         for ( let i = 0, n = this._chars.length; i < n; i++ ) {
             this._validTokenChars[this._chars.charCodeAt(i)] = i + 1;
         }
-
         // Four upper bits of token hash are reserved for built-in predefined
         // token hashes, which should never end up being used when tokenizing
         // any arbitrary string.
@@ -62,10 +61,14 @@
         this._urlIn = '';
         this._urlOut = '';
         this._tokenized = false;
-        this._tokens = [ 0 ];
+        this._tokens = new Uint32Array(1024);
 
         this.knownTokens = new Uint8Array(65536);
         this.resetKnownTokens();
+        this.MAX_TOKEN_LENGTH = 7;
+
+        this.charCodes = new Uint8Array(2048);
+        this.charCodeCount = 0;
     }
 
     setURL(url) {
@@ -91,17 +94,24 @@
     }
 
     // Tokenize on demand.
-    getTokens() {
+    getTokens(encodeInto) {
         if ( this._tokenized ) { return this._tokens; }
-        let i = this._tokenize();
-        i = this._appendTokenAt(i, this.anyTokenHash, 0);
+        let i = this._tokenize(encodeInto);
+        this._tokens[i+0] = this.anyTokenHash;
+        this._tokens[i+1] = 0;
+        i += 2;
         if ( this._urlOut.startsWith('https://') ) {
-            i = this._appendTokenAt(i, this.anyHTTPSTokenHash, 0);
+            this._tokens[i+0] = this.anyHTTPSTokenHash;
+            this._tokens[i+1] = 0;
+            i += 2;
         } else if ( this._urlOut.startsWith('http://') ) {
-            i = this._appendTokenAt(i, this.anyHTTPTokenHash, 0);
+            this._tokens[i+0] = this.anyHTTPTokenHash;
+            this._tokens[i+1] = 0;
+            i += 2;
         }
-        i = this._appendTokenAt(i, this.noTokenHash, 0);
-        this._tokens[i] = 0;
+        this._tokens[i+0] = this.noTokenHash;
+        this._tokens[i+1] = 0;
+        this._tokens[i+2] = 0;
         this._tokenized = true;
         return this._tokens;
     }
@@ -136,13 +146,7 @@
     // https://github.com/chrisaljoudi/uBlock/issues/1118
     // We limit to a maximum number of tokens.
 
-    _appendTokenAt(i, th, ti) {
-        this._tokens[i+0] = th;
-        this._tokens[i+1] = ti;
-        return i + 2;
-    }
-
-    _tokenize() {
+    _tokenize(encodeInto) {
         const tokens = this._tokens;
         let url = this._urlOut;
         let l = url.length;
@@ -151,19 +155,27 @@
             url = url.slice(0, 2048);
             l = 2048;
         }
+        encodeInto.haystackSize = l;
         const knownTokens = this.knownTokens;
         const vtc = this._validTokenChars;
-        let i = 0, j = 0, v, n, ti, th;
+        const charCodes = encodeInto.haystack;
+        let i = 0, j = 0, c, v, n, ti, th;
         for (;;) {
             for (;;) {
                 if ( i === l ) { return j; }
-                v = vtc[url.charCodeAt(i++)];
+                c = url.charCodeAt(i);
+                charCodes[i] = c;
+                v = vtc[c];
+                i += 1;
                 if ( v !== 0 ) { break; }
             }
             th = v; ti = i - 1; n = 1;
             for (;;) {
                 if ( i === l ) { break; }
-                v = vtc[url.charCodeAt(i++)];
+                c = url.charCodeAt(i);
+                charCodes[i] = c;
+                v = vtc[c];
+                i += 1;
                 if ( v === 0 ) { break; }
                 if ( n === 7 ) { continue; }
                 th = th << 4 ^ v;
@@ -292,7 +304,12 @@
             this.properties = new Map();
         }
         push(args) {
-            this.block[this.block.length] = this.stringifier(args);
+            this.block.push(this.stringifier(args));
+        }
+        last() {
+            if ( Array.isArray(this.block) && this.block.length !== 0 ) {
+                return this.block[this.block.length - 1];
+            }
         }
         select(blockId) {
             if ( blockId === this.blockId ) { return; }

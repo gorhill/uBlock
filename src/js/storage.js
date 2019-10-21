@@ -1101,6 +1101,7 @@
         catch (reason) {
             log.info(reason);
         }
+        destroy();
         return false;
     };
 
