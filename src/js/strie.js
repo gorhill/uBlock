@@ -101,9 +101,8 @@
 */
 
 const PAGE_SIZE = 65536*2;
-                                                    //   i32 /   i8
 const HAYSTACK_START = 0;
-const HAYSTACK_SIZE = 2048;
+const HAYSTACK_SIZE = 2048;                         //   i32 /   i8
 const HAYSTACK_SIZE_SLOT = HAYSTACK_SIZE >>> 2;     //   512 / 2048
 const TRIE0_SLOT  = HAYSTACK_SIZE_SLOT + 1;         //   512 / 2052
 const TRIE1_SLOT  = HAYSTACK_SIZE_SLOT + 2;         //   513 / 2056

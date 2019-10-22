@@ -161,6 +161,8 @@ const toNormalizedType = {
 
 const BlockImportant = BlockAction | Important;
 
+const typeValueFromCatBits = catBits => (catBits >>> 4) & 0b11111;
+
 /******************************************************************************/
 
 // See the following as short-lived registers, used during evaluation. They are
@@ -183,12 +185,10 @@ let $requestTypeBit = 0;
 const restrSeparator = '(?:[^%.0-9a-z_-]|$)';
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+const reEscape = /[.*+?^${}()|[\]\\]/g;
 
 // Convert a plain string (devoid of special characters) into a regex.
-const restrFromPlainPattern = function(s) {
-    return s.replace(restrFromPlainPattern.escape, '\\$&');
-};
-restrFromPlainPattern.escape = /[.*+?^${}()|[\]\\]/g;
+const restrFromPlainPattern = s => s.replace(reEscape, '\\$&');
 
 const restrFromGenericPattern = function(s, anchor = 0) {
     let reStr = s.replace(restrFromGenericPattern.rePlainChars, '\\$&')
@@ -270,9 +270,7 @@ const CHAR_CLASS_SEPARATOR = 0b00000001;
     }
 }
 
-const isSeparatorChar = function(c) {
-    return (charClassMap[c] & CHAR_CLASS_SEPARATOR) !== 0;
-};
+const isSeparatorChar = c => (charClassMap[c] & CHAR_CLASS_SEPARATOR) !== 0;
 
 /******************************************************************************/
 
@@ -494,8 +492,8 @@ registerFilterClass(FilterTrue);
 
 const FilterPatternPlain = class {
     constructor(i, n) {
-        this.i = i;
-        this.n = n;
+        this.i = i | 0;
+        this.n = n | 0;
     }
 
     match() {
@@ -596,8 +594,8 @@ const FilterPatternPlainX = class extends FilterPatternPlain {
 
 const FilterPatternLeft = class {
     constructor(i, n) {
-        this.i = i;
-        this.n = n;
+        this.i = i | 0;
+        this.n = n | 0;
     }
 
     match() {
@@ -682,8 +680,8 @@ registerFilterClass(FilterPatternLeftEx);
 
 const FilterPatternRight = class {
     constructor(i, n) {
-        this.i = i;
-        this.n = n;
+        this.i = i | 0;
+        this.n = n | 0;
     }
 
     match() {
@@ -1497,8 +1495,8 @@ const FilterDataHolderResult = class {
 
 const FilterCollection = class {
     constructor(i = 0, n = 0) {
-        this.i = i;
-        this.n = n;
+        this.i = i | 0;
+        this.n = n | 0;
     }
 
     get size() {
@@ -1796,6 +1794,47 @@ registerFilterClass(FilterHTTPJustOrigin);
 
 /******************************************************************************/
 
+const FilterPlainTrie = class {
+    constructor(trie) {
+        this.plainTrie = trie;
+    }
+
+    match() {
+        if ( this.plainTrie.matches($tokenBeg) ) {
+            this.$matchedUnit = this.plainTrie.$iu;
+            return true;
+        }
+        return false;
+    }
+
+    matchAndFetchData(/* type, out */) {
+        // TODO
+    }
+
+    logData(details) {
+        const s = $requestURL.slice(this.plainTrie.$l, this.plainTrie.$r);
+        details.pattern.push(s);
+        details.regex.push(restrFromPlainPattern(s));
+        if ( this.$matchedUnit !== -1 ) {
+            filterUnits[this.$matchedUnit].logData(details);
+        }
+    }
+
+    toSelfie() {
+        return [ this.fid, bidiTrie.compileOne(this.plainTrie) ];
+    }
+
+    static fromSelfie(args) {
+        return new FilterPlainTrie(bidiTrie.createOne(args[1]));
+    }
+};
+
+FilterPlainTrie.prototype.$matchedUnit = 0;
+
+registerFilterClass(FilterPlainTrie);
+
+/******************************************************************************/
+
 const FilterBucket = class extends FilterCollection {
     match() {
         if ( this.plainTrie !== null ) {
@@ -1847,6 +1886,7 @@ const FilterBucket = class extends FilterCollection {
     }
 
     optimize() {
+        if ( this.n < 3 ) { return; }
         const units = filterUnits;
         const trieables = new Set();
         let i = this.i;
@@ -1858,7 +1898,7 @@ const FilterBucket = class extends FilterCollection {
             i = filterSequences[i+1];
             if ( i === 0 ) { break; }
         }
-        if ( trieables.size <= 2 ) { return; }
+        if ( trieables.size < 3 ) { return; }
         if ( this.plainTrie === null ) {
             this.plainTrie = bidiTrie.createOne();
         }
@@ -1879,6 +1919,9 @@ const FilterBucket = class extends FilterCollection {
             }
             if ( inext === 0 ) { break; }
             i = inext;
+        }
+        if ( this.i === 0 ) {
+            return new FilterPlainTrie(this.plainTrie);
         }
     }
 
@@ -2707,11 +2750,17 @@ FilterContainer.prototype.freeze = function() {
     this.badFilters.clear();
     this.goodFilters.clear();
 
-    for ( const bucket of this.categories.values() ) {
+    // Skip 'data' type since bidi-trie does not (yet) support matchAll().
+    const dataTypeValue = typeValueFromCatBits(typeNameToTypeValue['data']);
+    for ( const [ catBits, bucket ] of this.categories ) {
+        if ( typeValueFromCatBits(catBits) === dataTypeValue ) { continue; }
         for ( const iunit of bucket.values() ) {
             const f = units[iunit];
             if ( f instanceof FilterBucket === false ) { continue; }
-            f.optimize();
+            const g = f.optimize();
+            if ( g !== undefined ) {
+                units[iunit] = g;
+            }
         }
     }
 
@@ -3589,8 +3638,9 @@ FilterContainer.prototype.filterClassHistogram = function() {
     for ( const fclass of filterClasses ) {
         filterClassDetails.set(fclass.fid, { name: fclass.name, count: 0, });
     }
-    // Artificial classes to report content of tries
-    filterClassDetails.set(1000, { name: 'FilterPlainTrie', count: 0, });
+    // Artificial classes to report content counts
+    filterClassDetails.set(1000, { name: 'FilterPlainTrie Content', count: 0, });
+    filterClassDetails.set(1001, { name: 'FilterHostnameDict Content', count: 0, });
 
     const countFilter = function(f) {
         if ( f instanceof Object === false ) { return; }
@@ -3600,15 +3650,19 @@ FilterContainer.prototype.filterClassHistogram = function() {
     for ( const f of filterUnits ) {
         if ( f === null ) { continue; }
         countFilter(f);
-        if ( f instanceof FilterBucket ) {
+        if ( f instanceof FilterCollection ) {
             let i = f.i;
             while ( i !== 0 ) {
                 countFilter(filterUnits[filterSequences[i+0]]);
                 i = filterSequences[i+1];
             }
-            if ( f.plainTrie !== null ) {
+            if ( f.plainTrie ) {
                 filterClassDetails.get(1000).count += f.plainTrie.size;
             }
+            continue;
+        }
+        if ( f instanceof FilterHostnameDict ) {
+            filterClassDetails.get(1001).count += f.size;
             continue;
         }
         if ( f instanceof FilterComposite ) {
@@ -3617,6 +3671,10 @@ FilterContainer.prototype.filterClassHistogram = function() {
                 countFilter(filterUnits[filterSequences[i+0]]);
                 i = filterSequences[i+1];
             }
+            continue;
+        }
+        if ( f instanceof FilterPlainTrie ) {
+            filterClassDetails.get(1000).count += f.plainTrie.size;
             continue;
         }
     }
