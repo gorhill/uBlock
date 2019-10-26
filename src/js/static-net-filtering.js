@@ -50,6 +50,7 @@ const Important   = 1 << 1;
 const AnyParty    = 0 << 2;
 const FirstParty  = 1 << 2;
 const ThirdParty  = 2 << 2;
+const BlockImportant = BlockAction | Important;
 
 const typeNameToTypeValue = {
            'no_type':  0 << 4,
@@ -158,8 +159,6 @@ const toNormalizedType = {
             'webrtc': 'unsupported',
          'websocket': 'websocket',
 };
-
-const BlockImportant = BlockAction | Important;
 
 const typeValueFromCatBits = catBits => (catBits >>> 4) & 0b11111;
 
@@ -320,7 +319,11 @@ const bidiTrie = (( ) => {
         );
     } catch(ex) {
     }
-    return new µb.BidiTrieContainer(trieDetails, bidiTrieMatchExtra);
+    const trie = new µb.BidiTrieContainer(trieDetails, bidiTrieMatchExtra);
+    if ( µb.hiddenSettings.disableWebAssembly !== true ) {
+        trie.enableWASM();
+    }
+    return trie;
 })();
 
 const bidiTrieOptimize = function() {
@@ -498,7 +501,14 @@ const FilterPatternPlain = class {
 
     match() {
         const left = $tokenBeg;
-        if ( bidiTrie.startsWith(left, this.i, this.n) === false ) {
+        if (
+            bidiTrie.startsWith(
+                left,
+                bidiTrie.haystackLen,
+                this.i,
+                this.n
+            ) === 0
+        ) {
             return false;
         }
         $patternMatchLeft = left;
@@ -561,7 +571,14 @@ registerFilterClass(FilterPatternPlain);
 const FilterPatternPlain1 = class extends FilterPatternPlain {
     match() {
         const left = $tokenBeg - 1;
-        if ( bidiTrie.startsWith(left, this.i, this.n) === false ) {
+        if (
+            bidiTrie.startsWith(
+                left,
+                bidiTrie.haystackLen,
+                this.i,
+                this.n
+            ) === 0
+        ) {
             return false;
         }
         $patternMatchLeft = left;
@@ -581,7 +598,14 @@ const FilterPatternPlainX = class extends FilterPatternPlain {
 
     match() {
         const left = $tokenBeg - this.tokenBeg;
-        if ( bidiTrie.startsWith(left, this.i, this.n) === false ) {
+        if (
+            bidiTrie.startsWith(
+                left,
+                bidiTrie.haystackLen,
+                this.i,
+                this.n
+            ) === 0
+        ) {
             return false;
         }
         $patternMatchLeft = left;
@@ -686,7 +710,7 @@ const FilterPatternRight = class {
 
     match() {
         const right = bidiTrie.lastIndexOf(
-            $patternMatchRight, bidiTrie.haystackSize,
+            $patternMatchRight, bidiTrie.haystackLen,
             this.i, this.n
         );
         if ( right === -1 ) { return false; }
@@ -729,7 +753,7 @@ const FilterPatternRightEx = class extends FilterPatternRight {
     match() {
         const left = $patternMatchRight;
         const right = bidiTrie.lastIndexOf(
-            left + 1, bidiTrie.haystackSize,
+            left + 1, bidiTrie.haystackLen,
             this.i, this.n
         );
         if ( right === -1 ) { return false; }
@@ -881,7 +905,7 @@ const FilterAnchorHn = class {
             this.lastBeg = len !== 0 ? haystackCodes.indexOf(0x3A) : -1;
             if ( this.lastBeg !== -1 ) {
                 if (
-                    this.lastBeg >= bidiTrie.haystackSize ||
+                    this.lastBeg >= bidiTrie.haystackLen ||
                     haystackCodes[this.lastBeg+1] !== 0x2F ||
                     haystackCodes[this.lastBeg+2] !== 0x2F
                 ) {

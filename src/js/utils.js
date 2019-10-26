@@ -155,7 +155,7 @@
             url = url.slice(0, 2048);
             l = 2048;
         }
-        encodeInto.haystackSize = l;
+        encodeInto.haystackLen = l;
         const knownTokens = this.knownTokens;
         const vtc = this._validTokenChars;
         const charCodes = encodeInto.haystack;

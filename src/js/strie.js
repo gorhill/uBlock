@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* globals WebAssembly */
+
 'use strict';
 
 // *****************************************************************************
@@ -131,20 +133,21 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
     constructor(details, extraHandler) {
         if ( details instanceof Object === false ) { details = {}; }
         const len = roundToPageSize(details.byteLength || 0);
-        const minInitialLen = PAGE_SIZE * 4;
-        this.buf8 = new Uint8Array(Math.max(len, minInitialLen));
+        const minInitialSize = PAGE_SIZE * 4;
+        this.buf8 = new Uint8Array(Math.max(len, minInitialSize));
         this.buf32 = new Uint32Array(this.buf8.buffer);
         this.buf32[TRIE0_SLOT] = TRIE0_START;
         this.buf32[TRIE1_SLOT] = this.buf32[TRIE0_SLOT];
-        this.buf32[CHAR0_SLOT] = details.char0 || (minInitialLen >>> 1);
+        this.buf32[CHAR0_SLOT] = details.char0 || (minInitialSize >>> 1);
         this.buf32[CHAR1_SLOT] = this.buf32[CHAR0_SLOT];
         this.haystack = this.buf8.subarray(
             HAYSTACK_START,
             HAYSTACK_START + HAYSTACK_SIZE
         );
-        this.haystackSize = 0;
+        this.haystackLen = 0;
         this.extraHandler = extraHandler;
         this.textDecoder = null;
+        this.wasmMemory = null;
 
         this.$l = 0;
         this.$r = 0;
@@ -164,7 +167,7 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
         const buf32 = this.buf32;
         const buf8 = this.buf8;
         const char0 = buf32[CHAR0_SLOT];
-        const aR = this.haystackSize;
+        const aR = this.haystackLen;
         let icell = iroot;
         let al = i;
         let c, v, bl, n;
@@ -180,15 +183,16 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
                 if ( icell === 0 ) { return false; }
             }
             // all characters in segment must match
-            n = v >>> 24;
-            if ( n > 1 ) {
-                n -= 1;
-                if ( (al + n) > aR ) { return false; }
-                bl += 1;
-                for ( let i = 0; i < n; i++ ) {
-                    if ( buf8[al+i] !== buf8[bl+i] ) { return false; }
-                }
-                al += n;
+            n = (v >>> 24) - 1;
+            if ( n !== 0 ) {
+                const ar = al + n;
+                if ( ar > aR ) { return false; }
+                let i = al, j = bl + 1;
+                do {
+                    if ( buf8[i] !== buf8[j] ) { return false; }
+                    i += 1; j += 1;
+                } while ( i !== ar );
+                al = i;
             }
             // next segment
             icell = buf32[icell+CELL_AND];
@@ -225,20 +229,22 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
             // find first segment with a first-character match
             for (;;) {
                 v = buf32[icell+SEGMENT_INFO];
-                n = v >>> 24;
-                br = char0 + (v & 0x00FFFFFF) + n - 1;
+                n = (v >>> 24) - 1;
+                br = char0 + (v & 0x00FFFFFF) + n;
                 if ( buf8[br] === c ) { break; }
                 icell = buf32[icell+CELL_OR];
                 if ( icell === 0 ) { return false; }
             }
             // all characters in segment must match
-            if ( n > 1 ) {
-                n -= 1;
-                if ( n > ar ) { return false; }
-                for ( let i = 1; i <= n; i++ ) {
-                    if ( buf8[ar-i] !== buf8[br-i] ) { return false; }
-                }
-                ar -= n;
+            if ( n !== 0 ) {
+                const al = ar - n;
+                if ( al < 0 ) { return false; }
+                let i = ar, j = br;
+                do {
+                    i -= 1; j -= 1;
+                    if ( buf8[i] !== buf8[j] ) { return false; }
+                } while ( i !== al );
+                ar = i;
             }
             // next segment
             icell = buf32[icell+CELL_AND];
@@ -605,73 +611,99 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
     }
 
     // WASMable.
-    startsWith(haystackOffset, needleOffset, needleLen) {
-        if ( (haystackOffset + needleLen) > this.haystackSize ) {
-            return false;
+    startsWith(haystackLeft, haystackRight, needleLeft, needleLen) {
+        if ( haystackLeft < 0 || (haystackLeft + needleLen) > haystackRight ) {
+            return 0;
         }
-        const haystackCodes = this.haystack;
-        const needleCodes = this.buf8;
-        needleOffset += this.buf32[CHAR0_SLOT];
-        for ( let i = 0; i < needleLen; i++ ) {
-            if (
-                haystackCodes[haystackOffset+i] !==
-                needleCodes[needleOffset+i]
-            ) {
-                return false;
-            }
+        const charCodes = this.buf8;
+        needleLeft += this.buf32[CHAR0_SLOT];
+        const needleRight = needleLeft + needleLen;
+        while ( charCodes[haystackLeft] === charCodes[needleLeft] ) {
+            needleLeft += 1;
+            if ( needleLeft === needleRight ) { return 1; }
+            haystackLeft += 1;
         }
-        return true;
+        return 0;
     }
 
     // Find the left-most instance of substring in main string
     // WASMable.
-    indexOf(haystackBeg, haystackEnd, needleOffset, needleLen) {
+    indexOf(haystackLeft, haystackEnd, needleLeft, needleLen) {
         haystackEnd -= needleLen;
-        if ( haystackEnd < haystackBeg ) { return -1; }
-        const haystackCodes = this.haystack;
-        const needleCodes = this.buf8;
-        needleOffset += this.buf32[CHAR0_SLOT];
-        let i = haystackBeg;
-        let c0 = needleCodes[needleOffset];
+        if ( haystackEnd < haystackLeft ) { return -1; }
+        needleLeft += this.buf32[CHAR0_SLOT];
+        const needleRight = needleLeft + needleLen;
+        const charCodes = this.buf8;
         for (;;) {
-            i = haystackCodes.indexOf(c0, i);
-            if ( i === -1 || i > haystackEnd ) { return -1; }
-            let j = 1;
-            while ( j < needleLen ) {
-                if ( haystackCodes[i+j] !== needleCodes[needleOffset+j] ) {
-                    break;
-                }
+            let i = haystackLeft;
+            let j = needleLeft;
+            while ( charCodes[i] === charCodes[j] ) {
                 j += 1;
+                if ( j === needleRight ) { return haystackLeft; }
+                i += 1;
             }
-            if ( j === needleLen ) { return i; }
-            i += 1;
+            haystackLeft += 1;
+            if ( haystackLeft === haystackEnd ) { break; }
         }
         return -1;
     }
 
     // Find the right-most instance of substring in main string.
     // WASMable.
-    lastIndexOf(haystackBeg, haystackEnd, needleOffset, needleLen) {
-        needleOffset += this.buf32[CHAR0_SLOT];
-        let i = haystackEnd - needleLen;
-        if ( i < haystackBeg ) { return -1; }
-        const haystackCodes = this.haystack;
-        const needleCodes = this.buf8;
-        let c0 = needleCodes[needleOffset];
+    lastIndexOf(haystackBeg, haystackEnd, needleLeft, needleLen) {
+        let haystackLeft = haystackEnd - needleLen;
+        if ( haystackLeft < haystackBeg ) { return -1; }
+        needleLeft += this.buf32[CHAR0_SLOT];
+        const needleRight = needleLeft + needleLen;
+        const charCodes = this.buf8;
         for (;;) {
-            i = haystackCodes.lastIndexOf(c0, i);
-            if ( i === -1 || i < haystackBeg ) { return -1; }
-            let j = 1;
-            while ( j < needleLen ) {
-                if ( haystackCodes[i+j] !== needleCodes[needleOffset+j] ) {
-                    break;
-                }
+            let i = haystackLeft;
+            let j = needleLeft;
+            while ( charCodes[i] === charCodes[j] ) {
                 j += 1;
+                if ( j === needleRight ) { return haystackLeft; }
+                i += 1;
             }
-            if ( j === needleLen ) { return i; }
-            i -= 1;
+            if ( haystackLeft === haystackBeg ) { break; }
+            haystackLeft -= 1;
         }
         return -1;
+    }
+
+    async enableWASM() {
+        if ( this.wasmMemory instanceof WebAssembly.Memory ) { return true; }
+        const module = await getWasmModule();
+        if ( module instanceof WebAssembly.Module === false ) {
+            return false;
+        }
+        const memory = new WebAssembly.Memory({
+            initial: this.buf8.length >>> 16
+        });
+        const instance = await WebAssembly.instantiate(
+            module,
+            { imports: { memory } }
+        );
+        if ( instance instanceof WebAssembly.Instance === false ) {
+            return false;
+        }
+        this.wasmMemory = memory;
+        const curPageCount = memory.buffer.byteLength >>> 16;
+        const newPageCount = this.buf8.byteLength + PAGE_SIZE-1 >>> 16;
+        if ( newPageCount > curPageCount ) {
+            memory.grow(newPageCount - curPageCount);
+        }
+        const buf8 = new Uint8Array(memory.buffer);
+        buf8.set(this.buf8);
+        this.buf8 = buf8;
+        this.buf32 = new Uint32Array(this.buf8.buffer);
+        this.haystack = this.buf8.subarray(
+            HAYSTACK_START,
+            HAYSTACK_START + HAYSTACK_SIZE
+        );
+        this.startsWith = instance.exports.startsWith;
+        this.indexOf = instance.exports.indexOf;
+        this.lastIndexOf = instance.exports.lastIndexOf;
+        return true;
     }
 
     //--------------------------------------------------------------------------
@@ -710,6 +742,7 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
     }
 
     shrinkBuf() {
+        if ( this.wasmMemory !== null ) { return; }
         const char0 = this.buf32[TRIE1_SLOT] + MIN_FREE_CELL_BYTE_LENGTH;
         const char1 = char0 + this.buf32[CHAR1_SLOT] - this.buf32[CHAR0_SLOT];
         const bufLen = char1 + 256;
@@ -723,9 +756,25 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
         }
         const charDataLen = this.buf32[CHAR1_SLOT] - this.buf32[CHAR0_SLOT];
         if ( bufLen !== this.buf8.length ) {
-            const newBuf = new Uint8Array(bufLen);
+            let newBuf;
+            if ( this.wasmMemory === null ) {
+                newBuf = new Uint8Array(bufLen);
+            } else {
+                const oldPageCount = this.buf8.length >>> 16;
+                const newPageCount = (bufLen + 0xFFFF) >>> 16;
+                if ( newPageCount > oldPageCount ) {
+                    this.wasmMemory.grow(newPageCount - oldPageCount);
+                }
+                newBuf = new Uint8Array(this.wasmMemory.buffer);
+            }
             newBuf.set(this.buf8.subarray(0, this.buf32[TRIE1_SLOT]), 0);
-            newBuf.set(this.buf8.subarray(this.buf32[CHAR0_SLOT], this.buf32[CHAR1_SLOT]), char0);
+            newBuf.set(
+                this.buf8.subarray(
+                    this.buf32[CHAR0_SLOT],
+                    this.buf32[CHAR1_SLOT]
+                ),
+                char0
+            );
             this.buf8 = newBuf;
             this.buf32 = new Uint32Array(this.buf8.buffer);
             this.buf32[CHAR0_SLOT] = char0;
@@ -736,7 +785,11 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
             );
         }
         if ( char0 !== this.buf32[CHAR0_SLOT] ) {
-            this.buf8.copyWithin(char0, this.buf32[CHAR0_SLOT], this.buf32[CHAR1_SLOT]);
+            this.buf8.copyWithin(
+                char0,
+                this.buf32[CHAR0_SLOT],
+                this.buf32[CHAR1_SLOT]
+            );
             this.buf32[CHAR0_SLOT] = char0;
             this.buf32[CHAR1_SLOT] = char0 + charDataLen;
         }
@@ -838,6 +891,72 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
         };
     }
 };
+
+/******************************************************************************/
+
+// Code below is to attempt to load a WASM module which implements:
+//
+// - BidiTrieContainer.startsWith()
+//
+// The WASM module is entirely optional, the JS implementations will be
+// used should the WASM module be unavailable for whatever reason.
+
+const getWasmModule = (( ) => {
+    let wasmModulePromise;
+
+    return function() {
+        if ( wasmModulePromise instanceof Promise ) {
+            return wasmModulePromise;
+        }
+
+        if (
+            typeof WebAssembly !== 'object' ||
+            typeof WebAssembly.compileStreaming !== 'function'
+        ) {
+            return;
+        }
+
+        // Soft-dependency on vAPI so that the code here can be used outside of
+        // uBO (i.e. tests, benchmarks)
+        if (
+            typeof vAPI === 'object' &&
+            vAPI.webextFlavor.soup.has('firefox') === false
+        ) {
+            return;
+        }
+
+        // The wasm module will work only if CPU is natively little-endian,
+        // as we use native uint32 array in our js code.
+        const uint32s = new Uint32Array(1);
+        const uint8s = new Uint8Array(uint32s.buffer);
+        uint32s[0] = 1;
+        if ( uint8s[0] !== 1 ) { return; }
+
+        // The directory from which the current script was fetched should also
+        // contain the related WASM file. The script is fetched from a trusted
+        // location, and consequently so will be the related WASM file.
+        let workingDir;
+        {
+            const url = new URL(document.currentScript.src);
+            const match = /[^\/]+$/.exec(url.pathname);
+            if ( match !== null ) {
+                url.pathname = url.pathname.slice(0, match.index);
+            }
+            workingDir = url.href;
+        }
+
+        wasmModulePromise = fetch(
+            workingDir + 'wasm/biditrie.wasm',
+            { mode: 'same-origin' }
+        ).then(
+            WebAssembly.compileStreaming
+        ).catch(reason => {
+            log.info(reason);
+        });
+
+        return wasmModulePromise;
+    };
+})();
 
 // end of local namespace
 // *****************************************************************************
