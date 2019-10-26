@@ -759,6 +759,14 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
             let newBuf;
             if ( this.wasmMemory === null ) {
                 newBuf = new Uint8Array(bufLen);
+                newBuf.set(this.buf8.subarray(0, this.buf32[TRIE1_SLOT]), 0);
+                newBuf.set(
+                    this.buf8.subarray(
+                        this.buf32[CHAR0_SLOT],
+                        this.buf32[CHAR1_SLOT]
+                    ),
+                    char0
+                );
             } else {
                 const oldPageCount = this.buf8.length >>> 16;
                 const newPageCount = (bufLen + 0xFFFF) >>> 16;
@@ -767,14 +775,6 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
                 }
                 newBuf = new Uint8Array(this.wasmMemory.buffer);
             }
-            newBuf.set(this.buf8.subarray(0, this.buf32[TRIE1_SLOT]), 0);
-            newBuf.set(
-                this.buf8.subarray(
-                    this.buf32[CHAR0_SLOT],
-                    this.buf32[CHAR1_SLOT]
-                ),
-                char0
-            );
             this.buf8 = newBuf;
             this.buf32 = new Uint32Array(this.buf8.buffer);
             this.buf32[CHAR0_SLOT] = char0;
