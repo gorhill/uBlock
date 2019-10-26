@@ -101,7 +101,7 @@
         i32.const 1
         i32.add
         tee_local $needleLeft
-        ;; if ( needleLeft === needleRight ) { break; }
+        ;; if ( needleLeft === needleRight ) { return 1; }
         get_local $needleRight
         i32.eq
         if
@@ -116,7 +116,7 @@
         br $compare
     end end
     ;; }
-    ;; return true;
+    ;; return 0;
     i32.const 0
 )
 
