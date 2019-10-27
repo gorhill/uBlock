@@ -145,6 +145,16 @@ const µBlock = (( ) => { // jshint ignore:line
             selfieMagic: 23,    // Increase when selfie format changes
         },
 
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/759#issuecomment-546654501
+        //   The assumption is that cache storage state reflects whether
+        //   compiled or selfie assets are available or not. The properties
+        //   below is to no longer rely on this assumption -- though it's still
+        //   not clear how the assumption could be wrong, and it's still not
+        //   clear whether relying on those properties will really solve the
+        //   issue. It's just an attempt at hardening.
+        compiledFormatChanged: false,
+        selfieIsInvalid: false,
+
         restoreBackupSettings: {
             lastRestoreFile: '',
             lastRestoreTime: 0,

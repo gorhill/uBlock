@@ -173,15 +173,15 @@ const onUserSettingsReady = function(fetched) {
 // Housekeeping, as per system setting changes
 
 const onSystemSettingsReady = function(fetched) {
-    let mustSaveSystemSettings = false;
     if ( fetched.compiledMagic !== µb.systemSettings.compiledMagic ) {
         µb.assets.remove(/^compiled\//);
-        mustSaveSystemSettings = true;
+        µb.compiledFormatChanged = true;
+        µb.selfieIsInvalid = true;
     }
     if ( fetched.selfieMagic !== µb.systemSettings.selfieMagic ) {
-        mustSaveSystemSettings = true;
+        µb.selfieIsInvalid = true;
     }
-    if ( mustSaveSystemSettings ) {
+    if ( µb.selfieIsInvalid ) {
         fetched.selfie = null;
         µb.selfieManager.destroy();
         vAPI.storage.set(µb.systemSettings);

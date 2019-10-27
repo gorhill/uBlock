@@ -638,6 +638,7 @@
 
         this.selfieManager.destroy();
         this.lz4Codec.relinquish();
+        this.compiledFormatChanged = false;
 
         loadingPromise = undefined;
     };
@@ -712,10 +713,12 @@
 µBlock.getCompiledFilterList = async function(assetKey) {
     const compiledPath = 'compiled/' + assetKey;
 
-    let compiledDetails = await this.assets.get(compiledPath);
-    if ( compiledDetails.content !== '' ) {
-        compiledDetails.assetKey = assetKey;
-        return compiledDetails;
+    if ( this.compiledFormatChanged === false ) {
+        let compiledDetails = await this.assets.get(compiledPath);
+        if ( compiledDetails.content !== '' ) {
+            compiledDetails.assetKey = assetKey;
+            return compiledDetails;
+        }
     }
 
     const rawDetails = await this.assets.get(assetKey);
@@ -730,7 +733,7 @@
     // Fetching the raw content may cause the compiled content to be
     // generated somewhere else in uBO, hence we try one last time to
     // fetch the compiled content in case it has become available.
-    compiledDetails = await this.assets.get(compiledPath);
+    let compiledDetails = await this.assets.get(compiledPath);
     if ( compiledDetails.content === '' ) {
         compiledDetails.content = this.compileFilters(
             rawDetails.content,
@@ -1053,6 +1056,7 @@
             ),
         ]);
         µb.lz4Codec.relinquish();
+        µb.selfieIsInvalid = false;
     };
 
     const loadMain = async function() {
@@ -1080,7 +1084,7 @@
     };
 
     const load = async function() {
-        if ( destroyTimer !== undefined ) {
+        if ( µb.selfieIsInvalid ) {
             return false;
         }
         try {
@@ -1108,6 +1112,7 @@
     const destroy = function() {
         µb.cacheStorage.remove('selfie'); // TODO: obsolete, remove eventually.
         µb.assets.remove(/^selfie\//);
+        µb.selfieIsInvalid = true;
         createTimer = vAPI.setTimeout(( ) => {
             createTimer = undefined;
             create();
@@ -1127,6 +1132,7 @@
             },
             1019
         );
+        µb.selfieIsInvalid = true;
     };
 
     return { load, destroy: destroyAsync };
