@@ -539,8 +539,10 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
         }
     }
 
-    optimize() {
-        this.shrinkBuf();
+    optimize(shrink = false) {
+        if ( shrink ) {
+            this.shrinkBuf();
+        }
         return {
             byteLength: this.buf8.byteLength,
             char0: this.buf32[CHAR0_SLOT],
@@ -569,15 +571,7 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
             ? decoder.decodeSize(selfie)
             : selfie.length << 2;
         if ( byteLength === 0 ) { return false; }
-        byteLength = roundToPageSize(byteLength);
-        if ( byteLength > this.buf8.length ) {
-            this.buf8 = new Uint8Array(byteLength);
-            this.buf32 = new Uint32Array(this.buf8.buffer);
-            this.haystack = this.buf8.subarray(
-                HAYSTACK_START,
-                HAYSTACK_START + HAYSTACK_SIZE
-            );
-        }
+        this.reallocateBuf(byteLength);
         if ( shouldDecode ) {
             decoder.decode(selfie, this.buf8.buffer);
         } else {
@@ -738,51 +732,8 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
             roundToPageSize(char1 + charGrow),
             this.buf8.length
         );
-        this.resizeBuf(bufLen, char0);
-    }
-
-    shrinkBuf() {
-        if ( this.wasmMemory !== null ) { return; }
-        const char0 = this.buf32[TRIE1_SLOT] + MIN_FREE_CELL_BYTE_LENGTH;
-        const char1 = char0 + this.buf32[CHAR1_SLOT] - this.buf32[CHAR0_SLOT];
-        const bufLen = char1 + 256;
-        this.resizeBuf(bufLen, char0);
-    }
-
-    resizeBuf(bufLen, char0) {
-        bufLen = roundToPageSize(bufLen);
-        if ( bufLen === this.buf8.length && char0 === this.buf32[CHAR0_SLOT] ) {
-            return;
-        }
-        const charDataLen = this.buf32[CHAR1_SLOT] - this.buf32[CHAR0_SLOT];
-        if ( bufLen !== this.buf8.length ) {
-            let newBuf;
-            if ( this.wasmMemory === null ) {
-                newBuf = new Uint8Array(bufLen);
-                newBuf.set(this.buf8.subarray(0, this.buf32[TRIE1_SLOT]), 0);
-                newBuf.set(
-                    this.buf8.subarray(
-                        this.buf32[CHAR0_SLOT],
-                        this.buf32[CHAR1_SLOT]
-                    ),
-                    char0
-                );
-            } else {
-                const oldPageCount = this.buf8.length >>> 16;
-                const newPageCount = (bufLen + 0xFFFF) >>> 16;
-                if ( newPageCount > oldPageCount ) {
-                    this.wasmMemory.grow(newPageCount - oldPageCount);
-                }
-                newBuf = new Uint8Array(this.wasmMemory.buffer);
-            }
-            this.buf8 = newBuf;
-            this.buf32 = new Uint32Array(this.buf8.buffer);
-            this.buf32[CHAR0_SLOT] = char0;
-            this.buf32[CHAR1_SLOT] = char0 + charDataLen;
-            this.haystack = this.buf8.subarray(
-                HAYSTACK_START,
-                HAYSTACK_START + HAYSTACK_SIZE
-            );
+        if ( bufLen > this.buf8.length ) {
+            this.reallocateBuf(bufLen);
         }
         if ( char0 !== this.buf32[CHAR0_SLOT] ) {
             this.buf8.copyWithin(
@@ -791,8 +742,51 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
                 this.buf32[CHAR1_SLOT]
             );
             this.buf32[CHAR0_SLOT] = char0;
-            this.buf32[CHAR1_SLOT] = char0 + charDataLen;
+            this.buf32[CHAR1_SLOT] = char1;
         }
+    }
+
+    shrinkBuf() {
+        const char0 = this.buf32[TRIE1_SLOT] + MIN_FREE_CELL_BYTE_LENGTH;
+        const char1 = char0 + this.buf32[CHAR1_SLOT] - this.buf32[CHAR0_SLOT];
+        const bufLen = char1 + 256;
+        if ( char0 !== this.buf32[CHAR0_SLOT] ) {
+            this.buf8.copyWithin(
+                char0,
+                this.buf32[CHAR0_SLOT],
+                this.buf32[CHAR1_SLOT]
+            );
+            this.buf32[CHAR0_SLOT] = char0;
+            this.buf32[CHAR1_SLOT] = char1;
+        }
+        if ( bufLen < this.buf8.length ) {
+            this.reallocateBuf(bufLen);
+        }
+    }
+
+    reallocateBuf(newSize) {
+        newSize = roundToPageSize(newSize);
+        if ( newSize === this.buf8.length ) { return; }
+        if ( this.wasmMemory === null ) {
+            const newBuf = new Uint8Array(newSize);
+            newBuf.set(
+                newBuf.length < this.buf8.length
+                    ? this.buf8.subarray(0, newBuf.length)
+                    : this.buf8
+            );
+            this.buf8 = newBuf;
+        } else {
+            const growBy =
+                ((newSize + 0xFFFF) >>> 16) - (this.buf8.length >>> 16);
+            if ( growBy <= 0 ) { return; }
+            this.wasmMemory.grow(growBy);
+            this.buf8 = new Uint8Array(this.wasmMemory.buffer);
+        }
+        this.buf32 = new Uint32Array(this.buf8.buffer);
+        this.haystack = this.buf8.subarray(
+            HAYSTACK_START,
+            HAYSTACK_START + HAYSTACK_SIZE
+        );
     }
 };
 

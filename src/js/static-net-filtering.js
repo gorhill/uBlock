@@ -326,8 +326,8 @@ const bidiTrie = (( ) => {
     return trie;
 })();
 
-const bidiTrieOptimize = function() {
-    const trieDetails = bidiTrie.optimize();
+const bidiTrieOptimize = function(shrink = false) {
+    const trieDetails = bidiTrie.optimize(shrink);
     vAPI.localStorage.setItem(
         'SNFE.bidiTrieDetails',
         JSON.stringify(trieDetails)
@@ -2804,6 +2804,7 @@ FilterContainer.prototype.toSelfie = function(path) {
         return selfie;
     };
 
+    bidiTrieOptimize(true);
     filterOrigin.optimize();
 
     return Promise.all([
