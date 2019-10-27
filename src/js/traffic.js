@@ -1070,7 +1070,7 @@ return {
                     [ 'blocking', 'requestBody' ]
                 );
             }
-            vAPI.net.unsuspend();
+            vAPI.net.unsuspend(true);
         };
     })(),
 

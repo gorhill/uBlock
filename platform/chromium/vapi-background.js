@@ -1227,9 +1227,13 @@ vAPI.Net = class {
             this.suspendDepth += 1;
         }
     }
-    unsuspend() {
+    unsuspend(all = false) {
         if ( this.suspendDepth === 0 ) { return; }
-        this.suspendDepth -= 1;
+        if ( all ) {
+            this.suspendDepth = 0;
+        } else {
+            this.suspendDepth -= 1;
+        }
         if ( this.suspendDepth !== 0 ) { return; }
         this.unsuspendAllRequests(this.suspendableListener);
     }
