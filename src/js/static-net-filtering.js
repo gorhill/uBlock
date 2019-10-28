@@ -1824,7 +1824,7 @@ const FilterPlainTrie = class {
     }
 
     match() {
-        if ( this.plainTrie.matches($tokenBeg) ) {
+        if ( this.plainTrie.matches($tokenBeg) !== 0 ) {
             this.$matchedUnit = this.plainTrie.$iu;
             return true;
         }
@@ -1862,7 +1862,7 @@ registerFilterClass(FilterPlainTrie);
 const FilterBucket = class extends FilterCollection {
     match() {
         if ( this.plainTrie !== null ) {
-            if ( this.plainTrie.matches($tokenBeg) ) {
+            if ( this.plainTrie.matches($tokenBeg, this) !== 0 ) {
                 this.$matchedTrie = true;
                 this.$matchedUnit = this.plainTrie.$iu;
                 return true;

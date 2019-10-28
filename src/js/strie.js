@@ -106,11 +106,14 @@ const PAGE_SIZE = 65536*2;
 const HAYSTACK_START = 0;
 const HAYSTACK_SIZE = 2048;                         //   i32 /   i8
 const HAYSTACK_SIZE_SLOT = HAYSTACK_SIZE >>> 2;     //   512 / 2048
-const TRIE0_SLOT  = HAYSTACK_SIZE_SLOT + 1;         //   512 / 2052
-const TRIE1_SLOT  = HAYSTACK_SIZE_SLOT + 2;         //   513 / 2056
-const CHAR0_SLOT  = HAYSTACK_SIZE_SLOT + 3;         //   514 / 2060
-const CHAR1_SLOT  = HAYSTACK_SIZE_SLOT + 4;         //   515 / 2064
-const TRIE0_START = HAYSTACK_SIZE_SLOT + 5 << 2;    //         2068
+const TRIE0_SLOT     = HAYSTACK_SIZE_SLOT + 1;      //   513 / 2052
+const TRIE1_SLOT     = HAYSTACK_SIZE_SLOT + 2;      //   514 / 2056
+const CHAR0_SLOT     = HAYSTACK_SIZE_SLOT + 3;      //   515 / 2060
+const CHAR1_SLOT     = HAYSTACK_SIZE_SLOT + 4;      //   516 / 2064
+const RESULT_L_SLOT  = HAYSTACK_SIZE_SLOT + 5;      //   517 / 2068
+const RESULT_R_SLOT  = HAYSTACK_SIZE_SLOT + 6;      //   518 / 2072
+const RESULT_IU_SLOT = HAYSTACK_SIZE_SLOT + 7;      //   519 / 2076
+const TRIE0_START    = HAYSTACK_SIZE_SLOT + 8 << 2; //         2080
 // TODO: need a few slots for result values if WASM-ing
 
 const CELL_BYTE_LENGTH = 12;
@@ -144,32 +147,34 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
             HAYSTACK_START,
             HAYSTACK_START + HAYSTACK_SIZE
         );
-        this.haystackLen = 0;
         this.extraHandler = extraHandler;
         this.textDecoder = null;
         this.wasmMemory = null;
-
-        this.$l = 0;
-        this.$r = 0;
-        this.$iu = 0;
     }
 
     //--------------------------------------------------------------------------
     // Public methods
     //--------------------------------------------------------------------------
 
+    get haystackLen() {
+        return this.buf32[HAYSTACK_SIZE_SLOT];
+    }
+
+    set haystackLen(v) {
+        this.buf32[HAYSTACK_SIZE_SLOT] = v;
+    }
+
     reset() {
         this.buf32[TRIE1_SLOT] = this.buf32[TRIE0_SLOT];
         this.buf32[CHAR1_SLOT] = this.buf32[CHAR0_SLOT];
     }
 
-    matches(iroot, i) {
+    matches(icell, ai) {
         const buf32 = this.buf32;
         const buf8 = this.buf8;
         const char0 = buf32[CHAR0_SLOT];
-        const aR = this.haystackLen;
-        let icell = iroot;
-        let al = i;
+        const aR = buf32[HAYSTACK_SIZE_SLOT];
+        let al = ai;
         let c, v, bl, n;
         for (;;) {
             c = buf8[al];
@@ -180,50 +185,47 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
                 bl = char0 + (v & 0x00FFFFFF);
                 if ( buf8[bl] === c ) { break; }
                 icell = buf32[icell+CELL_OR];
-                if ( icell === 0 ) { return false; }
+                if ( icell === 0 ) { return 0; }
             }
             // all characters in segment must match
             n = (v >>> 24) - 1;
             if ( n !== 0 ) {
                 const ar = al + n;
-                if ( ar > aR ) { return false; }
+                if ( ar > aR ) { return 0; }
                 let i = al, j = bl + 1;
                 do {
-                    if ( buf8[i] !== buf8[j] ) { return false; }
-                    i += 1; j += 1;
+                    if ( buf8[i] !== buf8[j] ) { return 0; }
+                    j += 1; i += 1;
                 } while ( i !== ar );
                 al = i;
             }
             // next segment
             icell = buf32[icell+CELL_AND];
-            const ix = buf32[icell+BCELL_EXTRA];
-            if ( ix <= BCELL_EXTRA_MAX ) {
-                if ( ix !== 0 ) {
-                    const iu = ix === 1 ? -1 : this.extraHandler(i, al, ix);
-                    if ( iu !== 0 ) {
-                        this.$l = i; this.$r = al; this.$iu = iu; return true;
-                    }
+            v = buf32[icell+BCELL_EXTRA];
+            if ( v <= BCELL_EXTRA_MAX ) {
+                if ( v !== 0 && this.matchesExtra(ai, al, v) !== 0 ) {
+                    return 1;
                 }
                 let inext = buf32[icell+BCELL_ALT_AND];
-                if ( inext !== 0 ) {
-                    if ( this.matchesLeft(inext, i, al) ) { return true; }
+                if ( inext !== 0 && this.matchesLeft(inext, ai, al) !== 0 ) {
+                    return 1;
                 }
-                inext = buf32[icell+BCELL_NEXT_AND];
-                if ( inext === 0 ) { return false; }
-                icell = inext;
+                icell = buf32[icell+BCELL_NEXT_AND];
+                if ( icell === 0 ) { return 0; }
             }
-            if ( al === aR ) { return false; }
+            if ( al === aR ) { return 0; }
         }
+        return 0;
     }
 
-    matchesLeft(iroot, i, r) {
+    matchesLeft(iroot, ar, r) {
         const buf32 = this.buf32;
         const buf8 = this.buf8;
         const char0 = buf32[CHAR0_SLOT];
         let icell = iroot;
-        let ar = i;
         let c, v, br, n;
         for (;;) {
+            if ( ar === 0 ) { return 0; }
             ar -= 1;
             c = buf8[ar];
             // find first segment with a first-character match
@@ -233,34 +235,45 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
                 br = char0 + (v & 0x00FFFFFF) + n;
                 if ( buf8[br] === c ) { break; }
                 icell = buf32[icell+CELL_OR];
-                if ( icell === 0 ) { return false; }
+                if ( icell === 0 ) { return 0; }
             }
             // all characters in segment must match
             if ( n !== 0 ) {
                 const al = ar - n;
-                if ( al < 0 ) { return false; }
+                if ( al < 0 ) { return 0; }
                 let i = ar, j = br;
                 do {
                     i -= 1; j -= 1;
-                    if ( buf8[i] !== buf8[j] ) { return false; }
+                    if ( buf8[i] !== buf8[j] ) { return 0; }
                 } while ( i !== al );
                 ar = i;
             }
             // next segment
             icell = buf32[icell+CELL_AND];
-            const ix = buf32[icell+BCELL_EXTRA];
-            if ( ix <= BCELL_EXTRA_MAX ) {
-                if ( ix !== 0 ) {
-                    const iu = ix === 1 ? -1 : this.extraHandler(ar, r, ix);
-                    if ( iu !== 0 ) {
-                        this.$l = ar; this.$r = r; this.$iu = iu; return true;
-                    }
+            v = buf32[icell+BCELL_EXTRA];
+            if ( v <= BCELL_EXTRA_MAX ) {
+                if ( v !== 0 && this.matchesExtra(ar, r, v) !== 0 ) {
+                    return 1;
                 }
                 icell = buf32[icell+BCELL_NEXT_AND];
-                if ( icell === 0 ) { return false; }
+                if ( icell === 0 ) { return 0; }
             }
-            if ( ar === 0 ) { return false; }
         }
+        return 0;
+    }
+
+    matchesExtra(l, r, ix) {
+        let iu;
+        if ( ix !== 1 ) {
+            iu = this.extraHandler(l, r, ix);
+            if ( iu === 0 ) { return 0; }
+        } else {
+            iu = -1;
+        }
+        this.buf32[RESULT_L_SLOT] = l;
+        this.buf32[RESULT_R_SLOT] = r;
+        this.buf32[RESULT_IU_SLOT] = iu;
+        return 1;
     }
 
     createOne(args) {
@@ -675,7 +688,7 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
         });
         const instance = await WebAssembly.instantiate(
             module,
-            { imports: { memory } }
+            { imports: { memory, extraHandler: this.extraHandler } }
         );
         if ( instance instanceof WebAssembly.Instance === false ) {
             return false;
@@ -694,6 +707,7 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
             HAYSTACK_START,
             HAYSTACK_START + HAYSTACK_SIZE
         );
+        this.matches = instance.exports.matches;
         this.startsWith = instance.exports.startsWith;
         this.indexOf = instance.exports.indexOf;
         this.lastIndexOf = instance.exports.lastIndexOf;
@@ -829,9 +843,9 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
         }
     }
 
-    get $l() { return this.container.$l; }
-    get $r() { return this.container.$r; }
-    get $iu() { return this.container.$iu; }
+    get $l() { return this.container.buf32[RESULT_L_SLOT] | 0; }
+    get $r() { return this.container.buf32[RESULT_R_SLOT] | 0; }
+    get $iu() { return this.container.buf32[RESULT_IU_SLOT] | 0; }
 
     [Symbol.iterator]() {
         return {
