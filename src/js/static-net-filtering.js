@@ -1518,26 +1518,25 @@ const FilterDataHolderResult = class {
 /******************************************************************************/
 
 const FilterCollection = class {
-    constructor(i = 0, n = 0) {
+    constructor(i = 0) {
         this.i = i | 0;
-        this.n = n | 0;
     }
 
     get size() {
-        return this.n;
+        let n = 0;
+        this.forEach(( ) => { n += 1; });
+        return n;
     }
 
     unshift(iunit) {
         const j = this.i;
         this.i = filterSequenceAdd(iunit, j);
-        this.n += 1;
     }
 
     shift() {
         const sequences = filterSequences;
         filterUnits[sequences[this.i+0]] = null;
         this.i = sequences[this.i+1];
-        this.n -= 1;
     }
 
     forEach(fn) {
@@ -1553,7 +1552,7 @@ const FilterCollection = class {
     }
 
     toSelfie() {
-        return [ this.fid, this.i, this.n ];
+        return [ this.fid, this.i ];
     }
 
     static compile(ctor, fdata) {
@@ -1577,7 +1576,7 @@ const FilterCollection = class {
     }
 
     static fromSelfie(ctor, args) {
-        return new ctor(args[1], args[2]);
+        return new ctor(args[1]);
     }
 };
 
@@ -1585,14 +1584,13 @@ const FilterCollection = class {
 
 const FilterComposite = class extends FilterCollection {
     match() {
-        let i = this.i;
-        if ( i === 0 ) { return false; }
         const sequences = filterSequences;
         const units = filterUnits;
-        do {
+        let i = this.i;
+        while ( i !== 0 ) {
             if ( units[sequences[i+0]].match() !== true ) { return false; }
             i = sequences[i+1];
-        } while ( i !== 0 );
+        }
         return true;
     }
 
@@ -1868,18 +1866,17 @@ const FilterBucket = class extends FilterCollection {
                 return true;
             }
         }
-        let i = this.i;
-        if ( i === 0 ) { return false; }
         const sequences = filterSequences;
         const units = filterUnits;
-        do {
+        let i = this.i;
+        while ( i !== 0 ) {
             if ( units[sequences[i+0]].match() ) {
                 this.$matchedTrie = false;
                 this.$matchedUnit = sequences[i+0];
                 return true;
             }
             i = sequences[i+1];
-        } while ( i !== 0 );
+        }
         return false;
     }
 
@@ -1910,19 +1907,14 @@ const FilterBucket = class extends FilterCollection {
     }
 
     optimize() {
-        if ( this.n < 3 ) { return; }
         const units = filterUnits;
-        const trieables = new Set();
+        let n = 0;
         let i = this.i;
-        for (;;) {
-            const f = units[filterSequences[i+0]];
-            if ( f.isBidiTrieable === true ) {
-                trieables.add(i);
-            }
+        do {
+            if ( units[filterSequences[i+0]].isBidiTrieable ) { n += 1; }
             i = filterSequences[i+1];
-            if ( i === 0 ) { break; }
-        }
-        if ( trieables.size < 3 ) { return; }
+        } while ( i !== 0 && n < 3 );
+        if ( n < 3 ) { return; }
         if ( this.plainTrie === null ) {
             this.plainTrie = bidiTrie.createOne();
         }
@@ -1931,7 +1923,7 @@ const FilterBucket = class extends FilterCollection {
         for (;;) {
             const iunit = filterSequences[i+0];
             const inext = filterSequences[i+1];
-            if ( trieables.has(i) ) {
+            if ( units[iunit].isBidiTrieable ) {
                 this._addToTrie(iunit);
                 if ( iprev !== 0 ) {
                     filterSequences[iprev+1] = inext;
@@ -1982,8 +1974,8 @@ const FilterBucket = class extends FilterCollection {
 
     static fromSelfie(args) {
         const bucket = FilterCollection.fromSelfie(FilterBucket, args);
-        if ( args.length > 3 && Array.isArray(args[3]) ) {
-            bucket.plainTrie = bidiTrie.createOne(args[3]);
+        if ( args.length > 2 && Array.isArray(args[2]) ) {
+            bucket.plainTrie = bidiTrie.createOne(args[2]);
         }
         return bucket;
     }
@@ -2688,6 +2680,8 @@ FilterContainer.prototype.freeze = function() {
     const unserialize = µb.CompiledLineIO.unserialize;
     const units = filterUnits;
 
+    const t0 = Date.now();
+
     for ( const line of this.goodFilters ) {
         if ( this.badFilters.has(line) ) {
             this.discardedCount += 1;
@@ -2791,6 +2785,8 @@ FilterContainer.prototype.freeze = function() {
     FilterHostnameDict.optimize();
     bidiTrieOptimize();
     this.frozen = true;
+
+    log.info(`staticNetFilteringEngine.freeze() took ${Date.now()-t0} ms`);
 };
 
 /******************************************************************************/

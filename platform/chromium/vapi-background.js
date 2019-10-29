@@ -39,7 +39,14 @@ vAPI.cantWebsocket =
     browser.webRequest.ResourceType instanceof Object === false  ||
     browser.webRequest.ResourceType.WEBSOCKET !== 'websocket';
 
+vAPI.canWASM = vAPI.webextFlavor.soup.has('chromium') === false;
+if ( vAPI.canWASM === false ) {
+    const csp = manifest.content_security_policy;
+    vAPI.canWASM = csp !== undefined && csp.indexOf("'wasm-eval'") !== -1;
+}
+
 vAPI.supportsUserStylesheets = vAPI.webextFlavor.soup.has('user_stylesheet');
+
 // The real actual webextFlavor value may not be set in stone, so listen
 // for possible future changes.
 window.addEventListener('webextFlavor', function() {

@@ -149,7 +149,7 @@
     _tokenize(encodeInto) {
         const tokens = this._tokens;
         let url = this._urlOut;
-        let l = url.length;
+        let l = url.length | 0;
         if ( l === 0 ) { return 0; }
         if ( l > 2048 ) {
             url = url.slice(0, 2048);
@@ -163,7 +163,7 @@
         for (;;) {
             for (;;) {
                 if ( i === l ) { return j; }
-                c = url.charCodeAt(i);
+                c = url.charCodeAt(i) | 0;
                 charCodes[i] = c;
                 v = vtc[c];
                 i += 1;
@@ -172,7 +172,7 @@
             th = v; ti = i - 1; n = 1;
             for (;;) {
                 if ( i === l ) { break; }
-                c = url.charCodeAt(i);
+                c = url.charCodeAt(i) | 0;
                 charCodes[i] = c;
                 v = vtc[c];
                 i += 1;

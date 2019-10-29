@@ -710,12 +710,7 @@ HNTrieContainer.prototype.HNTrieRef.prototype.needle = '';
 
     // Soft-dependency on vAPI so that the code here can be used outside of
     // uBO (i.e. tests, benchmarks)
-    if (
-        typeof vAPI === 'object' &&
-        vAPI.webextFlavor.soup.has('firefox') === false
-    ) {
-        return;
-    }
+    if ( typeof vAPI === 'object' && vAPI.canWASM !== true ) { return; }
 
     // Soft-dependency on µBlock's advanced settings so that the code here can
     // be used outside of uBO (i.e. tests, benchmarks)

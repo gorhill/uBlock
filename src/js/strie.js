@@ -174,40 +174,40 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
         const buf8 = this.buf8;
         const char0 = buf32[CHAR0_SLOT];
         const aR = buf32[HAYSTACK_SIZE_SLOT];
-        let al = ai;
-        let c, v, bl, n;
+        let al = ai, x = 0, y = 0;
         for (;;) {
-            c = buf8[al];
+            x = buf8[al];
             al += 1;
-            // find first segment with a first-character match
+            // find matching segment
             for (;;) {
-                v = buf32[icell+SEGMENT_INFO];
-                bl = char0 + (v & 0x00FFFFFF);
-                if ( buf8[bl] === c ) { break; }
+                y = buf32[icell+SEGMENT_INFO];
+                let bl = char0 + (y & 0x00FFFFFF);
+                if ( buf8[bl] === x ) {
+                    y = (y >>> 24) - 1;
+                    if ( y !== 0 ) {
+                        x = al + y;
+                        if ( x > aR ) { return 0; }
+                        for (;;) {
+                            bl += 1;
+                            if ( buf8[bl] !== buf8[al] ) { return 0; }
+                            al += 1;
+                            if ( al === x ) { break; }
+                        }
+                    }
+                    break;
+                }
                 icell = buf32[icell+CELL_OR];
                 if ( icell === 0 ) { return 0; }
             }
-            // all characters in segment must match
-            n = (v >>> 24) - 1;
-            if ( n !== 0 ) {
-                const ar = al + n;
-                if ( ar > aR ) { return 0; }
-                let i = al, j = bl + 1;
-                do {
-                    if ( buf8[i] !== buf8[j] ) { return 0; }
-                    j += 1; i += 1;
-                } while ( i !== ar );
-                al = i;
-            }
             // next segment
             icell = buf32[icell+CELL_AND];
-            v = buf32[icell+BCELL_EXTRA];
-            if ( v <= BCELL_EXTRA_MAX ) {
-                if ( v !== 0 && this.matchesExtra(ai, al, v) !== 0 ) {
+            x = buf32[icell+BCELL_EXTRA];
+            if ( x <= BCELL_EXTRA_MAX ) {
+                if ( x !== 0 && this.matchesExtra(ai, al, x) !== 0 ) {
                     return 1;
                 }
-                let inext = buf32[icell+BCELL_ALT_AND];
-                if ( inext !== 0 && this.matchesLeft(inext, ai, al) !== 0 ) {
+                x = buf32[icell+BCELL_ALT_AND];
+                if ( x !== 0 && this.matchesLeft(x, ai, al) !== 0 ) {
                     return 1;
                 }
                 icell = buf32[icell+BCELL_NEXT_AND];
@@ -218,41 +218,41 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
         return 0;
     }
 
-    matchesLeft(iroot, ar, r) {
+    matchesLeft(icell, ar, r) {
         const buf32 = this.buf32;
         const buf8 = this.buf8;
         const char0 = buf32[CHAR0_SLOT];
-        let icell = iroot;
-        let c, v, br, n;
+        let x = 0, y = 0;
         for (;;) {
             if ( ar === 0 ) { return 0; }
             ar -= 1;
-            c = buf8[ar];
+            x = buf8[ar];
             // find first segment with a first-character match
             for (;;) {
-                v = buf32[icell+SEGMENT_INFO];
-                n = (v >>> 24) - 1;
-                br = char0 + (v & 0x00FFFFFF) + n;
-                if ( buf8[br] === c ) { break; }
+                y = buf32[icell+SEGMENT_INFO];
+                let br = char0 + (y & 0x00FFFFFF);
+                y = (y >>> 24) - 1;
+                br += y;
+                if ( buf8[br] === x ) { // all characters in segment must match
+                    if ( y !== 0 ) {
+                        x = ar - y;
+                        if ( x < 0 ) { return 0; }
+                        for (;;) {
+                            ar -= 1; br -= 1;
+                            if ( buf8[ar] !== buf8[br] ) { return 0; }
+                            if ( ar === x ) { break; }
+                        }
+                    }
+                    break;
+                }
                 icell = buf32[icell+CELL_OR];
                 if ( icell === 0 ) { return 0; }
             }
-            // all characters in segment must match
-            if ( n !== 0 ) {
-                const al = ar - n;
-                if ( al < 0 ) { return 0; }
-                let i = ar, j = br;
-                do {
-                    i -= 1; j -= 1;
-                    if ( buf8[i] !== buf8[j] ) { return 0; }
-                } while ( i !== al );
-                ar = i;
-            }
             // next segment
             icell = buf32[icell+CELL_AND];
-            v = buf32[icell+BCELL_EXTRA];
-            if ( v <= BCELL_EXTRA_MAX ) {
-                if ( v !== 0 && this.matchesExtra(ar, r, v) !== 0 ) {
+            x = buf32[icell+BCELL_EXTRA];
+            if ( x <= BCELL_EXTRA_MAX ) {
+                if ( x !== 0 && this.matchesExtra(ar, r, x) !== 0 ) {
                     return 1;
                 }
                 icell = buf32[icell+BCELL_NEXT_AND];
@@ -263,16 +263,16 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
     }
 
     matchesExtra(l, r, ix) {
-        let iu;
+        let iu = 0;
         if ( ix !== 1 ) {
             iu = this.extraHandler(l, r, ix);
             if ( iu === 0 ) { return 0; }
         } else {
             iu = -1;
         }
+        this.buf32[RESULT_IU_SLOT] = iu;
         this.buf32[RESULT_L_SLOT] = l;
         this.buf32[RESULT_R_SLOT] = r;
-        this.buf32[RESULT_IU_SLOT] = iu;
         return 1;
     }
 
@@ -926,12 +926,7 @@ const getWasmModule = (( ) => {
 
         // Soft-dependency on vAPI so that the code here can be used outside of
         // uBO (i.e. tests, benchmarks)
-        if (
-            typeof vAPI === 'object' &&
-            vAPI.webextFlavor.soup.has('firefox') === false
-        ) {
-            return;
-        }
+        if ( typeof vAPI === 'object' && vAPI.canWASM !== true ) { return; }
 
         // The wasm module will work only if CPU is natively little-endian,
         // as we use native uint32 array in our js code.

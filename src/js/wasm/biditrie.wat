@@ -60,14 +60,9 @@
     (local $char0 i32)
     (local $aR i32)
     (local $al i32)
-    (local $c i32)
-    (local $v i32)
     (local $bl i32)
-    (local $n i32)
-    (local $ar i32)
-    (local $i i32)
-    (local $j i32)
-    (local $inext i32)
+    (local $x i32)
+    (local $y i32)
     ;; trie index is a uint32 offset, need to convert to uint8 offset
     get_local $icell
     i32.const 2
@@ -90,33 +85,78 @@
     block $matchNotFound
     ;; for (;;) {
     loop $mainLoop
-        ;; c = buf8[al];
+        ;; x = buf8[al];
         get_local $al
         i32.load8_u
-        set_local $c
+        set_local $x
         ;; al += 1;
         get_local $al
         i32.const 1
         i32.add
         set_local $al
-        ;; // find first segment with a first-character match
+        ;; // find matching segment
         ;; for (;;) {
-        block $breakMatchFirstChar loop $matchFirstChar
-            ;; v = buf32[icell+SEGMENT_INFO];
+        block $nextSegment loop $findSegment
+            ;; y = buf32[icell+SEGMENT_INFO];
             get_local $icell
             i32.load offset=8 align=4
-            tee_local $v
-            ;; bl = char0 + (v & 0x00FFFFFF);
+            tee_local $y
+            ;; bl = char0 + (y & 0x00FFFFFF);
             i32.const 0x00FFFFFF
             i32.and
             get_local $char0
             i32.add
             tee_local $bl
-            ;; if ( buf8[bl] === c ) { break; }
+            ;; if ( buf8[bl] === x ) {
             i32.load8_u
-            get_local $c
+            get_local $x
             i32.eq
-            br_if $breakMatchFirstChar
+            if
+                ;; y = (y >>> 24) - 1;
+                get_local $y
+                i32.const 24
+                i32.shr_u
+                i32.const 1
+                i32.sub
+                tee_local $y
+                ;; if ( n !== 0 ) {
+                if
+                    ;; x = al + y;
+                    get_local $y
+                    get_local $al
+                    i32.add
+                    tee_local $x
+                    ;; if ( x > aR ) { return 0; }
+                    get_local $aR
+                    i32.gt_u
+                    br_if $matchNotFound
+                    ;; for (;;) {
+                    loop
+                        ;; bl += 1;
+                        get_local $bl
+                        i32.const 1
+                        i32.add
+                        tee_local $bl
+                        ;; if ( buf8[bl] !== buf8[al] ) { return 0; }
+                        i32.load8_u
+                        get_local $al
+                        i32.load8_u
+                        i32.ne
+                        br_if $matchNotFound
+                        ;; al += 1;
+                        get_local $al
+                        i32.const 1
+                        i32.add
+                        tee_local $al
+                        ;; if ( al === x ) { break; }
+                        get_local $x
+                        i32.ne
+                        br_if 0
+                    end
+                ;; }
+                end
+                br $nextSegment
+            end
             ;; icell = buf32[icell+CELL_OR];
             get_local $icell
             i32.load offset=4 align=4
@@ -126,63 +166,9 @@
             ;; if ( icell === 0 ) { return 0; }
             i32.eqz
             br_if $matchNotFound
-            br $matchFirstChar
+            br $findSegment
         ;; }
         end end
-        ;; // all characters in segment must match
-        ;; n = (v >>> 24) - 1;
-        get_local $v
-        i32.const 24
-        i32.shr_u
-        i32.const 1
-        i32.sub
-        tee_local $n
-        ;; if ( n !== 0 ) {
-        if
-            ;; const ar = al + n;
-            get_local $n
-            get_local $al
-            i32.add
-            tee_local $ar
-            ;; if ( ar > aR ) { return 0; }
-            get_local $aR
-            i32.gt_u
-            br_if $matchNotFound
-            ;; let i = al, j = bl + 1;
-            get_local $al
-            set_local $i
-            get_local $bl
-            i32.const 1
-            i32.add
-            set_local $j
-            ;; do {
-            loop
-                ;; if ( buf8[i] !== buf8[j] ) { return 0; }
-                get_local $i
-                i32.load8_u
-                get_local $j
-                i32.load8_u
-                i32.ne
-                br_if $matchNotFound
-                ;; j += 1; i += 1;
-                get_local $j
-                i32.const 1
-                i32.add
-                set_local $j
-                get_local $i
-                i32.const 1
-                i32.add
-                tee_local $i
-                ;; } while ( i !== ar );
-                get_local $ar
-                i32.ne
-                br_if 0
-            end
-            ;; al = i;
-            get_local $i
-            set_local $al
-        ;; }
-        end
         ;; // next segment
         ;; icell = buf32[icell+CELL_AND];
         get_local $icell
@@ -190,33 +176,33 @@
         i32.const 2
         i32.shl
         tee_local $icell
-        ;; const v = buf32[icell+BCELL_EXTRA];
+        ;; const x = buf32[icell+BCELL_EXTRA];
         i32.load offset=8 align=4
-        tee_local $v
-        ;; if ( v <= BCELL_EXTRA_MAX ) {
+        tee_local $x
+        ;; if ( x <= BCELL_EXTRA_MAX ) {
         i32.const 0x00FFFFFF
         i32.le_u
         if
-            ;; if ( v !== 0 && this.matchesExtra(ai, al, v) !== 0 ) {
+            ;; if ( x !== 0 && this.matchesExtra(ai, al, x) !== 0 ) {
             ;;     return 1;
             ;; }
-            get_local $v
+            get_local $x
             if
                 get_local $ai
                 get_local $al
-                get_local $v
+                get_local $x
                 call $matchesExtra
                 br_if $matchFound
             end
-            ;; let inext = buf32[icell+BCELL_ALT_AND];
+            ;; x = buf32[icell+BCELL_ALT_AND];
             get_local $icell
             i32.load offset=4 align=4
             i32.const 2
             i32.shl
-            tee_local $inext
-            ;; if ( inext !== 0 && this.matchesLeft(inext, ai, al) !== 0 ) {
+            tee_local $x
+            ;; if ( x !== 0 && this.matchesLeft(x, ai, al) !== 0 ) {
             if
-                get_local $inext
+                get_local $x
                 get_local $ai
                 get_local $al
                 call $matchesLeft
@@ -260,14 +246,10 @@
     (param $r i32)              ;; right bound of match so far
     (result i32)                ;; result: 0 = no match, 1 = match
     (local $char0 i32)
-    (local $c i32)
-    (local $v i32)
     (local $bl i32)
-    (local $n i32)
-    (local $al i32)
     (local $br i32)
-    (local $i i32)
-    (local $j i32)
+    (local $x i32)
+    (local $y i32)
     ;; const buf32 = this.buf32;
     ;; const buf8 = this.buf8;
     ;; const char0 = buf32[CHAR0_SLOT];
@@ -287,35 +269,76 @@
         i32.const 1
         i32.sub
         tee_local $ar
-        ;; c = buf8[ar];
+        ;; x = buf8[ar];
         i32.load8_u
-        set_local $c
-        ;; // find first segment with a first-character match
+        set_local $x
+        ;; // find matching segment
         ;; for (;;) {
-        block $breakMatchFirstChar loop $matchFirstChar
-            ;; v = buf32[icell+SEGMENT_INFO];
+        block $nextSegment loop $findSegment
+            ;; y = buf32[icell+SEGMENT_INFO];
             get_local $icell
             i32.load offset=8 align=4
-            tee_local $v
-            ;; n = (v >>> 24) - 1;
+            tee_local $y
+            ;; br = char0 + (y & 0x00FFFFFF);
+            i32.const 0x00FFFFFF
+            i32.and
+            get_local $char0
+            i32.add
+            tee_local $br
+            ;; y = (y >>> 24) - 1;
+            get_local $y
             i32.const 24
             i32.shr_u
             i32.const 1
             i32.sub
-            tee_local $n
-            ;; br = char0 + (v & 0x00FFFFFF) + n;
-            get_local $char0
-            i32.add
-            get_local $v
-            i32.const 0x00FFFFFF
-            i32.and
+            tee_local $y
+            ;; br += y;
             i32.add
             tee_local $br
-            ;; if ( buf8[br] === c ) { break; }
+            ;; if ( buf8[br] === x ) {
             i32.load8_u
-            get_local $c
+            get_local $x
             i32.eq
-            br_if $breakMatchFirstChar
+            if
+                ;; // all characters in segment must match
+                ;; if ( y !== 0 ) {
+                get_local $y
+                if
+                    ;; x = ar - y;
+                    get_local $ar
+                    get_local $y
+                    i32.sub
+                    tee_local $x
+                    ;; if ( x < 0 ) { return 0; }
+                    i32.const 0
+                    i32.lt_s
+                    br_if $matchNotFound
+                    ;; for (;;) {
+                    loop
+                        ;; ar -= 1; br -= 1;
+                        ;; if ( buf8[ar] !== buf8[br] ) { return 0; }
+                        get_local $ar
+                        i32.const 1
+                        i32.sub
+                        tee_local $ar
+                        i32.load8_u
+                        get_local $br
+                        i32.const 1
+                        i32.sub
+                        tee_local $br
+                        i32.load8_u
+                        i32.ne
+                        br_if $matchNotFound
+                        ;; if ( ar === x ) { break; }
+                        get_local $ar
+                        get_local $x
+                        i32.ne
+                        br_if 0
+                    end
+                ;; }
+                end
+                br $nextSegment
+            end
             ;; icell = buf32[icell+CELL_OR];
             get_local $icell
             i32.load offset=4 align=4
@@ -325,54 +348,9 @@
             ;; if ( icell === 0 ) { return 0; }
             i32.eqz
             br_if $matchNotFound
-            br $matchFirstChar
+            br $findSegment
         ;; }
         end end
-        ;; // all characters in segment must match
-        ;; if ( n !== 0 ) {
-        get_local $n
-        if
-            ;; const al = ar - n;
-            get_local $ar
-            get_local $n
-            i32.sub
-            tee_local $al
-            ;; if ( al < 0 ) { return 0; }
-            i32.const 0
-            i32.lt_s
-            br_if $matchNotFound
-            ;; let i = ar, j = br;
-            get_local $ar
-            set_local $i
-            get_local $br
-            set_local $j
-            ;; do {
-            loop
-                ;; i -= 1; j -= 1;
-                ;; if ( buf8[i] !== buf8[j] ) { return 0; }
-                get_local $i
-                i32.const 1
-                i32.sub
-                tee_local $i
-                i32.load8_u
-                get_local $j
-                i32.const 1
-                i32.sub
-                tee_local $j
-                i32.load8_u
-                i32.ne
-                br_if $matchNotFound
-                ;; } while ( i !== al );
-                get_local $i
-                get_local $al
-                i32.ne
-                br_if 0
-            end
-            ;; ar = i;
-            get_local $i
-            set_local $ar
-        ;; }
-        end
         ;; // next segment
         ;; icell = buf32[icell+CELL_AND];
         get_local $icell
@@ -380,21 +358,21 @@
         i32.const 2
         i32.shl
         tee_local $icell
-        ;; const v = buf32[icell+BCELL_EXTRA];
+        ;; const x = buf32[icell+BCELL_EXTRA];
         i32.load offset=8 align=4
-        tee_local $v
-        ;; if ( v <= BCELL_EXTRA_MAX ) {
+        tee_local $x
+        ;; if ( x <= BCELL_EXTRA_MAX ) {
         i32.const 0x00FFFFFF
         i32.le_u
         if
-            ;; if ( v !== 0 && this.matchesExtra(ar, r, v) !== 0 ) {
+            ;; if ( x !== 0 && this.matchesExtra(ar, r, x) !== 0 ) {
             ;;     return 1;
             ;; }
-            get_local $v
+            get_local $x
             if
                 get_local $ar
                 get_local $r
-                get_local $v
+                get_local $x
                 call $matchesExtra
                 br_if $matchFound
             end
@@ -431,9 +409,10 @@
     (param $ix i32)             ;; extra token
     (result i32)                ;; result: 0 = no match, 1 = match
     (local $iu i32)             ;; filter unit
-    ;; let iu;
+    block $fail
+    block $succeed
     ;; if ( ix !== 1 ) {
-    ;;     iu = this.extraHandler(l, r, ix);
+    ;;     const iu = this.extraHandler(l, r, ix);
     ;;     if ( iu === 0 ) { return 0; }
     get_local $ix
     i32.const 1
@@ -445,10 +424,7 @@
         call $extraHandler
         tee_local $iu
         i32.eqz
-        if
-            i32.const 0
-            return
-        end
+        br_if $fail
     ;; } else {
     ;;     iu = -1;
     else
@@ -456,6 +432,10 @@
         set_local $iu
     ;; }
     end
+    ;; this.buf32[RESULT_IU_SLOT] = iu;
+    i32.const 2076
+    get_local $iu
+    i32.store align=4
     ;; this.buf32[RESULT_L_SLOT] = l;
     i32.const 2068
     get_local $l
@@ -464,11 +444,11 @@
     i32.const 2072
     get_local $r
     i32.store align=4
-    ;; this.buf32[RESULT_IU_SLOT] = iu;
-    i32.const 2076
-    get_local $iu
-    i32.store align=4
+    end ;; $succeed
     i32.const 1
+    return
+    end ;; $fail
+    i32.const 0
 )
 
 ;;
@@ -484,6 +464,8 @@
     (param $needleLen i32)      ;; number of characters to match
     (result i32)                ;; result: 0 = no match, 1 = match
     (local $needleRight i32)
+    block $fail
+    block $succeed
     ;;
     ;; if ( haystackLeft < 0 || (haystackLeft + needleLen) > haystackRight ) {
     ;;     return 0;
@@ -491,38 +473,32 @@
     get_local $haystackLeft
     i32.const 0
     i32.lt_s
-    if
-        i32.const 0
-        return
-    end
+    br_if $fail
     get_local $haystackLeft
     get_local $needleLen
     i32.add
     get_local $haystackRight
     i32.gt_u
-    if
-        i32.const 0
-        return
-    end
+    br_if $fail
     ;; const charCodes = this.buf8;
     ;; needleLeft += this.buf32[CHAR0_SLOT];
     get_local $needleLeft
     i32.const 2060              ;; CHAR0_SLOT memory address
     i32.load align=4            ;; CHAR0 memory address
     i32.add                     ;; needle memory address
-    ;; const needleRight = needleLeft + needleLen;
     tee_local $needleLeft
+    ;; const needleRight = needleLeft + needleLen;
     get_local $needleLen
     i32.add
     set_local $needleRight
     ;; while ( charCodes[haystackLeft] === charCodes[needleLeft] ) {
-    block $breakCompare loop $compare
+    loop $compare
         get_local $haystackLeft
         i32.load8_u
         get_local $needleLeft
         i32.load8_u
-        i32.ne 
-        br_if $breakCompare
+        i32.ne
+        br_if $fail
         ;; needleLeft += 1;
         get_local $needleLeft
         i32.const 1
@@ -531,19 +507,21 @@
         ;; if ( needleLeft === needleRight ) { return 1; }
         get_local $needleRight
         i32.eq
-        if
-            i32.const 1
-            return
-        end
+        br_if $succeed
         ;; haystackLeft += 1;
         i32.const 1
         get_local $haystackLeft
         i32.add
         set_local $haystackLeft
         br $compare
-    end end
+    end
     ;; }
+    ;; return 1;
+    end ;; $succeed
+    i32.const 1
+    return
     ;; return 0;
+    end ;; $fail
     i32.const 0
 )
 
@@ -564,6 +542,8 @@
     (local $i i32)
     (local $j i32)
     (local $c0 i32)
+    block $fail
+    block $succeed
     ;; haystackEnd -= needleLen;
     get_local $haystackEnd
     get_local $needleLen
@@ -572,10 +552,7 @@
     ;; if ( haystackEnd < haystackLeft ) { return -1; }
     get_local $haystackLeft
     i32.lt_s
-    if
-        i32.const -1
-        return
-    end
+    br_if $fail
     ;; needleLeft += this.buf32[CHAR0_SLOT];
     get_local $needleLeft
     i32.const 2060              ;; CHAR0_SLOT memory address
@@ -588,7 +565,7 @@
     set_local $needleRight
     ;; const charCodes = this.buf8;
     ;; for (;;) {
-    block $breakMainLoop loop $mainLoop
+    loop $mainLoop
         ;; let i = haystackLeft;
         ;; let j = needleLeft;
         get_local $haystackLeft
@@ -611,10 +588,7 @@
             ;; if ( j === needleRight ) { return haystackLeft; }
             get_local $needleRight
             i32.eq
-            if
-                get_local $haystackLeft
-                return
-            end
+            br_if $succeed
             ;; i += 1;
             get_local $i
             i32.const 1
@@ -630,10 +604,15 @@
         tee_local $haystackLeft
         ;; if ( haystackLeft === haystackEnd ) { break; }
         get_local $haystackEnd
-        i32.ne
-        br_if $mainLoop
+        i32.eq
+        br_if $fail
+        br $mainLoop
     ;; }
-    end end
+    end
+    end ;; $succeed
+    get_local $haystackLeft
+    return
+    end ;; $fail
     ;; return -1;
     i32.const -1
 )
@@ -656,6 +635,8 @@
     (local $i i32)
     (local $j i32)
     (local $c0 i32)
+    block $fail
+    block $succeed
     ;; let haystackLeft = haystackEnd - needleLen;
     get_local $haystackEnd
     get_local $needleLen
@@ -664,10 +645,7 @@
     ;; if ( haystackLeft < haystackBeg ) { return -1; }
     get_local $haystackBeg
     i32.lt_s
-    if
-        i32.const -1
-        return
-    end
+    br_if $fail
     ;; needleLeft += this.buf32[CHAR0_SLOT];
     get_local $needleLeft
     i32.const 2060              ;; CHAR0_SLOT memory address
@@ -680,7 +658,7 @@
     set_local $needleRight
     ;; const charCodes = this.buf8;
     ;; for (;;) {
-    block $breakMainLoop loop $mainLoop
+    loop $mainLoop
         ;; let i = haystackLeft;
         ;; let j = needleLeft;
         get_local $haystackLeft
@@ -703,10 +681,7 @@
             ;; if ( j === needleRight ) { return haystackLeft; }
             get_local $needleRight
             i32.eq
-            if
-                get_local $haystackLeft
-                return
-            end
+            br_if $succeed
             ;; i += 1;
             get_local $i
             i32.const 1
@@ -720,14 +695,18 @@
         get_local $haystackLeft
         get_local $haystackBeg
         i32.eq
-        br_if $breakMainLoop
+        br_if $fail
         get_local $haystackLeft
         i32.const 1
         i32.sub
         set_local $haystackLeft
         br $mainLoop
     ;; }
-    end end
+    end
+    end ;; $succeed
+    get_local $haystackLeft
+    return
+    end ;; $fail
     ;; return -1;
     i32.const -1
 )

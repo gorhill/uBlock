@@ -621,7 +621,11 @@
     const loadedListKeys = [];
     let loadingPromise;
 
+    const t0 = Date.now();
+
     const onDone = function() {
+        log.info(`loadFilterLists() took ${Date.now()-t0} ms`);
+
         this.staticNetFilteringEngine.freeze();
         this.staticExtFilteringEngine.freeze();
         this.redirectEngine.freeze();
@@ -696,9 +700,9 @@
         if ( loadingPromise instanceof Promise === false ) {
             loadedListKeys.length = 0;
             loadingPromise = Promise.all([
-                this.getAvailableLists().then(lists => {
-                    return onFilterListsReady.call(this, lists);
-                }),
+                this.getAvailableLists().then(lists =>
+                    onFilterListsReady.call(this, lists)
+                ),
                 this.loadRedirectResources(),
             ]).then(( ) => {
                 onDone.call(this);
