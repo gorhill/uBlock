@@ -1821,24 +1821,27 @@
     var notes = notifications, modified = false;
     // console.log("incognito", chrome.extension.inIncognitoContext);
 
-    var isPrivateOrIncognito = function() {
+    var isPrivateOrIncognito = function(callback) {
       if (typeof browser === 'undefined') {
-        return chrome.extension.inIncognitoContext;
+        callback(chrome.extension.inIncognitoContext);
       } else {
         var trackingProtectionMode = browser.privacy.websites.trackingProtectionMode.get({});
 
         trackingProtectionMode.then((got) => {
-          return got.value == "private_browsing";
+          callback(got.value == "private_browsing");
         });
       }
     };
 
-    if (isPrivateOrIncognito){
-      modified = addNotification(notes, Incognito);
-    } else {
-      modified = removeNotification(notes, Incognito);
-    }
-      modified && sendNotifications(notes);
+    isPrivateOrIncognito( function(on) {
+      if (on){
+        modified = addNotification(notes, Incognito);
+      } else {
+        modified = removeNotification(notes, Incognito);
+      }
+        modified && sendNotifications(notes);
+    })
+
 
   };
 
