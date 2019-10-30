@@ -440,8 +440,6 @@ vAPI.shutdown.add(function() {
 });
 
 vAPI.prefs = {}; // ADN, for content-scripts
-vAPI.extensionsPage = 'chrome://extensions/';
-
 //vAPI.executionCost.stop('vapi-client.js');
 
 /******************************************************************************/

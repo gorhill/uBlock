@@ -144,6 +144,8 @@ var AdBlockerEnabled = new Notification({
   firstrun: true
 });
 
+AdBlockerEnabled.func = openExtPage.bind(AdBlockerEnabled);
+
 var FirefoxSetting = new Notification({
   name: 'FirefoxSetting',
   text: 'adnNotificationBrowserSetting',
@@ -152,11 +154,19 @@ var FirefoxSetting = new Notification({
   firstrun: true
 });
 
-AdBlockerEnabled.func = isFirefox() ? undefined : openExtPage.bind(AdBlockerEnabled);
+var Incognito = new Notification({
+  name: 'Incognito',
+  text: isFirefox() ? 'adnNotificationPrivacyMode': 'adnNotificationIncognito',
+  button: 'adnNotificationDisable',
+  link: 'https://github.com/dhowe/AdNauseam/wiki/FAQ#does-adnauseam-respect-the-browsers-private-browsingincognito-modes',
+  firstrun: true
+});
+
+Incognito.func = openAdnPage.bind(Incognito);
 
 /***************************************************************************/
 
-var Notifications = [AdBlockerEnabled, HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList, AdNauseamTxt, DNTAllowed, DNTHideNotClick, DNTClickNotHide, DNTNotify, FirefoxSetting];
+var Notifications = [AdBlockerEnabled, HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList, AdNauseamTxt, DNTAllowed, DNTHideNotClick, DNTClickNotHide, DNTNotify, FirefoxSetting, Incognito];
 
 function Notification(m) {
 
@@ -383,7 +393,11 @@ function isMobile() {
 
 function openExtPage() {
 
-  openPage(vAPI.extensionsPage);
+  openPage(isFirefox()? 'about:addons':'chrome://extensions/');
+}
+
+function openAdnPage() {
+  openPage(isFirefox()? 'about:addons':'chrome://extensions/?id=pnjfhlmmeapfclcplcihceboadiigekg');
 }
 
 function openSettings() {
