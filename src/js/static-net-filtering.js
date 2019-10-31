@@ -1447,12 +1447,9 @@ const FilterDataHolder = class {
         return true;
     }
 
-    matchAndFetchData(type, out) {
-        if ( this.dataType !== type ) { return false; }
-        if ( Array.isArray(out) ) {
-            out.push(this);
-        }
-        return true;
+    matchAndFetchData(type, callback) {
+        if ( this.dataType !== type ) { return; }
+        callback(this);
     }
 
     getData(type) {
@@ -1594,16 +1591,12 @@ const FilterComposite = class extends FilterCollection {
         return true;
     }
 
-    matchAndFetchData(type, out) {
+    matchAndFetchData(type, callback) {
         if ( this.match() !== true ) { return false; }
         this.forEach(iunit => {
             const f = filterUnits[iunit];
             if ( f.matchAndFetchData instanceof Function === false ) { return; }
-            if ( f.matchAndFetchData(type) === false ) { return; }
-            if ( Array.isArray(out) ) {
-                out.push(this);
-            }
-            return true;
+            f.matchAndFetchData(type, ( ) => { callback(this); });
         });
     }
 
@@ -1880,10 +1873,12 @@ const FilterBucket = class extends FilterCollection {
         return false;
     }
 
-    matchAndFetchData(type, out) {
+    matchAndFetchData(type, callback) {
         const units = filterUnits;
         this.forEach(iunit => {
-            units[iunit].matchAndFetchData(type, out);
+            units[iunit].matchAndFetchData(type, f => {
+                callback(f, iunit);
+            });
         });
     }
 
@@ -3118,41 +3113,28 @@ FilterContainer.prototype.realmMatchAndFetchData = function(
 
     if ( bucket01 === undefined && bucket11 === undefined ) { return false; }
 
+    const t = type, o = out;    // to avoid jshint warning
+    const fdhr = (a, b, c) => new FilterDataHolderResult(a, b, c);
     const units = filterUnits;
     const tokenHashes = urlTokenizer.getTokens(bidiTrie);
-    const filters = [];
-    let i = 0, iunit, f;
+    let i = 0;
     for (;;) {
         const th = tokenHashes[i];
         if ( th === 0 ) { return; }
         $tokenBeg = tokenHashes[i+1];
-        if (
-            (bucket01 !== undefined) &&
-            (iunit = bucket01.get(th)) !== undefined
-        ) {
-            f = units[iunit];
-            filters.length = 0;
-            f.matchAndFetchData(type, filters);
-            for ( f of filters ) {
-                out.set(
-                    f.getData(type),
-                    new FilterDataHolderResult(bits01, th, iunit)
-                );
-            }
+        if ( bucket01 !== undefined ) bucket01: {
+            const iunit = bucket01.get(th);
+            if ( iunit === undefined ) { break bucket01; }
+            units[iunit].matchAndFetchData(type, (f, i) => {
+                o.set(f.getData(t), fdhr(bits01, th, i || iunit));
+            });
         }
-        if (
-            (bucket11 !== undefined) &&
-            (iunit = bucket11.get(th)) !== undefined
-        ) {
-            f = units[iunit];
-            filters.length = 0;
-            f.matchAndFetchData(type, filters);
-            for ( f of filters ) {
-                out.set(
-                    f.getData(type),
-                    new FilterDataHolderResult(bits11, th, iunit)
-                );
-            }
+        if ( bucket11 !== undefined ) bucket11: {
+            const iunit = bucket11.get(th);
+            if ( iunit === undefined ) { break bucket11; }
+            units[iunit].matchAndFetchData(t, (f, i) => {
+                o.set(f.getData(t), fdhr(bits11, th, i || iunit));
+            });
         }
         i += 2;
     }
