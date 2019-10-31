@@ -524,10 +524,10 @@ var onRemoveExternalList = function(ev) {
 
 /******************************************************************************/
 
-var onPurgeClicked = function() {
-    var button = uDom(this),
-        liEntry = button.ancestors('[data-listkey]'),
-        listKey = liEntry.attr('data-listkey');
+var onPurgeClicked = function(ev) {
+    var button = uDom(ev.target);
+    var liEntry = button.ancestors('[data-listkey]');
+    var listKey = liEntry.attr('data-listkey');
     if ( !listKey ) { return; }
 
     messaging.send('dashboard', { what: 'purgeCache', assetKey: listKey });

@@ -125,7 +125,11 @@ var onMessage = function(request, sender, callback) {
         break;
 
     case 'forceUpdateAdnauseam':
-        µb.assets.updateAdNauseam();
+        µb.assets.forceUpdate("Adnauseam");
+        break;
+
+    case 'forceUpdateEff':
+        µb.assets.forceUpdate("Eff");
         break;
 
     case 'getAppData':

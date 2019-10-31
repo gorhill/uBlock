@@ -1043,7 +1043,7 @@ api.updateStart = function(details) {
     updateFirst();
 };
 
-api.updateAdNauseam = function() {
+api.forceUpdate = function(which) { // ADN
 
     var updateDone = function() {
         var assetKeys = updaterUpdated;
@@ -1063,7 +1063,15 @@ api.updateAdNauseam = function() {
         updateDone();
     };
 
-    getRemote("adnauseam-filters", updatedOne);
+    switch (which) {
+      case "Adnauseam":
+        getRemote("adnauseam-filters", updatedOne);
+        break;
+      case "Eff":
+        getRemote("eff-dnt-whitelist", updatedOne);
+      default:
+        return;
+    }
 }
 
 api.updateStop = function() {
