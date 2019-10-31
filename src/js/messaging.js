@@ -377,8 +377,15 @@ const getDOMStats = async function(tabId) {
     let scriptCount = 0;
     results.forEach(result => {
         if ( result instanceof Object === false ) { return; }
-        elementCount += result.elementCount;
-        scriptCount += result.scriptCount;
+        if ( result.hiddenElementCount > 0 ) {
+            elementCount += result.hiddenElementCount;
+        }
+        if ( result.externalScriptCount > 0 ) {
+            scriptCount += result.externalScriptCount;
+        }
+        if ( result.inlineScriptCount > 0 ) {
+            scriptCount += 1;
+        }
     });
 
     return { elementCount, scriptCount };

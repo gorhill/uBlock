@@ -268,6 +268,7 @@ vAPI.SafeAnimationFrame.prototype = {
 /******************************************************************************/
 
 vAPI.domWatcher = (( ) => {
+    vAPI.domMutationTime = Date.now();
 
     const addedNodeLists = [];
     const removedNodeLists = [];
@@ -282,9 +283,7 @@ vAPI.domWatcher = (( ) => {
         safeObserverHandlerTimer;
 
     const safeObserverHandler = function() {
-        //console.time('dom watcher/safe observer handler');
-        let i = addedNodeLists.length,
-            j = addedNodes.length;
+        let i = addedNodeLists.length;
         while ( i-- ) {
             const nodeList = addedNodeLists[i];
             let iNode = nodeList.length;
@@ -293,7 +292,7 @@ vAPI.domWatcher = (( ) => {
                 if ( node.nodeType !== 1 ) { continue; }
                 if ( ignoreTags.has(node.localName) ) { continue; }
                 if ( node.parentElement === null ) { continue; }
-                addedNodes[j++] = node;
+                addedNodes.push(node);
             }
         }
         addedNodeLists.length = 0;
@@ -308,7 +307,6 @@ vAPI.domWatcher = (( ) => {
             }
         }
         removedNodeLists.length = 0;
-        //console.timeEnd('dom watcher/safe observer handler');
         if ( addedNodes.length === 0 && removedNodes === false ) { return; }
         for ( const listener of getListenerIterator() ) {
             try { listener.onDOMChanged(addedNodes, removedNodes); }
@@ -316,12 +314,12 @@ vAPI.domWatcher = (( ) => {
         }
         addedNodes.length = 0;
         removedNodes = false;
+        vAPI.domMutationTime = Date.now();
     };
 
     // https://github.com/chrisaljoudi/uBlock/issues/205
     // Do not handle added node directly from within mutation observer.
     const observerHandler = function(mutations) {
-        //console.time('dom watcher/observer handler');
         let i = mutations.length;
         while ( i-- ) {
             const mutation = mutations[i];
@@ -339,7 +337,6 @@ vAPI.domWatcher = (( ) => {
                 addedNodeLists.length < 100 ? 1 : undefined
             );
         }
-        //console.timeEnd('dom watcher/observer handler');
     };
 
     const startMutationObserver = function() {
