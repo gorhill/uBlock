@@ -25,8 +25,7 @@
 
   if ( typeof vAPI !== 'object' ) return; // injection failed
 
-  // no ad extraction in incognito windows (see #236), or parser already exists
-  if (vAPI.chrome && chrome.extension.inIncognitoContext || typeof vAPI.adCheck === 'function')
+  if (vAPI.chrome  || typeof vAPI.adCheck === 'function')
     return;
 
   vAPI.adCheck = function (elem) {

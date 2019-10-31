@@ -1813,6 +1813,36 @@
     verifyDNT(request);
     verifyAdBlockers();
     verifyFirefoxSetting();
+    verifyIncognito();
+  };
+
+  var verifyIncognito = exports.verifyIncognito = function(){
+
+    var notes = notifications, modified = false;
+    // console.log("incognito", chrome.extension.inIncognitoContext);
+
+    var isPrivateOrIncognito = function(callback) {
+      if (typeof browser === 'undefined') {
+        callback(chrome.extension.inIncognitoContext);
+      } else {
+        var trackingProtectionMode = browser.privacy.websites.trackingProtectionMode.get({});
+
+        trackingProtectionMode.then((got) => {
+          callback(got.value == "private_browsing");
+        });
+      }
+    };
+
+    isPrivateOrIncognito( function(on) {
+      if (on){
+        modified = addNotification(notes, Incognito);
+      } else {
+        modified = removeNotification(notes, Incognito);
+      }
+        modified && sendNotifications(notes);
+    })
+
+
   };
 
   var verifyFirefoxSetting = exports.verifyFirefoxSetting = function () {
@@ -1828,7 +1858,7 @@
 
         if (got.value == "always") {
           modified = addNotification(notes, FirefoxSetting);
-        } else {
+        } else{
           modified = removeNotification(notes, FirefoxSetting);
         }
           modified && sendNotifications(notes);
