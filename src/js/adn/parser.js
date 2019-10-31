@@ -25,7 +25,7 @@
 
   if ( typeof vAPI !== 'object' ) return; // injection failed
 
-  if (vAPI.chrome  || typeof vAPI.adCheck === 'function')
+  if (typeof vAPI.adCheck === 'function')
     return;
 
   vAPI.adCheck = function (elem) {
