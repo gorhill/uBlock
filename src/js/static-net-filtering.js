@@ -2527,6 +2527,25 @@ const FilterParser = class {
         this.token = matches[0];
         this.tokenHash = urlTokenizer.tokenHashFromString(this.token);
         this.tokenBeg = matches.index;
+
+        // https://www.reddit.com/r/uBlockOrigin/comments/dpcvfx/
+        //   Since we found a valid token, we can get rid of leading/trailing
+        //   wildcards if any.
+        if ( this.firstWildcardPos === 0 ) {
+            this.f = this.f.slice(1);
+            this.firstWildcardPos = this.secondWildcardPos;
+            this.secondWildcardPos = -1;
+        }
+        if ( this.firstWildcardPos !== -1 ) {
+            const lastCharPos = this.f.length - 1;
+            if ( this.firstWildcardPos === lastCharPos ) {
+                this.f = this.f.slice(0, -1);
+                this.firstWildcardPos = -1;
+            } else if ( this.secondWildcardPos === lastCharPos ) {
+                this.f = this.f.slice(0, -1);
+                this.secondWildcardPos = -1;
+            }
+        }
     }
 
     findGoodToken() {
