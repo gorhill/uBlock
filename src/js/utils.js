@@ -66,9 +66,6 @@
         this.knownTokens = new Uint8Array(65536);
         this.resetKnownTokens();
         this.MAX_TOKEN_LENGTH = 7;
-
-        this.charCodes = new Uint8Array(2048);
-        this.charCodeCount = 0;
     }
 
     setURL(url) {
@@ -149,7 +146,7 @@
     _tokenize(encodeInto) {
         const tokens = this._tokens;
         let url = this._urlOut;
-        let l = url.length | 0;
+        let l = url.length;
         if ( l === 0 ) { return 0; }
         if ( l > 2048 ) {
             url = url.slice(0, 2048);
@@ -159,22 +156,18 @@
         const knownTokens = this.knownTokens;
         const vtc = this._validTokenChars;
         const charCodes = encodeInto.haystack;
-        let i = 0, j = 0, c, v, n, ti, th;
+        let i = 0, j = 0, n, ti, th;
         for (;;) {
             for (;;) {
                 if ( i === l ) { return j; }
-                c = url.charCodeAt(i) | 0;
-                charCodes[i] = c;
-                v = vtc[c];
+                th = vtc[(charCodes[i] = url.charCodeAt(i))];
                 i += 1;
-                if ( v !== 0 ) { break; }
+                if ( th !== 0 ) { break; }
             }
-            th = v; ti = i - 1; n = 1;
+            ti = i - 1; n = 1;
             for (;;) {
                 if ( i === l ) { break; }
-                c = url.charCodeAt(i) | 0;
-                charCodes[i] = c;
-                v = vtc[c];
+                const v = vtc[(charCodes[i] = url.charCodeAt(i))];
                 i += 1;
                 if ( v === 0 ) { break; }
                 if ( n === 7 ) { continue; }
