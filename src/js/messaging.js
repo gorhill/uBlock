@@ -366,39 +366,34 @@ const popupDataFromRequest = async function(request) {
     return popupDataFromTabId(tabId, tabTitle);
 };
 
-const getDOMStats = async function(tabId) {
+const getElementCount = async function(tabId, what) {
     const results = await vAPI.tabs.executeScript(tabId, {
         allFrames: true,
-        file: '/js/scriptlets/dom-survey.js',
+        file: `/js/scriptlets/dom-survey-${what}.js`,
         runAt: 'document_end',
     });
 
-    let elementCount = 0;
-    let scriptCount = 0;
-    results.forEach(result => {
-        if ( result instanceof Object === false ) { return; }
-        if ( result.hiddenElementCount > 0 ) {
-            elementCount += result.hiddenElementCount;
-        }
-        if ( result.externalScriptCount > 0 ) {
-            scriptCount += result.externalScriptCount;
-        }
-        if ( result.inlineScriptCount > 0 ) {
-            scriptCount += 1;
-        }
+    let total = 0;
+    results.forEach(count => {
+        if ( typeof count !== 'number' ) { return; }
+        total += count;
     });
 
-    return { elementCount, scriptCount };
+    return total;
 };
 
 const onMessage = function(request, sender, callback) {
-    let pageStore;
-
     // Async
     switch ( request.what ) {
-    case 'getPopupLazyData':
-        getDOMStats(request.tabId).then(results => {
-            callback(results);
+    case 'getHiddenElementCount':
+        getElementCount(request.tabId, 'elements').then(count => {
+            callback(count);
+        });
+        return;
+
+    case 'getScriptCount':
+        getElementCount(request.tabId, 'scripts').then(count => {
+            callback(count);
         });
         return;
 
@@ -414,6 +409,7 @@ const onMessage = function(request, sender, callback) {
 
     // Sync
     let response;
+    let pageStore;
 
     switch ( request.what ) {
     case 'hasPopupContentChanged':

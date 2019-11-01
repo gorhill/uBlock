@@ -23,31 +23,28 @@
 
 /******************************************************************************/
 
-// https://github.com/uBlockOrigin/uBlock-issues/issues/756
-//   Keep in mind CPU usage witj large DOM and/or filterset.
+// Scriptlets to count the number of script tags in a document.
 
 (( ) => {
     if ( typeof vAPI !== 'object' ) { return; }
 
     const t0 = Date.now();
-    const tMax = t0 + 60;
+    const tMax = t0 + 50;
 
-    if ( vAPI.domSurveyResults instanceof Object === false ) {
-        vAPI.domSurveyResults = {
+    if ( vAPI.domSurveyScripts instanceof Object === false ) {
+        vAPI.domSurveyScripts = {
             busy: false,
-            hiddenElementCount: -1,
             inlineScriptCount: -1,
             externalScriptCount: -1,
             surveyTime: t0,
         };
     }
-    const surveyResults = vAPI.domSurveyResults;
+    const surveyResults = vAPI.domSurveyScripts;
 
     if ( surveyResults.busy ) { return; }
     surveyResults.busy = true;
 
     if ( surveyResults.surveyTime < vAPI.domMutationTime ) {
-        surveyResults.hiddenElementCount = -1;
         surveyResults.inlineScriptCount = -1;
         surveyResults.externalScriptCount = -1;
     }
@@ -69,46 +66,6 @@
             surveyResults.inlineScriptCount = inlineScriptCount;
         }
         surveyResults.externalScriptCount = externalScriptCount;
-    }
-
-    if ( surveyResults.hiddenElementCount === -1 ) {
-        surveyResults.hiddenElementCount = (( ) => {
-            if ( vAPI.domFilterer instanceof Object === false ) { return 0; }
-            const details = vAPI.domFilterer.getAllSelectors_(true);
-            if ( Array.isArray(details.declarative) === false ) { return 0; }
-            const selectors = details.declarative.map(entry => entry[0]);
-            const simple = [], complex = [];
-            for ( const selectorStr of selectors ) {
-                for ( const selector of selectorStr.split(',\n') ) {
-                    if ( /[ +>~]/.test(selector) ) {
-                        complex.push(selector);
-                    } else {
-                        simple.push(selector);
-                    }
-                }
-            }
-            const simpleStr = simple.join(',\n');
-            const complexStr = complex.join(',\n');
-            const nodeIter = document.createNodeIterator(
-                document.body,
-                NodeFilter.SHOW_ELEMENT
-            );
-            const matched = new Set();
-            for (;;) {
-                const node = nodeIter.nextNode();
-                if ( node === null ) { break; }
-                if ( node.offsetParent !== null ) { continue; }
-                if (
-                    node.matches(simpleStr) === false &&
-                    node.closest(complexStr) !== node
-                ) {
-                    continue;
-                }
-                matched.add(node);
-                if ( matched.size === 99 ) { break; }
-            }
-            return matched.size;
-        })();
     }
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/756
@@ -164,9 +121,9 @@
 
     // IMPORTANT: This is returned to the injector, so this MUST be
     //            the last statement.
-    return {
-        hiddenElementCount: surveyResults.hiddenElementCount,
-        inlineScriptCount: surveyResults.inlineScriptCount,
-        externalScriptCount: surveyResults.externalScriptCount,
-    };
+    let total = surveyResults.externalScriptCount;
+    if ( surveyResults.inlineScriptCount !== -1 ) {
+        total += surveyResults.inlineScriptCount;
+    }
+    return total;
 })();
