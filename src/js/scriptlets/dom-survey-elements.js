@@ -52,7 +52,12 @@
         surveyResults.hiddenElementCount = (( ) => {
             if ( vAPI.domFilterer instanceof Object === false ) { return 0; }
             const details = vAPI.domFilterer.getAllSelectors_(true);
-            if ( Array.isArray(details.declarative) === false ) { return 0; }
+            if (
+                Array.isArray(details.declarative) === false ||
+                details.declarative.length === 0
+            ) {
+                return 0;
+            }
             const selectors = details.declarative.map(entry => entry[0]);
             const simple = [], complex = [];
             for ( const selectorStr of selectors ) {
@@ -70,19 +75,29 @@
                 document.body,
                 NodeFilter.SHOW_ELEMENT
             );
-            const matched = new Set();
+            const candidates = new Set();
             for (;;) {
                 const node = nodeIter.nextNode();
                 if ( node === null ) { break; }
-                if ( node.offsetParent !== null ) { continue; }
-                if (
-                    node.matches(simpleStr) === false &&
-                    node.closest(complexStr) !== node
-                ) {
-                    continue;
+                if ( node.offsetParent === null ) {
+                    candidates.add(node);
                 }
-                matched.add(node);
-                if ( matched.size === 99 ) { break; }
+            }
+            const matched = new Set();
+            if ( simpleStr !== '') {
+                for ( const node of candidates ) {
+                    if ( node.matches(simpleStr) === false ) { continue; }
+                    candidates.delete(node);
+                    matched.add(node);
+                    if ( matched.size === 99 ) { break; }
+                }
+            }
+            if ( matched.size < 99 && complexStr !== '') {
+                for ( const node of candidates ) {
+                    if ( node.closest(complexStr) !== node ) { continue; }
+                    matched.add(node);
+                    if ( matched.size === 99 ) { break; }
+                }
             }
             return matched.size;
         })();
