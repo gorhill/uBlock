@@ -29,13 +29,11 @@
     if ( typeof vAPI !== 'object' ) { return; }
 
     const t0 = Date.now();
-    const tMax = t0 + 50;
 
     if ( vAPI.domSurveyScripts instanceof Object === false ) {
         vAPI.domSurveyScripts = {
             busy: false,
-            inlineScriptCount: -1,
-            externalScriptCount: -1,
+            scriptCount: -1,
             surveyTime: t0,
         };
     }
@@ -45,40 +43,39 @@
     surveyResults.busy = true;
 
     if ( surveyResults.surveyTime < vAPI.domMutationTime ) {
-        surveyResults.inlineScriptCount = -1;
-        surveyResults.externalScriptCount = -1;
+        surveyResults.scriptCount = -1;
     }
     surveyResults.surveyTime = t0;
 
-    if ( surveyResults.externalScriptCount === -1 ) {
+    if ( surveyResults.scriptCount === -1 ) {
         const reInlineScript = /^(data:|blob:|$)/;
         let inlineScriptCount = 0;
-        let externalScriptCount = 0;
+        let scriptCount = 0;
         for ( const script of document.scripts ) {
             if ( reInlineScript.test(script.src) ) {
                 inlineScriptCount = 1;
                 continue;
             }
-            externalScriptCount += 1;
-            if ( externalScriptCount === 99 ) { break; }
+            scriptCount += 1;
+            if ( scriptCount === 99 ) { break; }
         }
-        if ( inlineScriptCount !== 0 || externalScriptCount === 99 ) {
-            surveyResults.inlineScriptCount = inlineScriptCount;
+        scriptCount += inlineScriptCount;
+        if ( scriptCount !== 0 ) {
+            surveyResults.scriptCount = scriptCount;
         }
-        surveyResults.externalScriptCount = externalScriptCount;
     }
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/756
     //   Keep trying to find inline script-like instances but only if we
     //   have the time-budget to do so.
-    if ( surveyResults.inlineScriptCount === -1 && Date.now() < tMax ) {
+    if ( surveyResults.scriptCount === -1 ) {
         if ( document.querySelector('a[href^="javascript:"]') !== null ) {
-            surveyResults.inlineScriptCount = 1;
+            surveyResults.scriptCount = 1;
         }
     }
 
-    if ( surveyResults.inlineScriptCount === -1 && Date.now() < tMax ) {
-        surveyResults.inlineScriptCount = 0;
+    if ( surveyResults.scriptCount === -1 ) {
+        surveyResults.scriptCount = 0;
         const onHandlers = new Set([
             'onabort', 'onblur', 'oncancel', 'oncanplay',
             'oncanplaythrough', 'onchange', 'onclick', 'onclose',
@@ -111,7 +108,7 @@
             if ( node.hasAttributes() === false ) { continue; }
             for ( const attr of node.getAttributeNames() ) {
                 if ( onHandlers.has(attr) === false ) { continue; }
-                surveyResults.inlineScriptCount = 1;
+                surveyResults.scriptCount = 1;
                 break;
             }
         }
@@ -121,9 +118,7 @@
 
     // IMPORTANT: This is returned to the injector, so this MUST be
     //            the last statement.
-    let total = surveyResults.externalScriptCount;
-    if ( surveyResults.inlineScriptCount !== -1 ) {
-        total += surveyResults.inlineScriptCount;
+    if ( surveyResults.scriptCount !== -1 ) {
+        return surveyResults.scriptCount;
     }
-    return total;
 })();
