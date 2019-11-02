@@ -688,9 +688,15 @@ const renderPopupLazy = (( ) => {
                 what: 'getHiddenElementCount',
                 tabId: popupData.tabId,
             }).then(count => {
-                badge.textContent = (count || 0) !== 0
-                    ? Math.min(count, 99).toLocaleString()
-                    : '';
+                let text;
+                if ( (count || 0) === 0 ) {
+                    text = '';
+                } else if ( count === -1 ) {
+                    text = '?';
+                } else {
+                    text = Math.min(count, 99).toLocaleString();
+                }
+                badge.textContent = text;
                 sw.classList.remove('hnSwitchBusy');
             });
         };

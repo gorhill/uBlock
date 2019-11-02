@@ -374,10 +374,11 @@ const getElementCount = async function(tabId, what) {
     });
 
     let total = 0;
-    results.forEach(count => {
-        if ( typeof count !== 'number' ) { return; }
+    for ( const count of results ) {
+        if ( typeof count !== 'number' ) { continue; }
+        if ( count === -1 ) { return -1; }
         total += count;
-    });
+    }
 
     return total;
 };

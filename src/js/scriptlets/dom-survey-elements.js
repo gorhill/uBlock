@@ -30,11 +30,12 @@
     if ( typeof vAPI !== 'object' ) { return; }
 
     const t0 = Date.now();
+    const tMax = t0 + 100;
 
     if ( vAPI.domSurveyElements instanceof Object === false ) {
         vAPI.domSurveyElements = {
             busy: false,
-            hiddenElementCount: -1,
+            hiddenElementCount: Number.NaN,
             surveyTime: t0,
         };
     }
@@ -44,11 +45,11 @@
     surveyResults.busy = true;
 
     if ( surveyResults.surveyTime < vAPI.domMutationTime ) {
-        surveyResults.hiddenElementCount = -1;
+        surveyResults.hiddenElementCount = Number.NaN;
     }
     surveyResults.surveyTime = t0;
 
-    if ( surveyResults.hiddenElementCount === -1 ) {
+    if ( isNaN(surveyResults.hiddenElementCount) ) {
         surveyResults.hiddenElementCount = (( ) => {
             if ( vAPI.domFilterer instanceof Object === false ) { return 0; }
             const details = vAPI.domFilterer.getAllSelectors_(true);
@@ -90,6 +91,7 @@
                     candidates.delete(node);
                     matched.add(node);
                     if ( matched.size === 99 ) { break; }
+                    if ( Date.now() > tMax ) { return -1; }
                 }
             }
             if ( matched.size < 99 && complexStr !== '') {
@@ -97,6 +99,7 @@
                     if ( node.closest(complexStr) !== node ) { continue; }
                     matched.add(node);
                     if ( matched.size === 99 ) { break; }
+                    if ( Date.now() > tMax ) { return -1; }
                 }
             }
             return matched.size;
