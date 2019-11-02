@@ -87,19 +87,19 @@
             const matched = new Set();
             if ( simpleStr !== '') {
                 for ( const node of candidates ) {
+                    if ( Date.now() > tMax ) { return -1; }
                     if ( node.matches(simpleStr) === false ) { continue; }
                     candidates.delete(node);
                     matched.add(node);
                     if ( matched.size === 99 ) { break; }
-                    if ( Date.now() > tMax ) { return -1; }
                 }
             }
             if ( matched.size < 99 && complexStr !== '') {
                 for ( const node of candidates ) {
+                    if ( Date.now() > tMax ) { return -1; }
                     if ( node.closest(complexStr) !== node ) { continue; }
                     matched.add(node);
                     if ( matched.size === 99 ) { break; }
-                    if ( Date.now() > tMax ) { return -1; }
                 }
             }
             return matched.size;
