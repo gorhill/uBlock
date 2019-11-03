@@ -387,10 +387,7 @@ const onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
     case 'getHiddenElementCount':
-        const scriptlet = µb.hiddenSettings.popupCosmeticFilterBadgeSlow
-            ? 'elements-all'
-            : 'elements';
-        getElementCount(request.tabId, scriptlet).then(count => {
+        getElementCount(request.tabId, 'elements').then(count => {
             callback(count);
         });
         return;

@@ -56,7 +56,6 @@ const µBlock = (( ) => { // jshint ignore:line
         filterAuthorMode: false,
         loggerPopupType: 'popup',
         manualUpdateAssetFetchPeriod: 500,
-        popupCosmeticFilterBadgeSlow: false,
         popupFontSize: 'unset',
         requestJournalProcessPeriod: 1000,
         selfieAfter: 3,

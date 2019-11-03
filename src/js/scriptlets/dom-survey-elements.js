@@ -30,7 +30,6 @@
     if ( typeof vAPI !== 'object' ) { return; }
 
     const t0 = Date.now();
-    const tMax = t0 + 100;
 
     if ( vAPI.domSurveyElements instanceof Object === false ) {
         vAPI.domSurveyElements = {
@@ -59,48 +58,9 @@
             ) {
                 return 0;
             }
-            const selectors = details.declarative.map(entry => entry[0]);
-            const simple = [], complex = [];
-            for ( const selectorStr of selectors ) {
-                for ( const selector of selectorStr.split(',\n') ) {
-                    if ( /[ +>~]/.test(selector) ) {
-                        complex.push(selector);
-                    } else {
-                        simple.push(selector);
-                    }
-                }
-            }
-            const simpleStr = simple.join(',\n');
-            const complexStr = complex.join(',\n');
-            const nodeIter = document.createTreeWalker(
-                document.body,
-                NodeFilter.SHOW_ELEMENT
-            );
-            const matched = new Set();
-            let node = nodeIter.nextNode();
-            for (;;) {
-                if ( node === null ) { break; }
-                if ( Date.now() > tMax ) { return -1; }
-                if (
-                    (node.offsetParent !== null) ||
-                    (simpleStr === '' || node.matches(simpleStr) === false) &&
-                    (complexStr === '' || node.closest(complexStr) !== node)
-                ) {
-                    node = nodeIter.nextNode();
-                    continue;
-                }
-                matched.add(node);
-                if ( matched.size === 99 ) { break; }
-                // https://github.com/uBlockOrigin/uBlock-issues/issues/756#issuecomment-549079064
-                //   Skip descendants when a match is detected.
-                for (;;) {
-                    node = nodeIter.nextSibling();
-                    if ( node !== null ) { break; }
-                    node = nodeIter.parentNode();
-                    if ( node === null ) { break; }
-                }
-            }
-            return matched.size;
+            return document.querySelectorAll(
+                    details.declarative.map(entry => entry[0]).join(',')
+            ).length;
         })();
     }
 
