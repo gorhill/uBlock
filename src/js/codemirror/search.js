@@ -96,11 +96,11 @@
     }
 
     function queryTextFromSearchWidget(cm) {
-        return getSearchState(cm).widget.querySelector('input[type="text"]').value;
+        return getSearchState(cm).widget.querySelector('input[type="search"]').value;
     }
 
     function queryTextToSearchWidget(cm, q) {
-        var input = getSearchState(cm).widget.querySelector('input[type="text"]');
+        var input = getSearchState(cm).widget.querySelector('input[type="search"]');
         if ( typeof q === 'string' && q !== input.value ) {
             input.value = q;
         }
@@ -310,7 +310,7 @@
               '<div class="cm-search-widget">' +
                 '<span class="fa-icon fa-icon-ro">search</span>&ensp;' +
                 '<span class="cm-search-widget-input">' +
-                  '<input type="text">' +
+                  '<input type="search">' +
                   '<span class="cm-search-widget-count">' +
                     '<span><!-- future use --></span><span>0</span>' +
                   '</span>' +
