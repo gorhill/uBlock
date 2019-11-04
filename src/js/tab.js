@@ -464,7 +464,7 @@ housekeep itself.
                 frameId: createDetails.sourceFrameId,
                 frameURL: openerDetails[1].url,
                 popunder: false,
-                trustedURL: createDetails.tabId === µb.maybeGoodPopup.tabId
+                trustedURL: createDetails.sourceTabId === µb.maybeGoodPopup.tabId
                     ? µb.maybeGoodPopup.url
                     : ''
             };
