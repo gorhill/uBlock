@@ -311,7 +311,7 @@
         if ( targetURL.startsWith(vAPI.getURL('document-blocked.html')) ) {
             const matches = /details=([^&]+)/.exec(targetURL);
             if ( matches !== null ) {
-                targetURL = JSON.parse(atob(matches[1])).url;
+                targetURL = JSON.parse(decodeURIComponent(matches[1])).url;
             }
         }
 

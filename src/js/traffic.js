@@ -217,7 +217,7 @@ const onBeforeRootFrameRequest = function(fctxt) {
     if ( logData === undefined  ) { return; }
 
     // Blocked
-    const query = btoa(JSON.stringify({
+    const query = encodeURIComponent(JSON.stringify({
         url: requestURL,
         hn: requestHostname,
         dn: fctxt.getDomain() || requestHostname,
