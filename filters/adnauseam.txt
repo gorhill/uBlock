@@ -474,6 +474,9 @@ bitcoin.treasurebits.net##iframe[src="about:blank"]
 #latimes
 ||tribdss.com^$third-party^$important
 
+#kisscartoon
+||ad.kisscartoon.is^
+
 #Malware
 ||rtax.criteo.com^$important
 ||b3.mookie1.com^$important
