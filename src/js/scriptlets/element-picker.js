@@ -1519,17 +1519,27 @@ const onScrolled = function() {
 
 const onStartMoving = (( ) => {
     let mx0 = 0, my0 = 0;
+    let mx1 = 0, my1 = 0;
     let r0 = 0, b0 = 0;
     let rMax = 0, bMax = 0;
+    let timer;
 
-    const move = ev => {
-        if ( ev.isTrusted === false ) { return; }
-        let r1 = Math.min(Math.max(r0 - ev.pageX + mx0, 4), rMax);
-        let b1 = Math.min(Math.max(b0 - ev.pageY + my0, 4), bMax);
+    const move = ( ) => {
+        timer = undefined;
+        let r1 = Math.min(Math.max(r0 - mx1 + mx0, 4), rMax);
+        let b1 = Math.min(Math.max(b0 - my1 + my0, 4), bMax);
         dialog.style.setProperty('right', `${r1}px`, 'important');
         dialog.style.setProperty('bottom', `${b1}px`, 'important');
+    };
+
+    const moveAsync = ev => {
+        if ( ev.isTrusted === false ) { return; }
         ev.preventDefault();
         ev.stopPropagation();
+        if ( timer !== undefined ) { return; }
+        mx1 = ev.pageX;
+        my1 = ev.pageY;
+        timer = self.requestAnimationFrame(move);
     };
 
     const stop = ev => {
@@ -1537,7 +1547,7 @@ const onStartMoving = (( ) => {
         if ( dialog.classList.contains('moving') === false ) { return; }
         dialog.classList.remove('moving');
         const pickerWin = pickerRoot.contentWindow;
-        pickerWin.removeEventListener('mousemove', move, { capture: true });
+        pickerWin.removeEventListener('mousemove', moveAsync, { capture: true });
         pickerWin.removeEventListener('mouseup', stop, { capture: true, once: true });
         ev.preventDefault();
         ev.stopPropagation();
@@ -1557,7 +1567,7 @@ const onStartMoving = (( ) => {
         rMax = pickerBody.clientWidth - 4 - rect.width ;
         bMax = pickerBody.clientHeight - 4 - rect.height;
         dialog.classList.add('moving');
-        pickerWin.addEventListener('mousemove', move, { capture: true });
+        pickerWin.addEventListener('mousemove', moveAsync, { capture: true });
         pickerWin.addEventListener('mouseup', stop, { capture: true, once: true });
         ev.preventDefault();
         ev.stopPropagation();
