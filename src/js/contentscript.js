@@ -1429,11 +1429,10 @@ vAPI.bootstrap = (function() {
             // https://github.com/chrisaljoudi/uBlock/issues/1143
             //   Find a link under the mouse, to try to avoid confusing new tabs
             //   as nuisance popups.
-            let elem = ev.target;
-            while ( elem !== null && elem.localName !== 'a' ) {
-                elem = elem.parentElement;
-            }
-            if ( elem === null ) { return; }
+            // https://github.com/uBlockOrigin/uBlock-issues/issues/777
+            //   Mind that href may not be a string.
+            const elem = ev.target.closest('a[href]');
+            if ( elem === null || typeof elem.href !== 'string' ) { return; }
             vAPI.messaging.send('contentscript', {
                 what: 'maybeGoodPopup',
                 url: elem.href || '',
