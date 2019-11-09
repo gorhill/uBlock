@@ -572,15 +572,15 @@
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
-    "message": "Làm sạch tác vụ log",
+    "message": "Xoá nhật ký",
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
-    "message": "Ngưng tác vụ log (loại bỏ tất cả dữ liệu đang nhập vào)",
+    "message": "Tạm dừng nhật ký (loại bỏ tất cả dữ liệu đang nhập vào)",
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {
-    "message": "Tiếp tục tác vụ log",
+    "message": "Tiếp tục tác vụ nhật ký",
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {

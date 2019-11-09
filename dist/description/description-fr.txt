@@ -24,7 +24,7 @@ Davantage de listes sont disponibles si vous souhaitez renforcer le blocage :
 - Spam404 (Liste de protection contre les spams, maintenue fréquemment à jour par la communauté)
 - Et de nombreuses autres listes
 
-Bien évidemment, plus vous activez de filtres, plus l'empreinte mémoire augmentera. Pourtant, même après avoir ajouté deux listes supplémentaires créeés par Fanboy et le fichier hosts d'hpHosts, uBlock₀ utilise moins de mémoire vive que tous les autres bloqueurs populaires.
+Bien évidemment, plus vous activez de filtres, plus l'empreinte mémoire augmentera. Pourtant, même après avoir ajouté deux listes supplémentaires créées par Fanboy et le fichier hosts d'hpHosts, uBlock₀ utilise moins de mémoire vive que tous les autres bloqueurs populaires.
 
 Veuillez tout de même prendre en compte qu'utiliser certaines listes supplémentaires peut conduire à quelques incompatibilités sur les sites Web que vous visitez - en particulier les fichiers hosts.
 

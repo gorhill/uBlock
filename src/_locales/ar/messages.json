@@ -556,7 +556,7 @@
     "description": "Appears in the logger's tab selector"
   },
   "loggerReloadTip": {
-    "message": "أعِد تحميل محتوى اللسان",
+    "message": "إعادة تحميل علامة التبويب",
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
