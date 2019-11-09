@@ -2003,7 +2003,7 @@ const FilterParser = class {
         this.reIsolateHostname = /^(\*?\.)?([^\x00-\x24\x26-\x2C\x2F\x3A-\x5E\x60\x7B-\x7F]+)(.*)/;
         this.reHasUnicode = /[^\x00-\x7F]/;
         this.reWebsocketAny = /^ws[s*]?(?::\/?\/?)?\*?$/;
-        this.reBadCSP = /\breport-(?:to|uri)\b/;
+        this.reBadCSP = /(?:=|;)\s*report-(?:to|uri)\b/;
         this.reGoodToken = /[%0-9a-z]{1,}/g;
         this.reSeparator = /[\/^]/;
         this.reRegexToken = /[%0-9A-Za-z]{2,}/g;
@@ -2272,7 +2272,7 @@ const FilterParser = class {
                 continue;
             }
             // Used by Adguard:
-            // https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters?aid=16593#empty-modifier
+            // https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters#empty-modifier
             if ( opt === 'empty' || opt === 'mp4' ) {
                 if ( this.redirect !== 0 ) {
                     this.unsupported = true;
