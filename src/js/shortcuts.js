@@ -204,7 +204,12 @@
         const template = document.querySelector('#templates .commandEntry');
         const tbody = document.querySelector('.commandEntries tbody');
         for ( const command of commands ) {
-            if ( command.description === '' ) { continue; }
+            if (
+                typeof command.description !== 'string' ||
+                command.description === '' )
+            {
+                continue;
+            }
             const tr = template.cloneNode(true);
             tr.setAttribute('data-name', command.name);
             tr.querySelector('.commandDesc').textContent = command.description;

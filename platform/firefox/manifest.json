@@ -19,6 +19,8 @@
     }
   },
   "commands": {
+    "_execute_browser_action": {
+    },
     "launch-element-zapper": {
       "description": "__MSG_popupTipZapper__"
     },
