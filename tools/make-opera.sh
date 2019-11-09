@@ -27,7 +27,6 @@ rm $DES/js/vapi-usercss.pseudo.js
 # Opera-specific
 cp platform/opera/manifest.json $DES/
 rm -r $DES/_locales/az
-rm -r $DES/_locales/bs
 rm -r $DES/_locales/cv
 rm -r $DES/_locales/hi
 rm -r $DES/_locales/ka
