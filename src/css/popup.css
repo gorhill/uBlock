@@ -329,6 +329,7 @@ body[dir="rtl"] #tooltip {
     }
 #firewallContainer > div > span[data-acount]::before,
 #firewallContainer > div > span[data-bcount]::after {
+    font-family: monospace;
     position: absolute;
     }
 #firewallContainer > div > span[data-acount]::before {
