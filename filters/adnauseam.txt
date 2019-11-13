@@ -30,6 +30,9 @@ freebitcoin.win##iframe[src*="coinad"]
 freebitcoin.win##iframe[src*="mellowads"]
 rockpapershotgun.com##*[id^="google_ads"]
 
+#atptour.com
+atptour.com##.adtech-wrapper-ad
+
 # dotabuff
 dotabuff.com##.iasId > [class*="-container-"]
 dotabuff.com##[class*="sponsor"]
