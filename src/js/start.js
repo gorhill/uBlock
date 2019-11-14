@@ -170,9 +170,10 @@ const onUserSettingsReady = function(fetched) {
 
 /******************************************************************************/
 
-// Housekeeping, as per system setting changes
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1588916
+//   Save magic format numbers into the cache storage itself.
 
-const onSystemSettingsReady = function(fetched) {
+const onCacheSettingsReady = function(fetched) {
     if ( fetched.compiledMagic !== µb.systemSettings.compiledMagic ) {
         µb.assets.remove(/^compiled\//);
         µb.compiledFormatChanged = true;
@@ -182,9 +183,8 @@ const onSystemSettingsReady = function(fetched) {
         µb.selfieIsInvalid = true;
     }
     if ( µb.selfieIsInvalid ) {
-        fetched.selfie = null;
         µb.selfieManager.destroy();
-        vAPI.storage.set(µb.systemSettings);
+        µb.cacheStorage.set(µb.systemSettings);
     }
 };
 
@@ -199,7 +199,6 @@ const onFirstFetchReady = function(fetched) {
     }
 
     // Order is important -- do not change:
-    onSystemSettingsReady(fetched);
     fromFetch(µb.localSettings, fetched);
     onUserSettingsReady(fetched);
     fromFetch(µb.restoreBackupSettings, fetched);
@@ -228,7 +227,6 @@ const fromFetch = function(to, fetched) {
 const createDefaultProps = function() {
     const fetchableProps = {
         'commandShortcuts': [],
-        'compiledMagic': 0,
         'dynamicFilteringString': [
             'behind-the-scene * * noop',
             'behind-the-scene * image noop',
@@ -247,7 +245,6 @@ const createDefaultProps = function() {
         'lastBackupFile': '',
         'lastBackupTime': 0,
         'netWhitelist': µb.netWhitelistDefault,
-        'selfieMagic': 0,
         'version': '0.0.0.0'
     };
     toFetch(µb.localSettings, fetchableProps);
@@ -274,6 +271,12 @@ try {
     await Promise.all([
         µb.loadSelectedFilterLists().then(( ) => {
             log.info(`List selection ready ${Date.now()-vAPI.T0} ms after launch`);
+        }),
+        µb.cacheStorage.get(
+            { compiledMagic: 0, selfieMagic: 0 }
+        ).then(fetched => {
+            log.info(`Cache magic numbers ready ${Date.now()-vAPI.T0} ms after launch`);
+            onCacheSettingsReady(fetched);
         }),
         vAPI.storage.get(createDefaultProps()).then(fetched => {
             log.info(`First fetch ready ${Date.now()-vAPI.T0} ms after launch`);
