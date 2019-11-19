@@ -996,6 +996,8 @@ var filterDocument = (function() {
                 utf8TextDecoder = new TextDecoder();
             }
             doc = domParser.parseFromString(
+              utf8TextDecoder.decode(filterer.buffer.slice(0, 1024)),
+              filterer.mime
             );
             charsetFound = charsetFromDoc(doc);
             charsetUsed = µb.textEncode.normalizeCharset(charsetFound);
