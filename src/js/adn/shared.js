@@ -154,19 +154,19 @@ var FirefoxSetting = new Notification({
   firstrun: true
 });
 
-var Incognito = new Notification({
-  name: 'Incognito',
-  text: isFirefox() ? 'adnNotificationPrivacyMode': 'adnNotificationIncognito',
+var PrivacyMode = new Notification({
+  name: 'privacyMode',
+  text: 'adnNotificationPrivacyMode',
   button: 'adnNotificationDisable',
   link: 'https://github.com/dhowe/AdNauseam/wiki/FAQ#does-adnauseam-respect-the-browsers-private-browsingincognito-modes',
   firstrun: true
 });
 
-Incognito.func = openAdnPage.bind(Incognito);
+PrivacyMode.func = openAdnPage.bind(PrivacyMode);
 
 /***************************************************************************/
 
-var Notifications = [AdBlockerEnabled, HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList, AdNauseamTxt, DNTAllowed, DNTHideNotClick, DNTClickNotHide, DNTNotify, FirefoxSetting, Incognito];
+var Notifications = [AdBlockerEnabled, HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList, AdNauseamTxt, DNTAllowed, DNTHideNotClick, DNTClickNotHide, DNTNotify, FirefoxSetting, PrivacyMode];
 
 function Notification(m) {
 

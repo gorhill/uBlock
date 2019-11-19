@@ -1813,31 +1813,30 @@
     verifyDNT(request);
     verifyAdBlockers();
     verifyFirefoxSetting();
-    verifyIncognito();
+    verifyPrivacyMode();
   };
 
-  var verifyIncognito = exports.verifyIncognito = function(){
+  var verifyPrivacyMode = exports.verifyPrivacyMode = function(){
 
     var notes = notifications, modified = false;
-    // console.log("incognito", chrome.extension.inIncognitoContext);
+    var isPrivateMode = function(callback) {
+      // only check this for firefox
+      if (typeof browser === 'undefined') return;
 
-    var isPrivateOrIncognito = function(callback) {
-      if (typeof browser === 'undefined') {
-        callback(chrome.extension.inIncognitoContext);
-      } else {
-        var trackingProtectionMode = browser.privacy.websites.trackingProtectionMode.get({});
+      var trackingProtectionMode = browser.privacy.websites.trackingProtectionMode.get({});
 
-        trackingProtectionMode.then((got) => {
-          callback(got.value == "private_browsing");
-        });
-      }
+      trackingProtectionMode.then((got) => {
+        callback(got.value == "private_browsing");
+      });
+
     };
 
-    isPrivateOrIncognito( function(on) {
+    isPrivateMode( function(on) {
+      console.log("Privacy", on)
       if (on){
-        modified = addNotification(notes, Incognito);
+        modified = addNotification(notes, PrivacyMode);
       } else {
-        modified = removeNotification(notes, Incognito);
+        modified = removeNotification(notes, PrivacyMode);
       }
         modified && sendNotifications(notes);
     })
