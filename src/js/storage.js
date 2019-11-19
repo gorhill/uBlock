@@ -112,7 +112,6 @@
                     : 'unset';
         }
     }
-    self.log.verbosity = this.hiddenSettings.consoleLogLevel;
     this.fireDOMEvent('hiddenSettingsChanged');
 };
 
@@ -132,8 +131,17 @@
     }
     vAPI.storage.set(bin);
     this.saveImmediateHiddenSettings();
-    self.log.verbosity = this.hiddenSettings.consoleLogLevel;
 };
+
+self.addEventListener('hiddenSettingsChanged', ( ) => {
+    self.log.verbosity = µBlock.hiddenSettings.consoleLogLevel;
+    vAPI.net.setOptions({
+        cnameAliasList: µBlock.hiddenSettings.cnameAliasList,
+        cnameIgnoreList: µBlock.hiddenSettings.cnameIgnoreList,
+        cnameIgnore1stParty: µBlock.hiddenSettings.cnameIgnore1stParty,
+        cnameMaxTTL: µBlock.hiddenSettings.cnameMaxTTL,
+    });
+});
 
 /******************************************************************************/
 

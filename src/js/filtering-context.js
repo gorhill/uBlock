@@ -30,6 +30,7 @@
     this.tstamp = 0;
     this.realm = '';
     this.type = undefined;
+    this.cnameOf = undefined;
     this.url = undefined;
     this.hostname = undefined;
     this.domain = undefined;
@@ -65,6 +66,7 @@
         this.realm = '';
         this.type = details.type;
         this.setURL(details.url);
+        this.cnameOf = details.cnameOf !== undefined ? details.cnameOf : '';
         this.docId = details.type !== 'sub_frame'
             ? details.frameId
             : details.parentFrameId;

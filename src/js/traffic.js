@@ -96,7 +96,11 @@ const onBeforeRequest = function(details) {
 
     // Not blocked
     if ( result !== 1 ) {
-        if ( details.parentFrameId !== -1 && details.type === 'sub_frame' ) {
+        if (
+            details.parentFrameId !== -1 &&
+            details.type === 'sub_frame' &&
+            details.cnameOf === undefined
+        ) {
             pageStore.setFrame(details.frameId, details.url);
         }
         return;

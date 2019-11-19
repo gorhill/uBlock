@@ -44,6 +44,7 @@ let activeTabId = 0;
 let filterAuthorMode = false;
 let selectedTabId = 0;
 let netInspectorPaused = false;
+let cnameOfEnabled = false;
 
 /******************************************************************************/
 
@@ -221,6 +222,7 @@ const LogEntry = function(details) {
     }
 };
 LogEntry.prototype = {
+    cnameOf: '',
     dead: false,
     docDomain: '',
     docHostname: '',
@@ -292,7 +294,7 @@ const processLoggerEntries = function(response) {
             if ( autoDeleteVoidedRows ) { continue; }
             parsed.voided = true;
         }
-        if ( parsed.type === 'main_frame' ) {
+        if ( parsed.type === 'main_frame' && parsed.cnameOf === '' ) {
             const separator = createLogSeparator(parsed, unboxed.url);
             loggerEntries.unshift(separator);
             if ( rowFilterer.filterOne(separator) ) {
@@ -301,6 +303,10 @@ const processLoggerEntries = function(response) {
                     filteredLoggerEntryVoidedCount += 1;
                 }
             }
+        }
+        if ( cnameOfEnabled === false && parsed.cnameOf !== '' ) {
+            uDom.nodeFromId('filterExprCnameOf').style.display = '';
+            cnameOfEnabled = true;
         }
         loggerEntries.unshift(parsed);
         if ( rowFilterer.filterOne(parsed) ) {
@@ -364,29 +370,28 @@ const parseLogEntry = function(details) {
     textContent.push(normalizeToStr(entry.docHostname));
 
     // Cell 4
-    if (
-        entry.realm === 'network' &&
-        typeof entry.domain === 'string' &&
-        entry.domain !== ''
-    ) {
-        let partyness = '';
-        if ( entry.tabDomain !== undefined ) {
-            if ( entry.tabId < 0 ) {
-                partyness += '0,';
-            }
-            partyness += entry.domain === entry.tabDomain ? '1' : '3';
-        } else {
-            partyness += '?';
-        }
-        if ( entry.docDomain !== entry.tabDomain ) {
-            partyness += ',';
-            if ( entry.docDomain !== undefined ) {
-                partyness += entry.domain === entry.docDomain ? '1' : '3';
+    if ( entry.realm === 'network' ) {
+        // partyness
+        if ( typeof entry.domain === 'string' && entry.domain !== '' ) {
+            let partyness = '';
+            if ( entry.tabDomain !== undefined ) {
+                if ( entry.tabId < 0 ) {
+                    partyness += '0,';
+                }
+                partyness += entry.domain === entry.tabDomain ? '1' : '3';
             } else {
                 partyness += '?';
             }
+            if ( entry.docDomain !== entry.tabDomain ) {
+                partyness += ',';
+                if ( entry.docDomain !== undefined ) {
+                    partyness += entry.domain === entry.docDomain ? '1' : '3';
+                } else {
+                    partyness += '?';
+                }
+            }
+            textContent.push(partyness);
         }
-        textContent.push(partyness);
     } else {
         textContent.push('');
     }
@@ -398,6 +403,11 @@ const parseLogEntry = function(details) {
 
     // Cell 6
     textContent.push(normalizeToStr(details.url));
+
+    // Hidden cells -- useful for row-filtering purpose
+    if ( entry.cnameOf !== '' ) {
+        textContent.push(`cnameOf=${entry.cnameOf}`);
+    }
 
     entry.textContent = textContent.join('\t');
     return entry;
@@ -720,6 +730,11 @@ const viewPort = (( ) => {
             re = regexFromURLFilteringResult(filter.rule.join(' '));
         }
         nodeFromURL(div.children[6], cells[6], re);
+
+        // Cname
+        if ( details.cnameOf !== '' ) {
+            div.setAttribute('data-cnameof', details.cnameOf);
+        }
 
         return div;
     };
@@ -1608,6 +1623,13 @@ const reloadTab = function(ev) {
         } else {
             rows[7].style.display = 'none';
         }
+        // CNAME of
+        text = tr.getAttribute('data-cnameof') || '';
+        if ( text !== '' ) {
+            rows[8].children[1].textContent = text;
+        } else {
+            rows[8].style.display = 'none';
+        }
     };
 
     // Fill dynamic URL filtering pane
@@ -1951,14 +1973,14 @@ const rowFilterer = (( ) => {
         );
     };
 
-    const onFilterChangedAsync = (function() {
+    const onFilterChangedAsync = (( ) => {
         let timer;
         const commit = ( ) => {
             timer = undefined;
             parseInput();
             filterAll();
         };
-        return function() {
+        return ( ) => {
             if ( timer !== undefined ) {
                 clearTimeout(timer);
             }

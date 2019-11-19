@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global publicSuffixList */
-
 'use strict';
 
 /*******************************************************************************
@@ -33,11 +31,9 @@ Naming convention from https://en.wikipedia.org/wiki/URI_scheme#Examples
 
 /******************************************************************************/
 
-µBlock.URI = (function() {
+µBlock.URI = (( ) => {
 
 /******************************************************************************/
-
-const punycode = self.punycode;
 
 // Favorite regex tool: http://regex101.com/
 
@@ -50,11 +46,8 @@ const reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
 
 // Derived
 const reSchemeFromURI          = /^[^:\/?#]+:/;
-const reAuthorityFromURI       = /^(?:[^:\/?#]+:)?(\/\/[^\/?#]+)/;
 const reOriginFromURI          = /^(?:[^:\/?#]+:)\/\/[^\/?#]+/;
-const reCommonHostnameFromURL  = /^https?:\/\/([0-9a-z_][0-9a-z._-]*[0-9a-z])\//;
 const rePathFromURI            = /^(?:[^:\/?#]+:)?(?:\/\/[^\/?#]*)?([^?#]*)/;
-const reMustNormalizeHostname  = /[^0-9a-z._-]/;
 
 // These are to parse authority field, not parsed by above official regex
 // IPv6 is seen as an exception: a non-compatible IPv6 is first tried, and
@@ -68,12 +61,9 @@ const reHostPortFromAuthority  = /^(?:[^@]*@)?([^:]*)(:\d*)?$/;
 const reIPv6PortFromAuthority  = /^(?:[^@]*@)?(\[[0-9a-f:]*\])(:\d*)?$/i;
 
 const reHostFromNakedAuthority = /^[0-9a-z._-]+[0-9a-z]$/i;
-const reHostFromAuthority      = /^(?:[^@]*@)?([^:]+)(?::\d*)?$/;
-const reIPv6FromAuthority      = /^(?:[^@]*@)?(\[[0-9a-f:]+\])(?::\d*)?$/i;
 
 // Coarse (but fast) tests
 const reValidHostname          = /^([a-z\d]+(-*[a-z\d]+)*)(\.[a-z\d]+(-*[a-z\d])*)*$/;
-const reIPAddressNaive         = /^\d+\.\d+\.\d+\.\d+$|^\[[\da-zA-Z:]+\]$/;
 
 /******************************************************************************/
 
@@ -239,59 +229,12 @@ URI.schemeFromURI = function(uri) {
 
 /******************************************************************************/
 
-URI.authorityFromURI = function(uri) {
-    const matches = reAuthorityFromURI.exec(uri);
-    if ( !matches ) { return ''; }
-    return matches[1].slice(2).toLowerCase();
-};
-
-/******************************************************************************/
-
-// The most used function, so it better be fast.
-
-// https://github.com/gorhill/uBlock/issues/1559
-//   See http://en.wikipedia.org/wiki/FQDN
-// https://bugzilla.mozilla.org/show_bug.cgi?id=1360285
-//   Revisit punycode dependency when above issue is fixed in Firefox.
-
-URI.hostnameFromURI = function(uri) {
-    let matches = reCommonHostnameFromURL.exec(uri);
-    if ( matches !== null ) { return matches[1]; }
-    matches = reAuthorityFromURI.exec(uri);
-    if ( matches === null ) { return ''; }
-    const authority = matches[1].slice(2);
-    // Assume very simple authority (most common case for µBlock)
-    if ( reHostFromNakedAuthority.test(authority) ) {
-        return authority.toLowerCase();
-    }
-    matches = reHostFromAuthority.exec(authority);
-    if ( matches === null ) {
-        matches = reIPv6FromAuthority.exec(authority);
-        if ( matches === null ) { return ''; }
-    }
-    let hostname = matches[1];
-    while ( hostname.endsWith('.') ) {
-        hostname = hostname.slice(0, -1);
-    }
-    if ( reMustNormalizeHostname.test(hostname) ) {
-        hostname = punycode.toASCII(hostname.toLowerCase());
-    }
-    return hostname;
-};
-
-/******************************************************************************/
-
-URI.domainFromHostname = function(hostname) {
-    return reIPAddressNaive.test(hostname) ? hostname : psl.getDomain(hostname);
-};
+URI.hostnameFromURI = vAPI.hostnameFromURI;
+URI.domainFromHostname = vAPI.domainFromHostname;
 
 URI.domain = function() {
     return this.domainFromHostname(this.hostname);
 };
-
-// It is expected that there is higher-scoped `publicSuffixList` lingering
-// somewhere. Cache it. See <https://github.com/gorhill/publicsuffixlist.js>.
-const psl = publicSuffixList;
 
 /******************************************************************************/
 

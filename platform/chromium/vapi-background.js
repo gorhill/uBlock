@@ -1164,15 +1164,16 @@ vAPI.Net = class {
         browser.webRequest.onBeforeRequest.addListener(
             details => {
                 this.normalizeDetails(details);
-                if ( this.suspendDepth === 0 || details.tabId < 0 ) {
-                    if ( this.suspendableListener === undefined ) { return; }
-                    return this.suspendableListener(details);
+                if ( this.suspendDepth !== 0 && details.tabId >= 0 ) {
+                    return this.suspendOneRequest(details);
                 }
-                return this.suspendOneRequest(details);
+                return this.onBeforeSuspendableRequest(details);
             },
             this.denormalizeFilters({ urls: [ 'http://*/*', 'https://*/*' ] }),
             [ 'blocking' ]
         );
+    }
+    setOptions(/* options */) {
     }
     normalizeDetails(/* details */) {
     }
@@ -1208,6 +1209,10 @@ vAPI.Net = class {
             options
         );
     }
+    onBeforeSuspendableRequest(details) {
+        if ( this.suspendableListener === undefined ) { return; }
+        return this.suspendableListener(details);
+    }
     setSuspendableListener(listener) {
         this.suspendableListener = listener;
     }
@@ -1242,7 +1247,7 @@ vAPI.Net = class {
             this.suspendDepth -= 1;
         }
         if ( this.suspendDepth !== 0 ) { return; }
-        this.unsuspendAllRequests(this.suspendableListener);
+        this.unsuspendAllRequests();
     }
     canSuspend() {
         return false;

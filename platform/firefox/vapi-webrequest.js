@@ -60,6 +60,20 @@
         constructor() {
             super();
             this.pendingRequests = [];
+            this.cnames = new Map();
+            this.cnameAliasList = null;
+            this.cnameIgnoreList = null;
+            this.url = new URL(vAPI.getURL('/'));
+            this.cnameMaxTTL = 60;
+            this.cnameTimer = undefined;
+        }
+        setOptions(options) {
+            super.setOptions(options);
+            this.cnameAliasList = this.regexFromStrList(options.cnameAliasList);
+            this.cnameIgnoreList = this.regexFromStrList(options.cnameIgnoreList);
+            this.cnameIgnore1stParty = options.cnameIgnore1stParty === true;
+            this.cnameMaxTTL = options.cnameMaxTTL || 120;
+            this.cnames.clear();
         }
         normalizeDetails(details) {
             if ( mustPunycode && !reAsciiHostname.test(details.url) ) {
@@ -109,6 +123,87 @@
             }
             return Array.from(out);
         }
+        processCanonicalName(cname, details) {
+            this.url.href = details.url;
+            details.cnameOf = this.url.hostname;
+            this.url.hostname = cname;
+            details.url = this.url.href;
+            return super.onBeforeSuspendableRequest(details);
+        }
+        recordCanonicalName(hn, record) {
+            let cname =
+                typeof record.canonicalName === 'string' &&
+                record.canonicalName !== hn
+                    ? record.canonicalName
+                    : '';
+            if (
+                cname !== '' &&
+                this.cnameIgnore1stParty &&
+                vAPI.domainFromHostname(cname) === vAPI.domainFromHostname(hn)
+            ) {
+                cname = '';
+            }
+            if (
+                cname !== '' &&
+                this.cnameIgnoreList !== null &&
+                this.cnameIgnoreList.test(cname)
+            ) {
+
+                cname = '';
+            }
+            this.cnames.set(hn, cname);
+            if ( this.cnameTimer === undefined ) {
+                this.cnameTimer = self.setTimeout(
+                    ( ) => {
+                        this.cnameTimer = undefined;
+                        this.cnames.clear();
+                    },
+                    this.cnameMaxTTL * 60000
+                );
+            }
+            return cname;
+        }
+        regexFromStrList(list) {
+            if (
+                typeof list !== 'string' ||
+                list.length === 0 ||
+                list === 'unset'
+            ) {
+                return null;
+            }
+            if ( list === '*' ) {
+                return /^./;
+            }
+            return new RegExp(
+                '(?:^|\.)(?:' +
+                list.trim()
+                    .split(/\s+/)
+                    .map(a => a.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+                    .join('|') +
+                ')$'
+            );
+        }
+        onBeforeSuspendableRequest(details) {
+            let r = super.onBeforeSuspendableRequest(details);
+            if ( r !== undefined ) { return r; }
+            if ( this.cnameAliasList === null ) { return; }
+            const hn = vAPI.hostnameFromURI(details.url);
+            let cname = this.cnames.get(hn);
+            if ( cname === '' ) { return; }
+            if ( cname !== undefined ) {
+                return this.processCanonicalName(cname, details);
+            }
+            if ( this.cnameAliasList.test(hn) === false ) {
+                this.cnames.set(hn, '');
+                return;
+            }
+            return browser.dns.resolve(hn, [ 'canonical_name' ]).then(rec => {
+                const cname = this.recordCanonicalName(hn, rec);
+                if ( cname === '' ) { return; }
+                return this.processCanonicalName(cname, details);
+
+            });
+        }
         suspendOneRequest(details) {
             const pending = {
                 details: Object.assign({}, details),
@@ -121,11 +216,11 @@
             this.pendingRequests.push(pending);
             return pending.promise;
         }
-        unsuspendAllRequests(resolver) {
+        unsuspendAllRequests() {
             const pendingRequests = this.pendingRequests;
             this.pendingRequests = [];
             for ( const entry of pendingRequests ) {
-                entry.resolve(resolver(entry.details));
+                entry.resolve(this.onBeforeSuspendableRequest(entry.details));
             }
         }
         canSuspend() {
