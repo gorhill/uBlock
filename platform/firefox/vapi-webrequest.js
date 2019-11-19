@@ -167,7 +167,8 @@
             if (
                 typeof list !== 'string' ||
                 list.length === 0 ||
-                list === 'unset'
+                list === 'unset' ||
+                browser.dns instanceof Object === false
             ) {
                 return null;
             }
