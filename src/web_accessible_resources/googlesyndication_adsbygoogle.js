@@ -37,10 +37,12 @@
     const css = 'height:1px!important;max-height:1px!important;max-width:1px!important;width:1px!important;';
     for ( let i = 0; i < phs.length; i++ ) {
         const fr = document.createElement('iframe');
-        fr.id = 'aswift_' + (i+1);
+        const id = `aswift_${(i+1)}`;
+        if ( document.querySelector(`iframe#${id}`) !== null ) { continue; }
+        fr.id = id;
         fr.style = css;
         const cfr = document.createElement('iframe');
-        cfr.id = 'google_ads_frame' + i;
+        cfr.id = `google_ads_frame${i}`;
         fr.appendChild(cfr);
         document.body.appendChild(fr);
     }
