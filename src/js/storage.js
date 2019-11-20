@@ -164,7 +164,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
             }
             break;
         case 'string':
-            out[name] = value;
+            out[name] = value.trim();
             break;
         case 'number':
             out[name] = parseInt(value, 10);
