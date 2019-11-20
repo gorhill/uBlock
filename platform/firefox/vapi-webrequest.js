@@ -60,7 +60,7 @@
         constructor() {
             super();
             this.pendingRequests = [];
-            this.cnames = new Map();
+            this.cnames = new Map([ [ '', '' ] ]);
             this.cnameAliasList = null;
             this.cnameIgnoreList = null;
             this.url = new URL(vAPI.getURL('/'));
@@ -73,7 +73,7 @@
             this.cnameIgnoreList = this.regexFromStrList(options.cnameIgnoreList);
             this.cnameIgnore1stParty = options.cnameIgnore1stParty === true;
             this.cnameMaxTTL = options.cnameMaxTTL || 120;
-            this.cnames.clear();
+            this.cnames.clear(); this.cnames.set('', '');
         }
         normalizeDetails(details) {
             if ( mustPunycode && !reAsciiHostname.test(details.url) ) {
@@ -148,7 +148,6 @@
                 this.cnameIgnoreList !== null &&
                 this.cnameIgnoreList.test(cname)
             ) {
-
                 cname = '';
             }
             this.cnames.set(hn, cname);
@@ -156,7 +155,7 @@
                 this.cnameTimer = self.setTimeout(
                     ( ) => {
                         this.cnameTimer = undefined;
-                        this.cnames.clear();
+                        this.cnames.clear(); this.cnames.set('', '');
                     },
                     this.cnameMaxTTL * 60000
                 );
@@ -188,7 +187,7 @@
             let r = super.onBeforeSuspendableRequest(details);
             if ( r !== undefined ) { return r; }
             if ( this.cnameAliasList === null ) { return; }
-            const hn = vAPI.hostnameFromURI(details.url);
+            const hn = vAPI.hostnameFromNetworkURL(details.url);
             let cname = this.cnames.get(hn);
             if ( cname === '' ) { return; }
             if ( cname !== undefined ) {
@@ -202,7 +201,9 @@
                 const cname = this.recordCanonicalName(hn, rec);
                 if ( cname === '' ) { return; }
                 return this.processCanonicalName(cname, details);
-
+            }).catch(( ) => {
+                this.cnames.set(hn, '');
+            }).then(( ) => {
             });
         }
         suspendOneRequest(details) {

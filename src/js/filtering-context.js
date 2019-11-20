@@ -66,7 +66,7 @@
         this.realm = '';
         this.type = details.type;
         this.setURL(details.url);
-        this.cnameOf = details.cnameOf !== undefined ? details.cnameOf : '';
+        this.cnameOf = details.cnameOf || undefined;
         this.docId = details.type !== 'sub_frame'
             ? details.frameId
             : details.parentFrameId;

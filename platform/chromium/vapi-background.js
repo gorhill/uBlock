@@ -1252,6 +1252,39 @@ vAPI.Net = class {
     canSuspend() {
         return false;
     }
+    async benchmark() {
+        if ( typeof µBlock !== 'object' ) { return; }
+        const requests = await µBlock.loadBenchmarkDataset();
+        if ( Array.isArray(requests) === false || requests.length === 0 ) {
+            console.info('No requests found to benchmark');
+            return;
+        }
+        console.info('vAPI.net.onBeforeSuspendableRequest()...');
+        const t0 = self.performance.now();
+        const promises = [];
+        for ( const request of requests ) {
+            const details = {
+                documentUrl: request.frameUrl,
+                tabId: Number.MAX_SAFE_INTEGER,
+                parentFrameId: -1,
+                frameId: 0,
+                type: request.cpt,
+                url: request.url,
+            };
+            promises.push(this.onBeforeSuspendableRequest(details));
+        }
+        return Promise.all(promises).then(results => {
+            let blockCount = 0;
+            for ( const r of results ) {
+                if ( r !== undefined ) { blockCount += 1; }
+            }
+            const t1 = self.performance.now();
+            const dur = t1 - t0;
+            console.info(`Evaluated ${requests.length} requests in ${dur.toFixed(0)} ms`);
+            console.info(`\tBlocked ${blockCount} requests`);
+            console.info(`\tAverage: ${(dur / requests.length).toFixed(3)} ms per request`);
+        });
+    }
 };
 
 /******************************************************************************/
