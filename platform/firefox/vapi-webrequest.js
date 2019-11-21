@@ -197,14 +197,16 @@
                 this.cnames.set(hn, '');
                 return;
             }
-            return browser.dns.resolve(hn, [ 'canonical_name' ]).then(rec => {
-                const cname = this.recordCanonicalName(hn, rec);
-                if ( cname === '' ) { return; }
-                return this.processCanonicalName(cname, details);
-            }).catch(( ) => {
-                this.cnames.set(hn, '');
-            }).then(( ) => {
-            });
+            return browser.dns.resolve(hn, [ 'canonical_name' ]).then(
+                rec => {
+                    const cname = this.recordCanonicalName(hn, rec);
+                    if ( cname === '' ) { return; }
+                    return this.processCanonicalName(cname, details);
+                },
+                ( ) => {
+                    this.cnames.set(hn, '');
+                }
+            );
         }
         suspendOneRequest(details) {
             const pending = {
