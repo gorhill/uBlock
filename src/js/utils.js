@@ -61,7 +61,9 @@
         this._urlIn = '';
         this._urlOut = '';
         this._tokenized = false;
-        this._tokens = new Uint32Array(1024);
+        // https://www.reddit.com/r/uBlockOrigin/comments/dzw57l/
+        //   Remember: 1 token needs two slots
+        this._tokens = new Uint32Array(2064);
 
         this.knownTokens = new Uint8Array(65536);
         this.resetKnownTokens();
