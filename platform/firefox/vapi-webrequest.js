@@ -63,16 +63,20 @@
             this.cnames = new Map([ [ '', '' ] ]);
             this.cnameAliasList = null;
             this.cnameIgnoreList = null;
-            this.url = new URL(vAPI.getURL('/'));
+            this.cnameIgnore1stParty = true;
+            this.cnameIgnoreRootDocument = true;
             this.cnameMaxTTL = 60;
+            this.cnameReplayFullURL = false;
             this.cnameTimer = undefined;
         }
         setOptions(options) {
             super.setOptions(options);
             this.cnameAliasList = this.regexFromStrList(options.cnameAliasList);
             this.cnameIgnoreList = this.regexFromStrList(options.cnameIgnoreList);
-            this.cnameIgnore1stParty = options.cnameIgnore1stParty === true;
+            this.cnameIgnore1stParty = options.cnameIgnore1stParty !== false;
+            this.cnameIgnoreRootDocument = options.cnameIgnoreRootDocument !== false;
             this.cnameMaxTTL = options.cnameMaxTTL || 120;
+            this.cnameReplayFullURL = options.cnameReplayFullURL === true;
             this.cnames.clear(); this.cnames.set('', '');
         }
         normalizeDetails(details) {
@@ -123,11 +127,22 @@
             }
             return Array.from(out);
         }
-        processCanonicalName(cname, details) {
-            this.url.href = details.url;
-            details.cnameOf = this.url.hostname;
-            this.url.hostname = cname;
-            details.url = this.url.href;
+        processCanonicalName(hn, cn, details) {
+            const hnBeg = details.url.indexOf(hn);
+            if ( hnBeg === -1 ) { return; }
+            const oldURL = details.url;
+            let newURL = oldURL.slice(0, hnBeg) + cn;
+            const hnEnd = hnBeg + hn.length;
+            if ( this.cnameReplayFullURL ) {
+                newURL += oldURL.slice(hnEnd);
+            } else {
+                const pathBeg = oldURL.indexOf('/', hnEnd);
+                if ( pathBeg !== -1 ) {
+                    newURL += oldURL.slice(hnEnd, pathBeg + 1);
+                }
+            }
+            details.url = newURL;
+            details.aliasURL = oldURL;
             return super.onBeforeSuspendableRequest(details);
         }
         recordCanonicalName(hn, record) {
@@ -187,11 +202,14 @@
             let r = super.onBeforeSuspendableRequest(details);
             if ( r !== undefined ) { return r; }
             if ( this.cnameAliasList === null ) { return; }
+            if ( details.type === 'main_frame' && this.cnameIgnoreRootDocument ) {
+                return;
+            }
             const hn = vAPI.hostnameFromNetworkURL(details.url);
             let cname = this.cnames.get(hn);
             if ( cname === '' ) { return; }
             if ( cname !== undefined ) {
-                return this.processCanonicalName(cname, details);
+                return this.processCanonicalName(hn, cname, details);
             }
             if ( this.cnameAliasList.test(hn) === false ) {
                 this.cnames.set(hn, '');
@@ -201,7 +219,7 @@
                 rec => {
                     const cname = this.recordCanonicalName(hn, rec);
                     if ( cname === '' ) { return; }
-                    return this.processCanonicalName(cname, details);
+                    return this.processCanonicalName(hn, cname, details);
                 },
                 ( ) => {
                     this.cnames.set(hn, '');

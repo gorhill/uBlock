@@ -268,7 +268,7 @@ body.colorBlind #vwRenderer .logEntry > div.cosmeticRealm,
 body.colorBlind #vwRenderer .logEntry > div.redirect {
     background-color: rgba(0, 19, 110, 0.1);
     }
-#vwRenderer .logEntry > div[data-cnameof] {
+#vwRenderer .logEntry > div[data-aliasid] {
     color: mediumblue;
     }
 #vwRenderer .logEntry > div[data-type="tabLoad"] {

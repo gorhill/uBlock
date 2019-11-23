@@ -1259,18 +1259,29 @@ vAPI.Net = class {
             console.info('No requests found to benchmark');
             return;
         }
+        const mappedTypes = new Map([
+            [ 'document', 'main_frame' ],
+            [ 'subdocument', 'sub_frame' ],
+        ]);
         console.info('vAPI.net.onBeforeSuspendableRequest()...');
         const t0 = self.performance.now();
         const promises = [];
+        const details = {
+            documentUrl: '',
+            tabId: -1,
+            parentFrameId: -1,
+            frameId: 0,
+            type: '',
+            url: '',
+        };
         for ( const request of requests ) {
-            const details = {
-                documentUrl: request.frameUrl,
-                tabId: Number.MAX_SAFE_INTEGER,
-                parentFrameId: -1,
-                frameId: 0,
-                type: request.cpt,
-                url: request.url,
-            };
+            details.documentUrl = request.frameUrl;
+            details.tabId = -1;
+            details.parentFrameId = -1;
+            details.frameId = 0;
+            details.type = mappedTypes.get(request.cpt) || request.cpt;
+            details.url = request.url;
+            if ( details.type === 'main_frame' ) { continue; }
             promises.push(this.onBeforeSuspendableRequest(details));
         }
         return Promise.all(promises).then(results => {

@@ -139,7 +139,9 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         cnameAliasList: µBlock.hiddenSettings.cnameAliasList,
         cnameIgnoreList: µBlock.hiddenSettings.cnameIgnoreList,
         cnameIgnore1stParty: µBlock.hiddenSettings.cnameIgnore1stParty,
+        cnameIgnoreRootDocument: µBlock.hiddenSettings.cnameIgnoreRootDocument,
         cnameMaxTTL: µBlock.hiddenSettings.cnameMaxTTL,
+        cnameReplayFullURL: µBlock.hiddenSettings.cnameReplayFullURL,
     });
 });
 

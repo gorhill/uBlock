@@ -99,7 +99,7 @@ const onBeforeRequest = function(details) {
         if (
             details.parentFrameId !== -1 &&
             details.type === 'sub_frame' &&
-            details.cnameOf === undefined
+            details.aliasURL === undefined
         ) {
             pageStore.setFrame(details.frameId, details.url);
         }
