@@ -226,8 +226,9 @@ with open(unsigned_xpi_filepath, 'rb') as f:
             exit(1)
         if not signing_check_response['files'] or len(signing_check_response['files']) == 0:
             continue
-        if not signing_check_response['files'][0]['signed']:
+        if not signing_check_response['files'][0]['download_url']:
             print('Error: AMO signing failed')
+            print(response.text)
             exit(1)
         print('\r')
         print('Self-hosted xpi package successfully signed.')
