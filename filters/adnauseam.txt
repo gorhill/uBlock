@@ -30,16 +30,15 @@ freebitcoin.win##iframe[src*="coinad"]
 freebitcoin.win##iframe[src*="mellowads"]
 rockpapershotgun.com##*[id^="google_ads"]
 
-#atptour.com
 atptour.com##.adtech-wrapper-ad
 
-# dotabuff
 dotabuff.com##.iasId > [class*="-container-"]
 dotabuff.com##[class*="sponsor"]
 dotabuff.com##[class*="placement"]
 ||lkqd.net^$domain=www.dotabuff.com
 
-# spiegel.de
+metacritic.com##.sitewide_promo
+
 spiegel.de##div[id*="google_ads_iframe"]
 spiegel.de##div[class*="Anzeige"]
 
