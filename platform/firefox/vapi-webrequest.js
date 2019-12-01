@@ -61,19 +61,21 @@
             super();
             this.pendingRequests = [];
             this.cnames = new Map([ [ '', '' ] ]);
-            this.cnameAliasList = null;
             this.cnameIgnoreList = null;
             this.cnameIgnore1stParty = true;
+            this.cnameIgnoreExceptions = true;
             this.cnameIgnoreRootDocument = true;
             this.cnameMaxTTL = 60;
             this.cnameReplayFullURL = false;
             this.cnameTimer = undefined;
+            this.cnameUncloak = true;
         }
         setOptions(options) {
             super.setOptions(options);
-            this.cnameAliasList = this.regexFromStrList(options.cnameAliasList);
+            this.cnameUncloak = options.cnameUncloak !== false;
             this.cnameIgnoreList = this.regexFromStrList(options.cnameIgnoreList);
             this.cnameIgnore1stParty = options.cnameIgnore1stParty !== false;
+            this.cnameIgnoreExceptions = options.cnameIgnoreExceptions !== false;
             this.cnameIgnoreRootDocument = options.cnameIgnoreRootDocument !== false;
             this.cnameMaxTTL = options.cnameMaxTTL || 120;
             this.cnameReplayFullURL = options.cnameReplayFullURL === true;
@@ -199,21 +201,28 @@
             );
         }
         onBeforeSuspendableRequest(details) {
-            let r = super.onBeforeSuspendableRequest(details);
-            if ( r !== undefined ) { return r; }
-            if ( this.cnameAliasList === null ) { return; }
-            if ( details.type === 'main_frame' && this.cnameIgnoreRootDocument ) {
+            const r = super.onBeforeSuspendableRequest(details);
+            if ( r !== undefined ) {
+                if (
+                    r.cancel === true ||
+                    r.redirectUrl !== undefined ||
+                    this.cnameIgnoreExceptions
+                ) {
+                    return r;
+                }
+            }
+            if (
+                details.type === 'main_frame' &&
+                this.cnameIgnoreRootDocument
+            ) {
                 return;
             }
+            if ( this.cnameUncloak === false ) { return; }
             const hn = vAPI.hostnameFromNetworkURL(details.url);
             let cname = this.cnames.get(hn);
             if ( cname === '' ) { return; }
             if ( cname !== undefined ) {
                 return this.processCanonicalName(hn, cname, details);
-            }
-            if ( this.cnameAliasList.test(hn) === false ) {
-                this.cnames.set(hn, '');
-                return;
             }
             return browser.dns.resolve(hn, [ 'canonical_name' ]).then(
                 rec => {

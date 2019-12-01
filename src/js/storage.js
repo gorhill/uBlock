@@ -136,12 +136,13 @@
 self.addEventListener('hiddenSettingsChanged', ( ) => {
     self.log.verbosity = µBlock.hiddenSettings.consoleLogLevel;
     vAPI.net.setOptions({
-        cnameAliasList: µBlock.hiddenSettings.cnameAliasList,
         cnameIgnoreList: µBlock.hiddenSettings.cnameIgnoreList,
         cnameIgnore1stParty: µBlock.hiddenSettings.cnameIgnore1stParty,
+        cnameIgnoreExceptions: µBlock.hiddenSettings.cnameIgnoreExceptions,
         cnameIgnoreRootDocument: µBlock.hiddenSettings.cnameIgnoreRootDocument,
         cnameMaxTTL: µBlock.hiddenSettings.cnameMaxTTL,
         cnameReplayFullURL: µBlock.hiddenSettings.cnameReplayFullURL,
+        cnameUncloak: µBlock.hiddenSettings.cnameUncloak,
     });
 });
 

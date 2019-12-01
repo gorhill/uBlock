@@ -103,7 +103,8 @@ const onBeforeRequest = function(details) {
         ) {
             pageStore.setFrame(details.frameId, details.url);
         }
-        return;
+        if ( result !== 2 ) { return; }
+        return { cancel: false };
     }
 
     // Blocked
