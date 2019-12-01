@@ -1215,7 +1215,6 @@ const getLoggerData = async function(details, activeTabId, callback) {
         colorBlind: µb.userSettings.colorBlindFriendly,
         entries: µb.logger.readAll(details.ownerId),
         filterAuthorMode: µb.hiddenSettings.filterAuthorMode,
-        maxEntries: µb.userSettings.requestLogMaxEntries,
         tabIdsToken: µb.pageStoresToken,
         tooltips: µb.userSettings.tooltipsDisabled === false
     };
