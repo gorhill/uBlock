@@ -6,7 +6,6 @@
 	"globals": {
 		"browser": false,    // global variable in Firefox, Edge
 		"chrome": false,     // global variable in Chromium, Chrome, Opera
-		"Components": false, // global variable in Firefox
 		"log": false,
 		"safari": false,
 		"self": false,
