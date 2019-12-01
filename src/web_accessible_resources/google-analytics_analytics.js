@@ -37,17 +37,24 @@
     //
     const w = window;
     const gaName = w.GoogleAnalyticsObject || 'ga';
+    const gaQueue = w[gaName];
     const ga = function() {
-        var len = arguments.length;
-        if ( len === 0 ) {
-            return;
+        const len = arguments.length;
+        if ( len === 0 ) { return; }
+        const args = Array.from(arguments);
+        let fn;
+        let a = args[len-1];
+        if ( a instanceof Object && a.hitCallback instanceof Function ) {
+            fn = a.hitCallback;
+        } else {
+            const pos = args.indexOf('hitCallback');
+            if ( pos !== -1 && args[pos+1] instanceof Function ) {
+                fn = args[pos+1];
+            }
         }
-        var f = arguments[len-1];
-        if ( typeof f !== 'object' || f === null || typeof f.hitCallback !== 'function' ) {
-            return;
-        }
+        if ( fn instanceof Function === false ) { return; }
         try {
-            f.hitCallback();
+            fn();
         } catch (ex) {
         }
     };
@@ -66,5 +73,11 @@
     const dl = w.dataLayer;
     if ( dl instanceof Object && dl.hide instanceof Object && typeof dl.hide.end === 'function' ) {
         dl.hide.end();
+    }
+    // empty ga queue
+    if ( gaQueue instanceof Function && Array.isArray(gaQueue.q) ) {
+        for ( const entry of gaQueue.q ) {
+            ga(...entry);
+        }
     }
 })();
