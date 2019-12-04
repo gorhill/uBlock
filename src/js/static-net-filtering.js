@@ -223,9 +223,6 @@ const toLogDataInternal = function(categoryBits, tokenHash, iunit) {
     const domains = [];
     const logData = { pattern, regex, domains, options, isRegex: false };
     filterUnits[iunit].logData(logData);
-    if ( categoryBits & 0x001 ) {
-        logData.pattern.unshift('@@');
-    }
     if ( categoryBits & 0x002 ) {
         logData.options.unshift('important');
     }
@@ -245,6 +242,9 @@ const toLogDataInternal = function(categoryBits, tokenHash, iunit) {
         raw.charCodeAt(raw.length - 1) === 0x2F /* '/' */
     ) {
         raw += '*';
+    }
+    if ( categoryBits & 0x001 ) {
+        raw = '@@' + raw;
     }
     if ( domains.length !== 0 ) {
         options.push(`domain=${domains.join('|')}`);
