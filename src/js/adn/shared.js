@@ -154,6 +154,14 @@ var FirefoxSetting = new Notification({
   firstrun: true
 });
 
+var OperaSetting = new Notification({
+  name: 'OperaSetting',
+  text: 'adnNotificationOperaSetting',
+  button: undefined,
+  link: 'https://github.com/dhowe/AdNauseam/wiki/FAQ#why-adnauseam-does-not-work-on-search-engines-in-opera',
+  firstrun: false
+});
+
 var PrivacyMode = new Notification({
   name: 'privacyMode',
   text: 'adnNotificationPrivacyMode',
@@ -166,7 +174,7 @@ PrivacyMode.func = openAdnPage.bind(PrivacyMode);
 
 /***************************************************************************/
 
-var Notifications = [AdBlockerEnabled, HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList, AdNauseamTxt, DNTAllowed, DNTHideNotClick, DNTClickNotHide, DNTNotify, FirefoxSetting, PrivacyMode];
+var Notifications = [AdBlockerEnabled, HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList, AdNauseamTxt, DNTAllowed, DNTHideNotClick, DNTClickNotHide, DNTNotify, FirefoxSetting, OperaSetting, PrivacyMode];
 
 function Notification(m) {
 

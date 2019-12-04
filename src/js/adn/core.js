@@ -1813,8 +1813,46 @@
     verifyDNT(request);
     verifyAdBlockers();
     verifyFirefoxSetting();
+    verifyOperaSetting(request);
     verifyPrivacyMode();
   };
+
+   var verifyOperaSetting = exports.verifyOperaSetting = function (request) {
+    var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+
+    if (isOpera) {
+      // only check for google, bing & duckduckgo, other search engines seem to be fine at the moment
+      // search? only
+      var searchEngineRegex = /^.*\.bing\.com|^(.*\.)?duckduckgo\.com|^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i
+      var domain = parseDomain(request.url);
+      var isSearch = searchEngineRegex.test(domain); 
+
+      if (!isSearch) return;
+
+      var thisPageStore = null;
+      for (let [key, pageStore] of µb.pageStores.entries()) {
+        if (pageStore.rawURL === request.url){
+          thisPageStore = pageStore;
+          break;
+        }
+      }
+
+      // check the url in pageStore
+      // if perLoadAllowedRequestCount: 0 && contentLastModified : 0
+      // adnauseam is not running on this page
+      
+      if (thisPageStore) {
+        var notes = notifications, modified = false;
+        if (thisPageStore.perLoadAllowedRequestCount == 0 && thisPageStore.contentLastModified == 0) {
+          console.log("addNotification")
+          modified = addNotification(notes, OperaSetting);
+        } else {
+          modified = removeNotification(notes, OperaSetting);
+        }
+        modified && sendNotifications(notes);
+      }
+    }
+  }
 
   var verifyPrivacyMode = exports.verifyPrivacyMode = function(){
 
@@ -2070,7 +2108,6 @@
   };
 
   exports.getNotifications = function () {
-
     return notifications;
   };
 
