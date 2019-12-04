@@ -121,43 +121,33 @@ const fromCosmeticFilter = function(details) {
     const exception = prefix.charAt(1) === '@';
     const selector = details.rawFilter.slice(prefix.length);
     const isHtmlFilter = prefix.endsWith('^');
+    const hostname = details.hostname;
 
     // The longer the needle, the lower the number of false positives.
     const needle = selector.match(/\w+/g).reduce(function(a, b) {
         return a.length > b.length ? a : b;
     });
 
-    const reHostname = new RegExp(
-        '^' +
-        details.hostname.split('.').reduce(
-            function(acc, item) {
-                return acc === ''
-                     ? item
-                    : '(' + acc + '\\.)?' + item;
-            },
-            ''
-        ) +
-        '$'
-    );
-
-    let reEntity,
-        domain = details.domain,
-        pos = domain.indexOf('.');
-    if ( pos !== -1 ) {
-        reEntity = new RegExp(
+    const regexFromLabels = (hn, suffix) =>
+        new RegExp(
             '^' +
-            domain.slice(0, pos).split('.').reduce(
-                function(acc, item) {
-                    return acc === ''
-                         ? item
-                        : '(' + acc + '\\.)?' + item;
-                },
-                ''
-            ) +
-            '\\.\\*$'
+            hn.split('.').reduce((acc, item) => `(${acc}\\.)?${item}`) +
+            suffix
         );
+
+    const reHostname = regexFromLabels(hostname, '$');
+    let reEntity;
+    {
+        const domain = details.domain;
+        const pos = domain.indexOf('.');
+        if ( pos !== -1 ) {
+            reEntity = regexFromLabels(
+                hostname.slice(0, pos + hostname.length - domain.length),
+                '\\.\\*$'
+            );
+        }
     }
-        
+
     const hostnameMatches = hn => {
         return hn === '' ||
                reHostname.test(hn) ||
