@@ -219,7 +219,7 @@
             }
             if ( this.cnameUncloak === false ) { return; }
             const hn = vAPI.hostnameFromNetworkURL(details.url);
-            let cname = this.cnames.get(hn);
+            const cname = this.cnames.get(hn);
             if ( cname === '' ) { return; }
             if ( cname !== undefined ) {
                 return this.processCanonicalName(hn, cname, details);
