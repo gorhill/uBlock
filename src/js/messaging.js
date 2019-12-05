@@ -1347,7 +1347,7 @@ var domSurveyFinalReport = function(tabId) {
 /******************************************************************************/
 
 var logCosmeticFilters = function(tabId, details) {
-    if ( µb.logger.isEnabled() === false ) {
+    if ( µb.logger.enabled === false ) {
         return;
     }
 

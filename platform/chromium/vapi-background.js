@@ -1022,7 +1022,7 @@ vAPI.messaging.onPortMessage = (function() {
 
     return function(request, port) {
         // prepare response
-        var callback = this.NOOPFUNC;
+        let callback = this.NOOPFUNC;
         if ( request.auxProcessId !== undefined ) {
             callback = callbackWrapperFactory(port, request).callback;
         }
@@ -1034,7 +1034,7 @@ vAPI.messaging.onPortMessage = (function() {
         }
 
         // Auxiliary process to main process: specific handler
-        var r = this.UNHANDLED,
+        let r = this.UNHANDLED,
             listener = this.listeners[request.channelName];
         if ( typeof listener === 'function' ) {
             r = listener(request.msg, port.sender, callback);
@@ -1046,7 +1046,7 @@ vAPI.messaging.onPortMessage = (function() {
         if ( r !== this.UNHANDLED ) { return; }
 
         // Auxiliary process to main process: no handler
-        console.error(
+        log.info(
             'vAPI.messaging.onPortMessage > unhandled request: %o',
             request
         );

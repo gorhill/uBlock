@@ -966,7 +966,7 @@ const onLogBufferRead = function(response) {
     }
 
 
-    dntDomains = response.dntDomains; // ADN
+    const dntDomains = response.dntDomains; // ADN
 
     // Tab id of currently active tab
     let activeTabIdChanged = false;
