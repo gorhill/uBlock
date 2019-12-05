@@ -1489,7 +1489,7 @@ const logCSPViolations = function(pageStore, request) {
             µb.staticNetFilteringEngine.matchAndFetchData(fctxt, 'csp');
         for ( const directive of staticDirectives ) {
             if ( directive.result !== 1 ) { continue; }
-            cspData.set(directive.data, directive.logData());
+            cspData.set(directive.getData('csp'), directive.logData());
         }
 
         fctxt.type = 'inline-script';
