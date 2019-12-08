@@ -68,11 +68,12 @@
             this.cnameMaxTTL = 60;
             this.cnameReplayFullURL = false;
             this.cnameTimer = undefined;
-            this.cnameUncloak = true;
+            this.cnameUncloak = browser.dns instanceof Object;
         }
         setOptions(options) {
             super.setOptions(options);
-            this.cnameUncloak = options.cnameUncloak !== false;
+            this.cnameUncloak = browser.dns instanceof Object &&
+                                options.cnameUncloak !== false;
             this.cnameIgnoreList = this.regexFromStrList(options.cnameIgnoreList);
             this.cnameIgnore1stParty = options.cnameIgnore1stParty !== false;
             this.cnameIgnoreExceptions = options.cnameIgnoreExceptions !== false;
@@ -202,6 +203,7 @@
         }
         onBeforeSuspendableRequest(details) {
             const r = super.onBeforeSuspendableRequest(details);
+            if ( this.cnameUncloak === false ) { return r; }
             if ( r !== undefined ) {
                 if (
                     r.cancel === true ||
@@ -217,7 +219,6 @@
             ) {
                 return;
             }
-            if ( this.cnameUncloak === false ) { return; }
             const hn = vAPI.hostnameFromNetworkURL(details.url);
             const cname = this.cnames.get(hn);
             if ( cname === '' ) { return; }
