@@ -1074,7 +1074,18 @@
 
   var listsForFilter = function (compiledFilter) {
 
-    var entry, content, pos, c, lists = [];
+    var entry, content, pos, c, lists = {}, allFilters = [compiledFilter];
+    // Note:snfe.fRegister is going to change later in uBlock
+    var snfe = µb.staticNetFilteringEngine;
+    if (snfe.fRegister.filters !== undefined) {
+      for (var i = 0; i < snfe.fRegister.filters.length; i++) {
+        var compiledItem = µb.CompiledLineWriter.fingerprint([ snfe.cbRegister, snfe.thRegister, snfe.fRegister.filters[i].logData().compiled]);
+        allFilters.push(compiledItem);
+      }
+    } else if (snfe.fRegister.f1 !== undefined) {
+      // console.log(snfe.fRegister)
+    }
+
     for (var path in listEntries) {
 
       entry = listEntries[path];
@@ -1083,23 +1094,32 @@
       }
 
       content = entry.content;
-      pos = content.indexOf(compiledFilter);
-      if (pos === -1) {
-        continue;
+      for (var i = 0; i < allFilters.length; i++) {
+        if (allFilters[i] == undefined) continue;
+        var compiledFilter = allFilters[i];
+        pos = content.indexOf(compiledFilter);
+        if (pos === -1) {
+          continue;
+        }
+        // We need an exact match.
+        // https://github.com/gorhill/uBlock/issues/1392
+        if (pos !== 0 && reSpecialChars.test(content.charAt(pos - 1)) === false) {
+          continue;
+        }
+
+        // https://github.com/gorhill/uBlock/issues/835
+        c = content.charAt(pos + compiledFilter.length);
+        if (c !== '' && reSpecialChars.test(c) === false) {
+          continue;
+        }
+
+        if (lists[entry.title] == undefined) {
+          lists[entry.title] = compiledFilter;
+          break; // one match per list is enough
+        }
+        /*{ title: entry.title
+        supportURL: entry.supportURL }*/
       }
-      // We need an exact match.
-      // https://github.com/gorhill/uBlock/issues/1392
-      if (pos !== 0 && reSpecialChars.test(content.charAt(pos - 1)) === false) {
-        continue;
-      }
-      // https://github.com/gorhill/uBlock/issues/835
-      c = content.charAt(pos + compiledFilter.length);
-      if (c !== '' && reSpecialChars.test(c) === false) {
-        continue;
-      }
-      lists.push(entry.title); // only need titles
-      /*{ title: entry.title
-      supportURL: entry.supportURL }*/
     }
     return lists;
   };
@@ -1179,34 +1199,31 @@
      */
     var lists = listsForFilter(compiled);
 
-    if (lists.length === 0) {                                // case A
+    if (Object.keys(lists).length === 0) {                                // case A
       logNetBlock('User List', raw + ': ', url); // always block
       return true;
     }
 
-    for (var i = 0; i < lists.length; i++) {
+    for (var name in lists) {
 
-      var name = lists[0];
+    if (activeBlockList(name)) {
 
-      if (activeBlockList(name)) {
+      if (lists[name].indexOf('@@') === 0) {                       // case B
 
-        if (raw.indexOf('@@') === 0) {                       // case B
-
-          logNetAllow(name, raw + ': ', url);
-          return false;
-        }
-
-        logNetBlock(name, raw + ': ', url);                  // case C
-        return true; // blocked, no need to continue
+        logNetAllow(name, lists[name] + ': ', url);
+        return false;
       }
-      else {
 
-        if (!misses) var misses = [];
-        if (!misses.contains(name)) misses.push(name);
-      }
+      logNetBlock(name, lists[name] + ': ', url);                  // case C
+      return true; // blocked, no need to continue
     }
+    else {
+      if (!misses) var misses = [];
+      if (!misses.contains(name)) misses.push(name);
+    }
+  }
 
-    return allowRequest(misses.join(','), raw + ': ', url);  // case D
+  return allowRequest(misses.join(','), lists[name] + ': ', url)
   }
 
   var adCount = function () {
@@ -1825,7 +1842,7 @@
       // search? only
       var searchEngineRegex = /^.*\.bing\.com|^(.*\.)?duckduckgo\.com|^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i
       var domain = parseDomain(request.url);
-      var isSearch = searchEngineRegex.test(domain); 
+      var isSearch = searchEngineRegex.test(domain);
 
       if (!isSearch) return;
 
@@ -1840,7 +1857,7 @@
       // check the url in pageStore
       // if perLoadAllowedRequestCount: 0 && contentLastModified : 0
       // adnauseam is not running on this page
-      
+
       if (thisPageStore) {
         var notes = notifications, modified = false;
         if (thisPageStore.perLoadAllowedRequestCount == 0 && thisPageStore.contentLastModified == 0) {
