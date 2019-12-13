@@ -237,6 +237,7 @@ mediapost.com##img[src*="ced.sascdn"]
 forbes.com##div[id*='ads']
 ##DIV[class*="header_ad_container"] > div
 ##DIV[class*="rec-ad"]
+/forbesprebidheader
 
 fmovies.is##.mgline
 
