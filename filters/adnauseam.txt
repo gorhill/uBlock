@@ -100,6 +100,10 @@ facebook.com##._5hn6
 www.scmp.com##*[id^="teads"]
 www.scmp.com##*[class*="teads"]
 
+#davidwalsh.name
+davidwalsh.name##.x-secondary-large
+davidwalsh.name##.sidebar-sda-large
+
 si.com#@#.ad
 si.com#@#.mobile-ad
 si.com#@#.cm-ad
