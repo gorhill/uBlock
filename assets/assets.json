@@ -44,6 +44,14 @@
 		],
 		"supportURL": "https://www.eff.org/dnt-policy"
 	},
+	"facebook-annoyances-blocker": {
+		"content": "filters",
+		"group": "social",
+		"title": "Facebook Annoyances Blocker",
+		"contentURL": [
+			"https://easylist-downloads.adblockplus.org/fb_annoyances_full.txt"
+		]
+	},
 	"ublock-filters": {
 		"content": "filters",
 		"group": "default",

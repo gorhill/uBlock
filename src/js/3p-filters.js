@@ -340,7 +340,7 @@ var renderFilterLists = function(soft) {
                 'annoyances',
                 'multipurpose',
                 'regions',
-                'custom'
+                'multipurpose' //ADN
             ];
         document.body.classList.toggle('hideUnused', mustHideUnusedLists('*'));
 
