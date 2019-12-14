@@ -286,7 +286,14 @@ try {
             log.info(`PSL ready ${Date.now()-vAPI.T0} ms after launch`);
         }),
     ]);
+} catch (ex) {
+    console.trace(ex);
+}
 
+// https://github.com/uBlockOrigin/uBlock-issues/issues/817#issuecomment-565730122
+//   Still try to load filter lists regardless of whether a serious error
+//   occurred in the previous initialization steps.
+try {
     const selfieIsValid = await µb.selfieManager.load();
     if ( selfieIsValid === true ) {
         log.info(`Selfie ready ${Date.now()-vAPI.T0} ms after launch`);
