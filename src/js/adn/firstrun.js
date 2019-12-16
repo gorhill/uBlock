@@ -29,10 +29,10 @@
 
   /******************************************************************************/
 
-  var dntRespectAppeared = false;
+  let dntRespectAppeared = false;
 
   /******************************************************************************/
-  var changeUserSettings = function (name, value) {
+  const changeUserSettings = function (name, value) {
 
     vAPI.messaging.send('dashboard', {
       what: 'userSettings',
@@ -41,11 +41,11 @@
     });
   };
 
-  var onInputChanged = function (ev) {
+  const onInputChanged = function (ev) {
 
-    var input = ev.target;
-    var name = this.getAttribute('data-setting-name');
-    var value = input.value;
+    const input = ev.target;
+    const name = this.getAttribute('data-setting-name');
+    const value = input.value;
     if (value !== input.value) {
       input.value = value;
     }
@@ -69,7 +69,7 @@
 
   function toggleNum(){
 
-    var toggleNum = 0;
+    let toggleNum = 0;
     if(switchValue('hidingAds')) toggleNum++;
     if(switchValue('clickingAds')) toggleNum++;
     if(switchValue('blockingMalware')) toggleNum++;
@@ -85,7 +85,7 @@
 
   function toggleDNTException(bool) {
 
-    var dntInput = uDom('#dnt-exception');
+    const dntInput = uDom('#dnt-exception');
 
     if (!isMobile() && hideOrClick() && !dntRespectAppeared) { // runs once only
       changeDNTexceptions(true);
@@ -98,7 +98,7 @@
 
   function toggleFirstRunButton() {
 
-    var button = uDom('#confirm-close > button');
+    const button = uDom('#confirm-close > button');
 
     if (hasEnabledToggle()) {
       //remove class "disable"
@@ -145,7 +145,7 @@
   /******************************************************************************/
 
   // TODO: use data-* to declare simple settings
-  var onUserSettingsReceived = function (details) {
+  const onUserSettingsReceived = function (details) {
 
     uDom('[data-setting-type="bool"]').forEach(function (uNode) {
       if (details.hasOwnProperty([uNode.attr('data-setting-name')])) {

@@ -27,19 +27,19 @@
 
   /******************************************************************************/
 
-  var messager = vAPI.messaging;
+  const messager = vAPI.messaging;
 
   /******************************************************************************/
 
-  var onLocalDataReceived = function (details) {
+  const onLocalDataReceived = function (details) {
 
     if (details.storageUsed)
      uDom('#localData > ul > li:nth-of-type(1)').text(
          vAPI.i18n('settingsStorageUsed').replace('{{value}}', details.storageUsed.toLocaleString())
      );
 
-    var elem, dt;
-    var timeOptions = {
+    let elem, dt;
+    const timeOptions = {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
@@ -57,7 +57,7 @@
     //   uDom('#localData > ul > li:nth-of-type(2)').css('display', '');
     // }
 
-    var lastRestoreFile = details.lastRestoreFile || '';
+    const lastRestoreFile = details.lastRestoreFile || '';
     elem = uDom('#localData > p:nth-of-type(3)');
     if (lastRestoreFile !== '') {
       dt = new Date(details.lastRestoreTime);
@@ -70,9 +70,9 @@
 
   /******************************************************************************/
 
-  var resetUserData = function() {
-      var msg = vAPI.i18n('adnAboutResetDataConfirm'); // ADN
-      var proceed = window.confirm(msg); // ADN: changed from vAPI.confirm merge1.14.12
+  const resetUserData = function() {
+      const msg = vAPI.i18n('adnAboutResetDataConfirm'); // ADN
+      const proceed = window.confirm(msg); // ADN: changed from vAPI.confirm merge1.14.12
       if ( proceed ) {
           messager.send('dashboard', { what: 'resetUserData' });
       }
@@ -80,7 +80,7 @@
 
   /******************************************************************************/
 
-  var changeUserSettings = function (name, value) {
+  const changeUserSettings = function (name, value) {
 
     //console.log('changeUserSettings',name, value);
 
@@ -94,9 +94,9 @@
     });
   };
 
-  var ClickProbabilityChanged = function() {
-      var selection = uDom('input[id="slider"]');
-      var slideVal = selection.nodes[0].value;
+  const ClickProbabilityChanged = function() {
+      const selection = uDom('input[id="slider"]');
+      const slideVal = selection.nodes[0].value;
 
       selection.val(slideVal);
 
@@ -110,10 +110,10 @@
 
   /******************************************************************************/
 
-  var onInputChanged = function (ev) {
-    var input = ev.target;
-    var name = this.getAttribute('data-setting-name');
-    var value = input.value;
+  const onInputChanged = function (ev) {
+    const input = ev.target;
+    const name = this.getAttribute('data-setting-name');
+    let value = input.value;
     if (name === 'largeMediaSize') {
       value = Math.min(Math.max(Math.floor(parseInt(value, 10) || 0), 0), 1000000);
     }
@@ -127,7 +127,7 @@
   /******************************************************************************/
 
   // if any of 3 main toggles are off, disabled their subgroups
-  var updateGroupState = function () {
+  const updateGroupState = function () {
 
     uDom('.hidingAds-child').prop('disabled', !uDom('#hidingAds').prop('checked'));
     uDom('.clickingAds-child').prop('disabled', !uDom('#clickingAds').prop('checked'));
@@ -136,17 +136,17 @@
 
    /******************************************************************************/
 
-    var exportDialog = function() {
+    const exportDialog = function() {
        uDom('#export-dialog').removeClass("hide");
-     }
+     };
 
-    var exportTo = function() {
-        var action = uDom('#export-dialog input:checked').nodes[0].id;
+    const exportTo = function() {
+        const action = uDom('#export-dialog input:checked').nodes[0].id;
         exportToFile(action)
         closeDialog();
-    }
+    };
 
-    var closeDialog = function() {
+    const closeDialog = function() {
        uDom('#export-dialog').addClass("hide");
     }
 
@@ -156,7 +156,7 @@
 
   // TODO: use data-* to declare simple settings
 
-  var onUserSettingsReceived = function (details) {
+  const onUserSettingsReceived = function (details) {
 
     // console.log('onUserSettingsReceived', details);
 
@@ -166,8 +166,8 @@
 
     uDom('[data-setting-type="bool"]').forEach(function (uNode) {
 
-      var name = uNode.attr('data-setting-name'), value = details[name];
-      var selection = uDom('input[id="slider"]');
+      const name = uNode.attr('data-setting-name'), value = details[name];
+      const selection = uDom('input[id="slider"]');
 
 
       //updateSubgroupState(name, value);
@@ -182,7 +182,7 @@
           );
         });
 
-        var id = "#slider";
+        const id = "#slider";
         uDom(id).prop('checked',true);
 
     });

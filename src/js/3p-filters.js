@@ -341,6 +341,7 @@ const renderFilterLists = function(soft) {
             'annoyances',
             'multipurpose',
             'regions',
+            'custom',
             'multipurpose' //ADN
         ];
 
@@ -389,7 +390,6 @@ const renderFilterLists = function(soft) {
         uDom('#lists .listEntries .listEntry.discard').remove();
 
         // Re-insert import widget.
-        // TODO: no groupkey custom
         uDom('[data-groupkey="custom"] .listEntries').append(importWidget);
 
         uDom.nodeFromId('autoUpdate').checked = listDetails.autoUpdate === true;
@@ -528,17 +528,12 @@ const onRemoveExternalList = function(ev) {
 
 /******************************************************************************/
 
-<<<<<<< HEAD
+
 const onPurgeClicked = function(ev) {
     const button = uDom(ev.target);
     const liEntry = button.ancestors('[data-listkey]');
     const listKey = liEntry.attr('data-listkey');
-=======
-var onPurgeClicked = function(ev) {
-    var button = uDom(ev.target);
-    var liEntry = button.ancestors('[data-listkey]');
-    var listKey = liEntry.attr('data-listkey');
->>>>>>> origin/master
+
     if ( !listKey ) { return; }
 
     messaging.send('dashboard', { what: 'purgeCache', assetKey: listKey });

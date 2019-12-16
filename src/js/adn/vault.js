@@ -22,7 +22,6 @@
 /* global uDom */
 
 (function () {
-
   'use strict';
 
   const States = ['pending', 'visited', 'failed', 'dnt-allowed'],
@@ -38,19 +37,26 @@
     left: 20
   };
 
-  var zoomStyle, animatorId,
-    resizeId, selectedAdSet,
-    showInterface = true,
-    animateMs = 2000,
-    viewState = {},
-    userZoomScale = Zooms[Zooms.indexOf(100)], // determined by mousewheel
-    zoomIdx = 0, // determined by zoom in / out buttons
-    draggingVault = false,
-    vaultLoading = false;
+  let zoomStyle;
+  let animatorId;
+  let resizeId;
+  let selectedAdSet;
+  let showInterface = true;
+  const animateMs = 2000;
+  const viewState = {};
 
-  var gAds, gAdSets, gMin, gMax, gSliderRight, gSliderLeft, settings, lastAdDetectedTime, waitingAds = []; // stateful
+  let // determined by mousewheel
+  userZoomScale = Zooms[Zooms.indexOf(100)];
 
-  var messager = vAPI.messaging;
+  let // determined by zoom in / out buttons
+  zoomIdx = 0;
+
+  let draggingVault = false;
+  let vaultLoading = false;
+
+  let gAds, gAdSets, gMin, gMax, gSliderRight, gSliderLeft, settings, lastAdDetectedTime, waitingAds = []; // stateful
+
+  const messager = vAPI.messaging;
 
   messager.addChannelListener('adnauseam', function (request) {
 
@@ -65,9 +71,8 @@
       console.log('*** New-ad-detected ***', request.ad);
       waitingAds.push(request.ad);
       lastAdDetectedTime = new Date();
-      var brush =  document.getElementsByClassName('chart-bg')[0]
-      var w = brush ? parseInt(brush.attributes.width.value) : null,
-          sliderPos = gSliderLeft ? parseFloat(/\((.*?),/g.exec(gSliderLeft)[1]) : null;
+      const brush =  document.getElementsByClassName('chart-bg')[0];
+      const w = brush ? parseInt(brush.attributes.width.value) : null, sliderPos = gSliderLeft ? parseFloat(/\((.*?),/g.exec(gSliderLeft)[1]) : null;
 
       // only when the slider covers 'now' or when there is no slider (empty vault or one ad)
       // console.log(w, sliderPos)
@@ -103,7 +108,7 @@
     return ele ? ele.offsetHeight || ele.clientHeight : -1;
   }
 
-  var renderAds = function (json) {
+  const renderAds = function (json) {
 
     // console.log('renderAds: ', json);
     gAds = json.data; // store
@@ -123,9 +128,9 @@
 
   };
 
-  var autoUpdateVault = function(){
+  const autoUpdateVault = function(){
 
-    var gap = new Date() - lastAdDetectedTime;
+    const gap = new Date() - lastAdDetectedTime;
     if (waitingAds != [] && gap >= 3000){
       updateVault(waitingAds, true);
       // console.log("autoupdate", gap)
@@ -134,7 +139,7 @@
     }
   }
 
-  var updateVault = function (ads, newAdsOnly){
+  const updateVault = function (ads, newAdsOnly){
     if (vaultLoading) return;
     if (gAdSets == null) {
       gAds = ads;
@@ -145,12 +150,12 @@
     // console.log('updateAds: ', json);
     if (newAdsOnly) {
       gAds = gAds.concat(ads);
-      for (var i = 0; i < ads.length; i++) {
-          var ad = ads[i];
-          var key = computeHash(ad);
+      for (let i = 0; i < ads.length; i++) {
+          let ad = ads[i];
+          const key = computeHash(ad);
           if (!key) continue;
 
-          for (var j = 0; j < gAdSets.length; j++) {
+          for (let j = 0; j < gAdSets.length; j++) {
             if (gAdSets[j].gid === key){
               gAdSets[j].children.append(ad);
               ad = null
@@ -171,17 +176,16 @@
     waitingAds = [];
   }
 
-  var updateAd = function (json) {
+  const updateAd = function (json) {
     doUpdate(json.ad);
     computeStats(gAdSets);
   }
 
-  var setAttempting = function (ad) {
-
+  const setAttempting = function (ad) {
     if (!ad) return;
 
-    var groupInfo = findAdById(ad.id),
-      $item;
+    const groupInfo = findAdById(ad.id);
+    let $item;
 
     if (groupInfo) {
 
@@ -190,7 +194,7 @@
       // update the class for ad being attempted
       $item && $item.addClass('attempting');
     }
-  }
+  };
 
   function setCurrent(ad) {
 
@@ -216,12 +220,12 @@
 
     function hoverOnDiv(e) { // on
 
-      var $this = $(this);
+      const $this = $(this);
 
       if ($this.hasClass('inspected')) {
 
         // pause animation on mouse-over image
-        var inspectedGid = parseInt($this.attr('data-gid'));
+        const inspectedGid = parseInt($this.attr('data-gid'));
         selectedAdSet = findAdSetByGid(inspectedGid); // throws
         bulletIndex($this, selectedAdSet);
         animateInspector(false);
@@ -239,7 +243,7 @@
     }
 
     function addAd(ad) {
-      var $div = $('<div/>', {
+      const $div = $('<div/>', {
 
         'class': 'item dup-count-' + ad.count(),
         'data-gid': ad.gid
@@ -253,7 +257,7 @@
     // // Hide #container while appending new divs from 0
     if(!update) $('#container').css('opacity','0');
 
-    for (var i = 0; i < adsets.length; i++) {
+    for (let i = 0; i < adsets.length; i++) {
 
       if (update) {
         if ($('div[data-gid=' + adsets[i].gid + ']').length < 1) addAd(adsets[i]);
@@ -274,11 +278,12 @@
   }
 
   function doUpdate(updated) {
+    const groupInfo = findAdById(updated.id);
+    let adset;
+    let itemClass;
+    let $item;
 
-    var groupInfo = findAdById(updated.id),
-      adset, itemClass, $item;
-
-    for (var i = 0, j = gAds && gAds.length; i < j; i++)
+    for (let i = 0, j = gAds && gAds.length; i < j; i++)
       if(gAds[i].id === updated.id) gAds[i] = updated;
 
     if (groupInfo) {
@@ -322,29 +327,29 @@
   function appendMetaTo($div, adset) {
 
     //log('appendMetaTo:' + adset.gid);
-    var $meta = $('<div/>', {
+    const $meta = $('<div/>', {
       class: 'meta'
     }).appendTo($div);
 
-    var $ul = $('<ul/>', {
+    const $ul = $('<ul/>', {
 
       class: 'meta-list',
       style: 'margin-top: 0px'
 
     }).appendTo($meta);
 
-    for (var i = 0; i < adset.count(); i++) {
+    for (let i = 0; i < adset.count(); i++) {
 
-      var ad = adset.child(i);
+      const ad = adset.child(i);
 
-      var $li = $('<li/>', {
+      const $li = $('<li/>', {
 
         'class': 'meta-item',
         'style': 'margin-top: 0px'
 
       }).appendTo($ul);
 
-      var $target = $('<div/>', {
+      const $target = $('<div/>', {
 
         class: 'target',
         'data-idx': i
@@ -353,7 +358,7 @@
 
       appendTargetTo($target, ad, adset); // tmp, remove adset
 
-      var $detected = $('<div/>', {
+      const $detected = $('<div/>', {
         class: 'detected-on'
       }).appendTo($li);
 
@@ -425,7 +430,7 @@
 
     $target.find('#target-domain').text(targetDomain(ad));
     $target.find('#target-date').text(formatDate(ad.visitedTs));
-    var $titleA = $target.find('#target-title').text(ad.title);
+    const $titleA = $target.find('#target-title').text(ad.title);
     if (ad.resolvedTargetUrl)
       $titleA.attr('href', ad.resolvedTargetUrl);
   }
@@ -435,11 +440,13 @@
    * Shifts meta list to show correct item
    * Updates index-counter for the bullet
    */
-  function bulletIndex($div, adset) { // adset.index must be updated first
+  function bulletIndex($div, adset) {
+    // adset.index must be updated first
 
-    var $bullet = $div.find('.bullet[data-idx=' + (adset.index) + ']'),
-      state = adset.state(),
-      $ul;
+    const $bullet = $div.find('.bullet[data-idx=' + (adset.index) + ']');
+
+    const state = adset.state();
+    let $ul;
 
     if (!state) console.warn('[WARN] undefined state (dont we need an arg here?)');
 
@@ -468,7 +475,7 @@
 
   function appendDisplayTo($div, adset) {
 
-    var $ad = $('<div/>', {
+    const $ad = $('<div/>', {
       class: 'ad'
     }).appendTo($div);
 
@@ -487,7 +494,7 @@
 
     }).appendTo($ad).hide();
 
-    var $img = $('<img/>', {
+    const $img = $('<img/>', {
 
       src: adset.child(0).contentData.src,
 
@@ -504,7 +511,7 @@
     // fix for #291
     $img.on('load', function() {
       // cache the dimensions of the img-item AFTER load
-      var $this = $(this);
+      const $this = $(this);
       $div.attr('data-width', $this.width());
       $div.attr('data-height', $this.height());
     });
@@ -512,12 +519,11 @@
 
   function appendTextDisplayTo($pdiv, adset) {
 
-    var total = adset.count(),
-      ad = adset.child(0);
+    const total = adset.count(), ad = adset.child(0);
 
     $pdiv.addClass('item-text');
 
-    var $div = $('<div/>', {
+    const $div = $('<div/>', {
 
       class: 'item-text-div',
       width: rand(TEXT_MINW, TEXT_MAXW)
@@ -539,7 +545,7 @@
 
     }).appendTo($div).hide();
 
-    var $h3 = $('<h3/>', {}).appendTo($div);
+    const $h3 = $('<h3/>', {}).appendTo($div);
 
     $('<div/>', { // title
 
@@ -589,27 +595,27 @@
       animateInspector($div);
     }
 
-    var count = adset.count();
+    const count = adset.count();
 
     if (count > 1) {
 
-      var $bullets = $('<div/>', {
+      const $bullets = $('<div/>', {
         class: 'bullets'
       }).appendTo($div);
 
       // find the height of the image for bullet layout (#291)
-      var adHeight = $div.attr('data-height');
+      const adHeight = $div.attr('data-height');
 
       //log($div.find('img').height(), '?=', adHeight);
 
-      var $ul = $('<ul/>', {
+      const $ul = $('<ul/>', {
         height: adHeight
       }).appendTo($bullets);
 
       // add items based on count/state
-      for (var i = 0; i < adset.count(); i++) {
+      for (let i = 0; i < adset.count(); i++) {
 
-        var $li = $('<li/>', {
+        const $li = $('<li/>', {
 
           'data-idx': i,
           'class': 'bullet ' + adset.state(i)
@@ -624,7 +630,7 @@
   }
 
   function computeStats(adsets) {
-    var numVisits = numVisited(gAds);
+    const numVisits = numVisited(gAds);
     $('.since').text(sinceTime(adsets));
     $('#clicked').text(numVisits);
     $('#total').text(numTotal());
@@ -642,9 +648,9 @@
 
   function numVisited(adsets) {
    //TODO: update after visit
-    var numv = 0;
+    let numv = 0;
 
-    for (var i = 0, j = adsets && adsets.length; i < j; i++)
+    for (let i = 0, j = adsets && adsets.length; i < j; i++)
       numv += (adsets[i].visitedTs > 0);
 
     return numv;
@@ -652,9 +658,9 @@
 
   function numFound(adsets) {
 
-    var numv = 0;
+    let numv = 0;
 
-    for (var i = 0, j = adsets && adsets.length; i < j; i++)
+    for (let i = 0, j = adsets && adsets.length; i < j; i++)
       numv += (adsets[i].count());
 
     return numv;
@@ -667,12 +673,11 @@
 
   function sinceTime(adsets) {
 
-    var idx = 0,
-      oldest = +new Date();
+    let idx = 0, oldest = +new Date();
 
-    for (var i = 0, j = adsets && adsets.length; i < j; i++) {
+    for (let i = 0, j = adsets && adsets.length; i < j; i++) {
 
-      var foundTs = adsets[i].child(0).foundTs;
+      const foundTs = adsets[i].child(0).foundTs;
       if (foundTs < oldest) {
 
         oldest = foundTs;
@@ -684,9 +689,7 @@
   }
 
   function formatTargetDate(ad) {
-    var dntNote = vAPI.i18n('adnAllowedByDNT') + "<a class='help-mark dnt' href='https://github.com/dhowe/AdNauseam/wiki/FAQ#what-is-the-effs-do-not-track-standard-and-how-it-is-supported-in-adnauseam'> ? </a>",
-        frequencyNote = vAPI.i18n('adnAdClickingStatusSkippedFrequency'),
-        userNote = vAPI.i18n('adnAdClickingStatusSkippedUser');
+    const dntNote = vAPI.i18n('adnAllowedByDNT') + "<a class='help-mark dnt' href='https://github.com/dhowe/AdNauseam/wiki/FAQ#what-is-the-effs-do-not-track-standard-and-how-it-is-supported-in-adnauseam'> ? </a>", frequencyNote = vAPI.i18n('adnAdClickingStatusSkippedFrequency'), userNote = vAPI.i18n('adnAdClickingStatusSkippedUser');
 
     return ad.noVisit ? (ad.clickedByUser ? userNote : (ad.dntAllowed ? dntNote : frequencyNote)) : formatDate(ad.visitedTs);
   }
@@ -698,11 +701,11 @@
       return navigator.languages[0] || navigator.language;
     }
 
-    var date = new Date(Math.abs(ts));
-    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+    const date = new Date(Math.abs(ts));
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
                     hour: 'numeric', minute: 'numeric' };
 
-    var result = typeof Intl === "object" ? new Intl.DateTimeFormat(getLocale(), options).format(date) : date;
+    const result = typeof Intl === "object" ? new Intl.DateTimeFormat(getLocale(), options).format(date) : date;
     return result;
   }
 
@@ -724,7 +727,7 @@
 
       $('.item').bind("contextmenu", function (e) {
 
-        var $this = $(this);
+        const $this = $(this);
 
         if (!$this.hasClass('inspected')) {
 
@@ -732,7 +735,7 @@
           e.stopPropagation();
           e.preventDefault();
 
-          var inspectedGid = parseInt($this.attr('data-gid'));
+          const inspectedGid = parseInt($this.attr('data-gid'));
           selectedAdSet = findAdSetByGid(inspectedGid); // throws
 
           // show custom contextmenu
@@ -748,19 +751,19 @@
     }
   }
 
-  function computeZoom(items) { // autozoom
+  function computeZoom(items) {
+    // autozoom
 
     setZoom(zoomIdx = Zooms.indexOf(100), true);
 
-    var i = 0,
-      percentVis = 0.55,
-      winW = $(window).width(),
-      winH = $('#svgcon').offset().top;
+    let i = 0;
+    const percentVis = 0.55;
+    const winW = $(window).width();
+    const winH = $('#svgcon').offset().top;
 
     while (i < items.length) {
 
-      var $this = $(items[i++]),
-        scale = Zooms[zoomIdx] / 100;
+      const $this = $(items[i++]), scale = Zooms[zoomIdx] / 100;
 
       if (!onscreen($this, winW, winH, scale, percentVis)) {
 
@@ -782,25 +785,25 @@
   function itemPosition($ele) {
     // first set zoom back to 100%
     setZoom(Zooms.indexOf(100), true);
-    var off = $ele.offset(), // relative to container
-      cx = $(window).width() / 2,
-      cy = $(window).height() / 2,
-      iw = $ele.attr('data-width') || 80,
-      ih = $ele.attr('data-height') || 40;
+    const // relative to container
+          off = $ele.offset(),
+          cx = $(window).width() / 2,
+          cy = $(window).height() / 2,
+          iw = $ele.attr('data-width') || 80,
+          ih = $ele.attr('data-height') || 40;
 
     if (!(iw && ih && iw.length && ih.length)) {
       console.warn('No dimensions for item: gid=' +
         $this.attr('data-gid') + ', using ' + iw + 'x' + ih);
     }
 
-    var $dm = $('#container');
+    const $dm = $('#container');
 
     // compute offset of dragged container
-    var dragoffX = -10000 - parseInt($dm.css('margin-left')),
-      dragoffY = -10000 - parseInt($dm.css('margin-top'));
+    const dragoffX = -10000 - parseInt($dm.css('margin-left')), dragoffY = -10000 - parseInt($dm.css('margin-top'));
 
     // compute offset of item-center from (dragged) window-center
-    var pos = {
+    const pos = {
       left: (off.left - cx) + (iw / 2) + dragoffX,
       top: (off.top - cy) + (ih / 2) + dragoffY
     };
@@ -814,24 +817,24 @@
   function centerZoom($ele) {
 
     if ($ele) {
-
       storeViewState(true);
 
       // compute target positions for transform
-      var dm, spacing = 10,
-        metaOffset = 110,
-        center = -10000,
-        ww = $(window).width(),
-        wh = $(window).height(),
-        pos = itemPosition($ele);
+      let dm;
+
+      const spacing = 10;
+      const metaOffset = 110;
+      const center = -10000;
+      const ww = $(window).width();
+      const wh = $(window).height();
+      const pos = itemPosition($ele);
 
       // now compute the centered position based on item-offset
-      var mleft = center - pos.left,
-        mtop = center - pos.top;
+      let mleft = center - pos.left, mtop = center - pos.top;
 
       // can these 2 be removed?
-      var iw = parseInt($ele.attr('data-width'));
-      var ih = parseInt($ele.attr('data-height'));
+      const iw = parseInt($ele.attr('data-width'));
+      const ih = parseInt($ele.attr('data-height'));
 
       // make sure left/bottom corner of meta-data is onscreen (#180)
       if (iw > ww - (metaOffset * 2 + spacing)) {
@@ -853,7 +856,6 @@
         marginLeft: mleft + 'px',
         marginTop: mtop + 'px'
       });
-
     } else { // restore zoom-state
 
       storeViewState(false);
@@ -863,7 +865,7 @@
   // stores zoom/drag-offset for container
   function storeViewState(store) {
 
-    var $dm = $('#container');
+    const $dm = $('#container');
 
     if (store) {
 
@@ -897,7 +899,7 @@
     }
   }
 
-  var ifs = ['#logo', '#ratio', '#stats', '#svgcon', '#x-close-button', '.zoom', '#bottom-text'];
+  const ifs = ['#logo', '#ratio', '#stats', '#svgcon', '#x-close-button', '.zoom', '#bottom-text'];
 
   function toggleInterface() {
 
@@ -936,7 +938,7 @@
 
     if ($selected && !$selected.hasClass('inspected')) {
 
-      var inspectedGid = parseInt($selected.attr('data-gid'));
+      const inspectedGid = parseInt($selected.attr('data-gid'));
 
       selectedAdSet = findAdSetByGid(inspectedGid); // throws
 
@@ -956,7 +958,7 @@
         animateInspector($selected);
       }
 
-      var next = selectedAdSet.nextPending(); // tell the addon
+      const next = selectedAdSet.nextPending(); // tell the addon
 
       if (next) {
 
@@ -972,7 +974,7 @@
 
     } else if ($('#container').hasClass('lightbox')) {
 
-      var $item = $('.item.inspected');
+      const $item = $('.item.inspected');
 
       // reset the class to the group class
       setItemClass($item, selectedAdSet.groupState());
@@ -1014,9 +1016,9 @@
   function findAdById(id) {
     if (gAdSets == undefined || gAdSets == null) return
 
-    for (var i = 0, j = gAdSets.length; i < j; i++) {
+    for (let i = 0, j = gAdSets.length; i < j; i++) {
 
-      var childIdx = gAdSets[i].childIdxForId(id);
+      const childIdx = gAdSets[i].childIdxForId(id);
 
       if (childIdx > -1) {
 
@@ -1033,9 +1035,9 @@
   }
 
   function findItemDivByGid(gid) {
-
-    var $item, items = $('.item');
-    for (var i = 0; i < items.length; i++) {
+    let $item;
+    const items = $('.item');
+    for (let i = 0; i < items.length; i++) {
 
       $item = $(items[i]);
       if (parseInt($item.attr('data-gid')) === gid)
@@ -1047,7 +1049,7 @@
 
   function findAdSetByGid(gid) {
 
-    for (var i = 0, j = gAdSets.length; i < j; i++) {
+    for (let i = 0, j = gAdSets.length; i < j; i++) {
 
       if (gAdSets[i].gid === gid)
         return gAdSets[i];
@@ -1059,8 +1061,8 @@
   function zoomIn(immediate) {
 
     // calculate the suitable zoomIdx by userZoomScale
-    var previousState = zoomIdx;
-    for (var i = 0; zoomIdx === previousState && i < Zooms.length; i++) {
+    const previousState = zoomIdx;
+    for (let i = 0; zoomIdx === previousState && i < Zooms.length; i++) {
 
       if (userZoomScale === Zooms[i])
         zoomIdx = i;
@@ -1074,8 +1076,8 @@
   function zoomOut(immediate) {
 
     // calculate the suitable zoomIdx by userZoomScale
-    var previousState = zoomIdx;
-    for (var i = 0; zoomIdx === previousState && i < Zooms.length - 1; i++) {
+    const previousState = zoomIdx;
+    for (let i = 0; zoomIdx === previousState && i < Zooms.length - 1; i++) {
 
       if (userZoomScale === Zooms[i])
         zoomIdx = i;
@@ -1111,7 +1113,7 @@
 
     //log('setZoom('+idx+','+(immediate===true)+')');
 
-    var $container = $('#container');
+    const $container = $('#container');
 
     // Disable transitions
     immediate && $container.addClass('notransition');
@@ -1131,13 +1133,7 @@
 
   function onscreen($this, winW, winH, scale, percentVisible) {
 
-    var off = $this.offset(),
-      w = $this.width() * scale,
-      h = $this.height() * scale,
-      minX = (-w * (1 - percentVisible)),
-      maxX = (winW - (w * percentVisible)),
-      minY = (-h * (1 - percentVisible)),
-      maxY = (winH - (h * percentVisible));
+    const off = $this.offset(), w = $this.width() * scale, h = $this.height() * scale, minX = (-w * (1 - percentVisible)), maxX = (winW - (w * percentVisible)), minY = (-h * (1 - percentVisible)), maxY = (winH - (h * percentVisible));
 
     // console.log('onscreen() :: trying: '+Zooms[zoomIdx]+"%",$this.attr('data-gid'),off.left, minX, maxX);
 
@@ -1151,9 +1147,9 @@
 
   function asAdArray(adsets) { // remove
 
-    var ads = [];
-    for (var i = 0, j = adsets.length; i < j; i++) {
-      for (var k = 0, m = adsets[i].children.length; k < m; k++)
+    const ads = [];
+    for (let i = 0, j = adsets.length; i < j; i++) {
+      for (let k = 0, m = adsets[i].children.length; k < m; k++)
         ads.push(adsets[i].children[k]);
     }
     return ads;
@@ -1193,9 +1189,9 @@
     });
 
     /////////// DRAG-STAGE ///////////
-    var offsetX = 0;
-    var offsetY = 0;
-    var container_div = document.getElementById('container');
+    let offsetX = 0;
+    let offsetY = 0;
+    const container_div = document.getElementById('container');
 
     container_div.addEventListener('mousedown', mouseDown, false);
     window.addEventListener('mouseup', mouseUp, false);
@@ -1213,29 +1209,29 @@
     }
 
     function mouseOnAd(mouseX, mouseY){
-      var ads = $(".ad")
-      for(var i = 0; i < ads.length; i++){
-        var itemTop = ads[i].getBoundingClientRect().top;
-        var itemRight = ads[i].getBoundingClientRect().left + ads[i].getBoundingClientRect().width;
-        var itemBottom = ads[i].getBoundingClientRect().top + ads[i].getBoundingClientRect().height;
-        var itemLeft = ads[i].getBoundingClientRect().left;
+      const ads = $(".ad");
+      for(let i = 0; i < ads.length; i++){
+        const itemTop = ads[i].getBoundingClientRect().top;
+        const itemRight = ads[i].getBoundingClientRect().left + ads[i].getBoundingClientRect().width;
+        const itemBottom = ads[i].getBoundingClientRect().top + ads[i].getBoundingClientRect().height;
+        const itemLeft = ads[i].getBoundingClientRect().left;
         if(mouseX > itemLeft && mouseX < itemRight && mouseY > itemTop && mouseY < itemBottom) return true;
       }
       return false;
     }
 
 
-    var divMove = function(e){
+    const divMove = function(e){
         draggingVault = false;
         if(mouseOnAd(e.pageX, e.pageY)){
           draggingVault = true;
         }
 
-        var x_change = e.pageX - offsetX;
-        var y_change = e.pageY - offsetY;
+        const x_change = e.pageX - offsetX;
+        const y_change = e.pageY - offsetY;
 
-        var ml = parseInt(container_div.style.getPropertyValue("margin-left"));
-        var mt = parseInt(container_div.style.getPropertyValue("margin-top"));
+        let ml = parseInt(container_div.style.getPropertyValue("margin-left"));
+        let mt = parseInt(container_div.style.getPropertyValue("margin-top"));
 
         container_div.style.marginLeft = (ml+=x_change) + 'px';
         container_div.style.marginTop = (mt+=y_change) + 'px';
@@ -1298,15 +1294,14 @@
 
         case "delete":
 
-          var ids = selectedAdSet.childIds(),
-            $item = findItemDivByGid(selectedAdSet.gid);
+          const ids = selectedAdSet.childIds(), $item = findItemDivByGid(selectedAdSet.gid);
 
           // remove the adset item from the DOM
           $item.remove();
 
           // remove each ad from the full-adset
           gAds = gAds.filter(function (ad) {
-            for (var i = 0, len = ids.length; i < len; i++) {
+            for (let i = 0, len = ids.length; i < len; i++) {
               if (ad.id === ids[i])
                 return false;
             }
@@ -1342,8 +1337,8 @@
       }
 
       // rawDeltaY denotes how fast the mousewheel got scrolled
-      var rawDeltaY = e.deltaY * e.deltaFactor;
-      var scale = (Math.abs(rawDeltaY) >= 100) ? rawDeltaY / 100 : rawDeltaY / 10;
+      const rawDeltaY = e.deltaY * e.deltaFactor;
+      const scale = (Math.abs(rawDeltaY) >= 100) ? rawDeltaY / 100 : rawDeltaY / 10;
 
       dynamicZoom(scale);
     });
@@ -1356,14 +1351,16 @@
   // If we get too many cross-domain duplicate images, we may need to revisit
   // -- called just once per layout
   function createAdSets(ads) {
-
     //console.log('Vault-Slider.createAdSets: ' + ads.length + '/' + gAds.length + ' ads');
 
-    var key, ad, hash = {},
-      adsets = [];
+    let key;
+
+    let ad;
+    const hash = {};
+    const adsets = [];
 
     // set hidden val for each ad
-    for (var i = 0, j = ads.length; i < j; i++) {
+    for (let i = 0, j = ads.length; i < j; i++) {
 
       ad = ads[i];
 
@@ -1395,11 +1392,10 @@
   }
 
   function repack() {
-
-    var done = false,
-      $items = $(".item"),
-      visible = $items.length,
-      $container = $('#container');
+    let done = false;
+    const $items = $(".item");
+    const visible = $items.length;
+    const $container = $('#container');
 
     setTimeout(function () {
       if (!done) $('#loading-img').show();
@@ -1407,11 +1403,11 @@
 
     showAlert(visible ? false : 'no ads found');
 
-    var loader = imagesLoaded($container, function () {
+    const loader = imagesLoaded($container, function () {
 
       if (visible > 1) {
 
-        var p = new Packery('#container', {
+        const p = new Packery('#container', {
 
           centered: {
             y: 10000
@@ -1446,7 +1442,7 @@
     // three special modes:
     // all three special modes: remember brush
 
-    var lastBrush = null;
+    let lastBrush = null;
 
     if (mode!= undefined && !d3.select('.brush').empty()) {
       lastBrush = {};
@@ -1469,39 +1465,39 @@
     }
 
     // setting up the position of the chart
-    var iconW = 100;
+    const iconW = 100;
 
     try {
-      var width = parseInt(d3.select("#stage").style("width")) -
+      const width = parseInt(d3.select("#stage").style("width")) -
         (margin.left + margin.right + iconW);
     } catch (e) {
       throw Error("[D3] NO STAGE (page-not-ready?)");
     }
 
     // finding the first and last ad
-    var minDate = d3.min(gAds, function (d) {
-        return d.foundTs;
-      }),
-      maxDate = d3.max(gAds, function (d) {
-        return d.foundTs;
-      });
+    const minDate = d3.min(gAds, function (d) {
+              return d.foundTs;
+            }),
+          maxDate = d3.max(gAds, function (d) {
+            return d.foundTs;
+          });
 
     // mapping the scales
-    var xScale = d3.time.scale()
+    const xScale = d3.time.scale()
       .domain([minDate, maxDate])
       .range([0, width]);
 
     // create an array of dates
-    var map = gAds.map(function (d) {
+    const map = gAds.map(function (d) {
       return parseInt(xScale(d.foundTs));
     });
 
     // setup the histogram layout
-    var histogram = d3.layout.histogram()
+    const histogram = d3.layout.histogram()
       .bins(400)(map);
 
     // setup the x axis
-    var xAxis = d3.svg.axis()
+    const xAxis = d3.svg.axis()
       .scale(xScale)
       .tickFormat(d3.time.format.multi([
         [".%L", function (d) {
@@ -1531,7 +1527,7 @@
       ])).ticks(7);
 
     // position the SVG
-    var svg = d3.select("#svgcon")
+    const svg = d3.select("#svgcon")
       .append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", /*height +*/ margin.top + margin.bottom)
@@ -1551,16 +1547,16 @@
       .attr("fill", "#000")
       .attr("fill-opacity", ".5");
 
-    var barw = histogram[0].dx - 1; //relative width
+    const barw = histogram[0].dx - 1; //relative width
 
     // Create groups for the bars
-    var bars = svg.selectAll(".bar")
+    const bars = svg.selectAll(".bar")
       .data(histogram)
       .enter()
       .append("g");
 
     // Y scale
-    var yScale = d3.scale.linear()
+    const yScale = d3.scale.linear()
         .domain([0, d3.max(histogram, function(d) { return d.length; })])
         .range([-2, -46]);
 
@@ -1578,13 +1574,13 @@
       .attr("style", "stroke-width:" + barw + "; stroke-dasharray: 1,0.5; stroke: #999");
 
     // setup the brush
-     var bExtent = [computeMinDateFor(gAds, minDate), maxDate],
-      brush = d3.svg.brush()
-      .x(xScale)
-      .extent(bExtent)
-      .on("brushend", brushend);
+     const bExtent = [computeMinDateFor(gAds, minDate), maxDate],
+           brush = d3.svg.brush()
+           .x(xScale)
+           .extent(bExtent)
+           .on("brushend", brushend);
 
-      var gBrush = svg.append("g")
+      const gBrush = svg.append("g")
         .attr("class", "brush")
         .call(brush);
 
@@ -1609,7 +1605,7 @@
 
       if (lastBrush && mode!= undefined) {
         // map all values if resize
-        var r =  mode == "resize" ? d3.select('.chart-bg').attr("width") / lastBrush.width : 1;
+        const r =  mode == "resize" ? d3.select('.chart-bg').attr("width") / lastBrush.width : 1;
         d3.select(".extent").attr("width", lastBrush.extentWidth * r);
         d3.select(".extent").attr("x", lastBrush.extentX * r);
         d3.select(".resize.w").attr("transform", "translate(" + lastBrush.w * r +",0)");
@@ -1635,7 +1631,7 @@
         break;
       case "update":
         // console.log(gMin, new Date())
-        var ext = [gMin, new Date()];
+        const ext = [gMin, new Date()];
         doLayout(runFilter(ext), true)
         break;
       default:
@@ -1666,7 +1662,7 @@
         uDom("a[class=showing-help]").addClass("help-mark")
       }
 
-      var filtered = dateFilter(gMin, gMax);
+      const filtered = dateFilter(gMin, gMax);
 
       return gAdSets && gAds.length < MaxStartNum ? filterAdSets(filtered) :
         (gAdSets = createAdSets(filtered));
@@ -1685,9 +1681,9 @@
 
       //console.log('Vault-slider.filterAdSets: ' + ads.length + '/' + gAds.length + ' ads');
 
-      var sets = [];
-      for (var i = 0, j = ads.length; i < j; i++) {
-        for (var k = 0, l = gAdSets.length; k < l; k++) {
+      const sets = [];
+      for (let i = 0, j = ads.length; i < j; i++) {
+        for (let k = 0, l = gAdSets.length; k < l; k++) {
 
           if (gAdSets[k].childIdxForId(ads[i].id) > -1) {
 
@@ -1704,7 +1700,7 @@
       if (ads && ads.length) {
 
         ads.sort(byField('-foundTs')); // or slice?
-        var subset = ads.slice(0, MaxStartNum);
+        const subset = ads.slice(0, MaxStartNum);
         return subset[subset.length - 1].foundTs;
       }
       return min;
@@ -1714,10 +1710,10 @@
 
       //log('dateFilter: min='+min+', max='+max);
 
-      var filtered = [];
+      const filtered = [];
 
       // NOTE: always need to start from full-set (all) here
-      for (var i = 0, j = gAds.length; i < j; i++) {
+      for (let i = 0, j = gAds.length; i < j; i++) {
 
         if (!(gAds[i].foundTs < min || gAds[i].foundTs > max)) {
 
@@ -1729,8 +1725,8 @@
     }
 
     function brushend() {
-      var lastgSliderRight = gSliderRight;
-      var lastgSliderLeft = gSliderLeft;
+      const lastgSliderRight = gSliderRight;
+      const lastgSliderLeft = gSliderLeft;
       gSliderRight = d3.select('.w.resize')[0][0].attributes.transform.value;
       gSliderLeft = d3.select('.e.resize')[0][0].attributes.transform.value;
 
@@ -1739,7 +1735,7 @@
       if (gSliderRight === lastgSliderRight && gSliderLeft === lastgSliderLeft) {
         return;
       } else {
-        var filtered = runFilter(d3.event.target.extent());
+        const filtered = runFilter(d3.event.target.extent());
         filtered && doLayout(filtered);
       }
     }
@@ -1747,7 +1743,7 @@
 
   /********************************************************************/
 
-  var TEXT_MINW = 150,
+  const TEXT_MINW = 150,
     TEXT_MAXW = 450;
 
   function AdSet(ad) {
@@ -1765,9 +1761,9 @@
 
   AdSet.prototype.childIds = function () {
 
-    var ids = [];
+    const ids = [];
 
-    for (var i = 0, j = this.children.length; i < j; i++) {
+    for (let i = 0, j = this.children.length; i < j; i++) {
 
       this.children[i] && ids.push(this.children[i].id);
     }
@@ -1777,7 +1773,7 @@
 
   AdSet.prototype.childIdxForId = function (id) {
 
-    for (var i = 0, j = this.children.length; i < j; i++) {
+    for (let i = 0, j = this.children.length; i < j; i++) {
 
       if (this.children[i].id === id)
         return i;
@@ -1793,7 +1789,7 @@
 
   AdSet.prototype.state = function (i) {
 
-    var ad = this.child(i) || i;
+    const ad = this.child(i) || i;
 
     if (!ad) console.warn('invalid index!');
 
@@ -1816,7 +1812,7 @@
 
   AdSet.prototype.failedCount = function () {
 
-    var containerObj = this;
+    const containerObj = this;
 
     return this.children.filter(function (d) {
 
@@ -1827,7 +1823,7 @@
 
   AdSet.prototype.dntCount = function () {
 
-    var containerObj = this;
+    const containerObj = this;
 
     return this.children.filter(function (d) {
 
@@ -1847,10 +1843,10 @@
 
   AdSet.prototype.nextPending = function () {
 
-    var ads = this.children.slice();
+    const ads = this.children.slice();
     ads.sort(byField('-foundTs'));
 
-    for (var i = 0, j = ads.length; i < j; i++) {
+    for (let i = 0, j = ads.length; i < j; i++) {
 
       if (ads[i].visitedTs === 0) // pending
         return ads[i];
@@ -1870,12 +1866,11 @@
   };
 
   function createGid(ad) {
+    let hash = 0;
+    const key = computeHash(ad);
 
-    var hash = 0,
-      key = computeHash(ad);
-
-    for (var i = 0; i < key.length; i++) {
-      var code = key.charCodeAt(i);
+    for (let i = 0; i < key.length; i++) {
+      const code = key.charCodeAt(i);
       hash = ((hash << 5) - hash) + code;
       hash = hash & hash; // Convert to 32bit integer
     }
@@ -1898,17 +1893,17 @@
    */
   AdSet.prototype.groupState = function () {
 
-    var visited = this.visitedCount();
+    const visited = this.visitedCount();
 
     if (visited) return 'visited';
 
-    var dnts = this.dntCount();
+    const dnts = this.dntCount();
 
     if (dnts === this.children.length) {
       return 'dnt-allowed';
     }
 
-    var failed = this.failedCount();
+    const failed = this.failedCount();
 
     return failed ? 'failed' : 'pending';
   };
@@ -1921,5 +1916,4 @@
   $('#import').on('click', startImportFilePicker);
   $('#importFilePicker').on('change', handleImportAds);
   $('#reset').on('click', clearAds);
-
 })();
