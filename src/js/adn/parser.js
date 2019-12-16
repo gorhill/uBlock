@@ -25,8 +25,7 @@
 
   if ( typeof vAPI !== 'object' ) return; // injection failed
 
-  // no ad extraction in incognito windows (see #236), or parser already exists
-  if (vAPI.chrome && chrome.extension.inIncognitoContext || typeof vAPI.adCheck === 'function')
+  if (typeof vAPI.adCheck === 'function')
     return;
 
   vAPI.adCheck = function (elem) {
@@ -335,18 +334,106 @@
         }
 
         logP('Checking children of', elem);
+
         var imgs = elem.querySelectorAll('img');
         if (imgs.length) {
           findImageAds(imgs);
         }
         else {
-          findBgImage(elem) || logP('No images in children of', elem);
+          logP('No img found, check other cases', elem);
+
+          // if no img found within the element
+          findGoogleResponsiveDisplayAd(elem) || findBgImage(elem) || logP('No images in children of', elem);
         }
 
         // and finally check for text ads
         vAPI.textAdParser.process(elem);
       }
     };
+
+
+
+    var findGoogleResponsiveDisplayAd = function(elem) {
+      // a#mys-content href
+      //   div.GoogleActiveViewElement
+      //   -> canvas.image background-Image
+      //   -> div.title
+      //   -> div.row-container > .body
+
+      var googleDisplayAd = elem.querySelector('.GoogleActiveViewElement');
+      if (!googleDisplayAd) return;
+      logP("[Parser] Google Responsive Display Ad")
+
+      var img = googleDisplayAd.querySelector('canvas.image');
+
+      if (img) {
+          // img case
+          var src, link, targetURL;
+
+          if (elem.tagName == "A" && elem.id == "mys-content") {
+            link = elem
+          } else {
+            link = elem.querySelector('a#mys-content');
+          }
+
+          if (link && link.hasAttribute("href")) {
+            targetURL = link.getAttribute("href");
+          } else if(link && !link.hasAttribute("href")){
+            var clickableElement = img;
+            // clickableElement.addEventListener("mousedown", function(){
+            //   console.log("Clicked by adnauseam!")
+            // })
+            // if no href, fake click event
+            if (document.createEvent) {
+                var ev = document.createEvent('HTMLEvents');
+                ev.initEvent('mousedown', true, false);
+                clickableElement.dispatchEvent(ev);
+            }
+          }
+
+        var attribute = getComputedStyle(img).backgroundImage;
+        src = attribute.match(/\((.*?)\)/)[1].replace(/('|")/g,'');
+        if(!targetURL) targetURL = getTargetUrl(img);
+
+        if (img && src && targetURL){
+          createImageAd(img, src, targetURL);
+        } else {
+          logP("[Google Responsive Display Ad] Can't find element", img, src, targetURL);
+        }
+
+      } else {
+        // No img, trying to collect as text ad
+        var title = googleDisplayAd.querySelector('.title > span'),
+            text = googleDisplayAd.querySelector('.row-container > .body > span');
+
+        if (title && text && targetURL) {
+
+          var ad = vAPI.adParser.createAd('Ads by google responsive display ad', targetURL, {
+            title: title.innerText,
+            text: text.innerText
+          });
+
+          if (ad) {
+
+            if (vAPI.prefs.logEvents) console.log('[PARSED] Responsive Text Ad', ad);
+            notifyAddon(ad);
+            return true;
+
+          } else {
+            warnP("Fail: Unable to create Ad", document.domain, targetUrl);
+          }
+
+          return;
+        } else {
+          logP("[Text Ad Parser] Google Responsive Display Ad")
+          vAPI.textAdParser.findGoogleTextAd(elem)
+        }
+
+      }
+
+
+
+    }
 
     var processIFrame = function () {
 
@@ -357,10 +444,8 @@
         logP('Ignored cross-domain iFrame', this.getAttribute('src'));
         return;
       }
-
       var imgs = doc.querySelectorAll('img');
       if (imgs.length) {
-
         findImageAds(imgs);
       }
       else {

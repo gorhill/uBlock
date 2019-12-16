@@ -240,7 +240,7 @@ const renderFilterLists = function(soft) {
      if (groupKey === 'multipurpose') groupKey = 'Other';
 
         let groupName = groupNames.get(groupKey);
-        
+
         if ( liGroup === null ) {
             liGroup = listGroupTemplate.clone().nodeAt(0);
 
@@ -329,6 +329,7 @@ const renderFilterLists = function(soft) {
         const importWidget = uDom('.listEntry.toImport').detach();
 
         // Visually split the filter lists in purpose-based groups
+
         const ulLists = document.querySelector('#lists');
         const groups = groupsFromLists(details.available);
         const groupKeys = [
@@ -340,24 +341,25 @@ const renderFilterLists = function(soft) {
             'annoyances',
             'multipurpose',
             'regions',
-            'custom'
+            'multipurpose' //ADN
         ];
+
         document.body.classList.toggle('hideUnused', mustHideUnusedLists('*'));
 
         // ADN: move the lists in these groups to default/Essentials
-        var toOther = ['ads', 'privacy'];
+        const toOther = ['ads', 'privacy'];
         for (let i = 0; i < toOther.length; i++) {
             Array.prototype.push.apply(groups.get('multipurpose'), groups.get(toOther[i]));
             delete groups[toOther[i]];
-            var index = groupKeys.indexOf(toOther[i]);
+            let index = groupKeys.indexOf(toOther[i]);
             groupKeys.splice(index,1);
         }
 
 
         // ADN: move these specific lists to default/Essentials
-        var toDefault = [ 'easylist', 'easyprivacy', 'ublock-abuse' ];
+        const toDefault = [ 'easylist', 'easyprivacy', 'ublock-abuse' ];
         for (let i = 0; i < toDefault.length; i++) {
-            var idx = groups.get('multipurpose').indexOf(toDefault[i]);
+            let idx = groups.get('multipurpose').indexOf(toDefault[i]);
             if (idx > -1) {
               groups.get('default').push(groups.get('multipurpose').splice(idx, 1)[0]);
             }
@@ -526,10 +528,17 @@ const onRemoveExternalList = function(ev) {
 
 /******************************************************************************/
 
+<<<<<<< HEAD
 const onPurgeClicked = function(ev) {
     const button = uDom(ev.target);
     const liEntry = button.ancestors('[data-listkey]');
     const listKey = liEntry.attr('data-listkey');
+=======
+var onPurgeClicked = function(ev) {
+    var button = uDom(ev.target);
+    var liEntry = button.ancestors('[data-listkey]');
+    var listKey = liEntry.attr('data-listkey');
+>>>>>>> origin/master
     if ( !listKey ) { return; }
 
     messaging.send('dashboard', { what: 'purgeCache', assetKey: listKey });

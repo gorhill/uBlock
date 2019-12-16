@@ -114,9 +114,19 @@ const whitelistChanged = function() {
 cmEditor.on('changes', whitelistChanged);
 
 /******************************************************************************/
+const buttonUpdateEff = function() {
+     // Only update eff list
+     // var effEntry = uDom(".listEntry[data-listkey='eff']");
+     // effEntry.addClass('obsolete');
+     // effEntry.removeClass('cached');
+     setTimeout(function(){
+        messaging.send('dashboard', { what: 'forceUpdateEff' });
+     },200);
+};
 
 const renderWhitelist = function() {
     const onRead = details => {
+
         uDom.nodeFromId('effListInput').checked = details.dntEnabled; //ADN
 
         const first = reBadHostname === undefined;
@@ -253,6 +263,7 @@ uDom('#importFilePicker').on('change', handleImportFilePicker);
 uDom('#exportWhitelistToFile').on('click', exportWhitelistToFile);
 uDom('#whitelistApply').on('click', applyChanges);
 uDom('#whitelistRevert').on('click', revertChanges);
+uDom('#buttonUpdateEff').on('click', buttonUpdateEff);
 
 renderWhitelist();
 

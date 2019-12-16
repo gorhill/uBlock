@@ -22,19 +22,18 @@
   <ul id="lists"><li class="groupEntry"><span class="geName">External Whitelists</span>
     <span class="geCount dim">(1)</span>
     <ul>
-      <li class="listEntry">
+      <li class="listEntry" data-listkey="eff">
         <input id="effListInput" type="checkbox" disabled="disabled" checked>
         <label>
           <a type="text/html" target="_blank" href="asset-viewer.html?url=eff-dnt-whitelist" data-listkey="https://www.eff.org/files/effdntlist.txt">EFF DNT Policy Whitelist‎</a>
-          <a class="fa" style="display: none;" target="_blank"></a>
+
           <a href="https://www.eff.org/dnt-policy" target="_blank">(www.eff.org)</a>
       </label>
       <a class="fa info" href="https://github.com/dhowe/AdNauseam/wiki/FAQ#what-is-the-effs-do-not-track-standard-and-how-it-is-supported-in-adnauseam" target="_blank">&#xf05a;</a>
-    <span class="counts dim"></span>
-    <span class="status unsecure" style="display: none;">http</span>
-    <span class="status new" style="display: none;" data-i18n="3pExternalListNew">new version available</span>
-    <span class="status obsolete" style="display: none;" data-i18n="3pExternalListObsolete">out of date</span>
-     <span class="status purge" style="display: none;" data-i18n="3pExternalListPurge">purge cache</span>
+      <!-- <span class="fa status obsolete" data-i18n-title="3pExternalListObsolete" title="Out of date."></span>
+      <span class="fa status cache" title="Last update: 5 minutes ago.
+Click to force an update."></span> -->
+      <button id="buttonUpdateEff" class="custom" data-i18n="3pPageUpdate"></button>
       </li>
     </ul>
   </ul>

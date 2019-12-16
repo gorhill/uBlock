@@ -6,6 +6,7 @@
 ##*[class^="img_ad"]
 ##iframe[src*="mellowads"]
 ##*[class*="Advert"]
+##*[class*="teads-"]
 
 # Generic exceptions
 tweakers.net#@#*[class*="Advert"]
@@ -13,11 +14,13 @@ tweakers.net#@#*[class*="Advert"]
 # Google map ads on Search
 google.*##.mnr-c.rl-qs-crs-t._Db > ._gt:has(._mB)
 
-# Google Advert
-###google_image_div
 
-## Testing Use
-filbert.cc#@#.adsbygoogle
+## Generic unhide for Google Ads
+#@#.adsbygoogle
+# Generic hide for Google Ads
+###google_image_div
+###mys-content
+##ins[id*="aswift"] > iframe
 
 # generichide-rules (#1466 etc)
 trustedreviews.com##*[class^="ad-"]
@@ -27,6 +30,18 @@ textmechanic.com##*[class^="adsby"]
 freebitcoin.win##iframe[src*="coinad"]
 freebitcoin.win##iframe[src*="mellowads"]
 rockpapershotgun.com##*[id^="google_ads"]
+
+atptour.com##.adtech-wrapper-ad
+
+dotabuff.com##.iasId > [class*="-container-"]
+dotabuff.com##[class*="sponsor"]
+dotabuff.com##[class*="placement"]
+||lkqd.net^$domain=www.dotabuff.com
+
+metacritic.com##.sitewide_promo
+
+spiegel.de##div[id*="google_ads_iframe"]
+spiegel.de##div[class*="Anzeige"]
 
 www.nytimes.com##.e12j3pa50
 
@@ -50,7 +65,8 @@ www.spacious.hk##.page__commercial_display_banner_box__content
 ##img[src*="ads.guava-affiliate.com"]
 ##img[src*="display-ad/"]
 
-inc.com##.teads-inread
+# teads inread video ads, found on inc.com and bbc.com
+.teads-inread
 
 www.ask.com##.tsrc_SAS
 www.ask.com###megaLabel
@@ -84,6 +100,10 @@ facebook.com##._5hn6
 www.scmp.com##*[id^="teads"]
 www.scmp.com##*[class*="teads"]
 
+#davidwalsh.name
+davidwalsh.name##.x-secondary-large
+davidwalsh.name##.sidebar-sda-large
+
 si.com#@#.ad
 si.com#@#.mobile-ad
 si.com#@#.cm-ad
@@ -115,6 +135,9 @@ www.thepiratebay.org###sky-center
 
 # cpomagazine
 cpomagazine.com##[id*="cpoma"]
+
+# delfi.lt
+delfi.lt###header-top-banner + *[class^="h"]
 
 asiaxpat.com##.header_in1
 asiaxpat.com##.megaBanner
@@ -214,6 +237,7 @@ mediapost.com##img[src*="ced.sascdn"]
 forbes.com##div[id*='ads']
 ##DIV[class*="header_ad_container"] > div
 ##DIV[class*="rec-ad"]
+/forbesprebidheader
 
 fmovies.is##.mgline
 
@@ -457,6 +481,9 @@ bitcoin.treasurebits.net##iframe[src="about:blank"]
 
 #latimes
 ||tribdss.com^$third-party^$important
+
+#kisscartoon
+||ad.kisscartoon.is^
 
 #Malware
 ||rtax.criteo.com^$important

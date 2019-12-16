@@ -1,13 +1,15 @@
 ! Homepage: https://eff.org/dnt-policy
 ! Title: EFF DNT Policy Whitelist
 ! Expires: 5 days
-! Last Scanned: Sun Jan  1 03:16:53 PST 2017
+! Last Scanned: Tue Oct 29 00:00:08 UTC 2019
 !
-! EFF generates this whitelist by scanning the Alexa top 
-! 1 million to see if a compliant Do Not Track policy is 
-! posted at /.well-known/dnt-policy.txt. EFF has no way 
-! of verifying if the domain actually complies with the 
-! policy. The whitelist is updated with each scan.
+! EFF generates this whitelist by scanning the Majestic
+! top 1 million sites
+! (https://majestic.com/reports/majestic-million)
+! to see if a compliant Do Not Track policy is posted at
+! /.well-known/dnt-policy.txt on each. EFF has no way
+! of verifying whether the domain actually complies with
+! the policy. The whitelist is updated with each scan.
 !
 ! Note that this filter list will only
 ! be effective if you enable the DNT=1
@@ -18,34 +20,102 @@
 ! dnt-policy@eff.org
 !
 !=========================================
-
+@@||65daysofstatic.com^$third-party
 @@||99designs.community^$third-party
+@@||abzugame.com^$third-party
+@@||achtung.nl^$third-party
 @@||act.eff.org^$third-party
 @@||algolianet.com^$third-party
-@@||asweetlife.org^$third-party
-@@||avatars.discourse.org^$third-party
-@@||circleforum.squarespace.com^$third-party
+@@||anidb.info^$third-party
+@@||anidb.net^$third-party
+@@||antoinegeiger.com^$third-party
+@@||bentasker.co.uk^$third-party
+@@||bergerfohr.com^$third-party
+@@||bodymindopleidingen.nl^$third-party
+@@||butdoesitfloat.com^$third-party
+@@||c1.neweggimages.com^$third-party
+@@||cargo.site^$third-party
+@@||cdn-images-1.medium.com^$third-party
+@@||cdn02.plentymarkets.com^$third-party
+@@||cdn03.plentymarkets.com^$third-party
+@@||christienmeindertsma.com^$third-party
+@@||cloudsao.com^$third-party
 @@||codepoints.net^$third-party
-@@||do-not-tracker.org^$third-party
-@@||do-not-track.org^$third-party
+@@||dabuttonfactory.com^$third-party
+@@||datawrapper.dwcdn.net^$third-party
+@@||davidquilesguillo.com^$third-party
+@@||ddg.gg^$third-party
+@@||discourse-cdn-sjc1.com^$third-party
+@@||discuss.elastic.co^$third-party
+@@||divergentdesignlab.org^$third-party
+@@||donttrack.us^$third-party
 @@||duckduckgo.com^$third-party
 @@||duckduckhack.com^$third-party
 @@||eff.org^$third-party
-@@||elyotherm.fr^$third-party
+@@||eisenmanarchitects.com^$third-party
 @@||eve.community^$third-party
-@@||firstpartysimulator.net^$third-party
-@@||firstpartysimulator.org^$third-party
-@@||geeek.org^$third-party
-@@||getfirehawk.com^$third-party
-@@||hitmanforum.com^$third-party
+@@||exposureevents.com^$third-party
+@@||favelapainting.com^$third-party
+@@||forums.envato.com^$third-party
+@@||framatube.org^$third-party
+@@||gamingonlinux.com^$third-party
+@@||geoffreybawa.com^$third-party
+@@||gerzilla.de^$third-party
+@@||gmunk.com^$third-party
+@@||goodinc.com^$third-party
+@@||gps-data-team.com^$third-party
+@@||henryhargreaves.com^$third-party
+@@||holtermand.dk^$third-party
+@@||huk.org^$third-party
+@@||iamgabz.com^$third-party
+@@||ino.com^$third-party
+@@||interparcel.com^$third-party
 @@||itsgoingdown.org^$third-party
-@@||linuxsecrets.com^$third-party
-@@||login.persona.org^$third-party
-@@||medium.com^$third-party
-@@||meta.discourse.org^$third-party
-@@||persona.org^$third-party
+@@||jms1.net^$third-party
+@@||joshuadavis.com^$third-party
+@@||justsoftwaresolutions.co.uk^$third-party
+@@||lauren-mccarthy.com^$third-party
+@@||leifpodhajsky.com^$third-party
+@@||lida.in^$third-party
+@@||lifestyleupdated.com^$third-party
+@@||lot-ek.com^$third-party
+@@||marius.systems^$third-party
+@@||mishkahenner.com^$third-party
+@@||mosaic.org^$third-party
+@@||movilesdualsim.com^$third-party
+@@||muzeeum.nl^$third-party
+@@||myarcadeplugin.com^$third-party
+@@||ngo-online.de^$third-party
+@@||openrightsgroup.org^$third-party
+@@||peertube.fr^$third-party
+@@||peertube.social^$third-party
+@@||peertube.video^$third-party
+@@||poidirectory.com^$third-party
+@@||postmarketos.org^$third-party
+@@||printedmatterartbookfairs.org^$third-party
+@@||realiseerjedroomhuis.nl^$third-party
+@@||rednoise.org^$third-party
+@@||riffreporter.de^$third-party
+@@||romain-laurent.com^$third-party
 @@||safenetforum.org^$third-party
+@@||scroll.com^$third-party
+@@||shara.li^$third-party
+@@||share.tube^$third-party
+@@||snopyta.org^$third-party
+@@||sputniko.com^$third-party
+@@||superfamous.com^$third-party
 @@||thefitrv.com^$third-party
+@@||themobymart.com^$third-party
+@@||thewrong.org^$third-party
+@@||thisispaper.com^$third-party
+@@||torrentz2.eu^$third-party
+@@||trendcounter.com^$third-party
 @@||try.discourse.org^$third-party
 @@||twittercommunity.com^$third-party
+@@||uknowhatimsayin.com^$third-party
+@@||verasity.io^$third-party
+@@||visualmelt.com^$third-party
+@@||warszawawpigulce.pl^$third-party
+@@||webcookies.org^$third-party
+@@||wikihouse.cc^$third-party
 @@||wpstagecoach.com^$third-party

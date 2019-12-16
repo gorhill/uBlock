@@ -125,7 +125,11 @@ var onMessage = function(request, sender, callback) {
         break;
 
     case 'forceUpdateAdnauseam':
-        µb.assets.updateAdNauseam();
+        µb.assets.forceUpdate("Adnauseam");
+        break;
+
+    case 'forceUpdateEff':
+        µb.assets.forceUpdate("Eff");
         break;
 
     case 'getAppData':
@@ -581,11 +585,8 @@ var onMessage = function(request, sender, callback) {
         request.entity = µb.URI.entityFromDomain(request.domain);
         response.prefs = µb.adnauseam.contentPrefs(pageStore.tabHostname); // ADN
 
-        if(!response.prefs.hidingDisabled) { // ADN
-           response.specificCosmeticFilters =
-            µb.cosmeticFilteringEngine.retrieveSpecificSelectors(request, response);
-        }
-
+        response.specificCosmeticFilters =
+        µb.cosmeticFilteringEngine.retrieveSpecificSelectors(request, response);
 
         if ( µb.canInjectScriptletsNow === false ) {
             response.scriptlets = µb.scriptletFilteringEngine.retrieve(request);

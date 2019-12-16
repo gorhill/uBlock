@@ -393,7 +393,7 @@
     /******************************** API *********************************/
 
     var process = function (elem) {
-
+        // domain specific
         if (vAPI.prefs.textAdsDisabled) {
           console.log("adn: texts-ads disabled");
           return;
@@ -410,9 +410,44 @@
         }
       }
 
+    var findGoogleTextAd = function(elem) {
+          // table
+          // -> .rhtitle
+          // -> .rhbody
+          // -> .rhurl
+
+          var div = $find(elem, 'ul > li > div > table')
+          if (!div.length) return;
+
+          var title = $find(div, '.rhtitle'),
+            text = $find(div, '.rhbody'),
+            site = $find(div, 'a.rhurl');
+
+          if (text.length && site.length && title.length) {
+
+            var ad = vAPI.adParser.createAd('Google AdSense', $attr(site, 'href'), {
+              title: $text(title),
+              text: $text(text),
+              site: $text(site)
+            });
+
+            if (ad) {
+              if (vAPI.prefs.logEvents) console.log("[PARSED] TEXT-AD", ad);
+              vAPI.adParser.notifyAddon(ad);
+            }
+
+          } else {
+            console.warn('[TEXTADS] findGoogleTextAd.fail: ', title, site, text); //title, site, text);
+          }
+
+    }
+
     /**********************************************************************/
 
-    return {  process: process };
+    return {
+      process: process,
+      findGoogleTextAd: findGoogleTextAd
+    };
 
   })();
 })();

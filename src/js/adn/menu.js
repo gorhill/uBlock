@@ -410,7 +410,7 @@
       .addClass('thumb')
       .text('Text Ad').appendTo($li);
 
-    appendAdStatus(ad,$li); 
+    appendAdStatus(ad,$li);
 
     $h3 = uDom(document.createElement('h3'));
 
@@ -421,10 +421,11 @@
       .text(decodeEntities(ad.title)).appendTo($h3);
 
     $h3.appendTo($li);
-
-    $cite = uDom(document.createElement('cite')).text(ad.contentData.site);
-    $cite.text($cite.text() + ' (#' + ad.id + ')'); // testing-only
-    $cite.appendTo($li);
+    if(ad.contentData.site) {
+      $cite = uDom(document.createElement('cite')).text(ad.contentData.site);
+      $cite.text($cite.text() + ' (#' + ad.id + ')'); // testing-only
+      $cite.appendTo($li);
+    }
 
     uDom(document.createElement('div'))
       .addClass('ads-creative')

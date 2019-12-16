@@ -144,6 +144,8 @@ var AdBlockerEnabled = new Notification({
   firstrun: true
 });
 
+AdBlockerEnabled.func = openExtPage.bind(AdBlockerEnabled);
+
 var FirefoxSetting = new Notification({
   name: 'FirefoxSetting',
   text: 'adnNotificationBrowserSetting',
@@ -152,11 +154,27 @@ var FirefoxSetting = new Notification({
   firstrun: true
 });
 
-AdBlockerEnabled.func = isFirefox() ? undefined : openExtPage.bind(AdBlockerEnabled);
+var OperaSetting = new Notification({
+  name: 'OperaSetting',
+  text: 'adnNotificationOperaSetting',
+  button: undefined,
+  link: 'https://github.com/dhowe/AdNauseam/wiki/FAQ#why-adnauseam-does-not-work-on-search-engines-in-opera',
+  firstrun: false
+});
+
+var PrivacyMode = new Notification({
+  name: 'privacyMode',
+  text: 'adnNotificationPrivacyMode',
+  button: 'adnNotificationDisable',
+  link: 'https://github.com/dhowe/AdNauseam/wiki/FAQ#does-adnauseam-respect-the-browsers-private-browsingincognito-modes',
+  firstrun: true
+});
+
+PrivacyMode.func = openAdnPage.bind(PrivacyMode);
 
 /***************************************************************************/
 
-var Notifications = [AdBlockerEnabled, HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList, AdNauseamTxt, DNTAllowed, DNTHideNotClick, DNTClickNotHide, DNTNotify, FirefoxSetting];
+var Notifications = [AdBlockerEnabled, HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList, AdNauseamTxt, DNTAllowed, DNTHideNotClick, DNTClickNotHide, DNTNotify, FirefoxSetting, OperaSetting, PrivacyMode];
 
 function Notification(m) {
 
@@ -383,7 +401,11 @@ function isMobile() {
 
 function openExtPage() {
 
-  openPage(vAPI.extensionsPage);
+  openPage(isFirefox()? 'about:addons':'chrome://extensions/');
+}
+
+function openAdnPage() {
+  openPage(isFirefox()? 'about:addons':'chrome://extensions/?id=pnjfhlmmeapfclcplcihceboadiigekg');
 }
 
 function openSettings() {
