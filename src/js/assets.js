@@ -36,7 +36,7 @@ const api = {};
 
 /******************************************************************************/
 
-var observers = [];
+const observers = [];
 
 api.addObserver = function(observer) {
     if ( observers.indexOf(observer) === -1 ) {
@@ -45,14 +45,14 @@ api.addObserver = function(observer) {
 };
 
 api.removeObserver = function(observer) {
-    var pos;
+    let pos;
     while ( (pos = observers.indexOf(observer)) !== -1 ) {
         observers.splice(pos, 1);
     }
 };
 
-var fireNotification = function(topic, details) {
-    var result, r;
+const fireNotification = function(topic, details) {
+    let result, r;
     for ( var i = 0; i < observers.length; i++ ) {
         r = observers[i](topic, details);
         if ( r !== undefined ) { result = r; }

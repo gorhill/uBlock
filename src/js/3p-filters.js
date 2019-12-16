@@ -189,7 +189,7 @@ const renderFilterLists = function(soft) {
                 )
             );
             // AdNauseam update button
-            var button = li.querySelector('#buttonUpdateAdNauseam');
+            let button = li.querySelector('#buttonUpdateAdNauseam');
             if ( button != null ) {
                 button.setAttribute(
                     'title',
@@ -209,7 +209,7 @@ const renderFilterLists = function(soft) {
 
         // ADN: add adnauseam update button
         if (listKey === "adnauseam-filters") {
-            var button = document.getElementById("buttonUpdateAdNauseam");
+            const button = document.getElementById("buttonUpdateAdNauseam");
             li.appendChild(button);
         }
 
@@ -266,7 +266,7 @@ const renderFilterLists = function(soft) {
         let ulGroup = liGroup.querySelector('.listEntries');
         if ( !listKeys ) { return liGroup; }
         listKeys.sort(function(a, b) {
-            var aTitle = listDetails.available[a].title || '',
+            const aTitle = listDetails.available[a].title || '',
               bTitle = listDetails.available[b].title || '';
 
             // ADN: push 'My filters' to last
@@ -465,12 +465,11 @@ const updateAssetStatus = function(details) {
 /*******************************************************************************/
 
 // ADN
-var availableLists = listDetails.available;
-var currentLists = listDetails.current;
-var location, availableOff, currentOff;
+const availableLists = listDetails.available, currentLists = listDetails.current;
+let availableOff, currentOff;
 
 // This check existing entries
-for ( location in availableLists ) {
+for ( let location in availableLists ) {
     if ( availableLists.hasOwnProperty(location) === false ) {
         continue;
     }
@@ -612,9 +611,9 @@ const buttonApplyHandler = function() {
 };
 /******************************************************************************/
 
-var buttonUpdateAdNauseam = function() {
+const buttonUpdateAdNauseam = function() {
     //only update adnauseam.txt
-     var adnauseamEntry = uDom(".listEntry[data-listkey='adnauseam-filters']");
+     let adnauseamEntry = uDom(".listEntry[data-listkey='adnauseam-filters']");
      adnauseamEntry.addClass('obsolete');
      adnauseamEntry.removeClass('cached');
      setTimeout(function(){
