@@ -1360,7 +1360,7 @@
     const adsets = [];
 
     // set hidden val for each ad
-    for (let i = 0, j = ads.length; i < j; i++) {
+    for (let i = 0; i < ads.length; i++) {
 
       ad = ads[i];
 
@@ -1383,7 +1383,7 @@
 
     // sort adset children by foundTs
 
-    for (i = 0, j = adsets.length; i < j; i++) {
+    for (let i = 0; i < adsets.length; i++) {
 
       adsets[i].children.sort(byField('-foundTs'));
     }
@@ -1466,9 +1466,9 @@
 
     // setting up the position of the chart
     const iconW = 100;
-
+    let width;
     try {
-      const width = parseInt(d3.select("#stage").style("width")) -
+      width = parseInt(d3.select("#stage").style("width")) -
         (margin.left + margin.right + iconW);
     } catch (e) {
       throw Error("[D3] NO STAGE (page-not-ready?)");
