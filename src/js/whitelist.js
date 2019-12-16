@@ -135,6 +135,7 @@ const renderWhitelist = function() {
         if ( toAdd.size !== 0 ) {
             details.whitelist.push(...Array.from(toAdd).map(a => `# ${a}`));
         }
+        console.log(details);
         details.whitelist.sort((a, b) => {
             const ad = directiveFromLine(a);
             const bd = directiveFromLine(b);

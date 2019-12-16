@@ -855,7 +855,6 @@ vAPI.tabs.registerListeners();
     // Tab is not bound
     if ( pageStore === undefined ) {
         this.updateTitle(tabId);
-        console.log(this.PageStore)
         pageStore = this.PageStore.factory(tabId, context);
         this.pageStores.set(tabId, pageStore);
         this.pageStoresToken = Date.now();

@@ -1816,10 +1816,9 @@
   };
 
   var verifyFirefoxSetting = exports.verifyFirefoxSetting = function () {
-
-      if (typeof browser === 'undefined') return; // if not firefox
-
-      var trackingProtectionMode = browser.privacy.websites.trackingProtectionMode.get({});
+      var tpmFunction = browser.privacy.websites.trackingProtectionMode;
+      if (typeof tpmFunction === 'undefined') return; // if not firefox
+      var trackingProtectionMode = tpmFunction.get({});
 
       trackingProtectionMode.then((got) => {
         // console.log("FF:", got.value);

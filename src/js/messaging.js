@@ -142,7 +142,7 @@ var onMessage = function(request, sender, callback) {
     case 'getWhitelist':
         response = {
             dntEnabled: µb.adnauseam.dnt.enabled(),
-            whitelist: µb.stringFromWhitelist(µb.netWhitelist),
+            whitelist: µb.arrayFromWhitelist(µb.netWhitelist),
             reBadHostname: µb.reWhitelistBadHostname.source,
             reHostnameExtractor: µb.reWhitelistHostnameExtractor.source
         };
@@ -547,7 +547,7 @@ var onMessage = function(request, sender, callback) {
 
     case 'shouldRenderNoscriptTags':
         if ( pageStore === null ) { break; }
-        const fctxt = µb.filteringContext.fromTabId.tabId;
+        const fctxt = µb.filteringContext.fromTabId(tabId);
         if ( pageStore.filterScripting(fctxt, undefined) ) {
             vAPI.tabs.injectScript(
                 tabId,

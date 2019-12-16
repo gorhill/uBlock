@@ -239,9 +239,11 @@ const renderFilterLists = function(soft) {
      if (groupKey === 'default') groupKey = 'Essentials';
      if (groupKey === 'multipurpose') groupKey = 'Other';
 
+        let groupName = groupNames.get(groupKey);
+        
         if ( liGroup === null ) {
             liGroup = listGroupTemplate.clone().nodeAt(0);
-            let groupName = groupNames.get(groupKey);
+
             if ( groupName === undefined ) {
                 groupName = vAPI.i18n('3pGroup' + groupKey.charAt(0).toUpperCase() + groupKey.slice(1));
                 groupNames.set(groupKey, groupName);

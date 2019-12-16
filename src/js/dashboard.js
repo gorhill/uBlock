@@ -88,10 +88,12 @@ const discardUnsavedData = function(synchronous = false) {
 const loadDashboardPanel = function(pane = '') {
     if ( pane === '' ) {
         pane = vAPI.localStorage.getItem('dashboardLastVisitedPane');
+
         if ( pane === null ) {
-             pane = 'settings.html';
+             pane = 'options.html';
         }
     }
+    console.log(pane);
     const tabButton = uDom(`[href="#${pane}"]`);
     if ( !tabButton || tabButton.hasClass('selected') ) { return; }
     const loadPane = ( ) => {
@@ -126,13 +128,12 @@ vAPI.messaging.send('dashboard', { what: 'canUpdateShortcuts' }, response => {
 vAPI.messaging.addChannelListener('adnauseam', function (request) {
 
   // console.log("dashboard.js::BROADCAST", request);
-
-  switch (request.what) {
-  case 'notifications':
-
-    loadDashboardPanel(request.notifications);
-    break;
-  }
+  // TODO: Fix settings notifications
+  // switch (request.what) {
+  // case 'notifications':
+  //   loadDashboardPanel(request.notifications);
+  //   break;
+  // }
 });
 
 resizeFrame();
@@ -157,15 +158,16 @@ uDom.onLoad(function () {
     uDom('.tabButton').on('click', onTabClickHandler);
     uDom('#notifications').on('click', resizeFrame);
 
-     vAPI.messaging.send(
-      'adnauseam', {
-          what: 'verifyAdBlockers'
-        }, function() {
-          vAPI.messaging.send(
-          'adnauseam', {
-            what: 'getNotifications'
-          }, loadDashboardPanel);
-      });
+     // TODO: Fix settings notifications
+     // vAPI.messaging.send(
+     //  'adnauseam', {
+     //      what: 'verifyAdBlockers'
+     //    }, function() {
+     //      vAPI.messaging.send(
+     //      'adnauseam', {
+     //        what: 'getNotifications'
+     //      }, loadDashboardPanel);
+     //  });
 
   });
 
