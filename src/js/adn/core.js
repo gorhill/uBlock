@@ -625,8 +625,6 @@
       xhr.onerror = onVisitError;
       xhr.ontimeout = onVisitError;
       xhr.responseType = ''; // 'document'?;
-
-      xhr.setRequestHeader("Referer", µb.URI.hostnameFromURI(ad.pageUrl));
       xhr.send();
     } catch (e) {
 
