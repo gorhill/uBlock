@@ -239,8 +239,6 @@
        var ads = [],
         divs = $find(div, 'ul > li');
 
-
-
       for (var i = 0; i < divs.length; i++) {
 
         var title, subs, site, text;
@@ -270,6 +268,31 @@
       }
 
       return ads;
+    }
+
+    var youtubeAds = function (div) {
+
+      var ad, target, src,
+          banner = $find(div, '#banner'),
+          title = $find(div,'#title');
+
+     src = div.style.cssText.match(/url\((.*?)\)/)[1];
+     var parsed = src.replace(/\\/g,"");
+
+     if (banner.length) {
+       target = $attr(banner, 'href'); //relative url
+       var proto = window.location.protocol || 'http';
+       target = vAPI.adParser.normalizeUrl(proto, "youtube.com", target);
+     }
+
+      if (title.length && target.length && parsed.length) {
+        ad = vAPI.adParser.createAd('youtube', target, {
+          title: $text(title),
+          src: parsed
+        });
+      }
+
+      return [ad];
     }
 
     // TODO: replace with core::domainFromURI
@@ -372,6 +395,11 @@
       handler: googleAdsText,
       name: 'google - third party',
       domain: /^.*\.bbc\.com/i
+    }, {
+      selector: 'ytd-video-masthead-ad-advertiser-info-renderer',
+      handler: youtubeAds,
+      name: 'youtube ads',
+      domain: /^.*youtube\.com/i
     }];
 
     var checkFilters = function (elem) {
