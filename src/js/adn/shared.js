@@ -164,7 +164,7 @@ const OperaSetting = new Notification({
 const PrivacyMode = new Notification({
   name: 'privacyMode',
   text: 'adnNotificationPrivacyMode',
-  button: 'adnNotificationDisable',
+  button: undefined,
   link: 'https://github.com/dhowe/AdNauseam/wiki/FAQ#does-adnauseam-respect-the-browsers-private-browsingincognito-modes',
   firstrun: true
 });

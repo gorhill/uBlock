@@ -458,7 +458,7 @@ vAPI.tabs.open = function(details) {
             // Opening a tab from incognito window won't focus the window
             // in which the tab was opened
             const focusWindow = tab => {
-                if ( tab.active && browser.windows instanceof Object ) {
+                if ( tab && tab.active && browser.windows instanceof Object ) {
                     browser.windows.update(tab.windowId, { focused: true });
                 }
             };

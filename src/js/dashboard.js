@@ -93,7 +93,6 @@ const loadDashboardPanel = function(pane = '') {
              pane = 'options.html';
         }
     }
-    console.log(pane);
     const tabButton = uDom(`[href="#${pane}"]`);
     if ( !tabButton || tabButton.hasClass('selected') ) { return; }
     const loadPane = ( ) => {

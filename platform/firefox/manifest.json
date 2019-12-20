@@ -1,5 +1,5 @@
 {
-  "author": "All uBlock Origin contributors",
+  "author": "Daniel C. Howe",
   "background": {
     "page": "background.html"
   },
@@ -9,12 +9,12 @@
       "16": "img/icon_16.png",
       "32": "img/icon_32.png"
     },
-    "default_title": "uBlock Origin",
-    "default_popup": "popup.html"
+    "default_title": "AdNauseam",
+    "default_popup": "menu.html"
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "uBlock0@raymondhill.net",
+      "id": "adnauseam@rednoise.org",
       "strict_min_version": "55.0"
     }
   },
@@ -39,7 +39,9 @@
       "js": [
         "/js/vapi.js",
         "/js/vapi-client.js",
-        "/js/contentscript.js"
+        "/js/contentscript.js",
+        "js/adn/textads.js",
+        "js/adn/parser.js"
       ],
       "run_at": "document_start",
       "all_frames": true
@@ -59,14 +61,13 @@
   "default_locale": "en",
   "description": "__MSG_extShortDesc__",
   "icons": {
-    "16": "img/ublock.svg",
-    "48": "img/ublock.svg",
-    "96": "img/ublock.svg"
+    "48": "img/icon-48.png",
+    "96": "img/icon-96.png"
   },
   "manifest_version": 2,
-  "name": "uBlock Origin",
+  "name": "AdNauseam",
   "options_ui": {
-    "page": "dashboard.html",
+    "page": "options.html",
     "open_in_tab": true
   },
   "permissions": [

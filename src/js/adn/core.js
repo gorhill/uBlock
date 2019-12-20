@@ -1837,7 +1837,7 @@ const verifyAdBlockers = exports.verifyAdBlockers = function () {
     verifyAdBlockers();
     verifyFirefoxSetting();
     verifyOperaSetting(request);
-    verifyPrivacyMode();
+    //verifyPrivacyMode();
   };
 
   const verifyOperaSetting = exports.verifyOperaSetting = function (request) {
