@@ -125,14 +125,12 @@ vAPI.messaging.send('dashboard', { what: 'canUpdateShortcuts' }, response => {
 
 
 vAPI.messaging.addChannelListener('adnauseam', function (request) {
-
-  // console.log("dashboard.js::BROADCAST", request);
-  // TODO: Fix settings notifications
-  // switch (request.what) {
-  // case 'notifications':
-  //   loadDashboardPanel(request.notifications);
-  //   break;
-  // }
+  switch (request.what) {
+  case 'notifications':
+    renderNotifications(request.notifications, "dashboard");
+    resizeFrame();
+    break;
+  }
 });
 
 resizeFrame();
@@ -157,16 +155,18 @@ uDom.onLoad(function () {
     uDom('.tabButton').on('click', onTabClickHandler);
     uDom('#notifications').on('click', resizeFrame);
 
-     // TODO: Fix settings notifications
-     // vAPI.messaging.send(
-     //  'adnauseam', {
-     //      what: 'verifyAdBlockers'
-     //    }, function() {
-     //      vAPI.messaging.send(
-     //      'adnauseam', {
-     //        what: 'getNotifications'
-     //      }, loadDashboardPanel);
-     //  });
+     vAPI.messaging.send(
+      'adnauseam', {
+          what: 'verifyAdBlockers'
+        }, function() {
+          vAPI.messaging.send(
+          'adnauseam', {
+            what: 'getNotifications'
+          }, function(notifications){
+            renderNotifications(notifications,"dashboard");
+            resizeFrame();
+          });
+      });
 
   });
 
