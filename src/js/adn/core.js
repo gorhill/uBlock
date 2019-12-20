@@ -46,7 +46,7 @@
   // targets on these domains are never internal (may need to be regex)
   var internalLinkDomains = ['google.com', 'asiaxpat.com', 'nytimes.com',
     'columbiagreenemedia.com','163.com', 'sohu.com','zol.com.cn','baidu.com',
-    'yahoo.com','facebook.com'
+    'yahoo.com','facebook.com','youtube.com'
   ];
 
   // mark ad visits as failure if any of these are included in title

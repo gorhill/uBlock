@@ -506,12 +506,12 @@
     }
 
     return {
-
       process: process,
       createAd: createAd,
       notifyAddon: notifyAddon,
       useShadowDOM: useShadowDOM,
-      parseOnClick: parseOnClick
+      parseOnClick: parseOnClick,
+      normalizeUrl:normalizeUrl
     };
 
   };
