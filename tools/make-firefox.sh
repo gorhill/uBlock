@@ -28,15 +28,14 @@ cp platform/chromium/*.html      $DES/
 cp platform/chromium/*.json      $DES/
 cp LICENSE.txt                   $DES/
 
-cp platform/webext/manifest.json        $DES/
-cp platform/webext/vapi-usercss.js      $DES/js/
+cp platform/firefox/manifest.json        $DES/
+cp platform/firefox/vapi-usercss.js      $DES/js/
+cp platform/firefox/vapi-webrequest.js      $DES/js/
 
 echo "*** AdNauseam.firefox: concatenating content scripts"
 cat $DES/js/vapi-usercss.js > /tmp/contentscript.js
 echo >> /tmp/contentscript.js
 grep -v "^'use strict';$" $DES/js/vapi-usercss.real.js >> /tmp/contentscript.js
-echo >> /tmp/contentscript.js
-grep -v "^'use strict';$" $DES/js/vapi-usercss.pseudo.js >> /tmp/contentscript.js
 echo >> /tmp/contentscript.js
 grep -v "^'use strict';$" $DES/js/contentscript.js >> /tmp/contentscript.js
 mv /tmp/contentscript.js $DES/js/contentscript.js
@@ -64,7 +63,7 @@ if [ "$1" = all ]; then
     zip adnauseam.firefox.zip -qr $(basename $DES/)/*
     popd > /dev/null
 elif [ -n "$1" ]; then
-    echo "*** uBlock0.firefox: Creating versioned package..."
+    echo "*** AdNauseam.firefox: Creating versioned package..."
     pushd $DES > /dev/null
     zip ../$(basename $DES).xpi -qr *
     popd > /dev/null

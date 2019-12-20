@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "AdNauseam",
     "version": "{version}",
-    "applications": {
+    "browser_specific_settings": {
         "gecko": {
            "id": "adnauseam@rednoise.org",
            "strict_min_version":"55.0"
