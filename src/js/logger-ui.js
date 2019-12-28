@@ -334,6 +334,10 @@ const parseLogEntry = function(details) {
             textContent.push('++');
         } else if ( entry.filter.result === 3 ) {
             textContent.push('**');
+        } else if ( entry.filter.result === 4 ) {
+            textContent.push('~~');
+            //adn allow
+            console.log("adn allow")
         } else if ( entry.filter.source === 'redirect' ) {
             textContent.push('<<');
         } else {
@@ -711,6 +715,7 @@ const viewPort = (( ) => {
         } else if ( cells[2] === '<<' ) {
             divcl.add('redirect');
         }
+        // TODO: add dnt allow
         span = div.children[2];
         span.textContent = cells[2];
 
