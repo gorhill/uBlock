@@ -111,9 +111,9 @@
   /******************************************************************************/
 
   const onInputChanged = function (ev) {
-    const input = ev.target;
     const name = this.getAttribute('data-setting-name');
-    let value = input.value;
+    let value = input.value, input = ev.target;
+
     if (name === 'largeMediaSize') {
       value = Math.min(Math.max(Math.floor(parseInt(value, 10) || 0), 0), 1000000);
     }

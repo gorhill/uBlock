@@ -437,9 +437,9 @@
     }
 
     const processIFrame = function () {
-
+      let doc;
       try {
-        const doc = this.contentDocument || this.contentWindow.document|| this.document;
+        doc = this.contentDocument || this.contentWindow.document|| this.document;
       }
       catch(e) {
         logP('Ignored cross-domain iFrame', this.getAttribute('src'));

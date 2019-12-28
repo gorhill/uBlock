@@ -946,7 +946,7 @@ api.rmrf = function() {
 
 // Asset updater area.
 const updaterAssetDelayDefault = 120000;
-const updaterUpdated = [];
+let updaterUpdated = [];
 const updaterFetched = new Set();
 
 let updaterStatus,
