@@ -178,12 +178,12 @@
         .on('change', onInputChanged);
     });
 
-    uDom(document).on('click', 'p[data-i18n="adnFirstRunHideAllAdsDescription"] span, p[data-i18n="adnFirstRunClickingAdsDescription"] span', function() {
+    uDom('p[data-i18n="adnFirstRunHideAllAdsDescription"] span, p[data-i18n="adnFirstRunClickingAdsDescription"] span').on('click', function() {
 
         openPage('/dashboard.html#3p-filters.html');
     });
 
-    uDom(document).on('click', 'p[data-i18n="adnFirstRunBlockingMalwareDescription"] span',function (e) {
+    uDom('p[data-i18n="adnFirstRunBlockingMalwareDescription"] span').on('click',function (e) {
 
        openPage('/dashboard.html#options.html');
     });
