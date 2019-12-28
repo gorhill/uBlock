@@ -876,9 +876,9 @@ var resetUserData = function() {
             vAPI.app.restart();
         }
     };
-    µb.cacheStorage.clear(countdown); // 1
-    vAPI.storage.clear(countdown);    // 2
-    µb.saveLocalSettings(countdown);  // 3
+    µb.cacheStorage.clear().then(( ) => countdown());   // 1
+    vAPI.storage.clear(countdown);                      // 2
+    µb.saveLocalSettings(countdown);                    // 3
     vAPI.localStorage.removeItem('immediateHiddenSettings');
 };
 
