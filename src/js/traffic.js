@@ -615,7 +615,7 @@ const onHeadersReceived = function(details) {
 
    if (vAPI.isBehindTheSceneTabId(tabId)) {
 
-     // ADN: handle incoming cookies for our visits (ignore in ff for now)
+     // ADN: handle incoming cookies for our visits
      if (vAPI.chrome && µb.userSettings.noIncomingCookies) {
 
          dbug && console.log('onHeadersReceived: ', requestType, details.url, details.responseHeaders);
@@ -1194,47 +1194,6 @@ const headerValueFromName = function(headerName, headers) {
     return i !== -1 ? headers[i].value : '';
 };
 
-/******************************************************************************/
-
-vAPI.net.onBeforeRequest = {
-    urls: [
-        'http://*/*',
-        'https://*/*'
-    ],
-    extra: [ 'blocking' ],
-    callback: onBeforeRequest
-};
-
-vAPI.net.onBeforeMaybeSpuriousCSPReport = {
-    callback: onBeforeMaybeSpuriousCSPReport
-};
-
-vAPI.net.onHeadersReceived = {
-    urls: [
-        'http://*/*',
-        'https://*/*'
-    ],
-    /*types: [ // ADN
-        'main_frame',
-        'sub_frame',
-        'image',
-        'media',
-        'script'
-    ],*/
-    extra: [ 'blocking', 'responseHeaders' ],
-    callback: onHeadersReceived
-};
-
-vAPI.net.onBeforeSendHeaders = {   // ADN
-  urls: [
-    'http://*/*',
-    'https://*/*'
-  ],
-  extra: ['blocking', 'requestHeaders'],
-  callback: onBeforeSendHeaders
-};
-
-// vAPI.net.registerListeners();
 
 const strictBlockBypasser = {
     hostnameToDeadlineMap: new Map(),
@@ -1315,14 +1274,14 @@ return {
             vAPI.net.addListener(
                 'onHeadersReceived',
                 onHeadersReceived,
-                {
-                    types: [
-                        'main_frame',
-                        'sub_frame',
-                        'image',
-                        'media',
-                        'xmlhttprequest',
-                    ],
+                {   // ADN
+                    // types: [
+                    //     'main_frame',
+                    //     'sub_frame',
+                    //     'image',
+                    //     'media',
+                    //     'xmlhttprequest',
+                    // ],
                     urls: [ 'http://*/*', 'https://*/*' ],
                 },
                 [ 'blocking', 'responseHeaders' ]
