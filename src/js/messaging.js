@@ -1331,7 +1331,7 @@ let broadcastTimers = new Map();
 
 /******************************************************************************/
 
-var domSurveyFinalReport = function(tabId) {
+const domSurveyFinalReport = function(tabId) {
     broadcastTimers.delete(tabId + '-domSurveyReport');
 
     let pageStore = µb.pageStoreFromTabId(tabId);
@@ -1347,31 +1347,27 @@ var domSurveyFinalReport = function(tabId) {
 
 /******************************************************************************/
 
-var logCosmeticFilters = function(tabId, details) {
+const logCosmeticFilters = function(tabId, details) {
     if ( µb.logger.enabled === false ) {
         return;
     }
-
-    var selectors = details.matchedSelectors;
-
-    selectors.sort();
-
-    for ( var i = 0; i < selectors.length; i++ ) {
-        µb.logger.writeOne(
-            tabId,
-            'cosmetic',
-            { source: 'cosmetic', raw: '##' + selectors[i] },
-            'dom',
-            details.frameURL,
-            null,
-            details.frameHostname
-        );
+    const filter = { source: 'cosmetic', raw: '' };
+    const fctxt = µb.filteringContext.duplicate();
+    fctxt.fromTabId(tabId)
+         .setRealm('cosmetic')
+         .setType('dom')
+         .setURL(details.frameURL)
+         .setDocOriginFromURL(details.frameURL)
+         .setFilter(filter);
+    for ( const selector of details.matchedSelectors.sort() ) {
+        filter.raw = selector;
+        fctxt.toLogger();
     }
 };
 
 /******************************************************************************/
 
-var onMessage = function(request, sender, callback) {
+const onMessage = function(request, sender, callback) {
     let tabId = sender && sender.tab ? sender.tab.id : 0;
     let pageStore = µb.pageStoreFromTabId(tabId);
 
@@ -1382,7 +1378,7 @@ var onMessage = function(request, sender, callback) {
     }
 
     // Sync
-    var response;
+    let response;
 
     switch ( request.what ) {
     case 'domSurveyTransientReport':

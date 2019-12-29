@@ -1082,16 +1082,16 @@
     let c;
     const lists = {};
     const allFilters = [compiledFilter];
-    // Note:snfe.fRegister is going to change later in uBlock
-    const snfe = µb.staticNetFilteringEngine;
-    if (snfe.fRegister.filters !== undefined) {
-      for (let i = 0; i < snfe.fRegister.filters.length; i++) {
-        const compiledItem = µb.CompiledLineWriter.fingerprint([ snfe.cbRegister, snfe.thRegister, snfe.fRegister.filters[i].logData().compiled]);
-        allFilters.push(compiledItem);
-      }
-    } else if (snfe.fRegister.f1 !== undefined) {
-      // console.log(snfe.fRegister)
-    }
+    // Note:snfe.fRegister no longer exist in uBlock
+    // const snfe = µb.staticNetFilteringEngine;
+    // if (snfe.fRegister.filters !== undefined) {
+    //   for (let i = 0; i < snfe.fRegister.filters.length; i++) {
+    //     const compiledItem = µb.CompiledLineWriter.fingerprint([ snfe.cbRegister, snfe.thRegister, snfe.fRegister.filters[i].logData().compiled]);
+    //     allFilters.push(compiledItem);
+    //   }
+    // } else if (snfe.fRegister.f1 !== undefined) {
+    //   // console.log(snfe.fRegister)
+    // }
 
     for (const path in listEntries) {
 
@@ -1133,9 +1133,9 @@
 
   const isBlockableDomain = function (context) {
 
-    //console.log('isBlockableDomain',context.rootDomain, context);
+    //console.log('isBlockableDomain',context.docDomain, context);
 
-    const domain = context.rootDomain, host = context.requestHostname;
+    const domain = context.docDomain, host = context.getHostname();
 
     for (let i = 0; i < allowAnyBlockOnDomains.length; i++) {
 
@@ -1166,31 +1166,30 @@
 
     if (µb.userSettings.blockingMalware === false) {
 
-      logNetAllow('NoBlock', context.rootDomain + ' => ' + context.requestURL);
+      logNetAllow('NoBlock', context.docDomain + ' => ' + context.url);
       return false;
     }
 
     if (!listsLoaded) {
 
-      logNetAllow('Loading', context.rootDomain  + ' => ' + context.requestURL);
+      logNetAllow('Loading', context.docDomain  + ' => ' + context.url);
       return false;
     }
 
     if (isBlockableDomain(context)) {
 
-      logNetBlock('Domains', context.rootDomain + ' => ' + context.requestURL);
+      logNetBlock('Domains', context.docDomain + ' => ' + context.url);
       return true;
     }
 
     // always allow redirect blocks from lists (?)
     if (µb.redirectEngine.toURL(context)) {
 
-      logNetBlock('*Redirect*', context.rootDomain + ' => ' + context.requestURL, context);
+      logNetBlock('*Redirect*', context.docDomain + ' => ' + context.url, context);
       return true;
     }
 
-    const snfe = µb.staticNetFilteringEngine, compiled = snfe.toLogData().compiled, raw = snfe.toLogData().raw, url = context.requestURL;
-
+    const snfe = µb.staticNetFilteringEngine, compiled = snfe.toLogData().compiled, raw = snfe.toLogData().raw, url = snfe.urlRegister;
     /*
       Check active rule(s) to see if we should block or allow
 

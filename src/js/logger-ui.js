@@ -35,6 +35,7 @@ const logDate = new Date();
 const logDateTimezoneOffset = logDate.getTimezoneOffset() * 60000;
 const loggerEntries = [];
 
+let dntDomains = [];
 let filteredLoggerEntries = [];
 let filteredLoggerEntryVoidedCount = 0;
 
@@ -302,6 +303,13 @@ const processLoggerEntries = function(response) {
 };
 
 /******************************************************************************/
+const isDNTDomain = function(domain) {
+      for (var i = 0; i < dntDomains.length; i++) {
+        if (domain == dntDomains[i])
+          return true;
+      }
+      return false;
+}
 
 const parseLogEntry = function(details) {
     const entry = new LogEntry(details);
@@ -324,9 +332,9 @@ const parseLogEntry = function(details) {
         entry.textContent = textContent.join('\t');
         return entry;
     }
-
     // Cell 1, 2
     if ( entry.filter !== undefined ) {
+
         textContent.push(entry.filter.raw);
         if ( entry.filter.result === 1 ) {
             textContent.push('--');
@@ -337,15 +345,19 @@ const parseLogEntry = function(details) {
         } else if ( entry.filter.result === 4 ) {
             textContent.push('~~');
             //adn allow
-            console.log("adn allow")
         } else if ( entry.filter.source === 'redirect' ) {
             textContent.push('<<');
         } else {
             textContent.push('');
         }
     } else {
-        textContent.push('', '');
+        if (isDNTDomain(entry.domain)) {
+          textContent.push("*" + entry.domain + "*allow");
+          textContent.push('@@');
+        }
+        else textContent.push('', '');
     }
+
 
     // Cell 3
     textContent.push(normalizeToStr(entry.docHostname));
@@ -377,53 +389,6 @@ const parseLogEntry = function(details) {
     } else {
         textContent.push('');
     }
-
-// TODO: Add back DNTAllowed entries
-
-    // td = tr.cells[3];
-    // if ( filter !== undefined ) {
-    //     if ( filter.result === 1 ) {
-    //         trcl.add('blocked');
-    //         td.textContent = '--';
-    //     } else if ( filter.result === 2 ) {
-    //
-    //         trcl.add('allowed');
-    //         td.textContent = '++';
-    //
-    //         var isDNTRule = function(rule) {
-    //             for (var i = 0; i < dntDomains.length; i++) {
-    //               if (rule.indexOf(dntDomains[i]) != -1)
-    //                 return true;
-    //             }
-    //             return false;
-    //         }
-    //
-    //         if (isDNTRule(filter.raw)) trcl.add('dnt');
-    //
-    //         /*var processDNTEntries = function (isDNT) { // ADN
-    //           if (!isDNT) return;
-    //           else {
-    //             trcl.add('dnt');
-    //           }
-    //         }
-    //         messaging.send(
-    //           'loggerUI', {
-    //             what: 'domainIsDNT',
-    //             rule: filter.raw
-    //           },
-    //           processDNTEntries
-    //         );*/
-    //
-    //     } else if ( filter.result === 3 ) {
-    //         trcl.add('nooped');
-    //         td.textContent = '**';
-    //     } else if ( filter.source === 'redirect' ) {
-    //         trcl.add('redirect');
-    //         td.textContent = '<<';
-    //     } else if ( filter.result === 4) { // ADN
-    //         trcl.add('adnauseamAllowed');
-    //         td.textContent = '';
-    //     }
 
 
     // Cell 5
@@ -712,10 +677,14 @@ const viewPort = (( ) => {
             div.setAttribute('data-status', '2');
         } else if ( cells[2] === '**' ) {
             div.setAttribute('data-status', '3');
+        } else if ( cells[2] === '~~' ) {
+            div.setAttribute('data-status', '4');
+        } else if ( cells[2] === '@@' ) {
+            div.setAttribute('data-status', '5');
         } else if ( cells[2] === '<<' ) {
             divcl.add('redirect');
         }
-        // TODO: add dnt allow
+
         span = div.children[2];
         span.textContent = cells[2];
 
@@ -971,7 +940,8 @@ const onLogBufferRead = function(response) {
     }
 
 
-    const dntDomains = response.dntDomains; // ADN
+    dntDomains = response.dntDomains; // ADN
+
 
     // Tab id of currently active tab
     let activeTabIdChanged = false;

@@ -158,9 +158,6 @@ body.colorBlind #netInspector tr.nooped {
 #netInspector tr.allowed {
     background-color: rgba(0, 160, 0, 0.25);
     }
-#netInspector tr.adnauseamAllowed {
-    background-color: rgba(0,118,255,0.2);
-    }
 #netInspector tr.allowed.dnt {
     background-color: rgba(150,185,107,0.5);
     }
@@ -274,9 +271,11 @@ body[dir="rtl"] #netInspector #filterExprPicker {
     height: 100%;
     white-space: nowrap;
     }
+  /* Block color */
 #vwRenderer .logEntry > div[data-status="1"],
 #netFilteringDialog > .panes > .details > div[data-status="1"] {
     background-color: rgba(192, 0, 0, 0.25);
+
     }
 body.colorBlind #vwRenderer .logEntry > div[data-status="1"],
 body.colorBlind #netFilteringDialog > .panes > .details > div[data-status="1"] {
@@ -288,6 +287,7 @@ body.colorBlind #netFilteringDialog > .panes > .details > div[data-status="1"] {
 body.colorBlind #vwRenderer .logEntry > div[data-status="3"] {
     background-color: rgba(96, 96, 96, 0.25);
     }
+/* Allow color */
 #vwRenderer .logEntry > div[data-status="2"],
 #netFilteringDialog > .panes > .details > div[data-status="2"] {
     background-color: rgba(0, 160, 0, 0.25);
@@ -296,9 +296,20 @@ body.colorBlind #vwRenderer .logEntry > div[data-status="2"],
 body.colorBlind #netFilteringDialog > .panes > .details > div[data-status="2"] {
     background-color: rgba(255, 194, 57, 0.25)
     }
+/* adn allow color*/
+#vwRenderer .logEntry > div[data-status="4"],
+#netFilteringDialog > .panes > .details > div[data-status="4"] {
+    background-color: rgba(0,118,255,0.25);
+    }
+/* dnt allow color */
+#vwRenderer .logEntry > div[data-status="5"],
+#netFilteringDialog > .panes > .details > div[data-status="5"] {
+    background-color: rgba(150,185,107,0.5);
+    }
 #vwRenderer .logEntry > div[data-tabid="-1"] {
     text-shadow: 0 0.2em 0.4em #aaa;
     }
+    /* Cosmetic Color */
 #vwRenderer .logEntry > div.cosmeticRealm,
 #vwRenderer .logEntry > div.redirect {
     background-color: rgba(255, 255, 0, 0.25);

@@ -545,6 +545,16 @@ const PageStore = class {
             fctxt.filter = µb.sessionURLFiltering.toLogData();
         }
 
+        // ADN: now check our firewall (top precedence) if DNT enabled
+        if ( result === 0 && µb.adnauseam.dnt.enabled() ) {
+            if ( µb.adnauseam.dnt.mustAllow(fctxt) ) {
+                  result = 2;
+                  if ( µb.logger.enabled ) { // logger
+                      this.logData = µb.adnauseam.dnt.firewall.toLogData();
+                  }
+            }
+        }
+
         // Dynamic hostname/type filtering.
         if ( result === 0 && µb.userSettings.advancedUserEnabled ) {
             result = µb.sessionFirewall.evaluateCellZY(
@@ -563,6 +573,11 @@ const PageStore = class {
             if ( result !== 0 && µb.logger.enabled ) {
                 fctxt.filter = µb.staticNetFilteringEngine.toLogData();
             }
+            if ( result !== 2 && µb.adnauseam.mustAllowRequest(result, fctxt) ) {
+               result = fctxt.filter.result = 4; // ADN: adnauseamAllowed
+            }
+
+
         }
 
         if ( cacheableResult ) {

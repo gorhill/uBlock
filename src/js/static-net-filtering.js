@@ -84,7 +84,7 @@ const otherTypeBitValue = typeNameToTypeValue.other;
 //   subtract 1 to set all type bits
 const allNetworkTypesBits =
     (1 << (otherTypeBitValue >>> 4)) - 1;
-    
+
 const allTypesBits =
     allNetworkTypesBits |
     1 << (typeNameToTypeValue['popup'] >>> 4) - 1 |
@@ -1152,7 +1152,7 @@ const FilterOriginHitSet = class {
                 filterOrigin.strFromSlotId(this.domainOpt),
             this.wrapped.compile(toSelfie),
         ];
-        if ( this.oneOf !== null ) { 
+        if ( this.oneOf !== null ) {
             out.push(filterOrigin.trieContainer.compileOne(this.oneOf));
         }
         return out;

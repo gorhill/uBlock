@@ -134,26 +134,27 @@
   exports.mustAllow = function (context) {
 
     let action, requestHostname, requestDomain, result = '';
+    // root-page , request-url
 
-    firewall.evaluateCellZY(context.rootHostname, context.requestHostname, context.requestType);
+    firewall.evaluateCellZY(context.getTabHostname(), context.getHostname(), context.type);
 
     if (firewall.mustBlockOrAllow()) {
 
       result = firewall.r;
 
-      requestHostname = context.requestHostname || µb.URI.hostnameFromURI(context.requestURL);
+      requestHostname = context.hostname || µb.URI.hostnameFromURI(context.url);
       requestDomain = µb.URI.domainFromHostname(requestHostname);
 
-      if (context.rootHostname !== requestDomain) {
+      if (context.tabHostname !== requestDomain) {
 
-        µb.adnauseam.logNetEvent('[DNT*3P] (Allow) ', [ context.rootHostname + ' => ' +
-          requestDomain + ' ' + context.requestURL ]); // suspicious: may want to check
+        µb.adnauseam.logNetEvent('[DNT*3P] (Allow) ', [ context.tabHostname + ' => ' +
+          requestDomain + ' ' + context.url ]); // suspicious: may want to check
       }
 
-      if (context.requestType === 'inline-script') { // #1271
+      if (context.type === 'inline-script') { // #1271
 
-        µb.adnauseam.logNetEvent('[DNT] (Allow)', [ context.rootHostname + ' => ' +
-          context.requestHostname + ' ' + context.requestURL  ]);
+        µb.adnauseam.logNetEvent('[DNT] (Allow)', [ context.tabHostname + ' => ' +
+          context.hostname + ' ' + context.url  ]);
       }
     }
 
