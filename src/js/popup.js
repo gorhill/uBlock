@@ -244,12 +244,12 @@ const updateFirewallCell = function(scope, des, type, rule) {
     if ( hnDetails.allowCount !== 0 ) {
         cell.setAttribute('data-acount', Math.min(Math.ceil(Math.log(hnDetails.allowCount + 1) / Math.LN10), 3));
     } else {
-        cell.removeAttribute('data-acount');
+        cell.setAttribute('data-acount', '0');
     }
     if ( hnDetails.blockCount !== 0 ) {
         cell.setAttribute('data-bcount', Math.min(Math.ceil(Math.log(hnDetails.blockCount + 1) / Math.LN10), 3));
     } else {
-        cell.removeAttribute('data-bcount');
+        cell.setAttribute('data-bcount', '0');
     }
 
     if ( hnDetails.domain !== des ) {
@@ -260,12 +260,12 @@ const updateFirewallCell = function(scope, des, type, rule) {
     if ( hnDetails.totalAllowCount !== 0 ) {
         cell.setAttribute('data-acount', Math.min(Math.ceil(Math.log(hnDetails.totalAllowCount + 1) / Math.LN10), 3));
     } else {
-        cell.removeAttribute('data-acount');
+        cell.setAttribute('data-acount', '0');
     }
     if ( hnDetails.totalBlockCount !== 0 ) {
         cell.setAttribute('data-bcount', Math.min(Math.ceil(Math.log(hnDetails.totalBlockCount + 1) / Math.LN10), 3));
     } else {
-        cell.removeAttribute('data-bcount');
+        cell.setAttribute('data-bcount', '0');
     }
 };
 
@@ -302,9 +302,9 @@ const buildAllFirewallRows = function() {
     dfHotspots.detach();
 
     // Update incrementally: reuse existing rows if possible.
-    let rowContainer = document.getElementById('firewallContainer');
-    let toAppend = document.createDocumentFragment();
-    let rowTemplate = document.querySelector('#templates > div:nth-of-type(1)');
+    const rowContainer = document.getElementById('firewallContainer');
+    const toAppend = document.createDocumentFragment();
+    const rowTemplate = document.querySelector('#templates > div:nth-of-type(1)');
     let row = rowContainer.querySelector('div:nth-of-type(7) + div');
 
     for ( const des of allHostnameRows ) {
@@ -331,12 +331,14 @@ const buildAllFirewallRows = function() {
         span.title = isDomain && isPunycoded ? des : '';
 
         const classList = row.classList;
+        classList.toggle('isRootContext', des === popupData.pageHostname);
         classList.toggle('isDomain', isDomain);
         classList.toggle('isSubDomain', !isDomain);
         classList.toggle('allowed', hnDetails.allowCount !== 0);
         classList.toggle('blocked', hnDetails.blockCount !== 0);
         classList.toggle('totalAllowed', hnDetails.totalAllowCount !== 0);
         classList.toggle('totalBlocked', hnDetails.totalBlockCount !== 0);
+        classList.toggle('expandException', expandExceptions.has(hnDetails.domain));
 
         row = row.nextElementSibling;
     }
@@ -445,7 +447,7 @@ const renderPopup = function() {
         popupData.pageURL === '' || popupData.netFilteringSwitch !== true
     );
 
-    let canElementPicker = popupData.canElementPicker === true &&
+    const canElementPicker = popupData.canElementPicker === true &&
                            popupData.netFilteringSwitch === true;
     uDom.nodeFromId('gotoPick').classList.toggle('enabled', canElementPicker);
     uDom.nodeFromId('gotoZap').classList.toggle('enabled', canElementPicker);
@@ -510,15 +512,12 @@ const renderPopup = function() {
         dfPaneVisible === true
     );
 
-    elem = uDom.nodeFromId('firewallContainer');
-    elem.classList.toggle(
-        'minimized',
-        popupData.firewallPaneMinimized === true
-    );
-    elem.classList.toggle(
+    uDom.nodeFromId('firewallContainer').classList.toggle(
         'colorBlind',
         popupData.colorBlindFriendly === true
     );
+
+    setGlobalExpand(popupData.firewallPaneMinimized === false, true);
 
     // Build dynamic filtering pane only if in use
     if ( dfPaneVisible ) {
@@ -923,7 +922,66 @@ document.addEventListener(
 
 /******************************************************************************/
 
-const toggleMinimize = function(ev) {
+const expandExceptions = new Set();
+
+(( ) => {
+    try {
+        const exceptions = JSON.parse(
+            vAPI.localStorage.getItem('popupExpandExceptions')
+        );
+        if ( Array.isArray(exceptions) === false ) { return; }
+        for ( const exception of exceptions ) {
+            expandExceptions.add(exception);
+        }
+    }
+    catch(ex) {
+    }
+
+})();
+
+const saveExpandExceptions = function() {
+    vAPI.localStorage.setItem(
+        'popupExpandExceptions',
+        JSON.stringify(Array.from(expandExceptions))
+    );
+};
+
+const setGlobalExpand = function(state, internal = false) {
+    uDom('.expandException').removeClass('expandException');
+    if ( state ) {
+        uDom('#firewallContainer').addClass('expanded');
+    } else {
+        uDom('#firewallContainer').removeClass('expanded');
+    }
+    positionRulesetTools();
+    if ( internal ) { return; }
+    popupData.firewallPaneMinimized = !state;
+    expandExceptions.clear();
+    saveExpandExceptions();
+    messaging.send('popupPanel', {
+        what: 'userSettings',
+        name: 'firewallPaneMinimized',
+        value: popupData.firewallPaneMinimized,
+    });
+};
+
+const setSpecificExpand = function(domain, state, internal = false) {
+    const unodes = uDom(`[data-des="${domain}"],[data-des$=".${domain}"]`);
+    if ( state ) {
+        unodes.addClass('expandException');
+    } else {
+        unodes.removeClass('expandException');
+    }
+    if ( internal ) { return; }
+    if ( state ) {
+        expandExceptions.add(domain);
+    } else {
+        expandExceptions.delete(domain);
+    }
+    saveExpandExceptions();
+};
+
+uDom('[data-i18n="popupAnyRulePrompt"]').on('click', ev => {
     // Special display mode: in its own tab/window, with no vertical restraint.
     // Useful to take snapshots of the whole list of domains -- example:
     //   https://github.com/gorhill/uBlock/issues/736#issuecomment-178879944
@@ -931,25 +989,31 @@ const toggleMinimize = function(ev) {
         messaging.send('popupPanel', {
             what: 'gotoURL',
             details: {
-                url: 'popup.html?tabId=' + popupData.tabId + '&responsive=1',
+                url: `popup.html?tabId=${popupData.tabId}&responsive=1`,
                 select: true,
-                index: -1
+                index: -1,
             },
         });
         vAPI.closePopup();
         return;
     }
 
-    popupData.firewallPaneMinimized =
-        uDom.nodeFromId('firewallContainer').classList.toggle('minimized');
+    setGlobalExpand(
+        uDom('#firewallContainer').hasClass('expanded') === false
+    );
+});
 
-    messaging.send('popupPanel', {
-        what: 'userSettings',
-        name: 'firewallPaneMinimized',
-        value: popupData.firewallPaneMinimized,
-    });
-    positionRulesetTools();
-};
+uDom('#firewallContainer').on(
+    'click', '.isDomain[data-type="*"] > span:first-of-type',
+    ev => {
+        const div = ev.target.closest('[data-des]');
+        if ( div === null ) { return; }
+        setSpecificExpand(
+            div.getAttribute('data-des'),
+            div.classList.contains('expandException') === false
+        );
+    }
+);
 
 /******************************************************************************/
 
@@ -1137,7 +1201,6 @@ uDom('h2').on('click', toggleFirewallPane);
 uDom('.hnSwitch').on('click', ev => { toggleHostnameSwitch(ev); });
 uDom('#saveRules').on('click', saveFirewallRules);
 uDom('#revertRules').on('click', ( ) => { revertFirewallRules(); });
-uDom('[data-i18n="popupAnyRulePrompt"]').on('click', toggleMinimize);
 
 uDom('body').on('mouseenter', '[data-tip]', onShowTooltip)
             .on('mouseleave', '[data-tip]', onHideTooltip);

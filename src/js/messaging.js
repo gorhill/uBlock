@@ -217,7 +217,7 @@ const getHostnameDict = function(hostnameToCountMap) {
             blockCount: blockCount,
             allowCount: allowCount,
             totalBlockCount: 0,
-            totalAllowCount: 0
+            totalAllowCount: 0,
         };
     }
     return r;
