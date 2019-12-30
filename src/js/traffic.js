@@ -29,28 +29,28 @@
 
 /******************************************************************************/
 
-var AcceptHeaders = {
+const AcceptHeaders = {
     chrome: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
     firefox: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
 };
-var CommonUserAgent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.85 Safari/537.36';
+const CommonUserAgent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.85 Safari/537.36';
 
-var exports = {};
+let exports = {};
 
 /********************************* ADN ****************************************/
 
 // Called before each outgoing request (ADN:)
-var onBeforeSendHeaders = function (details) {
+const onBeforeSendHeaders = function (details) {
 
-  var headers = details.requestHeaders, prefs = µBlock.userSettings, adn = µBlock.adnauseam;
+  const headers = details.requestHeaders, prefs = µBlock.userSettings, adn = µBlock.adnauseam;
 
   // if clicking/hiding is enabled with DNT, then send the DNT header
-  var respectDNT = ((prefs.clickingAds && prefs.disableClickingForDNT) ||
+  const respectDNT = ((prefs.clickingAds && prefs.disableClickingForDNT) ||
     (prefs.hidingAds && prefs.disableHidingForDNT));
 
   if (respectDNT) {
 
-    var pageStore = µBlock.mustPageStoreFromTabId(details.tabId);
+    const pageStore = µBlock.mustPageStoreFromTabId(details.tabId);
 
     // add it only if the browser is not sending it already
     if (pageStore.getNetFilteringSwitch() && !hasDNT(headers)) {
@@ -66,7 +66,7 @@ var onBeforeSendHeaders = function (details) {
   if (vAPI.isBehindTheSceneTabId(details.tabId)) {
 
     // If so, is it one of our Ad visits ?
-    var ad = adn.lookupAd(details.url, details.requestId);
+    const ad = adn.lookupAd(details.url, details.requestId);
 
     // if so, handle the headers (cookies, ua, referer, dnt)
     ad && beforeAdVisit(details, headers, prefs, ad, respectDNT);
@@ -79,18 +79,19 @@ var onBeforeSendHeaders = function (details) {
 };
 
 // ADN: remove outgoing cookies, reset user-agent, strip referer
-var beforeAdVisit = function (details, headers, prefs, ad, respectDNT) {
+const beforeAdVisit = function (details, headers, prefs, ad, respectDNT) {
 
-  var referer = ad.pageUrl, refererIdx = -1, uirIdx = -1, dbug = 0;
+  const referer = ad.pageUrl, refererIdx = -1, dbug = 1;
+  let uirIdx = -1;
 
   ad.requestId = details.requestId; // needed?
 
   dbug && console.log('[HEADERS] (Outgoing'+(ad.targetUrl===details.url ? ')' : '-redirect)'), details.url);
 
-  for (var i = headers.length - 1; i >= 0; i--) {
+  for (let i = headers.length - 1; i >= 0; i--) {
 
     dbug && console.log(i + ") " + headers[i].name, headers[i].value);
-    var name = headers[i].name.toLowerCase();
+    const name = headers[i].name.toLowerCase();
 
     if ((name === 'http_x_requested_with') ||
       (name === 'x-devtools-emulate-network-conditions-client-id') ||
@@ -135,7 +136,7 @@ var beforeAdVisit = function (details, headers, prefs, ad, respectDNT) {
   handleRefererForVisit(prefs, refererIdx, referer, details.url, headers);
 };
 
-var handleRefererForVisit = function (prefs, refIdx, referer, url, headers) {
+const handleRefererForVisit = function (prefs, refIdx, referer, url, headers) {
 
   // console.log('handleRefererForVisit()', arguments);
 
@@ -159,28 +160,28 @@ var handleRefererForVisit = function (prefs, refIdx, referer, url, headers) {
 
 function dumpHeaders(headers) {
 
-  var s = '\n\n';
-  for (var i = headers.length - 1; i >= 0; i--) {
+  const s = '\n\n';
+  for (let i = headers.length - 1; i >= 0; i--) {
     s += headers[i].name + ': ' + headers[i].value + '\n';
   }
   return s;
 }
 
-var setHeader = function (header, value) {
+const setHeader = function (header, value) {
 
   if (header) header.value = value;
 };
 
-var addHeader = function (headers, name, value) {
+const addHeader = function (headers, name, value) {
   headers.push({
     name: name,
     value: value
   });
 };
 
-var hasDNT = function (headers) {
+const hasDNT = function (headers) {
 
-  for (var i = headers.length - 1; i >= 0; i--) {
+  for (let i = headers.length - 1; i >= 0; i--) {
     if (headers[i].name === 'DNT' && headers[i].value === '1') {
       return true;
     }
@@ -1286,6 +1287,15 @@ return {
                 },
                 [ 'blocking', 'responseHeaders' ]
             );
+            vAPI.net.addListener(
+              'onBeforeSendHeaders',
+               onBeforeSendHeaders,
+               {
+                   'urls': [ '<all_urls>' ],
+                   'types': undefined // ADN
+               },
+               [ 'blocking', 'requestHeaders' ]
+           );
             if ( vAPI.net.validTypes.has('csp_report') ) {
                 vAPI.net.addListener(
                     'onBeforeRequest',

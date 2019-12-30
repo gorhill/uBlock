@@ -481,7 +481,7 @@
   };
 
   const onVisitError = function (e) {
-
+    if (this == undefined) return;
     this.onload = this.onerror = this.ontimeout = null;
 
     markActivity();
