@@ -120,7 +120,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Натисніть для скасування блокування спливаючих вікон на цьому сайті",
+    "message": "Натисніть для скасування блокування всіх спливаючих вікон на цьому сайті",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {

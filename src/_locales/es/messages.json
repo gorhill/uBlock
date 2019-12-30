@@ -12,7 +12,7 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "¡Atención! Tiene cambios no guardados",
+    "message": "¡Atención! Tienes cambios sin guardar",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -176,11 +176,11 @@
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
-    "message": "Haga clic para hacer sus cambios permanentes.",
+    "message": "Haz clic para hacer tus cambios permanentes.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Haga clic para revertir sus cambios.",
+    "message": "Haz clic para revertir tus cambios.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {
@@ -500,7 +500,7 @@
     "description": "default file name to use"
   },
   "rulesHint": {
-    "message": "Lista de sus reglas de filtrado dinámico.",
+    "message": "Lista de tus reglas de filtrado dinámico.",
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
@@ -824,7 +824,7 @@
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
-    "message": "Se borrará todas sus configuraciones y uBlock₀ se reiniciará.\n\n¿Restablecer uBlock₀ a la configuración predeterminada?",
+    "message": "Se borrará todas tus configuraciones y uBlock₀ se reiniciará.\n\n¿Restablecer uBlock₀ a la configuración predeterminada?",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
@@ -832,7 +832,7 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: ¿Desea añadir la siguiente URL a su lista de filtros personalizados?\n\nTítulo: \"{{title}}\"\nURL: {{url}}",
+    "message": "uBlock₀: ¿Desea añadir la siguiente URL a tus listas de filtros personalizados?\n\nTítulo: \"{{title}}\"\nURL: {{url}}",
     "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo": {
@@ -928,7 +928,7 @@
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
-    "message": "¡Atención! Cambie estas configuraciones avanzadas bajo su propio riesgo.",
+    "message": "¡Atención! Cambie estas configuraciones avanzadas bajo tu propio riesgo.",
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {
