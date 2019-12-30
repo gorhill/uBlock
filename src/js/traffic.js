@@ -612,7 +612,8 @@ const onHeadersReceived = function(details) {
 
     const tabId = details.tabId;
 
-    let ad, result, dbug = 0; //ADN
+    let ad, result; //ADN
+    const dbug = 0; //ADN
 
    if (vAPI.isBehindTheSceneTabId(tabId)) {
 

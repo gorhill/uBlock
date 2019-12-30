@@ -7,7 +7,7 @@
     "browser_style": false,
     "default_icon": {
       "16": "img/icon_16.png",
-      "32": "img/icon_32.png"
+      "32": "img/icon-32.png"
     },
     "default_title": "AdNauseam",
     "default_popup": "menu.html"
