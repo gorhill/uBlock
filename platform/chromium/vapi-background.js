@@ -1200,6 +1200,8 @@ vAPI.Net = class {
     denormalizeTypes(types) {
         return types;
     }
+    canonicalNameFromHostname(/* hn */) {
+    }
     addListener(which, clientListener, filters, options) {
         const actualFilters = this.denormalizeFilters(filters);
         const actualListener = this.makeNewListenerProxy(clientListener);

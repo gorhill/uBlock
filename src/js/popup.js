@@ -117,6 +117,11 @@ const cachePopupData = function(data) {
         return popupData;
     }
     popupData = data;
+    if ( Array.isArray(popupData.cnameSet) ) {
+        popupData.cnameSet = new Set(popupData.cnameSet);
+    } else if ( popupData.cnameSet === undefined ) {
+        popupData.cnameSet = new Set();
+    }
     scopeToSrcHostnameMap['.'] = popupData.pageHostname || '';
     const hostnameDict = popupData.hostnameDict;
     if ( typeof hostnameDict !== 'object' ) {
@@ -334,6 +339,7 @@ const buildAllFirewallRows = function() {
         classList.toggle('isRootContext', des === popupData.pageHostname);
         classList.toggle('isDomain', isDomain);
         classList.toggle('isSubDomain', !isDomain);
+        classList.toggle('isCname', popupData.cnameSet.has(des));
         classList.toggle('allowed', hnDetails.allowCount !== 0);
         classList.toggle('blocked', hnDetails.blockCount !== 0);
         classList.toggle('totalAllowed', hnDetails.totalAllowCount !== 0);

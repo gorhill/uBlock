@@ -65,9 +65,9 @@
             this.cnameIgnore1stParty = true;
             this.cnameIgnoreExceptions = true;
             this.cnameIgnoreRootDocument = true;
-            this.cnameMaxTTL = 60;
+            this.cnameMaxTTL = 120;
             this.cnameReplayFullURL = false;
-            this.cnameTimer = undefined;
+            this.cnameFlushTime = Date.now() + this.cnameMaxTTL * 60000;
             this.cnameUncloak = browser.dns instanceof Object;
         }
         setOptions(options) {
@@ -81,6 +81,7 @@
             this.cnameMaxTTL = options.cnameMaxTTL || 120;
             this.cnameReplayFullURL = options.cnameReplayFullURL === true;
             this.cnames.clear(); this.cnames.set('', '');
+            this.cnameFlushTime = Date.now() + this.cnameMaxTTL * 60000;
         }
         normalizeDetails(details) {
             if ( mustPunycode && !reAsciiHostname.test(details.url) ) {
@@ -130,6 +131,12 @@
             }
             return Array.from(out);
         }
+        canonicalNameFromHostname(hn) {
+            const cn = this.cnames.get(hn);
+            if ( cn !== undefined && cn !== '' ) {
+                return cn;
+            }
+        }
         processCanonicalName(hn, cn, details) {
             const hnBeg = details.url.indexOf(hn);
             if ( hnBeg === -1 ) { return; }
@@ -149,6 +156,13 @@
             return super.onBeforeSuspendableRequest(details);
         }
         recordCanonicalName(hn, record) {
+            if ( (this.cnames.size & 0b111111) === 0 ) {
+                const now = Date.now();
+                if ( now >= this.cnameFlushTime ) {
+                    this.cnames.clear(); this.cnames.set('', '');
+                    this.cnameFlushTime = now + this.cnameMaxTTL * 60000;
+                }
+            }
             let cname =
                 typeof record.canonicalName === 'string' &&
                 record.canonicalName !== hn
@@ -169,15 +183,6 @@
                 cname = '';
             }
             this.cnames.set(hn, cname);
-            if ( this.cnameTimer === undefined ) {
-                this.cnameTimer = self.setTimeout(
-                    ( ) => {
-                        this.cnameTimer = undefined;
-                        this.cnames.clear(); this.cnames.set('', '');
-                    },
-                    this.cnameMaxTTL * 60000
-                );
-            }
             return cname;
         }
         regexFromStrList(list) {

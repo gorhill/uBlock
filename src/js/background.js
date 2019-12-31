@@ -50,7 +50,7 @@ const µBlock = (( ) => { // jshint ignore:line
         cnameIgnore1stParty: true,
         cnameIgnoreExceptions: true,
         cnameIgnoreRootDocument: true,
-        cnameMaxTTL: 60,
+        cnameMaxTTL: 120,
         cnameReplayFullURL: false,
         cnameUncloak: true,
         consoleLogLevel: 'unset',

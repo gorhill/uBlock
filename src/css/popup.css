@@ -281,6 +281,9 @@ body[dir="rtl"] #tooltip {
     padding-right: 2px;
     width: calc(100% - 4em);
     }
+#firewallContainer > div.isCname > span:first-of-type {
+    color: mediumblue;
+    }
 #firewallContainer > div > span:first-of-type > sup {
     color: #666;
     display: none;
