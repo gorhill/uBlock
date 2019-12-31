@@ -235,6 +235,13 @@
 
   });
 
+  // https://github.com/uBlockOrigin/uBlock-issues/issues/591
+  document.querySelector(
+      '[data-i18n-title="settingsAdvancedUserSettings"]'
+  ).addEventListener(
+      'click',
+      self.uBlockDashboard.openOrSelectPage
+  );
   /******************************************************************************/
 
 })();
