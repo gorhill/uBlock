@@ -271,6 +271,8 @@ reuters.com##.CanvasAd_container_sZDIL
 ##bing.com
 www.bing.com##.adbDef
 www.bing.com##.b_ad
+# blocking rule for anti-adblocking solutions for text ads on search page
+||www.bing.com/rb/5j/*$script,domain=www.bing.com
 
 computerworld.com###superadunit
 
