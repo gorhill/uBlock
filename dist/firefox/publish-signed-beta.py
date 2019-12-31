@@ -173,19 +173,32 @@ with zipfile.ZipFile(raw_xpi_filepath, 'r') as zipin:
 # - https://addons-server.readthedocs.io/en/latest/topics/api/signing.html
 #
 
-print('Ask AMO to sign self-hosted xpi package...')
-with open(unsigned_xpi_filepath, 'rb') as f:
-    amo_api_key = input_secret('AMO API key', 'amo_api_key')
-    amo_secret = input_secret('AMO API secret', 'amo_secret')
+amo_api_key = ''
+amo_secret = ''
+
+def get_jwt_auth():
+    global amo_api_key
+    if amo_api_key == '':
+        amo_api_key = input_secret('AMO API key', 'amo_api_key')
+    global amo_secret
+    if amo_secret == '':
+        amo_secret = input_secret('AMO API secret', 'amo_secret')
     amo_nonce = os.urandom(8).hex()
     jwt_payload = {
         'iss': amo_api_key,
         'jti': amo_nonce,
         'iat': datetime.datetime.utcnow(),
-        'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=180),
+        'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=15),
     }
-    jwt_auth = 'JWT ' + jwt.encode(jwt_payload, amo_secret).decode()
-    headers = { 'Authorization': jwt_auth, }
+    return 'JWT ' + jwt.encode(jwt_payload, amo_secret).decode()
+
+print('Ask AMO to sign self-hosted xpi package...')
+with open(unsigned_xpi_filepath, 'rb') as f:
+    # https://blog.mozilla.org/addons/2019/11/11/security-improvements-in-amo-upload-tools/
+    #   "We recommend allowing up to 15 minutes."
+    interval = 60                   # check every 60 seconds
+    countdown = 15 * 60 / interval  # for at most 15 minutes
+    headers = { 'Authorization': get_jwt_auth(), }
     data = { 'channel': 'unlisted' }
     files = { 'upload': f, }
     signing_url = 'https://addons.mozilla.org/api/v3/addons/{0}/versions/{1}/'.format(extension_id, ext_version)
@@ -201,28 +214,26 @@ with open(unsigned_xpi_filepath, 'rb') as f:
     print('Waiting for AMO to process the request to sign the self-hosted xpi package...')
     # Wait for signed package to be ready
     signing_check_url = signing_request_response['url']
-    # TODO: use real time instead
-    # https://blog.mozilla.org/addons/2019/11/11/security-improvements-in-amo-upload-tools/
-    #   "We recommend allowing up to 15 minutes."
-    interval = 30                   # check every 30 seconds
-    countdown = 15 * 60 / interval  # for at most 15 minutes
     while True:
+        time.sleep(interval)
         sys.stdout.write('.')
         sys.stdout.flush()
-        time.sleep(interval)
         countdown -= 1
         if countdown <= 0:
             print('Error: AMO signing timed out')
             exit(1)
+        headers = { 'Authorization': get_jwt_auth(), }
         response = requests.get(signing_check_url, headers=headers)
         if response.status_code != 200:
             print('Error: AMO signing failed -- server error {0}'.format(response.status_code))
+            print(response.text)
             exit(1)
         signing_check_response = response.json()
         if not signing_check_response['processed']:
             continue
         if not signing_check_response['valid']:
             print('Error: AMO validation failed')
+            print(response.text)
             exit(1)
         if not signing_check_response['files'] or len(signing_check_response['files']) == 0:
             continue
@@ -239,6 +250,7 @@ with open(unsigned_xpi_filepath, 'rb') as f:
         response = requests.get(download_url, headers=headers)
         if response.status_code != 200:
             print('Error: Download signed package failed -- server error {0}'.format(response.status_code))
+            print(response.text)
             exit(1)
         with open(signed_xpi_filepath, 'wb') as f:
             f.write(response.content)
