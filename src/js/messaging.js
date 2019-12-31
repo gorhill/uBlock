@@ -58,7 +58,11 @@ var onMessage = function(request, sender, callback) {
     switch ( request.what ) {
     case 'getAssetContent':
         // https://github.com/chrisaljoudi/uBlock/issues/417
-        µb.assets.get(request.url, { dontCache: true }, callback);
+        µb.assets.get(
+            request.url,
+            { dontCache: true, needSourceURL: true },
+            callback
+        );
         return;
 
     case 'listsFromNetFilter':
@@ -911,6 +915,7 @@ var getLists = function(callback) {
         current: µb.availableFilterLists,
         externalLists: µb.userSettings.externalLists,
         ignoreGenericCosmeticFilters: µb.userSettings.ignoreGenericCosmeticFilters,
+        isUpdating: µb.assets.isUpdating(),
         netFilterCount: µb.staticNetFilteringEngine.getFilterCount(),
         parseCosmeticFilters: µb.userSettings.parseAllABPHideFilters,
         userFiltersPath: µb.userFiltersPath
