@@ -576,12 +576,29 @@ var onMessage = function(request, sender, callback) {
         ) {
             break;
         }
+        const noCosmeticFiltering = pageStore.noCosmeticFiltering === true;
         response = {
             collapseBlocked: µb.userSettings.collapseBlocked,
-            noCosmeticFiltering: pageStore.noCosmeticFiltering === true,
-            noGenericCosmeticFiltering:
-                pageStore.noGenericCosmeticFiltering === true
+            noCosmeticFiltering,
+            noGenericCosmeticFiltering:noCosmeticFiltering,
         };
+        // https://github.com/uBlockOrigin/uAssets/issues/5704
+        //   `generichide` must be evaluated in the frame context.
+        if ( noCosmeticFiltering === false ) {
+            const genericHide =
+                µb.staticNetFilteringEngine.matchStringGenericHide(request.url);
+            response.noGenericCosmeticFiltering = genericHide === 2;
+            if ( genericHide !== 0 && µb.logger.enabled ) {
+                µBlock.filteringContext
+                    .duplicate()
+                    .fromTabId(tabId)
+                    .setURL(request.url)
+                    .setRealm('network')
+                    .setType('generichide')
+                    .setFilter(µb.staticNetFilteringEngine.toLogData())
+                    .toLogger();
+            }
+        }
         request.tabId = tabId;
         request.frameId = frameId;
         request.hostname = µb.URI.hostnameFromURI(request.url);

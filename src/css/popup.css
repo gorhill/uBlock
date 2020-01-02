@@ -234,7 +234,7 @@ body[dir="rtl"] #tooltip {
     -webkit-transition: opacity 0.15s 0.5s;
     visibility: visible;
     opacity: 1;
-    }
+}
 
 #firewallContainer {
     border: 0;
