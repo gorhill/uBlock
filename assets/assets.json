@@ -105,7 +105,7 @@
 		"content": "filters",
 		"group": "ads",
 		"off": true,
-		"title": "Adblock Warning Removal List",
+		"title": "Adblock Warning Removal",
 		"contentURL": "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt",
 		"supportURL": "https://forums.lanik.us/"
 	},
@@ -113,7 +113,7 @@
 		"content": "filters",
 		"group": "ads",
 		"off": true,
-		"title": "AdGuard Base filter",
+		"title": "AdGuard Base",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/2_without_easylist.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
 		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
@@ -122,7 +122,7 @@
 		"content": "filters",
 		"group": "ads",
 		"off": true,
-		"title": "AdGuard Mobile Ads filter",
+		"title": "AdGuard Mobile Ads",
 		"ua": "mobile",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/11.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
@@ -144,7 +144,7 @@
 		"content": "filters",
 		"group": "privacy",
 		"off": true,
-		"title": "AdGuard Spyware filter",
+		"title": "AdGuard Tracking Protection",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/3.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
 		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
@@ -213,7 +213,7 @@
 		"content": "filters",
 		"group": "social",
 		"off": true,
-		"title": "AdGuard Annoyances filter",
+		"title": "AdGuard Annoyances",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/14.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
 		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
@@ -222,7 +222,7 @@
 		"content": "filters",
 		"group": "social",
 		"off": true,
-		"title": "AdGuard Social Media filter",
+		"title": "AdGuard Social Media",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/4.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
 		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
@@ -231,7 +231,7 @@
 		"content": "filters",
 		"group": "social",
 		"off": true,
-		"title": "Anti-Facebook List",
+		"title": "Anti-Facebook",
 		"contentURL": "https://fanboy.co.nz/fanboy-antifacebook.txt",
 		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
 	},
@@ -239,7 +239,7 @@
 		"content": "filters",
 		"group": "social",
 		"off": true,
-		"title": "Fanboy’s Annoyance List",
+		"title": "Fanboy’s Annoyance",
 		"contentURL": [
 			"https://easylist.to/easylist/fanboy-annoyance.txt",
 			"https://fanboy.co.nz/fanboy-annoyance.txt"
@@ -250,15 +250,15 @@
 		"content": "filters",
 		"group": "social",
 		"off": true,
-		"title": "Fanboy's Cookie List",
-		"contentURL": "https://secure.fanboy.co.nz/fanboy-cookiemonster.txt",
-		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
+		"title": "EasyList Cookie",
+		"contentURL": "https://easylist-downloads.adblockplus.org/easylist-cookie.txt",
+		"supportURL": "https://github.com/easylist/easylist/issues"
 	},
 	"fanboy-social": {
 		"content": "filters",
 		"group": "social",
 		"off": true,
-		"title": "Fanboy’s Social Blocking List",
+		"title": "Fanboy’s Social",
 		"contentURL": [
 			"https://easylist.to/easylist/fanboy-social.txt",
 			"https://fanboy.co.nz/fanboy-social.txt"
@@ -321,7 +321,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "BGR: Bulgarian Adblock list",
-		"lang": "bg",
+		"lang": "bg mk",
 		"contentURL": "https://stanev.org/abp/adblock_bg.txt",
 		"supportURL": "https://stanev.org/abp/"
 	},
@@ -365,15 +365,6 @@
 		],
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=90"
 	},
-	"DNK-0": {
-		"content": "filters",
-		"group": "regions",
-		"off": true,
-		"title": "DNK: Schacks Adblock Plus liste",
-		"lang": "da",
-		"contentURL": "https://adblock.dk/block.csv",
-		"supportURL": "https://henrik.schack.dk/adblock/"
-	},
 	"EST-0": {
 		"content": "filters",
 		"group": "regions",
@@ -397,7 +388,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "FRA: EasyList Liste FR",
-		"lang": "ar fr",
+		"lang": "ar br fr oc",
 		"contentURL": "https://easylist-downloads.adblockplus.org/liste_fr.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=91"
 	},
@@ -417,8 +408,8 @@
 		"off": true,
 		"title": "HUN: hufilter",
 		"lang": "hu",
-		"contentURL": "https://raw.githubusercontent.com/szpeter80/hufilter/master/hufilter.txt",
-		"supportURL": "https://github.com/szpeter80/hufilter"
+		"contentURL": "https://raw.githubusercontent.com/hufilter/hufilter/master/hufilter.txt",
+		"supportURL": "https://github.com/hufilter/hufilter"
 	},
 	"IDN-0": {
 		"content": "filters",
@@ -461,7 +452,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "ITA: EasyList Italy",
-		"lang": "it",
+		"lang": "it lij",
 		"contentURL": "https://easylist-downloads.adblockplus.org/easylistitaly.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=96"
 	},
@@ -477,7 +468,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "JPN: AdGuard Japanese filter",
+		"title": "JPN: AdGuard Japanese",
 		"lang": "ja",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/7.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
@@ -524,7 +515,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "NLD: EasyList Dutch",
-		"lang": "nl",
+		"lang": "af fy nl",
 		"contentURL": "https://easylist-downloads.adblockplus.org/easylistdutch.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=100"
 	},
@@ -533,7 +524,7 @@
 		"group": "regions",
 		"off": true,
 		"title": "NOR, DNK, ISL: Dandelion Sprouts nordiske filtre",
-		"lang": "nb no da is",
+		"lang": "nb nn no da is",
 		"contentURL": [
 			"https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianList.txt",
 			"https://repo.or.cz/FilterMirrorRepo.git/blob_plain/refs/heads/master:/NorwegianList.txt"
@@ -576,27 +567,17 @@
 		"group": "regions",
 		"off": true,
 		"title": "RUS: RU AdList",
-		"lang": "be ru uk",
+		"lang": "be kk ru uk uz",
 		"contentURL": "https://easylist-downloads.adblockplus.org/advblock+cssfixes.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=102",
 		"instructionURL": "https://forums.lanik.us/viewtopic.php?f=102&t=22512"
-	},
-	"RUS-2": {
-		"content": "filters",
-		"group": "regions",
-		"off": true,
-		"title": "RUS: AdGuard Russian filter",
-		"lang": "be ru uk",
-		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/1.txt",
-		"supportURL": "https://forum.adguard.com/forumdisplay.php?69-%D0%A4%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D1%8B-Adguard",
-		"instructionURL": "https://kb.adguard.com/ru/general/adguard-ad-filters#russian"
 	},
 	"spa-0": {
 		"content": "filters",
 		"group": "regions",
 		"off": true,
 		"title": "spa: EasyList Spanish",
-		"lang": "es",
+		"lang": "an ast ca es eu gl",
 		"contentURL": "https://easylist-downloads.adblockplus.org/easylistspanish.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=103"
 	},
@@ -604,8 +585,8 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "spa, por: AdGuard Spanish/Portuguese filter",
-		"lang": "es pt",
+		"title": "spa, por: AdGuard Spanish/Portuguese",
+		"lang": "an ast ca es eu gl pt",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/9.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
 		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
@@ -641,7 +622,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "TUR: AdGuard Turkish filter",
+		"title": "TUR: AdGuard Turkish",
 		"lang": "tr",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/13.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
