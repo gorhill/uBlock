@@ -1168,19 +1168,21 @@
 //   Support ability to auto-enable a filter list based on user agent.
 
 µBlock.listMatchesEnvironment = function(details) {
-    var re;
     // Matches language?
     if ( typeof details.lang === 'string' ) {
-        re = this.listMatchesEnvironment.reLang;
+        var re = this.listMatchesEnvironment.reLang;
         if ( re === undefined ) {
-            re = new RegExp('\\b' + self.navigator.language.slice(0, 2) + '\\b');
-            this.listMatchesEnvironment.reLang = re;
+            var match = /^[a-z]+/.exec(self.navigator.language);
+            if ( match !== null ) {
+                re = new RegExp('\\b' + match[0] + '\\b');
+                this.listMatchesEnvironment.reLang = re;
+            }
         }
-        if ( re.test(details.lang) ) { return true; }
+        if ( re !== undefined && re.test(details.lang) ) { return true; }
     }
     // Matches user agent?
     if ( typeof details.ua === 'string' ) {
-        re = new RegExp('\\b' + this.escapeRegex(details.ua) + '\\b', 'i');
+        var re = new RegExp('\\b' + this.escapeRegex(details.ua) + '\\b', 'i');
         if ( re.test(self.navigator.userAgent) ) { return true; }
     }
     return false;
