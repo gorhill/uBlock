@@ -1170,9 +1170,9 @@
 µBlock.listMatchesEnvironment = function(details) {
     // Matches language?
     if ( typeof details.lang === 'string' ) {
-        let re = this.listMatchesEnvironment.reLang;
+        var re = this.listMatchesEnvironment.reLang;
         if ( re === undefined ) {
-            const match = /^[a-z]+/.exec(self.navigator.language);
+            var match = /^[a-z]+/.exec(self.navigator.language);
             if ( match !== null ) {
                 re = new RegExp('\\b' + match[0] + '\\b');
                 this.listMatchesEnvironment.reLang = re;
@@ -1182,7 +1182,7 @@
     }
     // Matches user agent?
     if ( typeof details.ua === 'string' ) {
-        let re = new RegExp('\\b' + this.escapeRegex(details.ua) + '\\b', 'i');
+        var re = new RegExp('\\b' + this.escapeRegex(details.ua) + '\\b', 'i');
         if ( re.test(self.navigator.userAgent) ) { return true; }
     }
     return false;
