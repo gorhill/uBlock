@@ -573,8 +573,9 @@ const PageStore = class {
             if ( result !== 0 && µb.logger.enabled ) {
                 fctxt.filter = µb.staticNetFilteringEngine.toLogData();
             }
-            if ( result !== 2 && µb.adnauseam.mustAllowRequest(result, fctxt) && fctxt.filter) {
-                fctxt.filter.result = 4; // ADN: adnauseamAllowed
+            if ( result !== 2 && µb.adnauseam.mustAllowRequest(result, fctxt)) {
+                result = 4; // ADN: adnauseamAllowed
+                if (fctxt.filter) fctxt.filter.result = 4;
             }
 
 
