@@ -604,6 +604,8 @@
     if (!validateTarget(ad)) return deleteAd(ad);
 
     return sendXhr(ad);
+    // return openAdInNewTab(ad);
+    // return popUnderAd(ad)
   };
 
   const sendXhr = function (ad) {

@@ -1437,7 +1437,6 @@ vAPI.domSurveyor = (function() {
             if ( pendingNodes.hasNodes() ) {
                 surveyTimer.start(1);
             }
-            //console.timeEnd('dom surveyor/dom layout changed');
         }
     };
 
@@ -1461,14 +1460,18 @@ vAPI.bootstrap = (function() {
 
     const bootstrapPhase2 = function(ev) {
         // ADN
-        vAPI.domFilterer.filterset.forEach(function(c){
-          let nodes = document.querySelectorAll(c.selectors);
-          for ( const node of nodes ) {
-              // console.log("BootstrapPhase2 Adcheck:", node)
-              vAPI.adCheck && vAPI.adCheck(node);
-          }
-        //  TODO:  proceduralFilters ?
-        })
+        if (vAPI.domFilterer) {
+          vAPI.domFilterer.filterset.forEach(function(c){
+            let nodes = document.querySelectorAll(c.selectors);
+            for ( const node of nodes ) {
+                // console.log("BootstrapPhase2 Adcheck:", node)
+                vAPI.adCheck && vAPI.adCheck(node);
+            }
+          //  TODO:  proceduralFilters ?
+          })
+
+        }
+
 
         // This can happen on Firefox. For instance:
         // https://github.com/gorhill/uBlock/issues/1893

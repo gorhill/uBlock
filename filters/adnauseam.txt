@@ -2,7 +2,6 @@
 
 # Generics (any page)
 ##*[class^="google_ads"]
-##*[id^="google_ads"]
 ##*[class^="img_ad"]
 ##iframe[src*="mellowads"]
 ##*[class*="Advert"]
@@ -14,13 +13,13 @@ tweakers.net#@#*[class*="Advert"]
 # Google map ads on Search
 google.*##.mnr-c.rl-qs-crs-t._Db > ._gt:has(._mB)
 
-
 ## Generic unhide for Google Ads
 #@#.adsbygoogle
+#@#iframe[id^="google_ads_frame"]
+
 # Generic hide for Google Ads
 ###google_image_div
 ###mys-content
-##ins[id*="aswift"] > iframe
 
 # generichide-rules (#1466 etc)
 trustedreviews.com##*[class^="ad-"]
