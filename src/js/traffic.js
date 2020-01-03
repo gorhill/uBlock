@@ -494,7 +494,7 @@ const onBeforeBehindTheSceneRequest = function(fctxt) {
     // Blocked?
     if ( result === 1 ) {
         // ADN: Blocked xhr
-        µb.adnauseam.logNetBlock(fctxt.type, requestURL, JSON.stringify(context));
+        µb.adnauseam.logNetBlock(fctxt.type, fctxt.url, JSON.stringify(context));
         return { cancel: true };
     }
 
@@ -1124,7 +1124,7 @@ const injectCSP = function(fctxt, pageStore, responseHeaders) {
 
     if ( cspSubsets.length === 0 ) { return; }
 
-    µb.updateToolbarIcon(fctxt.tabId, 0x02);
+    µb.updateToolbarIcon(fctxt.tabId);
 
     // Use comma to merge CSP directives.
     // Ref.: https://www.w3.org/TR/CSP2/#implementation-considerations

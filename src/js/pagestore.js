@@ -480,7 +480,7 @@ const PageStore = class {
         // https://github.com/chrisaljoudi/uBlock/issues/905#issuecomment-76543649
         //   No point updating the badge if it's not being displayed.
         if ( (aggregateCounts & 0xFFFF) && µb.userSettings.showIconBadge ) {
-            µb.updateToolbarIcon(this.tabId, 0x02);
+            µb.updateToolbarIcon(this.tabId);
         }
 
         // Everything before pivot does not originate from current page -- we
