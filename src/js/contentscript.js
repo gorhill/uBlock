@@ -21,7 +21,7 @@
 
 'use strict';
 
-//console.log('contentscript.js: '+location.href, (window.self !== window.top?'[iframe]':''));
+// console.log('contentscript.js: '+location.href, (window.self !== window.top?'[iframe]':''));
 
 /*******************************************************************************
 
@@ -1265,7 +1265,7 @@ vAPI.domSurveyor = (function() {
     // http://jsperf.com/enumerate-classes/6
 
     const surveyPhase1 = function() {
-        //console.time('dom surveyor/surveying');
+        // console.log('dom surveyor/surveying');
         const t0 = performance.now();
         const rews = reWhitespace;
         const ids = [];
@@ -1346,7 +1346,6 @@ vAPI.domSurveyor = (function() {
     const surveyPhase3 = function(response) {
         const result = response && response.result;
         let mustCommit = false;
-
         if ( result ) {
             let selectors = result.simple;
             if ( Array.isArray(selectors) && selectors.length !== 0 ) {
@@ -1371,6 +1370,15 @@ vAPI.domSurveyor = (function() {
                 domFilterer.addCSSRule(
                     selectors,
                     'display:none!important;',
+                    { injected: true }
+                );
+                mustCommit = true;
+            }
+            selectors = result.fake;
+            if ( typeof selectors === 'string' && selectors.length !== 0 ) {
+                domFilterer.addCSSRule(
+                    selectors,
+                    'height:0px!important;',
                     { injected: true }
                 );
                 mustCommit = true;
@@ -1464,14 +1472,11 @@ vAPI.bootstrap = (function() {
           vAPI.domFilterer.filterset.forEach(function(c){
             let nodes = document.querySelectorAll(c.selectors);
             for ( const node of nodes ) {
-                // console.log("BootstrapPhase2 Adcheck:", node)
                 vAPI.adCheck && vAPI.adCheck(node);
             }
           //  TODO:  proceduralFilters ?
           })
-
         }
-
 
         // This can happen on Firefox. For instance:
         // https://github.com/gorhill/uBlock/issues/1893

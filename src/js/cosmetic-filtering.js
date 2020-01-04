@@ -31,6 +31,9 @@ const µb = µBlock;
 const cosmeticSurveyingMissCountMax =
     parseInt(vAPI.localStorage.getItem('cosmeticSurveyingMissCountMax'), 10) ||
     15;
+//ADN google adsense collection
+const fakeEntries = '.adsbygoogle, ins[id*="aswift"] > iframe, iframe[id^="google_ads_frame"], #google_image_div, #mys-content'.split(", ");
+
 
 let supportsUserStylesheets = vAPI.webextFlavor.soup.has('user_stylesheet');
 // https://www.reddit.com/r/uBlockOrigin/comments/8dkvqn/116_broken_loading_custom_filters_from_my_filters/
@@ -38,6 +41,22 @@ window.addEventListener('webextFlavor', function() {
     supportsUserStylesheets = vAPI.webextFlavor.soup.has('user_stylesheet');
 }, { once: true });
 
+const checkFakeEntries = function(filters) {
+  //ADN
+  //iterate over filters, if they are fakeEntries, remove from simple/complex
+  const array = filters.split(",\n");
+  let out = [];
+  for (let i = 0; i < fakeEntries.length; i++) {
+    const entry = fakeEntries[i];
+    if (array.includes(entry)) {
+      out.push(entry);
+      const index = array.indexOf(entry);
+      array.splice(index, 1);
+    }
+  }
+  filters = array.join(',\n');
+  return [filters,out];
+}
 /******************************************************************************/
 /******************************************************************************/
 
@@ -840,7 +859,9 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
         const selectors = request[entry.canonical];
         if ( Array.isArray(selectors) === false ) { continue; }
         for ( let selector of selectors ) {
-            if ( entry.simple.has(selector) === false ) { continue; }
+            if ( entry.simple.has(selector) === false ) {
+              continue;
+            }
             const bucket = entry.complex.get(selector);
             if ( bucket !== undefined ) {
                 if ( Array.isArray(bucket) ) {
@@ -880,7 +901,9 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
         complexSelectors.size === 0 &&
         excepted.length === 0
     ) {
-        return;
+      // ADN: return fake hide anyway
+      const out = {fake: fakeEntries.join(", ")}
+      return out;
     }
 
     const out = {
@@ -888,7 +911,7 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
         complex: Array.from(complexSelectors),
         injected: '',
         excepted,
-    };
+    } ;
 
     // Cache and inject (if user stylesheets supported) looked-up low generic
     // cosmetic filters.
@@ -907,12 +930,14 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
 
     // If user stylesheets are supported in the current process, inject the
     // cosmetic filters now.
-    if (
+   if (
         supportsUserStylesheets &&
         request.tabId !== undefined &&
-        request.frameId !== undefined
+        request.frameId !== undefined &&
+        !µb.adnauseam.contentPrefs(request.hostname).hidingDisabled // ADN Don't inject user stylesheets if hiding is disabled
     ) {
         const injected = [];
+        out.fake = [];
         if ( out.simple.length !== 0 ) {
             injected.push(out.simple.join(',\n'));
             out.simple = [];
@@ -922,8 +947,19 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
             out.complex = [];
         }
         out.injected = injected.join(',\n');
+        //Adn
+        const values = checkFakeEntries(out.injected);
+        out.injected = values[0];
+        out.fake = values[1];
         vAPI.insertCSS(request.tabId, {
             code: out.injected + '\n{display:none!important;}',
+            cssOrigin: 'user',
+            frameId: request.frameId,
+            runAt: 'document_start'
+        });
+        out.fake = out.fake.join(',\n');
+        vAPI.insertCSS(request.tabId, {
+            code: out.fake + '\n{height:0px!important;}',
             cssOrigin: 'user',
             frameId: request.frameId,
             runAt: 'document_start'
@@ -971,7 +1007,8 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
         injectedHideFilters: '',
         networkFilters: '',
         noDOMSurveying: this.hasGenericHide === false,
-        proceduralFilters: []
+        proceduralFilters: [],
+        fake:[]
     };
 
     if ( options.noCosmeticFiltering !== true ) {
@@ -1097,16 +1134,17 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
             injectedHideFilters.push(out.highGenericHideComplex);
             out.highGenericHideComplex = '';
         }
+
         out.injectedHideFilters = injectedHideFilters.join(',\n');
+        const values = checkFakeEntries(out.injectedHideFilters);
+        out.injectedHideFilters = values[0];
+        out.fake = values[1];
         const details = {
             code: '',
             cssOrigin: 'user',
             frameId: request.frameId,
             runAt: 'document_start'
         };
-        // TMP: fake hide filters
-        details.code = 'ins[id*="aswift"] > iframe, .adsbygoogle' + '\n{display:none!important;}';
-        vAPI.insertCSS(request.tabId, details);
 
         if ( out.injectedHideFilters.length !== 0 ) {
             details.code = out.injectedHideFilters + '\n{display:none!important;}';
@@ -1115,6 +1153,12 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
 
         if ( out.networkFilters.length !== 0 ) {
             details.code = out.networkFilters + '\n{display:none!important;}';
+            vAPI.insertCSS(request.tabId, details);
+            out.networkFilters = '';
+        }
+
+        if ( out.fake.length !== 0 ) {
+            details.code = out.fake + '\n{height:0px!important;}';
             vAPI.insertCSS(request.tabId, details);
             out.networkFilters = '';
         }

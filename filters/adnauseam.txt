@@ -1,7 +1,6 @@
 ||http://widgets.wp.com/platform.js, domain=filbert.cc
 
 # Generics (any page)
-##*[class^="google_ads"]
 ##*[class^="img_ad"]
 ##iframe[src*="mellowads"]
 ##*[class*="Advert"]
@@ -13,11 +12,8 @@ tweakers.net#@#*[class*="Advert"]
 # Google map ads on Search
 google.*##.mnr-c.rl-qs-crs-t._Db > ._gt:has(._mB)
 
-## Generic unhide for Google Ads
-#@#.adsbygoogle
-#@#iframe[id^="google_ads_frame"]
-
 # Generic hide for Google Ads
+##ins[id*="aswift"] > iframe
 ###google_image_div
 ###mys-content
 
