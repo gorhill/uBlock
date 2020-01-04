@@ -11,6 +11,18 @@
     "message": "uBlock₀ — Kontrol panela",
     "description": "English: uBlock₀ — Dashboard"
   },
+  "dashboardUnsavedWarning": {
+    "message": "Abisua! Gorde gabeko aldaketak dituzu",
+    "description": "A warning in the dashboard when navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningStay": {
+    "message": "Geratu",
+    "description": "Label for button to prevent navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningIgnore": {
+    "message": "Ezikusi",
+    "description": "Label for button to ignore unsaved changes"
+  },
   "settingsPageName": {
     "message": "Ezarpenak",
     "description": "appears as tab name in dashboard"
@@ -241,7 +253,7 @@
   },
   "pickerContextMenuEntry": {
     "message": "Blokeatu elementua",
-    "description": "English: Block element"
+    "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
     "message": "Ezkutatu blokeatutako elementuen hutsuneak",
@@ -543,13 +555,109 @@
     "message": "Uneko fitxa",
     "description": "Appears in the logger's tab selector"
   },
+  "loggerReloadTip": {
+    "message": "Birkargatu fitxako edukia",
+    "description": "Tooltip for the reload button in the logger page"
+  },
+  "loggerDomInspectorTip": {
+    "message": "Txandakatu DOM ikuskatzailea",
+    "description": "Tooltip for the DOM inspector button in the logger page"
+  },
+  "loggerPopupPanelTip": {
+    "message": "Txandakatu laster-leiho panela",
+    "description": "Tooltip for the popup panel button in the logger page"
+  },
+  "loggerInfoTip": {
+    "message": "uBlock Origin wiki: Egunkaria",
+    "description": "Tooltip for the top-right info label in the logger page"
+  },
+  "loggerClearTip": {
+    "message": "Garbitu egunkaria",
+    "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
+  },
+  "loggerPauseTip": {
+    "message": "Pausatu egunkaria (baztertu jasotako informazioa)",
+    "description": "Tooltip for the pause button in the logger page"
+  },
+  "loggerUnpauseTip": {
+    "message": "Kendu pausa egunkariari",
+    "description": "Tooltip for the play button in the logger page"
+  },
+  "loggerRowFiltererButtonTip": {
+    "message": "Txandakatu egunkariaren iragazkia",
+    "description": "Tooltip for the row filterer button in the logger page"
+  },
   "logFilterPrompt": {
     "message": "iragazi egunkariko sarrerak",
-    "description": "English: filter log entries"
+    "description": "Placeholder string for logger output filtering input field"
   },
-  "logMaxEntriesTip": {
-    "message": "Egunkariaren gehieneko sarrera kopurua",
-    "description": "Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  "loggerRowFiltererBuiltinTip": {
+    "message": "Egunkaria iragazteko aukerak",
+    "description": "Tooltip for the button to bring up logger output filtering options"
+  },
+  "loggerRowFiltererBuiltinNot": {
+    "message": "Ez",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinEventful": {
+    "message": "eventful",
+    "description": "A keyword in the built-in row filtering expression: all items corresponding to uBO doing something (blocked, allowed, redirected, etc.)"
+  },
+  "loggerRowFiltererBuiltinBlocked": {
+    "message": "blokeatuta",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinAllowed": {
+    "message": "baimenduta",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltin1p": {
+    "message": "Lehen eskukoa",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltin3p": {
+    "message": "Hirugarrengoa",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerEntryDetailsHeader": {
+    "message": "Xehetasunak",
+    "description": "Small header to identify the 'Details' pane for a specific logger entry"
+  },
+  "loggerEntryDetailsFilter": {
+    "message": "Iragazkia",
+    "description": "Label to identify a filter field"
+  },
+  "loggerEntryDetailsFilterList": {
+    "message": "Iragazki-zerrendak",
+    "description": "Label to identify a filter list field"
+  },
+  "loggerEntryDetailsRule": {
+    "message": "Araua",
+    "description": "Label to identify a rule field"
+  },
+  "loggerEntryDetailsContext": {
+    "message": "Testuingurua",
+    "description": "Label to identify a context field (typically a hostname)"
+  },
+  "loggerEntryDetailsRootContext": {
+    "message": "Erro testuingurua",
+    "description": "Label to identify a root context field (typically a hostname)"
+  },
+  "loggerEntryDetailsPartyness": {
+    "message": "Jatorria",
+    "description": "Label to identify a field providing partyness information"
+  },
+  "loggerEntryDetailsType": {
+    "message": "Mota",
+    "description": "Label to identify the type of an entry"
+  },
+  "loggerEntryDetailsURL": {
+    "message": "URLa",
+    "description": "Label to identify the URL of an entry"
+  },
+  "loggerURLFilteringHeader": {
+    "message": "URL araua",
+    "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
     "message": "Testuingurua:",
@@ -558,10 +666,6 @@
   "loggerURLFilteringTypeLabel": {
     "message": "Mota:",
     "description": "Label for the type selector"
-  },
-  "loggerURLFilteringHeader": {
-    "message": "URL iragazketa dinamikoa",
-    "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerStaticFilteringHeader": {
     "message": "Iragazketa estatikoa",
@@ -611,6 +715,62 @@
     "message": "<code>{{filter}}<\/code> iragazki estatikoa ezin izan da aurkitu orain aktibatutako iragazki zerrendetan",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
+  "loggerSettingDiscardPrompt": {
+    "message": "Beheko hiru baldintzak betetzen ez dituzten egunkariko sarrerak automatikoki ezikusiko dira:",
+    "description": "Logger setting: A sentence to describe the purpose of the settings below"
+  },
+  "loggerSettingPerEntryMaxAge": {
+    "message": "Mantendu azken {{input}} minutuetako sarrerak",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerTabMaxLoads": {
+    "message": "Mantendu gehienez {{input}} orrien kargak fitxako",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerTabMaxEntries": {
+    "message": "Mantendu gehienez {{input}} sarrera fitxako",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerEntryLineCount": {
+    "message": "Erabili {{input}} errenkada sarrerako bertikalki hedatutako moduan",
+    "description": "A logger setting"
+  },
+  "loggerSettingHideColumnsPrompt": {
+    "message": "Ezkutatu zutabeak:",
+    "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
+  },
+  "loggerSettingHideColumnTime": {
+    "message": "{{input}} Denbora",
+    "description": "A label for the time column"
+  },
+  "loggerSettingHideColumnFilter": {
+    "message": "{{input}} Iragazkia\/araua",
+    "description": "A label for the filter or rule column"
+  },
+  "loggerSettingHideColumnContext": {
+    "message": "{{input}} Testuingurua",
+    "description": "A label for the context column"
+  },
+  "loggerSettingHideColumnPartyness": {
+    "message": "{{input}} jatorria",
+    "description": "A label for the partyness column"
+  },
+  "loggerExportFormatList": {
+    "message": "Zerrenda",
+    "description": "Label for radio-button to pick export format"
+  },
+  "loggerExportFormatTable": {
+    "message": "Taula",
+    "description": "Label for radio-button to pick export format"
+  },
+  "loggerExportEncodePlain": {
+    "message": "Laua",
+    "description": "Label for radio-button to pick export text format"
+  },
+  "loggerExportEncodeMarkdown": {
+    "message": "Markdown",
+    "description": "Label for radio-button to pick export text format"
+  },
   "aboutChangelog": {
     "message": "Aldaketa egunkaria",
     "description": ""
@@ -634,6 +794,10 @@
   "aboutContributors": {
     "message": "Parte-hartzaileak",
     "description": "English: Contributors"
+  },
+  "aboutDependencies": {
+    "message": "Kanpo menpekotasunak (GPLv3 lizentziarekin bateragarriak):",
+    "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
     "message": "Egin babeskopia fitxategian",
@@ -790,6 +954,14 @@
   "shortcutCapturePlaceholder": {
     "message": "Idatzi lasterbide bat",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
+  },
+  "genericMergeViewScrollLock": {
+    "message": "Txandakatu korritze blokeatua",
+    "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
+  },
+  "genericCopyToClipboard": {
+    "message": "Kopiatu arbelera",
+    "description": "Label for buttons used to copy something to the clipboard"
   },
   "dummy": {
     "message": "This entry must be the last one",

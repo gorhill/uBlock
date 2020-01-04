@@ -1,0 +1,50 @@
+Tõhus blokeerija: kasutab vähe mälu ja protsessorit ning sellegipoolest suudab laadida ja kasutada mitu korda rohkem filtreid kui teised tuntud blokeerijad.
+
+Illustreeritud ülevaade selle kasulikkusest: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+
+Kasutamine: hüpikaknas oleva suure toitenupu abil on võimalik uBlock avatud lehel püsivalt keelata või lubada. See käib ainult hetkel avatud lehe, mitte kõikide saitide kohta.
+
+***
+
+Paindlik, midagi rohkemat kui ainult "reklaamide blokeerija" - laiendus suudab lugeda ja luua filtreid ka hosts-failidest.
+
+Laienduse installimisel kasutatakse järgnevaid soovitatud filtreid:
+
+- EasyList
+- Peter Lowe reklaamiserveri loend
+- EasyPrivacy
+- Pahavara levitavad domeenid
+
+Lisaks neile on veel saadaval:
+
+- Fanboy täiustatud jälitusloend
+- Dan Pollock'i hosts-fail
+- hpHosts'i reklaami- ja jälitusserverid
+- MVPS HOSTS
+- Spam404
+- Ja paljud teised
+
+Mida rohkem filtreid on kasutusel, seda suurem on mälu kasutatavus. Siiski, pärast Fanboy kahe lisaloendi - hpHosts'i reklaami- ja jälitusserverite lisamist kasutab uBlock siiski palju vähem mälu kui ülejäänud tuntud blokeerijad.
+
+Lisaks pidage meeles, et täiendavate loendite lisamine tõstab saitide valesti kuvamise ohtu -- eriti nende loendite puhul, mida tavaliselt kasutatakse hosts-failina.
+
+***
+
+Ilma soovitatud loenditeta poleks laienduse kasutamisel mõtet. Kui peaksite kunagi tahtma lisada oma panuse siis mõelge nende peale, kes on töötanud kogu südamest selle nimel, et loendid oleksid kasutamiskõlblikud ning tasuta kättesaadavad.
+
+***
+
+Tasuta.
+Avatud lähtekoodiga avaliku litsentsiga (GPLv3)
+Kasutajatelt kasutajaile.
+
+Toetajad Github'is:
+https://github.com/gorhill/uBlock/graphs/contributors
+Toetajad Crowdin'is: https://crowdin.net/project/ublock
+
+***
+
+Laienduse kasutamisel pange tähele, et tegemist on uue laiendusega.
+
+Projekti muudatuste logi:
+https://github.com/gorhill/uBlock/releases

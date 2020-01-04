@@ -25,13 +25,13 @@
 
 /******************************************************************************/
 
-(function() {
+(( ) => {
 
 /******************************************************************************/
 /******************************************************************************/
 
-var chrome = self.chrome;
-var manifest = chrome.runtime.getManifest();
+const chrome = self.chrome;
+const manifest = chrome.runtime.getManifest();
 
 vAPI.cantWebsocket =
     chrome.webRequest.ResourceType instanceof Object === false  ||
@@ -60,7 +60,7 @@ vAPI.insertCSS = function(tabId, details) {
     return chrome.tabs.insertCSS(tabId, details, vAPI.resetLastError);
 };
 
-var noopFunc = function(){};
+const noopFunc = function(){};
 
 /******************************************************************************/
 
@@ -81,7 +81,6 @@ vAPI.app.restart = function() {
 // chrome.storage.local.get(null, function(bin){ console.debug('%o', bin); });
 
 vAPI.storage = chrome.storage.local;
-vAPI.cacheStorage = chrome.storage.local;
 
 /******************************************************************************/
 /******************************************************************************/
@@ -102,9 +101,7 @@ vAPI.cacheStorage = chrome.storage.local;
 
 vAPI.browserSettings = (function() {
     // Not all platforms support `chrome.privacy`.
-    if ( chrome.privacy instanceof Object === false ) {
-        return;
-    }
+    if ( chrome.privacy instanceof Object === false ) { return; }
 
     return {
         // Whether the WebRTC-related privacy API is crashy is an open question
@@ -113,11 +110,7 @@ vAPI.browserSettings = (function() {
         // an iframe) for platforms where it's a non-issue.
         // https://github.com/uBlockOrigin/uBlock-issues/issues/9
         //   Some Chromium builds are made to look like a Chrome build.
-        webRTCSupported: (function() {
-            if ( vAPI.webextFlavor.soup.has('chromium') === false ) {
-                return true;
-            }
-        })(),
+        webRTCSupported: vAPI.webextFlavor.soup.has('chromium') === false || undefined,
 
         // Calling with `true` means IP address leak is not prevented.
         // https://github.com/gorhill/uBlock/issues/533
@@ -136,16 +129,13 @@ vAPI.browserSettings = (function() {
                 // place.
                 if ( setting ) { return; }
                 this.webRTCSupported = { setting: setting };
-                var iframe = document.createElement('iframe');
-                var me = this;
-                var messageHandler = function(ev) {
-                    if ( ev.origin !== self.location.origin ) {
-                        return;
-                    }
+                let iframe = document.createElement('iframe');
+                const messageHandler = ev => {
+                    if ( ev.origin !== self.location.origin ) { return; }
                     window.removeEventListener('message', messageHandler);
-                    var setting = me.webRTCSupported.setting;
-                    me.webRTCSupported = ev.data === 'webRTCSupported';
-                    me.setWebrtcIPAddress(setting);
+                    const setting = this.webRTCSupported.setting;
+                    this.webRTCSupported = ev.data === 'webRTCSupported';
+                    this.setWebrtcIPAddress(setting);
                     iframe.parentNode.removeChild(iframe);
                     iframe = null;
                 };
@@ -166,12 +156,10 @@ vAPI.browserSettings = (function() {
             // WebRTC not supported: `webRTCMultipleRoutesEnabled` can NOT be
             // safely accessed. Accessing the property will cause full browser
             // crash.
-            if ( this.webRTCSupported !== true ) {
-                return;
-            }
+            if ( this.webRTCSupported !== true ) { return; }
 
-            var cp = chrome.privacy,
-                cpn = cp.network;
+            const cp = chrome.privacy;
+            const cpn = cp.network;
 
             // Older version of Chromium do not support this setting, and is
             // marked as "deprecated" since Chromium 48.
@@ -201,9 +189,14 @@ vAPI.browserSettings = (function() {
                         }, vAPI.resetLastError);
                     } else {
                         // https://github.com/uBlockOrigin/uAssets/issues/333#issuecomment-289426678
-                        // - Leverage virtuous side-effect of strictest setting.
+                        //   Leverage virtuous side-effect of strictest setting.
+                        // https://github.com/gorhill/uBlock/issues/3009
+                        //   Firefox currently works differently, use
+                        //   `default_public_interface_only` for now.
                         cpn.webRTCIPHandlingPolicy.set({
-                            value: 'disable_non_proxied_udp',
+                            value: vAPI.webextFlavor.soup.has('chromium')
+                                ? 'disable_non_proxied_udp'
+                                : 'default_public_interface_only',
                             scope: 'regular'
                         }, vAPI.resetLastError);
                     }
@@ -220,8 +213,9 @@ vAPI.browserSettings = (function() {
                 }
                 switch ( setting ) {
                 case 'prefetching':
+                    const enabled = !!details[setting];
                     try {
-                        if ( !!details[setting] ) {
+                        if ( enabled ) {
                             chrome.privacy.network.networkPredictionEnabled.clear({
                                 scope: 'regular'
                             }, vAPI.resetLastError);
@@ -233,6 +227,9 @@ vAPI.browserSettings = (function() {
                         }
                     } catch(ex) {
                         console.error(ex);
+                    }
+                    if ( vAPI.prefetching instanceof Function ) {
+                        vAPI.prefetching(enabled);
                     }
                     break;
 
@@ -272,21 +269,12 @@ vAPI.tabs = {};
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/3546
-//   Added a new flavor of behind-the-scene tab id: vAPI.anyTabId.
-//   vAPI.anyTabId will be used for network requests which can be filtered,
-//   because they comes with enough contextual information. It's just not
-//   possible to pinpoint exactly from which tab it comes from. For example,
-//   with Firefox/webext, the `documentUrl` property is available for every
-//   network requests.
-
 vAPI.isBehindTheSceneTabId = function(tabId) {
     return tabId < 0;
 };
 
 vAPI.unsetTabId = 0;
 vAPI.noTabId = -1;      // definitely not any existing tab
-vAPI.anyTabId = -2;     // one of the existing tab
 
 /******************************************************************************/
 
@@ -429,18 +417,23 @@ vAPI.tabs.get = function(tabId, callback) {
     });
 };
 
-/******************************************************************************/
+/*******************************************************************************
 
-// properties of the details object:
-//   url: 'URL', // the address that will be opened
-//   tabId: 1, // the tab is used if set, instead of creating a new one
-//   index: -1, // undefined: end of the list, -1: following tab, or after index
-//   active: false, // opens the tab in background - true and undefined: foreground
-//   select: true, // if a tab is already opened with that url, then select it instead of opening a new one
-//   popup: true // open in a new window
+    Properties of the details object:
+    - url: 'URL',    => the address that will be opened
+    - tabId: 1,      => the tab is used if set, instead of creating a new one
+    - index: -1,     => undefined: end of the list, -1: following tab, or
+                        after index
+    - active: false, => opens the tab in background - true and undefined:
+                        foreground
+    - select: true,  => if a tab is already opened with that url, then select
+                        it instead of opening a new one
+    - popup: true    => open in a new window
+
+*/
 
 vAPI.tabs.open = function(details) {
-    var targetURL = details.url;
+    let targetURL = details.url;
     if ( typeof targetURL !== 'string' || targetURL === '' ) {
         return null;
     }
@@ -451,48 +444,78 @@ vAPI.tabs.open = function(details) {
     }
 
     // dealing with Chrome's asynchronous API
-    var wrapper = function() {
+    const wrapper = ( ) => {
         if ( details.active === undefined ) {
             details.active = true;
         }
 
-        var subWrapper = function() {
-            var _details = {
+        const subWrapper = ( ) => {
+            const updateDetails = {
                 url: targetURL,
                 active: !!details.active
             };
 
             // Opening a tab from incognito window won't focus the window
             // in which the tab was opened
-            var focusWindow = function(tab) {
-                if ( tab.active ) {
-                    chrome.windows.update(tab.windowId, { focused: true });
+            const focusWindow = tab => {
+                if ( tab && tab.active && browser.windows instanceof Object ) {
+                    browser.windows.update(tab.windowId, { focused: true });
                 }
             };
 
             if ( !details.tabId ) {
                 if ( details.index !== undefined ) {
-                    _details.index = details.index;
+                    updateDetails.index = details.index;
                 }
-
-                chrome.tabs.create(_details, focusWindow);
+                browser.tabs.create(updateDetails, focusWindow);
                 return;
             }
 
             // update doesn't accept index, must use move
-            chrome.tabs.update(toChromiumTabId(details.tabId), _details, function(tab) {
-                // if the tab doesn't exist
-                if ( vAPI.lastError() ) {
-                    chrome.tabs.create(_details, focusWindow);
-                } else if ( details.index !== undefined ) {
-                    chrome.tabs.move(tab.id, {index: details.index});
+            browser.tabs.update(
+                toChromiumTabId(details.tabId),
+                updateDetails,
+                tab => {
+                    // if the tab doesn't exist
+                    if ( vAPI.lastError() ) {
+                        browser.tabs.create(updateDetails, focusWindow);
+                    } else if ( details.index !== undefined ) {
+                        browser.tabs.move(tab.id, { index: details.index });
+                    }
                 }
-            });
+            );
         };
 
         // Open in a standalone window
-        if ( details.popup === true ) {
-            chrome.windows.create({ url: details.url, type: 'popup' });
+        //
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/168#issuecomment-413038191
+        //   Not all platforms support browser.windows API.
+        //
+        // For some reasons, some platforms do not honor the left,top
+        // position when specified. I found that further calling
+        // windows.update again with the same position _may_ help.
+        if ( details.popup === true && browser.windows instanceof Object ) {
+            const createDetails = {
+                url: details.url,
+                type: 'popup',
+            };
+            if ( details.box instanceof Object ) {
+                Object.assign(createDetails, details.box);
+            }
+            browser.windows.create(createDetails, win => {
+                if ( win instanceof Object === false ) { return; }
+                if ( details.box instanceof Object === false ) { return; }
+                if (
+                    win.left === details.box.left &&
+                    win.top === details.box.top
+                ) {
+                    return;
+                }
+                browser.windows.update(win.id, {
+                    left: details.box.left,
+                    top: details.box.top
+                });
+            });
             return;
         }
 
@@ -501,7 +524,7 @@ vAPI.tabs.open = function(details) {
             return;
         }
 
-        vAPI.tabs.get(null, function(tab) {
+        vAPI.tabs.get(null, tab => {
             if ( tab ) {
                 details.index = tab.index + 1;
             } else {
@@ -528,28 +551,29 @@ vAPI.tabs.open = function(details) {
     }
 
     // https://developer.chrome.com/extensions/tabs#method-query
-    // "Note that fragment identifiers are not matched."
-    // It's a lie, fragment identifiers ARE matched. So we need to remove the
-    // fragment.
-    var pos = targetURL.indexOf('#'),
-        targetURLWithoutHash = pos === -1 ? targetURL : targetURL.slice(0, pos);
+    //   "Note that fragment identifiers are not matched."
+    //   It's a lie, fragment identifiers ARE matched. So we need to remove
+    //   the fragment.
+    const pos = targetURL.indexOf('#');
+    const targetURLWithoutHash = pos === -1
+        ? targetURL
+        : targetURL.slice(0, pos);
 
-    chrome.tabs.query({ url: targetURLWithoutHash }, function(tabs) {
-        void chrome.runtime.lastError;
-        var tab = Array.isArray(tabs) && tabs[0];
+    browser.tabs.query({ url: targetURLWithoutHash }, tabs => {
+        void browser.runtime.lastError;
+        const tab = Array.isArray(tabs) && tabs[0];
         if ( !tab ) {
             wrapper();
             return;
         }
-        var _details = {
-            active: true,
-            url: undefined
-        };
-        if ( targetURL !== tab.url ) {
-            _details.url = targetURL;
+        const updateDetails = { active: true };
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/592
+        if ( tab.url.startsWith(targetURL) === false ) {
+            updateDetails.url = targetURL;
         }
-        chrome.tabs.update(tab.id, _details, function(tab) {
-            chrome.windows.update(tab.windowId, { focused: true });
+        browser.tabs.update(tab.id, updateDetails, tab => {
+            if ( browser.windows instanceof Object === false ) { return; }
+            browser.windows.update(tab.windowId, { focused: true });
         });
     });
 };
@@ -616,7 +640,7 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
         // https://code.google.com/p/chromium/issues/detail?id=410868#c8
         void chrome.runtime.lastError;
         if ( typeof callback === 'function' ) {
-            callback();
+            callback.apply(null, arguments);
         }
     };
     if ( tabId ) {
@@ -645,9 +669,11 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 //   Ensure ImageData for toolbar icon is valid before use.
 /*
 vAPI.setIcon = (function() {
-    let browserAction = chrome.browserAction,
-        titleTemplate = chrome.runtime.getManifest().name + ' ({badge})';
-    let icons = [
+    const browserAction = chrome.browserAction,
+        titleTemplate =
+            chrome.runtime.getManifest().browser_action.default_title +
+            ' ({badge})';
+    const icons = [
         {
             tabId: 0,
             path: { '16': 'img/icon_16-off.png', '32': 'img/icon_32-off.png' }
@@ -679,23 +705,38 @@ vAPI.setIcon = (function() {
         // https://searchfox.org/mozilla-central/rev/5ff2d7683078c96e4b11b8a13674daded935aa44/browser/components/extensions/parent/ext-browserAction.js#631
         if ( vAPI.webextFlavor.soup.has('chromium') === false ) { return; }
 
-        let imgs = [
-            { i: 0, p: '16' }, { i: 0, p: '32' },
-            { i: 1, p: '16' }, { i: 1, p: '32' },
-        ];
-        let onLoaded = function() {
-            for ( let img of imgs ) {
+        const imgs = [];
+        for ( let i = 0; i < icons.length; i++ ) {
+            let path = icons[i].path;
+            for ( const key in path ) {
+                if ( path.hasOwnProperty(key) === false ) { continue; }
+                imgs.push({ i: i, p: key });
+            }
+        }
+
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/296
+        const safeGetImageData = function(ctx, w, h) {
+            let data;
+            try {
+                data = ctx.getImageData(0, 0, w, h);
+            } catch(ex) {
+            }
+            return data;
+        };
+
+        const onLoaded = function() {
+            for ( const img of imgs ) {
                 if ( img.r.complete === false ) { return; }
             }
             let ctx = document.createElement('canvas').getContext('2d');
             let iconData = [ null, null ];
-            for ( let img of imgs ) {
+            for ( const img of imgs ) {
                 let w = img.r.naturalWidth, h = img.r.naturalHeight;
                 ctx.width = w; ctx.height = h;
                 ctx.clearRect(0, 0, w, h);
                 ctx.drawImage(img.r, 0, 0);
                 if ( iconData[img.i] === null ) { iconData[img.i] = {}; }
-                let imgData = ctx.getImageData(0, 0, w, h);
+                const imgData = safeGetImageData(ctx, w, h);
                 if (
                     imgData instanceof Object === false ||
                     imgData.data instanceof Uint8ClampedArray === false ||
@@ -711,7 +752,7 @@ vAPI.setIcon = (function() {
             icons[0] = { tabId: 0, imageData: iconData[0] };
             icons[1] = { tabId: 0, imageData: iconData[1] };
         };
-        for ( let img of imgs ) {
+        for ( const img of imgs ) {
             img.r = new Image();
             img.r.addEventListener('load', onLoaded, { once: true });
             img.r.src = icons[img.i].path[img.p];
@@ -761,7 +802,7 @@ vAPI.setIcon = (function() {
     return function(tabId, iconStatus, badge) {
 
         var iconPaths; // ADN
-        
+
         switch(iconStatus) { // ADN
             case 'dnt':
                 iconPaths = { '16': 'img/adn_dnt_on_16.png', '32': 'img/adn_dnt_on_32.png' };
@@ -981,7 +1022,7 @@ vAPI.messaging.onPortMessage = (function() {
 
     return function(request, port) {
         // prepare response
-        var callback = this.NOOPFUNC;
+        let callback = this.NOOPFUNC;
         if ( request.auxProcessId !== undefined ) {
             callback = callbackWrapperFactory(port, request).callback;
         }
@@ -993,7 +1034,7 @@ vAPI.messaging.onPortMessage = (function() {
         }
 
         // Auxiliary process to main process: specific handler
-        var r = this.UNHANDLED,
+        let r = this.UNHANDLED,
             listener = this.listeners[request.channelName];
         if ( typeof listener === 'function' ) {
             r = listener(request.msg, port.sender, callback);
@@ -1005,7 +1046,7 @@ vAPI.messaging.onPortMessage = (function() {
         if ( r !== this.UNHANDLED ) { return; }
 
         // Auxiliary process to main process: no handler
-        console.error(
+        log.info(
             'vAPI.messaging.onPortMessage > unhandled request: %o',
             request
         );
@@ -1057,12 +1098,16 @@ vAPI.messaging.broadcast = function(message) {
       makeCloneable(message.notifications); // #1163
     }
 
-    var messageWrapper = {
+    const messageWrapper = {
         broadcast: true,
         msg: message
     };
-    for ( var port of this.ports.values() ) {
-        port.postMessage(messageWrapper);
+    for ( const port of this.ports.values() ) {
+      try {
+          port.postMessage(messageWrapper);
+      } catch(ex) {
+          this.ports.delete(port.name);
+      }
     }
 };
 
@@ -1071,22 +1116,32 @@ vAPI.messaging.broadcast = function(message) {
 
 // https://github.com/gorhill/uBlock/issues/3474
 // https://github.com/gorhill/uBlock/issues/2823
-// - foil ability of web pages to identify uBO through
+//   Foil ability of web pages to identify uBO through
 //   its web accessible resources.
 // https://github.com/gorhill/uBlock/issues/3497
-// - prevent web pages from interfering with uBO's element picker
+//   Prevent web pages from interfering with uBO's element picker
+// https://github.com/uBlockOrigin/uBlock-issues/issues/550
+//   A specific secret can be used for at most one second.
 
-(function() {
-    vAPI.warSecret =
-        Math.floor(Math.random() * 982451653 + 982451653).toString(36) +
-        Math.floor(Math.random() * 982451653 + 982451653).toString(36);
+vAPI.warSecret = (function() {
+    const generateSecret = ( ) => {
+        return Math.floor(Math.random() * 982451653 + 982451653).toString(36) +
+               Math.floor(Math.random() * 982451653 + 982451653).toString(36);
+    };
 
-    var key = 'secret=' + vAPI.warSecret;
-    var root = vAPI.getURL('/');
-    var guard = function(details) {
-        if ( details.url.indexOf(key) === -1 ) {
+    const root = vAPI.getURL('/');
+    const secrets = [];
+    let lastSecretTime = 0;
+
+    const guard = function(details) {
+        const url = details.url;
+        const pos = secrets.findIndex(secret =>
+            url.lastIndexOf(`?secret=${secret}`) !== -1
+        );
+        if ( pos === -1 ) {
             return { redirectUrl: root };
         }
+        secrets.splice(pos, 1);
     };
 
     chrome.webRequest.onBeforeRequest.addListener(
@@ -1096,7 +1151,76 @@ vAPI.messaging.broadcast = function(message) {
         },
         [ 'blocking' ]
     );
+
+    return ( ) => {
+        if ( secrets.length !== 0 ) {
+            if ( (Date.now() - lastSecretTime) > 5000 ) {
+                secrets.splice(0);
+            } else if ( secrets.length > 256 ) {
+                secrets.splice(0, secrets.length - 192);
+            }
+        }
+        lastSecretTime = Date.now();
+        const secret = generateSecret();
+        secrets.push(secret);
+        return `?secret=${secret}`;
+    };
 })();
+
+vAPI.net = {
+    listenerMap: new WeakMap(),
+    // legacy Chromium understands only these network request types.
+    validTypes: (function() {
+        let types = new Set([
+            'main_frame',
+            'sub_frame',
+            'stylesheet',
+            'script',
+            'image',
+            'object',
+            'xmlhttprequest',
+            'other'
+        ]);
+        let wrrt = browser.webRequest.ResourceType;
+        if ( wrrt instanceof Object ) {
+            for ( let typeKey in wrrt ) {
+                if ( wrrt.hasOwnProperty(typeKey) ) {
+                    types.add(wrrt[typeKey]);
+                }
+            }
+        }
+        return types;
+    })(),
+    denormalizeFilters: null,
+    normalizeDetails: null,
+    addListener: function(which, clientListener, filters, options) {
+        if ( typeof this.denormalizeFilters === 'function' ) {
+            filters = this.denormalizeFilters(filters);
+        }
+        let actualListener;
+        if ( typeof this.normalizeDetails === 'function' ) {
+            actualListener = function(details) {
+                vAPI.net.normalizeDetails(details);
+                return clientListener(details);
+            };
+            this.listenerMap.set(clientListener, actualListener);
+        }
+        browser.webRequest[which].addListener(
+            actualListener || clientListener,
+            filters,
+            options
+        );
+    },
+    removeListener: function(which, clientListener) {
+        let actualListener = this.listenerMap.get(clientListener);
+        if ( actualListener !== undefined ) {
+            this.listenerMap.delete(clientListener);
+        }
+        browser.webRequest[which].removeListener(
+            actualListener || clientListener
+        );
+    },
+};
 
 /******************************************************************************/
 /******************************************************************************/
@@ -1236,20 +1360,6 @@ vAPI.onLoadAllCompleted = function(tabId, frameId) {
     }
 };
 
-
-/******************************************************************************/
-/******************************************************************************/
-
-vAPI.punycodeHostname = function(hostname) {
-    return hostname;
-};
-
-vAPI.punycodeURL = function(url) {
-    return url;
-};
-
-/******************************************************************************/
-/******************************************************************************/
 
 // https://github.com/gorhill/uBlock/issues/531
 // Storage area dedicated to admin settings. Read-only.

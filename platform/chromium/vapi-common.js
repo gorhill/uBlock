@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2018 The uBlock Origin authors
+    Copyright (C) 2014-present The uBlock Origin authors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,7 +28,9 @@
 
 (function(self) {
 
-var chrome = self.chrome;
+/******************************************************************************/
+
+vAPI.T0 = Date.now();
 
 /******************************************************************************/
 
@@ -42,10 +44,10 @@ vAPI.webextFlavor = {
 };
 
 (function() {
-    var ua = navigator.userAgent,
-        flavor = vAPI.webextFlavor,
-        soup = flavor.soup;
-    var dispatch = function() {
+    const ua = navigator.userAgent;
+    const flavor = vAPI.webextFlavor;
+    const soup = flavor.soup;
+    const dispatch = function() {
         window.dispatchEvent(new CustomEvent('webextFlavor'));
     };
 
@@ -62,33 +64,36 @@ vAPI.webextFlavor = {
     }
 
     // Asynchronous
-    var async = self.browser instanceof Object &&
-                typeof self.browser.runtime.getBrowserInfo === 'function';
-    if ( async ) {
-        self.browser.runtime.getBrowserInfo().then(function(info) {
-            flavor.major = parseInt(info.version, 10) || 0;
+    if (
+        self.browser instanceof Object &&
+        typeof self.browser.runtime.getBrowserInfo === 'function'
+    ) {
+        self.browser.runtime.getBrowserInfo().then(info => {
+            flavor.major = parseInt(info.version, 10) || 60;
             soup.add(info.vendor.toLowerCase())
                 .add(info.name.toLowerCase());
-            soup.delete('user_stylesheet');
-            if ( flavor.major >= 53 ) { soup.add('user_stylesheet'); }
-            soup.delete('html_filtering');
-            if ( flavor.major >= 57 ) { soup.add('html_filtering'); }
+            if ( soup.has('firefox') && flavor.major < 57 ) {
+                soup.delete('html_filtering');
+            }
             dispatch();
         });
+        if ( self.browser.runtime.getURL('').startsWith('moz-extension://') ) {
+            soup.add('mozilla')
+                .add('firefox')
+                .add('user_stylesheet')
+                .add('html_filtering');
+            flavor.major = 60;
+        }
+        return;
     }
 
     // Synchronous -- order of tests is important
-    var match;
-    if ( (match = /\bFirefox\/(\d+)/.exec(ua)) !== null ) {
-        flavor.major = parseInt(match[1], 10) || 0;
-        soup.add('mozilla').add('firefox');
-        if ( flavor.major >= 53 ) { soup.add('user_stylesheet'); }
-        if ( flavor.major >= 57 ) { soup.add('html_filtering'); }
-    } else if ( (match = /\bEdge\/(\d+)/.exec(ua)) !== null ) {
+    let match;
+    if ( (match = /\bEdge\/(\d+)/.exec(ua)) !== null ) {
         flavor.major = parseInt(match[1], 10) || 0;
         soup.add('microsoft').add('edge');
     } else if ( (match = /\bOPR\/(\d+)/.exec(ua)) !== null ) {
-        var reEx = /\bChrom(?:e|ium)\/([\d.]+)/;
+        const reEx = /\bChrom(?:e|ium)\/([\d.]+)/;
         if ( reEx.test(ua) ) { match = reEx.exec(ua); }
         flavor.major = parseInt(match[1], 10) || 0;
         soup.add('opera').add('chromium');
@@ -109,21 +114,8 @@ vAPI.webextFlavor = {
     }
 
     // Don't starve potential listeners
-    if ( !async ) {
-        vAPI.setTimeout(dispatch, 97);
-    }
+    vAPI.setTimeout(dispatch, 97);
 })();
-
-/******************************************************************************/
-
-// http://www.w3.org/International/questions/qa-scripts#directions
-
-var setScriptDirection = function(language) {
-    document.body.setAttribute(
-        'dir',
-        ['ar', 'he', 'fa', 'ps', 'ur'].indexOf(language) !== -1 ? 'rtl' : 'ltr'
-    );
-};
 
 /******************************************************************************/
 
@@ -148,7 +140,13 @@ vAPI.getViews = chrome.extension.getViews; // ADN
 
 vAPI.i18n = chrome.i18n.getMessage;
 
-setScriptDirection(vAPI.i18n('@@ui_locale'));
+// http://www.w3.org/International/questions/qa-scripts#directions
+document.body.setAttribute(
+    'dir',
+    ['ar', 'he', 'fa', 'ps', 'ur'].indexOf(vAPI.i18n('@@ui_locale')) !== -1
+        ? 'rtl'
+        : 'ltr'
+);
 
 /******************************************************************************/
 

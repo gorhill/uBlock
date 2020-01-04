@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2018 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -41,57 +41,122 @@
 // Benchmark for string-based tokens vs. safe-integer token values:
 //   https://gorhill.github.io/obj-vs-set-vs-map/tokenize-to-str-vs-to-int.html
 
-µBlock.urlTokenizer = {
-    setURL: function(url) {
+µBlock.urlTokenizer = new (class {
+    constructor() {
+        this._chars = '0123456789%abcdefghijklmnopqrstuvwxyz';
+        this._validTokenChars = new Uint8Array(128);
+        for ( let i = 0, n = this._chars.length; i < n; i++ ) {
+            this._validTokenChars[this._chars.charCodeAt(i)] = i + 1;
+        }
+
+        // Four upper bits of token hash are reserved for built-in predefined
+        // token hashes, which should never end up being used when tokenizing
+        // any arbitrary string.
+             this.dotTokenHash = 0x10000000;
+             this.anyTokenHash = 0x20000000;
+        this.anyHTTPSTokenHash = 0x30000000;
+         this.anyHTTPTokenHash = 0x40000000;
+              this.noTokenHash = 0x50000000;
+           this.emptyTokenHash = 0xF0000000;
+
+        this._urlIn = '';
+        this._urlOut = '';
+        this._tokenized = false;
+        this._tokens = [ 0 ];
+
+        this.knownTokens = new Uint8Array(65536);
+        this.resetKnownTokens();
+    }
+
+    setURL(url) {
         if ( url !== this._urlIn ) {
             this._urlIn = url;
             this._urlOut = url.toLowerCase();
             this._tokenized = false;
         }
         return this._urlOut;
-    },
+    }
+
+    resetKnownTokens() {
+        this.knownTokens.fill(0);
+        this.addKnownToken(this.dotTokenHash);
+        this.addKnownToken(this.anyTokenHash);
+        this.addKnownToken(this.anyHTTPSTokenHash);
+        this.addKnownToken(this.anyHTTPTokenHash);
+        this.addKnownToken(this.noTokenHash);
+    }
+
+    addKnownToken(th) {
+        this.knownTokens[th & 0xFFFF ^ th >>> 16] = 1;
+    }
 
     // Tokenize on demand.
-    getTokens: function() {
-        if ( this._tokenized === false ) {
-            this._tokenize();
-            this._tokenized = true;
+    getTokens() {
+        if ( this._tokenized ) { return this._tokens; }
+        let i = this._tokenize();
+        i = this._appendTokenAt(i, this.anyTokenHash, 0);
+        if ( this._urlOut.startsWith('https://') ) {
+            i = this._appendTokenAt(i, this.anyHTTPSTokenHash, 0);
+        } else if ( this._urlOut.startsWith('http://') ) {
+            i = this._appendTokenAt(i, this.anyHTTPTokenHash, 0);
         }
+        i = this._appendTokenAt(i, this.noTokenHash, 0);
+        this._tokens[i] = 0;
+        this._tokenized = true;
         return this._tokens;
-    },
+    }
 
-    tokenHashFromString: function(s) {
-        var l = s.length;
-        if ( l === 0 ) { return 0; }
-        if ( l === 1 ) {
-            if ( s === '*' ) { return 63; }
-            if ( s === '.' ) { return 62; }
-        }
-        var vtc = this._validTokenChars,
-            th = vtc[s.charCodeAt(0)];
-        for ( var i = 1; i !== 8 && i !== l; i++ ) {
-            th = th * 64 + vtc[s.charCodeAt(i)];
+    tokenHashFromString(s) {
+        const l = s.length;
+        if ( l === 0 ) { return this.emptyTokenHash; }
+        const vtc = this._validTokenChars;
+        let th = vtc[s.charCodeAt(0)];
+        for ( let i = 1; i !== 7 && i !== l; i++ ) {
+            th = th << 4 ^ vtc[s.charCodeAt(i)];
         }
         return th;
-    },
+    }
+
+    stringFromTokenHash(th) {
+        if ( th === 0 ) { return ''; }
+        return th.toString(16);
+    }
+
+    toSelfie() {
+        return µBlock.base64.encode(
+            this.knownTokens.buffer,
+            this.knownTokens.byteLength
+        );
+    }
+
+    fromSelfie(selfie) {
+        return µBlock.base64.decode(selfie, this.knownTokens.buffer);
+    }
 
     // https://github.com/chrisaljoudi/uBlock/issues/1118
     // We limit to a maximum number of tokens.
 
-    _tokenize: function() {
-        var tokens = this._tokens,
-            url = this._urlOut,
-            l = url.length;
-        if ( l === 0 ) { tokens[0] = 0; return; }
+    _appendTokenAt(i, th, ti) {
+        this._tokens[i+0] = th;
+        this._tokens[i+1] = ti;
+        return i + 2;
+    }
+
+    _tokenize() {
+        const tokens = this._tokens;
+        let url = this._urlOut;
+        let l = url.length;
+        if ( l === 0 ) { return this.emptyTokenHash; }
         if ( l > 2048 ) {
             url = url.slice(0, 2048);
             l = 2048;
         }
-        var i = 0, j = 0, v, n, ti, th,
-            vtc = this._validTokenChars;
+        const knownTokens = this.knownTokens;
+        const vtc = this._validTokenChars;
+        let i = 0, j = 0, v, n, ti, th;
         for (;;) {
             for (;;) {
-                if ( i === l ) { tokens[j] = 0; return; }
+                if ( i === l ) { return j; }
                 v = vtc[url.charCodeAt(i++)];
                 if ( v !== 0 ) { break; }
             }
@@ -100,29 +165,18 @@
                 if ( i === l ) { break; }
                 v = vtc[url.charCodeAt(i++)];
                 if ( v === 0 ) { break; }
-                if ( n === 8 ) { continue; }
-                th = th * 64 + v;
+                if ( n === 7 ) { continue; }
+                th = th << 4 ^ v;
                 n += 1;
             }
-            tokens[j++] = th;
-            tokens[j++] = ti;
+            if ( knownTokens[th & 0xFFFF ^ th >>> 16] !== 0 ) {
+                tokens[j+0] = th;
+                tokens[j+1] = ti;
+                j += 2;
+            }
         }
-    },
-
-    _urlIn: '',
-    _urlOut: '',
-    _tokenized: false,
-    _tokens: [ 0 ],
-    _validTokenChars: (function() {
-        var vtc = new Uint8Array(128),
-            chars = '0123456789%abcdefghijklmnopqrstuvwxyz',
-            i = chars.length;
-        while ( i-- ) {
-            vtc[chars.charCodeAt(i)] = i + 1;
-        }
-        return vtc;
-    })()
-};
+    }
+})();
 
 /******************************************************************************/
 
@@ -224,18 +278,49 @@
 
 /******************************************************************************/
 
-µBlock.CompiledLineWriter = function() {
-    this.blockId = undefined;
-    this.block = undefined;
-    this.blocks = new Map();
-    this.stringifier = JSON.stringify;
+µBlock.CompiledLineIO = {
+    serialize: JSON.stringify,
+    unserialize: JSON.parse,
+    blockStartPrefix: '#block-start-',  // ensure no special regex characters
+    blockEndPrefix: '#block-end-',      // ensure no special regex characters
+
+    Writer: function() {
+        this.io = µBlock.CompiledLineIO;
+        this.blockId = undefined;
+        this.block = undefined;
+        this.stringifier = this.io.serialize;
+        this.blocks = new Map();
+        this.properties = new Map();
+    },
+
+    Reader: function(raw, blockId) {
+        this.io = µBlock.CompiledLineIO;
+        this.block = '';
+        this.len = 0;
+        this.offset = 0;
+        this.line = '';
+        this.parser = this.io.unserialize;
+        this.blocks = new Map();
+        this.properties = new Map();
+        let reBlockStart = new RegExp(
+            '^' + this.io.blockStartPrefix + '(\\d+)\\n',
+            'gm'
+        );
+        let match = reBlockStart.exec(raw);
+        while ( match !== null ) {
+            let beg = match.index + match[0].length;
+            let end = raw.indexOf(this.io.blockEndPrefix + match[1], beg);
+            this.blocks.set(parseInt(match[1], 10), raw.slice(beg, end));
+            reBlockStart.lastIndex = end;
+            match = reBlockStart.exec(raw);
+        }
+        if ( blockId !== undefined ) {
+            this.select(blockId);
+        }
+    }
 };
 
-µBlock.CompiledLineWriter.fingerprint = function(args) {
-    return JSON.stringify(args);
-};
-
-µBlock.CompiledLineWriter.prototype = {
+µBlock.CompiledLineIO.Writer.prototype = {
     push: function(args) {
         this.block[this.block.length] = this.stringifier(args);
     },
@@ -248,50 +333,26 @@
         }
     },
     toString: function() {
-        var result = [];
-        for ( var entry of this.blocks ) {
-            if ( entry[1].length === 0 ) { continue; }
+        let result = [];
+        for ( let [ id, lines ] of this.blocks ) {
+            if ( lines.length === 0 ) { continue; }
             result.push(
-                '#block-start-' + entry[0],
-                entry[1].join('\n'),
-                '#block-end-' + entry[0]
+                this.io.blockStartPrefix + id,
+                lines.join('\n'),
+                this.io.blockEndPrefix + id
             );
         }
         return result.join('\n');
     }
 };
 
-/******************************************************************************/
-
-µBlock.CompiledLineReader = function(raw, blockId) {
-    this.block = '';
-    this.len = 0;
-    this.offset = 0;
-    this.line = '';
-    this.parser = JSON.parse;
-    this.blocks = new Map();
-    var reBlockStart = /^#block-start-(\d+)\n/gm,
-        match = reBlockStart.exec(raw),
-        beg, end;
-    while ( match !== null ) {
-        beg = match.index + match[0].length;
-        end = raw.indexOf('#block-end-' + match[1], beg);
-        this.blocks.set(parseInt(match[1], 10), raw.slice(beg, end));
-        reBlockStart.lastIndex = end;
-        match = reBlockStart.exec(raw);
-    }
-    if ( blockId !== undefined ) {
-        this.select(blockId);
-    }
-};
-
-µBlock.CompiledLineReader.prototype = {
+µBlock.CompiledLineIO.Reader.prototype = {
     next: function() {
         if ( this.offset === this.len ) {
             this.line = '';
             return false;
         }
-        var pos = this.block.indexOf('\n', this.offset);
+        let pos = this.block.indexOf('\n', this.offset);
         if ( pos !== -1 ) {
             this.line = this.block.slice(this.offset, pos);
             this.offset = pos + 1;
@@ -317,40 +378,6 @@
 
 /******************************************************************************/
 
-// I want this helper to be self-maintained, callers must not worry about
-// this helper cleaning after itself by asking them to reset it when it is no
-// longer needed. A timer will be used for self-garbage-collect.
-// Cleaning up 10s after last hit sounds reasonable.
-
-µBlock.stringDeduplicater = {
-    strings: new Map(),
-    timer: undefined,
-    last: 0,
-
-    lookup: function(s) {
-        let t = this.strings.get(s);
-        if ( t === undefined ) {
-            t = this.strings.set(s, s).get(s);
-            if ( this.timer === undefined ) {
-                this.timer = vAPI.setTimeout(() => { this.cleanup(); }, 10000);
-            }
-        }
-        this.last = Date.now();
-        return t;
-    },
-
-    cleanup: function() {
-        if ( (Date.now() - this.last) < 10000 ) {
-            this.timer = vAPI.setTimeout(() => { this.cleanup(); }, 10000);
-        } else {
-            this.timer = undefined;
-            this.strings.clear();
-        }
-    }
-};
-
-/******************************************************************************/
-
 µBlock.openNewTab = function(details) {
     if ( details.url.startsWith('logger-ui.html') ) {
         if ( details.shiftKey ) {
@@ -360,6 +387,21 @@
             );
         }
         details.popup = this.userSettings.alwaysDetachLogger;
+        if ( details.popup ) {
+            const url = new URL(vAPI.getURL(details.url));
+            url.searchParams.set('popup', '1');
+            details.url = url.href;
+            let popupLoggerBox;
+            try {
+                popupLoggerBox = JSON.parse(
+                    vAPI.localStorage.getItem('popupLoggerBox')
+                );
+            } catch(ex) {
+            }
+            if ( popupLoggerBox !== undefined ) {
+                details.box = popupLoggerBox;
+            }
+        }
     }
     vAPI.tabs.open(details);
 };
@@ -464,5 +506,197 @@
             decomposed.length = i;
         }
         return decomposed;
+    };
+})();
+
+/******************************************************************************/
+
+// TODO: evaluate using TextEncoder/TextDecoder
+
+µBlock.orphanizeString = function(s) {
+    return JSON.parse(JSON.stringify(s));
+};
+
+/******************************************************************************/
+
+// Custom base64 encoder/decoder
+//
+// TODO:
+//   Could expand the LZ4 codec API to be able to return UTF8-safe string
+//   representation of a compressed buffer, and thus the code below could be
+//   moved LZ4 codec-side.
+// https://github.com/uBlockOrigin/uBlock-issues/issues/461
+//   Provide a fallback encoding for Chromium 59 and less by issuing a plain
+//   JSON string. The fallback can be removed once min supported version is
+//   above 59.
+
+µBlock.base64 = new (class {
+    constructor() {
+        this.valToDigit = new Uint8Array(64);
+        this.digitToVal = new Uint8Array(128);
+        const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz@%";
+        for ( let i = 0, n = chars.length; i < n; i++ ) {
+            const c = chars.charCodeAt(i);
+            this.valToDigit[i] = c;
+            this.digitToVal[c] = i;
+        }
+        this.magic = 'Base64_1';
+    }
+
+    encode(arrbuf, arrlen) {
+        const inputLength = arrlen >>> 2;
+        const inbuf = new Uint32Array(arrbuf, 0, inputLength);
+        const outputLength = this.magic.length + 7 + inputLength * 7;
+        const outbuf = new Uint8Array(outputLength);
+        let j = 0;
+        for ( let i = 0; i < this.magic.length; i++ ) {
+            outbuf[j++] = this.magic.charCodeAt(i);
+        }
+        let v = inputLength;
+        do {
+            outbuf[j++] = this.valToDigit[v & 0b111111];
+            v >>>= 6;
+        } while ( v !== 0 );
+        outbuf[j++] = 0x20 /* ' ' */;
+        for ( let i = 0; i < inputLength; i++ ) {
+            v = inbuf[i];
+            do {
+                outbuf[j++] = this.valToDigit[v & 0b111111];
+                v >>>= 6;
+            } while ( v !== 0 );
+            outbuf[j++] = 0x20 /* ' ' */;
+        }
+        if ( typeof TextDecoder === 'undefined' ) {
+            return JSON.stringify(
+                Array.from(new Uint32Array(outbuf.buffer, 0, j >>> 2))
+            );
+        }
+        const textDecoder = new TextDecoder();
+        return textDecoder.decode(new Uint8Array(outbuf.buffer, 0, j));
+    }
+
+    decode(instr, arrbuf) {
+        if (  instr.charCodeAt(0) === 0x5B /* '[' */ ) {
+            const inbuf = JSON.parse(instr);
+            if ( arrbuf instanceof ArrayBuffer === false ) {
+                return new Uint32Array(inbuf);
+            }
+            const outbuf = new Uint32Array(arrbuf);
+            outbuf.set(inbuf);
+            return outbuf;
+        }
+        if ( instr.startsWith(this.magic) === false ) {
+            throw new Error('Invalid µBlock.base64 encoding');
+        }
+        const inputLength = instr.length;
+        const outbuf = arrbuf instanceof ArrayBuffer === false
+            ? new Uint32Array(this.decodeSize(instr))
+            : new Uint32Array(arrbuf);
+        let i = instr.indexOf(' ', this.magic.length) + 1;
+        if ( i === -1 ) {
+            throw new Error('Invalid µBlock.base64 encoding');
+        }
+        let j = 0;
+        for (;;) {
+            if ( i === inputLength ) { break; }
+            let v = 0, l = 0;
+            for (;;) {
+                const c = instr.charCodeAt(i++);
+                if ( c === 0x20 /* ' ' */ ) { break; }
+                v += this.digitToVal[c] << l;
+                l += 6;
+            }
+            outbuf[j++] = v;
+        }
+        return outbuf;
+    }
+
+    decodeSize(instr) {
+        if ( instr.startsWith(this.magic) === false ) { return 0; }
+        let v = 0, l = 0, i = this.magic.length;
+        for (;;) {
+            const c = instr.charCodeAt(i++);
+            if ( c === 0x20 /* ' ' */ ) { break; }
+            v += this.digitToVal[c] << l;
+            l += 6;
+        }
+        return v << 2;
+    }
+})();
+
+/******************************************************************************/
+
+// The requests.json.gz file can be downloaded from:
+//   https://cdn.cliqz.com/adblocking/requests_top500.json.gz
+//
+// Which is linked from:
+//   https://whotracks.me/blog/adblockers_performance_study.html
+//
+// Copy the file into ./tmp/requests.json.gz
+//
+// If the file is present when you build uBO using `make-[target].sh` from
+// the shell, the resulting package will have `./assets/requests.json`, which
+// will be looked-up by the method below to launch a benchmark session.
+//
+// From uBO's dev console, launch the benchmark:
+//   µBlock.staticNetFilteringEngine.benchmark();
+//
+// The advanced setting `consoleLogLevel` must be set to `info` to see the
+// results in uBO's dev console, see:
+//   https://github.com/gorhill/uBlock/wiki/Advanced-settings#consoleloglevel
+//
+// The usual browser dev tools can be used to obtain useful profiling
+// data, i.e. start the profiler, call the benchmark method from the
+// console, then stop the profiler when it completes.
+//
+// Keep in mind that the measurements at the blog post above where obtained
+// with ONLY EasyList. The CPU reportedly used was:
+//   https://www.cpubenchmark.net/cpu.php?cpu=Intel+Core+i7-6600U+%40+2.60GHz&id=2608
+//
+// Rename ./tmp/requests.json.gz to something else if you no longer want
+// ./assets/requests.json in the build.
+
+µBlock.loadBenchmarkDataset = (function() {
+    let datasetPromise;
+    let ttlTimer;
+
+    return function() {
+        if ( ttlTimer !== undefined ) {
+            clearTimeout(ttlTimer);
+            ttlTimer = undefined;
+        }
+
+        vAPI.setTimeout(( ) => {
+            ttlTimer = undefined;
+            datasetPromise = undefined;
+        }, 60000);
+
+        if ( datasetPromise !== undefined ) {
+            return datasetPromise;
+        }
+
+        console.info(`Loading benchmark dataset...`);
+        const url = vAPI.getURL('/assets/requests.json');
+        datasetPromise = µBlock.assets.fetchText(url).then(details => {
+            console.info(`Parsing benchmark dataset...`);
+            const requests = [];
+            const lineIter = new µBlock.LineIterator(details.content);
+            while ( lineIter.eot() === false ) {
+                let request;
+                try {
+                    request = JSON.parse(lineIter.next());
+                } catch(ex) {
+                }
+                if ( request instanceof Object === false ) { continue; }
+                if ( !request.frameUrl || !request.url ) { continue; }
+                requests.push(request);
+            }
+            return requests;
+        }).catch(details => {
+            console.info(`Not found: ${details.url}`);
+            datasetPromise = undefined;
+        });
+
+        return datasetPromise;
     };
 })();

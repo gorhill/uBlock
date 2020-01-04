@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
@@ -10,6 +10,18 @@
   "dashboardName": {
     "message": "uBlock₀ — Töölaud",
     "description": "English: uBlock₀ — Dashboard"
+  },
+  "dashboardUnsavedWarning": {
+    "message": "Hoiatus! Sul on salvestamata muutusi",
+    "description": "A warning in the dashboard when navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningStay": {
+    "message": "Jää lehele",
+    "description": "Label for button to prevent navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningIgnore": {
+    "message": "Eira",
+    "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
     "message": "Seaded",
@@ -32,7 +44,7 @@
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "Otseteed",
+    "message": "Kiirklahvid",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -108,7 +120,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Klõpsa, et lubada kõik hüpikaknad sellel saidil",
+    "message": "Klõpsa, et lõpetada hüpikakende keelamine sellel saidil",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -120,7 +132,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Klõpsa, et lubada mahukad meediaelemendid sellel saidil",
+    "message": "Klõpsa, et lõpetada mahukate meediaelementide keelamine sellel saidil",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -144,15 +156,15 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Klõpsa, et lubada välisfondid sellel saidil",
+    "message": "Klõpsa, et lõpetada välisfontide keelamine sellel saidil",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Klõpsa, et keelata JavaScript sellel saidil täielikult",
+    "message": "Klõpsa, et keelata JavaScript sellel saidil",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Klõpsa, et lõpetada sellel saidil täielik JavaScripti keelamine",
+    "message": "Klõpsa, et lõpetada sellel saidil JavaScripti keelamine",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
@@ -204,7 +216,7 @@
     "description": ""
   },
   "popupHitDomainCountPrompt": {
-    "message": "domeene ühendatud",
+    "message": "ühendatud domeene",
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
@@ -240,8 +252,8 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Blokeeri element",
-    "description": "English: Block element"
+    "message": "Blokeeri element...",
+    "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
     "message": "Peida blokeeritud elementide asukohad",
@@ -300,7 +312,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Blokeeri meediaelemendid, mis on suuremad kui {{input:number}} kB",
+    "message": "Blokeeri meediaelemendid, mis on suuremad kui {{input}} kB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -372,7 +384,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Seadmes",
+    "message": "Sisseehitatud",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -408,7 +420,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "Üks URL rea kohta. Vigased URLid jäetakse taustal vahele.",
+    "message": "Üks URL rea kohta. Vigaseid URLe eiratakse hoiatuseta.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -428,7 +440,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Üks filter rea kohta. Filtriks võib olla tavaline domeenilist või Adblock Plusiga-ühilduv filter. Märgiga <code>!<\/code> algavaid ridu eiratakse.",
+    "message": "Üks filter rea kohta. Filtriks võib olla tavaline hostinimi või Adblock Plusiga ühilduv filter. Märgiga <code>!<\/code> algavaid ridu eiratakse.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -536,20 +548,116 @@
     "description": "Appears in the logger's tab selector"
   },
   "logBehindTheScene": {
-    "message": "Telgitagus",
+    "message": "Kaardivaba",
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
     "message": "Praegune kaart",
     "description": "Appears in the logger's tab selector"
   },
-  "logFilterPrompt": {
-    "message": "filtreeri logikirjeid",
-    "description": "English: filter log entries"
+  "loggerReloadTip": {
+    "message": "Laadi kaardi sisu uuesti",
+    "description": "Tooltip for the reload button in the logger page"
   },
-  "logMaxEntriesTip": {
-    "message": "Maksimaalne logikirjete arv",
-    "description": "Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  "loggerDomInspectorTip": {
+    "message": "Lülita sisse DOM-inspektor",
+    "description": "Tooltip for the DOM inspector button in the logger page"
+  },
+  "loggerPopupPanelTip": {
+    "message": "Lülita sisse hüpikpaneel",
+    "description": "Tooltip for the popup panel button in the logger page"
+  },
+  "loggerInfoTip": {
+    "message": "uBlock Origin'i viki: Logija",
+    "description": "Tooltip for the top-right info label in the logger page"
+  },
+  "loggerClearTip": {
+    "message": "Tühjenda logija",
+    "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
+  },
+  "loggerPauseTip": {
+    "message": "Peata logija (ignoreeri sissetulevaid andmeid)",
+    "description": "Tooltip for the pause button in the logger page"
+  },
+  "loggerUnpauseTip": {
+    "message": "Jätka logimist",
+    "description": "Tooltip for the play button in the logger page"
+  },
+  "loggerRowFiltererButtonTip": {
+    "message": "Lülita sisse logija filtreerimine",
+    "description": "Tooltip for the row filterer button in the logger page"
+  },
+  "logFilterPrompt": {
+    "message": "filtreeri logija sisu",
+    "description": "Placeholder string for logger output filtering input field"
+  },
+  "loggerRowFiltererBuiltinTip": {
+    "message": "Logija filtreerimise valikud",
+    "description": "Tooltip for the button to bring up logger output filtering options"
+  },
+  "loggerRowFiltererBuiltinNot": {
+    "message": "Mitte",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinEventful": {
+    "message": "oluline",
+    "description": "A keyword in the built-in row filtering expression: all items corresponding to uBO doing something (blocked, allowed, redirected, etc.)"
+  },
+  "loggerRowFiltererBuiltinBlocked": {
+    "message": "blokeeritud",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinAllowed": {
+    "message": "lubatud",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltin1p": {
+    "message": "1. osapool",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltin3p": {
+    "message": "3. osapool",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerEntryDetailsHeader": {
+    "message": "Andmed",
+    "description": "Small header to identify the 'Details' pane for a specific logger entry"
+  },
+  "loggerEntryDetailsFilter": {
+    "message": "Filter",
+    "description": "Label to identify a filter field"
+  },
+  "loggerEntryDetailsFilterList": {
+    "message": "Filtri loend",
+    "description": "Label to identify a filter list field"
+  },
+  "loggerEntryDetailsRule": {
+    "message": "Reegel",
+    "description": "Label to identify a rule field"
+  },
+  "loggerEntryDetailsContext": {
+    "message": "Kontekst",
+    "description": "Label to identify a context field (typically a hostname)"
+  },
+  "loggerEntryDetailsRootContext": {
+    "message": "Juurkontekst",
+    "description": "Label to identify a root context field (typically a hostname)"
+  },
+  "loggerEntryDetailsPartyness": {
+    "message": "Osapool",
+    "description": "Label to identify a field providing partyness information"
+  },
+  "loggerEntryDetailsType": {
+    "message": "Tüüp",
+    "description": "Label to identify the type of an entry"
+  },
+  "loggerEntryDetailsURL": {
+    "message": "URL",
+    "description": "Label to identify the URL of an entry"
+  },
+  "loggerURLFilteringHeader": {
+    "message": "URL'i reegel",
+    "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
     "message": "Kontekst:",
@@ -558,10 +666,6 @@
   "loggerURLFilteringTypeLabel": {
     "message": "Tüüp:",
     "description": "Label for the type selector"
-  },
-  "loggerURLFilteringHeader": {
-    "message": "Dünaamiline URL'i filter",
-    "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerStaticFilteringHeader": {
     "message": "Staatiline filtreerimine",
@@ -611,6 +715,62 @@
     "message": "Staatilist filtrit <code>{{filter}}<\/code> ei leitud ühegi hetkel lubatud filtrite loendist",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
+  "loggerSettingDiscardPrompt": {
+    "message": "Logija kirjeid, mis ei vasta kõigile kolmele alumisele tingimusele, eiratakse automaatselt:",
+    "description": "Logger setting: A sentence to describe the purpose of the settings below"
+  },
+  "loggerSettingPerEntryMaxAge": {
+    "message": "Säilita viimase {{input}} minuti kirjed",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerTabMaxLoads": {
+    "message": "Säilita kuni {{input}} lehe laadimist vahekaardi kohta",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerTabMaxEntries": {
+    "message": "Säilita kuni {{input}} kirjet vahekaardi kohta",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerEntryLineCount": {
+    "message": "Kasuta {{input}} rida kirje kohta vertikaalses laiendatud režiimis",
+    "description": "A logger setting"
+  },
+  "loggerSettingHideColumnsPrompt": {
+    "message": "Peida veerud:",
+    "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
+  },
+  "loggerSettingHideColumnTime": {
+    "message": "{{input}} aeg",
+    "description": "A label for the time column"
+  },
+  "loggerSettingHideColumnFilter": {
+    "message": "{{input}} filter\/reegel",
+    "description": "A label for the filter or rule column"
+  },
+  "loggerSettingHideColumnContext": {
+    "message": "{{input}} kontekst",
+    "description": "A label for the context column"
+  },
+  "loggerSettingHideColumnPartyness": {
+    "message": "{{input}} osapool",
+    "description": "A label for the partyness column"
+  },
+  "loggerExportFormatList": {
+    "message": "Loend",
+    "description": "Label for radio-button to pick export format"
+  },
+  "loggerExportFormatTable": {
+    "message": "Tabel",
+    "description": "Label for radio-button to pick export format"
+  },
+  "loggerExportEncodePlain": {
+    "message": "Lihttekst",
+    "description": "Label for radio-button to pick export text format"
+  },
+  "loggerExportEncodeMarkdown": {
+    "message": "Markdown",
+    "description": "Label for radio-button to pick export text format"
+  },
   "aboutChangelog": {
     "message": "Muudatuste logi",
     "description": ""
@@ -634,6 +794,10 @@
   "aboutContributors": {
     "message": "Toetajad",
     "description": "English: Contributors"
+  },
+  "aboutDependencies": {
+    "message": "Välised sõltuvused (ühilduvad GPLv3-ga):",
+    "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
     "message": "Varunda faili",
@@ -788,8 +952,16 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Kirjuta otsetee",
+    "message": "Kirjuta kiirklahv",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
+  },
+  "genericMergeViewScrollLock": {
+    "message": "Lülita sisse lukustatud kerimine",
+    "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
+  },
+  "genericCopyToClipboard": {
+    "message": "Kopeeri lõikelauale",
+    "description": "Label for buttons used to copy something to the clipboard"
   },
   "dummy": {
     "message": "See sisestus peab olema viimane",

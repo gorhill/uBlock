@@ -46,7 +46,7 @@
 
 /******************************************************************************/
 
-let growOutputBuffer = function(instance, size) {
+const growOutputBuffer = function(instance, size) {
     if (
         instance.outputBuffer === undefined ||
         instance.outputBuffer.byteLength < size
@@ -56,13 +56,13 @@ let growOutputBuffer = function(instance, size) {
     return instance.outputBuffer;
 };
 
-let encodeBound = function(size) {
+const encodeBound = function(size) {
     return size > 0x7E000000 ?
         0 :
         size + (size / 255 | 0) + 16;
 };
 
-let encodeBlock = function(instance, iBuf, oOffset) {
+const encodeBlock = function(instance, iBuf, oOffset) {
     let iLen = iBuf.byteLength;
     if ( iLen >= 0x7E000000 ) { throw new RangeError(); }
 
@@ -183,7 +183,7 @@ let encodeBlock = function(instance, iBuf, oOffset) {
     return new Uint8Array(oBuf.buffer, 0, oPos);
 };
 
-let decodeBlock = function(instance, iBuf, iOffset, oLen) {
+const decodeBlock = function(instance, iBuf, iOffset, oLen) {
     let iLen = iBuf.byteLength;
     let oBuf = new Uint8Array(growOutputBuffer(instance, oLen), 0, oLen);
     let iPos = iOffset, oPos = 0;
@@ -252,7 +252,7 @@ context.LZ4BlockJS = function() {
 context.LZ4BlockJS.prototype = {
     flavor: 'js',
     init: function() {
-        return Promise.resolve();
+        return Promise.resolve(true);
     },
 
     reset: function() {

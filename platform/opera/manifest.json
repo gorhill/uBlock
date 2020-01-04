@@ -43,7 +43,7 @@
     "all_frames": false
   }],
   "incognito": "split",
-  "minimum_opera_version": "32.0",
+  "minimum_opera_version": "40.0",
   "options_page": "dashboard.html",
   "permissions": [
     "contextMenus",

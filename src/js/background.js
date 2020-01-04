@@ -33,46 +33,34 @@ if ( vAPI.webextFlavor === undefined ) {
 
 /******************************************************************************/
 
-var µBlock = (function() { // jshint ignore:line
+const µBlock = (function() { // jshint ignore:line
 
-    var oneSecond = 1000,
-        oneMinute = 60 * oneSecond;
-
-    var hiddenSettingsDefault = {
+    const hiddenSettingsDefault = {
+        allowGenericProceduralFilters: false,
         assetFetchTimeout: 30,
+        autoCommentFilterTemplate: '{{date}} {{origin}}',
         autoUpdateAssetFetchPeriod: 120,
+        autoUpdateDelayAfterLaunch: 180,
         autoUpdatePeriod: 7,
+        cacheStorageAPI: 'unset',
         cacheStorageCompression: true,
-        debugScriptlets: false,
         cacheControlForFirefox1376932: 'no-cache, no-store, must-revalidate',
+        consoleLogLevel: 'unset',
+        debugScriptlets: false,
+        disableWebAssembly: false,
         ignoreRedirectFilters: false,
         ignoreScriptInjectFilters: false,
         manualUpdateAssetFetchPeriod: 500,
         popupFontSize: 'unset',
         requestJournalProcessPeriod: 1000,
-        suspendTabsUntilReady: false,
-        userResourcesLocation: 'unset'
+        selfieAfter: 3,
+        strictBlockingBypassDuration: 120,
+        suspendTabsUntilReady: 'unset',
+        userResourcesLocation: 'unset',
     };
-
-    var whitelistDefault = [
-        'about-scheme',
-        'chrome-extension-scheme',
-        'chrome-scheme',
-        'moz-extension-scheme',
-        'opera-scheme',
-        'vivaldi-scheme',
-        'wyciwyg-scheme',   // Firefox's "What-You-Cache-Is-What-You-Get"
-    ];
-    // https://github.com/gorhill/uBlock/issues/3693#issuecomment-379782428
-    if ( vAPI.webextFlavor.soup.has('webext') === false ) {
-        whitelistDefault.push('behind-the-scene');
-    }
 
     return {
         firstInstall: false,
-
-        onBeforeStartQueue: [],
-        onStartCompletedQueue: [],
 
         userSettings: {
             admap: {},          // ADN //////////////////
@@ -106,7 +94,7 @@ var µBlock = (function() { // jshint ignore:line
             externalLists: [],
             firewallPaneMinimized: true,
             hyperlinkAuditingDisabled: true,
-            ignoreGenericCosmeticFilters: false,
+            ignoreGenericCosmeticFilters: vAPI.webextFlavor.soup.has('mobile'),
             largeMediaSize: 50,
             parseAllABPHideFilters: true,
             prefetchingDisabled: true,
@@ -118,38 +106,47 @@ var µBlock = (function() { // jshint ignore:line
 
         hiddenSettingsDefault: hiddenSettingsDefault,
         hiddenSettings: (function() {
-            var out = Object.assign({}, hiddenSettingsDefault),
-                json = vAPI.localStorage.getItem('immediateHiddenSettings');
-            if ( typeof json === 'string' ) {
-                try {
-                    var o = JSON.parse(json);
-                    if ( o instanceof Object ) {
-                        for ( var k in o ) {
-                            if ( out.hasOwnProperty(k) ) {
-                                out[k] = o[k];
-                            }
-                        }
+            const out = Object.assign({}, hiddenSettingsDefault);
+            const json = vAPI.localStorage.getItem('immediateHiddenSettings');
+            if ( typeof json !== 'string' ) { return out; }
+            try {
+                const o = JSON.parse(json);
+                if ( o instanceof Object ) {
+                    for ( const k in o ) {
+                        if ( out.hasOwnProperty(k) ) { out[k] = o[k]; }
+                    }
+                    self.log.verbosity = out.consoleLogLevel;
+                    if ( typeof out.suspendTabsUntilReady === 'boolean' ) {
+                        out.suspendTabsUntilReady = out.suspendTabsUntilReady
+                            ? 'yes'
+                            : 'unset';
                     }
                 }
-                catch(ex) {
-                }
             }
-            // Remove once 1.15.12+ is widespread.
-            vAPI.localStorage.removeItem('hiddenSettings');
+            catch(ex) {
+            }
             return out;
         })(),
 
         // Features detection.
         privacySettingsSupported: vAPI.browserSettings instanceof Object,
         cloudStorageSupported: vAPI.cloud instanceof Object,
-        canFilterResponseBody: vAPI.net.canFilterResponseBody === true,
+        canFilterResponseData: typeof browser.webRequest.filterResponseData === 'function',
         canInjectScriptletsNow: vAPI.webextFlavor.soup.has('chromium'),
 
         // https://github.com/chrisaljoudi/uBlock/issues/180
         // Whitelist directives need to be loaded once the PSL is available
         netWhitelist: {},
         netWhitelistModifyTime: 0,
-        netWhitelistDefault: whitelistDefault.join('\n'),
+        netWhitelistDefault: [
+            'about-scheme',
+            'chrome-extension-scheme',
+            'chrome-scheme',
+            'moz-extension-scheme',
+            'opera-scheme',
+            'vivaldi-scheme',
+            'wyciwyg-scheme',   // Firefox's "What-You-Cache-Is-What-You-Get"
+        ],
 
         localSettings: {
             blockedRequestCount: 0,
@@ -160,8 +157,8 @@ var µBlock = (function() { // jshint ignore:line
 
         // Read-only
         systemSettings: {
-            compiledMagic: 5,   // Increase when compiled format changes
-            selfieMagic: 4      // Increase when selfie format changes
+            compiledMagic: 16,  // Increase when compiled format changes
+            selfieMagic: 16     // Increase when selfie format changes
         },
 
         restoreBackupSettings: {
@@ -183,8 +180,6 @@ var µBlock = (function() { // jshint ignore:line
 
         selectedFilterLists: [],
         availableFilterLists: {},
-
-        selfieAfter: 17 * oneMinute,
 
         pageStores: new Map(),
         pageStoresToken: 0,
@@ -208,6 +203,10 @@ var µBlock = (function() { // jshint ignore:line
         epickerEprom: null,
 
         scriptlets: {},
+
+        cspNoInlineScript: "script-src 'unsafe-eval' * blob: data:",
+        cspNoScripting: 'script-src http: https:',
+        cspNoInlineFont: 'font-src *',
     };
 
 })();

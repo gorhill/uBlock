@@ -3,7 +3,7 @@ En effektiv blockerare: lätt på minne och CPU-fotavtryck, som ändå kan ladda
 Illustrerad översikt av dess effektivitet:
 https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Användning: Den stora strömbrytarikonen i poppupprutan är till för att avaktivera/aktivera uBlock₀ på den aktuella webbplatsen permanent. Detta gäller enbart för den aktuella webbplatsen, det är inte en global strömbrytare.
+Användning: Den stora strömbrytaren i popup-rutan är tillför att permanent inaktivera/aktivera uBlock för den aktuella webbplatsen. Detta gäller enbart för den aktuella webbplatsen, det är inte en global strömbrytare.
 
 ***
 
@@ -19,15 +19,15 @@ Som standard är följande filterlistor laddade och tillämpade:
 Fler filterlistor finns tillgängliga att använda om du vill:
 
 - Fanboy’s Enhanced Tracking List
-- Dan Pollock’s hosts file
+- Dan Pollocks hosts-fil
 - hpHosts reklam- och spårarservrar
 - MVPS HOSTS
 - Spam404
 - med flera
 
-Ju fler aktiverade filter, desto högre minnesfotavtryck. Men även efter att ha lagt till Fanboys två extra filterlistor och hpHosts reklam- och språrarservrar, använder uBlock₀ mindre minnesfotavtryck än andra populära blockare.
+Givetvis gör fler aktiverade filter att minnesanvändningen blir högre. Även efter att ha lagt till Fanboys två extra filterlistor och hpHosts reklam- och spårarservrar, använder ändå uBlock mindre minnesanvändning än andra populära reklamblockerare.
 
-Tänk på att genom att aktivera vissa av dessa extra filterlistor finns det större risk att webbplatser går sönder - särskilt de listor som i normala fall används som hosts-filer.
+Tänk på att genom att aktivera vissa av dessa extra filterlistor finns det större risk att webbplatser går sönder -- särskilt de listor som i normala fall används som hosts-fil.
 
 ***
 

@@ -404,24 +404,18 @@ Matrix.prototype.lookupRuleData = function(src, des, type) {
 /******************************************************************************/
 
 Matrix.prototype.toLogData = function() {
-    if ( this.r === 0  || this.type === '' ) {
-        return;
-    }
-    var logData = {
+    if ( this.r === 0  || this.type === '' ) { return; }
+    return {
         source: 'dynamicHost',
         result: this.r,
-        raw: this.z + ' ' +
-             this.y + ' ' +
-             this.type + ' ' +
-             this.intToActionMap.get(this.r)
+        raw: `${this.z} ${this.y} ${this.type} ${this.intToActionMap.get(this.r)}`
     };
-    return logData;
 };
 
 Matrix.prototype.intToActionMap = new Map([
-    [ 1, ' block' ],
-    [ 2, ' allow' ],
-    [ 3, ' noop' ]
+    [ 1, 'block' ],
+    [ 2, 'allow' ],
+    [ 3, 'noop' ]
 ]);
 
 /******************************************************************************/
@@ -534,7 +528,7 @@ Matrix.prototype.removeFromRuleParts = function(parts) {
 
 /******************************************************************************/
 
-var magicId = 1;
+const magicId = 1;
 
 Matrix.prototype.toSelfie = function() {
     return {
@@ -548,6 +542,35 @@ Matrix.prototype.fromSelfie = function(selfie) {
     this.rules = new Map(selfie.rules);
     this.changed = true;
     return true;
+};
+
+/******************************************************************************/
+
+Matrix.prototype.benchmark = function() {
+    µBlock.loadBenchmarkDataset().then(requests => {
+        if ( Array.isArray(requests) === false || requests.length === 0 ) {
+            console.info('No requests found to benchmark');
+            return;
+        }
+        console.info(`Benchmarking sessionFirewall.evaluateCellZY()...`);
+        const fctxt = µBlock.filteringContext.duplicate();
+        const t0 = self.performance.now();
+        for ( const request of requests ) {
+            fctxt.setURL(request.url);
+            fctxt.setTabOriginFromURL(request.frameUrl);
+            fctxt.setType(request.cpt);
+            this.evaluateCellZY(
+                fctxt.getTabHostname(),
+                fctxt.getHostname(),
+                fctxt.type
+            );
+        }
+        const t1 = self.performance.now();
+        const dur = t1 - t0;
+        console.info(`Evaluated ${requests.length} requests in ${dur.toFixed(0)} ms`);
+        console.info(`\tAverage: ${(dur / requests.length).toFixed(3)} ms per request`);
+    });
+    return 'ok';
 };
 
 /******************************************************************************/

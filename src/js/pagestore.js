@@ -30,161 +30,140 @@ To create a log of net requests
 
 **/
 
-/******************************************************************************/
-/******************************************************************************/
+{
 
-µBlock.PageStore = (function() {
-
-/******************************************************************************/
-
-var µb = µBlock;
+// start of private namespace
+// >>>>>
 
 /******************************************************************************/
+
+const µb = µBlock;
+
 /******************************************************************************/
 
 // To mitigate memory churning
-var netFilteringCacheJunkyard = [],
-    netFilteringCacheJunkyardMax = 10;
+const netFilteringCacheJunkyard = [];
+const netFilteringCacheJunkyardMax = 10;
 
-/******************************************************************************/
-
-var NetFilteringResultCache = function() {
-    this.boundPruneAsyncCallback = this.pruneAsyncCallback.bind(this);
-    this.init();
-};
-
-/******************************************************************************/
-
-NetFilteringResultCache.prototype.shelfLife = 15 * 1000;
-
-/******************************************************************************/
-
-NetFilteringResultCache.factory = function() {
-    var entry = netFilteringCacheJunkyard.pop();
-    if ( entry === undefined ) {
-        entry = new NetFilteringResultCache();
-    } else {
-        entry.init();
+const NetFilteringResultCache = class {
+    constructor() {
+        this.init();
     }
-    return entry;
-};
 
-/******************************************************************************/
-
-NetFilteringResultCache.prototype.init = function() {
-    this.blocked = new Map();
-    this.results = new Map();
-    this.hash = 0;
-    this.timer = null;
-};
-
-/******************************************************************************/
-
-NetFilteringResultCache.prototype.dispose = function() {
-    this.empty();
-    if ( netFilteringCacheJunkyard.length < netFilteringCacheJunkyardMax ) {
-        netFilteringCacheJunkyard.push(this);
+    init() {
+        this.blocked = new Map();
+        this.results = new Map();
+        this.hash = 0;
+        this.timer = undefined;
+        return this;
     }
-    return null;
-};
 
-/******************************************************************************/
-
-NetFilteringResultCache.prototype.rememberResult = function(context, result, logData) {
-    if ( this.results.size === 0 ) {
-        this.pruneAsync();
+    dispose() {
+        this.empty();
+        if ( netFilteringCacheJunkyard.length < netFilteringCacheJunkyardMax ) {
+            netFilteringCacheJunkyard.push(this);
+        }
+        return null;
     }
-    var key = context.pageHostname + ' ' + context.requestType + ' ' + context.requestURL;
-    this.results.set(key, {
-        result: result,
-        logData: logData,
-        tstamp: Date.now()
-    });
-    if ( result !== 1 ) { return; }
-    var now = Date.now();
-    this.blocked.set(key, now);
-    this.hash = now;
-};
 
-/******************************************************************************/
-
-NetFilteringResultCache.prototype.rememberBlock = function(details) {
-    if ( this.blocked.size === 0 ) {
-        this.pruneAsync();
+    rememberResult(fctxt, result) {
+        if ( fctxt.tabId <= 0 ) { return; }
+        if ( this.results.size === 0 ) {
+            this.pruneAsync();
+        }
+        const key = fctxt.getDocHostname() + ' ' + fctxt.type + ' ' + fctxt.url;
+        this.results.set(key, {
+            result: result,
+            logData: fctxt.filter,
+            tstamp: Date.now()
+        });
+        if ( result !== 1 ) { return; }
+        const now = Date.now();
+        this.blocked.set(key, now);
+        this.hash = now;
     }
-    var now = Date.now();
-    this.blocked.set(
-        details.pageHostname + ' ' + details.requestType + ' ' + details.requestURL,
-        now
-    );
-    this.hash = now;
-};
 
-/******************************************************************************/
-
-NetFilteringResultCache.prototype.empty = function() {
-    this.blocked.clear();
-    this.results.clear();
-    this.hash = 0;
-    if ( this.timer !== null ) {
-        clearTimeout(this.timer);
-        this.timer = null;
+    rememberBlock(fctxt) {
+        if ( fctxt.tabId <= 0 ) { return; }
+        if ( this.blocked.size === 0 ) {
+            this.pruneAsync();
+        }
+        const now = Date.now();
+        this.blocked.set(
+            fctxt.getDocHostname() + ' ' + fctxt.type + ' ' + fctxt.url,
+            now
+        );
+        this.hash = now;
     }
-};
 
-/******************************************************************************/
-
-NetFilteringResultCache.prototype.pruneAsync = function() {
-    if ( this.timer === null ) {
-        this.timer = vAPI.setTimeout(this.boundPruneAsyncCallback, this.shelfLife * 2);
-    }
-};
-
-NetFilteringResultCache.prototype.pruneAsyncCallback = function() {
-    this.timer = null;
-    var obsolete = Date.now() - this.shelfLife,
-        entry;
-    for ( entry of this.blocked ) {
-        if ( entry[1] <= obsolete ) {
-            this.results.delete(entry[0]);
-            this.blocked.delete(entry[0]);
+    empty() {
+        this.blocked.clear();
+        this.results.clear();
+        this.hash = 0;
+        if ( this.timer !== undefined ) {
+            clearTimeout(this.timer);
+            this.timer = undefined;
         }
     }
-    for ( entry of this.results ) {
-        if ( entry[1].tstamp <= obsolete ) {
-            this.results.delete(entry[0]);
+
+    prune() {
+        const obsolete = Date.now() - this.shelfLife;
+        for ( const entry of this.blocked ) {
+            if ( entry[1] <= obsolete ) {
+                this.results.delete(entry[0]);
+                this.blocked.delete(entry[0]);
+            }
+        }
+        for ( const entry of this.results ) {
+            if ( entry[1].tstamp <= obsolete ) {
+                this.results.delete(entry[0]);
+            }
+        }
+        if ( this.blocked.size !== 0 || this.results.size !== 0 ) {
+            this.pruneAsync();
         }
     }
-    if ( this.blocked.size !== 0 || this.results.size !== 0 ) {
-        this.pruneAsync();
+
+    pruneAsync() {
+        if ( this.timer !== undefined ) { return; }
+        this.timer = vAPI.setTimeout(
+            ( ) => {
+                this.timer = undefined;
+                this.prune();
+            },
+            this.shelfLife
+        );
     }
-};
 
-/******************************************************************************/
+    lookupResult(fctxt) {
+        return this.results.get(
+            fctxt.getDocHostname() + ' ' +
+            fctxt.type + ' ' +
+            fctxt.url
+        );
+    }
 
-NetFilteringResultCache.prototype.lookupResult = function(context) {
-    return this.results.get(
-        context.pageHostname + ' ' +
-        context.requestType + ' ' +
-        context.requestURL
-    );
-};
-
-/******************************************************************************/
-
-NetFilteringResultCache.prototype.lookupAllBlocked = function(hostname) {
-    var result = [],
-        pos;
-    for ( var entry of this.blocked ) {
-        pos = entry[0].indexOf(' ');
-        if ( entry[0].slice(0, pos) === hostname ) {
-            result[result.length] = entry[0].slice(pos + 1);
+    lookupAllBlocked(hostname) {
+        const result = [];
+        for ( const entry of this.blocked ) {
+            const pos = entry[0].indexOf(' ');
+            if ( entry[0].slice(0, pos) === hostname ) {
+                result[result.length] = entry[0].slice(pos + 1);
+            }
         }
+        return result;
     }
-    return result;
+
+    static factory() {
+        const entry = netFilteringCacheJunkyard.pop();
+        return entry !== undefined
+            ? entry.init()
+            : new NetFilteringResultCache();
+    }
 };
 
-/******************************************************************************/
+NetFilteringResultCache.prototype.shelfLife = 15000;
+
 /******************************************************************************/
 
 // Frame stores are used solely to associate a URL with a frame id. The
@@ -193,632 +172,555 @@ NetFilteringResultCache.prototype.lookupAllBlocked = function(hostname) {
 // refactoring.
 
 // To mitigate memory churning
-var frameStoreJunkyard = [];
-var frameStoreJunkyardMax = 50;
+const frameStoreJunkyard = [];
+const frameStoreJunkyardMax = 50;
 
-/******************************************************************************/
-
-var FrameStore = function(frameURL) {
-    this.init(frameURL);
-};
-
-/******************************************************************************/
-
-FrameStore.factory = function(frameURL) {
-    var entry = frameStoreJunkyard.pop();
-    if ( entry === undefined ) {
-        return new FrameStore(frameURL);
+const FrameStore = class {
+    constructor(frameURL) {
+        this.init(frameURL);
     }
-    return entry.init(frameURL);
-};
 
-/******************************************************************************/
-
-FrameStore.prototype.init = function(frameURL) {
-    var µburi = µb.URI;
-    this.pageHostname = µburi.hostnameFromURI(frameURL);
-    this.pageDomain = µburi.domainFromHostname(this.pageHostname) || this.pageHostname;
-    return this;
-};
-
-/******************************************************************************/
-
-FrameStore.prototype.dispose = function() {
-    this.pageHostname = this.pageDomain = '';
-    if ( frameStoreJunkyard.length < frameStoreJunkyardMax ) {
-        frameStoreJunkyard.push(this);
+    init(frameURL) {
+        const µburi = µb.URI;
+        this.pageHostname = µburi.hostnameFromURI(frameURL);
+        this.pageDomain =
+            µburi.domainFromHostname(this.pageHostname) || this.pageHostname;
+        return this;
     }
-    return null;
+
+    dispose() {
+        this.pageHostname = this.pageDomain = '';
+        if ( frameStoreJunkyard.length < frameStoreJunkyardMax ) {
+            frameStoreJunkyard.push(this);
+        }
+        return null;
+    }
+
+    static factory(frameURL) {
+        const entry = frameStoreJunkyard.pop();
+        if ( entry === undefined ) {
+            return new FrameStore(frameURL);
+        }
+        return entry.init(frameURL);
+    }
 };
 
-/******************************************************************************/
 /******************************************************************************/
 
 // To mitigate memory churning
-var pageStoreJunkyard = [];
-var pageStoreJunkyardMax = 10;
+const pageStoreJunkyard = [];
+const pageStoreJunkyardMax = 10;
 
-/******************************************************************************/
-
-var PageStore = function(tabId, context) {
-    this.init(tabId, context);
-    this.journal = [];
-    this.journalTimer = null;
-    this.journalLastCommitted = this.journalLastUncommitted = undefined;
-    this.journalLastUncommittedURL = undefined;
-};
-
-/******************************************************************************/
-
-PageStore.factory = function(tabId, context) {
-    var entry = pageStoreJunkyard.pop();
-    if ( entry === undefined ) {
-        entry = new PageStore(tabId, context);
-    } else {
-        entry.init(tabId, context);
-    }
-    return entry;
-};
-
-/******************************************************************************/
-
-// https://github.com/gorhill/uBlock/issues/3201
-//   The context is used to determine whether we report behavior change to the
-//   logger.
-
-PageStore.prototype.init = function(tabId, context) {
-    var tabContext = µb.tabContextManager.mustLookup(tabId);
-    this.tabId = tabId;
-
-    // If we are navigating from-to same site, remember whether large
-    // media elements were temporarily allowed.
-    if (
-        typeof this.allowLargeMediaElementsUntil !== 'number' ||
-        tabContext.rootHostname !== this.tabHostname
-    ) {
-        this.allowLargeMediaElementsUntil = 0;
+const PageStore = class {
+    constructor(tabId, context) {
+        this.extraData = new Map();
+        this.journal = [];
+        this.journalTimer = null;
+        this.journalLastCommitted = this.journalLastUncommitted = undefined;
+        this.journalLastUncommittedURL = undefined;
+        this.init(tabId, context);
     }
 
-    this.tabHostname = tabContext.rootHostname;
-    this.title = tabContext.rawURL;
-    this.rawURL = tabContext.rawURL;
-    this.hostnameToCountMap = new Map();
-    this.contentLastModified = 0;
-    this.frames = new Map();
-    this.logData = undefined;
-    this.perLoadBlockedRequestCount = 0;
-    this.perLoadAllowedRequestCount = 0;
-    this.hiddenElementCount = ''; // Empty string means "unknown"
-    this.remoteFontCount = 0;
-    this.scriptCount = 0;
-    this.popupBlockedCount = 0;
-    this.largeMediaCount = 0;
-    this.largeMediaTimer = null;
-    this.netFilteringCache = NetFilteringResultCache.factory();
-    this.internalRedirectionCount = 0;
-
-    this.noCosmeticFiltering = µb.sessionSwitches.evaluateZ(
-        'no-cosmetic-filtering',
-        tabContext.rootHostname
-    ) === true;
-    if (
-        this.noCosmeticFiltering &&
-        µb.logger.isEnabled() &&
-        context === 'tabCommitted'
-    ) {
-        µb.logger.writeOne(
-            tabId,
-            'cosmetic',
-            µb.sessionSwitches.toLogData(),
-            'dom',
-            tabContext.rawURL,
-            this.tabHostname,
-            this.tabHostname
-        );
+    static factory(tabId, context) {
+        let entry = pageStoreJunkyard.pop();
+        if ( entry === undefined ) {
+            entry = new PageStore(tabId, context);
+        } else {
+            entry.init(tabId, context);
+        }
+        return entry;
     }
 
-    // Support `generichide` filter option.
-    this.noGenericCosmeticFiltering = this.noCosmeticFiltering;
-    if ( this.noGenericCosmeticFiltering !== true ) {
-        let result = µb.staticNetFilteringEngine.matchStringGenericHide(
-            tabContext.normalURL
-        );
-        this.noGenericCosmeticFiltering = result === 2;
+    // https://github.com/gorhill/uBlock/issues/3201
+    //   The context is used to determine whether we report behavior change
+    //   to the logger.
+
+    init(tabId, context) {
+        const tabContext = µb.tabContextManager.mustLookup(tabId);
+        this.tabId = tabId;
+
+        // If we are navigating from-to same site, remember whether large
+        // media elements were temporarily allowed.
         if (
-            result !== 0 &&
-            µb.logger.isEnabled() &&
+            typeof this.allowLargeMediaElementsUntil !== 'number' ||
+            tabContext.rootHostname !== this.tabHostname
+        ) {
+            this.allowLargeMediaElementsUntil = 0;
+        }
+
+        this.tabHostname = tabContext.rootHostname;
+        this.title = tabContext.rawURL;
+        this.rawURL = tabContext.rawURL;
+        this.hostnameToCountMap = new Map();
+        this.contentLastModified = 0;
+        this.frames = new Map();
+        this.logData = undefined;
+        this.perLoadBlockedRequestCount = 0;
+        this.perLoadAllowedRequestCount = 0;
+        this.hiddenElementCount = ''; // Empty string means "unknown"
+        this.remoteFontCount = 0;
+        this.scriptCount = 0;
+        this.popupBlockedCount = 0;
+        this.largeMediaCount = 0;
+        this.largeMediaTimer = null;
+        this.netFilteringCache = NetFilteringResultCache.factory();
+        this.internalRedirectionCount = 0;
+        this.extraData.clear();
+
+        // The current filtering context is cloned because:
+        // - We may be called with or without the current context having been
+        //   initialized.
+        // - If it has been initialized, we do not want to change the state
+        //   of the current context.
+        const fctxt = µb.logger.enabled
+            ? µb.filteringContext
+                .duplicate()
+                .fromTabId(tabId)
+                .setURL(tabContext.rawURL)
+            : undefined;
+
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/314
+        const masterSwitch = tabContext.getNetFilteringSwitch();
+
+        this.noCosmeticFiltering = µb.sessionSwitches.evaluateZ(
+            'no-cosmetic-filtering',
+            tabContext.rootHostname
+        ) === true;
+        if (
+            masterSwitch &&
+            this.noCosmeticFiltering &&
+            µb.logger.enabled &&
             context === 'tabCommitted'
         ) {
-            µb.logger.writeOne(
-                tabId,
-                'net',
-                µb.staticNetFilteringEngine.toLogData(),
-                'generichide',
-                tabContext.rawURL,
-                this.tabHostname,
-                this.tabHostname
+            fctxt.setRealm('cosmetic')
+                 .setType('dom')
+                 .setFilter(µb.sessionSwitches.toLogData())
+                 .toLogger();
+        }
+
+        return this;
+    }
+
+    reuse(context) {
+        // When force refreshing a page, the page store data needs to be reset.
+
+        // If the hostname changes, we can't merely just update the context.
+        const tabContext = µb.tabContextManager.mustLookup(this.tabId);
+        if ( tabContext.rootHostname !== this.tabHostname ) {
+            context = '';
+        }
+
+        // If URL changes without a page reload (more and more common), then
+        // we need to keep all that we collected for reuse. In particular,
+        // not doing so was causing a problem in `videos.foxnews.com`:
+        // clicking a video thumbnail would not work, because the frame
+        // hierarchy structure was flushed from memory, while not really being
+        //  flushed on the page.
+        if ( context === 'tabUpdated' ) {
+            // As part of https://github.com/chrisaljoudi/uBlock/issues/405
+            // URL changed, force a re-evaluation of filtering switch
+            this.rawURL = tabContext.rawURL;
+            return this;
+        }
+
+        // A new page is completely reloaded from scratch, reset all.
+        if ( this.largeMediaTimer !== null ) {
+            clearTimeout(this.largeMediaTimer);
+            this.largeMediaTimer = null;
+        }
+        this.disposeFrameStores();
+        this.netFilteringCache = this.netFilteringCache.dispose();
+        this.init(this.tabId, context);
+        return this;
+    }
+
+    dispose() {
+        this.tabHostname = '';
+        this.title = '';
+        this.rawURL = '';
+        this.hostnameToCountMap = null;
+        this.allowLargeMediaElementsUntil = 0;
+        if ( this.largeMediaTimer !== null ) {
+            clearTimeout(this.largeMediaTimer);
+            this.largeMediaTimer = null;
+        }
+        this.disposeFrameStores();
+        this.netFilteringCache = this.netFilteringCache.dispose();
+        if ( this.journalTimer !== null ) {
+            clearTimeout(this.journalTimer);
+            this.journalTimer = null;
+        }
+        this.journal = [];
+        this.journalLastUncommittedURL = undefined;
+        if ( pageStoreJunkyard.length < pageStoreJunkyardMax ) {
+            pageStoreJunkyard.push(this);
+        }
+        return null;
+    }
+
+    disposeFrameStores() {
+        for ( const frameStore of this.frames.values() ) {
+            frameStore.dispose();
+        }
+        this.frames.clear();
+    }
+
+    getFrame(frameId) {
+        return this.frames.get(frameId) || null;
+    }
+
+    setFrame(frameId, frameURL) {
+        const frameStore = this.frames.get(frameId);
+        if ( frameStore !== undefined ) {
+            frameStore.init(frameURL);
+        } else {
+            this.frames.set(frameId, FrameStore.factory(frameURL));
+        }
+    }
+
+    getNetFilteringSwitch() {
+        return µb.tabContextManager
+                 .mustLookup(this.tabId)
+                 .getNetFilteringSwitch();
+    }
+
+    getSpecificCosmeticFilteringSwitch() {
+        return this.noCosmeticFiltering !== true;
+    }
+
+    toggleNetFilteringSwitch(url, scope, state) {
+        µb.toggleNetFilteringSwitch(url, scope, state);
+        this.netFilteringCache.empty();
+    }
+
+    injectLargeMediaElementScriptlet() {
+        vAPI.tabs.injectScript(this.tabId, {
+            file: '/js/scriptlets/load-large-media-interactive.js',
+            allFrames: true,
+            runAt: 'document_idle',
+        });
+        µb.contextMenu.update(this.tabId);
+    }
+
+    temporarilyAllowLargeMediaElements(state) {
+        this.largeMediaCount = 0;
+        µb.contextMenu.update(this.tabId);
+        this.allowLargeMediaElementsUntil = state ? Date.now() + 86400000 : 0;
+        µb.scriptlets.injectDeep(this.tabId, 'load-large-media-all');
+    }
+
+    // https://github.com/gorhill/uBlock/issues/2053
+    //   There is no way around using journaling to ensure we deal properly with
+    //   potentially out of order navigation events vs. network request events.
+    journalAddRequest(hostname, result) {
+        if ( hostname === '' ) { return; }
+        this.journal.push(
+            hostname,
+            result === 1 ? 0x00000001 : 0x00010000
+        );
+        if ( this.journalTimer === null ) {
+            this.journalTimer = vAPI.setTimeout(
+                ( ) => { this.journalProcess(true); },
+                µb.hiddenSettings.requestJournalProcessPeriod
             );
         }
     }
 
-    return this;
-};
-
-/******************************************************************************/
-
-PageStore.prototype.reuse = function(context) {
-    // When force refreshing a page, the page store data needs to be reset.
-
-    // If the hostname changes, we can't merely just update the context.
-    var tabContext = µb.tabContextManager.mustLookup(this.tabId);
-    if ( tabContext.rootHostname !== this.tabHostname ) {
-        context = '';
-    }
-
-    // If URL changes without a page reload (more and more common), then we
-    // need to keep all that we collected for reuse. In particular, not
-    // doing so was causing a problem in `videos.foxnews.com`: clicking a
-    // video thumbnail would not work, because the frame hierarchy structure
-    // was flushed from memory, while not really being flushed on the page.
-    if ( context === 'tabUpdated' ) {
-        // As part of https://github.com/chrisaljoudi/uBlock/issues/405
-        // URL changed, force a re-evaluation of filtering switch
-        this.rawURL = tabContext.rawURL;
-        return this;
-    }
-
-    // A new page is completely reloaded from scratch, reset all.
-    if ( this.largeMediaTimer !== null ) {
-        clearTimeout(this.largeMediaTimer);
-        this.largeMediaTimer = null;
-    }
-    this.disposeFrameStores();
-    this.netFilteringCache = this.netFilteringCache.dispose();
-    this.init(this.tabId, context);
-    return this;
-};
-
-// https://www.youtube.com/watch?v=dltNSbOupgE
-
-/******************************************************************************/
-
-PageStore.prototype.dispose = function() {
-    this.tabHostname = '';
-    this.title = '';
-    this.rawURL = '';
-    this.hostnameToCountMap = null;
-    this.allowLargeMediaElementsUntil = 0;
-    if ( this.largeMediaTimer !== null ) {
-        clearTimeout(this.largeMediaTimer);
-        this.largeMediaTimer = null;
-    }
-    this.disposeFrameStores();
-    this.netFilteringCache = this.netFilteringCache.dispose();
-    if ( this.journalTimer !== null ) {
-        clearTimeout(this.journalTimer);
-        this.journalTimer = null;
-    }
-    this.journal = [];
-    this.journalLastUncommittedURL = undefined;
-    if ( pageStoreJunkyard.length < pageStoreJunkyardMax ) {
-        pageStoreJunkyard.push(this);
-    }
-    return null;
-};
-
-/******************************************************************************/
-
-PageStore.prototype.disposeFrameStores = function() {
-    for ( var frameStore of this.frames.values() ) {
-        frameStore.dispose();
-    }
-    this.frames.clear();
-};
-
-/******************************************************************************/
-
-PageStore.prototype.getFrame = function(frameId) {
-    return this.frames.get(frameId) || null;
-};
-
-/******************************************************************************/
-
-PageStore.prototype.setFrame = function(frameId, frameURL) {
-    var frameStore = this.frames.get(frameId);
-    if ( frameStore !== undefined ) {
-        frameStore.init(frameURL);
-    } else {
-        this.frames.set(frameId, FrameStore.factory(frameURL));
-    }
-};
-
-/******************************************************************************/
-
-PageStore.prototype.createContextFromPage = function() {
-    var context = µb.tabContextManager.createContext(this.tabId);
-    context.pageHostname = context.rootHostname;
-    context.pageDomain = context.rootDomain;
-    return context;
-};
-
-PageStore.prototype.createContextFromFrameId = function(frameId) {
-    var context = µb.tabContextManager.createContext(this.tabId);
-    var frameStore = this.frames.get(frameId);
-    if ( frameStore !== undefined ) {
-        context.pageHostname = frameStore.pageHostname;
-        context.pageDomain = frameStore.pageDomain;
-    } else {
-        context.pageHostname = context.rootHostname;
-        context.pageDomain = context.rootDomain;
-    }
-    return context;
-};
-
-PageStore.prototype.createContextFromFrameHostname = function(frameHostname) {
-    var context = µb.tabContextManager.createContext(this.tabId);
-    context.pageHostname = frameHostname;
-    context.pageDomain = µb.URI.domainFromHostname(frameHostname) || frameHostname;
-    return context;
-};
-
-/******************************************************************************/
-
-PageStore.prototype.getNetFilteringSwitch = function() {
-    return µb.tabContextManager.mustLookup(this.tabId).getNetFilteringSwitch();
-};
-
-/******************************************************************************/
-
-PageStore.prototype.getSpecificCosmeticFilteringSwitch = function() {
-    return this.noCosmeticFiltering !== true;
-};
-
-/******************************************************************************/
-
-PageStore.prototype.getGenericCosmeticFilteringSwitch = function() {
-    return this.noGenericCosmeticFiltering !== true &&
-           this.noCosmeticFiltering !== true;
-};
-
-/******************************************************************************/
-
-PageStore.prototype.toggleNetFilteringSwitch = function(url, scope, state) {
-    µb.toggleNetFilteringSwitch(url, scope, state);
-    this.netFilteringCache.empty();
-};
-
-/******************************************************************************/
-
-PageStore.prototype.injectLargeMediaElementScriptlet = function() {
-    this.largeMediaTimer = null;
-    µb.scriptlets.injectDeep(
-        this.tabId,
-        'load-large-media-interactive'
-    );
-    µb.contextMenu.update(this.tabId);
-};
-
-PageStore.prototype.temporarilyAllowLargeMediaElements = function(state) {
-    this.largeMediaCount = 0;
-    µb.contextMenu.update(this.tabId);
-    this.allowLargeMediaElementsUntil = state ? Date.now() + 86400000 : 0;
-    µb.scriptlets.injectDeep(this.tabId, 'load-large-media-all');
-};
-
-/******************************************************************************/
-
-// https://github.com/gorhill/uBlock/issues/2053
-//   There is no way around using journaling to ensure we deal properly with
-//   potentially out of order navigation events vs. network request events.
-
-PageStore.prototype.journalAddRequest = function(hostname, result) {
-    if ( hostname === '' ) { return; }
-    this.journal.push(
-        hostname,
-        result === 1 ? 0x00000001 : 0x00010000
-    );
-    if ( this.journalTimer === null ) {
+    journalAddRootFrame(type, url) {
+        if ( type === 'committed' ) {
+            this.journalLastCommitted = this.journal.length;
+            if (
+                this.journalLastUncommitted !== undefined &&
+                this.journalLastUncommitted < this.journalLastCommitted &&
+                this.journalLastUncommittedURL === url
+            ) {
+                this.journalLastCommitted = this.journalLastUncommitted;
+                this.journalLastUncommitted = undefined;
+            }
+        } else if ( type === 'uncommitted' ) {
+            this.journalLastUncommitted = this.journal.length;
+            this.journalLastUncommittedURL = url;
+        }
+        if ( this.journalTimer !== null ) {
+            clearTimeout(this.journalTimer);
+        }
         this.journalTimer = vAPI.setTimeout(
             ( ) => { this.journalProcess(true); },
             µb.hiddenSettings.requestJournalProcessPeriod
         );
     }
-};
 
-PageStore.prototype.journalAddRootFrame = function(type, url) {
-    if ( type === 'committed' ) {
-        this.journalLastCommitted = this.journal.length;
+    journalProcess(fromTimer) {
+        if ( !fromTimer ) {
+            clearTimeout(this.journalTimer);
+        }
+        this.journalTimer = null;
+
+        const journal = this.journal;
+        const now = Date.now();
+        let aggregateCounts = 0;
+        let pivot = this.journalLastCommitted || 0;
+
+        // Everything after pivot originates from current page.
+        for ( let i = pivot; i < journal.length; i += 2 ) {
+            const hostname = journal[i];
+            let hostnameCounts = this.hostnameToCountMap.get(hostname);
+            if ( hostnameCounts === undefined ) {
+                hostnameCounts = 0;
+                this.contentLastModified = now;
+            }
+            let count = journal[i+1];
+            this.hostnameToCountMap.set(hostname, hostnameCounts + count);
+            aggregateCounts += count;
+        }
+        this.perLoadBlockedRequestCount += aggregateCounts & 0xFFFF;
+        this.perLoadAllowedRequestCount += aggregateCounts >>> 16 & 0xFFFF;
+        this.journalLastCommitted = undefined;
+
+        // https://github.com/chrisaljoudi/uBlock/issues/905#issuecomment-76543649
+        //   No point updating the badge if it's not being displayed.
+        if ( (aggregateCounts & 0xFFFF) && µb.userSettings.showIconBadge ) {
+            µb.updateToolbarIcon(this.tabId);
+        }
+
+        // Everything before pivot does not originate from current page -- we
+        // still need to bump global blocked/allowed counts.
+        for ( let i = 0; i < pivot; i += 2 ) {
+            aggregateCounts += journal[i+1];
+        }
+        if ( aggregateCounts !== 0 ) {
+            µb.localSettings.blockedRequestCount +=
+                aggregateCounts & 0xFFFF;
+            µb.localSettings.allowedRequestCount +=
+                aggregateCounts >>> 16 & 0xFFFF;
+            µb.localSettingsLastModified = now;
+        }
+        journal.length = 0;
+    }
+
+    filterRequest(fctxt) {
+        fctxt.filter = undefined;
+
+        if ( this.getNetFilteringSwitch(fctxt) === false ) {
+            return 0;
+        }
+
+        const requestType = fctxt.type;
+
         if (
-            this.journalLastUncommitted !== undefined &&
-            this.journalLastUncommitted < this.journalLastCommitted &&
-            this.journalLastUncommittedURL === url
+            requestType === 'csp_report' &&
+            this.filterCSPReport(fctxt) === 1
         ) {
-            this.journalLastCommitted = this.journalLastUncommitted;
-            this.journalLastUncommitted = undefined;
+            return 1;
         }
-    } else if ( type === 'uncommitted' ) {
-        this.journalLastUncommitted = this.journal.length;
-        this.journalLastUncommittedURL = url;
-    }
-    if ( this.journalTimer !== null ) {
-        clearTimeout(this.journalTimer);
-    }
-    this.journalTimer = vAPI.setTimeout(
-        ( ) => { this.journalProcess(true); },
-        µb.hiddenSettings.requestJournalProcessPeriod
-    );
-};
 
-PageStore.prototype.journalProcess = function(fromTimer) {
-    if ( !fromTimer ) {
-        clearTimeout(this.journalTimer);
-    }
-    this.journalTimer = null;
-
-    var journal = this.journal,
-        n = journal.length,
-        aggregateCounts = 0,
-        now = Date.now(),
-        pivot = this.journalLastCommitted || 0;
-
-    // Everything after pivot originates from current page.
-    for ( let i = pivot; i < n; i += 2 ) {
-        let hostname = journal[i];
-        let hostnameCounts = this.hostnameToCountMap.get(hostname);
-        if ( hostnameCounts === undefined ) {
-            hostnameCounts = 0;
-            this.contentLastModified = now;
+        if ( requestType.endsWith('font') && this.filterFont(fctxt) === 1 ) {
+            return 1;
         }
-        let count = journal[i+1];
-        this.hostnameToCountMap.set(hostname, hostnameCounts + count);
-        aggregateCounts += count;
-    }
-    this.perLoadBlockedRequestCount += aggregateCounts & 0xFFFF;
-    this.perLoadAllowedRequestCount += aggregateCounts >>> 16 & 0xFFFF;
-    this.journalLastCommitted = undefined;
 
-    // https://github.com/chrisaljoudi/uBlock/issues/905#issuecomment-76543649
-    //   No point updating the badge if it's not being displayed.
-    if ( (aggregateCounts & 0xFFFF) && µb.userSettings.showIconBadge ) {
-        µb.updateToolbarIcon(this.tabId);
-    }
-
-    // Everything before pivot does not originate from current page -- we still
-    // need to bump global blocked/allowed counts.
-    for ( let i = 0; i < pivot; i += 2 ) {
-        aggregateCounts += journal[i+1];
-    }
-    if ( aggregateCounts !== 0 ) {
-        µb.localSettings.blockedRequestCount += aggregateCounts & 0xFFFF;
-        µb.localSettings.allowedRequestCount += aggregateCounts >>> 16 & 0xFFFF;
-        µb.localSettingsLastModified = now;
-    }
-    journal.length = 0;
-};
-
-/******************************************************************************/
-
-PageStore.prototype.filterRequest = function(context) {
-    this.logData = undefined;
-
-    if ( this.getNetFilteringSwitch() === false ) {
-        return 0;
-    }
-
-    var requestType = context.requestType;
-
-    if ( requestType === 'csp_report' && this.filterCSPReport(context) === 1 ) {
-        return 1;
-    }
-
-    if ( requestType.endsWith('font') && this.filterFont(context) === 1 ) {
-        return 1;
-    }
-
-    if (
-        requestType === 'script' &&
-        this.filterScripting(context.rootHostname, true) === 1
-    ) {
-        return 1;
-    }
-
-    var cacheableResult = this.cacheableResults[requestType] === true;
-
-    if ( cacheableResult ) {
-        var entry = this.netFilteringCache.lookupResult(context);
-        if ( entry !== undefined ) {
-            this.logData = entry.logData;
-            return entry.result;
+        if (
+            requestType === 'script' &&
+            this.filterScripting(fctxt, true) === 1
+        ) {
+            return 1;
         }
-    }
 
-    // Dynamic URL filtering.
-    var result = µb.sessionURLFiltering.evaluateZ(context.rootHostname, context.requestURL, requestType);
-    if ( result !== 0) {
-        if ( µb.logger.isEnabled() ) {
-            this.logData = µb.sessionURLFiltering.toLogData();
+        const cacheableResult = this.cacheableResults.has(requestType);
+
+        if ( cacheableResult ) {
+            const entry = this.netFilteringCache.lookupResult(fctxt);
+            if ( entry !== undefined ) {
+                fctxt.filter = entry.logData;
+                return entry.result;
+            }
         }
-    }
 
-    // ADN: now check our firewall (top precedence) if DNT enabled
-    if ( result === 0 && µb.adnauseam.dnt.enabled() ) {
-        if ( µb.adnauseam.dnt.mustAllow(context) ) {
-              result = 2;
-              if ( µb.logger.isEnabled() ) { // logger
-                  this.logData = µb.adnauseam.dnt.firewall.toLogData();
-              }
-        }
-    }
-
-    // Dynamic hostname/type filtering.
-    if ( result === 0 && µb.userSettings.advancedUserEnabled ) {
-        result = µb.sessionFirewall.evaluateCellZY(context.rootHostname, context.requestHostname, requestType);
-        if ( result !== 0 && result !== 3 && µb.logger.isEnabled() ) {
-            this.logData = µb.sessionFirewall.toLogData();
-        }
-    }
-
-    // Static filtering has lowest precedence.
-    if ( result === 0 || result === 3 ) {
-        result = µb.staticNetFilteringEngine.matchString(context);
-
-          if ( result !== 2 && µb.adnauseam.mustAllowRequest(result, context) ) {
-             result = 4; // ADN: adnauseamAllowed
-          }
-
-          if ( result !== 0 && µb.logger.isEnabled() ) {
-             this.logData = µb.staticNetFilteringEngine.toLogData();
-             if ( result === 4 ) this.logData.result = 4; // ADN: log adnauseamAllowed
-          }
-    }
-
-    if ( cacheableResult ) {
-        this.netFilteringCache.rememberResult(context, result, this.logData);
-    } else if ( result === 1 && this.collapsibleResources[requestType] === true ) {
-        this.netFilteringCache.rememberBlock(context, true);
-    }
-
-    return result;
-};
-
-PageStore.prototype.cacheableResults = {
-    sub_frame: true
-};
-
-PageStore.prototype.collapsibleResources = {
-    image: true,
-    media: true,
-    object: true,
-    sub_frame: true
-};
-
-/******************************************************************************/
-
-PageStore.prototype.filterCSPReport = function(context) {
-    if ( µb.sessionSwitches.evaluateZ('no-csp-reports', context.requestHostname) ) {
-        if ( µb.logger.isEnabled() ) {
-            this.logData = µb.sessionSwitches.toLogData();
-        }
-        return 1;
-    }
-    // https://github.com/gorhill/uBlock/issues/3140
-    //   Special handling of CSP reports if and only if these can't be filtered
-    //   natively.
-    if (
-        vAPI.net.nativeCSPReportFiltering !== true &&
-        this.internalRedirectionCount !== 0
-    ) {
-        if ( µb.logger.isEnabled() ) {
-            this.logData = {
-                result: 1,
-                source: 'global',
-                raw: 'no-spurious-csp-report'
-            };
-        }
-        return 1;
-    }
-    return 0;
-};
-
-/******************************************************************************/
-
-PageStore.prototype.filterFont = function(context) {
-    if ( context.requestType === 'font' ) {
-        this.remoteFontCount += 1;
-    }
-    if ( µb.sessionSwitches.evaluateZ('no-remote-fonts', context.rootHostname) !== false ) {
-        if ( µb.logger.isEnabled() ) {
-            this.logData = µb.sessionSwitches.toLogData();
-        }
-        return 1;
-    }
-    return 0;
-};
-
-/******************************************************************************/
-
-PageStore.prototype.filterScripting = function(rootHostname, netFiltering) {
-    if ( netFiltering === undefined ) {
-        netFiltering = this.getNetFilteringSwitch();
-    }
-    if (
-        netFiltering === false ||
-        µb.sessionSwitches.evaluateZ('no-scripting', rootHostname) === false
-    ) {
-        return 0;
-    }
-    if ( µb.logger.isEnabled() ) {
-        this.logData = µb.sessionSwitches.toLogData();
-    }
-    return 1;
-};
-
-/******************************************************************************/
-
-// The caller is responsible to check whether filtering is enabled or not.
-
-PageStore.prototype.filterLargeMediaElement = function(size) {
-    this.logData = undefined;
-
-    if ( Date.now() < this.allowLargeMediaElementsUntil ) {
-        return 0;
-    }
-    if ( µb.sessionSwitches.evaluateZ('no-large-media', this.tabHostname) !== true ) {
-        return 0;
-    }
-    if ( (size >>> 10) < µb.userSettings.largeMediaSize ) {
-        return 0;
-    }
-
-    this.largeMediaCount += 1;
-    if ( this.largeMediaTimer === null ) {
-        this.largeMediaTimer = vAPI.setTimeout(
-            this.injectLargeMediaElementScriptlet.bind(this),
-            500
+        // Dynamic URL filtering.
+        let result = µb.sessionURLFiltering.evaluateZ(
+            fctxt.getTabHostname(),
+            fctxt.url,
+            requestType
         );
-    }
-
-    if ( µb.logger.isEnabled() ) {
-        this.logData = µb.sessionSwitches.toLogData();
-    }
-
-    return 1;
-};
-
-// https://www.youtube.com/watch?v=drW8p_dTLD4
-
-/******************************************************************************/
-
-PageStore.prototype.getBlockedResources = function(request, response) {
-    var µburi = µb.URI,
-        normalURL = µb.normalizePageURL(this.tabId, request.frameURL),
-        frameHostname = µburi.hostnameFromURI(normalURL),
-        resources = request.resources;
-    // Force some resources to go through the filtering engine in order to
-    // populate the blocked-resources cache. This is required because for
-    // some resources it's not possible to detect whether they were blocked
-    // content script-side (i.e. `iframes` -- unlike `img`).
-    if ( Array.isArray(resources) && resources.length !== 0 ) {
-        var context = this.createContextFromFrameHostname(frameHostname);
-        for ( var resource of resources ) {
-            context.requestType = resource.type;
-            context.requestHostname = µburi.hostnameFromURI(resource.url);
-            context.requestURL = resource.url;
-            this.filterRequest(context);
+        if ( result !== 0 && µb.logger.enabled ) {
+            fctxt.filter = µb.sessionURLFiltering.toLogData();
         }
+
+        // ADN: now check our firewall (top precedence) if DNT enabled
+        if ( result === 0 && µb.adnauseam.dnt.enabled() ) {
+            if ( µb.adnauseam.dnt.mustAllow(fctxt) ) {
+                  result = 2;
+                  if ( µb.logger.enabled ) { // logger
+                      this.logData = µb.adnauseam.dnt.firewall.toLogData();
+                  }
+            }
+        }
+
+        // Dynamic hostname/type filtering.
+        if ( result === 0 && µb.userSettings.advancedUserEnabled ) {
+            result = µb.sessionFirewall.evaluateCellZY(
+                fctxt.getTabHostname(),
+                fctxt.getHostname(),
+                requestType
+            );
+            if ( result !== 0 && result !== 3 && µb.logger.enabled ) {
+                fctxt.filter = µb.sessionFirewall.toLogData();
+            }
+        }
+
+        // Static filtering has lowest precedence.
+        if ( result === 0 || result === 3 ) {
+            result = µb.staticNetFilteringEngine.matchString(fctxt);
+            if ( result !== 0 && µb.logger.enabled ) {
+                fctxt.filter = µb.staticNetFilteringEngine.toLogData();
+            }
+            if ( result !== 2 && µb.adnauseam.mustAllowRequest(result, fctxt)) {
+                result = 4; // ADN: adnauseamAllowed
+                if (fctxt.filter) fctxt.filter.result = 4;
+            }
+
+
+        }
+
+        if ( cacheableResult ) {
+            this.netFilteringCache.rememberResult(fctxt, result);
+        } else if (
+            result === 1 &&
+            this.collapsibleResources.has(requestType)
+        ) {
+            this.netFilteringCache.rememberBlock(fctxt, true);
+        }
+
+        return result;
     }
-    if ( this.netFilteringCache.hash === response.hash ) { return; }
 
-    response.hash = this.netFilteringCache.hash;
-    response.blockedResources = this.netFilteringCache.lookupAllBlocked(frameHostname);
+    filterCSPReport(fctxt) {
+        if (
+            µb.sessionSwitches.evaluateZ(
+                'no-csp-reports',
+                fctxt.getHostname()
+            )
+        ) {
+            if ( µb.logger.enabled ) {
+                fctxt.filter = µb.sessionSwitches.toLogData();
+            }
+            return 1;
+        }
+        return 0;
+    }
+
+    filterFont(fctxt) {
+        if ( fctxt.type === 'font' ) {
+            this.remoteFontCount += 1;
+        }
+        if (
+            µb.sessionSwitches.evaluateZ(
+                'no-remote-fonts',
+                fctxt.getTabHostname()
+            ) !== false
+        ) {
+            if ( µb.logger.enabled ) {
+                fctxt.filter = µb.sessionSwitches.toLogData();
+            }
+            return 1;
+        }
+        return 0;
+    }
+
+    filterScripting(fctxt, netFiltering) {
+        fctxt.filter = undefined;
+        if ( netFiltering === undefined ) {
+            netFiltering = this.getNetFilteringSwitch(fctxt);
+        }
+        if (
+            netFiltering === false ||
+            µb.sessionSwitches.evaluateZ(
+                'no-scripting',
+                fctxt.getTabHostname()
+            ) === false
+        ) {
+            return 0;
+        }
+        if ( µb.logger.enabled ) {
+            fctxt.filter = µb.sessionSwitches.toLogData();
+        }
+        return 1;
+    }
+
+    // The caller is responsible to check whether filtering is enabled or not.
+    filterLargeMediaElement(fctxt, size) {
+        fctxt.filter = undefined;
+
+        if ( Date.now() < this.allowLargeMediaElementsUntil ) {
+            return 0;
+        }
+        if (
+            µb.sessionSwitches.evaluateZ(
+                'no-large-media',
+                fctxt.getTabHostname()
+            ) !== true
+        ) {
+            return 0;
+        }
+        if ( (size >>> 10) < µb.userSettings.largeMediaSize ) {
+            return 0;
+        }
+
+        this.largeMediaCount += 1;
+        if ( this.largeMediaTimer === null ) {
+            this.largeMediaTimer = vAPI.setTimeout(( ) => {
+                this.largeMediaTimer = null;
+                this.injectLargeMediaElementScriptlet();
+            }, 500);
+        }
+
+        if ( µb.logger.enabled ) {
+            fctxt.filter = µb.sessionSwitches.toLogData();
+        }
+
+        return 1;
+    }
+
+    getBlockedResources(request, response) {
+        const normalURL = µb.normalizePageURL(this.tabId, request.frameURL);
+        const resources = request.resources;
+        const fctxt = µb.filteringContext;
+        fctxt.fromTabId(this.tabId)
+             .setDocOriginFromURL(normalURL);
+        // Force some resources to go through the filtering engine in order to
+        // populate the blocked-resources cache. This is required because for
+        // some resources it's not possible to detect whether they were blocked
+        // content script-side (i.e. `iframes` -- unlike `img`).
+        if ( Array.isArray(resources) && resources.length !== 0 ) {
+            for ( const resource of resources ) {
+                this.filterRequest(
+                    fctxt.setType(resource.type)
+                         .setURL(resource.url)
+                );
+            }
+        }
+        if ( this.netFilteringCache.hash === response.hash ) { return; }
+        response.hash = this.netFilteringCache.hash;
+        response.blockedResources =
+            this.netFilteringCache.lookupAllBlocked(fctxt.getDocHostname());
+    }
 };
+
+PageStore.prototype.cacheableResults = new Set([
+    'sub_frame',
+]);
+
+PageStore.prototype.collapsibleResources = new Set([
+    'image',
+    'media',
+    'object',
+    'sub_frame',
+]);
+
+µb.PageStore = PageStore;
 
 /******************************************************************************/
 
-return {
-    factory: PageStore.factory
-};
+// <<<<<
+// end of private namespace
 
-})();
-
-/******************************************************************************/
+}

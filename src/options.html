@@ -31,11 +31,10 @@
           <label data-i18n="disableHidingForDNTPrompt" for="respect-dnt-for-hiding"></label>
           <a class="fa info" href="https://github.com/dhowe/AdNauseam/wiki/FAQ#what-is-the-effs-do-not-track-standard-and-how-it-is-supported-in-adnauseam" target="_blank">&#xf05a;</a>
         </li>
-        <li>
-          <input id="no-large-media" class="hidingAds-child" type="checkbox" data-setting-name="noLargeMedia" data-setting-type="bool">
-          <label data-i18n="settingsNoLargeMediaPrompt" for="no-large-media"></label> <a class="fa info" href="https://github.com/gorhill/uBlock/wiki/Per-site-switches#no-large-media-elements"
-              target="_blank">&#xf05a;</a>
-        </li>
+        <li><input id="no-large-media" class="hidingAds-child" type="checkbox" data-setting-name="noLargeMedia" data-setting-type="bool">
+          <label data-i18n="settingsNoLargeMediaPrompt" for="no-large-media">
+            <input type="number" min="0"></label> <a class="fa info" href="https://github.com/gorhill/uBlock/wiki/Per-site-switches#no-large-media-elements" target="_blank">&#xf05a;</a>
+      </li>
         <li>
           <input id="no-remote-fonts" class="hidingAds-child" type="checkbox" data-setting-name="noRemoteFonts" data-setting-type="bool">
           <label data-i18n="settingsNoRemoteFontsPrompt" for="no-remote-fonts"></label> <a class="fa info" href="https://github.com/gorhill/uBlock/wiki/Per-site-switches#no-remote-fonts"
@@ -173,14 +172,13 @@
               data-setting-type="bool">
           <label data-i18n="eventLoggingPrompt" for="event-logging"></label>
         </li>
-        <!--li>
-          <input id="advanced-user-enabled" type="checkbox" data-setting-name="advancedUserEnabled"
-              data-setting-type="bool">
-          <label data-i18n="settingsAdvancedUserPrompt" for="advanced-user-enabled"></label>
-        </li-->
+
       </ul>
     </li>
 
+    <li><input id="advanced-user-enabled" type="checkbox" disabled="disabled" data-setting-name="advancedUserEnabled" data-setting-type="bool">
+      <label data-i18n="settingsAdvancedUserPrompt" for="advanced-user-enabled"></label>
+      <a class="fa info" href="advanced-settings.html" data-i18n-title="settingsAdvancedUserSettings">&#xf085;</a></li>
   </ul>
 
   <div id="localData" style="margin: 0 1em;">

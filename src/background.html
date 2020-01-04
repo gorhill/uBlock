@@ -5,9 +5,10 @@
 <title>AdNauseam</title>
 </head>
 <body>
+<script src="js/console.js"></script>
 <script src="lib/lz4/lz4-block-codec-any.js"></script>
 <script src="lib/punycode.js"></script>
-<script src="lib/publicsuffixlist.js"></script>
+<script src="lib/publicsuffixlist/publicsuffixlist.js"></script>
 <script src="lib/jszip.min.js"></script>
 <script src="lib/yamd5.js"></script>
 <script src="js/vapi.js"></script>
@@ -15,12 +16,15 @@
 <script src="js/vapi-background.js"></script>
 <script src="js/vapi-webrequest.js"></script><!-- Forks can pick the webext, chromium, or their own implementation -->
 <script src="js/background.js"></script>
+<script src="js/traffic.js"></script>
 <script src="js/hntrie.js"></script>
+<script src="js/strie.js"></script>
 <script src="js/utils.js"></script>
 <script src="js/uritools.js"></script>
 <script src="js/lz4.js"></script>
 <script src="js/cachestorage.js"></script>
 <script src="js/assets.js"></script>
+<script src="js/filtering-context.js"></script>
 <script src="js/redirect-engine.js"></script>
 <script src="js/dynamic-net-filtering.js"></script>
 <script src="js/static-net-filtering.js"></script>
@@ -36,7 +40,6 @@
 <script src="js/logger.js"></script>
 <script src="js/pagestore.js"></script>
 <script src="js/tab.js"></script>
-<script src="js/traffic.js"></script>
 <script src="js/text-encode.js"></script>
 <script src="js/contextmenu.js"></script>
 <script src="js/reverselookup.js"></script>

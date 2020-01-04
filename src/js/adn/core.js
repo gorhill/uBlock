@@ -1,37 +1,44 @@
 /* global vAPI, µBlock */
 
 µBlock.adnauseam = (function () {
-
   'use strict';
 
   // for debugging only
-  var failAllVisits = 0, // all visits will fail
-    clearAdsOnInit = 0, // start with zero ads
-    clearVisitData = 0, // reset all ad visit data
-    automatedMode = 0, // testing ['selenium' or 'sessbench']
-    disableIdler = 0; // don't wait for user to be idle
+  let // all visits will fail
+      failAllVisits = 0,
+      // start with zero ads
+      clearAdsOnInit = 0,
+      // reset all ad visit data
+      clearVisitData = 0,
+      // testing ['selenium' or 'sessbench']
+      automatedMode = 0,
+      disableIdler = 0; // don't wait for user to be idle
 
-  var µb = µBlock,
-    production = 1,
-    lastActivity = 0,
-    lastUserActivity = 0,
-    listsLoaded = false,
-    notifications = [],
-    allowedExceptions = [],
-    maxAttemptsPerAd = 3,
-    visitTimeout = 20000,
-    profiler = +new Date(),
-    pollQueueInterval = 5000,
-    redactMarker = '********',
-    repeatVisitInterval = Number.MAX_VALUE;
-
-  var xhr, idgen, admap, inspected, listEntries, visitedURLs = new Set();
+  const µb = µBlock;
+  const production = 1;
+  let lastActivity = 0;
+  let lastUserActivity = 0;
+  let listsLoaded = false;
+  const notifications = [];
+  const allowedExceptions = [];
+  const maxAttemptsPerAd = 3;
+  const visitTimeout = 20000;
+  const profiler = +new Date();
+  const pollQueueInterval = 5000;
+  const redactMarker = '********';
+  const repeatVisitInterval = Number.MAX_VALUE;
+  let xhr;
+  let idgen;
+  let admap;
+  let inspected;
+  let listEntries;
+  const visitedURLs = new Set();
 
   // blocks requests to/from these domains even if the list is not in enabledBlockLists
-  var allowAnyBlockOnDomains = ['youtube.com', 'funnyordie.com']; // no dnt in here
+  const allowAnyBlockOnDomains = ['youtube.com', 'funnyordie.com']; // no dnt in here
 
   // allow blocks only from this set of lists (recheck this)
-  var enabledBlockLists = ['My filters', 'EasyPrivacy',
+  const enabledBlockLists = ['My filters', 'EasyPrivacy',
     'uBlock filters – Badware risks', 'uBlock filters – Unbreak',
     'uBlock filters – Privacy', 'Malware domains', 'Malware Domain List',
     'Anti-ThirdpartySocial', 'AdNauseam filters', 'Fanboy’s Annoyance List‎',
@@ -41,26 +48,26 @@
     'Basic tracking list by Disconnect', 'EFF DNT Policy Whitelist'
   ];
 
-  var removableBlockLists = [ 'hphosts', 'mvps-0', 'plowe-0' ];
+  const removableBlockLists = [ 'hphosts', 'mvps-0', 'plowe-0' ];
 
   // targets on these domains are never internal (may need to be regex)
-  var internalLinkDomains = ['google.com', 'asiaxpat.com', 'nytimes.com',
+  const internalLinkDomains = ['google.com', 'asiaxpat.com', 'nytimes.com',
     'columbiagreenemedia.com','163.com', 'sohu.com','zol.com.cn','baidu.com',
     'yahoo.com','facebook.com','youtube.com'
   ];
 
   // mark ad visits as failure if any of these are included in title
-  var errorStrings = ['file not found', 'website is currently unavailable', 'not found on this server'];
+  const errorStrings = ['file not found', 'website is currently unavailable', 'not found on this server'];
 
-  var reSpecialChars = /[\*\^\t\v\n]/, remd5 = /[a-fA-F0-9]{32}/;
+  const reSpecialChars = /[\*\^\t\v\n]/, remd5 = /[a-fA-F0-9]{32}/;
 
   /**************************** functions ******************************/
 
   /* called when the addon is first loaded */
-  var initialize = function (settings) {
+  const initialize = function (settings) {
 
     // modify XMLHttpRequest to store original request/ad
-    var XMLHttpRequest_open = XMLHttpRequest.prototype.open;
+    const XMLHttpRequest_open = XMLHttpRequest.prototype.open;
 
     XMLHttpRequest.prototype.open = function (method, url) {
 
@@ -72,9 +79,9 @@
     initializeState(settings);
 
     setTimeout(pollQueue, pollQueueInterval * 2);
-  }
+  };
 
-  var initializeState = function (settings) {
+  const initializeState = function (settings) {
 
     admap = (settings && settings.admap) || {};
 
@@ -90,7 +97,7 @@
     }
   }
 
-  var setupTesting = function () {
+  const setupTesting = function () {
 
     warn('AdNauseam/sessbench: eid=' + chrome.runtime.id);
 
@@ -98,12 +105,12 @@
       function (request, sender, sendResponse) {
 
         if (request.what === 'getAdCount') {
-          var url = request.pageURL,
-            count = currentCount(),
-            json = {
-              url: url,
-              count: count
-            };
+          const url = request.pageURL,
+                count = currentCount(),
+                json = {
+                  url: url,
+                  count: count
+                };
 
           console.log('TEST-FOUND: ', JSON.stringify(json));
 
@@ -120,9 +127,9 @@
   }
 
   /* make sure we have no bad data in ad storage */
-  var validateAdStorage = function () {
+  const validateAdStorage = function () {
 
-    var ads = adlist(), i = ads.length;
+    let ads = adlist(), i = ads.length;
 
     if (clearAdsOnInit) {
 
@@ -151,15 +158,17 @@
     log('[INIT] Initialized with ' + ads.length + ' ads');
   }
 
-  var validMD5 = function(s) {
+  const validMD5 = function(s) {
 
     return remd5.test(s);
-  }
+  };
 
-  var validateHashes = function () {
-
-    var hashes, ad, pages = Object.keys(admap),
-      unhashed = [], orphans = [];
+  const validateHashes = function () {
+    let hashes;
+    let ad;
+    const pages = Object.keys(admap);
+    const unhashed = [];
+    const orphans = [];
 
     /* ForEach pageKey in admap
       if (pageKey is not hashed)
@@ -168,17 +177,17 @@
       if (pageKey is hashed)
         add any non-hashed ads to orphans
     }*/
-    var checkHashes = function () {
+    const checkHashes = function () {
 
-      for (var i = 0; i < pages.length; i++) {
+      for (let i = 0; i < pages.length; i++) {
 
-        var isHashed = validMD5(pages[i]);
+        const isHashed = validMD5(pages[i]);
 
         if (!isHashed) {
 
           unhashed.push(pages[i]);
           hashes = Object.keys(admap[pages[i]]);
-          for (var j = 0; j < hashes.length; j++) {
+          for (let j = 0; j < hashes.length; j++) {
 
             ad = admap[pages[i]][hashes[j]];
             orphans.push(ad);
@@ -187,7 +196,7 @@
         } else {
 
           hashes = Object.keys(admap[pages[i]]);
-          for (var j = hashes.length - 1; j >= 0; j--) {
+          for (let j = hashes.length - 1; j >= 0; j--) {
 
             if (!validMD5(hashes[j])) {
 
@@ -203,7 +212,7 @@
         Delete unhashed entries from admap
         Add each orphan back to admap
       */
-      var repairHashes = function () {
+      const repairHashes = function () {
 
         orphans.forEach(function(ad) {
           createAdmapEntry(ad, admap)
@@ -214,16 +223,16 @@
         });
 
         storeUserData();
-      }
+      };
 
       if (unhashed.length || orphans.length) repairHashes();
-    }
+    };
 
     checkHashes();
     //log('[CRYPT] '+adCount()+ ' ads hash-verified');
   }
 
-  var clearAdVisits = function (ads) { // for dev-debugging only
+  const clearAdVisits = function (ads) { // for dev-debugging only
 
     warn("[WARN] Clearing all Ad visit data!");
 
@@ -240,7 +249,7 @@
   }
 
   // compute the highest id still in the admap
-  var computeNextId = function (ads) {
+  const computeNextId = function (ads) {
 
     ads = ads || adlist();
     idgen = Math.max(0, (Math.max.apply(Math,
@@ -249,19 +258,19 @@
       }))));
   }
 
-  var pollQueue = function (interval) {
-
+  const pollQueue = function (interval) {
     interval = interval || pollQueueInterval;
 
     markActivity();
 
-    var next, pending = pendingAds(),
-      settings = µb.userSettings;
+    let next;
+    const pending = pendingAds();
+    const settings = µb.userSettings;
 
     if (pending.length && settings.clickingAds && !isAutomated()) { // no visits if automated
 
       // check whether an idle timeout has been specified
-      var idleMs = disableIdler ? 0 : settings.clickOnlyWhenIdleFor;
+      const idleMs = disableIdler ? 0 : settings.clickOnlyWhenIdleFor;
       if (!idleMs || (millis() - lastUserActivity > idleMs)) {
 
         //idleMs && log("[IDLER] "+(millis() - lastUserActivity)+"ms, clicking resumed...");
@@ -289,21 +298,21 @@
     setTimeout(pollQueue, Math.max(1, interval - (millis() - lastActivity)));
   }
 
-  var markActivity = function () {
+  const markActivity = function () {
 
     return (lastActivity = millis());
   }
 
-  var pendingAds = function () {
+  const pendingAds = function () {
 
     return adlist().filter(function (a) {
       return visitPending(a);
     });
   }
 
-  var visitPending = function (ad) {
+  const visitPending = function (ad) {
 
-    var pending = ad && ad.attempts < maxAttemptsPerAd &&
+    let pending = ad && ad.attempts < maxAttemptsPerAd &&
       ad.visitedTs <= 0 && !ad.dntAllowed && !ad.noVisit;
 
     //  DH: moved to registerAd() as part of #1168
@@ -335,24 +344,24 @@
     return pending;
   }
 
-  var isPopupOpen = function () {
+  const isPopupOpen = function () {
 
     return vAPI.getViews({ type: "popup" }).length;
-  }
+  };
 
-  var getExtPageTabId = function (htmlPage) {
+  const getExtPageTabId = function (htmlPage) {
 
-    var pageUrl = vAPI.getURL(htmlPage);
+    const pageUrl = vAPI.getURL(htmlPage);
     for (let e of µb.pageStores) {
-      var pageStore = e[1];
+      const pageStore = e[1];
       if (pageStore !== null && pageStore.rawURL.startsWith(pageUrl))
         return pageStore.tabId;
     }
-  }
+  };
 
-  var updateAdOnFailure = function (xhr, e) {
+  const updateAdOnFailure = function (xhr, e) {
 
-    var ad = xhr.delegate;
+    const ad = xhr.delegate;
 
     if (ad && ad.visitedTs <= 0) { // make sure we haven't visited already
 
@@ -378,28 +387,27 @@
 
       err("No Ad in updateAdOnFailure()", xhr, e);
     }
-  }
+  };
 
   /* send to vault/menu/dashboard if open */
-  var sendNotifications = function(notes) {
+  const sendNotifications = function(notes) {
 
     vAPI.messaging.broadcast({
        what: 'notifications',
        notifications: notes
        // TODO: do we need to make these cloneable ? see #1163
      });
-  }
+  };
 
-  var parseTitle = function (xhr) {
-
-    var html = xhr.responseText,
-      title = html.match(/<title[^>]*>([^<]+)<\/title>/i);
+  const parseTitle = function (xhr) {
+    const html = xhr.responseText;
+    let title = html.match(/<title[^>]*>([^<]+)<\/title>/i);
 
     if (title && title.length > 1) {
 
       title = unescapeHTML(title[1].trim());
 
-      for (var i = 0; i < errorStrings.length; i++) {
+      for (let i = 0; i < errorStrings.length; i++) {
 
         // check the title isn't something like 'file not found'
         if (title.toLowerCase().indexOf(errorStrings[i]) > -1) {
@@ -417,16 +425,16 @@
       return title;
     }
 
-    var shtml = html.length > 100 ? html.substring(0, 100) + '...' : html;
+    const shtml = html.length > 100 ? html.substring(0, 100) + '...' : html;
     //console.log('shtml: ' + shtml);
     warn('[VISIT] No title for ' + xhr.requestUrl, 'Html:\n' + shtml);
 
     return false;
-  }
+  };
 
-  var updateAdOnSuccess = function (xhr, ad, title) {
+  const updateAdOnSuccess = function (xhr, ad, title) {
 
-    var ad = xhr.delegate;
+    ad = xhr.delegate;
 
     if (ad) {
 
@@ -441,7 +449,7 @@
       vAPI.tabs.get(null, function (tab) {
 
         if (tab && tab.id) { // do click animation
-          var tabId = tab.id;
+          const tabId = tab.id;
           µb.updateToolbarIcon(tabId, true); // click icon
           setTimeout(function () {
             µb.updateToolbarIcon(tabId);
@@ -461,19 +469,19 @@
     }
 
     storeUserData();
-  }
+  };
 
   // returns the current active visit attempt or null
-  var activeVisit = function (pageUrl) {
+  const activeVisit = function (pageUrl) {
 
     if (xhr && xhr.delegate) {
       if (!pageUrl || xhr.delegate === pageUrl)
         return xhr.delegate;
     }
-  }
+  };
 
-  var onVisitError = function (e) {
-
+  const onVisitError = function (e) {
+    if (this == undefined) return;
     this.onload = this.onerror = this.ontimeout = null;
 
     markActivity();
@@ -499,13 +507,13 @@
     xhr = null; // end the visit
   };
 
-  var onVisitResponse = function () {
+  const onVisitResponse = function () {
 
     this.onload = this.onerror = this.ontimeout = null;
 
     markActivity();
 
-    var ad = this.delegate;
+    const ad = this.delegate;
 
     if (!ad) {
 
@@ -519,8 +527,7 @@
 
     ad.attemptedTs = 0; // reset as visit no longer in progress
 
-    var status = this.status || 200,
-      html = this.responseText;
+    const status = this.status || 200, html = this.responseText;
 
     if (failAllVisits || status < 200 || status >= 300 ) {
       return onVisitError.call(this, {
@@ -545,11 +552,11 @@
   };
 
   // Checks for external FB link and if so, parses the true link
-  var isFacebookExternal = function (xhr, ad) {
+  const isFacebookExternal = function (xhr, ad) {
 
     if (/facebook\.com\/l\.php/.test(xhr.requestUrl)) {
 
-      var url = decodeURIComponent(xhr.responseURL);
+      const url = decodeURIComponent(xhr.responseURL);
       ad.parsedTargetUrl = decodeURIComponent(url.substring(url.lastIndexOf('http')));
       log("[FB-EXT] Parsed: ", ad.parsedTargetUrl);
 
@@ -557,7 +564,7 @@
     }
   };
 
-  var visitAd = function (ad) {
+  const visitAd = function (ad) {
 
     function timeoutError(xhr) {
       return onVisitError.call(xhr, {
@@ -565,8 +572,7 @@
       });
     }
 
-    var url = ad.targetUrl,
-      now = markActivity();
+    const url = ad.targetUrl, now = markActivity();
 
     // tell menu/vault we have a new attempt
     vAPI.messaging.broadcast({
@@ -578,7 +584,7 @@
 
       if (xhr.delegate.attemptedTs) {
 
-        var elapsed = (now - xhr.delegate.attemptedTs);
+        const elapsed = (now - xhr.delegate.attemptedTs);
 
         // TODO: why does this happen... a redirect?
         warn('[TRYING] Attempt to reuse xhr from ' + elapsed + " ms ago");
@@ -598,12 +604,14 @@
     if (!validateTarget(ad)) return deleteAd(ad);
 
     return sendXhr(ad);
+    // return openAdInNewTab(ad);
+    // return popUnderAd(ad)
   };
 
-  var sendXhr = function (ad) {
+  const sendXhr = function (ad) {
 
     // if we've parsed an obfuscated target, use it
-    var target = ad.parsedTargetUrl || ad.targetUrl;
+    const target = ad.parsedTargetUrl || ad.targetUrl;
 
     log('[TRYING] ' + adinfo(ad), ad.targetUrl);
 
@@ -619,8 +627,6 @@
       xhr.onerror = onVisitError;
       xhr.ontimeout = onVisitError;
       xhr.responseType = ''; // 'document'?;
-
-      xhr.setRequestHeader("Referer", µb.URI.hostnameFromURI(ad.pageUrl));
       xhr.send();
     } catch (e) {
 
@@ -628,21 +634,21 @@
     }
   }
 
-  var storeUserData = function (immediate) {
+  const storeUserData = function (immediate) {
 
     // TODO: defer if we've recently written and !immediate
     µb.userSettings.admap = admap;
     vAPI.storage.set(µb.userSettings);
   }
 
-  var validateTarget = function (ad) {
+  const validateTarget = function (ad) {
 
-    var url = ad.targetUrl;
+    const url = ad.targetUrl;
 
     if (!/^http/.test(url)) {
 
       // Here we try to extract an obfuscated URL
-      var idx = url.indexOf('http');
+      const idx = url.indexOf('http');
       if (idx != -1) {
 
         ad.targetUrl = decodeURIComponent(url.substring(idx));
@@ -656,7 +662,7 @@
 
     // ad.targetUrl = trimChar(ad.targetUrl, '/'); #751
 
-    var dInfo = domainInfo(ad.resolvedTargetUrl || ad.targetUrl);
+    const dInfo = domainInfo(ad.resolvedTargetUrl || ad.targetUrl);
 
     if (!isValidDomain(dInfo.domain)) {
 
@@ -670,7 +676,7 @@
 
     // Check: a slash at the end of the domain https://github.com/dhowe/AdNauseam/issues/1304
 
-    var idx = url.indexOf(ad.targetDomain) + ad.targetDomain.length;
+    const idx = url.indexOf(ad.targetDomain) + ad.targetDomain.length;
     if (idx < url.length - 1 && url.charAt(idx) != "/") {
       ad.targetUrl = url.substring(0,idx) + "/" + url.substring(idx, url.length);
     }
@@ -678,19 +684,19 @@
     return true;
   }
 
-  var domainInfo = function (url) { // via uBlock/psl
+  const domainInfo = function (url) { // via uBlock/psl
 
-    var hostname = µb.URI.hostnameFromURI(url);
-    var domain = µb.URI.domainFromHostname(hostname);
+    const hostname = µb.URI.hostnameFromURI(url);
+    const domain = µb.URI.domainFromHostname(hostname);
     return { hostname: hostname, domain: domain };
   }
 
-  var domainFromURI = function (url) { // TODO: replace all uses with domainInfo()
+  const domainFromURI = function (url) { // TODO: replace all uses with domainInfo()
 
     return µb.URI.domainFromHostname(µb.URI.hostnameFromURI(url));
-  }
+  };
 
-  var validateFields = function (ad) {
+  const validateFields = function (ad) {
 
     if (ad.visitedTs === 0 && ad.attempts > 0) {
 
@@ -712,16 +718,14 @@
       type(ad.contentData) === 'object';
   }
 
-  var validate = function (ad) {
+  const validate = function (ad) {
 
     if (!validateFields(ad)) {
 
       return warn('Invalid ad-fields: ', ad);
     }
 
-    var cd = ad.contentData,
-      ct = ad.contentType,
-      pu = ad.pageUrl;
+    const cd = ad.contentData, ct = ad.contentType, pu = ad.pageUrl;
 
     ad.title = unescapeHTML(ad.title); // fix to #31
 
@@ -752,19 +756,19 @@
     }
 
     return validateTarget(ad);
-  }
+  };
 
-  var clearAdmap = function () {
+  const clearAdmap = function () {
 
-    var pages = Object.keys(admap);
+    const pages = Object.keys(admap);
 
-    for (var i = 0; i < pages.length; i++) {
+    for (let i = 0; i < pages.length; i++) {
 
       if (admap[pages[i]]) {
 
-        var hashes = Object.keys(admap[pages[i]]);
+        const hashes = Object.keys(admap[pages[i]]);
 
-        for (var j = 0; j < hashes.length; j++) {
+        for (let j = 0; j < hashes.length; j++) {
 
           delete admap[pages[i]][hashes[j]];
         }
@@ -774,23 +778,23 @@
     }
 
     admap = {}; // redundant, remove
-  }
+  };
 
-  var millis = function () {
+  const millis = function () {
 
     return +new Date();
   }
 
-  var adinfo = function (ad) {
+  const adinfo = function (ad) {
 
-    var id = ad.id || '?';
+    const id = ad.id || '?';
     return 'Ad#' + id + '(' + ad.contentType + ')';
   }
 
-  var unescapeHTML = function (s) { // hack
+  const unescapeHTML = function (s) { // hack
 
     if (s && s.length) {
-      var entities = [
+      const entities = [
         '#0*32', ' ',
         '#0*33', '!',
         '#0*34', '"',
@@ -808,7 +812,7 @@
         '#x60', '`'
       ];
 
-      for (var i = 0; i < entities.length; i += 2) {
+      for (let i = 0; i < entities.length; i += 2) {
         s = s.replace(new RegExp('\&' + entities[i] + ';', 'g'), entities[i + 1]);
       }
     }
@@ -816,34 +820,33 @@
     return s;
   }
 
-  var adById = function (id) {
+  const adById = function (id) {
 
-    var list = adlist();
-    for (var i = 0; i < list.length; i++) {
+    const list = adlist();
+    for (let i = 0; i < list.length; i++) {
       if (list[i].id === id)
         return list[i];
     }
-  }
+  };
 
-  var reloadExtPage = function (htmlPage) {
+  const reloadExtPage = function (htmlPage) {
 
-    var tabId = getExtPageTabId(htmlPage)
+    const tabId = getExtPageTabId(htmlPage);
     tabId && vAPI.tabs.reload(tabId);
-  }
+  };
 
-  var deleteAd = function (arg) {
+  const deleteAd = function (arg) {
 
-    var ad = type(arg) === 'object' ? arg : adById(arg),
-      count = adCount();
+    const ad = type(arg) === 'object' ? arg : adById(arg), count = adCount();
 
     if (!ad) {
       return warn("No Ad to delete", id, admap);
     }
 
-    var pageHash = YaMD5.hashStr(ad.pageUrl);
+    const pageHash = YaMD5.hashStr(ad.pageUrl);
     if (admap[pageHash]) {
 
-      var hash = computeHash(ad);
+      const hash = computeHash(ad);
 
       if (admap[pageHash][hash]) {
 
@@ -871,25 +874,25 @@
     storeUserData();
   }
 
-  var log = function () {
+  const log = function () {
     if (µb.userSettings.eventLogging)
       console.log.apply(console, arguments);
     return true;
   }
 
-  var warn = function () {
+  const warn = function () {
     if (µb.userSettings.eventLogging)
       console.warn.apply(console, arguments);
     return false;
   }
 
-  var err = function () {
+  const err = function () {
     console.error.apply(console, arguments);
     return false;
   }
 
   // return ALL ads, regardless of pageUrl param
-  var adsForUI = function (pageUrl) {
+  const adsForUI = function (pageUrl) {
 
     return {
 
@@ -899,33 +902,32 @@
       current: activeVisit(),
       notifications: notifications
     };
-  }
+  };
 
-  var validateImport = function (map, replaceAll) {
-
+  const validateImport = function (map, replaceAll) {
     if (type(map) !== 'object')
       return false;
 
-    var pass = 0,
-      newmap = replaceAll ? {} : admap,
-      pages = Object.keys(map);
+    let pass = 0;
+    const newmap = replaceAll ? {} : admap;
+    const pages = Object.keys(map);
 
-    for (var i = 0; i < pages.length; i++) {
+    for (let i = 0; i < pages.length; i++) {
 
       if (type(map[pages[i]]) !== 'object')
         return false;
 
       computeNextId();
-      var hashes = Object.keys(map[pages[i]]);
-      for (var j = 0; j < hashes.length; j++) {
+      const hashes = Object.keys(map[pages[i]]);
+      for (let j = 0; j < hashes.length; j++) {
 
-        var hash = hashes[j];
+        const hash = hashes[j];
         if (type(hash) !== 'string' || !(validMD5(hash) || hash.includes('::'))) {
 
           return warn('Bad hash in import: ', hash, ad); // tmp
         }
 
-        var ad = map[pages[i]][hash];
+        let ad = map[pages[i]][hash];
         if (validateFields(ad)) {
 
           validateTarget(ad); // accept either way
@@ -944,26 +946,26 @@
     }
 
     return pass ? newmap : false;
-  }
+  };
 
-  var validateAdArray = function (ads, replaceAll) {
+  const validateAdArray = function (ads, replaceAll) {
 
-    var map = replaceAll ? {} : admap;
+    const map = replaceAll ? {} : admap;
 
-    for (var j = 0; j < ads.length; j++) {
+    for (let j = 0; j < ads.length; j++) {
 
-      var ad = updateLegacyAd(ads[j]);
+      const ad = updateLegacyAd(ads[j]);
       createAdmapEntry(ad, map)
     }
 
     return map;
-  }
+  };
 
-  var createAdmapEntry = function (ad, map) {
+  const createAdmapEntry = function (ad, map) {
 
     if (validateFields(ad)) {
 
-      var pagehash = YaMD5.hashStr(ad.pageUrl);
+      const pagehash = YaMD5.hashStr(ad.pageUrl);
       if (!map[pagehash]) map[pagehash] = {};
       map[pagehash][computeHash(ad)] = ad;
       return true;
@@ -972,23 +974,25 @@
     warn('Unable to validate ad', ad);
   }
 
-  var validateLegacyImport = function (map) {
-
+  const validateLegacyImport = function (map) {
     if (type(map) !== 'object') {
 
       return (type(map) === 'array') ? validateAdArray(map) :
         warn('Import-fail: not object or array', type(map), map);
     }
 
-    var ad, ads, hash, newmap = {},
-      pages = Object.keys(map);
+    let ad;
+    let ads;
+    let hash;
+    const newmap = {};
+    const pages = Object.keys(map);
 
     if (!pages || !pages.length) {
 
       return warn('no pages: ', pages);
     }
 
-    for (var i = 0; i < pages.length; i++) {
+    for (let i = 0; i < pages.length; i++) {
 
       ads = map[pages[i]];
 
@@ -1000,7 +1004,7 @@
 
       newmap[pages[i]] = {};
 
-      for (var j = 0; j < ads.length; j++) {
+      for (let j = 0; j < ads.length; j++) {
 
         ad = updateLegacyAd(ads[j]);
         hash = computeHash(ad);
@@ -1018,9 +1022,9 @@
     }
 
     return newmap;
-  }
+  };
 
-  var updateLegacyAd = function (ad) {
+  const updateLegacyAd = function (ad) {
 
     ad.id = ++idgen;
     ad.attemptedTs = 0;
@@ -1035,15 +1039,15 @@
     return ad;
   }
 
-  var postRegister = function (ad, tabId) {
+  const postRegister = function (ad, tabId) {
 
     log('[FOUND] ' + adinfo(ad), ad);
 
-    var vaultOpen = typeof getExtPageTabId('vault.html') !== 'undefined';
+    const vaultOpen = typeof getExtPageTabId('vault.html') !== 'undefined';
     if (vaultOpen || isPopupOpen()) {
 
       // if vault/menu is open, send the new ad
-      var json = adsForUI(ad.pageUrl);
+      const json = adsForUI(ad.pageUrl);
       json.what = 'adDetected';
       json.ad = ad;
 
@@ -1057,15 +1061,15 @@
       µb.updateToolbarIcon(tabId);
 
     storeUserData();
-  }
+  };
 
-  var activeBlockList = function (test) {
+  const activeBlockList = function (test) {
 
     return enabledBlockLists.contains(test);
-  }
+  };
 
   // check target domain against page-domain #337
-  var internalTarget = function (ad) {
+  const internalTarget = function (ad) {
 
     if (ad.contentType === 'text') return false;
 
@@ -1073,21 +1077,25 @@
     return (ad.pageDomain === ad.targetDomain);
   };
 
-  var listsForFilter = function (compiledFilter) {
+  const listsForFilter = function (compiledFilter) {
+    let entry;
+    let content;
+    let pos;
+    let c;
+    const lists = {};
+    const allFilters = [compiledFilter];
+    // Note:snfe.fRegister no longer exist in uBlock
+    // const snfe = µb.staticNetFilteringEngine;
+    // if (snfe.fRegister.filters !== undefined) {
+    //   for (let i = 0; i < snfe.fRegister.filters.length; i++) {
+    //     const compiledItem = µb.CompiledLineWriter.fingerprint([ snfe.cbRegister, snfe.thRegister, snfe.fRegister.filters[i].logData().compiled]);
+    //     allFilters.push(compiledItem);
+    //   }
+    // } else if (snfe.fRegister.f1 !== undefined) {
+    //   // console.log(snfe.fRegister)
+    // }
 
-    var entry, content, pos, c, lists = {}, allFilters = [compiledFilter];
-    // Note:snfe.fRegister is going to change later in uBlock
-    var snfe = µb.staticNetFilteringEngine;
-    if (snfe.fRegister.filters !== undefined) {
-      for (var i = 0; i < snfe.fRegister.filters.length; i++) {
-        var compiledItem = µb.CompiledLineWriter.fingerprint([ snfe.cbRegister, snfe.thRegister, snfe.fRegister.filters[i].logData().compiled]);
-        allFilters.push(compiledItem);
-      }
-    } else if (snfe.fRegister.f1 !== undefined) {
-      // console.log(snfe.fRegister)
-    }
-
-    for (var path in listEntries) {
+    for (const path in listEntries) {
 
       entry = listEntries[path];
       if (entry === undefined) {
@@ -1095,9 +1103,9 @@
       }
 
       content = entry.content;
-      for (var i = 0; i < allFilters.length; i++) {
+      for (let i = 0; i < allFilters.length; i++) {
         if (allFilters[i] == undefined) continue;
-        var compiledFilter = allFilters[i];
+        const compiledFilter = allFilters[i];
         pos = content.indexOf(compiledFilter);
         if (pos === -1) {
           continue;
@@ -1125,16 +1133,15 @@
     return lists;
   };
 
-  var isBlockableDomain = function (context) {
+  const isBlockableDomain = function (context) {
 
-    //console.log('isBlockableDomain',context.rootDomain, context);
+    //console.log('isBlockableDomain',context.docDomain, context);
 
-    var domain = context.rootDomain,
-      host = context.requestHostname;
+    const domain = context.docDomain, host = context.getHostname();
 
-    for (var i = 0; i < allowAnyBlockOnDomains.length; i++) {
+    for (let i = 0; i < allowAnyBlockOnDomains.length; i++) {
 
-      var dom = allowAnyBlockOnDomains[i];
+      const dom = allowAnyBlockOnDomains[i];
       if (dom === domain || host.indexOf(dom) > -1) {
         return true;
       }
@@ -1157,38 +1164,34 @@
    *  4) if any list that it was found on allows blocks
    *  		if so, return true;
    */
-  var isBlockableRequest = function (context) {
+  const isBlockableRequest = function (context) {
 
     if (µb.userSettings.blockingMalware === false) {
 
-      logNetAllow('NoBlock', context.rootDomain + ' => ' + context.requestURL);
+      logNetAllow('NoBlock', context.docDomain + ' => ' + context.url);
       return false;
     }
 
     if (!listsLoaded) {
 
-      logNetAllow('Loading', context.rootDomain  + ' => ' + context.requestURL);
+      logNetAllow('Loading', context.docDomain  + ' => ' + context.url);
       return false;
     }
 
     if (isBlockableDomain(context)) {
 
-      logNetBlock('Domains', context.rootDomain + ' => ' + context.requestURL);
+      logNetBlock('Domains', context.docDomain + ' => ' + context.url);
       return true;
     }
 
     // always allow redirect blocks from lists (?)
     if (µb.redirectEngine.toURL(context)) {
 
-      logNetBlock('*Redirect*', context.rootDomain + ' => ' + context.requestURL, context);
+      logNetBlock('*Redirect*', context.docDomain + ' => ' + context.url, context);
       return true;
     }
 
-    var snfe = µb.staticNetFilteringEngine,
-      compiled = snfe.toLogData().compiled,
-      raw = snfe.toLogData().raw,
-      url = context.requestURL;
-
+    const snfe = µb.staticNetFilteringEngine, compiled = snfe.toLogData().compiled, raw = snfe.toLogData().raw, url = snfe.urlRegister;
     /*
       Check active rule(s) to see if we should block or allow
 
@@ -1198,14 +1201,16 @@
         C) block hit:      block
         D) no valid hits:  allow, but no cookies later
      */
-    var lists = listsForFilter(compiled);
+    const lists = listsForFilter(compiled);
 
     if (Object.keys(lists).length === 0) {                                // case A
       logNetBlock('User List', raw + ': ', url); // always block
       return true;
     }
 
-    for (var name in lists) {
+    let misses = [];
+
+    for (let name in lists) {
 
     if (activeBlockList(name)) {
 
@@ -1219,32 +1224,29 @@
       return true; // blocked, no need to continue
     }
     else {
-      if (!misses) var misses = [];
       if (!misses.contains(name)) misses.push(name);
     }
   }
 
   return allowRequest(misses.join(','), lists[name] + ': ', url)
-  }
+  };
 
-  var adCount = function () {
+  const adCount = function () {
 
     return adlist().length;
   }
 
-  var dntAllowsRequest = function(url, hostname) {
+  const dntAllowsRequest = function(url, hostname) {
 
     //if (!url) throw Error("No URL!",hostname);
 
-    var us = µb.userSettings,
-      dntHides = us.hidingAds && us.disableHidingForDNT,
-      dntClicks = us.clickingAds && us.disableClickingForDNT;
+    const us = µb.userSettings, dntHides = us.hidingAds && us.disableHidingForDNT, dntClicks = us.clickingAds && us.disableClickingForDNT;
 
     // 1st-party: only check original-request per EFF spec
     return ((dntHides || dntClicks) && us.dntDomains.contains(hostname));
-  }
+  };
 
-  var allowRequest = function (msg, raw, url) {
+  const allowRequest = function (msg, raw, url) {
 
     // Note: need to store allowed requests here so that we can
     // block any incoming cookies later (see #301)
@@ -1257,16 +1259,15 @@
     return false;
   }
 
-  var isAutomated = function () {
+  const isAutomated = function () {
 
     return (automatedMode && automatedMode.length);
   }
 
-  var saveVaultImages = function (jsonName) {
-
+  const saveVaultImages = function (jsonName) {
     // Note(not-in-use): crashes over approx. 725 image or 70MB
 
-    var imgURLs = [];
+    const imgURLs = [];
     adlist().forEach(function (ad) {
       if (ad.contentType === 'img')
         imgURLs.push(ad.contentData.src);
@@ -1274,17 +1275,19 @@
 
     // #639: download to a folder next to the export file (with same name -json)
 
-    var files = [], lastFilesLength = 0, zipNameParts = jsonName.split("."),
-      zipName = zipNameParts.splice(0, zipNameParts.length - 2).join('_');
+    const files = [];
 
-    var processUrl = function (url) {
+    let lastFilesLength = 0;
+    const zipNameParts = jsonName.split(".");
+    const zipName = zipNameParts.splice(0, zipNameParts.length - 2).join('_');
 
-      var parts = url.split("/"),
-        filename = parts[parts.length - 1];
+    const processUrl = function (url) {
+      const parts = url.split("/");
+      let filename = parts[parts.length - 1];
 
       filename = "image_" + i + ".jpg"; // tmp
 
-      var img = new Image();
+      const img = new Image();
       img.onload = function () {
 
         //better image handling
@@ -1298,7 +1301,7 @@
           return;
         }
 
-        var a = document.createElement('a');
+        const a = document.createElement('a');
         a.href = this.src;
         files.push({
           name: filename,
@@ -1308,18 +1311,18 @@
 
       img.onerror = function () {
         log("Error");
-        var index = imgURLs.indexOf(url);
+        const index = imgURLs.indexOf(url);
         if (index > -1) {
           imgURLs.splice(index, 1);
         }
       }
 
       img.src = url;
-    }
+    };
 
     imgURLs.forEach(processUrl);
 
-    var check = setInterval(function () {
+    const check = setInterval(function () {
 
       log("checking", files.length, imgURLs.length, lastFilesLength);
 
@@ -1327,11 +1330,9 @@
 
         clearInterval(check);
 
-        var zip = new JSZip(),
-          img = zip.folder(zipName),
-          zipcount = 0;
+        const zip = new JSZip(), img = zip.folder(zipName), zipcount = 0;
 
-        for (var i = 0; i < files.length; i++) {
+        for (let i = 0; i < files.length; i++) {
           img.file(files[i].name, files[i].data, {
             base64: true
           });
@@ -1342,8 +1343,7 @@
           type: "base64"
         }).then(function (content) {
 
-          var blob = b64toBlob(content, 'image'),
-            blobUrl = URL.createObjectURL(blob);
+          const blob = b64toBlob(content, 'image'), blobUrl = URL.createObjectURL(blob);
 
           //use vAPI.download, convert base64 to blob
           vAPI.download({
@@ -1356,18 +1356,19 @@
     }, 1000);
   };
 
-  var admapToJSON = function(sanitize) {
+  const admapToJSON = function(sanitize) {
 
-    var map = JSON.parse(JSON.stringify(admap)), // deep clone
-      pages = Object.keys(map);
+    const // deep clone
+          map = JSON.parse(JSON.stringify(admap)),
+          pages = Object.keys(map);
 
-    for (var i = 0; i < pages.length; i++) {
+    for (let i = 0; i < pages.length; i++) {
 
       if (map[pages[i]]) {
-        var hashes = Object.keys(map[pages[i]]);
-        for (var j = 0; j < hashes.length; j++) {
+        const hashes = Object.keys(map[pages[i]]);
+        for (let j = 0; j < hashes.length; j++) {
 
-          var ad = map[pages[i]][hashes[j]];
+          const ad = map[pages[i]][hashes[j]];
 
           delete ad.current;
           delete ad.pageDomain;
@@ -1386,13 +1387,13 @@
       }
     }
     return JSON.stringify(map, null, 2);
-  }
+  };
 
   // start by grabbing user-settings, then calling initialize()
   vAPI.storage.get(µb.userSettings, function (settings) {
 
     // this for backwards compatibility only ---------------------
-    var mapSz = Object.keys(settings.admap).length;
+    const mapSz = Object.keys(settings.admap).length;
     if (!mapSz && µb.adnSettings && µb.adnSettings.admap) {
 
       settings.admap = µb.adnSettings.admap;
@@ -1410,7 +1411,7 @@
 
   /********************************** API *************************************/
 
-  var exports = { log: log };
+  const exports = { log: log };
 
   exports.removeBlockingLists = function (lists) {
 
@@ -1432,17 +1433,15 @@
   exports.itemInspected = function (request, pageStore, tabId) {
 
     if (request.id) {
-      var ad = adById(request.id)
+      const ad = adById(request.id);
       inspected = ad;
     }
   };
 
-  var contentPrefs = exports.contentPrefs = function (hostname) {
+  const contentPrefs = exports.contentPrefs = function (hostname) {
 
     // preferences relevant to our ui/content-scripts
-    var us = µb.userSettings,
-      showDnt = (us.disableHidingForDNT && us.dntDomains.contains(hostname));
-
+    const us = µb.userSettings, showDnt = (us.disableHidingForDNT && us.dntDomains.contains(hostname));
     //console.log('contentPrefs: '+hostname, "VISIBLE: "+showDnt);
     return {
       hidingDisabled: !us.hidingAds || showDnt,
@@ -1454,14 +1453,14 @@
 
   exports.toggleEnabled = function (request, pageStore, tabId) {
 
-    var store = µb.pageStoreFromTabId(request.tabId);
+    const store = µb.pageStoreFromTabId(request.tabId);
     if (store) {
 
       store.toggleNetFilteringSwitch(request.url, request.scope, request.state);
       updateBadges();
 
       // close whitelist if open (see gh #113)
-      var wlId = getExtPageTabId("dashboard.html#whitelist.html")
+      const wlId = getExtPageTabId("dashboard.html#whitelist.html");
       wlId && vAPI.tabs.replace(wlId, vAPI.getURL("dashboard.html"));
     }
   };
@@ -1469,7 +1468,7 @@
   // Called when new top-level page is loaded
   exports.onPageLoad = function (tabId, requestURL) {
 
-    var ads = adlist(requestURL); // all ads for url
+    const ads = adlist(requestURL); // all ads for url
 
     //console.log('PAGE: ', requestURL, ads.length);
     visitedURLs.add(requestURL);
@@ -1497,7 +1496,7 @@
 
       listEntries = entries;
       //console.log('listEntries:', listEntries);
-      var keys = Object.keys(entries);
+      const keys = Object.keys(entries);
       log("[LOAD] Compiled " + keys.length +
         " 3rd-party lists in " + (+new Date() - profiler) + "ms");
       listsLoaded = true;
@@ -1521,37 +1520,37 @@
     }
   };
 
-  var markUserAction = exports.markUserAction = function () {
+  const markUserAction = exports.markUserAction = function () {
 
     return (lastUserActivity = millis());
   }
 
-  var logNetAllow = exports.logNetAllow = function () {
+  const logNetAllow = exports.logNetAllow = function () {
 
-    var args = Array.prototype.slice.call(arguments);
+    const args = Array.prototype.slice.call(arguments);
     args.unshift('[ALLOW]')
     logNetEvent.apply(this, args);
   };
 
-  var logNetBlock = exports.logNetBlock = function () {
+  const logNetBlock = exports.logNetBlock = function () {
 
-    var args = Array.prototype.slice.call(arguments);
+    const args = Array.prototype.slice.call(arguments);
     args.unshift('[BLOCK]');
     logNetEvent.apply(this, args);
   };
 
-  var logRedirect = exports.logRedirect = function (from, to) {
+  const logRedirect = exports.logRedirect = function (from, to) {
 
     if (µb.userSettings.eventLogging && arguments.length)
       log('[REDIRECT] ' + from + ' => ' + to);
   };
 
-  var logNetEvent = exports.logNetEvent = function () {
+  const logNetEvent = exports.logNetEvent = function () {
 
     if (µb.userSettings.eventLogging && arguments.length) {
 
-      var args = Array.prototype.slice.call(arguments);
-      var action = args.shift();
+      const args = Array.prototype.slice.call(arguments);
+      const action = args.shift();
       args[0] = action + ' (' + args[0] + ')';
       log.apply(this, args);
     }
@@ -1561,9 +1560,9 @@
 
     //url = trimChar(url, '/'); // no trailing slash
 
-    var ads = adlist();
+    const ads = adlist();
 
-    for (var i = 0; i < ads.length; i++) {
+    for (let i = 0; i < ads.length; i++) {
 
       if (ads[i].attemptedTs) {
         //console.log('check: '+ads[i].requestId+'/'+ads[i].targetUrl+' ?= '+requestId+'/'+url);
@@ -1575,10 +1574,14 @@
   };
 
   exports.registerAd = function (request, pageStore, tabId) {
-
     if (!request.ad) return;
 
-    var json, adhash, pageHash, msSinceFound, orig, ad = request.ad;
+    let json;
+    let adhash;
+    let pageHash;
+    let msSinceFound;
+    let orig;
+    const ad = request.ad;
 
     ad.current = true;
     ad.attemptedTs = 0;
@@ -1635,13 +1638,13 @@
   };
 
   // update tab badges if we're showing them
-  var updateBadges = exports.updateBadges = function () {
+  const updateBadges = exports.updateBadges = function () {
 
-    var optionsUrl = vAPI.getURL('options.html');
+    const optionsUrl = vAPI.getURL('options.html');
 
-    for (var tabId in µb.pageStores) {
+    for (const tabId in µb.pageStores) {
 
-      var store = µb.pageStoreFromTabId(tabId);
+      const store = µb.pageStoreFromTabId(tabId);
       if (store !== null && !store.rawURL.startsWith(optionsUrl)) {
         µb.updateBadgeAsync(tabId);
       }
@@ -1660,7 +1663,7 @@
 
     if (typeof allowedExceptions[requestUrl] !== 'undefined') {
 
-      var originalHostname = µb.URI.hostnameFromURI(originalUrl);
+      const originalHostname = µb.URI.hostnameFromURI(originalUrl);
       return !dntAllowsRequest(requestUrl, originalUrl);
     }
   };
@@ -1673,25 +1676,27 @@
     return false;
   };
 
-  var blockIncomingCookies = exports.blockIncomingCookies = function (headers, requestUrl, originalUrl) {
+  const blockIncomingCookies = exports.blockIncomingCookies = function (headers, requestUrl, originalUrl) {
+    let modified = false;
+    const dbug = 1;
+    let hostname;
+    const us = µb.userSettings;
 
-    var modified = false, dbug = 1, hostname, us = µb.userSettings;
+    const cookieAttr = function(cookie, name) {
 
-    var cookieAttr = function(cookie, name) {
-
-      var parts = cookie.split(';');
-      for (var i = 0; i < parts.length; i++) {
-        var keyval = parts[i].trim().split('=');
-        var key = keyval[0]
+      const parts = cookie.split(';');
+      for (let i = 0; i < parts.length; i++) {
+        const keyval = parts[i].trim().split('=');
+        const key = keyval[0];
         if (keyval[0].toLowerCase() === name)
           return keyval[1];
       }
-    }
+    };
 
     dbug && console.log('[HEADERS] (Incoming' +
       (requestUrl===originalUrl ? ')' : '-redirect)'), requestUrl);
 
-    var originalHostname = µb.URI.hostnameFromURI(originalUrl);
+    const originalHostname = µb.URI.hostnameFromURI(originalUrl);
 
     if (dntAllowsRequest(originalUrl, originalHostname)) {
 
@@ -1700,11 +1705,11 @@
     }
 
     //console.log("1pDomain: '"+µb.URI.hostnameFromURI(originalUrl)+"' / '" +
-      //µb.URI.hostnameFromURI(requestUrl)+"'", " original='"+originalUrl+"'");
+    //µb.URI.hostnameFromURI(requestUrl)+"'", " original='"+originalUrl+"'");
 
-    for (var i = headers.length - 1; i >= 0; i--) {
+    for (let i = headers.length - 1; i >= 0; i--) {
 
-      var name = headers[i].name.toLowerCase();
+      const name = headers[i].name.toLowerCase();
 
       dbug && console.log(i + ') '+name, headers[i].value);
 
@@ -1712,8 +1717,8 @@
 
         if (1) { // don't block incoming cookies for 3rd party-requests coming from DNT-pages? [needs checking]
 
-          var cval = headers[i].value.trim();
-          var domain = cookieAttr(cval, 'domain');
+          const cval = headers[i].value.trim();
+          const domain = cookieAttr(cval, 'domain');
 
           if (domain && us.dntDomains.contains(domain)) {
             log('[DNT] (AllowCookie3p) \'', cval + '\' dnt-domain: '+domain);
@@ -1721,7 +1726,7 @@
           }
         }
 
-        var requestHostname = requestUrl && µb.URI.hostnameFromURI(requestUrl);
+        const requestHostname = requestUrl && µb.URI.hostnameFromURI(requestUrl);
 
         log('[COOKIE] (Block)', headers[i].value, "1pDomain: "+ originalHostname +
             (requestHostname && requestHostname !== originalHostname ? ' / ' + requestHostname: ''),
@@ -1749,7 +1754,7 @@
 
   exports.logAdSet = function (request, pageStore, tabId) {
 
-    var data = '';
+    let data = '';
     request.ids.forEach(function (id) {
       data += JSON.stringify(adById(id), null, 2);
     });
@@ -1771,22 +1776,23 @@
    * Omits text-ads if specified in preferences
    * Called also from tab.js::µb.updateBadgeAsync()
    */
-  var adlist = exports.adlist = function (pageUrl, currentOnly) {
+  const adlist = exports.adlist = function (pageUrl, currentOnly) {
 
     admap = admap || µb.userSettings.admap;
 
-    var result = [], pages = pageUrl ? [ YaMD5.hashStr(pageUrl) ]
-      : Object.keys(admap);
+    const result = [],
+          pages = pageUrl ? [ YaMD5.hashStr(pageUrl) ]
+            : Object.keys(admap);
 
-    for (var i = 0; admap && i < pages.length; i++) {
+    for (let i = 0; admap && i < pages.length; i++) {
 
       if (admap[pages[i]]) {
 
-        var hashes = Object.keys(admap[pages[i]]);
+        const hashes = Object.keys(admap[pages[i]]);
 
-        for (var j = 0; j < hashes.length; j++) {
+        for (let j = 0; j < hashes.length; j++) {
 
-          var ad = admap[pages[i]][hashes[j]];
+          const ad = admap[pages[i]][hashes[j]];
 
           // ignore text-ads according to parseTextAds prefe
           if (ad && (µb.userSettings.parseTextAds || ad.contentType !== 'text')) {
@@ -1808,10 +1814,9 @@
    *
    * TODO: Shall be handled differently on different browser (?)
    */
-  var verifyAdBlockers = exports.verifyAdBlockers = function () {
-
-    var notes = notifications,
-      modified = false;
+const verifyAdBlockers = exports.verifyAdBlockers = function () {
+    const notes = notifications;
+    let modified = false;
 
     vAPI.getAddonInfo(function (UBlockConflict, AdBlockConflict) {
 
@@ -1832,54 +1837,55 @@
     verifyAdBlockers();
     verifyFirefoxSetting();
     verifyOperaSetting(request);
-    verifyPrivacyMode();
+    //verifyPrivacyMode();
   };
 
-   var verifyOperaSetting = exports.verifyOperaSetting = function (request) {
-    var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+  const verifyOperaSetting = exports.verifyOperaSetting = function (request) {
+   const isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
 
-    if (isOpera) {
-      // only check for google, bing & duckduckgo, other search engines seem to be fine at the moment
-      // search? only
-      var searchEngineRegex = /^.*\.bing\.com|^(.*\.)?duckduckgo\.com|^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i
-      var domain = parseDomain(request.url);
-      var isSearch = searchEngineRegex.test(domain);
+   if (isOpera) {
+     // only check for google, bing & duckduckgo, other search engines seem to be fine at the moment
+     // search? only
+     const searchEngineRegex = /^.*\.bing\.com|^(.*\.)?duckduckgo\.com|^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i;
+     const domain = parseDomain(request.url);
+     const isSearch = searchEngineRegex.test(domain);
 
-      if (!isSearch) return;
+     if (!isSearch) return;
 
-      var thisPageStore = null;
-      for (let [key, pageStore] of µb.pageStores.entries()) {
-        if (pageStore.rawURL === request.url){
-          thisPageStore = pageStore;
-          break;
-        }
-      }
+     let thisPageStore = null;
+     for (let [key, pageStore] of µb.pageStores.entries()) {
+       if (pageStore.rawURL === request.url){
+         thisPageStore = pageStore;
+         break;
+       }
+     }
 
-      // check the url in pageStore
-      // if perLoadAllowedRequestCount: 0 && contentLastModified : 0
-      // adnauseam is not running on this page
+     // check the url in pageStore
+     // if perLoadAllowedRequestCount: 0 && contentLastModified : 0
+     // adnauseam is not running on this page
 
-      if (thisPageStore) {
-        var notes = notifications, modified = false;
-        if (thisPageStore.perLoadAllowedRequestCount == 0 && thisPageStore.contentLastModified == 0) {
-          console.log("addNotification")
-          modified = addNotification(notes, OperaSetting);
-        } else {
-          modified = removeNotification(notes, OperaSetting);
-        }
-        modified && sendNotifications(notes);
-      }
-    }
-  }
+     if (thisPageStore) {
+       const notes = notifications;
+       let modified = false;
+       if (thisPageStore.perLoadAllowedRequestCount == 0 && thisPageStore.contentLastModified == 0) {
+         console.log("addNotification")
+         modified = addNotification(notes, OperaSetting);
+       } else {
+         modified = removeNotification(notes, OperaSetting);
+       }
+       modified && sendNotifications(notes);
+     }
+   }
+ }
 
-  var verifyPrivacyMode = exports.verifyPrivacyMode = function(){
-
-    var notes = notifications, modified = false;
-    var isPrivateMode = function(callback) {
+const verifyPrivacyMode = exports.verifyPrivacyMode = function(){
+    const notes = notifications;
+    let modified = false;
+    const isPrivateMode = function(callback) {
       // only check this for firefox
-      if (typeof browser === 'undefined') return;
-
-      var trackingProtectionMode = browser.privacy.websites.trackingProtectionMode.get({});
+      const tpmFunction = browser.privacy.websites.trackingProtectionMode;
+      if (typeof tpmFunction === 'undefined') return; // if not firefox
+      const trackingProtectionMode = tpmFunction.get({});
 
       trackingProtectionMode.then((got) => {
         callback(got.value == "private_browsing");
@@ -1896,57 +1902,55 @@
       }
         modified && sendNotifications(notes);
     })
-
-
   };
 
-  var verifyFirefoxSetting = exports.verifyFirefoxSetting = function () {
-
-      if (typeof browser === 'undefined') return; // if not firefox
-
-      var trackingProtectionMode = browser.privacy.websites.trackingProtectionMode.get({});
+  const verifyFirefoxSetting = exports.verifyFirefoxSetting = function () {
+      const tpmFunction = browser.privacy.websites.trackingProtectionMode;
+      if (typeof tpmFunction === 'undefined') return; // if not firefox
+      const trackingProtectionMode = tpmFunction.get({});
 
       trackingProtectionMode.then((got) => {
         // console.log("FF:", got.value);
-        var notes = notifications,
-          modified = false;
+        const notes = notifications;
+
+        let modified = false;
 
         if (got.value == "always") {
           modified = addNotification(notes, FirefoxSetting);
         } else{
           modified = removeNotification(notes, FirefoxSetting);
         }
-          modified && sendNotifications(notes);
+        modified && sendNotifications(notes);
       });
   }
 
-  var verifySettings = exports.verifySettings = function () {
+  const verifySettings = exports.verifySettings = function () {
 
     verifySetting(HidingDisabled, !µb.userSettings.hidingAds);
     verifySetting(ClickingDisabled, !µb.userSettings.clickingAds);
     verifySetting(BlockingDisabled, !µb.userSettings.blockingMalware);
   };
 
-  var verifyLists = exports.verifyLists = function () {
-    var lists = µb.selectedFilterLists;
+  const verifyLists = exports.verifyLists = function () {
+    const lists = µb.selectedFilterLists;
     verifyList(EasyList, lists);
     verifyList(AdNauseamTxt, lists);
   };
 
-  var verifyList = exports.verifyList = function (note, lists) {
+const verifyList = exports.verifyList = function (note, lists) {
+    const notes = notifications;
+    let modified = false;
+    let path;
+    let entry;
 
-    var notes = notifications,
-      modified = false,
-      path, entry;
-
-      for (var i = 0; i < lists.length; i++) {
-        if (lists[i] === note.listName) {
-            entry = lists[i];
-        } else if (note.listName === "easylist" && lists[i] === "fanboy-ultimate") {
-            //Fanboy's Ultimate Merged List
-            entry = note.listName;
-        }
+    for (let i = 0; i < lists.length; i++) {
+      if (lists[i] === note.listName) {
+          entry = lists[i];
+      } else if (note.listName === "easylist" && lists[i] === "fanboy-ultimate") {
+          //Fanboy's Ultimate Merged List
+          entry = note.listName;
       }
+    }
 
     if (entry) {
       modified = removeNotification(notes, note);
@@ -1958,12 +1962,9 @@
     if (modified) sendNotifications(notes);
   };
 
-  var verifyDNT = exports.verifyDNT = function (request) {
+  const verifyDNT = exports.verifyDNT = function (request) {
 
-    var notes = notifications,
-      prefs = µb.userSettings,
-      domain = µb.URI.domainFromHostname(µb.URI.hostnameFromURI(request.url)),
-      target = hasDNTNotification(notifications);
+    const notes = notifications, prefs = µb.userSettings, domain = µb.URI.domainFromHostname(µb.URI.hostnameFromURI(request.url)), target = hasDNTNotification(notifications);
 
     //console.log("verifyDNT: " + domain, request.url, prefs.dntDomains);
 
@@ -1982,10 +1983,9 @@
 
     // continue if the domain is in EFF DNT list
 
-    var disableClicking = (prefs.clickingAds && prefs.disableClickingForDNT),
-      disableHiding = (prefs.hidingAds && prefs.disableHidingForDNT);
+    const disableClicking = (prefs.clickingAds && prefs.disableClickingForDNT), disableHiding = (prefs.hidingAds && prefs.disableHidingForDNT);
 
-    var note = DNTNotify; // neither clicking nor hiding
+    let note = DNTNotify; // neither clicking nor hiding
     if ((disableClicking && disableHiding) || (!prefs.clickingAds && disableHiding) || (!prefs.hidingAds && disableClicking))
       note = DNTAllowed;
     else if (disableClicking && prefs.hidingAds && !prefs.disableHidingForDNT)
@@ -2006,11 +2006,12 @@
     }
   };
 
-  var verifySetting = exports.verifySetting = function (note, state) {
-
+  const verifySetting = exports.verifySetting = function (note, state) {
     //console.log('verifySetting', note, state, notifications);
 
-    var notes = notifications, modified = false;
+    const notes = notifications;
+
+    let modified = false;
 
     if (state && !notes.contains(note)) {
 
@@ -2027,7 +2028,7 @@
       if (note === ClickingDisabled || note === HidingDisabled) {
 
         //console.log('clicking: ', state, µb.userSettings.clickingAds || µb.userSettings.clickingAds);
-        var off = !(µb.userSettings.clickingAds || µb.userSettings.hidingAds);
+        const off = !(µb.userSettings.clickingAds || µb.userSettings.hidingAds);
 
         // ADN/TODO: need a new way to check this (broken in merge1.13.2)************************
         // µb.selectFilterLists({ location: µb.adnauseam.dnt.effList, off: off })
@@ -2039,14 +2040,14 @@
 
   // Returns the count for current-marked ads for the url
   // or if none exists, then all ads stored for the url
-  var currentCount = exports.currentCount = function (url) {
+  const currentCount = exports.currentCount = function (url) {
 
     return adlist(url, true).length || adlist(url).length;
   };
 
-  var clearAds = exports.clearAds = function () {
+  const clearAds = exports.clearAds = function () {
 
-    var pre = adCount();
+    const pre = adCount();
 
     clearAdmap();
     reloadExtPage('vault.html');
@@ -2060,11 +2061,11 @@
   };
 
   exports.importAds = function (request) {
-
     // try to parse imported ads in current format
-    var importedCount = 0,
-      count = adCount(),
-      map = validateImport(request.data);
+    let importedCount = 0;
+
+    const count = adCount();
+    let map = validateImport(request.data);
 
     // no good, try to parse in legacy-format
     if (!map) {
@@ -2129,10 +2130,9 @@
     return notifications;
   };
 
-  var exportAds = exports.exportAds = function (request) {
+  const exportAds = exports.exportAds = function (request) {
 
-    var count = adCount(),
-      jsonData = admapToJSON(request.sanitize);
+    const count = adCount(), jsonData = admapToJSON(request.sanitize);
 
     if (!production && request.includeImages) saveVaultImages();
 
@@ -2163,13 +2163,13 @@
 
   exports.closeExtPage = function (request) {
 
-    var tabId = getExtPageTabId(request.page);
+    const tabId = getExtPageTabId(request.page);
     tabId && vAPI.tabs.remove(tabId, true);
   }
 
   exports.adsForPage = function (request, pageStore, tabId) {
 
-    var reqPageStore = request.tabId &&
+    const reqPageStore = request.tabId &&
       µb.pageStoreFromTabId(request.tabId) || pageStore;
 
     if (!reqPageStore) {
@@ -2184,7 +2184,6 @@
   };
 
   return exports;
-
 })();
 
 /****************************** messaging ********************************/
@@ -2194,14 +2193,16 @@
   'use strict';
 
   vAPI.messaging.listen('adnauseam', function (request, sender, callback) {
-
     //console.log("adnauseam.MSG: "+request.what, sender.frameId);
 
     switch (request.what) {
       default: break;
     } // Async
 
-    var pageStore, tabId, frameId, µb = µBlock;
+    let pageStore;
+    let tabId;
+    let frameId;
+    const µb = µBlock;
 
     if (sender && sender.tab) {
 

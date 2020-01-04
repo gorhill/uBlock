@@ -11,6 +11,18 @@
     "message": "uBlock₀ — Kontrolpanel",
     "description": "English: uBlock₀ — Dashboard"
   },
+  "dashboardUnsavedWarning": {
+    "message": "Advarsel! Du har ændringer, der ikke er gemt",
+    "description": "A warning in the dashboard when navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningStay": {
+    "message": "Bliv her",
+    "description": "Label for button to prevent navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningIgnore": {
+    "message": "Ignorér",
+    "description": "Label for button to ignore unsaved changes"
+  },
   "settingsPageName": {
     "message": "Indstillinger",
     "description": "appears as tab name in dashboard"
@@ -28,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Whitelist",
+    "message": "Hvidliste",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -36,7 +48,7 @@
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
-    "message": "uBlock₀ — Loggen",
+    "message": "uBlock₀ — Logger",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
@@ -52,11 +64,11 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Klik: Deaktiver\/aktiver uBlock₀ på dette websted.\n\nCtrl+klik: Deaktiver uBlock₀ kun på denne side.",
+    "message": "Klik: Deaktivér\/aktivér uBlock₀ på dette websted.\n\nCtrl+klik: Deaktivér kun uBlock₀ på denne side.",
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Klik for at deaktivere uBlock₀ på dette websted.\n\nCtrl+klik for at deaktivere uBlock₀ kun på denne side.",
+    "message": "Klik for at deaktivere uBlock₀ på dette websted.\n\nCtrl+klik for kun at deaktivere uBlock₀ på denne side.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
@@ -64,7 +76,7 @@
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
-    "message": "Blokerede forespørgsler",
+    "message": "blokerede forespørgsler",
     "description": "English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt": {
@@ -88,19 +100,19 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Start element zapper tilstand",
+    "message": "Gå til elementdræbertilstand",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Start element-vælger tilstand",
+    "message": "Start elementvælgertilstand",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "Åbn loggen",
+    "message": "Åbn loggeren",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Aktiver\/deaktiver blokering af alle popups på dette websted",
+    "message": "Aktivér\/deaktivér blokering af alle popups på dette websted",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
@@ -108,59 +120,59 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Klik for at stoppe med at blokere alle popups på dette websted",
+    "message": "Klik for ikke længere at blokere alle popups på dette websted",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Aktiver\/deaktiver blokering af store medie-elementer på dette websted",
+    "message": "Aktivér\/deaktivér blokering af store medieelementer på dette websted",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Klik for at blokere store medie-elementer på dette websted",
+    "message": "Klik for at blokere store medieelementer på dette websted",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Klik for at stoppe med at blokere store medie-elementer på dette websted",
+    "message": "Klik for ikke længere at blokere store medieelementer på dette websted",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Aktiver\/deaktiver kosmetiske filtre på dette websted",
+    "message": "Slå kosmetisk filtrering til\/fra for dette websted",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Klik for at deaktivere kosmetisk filtrering på dette websted",
+    "message": "Klik for at slå kosmetisk filtrering fra på dette websted",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Klik for at aktivere kosmetisk filtrering på dette websted",
+    "message": "Klik for at slå kosmetisk filtrering til på dette websted",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Aktiver\/deaktiver blokering af skrifttyper fra nettet på dette websted",
+    "message": "Slå blokeringen af fjernskrifttyper til\/fra for dette websted",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Klik for at blokere skrifttyper fra nettet på dette websted",
+    "message": "Klik for at blokere fjernskrifttyper på dette websted",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Klik for at stoppe med at blokere skrifttyper på nettet på dette websted",
+    "message": "Klik for ikke længere at blokere fjernskrifttyper på dette websted",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Klik for at deaktivere JavaScript helt på dette websted",
+    "message": "Klik for at deaktivere JavaScript på dette websted",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Klik for ikke længere at deaktivere JavaScript helt på dette websted",
+    "message": "Klik for ikke længere at deaktivere JavaScript på dette websted",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
-    "message": "Globale regler: denne kolonne er til de regler der gælder på alle websteder.",
+    "message": "Globale regler: Denne kolonne er til regler gældende alle websteder.",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Lokale regler: denne kolonne viser de regler der kun gælder på dette websted.\nLokale regler overstyrer globale regler.",
+    "message": "Lokale regler: Denne kolonne er til regler kun gældene dette websted.\nLokale regler tilsidesætter globale regler.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -188,19 +200,19 @@
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
-    "message": "integrerede skripter",
+    "message": "indlejrede scripts",
     "description": ""
   },
   "popup1pScriptRulePrompt": {
-    "message": "Førsteparts skripter",
+    "message": "Førsteparts-scripts",
     "description": ""
   },
   "popup3pScriptRulePrompt": {
-    "message": "Tredjeparts skripter",
+    "message": "Tredjeparts-scripts",
     "description": ""
   },
   "popup3pFrameRulePrompt": {
-    "message": "Tredjeparts rammer",
+    "message": "Tredjeparts-rammer",
     "description": ""
   },
   "popupHitDomainCountPrompt": {
@@ -208,7 +220,7 @@
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
-    "message": "{{count}} ud af {{total}}",
+    "message": "{{count}} af {{total}}",
     "description": "appears in popup"
   },
   "pickerCreate": {
@@ -224,11 +236,11 @@
     "description": "English: Quit"
   },
   "pickerPreview": {
-    "message": "Forhåndsvisning",
+    "message": "Eksempel",
     "description": "Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters": {
-    "message": "Netfiltre",
+    "message": "Netværksfiltre",
     "description": "English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters": {
@@ -240,8 +252,8 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Bloker element",
-    "description": "English: Block element"
+    "message": "Blokér element...",
+    "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
     "message": "Skjul blokerede elementers pladsholdere",
@@ -252,7 +264,7 @@
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "Deaktiver værktøjstips",
+    "message": "Deaktivér værktøjstips",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
@@ -264,11 +276,11 @@
     "description": "English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt": {
-    "message": "Aktiver support for skylagring",
+    "message": "Aktivér understøttelse for Skylagring",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Jeg er en erfaren bruger (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>krævet læsning<\/a>)",
+    "message": "Dette er (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>obligatorisk læsning<\/a>) for den erfarne bruger",
     "description": ""
   },
   "settingsAdvancedUserSettings": {
@@ -276,11 +288,11 @@
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Deaktiver forudindlæsning (for at sikre at alle sortlistede netværksanmodninger bliver blokeret)",
+    "message": "Deaktivér præindlæsning (for at hindre enhver forbindelse for blokerede netværksanmodninger)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
-    "message": "Deaktiver hyperlink revision",
+    "message": "Deaktivér hyperlinkrevision",
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
@@ -288,23 +300,23 @@
     "description": "English: "
   },
   "settingPerSiteSwitchGroup": {
-    "message": "Standard opførsel",
+    "message": "Standardadfærd",
     "description": ""
   },
   "settingPerSiteSwitchGroupSynopsis": {
-    "message": "Disse standardadfærde kan overstyres for hver enkelt websted",
+    "message": "Standardadfærd som disse kan tilsidesættes pr. websted",
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "Deaktiver kosmetisk filtrering",
+    "message": "Deaktivér kosmetisk filtrering",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Bloker medieelementer større end {{input:number}} kB",
+    "message": "Blokér medieelementer større end {{input:number}} kB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
-    "message": "Bloker skrifttyper fra nettet",
+    "message": "Blokér fjernskrifttyper",
     "description": ""
   },
   "settingsNoScriptingPrompt": {
@@ -312,19 +324,19 @@
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
-    "message": "Blokér CSP rapporter",
+    "message": "Blokér CSP-rapporter",
     "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
   },
   "settingsStorageUsed": {
-    "message": "Lagerplads brugt: {{value}} bytes",
+    "message": "Lagerplads forbrugt: {{value}} bytes",
     "description": "English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt": {
-    "message": "Sidste gendannelse:",
+    "message": "Seneste gendannelse:",
     "description": "English: Last restore:"
   },
   "settingsLastBackupPrompt": {
-    "message": "Sidste sikkerhedskopi:",
+    "message": "Seneste sikkerhedskopi:",
     "description": "English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt": {
@@ -332,11 +344,11 @@
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
-    "message": "{{used}} ud af {{total}} brugt",
+    "message": "{{used}} af {{total}} brugt",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
-    "message": "Opdater filterlister automatisk",
+    "message": "Auto-opdatér filterlister",
     "description": "A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow": {
@@ -344,23 +356,23 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll": {
-    "message": "Slet alt cache",
+    "message": "Ryd alle caches",
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
-    "message": "Analyser og benyt kosmetiske filtre",
+    "message": "Fortolk og benyt kosmetiske filtre",
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Denne indstilling gør det muligt at analysere og anvende <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus kompatible &ldquo;element skjuldende&rdquo; filtre<\/a>. Disse filtre er i det væsentlige kosmetiske og har til formål at skjule irriterende visuelle elementer websider, som det ikke er muligt at blokere på andre måder. <\/p><p>Denne indstilling øger uBlock₀'s hukommelsesforbrug.<\/p>",
+    "message": "<p>Denne indstilling gør det muligt at fortolke og håndhæve <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-kompatible &ldquo;elementskjulningsfiltre&rdquo;<\/a>. Disse filtre er primært kosmetiske med det formål at skjule websideelementer, som vurderes at være visuelt generende og ikke kan blokeres vha. den netanmodningsbaserede filtermotor. <\/p><p>Denne indstilling øger uBlock₀s hukommelsesforbrug.<\/p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
-    "message": "Ignorer fælles kosmetiske filtre",
+    "message": "Ignorér generiske kosmetiske filtre",
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Fælles kosmetiske filtre er de kosmetiske filtre der er ment til anvendelse på alle websider. \n<p>Selvom uBlock₀ behandler dem effektivt, kan de fælles kosmetiske filtre medføre forøget brug af hukommelse og CPU på nogle websider, specielt de store og længe-åbnede websider.\n<p>Aktiveres denne funktion vil uBlock₀ ikke længere benytte de fælles kosmetiske filtre, hvilket medfører lavere hukommelses- og CPU-forbrug på hver side, samt mindre overordnet hukommelsesforbrug.\n<p>Det anbefales at aktivere denne funktion på mindre kraftfulde enheder.",
+    "message": "<p>Generiske kosmetiske filtre er de filtre som tiltænkes anvendt for alle websteder.<p>Selvom uBlock₀ håndterer dem effektivt, kan generiskes kosmetiske filtre medføre forøget hukommelse- og CPU-forbrug på visse websider, specielt de store og længe-åbnede ditto.\n<p>Aktiveres funktionen, vil uBlock₀ ikke længere benytte filtrene, hvilket betyder lavere hukommelses- og CPU-forbrug pr. side samt lavere overordnet hukommelsesforbrug.\n<p>Funktionen anbefales aktiveret på mindre kraftfulde enheder.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -368,15 +380,15 @@
     "description": "English: Lists of blocked hosts"
   },
   "3pApplyChanges": {
-    "message": "Anvend ændringer",
+    "message": "Effektuér ændringer",
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Indbygget",
+    "message": "Integreret",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
-    "message": "Reklamer",
+    "message": "Annoncer",
     "description": "English: Ads"
   },
   "3pGroupPrivacy": {
@@ -384,11 +396,11 @@
     "description": "English: Privacy"
   },
   "3pGroupMalware": {
-    "message": "Malware domæner",
+    "message": "Malware-domæner",
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {
-    "message": "Irritationsmomenter",
+    "message": "Gener",
     "description": "The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose": {
@@ -400,7 +412,7 @@
     "description": "English: Regions, languages"
   },
   "3pGroupCustom": {
-    "message": "Brugerdefineret",
+    "message": "Tilpasset",
     "description": "English: Custom"
   },
   "3pImport": {
@@ -408,7 +420,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "En URL pr. linje. Ugyldige URL'er bliver ignoreret.",
+    "message": "Én URL pr. linje. Ugyldige URL'er ignoreres uden notificering.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -416,7 +428,7 @@
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "Sidste opdatering: {{ago}}.\nKlik for at gennemtvinge en opdatering.",
+    "message": "Seneste opdatering: {{ago}}.\nKlik for at gennemtvinge en opdatering.",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
@@ -424,15 +436,15 @@
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
-    "message": "En netværksfejl forhindrede ressourcen i at blive opdateret.",
+    "message": "En netværksfejl forhindrede opdatering af ressourcen.",
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Ét filter pr. linje. Et filter kan være et almindeligt værtsnavn, eller et Adblock Plus-kompatibelt filter. Linjer der starter med <code>!<\/code> vil blive ignoreret.",
+    "message": "Ét filter pr. linje. Et filter kan være et almindeligt værtsnavn eller et Adblock Plus-kompatibelt filter. Linjer startende med <code>!<\/code> ignoreres.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
-    "message": "Importer og tilføj",
+    "message": "Importér og tilføj",
     "description": "English: Import and append"
   },
   "1pExport": {
@@ -444,7 +456,7 @@
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges": {
-    "message": "Anvend ændringer",
+    "message": "Effektuér ændringer",
     "description": "English: Apply changes"
   },
   "rulesPermanentHeader": {
@@ -464,7 +476,7 @@
     "description": "This will persist temporary rules"
   },
   "rulesEdit": {
-    "message": "Rediger",
+    "message": "Redigér",
     "description": "Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave": {
@@ -476,11 +488,11 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Importer fra fil...",
+    "message": "Importér fra fil...",
     "description": ""
   },
   "rulesExport": {
-    "message": "Eksporter til fil",
+    "message": "Eksportér til fil",
     "description": ""
   },
   "rulesDefaultFileName": {
@@ -496,11 +508,11 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Brugerdefineret liste over værtsnavne hvor uBlock Origin vil være deaktiveret. Kun et værtsnavn pr. linje. Ugyldige værtsnavne ignoreres og kommenteres ud.",
+    "message": "Hvidlistereglerne afgør, på hvilke sider uBlock Origin skal være slået fra. Kun én post pr. linje. Ugyldige regler ignoreres upåagtet og udkommenteres.",
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
-    "message": "Importer og tilføj",
+    "message": "Importér og tilføj",
     "description": "English: Import and append"
   },
   "whitelistExport": {
@@ -512,7 +524,7 @@
     "description": "English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply": {
-    "message": "Anvend ændringer",
+    "message": "Effektuér ændringer",
     "description": "English: Apply changes"
   },
   "logRequestsHeaderType": {
@@ -540,16 +552,112 @@
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
-    "message": "Nuværende fane",
+    "message": "Aktuel fane",
     "description": "Appears in the logger's tab selector"
   },
-  "logFilterPrompt": {
-    "message": "filtrér logposter",
-    "description": "English: filter log entries"
+  "loggerReloadTip": {
+    "message": "Genindlæs faneindholdet",
+    "description": "Tooltip for the reload button in the logger page"
   },
-  "logMaxEntriesTip": {
-    "message": "Maksimalt antal logposter",
-    "description": "Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  "loggerDomInspectorTip": {
+    "message": "Slå DOM-inspektøren til\/fra",
+    "description": "Tooltip for the DOM inspector button in the logger page"
+  },
+  "loggerPopupPanelTip": {
+    "message": "Slå popup-panelet til\/fra",
+    "description": "Tooltip for the popup panel button in the logger page"
+  },
+  "loggerInfoTip": {
+    "message": "uBlock Origin-wiki: Loggeren",
+    "description": "Tooltip for the top-right info label in the logger page"
+  },
+  "loggerClearTip": {
+    "message": "Ryd logger",
+    "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
+  },
+  "loggerPauseTip": {
+    "message": "Sæt logger på pause (ignorér alle indgående data)",
+    "description": "Tooltip for the pause button in the logger page"
+  },
+  "loggerUnpauseTip": {
+    "message": "Fortsæt logger",
+    "description": "Tooltip for the play button in the logger page"
+  },
+  "loggerRowFiltererButtonTip": {
+    "message": "Slå logger-filtrering til\/fra",
+    "description": "Tooltip for the row filterer button in the logger page"
+  },
+  "logFilterPrompt": {
+    "message": "filtrér logindhold",
+    "description": "Placeholder string for logger output filtering input field"
+  },
+  "loggerRowFiltererBuiltinTip": {
+    "message": "Logger-filtreringsindstillinger",
+    "description": "Tooltip for the button to bring up logger output filtering options"
+  },
+  "loggerRowFiltererBuiltinNot": {
+    "message": "Ikke",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinEventful": {
+    "message": "begivenhedsrig",
+    "description": "A keyword in the built-in row filtering expression: all items corresponding to uBO doing something (blocked, allowed, redirected, etc.)"
+  },
+  "loggerRowFiltererBuiltinBlocked": {
+    "message": "blokerede",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinAllowed": {
+    "message": "tilladte",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltin1p": {
+    "message": "førsteparts",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltin3p": {
+    "message": "tredjeparts",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerEntryDetailsHeader": {
+    "message": "Detaljer",
+    "description": "Small header to identify the 'Details' pane for a specific logger entry"
+  },
+  "loggerEntryDetailsFilter": {
+    "message": "Filter",
+    "description": "Label to identify a filter field"
+  },
+  "loggerEntryDetailsFilterList": {
+    "message": "Filterliste",
+    "description": "Label to identify a filter list field"
+  },
+  "loggerEntryDetailsRule": {
+    "message": "Regel",
+    "description": "Label to identify a rule field"
+  },
+  "loggerEntryDetailsContext": {
+    "message": "Kontekst",
+    "description": "Label to identify a context field (typically a hostname)"
+  },
+  "loggerEntryDetailsRootContext": {
+    "message": "Root-kontekst",
+    "description": "Label to identify a root context field (typically a hostname)"
+  },
+  "loggerEntryDetailsPartyness": {
+    "message": "Partsrelation",
+    "description": "Label to identify a field providing partyness information"
+  },
+  "loggerEntryDetailsType": {
+    "message": "Type",
+    "description": "Label to identify the type of an entry"
+  },
+  "loggerEntryDetailsURL": {
+    "message": "URL",
+    "description": "Label to identify the URL of an entry"
+  },
+  "loggerURLFilteringHeader": {
+    "message": "URL-regel",
+    "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
     "message": "Kontekst:",
@@ -559,20 +667,16 @@
     "message": "Type:",
     "description": "Label for the type selector"
   },
-  "loggerURLFilteringHeader": {
-    "message": "Dynamisk URL filtrering",
-    "description": "Small header to identify the dynamic URL filtering section"
-  },
   "loggerStaticFilteringHeader": {
     "message": "Statisk filtrering",
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "{{action}} netværksanmodninger af {{type}} {{br}}som matcher følgende URL {{url}} {{br}}og som stammer fra {{origin}},{{br}}{{importance}} der er et matchende undtagelses-filter.",
+    "message": "{{action}} netværksanmodninger af {{type}} {{br}}, hvis URL matcher {{url}} {{br}}, og som stammer fra {{origin}},{{br}}{{importance}} når der er et matchende undtagelsesfilter.",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
-    "message": "Bloker",
+    "message": "Blokér",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAllow": {
@@ -604,12 +708,68 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Statisk filter <code>{{filter}}<\/code> findes i:",
+    "message": "Statisk filter <code>{{filter}}<\/code> fundet i:",
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Statisk filter <code>{{filter}}<\/code> kunne ikke findes i nogen af de aktuelt aktiverede filterlister",
+    "message": "Statisk filter <code>{{filter}}<\/code> ikke fundet i nogen af de aktuelt aktiverede filterlister",
     "description": "Message to show when a filter cannot be found in any filter lists"
+  },
+  "loggerSettingDiscardPrompt": {
+    "message": "Loggerposter, som ikke opfylder alle tre betingelser nedenfor, kasseres automatisk:",
+    "description": "Logger setting: A sentence to describe the purpose of the settings below"
+  },
+  "loggerSettingPerEntryMaxAge": {
+    "message": "Bevar poster fra de seneste {{input}} minutter",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerTabMaxLoads": {
+    "message": "Bevar maks. {{input}} sideindlæsninger pr. fane",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerTabMaxEntries": {
+    "message": "Bevar maks. {{input}} poster pr. fane",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerEntryLineCount": {
+    "message": "Benyt {{input}} linjer pr. post i lodret udvidet tilstand",
+    "description": "A logger setting"
+  },
+  "loggerSettingHideColumnsPrompt": {
+    "message": "Skjul kolonner:",
+    "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
+  },
+  "loggerSettingHideColumnTime": {
+    "message": "{{input}} tid",
+    "description": "A label for the time column"
+  },
+  "loggerSettingHideColumnFilter": {
+    "message": "{{input}} Filter\/regel",
+    "description": "A label for the filter or rule column"
+  },
+  "loggerSettingHideColumnContext": {
+    "message": "{{input}} Kontekst",
+    "description": "A label for the context column"
+  },
+  "loggerSettingHideColumnPartyness": {
+    "message": "{{input}} Partsrelation",
+    "description": "A label for the partyness column"
+  },
+  "loggerExportFormatList": {
+    "message": "Liste",
+    "description": "Label for radio-button to pick export format"
+  },
+  "loggerExportFormatTable": {
+    "message": "Tabel",
+    "description": "Label for radio-button to pick export format"
+  },
+  "loggerExportEncodePlain": {
+    "message": "Enkel",
+    "description": "Label for radio-button to pick export text format"
+  },
+  "loggerExportEncodeMarkdown": {
+    "message": "Markdown",
+    "description": "Label for radio-button to pick export text format"
   },
   "aboutChangelog": {
     "message": "Ændringslog",
@@ -632,11 +792,15 @@
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Bidragydere",
+    "message": "Bidragsydere",
     "description": "English: Contributors"
   },
+  "aboutDependencies": {
+    "message": "Eksterne afhængigheder (GPLv3-kompatible):",
+    "description": "Shown in the About pane"
+  },
   "aboutBackupDataButton": {
-    "message": "Sikkerhedskopier til fil",
+    "message": "Sikkerhedskopiér til fil",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
@@ -652,15 +816,15 @@
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
-    "message": "Alle dine indstillinger vil blive overskrevet med sikkerhedskopierede data fra {{time}}, hvorefter uBlock₀ vil genstarte.\n\nOverskriv de nuværende indstillinger med data fra sikkerhedskopien?",
+    "message": "Alle dine indstillinger overskreves med data sikkerhedskopieret d. {{time}}, hvorefter uBlock₀ genstarter.\n\nOverskriv aktuelle indstillinger med data fra sikkerhedskopien?",
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {
-    "message": "Data kunne ikke læses eller er ugyldig",
+    "message": "Dataene kunne ikke læses eller er ugyldige",
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
-    "message": "Alle dine indstillinger bliver fjernet, og uBlock₀ genstarter.\n\nNulstil uBlock₀ til standardindstillingerne?",
+    "message": "Alle dine indstillinger fjernes, hvorefter uBlock₀ genstarter.\n\nNulstil uBlock₀ til standardindstillingerne?",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
@@ -668,7 +832,7 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock: Tilføj den følgende URL til dine brugerdefinerede filterlister?\n\nTitel: \"{{title}}\"\nURL: {{url}}",
+    "message": "uBlock: Føj flg. URL til dine tilpassede filterlister?\n\nTitel: \"{{title}}\"\nURL: {{url}}",
     "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo": {
@@ -696,11 +860,11 @@
     "description": "English: {{value}} days ago"
   },
   "showDashboardButton": {
-    "message": "Vis kontrolpanel",
+    "message": "Vis Kontrolpanel",
     "description": "Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
-    "message": "Vis loggen",
+    "message": "Vis Logger",
     "description": "Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
@@ -708,11 +872,11 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1": {
-    "message": "uBlock Origins har blokeret den følgende hjemmeside fra at hente:",
+    "message": "uBlock Origins har blokeret flg. side fra at hente:",
     "description": "English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2": {
-    "message": "På grund af det følgende filter",
+    "message": "Grundet flg. filter",
     "description": "English: Because of the following filter"
   },
   "docblockedNoParamsPrompt": {
@@ -732,7 +896,7 @@
     "description": "English: Close this window"
   },
   "docblockedProceed": {
-    "message": "Deaktiver streng blokering af {{hostname}}",
+    "message": "Deaktivér stringent blokering for {{hostname}}",
     "description": "English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary": {
@@ -744,15 +908,15 @@
     "description": "English: Permanently"
   },
   "cloudPush": {
-    "message": "Eksporter til skylager",
+    "message": "Eksportér til Skylager",
     "description": "tooltip"
   },
   "cloudPull": {
-    "message": "Importer fra skylager",
+    "message": "Importér fra Skylager",
     "description": "tooltip"
   },
   "cloudPullAndMerge": {
-    "message": "Importer fra skylager og flet sammen med de aktuelle indstillinger",
+    "message": "Importér fra Skylager og sammenflet med de aktuelle indstillinger",
     "description": "tooltip"
   },
   "cloudNoData": {
@@ -764,7 +928,7 @@
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
-    "message": "Advarsel! Disse avancerede indstillinger ændres på eget ansvar.",
+    "message": "Advarsel! Ændring af disse avancerede indstillinger sker på eget ansvar.",
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {
@@ -772,7 +936,7 @@
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Anvend ændringer",
+    "message": "Effektuér ændringer",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
@@ -784,15 +948,23 @@
     "description": ""
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
-    "message": "Tillad store medie-elementer midlertidigt",
+    "message": "Tillad midlertidigt store medieelementer",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Skriv en genvej",
+    "message": "Angiv en genvej",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
+  "genericMergeViewScrollLock": {
+    "message": "Slå rullelåsning til\/fra",
+    "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
+  },
+  "genericCopyToClipboard": {
+    "message": "Kopiér til Udklipsholder",
+    "description": "Label for buttons used to copy something to the clipboard"
+  },
   "dummy": {
-    "message": "Denne indskrivning må være den sidste",
+    "message": "Denne post skal være den sidste",
     "description": "so we dont need to deal with comma for last entry"
   }
 }

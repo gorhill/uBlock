@@ -74,9 +74,6 @@ ul#userSettings .subgroup> ul> li label {
   margin-top: 1em;
 }
 #advanced-user-enabled ~ a.fa {
-  display: none;
-}
-body.advancedUser #advanced-user-enabled ~ a.fa {
   display: inline;
 }
 input[type="range"]:focus {

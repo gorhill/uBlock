@@ -27,7 +27,6 @@ cp -R src/lib               $DES/
 #cp -R $DES/_locales/nb      $DES/_locales/no
 cp src/*.html               $DES/
 cp platform/chromium/*.js   $DES/js/
-cp -R platform/chromium/img $DES/
 cp platform/chromium/*.html $DES/
 cp platform/chromium/*.json $DES/
 cp manifest.json $DES/            # use ADN manifest, not ublock's
@@ -64,6 +63,11 @@ if [ "$1" = all ]; then
     echo "*** AdNauseam.chromium: Creating package..."
     pushd $(dirname $DES/) > /dev/null
     zip artifacts/adnauseam.chromium.zip -qr $(basename $DES/)/*
+    popd > /dev/null
+elif [ -n "$1" ]; then
+    echo "*** uBlock0.chromium: Creating versioned package..."
+    pushd $(dirname $DES/) > /dev/null
+    zip uBlock0_"$1".chromium.zip -qr $(basename $DES/)/*
     popd > /dev/null
 fi
 

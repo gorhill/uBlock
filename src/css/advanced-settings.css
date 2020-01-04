@@ -11,3 +11,6 @@ body {
     text-align: left;
     width: 100%;
     }
+.CodeMirror-wrap pre {
+    word-break: break-all;
+    }

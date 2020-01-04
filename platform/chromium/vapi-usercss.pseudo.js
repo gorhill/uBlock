@@ -40,10 +40,10 @@ vAPI.userStylesheet = {
     inject: function() {
         this.style = document.createElement('style');
         this.style.disabled = this.disabled;
-        var parent = document.head || document.documentElement;
+        const parent = document.head || document.documentElement;
         if ( parent === null ) { return; }
         parent.appendChild(this.style);
-        var observer = new MutationObserver(function() {
+        const observer = new MutationObserver(function() {
             if ( this.style === null ) { return; }
             if ( this.style.sheet !== null ) { return; }
             this.styleFixCount += 1;
@@ -58,31 +58,31 @@ vAPI.userStylesheet = {
     add: function(cssText) {
         if ( cssText === '' || this.css.has(cssText) ) { return; }
         if ( this.style === null ) { this.inject(); }
-        var sheet = this.style.sheet;
+        const sheet = this.style.sheet;
         if ( !sheet ) { return; }
-        var i = sheet.cssRules.length;
+        const i = sheet.cssRules.length;
         sheet.insertRule(cssText, i);
         this.css.set(cssText, sheet.cssRules[i]);
     },
     remove: function(cssText) {
         if ( cssText === '' ) { return; }
-        var cssRule = this.css.get(cssText);
+        const cssRule = this.css.get(cssText);
         if ( cssRule === undefined ) { return; }
         this.css.delete(cssText);
         if ( this.style === null ) { return; }
-        var sheet = this.style.sheet;
+        const sheet = this.style.sheet;
         if ( !sheet ) { return; }
-        var rules = sheet.cssRules,
-            i = rules.length;
+        const rules = sheet.cssRules;
+        let i = rules.length;
         while ( i-- ) {
             if ( rules[i] !== cssRule ) { continue; }
             sheet.deleteRule(i);
             break;
         }
         if ( rules.length !== 0 ) { return; }
-        var style = this.style;
+        const style = this.style;
         this.style = null;
-        var parent = style.parentNode;
+        const parent = style.parentNode;
         if ( parent !== null ) {
             parent.removeChild(style);
         }
@@ -99,55 +99,54 @@ vAPI.userStylesheet = {
 
 /******************************************************************************/
 
-vAPI.DOMFilterer = function() {
-    this.commitTimer = new vAPI.SafeAnimationFrame(this.commitNow.bind(this));
-    this.domIsReady = document.readyState !== 'loading';
-    this.listeners = [];
-    this.excludedNodeSet = new WeakSet();
-    this.addedNodes = new Set();
-    this.removedNodes = false;
+vAPI.DOMFilterer = class {
+    constructor() {
+        this.commitTimer = new vAPI.SafeAnimationFrame(this.commitNow.bind(this));
+        this.domIsReady = document.readyState !== 'loading';
+        this.listeners = [];
+        this.excludedNodeSet = new WeakSet();
+        this.addedNodes = new Set();
+        this.removedNodes = false;
 
-    this.specificSimpleHide = new Set();
-    this.specificSimpleHideAggregated = undefined;
-    this.addedSpecificSimpleHide = [];
-    this.specificComplexHide = new Set();
-    this.specificComplexHideAggregated = undefined;
-    this.addedSpecificComplexHide = [];
-    this.specificOthers = [];
-    this.genericSimpleHide = new Set();
-    this.genericComplexHide = new Set();
+        this.specificSimpleHide = new Set();
+        this.specificSimpleHideAggregated = undefined;
+        this.addedSpecificSimpleHide = [];
+        this.specificComplexHide = new Set();
+        this.specificComplexHideAggregated = undefined;
+        this.addedSpecificComplexHide = [];
+        this.specificOthers = [];
+        this.genericSimpleHide = new Set();
+        this.genericComplexHide = new Set();
+        this.exceptedCSSRules = [];
 
-    this.hideNodeExpando = undefined;
-    this.hideNodeBatchProcessTimer = undefined;
-    this.hiddenNodeObserver = undefined;
-    this.hiddenNodesetToProcess = new Set();
-    this.hiddenNodeset = new WeakSet();
+        this.hideNodeExpando = undefined;
+        this.hideNodeBatchProcessTimer = undefined;
+        this.hiddenNodeObserver = undefined;
+        this.hiddenNodesetToProcess = new Set();
+        this.hiddenNodeset = new WeakSet();
 
-    if ( vAPI.domWatcher instanceof Object ) {
-        vAPI.domWatcher.addListener(this);
+        if ( vAPI.domWatcher instanceof Object ) {
+            vAPI.domWatcher.addListener(this);
+        }
+
+        // https://www.w3.org/community/webed/wiki/CSS/Selectors#Combinators
+        this.reCSSCombinators = /[ >+~]/;
     }
-};
 
-vAPI.DOMFilterer.prototype = {
-    // https://www.w3.org/community/webed/wiki/CSS/Selectors#Combinators
-    reCSSCombinators: /[ >+~]/,
-
-    commitNow: function() {
+    commitNow() {
         this.commitTimer.clear();
 
         if ( this.domIsReady !== true || vAPI.userStylesheet.disabled ) {
             return;
         }
 
-        var nodes, node;
-
         // Filterset changed.
 
         if ( this.addedSpecificSimpleHide.length !== 0 ) {
             //console.time('specific simple filterset changed');
             //console.log('added %d specific simple selectors', this.addedSpecificSimpleHide.length);
-            nodes = document.querySelectorAll(this.addedSpecificSimpleHide.join(','));
-            for ( node of nodes ) {
+            const nodes = document.querySelectorAll(this.addedSpecificSimpleHide.join(','));
+            for ( const node of nodes ) {
                 this.hideNode(node);
             }
             this.addedSpecificSimpleHide = [];
@@ -158,8 +157,8 @@ vAPI.DOMFilterer.prototype = {
         if ( this.addedSpecificComplexHide.length !== 0 ) {
             //console.time('specific complex filterset changed');
             //console.log('added %d specific complex selectors', this.addedSpecificComplexHide.length);
-            nodes = document.querySelectorAll(this.addedSpecificComplexHide.join(','));
-            for ( node of nodes ) {
+            const nodes = document.querySelectorAll(this.addedSpecificComplexHide.join(','));
+            for ( const node of nodes ) {
                 this.hideNode(node);
             }
             this.addedSpecificComplexHide = [];
@@ -169,8 +168,8 @@ vAPI.DOMFilterer.prototype = {
 
         // DOM layout changed.
 
-        var domNodesAdded = this.addedNodes.size !== 0,
-            domLayoutChanged = domNodesAdded || this.removedNodes;
+        const domNodesAdded = this.addedNodes.size !== 0;
+        const domLayoutChanged = domNodesAdded || this.removedNodes;
 
         if ( domNodesAdded === false || domLayoutChanged === false ) {
             return;
@@ -184,12 +183,12 @@ vAPI.DOMFilterer.prototype = {
                 this.specificSimpleHideAggregated =
                     Array.from(this.specificSimpleHide).join(',\n');
             }
-            for ( node of this.addedNodes ) {
+            for ( const node of this.addedNodes ) {
                 if ( node[vAPI.matchesProp](this.specificSimpleHideAggregated) ) {
                     this.hideNode(node);
                 }
-                nodes = node.querySelectorAll(this.specificSimpleHideAggregated);
-                for ( node of nodes ) {
+                const nodes = node.querySelectorAll(this.specificSimpleHideAggregated);
+                for ( const node of nodes ) {
                     this.hideNode(node);
                 }
             }
@@ -202,8 +201,8 @@ vAPI.DOMFilterer.prototype = {
                 this.specificComplexHideAggregated =
                     Array.from(this.specificComplexHide).join(',\n');
             }
-            nodes = document.querySelectorAll(this.specificComplexHideAggregated);
-            for ( node of nodes ) {
+            const nodes = document.querySelectorAll(this.specificComplexHideAggregated);
+            for ( const node of nodes ) {
                 this.hideNode(node);
             }
             //console.timeEnd('dom layout changed/specific complex selectors');
@@ -211,27 +210,27 @@ vAPI.DOMFilterer.prototype = {
 
         this.addedNodes.clear();
         this.removedNodes = false;
-    },
+    }
 
-    commit: function(now) {
+    commit(now) {
         if ( now ) {
             this.commitTimer.clear();
             this.commitNow();
         } else {
             this.commitTimer.start();
         }
-    },
+    }
 
-    addCSSRule: function(selectors, declarations, details) {
+    addCSSRule(selectors, declarations, details) {
         if ( selectors === undefined ) { return; }
 
         if ( details === undefined ) { details = {}; }
 
-        var selectorsStr = Array.isArray(selectors) ?
+        const selectorsStr = Array.isArray(selectors) ?
             selectors.join(',\n') :
             selectors;
         if ( selectorsStr.length === 0 ) { return; }
-        
+
         if (!vAPI.prefs.hidingDisabled) { //ADN
           vAPI.userStylesheet.add(selectorsStr + '\n{' + declarations + '}');
         }
@@ -253,10 +252,9 @@ vAPI.DOMFilterer.prototype = {
         // Do not strongly enforce internal CSS rules.
         if ( details.internal ) { return; }
 
-        var isGeneric= details.lazy === true,
-            isSimple = details.type === 'simple',
-            isComplex = details.type === 'complex',
-            selector;
+        const isGeneric= details.lazy === true;
+        const isSimple = details.type === 'simple';
+        const isComplex = details.type === 'complex';
 
         if ( isGeneric ) {
             if ( isSimple ) {
@@ -269,12 +267,12 @@ vAPI.DOMFilterer.prototype = {
             }
         }
 
-        var selectorsArr = Array.isArray(selectors) ?
+        const selectorsArr = Array.isArray(selectors) ?
             selectors :
             selectors.split(',\n');
 
         if ( isGeneric ) {
-            for ( selector of selectorsArr ) {
+            for ( const selector of selectorsArr ) {
                 if ( this.reCSSCombinators.test(selector) ) {
                     this.genericComplexHide.add(selector);
                 } else {
@@ -285,7 +283,7 @@ vAPI.DOMFilterer.prototype = {
         }
 
         // Specific cosmetic filters.
-        for ( selector of selectorsArr ) {
+        for ( const selector of selectorsArr ) {
             if (
                 isComplex ||
                 isSimple === false && this.reCSSCombinators.test(selector)
@@ -299,44 +297,51 @@ vAPI.DOMFilterer.prototype = {
                 this.addedSpecificSimpleHide.push(selector);
             }
         }
-    },
+    }
 
-    onDOMCreated: function() {
+    exceptCSSRules(exceptions) {
+        if ( exceptions.length === 0 ) { return; }
+        this.exceptedCSSRules.push(...exceptions);
+        if ( this.hasListeners() ) {
+            this.triggerListeners({ exceptions });
+        }
+    }
+
+    onDOMCreated() {
         this.domIsReady = true;
         this.addedNodes.clear();
         this.removedNodes = false;
         this.commit();
-    },
+    }
 
-    onDOMChanged: function(addedNodes, removedNodes) {
-        for ( var node of addedNodes ) {
+    onDOMChanged(addedNodes, removedNodes) {
+        for ( const node of addedNodes ) {
             this.addedNodes.add(node);
         }
         this.removedNodes = this.removedNodes || removedNodes;
         this.commit();
-    },
+    }
 
-    addListener: function(listener) {
+    addListener(listener) {
         if ( this.listeners.indexOf(listener) !== -1 ) { return; }
         this.listeners.push(listener);
-    },
+    }
 
-    removeListener: function(listener) {
-        var pos = this.listeners.indexOf(listener);
+    removeListener(listener) {
+        const pos = this.listeners.indexOf(listener);
         if ( pos === -1 ) { return; }
         this.listeners.splice(pos, 1);
-    },
+    }
 
-    hasListeners: function() {
+    hasListeners() {
         return this.listeners.length !== 0;
-    },
+    }
 
-    triggerListeners: function(changes) {
-        var i = this.listeners.length;
-        while ( i-- ) {
-            this.listeners[i].onFiltersetChanged(changes);
+    triggerListeners(changes) {
+        for ( const listener of this.listeners ) {
+            listener.onFiltersetChanged(changes);
         }
-    },
+    }
 
     // https://jsperf.com/clientheight-and-clientwidth-vs-getcomputedstyle
     //   Avoid getComputedStyle(), detecting whether a node is visible can be
@@ -353,10 +358,10 @@ vAPI.DOMFilterer.prototype = {
     //   However, toggling off/on cosmetic filtering repeatedly is not
     //   a real use case, but this shows this will help performance
     //   on sites which try to use inline styles to bypass blockers.
-    hideNodeBatchProcess: function() {
+    hideNodeBatchProcess() {
         this.hideNodeBatchProcessTimer.clear();
-        var expando = this.hideNodeExpando;
-        for ( var node of this.hiddenNodesetToProcess ) {
+        const expando = this.hideNodeExpando;
+        for ( const node of this.hiddenNodesetToProcess ) {
             if (
                 this.hiddenNodeset.has(node) === false ||
                 node[expando] === undefined ||
@@ -364,7 +369,7 @@ vAPI.DOMFilterer.prototype = {
             ) {
                 continue;
             }
-            var attr = node.getAttribute('style');
+            let attr = node.getAttribute('style');
             if ( attr === null ) {
                 attr = '';
             } else if (
@@ -376,24 +381,18 @@ vAPI.DOMFilterer.prototype = {
             node.setAttribute('style', attr + 'display:none!important;');
         }
         this.hiddenNodesetToProcess.clear();
-    },
+    }
 
-    hideNodeObserverHandler: function(mutations) {
+    hideNodeObserverHandler(mutations) {
         if ( vAPI.userStylesheet.disabled ) { return; }
-        var i = mutations.length,
-            stagedNodes = this.hiddenNodesetToProcess;
-        while ( i-- ) {
-            stagedNodes.add(mutations[i].target);
+        const stagedNodes = this.hiddenNodesetToProcess;
+        for ( const mutation of mutations ) {
+            stagedNodes.add(mutation.target);
         }
         this.hideNodeBatchProcessTimer.start();
-    },
+    }
 
-    hiddenNodeObserverOptions: {
-        attributes: true,
-        attributeFilter: [ 'style' ]
-    },
-
-    hideNodeInit: function() {
+    hideNodeInit() {
         this.hideNodeExpando = vAPI.randomToken();
         this.hideNodeBatchProcessTimer =
             new vAPI.SafeAnimationFrame(this.hideNodeBatchProcess.bind(this));
@@ -402,26 +401,26 @@ vAPI.DOMFilterer.prototype = {
         if ( this.hideNodeStyleSheetInjected === false ) {
             this.hideNodeStyleSheetInjected = true;
             vAPI.userStylesheet.add(
-                '[' + this.hideNodeAttr + ']\n{display:none!important;}'
+                `[${this.hideNodeAttr}]\n{display:none!important;}`
             );
         }
-    },
+    }
 
-    excludeNode: function(node) {
+    excludeNode(node) {
         this.excludedNodeSet.add(node);
         this.unhideNode(node);
-    },
+    }
 
-    unexcludeNode: function(node) {
+    unexcludeNode(node) {
         this.excludedNodeSet.delete(node);
-    },
+    }
 
-    hideNode: function(node) {
+    hideNode(node) {
       if (this.excludedNodeSet.has(node)) { return; }
       if (this.hideNodeAttr === undefined) { return; }
       if (this.hiddenNodeset.has(node)) { return; }
       vAPI.adCheck && vAPI.adCheck(node); // ADN: parse node here
-     
+
       if (!vAPI.prefs.hidingDisabled) {  // ADN: only if we are hiding
         node.hidden = true;
         this.hiddenNodeset.add(node);
@@ -436,17 +435,16 @@ vAPI.DOMFilterer.prototype = {
 
         this.hideNodeBatchProcessTimer.start();
         this.hiddenNodeObserver.observe(node, this.hiddenNodeObserverOptions);
-      }
-    },
+    }
+  }
 
-
-    unhideNode: function(node) {
+    unhideNode(node) {
         if ( this.hiddenNodeset.has(node) === false ) { return; }
         node.hidden = false;
         node.removeAttribute(this.hideNodeAttr);
         this.hiddenNodesetToProcess.delete(node);
         if ( this.hideNodeExpando === undefined ) { return; }
-        var attr = node[this.hideNodeExpando];
+        const attr = node[this.hideNodeExpando];
         if ( attr === false ) {
             node.removeAttribute('style');
         } else if ( typeof attr === 'string' ) {
@@ -454,28 +452,28 @@ vAPI.DOMFilterer.prototype = {
         }
         node[this.hideNodeExpando] = undefined;
         this.hiddenNodeset.delete(node);
-    },
+    }
 
-    showNode: function(node) {
+    showNode(node) {
         node.hidden = false;
-        var attr = node[this.hideNodeExpando];
+        const attr = node[this.hideNodeExpando];
         if ( attr === false ) {
             node.removeAttribute('style');
         } else if ( typeof attr === 'string' ) {
             node.setAttribute('style', attr);
         }
-    },
+    }
 
-    unshowNode: function(node) {
+    unshowNode(node) {
         node.hidden = true;
         this.hiddenNodesetToProcess.add(node);
-    },
+    }
 
-    toggle: function(state, callback) {
+    toggle(state, callback) {
         vAPI.userStylesheet.toggle(state);
-        var disabled = vAPI.userStylesheet.disabled,
-            nodes = document.querySelectorAll('[' + this.hideNodeAttr + ']');
-        for ( var node of nodes ) {
+        const disabled = vAPI.userStylesheet.disabled;
+        const nodes = document.querySelectorAll(`[${this.hideNodeAttr}]`);
+        for ( const node of nodes ) {
             if ( disabled ) {
                 this.showNode(node);
             } else {
@@ -488,11 +486,12 @@ vAPI.DOMFilterer.prototype = {
         if ( typeof callback === 'function' ) {
             callback();
         }
-    },
+    }
 
-    getAllSelectors_: function(all) {
-        var out = {
-            declarative: []
+    getAllSelectors_(all) {
+        const out = {
+            declarative: [],
+            exceptions: this.exceptedCSSRules,
         };
         if ( this.specificSimpleHide.size !== 0 ) {
             out.declarative.push([
@@ -524,26 +523,28 @@ vAPI.DOMFilterer.prototype = {
                 'display:none!important;'
             ]);
         }
-        for ( var entry of this.specificOthers ) {
+        for ( const entry of this.specificOthers ) {
             out.declarative.push([ entry.selectors, entry.declarations ]);
         }
         return out;
-    },
+    }
 
-    getFilteredElementCount: function() {
-        var details = this.getAllSelectors_(true);
+    getFilteredElementCount() {
+        const details = this.getAllSelectors_(true);
         if ( Array.isArray(details.declarative) === false ) { return 0; }
-        var selectors = details.declarative.reduce(function(acc, entry) {
-            acc.push(entry[0]);
-            return acc;
-        }, []);
+        const selectors = details.declarative.map(entry => entry[0]);
         if ( selectors.length === 0 ) { return 0; }
         return document.querySelectorAll(selectors.join(',\n')).length;
-    },
+    }
 
-    getAllSelectors: function() {
+    getAllSelectors() {
         return this.getAllSelectors_(false);
     }
+};
+
+vAPI.DOMFilterer.prototype.hiddenNodeObserverOptions = {
+    attributes: true,
+    attributeFilter: [ 'style' ]
 };
 
 /******************************************************************************/

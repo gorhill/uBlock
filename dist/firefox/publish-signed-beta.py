@@ -42,16 +42,6 @@ if not os.path.isfile(version_filepath):
     print('Version file not found.')
     exit(1)
 
-extension_id = 'uBlock0@raymondhill.net'
-tmpdir = tempfile.TemporaryDirectory()
-raw_xpi_filename = 'uBlock0.firefox.xpi'
-raw_xpi_filepath = os.path.join(tmpdir.name, raw_xpi_filename)
-unsigned_xpi_filepath = os.path.join(tmpdir.name, 'uBlock0.firefox.unsigned.xpi')
-signed_xpi_filename = 'uBlock0.firefox.signed.xpi'
-signed_xpi_filepath = os.path.join(tmpdir.name, signed_xpi_filename)
-github_owner = 'gorhill'
-github_repo = 'uBlock'
-
 # We need a version string to work with
 if len(sys.argv) >= 2 and sys.argv[1]:
     tag_version = sys.argv[1]
@@ -68,6 +58,16 @@ if match.group(2):
     if match.group(2) == 'rc':
         revision += 100;
     ext_version += '.' + str(revision)
+
+extension_id = 'uBlock0@raymondhill.net'
+tmpdir = tempfile.TemporaryDirectory()
+raw_xpi_filename = 'uBlock0_' + tag_version + '.firefox.xpi'
+raw_xpi_filepath = os.path.join(tmpdir.name, raw_xpi_filename)
+unsigned_xpi_filepath = os.path.join(tmpdir.name, 'uBlock0.firefox.unsigned.xpi')
+signed_xpi_filename = 'uBlock0_' + tag_version + '.firefox.signed.xpi'
+signed_xpi_filepath = os.path.join(tmpdir.name, signed_xpi_filename)
+github_owner = 'gorhill'
+github_repo = 'uBlock'
 
 # Load/save auth secrets
 # The build directory is excluded from git
@@ -161,7 +161,7 @@ with zipfile.ZipFile(raw_xpi_filepath, 'r') as zipin:
             data = zipin.read(item.filename)
             if item.filename == 'manifest.json':
                 manifest = json.loads(bytes.decode(data))
-                manifest['applications']['gecko']['update_url'] = 'https://raw.githubusercontent.com/{0}/{1}/master/dist/firefox/updates.json'.format(github_owner, github_repo)
+                manifest['browser_specific_settings']['gecko']['update_url'] = 'https://raw.githubusercontent.com/{0}/{1}/master/dist/firefox/updates.json'.format(github_owner, github_repo)
                 data = json.dumps(manifest, indent=2, separators=(',', ': '), sort_keys=True).encode()
             zipout.writestr(item, data)
 
@@ -297,7 +297,7 @@ with open(updates_json_filepath) as f:
         r = subprocess.run(['git', 'status', '-s', updates_json_filepath], stdout=subprocess.PIPE)
         rout = bytes.decode(r.stdout).strip()
         if len(rout) >= 2 and rout[0] == 'M':
-            subprocess.run(['git', 'commit', '-m', 'make Firefox dev build auto-update', updates_json_filepath])
-            subprocess.run(['git', 'push', 'origin', 'master'])
+            subprocess.run(['git', 'commit', '-m', 'Make Firefox dev build auto-update', updates_json_filepath])
+            subprocess.run(['git', 'push', 'origin', 'HEAD'])
 
 print('All done.')

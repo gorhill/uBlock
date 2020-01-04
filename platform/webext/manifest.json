@@ -2,23 +2,12 @@
     "manifest_version": 2,
     "name": "AdNauseam",
     "version": "{version}",
-    "applications": {
+    "browser_specific_settings": {
         "gecko": {
            "id": "adnauseam@rednoise.org",
-           "strict_min_version":"52.0"
+           "strict_min_version":"55.0"
         }
      },
-    "commands": {
-        "launch-element-zapper": {
-            "description": "__MSG_popupTipZapper__"
-        },
-        "launch-element-picker": {
-            "description": "__MSG_popupTipPicker__"
-        },
-        "launch-logger": {
-            "description": "__MSG_popupTipLog__"
-        }
-    },
     "default_locale": "en",
     "description": "__MSG_extShortDesc__",
     "icons": {
@@ -74,6 +63,7 @@
         "contextMenus",
         "storage",
         "tabs",
+        "unlimitedStorage",
         "webNavigation",
         "webRequest",
         "webRequestBlocking",
@@ -82,6 +72,23 @@
         "downloads",
         "privacy"
     ],
+    "incognito": "split",
+    "minimum_chrome_version": "51.0",
+    "optional_permissions": [
+      "file:///*"
+    ],
+    "sidebar_action": {
+      "default_title": "__MSG_statsPageName__",
+      "default_panel": "logger-ui.html",
+      "default_icon": {
+        "16": "img/icon-16.png",
+        "48": "img/icon-48.png"
+      },
+      "open_at_install": false
+    },
+    "storage": {
+      "managed_schema": "managed_storage.json"
+    },
     "short_name": "AdNauseam",
   "web_accessible_resources": [
      "/web_accessible_resources/*"

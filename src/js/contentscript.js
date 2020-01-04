@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2018 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 
 'use strict';
 
-//console.log('contentscript.js: '+location.href, (window.self !== window.top?'[iframe]':''));
+// console.log('contentscript.js: '+location.href, (window.self !== window.top?'[iframe]':''));
 
 /*******************************************************************************
 
@@ -106,7 +106,9 @@
 // Abort execution if our global vAPI object does not exist.
 //   https://github.com/chrisaljoudi/uBlock/issues/456
 //   https://github.com/gorhill/uBlock/issues/2029
-if ( typeof vAPI === 'object' && !vAPI.contentScript ) { // >>>>>>>> start of HUGE-IF-BLOCK
+
+ // >>>>>>>> start of HUGE-IF-BLOCK
+if ( typeof vAPI === 'object' && !vAPI.contentScript ) {
 
 /******************************************************************************/
 /******************************************************************************/
@@ -144,36 +146,122 @@ vAPI.useShadowDOM = false; // ADN
 // https://github.com/gorhill/uBlock/issues/2147
 
 vAPI.SafeAnimationFrame = function(callback) {
-    this.fid = this.tid = null;
+    this.fid = this.tid = undefined;
     this.callback = callback;
-    this.boundMacroToMicro = this.macroToMicro.bind(this);
 };
 
 vAPI.SafeAnimationFrame.prototype = {
     start: function(delay) {
         if ( delay === undefined ) {
-            if ( this.fid === null ) {
-                this.fid = requestAnimationFrame(this.callback);
+            if ( this.fid === undefined ) {
+                this.fid = requestAnimationFrame(( ) => { this.onRAF(); } );
             }
-            if ( this.tid === null ) {
-                this.tid = vAPI.setTimeout(this.callback, 20000);
+            if ( this.tid === undefined ) {
+                this.tid = vAPI.setTimeout(( ) => { this.onSTO(); }, 20000);
             }
             return;
         }
-        if ( this.fid === null && this.tid === null ) {
-            this.tid = vAPI.setTimeout(this.boundMacroToMicro, delay);
+        if ( this.fid === undefined && this.tid === undefined ) {
+            this.tid = vAPI.setTimeout(( ) => { this.macroToMicro(); }, delay);
         }
     },
     clear: function() {
-        if ( this.fid !== null ) { cancelAnimationFrame(this.fid); }
-        if ( this.tid !== null ) { clearTimeout(this.tid); }
-        this.fid = this.tid = null;
+        if ( this.fid !== undefined ) {
+            cancelAnimationFrame(this.fid);
+            this.fid = undefined;
+        }
+        if ( this.tid !== undefined ) {
+            clearTimeout(this.tid);
+            this.tid = undefined;
+        }
     },
     macroToMicro: function() {
-        this.tid = null;
+        this.tid = undefined;
         this.start();
-    }
+    },
+    onRAF: function() {
+        if ( this.tid !== undefined ) {
+            clearTimeout(this.tid);
+            this.tid = undefined;
+        }
+        this.fid = undefined;
+        this.callback();
+    },
+    onSTO: function() {
+        if ( this.fid !== undefined ) {
+            cancelAnimationFrame(this.fid);
+            this.fid = undefined;
+        }
+        this.tid = undefined;
+        this.callback();
+    },
 };
+
+/******************************************************************************/
+/******************************************************************************/
+/******************************************************************************/
+
+// https://github.com/uBlockOrigin/uBlock-issues/issues/552
+//   Listen and report CSP violations so that blocked resources through CSP
+//   are properly reported in the logger.
+
+{
+    const events = new Set();
+    let timer;
+
+    const send = function() {
+        vAPI.messaging.send(
+            'scriptlets',
+            {
+                what: 'securityPolicyViolation',
+                type: 'net',
+                docURL: document.location.href,
+                violations: Array.from(events),
+            },
+            response => {
+                if ( response === true ) { return; }
+                stop();
+            }
+        );
+        events.clear();
+    };
+
+    const sendAsync = function() {
+        if ( timer !== undefined ) { return; }
+        timer = self.requestIdleCallback(
+            ( ) => { timer = undefined; send(); },
+            { timeout: 2000 }
+        );
+    };
+
+    const listener = function(ev) {
+        if ( ev.isTrusted !== true ) { return; }
+        if ( ev.disposition !== 'enforce' ) { return; }
+        events.add(JSON.stringify({
+            url: ev.blockedURL || ev.blockedURI,
+            policy: ev.originalPolicy,
+            directive: ev.effectiveDirective || ev.violatedDirective,
+        }));
+        sendAsync();
+    };
+
+    const stop = function() {
+        events.clear();
+        if ( timer !== undefined ) {
+            self.cancelIdleCallback(timer);
+            timer = undefined;
+        }
+        document.removeEventListener('securitypolicyviolation', listener);
+        vAPI.shutdown.remove(stop);
+    };
+
+    document.addEventListener('securitypolicyviolation', listener);
+    vAPI.shutdown.add(stop);
+
+    // We need to call at least once to find out whether we really need to
+    // listen to CSP violations.
+    sendAsync();
+}
 
 /******************************************************************************/
 /******************************************************************************/
@@ -181,28 +269,27 @@ vAPI.SafeAnimationFrame.prototype = {
 
 vAPI.domWatcher = (function() {
 
-    var addedNodeLists = [],
-        addedNodes = [],
-        domIsReady = false,
+    const addedNodeLists = [];
+    const removedNodeLists = [];
+    const addedNodes = [];
+    const ignoreTags = new Set([ 'br', 'head', 'link', 'meta', 'script', 'style' ]);
+    const listeners = [];
+
+    let domIsReady = false,
         domLayoutObserver,
-        ignoreTags = new Set([ 'br', 'head', 'link', 'meta', 'script', 'style' ]),
-        listeners = [],
         listenerIterator = [], listenerIteratorDirty = false,
-        removedNodeLists = [],
         removedNodes = false,
         safeObserverHandlerTimer;
 
-    var safeObserverHandler = function() {
+    const safeObserverHandler = function() {
         //console.time('dom watcher/safe observer handler');
-        safeObserverHandlerTimer.clear();
-        var i = addedNodeLists.length,
-            j = addedNodes.length,
-            nodeList, iNode, node;
+        let i = addedNodeLists.length,
+            j = addedNodes.length;
         while ( i-- ) {
-            nodeList = addedNodeLists[i];
-            iNode = nodeList.length;
+            const nodeList = addedNodeLists[i];
+            let iNode = nodeList.length;
             while ( iNode-- ) {
-                node = nodeList[iNode];
+                const node = nodeList[iNode];
                 if ( node.nodeType !== 1 ) { continue; }
                 if ( ignoreTags.has(node.localName) ) { continue; }
                 if ( node.parentElement === null ) { continue; }
@@ -212,8 +299,8 @@ vAPI.domWatcher = (function() {
         addedNodeLists.length = 0;
         i = removedNodeLists.length;
         while ( i-- && removedNodes === false ) {
-            nodeList = removedNodeLists[i];
-            iNode = nodeList.length;
+            const nodeList = removedNodeLists[i];
+            let iNode = nodeList.length;
             while ( iNode-- ) {
                 if ( nodeList[iNode].nodeType !== 1 ) { continue; }
                 removedNodes = true;
@@ -223,7 +310,7 @@ vAPI.domWatcher = (function() {
         removedNodeLists.length = 0;
         //console.timeEnd('dom watcher/safe observer handler');
         if ( addedNodes.length === 0 && removedNodes === false ) { return; }
-        for ( var listener of getListenerIterator() ) {
+        for ( const listener of getListenerIterator() ) {
             listener.onDOMChanged(addedNodes, removedNodes);
         }
         addedNodes.length = 0;
@@ -232,17 +319,15 @@ vAPI.domWatcher = (function() {
 
     // https://github.com/chrisaljoudi/uBlock/issues/205
     // Do not handle added node directly from within mutation observer.
-    var observerHandler = function(mutations) {
+    const observerHandler = function(mutations) {
         //console.time('dom watcher/observer handler');
-        var nodeList, mutation,
-            i = mutations.length;
+        let i = mutations.length;
         while ( i-- ) {
-            mutation = mutations[i];
-            nodeList = mutation.addedNodes;
+            const mutation = mutations[i];
+            let nodeList = mutation.addedNodes;
             if ( nodeList.length !== 0 ) {
                 addedNodeLists.push(nodeList);
             }
-            if ( removedNodes ) { continue; }
             nodeList = mutation.removedNodes;
             if ( nodeList.length !== 0 ) {
                 removedNodeLists.push(nodeList);
@@ -256,7 +341,7 @@ vAPI.domWatcher = (function() {
         //console.timeEnd('dom watcher/observer handler');
     };
 
-    var startMutationObserver = function() {
+    const startMutationObserver = function() {
         if ( domLayoutObserver !== undefined || !domIsReady ) { return; }
         domLayoutObserver = new MutationObserver(observerHandler);
         domLayoutObserver.observe(document.documentElement, {
@@ -269,13 +354,13 @@ vAPI.domWatcher = (function() {
         vAPI.shutdown.add(cleanup);
     };
 
-    var stopMutationObserver = function() {
+    const stopMutationObserver = function() {
         if ( domLayoutObserver === undefined ) { return; }
         cleanup();
         vAPI.shutdown.remove(cleanup);
     };
 
-    var getListenerIterator = function() {
+    const getListenerIterator = function() {
         if ( listenerIteratorDirty ) {
             listenerIterator = listeners.slice();
             listenerIteratorDirty = false;
@@ -283,7 +368,7 @@ vAPI.domWatcher = (function() {
         return listenerIterator;
     };
 
-    var addListener = function(listener) {
+    const addListener = function(listener) {
         if ( listeners.indexOf(listener) !== -1 ) { return; }
         listeners.push(listener);
         listenerIteratorDirty = true;
@@ -292,8 +377,8 @@ vAPI.domWatcher = (function() {
         startMutationObserver();
     };
 
-    var removeListener = function(listener) {
-        var pos = listeners.indexOf(listener);
+    const removeListener = function(listener) {
+        const pos = listeners.indexOf(listener);
         if ( pos === -1 ) { return; }
         listeners.splice(pos, 1);
         listenerIteratorDirty = true;
@@ -302,7 +387,7 @@ vAPI.domWatcher = (function() {
         }
     };
 
-    var cleanup = function() {
+    const cleanup = function() {
         if ( domLayoutObserver !== undefined ) {
             domLayoutObserver.disconnect();
             domLayoutObserver = null;
@@ -313,27 +398,23 @@ vAPI.domWatcher = (function() {
         }
     };
 
-    var start = function() {
+    const start = function() {
         domIsReady = true;
-        for ( var listener of getListenerIterator() ) {
+        for ( const listener of getListenerIterator() ) {
             listener.onDOMCreated();
         }
         startMutationObserver();
     };
 
-    return {
-        start: start,
-        addListener: addListener,
-        removeListener: removeListener
-    };
+    return { start, addListener, removeListener };
 })();
 
 /******************************************************************************/
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.matchesProp = (function() {
-    var docElem = document.documentElement;
+vAPI.matchesProp = (( ) => {
+    const docElem = document.documentElement;
     if ( typeof docElem.matches !== 'function' ) {
         if ( typeof docElem.mozMatchesSelector === 'function' ) {
             return 'mozMatchesSelector';
@@ -384,175 +465,270 @@ vAPI.DOMFilterer = (function() {
 
     // 'P' stands for 'Procedural'
 
-    var PSelectorHasTextTask = function(task) {
-        var arg0 = task[1], arg1;
-        if ( Array.isArray(task[1]) ) {
-            arg1 = arg0[1]; arg0 = arg0[0];
-        }
-        this.needle = new RegExp(arg0, arg1);
-    };
-    PSelectorHasTextTask.prototype.exec = function(input) {
-        var output = [];
-        for ( var node of input ) {
-            if ( this.needle.test(node.textContent) ) {
-                output.push(node);
+    const PSelectorHasTextTask = class {
+        constructor(task) {
+            let arg0 = task[1], arg1;
+            if ( Array.isArray(task[1]) ) {
+                arg1 = arg0[1]; arg0 = arg0[0];
             }
+            this.needle = new RegExp(arg0, arg1);
         }
-        return output;
-    };
-
-    var PSelectorIfTask = function(task) {
-        this.pselector = new PSelector(task[1]);
-    };
-    PSelectorIfTask.prototype.target = true;
-    PSelectorIfTask.prototype.exec = function(input) {
-        var output = [];
-        for ( var node of input ) {
-            if ( this.pselector.test(node) === this.target ) {
-                output.push(node);
-            }
-        }
-        return output;
-    };
-
-    var PSelectorIfNotTask = function(task) {
-        PSelectorIfTask.call(this, task);
-        this.target = false;
-    };
-    PSelectorIfNotTask.prototype = Object.create(PSelectorIfTask.prototype);
-    PSelectorIfNotTask.prototype.constructor = PSelectorIfNotTask;
-
-    var PSelectorMatchesCSSTask = function(task) {
-        this.name = task[1].name;
-        var arg0 = task[1].value, arg1;
-        if ( Array.isArray(arg0) ) {
-            arg1 = arg0[1]; arg0 = arg0[0];
-        }
-        this.value = new RegExp(arg0, arg1);
-    };
-    PSelectorMatchesCSSTask.prototype.pseudo = null;
-    PSelectorMatchesCSSTask.prototype.exec = function(input) {
-        var output = [], style;
-        for ( var node of input ) {
-            style = window.getComputedStyle(node, this.pseudo);
-            if ( style === null ) { return null; } /* FF */
-            if ( this.value.test(style[this.name]) ) {
-                output.push(node);
-            }
-        }
-        return output;
-    };
-
-    var PSelectorMatchesCSSAfterTask = function(task) {
-        PSelectorMatchesCSSTask.call(this, task);
-        this.pseudo = ':after';
-    };
-
-    PSelectorMatchesCSSAfterTask.prototype = Object.create(PSelectorMatchesCSSTask.prototype);
-    PSelectorMatchesCSSAfterTask.prototype.constructor = PSelectorMatchesCSSAfterTask;
-
-    var PSelectorMatchesCSSBeforeTask = function(task) {
-        PSelectorMatchesCSSTask.call(this, task);
-        this.pseudo = ':before';
-    };
-    PSelectorMatchesCSSBeforeTask.prototype = Object.create(PSelectorMatchesCSSTask.prototype);
-    PSelectorMatchesCSSBeforeTask.prototype.constructor = PSelectorMatchesCSSBeforeTask;
-
-    var PSelectorXpathTask = function(task) {
-        this.xpe = document.createExpression(task[1], null);
-        this.xpr = null;
-    };
-    PSelectorXpathTask.prototype.exec = function(input) {
-        var output = [], j;
-        for ( var node of input ) {
-            this.xpr = this.xpe.evaluate(
-                node,
-                XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
-                this.xpr
-            );
-            j = this.xpr.snapshotLength;
-            while ( j-- ) {
-                node = this.xpr.snapshotItem(j);
-                if ( node.nodeType === 1 ) {
+        exec(input) {
+            const output = [];
+            for ( const node of input ) {
+                if ( this.needle.test(node.textContent) ) {
                     output.push(node);
                 }
             }
+            return output;
         }
-        return output;
     };
 
-    var PSelector = function(o) {
-        if ( PSelector.prototype.operatorToTaskMap === undefined ) {
-            PSelector.prototype.operatorToTaskMap = new Map([
-                [ ':has', PSelectorIfTask ],
-                [ ':has-text', PSelectorHasTextTask ],
-                [ ':if', PSelectorIfTask ],
-                [ ':if-not', PSelectorIfNotTask ],
-                [ ':matches-css', PSelectorMatchesCSSTask ],
-                [ ':matches-css-after', PSelectorMatchesCSSAfterTask ],
-                [ ':matches-css-before', PSelectorMatchesCSSBeforeTask ],
-                [ ':xpath', PSelectorXpathTask ]
-            ]);
+    const PSelectorIfTask = class {
+        constructor(task) {
+            this.pselector = new PSelector(task[1]);
         }
-        this.budget = 200; // I arbitrary picked a 1/5 second
-        this.raw = o.raw;
-        this.cost = 0;
-        this.lastAllowanceTime = 0;
-        this.selector = o.selector;
-        this.tasks = [];
-        var tasks = o.tasks;
-        if ( !tasks ) { return; }
-        for ( var task of tasks ) {
-            this.tasks.push(new (this.operatorToTaskMap.get(task[0]))(task));
+        exec(input) {
+            const output = [];
+            for ( const node of input ) {
+                if ( this.pselector.test(node) === this.target ) {
+                    output.push(node);
+                }
+            }
+            return output;
+        }
+    };
+    PSelectorIfTask.prototype.target = true;
+
+    const PSelectorIfNotTask = class extends PSelectorIfTask {
+        constructor(task) {
+            super(task);
+            this.target = false;
+        }
+    };
+
+    const PSelectorMatchesCSSTask = class {
+        constructor(task) {
+            this.name = task[1].name;
+            let arg0 = task[1].value, arg1;
+            if ( Array.isArray(arg0) ) {
+                arg1 = arg0[1]; arg0 = arg0[0];
+            }
+            this.value = new RegExp(arg0, arg1);
+        }
+        exec(input) {
+            const output = [];
+            for ( const node of input ) {
+                const style = window.getComputedStyle(node, this.pseudo);
+                if ( style === null ) { return null; } /* FF */
+                if ( this.value.test(style[this.name]) ) {
+                    output.push(node);
+                }
+            }
+            return output;
+        }
+    };
+    PSelectorMatchesCSSTask.prototype.pseudo = null;
+
+    const PSelectorMatchesCSSAfterTask = class extends PSelectorMatchesCSSTask {
+        constructor(task) {
+            super(task);
+            this.pseudo = ':after';
+        }
+    };
+
+    const PSelectorMatchesCSSBeforeTask = class extends PSelectorMatchesCSSTask {
+        constructor(task) {
+            super(task);
+            this.pseudo = ':before';
+        }
+    };
+
+    const PSelectorNthAncestorTask = class {
+        constructor(task) {
+            this.nth = task[1];
+        }
+        exec(input) {
+            const output = [];
+            for ( let node of input ) {
+                let nth = this.nth;
+                for (;;) {
+                    node = node.parentElement;
+                    if ( node === null ) { break; }
+                    nth -= 1;
+                    if ( nth !== 0 ) { continue; }
+                    output.push(node);
+                    break;
+                }
+            }
+            return output;
+        }
+    };
+
+    const PSelectorSpathTask = class {
+        constructor(task) {
+            this.spath = task[1];
+        }
+        exec(input) {
+            const output = [];
+            for ( let node of input ) {
+                const parent = node.parentElement;
+                if ( parent === null ) { continue; }
+                let pos = 1;
+                for (;;) {
+                    node = node.previousElementSibling;
+                    if ( node === null ) { break; }
+                    pos += 1;
+                }
+                const nodes = parent.querySelectorAll(
+                    ':scope > :nth-child(' + pos + ')' + this.spath
+                );
+                for ( const node of nodes ) {
+                    output.push(node);
+                }
+            }
+            return output;
+        }
+    };
+
+    const PSelectorWatchAttrs = class {
+        constructor(task) {
+            this.observer = null;
+            this.observed = new WeakSet();
+            this.observerOptions = {
+                attributes: true,
+                subtree: true,
+            };
+            const attrs = task[1];
+            if ( Array.isArray(attrs) && attrs.length !== 0 ) {
+                this.observerOptions.attributeFilter = task[1];
+            }
+        }
+        // TODO: Is it worth trying to re-apply only the current selector?
+        handler() {
+            const filterer =
+                vAPI.domFilterer && vAPI.domFilterer.proceduralFilterer;
+            if ( filterer instanceof Object ) {
+                filterer.onDOMChanged([ null ]);
+            }
+        }
+        exec(input) {
+            if ( input.length === 0 ) { return input; }
+            if ( this.observer === null ) {
+                this.observer = new MutationObserver(this.handler);
+            }
+            for ( const node of input ) {
+                if ( this.observed.has(node) ) { continue; }
+                this.observer.observe(node, this.observerOptions);
+                this.observed.add(node);
+            }
+            return input;
+        }
+    };
+
+    const PSelectorXpathTask = class {
+        constructor(task) {
+            this.xpe = document.createExpression(task[1], null);
+            this.xpr = null;
+        }
+        exec(input) {
+            const output = [];
+            for ( const node of input ) {
+                this.xpr = this.xpe.evaluate(
+                    node,
+                    XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
+                    this.xpr
+                );
+                let j = this.xpr.snapshotLength;
+                while ( j-- ) {
+                    const node = this.xpr.snapshotItem(j);
+                    if ( node.nodeType === 1 ) {
+                        output.push(node);
+                    }
+                }
+            }
+            return output;
+        }
+    };
+
+    const PSelector = class {
+        constructor(o) {
+            if ( PSelector.prototype.operatorToTaskMap === undefined ) {
+                PSelector.prototype.operatorToTaskMap = new Map([
+                    [ ':has', PSelectorIfTask ],
+                    [ ':has-text', PSelectorHasTextTask ],
+                    [ ':if', PSelectorIfTask ],
+                    [ ':if-not', PSelectorIfNotTask ],
+                    [ ':matches-css', PSelectorMatchesCSSTask ],
+                    [ ':matches-css-after', PSelectorMatchesCSSAfterTask ],
+                    [ ':matches-css-before', PSelectorMatchesCSSBeforeTask ],
+                    [ ':not', PSelectorIfNotTask ],
+                    [ ':nth-ancestor', PSelectorNthAncestorTask ],
+                    [ ':spath', PSelectorSpathTask ],
+                    [ ':watch-attrs', PSelectorWatchAttrs ],
+                    [ ':xpath', PSelectorXpathTask ],
+                ]);
+            }
+            this.budget = 200; // I arbitrary picked a 1/5 second
+            this.raw = o.raw;
+            this.cost = 0;
+            this.lastAllowanceTime = 0;
+            this.selector = o.selector;
+            this.tasks = [];
+            const tasks = o.tasks;
+            if ( !tasks ) { return; }
+            for ( const task of tasks ) {
+                this.tasks.push(new (this.operatorToTaskMap.get(task[0]))(task));
+            }
+        }
+        prime(input) {
+            const root = input || document;
+            if ( this.selector !== '' ) {
+                return root.querySelectorAll(this.selector);
+            }
+            return [ root ];
+        }
+        exec(input) {
+            let nodes = this.prime(input);
+            for ( const task of this.tasks ) {
+                if ( nodes.length === 0 ) { break; }
+                nodes = task.exec(nodes);
+            }
+            return nodes;
+        }
+        test(input) {
+            const nodes = this.prime(input);
+            const AA = [ null ];
+            for ( const node of nodes ) {
+                AA[0] = node;
+                let aa = AA;
+                for ( const task of this.tasks ) {
+                    aa = task.exec(aa);
+                    if ( aa.length === 0 ) { break; }
+                }
+                if ( aa.length !== 0 ) { return true; }
+            }
+            return false;
         }
     };
     PSelector.prototype.operatorToTaskMap = undefined;
-    PSelector.prototype.prime = function(input) {
-        var root = input || document;
-        if ( this.selector !== '' ) {
-            return root.querySelectorAll(this.selector);
-        }
-        return [ root ];
-    };
-    PSelector.prototype.exec = function(input) {
-        var nodes = this.prime(input);
-        for ( var task of this.tasks ) {
-            if ( nodes.length === 0 ) { break; }
-            nodes = task.exec(nodes);
-        }
-        return nodes;
-    };
-    PSelector.prototype.test = function(input) {
-        var nodes = this.prime(input), AA = [ null ], aa;
-        for ( var node of nodes ) {
-            AA[0] = node; aa = AA;
-            for ( var task of this.tasks ) {
-                aa = task.exec(aa);
-                if ( aa.length === 0 ) { break; }
-            }
-            if ( aa.length !== 0 ) { return true; }
-        }
-        return false;
-    };
 
-    var DOMProceduralFilterer = function(domFilterer) {
-        this.domFilterer = domFilterer;
-        this.domIsReady = false;
-        this.domIsWatched = false;
-        this.addedSelectors = new Map();
-        this.addedNodes = false;
-        this.removedNodes = false;
-        this.selectors = new Map();
-    };
+    const DOMProceduralFilterer = class {
+        constructor(domFilterer) {
+            this.domFilterer = domFilterer;
+            this.domIsReady = false;
+            this.domIsWatched = false;
+            this.mustApplySelectors = false;
+            this.selectors = new Map();
+            this.hiddenNodes = new Set();
+        }
 
-    DOMProceduralFilterer.prototype = {
-
-        addProceduralSelectors: function(aa) {
-            var raw, o, pselector,
-                mustCommit = this.domIsWatched;
-            for ( var i = 0, n = aa.length; i < n; i++ ) {
-                raw = aa[i];
-                o = JSON.parse(raw);
+        addProceduralSelectors(aa) {
+            const addedSelectors = [];
+            let mustCommit = this.domIsWatched;
+            for ( let i = 0, n = aa.length; i < n; i++ ) {
+                const raw = aa[i];
+                const o = JSON.parse(raw);
                 if ( o.style ) {
                     this.domFilterer.addCSSRule(o.style[0], o.style[1]);
                     mustCommit = true;
@@ -568,158 +744,144 @@ vAPI.DOMFilterer = (function() {
                 }
                 if ( o.tasks ) {
                     if ( this.selectors.has(raw) === false ) {
-                        pselector = new PSelector(o);
+                        const pselector = new PSelector(o);
                         this.selectors.set(raw, pselector);
-                        this.addedSelectors.set(raw, pselector);
+                        addedSelectors.push(pselector);
                         mustCommit = true;
                     }
                     continue;
                 }
             }
             if ( mustCommit === false ) { return; }
+            this.mustApplySelectors = this.selectors.size !== 0;
             this.domFilterer.commit();
             if ( this.domFilterer.hasListeners() ) {
                 this.domFilterer.triggerListeners({
-                    procedural: Array.from(this.addedSelectors.values())
+                    procedural: addedSelectors
                 });
             }
-        },
+        }
 
-        commitNow: function() {
+        commitNow() {
             if ( this.selectors.size === 0 || this.domIsReady === false ) {
                 return;
             }
 
-            if ( this.addedNodes || this.removedNodes ) {
-                this.addedSelectors.clear();
-            }
-
-            var entry, nodes, i;
-
-            if ( this.addedSelectors.size !== 0 ) {
-                //console.time('procedural selectors/filterset changed');
-                for ( entry of this.addedSelectors ) {
-                    nodes = entry[1].exec();
-                    i = nodes.length;
-                    while ( i-- ) {
-                        this.domFilterer.hideNode(nodes[i]);
-                    }
-                }
-                this.addedSelectors.clear();
-                //console.timeEnd('procedural selectors/filterset changed');
-                return;
-            }
+            this.mustApplySelectors = false;
 
             //console.time('procedural selectors/dom layout changed');
 
-            this.addedNodes = this.removedNodes = false;
+            // https://github.com/uBlockOrigin/uBlock-issues/issues/341
+            //   Be ready to unhide nodes which no longer matches any of
+            //   the procedural selectors.
+            const toRemove = this.hiddenNodes;
+            this.hiddenNodes = new Set();
 
-            var t0 = Date.now(),
-                t1, pselector, allowance;
+            let t0 = Date.now();
 
-            for ( entry of this.selectors ) {
-                pselector = entry[1];
-                allowance = Math.floor((t0 - pselector.lastAllowanceTime) / 2000);
+            for ( const entry of this.selectors ) {
+                const pselector = entry[1];
+                const allowance = Math.floor((t0 - pselector.lastAllowanceTime) / 2000);
                 if ( allowance >= 1 ) {
                     pselector.budget += allowance * 50;
                     if ( pselector.budget > 200 ) { pselector.budget = 200; }
                     pselector.lastAllowanceTime = t0;
                 }
                 if ( pselector.budget <= 0 ) { continue; }
-                nodes = pselector.exec();
-                t1 = Date.now();
+                const nodes = pselector.exec();
+                const t1 = Date.now();
                 pselector.budget += t0 - t1;
                 if ( pselector.budget < -500 ) {
                     console.info('uBO: disabling %s', pselector.raw);
                     pselector.budget = -0x7FFFFFFF;
                 }
                 t0 = t1;
-                i = nodes.length;
-                while ( i-- ) {
-                    this.domFilterer.hideNode(nodes[i]);
+                for ( const node of nodes ) {
+                    this.domFilterer.hideNode(node);
+                    this.hiddenNodes.add(node);
                 }
             }
 
+            for ( const node of toRemove ) {
+                if ( this.hiddenNodes.has(node) ) { continue; }
+                this.domFilterer.unhideNode(node);
+            }
             //console.timeEnd('procedural selectors/dom layout changed');
-        },
+        }
 
-        createProceduralFilter: function(o) {
+        createProceduralFilter(o) {
             return new PSelector(o);
-        },
+        }
 
-        onDOMCreated: function() {
+        onDOMCreated() {
             this.domIsReady = true;
             this.domFilterer.commitNow();
-        },
+        }
 
-        onDOMChanged: function(addedNodes, removedNodes) {
+        onDOMChanged(addedNodes, removedNodes) {
             if ( this.selectors.size === 0 ) { return; }
-            this.addedNodes = this.addedNodes || addedNodes.length !== 0;
-            this.removedNodes = this.removedNodes || removedNodes;
+            this.mustApplySelectors =
+                this.mustApplySelectors ||
+                addedNodes.length !== 0 ||
+                removedNodes;
             this.domFilterer.commit();
         }
     };
 
-    var DOMFiltererBase = vAPI.DOMFilterer;
+    const DOMFilterer = class extends vAPI.DOMFilterer {
+        constructor() {
+            super();
+            this.exceptions = [];
+            this.proceduralFilterer = new DOMProceduralFilterer(this);
+            this.hideNodeAttr = undefined;
+            this.hideNodeStyleSheetInjected = false;
+            if ( vAPI.domWatcher instanceof Object ) {
+                vAPI.domWatcher.addListener(this);
+            }
+        }
 
-    var domFilterer = function() {
-        DOMFiltererBase.call(this);
-        this.exceptions = [];
-        this.proceduralFilterer = new DOMProceduralFilterer(this);
-        this.hideNodeAttr = undefined;
-        this.hideNodeStyleSheetInjected = false;
+        commitNow() {
+            super.commitNow();
+            this.proceduralFilterer.commitNow();
+        }
 
-        // May or may not exist: cache locally since this may be called often.
-        this.baseOnDOMChanged = DOMFiltererBase.prototype.onDOMChanged;
+        addProceduralSelectors(aa) {
+            this.proceduralFilterer.addProceduralSelectors(aa);
+        }
 
-        if ( vAPI.domWatcher instanceof Object ) {
-            vAPI.domWatcher.addListener(this);
+        createProceduralFilter(o) {
+            return this.proceduralFilterer.createProceduralFilter(o);
+        }
+
+        getAllSelectors() {
+            const out = super.getAllSelectors();
+            out.procedural = Array.from(this.proceduralFilterer.selectors.values());
+            return out;
+        }
+
+        getAllExceptionSelectors() {
+            return this.exceptions.join(',\n');
+        }
+
+        onDOMCreated() {
+            if ( super.onDOMCreated instanceof Function ) {
+                super.onDOMCreated();
+            }
+            this.proceduralFilterer.onDOMCreated();
+        }
+
+        onDOMChanged() {
+            if ( super.onDOMChanged instanceof Function ) {
+                super.onDOMChanged.apply(this, arguments);
+            }
+            this.proceduralFilterer.onDOMChanged.apply(
+                this.proceduralFilterer,
+                arguments
+            );
         }
     };
-    domFilterer.prototype = Object.create(DOMFiltererBase.prototype);
-    domFilterer.prototype.constructor = domFilterer;
 
-    domFilterer.prototype.commitNow = function() {
-        DOMFiltererBase.prototype.commitNow.call(this);
-        this.proceduralFilterer.commitNow();
-    };
-
-    domFilterer.prototype.addProceduralSelectors = function(aa) {
-        this.proceduralFilterer.addProceduralSelectors(aa);
-    };
-
-    domFilterer.prototype.createProceduralFilter = function(o) {
-        return this.proceduralFilterer.createProceduralFilter(o);
-    };
-
-    domFilterer.prototype.getAllSelectors = function() {
-        var out = DOMFiltererBase.prototype.getAllSelectors.call(this);
-        out.procedural = Array.from(this.proceduralFilterer.selectors.values());
-        return out;
-    };
-
-    domFilterer.prototype.getAllExceptionSelectors = function() {
-        return this.exceptions.join(',\n');
-    };
-
-    domFilterer.prototype.onDOMCreated = function() {
-        if ( DOMFiltererBase.prototype.onDOMCreated !== undefined ) {
-            DOMFiltererBase.prototype.onDOMCreated.call(this);
-        }
-        this.proceduralFilterer.onDOMCreated();
-    };
-
-    domFilterer.prototype.onDOMChanged = function() {
-        if ( this.baseOnDOMChanged !== undefined ) {
-            this.baseOnDOMChanged.apply(this, arguments);
-        }
-        this.proceduralFilterer.onDOMChanged.apply(
-            this.proceduralFilterer,
-            arguments
-        );
-    };
-
-    return domFilterer;
+    return DOMFilterer;
 })();
 
 vAPI.domFilterer = new vAPI.DOMFilterer();
@@ -729,33 +891,34 @@ vAPI.domFilterer = new vAPI.DOMFilterer();
 /******************************************************************************/
 
 vAPI.domCollapser = (function() {
-    var resquestIdGenerator = 1,
-        processTimer,
-        toProcess = [],
-        toFilter = [],
-        toCollapse = new Map(),
-        cachedBlockedSet,
-        cachedBlockedSetHash,
-        cachedBlockedSetTimer;
-    var src1stProps = {
-        'embed': 'src',
-        'iframe': 'src',
-        'img': 'src',
-        'object': 'data'
+    const messaging = vAPI.messaging;
+    const toCollapse = new Map();
+    const src1stProps = {
+        embed: 'src',
+        iframe: 'src',
+        img: 'src',
+        object: 'data'
     };
-    var src2ndProps = {
-        'img': 'srcset'
+    const src2ndProps = {
+        img: 'srcset'
     };
-    var tagToTypeMap = {
+    const tagToTypeMap = {
         embed: 'object',
         iframe: 'sub_frame',
         img: 'image',
         object: 'object'
     };
-    var netSelectorCacheCount = 0,
-        messaging = vAPI.messaging;
 
-    var cachedBlockedSetClear = function() {
+    let resquestIdGenerator = 1,
+        processTimer,
+        cachedBlockedSet,
+        cachedBlockedSetHash,
+        cachedBlockedSetTimer,
+        toProcess = [],
+        toFilter = [],
+        netSelectorCacheCount = 0;
+
+    const cachedBlockedSetClear = function() {
         cachedBlockedSet =
         cachedBlockedSetHash =
         cachedBlockedSetTimer = undefined;
@@ -763,13 +926,13 @@ vAPI.domCollapser = (function() {
 
     // https://github.com/chrisaljoudi/uBlock/issues/174
     //   Do not remove fragment from src URL
-    var onProcessed = function(response) {
+    const onProcessed = function(response) {
         if ( !response ) { // This happens if uBO is disabled or restarted.
             toCollapse.clear();
             return;
         }
 
-        var targets = toCollapse.get(response.id);
+        const targets = toCollapse.get(response.id);
         if ( targets === undefined ) { return; }
         toCollapse.delete(response.id);
         if ( cachedBlockedSetHash !== response.hash ) {
@@ -783,16 +946,15 @@ vAPI.domCollapser = (function() {
         if ( cachedBlockedSet === undefined || cachedBlockedSet.size === 0 ) {
             return;
         }
-        var selectors = [],
-            iframeLoadEventPatch = vAPI.iframeLoadEventPatch,
-            netSelectorCacheCountMax = response.netSelectorCacheCountMax,
-            tag, prop, src, value;
+        const selectors = [];
+        const iframeLoadEventPatch = vAPI.iframeLoadEventPatch;
+        let netSelectorCacheCountMax = response.netSelectorCacheCountMax;
 
-        for ( var target of targets ) {
-            tag = target.localName;
-            prop = src1stProps[tag];
+        for ( const target of targets ) {
+            const tag = target.localName;
+            let prop = src1stProps[tag];
             if ( prop === undefined ) { continue; }
-            src = target[prop];
+            let src = target[prop];
             if ( typeof src !== 'string' || src.length === 0 ) {
                 prop = src2ndProps[tag];
                 if ( prop === undefined ) { continue; }
@@ -808,12 +970,12 @@ vAPI.domCollapser = (function() {
             target.hidden = true;
             // https://github.com/chrisaljoudi/uBlock/issues/1048
             // Use attribute to construct CSS rule
-            if (
-                netSelectorCacheCount <= netSelectorCacheCountMax &&
-                (value = target.getAttribute(prop))
-            ) {
-                selectors.push(tag + '[' + prop + '="' + value + '"]');
-                netSelectorCacheCount += 1;
+            if ( netSelectorCacheCount <= netSelectorCacheCountMax ) {
+                const value = target.getAttribute(prop);
+                if ( value ) {
+                    selectors.push(tag + '[' + prop + '="' + value + '"]');
+                    netSelectorCacheCount += 1;
+                }
             }
             if ( iframeLoadEventPatch !== undefined ) {
                 iframeLoadEventPatch(target);
@@ -833,10 +995,10 @@ vAPI.domCollapser = (function() {
         }
     };
 
-    var send = function() {
+    const send = function() {
         processTimer = undefined;
         toCollapse.set(resquestIdGenerator, toProcess);
-        var msg = {
+        const msg = {
             what: 'getCollapsibleBlockedRequests',
             id: resquestIdGenerator,
             frameURL: window.location.href,
@@ -849,7 +1011,7 @@ vAPI.domCollapser = (function() {
         resquestIdGenerator += 1;
     };
 
-    var process = function(delay) {
+    const process = function(delay) {
         if ( toProcess.length === 0 ) { return; }
         if ( delay === 0 ) {
             if ( processTimer !== undefined ) {
@@ -861,26 +1023,24 @@ vAPI.domCollapser = (function() {
         }
     };
 
-    var add = function(target) {
+    const add = function(target) {
         toProcess[toProcess.length] = target;
     };
 
-    var addMany = function(targets) {
-        var i = targets.length;
-        while ( i-- ) {
-            add(targets[i]);
+    const addMany = function(targets) {
+        for ( const target of targets ) {
+            add(target);
         }
     };
 
-    var iframeSourceModified = function(mutations) {
-        var i = mutations.length;
-        while ( i-- ) {
-            addIFrame(mutations[i].target, true);
+    const iframeSourceModified = function(mutations) {
+        for ( const mutation of mutations ) {
+            addIFrame(mutation.target, true);
         }
         process();
     };
-    var iframeSourceObserver = new MutationObserver(iframeSourceModified);
-    var iframeSourceObserverOptions = {
+    const iframeSourceObserver = new MutationObserver(iframeSourceModified);
+    const iframeSourceObserverOptions = {
         attributes: true,
         attributeFilter: [ 'src' ]
     };
@@ -889,7 +1049,7 @@ vAPI.domCollapser = (function() {
     // document, from within `bootstrapPhase1`, and which scriptlets are
     // selectively looked-up from:
     // https://github.com/uBlockOrigin/uAssets/blob/master/filters/resources.txt
-    var primeLocalIFrame = function(iframe) {
+    const primeLocalIFrame = function(iframe) {
         if ( vAPI.injectedScripts ) {
             vAPI.injectScriptlet(iframe.contentDocument, vAPI.injectedScripts);
         }
@@ -931,13 +1091,12 @@ vAPI.domCollapser = (function() {
 
     // https://github.com/gorhill/uBlock/issues/162
     // Be prepared to deal with possible change of src attribute.
-    var addIFrame = function(iframe, dontObserve) {
+    const addIFrame = function(iframe, dontObserve) {
         if ( dontObserve !== true ) {
             iframeSourceObserver.observe(iframe, iframeSourceObserverOptions);
         }
-        var src = iframe.src;
-        //console.log("iframe.src=\""+src+"\"");
-        if ( src === '' || typeof src !== 'string') {
+        const src = iframe.src;
+        if ( src === '' || typeof src !== 'string' ) {
             primeLocalIFrame(iframe);
             return;
         }
@@ -945,28 +1104,25 @@ vAPI.domCollapser = (function() {
             primeLocalIFrame(iframe);  // ADN: handle cases where src is 'about:blank'
             return;
         }
-        toFilter[toFilter.length] = {
-            type: 'sub_frame',
-            url: iframe.src
-        };
+        if ( src.startsWith('http') === false ) { return; }
+        toFilter.push({ type: 'sub_frame', url: iframe.src });
         add(iframe);
     };
 
-    var addIFrames = function(iframes) {
-        var i = iframes.length;
-        while ( i-- ) {
-            addIFrame(iframes[i]);
+    const addIFrames = function(iframes) {
+        for ( const iframe of iframes ) {
+            addIFrame(iframe);
         }
     };
 
-    var onResourceFailed = function(ev) {
+    const onResourceFailed = function(ev) {
         if ( tagToTypeMap[ev.target.localName] !== undefined ) {
             add(ev.target);
             process();
         }
     };
 
-    var domWatcherInterface = {
+    const domWatcherInterface = {
         onDOMCreated: function() {
             if ( vAPI instanceof Object === false ) { return; }
             if ( vAPI.domCollapser instanceof Object === false ) {
@@ -982,10 +1138,9 @@ vAPI.domCollapser = (function() {
             // https://github.com/chrisaljoudi/uBlock/issues/7
             // Preferring getElementsByTagName over querySelectorAll:
             //   http://jsperf.com/queryselectorall-vs-getelementsbytagname/145
-            var elems = document.images || document.getElementsByTagName('img'),
-                i = elems.length, elem;
-            while ( i-- ) {
-                elem = elems[i];
+            const elems = document.images ||
+                          document.getElementsByTagName('img');
+            for ( const elem of elems ) {
                 if ( elem.complete ) {
                     add(elem);
                 }
@@ -1005,15 +1160,13 @@ vAPI.domCollapser = (function() {
             });
         },
         onDOMChanged: function(addedNodes) {
-            var ni = addedNodes.length;
-            if ( ni === 0 ) { return; }
-            for ( var i = 0, node; i < ni; i++ ) {
-                node = addedNodes[i];
+            if ( addedNodes.length === 0 ) { return; }
+            for ( const node of addedNodes ) {
                 if ( node.localName === 'iframe' ) {
                     addIFrame(node);
                 }
                 if ( node.childElementCount === 0 ) { continue; }
-                var iframes = node.getElementsByTagName('iframe');
+                const iframes = node.getElementsByTagName('iframe');
                 if ( iframes.length !== 0 ) {
                     addIFrames(iframes);
                 }
@@ -1026,13 +1179,7 @@ vAPI.domCollapser = (function() {
         vAPI.domWatcher.addListener(domWatcherInterface);
     }
 
-    return {
-        add: add,
-        addMany: addMany,
-        addIFrame: addIFrame,
-        addIFrames: addIFrames,
-        process: process
-    };
+    return { add, addMany, addIFrame, addIFrames, process };
 })();
 
 /******************************************************************************/
@@ -1040,31 +1187,167 @@ vAPI.domCollapser = (function() {
 /******************************************************************************/
 
 vAPI.domSurveyor = (function() {
-    var messaging = vAPI.messaging,
-        domFilterer,
+    const messaging = vAPI.messaging;
+    const queriedIds = new Set();
+    const queriedClasses = new Set();
+    const maxSurveyNodes = 65536;
+    const maxSurveyTimeSlice = 4;
+    const maxSurveyBuffer = 64;
+
+    let domFilterer,
         hostname = '',
-        queriedIds = new Set(),
-        queriedClasses = new Set(),
-        pendingIdNodes = { nodes: [], added: [] },
-        pendingClassNodes = { nodes: [], added: [] },
         surveyCost = 0;
+
+    const pendingNodes = {
+        nodeLists: [],
+        buffer: [
+            null, null, null, null, null, null, null, null,
+            null, null, null, null, null, null, null, null,
+            null, null, null, null, null, null, null, null,
+            null, null, null, null, null, null, null, null,
+            null, null, null, null, null, null, null, null,
+            null, null, null, null, null, null, null, null,
+            null, null, null, null, null, null, null, null,
+            null, null, null, null, null, null, null, null,
+        ],
+        j: 0,
+        accepted: 0,
+        iterated: 0,
+        stopped: false,
+        add: function(nodes) {
+            if ( nodes.length === 0 || this.accepted >= maxSurveyNodes ) {
+                return;
+            }
+            this.nodeLists.push(nodes);
+            this.accepted += nodes.length;
+        },
+        next: function() {
+            if ( this.nodeLists.length === 0 || this.stopped ) { return 0; }
+            const nodeLists = this.nodeLists;
+            let ib = 0;
+            do {
+                const nodeList = nodeLists[0];
+                let j = this.j;
+                let n = j + maxSurveyBuffer - ib;
+                if ( n > nodeList.length ) {
+                    n = nodeList.length;
+                }
+                for ( let i = j; i < n; i++ ) {
+                    this.buffer[ib++] = nodeList[j++];
+                }
+                if ( j !== nodeList.length ) {
+                    this.j = j;
+                    break;
+                }
+                this.j = 0;
+                this.nodeLists.shift();
+            } while ( ib < maxSurveyBuffer && nodeLists.length !== 0 );
+            this.iterated += ib;
+            if ( this.iterated >= maxSurveyNodes ) {
+                this.nodeLists = [];
+                this.stopped = true;
+                //console.info(`domSurveyor> Surveyed a total of ${this.iterated} nodes. Enough.`);
+            }
+            return ib;
+        },
+        hasNodes: function() {
+            return this.nodeLists.length !== 0;
+        },
+    };
+
+    // Extract all classes/ids: these will be passed to the cosmetic
+    // filtering engine, and in return we will obtain only the relevant
+    // CSS selectors.
+    const reWhitespace = /\s/;
+
+    // https://github.com/gorhill/uBlock/issues/672
+    // http://www.w3.org/TR/2014/REC-html5-20141028/infrastructure.html#space-separated-tokens
+    // http://jsperf.com/enumerate-classes/6
+
+    const surveyPhase1 = function() {
+        // console.log('dom surveyor/surveying');
+        const t0 = performance.now();
+        const rews = reWhitespace;
+        const ids = [];
+        const classes = [];
+        const nodes = pendingNodes.buffer;
+        const deadline = t0 + maxSurveyTimeSlice;
+        let qids = queriedIds;
+        let qcls = queriedClasses;
+        let processed = 0;
+        for (;;) {
+            const n = pendingNodes.next();
+            if ( n === 0 ) { break; }
+            for ( let i = 0; i < n; i++ ) {
+                const node = nodes[i]; nodes[i] = null;
+                let v = node.id;
+                if ( typeof v === 'string' && v.length !== 0 ) {
+                    v = v.trim();
+                    if ( qids.has(v) === false && v.length !== 0 ) {
+                        ids.push(v); qids.add(v);
+                    }
+                }
+                let vv = node.className;
+                if ( typeof vv === 'string' && vv.length !== 0 ) {
+                    if ( rews.test(vv) === false ) {
+                        if ( qcls.has(vv) === false ) {
+                            classes.push(vv); qcls.add(vv);
+                        }
+                    } else {
+                        vv = node.classList;
+                        let j = vv.length;
+                        while ( j-- ) {
+                            const v = vv[j];
+                            if ( qcls.has(v) === false ) {
+                                classes.push(v); qcls.add(v);
+                            }
+                        }
+                    }
+                }
+            }
+            processed += n;
+            if ( performance.now() >= deadline ) { break; }
+        }
+        const t1 = performance.now();
+        surveyCost += t1 - t0;
+        //console.info(`domSurveyor> Surveyed ${processed} nodes in ${(t1-t0).toFixed(2)} ms`);
+        // Phase 2: Ask main process to lookup relevant cosmetic filters.
+        if ( ids.length !== 0 || classes.length !== 0 ) {
+            messaging.send(
+                'contentscript',
+                {
+                    what: 'retrieveGenericCosmeticSelectors',
+                    hostname: hostname,
+                    ids: ids,
+                    classes: classes,
+                    exceptions: domFilterer.exceptions,
+                    cost: surveyCost
+                },
+                surveyPhase3
+            );
+        } else {
+            surveyPhase3(null);
+        }
+        //console.timeEnd('dom surveyor/surveying');
+    };
+
+    const surveyTimer = new vAPI.SafeAnimationFrame(surveyPhase1);
 
     // This is to shutdown the surveyor if result of surveying keeps being
     // fruitless. This is useful on long-lived web page. I arbitrarily
     // picked 5 minutes before the surveyor is allowed to shutdown. I also
     // arbitrarily picked 256 misses before the surveyor is allowed to
     // shutdown.
-    var canShutdownAfter = Date.now() + 300000,
+    let canShutdownAfter = Date.now() + 300000,
         surveyingMissCount = 0;
 
     // Handle main process' response.
 
-    var surveyPhase3 = function(response) {
-        var result = response && response.result,
-            mustCommit = false;
-
+    const surveyPhase3 = function(response) {
+        const result = response && response.result;
+        let mustCommit = false;
         if ( result ) {
-            var selectors = result.simple;
+            let selectors = result.simple;
             if ( Array.isArray(selectors) && selectors.length !== 0 ) {
                 domFilterer.addCSSRule(
                     selectors,
@@ -1091,21 +1374,34 @@ vAPI.domSurveyor = (function() {
                 );
                 mustCommit = true;
             }
+            selectors = result.fake;
+            if ( typeof selectors === 'string' && selectors.length !== 0 ) {
+                domFilterer.addCSSRule(
+                    selectors,
+                    'height:0px!important;',
+                    { injected: true }
+                );
+                mustCommit = true;
+            }
+            selectors = result.excepted;
+            if ( Array.isArray(selectors) && selectors.length !== 0 ) {
+                domFilterer.exceptCSSRules(selectors);
+            }
         }
 
-        if ( hasChunk(pendingIdNodes) || hasChunk(pendingClassNodes) ) {
-            surveyTimer.start(1);
-        }
-
-        if ( mustCommit ) {
-            surveyingMissCount = 0;
-            canShutdownAfter = Date.now() + 300000;
-            return;
-        }
-
-        surveyingMissCount += 1;
-        if ( surveyingMissCount < 256 || Date.now() < canShutdownAfter ) {
-            return;
+        if ( pendingNodes.stopped === false ) {
+            if ( pendingNodes.hasNodes() ) {
+                surveyTimer.start(1);
+            }
+            if ( mustCommit ) {
+                surveyingMissCount = 0;
+                canShutdownAfter = Date.now() + 300000;
+                return;
+            }
+            surveyingMissCount += 1;
+            if ( surveyingMissCount < 256 || Date.now() < canShutdownAfter ) {
+                return;
+            }
         }
 
         //console.info('dom surveyor shutting down: too many misses');
@@ -1115,131 +1411,7 @@ vAPI.domSurveyor = (function() {
         vAPI.domSurveyor = null;
     };
 
-    var surveyTimer = new vAPI.SafeAnimationFrame(function() {
-        surveyPhase1();
-    });
-
-    // The purpose of "chunkification" is to ensure the surveyor won't unduly
-    // block the main event loop.
-
-    var hasChunk = function(pending) {
-        return pending.nodes.length !== 0 ||
-               pending.added.length !== 0;
-    };
-
-    var addChunk = function(pending, added) {
-        if ( added.length === 0 ) { return; }
-        if (
-            Array.isArray(added) === false ||
-            pending.added.length === 0 ||
-            Array.isArray(pending.added[0]) === false ||
-            pending.added[0].length >= 1000
-        ) {
-            pending.added.push(added);
-        } else {
-            pending.added = pending.added.concat(added);
-        }
-    };
-
-    var nextChunk = function(pending) {
-        var added = pending.added.length !== 0 ? pending.added.shift() : [],
-            nodes;
-        if ( pending.nodes.length === 0 ) {
-            if ( added.length <= 1000 ) { return added; }
-            nodes = Array.isArray(added)
-                ? added
-                : Array.prototype.slice.call(added);
-            pending.nodes = nodes.splice(1000);
-            return nodes;
-        }
-        if ( Array.isArray(added) === false ) {
-            added = Array.prototype.slice.call(added);
-        }
-        if ( pending.nodes.length < 1000 ) {
-            nodes = pending.nodes.concat(added.splice(0, 1000 - pending.nodes.length));
-            pending.nodes = added;
-        } else {
-            nodes = pending.nodes.splice(0, 1000);
-            pending.nodes = pending.nodes.concat(added);
-        }
-        return nodes;
-    };
-
-    // Extract all classes/ids: these will be passed to the cosmetic
-    // filtering engine, and in return we will obtain only the relevant
-    // CSS selectors.
-
-    // https://github.com/gorhill/uBlock/issues/672
-    // http://www.w3.org/TR/2014/REC-html5-20141028/infrastructure.html#space-separated-tokens
-    // http://jsperf.com/enumerate-classes/6
-
-    var surveyPhase1 = function() {
-        //console.time('dom surveyor/surveying');
-        surveyTimer.clear();
-        var t0 = window.performance.now();
-        var rews = reWhitespace,
-            qq, iout, nodes, i, node, v, vv, j;
-        var ids = [];
-        iout = 0;
-        qq = queriedIds;
-        nodes = nextChunk(pendingIdNodes);
-        i = nodes.length;
-        while ( i-- ) {
-            node = nodes[i];
-            v = node.id;
-            if ( typeof v !== 'string' ) { continue; }
-            v = v.trim();
-            if ( qq.has(v) === false && v.length !== 0 ) {
-                ids[iout++] = v; qq.add(v);
-            }
-        }
-        var classes = [];
-        iout = 0;
-        qq = queriedClasses;
-        nodes = nextChunk(pendingClassNodes);
-        i = nodes.length;
-        while ( i-- ) {
-            node = nodes[i];
-            vv = node.className;
-            if ( typeof vv !== 'string' ) { continue; }
-            if ( rews.test(vv) === false ) {
-                if ( qq.has(vv) === false && vv.length !== 0 ) {
-                    classes[iout++] = vv; qq.add(vv);
-                }
-            } else {
-                vv = node.classList;
-                j = vv.length;
-                while ( j-- ) {
-                    v = vv[j];
-                    if ( qq.has(v) === false ) {
-                        classes[iout++] = v; qq.add(v);
-                    }
-                }
-            }
-        }
-        surveyCost += window.performance.now() - t0;
-        // Phase 2: Ask main process to lookup relevant cosmetic filters.
-        if ( ids.length !== 0 || classes.length !== 0 ) {
-            messaging.send(
-                'contentscript',
-                {
-                    what: 'retrieveGenericCosmeticSelectors',
-                    hostname: hostname,
-                    ids: ids.join('\n'),
-                    classes: classes.join('\n'),
-                    exceptions: domFilterer.exceptions,
-                    cost: surveyCost
-                },
-                surveyPhase3
-            );
-        } else {
-            surveyPhase3(null);
-        }
-        //console.timeEnd('dom surveyor/surveying');
-    };
-    var reWhitespace = /\s/;
-
-    var domWatcherInterface = {
+    const domWatcherInterface = {
         onDOMCreated: function() {
             if (
                 vAPI instanceof Object === false ||
@@ -1256,52 +1428,33 @@ vAPI.domSurveyor = (function() {
             }
             //console.time('dom surveyor/dom layout created');
             domFilterer = vAPI.domFilterer;
-            addChunk(pendingIdNodes, document.querySelectorAll('[id]'));
-            addChunk(pendingClassNodes, document.querySelectorAll('[class]'));
+            pendingNodes.add(document.querySelectorAll('[id],[class]'));
             surveyTimer.start();
             //console.timeEnd('dom surveyor/dom layout created');
         },
         onDOMChanged: function(addedNodes) {
             if ( addedNodes.length === 0 ) { return; }
             //console.time('dom surveyor/dom layout changed');
-            var idNodes = [], iid = 0,
-                classNodes = [], iclass = 0;
-            var i = addedNodes.length,
-                node, nodeList, j;
+            let i = addedNodes.length;
             while ( i-- ) {
-                node = addedNodes[i];
-                idNodes[iid++] = node;
-                classNodes[iclass++] = node;
+                const node = addedNodes[i];
+                pendingNodes.add([ node ]);
                 if ( node.childElementCount === 0 ) { continue; }
-                nodeList = node.querySelectorAll('[id]');
-                j = nodeList.length;
-                while ( j-- ) {
-                    idNodes[iid++] = nodeList[j];
-                }
-                nodeList = node.querySelectorAll('[class]');
-                j = nodeList.length;
-                while ( j-- ) {
-                    classNodes[iclass++] = nodeList[j];
-                }
+                pendingNodes.add(node.querySelectorAll('[id],[class]'));
             }
-            if ( idNodes.length !== 0 || classNodes.lengh !== 0 ) {
-                addChunk(pendingIdNodes, idNodes);
-                addChunk(pendingClassNodes, classNodes);
+            if ( pendingNodes.hasNodes() ) {
                 surveyTimer.start(1);
             }
-            //console.timeEnd('dom surveyor/dom layout changed');
         }
     };
 
-    var start = function(details) {
+    const start = function(details) {
         if ( vAPI.domWatcher instanceof Object === false ) { return; }
         hostname = details.hostname;
         vAPI.domWatcher.addListener(domWatcherInterface);
     };
 
-    return {
-        start: start
-    };
+    return { start };
 })();
 
 /******************************************************************************/
@@ -1311,30 +1464,24 @@ vAPI.domSurveyor = (function() {
 // Bootstrapping allows all components of the content script to be launched
 // if/when needed.
 
-(function bootstrap() {
+vAPI.bootstrap = (function() {
 
-    var bootstrapPhase2 = function(ev) {
+    const bootstrapPhase2 = function(ev) {
         // ADN
-        vAPI.domFilterer.filterset.forEach(function(c){
-          var nodes = document.querySelectorAll(c.selectors);
-          for ( var node of nodes ) {
-              // console.log("BootstrapPhase2 Adcheck:", node)
-              vAPI.adCheck && vAPI.adCheck(node);
-          }
-        //  TODO:  proceduralFilters ?
-        })
+        if (vAPI.domFilterer) {
+          vAPI.domFilterer.filterset.forEach(function(c){
+            let nodes = document.querySelectorAll(c.selectors);
+            for ( const node of nodes ) {
+                vAPI.adCheck && vAPI.adCheck(node);
+            }
+          //  TODO:  proceduralFilters ?
+          })
+        }
 
         // This can happen on Firefox. For instance:
         // https://github.com/gorhill/uBlock/issues/1893
         if ( window.location === null ) { return; }
-
-        if ( ev ) {
-            document.removeEventListener('DOMContentLoaded', bootstrapPhase2);
-        }
-
-        if ( vAPI instanceof Object === false ) {
-            return;
-        }
+        if ( vAPI instanceof Object === false ) { return; }
 
         vAPI.messaging.send(
             'contentscript',
@@ -1360,8 +1507,8 @@ vAPI.domSurveyor = (function() {
         // as nuisance popups.
         // Ref.: https://developer.mozilla.org/en-US/docs/Web/Events/contextmenu
 
-        var onMouseClick = function(ev) {
-            var elem = ev.target;
+        const onMouseClick = function(ev) {
+            let elem = ev.target;
             while ( elem !== null && elem.localName !== 'a' ) {
                 elem = elem.parentElement;
             }
@@ -1384,11 +1531,20 @@ vAPI.domSurveyor = (function() {
         });
     };
 
-    var bootstrapPhase1 = function(response) {
 
+// https://github.com/uBlockOrigin/uBlock-issues/issues/403
+//   If there was a spurious port disconnection -- in which case the
+//   response is expressly set to `null`, rather than undefined or
+//   an object -- let's stay around, we may be given the opportunity
+//   to try bootstrapping again later.
+
+    const bootstrapPhase1 = function(response) {
+
+        if ( response === null ) { return; }
+        vAPI.bootstrap = undefined;
         if (response && response.prefs) vAPI.prefs = response.prefs; // ADN
         // cosmetic filtering engine aka 'cfe'
-        var cfeDetails = response && response.specificCosmeticFilters;
+        const cfeDetails = response && response.specificCosmeticFilters;
         if ( !cfeDetails || !cfeDetails.ready ) {
             vAPI.domWatcher = vAPI.domCollapser = vAPI.domFilterer =
             vAPI.domSurveyor = vAPI.domIsLoaded = null;
@@ -1399,9 +1555,7 @@ vAPI.domSurveyor = (function() {
             vAPI.domFilterer = null;
             vAPI.domSurveyor = null;
         } else {
-
-
-            var domFilterer = vAPI.domFilterer;
+            const domFilterer = vAPI.domFilterer;
             if ( response.noGenericCosmeticFiltering || cfeDetails.noDOMSurveying ) {
                 vAPI.domSurveyor = null;
             }
@@ -1429,6 +1583,7 @@ vAPI.domSurveyor = (function() {
                 { injected: true }
             );
             domFilterer.addProceduralSelectors(cfeDetails.proceduralFilters);
+            domFilterer.exceptCSSRules(cfeDetails.exceptedFilters);
         }
 
         if ( cfeDetails.networkFilters.length !== 0 && !vAPI.prefs.hidingDisabled) {
@@ -1458,25 +1613,34 @@ vAPI.domSurveyor = (function() {
         ) {
             bootstrapPhase2();
         } else {
-            document.addEventListener('DOMContentLoaded', bootstrapPhase2);
+            document.addEventListener(
+                'DOMContentLoaded',
+                bootstrapPhase2,
+                { once: true }
+            );
         }
     };
 
-    // This starts bootstrap process.
-    vAPI.messaging.send(
-        'contentscript',
-        {
-            what: 'retrieveContentScriptParameters',
-            url: window.location.href,
-            isRootFrame: window === window.top,
-            charset: document.characterSet
-        },
-        bootstrapPhase1
-    );
+    return function() {
+        vAPI.messaging.send(
+            'contentscript',
+            {
+                what: 'retrieveContentScriptParameters',
+                url: window.location.href,
+                isRootFrame: window === window.top,
+                charset: document.characterSet,
+            },
+            bootstrapPhase1
+        );
+    };
 })();
 
+// This starts bootstrap process.
+vAPI.bootstrap();
+
 /******************************************************************************/
 /******************************************************************************/
 /******************************************************************************/
 
-} // <<<<<<<< end of HUGE-IF-BLOCK
+}
+// <<<<<<<< end of HUGE-IF-BLOCK

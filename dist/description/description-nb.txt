@@ -11,7 +11,7 @@ Fleksibel, uBlock er mer enn en "reklameblokkerer": uBlock kan også lese og opp
 Som standard er disse filterlistene lastet og i bruk:
 
 - EasyList
-- Peter Lowe's Ad server list
+- Peter Lowe’s Ad server list
 - EasyPrivacy
 - Malware domains
 
@@ -30,7 +30,7 @@ Vær også oppmerksom på at å velge noen av disse ekstra listene kan lede til 
 
 ***
 
-Uten de forhåndsgitte filterlistene er denne utvidelsen ubrukelig. Så hvis du ønsker å bidra med noe, tenk på folkene som arbeider hardt for å opprettholde filterlistene du bruker, som blir gjort tilgjengelige for alle - helt gratis.
+  Hvis du virkelig ønsker å bidra med noe, tenk på folkene som arbeider hardt for å opprettholde filterlistene du bruker, som blir gjort tilgjengelige for alle - helt gratis.
 
 ***
 
