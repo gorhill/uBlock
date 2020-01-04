@@ -1105,13 +1105,14 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
             runAt: 'document_start'
         };
         // TMP: fake hide filters
-        details.code = 'ins[id*="aswift"] > iframe, .adsbygoogle' + '\n{height:0px!important;}';
+        details.code = 'ins[id*="aswift"] > iframe, .adsbygoogle' + '\n{display:none!important;}';
         vAPI.insertCSS(request.tabId, details);
 
         if ( out.injectedHideFilters.length !== 0 ) {
             details.code = out.injectedHideFilters + '\n{display:none!important;}';
             vAPI.insertCSS(request.tabId, details);
         }
+
         if ( out.networkFilters.length !== 0 ) {
             details.code = out.networkFilters + '\n{display:none!important;}';
             vAPI.insertCSS(request.tabId, details);
