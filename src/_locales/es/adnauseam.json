@@ -4,7 +4,7 @@
     "description": "English: Firstrun.html page title"
   },
   "aboutSupport": {
-    "message": "Apoyo",
+    "message": "Ayuda",
     "description": "English: links.html Support"
   },
   "aboutBuiltOn": {
@@ -28,7 +28,7 @@
     "description": "English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware": {
-    "message": "Bloquear software malicioso",
+    "message": "Bloquear programas maliciosas",
     "description": "English: Firstrun.html -> Block Malware"
   },
   "adnAboutResetDataConfirm": {
@@ -36,15 +36,15 @@
     "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "Ocultar anuncios selecionados en su <span>lista de filtros<\/span>",
+    "message": "Ocultar anuncios selecionados en su <span>lista de filtros</span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "Registrar visitas en Anuncios encontrados via su <span>lista de filtros<\/span>",
+    "message": "Registrar visitas en Anuncios encontrados via su <span>lista de filtros</span>",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Bloquear seguidores y otros programas maliciosos (<span>personalizar<\/span>)",
+    "message": "Bloquear seguidores y otros programas maliciosos (<span>personalizar</span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -87,20 +87,24 @@
     "message": "¡La configuración de 'Bloqueo de contenido' en su navegador puede interferir con AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
+  "adnNotificationPrivacyMode": {
+    "message": "Has permitido a Adnauseam tener acceso a tus actividades en línea mientras navegas de forma privada.",
+    "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
+  },
   "adnNotificationDNTAllowed": {
-    "message": "Esta página respeta <b>Do Not Track<\/b>, anuncios permitidos.",
+    "message": "Esta página respeta <b>Do Not Track</b>, anuncios permitidos.",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "Esta página respeta <b>Do Not Track<\/b>, escondiendo no haciendo clic.",
+    "message": "Esta página respeta <b>Do Not Track</b>, escondiendo no haciendo clic.",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "Esta página respeta <b>Do Not Track<\/b>, haciendo clic, no escondiendo",
+    "message": "Esta página respeta <b>Do Not Track</b>, haciendo clic, no escondiendo",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "Esta página respeta <b>Do Not Track<\/b>, solo para que sepa.",
+    "message": "Esta página respeta <b>Do Not Track</b>, solo para que sepa.",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
@@ -141,7 +145,7 @@
   },
   "adnPausedOnPage": {
     "message": "AdNauseam está en pausa en esta página",
-    "description": "English: Menu->display when paused on page\/site"
+    "description": "English: Menu->display when paused on page/site"
   },
   "adnNotHiding": {
     "message": "AdNauseam no esconde anuncios actualmente",
@@ -280,7 +284,7 @@
     "description": "appears on vault page"
   },
   "adnVaultDefaultDate": {
-    "message": "1\/ene\/1970 0:00 a. m.",
+    "message": "1/ene/1970 0:00 a. m.",
     "description": "appears on vault page"
   },
   "adnVaultExport": {

@@ -36,15 +36,15 @@
     "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "Κρύψε τις διαφημίσεις στην επιλεγμένη <span>λίστα<\/span>",
+    "message": "Κρύψε τις διαφημίσεις στην επιλεγμένη <span>λίστα</span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "Καταχώριση επισκέψεων σε διαφημίσεις που βρέθηκαν με βάση την <span>λίστα<\/span>",
+    "message": "Καταχώριση επισκέψεων σε διαφημίσεις που βρέθηκαν με βάση την <span>λίστα</span>",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Απέκλεισε τα κακόβουλα λογισμικά και τα λογισμικά παρακολούθησης (<span>εξατομίκευση<\/span>)",
+    "message": "Απέκλεισε τα κακόβουλα λογισμικά και τα λογισμικά παρακολούθησης (<span>εξατομίκευση</span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -87,20 +87,24 @@
     "message": "Οι «Φραγή περιεχομένου» ρυθμίσεις στο πρόγραμμα περιήγησής σας ενδέχεται να επηρεάσουν με AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
+  "adnNotificationPrivacyMode": {
+    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
+  },
   "adnNotificationDNTAllowed": {
-    "message": "Αυτή η σελίδα σέβεται το <b>Μην Με Παρακολουθήτε<\/b> πρότυπο, Οι διαφημίσεις επιτρέπονται.",
+    "message": "Αυτή η σελίδα σέβεται το <b>Μην Με Παρακολουθήτε</b> πρότυπο, Οι διαφημίσεις επιτρέπονται.",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "Αυτή η σελίδα σέβεται το <b>Μην Με Παρακολουθήτε<\/b> πρότυπο, απόκρυψη, όχι κλικάρισμα.",
+    "message": "Αυτή η σελίδα σέβεται το <b>Μην Με Παρακολουθήτε</b> πρότυπο, απόκρυψη, όχι κλικάρισμα.",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "Αυτή η σελίδα σέβεται το <b>Μην Με Παρακολουθήτε<\/b> πρότυπο, κλικάρισμα, όχι απόκρυψη",
+    "message": "Αυτή η σελίδα σέβεται το <b>Μην Με Παρακολουθήτε</b> πρότυπο, κλικάρισμα, όχι απόκρυψη",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "Αυτή η σελίδα σέβεται το <b>Μην Με Παρακολουθήτε<\/b> πρότυπο, πληροφοριακά.",
+    "message": "Αυτή η σελίδα σέβεται το <b>Μην Με Παρακολουθήτε</b> πρότυπο, πληροφοριακά.",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
@@ -141,7 +145,7 @@
   },
   "adnPausedOnPage": {
     "message": "Το AdNauseam είναι σταματημένο για αυτήν την σελίδα ",
-    "description": "English: Menu->display when paused on page\/site"
+    "description": "English: Menu->display when paused on page/site"
   },
   "adnNotHiding": {
     "message": "Το AdNauseam δεν κρύβει τις διαφημίσεις αυτήν την στιγμή",
@@ -372,15 +376,15 @@
     "description": "English: Click Frequency - Always"
   },
   "respectDNTPrompt": {
-    "message": "Εξαίρεση των διαφημίσεων χωρίς σκοπό παρακολούθησης\/συλλογής δεδομένων",
+    "message": "Εξαίρεση των διαφημίσεων χωρίς σκοπό παρακολούθησης/συλλογής δεδομένων",
     "description": "English: Make exceptions for non-tracking Ads"
   },
   "disableHidingForDNTPrompt": {
-    "message": "Να μην γίνεται απόκρυψη διαφημίσεων χωρίς σκοπό παρακολούθησης\/συλλογής δεδομένων",
+    "message": "Να μην γίνεται απόκρυψη διαφημίσεων χωρίς σκοπό παρακολούθησης/συλλογής δεδομένων",
     "description": "English: Don't hide non-tracking Ads"
   },
   "disableClickingForDNTPrompt": {
-    "message": "Να μην κλικάρονται οι διαφημίσεις χωρίς σκοπό παρακολούθησης\/συλλογής δεδομένων",
+    "message": "Να μην κλικάρονται οι διαφημίσεις χωρίς σκοπό παρακολούθησης/συλλογής δεδομένων",
     "description": "English: Don't click non-tracking Ads"
   },
   "extName": {

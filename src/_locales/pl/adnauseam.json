@@ -36,15 +36,15 @@
     "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "ukryj reklamy z wybranych <span class='link' id='To3pfilter'>list filtrów<\/span>",
+    "message": "ukryj reklamy z wybranych <span class='link' id='To3pfilter'>list filtrów</span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "rejestruj wizyty w reklamach znalezionych na <span class='link' id='To3pfilter'>listach filtrów<\/span>",
+    "message": "rejestruj wizyty w reklamach znalezionych na <span class='link' id='To3pfilter'>listach filtrów</span>",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Blokuj tropicieli i inne złośliwe oprogramowanie (<span>Dostosowywanie<\/span>)",
+    "message": "Blokuj tropicieli i inne złośliwe oprogramowanie (<span>Dostosowywanie</span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -87,20 +87,24 @@
     "message": "'Blokowanie treści' Ustawienia w przeglądarce może kolidować z AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
+  "adnNotificationPrivacyMode": {
+    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
+  },
   "adnNotificationDNTAllowed": {
-    "message": "Ta strona szanuje politykę <b>Nie śledź<\/b>. Reklamy zostaną wyświetlone.",
+    "message": "Ta strona szanuje politykę <b>Nie śledź</b>. Reklamy zostaną wyświetlone.",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "Ta strona szanuje politykę <b>Nie śledź<\/b>. Reklamy zostaną ukryte, ale nie kliknięte.",
+    "message": "Ta strona szanuje politykę <b>Nie śledź</b>. Reklamy zostaną ukryte, ale nie kliknięte.",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "Ta strona szanuje politykę <b>Nie śledź<\/b>. Reklamy zostaną kliknięte, ale nie ukryte",
+    "message": "Ta strona szanuje politykę <b>Nie śledź</b>. Reklamy zostaną kliknięte, ale nie ukryte",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "Ta strona szanuje politykę <b>Nie śledź<\/b>.",
+    "message": "Ta strona szanuje politykę <b>Nie śledź</b>.",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
@@ -141,7 +145,7 @@
   },
   "adnPausedOnPage": {
     "message": "AdNauseam jest wstrzymane na tej stronie",
-    "description": "English: Menu->display when paused on page\/site"
+    "description": "English: Menu->display when paused on page/site"
   },
   "adnNotHiding": {
     "message": "AdNauseam aktualnie nie ukrywa reklam",

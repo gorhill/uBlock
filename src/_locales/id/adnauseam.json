@@ -36,15 +36,15 @@
     "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "sembunyikan iklan di <span class='link' id='To3pfilter'>daftar filter<\/span> yang telah Anda pilih",
+    "message": "sembunyikan iklan di <span class='link' id='To3pfilter'>daftar filter</span> yang telah Anda pilih",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "daftarkan kunjungan iklan yang telah ditemukan melalui <span class='link' id='To3pfilter'>daftar filter<\/span> Anda",
+    "message": "daftarkan kunjungan iklan yang telah ditemukan melalui <span class='link' id='To3pfilter'>daftar filter</span> Anda",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Blokir pelacak dan malware lainnya (<span>Kustomisasi<\/span>)",
+    "message": "Blokir pelacak dan malware lainnya (<span>Kustomisasi</span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -87,6 +87,10 @@
     "message": "'Pemblokiran konten' pengaturan di browser Anda dapat mengganggu AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
+  "adnNotificationPrivacyMode": {
+    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
+  },
   "adnNotificationDNTAllowed": {
     "message": "Halaman ini menyetujui penggunaan <b>Do Not Track<b>, Iklan diperbolehkan.",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
@@ -100,7 +104,7 @@
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "Halaman ini menyetujui <b>Do Not Track<\/b>, agar Anda tahu.",
+    "message": "Halaman ini menyetujui <b>Do Not Track</b>, agar Anda tahu.",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
@@ -141,7 +145,7 @@
   },
   "adnPausedOnPage": {
     "message": "AdNauseam sedang diberhentikan di halaman ini",
-    "description": "English: Menu->display when paused on page\/site"
+    "description": "English: Menu->display when paused on page/site"
   },
   "adnNotHiding": {
     "message": "AdNauseam saat ini sedang tidak menyembunyikan iklan",

@@ -36,15 +36,15 @@
     "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "dölj annonser i dina valda <span class='link' id='To3pfilter'>filterlistor<\/span>",
+    "message": "dölj annonser i dina valda <span class='link' id='To3pfilter'>filterlistor</span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "registrera besökta annonser hittade via dina <span class='link' id='To3pfilter'>filterlistor<\/span>",
+    "message": "Registrera besökta annonser hittade via dina <span class='link' id='To3pfilter'>filterlistor</span>",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Blockera trackers och annan skadlig kod (<span>Anpassa<\/span>)",
+    "message": "Blockera trackers och annan skadlig kod (<span>Anpassa</span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -87,20 +87,24 @@
     "message": "Inställningarna \"innehållsblockering\" i din webbläsare kan störa AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
+  "adnNotificationPrivacyMode": {
+    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
+  },
   "adnNotificationDNTAllowed": {
-    "message": "Sidan respekterar <b>Spåra inte<\/b>, annonser är tillåtna.",
+    "message": "Sidan respekterar <b>Spåra inte</b>, annonser är tillåtna.",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "Sidan respekterar <b>Spåra inte<\/b>, dölja inte klicka.",
+    "message": "Sidan respekterar <b>Spåra inte</b>, dölja inte klicka.",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "Sidan respekterar <b>Spåra inte<\/b>, klicka inte dölja",
+    "message": "Sidan respekterar <b>Spåra inte</b>, klicka inte dölja",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "Sidan respekterar <b>Spåra inte<\/b>, bara så du vet.",
+    "message": "Sidan respekterar <b>Spåra inte</b>, bara så du vet.",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
@@ -141,7 +145,7 @@
   },
   "adnPausedOnPage": {
     "message": "AdNauseam är pausat på den här sidan",
-    "description": "English: Menu->display when paused on page\/site"
+    "description": "English: Menu->display when paused on page/site"
   },
   "adnNotHiding": {
     "message": "AdNauseam döljer inte annonser för närvarande",

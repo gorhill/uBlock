@@ -32,19 +32,19 @@
     "description": "English: Firstrun.html -> Block Malware"
   },
   "adnAboutResetDataConfirm": {
-    "message": "All your settings will be removed, ads in your vault will be deleted, and AdNauseam will restart.\n\nReset AdNauseam to factory settings?",
+    "message": "আপনার সকল সেটিংস অপসারণ করা হবে, ভল্টে রাখা সকল বিজ্ঞাপন মুছে ফেলা হবে এবং AdNauseam নতুন করে শুরু হবে। AdNauseam কে একদম শুরুর অবস্থায় ফেরত নিয়ে যাবো?",
     "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "আপনার নির্বাচিত<span>ফিল্টার তালিকাগুলিতে বিজ্ঞাপনগুলি লুকান<\/span>",
+    "message": "আপনার নির্বাচিত<span>ফিল্টার তালিকাগুলিতে বিজ্ঞাপনগুলি লুকান</span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "আপনার <span> ফিল্টার তালিকা <\/span> এর মাধ্যমে পাওয়া বিজ্ঞাপনগুলিতে নিবন্ধন করা নিবন্ধনগুলি",
+    "message": "আপনার <span> ফিল্টার তালিকা </span> এর মাধ্যমে পাওয়া বিজ্ঞাপনগুলিতে নিবন্ধন করা নিবন্ধনগুলি",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "ব্লক ট্র্যাকার এবং অন্যান্য ম্যালওয়্যার (<span> কাস্টমাইজ করুন <\/span>)",
+    "message": "ব্লক ট্র্যাকার এবং অন্যান্য ম্যালওয়্যার (<span> কাস্টমাইজ করুন </span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -84,23 +84,27 @@
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
   "adnNotificationBrowserSetting": {
-    "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
+    "message": "আপনার ব্রাউজারের \"কনটেন্ট ব্লকিং\" সেটিংস অ্যাডনোসামে হস্তক্ষেপ করতে পারে!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
+  "adnNotificationPrivacyMode": {
+    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
+  },
   "adnNotificationDNTAllowed": {
-    "message": "এই পৃষ্ঠাটি <b>Do Not Track<\/b> শ্রদ্ধা করে বিজ্ঞাপন দেওয়া হয়।",
+    "message": "এই পৃষ্ঠাটি <b>Do Not Track</b> শ্রদ্ধা করে বিজ্ঞাপন দেওয়া হয়।",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "এই পাতায় ক্লিক না করে লুকিয়ে <b>অনুসরণ করবেন না<\/b>, সম্মান করে।",
+    "message": "এই পাতায় ক্লিক না করে লুকিয়ে <b>অনুসরণ করবেন না</b>, সম্মান করে।",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "এই পৃষ্ঠাটি <b> ট্র্যাক করবেন না <\/b>, গোপন না ক্লিক করে",
+    "message": "এই পৃষ্ঠাটি <b> ট্র্যাক করবেন না </b>, গোপন না ক্লিক করে",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "এই পৃষ্ঠাটি <b> ট্র্যাক করবেন না <\/b>, তাই আপনাকে জানার জন্য।",
+    "message": "এই পৃষ্ঠাটি <b> ট্র্যাক করবেন না </b>, তাই আপনাকে জানার জন্য।",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
@@ -141,7 +145,7 @@
   },
   "adnPausedOnPage": {
     "message": "AdNauseam এই পাতা হতে বিরত রাখা হয়েছে",
-    "description": "English: Menu->display when paused on page\/site"
+    "description": "English: Menu->display when paused on page/site"
   },
   "adnNotHiding": {
     "message": "AdNauseam বর্তমানে বিজ্ঞাপন গোপন করা হয় না",
@@ -160,7 +164,7 @@
     "description": "English: AdNauseam file export"
   },
   "adnImportAlertFormat": {
-    "message": "The file doesn't contain any Ads, please choose another file.",
+    "message": "এই নথিতে কোন বিজ্ঞাপন পাওয়া যায়নি, অনুগ্রহ করে অন্য আরেকটি নথি বাছাই করুন.",
     "description": "appears in ADN vault, after import"
   },
   "adnImportAlert": {
@@ -172,31 +176,31 @@
     "description": "appears in ADN settings"
   },
   "adnAdClickingStatusPending": {
-    "message": "Pending",
+    "message": "মুলতবি আছে",
     "description": "Menu & AdVault: Pending"
   },
   "adnAdClickingStatusVisited": {
-    "message": "Visited",
+    "message": "পরিদর্শন করা হয়েছে",
     "description": "Menu & AdVault: Visited"
   },
   "adnAdClickingStatusFailed": {
-    "message": "Failed",
+    "message": "ব্যর্থ হয়েছে",
     "description": "Menu & AdVault: Failed"
   },
   "adnAdClickingStatusSkippedDNT": {
-    "message": "SKIPPED: DNT Allowed",
+    "message": "এড়িয়ে গিয়েছে: অনুমতি প্রাপ্ত নয়",
     "description": "Menu & AdVault: SKIPPED: DNT Allowed"
   },
   "adnAdClickingStatusSkippedUser": {
-    "message": "SKIPPED: Clicked by user",
+    "message": "এড়িয়ে গিয়েছে: ব্যবহারকারী কর্তৃক ক্লিক করা হয়েছে",
     "description": "Menu & AdVault: SKIPPED: Clicked by User"
   },
   "adnAdClickingStatusSkippedFrequency": {
-    "message": "SKIPPED: Click Frequency",
+    "message": "এড়িয়ে গিয়েছে: ক্লিক করার হার",
     "description": "Menu & AdVault: SKIPPED: Click Frequency"
   },
   "adnAdClickingStatusSkippedDisabled": {
-    "message": "SKIPPED: Clicking Disabled",
+    "message": "এড়িয়ে গিয়েছে: ক্লিক করা বন্ধ রাখা হয়েছে",
     "description": "Menu & AdVault: SKIPPED: Clicking disabled"
   },
   "adnMenuViewLog": {
@@ -228,19 +232,19 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuExportOptions": {
-    "message": "Export Options",
+    "message": "অপশনসমূহ সংরক্ষণ করুন",
     "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuExportAdsOnly": {
-    "message": "Ads Only",
+    "message": "কেবলমাত্র বিজ্ঞাপন",
     "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuExportSettingsOnly": {
-    "message": "Settings Only",
+    "message": "কেবলমাত্র সেটিংস",
     "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuExportSettingsAndAds": {
-    "message": "Settings and Ads",
+    "message": "সেটিংস এবং বিজ্ঞাপন",
     "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuImportAds": {

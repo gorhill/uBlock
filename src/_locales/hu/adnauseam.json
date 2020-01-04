@@ -1,6 +1,6 @@
 {
   "adnAboutPageName": {
-    "message": "AdNauseam — About",
+    "message": "AdNauseamről",
     "description": "English: Firstrun.html page title"
   },
   "aboutSupport": {
@@ -16,7 +16,7 @@
     "description": "English: links.html -> Frequently asked questions"
   },
   "adnFirstRunPlease": {
-    "message": "Please:",
+    "message": "Kérem:",
     "description": "English: Firstrun.html -> Please:"
   },
   "adnFirstRunHideAllAds": {
@@ -24,27 +24,27 @@
     "description": "English: Firstrun.html -> Hide Ads:"
   },
   "adnFirstRunClickingAds": {
-    "message": "Click Ads",
+    "message": "Kattintson a hírdetésekre",
     "description": "English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware": {
-    "message": "Block Malware",
+    "message": "Kártevők blokkolása",
     "description": "English: Firstrun.html -> Block Malware"
   },
   "adnAboutResetDataConfirm": {
-    "message": "All your settings will be removed, ads in your vault will be deleted, and AdNauseam will restart.\n\nReset AdNauseam to factory settings?",
+    "message": "Az összes beállítása elvész, a széfben tárolt reklámok törölésre kerülnek, és az AdNauseam újraindul.\n\nSzeretné visszaállítani az AdNauseam gyári beállításait?",
     "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "Hide Ads in your selected <span>filter lists<\/span>",
+    "message": "Hide Ads in your selected <span>filter lists</span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "Regisztrálja a látogatásokat a <span>szűrőlistával<\/span> talált reklámokon",
+    "message": "Regisztrálja a látogatásokat a <span>szűrőlistával</span> talált reklámokon",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Block trackers and other malware (<span>customize<\/span>)",
+    "message": "Block trackers and other malware (<span>customize</span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -87,20 +87,24 @@
     "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
+  "adnNotificationPrivacyMode": {
+    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
+  },
   "adnNotificationDNTAllowed": {
-    "message": "Ez az oldal tiszteletben tartja, <b>Nem Követi<\/b>, hirdetések engedélyezettek.",
+    "message": "Ez az oldal tiszteletben tartja, <b>Nem Követi</b>, hirdetések engedélyezettek.",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "This page respects <b>Do Not Track<\/b>, hiding not clicking.",
+    "message": "This page respects <b>Do Not Track</b>, hiding not clicking.",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "This page respects <b>Do Not Track<\/b>, clicking not hiding",
+    "message": "This page respects <b>Do Not Track</b>, clicking not hiding",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "This page respects <b>Do Not Track<\/b>, just so you know.",
+    "message": "This page respects <b>Do Not Track</b>, just so you know.",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
@@ -141,7 +145,7 @@
   },
   "adnPausedOnPage": {
     "message": "AdNauseam szünetel, ezen az oldalon",
-    "description": "English: Menu->display when paused on page\/site"
+    "description": "English: Menu->display when paused on page/site"
   },
   "adnNotHiding": {
     "message": "AdNauseam hirdetések jelenleg nem takar",
@@ -160,7 +164,7 @@
     "description": "English: AdNauseam file export"
   },
   "adnImportAlertFormat": {
-    "message": "The file doesn't contain any Ads, please choose another file.",
+    "message": "A fálj nem tartalmaz hírdetéseket. Kérem, válasszon másik fáljt.",
     "description": "appears in ADN vault, after import"
   },
   "adnImportAlert": {
@@ -172,11 +176,11 @@
     "description": "appears in ADN settings"
   },
   "adnAdClickingStatusPending": {
-    "message": "Pending",
+    "message": "Függőben",
     "description": "Menu & AdVault: Pending"
   },
   "adnAdClickingStatusVisited": {
-    "message": "Visited",
+    "message": "Meglátogatott",
     "description": "Menu & AdVault: Visited"
   },
   "adnAdClickingStatusFailed": {
@@ -188,7 +192,7 @@
     "description": "Menu & AdVault: SKIPPED: DNT Allowed"
   },
   "adnAdClickingStatusSkippedUser": {
-    "message": "SKIPPED: Clicked by user",
+    "message": "ÁTUGORVA: Felhasználó által kattintva",
     "description": "Menu & AdVault: SKIPPED: Clicked by User"
   },
   "adnAdClickingStatusSkippedFrequency": {
@@ -196,7 +200,7 @@
     "description": "Menu & AdVault: SKIPPED: Click Frequency"
   },
   "adnAdClickingStatusSkippedDisabled": {
-    "message": "SKIPPED: Clicking Disabled",
+    "message": "ÁTUGORVA: Kattintás letiltva",
     "description": "Menu & AdVault: SKIPPED: Clicking disabled"
   },
   "adnMenuViewLog": {
@@ -216,7 +220,7 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuViewVault": {
-    "message": "View Ad Vault",
+    "message": "Ad széf megtekintése",
     "description": "appears in ADN popup menu"
   },
   "adnMenuResume": {
@@ -280,7 +284,7 @@
     "description": "appears on vault page"
   },
   "adnVaultDefaultDate": {
-    "message": "Jan 1 1970 0:00am",
+    "message": "Január 1 1970 0:00",
     "description": "appears on vault page"
   },
   "adnVaultExport": {
@@ -312,7 +316,7 @@
     "description": "appears on vault page"
   },
   "adnVaultAdsCost": {
-    "message": "cost",
+    "message": "ár",
     "description": "appears on vault page"
   },
   "hidingAdsPrompt": {
@@ -340,7 +344,7 @@
     "description": "English: Interface"
   },
   "settingsInterfacePrompt": {
-    "message": "Interface",
+    "message": "Kezelőfelület",
     "description": "English: Interface"
   },
   "noIncomingCookiesPrompt": {
@@ -400,7 +404,7 @@
     "description": "English: Other"
   },
   "3pGroupMalware": {
-    "message": "Malware",
+    "message": "Kártevő szoftver",
     "description": "English: Malware"
   },
   "3pGroupRegions": {
@@ -408,7 +412,7 @@
     "description": "English: Languages"
   },
   "3pPageUpdate": {
-    "message": "Update",
+    "message": "Frissítés",
     "description": "English: update"
   },
   "whitelistPageName": {

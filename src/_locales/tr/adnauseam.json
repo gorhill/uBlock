@@ -32,19 +32,19 @@
     "description": "English: Firstrun.html -> Block Malware"
   },
   "adnAboutResetDataConfirm": {
-    "message": "All your settings will be removed, ads in your vault will be deleted, and AdNauseam will restart.\n\nReset AdNauseam to factory settings?",
+    "message": "Tüm ayarlarınız kaldırılacak, kasanızdaki reklamlar silinecek ve AdNauseam yeniden başlatılacaktır. AdNauseam'i fabrika ayarlarına sıfırlayacağım mı?",
     "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "Seçili <span>süzgeç listeleriniz<\/span> deki reklamları gizle",
+    "message": "Seçili <span>süzgeç listeleriniz</span> deki reklamları gizle",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "<span>Süzgeç listeleriniz<\/span> deki reklamlara ziyaretleri kaydet",
+    "message": "<span>Süzgeç listeleriniz</span> deki reklamlara ziyaretleri kaydet",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "İzleyicileri ve diğer kötü amaçlı yazılımları engelleyin (<span> özelleştir<\/span>)",
+    "message": "İzleyicileri ve diğer kötü amaçlı yazılımları engelleyin (<span> özelleştir</span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -84,23 +84,27 @@
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
   "adnNotificationBrowserSetting": {
-    "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
+    "message": "Tarayıcınızdaki içerik engelleme ayarları AdNauseam'a etkileyebilir!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
+  "adnNotificationPrivacyMode": {
+    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
+  },
   "adnNotificationDNTAllowed": {
-    "message": "Bu sayfa <b>Takip etmeme<\/b> ye uyuyor, reklamlara izin verildi.",
+    "message": "Bu sayfa <b>Takip etmeme</b> ye uyuyor, reklamlara izin verildi.",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "Bu sayfa <b>Takip etmeme<\/b> ye uyuyor, tıklamadan gizliyoruz.",
+    "message": "Bu sayfa <b>Takip etmeme</b> ye uyuyor, tıklamadan gizliyoruz.",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "Bu sayfa <b>Takip etmeme<\/b> ye uyuyor, gizlemeden tıklıyoruz",
+    "message": "Bu sayfa <b>Takip etmeme</b> ye uyuyor, gizlemeden tıklıyoruz",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "Bu sayfa <b>Takip etmeme<\/b> ye uyuyor, bilginiz olsun.",
+    "message": "Bu sayfa <b>Takip etmeme</b> ye uyuyor, bilginiz olsun.",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
@@ -141,7 +145,7 @@
   },
   "adnPausedOnPage": {
     "message": "AdNauseam bu sayfada duraklatıldı",
-    "description": "English: Menu->display when paused on page\/site"
+    "description": "English: Menu->display when paused on page/site"
   },
   "adnNotHiding": {
     "message": "AdNauseam şu anda reklamları gizlemiyor",

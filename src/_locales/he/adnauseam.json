@@ -36,15 +36,15 @@
     "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "הסתר פרסומות על פי <span>רשימת המסננים<\/span> אשר בחרת",
+    "message": "הסתר פרסומות על פי <span>רשימת המסננים</span> אשר בחרת",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "תעד ביקורים בפרסומות אשר נמצאו על ידי <span>רשימת המסננים<\/span> אשר בחרת",
+    "message": "תעד ביקורים בפרסומות אשר נמצאו על ידי <span>רשימת המסננים</span> אשר בחרת",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "חסום טראקרים ותוכנות זדוניות אחרות (<span>customize<\/span>)",
+    "message": "חסום טראקרים ותוכנות זדוניות אחרות (<span>customize</span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -87,20 +87,24 @@
     "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
+  "adnNotificationPrivacyMode": {
+    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
+  },
   "adnNotificationDNTAllowed": {
-    "message": "דף זה מכבד <b>אל תעקוב<\/b>, פרסומות מאופשרות.",
+    "message": "דף זה מכבד <b>אל תעקוב</b>, פרסומות מאופשרות.",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "דף זה מכבד <b>אל תעקוב<\/b>, מסתיר, לא לוחץ.",
+    "message": "דף זה מכבד <b>אל תעקוב</b>, מסתיר, לא לוחץ.",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "דף זה מכבד <b>אל תעקוב<\/b>, לוחץ, לא מסתיר.",
+    "message": "דף זה מכבד <b>אל תעקוב</b>, לוחץ, לא מסתיר.",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "דף זה מכבד <b>אל תעקוב<\/b>, לידיעתך.",
+    "message": "דף זה מכבד <b>אל תעקוב</b>, לידיעתך.",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
@@ -141,7 +145,7 @@
   },
   "adnPausedOnPage": {
     "message": "AdNauseam מושהה בדף זה",
-    "description": "English: Menu->display when paused on page\/site"
+    "description": "English: Menu->display when paused on page/site"
   },
   "adnNotHiding": {
     "message": "AdNauseam כרגע לא מסתיר פרסומות",

@@ -8,7 +8,7 @@
     "description": "English: links.html Support"
   },
   "aboutBuiltOn": {
-    "message": "Raeknnettu",
+    "message": "Pohjana käytetty:",
     "description": "English: links.html Built on"
   },
   "aboutFaq": {
@@ -28,23 +28,23 @@
     "description": "English: Firstrun.html -> Click Ads"
   },
   "adnFirstRunBlockingMalware": {
-    "message": "Estää haittaohjelmat",
+    "message": "Estä haittaohjelmat",
     "description": "English: Firstrun.html -> Block Malware"
   },
   "adnAboutResetDataConfirm": {
-    "message": "Kaikki asetukset poistetaan, mainoksia sinun holvissa poistetaan ja AdNauseam käynnistyy uudelleen.\n\npalauttaa AdNauseam tehdasasetukset?",
+    "message": "Kaikki asetuksesi sekä mainosvarastossa olevat mainokset poistetaan ja AdNauseam käynnistyy uudelleen.\n\nPalautetaanko AdNauseamin oletusasetukset?",
     "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "piilota mainokset valitsemistasi <span class='link' id='To3pfilter'>suodatuslistoista<\/span>",
+    "message": "Piilota mainokset valitsemistasi <span class='link' id='To3pfilter'>suodatuslistoista</span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "rekisteröi vierailut mainoksiin valitsemistasi <span class='link' id='To3pfilter'>suodatuslistoista<\/span>",
+    "message": "Rekisteröi vierailut mainoksiin valitsemistasi <span class='link' id='To3pfilter'>suodatuslistoista</span>",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Estää jäljittäjät ja muut haittaohjelmat (<span>kustomoi<\/span>)",
+    "message": "Estä jäljittäjät ja muut haittaohjelmat (<span>mukauta</span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -52,7 +52,7 @@
     "description": "English: Notifications -> Reactivate"
   },
   "adnNotificationDisable": {
-    "message": "Poista käytöstä",
+    "message": "Pois käytöstä",
     "description": "English: Notifications -> Disable"
   },
   "adnNotificationActivateHiding": {
@@ -68,7 +68,7 @@
     "description": "English: Notifications -> Activate malware blocking"
   },
   "adnNotificationActivateEasyList": {
-    "message": "Aktivoi EasyList suodatin",
+    "message": "Aktivoi EasyList-suodatin",
     "description": "English: Notifications -> Activate the EasyList filter"
   },
   "adnNotificationActivateAdNauseamList": {
@@ -76,7 +76,7 @@
     "description": "English: Notifications -> Activate the AdNauseam filter"
   },
   "adnNotificationDisableAdBlocker": {
-    "message": "Sinun adblocker ja Adnauseam saattavat olla ristiriidassa!",
+    "message": "Mainostenestäjäsi ja AdNauseam saattavat olla ristiriidassa!",
     "description": "English: Notifications -> Your ad blocker and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock": {
@@ -84,23 +84,27 @@
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
   "adnNotificationBrowserSetting": {
-    "message": "Sisällön esto selaimen asetukset saattavat häiritä AdNauseam!",
+    "message": "Selaimessasi olevat sisällön estämisen asetukset saattavat häiritä AdNauseamin toimintaa!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
+  "adnNotificationPrivacyMode": {
+    "message": "Olet sallinut AdNauseamille pääsyn verkkosivuihin selatessasi yksityisesti.",
+    "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
+  },
   "adnNotificationDNTAllowed": {
-    "message": "Tämä sivu kunnioittaa <b>Älä Seuraa<\/b> -ominaisuutta, mainokset sallittuja.",
+    "message": "Tämä sivu kunnioittaa <b>Do Not Track</b> -ominaisuutta, joten mainokset sallitaan.",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "Tämä sivu kunnioittaa <b>Älä Seuraa<\/b> -ominaisuutta. Mainokset piilotetaan mutta ei klikata.",
+    "message": "Tämä sivu kunnioittaa <b>Do Not Track</b> -ominaisuutta, joten mainokset piilotetaan, mutta niitä ei klikata.",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "Tämä sivu kunnioittaa <b>Älä Seuraa<\/b> -ominaisuutta. Mainokset klikataan mutta ei piiloteta",
+    "message": "Tämä sivu kunnioittaa <b>Do Not Track</b> -ominaisuutta, joten mainoksia klikataan, mutta niitä ei piiloteta",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "Tämä sivu kunnioittaa <b>Älä seuraa<\/b> -ominaisuutta, ihan vain tiedoksi.",
+    "message": "Tämä sivu kunnioittaa <b>Do Not Track</b> -ominaisuutta, ihan vain tiedoksi.",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
@@ -108,7 +112,7 @@
     "description": "English: Vault.html -> inspected Ad -> TARGET"
   },
   "adnFoundOn": {
-    "message": "LÖYDETTY",
+    "message": "SIVULTA",
     "description": "English: Vault.html -> inspected Ad -> FOUND ON"
   },
   "adnNotYetVisited": {
@@ -120,11 +124,11 @@
     "description": "English: Not Yet Visited"
   },
   "adnFirstRunSwitchMeOn": {
-    "message": "Käännä minut päälle",
+    "message": "Kytke minut päälle",
     "description": "English: Firstrun.html -> Switch me on"
   },
   "adnFirstRunThatsIt": {
-    "message": "Tässäkö se oli? okei…",
+    "message": "Siinäkö kaikki? ok…",
     "description": "English: Firstrun.html -> That's it? ok…"
   },
   "adnFirstRunBetterButStill": {
@@ -132,23 +136,23 @@
     "description": "English: Firstrun.html -> Better, but still…"
   },
   "adnFirstRunLetsGo": {
-    "message": "Eikun menoksi!",
+    "message": "Ei kun menoksi!",
     "description": "English: Firstrun.html -> Let's go!"
   },
   "goToAdNauseamWebsite": {
-    "message": "Siirry AdNauseam-sivustoon",
+    "message": "Siirry AdNauseamin sivustolle",
     "description": "English: Menu icon title -> Go to AdNauseam website"
   },
   "adnPausedOnPage": {
     "message": "AdNauseam on pysäytetty tällä sivulla",
-    "description": "English: Menu->display when paused on page\/site"
+    "description": "English: Menu->display when paused on page/site"
   },
   "adnNotHiding": {
     "message": "AdNauseam ei tällä hetkellä piilota mainoksia",
     "description": "English: Menu->display when not hiding Ads"
   },
   "adnVaultName": {
-    "message": "AdNauseam — AdVault",
+    "message": "AdNauseam — Mainosvarasto",
     "description": "English: AdNauseam — Ad Vault"
   },
   "adnShowingRecentAds": {
@@ -160,11 +164,11 @@
     "description": "English: AdNauseam file export"
   },
   "adnImportAlertFormat": {
-    "message": "Tiedosto ei sisällä mainoksia, valitse toinen tiedosto.",
+    "message": "Tämä tiedosto ei sisällä mainoksia, valitse toinen tiedosto.",
     "description": "appears in ADN vault, after import"
   },
   "adnImportAlert": {
-    "message": "{{count}} mainosta tuotiin",
+    "message": "{{count}} uutta mainosta tuotiin",
     "description": "appears in ADN vault, after import"
   },
   "adnClearConfirm": {

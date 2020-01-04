@@ -32,19 +32,19 @@
     "description": "English: Firstrun.html -> Block Malware"
   },
   "adnAboutResetDataConfirm": {
-    "message": "All your settings will be removed, ads in your vault will be deleted, and AdNauseam will restart.\n\nReset AdNauseam to factory settings?",
+    "message": "Al uw instellingen worden verwijderd, advertenties in uw kluis worden verwijderd en AdNauseam zal opnieuw opstarten.\n\nAdNauseam herstellen naar fabrieksinstellingen?",
     "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "Verberg advertenties in uw geselecteerde <span> filter lijst <\/span>",
+    "message": "Verberg advertenties in uw geselecteerde <span> filter lijst </span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "Register bezoeken op advertenties gevonden via uw <span>filter lijst<\/span>",
+    "message": "Register bezoeken op advertenties gevonden via uw <span>filter lijst</span>",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Blokkeer tracerende programma's (o.a. cookies) en andere schadelijke software (<span>customize<\/span>)",
+    "message": "Blokkeer tracerende programma's (o.a. cookies) en andere schadelijke software (<span>customize</span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -84,23 +84,27 @@
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
   "adnNotificationBrowserSetting": {
-    "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
+    "message": "De 'Content Blocking'-instellingen in uw browser kunnen AdNauseam storen!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
+  "adnNotificationPrivacyMode": {
+    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
+  },
   "adnNotificationDNTAllowed": {
-    "message": "Deze pagina respecteert <b>Do Not Track<\/b>, advertenties zijn toegestaan.",
+    "message": "Deze pagina respecteert <b>Do Not Track</b>, advertenties zijn toegestaan.",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "Deze pagina respecteert <b> Niet Volgen <\/b> Verbergen niet klikken.",
+    "message": "Deze pagina respecteert <b> Niet Volgen </b> Verbergen niet klikken.",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "Deze pagina respecteert <b>Do Not Track<\/b>, klikken niet verbergen",
+    "message": "Deze pagina respecteert <b>Do Not Track</b>, klikken niet verbergen",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "Voor uw informatie: deze pagina respecteert <b>Do Not Track<\/b>.",
+    "message": "Voor uw informatie: deze pagina respecteert <b>Do Not Track</b>.",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
@@ -141,7 +145,7 @@
   },
   "adnPausedOnPage": {
     "message": "AdNauseam is onderbroken op deze pagina",
-    "description": "English: Menu->display when paused on page\/site"
+    "description": "English: Menu->display when paused on page/site"
   },
   "adnNotHiding": {
     "message": "AdNauseam verbergt momenteel geen advertenties",
@@ -184,7 +188,7 @@
     "description": "Menu & AdVault: Failed"
   },
   "adnAdClickingStatusSkippedDNT": {
-    "message": "SKIPPED: DNT Allowed",
+    "message": "Niet-Volgen Toegestaan",
     "description": "Menu & AdVault: SKIPPED: DNT Allowed"
   },
   "adnAdClickingStatusSkippedUser": {
@@ -192,7 +196,7 @@
     "description": "Menu & AdVault: SKIPPED: Clicked by User"
   },
   "adnAdClickingStatusSkippedFrequency": {
-    "message": "SKIPPED: Click Frequency",
+    "message": "Klikfrequentie",
     "description": "Menu & AdVault: SKIPPED: Click Frequency"
   },
   "adnAdClickingStatusSkippedDisabled": {
