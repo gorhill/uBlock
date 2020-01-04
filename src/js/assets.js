@@ -36,7 +36,7 @@ const api = {};
 
 /******************************************************************************/
 
-const observers = [];
+var observers = [];
 
 api.addObserver = function(observer) {
     if ( observers.indexOf(observer) === -1 ) {
@@ -45,14 +45,14 @@ api.addObserver = function(observer) {
 };
 
 api.removeObserver = function(observer) {
-    let pos;
+    var pos;
     while ( (pos = observers.indexOf(observer)) !== -1 ) {
         observers.splice(pos, 1);
     }
 };
 
-const fireNotification = function(topic, details) {
-    let result, r;
+var fireNotification = function(topic, details) {
+    var result, r;
     for ( var i = 0; i < observers.length; i++ ) {
         r = observers[i](topic, details);
         if ( r !== undefined ) { result = r; }
@@ -141,13 +141,11 @@ api.fetchText = function(url, onLoad, onError) {
             return onReject(details);
         }
         details.content = this.responseText;
-
         // ADN: If we've loaded a DNT list, we need to parse it
         if (µBlock.adnauseam.dnt.isDoNotTrackUrl(url)) {
             µBlock.adnauseam.dnt.processEntries(this.responseText);
         }
-
-          onResolve(details);
+        onResolve(details);
     };
 
     const onErrorEvent = function() {
@@ -751,7 +749,6 @@ api.get = function(assetKey, options, callback) {
         }
         if ( !contentURL ) {
             return reportBack('', 'E_NOTFOUND');
-
         }
         if ( assetDetails.content === 'filters' ) {
             api.fetchFilterList(contentURL, onContentLoaded, onContentNotLoaded);
@@ -819,7 +816,6 @@ const getRemote = function(assetKey, callback) {
             tryLoading();
             return;
         }
-
         // ADN: If we've loaded a DNT list, we need to parse it
         if (µBlock.adnauseam.dnt.isDoNotTrackUrl(assetKey)) {
             µBlock.adnauseam.dnt.processEntries(this.responseText);
@@ -829,7 +825,6 @@ const getRemote = function(assetKey, callback) {
             content: details.content,
             url: contentURL
         });
-
         registerAssetSource(assetKey, { error: undefined });
         reportBack(details.content);
     };
@@ -946,7 +941,7 @@ api.rmrf = function() {
 
 // Asset updater area.
 const updaterAssetDelayDefault = 120000;
-let updaterUpdated = [];
+const updaterUpdated = [];
 const updaterFetched = new Set();
 
 let updaterStatus,
@@ -1077,6 +1072,16 @@ api.updateStart = function(details) {
     updateFirst();
 };
 
+api.updateStop = function() {
+    if ( updaterTimer ) {
+        clearTimeout(updaterTimer);
+        updaterTimer = undefined;
+    }
+    if ( updaterStatus !== undefined ) {
+        updateDone();
+    }
+};
+
 api.forceUpdate = function(which) { // ADN
 
     var updateDone = function() {
@@ -1107,16 +1112,6 @@ api.forceUpdate = function(which) { // ADN
         return;
     }
 }
-
-api.updateStop = function() {
-    if ( updaterTimer ) {
-        clearTimeout(updaterTimer);
-        updaterTimer = undefined;
-    }
-    if ( updaterStatus !== undefined ) {
-        updateDone();
-    }
-};
 
 api.isUpdating = function() {
     return updaterStatus === 'updating' &&
