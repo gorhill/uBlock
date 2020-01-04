@@ -2913,7 +2913,7 @@ FilterContainer.prototype.fromSelfie = function(path) {
             return true;
         }),
     ]).then(results =>
-        results.reduce((acc, v) => acc && v, true)
+        results.every(v => v === true)
     );
 };
 
