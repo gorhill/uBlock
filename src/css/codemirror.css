@@ -2,7 +2,6 @@
     font-size: 12px;
     overflow: hidden;
     position: relative;
-    height:100% !important;
     }
 .CodeMirror {
     box-sizing: border-box;
