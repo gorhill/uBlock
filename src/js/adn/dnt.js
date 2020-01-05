@@ -2,12 +2,12 @@
 
   'use strict';
 
-  var µb = µBlock, adn = µb.adnauseam, log = adn.log;
-  var effList = 'eff-dnt-whitelist';
+  const µb = µBlock, adn = µb.adnauseam, log = adn.log;
+  const effList = 'eff-dnt-whitelist';
 
-  var exports = {};
+  let exports = {};
 
-  var firewall = exports.firewall = new µb.Firewall();
+  const firewall = exports.firewall = new µb.Firewall();
 
   exports.shutdown = function () {
 
@@ -17,7 +17,7 @@
   exports.mustNotVisit = function (ad) {
 
     // Here we check whether either page or target are in DNT (?)
-    var val = µb.userSettings.disableClickingForDNT && (
+    const val = µb.userSettings.disableClickingForDNT && (
       µb.userSettings.dntDomains.indexOf(ad.pageDomain) > -1 ||
       µb.userSettings.dntDomains.indexOf(ad.targetDomain) > -1 ||
       µb.userSettings.dntDomains.indexOf(ad.targetHostname) > -1 );
@@ -29,14 +29,11 @@
   }
 
   exports.processEntries = function (content) {
-
-    var domains = [];
+    const domains = [];
 
     while (content.indexOf("@@||") != -1) {
 
-      var start = content.indexOf("@@||"),
-        end = content.indexOf("^$", start),
-        domain = content.substring(start + 4, end);
+      const start = content.indexOf("@@||"), end = content.indexOf("^$", start), domain = content.substring(start + 4, end);
 
       domains.push(domain);
       content = content.substring(end);
@@ -44,14 +41,14 @@
 
     log('[DNT] Parsed ' + domains.length + ' domains'); //, dntDomains);
 
-    var current = µb.userSettings.dntDomains,
-      needsUpdate = current.length != domains.length;
+    const current = µb.userSettings.dntDomains;
+    let needsUpdate = current.length != domains.length;
 
     if (!needsUpdate) {
 
       current.sort();
       domains.sort();
-      for (var i = 0; i < domains.length; ++i) {
+      for (let i = 0; i < domains.length; ++i) {
         if (domains[i] !== current[i]) {
           needsUpdate = true;
           break;
@@ -79,22 +76,22 @@
   }
 
   exports.isDoNotTrackRule = function (rule) {
-    var dntDomains = µb.userSettings.dntDomains;
-    for (var i = 0; i < dntDomains.length; i++) {
+    const dntDomains = µb.userSettings.dntDomains;
+    for (let i = 0; i < dntDomains.length; i++) {
       if (rule.indexOf(dntDomains[i]) != -1)
         return true;
     }
     return false;
   }
 
-  var enabled = exports.enabled = function () {
+  const enabled = exports.enabled = function () {
 
-    var prefs = µb.userSettings;
+    const prefs = µb.userSettings;
     return (prefs.hidingAds && prefs.disableHidingForDNT)
       || (prefs.clickingAds && prefs.disableClickingForDNT);
-  }
+  };
 
-  var disableCosmeticFiltersFor = function (hostname, state) { // not used ?
+  const disableCosmeticFiltersFor = function (hostname, state) { // not used ?
 
     µb.toggleHostnameSwitch({
 
@@ -102,13 +99,11 @@
       hostname: hostname,
       state: state
     });
-  }
+  };
 
-  var updateFilters = exports.updateFilters = function () {
+  const updateFilters = exports.updateFilters = function () {
 
-    var ruleCount = Object.keys(firewall.rules).length,
-      enabled = µb.adnauseam.dnt.enabled(),
-      dnts = µb.userSettings.dntDomains;
+    const ruleCount = Object.keys(firewall.rules).length, enabled = µb.adnauseam.dnt.enabled(), dnts = µb.userSettings.dntDomains;
 
     // Only clear and possibly update if we actually find a change
     if ((enabled && ruleCount > 0) || (!enabled && ruleCount < 1)  ) {
@@ -119,8 +114,8 @@
 
     if (enabled) { // no current-rules
 
-      var firewallRules = []; // dynamic filters
-      for (var i = 0; i < dnts.length; i++) {
+      const firewallRules = []; // dynamic filters
+      for (let i = 0; i < dnts.length; i++) {
 
         firewallRules.push("* " + dnts[i] + " * allow");
       }
@@ -138,27 +133,28 @@
 
   exports.mustAllow = function (context) {
 
-    var action, requestHostname, requestDomain, result = '';
+    let action, requestHostname, requestDomain, result = '';
+    // root-page , request-url
 
-    firewall.evaluateCellZY(context.rootHostname, context.requestHostname, context.requestType);
+    firewall.evaluateCellZY(context.getTabHostname(), context.getHostname(), context.type);
 
     if (firewall.mustBlockOrAllow()) {
 
       result = firewall.r;
 
-      requestHostname = context.requestHostname || µb.URI.hostnameFromURI(context.requestURL);
+      requestHostname = context.hostname || µb.URI.hostnameFromURI(context.url);
       requestDomain = µb.URI.domainFromHostname(requestHostname);
 
-      if (context.rootHostname !== requestDomain) {
+      if (context.tabHostname !== requestDomain) {
 
-        µb.adnauseam.logNetEvent('[DNT*3P] (Allow) ', [ context.rootHostname + ' => ' +
-          requestDomain + ' ' + context.requestURL ]); // suspicious: may want to check
+        µb.adnauseam.logNetEvent('[DNT*3P] (Allow) ', [ context.tabHostname + ' => ' +
+          requestDomain + ' ' + context.url ]); // suspicious: may want to check
       }
 
-      if (context.requestType === 'inline-script') { // #1271
+      if (context.type === 'inline-script') { // #1271
 
-        µb.adnauseam.logNetEvent('[DNT] (Allow)', [ context.rootHostname + ' => ' +
-          context.requestHostname + ' ' + context.requestURL  ]);
+        µb.adnauseam.logNetEvent('[DNT] (Allow)', [ context.tabHostname + ' => ' +
+          context.hostname + ' ' + context.url  ]);
       }
     }
 

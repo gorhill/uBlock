@@ -36,15 +36,15 @@
     "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "フィルターリスト（<span>filter lists<\/span>）に入ってる広告を隠す",
+    "message": "フィルターリスト（<span>filter lists</span>）に入ってる広告を隠す",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "フィルターリスト（<span>filter lists<\/span>）で見つけた広告をレジスターする",
+    "message": "フィルターリスト（<span>filter lists</span>）で見つけた広告をレジスターする",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Block trackers and other malware (<span>customize<\/span>)",
+    "message": "Block trackers and other malware (<span>customize</span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -87,20 +87,24 @@
     "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
+  "adnNotificationPrivacyMode": {
+    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
+  },
   "adnNotificationDNTAllowed": {
-    "message": "This page respects <b>Do Not Track<\/b>, Ads are allowed.",
+    "message": "This page respects <b>Do Not Track</b>, Ads are allowed.",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "This page respects <b>Do Not Track<\/b>, hiding not clicking.",
+    "message": "This page respects <b>Do Not Track</b>, hiding not clicking.",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "This page respects <b>Do Not Track<\/b>, clicking not hiding",
+    "message": "This page respects <b>Do Not Track</b>, clicking not hiding",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "This page respects <b>Do Not Track<\/b>, just so you know.",
+    "message": "This page respects <b>Do Not Track</b>, just so you know.",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
@@ -141,7 +145,7 @@
   },
   "adnPausedOnPage": {
     "message": "AdNauseam is paused on this page",
-    "description": "English: Menu->display when paused on page\/site"
+    "description": "English: Menu->display when paused on page/site"
   },
   "adnNotHiding": {
     "message": "AdNauseam is not currently hiding Ads",

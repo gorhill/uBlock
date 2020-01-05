@@ -36,15 +36,15 @@
     "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "Сакријте огласе у изабраним <span>filter listama<\/span>",
+    "message": "Сакријте огласе у изабраним <span>filter listama</span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "Региструј посете огласа нађених у <span>filter listama<\/span>",
+    "message": "Региструј посете огласа нађених у <span>filter listama</span>",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Блокирајте пратиоце и друге штетне програме (<span>customize<\/span>)",
+    "message": "Блокирајте пратиоце и друге штетне програме (<span>customize</span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -87,20 +87,24 @@
     "message": "„Блокирање садржаја” поставке у вашем прегледачу могу ометати АдНаусеам!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
+  "adnNotificationPrivacyMode": {
+    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
+  },
   "adnNotificationDNTAllowed": {
-    "message": "Ова страница поштује <b>Не прати<\/b>, огласи су дозвољени.",
+    "message": "Ова страница поштује <b>Не прати</b>, огласи су дозвољени.",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "Ова страница поштује <b>Не прати<\/b>, сакивање, не кликтање.",
+    "message": "Ова страница поштује <b>Не прати</b>, сакивање, не кликтање.",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "Ова страница поштује <b>Не прати<\/b>, кликћући, не сакривајући",
+    "message": "Ова страница поштује <b>Не прати</b>, кликћући, не сакривајући",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "Ова страница поштује <b>Не прати<\/b>, само да знате.",
+    "message": "Ова страница поштује <b>Не прати</b>, само да знате.",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
@@ -141,7 +145,7 @@
   },
   "adnPausedOnPage": {
     "message": "АдНаузеам је паузиран на овој страници",
-    "description": "English: Menu->display when paused on page\/site"
+    "description": "English: Menu->display when paused on page/site"
   },
   "adnNotHiding": {
     "message": "АдНаузеам тренутно не сакрива огласе",

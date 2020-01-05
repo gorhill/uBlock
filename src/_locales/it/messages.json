@@ -11,6 +11,18 @@
     "message": "uBlock₀ — Dashboard",
     "description": "English: uBlock₀ — Dashboard"
   },
+  "dashboardUnsavedWarning": {
+    "message": "Attenzione! Ci sono delle modifiche non ancora salvate",
+    "description": "A warning in the dashboard when navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningStay": {
+    "message": "Attendi",
+    "description": "Label for button to prevent navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningIgnore": {
+    "message": "Ignora",
+    "description": "Label for button to ignore unsaved changes"
+  },
   "settingsPageName": {
     "message": "Opzioni",
     "description": "appears as tab name in dashboard"
@@ -56,7 +68,7 @@
     "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Click per disabilitare uBo per questo sito.\n\nCtrl+click per disabilitare uBo solo su questa pagina.",
+    "message": "Click per disabilitare uBlock₀ per questo sito.\n\nCtrl+click per disabilitare uBlock₀ solo su questa pagina.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
@@ -148,11 +160,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Clicca per disabilitare completamente javascript su questo sito",
+    "message": "Clicca per disabilitare completamente JavaScript su questo sito",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Clicca per non disabilitare più javascript su questo sito",
+    "message": "Clicca per non disabilitare più JavaScript su questo sito",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
@@ -240,8 +252,8 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Blocca elemento",
-    "description": "English: Block element"
+    "message": "Blocca elemento...",
+    "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
     "message": "Nascondi lo spazio riservato agli elementi bloccati",
@@ -280,7 +292,7 @@
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
-    "message": "Disattivare l'auditing del collegamento ipertestuale",
+    "message": "Disattiva la revisione dei collegamenti ipertestuali",
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
@@ -308,7 +320,7 @@
     "description": ""
   },
   "settingsNoScriptingPrompt": {
-    "message": "Disattiva javascript",
+    "message": "Disattiva JavaScript",
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
@@ -543,13 +555,109 @@
     "message": "Scheda corrente",
     "description": "Appears in the logger's tab selector"
   },
-  "logFilterPrompt": {
-    "message": "filtra voci del registro",
-    "description": "English: filter log entries"
+  "loggerReloadTip": {
+    "message": "Ricarica il contenuto della scheda",
+    "description": "Tooltip for the reload button in the logger page"
   },
-  "logMaxEntriesTip": {
-    "message": "Numero massimo di voci del registro",
-    "description": "Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  "loggerDomInspectorTip": {
+    "message": "Attiva o disattiva l'ispettore DOM",
+    "description": "Tooltip for the DOM inspector button in the logger page"
+  },
+  "loggerPopupPanelTip": {
+    "message": "Attiva o disattiva il pannello popup",
+    "description": "Tooltip for the popup panel button in the logger page"
+  },
+  "loggerInfoTip": {
+    "message": "uBlock Origin Wiki: Registro",
+    "description": "Tooltip for the top-right info label in the logger page"
+  },
+  "loggerClearTip": {
+    "message": "Pulisci il registro",
+    "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
+  },
+  "loggerPauseTip": {
+    "message": "Metti in pausa il registro (scarta tutti i dati in arrivo)",
+    "description": "Tooltip for the pause button in the logger page"
+  },
+  "loggerUnpauseTip": {
+    "message": "Riattiva il registro",
+    "description": "Tooltip for the play button in the logger page"
+  },
+  "loggerRowFiltererButtonTip": {
+    "message": "Attiva o disattiva il filtraggio del registro",
+    "description": "Tooltip for the row filterer button in the logger page"
+  },
+  "logFilterPrompt": {
+    "message": "filtra il contenuto del registro",
+    "description": "Placeholder string for logger output filtering input field"
+  },
+  "loggerRowFiltererBuiltinTip": {
+    "message": "Opzioni di filtraggio del registro",
+    "description": "Tooltip for the button to bring up logger output filtering options"
+  },
+  "loggerRowFiltererBuiltinNot": {
+    "message": "Non",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinEventful": {
+    "message": "movimentato",
+    "description": "A keyword in the built-in row filtering expression: all items corresponding to uBO doing something (blocked, allowed, redirected, etc.)"
+  },
+  "loggerRowFiltererBuiltinBlocked": {
+    "message": "bloccato",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinAllowed": {
+    "message": "permesso",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltin1p": {
+    "message": "Dominio corrente",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltin3p": {
+    "message": "Di terze parti",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerEntryDetailsHeader": {
+    "message": "Dettagli",
+    "description": "Small header to identify the 'Details' pane for a specific logger entry"
+  },
+  "loggerEntryDetailsFilter": {
+    "message": "Filtro",
+    "description": "Label to identify a filter field"
+  },
+  "loggerEntryDetailsFilterList": {
+    "message": "Elenco dei filtri",
+    "description": "Label to identify a filter list field"
+  },
+  "loggerEntryDetailsRule": {
+    "message": "Regola",
+    "description": "Label to identify a rule field"
+  },
+  "loggerEntryDetailsContext": {
+    "message": "Contesto",
+    "description": "Label to identify a context field (typically a hostname)"
+  },
+  "loggerEntryDetailsRootContext": {
+    "message": "Contesto di root",
+    "description": "Label to identify a root context field (typically a hostname)"
+  },
+  "loggerEntryDetailsPartyness": {
+    "message": "Parte della richiesta",
+    "description": "Label to identify a field providing partyness information"
+  },
+  "loggerEntryDetailsType": {
+    "message": "Tipo",
+    "description": "Label to identify the type of an entry"
+  },
+  "loggerEntryDetailsURL": {
+    "message": "URL",
+    "description": "Label to identify the URL of an entry"
+  },
+  "loggerURLFilteringHeader": {
+    "message": "Filtraggio dinamico dell'URL",
+    "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
     "message": "Contesto:",
@@ -558,10 +666,6 @@
   "loggerURLFilteringTypeLabel": {
     "message": "Tipo:",
     "description": "Label for the type selector"
-  },
-  "loggerURLFilteringHeader": {
-    "message": "Filtraggio dinamico dell'URL",
-    "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerStaticFilteringHeader": {
     "message": "Filtraggio statico",
@@ -611,6 +715,62 @@
     "message": "Non è stato possibile trovare il filtro statico <code>{{filter}}<\/code> in nessun filtro di terze parti attualmente abilitato",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
+  "loggerSettingDiscardPrompt": {
+    "message": "Le voci del registro che non soddisfano tutte e tre le condizioni seguenti verranno automaticamente scartate:",
+    "description": "Logger setting: A sentence to describe the purpose of the settings below"
+  },
+  "loggerSettingPerEntryMaxAge": {
+    "message": "Mantieni le voci degli ultimi {{input}} minuti",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerTabMaxLoads": {
+    "message": "Conserva al massimo {{input}} caricamenti di pagina per scheda",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerTabMaxEntries": {
+    "message": "Conserva al massimo {{input}} voci per scheda",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerEntryLineCount": {
+    "message": "Utilizza {{input}} righe per ogni voce con la modalità espansione verticale",
+    "description": "A logger setting"
+  },
+  "loggerSettingHideColumnsPrompt": {
+    "message": "Nascondi colonne:",
+    "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
+  },
+  "loggerSettingHideColumnTime": {
+    "message": "{{input}} Tempo",
+    "description": "A label for the time column"
+  },
+  "loggerSettingHideColumnFilter": {
+    "message": "{{input}} Filtro\/regola",
+    "description": "A label for the filter or rule column"
+  },
+  "loggerSettingHideColumnContext": {
+    "message": "{{input}} Contesto",
+    "description": "A label for the context column"
+  },
+  "loggerSettingHideColumnPartyness": {
+    "message": "{{input}} Parte della richiesta",
+    "description": "A label for the partyness column"
+  },
+  "loggerExportFormatList": {
+    "message": "Lista",
+    "description": "Label for radio-button to pick export format"
+  },
+  "loggerExportFormatTable": {
+    "message": "Tabella",
+    "description": "Label for radio-button to pick export format"
+  },
+  "loggerExportEncodePlain": {
+    "message": "Semplice",
+    "description": "Label for radio-button to pick export text format"
+  },
+  "loggerExportEncodeMarkdown": {
+    "message": "Markdown",
+    "description": "Label for radio-button to pick export text format"
+  },
   "aboutChangelog": {
     "message": "Change log",
     "description": ""
@@ -634,6 +794,10 @@
   "aboutContributors": {
     "message": "Collaboratori",
     "description": "English: Contributors"
+  },
+  "aboutDependencies": {
+    "message": "Dipendenze esterne (GPLv3-compatibili):",
+    "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
     "message": "Crea file di backup...",
@@ -790,6 +954,14 @@
   "shortcutCapturePlaceholder": {
     "message": "Digita una scorciatoia",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
+  },
+  "genericMergeViewScrollLock": {
+    "message": "Attiva o disattiva il blocco dello scorrimento",
+    "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
+  },
+  "genericCopyToClipboard": {
+    "message": "Copia negli appunti",
+    "description": "Label for buttons used to copy something to the clipboard"
   },
   "dummy": {
     "message": "This entry must be the last one",

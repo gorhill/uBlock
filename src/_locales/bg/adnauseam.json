@@ -32,19 +32,19 @@
     "description": "English: Firstrun.html -> Block Malware"
   },
   "adnAboutResetDataConfirm": {
-    "message": "All your settings will be removed, ads in your vault will be deleted, and AdNauseam will restart.\n\nReset AdNauseam to factory settings?",
+    "message": "Всички Ваши настройки ще бъдат премахнати, рекламите във Вашият трезор ще бъдат изтрити и AdNauseam ще бъде рестартиран.\n\nЖелаете ли да върнем AdNauseam до първоначалните настройки?",
     "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "скриване на реклами във вашите избрани <span class='link' id='To3pfilter'> списъци за филтриране<\/span>",
+    "message": "скриване на реклами във вашите избрани <span class='link' id='To3pfilter'> списъци за филтриране</span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "Регистриране на реклами намерени чрез избраните <span>списъци с филтри<\/span>",
+    "message": "Регистриране на реклами намерени чрез избраните <span>списъци с филтри</span>",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Блокираи на тракери и вируси (<span>персонализираи<\/span>)",
+    "message": "Блокираи на тракери и вируси (<span>персонализираи</span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -84,27 +84,31 @@
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
   "adnNotificationBrowserSetting": {
-    "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
+    "message": "Настройките за \"Блокиране на Съдържание\" във Вашият браузър може да попречат на AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
+  "adnNotificationPrivacyMode": {
+    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
+  },
   "adnNotificationDNTAllowed": {
-    "message": "Тази страница зачита <b>Do Not Track<\/b>, рекламите са позволени.",
+    "message": "Тази страница зачита <b>Do Not Track</b>, рекламите са позволени.",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "Тази страница зачита <b>Do Not Track<\/b>, скриване, не кликване.",
+    "message": "Тази страница зачита <b>Do Not Track</b>, скриване, не кликване.",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "Тази страница зачита <b>Do Not Track<\/b>, кликване, не криене",
+    "message": "Тази страница зачита <b>Do Not Track</b>, кликване, не криене",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "Тази страница зачита <b>Do Not Track<\/b>, за ваше сведение.",
+    "message": "Тази страница зачита <b>Do Not Track</b>, за ваше сведение.",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
-    "message": "TARGET",
+    "message": "ЦЕЛ",
     "description": "English: Vault.html -> inspected Ad -> TARGET"
   },
   "adnFoundOn": {
@@ -136,12 +140,12 @@
     "description": "English: Firstrun.html -> Let's go!"
   },
   "goToAdNauseamWebsite": {
-    "message": "Отиване в AdNauseam сайта",
+    "message": "Отиди в сайта на AdNauseam",
     "description": "English: Menu icon title -> Go to AdNauseam website"
   },
   "adnPausedOnPage": {
     "message": "AdNauseam е в пауза на тази страница",
-    "description": "English: Menu->display when paused on page\/site"
+    "description": "English: Menu->display when paused on page/site"
   },
   "adnNotHiding": {
     "message": "AdNauseam в момента не скрива реклами",

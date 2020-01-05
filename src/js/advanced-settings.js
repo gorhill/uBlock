@@ -25,16 +25,17 @@
 
 /******************************************************************************/
 
-(function() {                           // >>>> Start of private namespace
+(function() {
+// >>>> Start of private namespace
 
 /******************************************************************************/
 
-let messaging = vAPI.messaging;
-let noopFunc = function(){};
+const messaging = vAPI.messaging;
+const noopFunc = function(){};
 
 let beforeHash = '';
 
-let cmEditor = new CodeMirror(
+const cmEditor = new CodeMirror(
     document.getElementById('advancedSettings'),
     {
         autofocus: true,
@@ -48,18 +49,18 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 
 /******************************************************************************/
 
-let hashFromAdvancedSettings = function(raw) {
-    return raw.trim().replace(/\s+/g, '|');
+const hashFromAdvancedSettings = function(raw) {
+    return raw.trim().replace(/\s*[\n\r]+\s*/g, '\n').replace(/[ \t]+/g, ' ');
 };
 
 /******************************************************************************/
 
 // This is to give a visual hint that the content of user blacklist has changed.
 
-let advancedSettingsChanged = (function () {
+const advancedSettingsChanged = (function () {
     let timer = null;
 
-    let handler = ( ) => {
+    const handler = ( ) => {
         timer = null;
         let changed = hashFromAdvancedSettings(cmEditor.getValue()) !== beforeHash;
         uDom.nodeFromId('advancedSettingsApply').disabled = !changed;
@@ -76,8 +77,8 @@ cmEditor.on('changes', advancedSettingsChanged);
 
 /******************************************************************************/
 
-let renderAdvancedSettings = function(first) {
-    let onRead = function(raw) {
+const renderAdvancedSettings = function(first) {
+    const onRead = function(raw) {
         beforeHash = hashFromAdvancedSettings(raw);
         let pretty = [],
             whitespaces = '                                ',
@@ -103,7 +104,7 @@ let renderAdvancedSettings = function(first) {
 
 /******************************************************************************/
 
-let applyChanges = function() {
+const applyChanges = function() {
     messaging.send(
         'dashboard',
         {
@@ -129,4 +130,5 @@ renderAdvancedSettings(true);
 
 /******************************************************************************/
 
-})();                                   // <<<< End of private namespace
+// <<<< End of private namespace
+})();

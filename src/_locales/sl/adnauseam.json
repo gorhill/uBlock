@@ -36,15 +36,15 @@
     "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "Skrij oglase v vaših izbranih <span>seznamih filtrov<\/span>",
+    "message": "Skrij oglase v vaših izbranih <span>seznamih filtrov</span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "Registriraj obiske oglasov, ki so bili najdeni preko vaših <span>seznamov filtrov<\/span>",
+    "message": "Registriraj obiske oglasov, ki so bili najdeni preko vaših <span>seznamov filtrov</span>",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Blokiraj sledilce in drugo zlonamerno programsko opremo (<span>prilagodi<\/span>)",
+    "message": "Blokiraj sledilce in drugo zlonamerno programsko opremo (<span>prilagodi</span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -87,20 +87,24 @@
     "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
+  "adnNotificationPrivacyMode": {
+    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
+  },
   "adnNotificationDNTAllowed": {
-    "message": "Ta stran spoštuje <b>Ne sledi<\/b>, oglasi so dovoljeni.",
+    "message": "Ta stran spoštuje <b>Ne sledi</b>, oglasi so dovoljeni.",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "Ta stran spoštuje <b>Ne sledi<\/b>, skrivam ampak ne klikam.",
+    "message": "Ta stran spoštuje <b>Ne sledi</b>, skrivam ampak ne klikam.",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "Ta stran spoštuje <b>Ne sledi<\/b>, klikam ampak ne skrivam.",
+    "message": "Ta stran spoštuje <b>Ne sledi</b>, klikam ampak ne skrivam.",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "Ta stran spoštuje <b>Ne sledi<\/b>. V vednost.",
+    "message": "Ta stran spoštuje <b>Ne sledi</b>. V vednost.",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
@@ -141,7 +145,7 @@
   },
   "adnPausedOnPage": {
     "message": "AdNauseam je na tej strani zaustavljen",
-    "description": "English: Menu->display when paused on page\/site"
+    "description": "English: Menu->display when paused on page/site"
   },
   "adnNotHiding": {
     "message": "AdNauseam trenutno ne skriva oglasov",

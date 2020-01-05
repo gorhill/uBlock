@@ -2,7 +2,7 @@
     display: none;
     }
 #inspectors.dom #domInspector {
-    display: block;
+    display: flex;
     }
 #domInspector .permatoolbar .highlightMode.invert {
     transform: rotate(180deg);
@@ -85,13 +85,13 @@
     display: none;
     }
 
-#domInspector.vCompact li:not(.hasCosmeticHide):not(.isCosmeticHide) {
+#domInspector:not(.vExpanded) li:not(.hasCosmeticHide):not(.isCosmeticHide) {
     display: none;
     }
 #domInspector #domTree > li {
     display: block;
     }
-#domInspector.vCompact ul {
+#domInspector:not(.vExpanded) ul {
     display: block;
     }
 #domInspector li > ul > li:not(.hasCosmeticHide):not(.isCosmeticHide) {

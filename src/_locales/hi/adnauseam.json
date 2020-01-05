@@ -36,15 +36,15 @@
     "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "आपके चयनित <span> फ़िल्टर सूचियों <\/span> में विज्ञापनों को छुपाएं",
+    "message": "आपके चयनित <span> फ़िल्टर सूचियों </span> में विज्ञापनों को छुपाएं",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "आपके <span> फ़िल्टर सूचियों <\/span> के माध्यम से मिले विज्ञापन पर विज़िट्स रजिस्टर करें",
+    "message": "आपके <span> फ़िल्टर सूचियों </span> के माध्यम से मिले विज्ञापन पर विज़िट्स रजिस्टर करें",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "ट्रैकर्स और अन्य मैलवेयर ब्लॉक करें (<span>अनुकूलित करें<\/span>)",
+    "message": "ट्रैकर्स और अन्य मैलवेयर ब्लॉक करें (<span>अनुकूलित करें</span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -87,20 +87,24 @@
     "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
+  "adnNotificationPrivacyMode": {
+    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
+  },
   "adnNotificationDNTAllowed": {
-    "message": "यह पृष्ठ <b> ट्रैक न करें <\/b> का सम्मान करता है, विज्ञापनों की अनुमति है",
+    "message": "यह पृष्ठ <b> ट्रैक न करें </b> का सम्मान करता है, विज्ञापनों की अनुमति है",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "यह पृष्ठ <b> ट्रैक न करें <\/b> का सम्मान करता है, क्लिक नहीं छिपाना",
+    "message": "यह पृष्ठ <b> ट्रैक न करें </b> का सम्मान करता है, क्लिक नहीं छिपाना",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "यह पृष्ठ <b> ट्रैक न करें <\/b> का सम्मान करता है, छुपना नहीं क्लिक करना",
+    "message": "यह पृष्ठ <b> ट्रैक न करें </b> का सम्मान करता है, छुपना नहीं क्लिक करना",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "यह पृष्ठ <b> ट्रैक न करें <\/b> का सम्मान करता है, बस आपकी जानकारी के लिए",
+    "message": "यह पृष्ठ <b> ट्रैक न करें </b> का सम्मान करता है, बस आपकी जानकारी के लिए",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
@@ -141,7 +145,7 @@
   },
   "adnPausedOnPage": {
     "message": "AdNauseam इस पृष्ठ पर रुका हुआ है",
-    "description": "English: Menu->display when paused on page\/site"
+    "description": "English: Menu->display when paused on page/site"
   },
   "adnNotHiding": {
     "message": "AdNauseam फिलहाल विज्ञापन नहीं छुपा रहे हैं",

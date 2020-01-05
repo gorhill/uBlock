@@ -37,7 +37,7 @@ Ayrıca, bazı ekstra listelerin seçilmesinin web sitelerinin bozulması olası
 
 Özgür.
 Açık kaynak kamu lisanslı (GPLv3)
-Kullanıcılardan kullanıcılara.
+Kullanıcılar tarafından kullanıcılar için.
 
 Katkıda bulunanlar @ Github: https://github.com/gorhill/uBlock/graphs/contributors
 Katkıda bulunanlar @ Crowdin: https://crowdin.net/project/ublock

@@ -10,3 +10,9 @@ body {
     text-align: left;
     width: 100%;
     }
+.codeMirrorContainer .cm-builtin {
+    color: #00F;
+    }
+.codeMirrorContainer .cm-comment.cm-builtin {
+    color: #88F;
+    }

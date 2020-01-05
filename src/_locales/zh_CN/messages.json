@@ -11,6 +11,18 @@
     "message": "uBlock₀ — 控制面板",
     "description": "English: uBlock₀ — Dashboard"
   },
+  "dashboardUnsavedWarning": {
+    "message": "警告！您有未保存的更改",
+    "description": "A warning in the dashboard when navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningStay": {
+    "message": "留下",
+    "description": "Label for button to prevent navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningIgnore": {
+    "message": "忽略",
+    "description": "Label for button to ignore unsaved changes"
+  },
   "settingsPageName": {
     "message": "设置",
     "description": "appears as tab name in dashboard"
@@ -36,7 +48,7 @@
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
-    "message": "uBlock₀ — 网络请求日志",
+    "message": "uBlock₀ — 记录器",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
@@ -88,7 +100,7 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "进入元素临时移除模式",
+    "message": "进入临时移除元素模式",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
@@ -96,11 +108,11 @@
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "打开网络请求记录器",
+    "message": "开启记录器",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "是否禁止此网站弹出任何窗口",
+    "message": "是否禁止此网站的所有弹出窗口",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
@@ -152,7 +164,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "单击不再禁用此网站的所有脚本",
+    "message": "单击以取消禁用此网站的所有脚本",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
@@ -184,7 +196,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "第三方 样式\/图片",
+    "message": "第三方 CSS\/图像",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -236,12 +248,12 @@
     "description": "English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint": {
-    "message": "单击、Ctrl + 单击",
+    "message": "单击，Ctrl + 单击",
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "屏蔽元素",
-    "description": "English: Block element"
+    "message": "屏蔽元素…",
+    "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
     "message": "隐藏已屏蔽元素的占位符",
@@ -300,7 +312,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "屏蔽大于 {{input:number}} kB 的媒体元素",
+    "message": "屏蔽大于 {{input}} kB 的媒体元素",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -492,7 +504,7 @@
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
-    "message": "规则语法：<code>来源 目标 类型 操作<\/code>（<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>完整说明<\/a>）。",
+    "message": "规则语法：<code>来源主机名称 目标主机名称 连接请求类型 操作<\/code>（<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>完整说明<\/a>）。",
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
@@ -536,32 +548,124 @@
     "description": "Appears in the logger's tab selector"
   },
   "logBehindTheScene": {
-    "message": "后台",
+    "message": "后台网络请求",
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
     "message": "当前标签页",
     "description": "Appears in the logger's tab selector"
   },
-  "logFilterPrompt": {
-    "message": "过滤日志条目",
-    "description": "English: filter log entries"
+  "loggerReloadTip": {
+    "message": "重新加载该标签页的内容",
+    "description": "Tooltip for the reload button in the logger page"
   },
-  "logMaxEntriesTip": {
-    "message": "日志条目最大数量",
-    "description": "Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  "loggerDomInspectorTip": {
+    "message": "切换网页元素探查器",
+    "description": "Tooltip for the DOM inspector button in the logger page"
+  },
+  "loggerPopupPanelTip": {
+    "message": "开闭弹出面板",
+    "description": "Tooltip for the popup panel button in the logger page"
+  },
+  "loggerInfoTip": {
+    "message": "uBlock Origin wiki：记录器",
+    "description": "Tooltip for the top-right info label in the logger page"
+  },
+  "loggerClearTip": {
+    "message": "清空记录",
+    "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
+  },
+  "loggerPauseTip": {
+    "message": "暂停记录（放弃所有传入数据）",
+    "description": "Tooltip for the pause button in the logger page"
+  },
+  "loggerUnpauseTip": {
+    "message": "取消暂停记录",
+    "description": "Tooltip for the play button in the logger page"
+  },
+  "loggerRowFiltererButtonTip": {
+    "message": "开闭记录筛选",
+    "description": "Tooltip for the row filterer button in the logger page"
+  },
+  "logFilterPrompt": {
+    "message": "筛选记录条目",
+    "description": "Placeholder string for logger output filtering input field"
+  },
+  "loggerRowFiltererBuiltinTip": {
+    "message": "记录筛选设定",
+    "description": "Tooltip for the button to bring up logger output filtering options"
+  },
+  "loggerRowFiltererBuiltinNot": {
+    "message": "非",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinEventful": {
+    "message": "已应用规则",
+    "description": "A keyword in the built-in row filtering expression: all items corresponding to uBO doing something (blocked, allowed, redirected, etc.)"
+  },
+  "loggerRowFiltererBuiltinBlocked": {
+    "message": "已拦截",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinAllowed": {
+    "message": "已允许",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltin1p": {
+    "message": "第一方",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltin3p": {
+    "message": "第三方",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerEntryDetailsHeader": {
+    "message": "详细资料",
+    "description": "Small header to identify the 'Details' pane for a specific logger entry"
+  },
+  "loggerEntryDetailsFilter": {
+    "message": "过滤规则",
+    "description": "Label to identify a filter field"
+  },
+  "loggerEntryDetailsFilterList": {
+    "message": "规则列表",
+    "description": "Label to identify a filter list field"
+  },
+  "loggerEntryDetailsRule": {
+    "message": "规则",
+    "description": "Label to identify a rule field"
+  },
+  "loggerEntryDetailsContext": {
+    "message": "上下文",
+    "description": "Label to identify a context field (typically a hostname)"
+  },
+  "loggerEntryDetailsRootContext": {
+    "message": "根上下文",
+    "description": "Label to identify a root context field (typically a hostname)"
+  },
+  "loggerEntryDetailsPartyness": {
+    "message": "第一方\/第三方",
+    "description": "Label to identify a field providing partyness information"
+  },
+  "loggerEntryDetailsType": {
+    "message": "类型",
+    "description": "Label to identify the type of an entry"
+  },
+  "loggerEntryDetailsURL": {
+    "message": "URL",
+    "description": "Label to identify the URL of an entry"
+  },
+  "loggerURLFilteringHeader": {
+    "message": "URL 规则",
+    "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
-    "message": "上下文:",
+    "message": "上下文：",
     "description": "Label for the context selector"
   },
   "loggerURLFilteringTypeLabel": {
     "message": "类型:",
     "description": "Label for the type selector"
-  },
-  "loggerURLFilteringHeader": {
-    "message": "动态 URL 过滤",
-    "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerStaticFilteringHeader": {
     "message": "静态规则",
@@ -611,6 +715,62 @@
     "message": "无法在已启用的任何过滤规则列表中找到静态规则 <code>{{filter}}<\/code>",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
+  "loggerSettingDiscardPrompt": {
+    "message": "不符合以下任一状况的记录将会被自动清除：",
+    "description": "Logger setting: A sentence to describe the purpose of the settings below"
+  },
+  "loggerSettingPerEntryMaxAge": {
+    "message": "最多保留 {{input}} 分钟以内的记录",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerTabMaxLoads": {
+    "message": "每个分页最多保留 {{input}} 次内容加载产生的记录",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerTabMaxEntries": {
+    "message": "每个分页最多保留 {{input}} 条记录",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerEntryLineCount": {
+    "message": "垂直扩展模式下每项使用 {{input}} 行",
+    "description": "A logger setting"
+  },
+  "loggerSettingHideColumnsPrompt": {
+    "message": "隐藏栏位：",
+    "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
+  },
+  "loggerSettingHideColumnTime": {
+    "message": "{{input}} 时间",
+    "description": "A label for the time column"
+  },
+  "loggerSettingHideColumnFilter": {
+    "message": "{{input}} 过滤规则",
+    "description": "A label for the filter or rule column"
+  },
+  "loggerSettingHideColumnContext": {
+    "message": "{{input}} 上下文",
+    "description": "A label for the context column"
+  },
+  "loggerSettingHideColumnPartyness": {
+    "message": "{{input}} 第一方\/第三方",
+    "description": "A label for the partyness column"
+  },
+  "loggerExportFormatList": {
+    "message": "列表",
+    "description": "Label for radio-button to pick export format"
+  },
+  "loggerExportFormatTable": {
+    "message": "表格",
+    "description": "Label for radio-button to pick export format"
+  },
+  "loggerExportEncodePlain": {
+    "message": "纯文字",
+    "description": "Label for radio-button to pick export text format"
+  },
+  "loggerExportEncodeMarkdown": {
+    "message": "Markdown",
+    "description": "Label for radio-button to pick export text format"
+  },
   "aboutChangelog": {
     "message": "变更日志",
     "description": ""
@@ -620,7 +780,7 @@
     "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
-    "message": "支持网站",
+    "message": "支持",
     "description": "A link for where to get support"
   },
   "aboutIssues": {
@@ -634,6 +794,10 @@
   "aboutContributors": {
     "message": "贡献者",
     "description": "English: Contributors"
+  },
+  "aboutDependencies": {
+    "message": "外部依赖（兼容 GPLv3 协议）：",
+    "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
     "message": "备份到文件",
@@ -700,7 +864,7 @@
     "description": "Firefox\/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
-    "message": "显示网络日志记录器",
+    "message": "显示记录器",
     "description": "Firefox\/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
@@ -790,6 +954,14 @@
   "shortcutCapturePlaceholder": {
     "message": "键入快捷键",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
+  },
+  "genericMergeViewScrollLock": {
+    "message": "是否启用同步滚动",
+    "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
+  },
+  "genericCopyToClipboard": {
+    "message": "复制到剪贴板",
+    "description": "Label for buttons used to copy something to the clipboard"
   },
   "dummy": {
     "message": "此条目必须是最后一个",

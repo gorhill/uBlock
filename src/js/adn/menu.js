@@ -22,10 +22,9 @@
 /* global vAPI, uDom, $ */
 
 (function () {
-
   'use strict';
 
-  var ads, page, settings; // remove? only if we can find an updated ad already in the DOM
+  let ads, page, settings; // remove? only if we can find an updated ad already in the DOM
 
   vAPI.messaging.addChannelListener('adnauseam', function (request) {
 
@@ -53,7 +52,7 @@
 
   /******************************************************************************/
 
-  var renderPage = function (json) {
+  const renderPage = function (json) {
 
     page = json && json.pageUrl;
     settings = json && json.prefs;
@@ -86,7 +85,7 @@
 
     setCounts(ads, json && json.data && json.data.length);
 
-    var $items = uDom('#ad-list-items');
+    const $items = uDom('#ad-list-items');
 
     $items.removeClass().empty();
 
@@ -95,7 +94,7 @@
       // if we have no page ads, use the most recent
       if (!ads.length) ads = doRecent(json.data);
 
-      for (var i = 0, j = ads.length; i < j; i++) {
+      for (let i = 0, j = ads.length; i < j; i++) {
         appendAd($items, ads[i]);
       }
 
@@ -118,7 +117,7 @@
       });
   }
 
-  var updateMenuState = function () {
+  const updateMenuState = function () {
 
     if (uDom('#main').hasClass('disabled')) {
 
@@ -132,18 +131,18 @@
     }
   }
 
-  var setCounts = function (ads, total) {
+  const setCounts = function (ads, total) {
 
-    var numVisits = visitedCount(ads) || 0;
+    const numVisits = visitedCount(ads) || 0;
     uDom('#vault-count').text(total || 0);
     uDom('#visited-count').text(numVisits || 0);
     uDom('#found-count').text(ads ? ads.length : 0);
     setCost(numVisits);
   }
 
-  var updateInterface = function (json) {
+  const updateInterface = function (json) {
 
-    var page = json.pageUrl;
+    const page = json.pageUrl;
 
     // disable pause & resume buttons for options, vault, about/chrome
     if (page === vAPI.getURL("vault.html") ||
@@ -174,11 +173,11 @@
     uDom('#visited-count').text(visitedCount(ads));
     uDom('#found-count').text(ads.length);
     //console.log("FOUND: " + ads.length);
-  }
+  };
 
-  var layoutAds = function (json) {
+  const layoutAds = function (json) {
 
-    var $items = uDom('#ad-list-items');
+    const $items = uDom('#ad-list-items');
     $items.removeClass().empty();
 
     if (ads) {
@@ -186,30 +185,30 @@
       // if we have no page ads, use the most recent
       if (!ads.length) ads = doRecent(json.data);
 
-      for (var i = 0, j = ads.length; i < j; i++)
+      for (let i = 0, j = ads.length; i < j; i++)
         appendAd($items, ads[i]);
 
       setAttempting(json.current);
     }
-  }
+  };
 
-  var getTitle = function (ad) {
+  const getTitle = function (ad) {
 
-    var title = ad.title + ' ';
+    let title = ad.title + ' ';
     if (ad.visitedTs < 1) {
 
       // adds . to title for each failed attempt
-      for (var i = 0; i < ad.attempts; i++)
+      for (let i = 0; i < ad.attempts; i++)
         title += '.';
     }
     return title;
-  }
+  };
 
-  var updateAd = function (ad) { // update class, title, counts
+  const updateAd = function (ad) { // update class, title, counts
     // console.log(ad);
     if (verify(ad)) {
 
-      var $ad = updateAdClasses(ad);
+      const $ad = updateAdClasses(ad);
 
       // update the title
       $ad.descendants('.title').text(decodeEntities(getTitle(ad)));
@@ -220,20 +219,20 @@
       // update the visited count
       if (ad.pageUrl === page) { // global page here
 
-        var numVisits = visitedCount(ads);
+        const numVisits = visitedCount(ads);
         uDom('#visited-count').text(numVisits); // **uses global ads, page
         setCost(numVisits);
       }
     }
   }
 
-  var verify = function (ad) { // uses global ads
+  const verify = function (ad) { // uses global ads
 
     if (!ads) console.error("NO GLOBAL ADS!!!");
 
     if (ad) {
 
-      for (var i = 0; i < ads.length; i++) {
+      for (let i = 0; i < ads.length; i++) {
 
         if (ads[i].id === ad.id) {
           ads[i] = ad;
@@ -245,7 +244,7 @@
     return false;
   }
 
-  var doRecent = function (data) { // return 6 newest ads
+  const doRecent = function (data) { // return 6 newest ads
 
     uDom("#alert").removeClass('hide');
     uDom('#ad-list-items').addClass('recent-ads');
@@ -253,14 +252,14 @@
     return data.sort(byField('-foundTs')).slice(0, 6);
   }
 
-  var onPage = function (ads, pageUrl) {
+  const onPage = function (ads, pageUrl) {
 
     if (pageUrl) {
 
-      var res = [];
+      const res = [];
 
       // first try current ads
-      for (var i = 0; i < ads.length; i++) {
+      for (let i = 0; i < ads.length; i++) {
         if (ads[i] && ads[i].pageUrl === pageUrl && ads[i].current) {
           res.push(ads[i]);
         }
@@ -268,7 +267,7 @@
 
       // then all page ads
       if (res.length === 0) {
-        for (var i = 0; i < ads.length; i++) {
+        for (let i = 0; i < ads.length; i++) {
           if (ads[i] && ads[i].pageUrl === pageUrl) {
             res.push(ads[i]);
           }
@@ -279,7 +278,7 @@
     }
   }
 
-  var appendAd = function ($items, ad) {
+  const appendAd = function ($items, ad) {
 
     if (ad.contentType === 'img') {
 
@@ -291,13 +290,13 @@
     }
   }
 
-  var removeClassFromAll = function (cls) {
+  const removeClassFromAll = function (cls) {
 
     uDom('.ad-item').removeClass(cls);
     uDom('.ad-item-text').removeClass(cls);
-  }
+  };
 
-  var setAttempting = function (ad) {
+  const setAttempting = function (ad) {
 
     // one 'attempt' at a time
     removeClassFromAll('attempting');
@@ -307,17 +306,17 @@
     }
   }
 
-  var updateAdClasses = function (ad) {
+  const updateAdClasses = function (ad) {
 
-    var $ad = uDom('#ad' + ad.id); //$('#ad' + ad.id);
+    const $ad = uDom('#ad' + ad.id); //$('#ad' + ad.id);
 
     // allow only one just-* at a time...
     removeClassFromAll('just-visited just-failed');
 
     // See https://github.com/dhowe/AdNauseam/issues/61
-    var cls = ad.visitedTs > 0 ? 'just-visited' : 'just-failed';
+    const cls = ad.visitedTs > 0 ? 'just-visited' : 'just-failed';
     // Update the status
-    var txt = cls === 'just-visited' ? 'visited' : 'failed';
+    const txt = cls === 'just-visited' ? 'visited' : 'failed';
     $ad.descendants('.adStatus').text(txt);
 
     $ad.removeClass('failed visited attempting').addClass(cls);
@@ -330,9 +329,13 @@
     return $ad;
   }
 
-  var appendImageAd = function (ad, $items) {
+  const appendImageAd = function (ad, $items) {
+    let $img;
+    let $a;
+    let $span;
+    let $status;
 
-    var $img, $a, $span, $status, $li = uDom(document.createElement('li'))
+    const $li = uDom(document.createElement('li'))
       .attr('id', 'ad' + ad.id)
       .addClass(('ad-item ' + visitedClass(ad)).trim());
 
@@ -378,16 +381,16 @@
     $li.appendTo($items);
   }
 
-  var appendAdStatus = function(ad, parent) {
-    var $status = uDom(document.createElement('span'))
+  const appendAdStatus = function(ad, parent) {
+    const $status = uDom(document.createElement('span'))
         .addClass('adStatus').text(vAPI.i18n("adnAdClickingStatus" + adStatus(ad)));
     $status.appendTo(parent);
 
   }
 
-  var adStatus = function (ad) {
+  const adStatus = function (ad) {
 
-    var status = settings.clickingDisabled ? "SkippedDisabled" : "Pending";
+    let status = settings.clickingDisabled ? "SkippedDisabled" : "Pending";
 
     if (!ad.noVisit) {
       if (ad.attempts > 0) {
@@ -400,9 +403,12 @@
     return status;
   }
 
-  var appendTextAd = function (ad, $items) {
+  const appendTextAd = function (ad, $items) {
+    let $cite;
+    let $h3;
+    let $status;
 
-    var $cite, $h3, $status, $li = uDom(document.createElement('li'))
+    const $li = uDom(document.createElement('li'))
       .attr('id', 'ad' + ad.id)
       .addClass(('ad-item-text ' + visitedClass(ad)).trim());
 
@@ -434,22 +440,22 @@
     $li.appendTo($items);
   }
 
-  var visitedClass = function (ad) {
+  const visitedClass = function (ad) {
 
     return ad.dntAllowed ? 'dnt-allowed' : (ad.visitedTs > 0 ? 'visited' :
       (ad.visitedTs < 0 && ad.attempts >= 3) ? 'failed' : '');
   }
 
-  var visitedCount = function (arr) {
+  const visitedCount = function (arr) {
 
     return (!(arr && arr.length)) ? 0 : arr.filter(function (ad) {
       return ad.visitedTs > 0;
     }).length;
   }
 
-  var getPopupData = function (tabId) {
+  const getPopupData = function (tabId) {
 
-    var onPopupData = function (response) {
+    const onPopupData = function (response) {
       cachePopupData(response);
       vAPI.messaging.send(
         'adnauseam', {
@@ -465,23 +471,24 @@
       }, onPopupData);
   };
 
-  var dval = function () {
+  const dval = function () {
 
     return popupData.pageURL === '' || !popupData.netFilteringSwitch ||
       (popupData.pageHostname === 'behind-the-scene' && !popupData.advancedUserEnabled);
   }
 
   /******************************************************************************/
-  var cachedPopupHash = '',
-    hostnameToSortableTokenMap = {},
-    popupData = {};
+  const cachedPopupHash = '';
 
-  var scopeToSrcHostnameMap = {
+  let hostnameToSortableTokenMap = {};
+  let popupData = {};
+
+  const scopeToSrcHostnameMap = {
     '/': '*',
     '.': ''
   };
 
-  var cachePopupData = function (data) {
+  const cachePopupData = function (data) {
 
     popupData = {};
     scopeToSrcHostnameMap['.'] = '';
@@ -492,13 +499,13 @@
     }
     popupData = data;
     scopeToSrcHostnameMap['.'] = popupData.pageHostname || '';
-    var hostnameDict = popupData.hostnameDict;
+    const hostnameDict = popupData.hostnameDict;
     if (typeof hostnameDict !== 'object') {
       return popupData;
     }
 
-    var domain, prefix;
-    for (var hostname in hostnameDict) {
+    let domain, prefix;
+    for (const hostname in hostnameDict) {
       if (hostnameDict.hasOwnProperty(hostname) === false) {
         continue;
       }
@@ -546,21 +553,21 @@
     vAPI.closePopup();
   });
 
-    uDom('#help-button').on('click', function () {
+  uDom('#help-button').on('click', function () {
 
-    vAPI.messaging.send(
-      'default', {
-        what: 'gotoURL',
-        details: {
-          url: "https://github.com/dhowe/AdNauseam/wiki/FAQ",
-          select: true,
-          index: -1
-        }
+  vAPI.messaging.send(
+    'default', {
+      what: 'gotoURL',
+      details: {
+        url: "https://github.com/dhowe/AdNauseam/wiki/FAQ",
+        select: true,
+        index: -1
       }
-    );
+    }
+  );
 
-    vAPI.closePopup();
-  });
+  vAPI.closePopup();
+});
 
   uDom('#settings-close').on('click', function () {
 
@@ -568,7 +575,7 @@
     uDom('.settings').toggleClass('hide');
   });
 
-  var AboutURL = "https://github.com/dhowe/AdNauseam/wiki/"; // keep
+  const AboutURL = "https://github.com/dhowe/AdNauseam/wiki/"; // keep
 
   uDom('#about-button').on('click', function () {
 
@@ -576,36 +583,37 @@
     //window.open(AboutURL);
   });
 
-  var onHideTooltip = function () {
+  const onHideTooltip = function () {
 
     uDom.nodeFromId('tooltip').classList.remove('show');
   };
 
-  var onShowTooltip = function () {
-
+  const onShowTooltip = function () {
     if (popupData.tooltipsDisabled) {
       return;
     }
 
-    var target = this;
+    const target = this;
 
     // Tooltip container
-    var ttc = uDom(target).ancestors('.tooltipContainer').nodeAt(0) ||
+    const ttc = uDom(target).ancestors('.tooltipContainer').nodeAt(0) ||
       document.body;
-    var ttcRect = ttc.getBoundingClientRect();
+    const ttcRect = ttc.getBoundingClientRect();
 
     // Tooltip itself
-    var tip = uDom.nodeFromId('tooltip');
+    const tip = uDom.nodeFromId('tooltip');
     tip.textContent = target.getAttribute('data-tip');
     tip.style.removeProperty('top');
     tip.style.removeProperty('bottom');
     ttc.appendChild(tip);
 
     // Target rect
-    var targetRect = target.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
 
     // Default is "over"
-    var pos, over = target.getAttribute('data-tip-position') !== 'under';
+    let pos;
+
+    const over = target.getAttribute('data-tip-position') !== 'under';
     if (over) {
       pos = ttcRect.height - targetRect.top + ttcRect.top;
       tip.style.setProperty('bottom', pos + 'px');
@@ -620,7 +628,7 @@
     tip.classList.add('show');
   };
 
-  var toggleEnabled = function (ev) {
+  const toggleEnabled = function (ev) {
 
     if (!popupData || !popupData.pageURL || (popupData.pageHostname ===
         'behind-the-scene' && !popupData.advancedUserEnabled)) {
@@ -641,20 +649,20 @@
     // hashFromPopupData();
   };
 
-  var adjustBlockHeight = function () {
+  const adjustBlockHeight = function () {
 
     // recalculate the height of ad-list
-    var h = document.getElementById('notifications').offsetHeight;
-    var newh = 350 - h;
+    const h = document.getElementById('notifications').offsetHeight;
+    const newh = 350 - h;
     uDom('#ad-list').css('height', newh + 'px');
   };
 
-  var setBackBlockHeight = function () {
+  const setBackBlockHeight = function () {
 
-    var height = document.getElementById('ad-list').offsetHeight;
-    var top = parseInt(uDom('#paused-menu').css('top'));
+    let height = document.getElementById('ad-list').offsetHeight;
+    let top = parseInt(uDom('#paused-menu').css('top'));
 
-    var unit = 39;
+    const unit = 39;
     height += unit;
     top -= unit;
 
@@ -666,10 +674,10 @@
 
   (function () {
 
-    var tabId = null;
+    let tabId = null;
 
     // Extract the tab id of the page this popup is for
-    var matches = window.location.search.match(/[\?&]tabId=([^&]+)/);
+    const matches = window.location.search.match(/[\?&]tabId=([^&]+)/);
     if (matches && matches.length === 2) {
       tabId = matches[1];
     }
@@ -704,5 +712,4 @@
   })();
 
   /********************************************************************/
-
 })();

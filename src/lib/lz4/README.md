@@ -41,3 +41,12 @@ for whatever reason.
 
 This is the WebAssembly module, loaded by `lz4-block-codec-wasm.js` using a
 `same-origin` fetch.
+
+### `lz4-block-codec.wat`
+
+The WebAssembly source code used to generate the WebAssembly module `lz4-block-codec.wasm`.
+
+    wat2wasm ./lz4-block-codec.wat -o ./lz4-block-codec.wasm
+    wasm-opt ./lz4-block-codec.wasm -O4 -o ./lz4-block-codec.wasm
+
+You can get `wat2wasm` at <https://github.com/WebAssembly/wabt>, and `wasm-opt` at <https://github.com/WebAssembly/binaryen>.

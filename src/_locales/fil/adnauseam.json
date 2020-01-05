@@ -36,15 +36,15 @@
     "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "Itinatago ang mga Ad sa iyong napagpiliang <span>mga listahan ng salaan<\/span>",
+    "message": "Itinatago ang mga Ad sa iyong napagpiliang <span>mga listahan ng salaan</span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "Magrehisto ng mga bisita sa mga Ad na nakita sa pamamagitan ng iyong <span>mga listahan ng salaan<\/span>",
+    "message": "Magrehisto ng mga bisita sa mga Ad na nakita sa pamamagitan ng iyong <span>mga listahan ng salaan</span>",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Harangin ang mga tagapagsubaybay at iba pang malware (<span>i-customize<\/span>)",
+    "message": "Harangin ang mga tagapagsubaybay at iba pang malware (<span>i-customize</span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -87,20 +87,24 @@
     "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
+  "adnNotificationPrivacyMode": {
+    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
+  },
   "adnNotificationDNTAllowed": {
-    "message": "Ang pahinang ito ay nirerespeto ang <b>Do Not Track<\/b>, ang mga ad ay pinapayagan.",
+    "message": "Ang pahinang ito ay nirerespeto ang <b>Do Not Track</b>, ang mga ad ay pinapayagan.",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "Ang pahinang ito ay nirerespeto ang <b>Do Not Track<\/b>, itinatago ngunit hindi kini-click.",
+    "message": "Ang pahinang ito ay nirerespeto ang <b>Do Not Track</b>, itinatago ngunit hindi kini-click.",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "Ang pahinang ito ay nirerespeto ang <b>Do Not Track<\/b>, kini-click ngunit hindi itinatago",
+    "message": "Ang pahinang ito ay nirerespeto ang <b>Do Not Track</b>, kini-click ngunit hindi itinatago",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "Ang pahinang ito ay nirerespeto ang <b>Do Not Track<\/b>, para sa iyong kaalaman.",
+    "message": "Ang pahinang ito ay nirerespeto ang <b>Do Not Track</b>, para sa iyong kaalaman.",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
@@ -141,7 +145,7 @@
   },
   "adnPausedOnPage": {
     "message": "Ang AdNauseam ay nakahinto sa pahinang ito",
-    "description": "English: Menu->display when paused on page\/site"
+    "description": "English: Menu->display when paused on page/site"
   },
   "adnNotHiding": {
     "message": "AdNauseam is not currently hiding Ads",

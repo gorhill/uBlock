@@ -36,15 +36,15 @@
     "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "Skrýt reklamy ve vámi vybraných <span class='link' id='To3pfilter'> seznamech filtrů<\/span>",
+    "message": "Skrýt reklamy ve vámi vybraných <span class='link' id='To3pfilter'> seznamech filtrů</span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "Registrace návštěv reklam nalezených prostřednictvím vašich<span> seznamů filtrů<\/span>",
+    "message": "Registrace návštěv reklam nalezených prostřednictvím vašich<span> seznamů filtrů</span>",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Blokovat trackery a další malware (<span>upravit nastavení<\/span>)",
+    "message": "Blokovat trackery a další malware (<span>upravit nastavení</span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -87,20 +87,24 @@
     "message": "\"Blokování obsahu\" nastavení v prohlížeči může kolidovat s AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
+  "adnNotificationPrivacyMode": {
+    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
+  },
   "adnNotificationDNTAllowed": {
-    "message": "Tato stránka respektuje <b>Do Not Track<\/b>, reklamy jsou povoleny.",
+    "message": "Tato stránka respektuje <b>Do Not Track</b>, reklamy jsou povoleny.",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "Tato stránka respektuje <b>politiku Nesledovat (Do Not Track)<\/b>, reklamy jsou skryty a není na ně kliknuto.",
+    "message": "Tato stránka respektuje <b>politiku Nesledovat (Do Not Track)</b>, reklamy jsou skryty a není na ně kliknuto.",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "Tato stránka respektuje <b>politiku Nesledovat (Do Not Track)<\/b>, na reklamy je kliknuto místo skrytí",
+    "message": "Tato stránka respektuje <b>politiku Nesledovat (Do Not Track)</b>, na reklamy je kliknuto místo skrytí",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "Tato stránka respektuje <b>politiku Nesledovat (Do Not Track)<\/b>, jen pro Vaši informaci.",
+    "message": "Tato stránka respektuje <b>politiku Nesledovat (Do Not Track)</b>, jen pro Vaši informaci.",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
@@ -141,7 +145,7 @@
   },
   "adnPausedOnPage": {
     "message": "AdNauseam je pozastaveno na této stránce",
-    "description": "English: Menu->display when paused on page\/site"
+    "description": "English: Menu->display when paused on page/site"
   },
   "adnNotHiding": {
     "message": "AdNauseam momentálně neskrývá žadné reklamy",

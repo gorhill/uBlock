@@ -24,21 +24,18 @@ cp -R src/lib                    $DES/
 #cp -R $DES/_locales/nb           $DES/_locales/no
 cp src/*.html                    $DES/
 cp platform/chromium/*.js        $DES/js/
-cp -R platform/chromium/img      $DES/
 cp platform/chromium/*.html      $DES/
 cp platform/chromium/*.json      $DES/
 cp LICENSE.txt                   $DES/
 
-cp platform/webext/manifest.json        $DES/
-cp platform/webext/vapi-usercss.js      $DES/js/
-cp platform/webext/vapi-webrequest.js   $DES/js/
+cp platform/firefox/manifest.json        $DES/
+cp platform/firefox/vapi-usercss.js      $DES/js/
+cp platform/firefox/vapi-webrequest.js      $DES/js/
 
 echo "*** AdNauseam.firefox: concatenating content scripts"
 cat $DES/js/vapi-usercss.js > /tmp/contentscript.js
 echo >> /tmp/contentscript.js
 grep -v "^'use strict';$" $DES/js/vapi-usercss.real.js >> /tmp/contentscript.js
-echo >> /tmp/contentscript.js
-grep -v "^'use strict';$" $DES/js/vapi-usercss.pseudo.js >> /tmp/contentscript.js
 echo >> /tmp/contentscript.js
 grep -v "^'use strict';$" $DES/js/contentscript.js >> /tmp/contentscript.js
 mv /tmp/contentscript.js $DES/js/contentscript.js
@@ -65,6 +62,12 @@ if [ "$1" = all ]; then
     pushd $(dirname $DES/) > /dev/null
     zip adnauseam.firefox.zip -qr $(basename $DES/)/*
     popd > /dev/null
+elif [ -n "$1" ]; then
+    echo "*** AdNauseam.firefox: Creating versioned package..."
+    pushd $DES > /dev/null
+    zip ../$(basename $DES).xpi -qr *
+    popd > /dev/null
+    mv "$BLDIR"/uBlock0.firefox.xpi "$BLDIR"/uBlock0_"$1".firefox.xpi
 fi
 
 echo "*** AdNauseam.firefox: Package done."

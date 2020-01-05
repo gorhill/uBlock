@@ -36,15 +36,15 @@
     "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "Skjul annonser i din valgte <span>filterlister<\/span>",
+    "message": "Skjul annonser i din valgte <span>filterlister</span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "Registrer besøk på annonser funnet via dine <span>filterlister<\/span>",
+    "message": "Registrer besøk på annonser funnet via dine <span>filterlister</span>",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Blokker sporing og annen skadelig programvare (<span>tilpass<\/span>)",
+    "message": "Blokker sporing og annen skadelig programvare (<span>tilpass</span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -87,20 +87,24 @@
     "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
+  "adnNotificationPrivacyMode": {
+    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
+  },
   "adnNotificationDNTAllowed": {
-    "message": "Denne siden respekterer <b>Ikke spor<\/b>, annonser er tillatt.",
+    "message": "Denne siden respekterer <b>Ikke spor</b>, annonser er tillatt.",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "Denne siden respekterer <b>Ikke spor<\/b>, gjemmer, men klikker ikke.",
+    "message": "Denne siden respekterer <b>Ikke spor</b>, gjemmer, men klikker ikke.",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "Denne siden respekterer <b>Ikke spor<\/b>, klikker, men gjemmer ikke",
+    "message": "Denne siden respekterer <b>Ikke spor</b>, klikker, men gjemmer ikke",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "Denne siden respekterer <b>Ikke spor<\/b>, bare så du vet det.",
+    "message": "Denne siden respekterer <b>Ikke spor</b>, bare så du vet det.",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
@@ -141,7 +145,7 @@
   },
   "adnPausedOnPage": {
     "message": "AdNauseam er midlertidig stanset på denne siden",
-    "description": "English: Menu->display when paused on page\/site"
+    "description": "English: Menu->display when paused on page/site"
   },
   "adnNotHiding": {
     "message": "AdNauseam gjemmer for øyeblikket ikke annonser",

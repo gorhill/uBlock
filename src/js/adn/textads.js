@@ -37,15 +37,15 @@
 
     /***************************** Functions ******************************/
 
-    var bingText = function (dom) {
+    const bingText = function (dom) {
 
-      var ads = [],
-      divs = $find(dom,'div.sb_add');
+      const ads = [], divs = $find(dom,'div.sb_add');
 
-      for (var i = 0; i < divs.length; i++) {
-
-        var title, site, text,
-          idiv = divs[i];
+      for (let i = 0; i < divs.length; i++) {
+        let title;
+        let site;
+        let text;
+        const idiv = divs[i];
 
         title = $find(idiv, 'h2 a');
         site = $find(idiv, 'div.b_attribution cite');
@@ -53,7 +53,7 @@
 
         if (text.length && site.length && title.length) {
 
-          var ad = vAPI.adParser.createAd('bing', $attr(title, 'href'), {
+          const ad = vAPI.adParser.createAd('bing', $attr(title, 'href'), {
             title: $text(title),
             text: $text(text),
             site: $text(site)
@@ -63,21 +63,20 @@
         } else {
           console.warn('[TEXTADS] bingTextHandler.fail: ', divs[i], title, site, text); //title, site, text);
         }
-
       }
 
       return ads;
-    }
+    };
 
-    var yahooText = function (e) {
+    const yahooText = function (e) {
 
-      var ads = [],
-        divs = $find(e, 'div.dd .layoutMiddle');
+      const ads = [], divs = $find(e, 'div.dd .layoutMiddle');
 
-      for (var i = 0; i < divs.length; i++) {
-
-        var title, site, text,
-          idiv = $find(divs[i], 'div.compTitle');
+      for (let i = 0; i < divs.length; i++) {
+        let title;
+        let site;
+        let text;
+        const idiv = $find(divs[i], 'div.compTitle');
 
         if (idiv.length) {
           title = $find(idiv[0], 'h3.title a');
@@ -88,7 +87,7 @@
 
         if (text.length && site.length && title.length) {
 
-          var ad = vAPI.adParser.createAd('yahoo', $attr(title, 'href'), {
+          const ad = vAPI.adParser.createAd('yahoo', $attr(title, 'href'), {
             title: $text(title),
             text: $text(text),
             site: $text(site)
@@ -103,14 +102,14 @@
       }
 
       return ads;
-    }
+    };
 
-    var aolText = function (div) {
-
-      var ad, title = $find(div, '.title span'),
-        text = $find(div, '.desc span'),
-        site = $find(div, '.durl span'),
-        target = $find(div, '.title a');
+    const aolText = function (div) {
+      let ad;
+      const title = $find(div, '.title span');
+      const text = $find(div, '.desc span');
+      const site = $find(div, '.durl span');
+      const target = $find(div, '.title a');
 
       if (text.length && site.length && title.length && target.length) {
 
@@ -126,16 +125,16 @@
       }
 
       return [ad];
-    }
+    };
 
-    var askText = function (dom) {
-      var ads = [],
-        divs = $find(dom, 'div[id^="e"][data-bg=true]');
+    const askText = function (dom) {
+      const ads = [], divs = $find(dom, 'div[id^="e"][data-bg=true]');
 
-        for (var i = 0; i < divs.length; i++) {
-
-          var title, site, text,
-            idiv = divs[i];
+        for (let i = 0; i < divs.length; i++) {
+          let title;
+          let site;
+          let text;
+          const idiv = divs[i];
 
           title = $find(idiv, 'div:nth-child(1) a');
           site = $find(idiv, 'div:nth-child(2) a');
@@ -143,7 +142,7 @@
 
           if (text.length && site.length && title.length) {
 
-            var ad = vAPI.adParser.createAd('ask', $attr(title, 'href'), {
+            const ad = vAPI.adParser.createAd('ask', $attr(title, 'href'), {
               title: $text(title),
               text: $text(text),
               site: $text(site)
@@ -158,13 +157,16 @@
         }
 
       return ads;
-    }
+    };
 
-    var googleText = function (li) {
+    const googleText = function (li) {
+      let ad;
 
-      var ad, title = $find(li, '.ad_cclk a:nth-child(2)'), // title must contains href
-        text = $find(li, '.ads-creative'),
-        site = $find(li, '.ads-visurl cite');
+      const // title must contains href
+      title = $find(li, '.ad_cclk a:nth-child(2)');
+
+      const text = $find(li, '.ads-creative');
+      const site = $find(li, '.ads-visurl cite');
 
       if (text.length && site.length && title.length) {
 
@@ -179,14 +181,13 @@
       }
 
       return [ad];
-    }
+    };
 
-    var ddgText = function (div) {
-
-
-      var ad, title = $find(div, 'h2.result__title > a.result__a'),
-        text = $find(div, 'div.result__snippet > a'),
-        site = $find(div, 'a.result__url');
+    const ddgText = function (div) {
+      let ad;
+      const title = $find(div, 'h2.result__title > a.result__a');
+      const text = $find(div, 'div.result__snippet > a');
+      const site = $find(div, 'a.result__url');
 
       if (text.length && site.length && title.length) {
 
@@ -202,14 +203,14 @@
       }
 
       return [ad];
-    }
+    };
 
-    var baiduText = function (div) {
+    const baiduText = function (div) {
 
       if(!div.id.match(/\d{4}/g)) return;
 
-      var sections = div.childNodes;
-      var ad, title, text, site;
+      const sections = div.childNodes;
+      let ad, title, text, site;
 
       if(sections.length == 3){
           title = $find(sections[0], 'h3 a'),
@@ -232,16 +233,14 @@
       }
 
       return [ad];
-    }
+    };
 
-    var googleAdsText = function (div) {
+    const googleAdsText = function (div) {
 
-       var ads = [],
-        divs = $find(div, 'ul > li');
+       const ads = [], divs = $find(div, 'ul > li');
 
-      for (var i = 0; i < divs.length; i++) {
-
-        var title, subs, site, text;
+      for (let i = 0; i < divs.length; i++) {
+        let title, subs, site, text;
 
           title = $find(divs[i], 'h4 > a');
           subs = $find(divs[i], 'p');
@@ -252,7 +251,7 @@
 
         if (text.length && site.length && title.length) {
 
-          var ad = vAPI.adParser.createAd('Ads by google', $attr(title, 'href'), {
+          const ad = vAPI.adParser.createAd('Ads by google', $attr(title, 'href'), {
             title: $text(title),
             text: $text(text),
             site: $text(site)
@@ -268,7 +267,7 @@
       }
 
       return ads;
-    }
+    };
 
     var youtubeAds = function (div) {
 
@@ -296,26 +295,28 @@
     }
 
     // TODO: replace with core::domainFromURI
-    var parseDomain = function (url, useLast) { // dup. in shared
+    const parseDomain = function (url, useLast) { // dup. in shared
 
-      var domains = decodeURIComponent(url).match(/https?:\/\/[^?\/]+/g);
+      const domains = decodeURIComponent(url).match(/https?:\/\/[^?\/]+/g);
       return domains && domains.length ? new URL(
           useLast ? domains[domains.length - 1] : domains[0])
         .hostname : undefined;
-    }
+    };
 
     /*************************** JQUERY-SHIMS ****************************/
 
-    var $is = function (elem, selector) { // jquery shim
+    const $is = function (elem, selector) {
+      // jquery shim
 
       if (selector.nodeType) {
         return elem === selector;
       }
 
-      var qa = (typeof (selector) === 'string' ?
-          document.querySelectorAll(selector) : selector),
-        length = qa.length,
-        returnArr = [];
+      const qa = (typeof (selector) === 'string' ?
+          document.querySelectorAll(selector) : selector);
+
+      let length = qa.length;
+      const returnArr = [];
 
       while (length--) {
         if (qa[length] === elem) {
@@ -326,19 +327,19 @@
       return false;
     };
 
-    var $attr = function (ele, attr, val) { // jquery shim
+    const $attr = function (ele, attr, val) { // jquery shim
 
       return val ? (ele.length ? ele[0] : ele).setAttribute(attr, val) :
         (ele.length ? ele[0] : ele).getAttribute(attr);
     };
 
-    var $text = function (ele) { // jquery shim
+    const $text = function (ele) { // jquery shim
 
       if (typeof ele.length === 'undefined')
         return ele.innerText || ele.textContent;
 
-      var text = '';
-      for (var i = 0; i < ele.length; i++) {
+      let text = '';
+      for (let i = 0; i < ele.length; i++) {
 
         text += ele[i].innerText || ele[i].textContent;
       }
@@ -346,16 +347,16 @@
       return text;
     };
 
-    var $find = function (ele, selector) { // jquery shim
+    const $find = function (ele, selector) { // jquery shim
 
       return ele && (ele.length ? ele[0] : ele).querySelectorAll(selector);
     };
 
     /******************************** VARS ********************************/
 
-    var googleRegex = /^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i;
+    const googleRegex = /^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i;
 
-    var filters = [{
+    const filters = [{
       selector: 'li.ads-ad',
       handler: googleText,
       name: 'google',
@@ -402,58 +403,56 @@
       domain: /^.*youtube\.com/i
     }];
 
-    var checkFilters = function (elem) {
+    const checkFilters = function (elem) {
 
-      var active = filters.filter(function (f) {
-        var domain = (parent !== window) ? parseDomain(document.referrer) : document.domain;
-        var matched = f.domain.test(domain);
+      const active = filters.filter(function (f) {
+        const domain = (parent !== window) ? parseDomain(document.referrer) : document.domain;
+        const matched = f.domain.test(domain);
         // if (!matched) console.warn('Domain mismatch: ' + domain + ' != ' + f.domain);
         return matched;
       });
 
-      for (var i = 0; i < active.length; i++) {
+      for (let i = 0; i < active.length; i++) {
         if ($is(elem, active[i].selector)) {
           return active[i].handler(elem);
         }
       }
-    }
+    };
 
     /******************************** API *********************************/
 
-    var process = function (elem) {
+    const process = function (elem) {
         // domain specific
         if (vAPI.prefs.textAdsDisabled) {
           console.log("adn: texts-ads disabled");
           return;
         }
-        var ads = checkFilters(elem);
+        const ads = checkFilters(elem);
         if (ads) {
 
-          for (var i = 0; i < ads.length; i++) {
+          for (let i = 0; i < ads.length; i++) {
             if (typeof ads[i] !== 'undefined') {
               if (vAPI.prefs.logEvents) console.log("[PARSED] TEXT-AD", ads[i]);
                 vAPI.adParser.notifyAddon(ads[i]);
             }
           }
         }
-      }
+      };
 
-    var findGoogleTextAd = function(elem) {
+    const findGoogleTextAd = function(elem) {
           // table
           // -> .rhtitle
           // -> .rhbody
           // -> .rhurl
 
-          var div = $find(elem, 'ul > li > div > table')
+          const div = $find(elem, 'ul > li > div > table');
           if (!div.length) return;
 
-          var title = $find(div, '.rhtitle'),
-            text = $find(div, '.rhbody'),
-            site = $find(div, 'a.rhurl');
+          const title = $find(div, '.rhtitle'), text = $find(div, '.rhbody'), site = $find(div, 'a.rhurl');
 
           if (text.length && site.length && title.length) {
 
-            var ad = vAPI.adParser.createAd('Google AdSense', $attr(site, 'href'), {
+            const ad = vAPI.adParser.createAd('Google AdSense', $attr(site, 'href'), {
               title: $text(title),
               text: $text(text),
               site: $text(site)
@@ -468,7 +467,7 @@
             console.warn('[TEXTADS] findGoogleTextAd.fail: ', title, site, text); //title, site, text);
           }
 
-    }
+    };
 
     /**********************************************************************/
 

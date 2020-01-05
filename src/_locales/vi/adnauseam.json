@@ -36,15 +36,15 @@
     "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "ẩn quảng cáo trong <span class='link' id='To3pfilter'>bộ lọc<\/span> bạn đã chọn",
+    "message": "ẩn quảng cáo trong <span class='link' id='To3pfilter'>bộ lọc</span> bạn đã chọn",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "đăng ký truy cập vào quảng cáo được phát hiện qua <span class='link' id='To3pfilter'>bộ lọc của bạn<\/span>",
+    "message": "đăng ký truy cập vào quảng cáo được phát hiện qua <span class='link' id='To3pfilter'>bộ lọc của bạn</span>",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Chặn các trackers và phần mềm độc hại (<span>tùy chỉnh<\/span>) khác",
+    "message": "Chặn các trackers và phần mềm độc hại (<span>tùy chỉnh</span>) khác",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -87,20 +87,24 @@
     "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
+  "adnNotificationPrivacyMode": {
+    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
+  },
   "adnNotificationDNTAllowed": {
-    "message": "Trang này tuân thủ <b>Do Not Track<\/b>, quảng cáo được cho phép.",
+    "message": "Trang này tuân thủ <b>Do Not Track</b>, quảng cáo được cho phép.",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "Trang này tuân thủ <b>Do Not Track<\/b>, ẩn chứ không mở.",
+    "message": "Trang này tuân thủ <b>Do Not Track</b>, ẩn chứ không mở.",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "Trang này tuân thủ <b>Do Not Track<\/b>, mở chứ không ẩn",
+    "message": "Trang này tuân thủ <b>Do Not Track</b>, mở chứ không ẩn",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "Thông báo để bạn biết rằng trang này tuân thủ <b>Do Not Track<\/b>.",
+    "message": "Thông báo để bạn biết rằng trang này tuân thủ <b>Do Not Track</b>.",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
@@ -141,7 +145,7 @@
   },
   "adnPausedOnPage": {
     "message": "AdNauseam đã được tạm dừng trên trang này",
-    "description": "English: Menu->display when paused on page\/site"
+    "description": "English: Menu->display when paused on page/site"
   },
   "adnNotHiding": {
     "message": "AdNauseam hiện không ẩn quảng cáo",

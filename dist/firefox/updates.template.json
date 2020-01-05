@@ -4,9 +4,9 @@
    "updates": [
     {
      "version": "$ext_version",
-     "applications": { "gecko": { "strict_min_version": "52" } },
+     "browser_specific_settings": { "gecko": { "strict_min_version": "55" } },
      "update_info_url": "https://github.com/gorhill/uBlock/releases/tag/$tag_version",
-     "update_link": "https://github.com/gorhill/uBlock/releases/download/$tag_version/uBlock0.firefox.signed.xpi"
+     "update_link": "https://github.com/gorhill/uBlock/releases/download/$tag_version/uBlock0_$tag_version.firefox.signed.xpi"
     }
    ]
   }

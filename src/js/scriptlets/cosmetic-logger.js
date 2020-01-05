@@ -35,30 +35,34 @@ if (
     return;
 }
 
-let reHasCSSCombinators = /[ >+~]/,
-    reHasPseudoClass = /:+(?:after|before)$/,
-    sanitizedSelectors = new Map(),
-    simpleDeclarativeSet = new Set(),
-    simpleDeclarativeStr,
-    complexDeclarativeSet = new Set(),
-    complexDeclarativeStr,
-    proceduralDict = new Map(),
-    nodesToProcess = new Set(),
-    shouldProcessDeclarativeComplex = false,
-    shouldProcessProcedural = false,
-    loggedSelectors = new Set();
+const reHasCSSCombinators = /[ >+~]/;
+const reHasPseudoClass = /:+(?:after|before)$/;
+const sanitizedSelectors = new Map();
+const simpleDeclarativeSet = new Set();
+let simpleDeclarativeStr;
+const complexDeclarativeSet = new Set();
+let complexDeclarativeStr;
+const proceduralDict = new Map();
+const exceptionDict = new Map();
+let exceptionStr;
+const nodesToProcess = new Set();
+let shouldProcessDeclarativeComplex = false;
+let shouldProcessProcedural = false;
+let shouldProcessExceptions = false;
+const loggedSelectors = new Set();
 
 /******************************************************************************/
 
-let shouldProcess = function() {
+const shouldProcess = function() {
     return nodesToProcess.size !== 0 ||
            shouldProcessDeclarativeComplex ||
-           shouldProcessProcedural;
+           shouldProcessProcedural ||
+           shouldProcessExceptions;
 };
 
 /******************************************************************************/
 
-let processDeclarativeSimple = function(node, out) {
+const processDeclarativeSimple = function(node, out) {
     if ( simpleDeclarativeSet.size === 0 ) { return; }
     if ( simpleDeclarativeStr === undefined ) {
         simpleDeclarativeStr = Array.from(simpleDeclarativeSet).join(',\n');
@@ -69,14 +73,14 @@ let processDeclarativeSimple = function(node, out) {
     ) {
         return;
     }
-    for ( let selector of simpleDeclarativeSet ) {
+    for ( const selector of simpleDeclarativeSet ) {
         if (
             (node === document || node.matches(selector) === false) &&
             (node.querySelector(selector) === null)
         ) {
             continue;
         }
-        out.push(sanitizedSelectors.get(selector) || selector);
+        out.push(`##${sanitizedSelectors.get(selector) || selector}`);
         simpleDeclarativeSet.delete(selector);
         simpleDeclarativeStr = undefined;
         loggedSelectors.add(selector);
@@ -86,15 +90,15 @@ let processDeclarativeSimple = function(node, out) {
 
 /******************************************************************************/
 
-let processDeclarativeComplex = function(out) {
+const processDeclarativeComplex = function(out) {
     if ( complexDeclarativeSet.size === 0 ) { return; }
     if ( complexDeclarativeStr === undefined ) {
         complexDeclarativeStr = Array.from(complexDeclarativeSet).join(',\n');
     }
     if ( document.querySelector(complexDeclarativeStr) === null ) { return; }
-    for ( let selector of complexDeclarativeSet ) {
+    for ( const selector of complexDeclarativeSet ) {
         if ( document.querySelector(selector) === null ) { continue; }
-        out.push(sanitizedSelectors.get(selector) || selector);
+        out.push(`##${sanitizedSelectors.get(selector) || selector}`);
         complexDeclarativeSet.delete(selector);
         complexDeclarativeStr = undefined;
         loggedSelectors.add(selector);
@@ -104,11 +108,11 @@ let processDeclarativeComplex = function(out) {
 
 /******************************************************************************/
 
-let processProcedural = function(out) {
+const processProcedural = function(out) {
     if ( proceduralDict.size === 0 ) { return; }
-    for ( let entry of proceduralDict ) {
+    for ( const entry of proceduralDict ) {
         if ( entry[1].test() === false ) { continue; }
-        out.push(entry[1].raw);
+        out.push(`##${entry[1].raw}`);
         proceduralDict.delete(entry[0]);
         if ( proceduralDict.size === 0 ) { break; }
     }
@@ -116,16 +120,33 @@ let processProcedural = function(out) {
 
 /******************************************************************************/
 
-let processTimer = new vAPI.SafeAnimationFrame(() => {
+const processExceptions = function(out) {
+    if ( exceptionDict.size === 0 ) { return; }
+    if ( exceptionStr === undefined ) {
+        exceptionStr = Array.from(exceptionDict.keys()).join(',\n');
+    }
+    if ( document.querySelector(exceptionStr) === null ) { return; }
+    for ( const [ selector, raw ] of exceptionDict ) {
+        if ( document.querySelector(selector) === null ) { continue; }
+        out.push(`#@#${raw}`);
+        exceptionDict.delete(selector);
+        exceptionStr = undefined;
+        loggedSelectors.add(raw);
+    }
+};
+
+/******************************************************************************/
+
+const processTimer = new vAPI.SafeAnimationFrame(() => {
     //console.time('dom logger/scanning for matches');
     processTimer.clear();
-    let toLog = [];
+    const toLog = [];
     if ( nodesToProcess.size !== 0 && simpleDeclarativeSet.size !== 0 ) {
         if ( nodesToProcess.size !== 1 && nodesToProcess.has(document) ) {
             nodesToProcess.clear();
             nodesToProcess.add(document);
         }
-        for ( let node of nodesToProcess ) {
+        for ( const node of nodesToProcess ) {
             processDeclarativeSimple(node, toLog);
         }
         nodesToProcess.clear();
@@ -138,6 +159,10 @@ let processTimer = new vAPI.SafeAnimationFrame(() => {
         processProcedural(toLog);
         shouldProcessProcedural = false;
     }
+    if ( shouldProcessExceptions ) {
+        processExceptions(toLog);
+        shouldProcessExceptions = false;
+    }
     if ( toLog.length === 0 ) { return; }
     vAPI.messaging.send(
         'scriptlets',
@@ -145,7 +170,7 @@ let processTimer = new vAPI.SafeAnimationFrame(() => {
             what: 'logCosmeticFilteringData',
             frameURL: window.location.href,
             frameHostname: window.location.hostname,
-            matchedSelectors: toLog
+            matchedSelectors: toLog,
         }
     );
     //console.timeEnd('dom logger/scanning for matches');
@@ -153,10 +178,10 @@ let processTimer = new vAPI.SafeAnimationFrame(() => {
 
 /******************************************************************************/
 
-let attributeObserver = new MutationObserver(mutations => {
+const attributeObserver = new MutationObserver(mutations => {
     if ( simpleDeclarativeSet.size !== 0 ) {
-        for ( let mutation of mutations ) {
-            let node = mutation.target;
+        for ( const mutation of mutations ) {
+            const node = mutation.target;
             if ( node.nodeType !== 1 ) { continue; }
             nodesToProcess.add(node);
         }
@@ -174,20 +199,20 @@ let attributeObserver = new MutationObserver(mutations => {
 
 /******************************************************************************/
 
-let handlers = {
+const handlers = {
     onFiltersetChanged: function(changes) {
         //console.time('dom logger/filterset changed');
-        let simpleSizeBefore = simpleDeclarativeSet.size,
+        const simpleSizeBefore = simpleDeclarativeSet.size,
             complexSizeBefore = complexDeclarativeSet.size,
             logNow = [];
-        for ( let entry of (changes.declarative || []) ) {
+        for ( const entry of (changes.declarative || []) ) {
             for ( let selector of entry[0].split(',\n') ) {
                 if ( entry[1] !== 'display:none!important;' ) {
-                    logNow.push(selector + ':style(' + entry[1] + ')');
+                    logNow.push(`##${selector}:style(${entry[1]})`);
                     continue;
                 }
                 if ( reHasPseudoClass.test(selector) ) {
-                    let sanitized = selector.replace(reHasPseudoClass, '');
+                    const sanitized = selector.replace(reHasPseudoClass, '');
                     sanitizedSelectors.set(sanitized, selector);
                     selector = sanitized;
                 }
@@ -222,10 +247,23 @@ let handlers = {
             Array.isArray(changes.procedural) &&
             changes.procedural.length !== 0
         ) {
-            for ( let selector of changes.procedural ) {
+            for ( const selector of changes.procedural ) {
                 proceduralDict.set(selector.raw, selector);
             }
             shouldProcessProcedural = true;
+        }
+        if ( Array.isArray(changes.exceptions) ) {
+            for ( const selector of changes.exceptions ) {
+                if ( loggedSelectors.has(selector) ) { continue; }
+                if ( selector.charCodeAt(0) === 0x7B /* '{' */ ) {
+                    const details = JSON.parse(selector);
+                    exceptionDict.set(details.style[0], details.raw);
+                } else {
+                    exceptionDict.set(selector, selector);
+                }
+            }
+            exceptionStr = undefined;
+            shouldProcessExceptions = true;
         }
         if ( shouldProcess() ) {
             processTimer.start(1);
@@ -246,7 +284,7 @@ let handlers = {
         // This is to guard against runaway job queue. I suspect this could
         // occur on slower devices.
         if ( simpleDeclarativeSet.size !== 0 ) {
-            for ( let node of addedNodes ) {
+            for ( const node of addedNodes ) {
                 if ( node.parentNode === null ) { continue; }
                 nodesToProcess.add(node);
             }
@@ -257,6 +295,9 @@ let handlers = {
         if ( proceduralDict.size !== 0 ) {
             shouldProcessProcedural = true;
         }
+        if ( exceptionDict.size !== 0 ) {
+            shouldProcessExceptions = true;
+        }
         if ( shouldProcess() ) {
             processTimer.start(100);
         }
@@ -265,7 +306,7 @@ let handlers = {
 
 /******************************************************************************/
 
-let onMessage = function(msg) {
+const onMessage = function(msg) {
     if ( msg.what === 'loggerDisabled' ) {
         processTimer.clear();
         attributeObserver.disconnect();

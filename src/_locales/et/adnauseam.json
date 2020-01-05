@@ -36,15 +36,15 @@
     "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "Peida valitud reklaamid <span>filtreeri nimekirju<\/span>",
+    "message": "Peida valitud reklaamid <span>filtreeri nimekirju</span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "Registreeri reklaamide külastusi mis on leitud läbi teie <span>filtreeritud nimekirjade<\/span>",
+    "message": "Registreeri reklaamide külastusi mis on leitud läbi teie <span>filtreeritud nimekirjade</span>",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Blokeeri jälitajad ja muu pahavara (<span>kohanda<\/span>)",
+    "message": "Blokeeri jälitajad ja muu pahavara (<span>kohanda</span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -87,20 +87,24 @@
     "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
+  "adnNotificationPrivacyMode": {
+    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
+  },
   "adnNotificationDNTAllowed": {
-    "message": "See leht austab <b>Ära jälgi<\/b>, reklaamid lubatud.",
+    "message": "See leht austab <b>Ära jälgi</b>, reklaamid lubatud.",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "See leht austab <b>Ära jälgi<\/b>, peitmine mitte klikkamine.",
+    "message": "See leht austab <b>Ära jälgi</b>, peitmine mitte klikkamine.",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "See lehekülg austab <b>Ära Jälgi<\/b>, klikkamine mitte peitmine",
+    "message": "See lehekülg austab <b>Ära Jälgi</b>, klikkamine mitte peitmine",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "See lehekülg austab <b>Ära Jälgi<\/b>, võtke teadmiseks.",
+    "message": "See lehekülg austab <b>Ära Jälgi</b>, võtke teadmiseks.",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
@@ -141,7 +145,7 @@
   },
   "adnPausedOnPage": {
     "message": "AdNauseam on peatatud sellel lehel",
-    "description": "English: Menu->display when paused on page\/site"
+    "description": "English: Menu->display when paused on page/site"
   },
   "adnNotHiding": {
     "message": "AdNauseam ei peida hetkel reklaame",

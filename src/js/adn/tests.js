@@ -23,7 +23,7 @@ if (!vAPI.parser) vAPI.adCheck();
 
 QUnit.test('notifications', function (assert) {
 
-  var notes = [HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList];
+ let notes = [HidingDisabled, ClickingDisabled, BlockingDisabled, EasyList];
   assert.equal(addNotification(notes, HidingDisabled), false);
   assert.equal(notes.length,4);
   assert.equal(removeNotification(notes, EasyList), true);
@@ -31,7 +31,7 @@ QUnit.test('notifications', function (assert) {
   assert.equal(removeNotification(notes, EasyList), false);
   assert.equal(notes.length,3);
 
-  var notes = [];
+  let notes = [];
   assert.equal(addNotification(notes, ClickingDisabled), true);
   assert.equal(notes.length, 1);
   assert.equal(removeNotification(notes, BlockingDisabled), false);
@@ -67,8 +67,8 @@ QUnit.test('parseDomain', function (assert) {
 
 QUnit.test('parseOnClick', function (assert) {
 
-  var host = 'thepage.com', proto = "http:";
-  var test = '<div onclick=\"window.open(\'http://google.com\',toolbar=no,location = no,status = no,menubar = no,scrollbars = yes,resizable = yes,width = SomeSize,height = SomeSize\');return false;\">link</div>';
+  const host = 'thepage.com', proto = "http:";
+  let test = '<div onclick=\"window.open(\'http://google.com\',toolbar=no,location = no,status = no,menubar = no,scrollbars = yes,resizable = yes,width = SomeSize,height = SomeSize\');return false;\">link</div>';
   assert.equal(vAPI.adParser.parseOnClick(test, host, proto), 'http://google.com');
 
   test = '<div onclick=\"javascript:window.open(\'http://google.com\',toolbar=no,location = no,status = no,menubar = no,scrollbars = yes,resizable = yes,width = SomeSize,height = SomeSize\');return false;\">link</div>';

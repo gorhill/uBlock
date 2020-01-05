@@ -36,15 +36,15 @@
     "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "隱藏由你的<span>篩選器列表<\/span>標記的廣告",
+    "message": "隱藏由你的<span>篩選器列表</span>標記的廣告",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "訪問由你的<span>篩選器列表<\/span>標記的廣告",
+    "message": "訪問由你的<span>篩選器列表</span>標記的廣告",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "阻止追蹤器和其他惡意軟體 （<span>自訂<\/span>）",
+    "message": "阻止追蹤器和其他惡意軟體 （<span>自訂</span>）",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -76,7 +76,7 @@
     "description": "English: Notifications -> Activate the AdNauseam filter"
   },
   "adnNotificationDisableAdBlocker": {
-    "message": "廣告攔截插件和 AdNauseam 可能會發生衝突 ！",
+    "message": "廣告攔截擴充套件和 AdNauseam 可能會發生衝突 ！",
     "description": "English: Notifications -> Your ad blocker and AdNauseam may conflict!"
   },
   "adnNotificationDisableUBlock": {
@@ -87,20 +87,24 @@
     "message": "瀏覽器中的 \"內容封鎖\" 設置可能會干擾 AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
+  "adnNotificationPrivacyMode": {
+    "message": "您已允许AdNauseam在隱私瀏覽模式時得知您的線上行為",
+    "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
+  },
   "adnNotificationDNTAllowed": {
-    "message": "此頁尊重 <b>不跟蹤<\/b>準則，允許廣告。",
+    "message": "此頁尊重 <b>不跟蹤</b>準則，允許廣告。",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "此頁尊重 <b>不跟蹤<\/b>準則，隱藏但不點擊廣告。",
+    "message": "此頁尊重 <b>不跟蹤</b>準則，隱藏但不點擊廣告。",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "此頁尊重 <b>不跟蹤<\/b>準則，點擊但顯示廣告。",
+    "message": "此頁尊重 <b>不跟蹤</b>準則，點擊但顯示廣告。",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "此頁尊重 <b>不跟蹤<\/b>準則。",
+    "message": "此頁尊重 <b>不跟蹤</b>準則。",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
@@ -116,7 +120,7 @@
     "description": "English: Not Yet Visited"
   },
   "adnAllowedByDNT": {
-    "message": "允許此廣告，遵循<b>不跟蹤<\/b>準則",
+    "message": "允許此廣告，遵循<b>不跟蹤</b>準則",
     "description": "English: Not Yet Visited"
   },
   "adnFirstRunSwitchMeOn": {
@@ -141,7 +145,7 @@
   },
   "adnPausedOnPage": {
     "message": "AdNauseam 在本頁面被暫停",
-    "description": "English: Menu->display when paused on page\/site"
+    "description": "English: Menu->display when paused on page/site"
   },
   "adnNotHiding": {
     "message": "AdNauseam 目前不隱藏廣告",

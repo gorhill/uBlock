@@ -36,15 +36,15 @@
     "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "Amaga anuncis en els vostres <span>filtres<\/span> sel·leccionats",
+    "message": "Amaga anuncis en els vostres <span>filtres</span> sel·leccionats",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "Registra les visites als anuncis que es troben als vostres <span>filtres<\/span>",
+    "message": "Registra les visites als anuncis que es troben als vostres <span>filtres</span>",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Bloca els rastrejadors i altre programari maliciós (<span>personalitza-ho<\/span>)",
+    "message": "Bloca els rastrejadors i altre programari maliciós (<span>personalitza-ho</span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -87,20 +87,24 @@
     "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
+  "adnNotificationPrivacyMode": {
+    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
+  },
   "adnNotificationDNTAllowed": {
-    "message": "Aquesta pàgina respecta el paràmetre <b>No vull ser seguit<\/b>, es permeten els anuncis.",
+    "message": "Aquesta pàgina respecta el paràmetre <b>No vull ser seguit</b>, es permeten els anuncis.",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "Aquesta pàgina respecta el paràmetre <b>No vull ser seguit<\/b>, els anuncis s'amaguen però no se'ls fa clic.",
+    "message": "Aquesta pàgina respecta el paràmetre <b>No vull ser seguit</b>, els anuncis s'amaguen però no se'ls fa clic.",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "Aquesta pàgina respecta el paràmetre <b>No vull ser seguit<\/b>, es fa clic als anuncis però no s'amaguen.",
+    "message": "Aquesta pàgina respecta el paràmetre <b>No vull ser seguit</b>, es fa clic als anuncis però no s'amaguen.",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "Aquesta pàgina respecta el paràmetre <b>No vull ser seguit<\/b>.",
+    "message": "Aquesta pàgina respecta el paràmetre <b>No vull ser seguit</b>.",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
@@ -141,7 +145,7 @@
   },
   "adnPausedOnPage": {
     "message": "AdNauseam està aturat en aquesta pàgina",
-    "description": "English: Menu->display when paused on page\/site"
+    "description": "English: Menu->display when paused on page/site"
   },
   "adnNotHiding": {
     "message": "L'AdNauseam no està amagant els anuncis",

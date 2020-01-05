@@ -11,6 +11,18 @@
     "message": "uBlock₀ — నియంత్రణా వేదిక",
     "description": "English: uBlock₀ — Dashboard"
   },
+  "dashboardUnsavedWarning": {
+    "message": "Warning! You have unsaved changes",
+    "description": "A warning in the dashboard when navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningStay": {
+    "message": "Stay",
+    "description": "Label for button to prevent navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningIgnore": {
+    "message": "Ignore",
+    "description": "Label for button to ignore unsaved changes"
+  },
   "settingsPageName": {
     "message": "ఐచ్చికాలు",
     "description": "appears as tab name in dashboard"
@@ -44,7 +56,7 @@
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
-    "message": "uBlock₀ — Asset viewer",
+    "message": "uBlock₀ — వనరుల పట్టిక",
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
@@ -184,7 +196,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "3 వ పార్టీ CSS\/చిత్రాలు",
+    "message": "సైట్-ఏతరుల సిఎస్ఎస్\/చిత్రాలు",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -241,7 +253,7 @@
   },
   "pickerContextMenuEntry": {
     "message": "దీన్ని నిరోధించు",
-    "description": "English: Block element"
+    "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
     "message": "నిరోధించబడిన అంశాలయోక్క స్థానసంగ్రాహకాలను దాచుము",
@@ -404,7 +416,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "దిగుమతించు...",
+    "message": "దిగుమతిచేయు...",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -536,20 +548,116 @@
     "description": "Appears in the logger's tab selector"
   },
   "logBehindTheScene": {
-    "message": "తేర వెనుక",
+    "message": "తెర వెనుక",
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
     "message": "ప్రస్తుత ట్యాబ్",
     "description": "Appears in the logger's tab selector"
   },
+  "loggerReloadTip": {
+    "message": "Reload the tab content",
+    "description": "Tooltip for the reload button in the logger page"
+  },
+  "loggerDomInspectorTip": {
+    "message": "Toggle the DOM inspector",
+    "description": "Tooltip for the DOM inspector button in the logger page"
+  },
+  "loggerPopupPanelTip": {
+    "message": "Toggle the popup panel",
+    "description": "Tooltip for the popup panel button in the logger page"
+  },
+  "loggerInfoTip": {
+    "message": "uBlock Origin wiki: The logger",
+    "description": "Tooltip for the top-right info label in the logger page"
+  },
+  "loggerClearTip": {
+    "message": "Clear logger",
+    "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
+  },
+  "loggerPauseTip": {
+    "message": "Pause logger (discard all incoming data)",
+    "description": "Tooltip for the pause button in the logger page"
+  },
+  "loggerUnpauseTip": {
+    "message": "Unpause logger",
+    "description": "Tooltip for the play button in the logger page"
+  },
+  "loggerRowFiltererButtonTip": {
+    "message": "Toggle logger filtering",
+    "description": "Tooltip for the row filterer button in the logger page"
+  },
   "logFilterPrompt": {
     "message": "చిట్టాలోని నమోదులను జల్లెడపరచు",
-    "description": "English: filter log entries"
+    "description": "Placeholder string for logger output filtering input field"
   },
-  "logMaxEntriesTip": {
-    "message": "చిట్టాలోని గరిష్ట నమోదుల సంఖ్య",
-    "description": "Tooltip informaing that the input field is to set the maximum number of entries in the log"
+  "loggerRowFiltererBuiltinTip": {
+    "message": "Logger filtering options",
+    "description": "Tooltip for the button to bring up logger output filtering options"
+  },
+  "loggerRowFiltererBuiltinNot": {
+    "message": "Not",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinEventful": {
+    "message": "eventful",
+    "description": "A keyword in the built-in row filtering expression: all items corresponding to uBO doing something (blocked, allowed, redirected, etc.)"
+  },
+  "loggerRowFiltererBuiltinBlocked": {
+    "message": "blocked",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinAllowed": {
+    "message": "allowed",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltin1p": {
+    "message": "1st-party",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltin3p": {
+    "message": "3rd-party",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerEntryDetailsHeader": {
+    "message": "వివరాలు",
+    "description": "Small header to identify the 'Details' pane for a specific logger entry"
+  },
+  "loggerEntryDetailsFilter": {
+    "message": "Filter",
+    "description": "Label to identify a filter field"
+  },
+  "loggerEntryDetailsFilterList": {
+    "message": "Filter list",
+    "description": "Label to identify a filter list field"
+  },
+  "loggerEntryDetailsRule": {
+    "message": "నియమం",
+    "description": "Label to identify a rule field"
+  },
+  "loggerEntryDetailsContext": {
+    "message": "సందర్భం",
+    "description": "Label to identify a context field (typically a hostname)"
+  },
+  "loggerEntryDetailsRootContext": {
+    "message": "Root context",
+    "description": "Label to identify a root context field (typically a hostname)"
+  },
+  "loggerEntryDetailsPartyness": {
+    "message": "Partyness",
+    "description": "Label to identify a field providing partyness information"
+  },
+  "loggerEntryDetailsType": {
+    "message": "రకం",
+    "description": "Label to identify the type of an entry"
+  },
+  "loggerEntryDetailsURL": {
+    "message": "URL",
+    "description": "Label to identify the URL of an entry"
+  },
+  "loggerURLFilteringHeader": {
+    "message": "క్రియాశీలక URL ఫిల్టరింగ్",
+    "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
     "message": "సందర్భం:",
@@ -559,12 +667,8 @@
     "message": "రకం:",
     "description": "Label for the type selector"
   },
-  "loggerURLFilteringHeader": {
-    "message": "క్రియాశీలక URL వడపోత",
-    "description": "Small header to identify the dynamic URL filtering section"
-  },
   "loggerStaticFilteringHeader": {
-    "message": "నిశ్చలాత్మక వడపోత",
+    "message": "నిశ్చలాత్మక ఫిల్టరింగ్",
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
@@ -611,6 +715,62 @@
     "message": "నిశ్చలాత్మక ఫిల్టర్ అయిన <code>{{filter}}<\/code> ప్రస్తుతం ఉత్తేజపరిచిన ఫిల్టర్ జాబితాలలో కనుగొనబడలేదు",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
+  "loggerSettingDiscardPrompt": {
+    "message": "Logger entries which do not fulfill all three conditions below will be automatically discarded:",
+    "description": "Logger setting: A sentence to describe the purpose of the settings below"
+  },
+  "loggerSettingPerEntryMaxAge": {
+    "message": "Preserve entries from the last {{input}} minutes",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerTabMaxLoads": {
+    "message": "Preserve at most {{input}} page loads per tab",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerTabMaxEntries": {
+    "message": "Preserve at most {{input}} entries per tab",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerEntryLineCount": {
+    "message": "Use {{input}} lines per entry in vertically expanded mode",
+    "description": "A logger setting"
+  },
+  "loggerSettingHideColumnsPrompt": {
+    "message": "Hide columns:",
+    "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
+  },
+  "loggerSettingHideColumnTime": {
+    "message": "{{input}} Time",
+    "description": "A label for the time column"
+  },
+  "loggerSettingHideColumnFilter": {
+    "message": "{{input}} Filter\/rule",
+    "description": "A label for the filter or rule column"
+  },
+  "loggerSettingHideColumnContext": {
+    "message": "{{input}} Context",
+    "description": "A label for the context column"
+  },
+  "loggerSettingHideColumnPartyness": {
+    "message": "{{input}} Partyness",
+    "description": "A label for the partyness column"
+  },
+  "loggerExportFormatList": {
+    "message": "జాబితా",
+    "description": "Label for radio-button to pick export format"
+  },
+  "loggerExportFormatTable": {
+    "message": "పట్టిక",
+    "description": "Label for radio-button to pick export format"
+  },
+  "loggerExportEncodePlain": {
+    "message": "సాదా",
+    "description": "Label for radio-button to pick export text format"
+  },
+  "loggerExportEncodeMarkdown": {
+    "message": "Markdown",
+    "description": "Label for radio-button to pick export text format"
+  },
   "aboutChangelog": {
     "message": "మార్పుల సంచిక",
     "description": ""
@@ -624,7 +784,7 @@
     "description": "A link for where to get support"
   },
   "aboutIssues": {
-    "message": "ఇష్యూ ట్రాకర్",
+    "message": "సమస్యా సంచిక",
     "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
@@ -634,6 +794,10 @@
   "aboutContributors": {
     "message": "ప్రాజెక్ట్కు సహాయ పడిన వారు",
     "description": "English: Contributors"
+  },
+  "aboutDependencies": {
+    "message": "External dependencies (GPLv3-compatible):",
+    "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
     "message": "ఫైల్ లో భద్రపరచు",
@@ -790,6 +954,14 @@
   "shortcutCapturePlaceholder": {
     "message": "షార్ట్కట్ టైప్ చేయండి",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
+  },
+  "genericMergeViewScrollLock": {
+    "message": "Toggle locked scrolling",
+    "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
+  },
+  "genericCopyToClipboard": {
+    "message": "Copy to clipboard",
+    "description": "Label for buttons used to copy something to the clipboard"
   },
   "dummy": {
     "message": "ఇది అంతిమంగా వుండాల్సిన నమోదు",

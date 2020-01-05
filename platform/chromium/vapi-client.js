@@ -1,7 +1,8 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2018 The uBlock Origin authors
+    Copyright (C) 2014-present The uBlock Origin authors
+    Copyright (C) 2015-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -52,13 +53,18 @@ vAPI.shutdown = {
         this.jobs.push(job);
     },
     exec: function() {
-        var job;
-        while ( (job = this.jobs.pop()) ) {
-            job();
-        }
+        // Shutdown asynchronously, to ensure shutdown jobs are called from
+        // the top context.
+        self.requestIdleCallback(( ) => {
+            const jobs = this.jobs.slice();
+            this.jobs.length = 0;
+            while ( jobs.length !== 0 ) {
+                (jobs.pop())();
+            }
+        });
     },
     remove: function(job) {
-        var pos;
+        let pos;
         while ( (pos = this.jobs.indexOf(job)) !== -1 ) {
             this.jobs.splice(pos, 1);
         }
@@ -78,26 +84,27 @@ vAPI.messaging = {
     shuttingDown: false,
 
     Connection: function(handler, details) {
-        var messaging = vAPI.messaging;
-        this.messaging = messaging;
+        this.messaging = vAPI.messaging;
         this.handler = handler;
         this.id = details.id;
         this.to = details.to;
         this.toToken = details.toToken;
         this.from = details.from;
         this.fromToken = details.fromToken;
-        this.checkBound = this.check.bind(this);
         this.checkTimer = undefined;
-        // On Firefox it appears ports are not automatically disconnected when
-        // navigating to another page.
-        if ( messaging.Connection.pagehide !== undefined ) { return; }
-        messaging.Connection.pagehide = function() {
-            for ( var connection of this.connections.values() ) {
+        // On Firefox it appears ports are not automatically disconnected
+        // when navigating to another page.
+        const ctor = this.messaging.Connection;
+        if ( ctor.pagehide !== undefined ) { return; }
+        ctor.pagehide = ( ) => {
+            for ( const connection of this.messaging.connections.values() ) {
                 connection.disconnect();
-                connection.handler(connection.toDetails('connectionBroken'));
+                connection.handler(
+                    connection.toDetails('connectionBroken')
+                );
             }
-        }.bind(messaging);
-        window.addEventListener('pagehide', messaging.Connection.pagehide);
+        };
+        window.addEventListener('pagehide', ctor.pagehide);
     },
 
     shutdown: function() {
@@ -105,9 +112,15 @@ vAPI.messaging = {
         this.destroyPort();
     },
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/403
+    //   Spurious disconnection can happen, so do not consider such events
+    //   as world-ending, i.e. stay around. Except for embedded frames.
+
     disconnectListener: function() {
         this.port = null;
-        vAPI.shutdown.exec();
+        if ( window !== window.top ) {
+            vAPI.shutdown.exec();
+        }
     },
     disconnectListenerBound: null,
 
@@ -116,16 +129,15 @@ vAPI.messaging = {
 
         // Sent to all channels
         if ( details.broadcast ) {
-            for ( var channelName of this.channels.keys() ) {
+            for ( const channelName of this.channels.keys() ) {
                 this.sendToChannelListeners(channelName, details.msg);
             }
             return;
         }
 
         // Response to specific message previously sent
-        var listener;
         if ( details.auxProcessId ) {
-            listener = this.pending.get(details.auxProcessId);
+            const listener = this.pending.get(details.auxProcessId);
             if ( listener !== undefined ) {
                 this.pending.delete(details.auxProcessId);
                 listener(details.msg);
@@ -136,7 +148,7 @@ vAPI.messaging = {
         if ( details.channelName !== 'vapi' ) { return; }
 
         // Internal handler
-        var connection;
+        let connection;
 
         switch ( details.msg.what ) {
         case 'connectionAccepted':
@@ -149,11 +161,11 @@ vAPI.messaging = {
             connection.receive(details.msg);
             break;
         case 'connectionRequested':
-            var listeners = this.channels.get(details.msg.to);
+            const listeners = this.channels.get(details.msg.to);
             if ( listeners === undefined ) { return; }
-            var port = this.getPort();
+            const port = this.getPort();
             if ( port === null ) { return; }
-            for ( listener of listeners ) {
+            for ( const listener of listeners ) {
                 if ( listener(details.msg) !== true ) { continue; }
                 details.msg.what = 'connectionAccepted';
                 details.msg.toToken = port.name;
@@ -192,7 +204,7 @@ vAPI.messaging = {
             clearTimeout(this.portTimer);
             this.portTimer = null;
         }
-        var port = this.port;
+        const port = this.port;
         if ( port !== null ) {
             port.disconnect();
             port.onMessage.removeListener(this.messageListenerCallback);
@@ -201,16 +213,16 @@ vAPI.messaging = {
         }
         this.channels.clear();
         if ( this.connections.size !== 0 ) {
-            for ( var connection of this.connections.values() ) {
+            for ( const connection of this.connections.values() ) {
                 connection.receive({ what: 'connectionBroken' });
             }
             this.connections.clear();
         }
         // service pending callbacks
         if ( this.pending.size !== 0 ) {
-            var pending = this.pending;
+            const pending = this.pending;
             this.pending = new Map();
-            for ( var callback of pending.values() ) {
+            for ( const callback of pending.values() ) {
                 if ( typeof callback === 'function' ) {
                     callback(null);
                 }
@@ -230,16 +242,20 @@ vAPI.messaging = {
         } catch (ex) {
             this.port = null;
         }
-        if ( this.port !== null ) {
-            this.port.onMessage.addListener(this.messageListenerCallback);
-            this.port.onDisconnect.addListener(this.disconnectListenerBound);
-            this.portTimerDelay = 10000;
-            if ( this.portTimer === null ) {
-                this.portTimer = vAPI.setTimeout(
-                    this.portPollerBound,
-                    this.portTimerDelay
-                );
-            }
+        // Not having a valid port at this point means the main process is
+        // not available: no point keeping the content scripts alive.
+        if ( this.port === null ) {
+            vAPI.shutdown.exec();
+            return null;
+        }
+        this.port.onMessage.addListener(this.messageListenerCallback);
+        this.port.onDisconnect.addListener(this.disconnectListenerBound);
+        this.portTimerDelay = 10000;
+        if ( this.portTimer === null ) {
+            this.portTimer = vAPI.setTimeout(
+                this.portPollerBound,
+                this.portTimerDelay
+            );
         }
         return this.port;
     },
@@ -254,15 +270,15 @@ vAPI.messaging = {
         // the main process is no longer reachable: memory leaks and bad
         // performance become a risk -- especially for long-lived, dynamic
         // pages. Guard against this.
-        if ( this.pending.size > 25 ) {
+        if ( this.pending.size > 50 ) {
             vAPI.shutdown.exec();
         }
-        var port = this.getPort();
+        const port = this.getPort();
         if ( port === null ) {
             if ( typeof callback === 'function' ) { callback(); }
             return;
         }
-        var auxProcessId;
+        let auxProcessId;
         if ( callback ) {
             auxProcessId = this.auxProcessId++;
             this.pending.set(auxProcessId, callback);
@@ -275,10 +291,10 @@ vAPI.messaging = {
     },
 
     connectTo: function(from, to, handler) {
-        var port = this.getPort();
+        const port = this.getPort();
         if ( port === null ) { return; }
-        var connection = new this.Connection(handler, {
-            id: from + '-' + to + '-' + vAPI.sessionId,
+        const connection = new this.Connection(handler, {
+            id: `${from}-${to}-${vAPI.sessionId}`,
             to: to,
             from: from,
             fromToken: port.name
@@ -298,19 +314,19 @@ vAPI.messaging = {
     },
 
     disconnectFrom: function(connectionId) {
-        var connection = this.connections.get(connectionId);
+        const connection = this.connections.get(connectionId);
         if ( connection === undefined ) { return; }
         connection.disconnect();
     },
 
     sendTo: function(connectionId, payload) {
-        var connection = this.connections.get(connectionId);
+        const connection = this.connections.get(connectionId);
         if ( connection === undefined ) { return; }
         connection.send(payload);
     },
 
     addChannelListener: function(channelName, listener) {
-        var listeners = this.channels.get(channelName);
+        const listeners = this.channels.get(channelName);
         if ( listeners === undefined ) {
             this.channels.set(channelName, [ listener ]);
         } else if ( listeners.indexOf(listener) === -1 ) {
@@ -320,9 +336,9 @@ vAPI.messaging = {
     },
 
     removeChannelListener: function(channelName, listener) {
-        var listeners = this.channels.get(channelName);
+        const listeners = this.channels.get(channelName);
         if ( listeners === undefined ) { return; }
-        var pos = listeners.indexOf(listener);
+        const pos = listeners.indexOf(listener);
         if ( pos === -1 ) { return; }
         listeners.splice(pos, 1);
         if ( listeners.length === 0 ) {
@@ -335,11 +351,11 @@ vAPI.messaging = {
     },
 
     sendToChannelListeners: function(channelName, msg) {
-        var listeners = this.channels.get(channelName);
+        let listeners = this.channels.get(channelName);
         if ( listeners === undefined ) { return; }
         listeners = listeners.slice(0);
-        var response;
-        for ( var listener of listeners ) {
+        let response;
+        for ( const listener of listeners ) {
             response = listener(msg);
             if ( response !== undefined ) { break; }
         }
@@ -367,7 +383,7 @@ vAPI.messaging.Connection.prototype = {
             this.checkTimer = undefined;
         }
         this.messaging.connections.delete(this.id);
-        var port = this.messaging.getPort();
+        const port = this.messaging.getPort();
         if ( port === null ) { return; }
         port.postMessage({
             channelName: 'vapi',
@@ -378,12 +394,15 @@ vAPI.messaging.Connection.prototype = {
         if ( this.checkTimer !== undefined ) {
             clearTimeout(this.checkTimer);
         }
-        this.checkTimer = vAPI.setTimeout(this.checkBound, 499);
+        this.checkTimer = vAPI.setTimeout(
+            ( ) => { this.check(); },
+            499
+        );
     },
     check: function() {
         this.checkTimer = undefined;
         if ( this.messaging.connections.has(this.id) === false ) { return; }
-        var port = this.messaging.getPort();
+        const port = this.messaging.getPort();
         if ( port === null ) { return; }
         port.postMessage({
             channelName: 'vapi',
@@ -407,7 +426,7 @@ vAPI.messaging.Connection.prototype = {
             this.checkAsync();
             break;
         case 'connectionCheck':
-            var port = this.messaging.getPort();
+            const port = this.messaging.getPort();
             if ( port === null ) { return; }
             if ( this.messaging.connections.has(this.id) ) {
                 this.checkAsync();
@@ -423,7 +442,7 @@ vAPI.messaging.Connection.prototype = {
         }
     },
     send: function(payload) {
-        var port = this.messaging.getPort();
+        const port = this.messaging.getPort();
         if ( port === null ) { return; }
         port.postMessage({
             channelName: 'vapi',

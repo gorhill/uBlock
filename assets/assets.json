@@ -12,7 +12,7 @@
 		"updateAfter": 19,
 		"contentURL": [
 			"https://publicsuffix.org/list/public_suffix_list.dat",
-			"https://cdn.rawgit.com/publicsuffix/list/master/public_suffix_list.dat",
+			"https://gitcdn.xyz/repo/publicsuffix/list/master/public_suffix_list.dat",
 			"assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat"
 		]
 	},
@@ -119,7 +119,7 @@
 		"content": "filters",
 		"group": "ads",
 		"off": true,
-		"title": "Adguard Base Filters",
+		"title": "AdGuard Base List",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/2_without_easylist.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
 		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
@@ -128,7 +128,7 @@
 		"content": "filters",
 		"group": "ads",
 		"off": true,
-		"title": "Adguard Mobile Filters",
+		"title": "AdGuard Mobile Ads",
 		"ua": "mobile",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/11.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
@@ -142,7 +142,6 @@
 			"https://easylist.to/easylist/easylist.txt",
 			"https://secure.fanboy.co.nz/easylist.txt",
 			"https://easylist-downloads.adblockplus.org/easylist.txt",
-			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/thirdparties/easylist-downloads.adblockplus.org/easylist.txt",
 			"assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt"
 		],
 		"supportURL": "https://forums.lanik.us/"
@@ -151,7 +150,7 @@
 		"content": "filters",
 		"group": "privacy",
 		"off": true,
-		"title": "Adguard Spyware Filters",
+		"title": "AdGuard Tracking Protection",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/3.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
 		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
@@ -164,7 +163,6 @@
 			"https://easylist.to/easylist/easyprivacy.txt",
 			"https://secure.fanboy.co.nz/easyprivacy.txt",
 			"https://easylist-downloads.adblockplus.org/easyprivacy.txt",
-			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt",
 			"assets/thirdparties/easylist-downloads.adblockplus.org/easyprivacy.txt"
 		],
 		"supportURL": "https://forums.lanik.us/"
@@ -182,10 +180,10 @@
 		"group": "malware",
 		"title": "Malware Domain List",
 		"contentURL": [
-			"https://cdn.rawgit.com/NanoMeow/MDLMirror/master/hosts.txt",
+			"https://gitcdn.xyz/repo/NanoMeow/MDLMirror/master/hosts.txt",
 			"https://raw.githubusercontent.com/NanoMeow/MDLMirror/master/hosts.txt",
 			"https://www.malwaredomainlist.com/hostslist/hosts.txt",
-			"https://cdn.rawgit.com/NanoMeow/MDLMirror/master/filter.txt",
+			"https://gitcdn.xyz/repo/NanoMeow/MDLMirror/master/filter.txt",
 			"https://raw.githubusercontent.com/NanoMeow/MDLMirror/master/filter.txt",
 			"assets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt"
 		]
@@ -207,15 +205,24 @@
 		"group": "malware",
 		"off": true,
 		"title": "Spam404",
-		"contentURL": "https://raw.githubusercontent.com/Dawsey21/Lists/master/adblock-list.txt",
+		"contentURL": "https://raw.githubusercontent.com/Spam404/lists/master/adblock-list.txt",
 		"supportURL": "http://www.spam404.com/"
 	},
 	"adguard-annoyance": {
 		"content": "filters",
 		"group": "social",
 		"off": true,
-		"title": "Adguard’s Annoyance List",
+		"title": "AdGuard Annoyances",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/14.txt",
+		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
+		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
+	},
+	"adguard-social": {
+		"content": "filters",
+		"group": "social",
+		"off": true,
+		"title": "AdGuard Social Media",
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/4.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
 		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
 	},
@@ -223,7 +230,7 @@
 		"content": "filters",
 		"group": "social",
 		"off": true,
-		"title": "Fanboy’s Anti-Thirdparty Social (see warning inside list)",
+		"title": "Anti-Facebook List",
 		"contentURL": "https://fanboy.co.nz/fanboy-antifacebook.txt",
 		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
 	},
@@ -234,8 +241,7 @@
 		"title": "Fanboy’s Annoyance List",
 		"contentURL": [
 			"https://easylist.to/easylist/fanboy-annoyance.txt",
-			"https://fanboy.co.nz/fanboy-annoyance.txt",
-			"https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt"
+			"https://fanboy.co.nz/fanboy-annoyance.txt"
 		],
 		"supportURL": "https://forums.lanik.us/"
 	},
@@ -243,7 +249,7 @@
 		"content": "filters",
 		"group": "social",
 		"off": true,
-		"title": "Fanboy’s Cookiemonster List",
+		"title": "Fanboy's Cookie List",
 		"contentURL": "https://secure.fanboy.co.nz/fanboy-cookiemonster.txt",
 		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
 	},
@@ -254,8 +260,7 @@
 		"title": "Fanboy’s Social Blocking List",
 		"contentURL": [
 			"https://easylist.to/easylist/fanboy-social.txt",
-			"https://fanboy.co.nz/fanboy-social.txt",
-			"https://easylist-downloads.adblockplus.org/fanboy-social.txt"
+			"https://fanboy.co.nz/fanboy-social.txt"
 		],
 		"supportURL": "https://forums.lanik.us/"
 	},
@@ -371,15 +376,6 @@
 		],
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=90"
 	},
-	"DNK-0": {
-		"content": "filters",
-		"group": "regions",
-		"off": true,
-		"title": "DNK: Schacks Adblock Plus liste",
-		"lang": "da",
-		"contentURL": "https://adblock.dk/block.csv",
-		"supportURL": "https://henrik.schack.dk/adblock/"
-	},
 	"EST-0": {
 		"content": "filters",
 		"group": "regions",
@@ -407,6 +403,7 @@
 		"contentURL": "https://easylist-downloads.adblockplus.org/liste_fr.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=91"
 	},
+	
 	"GRC-0": {
 		"content": "filters",
 		"group": "regions",

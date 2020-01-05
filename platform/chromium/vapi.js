@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2017-2018 The uBlock Origin authors
+    Copyright (C) 2017-present The uBlock Origin authors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,6 +24,14 @@
 /* global HTMLDocument, XMLDocument */
 
 // For background page, auxiliary pages, and content scripts.
+
+/******************************************************************************/
+
+if ( self.browser instanceof Object ) {
+    self.chrome = self.browser;
+} else {
+    self.browser = self.chrome;
+}
 
 /******************************************************************************/
 

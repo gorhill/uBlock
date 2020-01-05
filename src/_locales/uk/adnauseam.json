@@ -32,19 +32,19 @@
     "description": "English: Firstrun.html -> Block Malware"
   },
   "adnAboutResetDataConfirm": {
-    "message": "All your settings will be removed, ads in your vault will be deleted, and AdNauseam will restart.\n\nReset AdNauseam to factory settings?",
+    "message": "Усі ваші налаштування буде видалено, оголошення у вашому сховищі будуть видалені, а AdNauseam перезавантажиться. \n\nСкинути налаштування AdNauseam до заводських налаштувань?",
     "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
-    "message": "приховати оголошення у ваших вибраних <span class='link' id='To3pfilter'>списках фільтрів<\/span>",
+    "message": "приховати оголошення у ваших вибраних <span class='link' id='To3pfilter'>списках фільтрів</span>",
     "description": "English: Firstrun.html -> Hide Ads in your selected filter lists"
   },
   "adnFirstRunClickingAdsDescription": {
-    "message": "записувати візитіи на оголошення, знайдені через ваші <span class='link' id='To3pfilter'>списки фільтрів<\/span>",
+    "message": "записувати візитіи на оголошення, знайдені через ваші <span class='link' id='To3pfilter'>списки фільтрів</span>",
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Блокувати трекери та інше зловмисне програмне забезпечення (<span>налаштувати<\/span>)",
+    "message": "Блокувати трекери та інше зловмисне програмне забезпечення (<span>налаштувати</span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -84,23 +84,27 @@
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
   "adnNotificationBrowserSetting": {
-    "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
+    "message": "Параметри \"Блокування вмісту\" у вашому веб-переглядачі можуть заважати AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
+  "adnNotificationPrivacyMode": {
+    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
+  },
   "adnNotificationDNTAllowed": {
-    "message": "Ця сторінка поважає <b>Do Not Track<\/b>, реклама дозволена.",
+    "message": "Ця сторінка поважає <b>Do Not Track</b>, реклама дозволена.",
     "description": "English: Notifications -> This page respects Do Not Track, Ads are allowed."
   },
   "adnNotificationDNTHidingNotClicking": {
-    "message": "Ця сторінка поважає <b>Do Not Track<\/b>, не клікати по рекламі, лише приховати.",
+    "message": "Ця сторінка поважає <b>Do Not Track</b>, не клікати по рекламі, лише приховати.",
     "description": "English: Notifications -> This page respects Do Not Track, hiding not clicking."
   },
   "adnNotificationDNTClickingNotHiding": {
-    "message": "Ця сторінка поважає <b>Do Not Track<\/b>, клікати по рекламі, не ховати її",
+    "message": "Ця сторінка поважає <b>Do Not Track</b>, клікати по рекламі, не ховати її",
     "description": "English: Notifications -> This page respects Do Not Track, clicking not hiding."
   },
   "adnNotificationDNTJustSoYouKnow": {
-    "message": "Ця сторінка поважає <b>Do Not Track<\/b>, ну такоє.",
+    "message": "Ця сторінка поважає <b>Do Not Track</b>, ну такоє.",
     "description": "English: Notifications -> This page respects Do Not Track, just so you know."
   },
   "adnTarget": {
@@ -141,7 +145,7 @@
   },
   "adnPausedOnPage": {
     "message": "AdNauseam зупинився на цій сторінці",
-    "description": "English: Menu->display when paused on page\/site"
+    "description": "English: Menu->display when paused on page/site"
   },
   "adnNotHiding": {
     "message": "AdNauseam в даний час не приховує реклами",

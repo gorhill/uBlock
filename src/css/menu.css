@@ -440,7 +440,7 @@ span.adStatus:before {
 .ad-item.just-visited::before,
 .ad-item-text.just-visited::before {
   background: #BD10E0;
-  animation: 1000ms ease-in-out visit-marker;
+  animation: 900ms ease-in-out visit-marker;
   content: "VISITED";
 }
 .ad-item.just-failed::before,
