@@ -954,7 +954,6 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
         vAPI.insertCSS(request.tabId, {
             code: out.injected + '\n{display:none!important;}',
             cssOrigin: 'user',
-            allFrames: true,
             frameId: request.frameId,
             runAt: 'document_start'
         });
@@ -962,7 +961,6 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
         vAPI.insertCSS(request.tabId, {
             code: out.fake + '\n{height:0px!important;}',
             cssOrigin: 'user',
-            allFrames: true,
             frameId: request.frameId,
             runAt: 'document_start'
         });
