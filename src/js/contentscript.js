@@ -1367,10 +1367,12 @@ vAPI.domSurveyor = (function() {
             }
             selectors = result.injected;
             if ( typeof selectors === 'string' && selectors.length !== 0 ) {
+                //ADN tmp fix: hiding - local iframe without src
+                const isSpecialLocalIframes = (location.href=="about:blank" || location.href=="") && (window.self !== window.top)
                 domFilterer.addCSSRule(
                     selectors,
                     'display:none!important;',
-                    { injected: true }
+                    { injected: isSpecialLocalIframes ? false : true }
                 );
                 mustCommit = true;
             }
