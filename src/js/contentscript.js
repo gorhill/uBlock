@@ -21,7 +21,7 @@
 
 'use strict';
 
-// console.log('contentscript.js: '+location.href, (window.self !== window.top?'[iframe]':''));
+console.log('contentscript.js: '+location.href, (window.self !== window.top?'[iframe]':''));
 
 /*******************************************************************************
 
@@ -1054,6 +1054,9 @@ vAPI.domCollapser = (function() {
             vAPI.injectScriptlet(iframe.contentDocument, vAPI.injectedScripts);
         }
 
+        // ADN: inject content-scripts into dynamically-created iframes (see #1197)
+        if (!navigator.userAgent.includes('Firefox/')) {
+
             var sendInjectScripts = function (f) {
 
                 f = f || this;
@@ -1082,6 +1085,7 @@ vAPI.domCollapser = (function() {
             catch (e) {
               console.warn('sendInjectScripts failed', e);
             }
+          }
 
     };
 
