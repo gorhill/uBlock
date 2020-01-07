@@ -1646,17 +1646,14 @@
 
       const store = µb.pageStoreFromTabId(tabId);
       if (store !== null && !store.rawURL.startsWith(optionsUrl)) {
-        µb.updateBadgeAsync(tabId);
+        µb.updateToolbarIcon(tabId);
       }
     }
   };
 
   exports.injectContentScripts = function (request, pageStore, tabId, frameId) {
-
     console.log('[INJECT] IFrame: ' + request.parentUrl, frameId + '/' + tabId);
-
-    // Firefox already handles this correctly
-    vAPI.chrome && vAPI.onLoadAllCompleted(tabId, frameId);
+    vAPI.onLoadAllCompleted(tabId, frameId);
   };
 
   exports.isBlockableException = function (requestUrl, originalUrl) {

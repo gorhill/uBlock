@@ -1291,9 +1291,9 @@ vAPI.commands = chrome.commands;
 // iframes, as Chrome does not inject into these by default. This is needed
 // because we often can't block the iframe outright, as we need the ads inside.
 //
-vAPI.onLoadAllCompleted = function(tabId, frameId) {
+vAPI.onLoadAllCompleted = function(tabId, frameId) { //ADN
 
-  // console.log('C.onLoadAllCompleted: '+tabId, frameId);
+    // console.log('C.onLoadAllCompleted: '+tabId, frameId);
 
     // http://code.google.com/p/chromium/issues/detail?id=410868#c11
     // Need to be sure to access `vAPI.lastError()` to prevent
@@ -1303,16 +1303,12 @@ vAPI.onLoadAllCompleted = function(tabId, frameId) {
         // console.log('C.onScriptInjected: ',err);
     };
 
-    var scriptStart = function(tabId) {
+    var scriptStart = function(tabId, frameId) {
         var manifest = chrome.runtime.getManifest();
         if ( manifest instanceof Object === false ) { return; }
         for ( var contentScript of manifest.content_scripts ) {
             for ( var file of contentScript.js ) {
-                vAPI.tabs.injectScript(tabId, {
-                    file: file,
-                    allFrames: contentScript.all_frames,
-                    runAt: contentScript.run_at
-                }, onScriptInjected);
+                injectOne(tabId, frameId, file, 0);
             }
         }
     };
@@ -1322,7 +1318,7 @@ vAPI.onLoadAllCompleted = function(tabId, frameId) {
         µb.bindTabToPageStats(tab.id);
         // https://github.com/chrisaljoudi/uBlock/issues/129
         if ( /^https?:\/\//.test(tab.url) ) { // added in ub/1.10.0
-          scriptStart(tab.id, frameId);
+          scriptStart(tab.id, frameId); //why scriptStart itself only take in one parameter?
         }
     };
     var injectOne = function(tabId, frameId, script, cb)  {
@@ -1336,7 +1332,6 @@ vAPI.onLoadAllCompleted = function(tabId, frameId) {
         details.frameId = frameId;
         details.matchAboutBlank = true;
       }
-// console.log('injectOne: '+script, details);
       vAPI.tabs.injectScript(tabId, details, cb || function(){});
     };
     var bindToTabs = function(tabs) {

@@ -1054,9 +1054,6 @@ vAPI.domCollapser = (function() {
             vAPI.injectScriptlet(iframe.contentDocument, vAPI.injectedScripts);
         }
 
-        // ADN: inject content-scripts into dynamically-created iframes (see #1197)
-        if (!navigator.userAgent.includes('Firefox/')) {
-
             var sendInjectScripts = function (f) {
 
                 f = f || this;
@@ -1064,7 +1061,6 @@ vAPI.domCollapser = (function() {
                 if (f.contentWindow) {  // may not be allowed in cross-domain frames
 
                     //console.log('injecting: ', iframe,  f.contentDocument.readyState);
-
                     if (typeof f.contentWindow.chrome.runtime.connect === 'function') {
                         f.contentWindow.chrome.runtime.connect().postMessage({
                             channelName: "adnauseam",
@@ -1086,7 +1082,7 @@ vAPI.domCollapser = (function() {
             catch (e) {
               console.warn('sendInjectScripts failed', e);
             }
-        }
+
     };
 
     // https://github.com/gorhill/uBlock/issues/162
