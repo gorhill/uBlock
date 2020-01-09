@@ -2591,8 +2591,12 @@ const FilterParser = class {
             const prefix = s.slice(0, matches.index);
             if ( this.reRegexTokenAbort.test(prefix) ) { return; }
             if (
-                this.reRegexBadPrefix.test(prefix) ||
-                this.reRegexBadSuffix.test(s.slice(this.reRegexToken.lastIndex))
+                this.reRegexBadPrefix.test(prefix) || (
+                    matches[0].length < this.maxTokenLen &&
+                    this.reRegexBadSuffix.test(
+                        s.slice(this.reRegexToken.lastIndex)
+                    )
+                )
             ) {
                 continue;
             }
