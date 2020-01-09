@@ -494,7 +494,7 @@ const onBeforeBehindTheSceneRequest = function(fctxt) {
     // Blocked?
     if ( result === 1 ) {
         // ADN: Blocked xhr
-        µb.adnauseam.logNetBlock(fctxt.type, fctxt.url, JSON.stringify(context));
+        µb.adnauseam.logNetBlock(fctxt.type, fctxt.url);
         return { cancel: true };
     }
 

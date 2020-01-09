@@ -1326,7 +1326,8 @@ vAPI.onLoadAllCompleted = function(tabId, frameId) { //ADN
       var details = {
           file: script,
           allFrames: true,
-          runAt: 'document_idle'
+          runAt: 'document_idle',
+          matchAboutBlank:true
       }
       if (frameId) {
         details.frameId = frameId;
