@@ -828,7 +828,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     const reIsWhitespaceChar = /\s/;
     const reMaybeLocalIp = /^[\d:f]/;
     const reIsLocalhostRedirect = /\s+(?:0\.0\.0\.0|broadcasthost|localhost|local|ip6-\w+)\b/;
-    const reLocalIp = /^(?:0\.0\.0\.0|127\.0\.0\.1|::1?|fe80::1%lo0)\s+/;
+    const reLocalIp = /^(?:(0\.0\.0\.)?0|127\.0\.0\.1|::1?|fe80::1%lo0)\s+/;
     const lineIter = new this.LineIterator(this.processDirectives(rawText));
 
     while ( lineIter.eot() === false ) {
