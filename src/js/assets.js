@@ -231,6 +231,11 @@ api.fetchFilterList = function(mainlistURL, onLoad, onError) {
 
         details.url = mainlistURL;
         details.content = content.join('\n').trim();
+
+        if (/uBlockOrigin\/uAssets/.test(mainlistURL)) {
+            details.content = api.fetchFilterList.legacy.convert(details.content);
+        }
+
         onLoad(details);
     };
 
@@ -254,6 +259,86 @@ api.fetchFilterList.toParsedURL = function(url) {
     try {
         return new URL(url);
     } catch (ex) {
+    }
+};
+
+api.fetchFilterList.legacy = {
+    mapRules: {
+        '=1x1.gif': '=1x1-transparent.gif',
+        '=2x2.png': '=2x2-transparent.png',
+        '=3x2.png': '=3x2-transparent.png',
+        '=32x32.png': '=32x32-transparent.png',
+        '=addthis_widget.js': '=addthis.com/addthis_widget.js',
+        '=ampproject_v0.js': '=ampproject.org/v0.js',
+        '=chartbeat.js': '=static.chartbeat.com/chartbeat.js',
+        '=amazon_ads.js': '=amazon-adsystem.com/aax2/amzn_ads.js',
+        '=disqus_embed.js': '=disqus.com/embed.js',
+        '=disqus_forums_embed.js': '=disqus.com/forums/*/embed.js',
+        '=doubleclick_instream_ad_status.js': '=doubleclick.net/instream/ad_status.js',
+        '=google-analytics_analytics.js': '=google-analytics.com/analytics.js',
+        '=google-analytics_cx_api.js': '=google-analytics.com/cx/api.js',
+        '=google-analytics_ga.js': '=google-analytics.com/ga.js',
+        '=google-analytics_inpage_linkid.js': '=google-analytics.com/inpage_linkid.js',
+        '=googlesyndication_adsbygoogle.js': '=googlesyndication.com/adsbygoogle.js',
+        '=googletagmanager_gtm.js': '=googletagmanager.com/gtm.js',
+        '=googletagservices_gpt.js': '=googletagservices.com/gpt.js',
+        '=ligatus_angular-tag.js': '=ligatus.com/*/angular-tag.js',
+        '=monkeybroker.js': '=d3pkae9owd2lcf.cloudfront.net/mb105.js',
+        '=noop-0.1s.mp3': '=noopmp3-0.1s',
+        '=noop-1s.mp4': '=noopmp4-1s',
+        '=noop.html': '=noopframe',
+        '=outbrain-widget.js': '=widgets.outbrain.com/outbrain.js',
+        '=scorecardresearch_beacon.js': '=scorecardresearch.com/beacon.js',
+        '=noeval-silent.js': '=silent-noeval.js',
+        '=silent-noeval': '=silent-noeval.js',
+        '=noop.js': '=noopjs',
+        '=noop.txt': '=nooptext',
+        '=popads.js': '=popads.net.js',
+        '(popads.js)': '(popads.net.js)',
+        '(popads)': '(popads.net.js)',
+        '(nobab)': '(bab-defuser.js)',
+        '(nofab)': '(fuckadblock.js-3.2.0)',
+        '(acis,': '(abort-current-inline-script.js,',
+        '(acis.js,': '(abort-current-inline-script.js,',
+        '(aopr,': '(abort-on-property-read.js,',
+        '(aopr.js,': '(abort-on-property-read.js,',
+        '(aopw,': '(abort-on-property-write.js,',
+        '(aopw.js,': '(abort-on-property-write.js,',
+        '(aeld,': '(addEventListener-defuser.js,',
+        '(aeld)': '(addEventListener-defuser.js)',
+        '(aell,': '(addEventListener-logger.js,',
+        '(aell)': '(addEventListener-logger.js)',
+        '(nano-sib,': '(nano-setInterval-booster.js,',
+        '(nano-sib)': '(nano-setInterval-booster.js)',
+        '(nano-sib.js)': '(nano-setInterval-booster.js)',
+        '(nano-stb,': '(nano-setTimeout-booster.js,',
+        '(nano-stb)': '(nano-setTimeout-booster.js)',
+        '(nano-stb.js)': '(nano-setTimeout-booster.js)',
+        '(ra,': '(remove-attr.js,',
+        '(sid,': '(setInterval-defuser.js,',
+        '(nosiif,': '(setInterval-defuser.js,',
+        '(nosiif)': '(setInterval-defuser.js)',
+        '(std,': '(setTimeout-defuser.js,',
+        '(nostif,': '(setTimeout-defuser.js,',
+        '(nostif)': '(setTimeout-defuser.js)',
+        '(window.open-defuser,': '(window.open-defuser.js,',
+        '(window.open-defuser)': '(window.open-defuser.js)',
+        '(set-constant,': '(set-constant.js,',
+        '(set,': '(set-constant.js,',
+        '(noeval)': '(noeval.js)',
+        '(nowebrtc)': '(nowebrtc.js)'
+    },
+    get mapRegex() {
+        delete this.mapRegex;
+        return this.mapRegex = new RegExp(Object.keys(this.mapRules)
+            .join('|').replace(/[().]/g, '\\$&'), 'g');
+    },
+    convert: function(content) {
+        var that = this;
+        return content.replace(/^(.*\(no(siif|stif).+!.*)$/mg, '! $1')
+            .replace(this.mapRegex, function(matched) {
+                return that.mapRules[matched];
+            });
     }
 };
 
