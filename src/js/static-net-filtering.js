@@ -1386,6 +1386,7 @@ FilterParser.prototype.toNormalizedType = {
              'frame': 'sub_frame',
       'genericblock': 'unsupported',
        'generichide': 'generichide',
+             'ghide': 'generichide',
              'image': 'image',
        'inline-font': 'inline-font',
      'inline-script': 'inline-script',
