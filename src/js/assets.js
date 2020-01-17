@@ -232,7 +232,7 @@ api.fetchFilterList = function(mainlistURL, onLoad, onError) {
         details.url = mainlistURL;
         details.content = content.join('\n').trim();
 
-        if (/uBlockOrigin\/uAssets/.test(mainlistURL)) {
+        if (api.fetchFilterList.legacy.regexFilters.test(mainlistURL)) {
             details.content = api.fetchFilterList.legacy.convert(details.content);
         }
 
@@ -263,6 +263,32 @@ api.fetchFilterList.toParsedURL = function(url) {
 };
 
 api.fetchFilterList.legacy = {
+    mapFilters: [
+        // uBlock filters
+        'https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/',
+        // Fanboy’s Enhanced Tracking List
+        'https://www.fanboy.co.nz/enhancedstats.txt',
+        // EST: Eesti saitidele kohandatud filter
+        'https://adblock.ee/list.php',
+        // HUN: hufilter
+        'https://raw.githubusercontent.com/hufilter/hufilter/master/hufilter.txt',
+        // IDN, MYS: ABPindo
+        'https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/subscriptions/abpindo.txt',
+        // IRN: Adblock-Iran
+        'https://gitcdn.xyz/repo/farrokhi/adblock-iran/master/filter.txt',
+        // NOR, DNK, ISL: Dandelion Sprouts nordiske filtre
+        'https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianList.txt',
+        'https://repo.or.cz/FilterMirrorRepo.git/blob_plain/refs/heads/master:/NorwegianList.txt',
+        // POL: Oficjalne polskie filtry przeciwko alertom o Adblocku
+        'https://raw.githubusercontent.com/olegwukr/polish-privacy-filters/master/anti-adblock.txt',
+        // RUS: RU AdList
+        'https://easylist-downloads.adblockplus.org/advblock+cssfixes.txt'
+    ],
+    get regexFilters() {
+        delete this.regexFilters;
+        return this.regexFilters = new RegExp(this.mapFilters
+            .join('|').replace(/[\\\/.+]/g, '\\$&'));
+    },
     mapRules: {
         '=1x1.gif': '=1x1-transparent.gif',
         '=2x2.png': '=2x2-transparent.png',
@@ -300,43 +326,59 @@ api.fetchFilterList.legacy = {
         '(nofab)': '(fuckadblock.js-3.2.0)',
         '(acis,': '(abort-current-inline-script.js,',
         '(acis.js,': '(abort-current-inline-script.js,',
+        '(abort-current-inline-script,': '(abort-current-inline-script.js,',
         '(aopr,': '(abort-on-property-read.js,',
         '(aopr.js,': '(abort-on-property-read.js,',
+        '(abort-on-property-read,': '(abort-on-property-read.js,',
         '(aopw,': '(abort-on-property-write.js,',
         '(aopw.js,': '(abort-on-property-write.js,',
+        '(abort-on-property-write,': '(abort-on-property-write.js,',
         '(aeld,': '(addEventListener-defuser.js,',
         '(aeld)': '(addEventListener-defuser.js)',
+        '(addEventListener-defuser,': '(addEventListener-defuser.js,',
+        '(addEventListener-defuser)': '(addEventListener-defuser.js)',
         '(aell,': '(addEventListener-logger.js,',
         '(aell)': '(addEventListener-logger.js)',
+        '(addEventListener-logger,': '(addEventListener-logger.js,',
+        '(addEventListener-logger)': '(addEventListener-logger.js)',
         '(nano-sib,': '(nano-setInterval-booster.js,',
         '(nano-sib)': '(nano-setInterval-booster.js)',
+        '(nano-sib.js,': '(nano-setInterval-booster.js,',
         '(nano-sib.js)': '(nano-setInterval-booster.js)',
+        '(nano-setInterval-booster,': '(nano-setInterval-booster.js,',
+        '(nano-setInterval-booster)': '(nano-setInterval-booster.js)',
         '(nano-stb,': '(nano-setTimeout-booster.js,',
         '(nano-stb)': '(nano-setTimeout-booster.js)',
+        '(nano-stb.js,': '(nano-setTimeout-booster.js,',
         '(nano-stb.js)': '(nano-setTimeout-booster.js)',
+        '(nano-setTimeout-booster,': '(nano-setTimeout-booster.js,',
+        '(nano-setTimeout-booster)': '(nano-setTimeout-booster.js)',
         '(ra,': '(remove-attr.js,',
+        '(remove-attr,': '(remove-attr.js,',
         '(sid,': '(setInterval-defuser.js,',
         '(nosiif,': '(setInterval-defuser.js,',
         '(nosiif)': '(setInterval-defuser.js)',
         '(std,': '(setTimeout-defuser.js,',
+        '(setTimeout-defuser,': '(setTimeout-defuser.js,',
         '(nostif,': '(setTimeout-defuser.js,',
         '(nostif)': '(setTimeout-defuser.js)',
         '(window.open-defuser,': '(window.open-defuser.js,',
         '(window.open-defuser)': '(window.open-defuser.js)',
-        '(set-constant,': '(set-constant.js,',
         '(set,': '(set-constant.js,',
+        '(set-constant,': '(set-constant.js,',
+        '(cookie-remover,': '(cookie-remover.js,',
         '(noeval)': '(noeval.js)',
         '(nowebrtc)': '(nowebrtc.js)'
     },
-    get mapRegex() {
-        delete this.mapRegex;
-        return this.mapRegex = new RegExp(Object.keys(this.mapRules)
+    get regexRules() {
+        delete this.regexRules;
+        return this.regexRules = new RegExp(Object.keys(this.mapRules)
             .join('|').replace(/[().]/g, '\\$&'), 'g');
     },
     convert: function(content) {
         var that = this;
         return content.replace(/^(.*\(no(siif|stif).+!.*)$/mg, '! $1')
-            .replace(this.mapRegex, function(matched) {
+            .replace(this.regexRules, function(matched) {
                 return that.mapRules[matched];
             });
     }
