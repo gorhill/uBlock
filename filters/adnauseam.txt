@@ -28,6 +28,8 @@ rockpapershotgun.com##*[id^="google_ads"]
 
 atptour.com##.adtech-wrapper-ad
 
+deathbyfilms.com##img[src*="advert"]
+
 dotabuff.com##.iasId > [class*="-container-"]
 dotabuff.com##[class*="sponsor"]
 dotabuff.com##[class*="placement"]
