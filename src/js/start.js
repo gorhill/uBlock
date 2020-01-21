@@ -293,16 +293,22 @@ try {
 // https://github.com/uBlockOrigin/uBlock-issues/issues/817#issuecomment-565730122
 //   Still try to load filter lists regardless of whether a serious error
 //   occurred in the previous initialization steps.
+let selfieIsValid = false;
 try {
-    const selfieIsValid = await µb.selfieManager.load();
+    selfieIsValid = await µb.selfieManager.load();
     if ( selfieIsValid === true ) {
         log.info(`Selfie ready ${Date.now()-vAPI.T0} ms after launch`);
-    } else {
-        await µb.loadFilterLists();
-        log.info(`Filter lists ready ${Date.now()-vAPI.T0} ms after launch`);
     }
 } catch (ex) {
     console.trace(ex);
+}
+if ( selfieIsValid !== true ) {
+    try {
+        await µb.loadFilterLists();
+        log.info(`Filter lists ready ${Date.now()-vAPI.T0} ms after launch`);
+    } catch (ex) {
+        console.trace(ex);
+    }
 }
 
 // Final initialization steps after all needed assets are in memory.
