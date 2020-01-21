@@ -506,7 +506,10 @@
     let aborted = false;
     const mustAbort = function(v) {
         if ( aborted ) { return true; }
-        aborted = v !== undefined && cValue !== undefined && typeof v !== typeof cValue;
+        aborted =
+            (v !== undefined && v !== null) &&
+            (cValue !== undefined && cValue !== null) &&
+            (typeof v !== typeof cValue);
         return aborted;
     };
     const makeProxy = function(owner, chain) {
