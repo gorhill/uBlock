@@ -83,19 +83,19 @@ const renderAdvancedSettings = async function(first) {
     });
 
     beforeHash = hashFromAdvancedSettings(raw);
-    let pretty = [],
-        whitespaces = '                                ',
-        lines = raw.split('\n'),
-        max = 0;
-    for ( let line of lines ) {
-        let pos = line.indexOf(' ');
+    const pretty = [];
+    const lines = raw.split('\n');
+    let max = 0;
+    for ( const line of lines ) {
+        const pos = line.indexOf(' ');
         if ( pos > max ) { max = pos; }
     }
-    for ( let line of lines ) {
-        let pos = line.indexOf(' ');
-        pretty.push(whitespaces.slice(0, max - pos) + line);
+    for ( const line of lines ) {
+        const pos = line.indexOf(' ');
+        pretty.push(' '.repeat(max - pos) + line);
     }
-    cmEditor.setValue(pretty.join('\n') + '\n');
+    pretty.push('');
+    cmEditor.setValue(pretty.join('\n'));
     if ( first ) {
         cmEditor.clearHistory();
     }
