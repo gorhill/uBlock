@@ -824,7 +824,14 @@ vAPI.setIcon = (( ) => {
             }
         }
 
-        if ( browserAction.setTitle !== undefined ) {
+        // Insert the badge text in the title if:
+        // - the platform does not support browserAction.setIcon(); OR
+        // - the rendering of the badge is disabled
+        if (
+            browserAction.setTitle !== undefined && (
+                browserAction.setIcon === undefined || (parts & 0b1000) !== 0
+            )
+        ) {
             browserAction.setTitle({
                 tabId: tab.id,
                 title: titleTemplate.replace(
