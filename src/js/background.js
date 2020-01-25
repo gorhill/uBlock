@@ -68,6 +68,7 @@ const µBlock = (( ) => { // jshint ignore:line
         selfieAfter: 3,
         strictBlockingBypassDuration: 120,
         suspendTabsUntilReady: 'unset',
+        uiFlavor: 'unset',
         updateAssetBypassBrowserCache: false,
         userResourcesLocation: 'unset',
     };

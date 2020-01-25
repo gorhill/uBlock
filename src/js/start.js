@@ -339,6 +339,19 @@ initializeTabs();
 // active tab.
 µb.contextMenu.update();
 
+// Maybe install non-default popup document
+if (
+    browser.browserAction instanceof Object &&
+    browser.browserAction.setPopup instanceof Function
+) {
+    const uiFlavor = µb.hiddenSettings.uiFlavor;
+    if ( uiFlavor !== 'unset' && /\w+/.test(uiFlavor) ) {
+        browser.browserAction.setPopup({
+            popup: vAPI.getURL(`popup-${uiFlavor}.html`)
+        });
+    }
+}
+
 // https://github.com/uBlockOrigin/uBlock-issues/issues/717
 //   Prevent the extension from being restarted mid-session.
 browser.runtime.onUpdateAvailable.addListener(details => {
