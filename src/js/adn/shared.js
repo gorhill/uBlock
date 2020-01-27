@@ -630,19 +630,10 @@ const exportToFile = function (action) {
     if (fileType === undefined) fileType = "Ads";
     filename = "AdNauseam_" + fileType + filename.substr(9,filename.length);
 
-    if (isFirefox()) {
-
-      chrome.downloads.download({
-        url : url,
-        filename : filename
-      });
-    } else {
-
-      vAPI.download({
-        'url': url,
-        'filename': filename
-      });
-    }
+    vAPI.download({
+      'url': url,
+      'filename': filename
+    });
   };
 
   switch(action){
