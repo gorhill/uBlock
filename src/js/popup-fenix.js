@@ -901,7 +901,7 @@ uDom('[data-i18n="popupAnyRulePrompt"]').on('click', ev => {
         messaging.send('popupPanel', {
             what: 'gotoURL',
             details: {
-                url: `popup-v2.html?tabId=${popupData.tabId}`,
+                url: `popup-fenix.html?tabId=${popupData.tabId}`,
                 select: true,
                 index: -1,
             },
