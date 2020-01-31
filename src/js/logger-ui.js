@@ -376,29 +376,30 @@ const parseLogEntry = function(details) {
     // Cell 3
     textContent.push(normalizeToStr(entry.docHostname));
 
-    // Cell 4
-    if ( entry.realm === 'network' ) {
-        // partyness
-        if ( typeof entry.domain === 'string' && entry.domain !== '' ) {
-            let partyness = '';
-            if ( entry.tabDomain !== undefined ) {
-                if ( entry.tabId < 0 ) {
-                    partyness += '0,';
-                }
-                partyness += entry.domain === entry.tabDomain ? '1' : '3';
+    // Cell 4: partyness
+    if (
+        entry.realm === 'network' &&
+        typeof entry.domain === 'string' &&
+        entry.domain !== ''
+    ) {
+        let partyness = '';
+        if ( entry.tabDomain !== undefined ) {
+            if ( entry.tabId < 0 ) {
+                partyness += '0,';
+            }
+            partyness += entry.domain === entry.tabDomain ? '1' : '3';
+        } else {
+            partyness += '?';
+        }
+        if ( entry.docDomain !== entry.tabDomain ) {
+            partyness += ',';
+            if ( entry.docDomain !== undefined ) {
+                partyness += entry.domain === entry.docDomain ? '1' : '3';
             } else {
                 partyness += '?';
             }
-            if ( entry.docDomain !== entry.tabDomain ) {
-                partyness += ',';
-                if ( entry.docDomain !== undefined ) {
-                    partyness += entry.domain === entry.docDomain ? '1' : '3';
-                } else {
-                    partyness += '?';
-                }
-            }
-            textContent.push(partyness);
         }
+        textContent.push(partyness);
     } else {
         textContent.push('');
     }
