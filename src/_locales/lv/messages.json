@@ -628,7 +628,7 @@
     "description": "Label to identify a filter field"
   },
   "loggerEntryDetailsFilterList": {
-    "message": "Filter list",
+    "message": "Filtru saraksts",
     "description": "Label to identify a filter list field"
   },
   "loggerEntryDetailsRule": {

@@ -12,15 +12,15 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Warning! You have unsaved changes",
+    "message": "Xəbərdarlıq! Sizin saxlanmamış dəyişiklikləriniz var",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Stay",
+    "message": "Qal",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Ignore",
+    "message": "Rədd et",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
@@ -132,7 +132,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Click to no longer block large media elements on this site",
+    "message": "Bu səhifədəki böyük media elementlərini blokdan çıxar",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -312,7 +312,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Block media elements larger than {{input}} KB",
+    "message": "{{input}} KB-dan böyük media elementlərini blokla",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -948,7 +948,7 @@
     "description": ""
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
-    "message": "Temporarily allow large media elements",
+    "message": "Böyük media elementlərinə müvəqqəti icazə ver",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {

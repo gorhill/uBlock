@@ -108,19 +108,19 @@
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "ქსელის მოთხოვნების ჩანაწერები",
+    "message": "აღმრიცხავის გახსნა",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "ამ საიტზე ყველა ამომხტომი ფირნიშის შეზღუდვის ჩართვა/გამორთვა",
+    "message": "ამ საიტზე ყველა ამომხტომი ფანჯრის შეზღუდვის ჩართვა/გამორთვა",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "დააწკაპეთ ყველა ამომხტომი ფირნიშის შესაზღუდად ამ საიტზე",
+    "message": "დააწკაპეთ ყველა ამომხტომი ფანჯრის შესაზღუდად ამ საიტზე",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "დააწკაპეთ, ამომხტომი ფირნიშების შეზღუდვის გასაუქმებლად ამ საიტზე",
+    "message": "დააწკაპეთ, ამომხტომი ფანჯრების შეზღუდვის გასაუქმებლად ამ საიტზე",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -584,7 +584,7 @@
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "ჩანაწერების გამორჩევის ჩართვა/გამორთვა",
+    "message": "აღრიცხულის გამორჩევის ჩართვა/გამორთვა",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
@@ -592,7 +592,7 @@
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
-    "message": "ჩანაწერების გამორჩევის პარამეტრები",
+    "message": "აღრიცხულის გამორჩევის პარამეტრები",
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {

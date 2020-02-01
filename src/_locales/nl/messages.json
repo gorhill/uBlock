@@ -724,7 +724,7 @@
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "Maximaal {{input}} paginaladingen per tabblad behouden",
+    "message": "Maximaal {{input}} paginalaadacties per tabblad behouden",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
