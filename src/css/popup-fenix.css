@@ -48,10 +48,16 @@ hr {
     top: 0;
     z-index: 100;
     }
+#sticky > div {
+    align-items: stretch;
+    display: flex;
+    justify-content: space-between;
+    }
 #switch {
     display: flex;
+    flex-grow: 2;
     justify-content: center;
-    margin: 1em 0;
+    margin: 0.5em 0;
     }
 #switch .fa-icon {
     fill: #0046ff;
@@ -65,6 +71,38 @@ hr {
     }
 body.off #switch .fa-icon {
     fill: #ccc;
+    }
+.rulesetTools {
+    background-color: transparent;
+    border: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-evenly;
+    padding: 0.5em;
+    }
+.rulesetTools [id] {
+    background-color: #ffe;
+    border: 1px solid #ddc;
+    border-radius: 4px;
+    cursor: pointer;
+    fill: #888;
+    flex-grow: 1;
+    font-size: 2.2em;
+    padding: 0;
+    visibility: hidden;
+    }
+.rulesetTools [id]:not(:first-of-type) {
+    margin-top: 0.25em;
+    }
+.rulesetTools [id]:hover {
+    fill: black;
+    }
+body.needReload #refresh,
+body.needSave #saveRules,
+body.needSave #revertRules {
+    visibility: visible;
     }
 
 .itemRibbon {
@@ -449,36 +487,4 @@ body.advancedUser #firewallContainer > div > span.noopRule.ownRule {
     }
 #actionSelector.colorBlind > span:nth-of-type(3) {
     background-color: rgb(0, 19, 110);
-    }
-
-#rulesetTools {
-    background-color: transparent;
-    border: 0;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    justify-content: space-evenly;
-    left: 0;
-    padding: 0.2em;
-    position: absolute;
-    top: 0;
-    }
-#rulesetTools [id] {
-    background-color: #ffe;
-    border: 1px solid #ddc;
-    border-radius: 4px;
-    cursor: pointer;
-    fill: #888;
-    font-size: 1.8em;
-    padding: 0.2em 0.4em;
-    visibility: hidden;
-    }
-#rulesetTools [id]:hover {
-    fill: black;
-    }
-body.needReload #refresh,
-body.needSave #saveRules,
-body.needSave #revertRules {
-    visibility: visible;
     }
