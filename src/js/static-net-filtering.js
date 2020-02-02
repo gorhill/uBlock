@@ -2531,10 +2531,13 @@ const FilterParser = class {
         // https://www.reddit.com/r/uBlockOrigin/comments/dpcvfx/
         //   Since we found a valid token, we can get rid of leading/trailing
         //   wildcards if any.
+        // https://github.com/gorhill/uBlock/commit/7971b223855d#commitcomment-37077525
+        //   Mind that changing the pattern may change token start index.
         if ( this.firstWildcardPos === 0 ) {
             this.f = this.f.slice(1);
             this.firstWildcardPos = this.secondWildcardPos;
             this.secondWildcardPos = -1;
+            this.tokenBeg -= 1;
         }
         if ( this.firstWildcardPos !== -1 ) {
             const lastCharPos = this.f.length - 1;
