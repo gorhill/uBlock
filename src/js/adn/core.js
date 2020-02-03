@@ -1124,7 +1124,6 @@
 
         if (lists[entry.title] == undefined) {
           lists[entry.title] = compiledFilter;
-          break; // one match per list is enough
         }
         /*{ title: entry.title
         supportURL: entry.supportURL }*/
@@ -1196,7 +1195,7 @@
       Check active rule(s) to see if we should block or allow
 
       Cases:
-        A) user list:      allow
+        A) user list:      block
         B) exception hit:  allow
         C) block hit:      block
         D) no valid hits:  allow, but no cookies later
