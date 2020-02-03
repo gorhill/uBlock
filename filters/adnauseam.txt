@@ -1,7 +1,6 @@
 ||http://widgets.wp.com/platform.js, domain=filbert.cc
 
 # Generics (any page)
-##*[class^="img_ad"]
 ##iframe[src*="mellowads"]
 ##*[class*="Advert"]
 ##*[class*="teads-"]
