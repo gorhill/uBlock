@@ -1020,8 +1020,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
             return;
         }
     } catch (ex) {
-        console.error(ex);
-        return;
+        log.info(ex);
     }
 
     const result = await this.assets.get(this.pslAssetKey);
