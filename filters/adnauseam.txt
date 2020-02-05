@@ -453,6 +453,9 @@ bitcoin.treasurebits.net##iframe[src="about:blank"]
 
 ||amazon-adsystem.com^$subdocument
 
+#opensubtitles
+||dc5k8fg5ioc8s.cloudfront.net^
+
 # radikal.ru (video)
 ||laim.tv^$important,third-party
 
