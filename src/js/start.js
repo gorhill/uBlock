@@ -339,12 +339,21 @@ initializeTabs();
 // active tab.
 µb.contextMenu.update();
 
-// Maybe install non-default popup document
+// Maybe install non-default popup document, or automatically select
+// default UI according to platform.
 if (
     browser.browserAction instanceof Object &&
     browser.browserAction.setPopup instanceof Function
 ) {
-    const uiFlavor = µb.hiddenSettings.uiFlavor;
+    let uiFlavor = µb.hiddenSettings.uiFlavor;
+    if (
+        uiFlavor === 'unset' &&
+        vAPI.webextFlavor.major > 68 &&
+        vAPI.webextFlavor.soup.has('firefox') &&
+        vAPI.webextFlavor.soup.has('mobile')
+    ) {
+        uiFlavor = 'fenix';
+    }
     if ( uiFlavor !== 'unset' && /\w+/.test(uiFlavor) ) {
         browser.browserAction.setPopup({
             popup: vAPI.getURL(`popup-${uiFlavor}.html`)
