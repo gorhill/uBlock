@@ -189,7 +189,7 @@ const µb = µBlock;
 
 const getHostnameDict = function(hostnameToCountMap, out) {
     const hnDict = Object.create(null);
-    const cnSet = [];
+    const cnMap = [];
     for ( const [ hostname, hnCounts ] of hostnameToCountMap ) {
         if ( hnDict[hostname] !== undefined ) { continue; }
         const domain = vAPI.domainFromHostname(hostname) || hostname;
@@ -206,7 +206,7 @@ const getHostnameDict = function(hostnameToCountMap, out) {
             };
             const cname = vAPI.net.canonicalNameFromHostname(domain);
             if ( cname !== undefined ) {
-                cnSet.push(cname);
+                cnMap.push([ cname, domain ]);
             }
         }
         const domainEntry = hnDict[domain];
@@ -224,11 +224,11 @@ const getHostnameDict = function(hostnameToCountMap, out) {
         };
         const cname = vAPI.net.canonicalNameFromHostname(hostname);
         if ( cname !== undefined ) {
-            cnSet.push(cname);
+            cnMap.push([ cname, hostname ]);
         }
     }
     out.hostnameDict = hnDict;
-    out.cnameSet = cnSet;
+    out.cnameMap = cnMap;
 };
 
 const getFirewallRules = function(srcHostname, desHostnames) {

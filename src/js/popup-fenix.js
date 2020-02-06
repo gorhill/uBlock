@@ -87,11 +87,7 @@ const cachePopupData = function(data) {
         return popupData;
     }
     popupData = data;
-    if ( Array.isArray(popupData.cnameSet) ) {
-        popupData.cnameSet = new Set(popupData.cnameSet);
-    } else if ( popupData.cnameSet === undefined ) {
-        popupData.cnameSet = new Set();
-    }
+    popupData.cnameMap = new Map(popupData.cnameMap);
     scopeToSrcHostnameMap['.'] = popupData.pageHostname || '';
     const hostnameDict = popupData.hostnameDict;
     if ( typeof hostnameDict !== 'object' ) {
@@ -304,12 +300,15 @@ const buildAllFirewallRows = function() {
         classList.toggle('isRootContext', des === popupData.pageHostname);
         classList.toggle('isDomain', isDomain);
         classList.toggle('isSubDomain', !isDomain);
-        classList.toggle('isCname', popupData.cnameSet.has(des));
         classList.toggle('allowed', hnDetails.allowCount !== 0);
         classList.toggle('blocked', hnDetails.blockCount !== 0);
         classList.toggle('totalAllowed', hnDetails.totalAllowCount !== 0);
         classList.toggle('totalBlocked', hnDetails.totalBlockCount !== 0);
         classList.toggle('expandException', expandExceptions.has(hnDetails.domain));
+
+        if ( classList.toggle('isCname', popupData.cnameMap.has(des)) ) {
+            span.title = punycode.toUnicode(popupData.cnameMap.get(des));
+        }
 
         row = row.nextElementSibling;
     }
