@@ -104,7 +104,7 @@
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Režim výběru prvků",
+    "message": "Zapnout režim výběru prvků",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
@@ -252,7 +252,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Blokovat prvek",
+    "message": "Blokovat prvek...",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -384,7 +384,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Integrované",
+    "message": "Zabudované",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -588,7 +588,7 @@
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
-    "message": "filtrovat záznamy",
+    "message": "filtrovat obsah loggeru",
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
@@ -668,7 +668,7 @@
     "description": "Label for the type selector"
   },
   "loggerStaticFilteringHeader": {
-    "message": "Statické filtrování",
+    "message": "Statický filtr",
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
@@ -716,7 +716,7 @@
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
-    "message": "Záznamy logu, které nesplní všechny uvedené podmínky budou automaticky zahozeny:",
+    "message": "Záznamy logu, které nesplní všechny uvedené podmínky, budou automaticky zahozeny:",
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
@@ -724,7 +724,7 @@
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "Zachovat nejvýše {{input}} načtení stránky pro kartu",
+    "message": "Zachovat nejvýše {{input}} načtení stránky pro list",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
@@ -968,7 +968,7 @@
     "description": "Label for keyboard shortcut used to toggle blocking profile"
   },
   "relaxBlockingMode": {
-    "message": "Relaxační mód blokování",
+    "message": "Uvolnit režim blokování",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "dummy": {

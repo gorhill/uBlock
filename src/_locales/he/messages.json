@@ -12,7 +12,7 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "אזהרה! יש לך שינויים בלתי שמורים",
+    "message": "אזהרה! יש לך שינויים שלא שמרת עדיין",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -252,7 +252,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "חסום אלמנט",
+    "message": "חסום אלמנט...",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -312,7 +312,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "חסום אלמנטי מדיה הגדולים מ {{input:number}} kB",
+    "message": "חסום אלמנטי מדיה הגדולים מ {{input}} KB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -556,43 +556,43 @@
     "description": "Appears in the logger's tab selector"
   },
   "loggerReloadTip": {
-    "message": "טען מחדש תוכן לשונית",
+    "message": "טען מחדש את תוכן הלשונית",
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
-    "message": "שנה את מצב ה Dom inspector",
+    "message": "פתח/סגור את ה DOM inspector",
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "שנה את מצב הפאנל Popup",
+    "message": "הצג/הסתר את הפאנל הקופץ",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
-    "message": "uBlock Origin וויקי: הלוגר",
+    "message": "uBlock Origin וויקי: מתעד הבקשות",
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
-    "message": "נקה את הלוגר",
+    "message": "נקה בקשות",
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
-    "message": "הפסק את הלוגר (התעלם מכל המידע שנרשם)",
+    "message": "עצור תיעוד של בקשות (התעלם מכל בקשה חדשה)",
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {
-    "message": "המשך את פעילות הלוגר",
+    "message": "המשך תיעוד של בקשות",
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "שנה את מסנני הלוגר",
+    "message": "הפעל/כבה סינון של מתעד הבקשות",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
-    "message": "סנן רשומות",
+    "message": "סנן רשומות של מתעד הבקשות",
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
-    "message": "הגדרות מסנני הלוגר",
+    "message": "הגדרות סינון של מתעד הבקשות",
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {
@@ -608,15 +608,15 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinAllowed": {
-    "message": "מותר",
+    "message": "מאופשר",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
-    "message": "צד ראשון",
+    "message": "צד-1",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin3p": {
-    "message": "צד שלישי",
+    "message": "צד-3",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerEntryDetailsHeader": {
@@ -632,7 +632,7 @@
     "description": "Label to identify a filter list field"
   },
   "loggerEntryDetailsRule": {
-    "message": "כלל",
+    "message": "חוק",
     "description": "Label to identify a rule field"
   },
   "loggerEntryDetailsContext": {
@@ -640,11 +640,11 @@
     "description": "Label to identify a context field (typically a hostname)"
   },
   "loggerEntryDetailsRootContext": {
-    "message": "הקשר שורש",
+    "message": "ההקשר המקורי",
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
-    "message": "Partyness",
+    "message": "צד",
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
@@ -716,23 +716,23 @@
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
-    "message": "רשומות הלוגר שלא תואמות את כל שלושת התנאים להלן לא ישמרו:",
+    "message": "רשומות של מתעד הבקשות שלא תואמות את כל שלושת התנאים הבאים לא ישמרו:",
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
-    "message": "שמור רשומות מה {{input}} דקות האחרונות",
+    "message": "שמור היסטוריית רשומות של {{input}} הדקות האחרונות",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "שמור לפחות {{input}} טעינות עמוד כל הזחה",
+    "message": "שמור היסטוריה של עד {{input}} טעינות עמוד עבור כל לשונית",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
-    "message": "שמור לפחות {{input}} רשומות כל הזחה",
+    "message": "שמור היסטוריה עד {{input}} רשומות עבור כל לשונית",
     "description": "A logger setting"
   },
   "loggerSettingPerEntryLineCount": {
-    "message": "השתמש ב {{input}} שורות כל רשומה במצב פרישה אנכי",
+    "message": "השתמש ב {{input}} שורות עבור כל רשומה במצב פרוס אנכית",
     "description": "A logger setting"
   },
   "loggerSettingHideColumnsPrompt": {
@@ -744,7 +744,7 @@
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
-    "message": "{{input}} מסנן/כלל",
+    "message": "{{input}} מסנן/חוק",
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
@@ -752,7 +752,7 @@
     "description": "A label for the context column"
   },
   "loggerSettingHideColumnPartyness": {
-    "message": "{{input}} Partyness",
+    "message": "{{input}} צד",
     "description": "A label for the partyness column"
   },
   "loggerExportFormatList": {
@@ -768,7 +768,7 @@
     "description": "Label for radio-button to pick export text format"
   },
   "loggerExportEncodeMarkdown": {
-    "message": "כתיב Markdown",
+    "message": "פורמט Markdown",
     "description": "Label for radio-button to pick export text format"
   },
   "aboutChangelog": {
@@ -864,7 +864,7 @@
     "description": "Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
-    "message": "הצג את המתעד",
+    "message": "הצג את מתעד הבקשות",
     "description": "Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
@@ -956,7 +956,7 @@
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "עורר גלילה נעולה",
+    "message": "הפעל/כבה נעילת גלילה",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
@@ -968,7 +968,7 @@
     "description": "Label for keyboard shortcut used to toggle blocking profile"
   },
   "relaxBlockingMode": {
-    "message": "הרפה את מצב החסימה",
+    "message": "הרפה את מצב החסימה הנוכחי",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "dummy": {
