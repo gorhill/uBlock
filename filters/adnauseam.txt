@@ -581,6 +581,12 @@ bitcoin.treasurebits.net##iframe[src="about:blank"]
 # nowbitco.in
 ||czilladx.com/serve/*.js^
 
+# Ninja Kiwi
+||cdn.nkstatic.com/*$script,domain=ninjakiwi.com
+ninjakiwi.com##.m1sckto
+ninjakiwi.com##.f1scktn
+ninjakiwi.com##.a1scktq
+
 # dailyfreebits.com
 ||serve.czilladx.com^$third-party
 ||coinad.com^$third-party
