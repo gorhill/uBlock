@@ -322,16 +322,22 @@ const buildAllFirewallRows = function() {
         const isPunycoded = prettyDomainName !== des;
 
         const span = row.querySelector('span:first-of-type');
-        span.classList.toggle(
-            'isIDN',
-            isPunycoded &&
-                reCyrillicAmbiguous.test(prettyDomainName) === true &&
-                reCyrillicNonAmbiguous.test(prettyDomainName) === false
-        );
         span.querySelector('span').textContent = prettyDomainName;
-        span.title = isDomain && isPunycoded ? des : '';
 
         const classList = row.classList;
+
+        let desExtra = '';
+        if ( classList.toggle('isCname', popupData.cnameMap.has(des)) ) {
+            desExtra = punycode.toUnicode(popupData.cnameMap.get(des));
+        } else if (
+            isDomain && isPunycoded &&
+            reCyrillicAmbiguous.test(prettyDomainName) === true &&
+            reCyrillicNonAmbiguous.test(prettyDomainName) === false
+        ) {
+            desExtra = des;
+        }
+        span.querySelector('sub').textContent = desExtra;
+
         classList.toggle('isRootContext', des === popupData.pageHostname);
         classList.toggle('isDomain', isDomain);
         classList.toggle('isSubDomain', !isDomain);
@@ -340,10 +346,6 @@ const buildAllFirewallRows = function() {
         classList.toggle('totalAllowed', hnDetails.totalAllowCount !== 0);
         classList.toggle('totalBlocked', hnDetails.totalBlockCount !== 0);
         classList.toggle('expandException', expandExceptions.has(hnDetails.domain));
-
-        if ( classList.toggle('isCname', popupData.cnameMap.has(des)) ) {
-            span.title = punycode.toUnicode(popupData.cnameMap.get(des));
-        }
 
         row = row.nextElementSibling;
     }

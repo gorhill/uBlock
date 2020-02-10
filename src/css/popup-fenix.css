@@ -94,7 +94,7 @@ body.off #switch .fa-icon {
     visibility: hidden;
     }
 .rulesetTools [id]:not(:first-of-type) {
-    margin-top: 0.25em;
+    margin-top: 0.2em;
     }
 .rulesetTools [id]:hover {
     fill: black;
@@ -259,13 +259,16 @@ body[dir="rtl"] #tooltip {
     color: #000;
     display: inline-flex;
     flex-shrink: 0;
-    line-height: 2;
+    padding: 0.33em 0;
     position: relative;
     }
 #firewallContainer > div:first-of-type > span:first-of-type {
     cursor: pointer;
+    flex-direction: unset;
     }
 #firewallContainer > div > span:first-of-type {
+    align-items: flex-end;
+    flex-direction: column;
     justify-content: flex-end;
     padding-right: 2px;
     width: calc(100% - 4em);
@@ -273,18 +276,14 @@ body[dir="rtl"] #tooltip {
 #firewallContainer > div.isCname > span:first-of-type {
     color: mediumblue;
     }
-#firewallContainer > div > span:first-of-type > sup {
-    color: #666;
-    display: none;
-    font-size: 80%;
-    font-weight: normal;
-    line-height: 1;
-    }
-#firewallContainer > div.isDomain > span.isIDN:first-of-type > sup {
+#firewallContainer > div > span:first-of-type > sub {
     display: inline-block;
+    font-size: 85%;
+    font-weight: normal;
+    padding: 0.25em 0 0 0;
     }
-#firewallContainer > div.isDomain > span.isIDN:first-of-type > sup::before {
-    content: '\0416\2002';
+#firewallContainer > div > span:first-of-type > sub:empty {
+    display: none;
     }
 #firewallContainer > div > span:first-of-type ~ span {
     margin-left: 1px;
@@ -380,6 +379,7 @@ body.advancedUser #firewallContainer > div > span:first-of-type ~ span {
     left: 0;
     opacity: 0.4;
     position: absolute;
+    top: 0;
     width: 7px;
     }
 #firewallContainer > div.isRootContext > span:first-of-type::before {
