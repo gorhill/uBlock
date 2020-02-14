@@ -128,22 +128,25 @@ const fromCosmeticFilter = function(details) {
         return a.length > b.length ? a : b;
     });
 
-    const regexFromLabels = (hn, suffix) =>
+    const regexFromLabels = (prefix, hn, suffix) =>
         new RegExp(
-            '^' +
+            prefix +
             hn.split('.').reduce((acc, item) => `(${acc}\\.)?${item}`) +
             suffix
         );
 
-    const reHostname = regexFromLabels(hostname, '$');
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/803
+    //   Support looking up selectors of the form `*##...`
+    const reHostname = regexFromLabels('^', hostname, '$');
     let reEntity;
     {
         const domain = details.domain;
         const pos = domain.indexOf('.');
         if ( pos !== -1 ) {
             reEntity = regexFromLabels(
+                '^(',
                 hostname.slice(0, pos + hostname.length - domain.length),
-                '\\.\\*$'
+                '\\.)?\\*$'
             );
         }
     }
@@ -218,8 +221,8 @@ const fromCosmeticFilter = function(details) {
             case 8:
             // HTML filtering
             case 64:
-                if ( exception !== ((fargs[2] & 0b01) !== 0) ) { break; }
-                isProcedural = (fargs[2] & 0b10) !== 0;
+                if ( exception !== ((fargs[2] & 0b001) !== 0) ) { break; }
+                isProcedural = (fargs[2] & 0b010) !== 0;
                 if (
                     isProcedural === false && fargs[3] !== selector ||
                     isProcedural && JSON.parse(fargs[3]).raw !== selector
@@ -240,7 +243,7 @@ const fromCosmeticFilter = function(details) {
                 break;
             // Scriptlet injection
             case 32:
-                if ( exception !== ((fargs[2] & 1) !== 0) ) { break; }
+                if ( exception !== ((fargs[2] & 0b001) !== 0) ) { break; }
                 if ( fargs[3] !== selector ) { break; }
                 if ( hostnameMatches(fargs[1]) ) {
                     found = fargs[1] + prefix + selector;
