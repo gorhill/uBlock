@@ -63,9 +63,6 @@
   "manifest_version": 2,
   "minimum_opera_version": "40.0",
   "name": "uBlock Origin",
-  "optional_permissions": [
-    "file:///*"
-  ],
   "options_page": "dashboard.html",
   "permissions": [
     "contextMenus",
