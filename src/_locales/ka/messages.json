@@ -95,6 +95,18 @@
     "message": "ანუ",
     "description": "English: or"
   },
+  "popupBlockedOnThisPage_v2": {
+    "message": "შეზღუდული ამ გვერდზე",
+    "description": "For the new mobile-friendly popup design"
+  },
+  "popupBlockedSinceInstall_v2": {
+    "message": "შეზღუდული დაყენების შემდგომ",
+    "description": "For the new mobile-friendly popup design"
+  },
+  "popupDomainsConnected_v2": {
+    "message": "დაკავშირებული დომენები",
+    "description": "For the new mobile-friendly popup design"
+  },
   "popupTipDashboard": {
     "message": "სამართავი დაფის გახსნა",
     "description": "English: Click to open the dashboard"
@@ -166,6 +178,26 @@
   "popupTipNoScripting2": {
     "message": "დააწკაპეთ JavaScript-ზე შეზღუდვის მოსახსნელად ამ საიტზე",
     "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupNoLargeMedia_v2": {
+    "message": "დიდი მედიაფაილები",
+    "description": "Tip for the no-large-media per-site switch"
+  },
+  "popupNoCosmeticFiltering_v2": {
+    "message": "ხილული ელემენტების გაფილტვრა",
+    "description": "Tip for the no-cosmetic-filtering per-site switch"
+  },
+  "popupNoRemoteFonts_v2": {
+    "message": "ვებშრიფტები",
+    "description": "Tip for the no-remote-fonts per-site switch"
+  },
+  "popupNoScripting_v2": {
+    "message": "JavaScript",
+    "description": "Tip for the no-scripting per-site switch"
+  },
+  "popupMoreButton_v2": {
+    "message": "სხვა",
+    "description": "Label to be used to toggle overview panel"
   },
   "popupTipGlobalRules": {
     "message": "გლობალური წესები: ეს სვეტი არის წესებისთვის, რომლებიც მოქმედებს ყველა საიტზე.",

@@ -28,11 +28,11 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Süzgeç listeleri",
+    "message": "Filtre listeleri",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
-    "message": "Süzgeçlerim",
+    "message": "Filtrelerim",
     "description": "appears as tab name in dashboard"
   },
   "rulesPageName": {
@@ -95,6 +95,18 @@
     "message": "ya da",
     "description": "English: or"
   },
+  "popupBlockedOnThisPage_v2": {
+    "message": "Bu sayfada engellenen",
+    "description": "For the new mobile-friendly popup design"
+  },
+  "popupBlockedSinceInstall_v2": {
+    "message": "Kurulumdan beri engellenen",
+    "description": "For the new mobile-friendly popup design"
+  },
+  "popupDomainsConnected_v2": {
+    "message": "Bağlanılan alan adları",
+    "description": "For the new mobile-friendly popup design"
+  },
   "popupTipDashboard": {
     "message": "Kontrol panelini açar",
     "description": "English: Click to open the dashboard"
@@ -136,15 +148,15 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Bu site için kozmetik süzmeyi aç/kapa",
+    "message": "Bu site için kozmetik filtrelemeyi aç/kapa",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Bu sitede kozmetik süzmeyi devre dışı bırakmak için tıklayın",
+    "message": "Bu sitede, kozmetik filtrelemeyi devre dışı bırakmak için tıklayın",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Bu sitede kozmetik süzmeyi etkinleştirmek için tıklayın",
+    "message": "Bu sitede, kozmetik filtrelemeyi etkinleştirmek için tıklayın",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -166,6 +178,26 @@
   "popupTipNoScripting2": {
     "message": "JavaScript'i bu sitede artık devre dışı bırakmamak için tıklayın",
     "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupNoLargeMedia_v2": {
+    "message": "Büyük medya ögeleri",
+    "description": "Tip for the no-large-media per-site switch"
+  },
+  "popupNoCosmeticFiltering_v2": {
+    "message": "Kozmetik filtreleme",
+    "description": "Tip for the no-cosmetic-filtering per-site switch"
+  },
+  "popupNoRemoteFonts_v2": {
+    "message": "Uzak yazı tipleri",
+    "description": "Tip for the no-remote-fonts per-site switch"
+  },
+  "popupNoScripting_v2": {
+    "message": "JavaScript",
+    "description": "Tip for the no-scripting per-site switch"
+  },
+  "popupMoreButton_v2": {
+    "message": "Daha fazla",
+    "description": "Label to be used to toggle overview panel"
   },
   "popupTipGlobalRules": {
     "message": "Genel kurallar: bu sütun tüm sitelere uygulanan kurallar içindir.",
@@ -240,11 +272,11 @@
     "description": "Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters": {
-    "message": "Ağ süzgeçleri",
+    "message": "Ağ filtreleri",
     "description": "English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters": {
-    "message": "Kozmetik süzgeçler",
+    "message": "Kozmetik filtreler",
     "description": "English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint": {
@@ -308,7 +340,7 @@
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "Kozmetik süzgeçleri devre dışı bırak",
+    "message": "Kozmetik filtreleri devre dışı bırak",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
@@ -340,7 +372,7 @@
     "description": "English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt": {
-    "message": "{{netFilterCount}} ağ süzgeci + {{cosmeticFilterCount}} kozmetik süzgeç:",
+    "message": "{{netFilterCount}} ağ filtresi + {{cosmeticFilterCount}} kozmetik filtre:",
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
@@ -348,7 +380,7 @@
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
-    "message": "Süzgeç listelerini otomatik güncelle.",
+    "message": "Filtre listelerini kendiliğinden güncelle",
     "description": "A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow": {
@@ -360,19 +392,19 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
-    "message": "Kozmetik süzgeçleri incele ve uygula",
+    "message": "Kozmetik filtreleri incele ve uygula",
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Bu seçenek <a href=\"https://adblockplus.org/en/faq_internal#elemhide\"> Adblock Plus-uyumlu &ldquo;öge gizleme&rdquo; süzgeçlerinin</a> işlenmesini ve uygulanmasını sağlar. Bu süzgeçler aslında kozmetiktir, bir web sayfasında görsel rahatsızlık yaratan ve ağ isteği-tabanlı süzme motoru tarafından engellenemeyecek olan ögelerin gizlenmesine yarar.</p><p>Bu özelliği etkinleştirmek uBlock₀'in bellek kullanımını artırır.</p>",
+    "message": "<p>Bu seçenek <a href=\"https://adblockplus.org/en/faq_internal#elemhide\"> Adblock Plus-uyumlu &ldquo;öge gizleme&rdquo; filtrelerinin</a> işlenmesini ve uygulanmasını sağlar. Bu filtreler aslında kozmetiktir, bir web sayfasında görsel rahatsızlık yaratan ve ağ isteği-tabanlı filtreleme motoru tarafından engellenemeyecek olan ögelerin gizlenmesine yarar.</p><p>Bu özelliği etkinleştirmek uBlock₀'in bellek kullanımını artırır.</p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
-    "message": "Genel kozmetik süzgeçleri yok say",
+    "message": "Genel kozmetik filtreleri yok say",
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Genel kozmetik süzgeçler tüm web sayfalarına uygulanan kozmetik süzgeçlerdir.<p>uBlock₀ tarafından verimli bir şekilde işlenmesine rağmen genel kozmetik süzgeçler bazı web sayfalarında ölçülebilir bellek ve CPU ek yüküne neden olabilir, özellikle büyük ve uzun süreli olanlar.<p>Bu seçeneğin etkinleştirmesi, web sayfalarına eklenen genel kozmetik süzgeçlerin işlenmesinden kaynaklı bellek ve CPU ek yükünü ortadan kaldıracaktır ve ek olarak uBlock₀'un kendi bellek izini de azaltacaktır.<p>Daha az güçlü cihazlarda bu seçeneğin etkinleştirilmesi tavsiye edilir.",
+    "message": "<p>Genel kozmetik filtreler tüm web sayfalarına uygulanan kozmetik filtrelerdir.<p>uBlock₀ tarafından verimli bir şekilde işlenmesine rağmen genel kozmetik filtreler bazı web sayfalarında ölçülebilir bellek ve CPU ek yüküne neden olabilir, özellikle büyük ve uzun süreli olanlar.<p>Bu seçeneğin etkinleştirilmesi, web sayfalarına eklenen genel kozmetik filtrelerin işlenmesinden kaynaklı bellek ve CPU ek yükünü ortadan kaldıracaktır ve ek olarak uBlock₀'un kendi bellek izini de azaltacaktır.<p>Daha az güçlü cihazlarda bu seçeneğin etkinleştirilmesi tavsiye edilir.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -440,7 +472,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Her satırda bir süzgeç. Bir süzgeç yalın bir alan adı veya Adblock Plus uyumlu bir süzgeç olabilir. <code>!</code> ile başlayan satırlar yok sayılacaktır.",
+    "message": "Her satırda bir filtre. Bir filtre yalın bir alan adı veya Adblock Plus uyumlu bir filtre olabilir. <code>!</code> ile başlayan satırlar yok sayılacaktır.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -452,7 +484,7 @@
     "description": "English: Export"
   },
   "1pExportFilename": {
-    "message": "ublock-statik-süzgeçlerim_{{datetime}}.txt",
+    "message": "ublock-statik-filtrelerim_{{datetime}}.txt",
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges": {
@@ -500,7 +532,7 @@
     "description": "default file name to use"
   },
   "rulesHint": {
-    "message": "Dinamik süzme kurallarınızın listesi.",
+    "message": "Dinamik filtreleme kurallarınızın listesi.",
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
@@ -540,7 +572,7 @@
     "description": "English: URL"
   },
   "logRequestsHeaderFilter": {
-    "message": "Süzgeç",
+    "message": "Filtre",
     "description": "English: Filter"
   },
   "logAll": {
@@ -584,15 +616,15 @@
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "Günlükçü süzmeyi aç/kapa",
+    "message": "Günlük filtrelemeyi aç/kapa",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
-    "message": "günlükçü içeriğini süz",
+    "message": "günlükçü içeriğini filtrele",
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
-    "message": "Günlükçü süzme seçenekleri",
+    "message": "Günlükçü filtreleme seçenekleri",
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {
@@ -624,11 +656,11 @@
     "description": "Small header to identify the 'Details' pane for a specific logger entry"
   },
   "loggerEntryDetailsFilter": {
-    "message": "Süzgeç",
+    "message": "Filtre",
     "description": "Label to identify a filter field"
   },
   "loggerEntryDetailsFilterList": {
-    "message": "Süzgeç listesi",
+    "message": "Filtre listesi",
     "description": "Label to identify a filter list field"
   },
   "loggerEntryDetailsRule": {
@@ -668,11 +700,11 @@
     "description": "Label for the type selector"
   },
   "loggerStaticFilteringHeader": {
-    "message": "Statik süzme",
+    "message": "Statik filtre",
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "Bu adres ile eşleşen {{url}} {{br}}ve kaynağı {{origin}} olan, {{type}} ağ isteklerini {{br}}eşleşen istisna süzgeci {{importance}} {{action}}.",
+    "message": "{{url}} URL adresi ile eşleşen {{br}}ve kaynağı {{origin}} olan,{{br}}eşleşen bir istisna filtresi {{importance}} {{br}}{{type}} ağ isteklerini {{action}} {{br}}.",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
@@ -708,11 +740,11 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Statik süzgecin <code>{{filter}}</code> bulunduğu listeler:",
+    "message": "Statik filtrenin <code>{{filter}}</code> bulunduğu listeler:",
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Statik süzgeç <code>{{filter}}</code> şu anda etkin olan süzgeç listelerinin hiçbirinde bulunamadı",
+    "message": "Statik filtre <code>{{filter}}</code> şu anda etkin olan filtre listelerinin hiçbirinde bulunamadı",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
@@ -744,7 +776,7 @@
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
-    "message": "{{input}} Süzgeç/kural",
+    "message": "{{input}} Filtre/kural",
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
@@ -832,7 +864,7 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: Aşağıdaki URL, özel süzgeç listenize eklensin mi?\n\nBaşlık: \"{{title}}\"\nURL: {{url}}",
+    "message": "uBlock₀: Aşağıdaki URL, özel filtre listenize eklensin mi?\n\nBaşlık: \"{{title}}\"\nURL: {{url}}",
     "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo": {
@@ -876,7 +908,7 @@
     "description": "English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2": {
-    "message": "Bu süzgeç nedeniyle",
+    "message": "Bu filtre nedeniyle",
     "description": "English: Because of the following filter"
   },
   "docblockedNoParamsPrompt": {

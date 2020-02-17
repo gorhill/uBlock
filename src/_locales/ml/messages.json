@@ -95,6 +95,18 @@
     "message": "അല്ലെങ്കില്‍",
     "description": "English: or"
   },
+  "popupBlockedOnThisPage_v2": {
+    "message": "Blocked on this page",
+    "description": "For the new mobile-friendly popup design"
+  },
+  "popupBlockedSinceInstall_v2": {
+    "message": "Blocked since install",
+    "description": "For the new mobile-friendly popup design"
+  },
+  "popupDomainsConnected_v2": {
+    "message": "Domains connected",
+    "description": "For the new mobile-friendly popup design"
+  },
   "popupTipDashboard": {
     "message": "ഡാഷ്ബോര്‍ഡ് തുറക്കാന്‍ ക്ലിക്ക് ചെയ്യുക",
     "description": "English: Click to open the dashboard"
@@ -166,6 +178,26 @@
   "popupTipNoScripting2": {
     "message": "Click to no longer disable JavaScript on this site",
     "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupNoLargeMedia_v2": {
+    "message": "Large media elements",
+    "description": "Tip for the no-large-media per-site switch"
+  },
+  "popupNoCosmeticFiltering_v2": {
+    "message": "Cosmetic filtering",
+    "description": "Tip for the no-cosmetic-filtering per-site switch"
+  },
+  "popupNoRemoteFonts_v2": {
+    "message": "Remote fonts",
+    "description": "Tip for the no-remote-fonts per-site switch"
+  },
+  "popupNoScripting_v2": {
+    "message": "JavaScript",
+    "description": "Tip for the no-scripting per-site switch"
+  },
+  "popupMoreButton_v2": {
+    "message": "More",
+    "description": "Label to be used to toggle overview panel"
   },
   "popupTipGlobalRules": {
     "message": "ആഗോള നിയമങ്ങൾ: ഈ കോളത്തിലെ നിയമങ്ങൾ എല്ലാ സൈറ്റുകളിലും പ്രയോഗിക്കുന്ന നിയമങ്ങള് ആണ്.",

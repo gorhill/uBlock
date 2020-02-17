@@ -95,6 +95,18 @@
     "message": "atau",
     "description": "English: or"
   },
+  "popupBlockedOnThisPage_v2": {
+    "message": "Diblokir di laman ini",
+    "description": "For the new mobile-friendly popup design"
+  },
+  "popupBlockedSinceInstall_v2": {
+    "message": "Diblokir sejak dipasang",
+    "description": "For the new mobile-friendly popup design"
+  },
+  "popupDomainsConnected_v2": {
+    "message": "Domain terhubung",
+    "description": "For the new mobile-friendly popup design"
+  },
   "popupTipDashboard": {
     "message": "Buka dasbor",
     "description": "English: Click to open the dashboard"
@@ -148,7 +160,7 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Jungkit pemblokiran fon pihak ketiga untuk situs ini",
+    "message": "Aktif/Nonaktifkan pemblokiran fon eksternal untuk situs ini",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
@@ -166,6 +178,26 @@
   "popupTipNoScripting2": {
     "message": "Klik untuk tidak lagi menonaktifkan total JavaScript di situs ini",
     "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupNoLargeMedia_v2": {
+    "message": "Elemen media besar",
+    "description": "Tip for the no-large-media per-site switch"
+  },
+  "popupNoCosmeticFiltering_v2": {
+    "message": "Filter tampilan",
+    "description": "Tip for the no-cosmetic-filtering per-site switch"
+  },
+  "popupNoRemoteFonts_v2": {
+    "message": "Fon eksternal",
+    "description": "Tip for the no-remote-fonts per-site switch"
+  },
+  "popupNoScripting_v2": {
+    "message": "JavaScript",
+    "description": "Tip for the no-scripting per-site switch"
+  },
+  "popupMoreButton_v2": {
+    "message": "Lainnya",
+    "description": "Label to be used to toggle overview panel"
   },
   "popupTipGlobalRules": {
     "message": "Aturan global: kolom ini untuk aturan yang diterapkan ke semua situs.",
@@ -316,7 +348,7 @@
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
-    "message": "Blokir fon rajuh",
+    "message": "Blokir fon eksternal",
     "description": ""
   },
   "settingsNoScriptingPrompt": {
@@ -560,11 +592,11 @@
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
-    "message": "Aktif/nonaktifkan inspeksi DOM",
+    "message": "Aktif/Nonaktifkan inspeksi DOM",
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "Aktif/nonaktifkan panel popup",
+    "message": "Aktif/Nonaktifkan panel popup",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
@@ -584,15 +616,15 @@
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "Aktif/nonaktifkan penyaringan pencatat log",
+    "message": "Aktif/Nonaktifkan penyaringan pencatat log",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
-    "message": "saring konten pencatat log",
+    "message": "filter konten pencatat log",
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
-    "message": "Pilihan penyaringan pencatat log",
+    "message": "Opsi filter pencatat log",
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {
@@ -624,7 +656,7 @@
     "description": "Small header to identify the 'Details' pane for a specific logger entry"
   },
   "loggerEntryDetailsFilter": {
-    "message": "Saringan",
+    "message": "Filter",
     "description": "Label to identify a filter field"
   },
   "loggerEntryDetailsFilterList": {
@@ -716,7 +748,7 @@
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
-    "message": "Entri pencatat log yang tidak memenuhi ketiga kondisi di bawah akan secara otomatis dibuang:",
+    "message": "Entri pencatat log yang tidak memenuhi ketiga kondisi di bawah akan otomatis dibuang:",
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
@@ -956,7 +988,7 @@
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "Aktif/nonaktifkan bilah gulir",
+    "message": "Aktif/Nonaktifkan bilah gulir",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
