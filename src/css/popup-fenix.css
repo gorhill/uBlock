@@ -222,7 +222,7 @@ body[dir="rtl"] #tooltip {
     border: 0;
     flex-shrink: 0;
     font-family: "Noto Sans", sans-serif;
-    font-size: 85%;
+    font-size: 90%;
     margin: 0;
     padding: 0;
     overflow-y: auto;
@@ -258,8 +258,7 @@ body[dir="rtl"] #tooltip {
     -moz-box-sizing: border-box;
     color: #000;
     display: inline-flex;
-    flex-shrink: 0;
-    padding: 0.33em 0;
+    padding: 0.35em 0;
     position: relative;
     }
 #firewallContainer > div:first-of-type > span:first-of-type {
@@ -269,6 +268,7 @@ body[dir="rtl"] #tooltip {
 #firewallContainer > div > span:first-of-type {
     align-items: flex-end;
     flex-direction: column;
+    flex-grow: 1;
     justify-content: flex-end;
     padding-right: 2px;
     width: calc(100% - 4em);
@@ -286,8 +286,9 @@ body[dir="rtl"] #tooltip {
     display: none;
     }
 #firewallContainer > div > span:first-of-type ~ span {
+    flex-shrink: 0;
     margin-left: 1px;
-    width: 4em;
+    width: 5em;
     }
 #firewallContainer > div > span:nth-of-type(2) {
     display: none;
@@ -322,7 +323,9 @@ body[dir="rtl"] #tooltip {
     }
 #firewallContainer > div > span[data-acount]::before,
 #firewallContainer > div > span[data-bcount]::after {
+    align-items: center;
     content: ' ';
+    display: inline-flex;
     }
 #firewallContainer > div > span[data-acount]::before {
     padding-left: 0.1em;
@@ -349,9 +352,6 @@ body[dir="rtl"] #tooltip {
     content: '\2212\2212\2212';
     }
 
-body.advancedUser #firewallContainer > div > span:first-of-type {
-    width: calc(100% - 8em);
-    }
 body.advancedUser #firewallContainer > div > span:nth-of-type(2) {
     display: inline-flex;
     }
@@ -453,7 +453,7 @@ body.advancedUser #firewallContainer > div > span.noopRule.ownRule {
     left: 0;
     position: absolute;
     top: 0;
-    width: 4em;
+    width: 100%;
     z-index: 1;
     }
 #actionSelector > span {
