@@ -1,3 +1,17 @@
+ /* External CSS values override */
+body {
+    color: #20123a;
+    fill: #20123a;
+    }
+.fa-icon {
+    padding: 0 0.1em;
+    }
+.fa-icon.fa-icon-badged > .fa-icon-badge {
+    bottom: auto;
+    top: -20%;
+    }
+
+/* Internal CSS values */
 body {
     background-color: white;
     border: 0;
@@ -6,16 +20,6 @@ body {
     white-space: nowrap;
     }
 
-h2 {
-    background-color: #eee;
-    border: 0;
-    color: #666;
-    cursor: pointer;
-    font-size: 100%;
-    font-weight: normal;
-    padding: 0.2em;
-    text-align: center;
-    }
 a {
     color: inherit;
     text-decoration: none;
@@ -34,7 +38,7 @@ a {
     }
 hr {
     border: 0;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid #e3e2e3;
     margin: 0;
     padding: 0;
     }
@@ -43,7 +47,7 @@ hr {
     }
 
 #sticky {
-    background-color: white;
+    background-color: inherit;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -60,7 +64,7 @@ hr {
     margin: 0.5em 0;
     }
 #switch .fa-icon {
-    fill: #0046ff;
+    fill: #0060df;
     cursor: pointer;
     font-size: 700%;
     margin: 0;
@@ -95,9 +99,6 @@ body.off #switch .fa-icon {
     }
 .rulesetTools [id]:not(:first-of-type) {
     margin-top: 0.2em;
-    }
-.rulesetTools [id]:hover {
-    fill: black;
     }
 body.needReload #refresh,
 body.needSave #saveRules,
@@ -142,19 +143,13 @@ body.needSave #revertRules {
     }
 
 .tool {
-    color: #444;
     cursor: pointer;
-    fill: #444;
     padding: 0 0.5em;
     unicode-bidi: embed;
     visibility: hidden;
     }
 .tool.enabled {
     visibility: visible;
-    }
-.tool.enabled:hover {
-    color: #444;
-    fill: #444;
     }
 
 .statValue {
@@ -175,10 +170,6 @@ body.needSave #revertRules {
     }
 #extraTools > span.on .fa-icon >.nope {
     visibility: visible;
-    }
-#extraTools > span:hover {
-    color: #222;
-    fill: #222;
     }
 
 #main:not(.dfEnabled) #moreButton .fa-icon {
@@ -252,7 +243,7 @@ body[dir="rtl"] #tooltip {
     display: none;
     }
 #firewallContainer > div > span {
-    background-color: #e6e6e6;
+    background-color: #e0e0e6;
     border: none;
     box-sizing: border-box;
     -moz-box-sizing: border-box;

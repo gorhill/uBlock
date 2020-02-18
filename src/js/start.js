@@ -346,12 +346,7 @@ if (
     browser.browserAction.setPopup instanceof Function
 ) {
     let uiFlavor = µb.hiddenSettings.uiFlavor;
-    if (
-        uiFlavor === 'unset' &&
-        vAPI.webextFlavor.major > 68 &&
-        vAPI.webextFlavor.soup.has('firefox') &&
-        vAPI.webextFlavor.soup.has('mobile')
-    ) {
+    if ( uiFlavor === 'unset' && vAPI.webextFlavor.soup.has('mobile') ) {
         uiFlavor = 'fenix';
     }
     if ( uiFlavor !== 'unset' && /\w+/.test(uiFlavor) ) {
