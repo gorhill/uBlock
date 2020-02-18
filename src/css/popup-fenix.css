@@ -415,9 +415,6 @@ body.advancedUser #firewallContainer.colorBlind > div > span.blockRule {
     background-color: rgba(0, 19, 110, 0.4);
     }
 body.advancedUser #firewallContainer > div > span.noopRule {
-    background-color: rgba(108, 108, 108, 0.3);
-    }
-body.advancedUser #firewallContainer.colorBlind > div > span.noopRule {
     background-color: rgba(96, 96, 96, 0.4);
     }
 body.advancedUser #firewallContainer > div > span.ownRule {
@@ -436,7 +433,7 @@ body.advancedUser #firewallContainer.colorBlind > div > span.blockRule.ownRule {
     background-color: rgba(0, 19, 110, 1);
     }
 body.advancedUser #firewallContainer > div > span.noopRule.ownRule {
-    background-color: rgba(108, 108, 108, 1);
+    background-color: rgba(96, 96, 96, 1);
     }
 
 #actionSelector {
