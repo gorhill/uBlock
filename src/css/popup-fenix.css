@@ -47,7 +47,7 @@ hr {
     }
 
 #sticky {
-    background-color: inherit;
+    background-color: white;
     position: sticky;
     top: 0;
     z-index: 100;
