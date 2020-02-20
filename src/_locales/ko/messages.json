@@ -96,15 +96,15 @@
     "description": "English: or"
   },
   "popupBlockedOnThisPage_v2": {
-    "message": "Blocked on this page",
+    "message": "이 페이지에서 차단됨",
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "Blocked since install",
+    "message": "설치 후 차단됨",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
-    "message": "Domains connected",
+    "message": "도메인 연결됨",
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
@@ -180,23 +180,23 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoLargeMedia_v2": {
-    "message": "Large media elements",
+    "message": "큰 미디어 요소",
     "description": "Tip for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
-    "message": "Cosmetic filtering",
+    "message": "표면 필터링",
     "description": "Tip for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
-    "message": "Remote fonts",
+    "message": "원격 폰트",
     "description": "Tip for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
-    "message": "JavaScript",
+    "message": "자바스크립트",
     "description": "Tip for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
-    "message": "More",
+    "message": "더보기",
     "description": "Label to be used to toggle overview panel"
   },
   "popupTipGlobalRules": {
