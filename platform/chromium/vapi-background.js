@@ -1443,7 +1443,14 @@ vAPI.cloud = (( ) => {
 
     const options = {
         defaultDeviceName: window.navigator.platform,
-        deviceName: vAPI.localStorage.getItem('deviceName') || ''
+        deviceName: undefined,
+    };
+
+    const getDeviceName = function() {
+        if ( options.deviceName === undefined ) {
+            options.deviceName = vAPI.localStorage.getItem('deviceName') || '';
+        }
+        return options.deviceName;
     };
 
     // This is used to find out a rough count of how many chunks exists:
@@ -1491,9 +1498,8 @@ vAPI.cloud = (( ) => {
     };
 
     const push = async function(dataKey, data) {
-
         let bin = {
-            'source': options.deviceName || options.defaultDeviceName,
+            'source': getDeviceName() || options.defaultDeviceName,
             'tstamp': Date.now(),
             'data': data,
             'size': 0
@@ -1579,6 +1585,7 @@ vAPI.cloud = (( ) => {
 
     const getOptions = function(callback) {
         if ( typeof callback !== 'function' ) { return; }
+        getDeviceName();
         callback(options);
     };
 

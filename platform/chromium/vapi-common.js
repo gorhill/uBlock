@@ -226,6 +226,10 @@ vAPI.closePopup = function() {
 //   Always use a wrapper to seamlessly handle exceptions
 
 vAPI.localStorage = {
+    started: vAPI.webextFlavor.soup.has('mobile') === false,
+    start: function() {
+        this.started = true;
+    },
     clear: function() {
         try {
             window.localStorage.clear();
@@ -233,6 +237,7 @@ vAPI.localStorage = {
         }
     },
     getItem: function(key) {
+        if ( this.started === false ) { return null; }
         try {
             return window.localStorage.getItem(key);
         } catch(ex) {
@@ -246,6 +251,7 @@ vAPI.localStorage = {
         }
     },
     setItem: function(key, value) {
+        if ( this.started === false ) { return; }
         try {
             window.localStorage.setItem(key, value);
         } catch(ex) {
