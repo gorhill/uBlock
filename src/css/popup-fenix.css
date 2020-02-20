@@ -262,7 +262,9 @@ body[dir="rtl"] #tooltip {
     flex-grow: 1;
     justify-content: flex-end;
     padding-right: 2px;
-    width: calc(100% - 4em);
+    white-space: normal;
+    width: calc(100% - 5em);
+    word-break: break-word;
     }
 #firewallContainer > div.isCname > span:first-of-type {
     color: mediumblue;
@@ -343,6 +345,9 @@ body[dir="rtl"] #tooltip {
     content: '\2212\2212\2212';
     }
 
+body.advancedUser #firewallContainer > div > span:first-of-type {
+    width: calc(100% - 10em);
+    }
 body.advancedUser #firewallContainer > div > span:nth-of-type(2) {
     display: inline-flex;
     }
