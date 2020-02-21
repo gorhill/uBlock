@@ -679,6 +679,7 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
     }
 
     async enableWASM() {
+        if ( typeof WebAssembly !== 'object' ) { return false; }
         if ( this.wasmMemory instanceof WebAssembly.Memory ) { return true; }
         const module = await getWasmModule();
         if ( module instanceof WebAssembly.Module === false ) {
