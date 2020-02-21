@@ -226,7 +226,7 @@ vAPI.closePopup = function() {
 //   Always use a wrapper to seamlessly handle exceptions
 
 vAPI.localStorage = {
-    started: vAPI.webextFlavor.soup.has('mobile') === false,
+    started: false,
     start: function() {
         this.started = true;
     },
