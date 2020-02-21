@@ -29,10 +29,12 @@
 
 /******************************************************************************/
 
-let popupFontSize = vAPI.localStorage.getItem('popupFontSize');
-if ( typeof popupFontSize === 'string' && popupFontSize !== 'unset' ) {
-    document.body.style.setProperty('font-size', popupFontSize);
-}
+let popupFontSize;
+vAPI.localStorage.getItemAsync('popupFontSize').then(value => {
+    if ( typeof value !== 'string' || value === 'unset' ) { return; }
+    document.body.style.setProperty('font-size', value);
+    popupFontSize = value;
+});
 
 // https://github.com/gorhill/uBlock/issues/3032
 // Popup panel can be in one of two modes:
@@ -48,13 +50,15 @@ if (
 }
 
 // https://github.com/chrisaljoudi/uBlock/issues/996
-// Experimental: mitigate glitchy popup UI: immediately set the firewall
-// pane visibility to its last known state. By default the pane is hidden.
-let dfPaneVisibleStored =
-    vAPI.localStorage.getItem('popupFirewallPane') === 'true';
-if ( dfPaneVisibleStored ) {
-    document.getElementById('panes').classList.add('dfEnabled');
-}
+//   Experimental: mitigate glitchy popup UI: immediately set the firewall
+//   pane visibility to its last known state. By default the pane is hidden.
+let dfPaneVisibleStored;
+vAPI.localStorage.getItemAsync('popupFirewallPane').then(value => {
+    dfPaneVisibleStored = value === true || value === 'true';
+    if ( dfPaneVisibleStored ) {
+        document.getElementById('panes').classList.add('dfEnabled');
+    }
+});
 
 /******************************************************************************/
 
@@ -931,11 +935,8 @@ document.addEventListener(
 
 const expandExceptions = new Set();
 
-(( ) => {
+vAPI.localStorage.getItemAsync('popupExpandExceptions').then(exceptions => {
     try {
-        const exceptions = JSON.parse(
-            vAPI.localStorage.getItem('popupExpandExceptions')
-        );
         if ( Array.isArray(exceptions) === false ) { return; }
         for ( const exception of exceptions ) {
             expandExceptions.add(exception);
@@ -943,13 +944,12 @@ const expandExceptions = new Set();
     }
     catch(ex) {
     }
-
-})();
+});
 
 const saveExpandExceptions = function() {
     vAPI.localStorage.setItem(
         'popupExpandExceptions',
-        JSON.stringify(Array.from(expandExceptions))
+        Array.from(expandExceptions)
     );
 };
 

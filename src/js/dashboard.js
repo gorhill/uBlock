@@ -84,10 +84,10 @@ const discardUnsavedData = function(synchronous = false) {
 
 const loadDashboardPanel = function(pane = '') {
     if ( pane === '' ) {
-        pane = vAPI.localStorage.getItem('dashboardLastVisitedPane');
-        if ( pane === null ) {
-             pane = 'settings.html';
-        }
+        vAPI.localStorage.getItemAsync('dashboardLastVisitedPane').then(value => {
+            loadDashboardPanel(value !== null ? value : 'settings.html');
+        });
+        return;
     }
     const tabButton = uDom(`[href="#${pane}"]`);
     if ( !tabButton || tabButton.hasClass('selected') ) { return; }

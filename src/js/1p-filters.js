@@ -45,20 +45,6 @@ let cachedUserFilters = '';
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/3706
-//   Save/restore cursor position
-//
-// CoreMirror reference: https://codemirror.net/doc/manual.html#api_selection
-
-window.addEventListener('beforeunload', ( ) => {
-    vAPI.localStorage.setItem(
-        'myFiltersCursorPosition',
-        JSON.stringify(cmEditor.getCursor().line)
-    );
-});
-
-/******************************************************************************/
-
 // This is to give a visual hint that the content of user blacklist has changed.
 
 const userFiltersChanged = function(changed) {
@@ -71,7 +57,7 @@ const userFiltersChanged = function(changed) {
 
 /******************************************************************************/
 
-const renderUserFilters = async function(first) {
+const renderUserFilters = async function() {
     const details = await vAPI.messaging.send('dashboard', {
         what: 'readUserFilters',
     });
@@ -83,18 +69,7 @@ const renderUserFilters = async function(first) {
         content += '\n';
     }
     cmEditor.setValue(content);
-    if ( first ) {
-        cmEditor.clearHistory();
-        try {
-            const line = JSON.parse(
-                vAPI.localStorage.getItem('myFiltersCursorPosition')
-            );
-            if ( typeof line === 'number' ) {
-                cmEditor.setCursor(line, 0);
-            }
-        } catch(ex) {
-        }
-    }
+
     userFiltersChanged(false);
 };
 
@@ -224,7 +199,24 @@ uDom('#exportUserFiltersToFile').on('click', exportUserFiltersToFile);
 uDom('#userFiltersApply').on('click', ( ) => { applyChanges(); });
 uDom('#userFiltersRevert').on('click', revertChanges);
 
-renderUserFilters(true);
+// https://github.com/gorhill/uBlock/issues/3706
+//   Save/restore cursor position
+//
+// CoreMirror reference: https://codemirror.net/doc/manual.html#api_selection
+renderUserFilters().then(( ) => {
+    cmEditor.clearHistory();
+    return vAPI.localStorage.getItemAsync('myFiltersCursorPosition');
+}).then(line => {
+    if ( typeof line === 'number' ) {
+        cmEditor.setCursor(line, 0);
+    }
+    cmEditor.on('cursorActivity', ( ) => {
+        const line = cmEditor.getCursor().line;
+        if ( vAPI.localStorage.getItem('myFiltersCursorPosition') !== line ) {
+            vAPI.localStorage.setItem('myFiltersCursorPosition', line);
+        }
+    });
+});
 
 cmEditor.on('changes', userFiltersChanged);
 CodeMirror.commands.save = applyChanges;

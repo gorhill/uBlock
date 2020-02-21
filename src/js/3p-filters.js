@@ -34,7 +34,7 @@ const reValidExternalList = /[a-z-]+:\/\/\S*\/\S+/;
 
 let listDetails = {};
 let filteringSettingsHash = '';
-let hideUnusedSet = new Set();
+let hideUnusedSet = new Set([ '*' ]);
 
 /******************************************************************************/
 
@@ -258,10 +258,6 @@ const renderFilterLists = function(soft) {
             let groupKey = groupKeys[i];
             let liGroup = liFromListGroup(groupKey, groups.get(groupKey));
             liGroup.setAttribute('data-groupkey', groupKey);
-            liGroup.classList.toggle(
-                'collapsed',
-                vAPI.localStorage.getItem('collapseGroup' + (i + 1)) === 'y'
-            );
             if ( liGroup.parentElement === null ) {
                 ulLists.appendChild(liGroup);
             }
@@ -548,7 +544,7 @@ const toggleHideUnusedLists = function(which) {
         .toggleClass('unused', mustHide);
     vAPI.localStorage.setItem(
         'hideUnusedFilterLists',
-        JSON.stringify(Array.from(hideUnusedSet))
+        Array.from(hideUnusedSet)
     );
 };
 
@@ -571,20 +567,11 @@ uDom('#lists').on('click', '.groupEntry[data-groupkey] > .geDetails', function(e
 });
 
 // Initialize from saved state.
-{
-    let aa;
-    try {
-        const json = vAPI.localStorage.getItem('hideUnusedFilterLists');
-        if ( json !== null ) {
-            aa = JSON.parse(json);
-        }
-    } catch (ex) {
+vAPI.localStorage.getItemAsync('hideUnusedFilterLists').then(value => {
+    if ( Array.isArray(value) ) {
+        hideUnusedSet = new Set(value);
     }
-    if ( Array.isArray(aa) === false ) {
-        aa = [ '*' ];
-    }
-    hideUnusedSet = new Set(aa);
-}
+});
 
 /******************************************************************************/
 

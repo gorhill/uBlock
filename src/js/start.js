@@ -316,10 +316,6 @@ if ( selfieIsValid !== true ) {
 // Start network observers.
 µb.webRequest.start();
 
-// https://github.com/uBlockOrigin/uBlock-issues/issues/899
-//   Signal that localStorage can be used now that uBO is ready.
-vAPI.localStorage.start();
-
 // Ensure that the resources allocated for decompression purpose (likely
 // large buffers) are garbage-collectable immediately after launch.
 // Otherwise I have observed that it may take quite a while before the

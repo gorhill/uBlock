@@ -218,48 +218,92 @@ vAPI.closePopup = function() {
 // background page or auxiliary pages.
 // This storage is optional, but it is nice to have, for a more polished user
 // experience.
-
+//
 // https://github.com/gorhill/uBlock/issues/2824
 //   Use a dummy localStorage if for some reasons it's not available.
-
+//
 // https://github.com/gorhill/uMatrix/issues/840
 //   Always use a wrapper to seamlessly handle exceptions
+//
+// https://github.com/uBlockOrigin/uBlock-issues/issues/899
+//   Convert into asynchronous access API.
 
 vAPI.localStorage = {
-    started: false,
     start: function() {
-        this.started = true;
+        if ( this.cache instanceof Object ) { return Promise.resolve(); }
+        if ( this.promise !== undefined ) { return this.promise; }
+        this.promise = new Promise(resolve => {
+            browser.storage.local.get('localStorage', bin => {
+                if (
+                    bin instanceof Object === false ||
+                    bin.localStorage instanceof Object === false
+                ) {
+                    this.cache = {};
+                    const ls = self.localStorage;
+                    for ( let i = 0; i < ls.length; i++ ) {
+                        const key = ls.key(i);
+                        this.cache[key] = ls.getItem(key);
+                    }
+                    //ls.clear();
+                    browser.storage.local.set({ localStorage: this.cache });
+                } else {
+                    try {
+                        this.cache = bin.localStorage;
+                    } catch(ex) {
+                    }
+                }
+                if ( this.cache instanceof Object === false ) {
+                    this.cache = {};
+                }
+                this.promise = undefined;
+                browser.storage.onChanged.addListener((changes, area) => {
+                    if (
+                        area !== 'local' ||
+                        changes instanceof Object === false ||
+                        changes.localStorage instanceof Object === false
+                    ) {
+                        return;
+                    }
+                    const newValue = changes.localStorage.newValue;
+                    this.cache = newValue instanceof Object ? newValue : {};
+                });
+                resolve();
+            });
+        });
+        return this.promise;
     },
     clear: function() {
-        try {
-            window.localStorage.clear();
-        } catch(ex) {
-        }
+        this.cache = {};
+        return browser.storage.local.set({ localStorage: this.cache });
     },
     getItem: function(key) {
-        if ( this.started === false ) { return null; }
-        try {
-            return window.localStorage.getItem(key);
-        } catch(ex) {
+        if ( this.cache instanceof Object === false ) {
+            console.info(`localStorage.getItem('${key}') not ready`);
+            return null;
         }
-        return null;
+        const value = this.cache[key];
+        return value !== undefined ? value : null;
+    },
+    getItemAsync: function(key) {
+        return this.start().then(( ) => {
+            const value = this.cache[key];
+            return value !== undefined ? value : null;
+        });
     },
     removeItem: function(key) {
-        try {
-            window.localStorage.removeItem(key);
-        } catch(ex) {
-        }
+        this.setItem(key);
     },
-    setItem: function(key, value) {
-        if ( this.started === false ) { return; }
-        try {
-            window.localStorage.setItem(key, value);
-        } catch(ex) {
-        }
-    }
+    setItem: function(key, value = undefined) {
+        return this.start().then(( ) => {
+            this.cache[key] = value;
+            return browser.storage.local.set({ localStorage: this.cache });
+        });
+    },
+    promise: undefined,
+    cache: undefined,
 };
 
-
+vAPI.localStorage.start();
 
 
 
