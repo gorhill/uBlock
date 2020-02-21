@@ -684,15 +684,18 @@
         vAPI.setTimeout(( ) => {
             ttlTimer = undefined;
             datasetPromise = undefined;
-        }, 60000);
+        }, 5 * 60 * 1000);
 
         if ( datasetPromise !== undefined ) {
             return datasetPromise;
         }
 
+        const datasetURL = µBlock.hiddenSettings.benchmarkDatasetURL;
+        if ( datasetURL === 'unset' ) {
+            return Promise.reject('No dataset');
+        }
         console.info(`Loading benchmark dataset...`);
-        const url = vAPI.getURL('/assets/requests.json');
-        datasetPromise = µBlock.assets.fetchText(url).then(details => {
+        datasetPromise = µBlock.assets.fetchText(datasetURL).then(details => {
             console.info(`Parsing benchmark dataset...`);
             const requests = [];
             const lineIter = new µBlock.LineIterator(details.content);

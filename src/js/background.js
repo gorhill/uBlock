@@ -42,6 +42,7 @@ const µBlock = (( ) => { // jshint ignore:line
         autoUpdateAssetFetchPeriod: 120,
         autoUpdateDelayAfterLaunch: 180,
         autoUpdatePeriod: 7,
+        benchmarkDatasetURL: 'unset',
         blockingProfiles: '11111/#F00 11011/#C0F 11001/#00F 00001',
         cacheStorageAPI: 'unset',
         cacheStorageCompression: true,
