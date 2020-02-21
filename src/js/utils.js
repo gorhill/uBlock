@@ -692,7 +692,8 @@
 
         const datasetURL = µBlock.hiddenSettings.benchmarkDatasetURL;
         if ( datasetURL === 'unset' ) {
-            return Promise.reject('No dataset');
+            console.info(`No benchmark dataset available.`);
+            return Promise.resolve();
         }
         console.info(`Loading benchmark dataset...`);
         datasetPromise = µBlock.assets.fetchText(datasetURL).then(details => {
