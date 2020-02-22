@@ -139,9 +139,7 @@ const HNTrieContainer = class {
         this.buf32[TRIE1_SLOT] = this.buf32[TRIE0_SLOT];
         this.buf32[CHAR0_SLOT] = details.char0 || 65536;
         this.buf32[CHAR1_SLOT] = this.buf32[CHAR0_SLOT];
-        this.wasmInstancePromise = null;
         this.wasmMemory = null;
-        this.readyToUse();
     }
 
     //--------------------------------------------------------------------------
@@ -151,15 +149,6 @@ const HNTrieContainer = class {
     reset() {
         this.buf32[TRIE1_SLOT] = this.buf32[TRIE0_SLOT];
         this.buf32[CHAR1_SLOT] = this.buf32[CHAR0_SLOT];
-    }
-
-    readyToUse() {
-        if ( HNTrieContainer.wasmModulePromise instanceof Promise === false ) {
-            return Promise.resolve();
-        }
-        return HNTrieContainer.wasmModulePromise.then(
-            module => this.initWASM(module)
-        );
     }
 
     setNeedle(needle) {
@@ -407,6 +396,40 @@ const HNTrieContainer = class {
         return true;
     }
 
+    async enableWASM() {
+        if ( typeof WebAssembly !== 'object' ) { return false; }
+        if ( this.wasmMemory instanceof WebAssembly.Memory ) { return true; }
+        const module = await getWasmModule();
+        if ( module instanceof WebAssembly.Module === false ) {
+            return false;
+        }
+        const memory = new WebAssembly.Memory({ initial: 2 });
+        const instance = await WebAssembly.instantiate(
+            module,
+            {
+                imports: {
+                    memory,
+                    growBuf: this.growBuf.bind(this, 24, 256)
+                }
+            }
+        );
+        if ( instance instanceof WebAssembly.Instance === false ) {
+            return false;
+        }
+        this.wasmMemory = memory;
+        const curPageCount = memory.buffer.byteLength >>> 16;
+        const newPageCount = this.buf.byteLength + PAGE_SIZE-1 >>> 16;
+        if ( newPageCount > curPageCount ) {
+            memory.grow(newPageCount - curPageCount);
+        }
+        const buf = new Uint8Array(memory.buffer);
+        buf.set(this.buf);
+        this.buf = buf;
+        this.buf32 = new Uint32Array(this.buf.buffer);
+        this.matches = this.matchesWASM = instance.exports.matches;
+        this.add = this.addWASM = instance.exports.add;
+    }
+
     //--------------------------------------------------------------------------
     // Private methods
     //--------------------------------------------------------------------------
@@ -506,39 +529,6 @@ const HNTrieContainer = class {
             this.buf32[CHAR0_SLOT] = char0;
             this.buf32[CHAR1_SLOT] = char0 + charDataLen;
         }
-    }
-
-    initWASM(module) {
-        if ( module instanceof WebAssembly.Module === false ) {
-            return Promise.resolve(null);
-        }
-        if ( this.wasmInstancePromise === null ) {
-            const memory = new WebAssembly.Memory({ initial: 2 });
-            this.wasmInstancePromise = WebAssembly.instantiate(
-                module,
-                {
-                    imports: {
-                        memory,
-                        growBuf: this.growBuf.bind(this, 24, 256)
-                    }
-                }
-            );
-            this.wasmInstancePromise.then(instance => {
-                this.wasmMemory = memory;
-                const curPageCount = memory.buffer.byteLength >>> 16;
-                const newPageCount = this.buf.byteLength + PAGE_SIZE-1 >>> 16;
-                if ( newPageCount > curPageCount ) {
-                    memory.grow(newPageCount - curPageCount);
-                }
-                const buf = new Uint8Array(memory.buffer);
-                buf.set(this.buf);
-                this.buf = buf;
-                this.buf32 = new Uint32Array(this.buf.buffer);
-                this.matches = this.matchesWASM = instance.exports.matches;
-                this.add = this.addWASM = instance.exports.add;
-            });
-        }
-        return this.wasmInstancePromise;
     }
 };
 
@@ -698,35 +688,8 @@ HNTrieContainer.prototype.HNTrieRef.prototype.needle = '';
 // The WASM module is entirely optional, the JS implementations will be
 // used should the WASM module be unavailable for whatever reason.
 
-(( ) => {
-    HNTrieContainer.wasmModulePromise = null;
-
-    if (
-        typeof WebAssembly !== 'object' ||
-        typeof WebAssembly.compileStreaming !== 'function'
-    ) {
-        return;
-    }
-
-    // Soft-dependency on vAPI so that the code here can be used outside of
-    // uBO (i.e. tests, benchmarks)
-    if ( typeof vAPI === 'object' && vAPI.canWASM !== true ) { return; }
-
-    // Soft-dependency on µBlock's advanced settings so that the code here can
-    // be used outside of uBO (i.e. tests, benchmarks)
-    if (
-        typeof µBlock === 'object' &&
-        µBlock.hiddenSettings.disableWebAssembly === true
-    ) {
-        return;
-    }
-
-    // The wasm module will work only if CPU is natively little-endian,
-    // as we use native uint32 array in our js code.
-    const uint32s = new Uint32Array(1);
-    const uint8s = new Uint8Array(uint32s.buffer);
-    uint32s[0] = 1;
-    if ( uint8s[0] !== 1 ) { return; }
+const getWasmModule = (( ) => {
+    let wasmModulePromise;
 
     // The directory from which the current script was fetched should also
     // contain the related WASM file. The script is fetched from a trusted
@@ -741,15 +704,40 @@ HNTrieContainer.prototype.HNTrieRef.prototype.needle = '';
         workingDir = url.href;
     }
 
-    HNTrieContainer.wasmModulePromise = fetch(
-        workingDir + 'wasm/hntrie.wasm',
-        { mode: 'same-origin' }
-    ).then(
-        WebAssembly.compileStreaming
-    ).catch(reason => {
-        HNTrieContainer.wasmModulePromise = null;
-        log.info(reason);
-    });
+    return async function() {
+        if ( wasmModulePromise instanceof Promise ) {
+            return wasmModulePromise;
+        }
+
+        if (
+            typeof WebAssembly !== 'object' ||
+            typeof WebAssembly.compileStreaming !== 'function'
+        ) {
+            return;
+        }
+
+        // Soft-dependency on vAPI so that the code here can be used outside of
+        // uBO (i.e. tests, benchmarks)
+        if ( typeof vAPI === 'object' && vAPI.canWASM !== true ) { return; }
+
+        // The wasm module will work only if CPU is natively little-endian,
+        // as we use native uint32 array in our js code.
+        const uint32s = new Uint32Array(1);
+        const uint8s = new Uint8Array(uint32s.buffer);
+        uint32s[0] = 1;
+        if ( uint8s[0] !== 1 ) { return; }
+
+        wasmModulePromise = fetch(
+            workingDir + 'wasm/hntrie.wasm',
+            { mode: 'same-origin' }
+        ).then(
+            WebAssembly.compileStreaming
+        ).catch(reason => {
+            log.info(reason);
+        });
+
+        return wasmModulePromise;
+    };
 })();
 
 /******************************************************************************/

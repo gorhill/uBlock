@@ -311,26 +311,15 @@ const bidiTrieMatchExtra = function(l, r, ix) {
     return 0;
 };
 
-const bidiTrie = (( ) => {
-    let trieDetails;
-    try {
-        trieDetails = JSON.parse(
-            vAPI.localStorage.getItem('SNFE.bidiTrieDetails')
-        );
-    } catch(ex) {
-    }
-    const trie = new µb.BidiTrieContainer(trieDetails, bidiTrieMatchExtra);
-    if ( µb.hiddenSettings.disableWebAssembly !== true ) {
-        trie.enableWASM();
-    }
-    return trie;
-})();
+const bidiTrie = new µb.BidiTrieContainer(
+    vAPI.localStorage.getItem('SNFE.bidiTrieDetails'),
+    bidiTrieMatchExtra
+);
 
 const bidiTrieOptimize = function(shrink = false) {
-    const trieDetails = bidiTrie.optimize(shrink);
     vAPI.localStorage.setItem(
         'SNFE.bidiTrieDetails',
-        JSON.stringify(trieDetails)
+        bidiTrie.optimize(shrink)
     );
 };
 
@@ -1157,14 +1146,9 @@ registerFilterClass(FilterRegex);
 
 const filterOrigin = new (class {
     constructor() {
-        let trieDetails;
-        try {
-            trieDetails = JSON.parse(
-                vAPI.localStorage.getItem('FilterOrigin.trieDetails')
-            );
-        } catch(ex) {
-        }
-        this.trieContainer = new µb.HNTrieContainer(trieDetails);
+        this.trieContainer = new µb.HNTrieContainer(
+            vAPI.localStorage.getItem('FilterOrigin.trieDetails')
+        );
         this.strToUnitMap = new Map();
         this.gcTimer = undefined;
     }
@@ -1244,10 +1228,9 @@ const filterOrigin = new (class {
     }
 
     optimize() {
-        const trieDetails = this.trieContainer.optimize();
         vAPI.localStorage.setItem(
             'FilterOrigin.trieDetails',
-            JSON.stringify(trieDetails)
+            this.trieContainer.optimize()
         );
     }
 
@@ -1689,10 +1672,9 @@ const FilterHostnameDict = class {
     }
 
     static optimize() {
-        const trieDetails = FilterHostnameDict.trieContainer.optimize();
         vAPI.localStorage.setItem(
             'FilterHostnameDict.trieDetails',
-            JSON.stringify(trieDetails)
+            FilterHostnameDict.trieContainer.optimize()
         );
     }
 
@@ -1701,16 +1683,9 @@ const FilterHostnameDict = class {
     }
 };
 
-FilterHostnameDict.trieContainer = (( ) => {
-    let trieDetails;
-    try {
-        trieDetails = JSON.parse(
-            vAPI.localStorage.getItem('FilterHostnameDict.trieDetails')
-        );
-    } catch(ex) {
-    }
-    return new µb.HNTrieContainer(trieDetails);
-})();
+FilterHostnameDict.trieContainer = new µb.HNTrieContainer(
+    vAPI.localStorage.getItem('FilterHostnameDict.trieDetails')
+);
 
 registerFilterClass(FilterHostnameDict);
 
@@ -3441,6 +3416,16 @@ FilterContainer.prototype.toLogData = function() {
 
 FilterContainer.prototype.getFilterCount = function() {
     return this.acceptedCount - this.discardedCount;
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.enableWASM = function() {
+    return Promise.all([
+        bidiTrie.enableWASM(),
+        filterOrigin.trieContainer.enableWASM(),
+        FilterHostnameDict.trieContainer.enableWASM(),
+    ]);
 };
 
 /******************************************************************************/

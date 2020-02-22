@@ -914,7 +914,20 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
 const getWasmModule = (( ) => {
     let wasmModulePromise;
 
-    return function() {
+    // The directory from which the current script was fetched should also
+    // contain the related WASM file. The script is fetched from a trusted
+    // location, and consequently so will be the related WASM file.
+    let workingDir;
+    {
+        const url = new URL(document.currentScript.src);
+        const match = /[^\/]+$/.exec(url.pathname);
+        if ( match !== null ) {
+            url.pathname = url.pathname.slice(0, match.index);
+        }
+        workingDir = url.href;
+    }
+
+    return async function() {
         if ( wasmModulePromise instanceof Promise ) {
             return wasmModulePromise;
         }
@@ -936,19 +949,6 @@ const getWasmModule = (( ) => {
         const uint8s = new Uint8Array(uint32s.buffer);
         uint32s[0] = 1;
         if ( uint8s[0] !== 1 ) { return; }
-
-        // The directory from which the current script was fetched should also
-        // contain the related WASM file. The script is fetched from a trusted
-        // location, and consequently so will be the related WASM file.
-        let workingDir;
-        {
-            const url = new URL(document.currentScript.src);
-            const match = /[^\/]+$/.exec(url.pathname);
-            if ( match !== null ) {
-                url.pathname = url.pathname.slice(0, match.index);
-            }
-            workingDir = url.href;
-        }
 
         wasmModulePromise = fetch(
             workingDir + 'wasm/biditrie.wasm',

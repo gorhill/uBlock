@@ -263,6 +263,12 @@ try {
     await µb.loadHiddenSettings();
     log.info(`Hidden settings ready ${Date.now()-vAPI.T0} ms after launch`);
 
+    if ( µb.hiddenSettings.disableWebAssembly !== true ) {
+        µb.staticNetFilteringEngine.enableWASM().then(( ) => {
+            log.info(`Static filtering engine WASM modules ready ${Date.now()-vAPI.T0} ms after launch`);
+        });
+    }
+
     const cacheBackend = await µb.cacheStorage.select(
         µb.hiddenSettings.cacheStorageAPI
     );

@@ -198,7 +198,6 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 µBlock.saveImmediateHiddenSettings = function() {
     const props = [
         'consoleLogLevel',
-        'disableWebAssembly',
         'suspendTabsUntilReady',
     ];
     const toSave = {};
@@ -1011,7 +1010,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 /******************************************************************************/
 
 µBlock.loadPublicSuffixList = async function() {
-    if ( this.hiddenSettings.disableWebAssembly === false ) {
+    if ( this.hiddenSettings.disableWebAssembly !== true ) {
         publicSuffixList.enableWASM();
     }
 
