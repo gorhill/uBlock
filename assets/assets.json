@@ -267,8 +267,8 @@
 		"updateAfter": 11,
 		"off": true,
 		"title": "MVPS HOSTS",
-		"contentURL": "http://winhelp2002.mvps.org/hosts.txt",
-		"supportURL": "http://winhelp2002.mvps.org/"
+		"contentURL": "https://winhelp2002.mvps.org/hosts.txt",
+		"supportURL": "https://winhelp2002.mvps.org/"
 	},
 	"plowe-0": {
 		"content": "filters",
