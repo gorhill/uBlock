@@ -44,7 +44,7 @@ let dfPaneVisibleStored;
 vAPI.localStorage.getItemAsync('popupFirewallPane').then(value => {
     dfPaneVisibleStored = value === true || value === 'true';
     if ( dfPaneVisibleStored ) {
-        document.getElementById('panes').classList.add('dfEnabled');
+        document.getElementById('main').classList.add('dfEnabled');
     }
 });
 
