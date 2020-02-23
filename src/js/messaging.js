@@ -896,7 +896,6 @@ const restoreUserData = async function(request) {
 
     // If we are going to restore all, might as well wipe out clean local
     // storages
-    vAPI.localStorage.removeItem('immediateHiddenSettings');
     await Promise.all([
         µb.cacheStorage.clear(),
         vAPI.storage.clear(),
@@ -945,8 +944,6 @@ const restoreUserData = async function(request) {
 // Remove all stored data but keep global counts, people can become
 // quite attached to numbers
 const resetUserData = async function() {
-    vAPI.localStorage.removeItem('immediateHiddenSettings');
-
     await Promise.all([
         µb.cacheStorage.clear(),
         vAPI.storage.clear(),

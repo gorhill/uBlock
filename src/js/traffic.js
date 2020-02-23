@@ -1039,15 +1039,7 @@ const strictBlockBypasser = {
 return {
     start: (( ) => {
         vAPI.net = new vAPI.Net();
-
-        if (
-            vAPI.net.canSuspend() &&
-            µBlock.hiddenSettings.suspendTabsUntilReady !== 'no' ||
-            vAPI.net.canSuspend() !== true &&
-            µBlock.hiddenSettings.suspendTabsUntilReady === 'yes'
-        ) {
-            vAPI.net.suspend(true);
-        }
+        vAPI.net.suspend(true);
 
         return function() {
             vAPI.net.setSuspendableListener(onBeforeRequest);

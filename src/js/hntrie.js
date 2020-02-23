@@ -127,17 +127,18 @@ const CHAR0_SLOT  = TRIE0_SLOT + 2;         //  66 / 264
 const CHAR1_SLOT  = TRIE0_SLOT + 3;         //  67 / 268
 const TRIE0_START = TRIE0_SLOT + 4 << 2;    //       272
 
+const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
+
 const HNTrieContainer = class {
 
-    constructor(details) {
-        if ( details instanceof Object === false ) { details = {}; }
-        let len = (details.byteLength || 0) + PAGE_SIZE-1 & ~(PAGE_SIZE-1);
-        this.buf = new Uint8Array(Math.max(len, 131072));
+    constructor() {
+        const len = PAGE_SIZE * 2;
+        this.buf = new Uint8Array(len);
         this.buf32 = new Uint32Array(this.buf.buffer);
         this.needle = '';
         this.buf32[TRIE0_SLOT] = TRIE0_START;
         this.buf32[TRIE1_SLOT] = this.buf32[TRIE0_SLOT];
-        this.buf32[CHAR0_SLOT] = details.char0 || 65536;
+        this.buf32[CHAR0_SLOT] = len >>> 1;
         this.buf32[CHAR1_SLOT] = this.buf32[CHAR0_SLOT];
         this.wasmMemory = null;
     }
@@ -146,7 +147,17 @@ const HNTrieContainer = class {
     // Public methods
     //--------------------------------------------------------------------------
 
-    reset() {
+    reset(details) {
+        if (
+            details instanceof Object &&
+            typeof details.byteLength === 'number' &&
+            typeof details.char0 === 'number'
+        ) {
+            if ( details.byteLength > this.buf.byteLength ) {
+                this.reallocateBuf(details.byteLength);
+            }
+            this.buf32[CHAR0_SLOT] = details.char0;
+        }
         this.buf32[TRIE1_SLOT] = this.buf32[TRIE0_SLOT];
         this.buf32[CHAR1_SLOT] = this.buf32[CHAR0_SLOT];
     }
@@ -375,7 +386,7 @@ const HNTrieContainer = class {
             ? decoder.decodeSize(selfie)
             : selfie.length << 2;
         if ( byteLength === 0 ) { return false; }
-        byteLength = byteLength + PAGE_SIZE-1 & ~(PAGE_SIZE-1);
+        byteLength = roundToPageSize(byteLength);
         if ( this.wasmMemory !== null ) {
             const pageCountBefore = this.buf.length >>> 16;
             const pageCountAfter = byteLength >>> 16;
@@ -458,12 +469,12 @@ const HNTrieContainer = class {
 
     growBuf(trieGrow, charGrow) {
         const char0 = Math.max(
-            (this.buf32[TRIE1_SLOT] + trieGrow + PAGE_SIZE-1) & ~(PAGE_SIZE-1),
+            roundToPageSize(this.buf32[TRIE1_SLOT] + trieGrow),
             this.buf32[CHAR0_SLOT]
         );
         const char1 = char0 + this.buf32[CHAR1_SLOT] - this.buf32[CHAR0_SLOT];
         const bufLen = Math.max(
-            (char1 + charGrow + PAGE_SIZE-1) & ~(PAGE_SIZE-1),
+            roundToPageSize(char1 + charGrow),
             this.buf.length
         );
         this.resizeBuf(bufLen, char0);
@@ -479,7 +490,7 @@ const HNTrieContainer = class {
     }
 
     resizeBuf(bufLen, char0) {
-        bufLen = bufLen + PAGE_SIZE-1 & ~(PAGE_SIZE-1);
+        bufLen = roundToPageSize(bufLen);
         if (
             bufLen === this.buf.length &&
             char0 === this.buf32[CHAR0_SLOT]
@@ -529,6 +540,27 @@ const HNTrieContainer = class {
             this.buf32[CHAR0_SLOT] = char0;
             this.buf32[CHAR1_SLOT] = char0 + charDataLen;
         }
+    }
+
+    reallocateBuf(newSize) {
+        newSize = roundToPageSize(newSize);
+        if ( newSize === this.buf.length ) { return; }
+        if ( this.wasmMemory === null ) {
+            const newBuf = new Uint8Array(newSize);
+            newBuf.set(
+                newBuf.length < this.buf.length
+                    ? this.buf.subarray(0, newBuf.length)
+                    : this.buf
+            );
+            this.buf = newBuf;
+        } else {
+            const growBy =
+                ((newSize + 0xFFFF) >>> 16) - (this.buf.length >>> 16);
+            if ( growBy <= 0 ) { return; }
+            this.wasmMemory.grow(growBy);
+            this.buf = new Uint8Array(this.wasmMemory.buffer);
+        }
+        this.buf32 = new Uint32Array(this.buf.buffer);
     }
 };
 

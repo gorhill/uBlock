@@ -311,16 +311,14 @@ const bidiTrieMatchExtra = function(l, r, ix) {
     return 0;
 };
 
-const bidiTrie = new µb.BidiTrieContainer(
-    vAPI.localStorage.getItem('SNFE.bidiTrieDetails'),
-    bidiTrieMatchExtra
-);
+const bidiTrie = new µb.BidiTrieContainer(bidiTrieMatchExtra);
+
+const bidiTriePrime = function() {
+    bidiTrie.reset(vAPI.localStorage.getItem('SNFE.bidiTrie'));
+};
 
 const bidiTrieOptimize = function(shrink = false) {
-    vAPI.localStorage.setItem(
-        'SNFE.bidiTrieDetails',
-        bidiTrie.optimize(shrink)
-    );
+    vAPI.localStorage.setItem('SNFE.bidiTrie', bidiTrie.optimize(shrink));
 };
 
 /*******************************************************************************
@@ -1146,9 +1144,7 @@ registerFilterClass(FilterRegex);
 
 const filterOrigin = new (class {
     constructor() {
-        this.trieContainer = new µb.HNTrieContainer(
-            vAPI.localStorage.getItem('FilterOrigin.trieDetails')
-        );
+        this.trieContainer = new µb.HNTrieContainer();
         this.strToUnitMap = new Map();
         this.gcTimer = undefined;
     }
@@ -1222,6 +1218,12 @@ const filterOrigin = new (class {
         return iunit;
     }
 
+    prime() {
+        this.trieContainer.reset(
+            vAPI.localStorage.getItem('SNFE.filterOrigin.trieDetails')
+        );
+    }
+
     reset() {
         this.trieContainer.reset();
         this.strToUnitMap.clear();
@@ -1229,7 +1231,7 @@ const filterOrigin = new (class {
 
     optimize() {
         vAPI.localStorage.setItem(
-            'FilterOrigin.trieDetails',
+            'SNFE.filterOrigin.trieDetails',
             this.trieContainer.optimize()
         );
     }
@@ -1667,13 +1669,19 @@ const FilterHostnameDict = class {
         ];
     }
 
+    static prime() {
+        return FilterHostnameDict.trieContainer.reset(
+            vAPI.localStorage.getItem('SNFE.FilterHostnameDict.trieDetails')
+        );
+    }
+
     static reset() {
         return FilterHostnameDict.trieContainer.reset();
     }
 
     static optimize() {
         vAPI.localStorage.setItem(
-            'FilterHostnameDict.trieDetails',
+            'SNFE.FilterHostnameDict.trieDetails',
             FilterHostnameDict.trieContainer.optimize()
         );
     }
@@ -1683,9 +1691,7 @@ const FilterHostnameDict = class {
     }
 };
 
-FilterHostnameDict.trieContainer = new µb.HNTrieContainer(
-    vAPI.localStorage.getItem('FilterHostnameDict.trieDetails')
-);
+FilterHostnameDict.trieContainer = new µb.HNTrieContainer();
 
 registerFilterClass(FilterHostnameDict);
 
@@ -2637,8 +2643,15 @@ const FilterContainer = function() {
 
 /******************************************************************************/
 
+FilterContainer.prototype.prime = function() {
+    FilterHostnameDict.prime();
+    filterOrigin.prime();
+    bidiTriePrime();
+};
+
+/******************************************************************************/
+
 FilterContainer.prototype.reset = function() {
-    this.frozen = false;
     this.processedFilterCount = 0;
     this.acceptedCount = 0;
     this.rejectedCount = 0;
@@ -2777,7 +2790,6 @@ FilterContainer.prototype.freeze = function() {
 
     FilterHostnameDict.optimize();
     bidiTrieOptimize();
-    this.frozen = true;
 
     log.info(`staticNetFilteringEngine.freeze() took ${Date.now()-t0} ms`);
 };
@@ -2875,7 +2887,6 @@ FilterContainer.prototype.fromSelfie = function(path) {
             } catch (ex) {
             }
             if ( selfie instanceof Object === false ) { return false; }
-            this.frozen = true;
             this.processedFilterCount = selfie.processedFilterCount;
             this.acceptedCount = selfie.acceptedCount;
             this.rejectedCount = selfie.rejectedCount;
@@ -3453,6 +3464,9 @@ FilterContainer.prototype.benchmark = async function(action, target) {
         console.log(`\ttype=${fctxt.type}`);
         console.log(`\turl=${fctxt.url}`);
         console.log(`\tdocOrigin=${fctxt.getDocOrigin()}`);
+        if ( r !== 0 ) {
+            console.log(this.toLogData());
+        }
         return;
     }
 

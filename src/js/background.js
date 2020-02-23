@@ -98,28 +98,7 @@ const µBlock = (( ) => { // jshint ignore:line
         },
 
         hiddenSettingsDefault: hiddenSettingsDefault,
-        hiddenSettings: (( ) => {
-            const out = Object.assign({}, hiddenSettingsDefault);
-            const json = vAPI.localStorage.getItem('immediateHiddenSettings');
-            if ( typeof json !== 'string' ) { return out; }
-            try {
-                const o = JSON.parse(json);
-                if ( o instanceof Object ) {
-                    for ( const k in o ) {
-                        if ( out.hasOwnProperty(k) ) { out[k] = o[k]; }
-                    }
-                    self.log.verbosity = out.consoleLogLevel;
-                    if ( typeof out.suspendTabsUntilReady === 'boolean' ) {
-                        out.suspendTabsUntilReady = out.suspendTabsUntilReady
-                            ? 'yes'
-                            : 'unset';
-                    }
-                }
-            }
-            catch(ex) {
-            }
-            return out;
-        })(),
+        hiddenSettings: Object.assign({}, hiddenSettingsDefault),
 
         // Features detection.
         privacySettingsSupported: vAPI.browserSettings instanceof Object,

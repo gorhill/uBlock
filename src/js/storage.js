@@ -130,7 +130,6 @@
         }
     }
     vAPI.storage.set(bin);
-    this.saveImmediateHiddenSettings();
 };
 
 self.addEventListener('hiddenSettingsChanged', ( ) => {
@@ -188,32 +187,6 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         out.push(key + ' ' + this.hiddenSettings[key]);
     }
     return out.join('\n');
-};
-
-/******************************************************************************/
-
-// These settings must be available immediately on startup, without delay
-// through the vAPI.localStorage. Add/remove settings as needed.
-
-µBlock.saveImmediateHiddenSettings = function() {
-    const props = [
-        'consoleLogLevel',
-        'suspendTabsUntilReady',
-    ];
-    const toSave = {};
-    for ( const prop of props ) {
-        if ( this.hiddenSettings[prop] !== this.hiddenSettingsDefault[prop] ) {
-            toSave[prop] = this.hiddenSettings[prop];
-        }
-    }
-    if ( Object.keys(toSave).length !== 0 ) {
-        vAPI.localStorage.setItem(
-            'immediateHiddenSettings',
-            JSON.stringify(toSave)
-        );
-    } else {
-        vAPI.localStorage.removeItem('immediateHiddenSettings');
-    }
 };
 
 /******************************************************************************/
@@ -630,8 +603,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 µBlock.loadFilterLists = (( ) => {
     const loadedListKeys = [];
     let loadingPromise;
-
-    const t0 = Date.now();
+    let t0 = 0;
 
     const onDone = function() {
         log.info(`loadFilterLists() took ${Date.now()-t0} ms`);
@@ -708,6 +680,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
     return function() {
         if ( loadingPromise instanceof Promise === false ) {
+            t0 = Date.now();
             loadedListKeys.length = 0;
             loadingPromise = Promise.all([
                 this.getAvailableLists().then(lists =>
