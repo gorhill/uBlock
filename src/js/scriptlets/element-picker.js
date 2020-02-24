@@ -738,7 +738,7 @@ const filterToDOMInterface = (( ) => {
         }
         let reFilter = null;
         try {
-            reFilter = new RegExp(reStr);
+            reFilter = new RegExp(reStr, 'i');
         }
         catch (e) {
             return out;
