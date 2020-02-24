@@ -230,10 +230,22 @@ vAPI.closePopup = function() {
 
 vAPI.localStorage = {
     start: function() {
+        if ( this.cache instanceof Promise ) { return this.cache; }
         if ( this.cache instanceof Object ) { return Promise.resolve(); }
-        if ( this.promise !== undefined ) { return this.promise; }
-        this.promise = new Promise(resolve => {
+        const onChanged = (changes, area) => {
+            if (
+                area !== 'local' ||
+                changes instanceof Object === false ||
+                changes.localStorage instanceof Object === false
+            ) {
+                return;
+            }
+            const newValue = changes.localStorage.newValue;
+            this.cache = newValue instanceof Object ? newValue : {};
+        };
+        this.cache = new Promise(resolve => {
             browser.storage.local.get('localStorage', bin => {
+                this.cache = undefined;
                 if (
                     bin instanceof Object === false ||
                     bin.localStorage instanceof Object === false
@@ -255,22 +267,15 @@ vAPI.localStorage = {
                 if ( this.cache instanceof Object === false ) {
                     this.cache = {};
                 }
-                this.promise = undefined;
-                browser.storage.onChanged.addListener((changes, area) => {
-                    if (
-                        area !== 'local' ||
-                        changes instanceof Object === false ||
-                        changes.localStorage instanceof Object === false
-                    ) {
-                        return;
-                    }
-                    const newValue = changes.localStorage.newValue;
-                    this.cache = newValue instanceof Object ? newValue : {};
-                });
                 resolve();
+                browser.storage.onChanged.addListener(onChanged);
+                self.addEventListener('beforeunload', ( ) => {
+                    this.cache = undefined;
+                    browser.storage.onChanged.removeListener(onChanged);
+                });
             });
         });
-        return this.promise;
+        return this.cache;
     },
     clear: function() {
         this.cache = {};
@@ -295,11 +300,11 @@ vAPI.localStorage = {
     },
     setItem: function(key, value = undefined) {
         return this.start().then(( ) => {
+            if ( value === this.cache[key] ) { return; }
             this.cache[key] = value;
             return browser.storage.local.set({ localStorage: this.cache });
         });
     },
-    promise: undefined,
     cache: undefined,
 };
 

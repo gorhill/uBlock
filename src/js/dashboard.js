@@ -25,7 +25,8 @@
 
 /******************************************************************************/
 
-(( ) => {
+{
+// >>>>> start of local scope
 
 /******************************************************************************/
 
@@ -82,13 +83,7 @@ const discardUnsavedData = function(synchronous = false) {
     });
 };
 
-const loadDashboardPanel = function(pane = '') {
-    if ( pane === '' ) {
-        vAPI.localStorage.getItemAsync('dashboardLastVisitedPane').then(value => {
-            loadDashboardPanel(value !== null ? value : 'settings.html');
-        });
-        return;
-    }
+const loadDashboardPanel = function(pane, first) {
     const tabButton = uDom(`[href="#${pane}"]`);
     if ( !tabButton || tabButton.hasClass('selected') ) { return; }
     const loadPane = ( ) => {
@@ -98,6 +93,9 @@ const loadDashboardPanel = function(pane = '') {
         uDom.nodeFromId('iframe').setAttribute('src', pane);
         vAPI.localStorage.setItem('dashboardLastVisitedPane', pane);
     };
+    if ( first ) {
+        return loadPane();
+    }
     const r = discardUnsavedData();
     if ( r === false ) { return; }
     if ( r === true ) {
@@ -122,18 +120,22 @@ vAPI.messaging.send('dashboard', {
 });
 
 resizeFrame();
-loadDashboardPanel();
 
-window.addEventListener('resize', resizeFrame);
-uDom('.tabButton').on('click', onTabClickHandler);
+vAPI.localStorage.getItemAsync('dashboardLastVisitedPane').then(value => {
+    loadDashboardPanel(value !== null ? value : 'settings.html', true);
 
-// https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
-window.addEventListener('beforeunload', ( ) => {
-    if ( discardUnsavedData(true) ) { return; }
-    event.preventDefault();
-    event.returnValue = '';
+    window.addEventListener('resize', resizeFrame);
+    uDom('.tabButton').on('click', onTabClickHandler);
+
+    // https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
+    window.addEventListener('beforeunload', ( ) => {
+        if ( discardUnsavedData(true) ) { return; }
+        event.preventDefault();
+        event.returnValue = '';
+    });
 });
 
 /******************************************************************************/
 
-})();
+// <<<<< end of local scope
+}
