@@ -56,12 +56,13 @@
         if ( owner instanceof Object === false ) { return; }
     }
     let value;
-    const desc = Object.getOwnPropertyDescriptor(owner, prop);
+    let desc = Object.getOwnPropertyDescriptor(owner, prop);
     if (
         desc instanceof Object === false ||
         desc.get instanceof Function === false
     ) {
         value = owner[prop];
+        desc = undefined;
     }
     const magic = String.fromCharCode(Date.now() % 26 + 97) +
                   Math.floor(Math.random() * 982451653 + 982451653).toString(36);
@@ -79,11 +80,17 @@
     Object.defineProperty(owner, prop, {
         get: function() {
             validate();
-            return value;
+            return desc instanceof Object
+                ? desc.get()
+                : value;
         },
         set: function(a) {
             validate();
-            value = a;
+            if ( desc instanceof Object ) {
+                desc.set(a);
+            } else {
+                value = a;
+            }
         }
     });
     const oe = window.onerror;
