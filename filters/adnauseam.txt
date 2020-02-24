@@ -64,6 +64,8 @@ www.spacious.hk##.page__commercial_display_banner_box__content
 # teads inread video ads, found on inc.com and bbc.com
 .teads-inread
 
+analyticsindiamag.com##a[data-wpel-link="external"]
+
 www.ask.com##.tsrc_SAS
 www.ask.com###megaLabel
 www.ask.com###csaBottom
