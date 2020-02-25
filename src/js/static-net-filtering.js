@@ -3451,7 +3451,9 @@ FilterContainer.prototype.benchmark = async function(action, target) {
         return;
     }
 
-    console.info(`Benchmarking staticNetFilteringEngine.matchString()...`);
+    const print = log.print;
+
+    print(`Benchmarking staticNetFilteringEngine.matchString()...`);
     const fctxt = µb.filteringContext.duplicate();
 
     if ( typeof target === 'number' ) {
@@ -3460,10 +3462,10 @@ FilterContainer.prototype.benchmark = async function(action, target) {
         fctxt.setDocOriginFromURL(request.frameUrl);
         fctxt.setType(request.cpt);
         const r = this.matchString(fctxt);
-        console.log(`Result=${r}:`);
-        console.log(`\ttype=${fctxt.type}`);
-        console.log(`\turl=${fctxt.url}`);
-        console.log(`\tdocOrigin=${fctxt.getDocOrigin()}`);
+        print(`Result=${r}:`);
+        print(`\ttype=${fctxt.type}`);
+        print(`\turl=${fctxt.url}`);
+        print(`\tdocOrigin=${fctxt.getDocOrigin()}`);
         if ( r !== 0 ) {
             console.log(this.toLogData());
         }
@@ -3492,21 +3494,21 @@ FilterContainer.prototype.benchmark = async function(action, target) {
         const r = this.matchString(fctxt);
         if ( recorded !== undefined ) { recorded.push(r); }
         if ( expected !== undefined && r !== expected[i] ) {
-            console.log(`Mismatch with reference results at ${i}:`);
-            console.log(`\tExpected ${expected[i]}, got ${r}:`);
-            console.log(`\ttype=${fctxt.type}`);
-            console.log(`\turl=${fctxt.url}`);
-            console.log(`\tdocOrigin=${fctxt.getDocOrigin()}`);
+            print(`Mismatch with reference results at ${i}:`);
+            print(`\tExpected ${expected[i]}, got ${r}:`);
+            print(`\ttype=${fctxt.type}`);
+            print(`\turl=${fctxt.url}`);
+            print(`\tdocOrigin=${fctxt.getDocOrigin()}`);
         }
     }
     const t1 = self.performance.now();
     const dur = t1 - t0;
 
-    console.info(`Evaluated ${requests.length} requests in ${dur.toFixed(0)} ms`);
-    console.info(`\tAverage: ${(dur / requests.length).toFixed(3)} ms per request`);
+    print(`Evaluated ${requests.length} requests in ${dur.toFixed(0)} ms`);
+    print(`\tAverage: ${(dur / requests.length).toFixed(3)} ms per request`);
     if ( expected !== undefined ) {
-        console.info(`\tBlocked: ${expected.reduce((n,r)=>{return r===1?n+1:n;},0)}`);
-        console.info(`\tExcepted: ${expected.reduce((n,r)=>{return r===2?n+1:n;},0)}`);
+        print(`\tBlocked: ${expected.reduce((n,r)=>{return r===1?n+1:n;},0)}`);
+        print(`\tExcepted: ${expected.reduce((n,r)=>{return r===2?n+1:n;},0)}`);
     }
     if ( recorded !== undefined ) {
         vAPI.localStorage.setItem(
