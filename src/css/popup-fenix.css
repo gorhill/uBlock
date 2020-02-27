@@ -249,7 +249,7 @@ body[dir="rtl"] #tooltip {
     -moz-box-sizing: border-box;
     color: #000;
     display: inline-flex;
-    padding: 0.35em 0;
+    padding: 0.4em 0;
     position: relative;
     }
 #firewallContainer > div:first-of-type > span:first-of-type {
