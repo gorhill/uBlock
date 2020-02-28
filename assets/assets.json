@@ -449,15 +449,6 @@
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
 		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
 	},
-	"KOR-0": {
-		"content": "filters",
-		"group": "regions",
-		"off": true,
-		"title": "KOR: Korean Adblock List",
-		"lang": "ko",
-		"contentURL": "https://raw.githubusercontent.com/gfmaster/adblock-korea-contrib/master/filter.txt",
-		"supportURL": "https://github.com/gfmaster/adblock-korea-contrib"
-	},
 	"KOR-1": {
 		"content": "filters",
 		"group": "regions",
