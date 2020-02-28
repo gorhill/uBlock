@@ -181,12 +181,14 @@ vAPI.browserSettings = (( ) => {
                 // https://github.com/gorhill/uBlock/issues/3009
                 //   Firefox currently works differently, use
                 //   `default_public_interface_only` for now.
-                bpn.webRTCIPHandlingPolicy.set({
-                    value: vAPI.webextFlavor.soup.has('chromium')
-                        ? 'disable_non_proxied_udp'
-                        : 'default_public_interface_only',
-                    scope: 'regular',
-                });
+                // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/privacy/network#Browser_compatibility
+                //   Firefox 70+ supports `disable_non_proxied_udp`
+                const value =
+                    vAPI.webextFlavor.soup.has('firefox') &&
+                    vAPI.webextFlavor.major < 70
+                        ? 'default_public_interface_only'
+                        : 'disable_non_proxied_udp';
+                bpn.webRTCIPHandlingPolicy.set({ value, scope: 'regular' });
             }
         },
 
