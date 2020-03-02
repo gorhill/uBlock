@@ -112,11 +112,11 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Gå til elementdræbertilstand",
+    "message": "Gå til elementdræbertil&shy;stand",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Start elementvælgertilstand",
+    "message": "Start elementvælgertil&shy;stand",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {

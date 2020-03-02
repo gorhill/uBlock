@@ -72,6 +72,7 @@ const safeTextToTextNode = (function() {
     const entities = new Map([
         // TODO: Remove quote entities once no longer present in translation
         // files. Other entities must stay.
+        [ '&shy;', '\u00AD' ],
         [ '&ldquo;', '“' ],
         [ '&rdquo;', '”' ],
         [ '&lsquo;', '‘' ],
