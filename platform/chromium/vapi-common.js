@@ -246,23 +246,22 @@ vAPI.localStorage = {
         this.cache = new Promise(resolve => {
             browser.storage.local.get('localStorage', bin => {
                 this.cache = undefined;
-                if (
-                    bin instanceof Object === false ||
-                    bin.localStorage instanceof Object === false
-                ) {
-                    this.cache = {};
-                    const ls = self.localStorage;
-                    for ( let i = 0; i < ls.length; i++ ) {
-                        const key = ls.key(i);
-                        this.cache[key] = ls.getItem(key);
-                    }
-                    //ls.clear();
-                    browser.storage.local.set({ localStorage: this.cache });
-                } else {
-                    try {
+                try {
+                    if (
+                        bin instanceof Object === false ||
+                        bin.localStorage instanceof Object === false
+                    ) {
+                        this.cache = {};
+                        const ls = self.localStorage;
+                        for ( let i = 0; i < ls.length; i++ ) {
+                            const key = ls.key(i);
+                            this.cache[key] = ls.getItem(key);
+                        }
+                        browser.storage.local.set({ localStorage: this.cache });
+                    } else {
                         this.cache = bin.localStorage;
-                    } catch(ex) {
                     }
+                } catch(ex) {
                 }
                 if ( this.cache instanceof Object === false ) {
                     this.cache = {};
