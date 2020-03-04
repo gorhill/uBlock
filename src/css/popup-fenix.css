@@ -216,8 +216,7 @@ body[dir="rtl"] #tooltip {
     font-size: 90%;
     margin: 0;
     padding: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden;
     text-align: right;
     }
 #main:not(.dfEnabled) #firewallContainer {
