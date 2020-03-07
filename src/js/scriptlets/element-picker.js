@@ -822,11 +822,11 @@ const filterToDOMInterface = (( ) => {
         let elems;
         try {
             const o = JSON.parse(raw);
-            if ( o.style ) {
+            if ( o.action === 'style' ) {
                 elems = document.querySelectorAll(
-                    o.style[0].replace(rePseudoElements, '')
+                    o.selector.replace(rePseudoElements, '')
                 );
-                lastAction = o.style[0] + ' {' + o.style[1] + '}';
+                lastAction = o.selector + ' {' + o.tasks[0][1] + '}';
             } else if ( o.tasks ) {
                 elems = vAPI.domFilterer.createProceduralFilter(o).exec();
             }

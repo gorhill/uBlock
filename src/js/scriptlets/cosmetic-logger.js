@@ -147,10 +147,10 @@ const processDeclarativeStyle = function(out) {
 
 const processProcedural = function(out) {
     if ( proceduralDict.size === 0 ) { return; }
-    for ( const entry of proceduralDict ) {
-        if ( entry[1].test() === false ) { continue; }
-        out.push(`##${entry[1].raw}`);
-        proceduralDict.delete(entry[0]);
+    for ( const [ raw, pselector ] of proceduralDict ) {
+        if ( pselector.hit === false ) { continue; }
+        out.push(`##${raw}`);
+        proceduralDict.delete(raw);
     }
 };
 

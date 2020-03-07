@@ -95,22 +95,6 @@
         }
     };
 
-    const PSelectorNthAncestorTask = class {
-        constructor(task) {
-            this.nth = task[1];
-        }
-        transpose(node, output) {
-            let nth = this.nth;
-            for (;;) {
-                node = node.parentElement;
-                if ( node === null ) { return; }
-                nth -= 1;
-                if ( nth === 0 ) { break; }
-            }
-            output.push(node);
-        }
-    };
-
     const PSelectorSpathTask = class {
         constructor(task) {
             this.spath = task[1];
@@ -132,6 +116,36 @@
             }
         }
     };
+
+    const PSelectorUpwardTask = class {
+        constructor(task) {
+            const arg = task[1];
+            if ( typeof arg === 'number' ) {
+                this.i = arg;
+            } else {
+                this.s = arg;
+            }
+        }
+        transpose(node, output) {
+            if ( this.s !== '' ) {
+                const parent = node.parentElement;
+                if ( parent === null ) { return; }
+                node = parent.closest(this.s);
+                if ( node === null ) { return; }
+            } else {
+                let nth = this.i;
+                for (;;) {
+                    node = node.parentElement;
+                    if ( node === null ) { return; }
+                    nth -= 1;
+                    if ( nth === 0 ) { break; }
+                }
+            }
+            output.push(node);
+        }
+    };
+    PSelectorUpwardTask.prototype.i = 0;
+    PSelectorUpwardTask.prototype.s = '';
 
     const PSelectorXpathTask = class {
         constructor(task) {
@@ -178,7 +192,7 @@
         prime(input) {
             const root = input || docRegister;
             if ( this.selector === '' ) { return [ root ]; }
-            return root.querySelectorAll(this.selector);
+            return Array.from(root.querySelectorAll(this.selector));
         }
         exec(input) {
             if ( this.invalid ) { return []; }
@@ -218,8 +232,9 @@
         [ ':if-not', PSelectorIfNotTask ],
         [ ':min-text-length', PSelectorMinTextLengthTask ],
         [ ':not', PSelectorIfNotTask ],
-        [ ':nth-ancestor', PSelectorNthAncestorTask ],
+        [ ':nth-ancestor', PSelectorUpwardTask ],
         [ ':spath', PSelectorSpathTask ],
+        [ ':upward', PSelectorUpwardTask ],
         [ ':xpath', PSelectorXpathTask ],
     ]);
     PSelector.prototype.invalid = false;
@@ -246,14 +261,10 @@
             pselectors.set(selector, pselector);
         }
         const nodes = pselector.exec();
-        let i = nodes.length,
-            modified = false;
-        while ( i-- ) {
-            const node = nodes[i];
-            if ( node.parentNode !== null ) {
-                node.parentNode.removeChild(node);
-                modified = true;
-            }
+        let modified = false;
+        for ( const node of nodes ) {
+            node.remove();
+            modified = true;
         }
         if ( modified && µb.logger.enabled ) {
             logOne(details, 0, pselector.raw);
@@ -263,14 +274,10 @@
 
     const applyCSSSelector = function(details, selector) {
         const nodes = docRegister.querySelectorAll(selector);
-        let i = nodes.length,
-            modified = false;
-        while ( i-- ) {
-            const node = nodes[i];
-            if ( node.parentNode !== null ) {
-                node.parentNode.removeChild(node);
-                modified = true;
-            }
+        let modified = false;
+        for ( const node of nodes ) {
+            node.remove();
+            modified = true;
         }
         if ( modified && µb.logger.enabled ) {
             logOne(details, 0, selector);
