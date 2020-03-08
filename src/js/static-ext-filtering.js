@@ -98,7 +98,7 @@
         }
         // Quick regex-based validation -- most cosmetic filters are of the
         // simple form and in such case a regex is much faster.
-        const reSimple = /^[#.][\w-]+$/;
+        const reSimple = /^[#.][A-Za-z_][\w-]*$/;
         return s => {
             if ( reSimple.test(s) ) { return 1; }
             const pos = cssPseudoSelector(s);
