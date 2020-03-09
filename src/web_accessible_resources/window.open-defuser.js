@@ -27,6 +27,9 @@
     if ( arg2 === '{{2}}' ) { arg2 = ''; }
     let arg3 = '{{3}}';
     if ( arg3 === '{{3}}' ) { arg3 = ''; }
+    const log = arg3 !== ''
+        ? console.log.bind(console)
+        : ( ) => { };
     const newSyntax = /^[01]?$/.test(arg1) === false;
     let pattern = '';
     let targetResult = true;
@@ -57,6 +60,7 @@
     const rePattern = new RegExp(pattern);
     window.open = new Proxy(window.open, {
         apply: function(target, thisArg, args) {
+            log('window.open:', ...args);
             const url = args[0];
             if ( rePattern.test(url) !== targetResult ) {
                 return target.apply(thisArg, args);
@@ -72,11 +76,11 @@
             if ( arg3 === '' ) { return iframe.contentWindow; }
             return new Proxy(iframe.contentWindow, {
                 get: function(target, prop) {
-                    console.log('get', prop, '===', target[prop]);
+                    log('window.open / get', prop, '===', target[prop]);
                     return target[prop];
                 },
                 set: function(target, prop, value) {
-                    console.log('set', prop, '=', value);
+                    log('window.open / set', prop, '=', value);
                     target[prop] = value;
                 },
             });
