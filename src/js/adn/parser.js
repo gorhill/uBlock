@@ -217,8 +217,9 @@
           imgSrc.includes("scontent") && imgWidth < 150);
       }
 
-      // Check size: require a min-size of 4x31 (if we found a size)
-      if (iw > -1 && ih > -1 && (minDim < 4 || maxDim < 31)) {
+      // Check size: require a min-size of 30X64 (if we found a size)
+      // avoid collecting adchoice logos
+      if (iw > -1 && ih > -1 && (minDim < 31 || maxDim < 65)) {
 
         return warnP('Ignoring Ad with size ' + iw + 'x' + ih + ': ', src, targetUrl);
       }
