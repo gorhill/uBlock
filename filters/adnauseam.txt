@@ -239,6 +239,7 @@ forbes.com##div[id*='ads']
 ##DIV[class*="header_ad_container"] > div
 ##DIV[class*="rec-ad"]
 /forbesprebidheader
+||brightcove.services^$xhr,domain=www.forbes.com
 
 fmovies.is##.mgline
 
