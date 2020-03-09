@@ -71,6 +71,9 @@ www.ask.com###megaLabel
 www.ask.com###csaBottom
 www.ask.com##.TopAdsPartial
 www.ask.com##.BottomAdsPartial
+
+biometricupdate.com##.ad
+
 www.google.com###adBlock
 
 www.startpage.com###adBlock
