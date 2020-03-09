@@ -228,9 +228,9 @@ fortune.com##.small-12.column > .row:nth-of-type(2) > .small-12.column > .row > 
 @@||pos.baidu.com$subdocument,domain=music.baidu.com
 
 ##DIV[id*="adcontent"]
-##DIV[class*="advert"]
 
 ##.advert
+
 ##DIV[class^="ads_inline"]
 ##DIV[id="ads_speedbump"]
 mediapost.com##img[src*="ced.sascdn"]
