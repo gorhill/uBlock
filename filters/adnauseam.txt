@@ -431,6 +431,7 @@ bitcoin.treasurebits.net##iframe[src="about:blank"]
 9anime.to##*[class*="crop"]
 9anime.to##*[src*="interbuzznews"]
 9anime.to##*[href*="revrtb"]
+
 ##################### Blocking rules ########################
 
 # 4archive.prg
@@ -579,6 +580,7 @@ bitcoin.treasurebits.net##iframe[src="about:blank"]
 ||wibbitz.com$domain=observer.com
 
 # 9anime
+||24vunvrv.com
 ||9anime.is/$script
 ||9anime.to/$script
 ||exdynsrv.com^$third-party
