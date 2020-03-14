@@ -804,11 +804,12 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     const lineIter = new this.LineIterator(this.processDirectives(rawText));
 
     while ( lineIter.eot() === false ) {
-        // rhill 2014-04-18: The trim is important here, as without it there
-        // could be a lingering `\r` which would cause problems in the
-        // following parsing code.
         let line = lineIter.next().trim();
         if ( line.length === 0 ) { continue; }
+
+        while ( line.endsWith(' \\') ) {
+            line = line.slice(0, -2).trim() + lineIter.next().trim();
+        }
 
         // Strip comments
         const c = line.charAt(0);
