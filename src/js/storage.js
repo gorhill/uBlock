@@ -808,6 +808,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         if ( line.length === 0 ) { continue; }
 
         while ( line.endsWith(' \\') ) {
+            if ( lineIter.peek(4) !== '    ' ) { break; }
             line = line.slice(0, -2).trim() + lineIter.next().trim();
         }
 

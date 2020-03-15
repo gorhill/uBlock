@@ -242,6 +242,10 @@
         this.offset = lineEnd + 1;
         return line;
     }
+    peek(n) {
+        const offset = this.offset;
+        return this.text.slice(offset, offset + n);
+    }
     charCodeAt(offset) {
         return this.text.charCodeAt(this.offset + offset);
     }
