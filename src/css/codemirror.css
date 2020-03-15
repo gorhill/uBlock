@@ -17,6 +17,10 @@
     height: 100%;
     }
 
+.codeMirrorContainer.codeMirrorBreakAll .CodeMirror-wrap pre {
+    word-break: break-all;
+    }
+
 .cm-s-default .cm-comment { color: #777; }
 .cm-directive { color: #333; font-weight: bold; }
 .cm-staticext { color: #008; }
