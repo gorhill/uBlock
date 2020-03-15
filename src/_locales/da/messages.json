@@ -116,7 +116,7 @@
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Start elementvælger&shy;tilstand",
+    "message": "Gå til elementvælger&shy;tilstand",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
