@@ -172,13 +172,13 @@ const fromCosmeticFilter = async function(details) {
         domain: µBlock.URI.domainFromHostname(hostname),
         hostname: hostname,
         ignoreGeneric:
-            µBlock.staticNetFilteringEngine.matchStringElementHide(
-                'generic',
+            µBlock.staticNetFilteringEngine.matchStringReverse(
+                'generichide',
                 details.url
             ) === 2,
         ignoreSpecific:
-            µBlock.staticNetFilteringEngine.matchStringElementHide(
-                'specific',
+            µBlock.staticNetFilteringEngine.matchStringReverse(
+                'specifichide',
                 details.url
             ) === 2,
         rawFilter: details.rawFilter

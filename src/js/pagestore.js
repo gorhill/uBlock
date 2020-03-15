@@ -151,10 +151,7 @@ NetFilteringResultCache.prototype.shelfLife = 15000;
 
 /******************************************************************************/
 
-// Frame stores are used solely to associate a URL with a frame id. The
-// name `pageHostname` is used because of historical reasons. A more
-// appropriate name is `frameHostname` -- something to do in a future
-// refactoring.
+// Frame stores are used solely to associate a URL with a frame id.
 
 // To mitigate memory churning
 const frameStoreJunkyard = [];
@@ -166,15 +163,19 @@ const FrameStore = class {
     }
 
     init(frameURL) {
-        const µburi = µb.URI;
-        this.pageHostname = µburi.hostnameFromURI(frameURL);
-        this.pageDomain =
-            µburi.domainFromHostname(this.pageHostname) || this.pageHostname;
+        this.exceptCname = undefined;
+        this.rawURL = frameURL;
+        if ( frameURL !== undefined ) {
+            this.hostname = vAPI.hostnameFromURI(frameURL);
+            this.domain =
+                vAPI.domainFromHostname(this.hostname) || this.hostname;
+        }
         return this;
     }
 
     dispose() {
-        this.pageHostname = this.pageDomain = '';
+        this.exceptCname = undefined;
+        this.rawURL = this.hostname = this.domain = '';
         if ( frameStoreJunkyard.length < frameStoreJunkyardMax ) {
             frameStoreJunkyard.push(this);
         }
@@ -239,7 +240,6 @@ const PageStore = class {
         this.rawURL = tabContext.rawURL;
         this.hostnameToCountMap = new Map();
         this.contentLastModified = 0;
-        this.frames = new Map();
         this.logData = undefined;
         this.perLoadBlockedRequestCount = 0;
         this.perLoadAllowedRequestCount = 0;
@@ -249,6 +249,9 @@ const PageStore = class {
         this.largeMediaTimer = null;
         this.internalRedirectionCount = 0;
         this.extraData.clear();
+
+        this.frames = new Map();
+        this.setFrame(0, tabContext.rawURL);
 
         // The current filtering context is cloned because:
         // - We may be called with or without the current context having been
@@ -303,6 +306,7 @@ const PageStore = class {
             // As part of https://github.com/chrisaljoudi/uBlock/issues/405
             // URL changed, force a re-evaluation of filtering switch
             this.rawURL = tabContext.rawURL;
+            this.setFrame(0, this.rawURL);
             return this;
         }
 
@@ -541,9 +545,22 @@ const PageStore = class {
 
         // Static filtering has lowest precedence.
         if ( result === 0 || result === 3 ) {
-            result = µb.staticNetFilteringEngine.matchString(fctxt);
-            if ( result !== 0 && µb.logger.enabled ) {
-                fctxt.filter = µb.staticNetFilteringEngine.toLogData();
+            const snfe = µb.staticNetFilteringEngine;
+            result = snfe.matchString(fctxt);
+            if ( result !== 0 ) {
+                if ( µb.logger.enabled ) {
+                    fctxt.filter = snfe.toLogData();
+                }
+                // https://github.com/uBlockOrigin/uBlock-issues/issues/943
+                //   Blanket-except blocked aliased canonical hostnames?
+                if (
+                    result === 1 &&
+                    fctxt.aliasURL !== undefined &&
+                    snfe.isBlockImportant() === false &&
+                    this.shouldExceptCname(fctxt)
+                ) {
+                    return 2;
+                }
             }
         }
 
@@ -644,6 +661,40 @@ const PageStore = class {
         }
 
         return 1;
+    }
+
+    shouldExceptCname(fctxt) {
+        let exceptCname;
+        let frameStore;
+        if ( fctxt.docId !== undefined ) {
+            frameStore = this.getFrame(fctxt.docId);
+            if ( frameStore instanceof Object ) {
+                exceptCname = frameStore.exceptCname;
+            }
+        }
+        if ( exceptCname === undefined ) {
+            const result = µb.staticNetFilteringEngine.matchStringReverse(
+                'cname',
+                frameStore instanceof Object
+                    ? frameStore.rawURL
+                    : fctxt.getDocOrigin()
+            );
+            if ( result === 2 ) {
+                exceptCname = µb.logger.enabled
+                    ? µb.staticNetFilteringEngine.toLogData()
+                    : true;
+            } else {
+                exceptCname = false;
+            }
+            if ( frameStore instanceof Object ) {
+                frameStore.exceptCname = exceptCname;
+            }
+        }
+        if ( exceptCname === false ) { return false; }
+        if ( exceptCname instanceof Object ) {
+            fctxt.setFilter(exceptCname);
+        }
+        return true;
     }
 
     getBlockedResources(request, response) {

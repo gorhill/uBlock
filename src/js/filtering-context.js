@@ -81,11 +81,9 @@
                 this.setDocOriginFromURL(details.documentUrl);
             } else {
                 const pageStore = µBlock.pageStoreFromTabId(this.tabId);
-                const docStore = pageStore && pageStore.frames.get(this.docId);
+                const docStore = pageStore && pageStore.getFrame(this.docId);
                 if ( docStore ) {
-                    this.docOrigin = undefined;
-                    this.docHostname = docStore.pageHostname;
-                    this.docDomain = docStore.pageDomain;
+                    this.setDocOriginFromURL(docStore.rawURL);
                 } else {
                     this.setDocOrigin(this.tabOrigin);
                 }

@@ -75,10 +75,11 @@ const typeNameToTypeValue = {
       'specifichide': 16 << 4,
        'inline-font': 17 << 4,
      'inline-script': 18 << 4,
-              'data': 19 << 4,  // special: a generic data holder
-          'redirect': 20 << 4,
-            'webrtc': 21 << 4,
-       'unsupported': 22 << 4,
+             'cname': 19 << 4,
+              'data': 20 << 4,  // special: a generic data holder
+          'redirect': 21 << 4,
+            'webrtc': 22 << 4,
+       'unsupported': 23 << 4,
 };
 
 const otherTypeBitValue = typeNameToTypeValue.other;
@@ -119,10 +120,11 @@ const typeValueToTypeName = {
     16: 'specifichide',
     17: 'inline-font',
     18: 'inline-script',
-    19: 'data',
-    20: 'redirect',
-    21: 'webrtc',
-    22: 'unsupported',
+    19: 'cname',
+    20: 'data',
+    21: 'redirect',
+    22: 'webrtc',
+    23: 'unsupported',
 };
 
 // https://github.com/gorhill/uBlock/issues/1493
@@ -130,6 +132,7 @@ const typeValueToTypeName = {
 const toNormalizedType = {
                'all': 'all',
             'beacon': 'ping',
+             'cname': 'cname',
                'css': 'stylesheet',
               'data': 'data',
                'doc': 'main_frame',
@@ -220,8 +223,16 @@ const toLogDataInternal = function(categoryBits, tokenHash, iunit) {
     const pattern = [];
     const regex = [];
     const options = [];
+    const denyallow = [];
     const domains = [];
-    const logData = { pattern, regex, domains, options, isRegex: false };
+    const logData = {
+        pattern,
+        regex,
+        denyallow,
+        domains,
+        options,
+        isRegex: false,
+    };
     filterUnits[iunit].logData(logData);
     if ( categoryBits & 0x002 ) {
         logData.options.unshift('important');
@@ -245,6 +256,9 @@ const toLogDataInternal = function(categoryBits, tokenHash, iunit) {
     }
     if ( categoryBits & 0x001 ) {
         raw = '@@' + raw;
+    }
+    if ( denyallow.length !== 0 ) {
+        options.push(`denyallow=${denyallow.join('|')}`);
     }
     if ( domains.length !== 0 ) {
         options.push(`domain=${domains.join('|')}`);
@@ -270,6 +284,10 @@ const CHAR_CLASS_SEPARATOR = 0b00000001;
 }
 
 const isSeparatorChar = c => (charClassMap[c] & CHAR_CLASS_SEPARATOR) !== 0;
+
+/******************************************************************************/
+
+// TODO: Unify  [ string instance, string usage instance ] pairs
 
 /******************************************************************************/
 
@@ -1697,6 +1715,50 @@ registerFilterClass(FilterHostnameDict);
 
 /******************************************************************************/
 
+const FilterDenyAllow = class {
+    constructor(s, trieArgs) {
+        this.s = s;
+        this.hndict = FilterHostnameDict.trieContainer.createOne(trieArgs);
+    }
+
+    match() {
+        return this.hndict.matches($requestHostname) === -1;
+    }
+
+    logData(details) {
+        details.denyallow.push(this.s);
+    }
+
+    toSelfie() {
+        return [
+            this.fid,
+            this.s,
+            FilterHostnameDict.trieContainer.compileOne(this.hndict),
+        ];
+    }
+
+    static compile(details) {
+        return [ FilterDenyAllow.fid, details.denyallow ];
+    }
+
+    static unitFromCompiled(args) {
+        const f = new FilterDenyAllow(args[1]);
+        for ( const hn of args[1].split('|') ) {
+            if ( hn === '' ) { continue; }
+            f.hndict.add(hn);
+        }
+        return filterUnits.push(f) - 1;
+    }
+
+    static fromSelfie(args) {
+        return new FilterDenyAllow(...args.slice(1));
+    }
+};
+
+registerFilterClass(FilterDenyAllow);
+
+/******************************************************************************/
+
 // Dictionary of hostnames for filters which only purpose is to match
 // the document origin.
 
@@ -2126,6 +2188,7 @@ const FilterParser = class {
         this.party = AnyParty;
         this.fopts = '';
         this.domainOpt = '';
+        this.denyallow = '';
         this.isPureHostname = false;
         this.isRegex = false;
         this.raw = '';
@@ -2184,7 +2247,7 @@ const FilterParser = class {
         }
     }
 
-    parseDomainOption(s) {
+    parseHostnameList(s) {
         if ( this.reHasUnicode.test(s) ) {
             const hostnames = s.split('|');
             let i = hostnames.length;
@@ -2222,8 +2285,16 @@ const FilterParser = class {
             // Detect and discard filter if domain option contains nonsensical
             // characters.
             if ( opt.startsWith('domain=') ) {
-                this.domainOpt = this.parseDomainOption(opt.slice(7));
+                this.domainOpt = this.parseHostnameList(opt.slice(7));
                 if ( this.domainOpt === '' ) {
+                    this.unsupported = true;
+                    break;
+                }
+                continue;
+            }
+            if ( opt.startsWith('denyallow=') ) {
+                this.denyallow = this.parseHostnameList(opt.slice(10));
+                if ( this.denyallow === '' ) {
                     this.unsupported = true;
                     break;
                 }
@@ -2374,7 +2445,7 @@ const FilterParser = class {
                     this.unsupported = true;
                     return this;
                 }
-                this.parseOptions(s.slice(pos + 1));
+                this.parseOptions(s.slice(pos + 1).trim());
                 if ( this.unsupported ) { return this; }
                 s = s.slice(0, pos);
             }
@@ -3015,6 +3086,11 @@ FilterContainer.prototype.compile = function(raw, writer) {
         );
     }
 
+    // Deny-allow
+    if ( parsed.denyallow !== '' ) {
+        units.push(FilterDenyAllow.compile(parsed));
+    }
+
     // Data
     if ( parsed.dataType !== undefined ) {
         units.push(FilterDataHolder.compile(parsed));
@@ -3334,8 +3410,8 @@ FilterContainer.prototype.realmMatchString = function(
 // https://www.reddit.com/r/uBlockOrigin/comments/d6vxzj/
 //   Add support for `specifichide`.
 
-FilterContainer.prototype.matchStringElementHide = function(type, url) {
-    const typeBits = typeNameToTypeValue[`${type}hide`] | 0x80000000;
+FilterContainer.prototype.matchStringReverse = function(type, url) {
+    const typeBits = typeNameToTypeValue[type] | 0x80000000;
 
     // Prime tokenizer: we get a normalized URL in return.
     $requestURL = urlTokenizer.setURL(url);
@@ -3421,6 +3497,12 @@ FilterContainer.prototype.toLogData = function() {
         ? 0
         : ((this.$catbits & 1) !== 0 ? 2 : 1);
     return logData;
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.isBlockImportant = function() {
+    return (this.$catbits & BlockImportant) === BlockImportant;
 };
 
 /******************************************************************************/

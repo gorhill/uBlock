@@ -532,8 +532,8 @@ const retrieveContentScriptParameters = function(senderDetails, request) {
     //   `generichide` must be evaluated in the frame context.
     if ( noCosmeticFiltering === false ) {
         const genericHide =
-            µb.staticNetFilteringEngine.matchStringElementHide(
-                'generic',
+            µb.staticNetFilteringEngine.matchStringReverse(
+                'generichide',
                 request.url
             );
         response.noGenericCosmeticFiltering = genericHide === 2;
@@ -559,8 +559,8 @@ const retrieveContentScriptParameters = function(senderDetails, request) {
     //   Add support for `specifichide`.
     if ( noCosmeticFiltering === false ) {
         const specificHide =
-            µb.staticNetFilteringEngine.matchStringElementHide(
-                'specific',
+            µb.staticNetFilteringEngine.matchStringReverse(
+                'specifichide',
                 request.url
             );
         response.noSpecificCosmeticFiltering = specificHide === 2;
