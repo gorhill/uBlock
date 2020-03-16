@@ -744,7 +744,7 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Filtr statyczny <code>{{filter}}</code> nie został znaleziony w aktualnie włączonych listach filtrów",
+    "message": "Filtr statyczny nie został znaleziony w aktualnie włączonych listach filtrów",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
