@@ -549,7 +549,7 @@
         const prop = chain.slice(0, pos);
         let v = owner[prop];
         chain = chain.slice(pos + 1);
-        if ( v instanceof Object ) {
+        if ( v instanceof Object || typeof v === 'object' ) {
             makeProxy(v, chain);
             return;
         }
