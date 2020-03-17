@@ -296,6 +296,8 @@ mingpao.com##DIV[id*="bannerd_ad_container"]
 mingpao.com##DIV[style="visibility: visible;"]
 mingpao.com##image[id*="bg"]
 
+hongkongfp.com##.category-sponsored
+
 bitcoinist.net###colorbox
 bitcoinist.net###cboxOverlay
 bitcoinist.net##iframe[src*='coinser']
