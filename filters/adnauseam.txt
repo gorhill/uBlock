@@ -410,6 +410,8 @@ theguardian.com##.adverts--within-unbranded .badge
 theguardian.com##.paidfor-container .badge
 theguardian.com##.paid-content .badge
 
+techradar.com##div[class^="slot-"]
+
 hk.yahoo.com###adive_vm
 
 weather.com##.wx-adWrapper
