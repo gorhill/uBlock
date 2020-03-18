@@ -458,6 +458,37 @@
 })();
 
 
+/// remove-class.js
+/// alias rc.js
+(function() {
+    const token = '{{1}}';
+    if ( token === '' || token === '{{1}}' ) { return; }
+    const tokens = token.split(/\s*\|\s*/);
+    let selector = '{{2}}';
+    if ( selector === '' || selector === '{{2}}' ) {
+        selector = '.' + tokens.map(a => CSS.escape(a)).join(',.');
+    }
+    const rmclass = function() {
+        try {
+            const nodes = document.querySelectorAll(selector);
+            for ( const node of nodes ) {
+                node.classList.remove(...tokens);
+            }
+        } catch(ex) {
+        }
+    };
+    if ( document.readyState === 'loading' ) {
+        window.addEventListener(
+            'DOMContentLoaded',
+            rmclass,
+            { capture: true, once: true }
+        );
+    } else {
+        rmclass();
+    }
+})();
+
+
 /// requestAnimationFrame-if.js
 /// alias raf-if.js
 (function() {
