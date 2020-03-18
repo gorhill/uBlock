@@ -69,14 +69,6 @@
 			"assets/ublock/unbreak.txt"
 		]
 	},
-	"awrl-0": {
-		"content": "filters",
-		"group": "ads",
-		"off": true,
-		"title": "Adblock Warning Removal",
-		"contentURL": "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt",
-		"supportURL": "https://forums.lanik.us/"
-	},
 	"adguard-generic": {
 		"content": "filters",
 		"group": "ads",
