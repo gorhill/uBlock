@@ -287,10 +287,6 @@ const isSeparatorChar = c => (charClassMap[c] & CHAR_CLASS_SEPARATOR) !== 0;
 
 /******************************************************************************/
 
-// TODO: Unify  [ string instance, string usage instance ] pairs
-
-/******************************************************************************/
-
 let filterUnits = [ null ];
 
 let filterSequences = new Uint32Array(131072);
@@ -374,6 +370,29 @@ const filterUnitFromCompiled = function(args) {
 
 const filterFromSelfie = function(args) {
     return filterClasses[args[0]].fromSelfie(args);
+};
+
+/******************************************************************************/
+
+// Optional manager to be used to reuse filters instances. This is useful
+// when deduplicating instances is worth it. For examples, filter instances
+// which have a high likelihood of larger than average memory usage per
+// instance.
+
+const filterInstanceManager = {
+    unitFromArgs: function(args, createFn) {
+        const key = JSON.stringify(args);
+        let iunit = this.argsToUnit.get(key);
+        if ( iunit === undefined ) {
+            iunit = createFn(args);
+            this.argsToUnit.set(key, iunit);
+        }
+        return iunit;
+    },
+    reset: function() {
+        this.argsToUnit.clear();
+    },
+    argsToUnit: new Map(),
 };
 
 /******************************************************************************/
@@ -838,8 +857,10 @@ const FilterPatternGeneric = class {
     }
 
     static unitFromCompiled(args) {
-        const f = new FilterPatternGeneric(args[1], args[2]);
-        return filterUnits.push(f) - 1;
+        return filterInstanceManager.unitFromArgs(args, args => {
+            const f = new FilterPatternGeneric(args[1], args[2]);
+            return filterUnits.push(f) - 1;
+        });
     }
 
     static fromSelfie(args) {
@@ -1139,8 +1160,10 @@ const FilterRegex = class {
     }
 
     static unitFromCompiled(args) {
-        const f = new FilterRegex(args[1]);
-        return filterUnits.push(f) - 1;
+        return filterInstanceManager.unitFromArgs(args, args => {
+            const f = new FilterRegex(args[1]);
+            return filterUnits.push(f) - 1;
+        });
     }
 
     static fromSelfie(args) {
@@ -1163,8 +1186,6 @@ registerFilterClass(FilterRegex);
 const filterOrigin = new (class {
     constructor() {
         this.trieContainer = new µb.HNTrieContainer();
-        this.strToUnitMap = new Map();
-        this.gcTimer = undefined;
     }
 
     compile(details, prepend, units) {
@@ -1219,23 +1240,6 @@ const filterOrigin = new (class {
         }
     }
 
-    unitFromCompiled(ctor, s) {
-        let iunit = this.strToUnitMap.get(s);
-        if ( iunit !== undefined ) { return iunit; }
-        const f = new ctor(s);
-        iunit = filterUnits.push(f) - 1;
-        this.strToUnitMap.set(s, iunit);
-        if ( this.gcTimer !== undefined ) { return iunit; }
-        this.gcTimer = self.setTimeout(
-            ( ) => {
-                this.gcTimer = undefined;
-                this.strToUnitMap.clear();
-            },
-            5000
-        );
-        return iunit;
-    }
-
     prime() {
         this.trieContainer.reset(
             vAPI.localStorage.getItem('SNFE.filterOrigin.trieDetails')
@@ -1244,7 +1248,6 @@ const filterOrigin = new (class {
 
     reset() {
         this.trieContainer.reset();
-        this.strToUnitMap.clear();
     }
 
     optimize() {
@@ -1293,7 +1296,8 @@ const FilterOriginHit = class {
     }
 
     static unitFromCompiled(args) {
-        return filterOrigin.unitFromCompiled(FilterOriginHit, args[1]);
+        const f = new FilterOriginHit(args[1]);
+        return filterUnits.push(f) - 1;
     }
 
     static fromSelfie(args) {
@@ -1337,7 +1341,8 @@ const FilterOriginMiss = class {
     }
 
     static unitFromCompiled(args) {
-        return filterOrigin.unitFromCompiled(FilterOriginMiss, args[1]);
+        const f = new FilterOriginMiss(args[1]);
+        return filterUnits.push(f) - 1;
     }
 
     static fromSelfie(args) {
@@ -1385,7 +1390,10 @@ const FilterOriginHitSet = class {
     }
 
     static unitFromCompiled(args) {
-        return filterOrigin.unitFromCompiled(FilterOriginHitSet, args[1]);
+        return filterInstanceManager.unitFromArgs(args, args => {
+            const f = new FilterOriginHitSet(args[1]);
+            return filterUnits.push(f) - 1;
+        });
     }
 
     static fromSelfie(args) {
@@ -1433,7 +1441,10 @@ const FilterOriginMissSet = class {
     }
 
     static unitFromCompiled(args) {
-        return filterOrigin.unitFromCompiled(FilterOriginMissSet, args[1]);
+        return filterInstanceManager.unitFromArgs(args, args => {
+            const f = new FilterOriginMissSet(args[1]);
+            return filterUnits.push(f) - 1;
+        });
     }
 
     static fromSelfie(args) {
@@ -1483,8 +1494,10 @@ const FilterDataHolder = class {
     }
 
     static unitFromCompiled(args) {
-        const f = new FilterDataHolder(args[1], args[2]);
-        return filterUnits.push(f) - 1;
+        return filterInstanceManager.unitFromArgs(args, args => {
+            const f = new FilterDataHolder(args[1], args[2]);
+            return filterUnits.push(f) - 1;
+        });
     }
 
     static fromSelfie(args) {
@@ -1742,12 +1755,14 @@ const FilterDenyAllow = class {
     }
 
     static unitFromCompiled(args) {
-        const f = new FilterDenyAllow(args[1]);
-        for ( const hn of args[1].split('|') ) {
-            if ( hn === '' ) { continue; }
-            f.hndict.add(hn);
-        }
-        return filterUnits.push(f) - 1;
+        return filterInstanceManager.unitFromArgs(args, args => {
+            const f = new FilterDenyAllow(args[1]);
+            for ( const hn of args[1].split('|') ) {
+                if ( hn === '' ) { continue; }
+                f.hndict.add(hn);
+            }
+            return filterUnits.push(f) - 1;
+        });
     }
 
     static fromSelfie(args) {
@@ -2739,6 +2754,7 @@ FilterContainer.prototype.reset = function() {
     FilterHostnameDict.reset();
     filterOrigin.reset();
     bidiTrie.reset();
+    filterInstanceManager.reset();
 
     filterUnits = filterUnits.slice(0, FILTER_UNITS_MIN);
     filterSequenceWritePtr = FILTER_SEQUENCES_MIN;
@@ -2861,6 +2877,7 @@ FilterContainer.prototype.freeze = function() {
 
     FilterHostnameDict.optimize();
     bidiTrieOptimize();
+    filterInstanceManager.reset();
 
     log.info(`staticNetFilteringEngine.freeze() took ${Date.now()-t0} ms`);
 };
