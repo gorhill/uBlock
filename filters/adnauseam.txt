@@ -589,6 +589,10 @@ bitcoin.treasurebits.net##iframe[src="about:blank"]
 ||9anime.to/$script
 ||exdynsrv.com^$third-party
 ||bebi.com^$third-party
+||bidgear.com^$third-party
+
+# rarbg
+||dyncdn.me/static/20/js/expla*.js$domain=rarbg.to|rarbg2019.org|rarbg2020.org|rarbg2021.org|rarbgaccess.org|rarbgmirror.com|rarbgmirror.org|rarbgmirrored.org|rarbgp2p.org|rarbgproxied.org|rarbgproxy.org|rarbgprx.org|rarbgto.org|rarbgway.org
 
 # nowbitco.in
 ||czilladx.com/serve/*.js^
