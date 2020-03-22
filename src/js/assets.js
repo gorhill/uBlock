@@ -161,11 +161,14 @@ api.fetchText = async function(url) {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/682#issuecomment-515197130
     //   Provide filter list authors a way to completely bypass
     //   the browser cache.
+    // https://github.com/gorhill/uBlock/commit/048bfd251c9b#r37972005
+    //   Use modulo prime numbers to avoid generating the same token at the
+    //   same time across different days.
     if ( isExternal ) {
         const cacheBypassToken =
             µBlock.hiddenSettings.updateAssetBypassBrowserCache
-                ? Math.floor(Date.now() /    1000) % 86400
-                : Math.floor(Date.now() / 3600000) %    12;
+                ? Math.floor(Date.now() /    1000) % 86413
+                : Math.floor(Date.now() / 3600000) %    13;
         const queryValue = `_=${cacheBypassToken}`;
         if ( actualUrl.indexOf('?') === -1 ) {
             actualUrl += '?';
