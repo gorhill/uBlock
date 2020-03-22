@@ -72,14 +72,32 @@
         }
         setOptions(options) {
             super.setOptions(options);
-            this.cnameUncloak = browser.dns instanceof Object &&
-                                options.cnameUncloak !== false;
-            this.cnameIgnoreList = this.regexFromStrList(options.cnameIgnoreList);
-            this.cnameIgnore1stParty = options.cnameIgnore1stParty !== false;
-            this.cnameIgnoreExceptions = options.cnameIgnoreExceptions !== false;
-            this.cnameIgnoreRootDocument = options.cnameIgnoreRootDocument !== false;
-            this.cnameMaxTTL = options.cnameMaxTTL || 120;
-            this.cnameReplayFullURL = options.cnameReplayFullURL === true;
+            if ( 'cnameUncloak' in options ) {
+                this.cnameUncloak = browser.dns instanceof Object &&
+                                    options.cnameUncloak !== false;
+            }
+            if ( 'cnameIgnoreList' in options ) {
+                this.cnameIgnoreList =
+                    this.regexFromStrList(options.cnameIgnoreList);
+            }
+            if ( 'cnameIgnore1stParty' in options ) {
+                this.cnameIgnore1stParty =
+                    options.cnameIgnore1stParty !== false;
+            }
+            if ( 'cnameIgnoreExceptions' in options ) {
+                this.cnameIgnoreExceptions =
+                    options.cnameIgnoreExceptions !== false;
+            }
+            if ( 'cnameIgnoreRootDocument' in options ) {
+                this.cnameIgnoreRootDocument =
+                    options.cnameIgnoreRootDocument !== false;
+            }
+            if ( 'cnameMaxTTL' in options ) {
+                this.cnameMaxTTL = options.cnameMaxTTL || 120;
+            }
+            if ( 'cnameReplayFullURL' in options ) {
+                this.cnameReplayFullURL = options.cnameReplayFullURL === true;
+            }
             this.cnames.clear(); this.cnames.set('', '');
             this.cnameFlushTime = Date.now() + this.cnameMaxTTL * 60000;
         }

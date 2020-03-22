@@ -143,6 +143,16 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         cnameReplayFullURL: µBlock.hiddenSettings.cnameReplayFullURL,
         cnameUncloak: µBlock.hiddenSettings.cnameUncloak,
     });
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/911
+    //   See uBO's onHeadersReceived() listener.
+    if (
+        µBlock.hiddenSettings.cnameUncloak === false ||
+        µBlock.hiddenSettings.cnameUncloakProxied === true
+    ) {
+        µBlock.proxyDNS = false;
+    } else {
+        µBlock.proxyDNS = undefined;
+    }
 });
 
 /******************************************************************************/
