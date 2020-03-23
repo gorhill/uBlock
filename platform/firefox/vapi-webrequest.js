@@ -49,6 +49,27 @@
     const reAsciiHostname  = /^https?:\/\/[0-9a-z_.:@-]+[/?#]/;
     const parsedURL = new URL('about:blank');
 
+    // Canonical name-uncloaking feature.
+    let cnameUncloak = browser.dns instanceof Object;
+    let cnameUncloakProxied = false;
+
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/911
+    //   We detect here whether network requests are proxied, and if so,
+    //   de-aliasing of hostnames will be disabled to avoid possible
+    //   DNS leaks.
+    const proxyDetector = function(details) {
+        if ( details.proxyInfo instanceof Object ) {
+            cnameUncloak = false;
+            proxyDetectorTryCount = 0;
+        }
+        if ( proxyDetectorTryCount === 0 ) {
+            browser.webRequest.onHeadersReceived.removeListener(proxyDetector);
+            return;
+        }
+        proxyDetectorTryCount -= 1;
+    };
+    let proxyDetectorTryCount = 0;
+
     // Related issues:
     // - https://github.com/gorhill/uBlock/issues/1327
     // - https://github.com/uBlockOrigin/uBlock-issues/issues/128
@@ -68,13 +89,15 @@
             this.cnameMaxTTL = 120;
             this.cnameReplayFullURL = false;
             this.cnameFlushTime = Date.now() + this.cnameMaxTTL * 60000;
-            this.cnameUncloak = browser.dns instanceof Object;
         }
         setOptions(options) {
             super.setOptions(options);
             if ( 'cnameUncloak' in options ) {
-                this.cnameUncloak = browser.dns instanceof Object &&
-                                    options.cnameUncloak !== false;
+                cnameUncloak = browser.dns instanceof Object &&
+                               options.cnameUncloak !== false;
+            }
+            if ( 'cnameUncloakProxied' in options ) {
+                cnameUncloakProxied = options.cnameUncloakProxied === true;
             }
             if ( 'cnameIgnoreList' in options ) {
                 this.cnameIgnoreList =
@@ -100,6 +123,21 @@
             }
             this.cnames.clear(); this.cnames.set('', '');
             this.cnameFlushTime = Date.now() + this.cnameMaxTTL * 60000;
+            // https://github.com/uBlockOrigin/uBlock-issues/issues/911
+            //   Install/remove proxy detector.
+            const wrohr = browser.webRequest.onHeadersReceived;
+            if ( cnameUncloak === false || cnameUncloakProxied ) {
+                if ( wrohr.hasListener(proxyDetector) ) {
+                    wrohr.removeListener(proxyDetector);
+                }
+            } else if ( wrohr.hasListener(proxyDetector) === false ) {
+                wrohr.addListener(
+                    proxyDetector,
+                    { urls: [ '*://*/*' ] },
+                    [ 'blocking' ]
+                );
+            }
+            proxyDetectorTryCount = 32;
         }
         normalizeDetails(details) {
             if ( mustPunycode && !reAsciiHostname.test(details.url) ) {
@@ -226,7 +264,7 @@
         }
         onBeforeSuspendableRequest(details) {
             const r = super.onBeforeSuspendableRequest(details);
-            if ( this.cnameUncloak === false ) { return r; }
+            if ( cnameUncloak === false ) { return r; }
             if ( r !== undefined ) {
                 if (
                     r.cancel === true ||

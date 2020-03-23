@@ -441,17 +441,6 @@ const onHeadersReceived = function(details) {
     const isRootDoc = requestType === 'main_frame';
     const isDoc = isRootDoc || requestType === 'sub_frame';
 
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/911
-    //   We detect here whether network requests are proxied, and if so,
-    //   de-aliasing of hostnames will be disabled to avoid possible
-    //   DNS leaks.
-    if ( isRootDoc && µb.proxyDNS === undefined ) {
-        µb.proxyDNS = details.proxyInfo instanceof Object;
-        if ( µb.proxyDNS ) {
-            vAPI.net.setOptions({ cnameUncloak: false });
-        }
-    }
-
     let pageStore = µb.pageStoreFromTabId(fctxt.tabId);
     if ( pageStore === null ) {
         if ( isRootDoc === false ) { return; }

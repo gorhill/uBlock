@@ -133,26 +133,18 @@
 };
 
 self.addEventListener('hiddenSettingsChanged', ( ) => {
-    self.log.verbosity = µBlock.hiddenSettings.consoleLogLevel;
+    const µbhs = µBlock.hiddenSettings;
+    self.log.verbosity = µbhs.consoleLogLevel;
     vAPI.net.setOptions({
-        cnameIgnoreList: µBlock.hiddenSettings.cnameIgnoreList,
-        cnameIgnore1stParty: µBlock.hiddenSettings.cnameIgnore1stParty,
-        cnameIgnoreExceptions: µBlock.hiddenSettings.cnameIgnoreExceptions,
-        cnameIgnoreRootDocument: µBlock.hiddenSettings.cnameIgnoreRootDocument,
-        cnameMaxTTL: µBlock.hiddenSettings.cnameMaxTTL,
-        cnameReplayFullURL: µBlock.hiddenSettings.cnameReplayFullURL,
-        cnameUncloak: µBlock.hiddenSettings.cnameUncloak,
+        cnameIgnoreList: µbhs.cnameIgnoreList,
+        cnameIgnore1stParty: µbhs.cnameIgnore1stParty,
+        cnameIgnoreExceptions: µbhs.cnameIgnoreExceptions,
+        cnameIgnoreRootDocument: µbhs.cnameIgnoreRootDocument,
+        cnameMaxTTL: µbhs.cnameMaxTTL,
+        cnameReplayFullURL: µbhs.cnameReplayFullURL,
+        cnameUncloak: µbhs.cnameUncloak,
+        cnameUncloakProxied: µbhs.cnameUncloakProxied,
     });
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/911
-    //   See uBO's onHeadersReceived() listener.
-    if (
-        µBlock.hiddenSettings.cnameUncloak === false ||
-        µBlock.hiddenSettings.cnameUncloakProxied === true
-    ) {
-        µBlock.proxyDNS = false;
-    } else {
-        µBlock.proxyDNS = undefined;
-    }
 });
 
 /******************************************************************************/
