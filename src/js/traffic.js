@@ -448,7 +448,7 @@ const onHeadersReceived = function(details) {
     if ( isRootDoc && µb.proxyDNS === undefined ) {
         µb.proxyDNS = details.proxyInfo instanceof Object;
         if ( µb.proxyDNS ) {
-            vAPI.Net.setOptions({ cnameUncloak: false });
+            vAPI.net.setOptions({ cnameUncloak: false });
         }
     }
 
