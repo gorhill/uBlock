@@ -49,6 +49,7 @@ cp $SRC/mr/messages.json    $DES/mr/messages.json
 cp $SRC/ms/messages.json    $DES/ms/messages.json
 cp $SRC/nb/messages.json    $DES/nb/messages.json
 cp $SRC/nl/messages.json    $DES/nl/messages.json
+cp $SRC/oc/messages.json    $DES/oc/messages.json
 cp $SRC/pl/messages.json    $DES/pl/messages.json
 cp $SRC/pt-BR/messages.json $DES/pt_BR/messages.json
 cp $SRC/pt-PT/messages.json $DES/pt_PT/messages.json
@@ -118,6 +119,7 @@ cp $SRC/ms/description.txt    $DES/description-ms.txt
 cp $SRC/mr/description.txt    $DES/description-mr.txt
 cp $SRC/nb/description.txt    $DES/description-nb.txt
 cp $SRC/nl/description.txt    $DES/description-nl.txt
+cp $SRC/oc/description.txt    $DES/description-oc.txt
 cp $SRC/pl/description.txt    $DES/description-pl.txt
 cp $SRC/pt-BR/description.txt $DES/description-pt_BR.txt
 cp $SRC/pt-PT/description.txt $DES/description-pt_PT.txt
