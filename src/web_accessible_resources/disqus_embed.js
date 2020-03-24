@@ -28,15 +28,31 @@
     b.type = 'button';
     p.appendChild(b);
     const loadDisqus = function(ev) {
-        b.removeEventListener('click', loadDisqus);
-        p.removeChild(b);
-        const script = document.createElement('script');
-        script.async = true;
+        b.remove();
+        let disqusScript =
+            document.querySelector('script[src$=".disqus.com/embed.js"]');
+        let newScript;
+        if ( disqusScript !== null ) {
+            disqusScript.remove();
+            newScript = document.createElement('script');
+            if ( disqusScript.hasAttributes() ) {
+                const attrs = disqusScript.attributes;
+                for ( let i = 0; i < attrs.length; i++ ) {
+                    const attr = attrs[i];
+                    newScript.setAttribute(attr.name, attr.value);
+                }
+            }
+        } else if ( typeof self.disqus_shortname === 'string' ) {
+            newScript = document.createElement('script');
+            newScript.async = true;
+            newScript.src = `//${self.disqus_shortname}.disqus.com/embed.js`;
+        }
+        if ( newScript === undefined ) { return; }
         const t = Date.now().toString();
-        script.src = '//' + window.disqus_shortname + '.disqus.com/embed.js?_=1457540' + t.slice(-6);
-        document.body.appendChild(script);
+        newScript.src += '?_=1457540' + t.slice(-6);
+        document.body.appendChild(newScript);
         ev.preventDefault();
         ev.stopPropagation();
     };
-    b.addEventListener('click', loadDisqus);
+    b.addEventListener('click', loadDisqus, { once: true });
 })();
