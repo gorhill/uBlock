@@ -211,10 +211,154 @@
 
     createDivs(adsets, update);
     computeStats(adsets);
+    analyze(adsets);
     enableLightbox();
     repack();
   }
 
+  function analyze(adsets) {
+
+    let data = {
+      totalImg: 0,
+      totalText: 0,
+      sites:{},
+      adNetworks:{}
+    };
+
+    for (let i = 0, j = adsets && adsets.length; i < j; i++) {
+      for (const key in adsets[i].children) {
+        const ad = adsets[i].children[key];
+        if (ad.contentType == "img") data.totalImg ++;
+        else if (ad.contentType == "text") data.totalText ++;
+        try {
+          let network = parseDomain(ad.targetUrl);
+          // merge common ad system
+          if (network.indexOf("adssettings.google") > -1 ) {
+            //ignore adsettings
+            continue;
+          } else if(network.indexOf("doubleclick") > -1 || network.indexOf("google") > -1 || ad.pageUrl.indexOf("google.com/search") > -1){
+            // Merge double click, google ads, google search
+            network = "google ads";
+          }
+          else if(network.indexOf("amazon") > -1){
+            network = "amazon ad system";
+          }
+
+            addToDict(network, data.adNetworks);
+
+        }
+        catch{
+          // can't parse
+
+        }
+        try {
+          const domain = parseDomain(ad.pageUrl);
+          addToDict(domain, data.sites);
+        }
+        catch {
+          // can't parse
+        }
+      }
+
+    }
+
+    data.sites = sortDict(data.sites);
+    data.adNetworks = sortDict(data.adNetworks);
+    //console.log(data);
+    displayStatistics(data);
+  }
+
+  function displayStatistics(data) {
+    // clear old data
+    $('#myStatistics ul').html("");
+
+    // Top Ad Network
+
+    for (var i = 0; i < data.adNetworks.length; i++) {
+      const $li = $('<li/>', {
+        class: 'entry',
+      }).appendTo('#topAdnetworks');
+      const site = data.adNetworks[i][0].replace(/^www\./g, '');
+      const $siteName = $('<span/>', {
+        class: 'label',
+        text: site
+      }).appendTo($li);
+      const $number = $('<span/>', {
+        class: 'number',
+        text: data.adNetworks[i][1]
+      }).appendTo($li);
+    }
+
+    // Top Site
+    for (var i = 0; i < data.sites.length; i++) {
+      const $li = $('<li/>', {
+        class: 'entry',
+      }).appendTo('#topSites');
+      const site = data.sites[i][0].replace(/^www\./g, '');
+      const $link = $('<a/>', {
+        href: "http://" + data.sites[i][0],
+        target:"_blank"
+      }).appendTo($li);
+      const $siteName = $('<span/>', {
+        class: 'label',
+        text: site
+      }).appendTo($link);
+      const $number = $('<span/>', {
+        class: 'number',
+        text: data.sites[i][1]
+      }).appendTo($li);
+    }
+
+    //Ad Type
+    const $imgAd = $('<li/>', {
+      class: 'entry',
+    }).appendTo('#adTypes');
+    const $label = $('<span/>', {
+      class: 'label',
+      text: 'img ads'
+    }).appendTo($imgAd);
+    const $number = $('<span/>', {
+      class: 'number',
+      text: data.totalImg
+    }).appendTo($imgAd);
+
+    const $textAd = $('<li/>', {
+      class: 'entry',
+    }).appendTo('#adTypes');
+    const $label2 = $('<span/>', {
+      class: 'label',
+      text: 'text ads'
+    }).appendTo($textAd);
+    const $number2 = $('<span/>', {
+      class: 'number',
+      text: data.totalText
+    }).appendTo($textAd);
+
+    //Toggle
+    $('.myStatistics-panel').toggle(300);
+    $('#myStatistics').toggleClass("show");
+    $('#myStatistics').toggleClass("min");
+
+  }
+
+  function sortDict(dict) {
+    var items = Object.keys(dict).map(function(key) {
+      return [key, dict[key]];
+    });
+
+    // Sort the array based on the second element
+    items.sort(function(first, second) {
+      return second[1] - first[1];
+    });
+
+    return items.slice(0, 3)
+  }
+
+  function addToDict(key, dict){
+    if (key == undefined) return;
+    if (key in dict) dict[key] ++;
+    else dict[key] = 1
+  }
 
   function createDivs(adsets, update) {
 
@@ -1164,6 +1308,12 @@
         what: 'closeExtPage',
         page: 'vault.html'
       });
+    });
+
+    $('#myStatistics .myStatistics-label').click(function (e) {
+        $('.myStatistics-panel').toggle(300);
+        $('#myStatistics').toggleClass("show");
+        $('#myStatistics').toggleClass("min");
     });
 
     $('#logo').click(function (e) {

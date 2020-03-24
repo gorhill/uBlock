@@ -14,6 +14,90 @@ body {
 * {
 	transition: opacity 0.5s ease;
 }
+/************************************
+ My-statistics-panel
+*************************************/
+#myStatistics{
+	font-family: bebas_neue,sans-serif;
+	z-index: 50;
+	margin-bottom: 30px;
+	cursor: default;
+	user-select:none;
+	width:270px;
+	position: absolute;
+  bottom: 0px;
+	left:-12px;
+}
+.myStatistics-panel{
+	display:none;
+  width:100%;
+	height:320px;
+	border:solid 1px #0076FF;
+	background-color:#0E1217;
+	padding:25px 15px;
+}
+.myStatistics-label{
+	font-weight:700;
+	font-size:16px;
+	border-radius:5px 5px 0px 0px;
+	height:32px;
+	padding:4px 15px;
+	width:130px;
+}
+.show .myStatistics-label, .min .myStatistics-label:hover{
+	color:black;
+	background-color:#0076FF;
+	transition: 0.3s;
+}
+.min .myStatistics-label{
+	color:#0076FF;;
+}
+.show .myStatistics-label:hover{
+	border-color:#0076FF;
+	border-style:solid;
+	border-width:1px 1px 0 1px;
+	background-color:rgba(0,0,0,0);
+	color:#0076FF;
+	transition: 0.3s;
+}
+.min .myStatistics-label:hover > span.st-icon{
+	transition: 0.3s;
+	filter:none;
+}
+.show .myStatistics-label:hover > span.st-icon, .min .myStatistics-label > span.st-icon{
+	transition: 0.3s;
+	filter: invert(31%) sepia(71%) saturate(3184%) hue-rotate(201deg) brightness(99%) contrast(112%);
+}
+.myStatistics-label span.title{
+	line-height: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: 0;
+	margin-bottom:5px;
+	margin-left:5px;
+}
+.min .myStatistics-panel .section{
+	display:none;
+}
+.myStatistics-panel .section{
+  margin-bottom: 22px;
+}
+.myStatistics-panel h4{
+	font-size:16px;
+	line-height:22px;
+	color:#EEE;
+}
+.myStatistics-panel li span{
+	line-height:18px;
+	font-size:14px;
+}
+.myStatistics-panel li span.label{
+		color:#AAA;
+}
+.myStatistics-panel li span.number{
+		color:#0076FF;
+		float:right;
+}
 
 
 /************************************
@@ -300,6 +384,13 @@ div.tooltip {
 	opacity: 0.8;
 	display: block;
 	text-decoration: none;
+}
+.st-icon{
+	width:20px;
+	height:20px;
+	margin-top:3px;
+	display: inline-block;
+	background: url(../img/statistics-icon.svg);
 }
 
 #logo:hover a{
