@@ -277,8 +277,8 @@ const handlers = {
                     continue;
                 }
                 const details = JSON.parse(selector);
-                if ( Array.isArray(details.style) ) {
-                    exceptionDict.set(details.style[0], details.raw);
+                if ( details.action === 'style' ) {
+                    exceptionDict.set(details.selector, details.raw);
                     continue;
                 }
                 proceduralExceptionDict.set(
