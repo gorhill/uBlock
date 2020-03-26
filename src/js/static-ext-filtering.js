@@ -528,7 +528,13 @@
             }
 
             // Expose action to take in root descriptor.
+            //
+            // https://github.com/uBlockOrigin/uBlock-issues/issues/961
+            // https://github.com/uBlockOrigin/uBlock-issues/issues/382
+            //   For the time being, `style` action can't be used in a
+            //   procedural selector.
             if ( action !== undefined ) {
+                if ( tasks.length > 1 && action === 'style' ) { return; }
                 out.action = action;
             }
 
