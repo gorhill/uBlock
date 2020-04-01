@@ -1305,13 +1305,15 @@ vAPI.messaging.listen('loggerUI', onMessage);
 /******************************************************************************/
 /******************************************************************************/
 
-// channel: documentBlocked
-
+// Channel:
+//      documentBlocked
 (function() {
 
 /******************************************************************************/
 
 var onMessage = function(request, sender, callback) {
+    const tabId = sender && sender.tab ? sender.tab.id : 0;
+
     // Async
     switch ( request.what ) {
     default:
@@ -1319,11 +1321,15 @@ var onMessage = function(request, sender, callback) {
     }
 
     // Sync
-    var response;
+    let response;
 
     switch ( request.what ) {
+    case 'closeThisTab':
+        vAPI.tabs.remove(tabId);
+        break;
+
     case 'temporarilyWhitelistDocument':
-        µBlock.webRequest.temporarilyWhitelistDocument(request.hostname);
+        µBlock.webRequest.strictBlockBypass(request.hostname);
         break;
 
     default:
