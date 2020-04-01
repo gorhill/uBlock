@@ -315,7 +315,7 @@
     }).appendTo('#adTypes');
     const $label = $('<span/>', {
       class: 'label',
-      text: 'img ads'
+      text: vAPI.i18n('adTypesImageAds')
     }).appendTo($imgAd);
     const $number = $('<span/>', {
       class: 'number',
@@ -327,7 +327,7 @@
     }).appendTo('#adTypes');
     const $label2 = $('<span/>', {
       class: 'label',
-      text: 'text ads'
+      text: vAPI.i18n('adTypesTextAds')
     }).appendTo($textAd);
     const $number2 = $('<span/>', {
       class: 'number',
