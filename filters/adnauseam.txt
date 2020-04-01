@@ -436,6 +436,10 @@ bitcoin.treasurebits.net##iframe[src="about:blank"]
 9anime.to##*[src*="interbuzznews"]
 9anime.to##*[href*="revrtb"]
 
+# Free WordPress blogs
+##div[class*="rtb"][onclick*="window.open"]
+##.compound-ad-unit
+
 ##################### Blocking rules ########################
 
 # 4archive.prg

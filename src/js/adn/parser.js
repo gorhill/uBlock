@@ -151,7 +151,7 @@
     }
 
     const getTargetUrl = function(elem) {
-      const target = clickableParent(elem);
+      const target = clickableParent(elem), loc = window.location;
       let targetUrl;
 
       if (!target) { // no clickable parent
