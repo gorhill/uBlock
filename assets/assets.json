@@ -241,18 +241,6 @@
 		"contentURL": "https://someonewhocares.org/hosts/hosts",
 		"supportURL": "https://someonewhocares.org/hosts/"
 	},
-	"hphosts": {
-		"content": "filters",
-		"group": "multipurpose",
-		"updateAfter": 11,
-		"off": true,
-		"title": "hpHosts’ Ad and tracking servers",
-		"contentURL": [
-			"https://hosts-file.net/.%5Cad_servers.txt",
-			"http://hosts-file.net/.%5Cad_servers.txt"
-		],
-		"supportURL": "https://hosts-file.net/"
-	},
 	"mvps-0": {
 		"content": "filters",
 		"group": "multipurpose",
