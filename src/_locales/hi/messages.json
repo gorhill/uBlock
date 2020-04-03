@@ -56,7 +56,7 @@
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
-    "message": "युब्लॉक₀ — असेट व्यूअर",
+    "message": "uBlock₀ — असेट व्यूअर",
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
