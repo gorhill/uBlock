@@ -27,7 +27,7 @@
 // https://github.com/uBlockOrigin/uBlock-issues/issues/403
 //   If the content script was not boostrapped, give it another try.
 
-(function() {
+(( ) => {
     try {
         let status = vAPI.uBO !== true;
         if ( status === false && vAPI.bootstrap ) {

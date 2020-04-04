@@ -509,6 +509,7 @@ vAPI.messaging.listen({
 const µb = µBlock;
 
 const retrieveContentScriptParameters = function(senderDetails, request) {
+    if ( µb.readyToFilter !== true ) { return; }
     const { url, tabId, frameId } = senderDetails;
     if ( url === undefined || tabId === undefined || frameId === undefined ) {
         return;

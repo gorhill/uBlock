@@ -333,6 +333,10 @@ if ( selfieIsValid !== true ) {
 
 // Final initialization steps after all needed assets are in memory.
 
+// https://github.com/uBlockOrigin/uBlock-issues/issues/974
+//   This can be used to defer filtering decision-making.
+µb.readyToFilter = true;
+
 // Start network observers.
 µb.webRequest.start();
 
