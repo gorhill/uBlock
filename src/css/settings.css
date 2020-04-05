@@ -1,6 +1,6 @@
 body {
     border: 0;
-    font: 16px/24px sans-serif;
+    font: 14px/21px sans-serif;
     margin: 0;
     padding: 0;
     }
@@ -42,3 +42,9 @@ hr {
 body.advancedUser #advanced-user-enabled ~ a.fa {
     display: inline;
     }
+
+@media (pointer: coarse) {
+    #dashboard-nav {
+        font: 16px/24px sans-serif;
+    }
+}
