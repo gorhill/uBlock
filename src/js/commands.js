@@ -26,8 +26,21 @@
 /******************************************************************************/
 
 µBlock.canUseShortcuts = vAPI.commands instanceof Object;
-µBlock.canUpdateShortcuts = µBlock.canUseShortcuts &&
-                            typeof vAPI.commands.update === 'function';
+
+// https://github.com/uBlockOrigin/uBlock-issues/issues/386
+//   Firefox 74 and above has complete shotcut assignment user interface.
+µBlock.canUpdateShortcuts =
+    µBlock.canUseShortcuts &&
+    vAPI.webextFlavor.soup.has('firefox') &&
+    typeof vAPI.commands.update === 'function';
+
+if ( µBlock.canUpdateShortcuts ) {
+    self.addEventListener(
+        'webextFlavor',
+        ( ) => { µBlock.canUpdateShortcuts = vAPI.webextFlavor.major < 74; },
+        { once: true }
+    );
+}
 
 /******************************************************************************/
 
