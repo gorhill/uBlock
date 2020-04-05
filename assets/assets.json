@@ -129,13 +129,6 @@
 		"contentURL": "https://www.fanboy.co.nz/enhancedstats.txt",
 		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
 	},
-	"disconnect-malvertising": {
-		"content": "filters",
-		"group": "malware",
-		"off": true,
-		"title": "Malvertising filter list by Disconnect",
-		"contentURL": "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt"
-	},
 	"malware-0": {
 		"content": "filters",
 		"group": "malware",
