@@ -1,69 +1,54 @@
 html, body {
-    margin: 0;
     border: 0;
+    font: 16px/24px sans-serif;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
     padding: 0;
     position: relative;
     width: 100%;
-    height: 100%;
-    overflow: hidden;
-    }
-@media screen and (max-device-width: 960px) {
-    #dashboard-nav {
-        zoom: 1.2;
-        }
     }
 #dashboard-nav {
+    background-color: #f9f9fb;
     border: 0;
-    margin: 0;
+    border-bottom: 1px solid rgba(14, 13, 26, 0.12);
+    display: flex;
+    flex-wrap: wrap;
+    overflow-x: hidden;
     padding: 0;
+    position: sticky;
     top: 0;
     width: 100%;
     z-index: 10;
     }
-#dashboard-nav-widgets {
-    align-items: stretch;
-    background-color: white;
-    border-bottom: 1px solid #ccc;
-    display: flex;
-    margin: 0;
-    padding: 4px 0 0;
-    white-space: nowrap;
-    }
-#dashboard-nav-widgets > span {
+#dashboard-nav > span {
     align-items: center;
     display: inline-flex;
     padding: 0 0.5em;
     width: 1.25em;
     }
-#dashboard-nav-widgets > span > img {
+#dashboard-nav > span > img {
     width: 100%;
     }
 .tabButton {
-    background-color: #eee;
-    border: 1px solid #ccc;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-    border-bottom: 1px solid #ccc;
-    color: black;
+    border: 0;
+    border-bottom: 3px solid #f9f9fb;
+    box-sizing: border-box;
+    color: #20123a;
     cursor: pointer;
-    display: inline-block;
-    font-size: 110%;
-    margin: 0 0.2em 0 0;
-    overflow: hidden;
-    padding: 4px;
-    position: relative;
+    padding: 0.5em 1.5em;
     text-decoration: none;
-    top: 1px;
+    white-space: nowrap;
     }
 .tabButton:focus {
     outline: 0;
     }
 .tabButton:active,.tabButton:visited {
-    color: inherit;
+    color: #20123a;
     }
 .tabButton.selected {
-    background-color: white;
-    border-bottom: 1px solid white;
+    border-bottom: 3px solid #592acb;
+    color: #592acb;
     }
 iframe {
     background-color: transparent;
@@ -97,20 +82,9 @@ body:not(.canUpdateShortcuts) .tabButton[href="#shortcuts.html"] {
     display: none;
     }
 
-@media (max-width: 640px) {
+@media (pointer: coarse) {
     #dashboard-nav {
-        position: relative;
-        }
-    #dashboard-nav-widgets {
-        padding: 1px 0 0 0;
-        }
-    .hverbose {
-        display: none !important;
-        }
-    .tabButton {
-        font-size: 90%;
-        }
-    .tabButton.selected {
-        border-bottom: 1px solid #ccc;
-        }
+        flex-wrap: nowrap;
+        overflow-x: auto;
     }
+}

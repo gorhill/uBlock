@@ -84,12 +84,15 @@ const discardUnsavedData = function(synchronous = false) {
 };
 
 const loadDashboardPanel = function(pane, first) {
-    const tabButton = uDom(`[href="#${pane}"]`);
-    if ( !tabButton || tabButton.hasClass('selected') ) { return; }
+    const tabButton = uDom.nodeFromSelector(`[href="#${pane}"]`);
+    if ( tabButton === null || tabButton.classList.contains('selected') ) {
+        return;
+    }
     const loadPane = ( ) => {
         self.location.replace(`#${pane}`);
         uDom('.tabButton.selected').toggleClass('selected', false);
-        tabButton.toggleClass('selected', true);
+        tabButton.classList.add('selected');
+        tabButton.scrollIntoView();
         uDom.nodeFromId('iframe').setAttribute('src', pane);
         vAPI.localStorage.setItem('dashboardLastVisitedPane', pane);
     };

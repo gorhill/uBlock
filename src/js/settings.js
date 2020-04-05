@@ -117,13 +117,11 @@ const exportToFile = async function() {
 /******************************************************************************/
 
 const onLocalDataReceived = function(details) {
-    uDom('#localData > ul > li:nth-of-type(1)').text(
-        vAPI.i18n('settingsStorageUsed')
-            .replace(
-                '{{value}}',
-                typeof details.storageUsed === 'number' ? details.storageUsed.toLocaleString() : '?'
-            )
-    );
+    uDom.nodeFromId('storageUsed').textContent =
+        vAPI.i18n('settingsStorageUsed').replace(
+            '{{value}}',
+            typeof details.storageUsed === 'number' ? details.storageUsed.toLocaleString() : '?'
+        );
 
     const timeOptions = {
         weekday: 'long',
@@ -138,18 +136,19 @@ const onLocalDataReceived = function(details) {
     const lastBackupFile = details.lastBackupFile || '';
     if ( lastBackupFile !== '' ) {
         const dt = new Date(details.lastBackupTime);
-        uDom('#localData > ul > li:nth-of-type(2) > ul > li:nth-of-type(1)').text(dt.toLocaleString('fullwide', timeOptions));
-        //uDom('#localData > ul > li:nth-of-type(2) > ul > li:nth-of-type(2)').text(lastBackupFile);
-        uDom('#localData > ul > li:nth-of-type(2)').css('display', '');
+        const text = vAPI.i18n('settingsLastBackupPrompt');
+        const node = uDom.nodeFromId('settingsLastBackupPrompt');
+        node.textContent = text + '\xA0' + dt.toLocaleString('fullwide', timeOptions);
+        node.style.display = '';
     }
 
     const lastRestoreFile = details.lastRestoreFile || '';
-    uDom('#localData > p:nth-of-type(3)');
     if ( lastRestoreFile !== '' ) {
         const dt = new Date(details.lastRestoreTime);
-        uDom('#localData > ul > li:nth-of-type(3) > ul > li:nth-of-type(1)').text(dt.toLocaleString('fullwide', timeOptions));
-        uDom('#localData > ul > li:nth-of-type(3) > ul > li:nth-of-type(2)').text(lastRestoreFile);
-        uDom('#localData > ul > li:nth-of-type(3)').css('display', '');
+        const text = vAPI.i18n('settingsLastRestorePrompt');
+        const node = uDom.nodeFromId('settingsLastRestorePrompt');
+        node.textContent = text + '\xA0' + dt.toLocaleString('fullwide', timeOptions);
+        node.style.display = '';
     }
 
     if ( details.cloudStorageSupported === false ) {

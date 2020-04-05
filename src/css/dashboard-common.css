@@ -48,10 +48,6 @@ input[type="checkbox"][disabled] + label {
 .para {
     width: 40em;
     }
-.synopsis {
-    display: inline-block;
-    padding: 0.25em 0;
-    }
 .whatisthis {
     margin: 0 0 0 8px;
     border: 0;

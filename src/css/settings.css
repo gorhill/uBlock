@@ -1,37 +1,44 @@
-ul {
-    padding-left: 1em;
-    padding-right: 0;
+body {
+    border: 0;
+    font: 16px/24px sans-serif;
+    margin: 0;
+    padding: 0;
     }
-body[dir="rtl"] ul {
-    padding-left: 0;
-    padding-right: 1em;
+hr {
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1.5em 0;
     }
-ul#userSettings {
-    padding-left: 0;
-    }
-li {
-    margin-top: 0.25em;
-    }
-ul#userSettings,
-ul#userSettings ul {
-    list-style-type: none;
-    }
-ul#userSettings .subgroup {
+.body {
+    color: #20123a;
     margin-top: 1em;
     }
-ul#userSettings .subgroup > span {
-    font-size: larger;
+.entries {
+    margin: 0.5em 0;
+    }
+.section {
+    font-size: large;
     font-weight: bold;
+    margin-top: 0.75em;
+    }
+.synopsis {
+    font-size: smaller;
+    }
+.entry {
+    align-items: baseline;
+    display: flex;
+    margin: 0.5em 0;
+    }
+.entry > * {
+    margin-inline-end: 0.5em;
+    -webkit-margin-end: 0.5em;
+    }
+.entry > input[type="checkbox"] {
+    align-self: center;
     }
 #advanced-user-enabled ~ a.fa {
     display: none;
     }
 body.advancedUser #advanced-user-enabled ~ a.fa {
     display: inline;
-    }
-#localData > ul > li {
-    margin-top: 1em;
-    }
-#localData > ul > li > ul > li:nth-of-type(2) {
-    font-family: monospace;
     }
