@@ -148,7 +148,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "এই সাইটের জন্য বাহ্যিক ছাকন অদলবদল করুন",
+    "message": "এই সাইটের জন্য বাহ্যিক ছাকন চালু/বন্ধ করুন",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
