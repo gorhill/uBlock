@@ -1,31 +1,33 @@
 @keyframes spin {
-    0% { transform: rotate(0deg); -webkit-transform: rotate(0deg); }
-    100% { transform: rotate(360deg); -webkit-transform: rotate(360deg); }
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
     }
-ul {
-    list-style-type: none;
-    padding-left: 1em;
-    padding-right: 0;
-    }
-body[dir="rtl"] ul {
-    padding-left: 0;
-    padding-right: 1em;
-    }
-ul.root {
+body {
+    border: 0;
+    font: 14px/21px sans-serif;
+    margin: 0;
     padding: 0;
+    }
+.root {
+    background-color: white;
+    overflow: auto;
+    padding: 0.5em 0;
+    }
+.entry {
+    align-items: center;
+    display: flex;
+    margin: 0.5em 0;
+    }
+#actions {
+    position: sticky;
+    top: 0;
+    z-index: 10;
     }
 #options li {
     margin-bottom: 0.5em;
     }
 #listsOfBlockedHostsPrompt {
     cursor: pointer;
-    }
-#listsOfBlockedHostsPrompt:before {
-    color: #888;
-    content: '\2212  ';
-    }
-body.hideUnused #listsOfBlockedHostsPrompt:before {
-    content: '+  ';
     }
 #lists {
     margin: 0.5em 0 0 0;
@@ -36,15 +38,24 @@ body.hideUnused #listsOfBlockedHostsPrompt:before {
     padding: 0;
     list-style-type: none;
     }
+#listsOfBlockedHostsPrompt::before,
+.groupEntry:not([data-groupkey="user"]) .geDetails::before {
+    color: #888;
+    content: '\2212';
+    font-family: monospace;
+    font-size: large;
+    margin-inline-end: 0.25em;
+    -webkit-margin-end: 0.25em;
+    }
+body.hideUnused #listsOfBlockedHostsPrompt::before,
+.groupEntry.hideUnused:not([data-groupkey="user"]) .geDetails::before {
+    content: '+';
+    }
+.groupEntry {
+    margin: 0.5em 0;
+    }
 .groupEntry .geDetails {
     cursor: pointer;
-    }
-.groupEntry:not([data-groupkey="user"]) .geDetails:before {
-    color: #888;
-    content: '\2212  ';
-    }
-.groupEntry.hideUnused:not([data-groupkey="user"]) .geDetails:before {
-    content: '+  ';
     }
 .groupEntry .geName {
     pointer-events: none;
@@ -57,9 +68,12 @@ body.hideUnused #listsOfBlockedHostsPrompt:before {
     margin: 0.25em 0 0 0;
     padding-left: 1em;
     }
+.listEntries {
+    margin-inline-start: 0.7em;
+    -webkit-margin-start: 0.7em;
+    }
 .listEntry {
-    margin: 0 auto 0 auto;
-    padding: 0.2em 0;
+    margin: 0.5em 0;
     white-space: nowrap;
     }
 .groupEntry:not([data-groupkey="user"]) .listEntry.unused {
@@ -69,115 +83,113 @@ body.hideUnused #listsOfBlockedHostsPrompt:before {
     margin-right: 0.5em;
     unicode-bidi: embed;
     }
-.listEntry.toRemove > input[type="checkbox"] {
+.listEntry input[type="checkbox"] {
+    margin-right: 0.5em;
+    }
+.listEntry.toRemove input[type="checkbox"] {
     visibility: hidden;
     }
-.listEntry.toRemove > a.content {
+.listEntry.toRemove .listname {
     text-decoration: line-through;
     }
-.listEntry > .fa {
+.listEntry .fa {
     color: inherit;
     display: none;
     font-size: 110%;
     opacity: 0.5;
     vertical-align: baseline;
     }
-.listEntry > a.towiki {
+.listEntry .content {
     display: inline-block;
     }
-.listEntry > a.fa:hover {
+.listEntry a.towiki {
+    display: inline-block;
+    }
+.listEntry a.fa:hover {
     opacity: 1;
     }
 .listEntry.support > a.support {
     display: inline-block;
     }
-.listEntry > a.remove,
-.listEntry > a.remove:visited {
+.listEntry .remove {
     color: darkred;
+    cursor: pointer;
     }
-.listEntry.external > a.remove {
+.listEntry.external .remove {
     display: inline-block;
     }
-.listEntry.mustread > a.mustread {
+.listEntry.mustread a.mustread {
     display: inline-block;
     }
-.listEntry.mustread > a.mustread:hover {
+.listEntry.mustread a.mustread:hover {
     color: mediumblue;
     }
-.listEntry > .counts {
+.listEntry .counts {
     display: none;
     font-size: smaller;
 }
-.listEntry > input[type="checkbox"]:checked ~ .counts {
+.listEntry.checked .counts {
     display: inline;
 }
 .dim {
     opacity: 0.6;
     }
-#buttonApply {
-    display: initial;
-    position: fixed;
-    right: 1em;
-    z-index: 10;
-    }
-body[dir=rtl] #buttonApply {
-    right: auto;
-    left: 1em;
-    }
-#buttonApply.disabled {
-    display: none;
-    }
-.listEntry span.status {
+.listEntry .status {
     color: #444;
     cursor: default;
     display: none;
 }
-.listEntry span.status:hover {
+.listEntry .status:hover {
     opacity: 1;
     }
-.listEntry span.unsecure {
+.listEntry .unsecure {
     color: darkred;
     }
-.listEntry.unsecure > input[type="checkbox"]:checked ~ span.unsecure {
+.listEntry.checked.unsecure .unsecure {
     display: inline-block;
     }
-.listEntry span.failed {
+.listEntry .failed {
     color: darkred;
     }
-.listEntry.failed span.failed {
+.listEntry.failed .failed {
     display: inline-block;
     }
-.listEntry span.cache {
+.listEntry .cache {
     cursor: pointer;
     }
-.listEntry.cached:not(.obsolete) > input[type="checkbox"]:checked ~ span.cache {
+.listEntry.checked.cached:not(.obsolete) .cache {
     display: inline-block;
     }
-.listEntry span.obsolete {
+.listEntry .obsolete {
     color: hsl(36, 100%, 40%);
     }
-body:not(.updating) .listEntry.obsolete > input[type="checkbox"]:checked ~ span.obsolete {
+body:not(.updating) .listEntry.checked.obsolete .obsolete {
     display: inline-block;
     }
-.listEntry span.updating {
+.listEntry .updating {
     transform-origin: 50% 46%;
     }
-body.updating .listEntry.obsolete > input[type="checkbox"]:checked ~ span.updating {
+body.updating .listEntry.checked.obsolete .updating {
     animation: spin 2s linear infinite;
     display: inline-block;
     }
-.listEntry.toImport > input[type="checkbox"] ~ textarea {
+.listEntry.toImport input[type="checkbox"] ~ textarea {
     border: 1px solid #ccc;
     box-sizing: border-box;
     display: block;
     font-size: smaller;
     height: 6em;
-    margin-left: 2em;
     resize: vertical;
     visibility: hidden;
     white-space: pre;
-    width: calc(100% - 4em);
+    width: 100%;
     }
-.listEntry.toImport > input[type="checkbox"]:checked ~ textarea {
+.listEntry.toImport input[type="checkbox"]:checked ~ textarea {
     visibility: visible;
     }
+
+@media (pointer: coarse) {
+    #dashboard-nav {
+        font: 16px/24px sans-serif;
+    }
+}

@@ -72,7 +72,6 @@ body[dir="rtl"] button.custom.iconifiable > .fa {
 
 @media (max-width: 640px) {
     button.custom.iconifiable > .fa {
-        font-size: 150%;
         padding: 0;
         }
     button.custom.iconifiable > [data-i18n] {

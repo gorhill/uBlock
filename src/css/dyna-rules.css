@@ -18,9 +18,6 @@ body {
 #diff .tools > * {
     margin-bottom: 0.5em;
     }
-#diff .tools .fa {
-    font-size: large;
-    }
 #diff .ruleActions {
     border: 0;
     box-sizing: border-box;

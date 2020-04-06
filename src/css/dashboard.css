@@ -33,16 +33,16 @@ html, body {
 .tabButton {
     border: 0;
     border-bottom: 3px solid #f9f9fb;
-    color: #20123a;
     cursor: pointer;
-    padding: 0.5em 1.5em;
+    padding: 0.5em 1.4em 0.3em 1.4em;
     text-decoration: none;
     white-space: nowrap;
     }
 .tabButton:focus {
     outline: 0;
     }
-.tabButton:active,.tabButton:visited {
+.tabButton:active,
+.tabButton:visited {
     color: #20123a;
     }
 .tabButton.selected {

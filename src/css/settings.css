@@ -10,22 +10,20 @@ hr {
     margin: 1.5em 0;
     }
 .body {
-    color: #20123a;
     margin-top: 1em;
     }
 .entries {
     margin: 0.5em 0;
     }
 .section {
-    font-size: large;
     font-weight: bold;
     margin-top: 0.75em;
     }
 .synopsis {
-    font-size: smaller;
+    font-size: 90%;
     }
 .entry {
-    align-items: baseline;
+    align-items: center;
     display: flex;
     margin: 0.5em 0;
     }
