@@ -1144,6 +1144,8 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         const json = await vAPI.adminStorage.getItem('adminSettings');
         if ( typeof json === 'string' && json !== '' ) {
             data = JSON.parse(json);
+        } else if ( json instanceof Object ) {
+            data = json;
         }
     } catch (ex) {
         console.error(ex);
@@ -1247,7 +1249,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
 /******************************************************************************/
 
-µBlock.scheduleAssetUpdater = (function() {
+µBlock.scheduleAssetUpdater = (( ) => {
     let timer, next = 0;
 
     return function(updateDelay) {
@@ -1271,7 +1273,8 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
             next = 0;
             this.assets.updateStart({
                 delay: this.hiddenSettings.autoUpdateAssetFetchPeriod * 1000 ||
-                       120000
+                       120000,
+                auto: true,
             });
         }, updateDelay);
     };
