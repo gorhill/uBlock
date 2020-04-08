@@ -459,6 +459,10 @@
     "message": "Застарело.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
+  "3pViewContent": {
+    "message": "приказ садржаја",
+    "description": "used as a tooltip for eye icon beside a list"
+  },
   "3pLastUpdate": {
     "message": "Последње ажурирање: {{ago}}.\nКликните да бисте ажурирали.",
     "description": "used as a tooltip for the clock icon beside a list"
@@ -744,7 +748,7 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Статички филтер <code>{{filter}}</code> није пронађен нити у једној тренутно омогућеној листи филтера",
+    "message": "Статички филтер није могуће пронаћи нити у једној тренутно омогућеној листи филтера",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {

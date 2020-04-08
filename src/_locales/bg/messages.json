@@ -459,6 +459,10 @@
     "message": "Остарял",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
+  "3pViewContent": {
+    "message": "Преглед на съдържанието",
+    "description": "used as a tooltip for eye icon beside a list"
+  },
   "3pLastUpdate": {
     "message": "Последно обновяване: {{ago}}.\nЩракнете за принудително обновяване.",
     "description": "used as a tooltip for the clock icon beside a list"

@@ -459,6 +459,10 @@
     "message": "Đã cũ.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
+  "3pViewContent": {
+    "message": "xem nội dung",
+    "description": "used as a tooltip for eye icon beside a list"
+  },
   "3pLastUpdate": {
     "message": "Cập nhật lần cuối: {{ago}}.\nNhấn để cập nhật ngay.",
     "description": "used as a tooltip for the clock icon beside a list"

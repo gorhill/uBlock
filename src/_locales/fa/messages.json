@@ -459,6 +459,10 @@
     "message": "منقضی شده.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
+  "3pViewContent": {
+    "message": "view content",
+    "description": "used as a tooltip for eye icon beside a list"
+  },
   "3pLastUpdate": {
     "message": "آخرین به روز رسانی: {{ago}}.\nبرای یک به روز رسانی اجباری کلیک کنید.",
     "description": "used as a tooltip for the clock icon beside a list"

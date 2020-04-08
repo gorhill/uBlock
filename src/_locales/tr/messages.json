@@ -459,6 +459,10 @@
     "message": "Güncel değil.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
+  "3pViewContent": {
+    "message": "içeriği görüntüle",
+    "description": "used as a tooltip for eye icon beside a list"
+  },
   "3pLastUpdate": {
     "message": "Son güncelleme: {{ago}}.\nGüncelleştirmeye zorlamak için tıklayın.",
     "description": "used as a tooltip for the clock icon beside a list"

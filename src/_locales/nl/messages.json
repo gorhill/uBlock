@@ -459,6 +459,10 @@
     "message": "Verouderd.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
+  "3pViewContent": {
+    "message": "inhoud weergeven",
+    "description": "used as a tooltip for eye icon beside a list"
+  },
   "3pLastUpdate": {
     "message": "Laatst bijgewerkt: {{ago}}.\nKlik om een update af te dwingen.",
     "description": "used as a tooltip for the clock icon beside a list"

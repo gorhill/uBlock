@@ -459,6 +459,10 @@
     "message": "E vjetër.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
+  "3pViewContent": {
+    "message": "shfaq përmbajtjen",
+    "description": "used as a tooltip for eye icon beside a list"
+  },
   "3pLastUpdate": {
     "message": "Përditësimi i fundit: {{ago}}.\nKlikoni për ta kryer vetë përditësimin.",
     "description": "used as a tooltip for the clock icon beside a list"

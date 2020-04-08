@@ -459,6 +459,10 @@
     "message": "Zastarané.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
+  "3pViewContent": {
+    "message": "zobraziť obsah",
+    "description": "used as a tooltip for eye icon beside a list"
+  },
   "3pLastUpdate": {
     "message": "Posledná aktualizácia: {{ago}}.\nKliknutím vynútite aktualizáciu.",
     "description": "used as a tooltip for the clock icon beside a list"

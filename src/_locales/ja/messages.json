@@ -459,6 +459,10 @@
     "message": "古いバージョンです",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
+  "3pViewContent": {
+    "message": "内容を表示する",
+    "description": "used as a tooltip for eye icon beside a list"
+  },
   "3pLastUpdate": {
     "message": "最終更新: {{ago}}\nクリックすると強制的に更新します",
     "description": "used as a tooltip for the clock icon beside a list"

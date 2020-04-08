@@ -459,6 +459,10 @@
     "message": "învechit",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
+  "3pViewContent": {
+    "message": "vezi conținut",
+    "description": "used as a tooltip for eye icon beside a list"
+  },
   "3pLastUpdate": {
     "message": "Ultima actualizare: {{ago}}.\nClic pentru a forța o actualizare.",
     "description": "used as a tooltip for the clock icon beside a list"

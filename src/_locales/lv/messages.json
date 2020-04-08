@@ -459,6 +459,10 @@
     "message": "Novecojis.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
+  "3pViewContent": {
+    "message": "view content",
+    "description": "used as a tooltip for eye icon beside a list"
+  },
   "3pLastUpdate": {
     "message": "Pēdējo reizi atjaunināts: {{ago}}.\nNoklikšķiniet, lai atjauninātu.",
     "description": "used as a tooltip for the clock icon beside a list"

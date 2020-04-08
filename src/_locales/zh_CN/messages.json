@@ -459,6 +459,10 @@
     "message": "过久未更新。",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
+  "3pViewContent": {
+    "message": "查看内容",
+    "description": "used as a tooltip for eye icon beside a list"
+  },
   "3pLastUpdate": {
     "message": "上次更新：{{ago}}。\n点击此处要求更新。",
     "description": "used as a tooltip for the clock icon beside a list"

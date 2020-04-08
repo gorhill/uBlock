@@ -459,6 +459,10 @@
     "message": "Sudah usang.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
+  "3pViewContent": {
+    "message": "lihat konten",
+    "description": "used as a tooltip for eye icon beside a list"
+  },
   "3pLastUpdate": {
     "message": "Pembaruan terakhir: {{ago}}.\nKlik untuk memaksa memperbarui.",
     "description": "used as a tooltip for the clock icon beside a list"

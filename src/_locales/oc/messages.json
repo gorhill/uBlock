@@ -256,7 +256,7 @@
     "description": "appears in popup"
   },
   "pickerCreate": {
-    "message": "Create",
+    "message": "Crear",
     "description": "English: Create"
   },
   "pickerPick": {
@@ -268,7 +268,7 @@
     "description": "English: Quit"
   },
   "pickerPreview": {
-    "message": "Preview",
+    "message": "Apercebut",
     "description": "Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters": {
@@ -459,6 +459,10 @@
     "message": "Out of date.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
+  "3pViewContent": {
+    "message": "view content",
+    "description": "used as a tooltip for eye icon beside a list"
+  },
   "3pLastUpdate": {
     "message": "Last update: {{ago}}.\nClick to force an update.",
     "description": "used as a tooltip for the clock icon beside a list"
@@ -492,7 +496,7 @@
     "description": "English: Apply changes"
   },
   "rulesPermanentHeader": {
-    "message": "Permanent rules",
+    "message": "Règlas permanentas",
     "description": "header"
   },
   "rulesTemporaryHeader": {
@@ -904,11 +908,11 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1": {
-    "message": "uBlock Origin has prevented the following page from loading:",
+    "message": "uBlock Origin a empachat lo cargament de la pagina seguenta :",
     "description": "English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2": {
-    "message": "Because of the following filter",
+    "message": "A causa del filtre seguent",
     "description": "English: Because of the following filter"
   },
   "docblockedNoParamsPrompt": {
@@ -916,11 +920,11 @@
     "description": "label to be used for the parameter-less URL: https://cloud.githubusercontent.com/assets/585534/9832014/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {
-    "message": "Found in:",
+    "message": "Trobat dins :",
     "description": "English: List of filter list names follows"
   },
   "docblockedBack": {
-    "message": "Go back",
+    "message": "Tornar",
     "description": "English: Go back"
   },
   "docblockedClose": {
@@ -932,11 +936,11 @@
     "description": "English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary": {
-    "message": "Temporarily",
+    "message": "Temporàriament",
     "description": "English: Temporarily"
   },
   "docblockedDisablePermanent": {
-    "message": "Permanently",
+    "message": "Permanentament",
     "description": "English: Permanently"
   },
   "cloudPush": {
@@ -980,7 +984,7 @@
     "description": ""
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
-    "message": "Temporarily allow large media elements",
+    "message": "Permetre temporàriament los elements mèdias larges",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {

@@ -459,6 +459,10 @@
     "message": "Utgått på dato",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
+  "3pViewContent": {
+    "message": "vis innhold",
+    "description": "used as a tooltip for eye icon beside a list"
+  },
   "3pLastUpdate": {
     "message": "Siste oppdatering: {{ago}}.\nKlikk for å framtvinge en oppdatering.",
     "description": "used as a tooltip for the clock icon beside a list"

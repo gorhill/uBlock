@@ -459,6 +459,10 @@
     "message": "Застарілий.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
+  "3pViewContent": {
+    "message": "переглянути вміст",
+    "description": "used as a tooltip for eye icon beside a list"
+  },
   "3pLastUpdate": {
     "message": "Останнє оновлення: {{ago}}\nКлацніть для примусового оновлення.",
     "description": "used as a tooltip for the clock icon beside a list"

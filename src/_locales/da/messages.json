@@ -459,6 +459,10 @@
     "message": "Forældet.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
+  "3pViewContent": {
+    "message": "vis indhold",
+    "description": "used as a tooltip for eye icon beside a list"
+  },
   "3pLastUpdate": {
     "message": "Seneste opdatering: {{ago}}.\nKlik for at gennemtvinge en opdatering.",
     "description": "used as a tooltip for the clock icon beside a list"
@@ -744,7 +748,7 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Statisk filter <code>{{filter}}</code> ikke fundet i nogen af de aktuelt aktiverede filterlister",
+    "message": "Statisk filter kunne ikke findes i nogen af de aktuelt aktiverede filterlister",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {

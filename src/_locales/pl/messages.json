@@ -459,6 +459,10 @@
     "message": "Nieaktualna.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
+  "3pViewContent": {
+    "message": "zobacz zawartość",
+    "description": "used as a tooltip for eye icon beside a list"
+  },
   "3pLastUpdate": {
     "message": "Zaktualizowano: {{ago}}.\nKliknij, aby wymusić aktualizację.",
     "description": "used as a tooltip for the clock icon beside a list"

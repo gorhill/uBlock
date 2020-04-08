@@ -459,6 +459,10 @@
     "message": "Vanhentunut.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
+  "3pViewContent": {
+    "message": "view content",
+    "description": "used as a tooltip for eye icon beside a list"
+  },
   "3pLastUpdate": {
     "message": "Viimeisin päivitys: {{ago}}.\nKlikkaa päivittääksesi manuaalisesti.",
     "description": "used as a tooltip for the clock icon beside a list"

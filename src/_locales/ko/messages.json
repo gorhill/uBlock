@@ -459,6 +459,10 @@
     "message": "구버전",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
+  "3pViewContent": {
+    "message": "view content",
+    "description": "used as a tooltip for eye icon beside a list"
+  },
   "3pLastUpdate": {
     "message": "마지막 업데이트: {{ago}}\n업데이트하려면 여기를 클릭하세요.",
     "description": "used as a tooltip for the clock icon beside a list"
