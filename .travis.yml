@@ -1,6 +1,6 @@
 language: ruby
 env:
-  jobs:
+  matrix:
   - BROWSER=chromium EXT=zip
   - BROWSER=firefox EXT=xpi
   - BROWSER=thunderbird EXT=xpi
