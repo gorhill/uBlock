@@ -4,9 +4,13 @@
     }
 body {
     border: 0;
-    font: 14px/21px sans-serif;
+    font: 14px/1.5 sans-serif;
     margin: 0;
     padding: 0;
+    }
+input[type="checkbox"] {
+    margin-inline-end: 0.5em;
+    -webkit-margin-end: 0.5em;
     }
 .root {
     background-color: white;
@@ -18,13 +22,16 @@ body {
     display: flex;
     margin: 0.5em 0;
     }
+.entry > * {
+    margin-left: 0;
+    margin-right: 0;
+    margin-inline-end: 0.5em;
+    -webkit-margin-end: 0.5em;
+    }
 #actions {
     position: sticky;
     top: 0;
     z-index: 10;
-    }
-#options li {
-    margin-bottom: 0.5em;
     }
 #listsOfBlockedHostsPrompt {
     cursor: pointer;
@@ -32,11 +39,6 @@ body {
 #lists {
     margin: 0.5em 0 0 0;
     padding: 0;
-    }
-#lists > li {
-    margin: 0.5em 0 0 0;
-    padding: 0;
-    list-style-type: none;
     }
 #listsOfBlockedHostsPrompt::before,
 .groupEntry:not([data-groupkey="user"]) .geDetails::before {
@@ -64,10 +66,6 @@ body.hideUnused #listsOfBlockedHostsPrompt::before,
     font-size: 90%;
     pointer-events: none;
     }
-.groupEntry > ul {
-    margin: 0.25em 0 0 0;
-    padding-left: 1em;
-    }
 .listEntries {
     margin-inline-start: 0.7em;
     -webkit-margin-start: 0.7em;
@@ -80,11 +78,15 @@ body.hideUnused #listsOfBlockedHostsPrompt::before,
     display: none;
     }
 .listEntry > * {
-    margin-right: 0.5em;
+    margin-left: 0;
+    margin-right: 0;
+    margin-inline-end: 0.5em;
+    -webkit-margin-end: 0.5em;
     unicode-bidi: embed;
     }
-.listEntry input[type="checkbox"] {
-    margin-right: 0.5em;
+.listEntry > label {
+    align-items: center;
+    display: inline-flex;
     }
 .listEntry.toRemove input[type="checkbox"] {
     visibility: hidden;
@@ -179,6 +181,7 @@ body.updating .listEntry.checked.obsolete .updating {
     display: block;
     font-size: smaller;
     height: 6em;
+    margin: 0;
     resize: vertical;
     visibility: hidden;
     white-space: pre;
@@ -189,7 +192,7 @@ body.updating .listEntry.checked.obsolete .updating {
     }
 
 @media (pointer: coarse) {
-    #dashboard-nav {
-        font: 16px/24px sans-serif;
+    body {
+        font: 16px/1.5 sans-serif;
     }
 }

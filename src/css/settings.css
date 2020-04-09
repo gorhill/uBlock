@@ -1,6 +1,6 @@
 body {
     border: 0;
-    font: 14px/21px sans-serif;
+    font: 14px/1.5 sans-serif;
     margin: 0;
     padding: 0;
     }
@@ -42,7 +42,7 @@ body.advancedUser #advanced-user-enabled ~ a.fa {
     }
 
 @media (pointer: coarse) {
-    #dashboard-nav {
-        font: 16px/24px sans-serif;
+    body {
+        font: 16px/1.5 sans-serif;
     }
 }

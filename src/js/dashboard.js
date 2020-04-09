@@ -84,7 +84,7 @@ const discardUnsavedData = function(synchronous = false) {
 };
 
 const loadDashboardPanel = function(pane, first) {
-    const tabButton = uDom.nodeFromSelector(`[href="#${pane}"]`);
+    const tabButton = uDom.nodeFromSelector(`[data-pane="${pane}"]`);
     if ( tabButton === null || tabButton.classList.contains('selected') ) {
         return;
     }
@@ -111,8 +111,7 @@ const loadDashboardPanel = function(pane, first) {
 };
 
 const onTabClickHandler = function(ev) {
-    loadDashboardPanel(ev.target.hash.slice(1));
-    ev.preventDefault();
+    loadDashboardPanel(ev.target.getAttribute('data-pane'));
 };
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/106
