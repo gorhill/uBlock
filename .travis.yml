@@ -1,4 +1,5 @@
 language: ruby
+sudo: false
 env:
   matrix:
   - BROWSER=chromium EXT=zip
@@ -11,6 +12,7 @@ deploy:
   api_key:
     secure: ujdEXakLw9fncnI70udUSrRvB0nNUogGr08/eC5UqS4uf5GJ6W6LAB2kNUIn2BaJujQEdYEeH7nFmRKzbqwQs4N1Qm9qOq75zOV6FP/922lSMuPuKB7rXVNRK88WYs/j7g40JEDKEjEYKGa4m3OGnDnywIoKtAsI3kqcCBOe34A=
   file: dist/build/uBlock0_${TRAVIS_TAG}.${BROWSER}.${EXT}
+  skip_cleanup: true
   on:
     repo: gorhill/uBlock
     tags: true
