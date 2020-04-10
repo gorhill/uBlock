@@ -37,7 +37,20 @@
 if ( µBlock.canUpdateShortcuts ) {
     self.addEventListener(
         'webextFlavor',
-        ( ) => { µBlock.canUpdateShortcuts = vAPI.webextFlavor.major < 74; },
+        ( ) => {
+            const µb = µBlock;
+            µb.canUpdateShortcuts = vAPI.webextFlavor.major < 74;
+            if ( µb.canUpdateShortcuts === false ) { return; }
+            vAPI.storage.get('commandShortcuts').then(bin => {
+                if ( bin instanceof Object === false ) { return; }
+                const shortcuts = bin.commandShortcuts;
+                if ( Array.isArray(shortcuts) === false ) { return; }
+                µb.commandShortcuts = new Map(shortcuts);
+                for ( const [ name, shortcut ] of shortcuts ) {
+                    vAPI.commands.update({ name, shortcut });
+                }
+            });
+        },
         { once: true }
     );
 }

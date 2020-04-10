@@ -95,17 +95,6 @@ const initializeTabs = async function() {
 
 /******************************************************************************/
 
-const onCommandShortcutsReady = function(commandShortcuts) {
-    if ( Array.isArray(commandShortcuts) === false ) { return; }
-    µb.commandShortcuts = new Map(commandShortcuts);
-    if ( µb.canUpdateShortcuts === false ) { return; }
-    for ( const entry of commandShortcuts ) {
-        vAPI.commands.update({ name: entry[0], shortcut: entry[1] });
-    }
-};
-
-/******************************************************************************/
-
 // To bring older versions up to date
 
 const onVersionReady = function(lastVersion) {
@@ -204,7 +193,6 @@ const onFirstFetchReady = function(fetched) {
     fromFetch(µb.restoreBackupSettings, fetched);
     onNetWhitelistReady(fetched.netWhitelist);
     onVersionReady(fetched.version);
-    onCommandShortcutsReady(fetched.commandShortcuts);
 };
 
 /******************************************************************************/
@@ -226,7 +214,6 @@ const fromFetch = function(to, fetched) {
 
 const createDefaultProps = function() {
     const fetchableProps = {
-        'commandShortcuts': [],
         'dynamicFilteringString': [
             'behind-the-scene * * noop',
             'behind-the-scene * image noop',
