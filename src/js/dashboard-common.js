@@ -239,10 +239,3 @@ self.uBlockDashboard.openOrSelectPage = function(url, options = {}) {
 // Open links in the proper window
 uDom('a').attr('target', '_blank');
 uDom('a[href*="dashboard.html"]').attr('target', '_parent');
-uDom('.whatisthis').on('click', function() {
-    uDom(this)
-        .parent()
-        .descendants('.whatisthis-expandable')
-        .first()
-        .toggleClass('whatisthis-expanded');
-});

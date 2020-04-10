@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>uBlock — Filter lists</title>
 <link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/fa-icons.css">
 <link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
 <link rel="stylesheet" type="text/css" href="css/cloud-ui.css">
 <link rel="stylesheet" type="text/css" href="css/3p-filters.css">
@@ -16,18 +17,16 @@
 
 <div id="cloudWidget" class="hide" data-cloud-entry="tpFiltersPane"></div>
 <div id="actions" class="root">
-    <button id="buttonApply" class="custom important disabled iconifiable" type="button" data-i18n-title="3pApplyChanges"><span class="fa">&#xf00c;</span><span data-i18n="3pApplyChanges"></span></button>
-    <button id="buttonUpdate" class="custom important disabled iconifiable" type="button" data-i18n-title="3pUpdateNow"><span class="fa">&#xf021;</span><span data-i18n="3pUpdateNow"></span></button>
-    <button id="buttonPurgeAll" class="custom disabled iconifiable" type="button" data-i18n-title="3pPurgeAll"><span class="fa">&#xf017;</span><span data-i18n="3pPurgeAll"></span></button>
+    <button id="buttonApply" class="custom important disabled iconifiable" type="button" data-i18n-title="3pApplyChanges"><span class="fa-icon">check</span><span data-i18n="3pApplyChanges"></span></button>
+    <button id="buttonUpdate" class="custom important disabled iconifiable" type="button" data-i18n-title="3pUpdateNow"><span class="fa-icon">refresh</span><span data-i18n="3pUpdateNow"></span></button>
+    <button id="buttonPurgeAll" class="custom disabled iconifiable" type="button" data-i18n-title="3pPurgeAll"><span class="fa-icon">clock-o</span><span data-i18n="3pPurgeAll"></span></button>
 </div>
 
 <div>
-    <div class="entry"><input type="checkbox" id="autoUpdate"><label data-i18n="3pAutoUpdatePrompt1" for="autoUpdate"></label></div>
-    <div class="entry"><input type="checkbox" id="parseCosmeticFilters"><label data-i18n="3pParseAllABPHideFiltersPrompt1" for="parseCosmeticFilters"></label><button class="whatisthis"></button>
-        <div class="whatisthis-expandable para" data-i18n="3pParseAllABPHideFiltersInfo"></div>
+    <div class="li"><label><input type="checkbox" id="autoUpdate"><span data-i18n="3pAutoUpdatePrompt1"></span></label></div>
+    <div class="li"><label><input type="checkbox" id="parseCosmeticFilters"><span data-i18n="3pParseAllABPHideFiltersPrompt1"></span></label>&ensp;<span class="fa-icon info" data-i18n-title="3pParseAllABPHideFiltersInfo">question-circle</span>
     </div>
-    <div class="entry"><input type="checkbox" id="ignoreGenericCosmeticFilters"><label data-i18n="3pIgnoreGenericCosmeticFilters" for="ignoreGenericCosmeticFilters"></label><button class="whatisthis"></button>
-        <div class="whatisthis-expandable para" data-i18n="3pIgnoreGenericCosmeticFiltersInfo"></div>
+    <div class="li"><label><input type="checkbox" id="ignoreGenericCosmeticFilters"><span data-i18n="3pIgnoreGenericCosmeticFilters"></span></label>&ensp;<span class="fa-icon info" data-i18n-title="3pIgnoreGenericCosmeticFiltersInfo">question-circle</span>
     </div>
 </div>
 
@@ -44,25 +43,26 @@
         <span class="geDetails"><span class="geName"></span> <span class="geCount dim"></span></span>
         <div class="listEntries"></div>
     </div>
-    <div class="entry listEntry">
-        <label><input type="checkbox"><span class="listname"></span></label><!--
-     --><a class="fa content" href="" type="text/plain" target="_blank" data-i18n-title="3pViewContent">&#xf06e;</a><!--
-     --><a class="fa support" href="" target="_blank">&#xf015;</a><!--
-     --><span class="fa remove" href="">&#xf014;</span><!--
-     --><a class="fa mustread" href="" target="_blank">&#xf05a;</a><!--
-     --><span class="fa status unsecure" title="http">&#xf13e;</span><!--
-     --><span class="fa status obsolete" data-i18n-title="3pExternalListObsolete">&#xf071;</span><!--
-     --><span class="fa status cache">&#xf017;</span><!--
-     --><span class="fa status updating" data-i18n-title="3pUpdating">&#xf110;</span><!--
-     --><span class="fa status failed" data-i18n-title="3pNetworkError">&#xf127;</span><!--
+    <div class="li listEntry">
+        <label><input type="checkbox"><span class="listname"></span>&nbsp;</label><!--
+     --><a class="fa-icon content" href="" type="text/plain" target="_blank" data-i18n-title="3pViewContent">eye-open</a><!--
+     --><a class="fa-icon support" href="" target="_blank">home</a><!--
+     --><span class="fa-icon remove" href="">trash-o</span><!--
+     --><a class="fa-icon mustread" href="" target="_blank">info-circle</a><!--
+     --><span class="fa-icon status unsecure" title="http">unlock-alt</span><!--
+     --><span class="fa-icon status obsolete" data-i18n-title="3pExternalListObsolete">exclamation-triangle</span><!--
+     --><span class="fa-icon status cache">clock-o</span><!--
+     --><span class="fa-icon status updating" data-i18n-title="3pUpdating">spinner</span><!--
+     --><span class="fa-icon status failed" data-i18n-title="3pNetworkError">unlink</span><!--
      --><span class="counts dim"></span>
     </div>
-    <div class="listEntry toImport"><input type="checkbox" id="importLists"><label for="importLists" data-i18n="3pImport"></label><!--
-        --><a class="fa info towiki" href="https://github.com/gorhill/uBlock/wiki/Filter-lists-from-around-the-web" target="_blank">&#xf05a;</a><!--
+    <div class="listEntry toImport"><label><input type="checkbox" id="importLists"><span data-i18n="3pImport"></span></label>&ensp;<!--
+        --><a class="fa-icon info towiki" href="https://github.com/gorhill/uBlock/wiki/Filter-lists-from-around-the-web" target="_blank">info-circle</a><!--
         --><textarea id="externalLists" dir="ltr" spellcheck="false" placeholder="3pExternalListsHint"></textarea>
     </div>
 </div>
 
+<script src="js/fa-icons.js"></script>
 <script src="js/vapi.js"></script>
 <script src="js/vapi-common.js"></script>
 <script src="js/vapi-client.js"></script>

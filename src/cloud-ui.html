@@ -5,14 +5,12 @@
 <title></title>
 </head>
 <body>
-<div class="cloudTools">
-    <button id="cloudPush" type="button" class="custom" data-i18n-title="cloudPush"><span class="fa">&#xf0ee;</span></button>
-    <span id="cloudInfo" data-i18n="cloudNoData"></span>
-    <button id="cloudPull" type="button" class="custom" data-i18n-title="cloudPull" disabled><span class="fa">&#xf0ed;</span></button>
-    <button id="cloudPullAndMerge" type="button" class="custom" data-i18n-title="cloudPullAndMerge" disabled><span class="fa">&#xf0ed;<span>&#xf067;</span></span></button>
-</div>
+<button id="cloudPush" type="button" class="custom" data-i18n-title="cloudPush"><span class="fa-icon">cloud-upload</span></button>
+<span id="cloudInfo" data-i18n="cloudNoData"></span>
+<button id="cloudPull" type="button" class="custom" data-i18n-title="cloudPull" disabled><span class="fa-icon">cloud-download</span></button>
+<button id="cloudPullAndMerge" type="button" class="custom" data-i18n-title="cloudPullAndMerge" disabled><span class="fa-icon">cloud-download</span><span class="fa-icon">plus</span></button>
 <p id="cloudError"></p>
-<span id="cloudCog" class="fa">&#xf013;</span>
+<span id="cloudCog" class="fa-icon">cog</span>
 <div id="cloudOptions">
     <div>
         <p><label data-i18n="cloudDeviceNamePrompt"></label> <input id="cloudDeviceName" type="text" value="">

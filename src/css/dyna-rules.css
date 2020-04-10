@@ -43,14 +43,19 @@ body {
 #commitButton,
 #diff.editing #exportButton,
 #diff.editing #importButton {
-    opacity: 0.25;
+    background-color: #eee;
+    color: #aaa;
     pointer-events: none;
     }
 #diff.dirty:not(.editing) #revertButton,
-#diff.dirty:not(.editing) #commitButton,
-#diff.editing {
-    opacity: 1;
+#diff.dirty:not(.editing) #commitButton {
+    background-color: #e6e6e6;
+    color: #20123a;
     pointer-events: auto;
+    }
+#diff.dirty:not(.editing) #revertButton:hover,
+#diff.dirty:not(.editing) #commitButton:hover {
+    background-color: #d4d4d4;
     }
 
 .codeMirrorContainer {

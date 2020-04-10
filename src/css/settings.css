@@ -34,11 +34,11 @@ hr {
 .entry > input[type="checkbox"] {
     align-self: center;
     }
-#advanced-user-enabled ~ a.fa {
+[href="advanced-settings.html"] {
     display: none;
     }
-body.advancedUser #advanced-user-enabled ~ a.fa {
-    display: inline;
+body.advancedUser [href="advanced-settings.html"] {
+    display: inline-flex;
     }
 
 @media (pointer: coarse) {

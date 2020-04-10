@@ -8,7 +8,12 @@
 #cloudWidget.hide {
     display: none;
     }
-#cloudWidget .cloudTools {
+#cloudWidget > button {
+    font-size: 180%;
+    padding: 0 0.25em;
+    position: relative;
+    }
+#cloudWidget {
     align-items: center;
     display: flex;
     flex-wrap: nowrap;
@@ -16,21 +21,17 @@
 #cloudWidget button[disabled] {
     visibility: hidden;
     }
-#cloudWidget button > span.fa {
-    font-size: 150%;
-    }
 #cloudWidget button.error {
     color: red;
     }
 #cloudPullAndMerge {
     margin-left: 0.25em;
     }
-#cloudPullAndMerge > span {
-    position: relative;
-}
-#cloudPullAndMerge > span > span {
+#cloudPullAndMerge > span:nth-of-type(2) {
     font-size: 50%;
     position: absolute;
+    right: 0;
+    top: 0;
     }
 #cloudInfo {
     color: gray;

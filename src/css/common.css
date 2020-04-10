@@ -17,7 +17,7 @@
 body {
     background-color: white;
     color: black;
-    font: 14px sans-serif;
+    font: 14px/1.5 sans-serif;
     }
 code {
     background-color: #eee;
@@ -28,39 +28,38 @@ textarea {
     }
 /* I designed the button with: http://charliepark.org/bootstrap_buttons/ */
 button.custom {
-    padding: 0.6em 1em;
+    align-items: flex-end;
     border: 1px solid transparent;
-    border-color: #ccc #ccc #bbb #bbb;
     border-radius: 3px;
-    background-color: hsl(216, 0%, 75%);
-    background-image: linear-gradient(#f2f2f2, #dddddd);
-    background-repeat: repeat-x;
-    color: #000;
-    opacity: 0.8;
+    background-color: #e6e6e6;
+    display: inline-flex;
+    padding: 0.6em 1em;
+    -moz-appearance: none;
+    -webkit-appearance: none;
     }
 button.custom:hover {
-    opacity: 1.0;
+    background-color: #d4d4d4;
     }
 button.custom.important {
-    border-color: #ffcc7f #ffcc7f hsl(36, 100%, 73%);
-    background-color: hsl(36, 100%, 75%);
-    background-image: linear-gradient(#ffdca8, #ffcc7f);
+    background-color: #ffddaa;
+    }
+button.custom.important:hover {
+    background-color: #ffcc80;
     }
 button.custom.disabled,
 button.custom[disabled],
 button.custom.important.disabled,
 button.custom.important[disabled] {
-    border-color: #ddd #ddd hsl(36, 0%, 85%);
-    background-color: hsl(36, 0%, 72%);
-    background-image: linear-gradient(#f2f2f2, #dddddd);
-    color: #666;
-    opacity: 0.6;
+    background-color: #eee;
+    color: #888;
     pointer-events: none;
     }
-button.custom.iconifiable > .fa {
+button.custom.iconifiable > .fa,
+button.custom.iconifiable > .fa-icon {
     padding-right: 0.5em;
     }
-body[dir="rtl"] button.custom.iconifiable > .fa {
+body[dir="rtl"] button.custom.iconifiable > .fa,
+body[dir="rtl"] button.custom.iconifiable > .fa-icon {
     padding-left: 0.5em;
     }
 .hidden {
@@ -69,9 +68,34 @@ body[dir="rtl"] button.custom.iconifiable > .fa {
     visibility: hidden;
     width: 0;
     }
-
+label {
+    align-items: center;
+    display: inline-flex;
+    }
+input[type="checkbox"] {
+    margin: 0;
+    margin-inline-start: 0.4em;
+    -webkit-margin-start: 0.4em;
+    margin-inline-end: 0.4em;
+    -webkit-margin-end: 0.4em;
+    }
+.ul {
+    margin: 0.5em 0;
+    }
+.li {
+    align-items: center;
+    display: flex;
+    margin: 0.5em 0;
+    }
+.liul {
+    margin: 0.5em 0;
+    margin-inline-start: 2em;
+    -webkit-margin-start: 2em;
+    }
 @media (max-width: 640px) {
-    button.custom.iconifiable > .fa {
+    button.custom.iconifiable > .fa,
+    button.custom.iconifiable > .fa-icon {
+        font-size: 120%;
         padding: 0;
         }
     button.custom.iconifiable > [data-i18n] {

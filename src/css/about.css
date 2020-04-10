@@ -1,0 +1,20 @@
+body {
+    border: 0;
+    font: 14px/1.5 sans-serif;
+    margin: 0;
+    padding: 0;
+    }
+.entries {
+    margin: 0.5em 0;
+    margin-inline-start: 2em;
+    -webkit-margin-start: 2em;
+    }
+.entry {
+    margin: 0.5em 0;
+    }
+
+@media (pointer: coarse) {
+    body {
+        font: 16px/1.5 sans-serif;
+    }
+}
