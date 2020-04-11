@@ -8,6 +8,7 @@
     padding: 0.1em;
     position: relative;
     user-select: none;
+    vertical-align: text-bottom;
     -webkit-user-select: none;
     }
 .fa-icon > * {
@@ -17,9 +18,9 @@
 .disabled > .fa-icon,
 .fa-icon[disabled],
 [disabled] > .fa-icon {
-    color: #888;
-    fill: #888;
-    stroke: #888;
+    color: var(--fg-button-disabled);
+    fill: var(--fg-button-disabled);
+    stroke: var(--fg-button-disabled);
     pointer-events: none;
     }
 .fa-icon > .fa-icon-badge,

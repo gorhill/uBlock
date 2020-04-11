@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>uBlock — Filter lists</title>
+<link rel="stylesheet" type="text/css" href="css/themes/default.css">
 <link rel="stylesheet" type="text/css" href="css/common.css">
 <link rel="stylesheet" type="text/css" href="css/fa-icons.css">
 <link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
@@ -24,9 +25,9 @@
 
 <div>
     <div class="li"><label><input type="checkbox" id="autoUpdate"><span data-i18n="3pAutoUpdatePrompt1"></span></label></div>
-    <div class="li"><label><input type="checkbox" id="parseCosmeticFilters"><span data-i18n="3pParseAllABPHideFiltersPrompt1"></span></label>&ensp;<span class="fa-icon info" data-i18n-title="3pParseAllABPHideFiltersInfo">question-circle</span>
+    <div class="li"><label><input type="checkbox" id="parseCosmeticFilters"><span><span data-i18n="3pParseAllABPHideFiltersPrompt1"></span>&nbsp;<span class="fa-icon info" data-i18n-title="3pParseAllABPHideFiltersInfo">question-circle</span></span></label>
     </div>
-    <div class="li"><label><input type="checkbox" id="ignoreGenericCosmeticFilters"><span data-i18n="3pIgnoreGenericCosmeticFilters"></span></label>&ensp;<span class="fa-icon info" data-i18n-title="3pIgnoreGenericCosmeticFiltersInfo">question-circle</span>
+    <div class="li"><label><input type="checkbox" id="ignoreGenericCosmeticFilters"><span><span data-i18n="3pIgnoreGenericCosmeticFilters"></span>&nbsp;<span class="fa-icon info" data-i18n-title="3pIgnoreGenericCosmeticFiltersInfo">question-circle</span></span></label>
     </div>
 </div>
 
@@ -40,11 +41,11 @@
 
 <div id="templates" style="display: none;">
     <div class="groupEntry">
-        <span class="geDetails"><span class="geName"></span> <span class="geCount dim"></span></span>
+        <div class="geDetails"><span class="geName"></span> <span class="geCount dim"></span></div>
         <div class="listEntries"></div>
     </div>
     <div class="li listEntry">
-        <label><input type="checkbox"><span class="listname"></span>&nbsp;</label><!--
+        <label><input type="checkbox"><span><span class="listname forinput"></span> <span class="iconbar"><!--
      --><a class="fa-icon content" href="" type="text/plain" target="_blank" data-i18n-title="3pViewContent">eye-open</a><!--
      --><a class="fa-icon support" href="" target="_blank">home</a><!--
      --><span class="fa-icon remove" href="">trash-o</span><!--
@@ -53,11 +54,11 @@
      --><span class="fa-icon status obsolete" data-i18n-title="3pExternalListObsolete">exclamation-triangle</span><!--
      --><span class="fa-icon status cache">clock-o</span><!--
      --><span class="fa-icon status updating" data-i18n-title="3pUpdating">spinner</span><!--
-     --><span class="fa-icon status failed" data-i18n-title="3pNetworkError">unlink</span><!--
-     --><span class="counts dim"></span>
+     --><span class="fa-icon status failed" data-i18n-title="3pNetworkError">unlink</span></span><!--
+     --><span class="counts"></span></span></label>
     </div>
-    <div class="listEntry toImport"><label><input type="checkbox" id="importLists"><span data-i18n="3pImport"></span></label>&ensp;<!--
-        --><a class="fa-icon info towiki" href="https://github.com/gorhill/uBlock/wiki/Filter-lists-from-around-the-web" target="_blank">info-circle</a><!--
+    <div class="listEntry toImport"><label><input type="checkbox" id="importLists"><span><span class="forinput" data-i18n="3pImport"></span> <a class="fa-icon info towiki" href="https://github.com/gorhill/uBlock/wiki/Filter-lists-from-around-the-web" target="_blank">info-circle</a></span></label><!--
+        --><!--
         --><textarea id="externalLists" dir="ltr" spellcheck="false" placeholder="3pExternalListsHint"></textarea>
     </div>
 </div>

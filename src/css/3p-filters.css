@@ -2,14 +2,8 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
     }
-body {
-    border: 0;
-    font: 14px/1.5 sans-serif;
-    margin: 0;
-    padding: 0;
-    }
 .root {
-    background-color: white;
+    background-color: var(--bg-0);
     overflow: auto;
     padding: 0.5em 0;
     }
@@ -31,7 +25,7 @@ body.updating #buttonUpdate .fa-icon svg {
     }
 #listsOfBlockedHostsPrompt::before,
 .groupEntry:not([data-groupkey="user"]) .geDetails::before {
-    color: #888;
+    color: var(--fg-0-50);
     content: '\2212';
     font-family: monospace;
     font-size: large;
@@ -56,12 +50,8 @@ body.hideUnused #listsOfBlockedHostsPrompt::before,
     pointer-events: none;
     }
 .listEntries {
-    margin-inline-start: 0.7em;
-    -webkit-margin-start: 0.7em;
-    }
-.listEntry {
-    margin: 0.5em 0;
-    white-space: nowrap;
+    margin-inline-start: 0.6em;
+    -webkit-margin-start: 0.6em;
     }
 .groupEntry:not([data-groupkey="user"]) .listEntry.unused {
     display: none;
@@ -70,6 +60,9 @@ body.hideUnused #listsOfBlockedHostsPrompt::before,
     margin-left: 0;
     margin-right: 0;
     unicode-bidi: embed;
+    }
+.listEntry .listname {
+    white-space: nowrap;
     }
 .listEntry.toRemove input[type="checkbox"] {
     visibility: hidden;
@@ -80,11 +73,11 @@ body.hideUnused #listsOfBlockedHostsPrompt::before,
 .listEntry .fa,
 .listEntry .fa-icon,
 .listEntry .counts {
-    color: #888;
+    color: var(--fg-0-50);
     display: none;
-    fill: #888;
+    fill: var(--fg-0-50);
     font-size: 110%;
-    margin: 0 0.25em;
+    margin: 0 0.2em 0 0;
     }
 .listEntry .fa:hover,
 .listEntry .fa-icon:hover {
@@ -100,28 +93,33 @@ body.hideUnused #listsOfBlockedHostsPrompt::before,
 .listEntry.support > a.support {
     display: inline-flex;
     }
-.listEntry .remove {
-    color: hsla(0, 100%, 27%, 0.5);
+.listEntry .remove,
+.listEntry .unsecure,
+.listEntry .failed {
+    color: var(--fg-icon-info-lvl-4-dimmed);
     cursor: pointer;
-    fill: hsla(0, 100%, 27%, 0.5);
+    fill: var(--fg-icon-info-lvl-4-dimmed);
     }
-.listEntry .remove:hover {
-    color: hsla(0, 100%, 27%, 1);
-    fill: hsla(0, 100%, 27%, 1);
+.listEntry .remove:hover,
+.listEntry .unsecure:hover,
+.listEntry .failed:hover {
+    color: var(--fg-icon-info-lvl-4);
+    fill: var(--fg-icon-info-lvl-4);
     }
 .listEntry.external .remove {
     display: inline-flex;
     }
 .listEntry.mustread a.mustread {
-    color: hsla(240, 100%, 40%, 0.5);
+    color: var(--fg-icon-info-lvl-1-dimmed);
     display: inline-flex;
-    fill: hsla(240, 100%, 40%, 0.5);
+    fill: var(--fg-icon-info-lvl-1-dimmed);
     }
 .listEntry.mustread a.mustread:hover {
-    color: hsla(240, 100%, 40%, 1);
-    fill: hsla(240, 100%, 40%, 1);
+    color: var(--fg-icon-info-lvl-1);
+    fill: var(--fg-icon-info-lvl-1);
     }
 .listEntry .counts {
+    color: var(--fg-0-60);
     font-size: smaller;
 }
 .listEntry.checked .counts {
@@ -137,24 +135,8 @@ body.hideUnused #listsOfBlockedHostsPrompt::before,
 .listEntry .status:hover {
     color: inherit;
     }
-.listEntry .unsecure {
-    color: hsla(0, 100%, 27%, 0.5);
-    fill: hsla(0, 100%, 27%, 0.5);
-    }
-.listEntry .unsecure:hover {
-    color: hsla(0, 100%, 27%, 1);
-    fill: hsla(0, 100%, 27%, 1);
-    }
 .listEntry.checked.unsecure .unsecure {
     display: inline-flex;
-    }
-.listEntry .failed {
-    color: hsla(0, 100%, 27%, 0.5);
-    fill: hsla(0, 100%, 27%, 0.5);
-    }
-.listEntry .failed:hover {
-    color: hsla(0, 100%, 27%, 1);
-    fill: hsla(0, 100%, 27%, 1);
     }
 .listEntry.failed .failed {
     display: inline-flex;
@@ -166,12 +148,12 @@ body.hideUnused #listsOfBlockedHostsPrompt::before,
     display: inline-flex;
     }
 .listEntry .obsolete {
-    color: hsla(36, 100%, 40%, 0.5);
-    fill: hsla(36, 100%, 40%, 0.5);
+    color: var(--fg-icon-info-lvl-2-dimmed);
+    fill: var(--fg-icon-info-lvl-2-dimmed);
     }
 .listEntry .obsolete:hover {
-    color: hsla(36, 100%, 40%, 1);
-    fill: hsla(36, 100%, 40%, 1);
+    color: var(--fg-icon-info-lvl-2);
+    fill: var(--fg-icon-info-lvl-2);
     }
 body:not(.updating) .listEntry.checked.obsolete .obsolete {
     display: inline-flex;
@@ -203,4 +185,20 @@ body.updating .listEntry.checked.obsolete .updating {
     body {
         font: 16px/1.5 sans-serif;
     }
+    .listEntries {
+        margin-inline-start: 0;
+        -webkit-margin-start: 0;
+        }
+    .li.listEntry {
+        background-color: var(--bg-dashboard-nav);
+        }
+    .li.listEntry label > span {
+        flex-grow: 1;
+        padding-inline-start: 0.3em;
+        }
+    .li.listEntry .listname,
+    .li.listEntry .iconbar,
+    .li.listEntry.checked .counts {
+        display: block;
+        }
 }

@@ -1,0 +1,30 @@
+:root {
+    --bg-0: #fff;
+    --fg-0: hsla(261, 53%, 15%, 1);
+
+    --fg-0-60: hsla(261, 53%, 15%, 0.6);
+    --fg-0-50: hsla(261, 53%, 15%, 0.5);
+
+    --fg-hline-1: #ccc;
+
+    --bg-button: #e6e6e6;
+    --fg-button: var(--fg-0);
+    --bg-button-disabled: #eee;
+    --fg-button-disabled: #888;
+
+    --bg-dashboard-nav: #f9f9fb;
+    --fg-dashboard-nav-off: var(--fg-0);
+    --fg-dashboard-nav-on: #592acb;
+    --dashboard-nav-border: rgba(14, 13, 26, 0.12);
+
+    --fg-icon-info-lvl-0-dimmed: #888;
+    --fg-icon-info-lvl-0: inherit;
+    --fg-icon-info-lvl-1-dimmed: hsla(240, 100%, 40%, 0.5);
+    --fg-icon-info-lvl-1: hsla(240, 100%, 40%, 1);
+    --fg-icon-info-lvl-2-dimmed: hsla(36, 100%, 40%, 0.5);
+    --fg-icon-info-lvl-2: hsla(36, 100%, 40%, 1);
+    --fg-icon-info-lvl-3-dimmed: hsla(16, 100%, 50%, 0.5);
+    --fg-icon-info-lvl-3: hsla(16, 100%, 50%, 1);
+    --fg-icon-info-lvl-4-dimmed: hsla(0, 100%, 40%, 0.5);
+    --fg-icon-info-lvl-4: hsla(0, 100%, 40%, 1);
+}

@@ -1,11 +1,3 @@
-body {
-    background-color: #fff;
-    box-sizing: border-box;
-    color: #20123a;
-    fill: #20123a;
-    margin: 0;
-    padding: 0;
-    }
 body > div.body {
     padding: 0 0.5em;
     }
@@ -29,8 +21,8 @@ a {
     }
 .fa.info,
 .fa-icon.info {
-    color: #888;
-    fill: #888;
+    color: var(--fg-icon-info-lvl-0-dimmed);
+    fill: var(--fg-icon-info-lvl-0-dimmed);
     font-size: 110%;
     }
 .fa.info:hover,
@@ -40,11 +32,11 @@ a {
     }
 .fa.info.important,
 .fa-icon.info.important {
-    color: #ffa280;
+    color: var(--fg-icon-info-lvl-3-dimmed);
     }
 .fa.info.important:hover,
 .fa-icon.info.important:hover {
-    color: orangered;
+    color: var(--fg-icon-info-lvl-3);
     }
 button {
     padding: 0.33em;

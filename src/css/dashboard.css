@@ -9,9 +9,9 @@ html, body {
     width: 100%;
     }
 #dashboard-nav {
-    background-color: #f9f9fb;
+    background-color: var(--bg-dashboard-nav);
     border: 0;
-    border-bottom: 1px solid rgba(14, 13, 26, 0.12);
+    border-bottom: 1px solid var(--dashboard-nav-border);
     display: flex;
     flex-wrap: wrap;
     overflow-x: hidden;
@@ -32,7 +32,9 @@ html, body {
     }
 .tabButton {
     border: 0;
-    border-bottom: 3px solid #f9f9fb;
+    border-bottom: 3px solid var(--bg-dashboard-nav);
+    color: var(--fg-dashboard-nav-off);
+    fill: var(--fg-dashboard-nav-off);
     cursor: pointer;
     padding: 0.5em 1.4em 0.3em 1.4em;
     text-decoration: none;
@@ -42,8 +44,9 @@ html, body {
     outline: 0;
     }
 .tabButton.selected {
-    border-bottom: 3px solid #592acb;
-    color: #592acb;
+    border-bottom: 3px solid var(--fg-dashboard-nav-on);
+    color: var(--fg-dashboard-nav-on);
+    fill: var(--fg-dashboard-nav-on);
     }
 iframe {
     background-color: transparent;

@@ -394,22 +394,19 @@ const onFilteringSettingsChanged = function() {
 
 /******************************************************************************/
 
-const onRemoveExternalList = function() {
-    const liEntry = uDom(this).ancestors('[data-listkey]');
-    const listKey = liEntry.attr('data-listkey');
-    if ( listKey ) {
-        liEntry.toggleClass('toRemove');
-        renderWidgets();
-    }
+const onRemoveExternalList = function(ev) {
+    const liEntry = ev.target.closest('[data-listkey]');
+    if ( liEntry === null ) { return; }
+    liEntry.classList.toggle('toRemove');
+    renderWidgets();
 };
 
 /******************************************************************************/
 
 const onPurgeClicked = function(ev) {
-    const button = uDom(ev.target);
-    const liEntry = button.ancestors('[data-listkey]');
-    const listKey = liEntry.attr('data-listkey');
-    if ( !listKey ) { return; }
+    const liEntry = ev.target.closest('[data-listkey]');
+    const listKey = liEntry.getAttribute('data-listkey') || '';
+    if ( listKey === '' ) { return; }
 
     messaging.send('dashboard', {
         what: 'purgeCache',
@@ -421,10 +418,10 @@ const onPurgeClicked = function(ev) {
     // https://github.com/gorhill/uBlock/issues/1733
     //   An external filter list must not be marked as obsolete, they will
     //   always be fetched anyways if there is no cached copy.
-    liEntry.addClass('obsolete');
-    liEntry.removeClass('cached');
+    liEntry.classList.add('obsolete');
+    liEntry.classList.remove('cached');
 
-    if ( liEntry.descendants('input').first().prop('checked') ) {
+    if ( liEntry.querySelector('input[type="checkbox"]').checked ) {
         renderWidgets();
     }
 };
@@ -673,6 +670,11 @@ uDom('#lists').on('change', '.listEntry input', onListsetChanged);
 uDom('#lists').on('click', '.listEntry .remove', onRemoveExternalList);
 uDom('#lists').on('click', 'span.cache', onPurgeClicked);
 uDom('#externalLists').on('input', onFilteringSettingsChanged);
+
+uDom('#lists').on('click', '.listEntry label *', ev => {
+    if ( ev.target.matches('a,input,.forinput') ) { return; }
+    ev.preventDefault();
+});
 
 /******************************************************************************/
 
