@@ -396,7 +396,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Bu seçenek <a href=\"https://adblockplus.org/en/faq_internal#elemhide\"> Adblock Plus-uyumlu &ldquo;öge gizleme&rdquo; filtrelerinin</a> işlenmesini ve uygulanmasını sağlar. Bu filtreler aslında kozmetiktir, bir web sayfasında görsel rahatsızlık yaratan ve ağ isteği-tabanlı filtreleme motoru tarafından engellenemeyecek olan ögelerin gizlenmesine yarar.</p><p>Bu özelliği etkinleştirmek uBlock₀'in bellek kullanımını artırır.</p>",
+    "message": "Kozmetik filtreler, bir web sayfasında görsel rahatsızlık yaratan ve ağ isteği-tabanlı filtreleme motorlarınca engellenemeyen ögelerin gizlenmesini sağlar.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -404,7 +404,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Genel kozmetik filtreler tüm web sayfalarına uygulanan kozmetik filtrelerdir.<p>uBlock₀ tarafından verimli bir şekilde işlenmesine rağmen genel kozmetik filtreler bazı web sayfalarında ölçülebilir bellek ve CPU ek yüküne neden olabilir, özellikle büyük ve uzun süreli olanlar.<p>Bu seçeneğin etkinleştirilmesi, web sayfalarına eklenen genel kozmetik filtrelerin işlenmesinden kaynaklı bellek ve CPU ek yükünü ortadan kaldıracaktır ve ek olarak uBlock₀'un kendi bellek izini de azaltacaktır.<p>Daha az güçlü cihazlarda bu seçeneğin etkinleştirilmesi tavsiye edilir.",
+    "message": "Genel kozmetik filtreler tüm web sayfalarına uygulanacak kozmetik filtrelerdir. Bu seçeneğin etkinleştirilmesi, genel kozmetik filtrelerin işlenmesi nedeniyle web sayfalarına eklenen bellek ve işlemci yükünü ortadan kaldırır.\n\nDaha az güçlü aygıtlarda bu seçeneğin etkinleştirilmesi önerilir.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -960,7 +960,7 @@
     "description": ""
   },
   "cloudDeviceNamePrompt": {
-    "message": "Bu cihazın adı:",
+    "message": "Bu aygıtın adı:",
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {

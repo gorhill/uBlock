@@ -396,7 +396,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Esta opção permite a análise e aplicação de <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">filtros para &ldquo;ocultação de elementos&rdquo; compatíveis com o Adblock Plus</a>. Estes filtros são essencialmente cosméticos, servindo para ocultar elementos em uma página da web que são consideradas um incômodo visual, e que não podem ser bloqueados pelo motor de filtragem baseado em solicitações de rede.</p><p>Ativando este recurso aumenta o consumo de memória do uBlock₀.</p>",
+    "message": "Os filtros cosméticos servem para esconder elementos de uma página web que são considerados um incômodo visual, e que não podem ser bloqueados pelos motores de filtragem baseados em solicitações de rede.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {

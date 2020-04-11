@@ -396,7 +396,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Táto možnosť povoľuje analyzovanie a vynútenie <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">filtrov &ldquo;skrývajúcich prvky&rdquo; a kompatibilných s Adblock Plus</a>. Tieto filtre sú prevažne kozmetické. Skrývajú prvky webových stránok, ktoré sú vizuálne otravné a nemôžu byť zablokované filtrovaním sieťových požiadavkov.</p><p>Povolenie tejto funkcie zvyšujte nároky <i>uBlock₀</i>na pamäť.</p>",
+    "message": "<p>Táto možnosť povoľuje analyzovanie a vynútenie <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">filtrov &ldquo;skrývajúcich prvky&rdquo; a kompatibilných s Adblock Plus</a>. Tieto filtre sú prevažne kozmetické. Skrývajú prvky webových stránok, ktoré sú vizuálne otravné a nemôžu byť zablokované filtrovaním sieťových požiadavkov.</p><p>Povolenie tejto funkcie zvyšujte nároky <i>uBlock₀</i> na pamäť.</p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -404,7 +404,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Generické kozmetické filtre sú tie kozmetické filtre, ktoré sú určené na použitie na všetkých webových stránkach.<p>Aj keď ich uBlock₀ používa efektívne, generické kozmetické filtre môžu stále prispievať k zaťaženiu pamäte a procesora na niektorých webových stránkach, a to najmä na veľkých a zložitých.<p>Zapnutím tejto možnosti sa zníži zaťaženie pamäte a procesora v dôsledku použitia generických kozmetických filtrov pre webové stránky, a taktiež sa znížia nároky samotného rozšírenia uBlock₀ na pamäť.<p>Odporúča sa povoliť túto možnosť na menej výkonných zariadení.",
+    "message": "<p>Generické kozmetické filtre sú tie kozmetické filtre, ktoré sú určené na použitie na všetkých webových stránkach.<p>Aj keď ich uBlock₀ používa efektívne, generické kozmetické filtre môžu stále prispievať k zaťaženiu pamäte a procesora na niektorých webových stránkach, a to najmä na veľkých a zložitých.<p>Zapnutím tejto možnosti sa zníži zaťaženie pamäte a procesora v dôsledku použitia generických kozmetických filtrov pre webové stránky, a taktiež sa znížia nároky samotného rozšírenia uBlock₀ na pamäť.<p>Odporúča sa povoliť túto možnosť na menej výkonných zariadeniach.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {

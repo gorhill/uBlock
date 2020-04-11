@@ -404,7 +404,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Generiske kosmetiske filtre er de filtre som tiltænkes anvendt for alle websteder.<p>Selvom uBlock₀ håndterer dem effektivt, kan generiskes kosmetiske filtre medføre forøget hukommelse- og CPU-forbrug på visse websider, specielt de store og længe-åbnede ditto.\n<p>Aktiveres funktionen, vil uBlock₀ ikke længere benytte filtrene, hvilket betyder lavere hukommelses- og CPU-forbrug pr. side samt lavere overordnet hukommelsesforbrug.\n<p>Funktionen anbefales aktiveret på mindre kraftfulde enheder.",
+    "message": "<p>Fælles kosmetiske filtre er de kosmetiske filtre der er ment til anvendelse på alle websider. \n<p>Selvom uBlock₀ behandler dem effektivt, kan de fælles kosmetiske filtre medføre forøget brug af hukommelse og CPU på nogle websider, specielt de store og længe-åbnede websider.\n<p>Aktiveres denne funktion vil uBlock₀ ikke længere benytte de fælles kosmetiske filtre, hvilket medfører lavere hukommelses- og CPU-forbrug på hver side, samt mindre overordnet hukommelsesforbrug.\n<p>Det anbefales at aktivere denne funktion på mindre kraftfulde enheder.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {

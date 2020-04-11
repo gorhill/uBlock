@@ -396,7 +396,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Tímto povolíte zpracovávání a používání <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">&ldquo;element hiding&rdquo; filtrů kompatibilních s Adblockem Plus</a>. Tyto filtry jsou převážně kosmetické. Skrývají prvky webových stránek, které jsou vizuálně na obtíž a nemohou být zablokovány síťovým požadavkem.</p><p>Povolení této funkce zvětšuje stopy uBlocku₀ v paměti.</p>",
+    "message": "<p>Tímto povolíte zpracovávání a používání <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">&ldquo;element hiding&rdquo; filtrů kompatibilních s Adblockem Plus</a>. Tyto filtry jsou převážně kosmetické. Skrývají prvky webových stránek, které jsou vizuálně na obtíž a nemohou být zablokovány síťovým požadavkem.</p><p>Povolení této funkce zvětšuje spotřebu paměti uBlocku₀.</p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {

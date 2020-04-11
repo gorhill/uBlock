@@ -396,7 +396,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Această opțiune permite citirea și aplicarea <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">filtrelor compatibile Adblock Plus pentru &ldquo;ascunderea elementelor&rdquo;</a>. Aceste filtre sunt în esență vizuale, ele servesc la ascunderea elementelor dintr-o pagină web care sunt considerate drept o neplăcere vizuală și care nu pot fi blocate de motorul de filtrare bazat pe cereri de rețea.</p><p>Activând această opțiune memoria utilizată de uBlock₀ va crește.</p>",
+    "message": "<p>Această opțiune permite citirea și aplicarea <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">filtrelor compatibile Adblock Plus pentru &ldquo;ascunderea elementelor&rdquo;</a>. Aceste filtre sunt în esență vizuale, ele servesc la ascunderea elementelor dintr-o pagină web care sunt considerate drept o neplăcere vizuală și care nu pot fi blocate de motorul de filtrare bazat pe cereri de rețea.</p><p>Activând această opțiune memoria utilizată de <i>uBlock</i> va crește.</p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {

@@ -460,7 +460,7 @@
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pViewContent": {
-    "message": "view content",
+    "message": "הצג תוכן",
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
