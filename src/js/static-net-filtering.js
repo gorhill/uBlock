@@ -2645,6 +2645,7 @@ const FilterParser = class {
     isJustOrigin() {
         return this.isRegex === false &&
             this.dataType === undefined &&
+            this.denyallow === '' &&
             this.domainOpt !== '' && (
                 this.f === '*' || (
                     this.anchor === 0b010 &&
