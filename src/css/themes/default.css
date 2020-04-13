@@ -1,21 +1,46 @@
+/*
+
+    Notes:
+
+    `--fg-...`: used for color of text or small icons
+    `--bg-...`: used to color large areas on which text will be rendered
+
+*/
+
 :root {
     --bg-0: #fff;
     --fg-0: hsla(261, 53%, 15%, 1);
 
+    --bg-1: hsla(240, 20%, 98%, 1);
+    --bg-1-border: hsla(240, 20%, 90%, 1);
+
+    --bg-overlay-50: #0008;
+
+    --bg-code: hsla(240, 20%, 93%, 1);
+
+    /* these fg colors are meant to render over bg colors */
+    --fg-0-80: hsla(261, 53%, 15%, 0.8);
+    --fg-0-70: hsla(261, 53%, 15%, 0.7);
     --fg-0-60: hsla(261, 53%, 15%, 0.6);
     --fg-0-50: hsla(261, 53%, 15%, 0.5);
+    --fg-0-40: hsla(261, 53%, 15%, 0.4);
+    --fg-0-30: hsla(261, 53%, 15%, 0.3);
+    --fg-0-20: hsla(261, 53%, 15%, 0.2);
 
-    --fg-hline-1: #ccc;
+    --hline-1: hsla(261, 53%, 15%, 0.2);
 
-    --bg-button: #e6e6e6;
+    --bg-button: hsla(0, 0%, 90%, 1);
+    --bg-button-hover: hsla(0, 0%, 83%, 1);
+    --bg-button-important: hsla(36, 100%, 85%, 1);
+    --bg-button-important-hover: hsla(36, 100%, 77%, 1);
     --fg-button: var(--fg-0);
-    --bg-button-disabled: #eee;
-    --fg-button-disabled: #888;
+    --bg-button-disabled: hsla(0, 0%, 93%, 1);
+    --fg-button-disabled: hsla(0, 0%, 60%, 1);
 
-    --bg-dashboard-nav: #f9f9fb;
+    --bg-transient-notice: hsla(60, 100%, 95%, 1);
+
     --fg-dashboard-nav-off: var(--fg-0);
     --fg-dashboard-nav-on: #592acb;
-    --dashboard-nav-border: rgba(14, 13, 26, 0.12);
 
     --fg-icon-info-lvl-0-dimmed: #888;
     --fg-icon-info-lvl-0: inherit;
@@ -25,6 +50,54 @@
     --fg-icon-info-lvl-2: hsla(36, 100%, 40%, 1);
     --fg-icon-info-lvl-3-dimmed: hsla(16, 100%, 50%, 0.5);
     --fg-icon-info-lvl-3: hsla(16, 100%, 50%, 1);
-    --fg-icon-info-lvl-4-dimmed: hsla(0, 100%, 40%, 0.5);
-    --fg-icon-info-lvl-4: hsla(0, 100%, 40%, 1);
+    --fg-icon-info-lvl-4-dimmed: hsla(0, 100%, 35%, 0.5);
+    --fg-icon-info-lvl-4: hsla(0, 100%, 35%, 1);
+
+    --large-icon-info-lvl-2: hsla(41, 100%, 47%, 1);
+
+    --bg-tooltip: hsla(60, 100%, 97%, 1);
+    --fg-tooltip: var(--fg-0);
+
+    /* popup panel */
+    --bg-popup-1: hsla(261, 0%, 93%, 1);
+    --fg-popup-power: hsla(214, 100%, 44%, 1);
+    --fg-popup-power-hover: opacity(80%);
+    --bg-popup-cell-label-filter: opacity(40%);
+    --fg-popup-fwcell-cname: hsla(240, 100%, 40%, 1);
+    --bg-popup-cell: var(--bg-popup-1);
+    --bg-popup-cell-allow: hsla(120, 40%, 75%, 1);
+    --bg-popup-cell-allow-own: hsla(120, 100%, 30%, 1);
+    --bg-popup-cell-noop: hsla(0, 0%, 75%, 1);
+    --bg-popup-cell-noop-own: hsla(0, 0%, 45%, 1);
+    --bg-popup-cell-block: hsla(0, 50%, 80%, 1);
+    --bg-popup-cell-block-own: hsla(0, 100%, 40%, 1);
+    --bg-popup-cell-label-mixed: hsla(45, 100%, 38%, 1);
+    --fg-popup-icon-caption-display: unset;
+    --fg-popup-icon-x: hsla(0, 100%, 50%, 1);
+}
+
+/**
+ Source for color-blind color scheme from https://github.com/WyohKnott:
+ https://github.com/chrisaljoudi/uBlock/issues/467#issuecomment-95177219
+ */
+:root.colorBlind {
+    --bg-popup-cell-allow: hsla(42, 100%, 80%, 1);
+    --bg-popup-cell-allow-own: hsla(42, 100%, 50%, 1);
+    --bg-popup-cell-noop: hsla(0, 0%, 75%, 1);
+    --bg-popup-cell-noop-own: hsla(0, 0%, 45%, 1);
+    --bg-popup-cell-block: hsla(230, 25%, 75%, 1);
+    --bg-popup-cell-block-own: hsla(230, 100%, 25%, 1);
+    --bg-popup-cell-label-mixed: hsla(25, 100%, 50%, 1);
+}
+
+/* Default dark theme starts here */
+
+@media (prefers-color-scheme: dark) {
+
+    :root {
+    }
+
+    :root.colorBlind {
+    }
+
 }

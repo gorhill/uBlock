@@ -43,16 +43,10 @@
     }
 
 .commandEntries td.commandShortcut input ~ .commandReset {
-    color: #888;
     cursor: pointer;
     font-size: 150%;
     padding: 0 0.2em;
     vertical-align: middle;
-    }
-
-.commandEntries td.commandShortcut input ~ .commandReset:hover {
-    background-color: #eee;
-    color: black;
     }
 
 .commandEntries td.commandShortcut input:placeholder-shown ~ .commandReset,

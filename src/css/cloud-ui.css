@@ -2,6 +2,7 @@
     background: url("../img/cloud.png") hsl(216, 100%, 93%);
     border-radius: 3px;
     margin: 0.5em 0;
+    overflow: auto;
     padding: 0.5em;
     position: relative;
     }
@@ -22,7 +23,7 @@
     visibility: hidden;
     }
 #cloudWidget button.error {
-    color: red;
+    color: var(--fg-icon-info-lvl-4);
     }
 #cloudPullAndMerge {
     margin-left: 0.25em;
@@ -34,61 +35,51 @@
     top: 0;
     }
 #cloudInfo {
-    color: gray;
-    display: inline-block;
+    color: var(--fg-0-60);
+    flex-shrink: 0;
     font-size: 90%;
     margin: 0 1em;
     overflow: hidden;
     padding: 0;
-    white-space: pre;
+    white-space: pre-line;
     }
 #cloudError {
-    color: red;
+    color: var(--fg-icon-info-lvl-4);
+    flex-grow: 1;
+    flex-shrink: 2;
     font-size: x-small;
-    margin: 0.5em 0 0 0;
+    margin: 0 1em;
     }
-#cloudError:empty {
-    display: none;
-    }
-#cloudWidget > #cloudCog {
+#cloudWidget #cloudCog {
+    color: var(--fg-0-50);
     cursor: pointer;
-    display: inline-block;
+    fill: var(--fg-0-50);
     font-size: 110%;
-    margin: 0;
-    opacity: 0.5;
-    padding: 4px;
-    position: absolute;
-    top: 0;
+    padding: 0.4em;
     }
-body[dir="ltr"] #cloudWidget > #cloudCog {
-    right: 0;
+#cloudWidget #cloudCog:hover {
+    color: inherit;
+    fill: inherit;
     }
-body[dir="rtl"] #cloudWidget > #cloudCog {
-    left: 0;
-    }
-#cloudWidget > #cloudCog:hover {
-    opacity: 1;
-    }
-#cloudWidget > #cloudOptions {
-    align-items: center;
-    -webkit-align-items: center;
-    background-color: rgba(0, 0, 0, 0.75);
+#cloudWidget #cloudOptions {
+    background-color: var(--bg-0);
+    border: 1px solid var(--bg-1-border);
     bottom: 0;
     display: none;
-    justify-content: center;
-    -webkit-justify-content: center;
     left: 0;
-    position: fixed;
+    margin: 0.4em;
+    padding: 0.4em;
+    position: absolute;
     right: 0;
+    text-align: center;
     top: 0;
-    z-index: 2000;
+    z-index: 10;
     }
-#cloudWidget > #cloudOptions.show {
-    display: flex;
-    display: -webkit-flex;
+#cloudWidget #cloudOptions.show {
+    display: block;
     }
-#cloudWidget > #cloudOptions > div {
-    background-color: white;
+#cloudWidget #cloudOptions > div {
+    background-color: var(--bg-0);
     border-radius: 3px;
     padding: 1em;
     text-align: center;

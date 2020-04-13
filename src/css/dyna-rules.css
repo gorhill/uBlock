@@ -37,25 +37,27 @@ body {
     text-align: center;
     }
 #ruleFilter .fa {
-    color: #888;
+    color: var(--fg-0-60);
     }
 #revertButton,
 #commitButton,
-#diff.editing #exportButton,
-#diff.editing #importButton {
-    background-color: #eee;
-    color: #aaa;
+body.editing #diff #exportButton,
+body.editing #diff #importButton {
+    background-color: var(--bg-button-disabled);
+    color: var(--fg-button-disabled);
+    fill: var(--fg-button-disabled);
     pointer-events: none;
     }
-#diff.dirty:not(.editing) #revertButton,
-#diff.dirty:not(.editing) #commitButton {
-    background-color: #e6e6e6;
-    color: #20123a;
+body:not(.editing) #diff.dirty #revertButton,
+body:not(.editing) #diff.dirty #commitButton {
+    background-color: var(--bg-button);
+    color: var(--fg-button);
+    fill: var(--fg-button);
     pointer-events: auto;
     }
-#diff.dirty:not(.editing) #revertButton:hover,
-#diff.dirty:not(.editing) #commitButton:hover {
-    background-color: #d4d4d4;
+body:not(.editing) #diff.dirty #revertButton:hover,
+body:not(.editing) #diff.dirty #commitButton:hover {
+    background-color: var(--bg-button-hover);
     }
 
 .codeMirrorContainer {
@@ -65,15 +67,15 @@ body {
     box-sizing: border-box;
     height: 100%;
     }
-#diff.editing .CodeMirror-merge-copy,
-#diff.editing .CodeMirror-merge-copy-reverse {
+body.editing .CodeMirror-merge-copy,
+body.editing .CodeMirror-merge-copy-reverse {
     display: none;
     }
-#diff.editing .CodeMirror-merge-left .CodeMirror {
-    color: #888;
+body.editing .CodeMirror-merge-left .CodeMirror {
+    color: var(--fg-0-60);
     }
-#diff.editing .CodeMirror-merge-editor .CodeMirror {
-    background-color: #ffe;
+body.editing .CodeMirror-merge-editor .CodeMirror {
+    background-color: var(--bg-transient-notice);
     }
 body[dir="rtl"] .CodeMirror-merge-pane-rightmost {
     right: unset;

@@ -45,15 +45,7 @@ input[type="number"] {
     width: 5em;
     }
 input[type="checkbox"][disabled] + * {
-    color: #888;
-    }
-.para {
-    width: 40em;
-    }
-.warn {
-    margin: 0;
-    padding: 5px;
-    background-color: #FEDAE0;
+    color: var(--fg-0-50);
     }
 @media (max-height: 640px), (max-height: 800px) and (max-width: 480px) {
     .body > p,

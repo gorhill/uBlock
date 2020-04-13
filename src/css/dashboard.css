@@ -9,9 +9,9 @@ html, body {
     width: 100%;
     }
 #dashboard-nav {
-    background-color: var(--bg-dashboard-nav);
+    background-color: var(--bg-1);
     border: 0;
-    border-bottom: 1px solid var(--dashboard-nav-border);
+    border-bottom: 1px solid var(--bg-1-border);
     display: flex;
     flex-wrap: wrap;
     overflow-x: hidden;
@@ -32,7 +32,7 @@ html, body {
     }
 .tabButton {
     border: 0;
-    border-bottom: 3px solid var(--bg-dashboard-nav);
+    border-bottom: 3px solid var(--bg-1);
     color: var(--fg-dashboard-nav-off);
     fill: var(--fg-dashboard-nav-off);
     cursor: pointer;
@@ -67,7 +67,7 @@ iframe {
     display: initial;
     }
 #unsavedWarning > div:first-of-type {
-    background-color: #ffffcc;
+    background-color: var(--bg-transient-notice);
     padding: 0.5em;
     }
 #unsavedWarning > div:last-of-type {

@@ -1,6 +1,6 @@
 hr {
     border: 0;
-    border-top: 1px solid var(--fg-hline-1);
+    border-top: 1px solid var(--hline-1);
     margin: 1.5em 0;
     }
 .body {

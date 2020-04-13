@@ -433,18 +433,20 @@ const selectFilterLists = async function() {
     messaging.send('dashboard', {
         what: 'userSettings',
         name: 'parseAllABPHideFilters',
-        value: document.getElementById('parseCosmeticFilters').checked,
+        value: uDom.nodeFromId('parseCosmeticFilters').checked,
     });
     messaging.send('dashboard', {
         what: 'userSettings',
         name: 'ignoreGenericCosmeticFilters',
-        value: document.getElementById('ignoreGenericCosmeticFilters').checked,
+        value: uDom.nodeFromId('ignoreGenericCosmeticFilters').checked,
     });
 
     // Filter lists to select
     const toSelect = [];
-    let liEntries = document.querySelectorAll('#lists .listEntry[data-listkey]:not(.toRemove)');
-    for ( const liEntry of liEntries ) {
+    for (
+        const liEntry of
+        document.querySelectorAll('#lists .listEntry[data-listkey]:not(.toRemove)')
+    ) {
         if ( liEntry.querySelector('input[type="checkbox"]:checked') !== null ) {
             toSelect.push(liEntry.getAttribute('data-listkey'));
         }
@@ -452,16 +454,22 @@ const selectFilterLists = async function() {
 
     // External filter lists to remove
     const toRemove = [];
-    liEntries = document.querySelectorAll('#lists .listEntry.toRemove[data-listkey]');
-    for ( const liEntry of liEntries ) {
+    for (
+        const liEntry of
+        document.querySelectorAll('#lists .listEntry.toRemove[data-listkey]')
+    ) {
         toRemove.push(liEntry.getAttribute('data-listkey'));
     }
 
     // External filter lists to import
     const externalListsElem = document.getElementById('externalLists');
     const toImport = externalListsElem.value.trim();
-    externalListsElem.value = '';
-    uDom.nodeFromId('importLists').checked = false;
+    {
+        const liEntry = externalListsElem.closest('.listEntry');
+        liEntry.classList.remove('checked');
+        liEntry.querySelector('input[type="checkbox"]').checked = false;
+        externalListsElem.value = '';
+    }
 
     await messaging.send('dashboard', {
         what: 'applyFilterListSelection',

@@ -46,6 +46,7 @@ body.hideUnused #listsOfBlockedHostsPrompt::before,
     pointer-events: none;
     }
 .groupEntry .geCount {
+    color: var(--fg-0-60);
     font-size: 90%;
     pointer-events: none;
     }
@@ -125,9 +126,6 @@ body.hideUnused #listsOfBlockedHostsPrompt::before,
 .listEntry.checked .counts {
     display: inline;
 }
-.dim {
-    color: #666;
-    }
 .listEntry .status {
     cursor: default;
     display: none;
@@ -165,6 +163,9 @@ body.updating .listEntry.checked.obsolete .updating {
     animation: spin 1s steps(8) infinite;
     display: inline-flex;
     }
+.listEntry.toImport {
+    margin: 0.5em 0;
+    }
 .listEntry.toImport textarea {
     border: 1px solid #ccc;
     box-sizing: border-box;
@@ -190,7 +191,8 @@ body.updating .listEntry.checked.obsolete .updating {
         -webkit-margin-start: 0;
         }
     .li.listEntry {
-        background-color: var(--bg-dashboard-nav);
+        background-color: var(--bg-1);
+        overflow-x: auto;
         }
     .li.listEntry label > span {
         flex-grow: 1;

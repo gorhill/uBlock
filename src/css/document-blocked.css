@@ -52,18 +52,17 @@ select {
     padding: 2px;
     }
 .code {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--bg-code);
     font-family: monospace;
     line-height: 1;
     padding: 4px;
     word-break: break-all;
     }
 #warningSign {
-    opacity: 1;
     width: 100%;
     }
 #warningSign > a {
-    fill: #f2a500;
+    fill: var(--large-icon-info-lvl-2);
     font-size: 10em;
     padding: 0;
     }
@@ -81,8 +80,9 @@ select {
     background-color: transparent;
     top: 100%;
     box-sizing: border-box;
+    color: var(--fg-0-60);
     cursor: pointer;
-    opacity: 0.5;
+    fill: var(--fg-0-60);
     padding: 0.2em;
     position: absolute;
     transform: translate(0, -50%);
@@ -94,7 +94,8 @@ body[dir="rtl"] #theURL > p > span {
     left: 0;
     }
 #theURL > p:hover > span {
-    opacity: 1;
+    color: var(--fg-0);
+    fill: var(--fg-0);
     }
 #theURL > p > span:before {
     content: '\f010';
@@ -103,10 +104,10 @@ body[dir="rtl"] #theURL > p > span {
     content: '\f00e';
     }
 #parsed {
-    background-color: #f8f8f8;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: var(--bg-1);
+    border: 1px solid var(--bg-code);
     border-top: none;
-    color: gray;
+    color: var(--fg-0-80);
     font-size: small;
     overflow-x: hidden;
     padding: 4px;
@@ -135,12 +136,6 @@ body[dir="rtl"] #theURL > p > span {
     text-align: left;
     }
 
-.filterList a {
-    opacity: 0.8;
-    }
-.filterList a:hover {
-    opacity: 1;
-    }
 .filterList:first-child .filterListSeparator {
     display: none;
     }

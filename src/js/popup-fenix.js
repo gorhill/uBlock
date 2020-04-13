@@ -265,11 +265,10 @@ const updateAllFirewallCells = function() {
 const buildAllFirewallRows = function() {
     // Do this before removing the rows
     if ( dfHotspots === null ) {
-        dfHotspots = uDom('#actionSelector')
-            .toggleClass('colorBlind', popupData.colorBlindFriendly)
-            .on('click', 'span', setFirewallRuleHandler);
+        dfHotspots =
+            uDom('#actionSelector').on('click', 'span', setFirewallRuleHandler);
     }
-    dfHotspots.detach();
+    dfHotspots.remove();
 
     // Update incrementally: reuse existing rows if possible.
     const rowContainer = document.getElementById('firewallContainer');
@@ -479,7 +478,7 @@ const renderPopup = function() {
         dfPaneVisible === true
     );
 
-    uDom.nodeFromId('firewallContainer').classList.toggle(
+    document.documentElement.classList.toggle(
         'colorBlind',
         popupData.colorBlindFriendly === true
     );
@@ -734,7 +733,7 @@ const mouseenterCellHandler = function() {
 };
 
 const mouseleaveCellHandler = function() {
-    dfHotspots.detach();
+    dfHotspots.remove();
 };
 
 /******************************************************************************/
@@ -758,6 +757,12 @@ const setFirewallRule = async function(src, des, type, action, persist) {
         action: action,
         persist: persist,
     });
+
+    // Remove action widget if an own rule has been set, this allows to click
+    // again immediately to remove the rule.
+    if ( action !== 0 ) {
+        dfHotspots.remove();
+    }
 
     cachePopupData(response);
     updateAllFirewallCells();
@@ -801,7 +806,7 @@ const setFirewallRuleHandler = function(ev) {
         action,
         ev.ctrlKey || ev.metaKey
     );
-    dfHotspots.detach();
+    dfHotspots.remove();
 };
 
 /******************************************************************************/
