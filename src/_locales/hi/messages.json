@@ -68,7 +68,7 @@
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "दबाए: uBlock को इस साईट में बंद करने के लिए।\n\nCtrl के साथ दबाए: uBlock को केवल इस पेज में बंद करने के लिए।",
+    "message": "दबाए: uBlock को इस साईट पर बंद करने के लिए।\n\nCtrl के साथ दबाए: uBlock को केवल इस पेज पर बंद करने के लिए।",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
@@ -112,7 +112,7 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "अन्श मिटाने की प्रक्रिया आरम्भ करे",
+    "message": "चीजें मिटाने के मोड में जाएं ",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
@@ -132,7 +132,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "इस वेबसाइट पर सभी पॉप-अप्स को ब्लाक न करने के लिए क्लिक करें",
+    "message": "इस वेबसाइट पर सभी पॉप-अप्स को और ब्लाक न करने के लिए क्लिक करें",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -152,11 +152,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "इस साइट पर कॉस्मेटिक फ़िल्टरिंग अक्षम करने के लिए क्लिक करें",
+    "message": "इस साइट पर कॉस्मेटिक फ़िल्टरिंग बंद करने के लिए क्लिक करें",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "इस साइट पर कॉस्मेटिक फ़िल्टरिंग सक्षम करने के लिए क्लिक करें",
+    "message": "इस साइट पर कॉस्मेटिक फ़िल्टरिंग चालू करने के लिए क्लिक करें",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -164,7 +164,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "इस साइट पर रिमोट फोंट को अवरुद्ध करने के लिए क्लिक करें",
+    "message": "इस साइट पर रिमोट फोंट को बंद करने के लिए क्लिक करें",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
@@ -200,7 +200,7 @@
     "description": "Label to be used to toggle overview panel"
   },
   "popupTipGlobalRules": {
-    "message": "निन्मलिखित नियमें सब वेस्बिते पर लागू है",
+    "message": "सार्वत्रिक नियम: इस क़तार के नियम सारे साइट्स पर लागु करने के लिए हैं ",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
@@ -208,7 +208,7 @@
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
-    "message": "आपके परिवर्तनों को रकने के लिए क्लिक करें",
+    "message": "अपने परिवर्तनों को स्थायी बनाने के लिए क्लिक करें।",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
@@ -228,7 +228,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "तृतीया पक्ष सीइसइस तस्वीरें",
+    "message": "३री-पार्टी CSS/तस्वीरें ",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -248,7 +248,7 @@
     "description": ""
   },
   "popupHitDomainCountPrompt": {
-    "message": "योजित साइटें",
+    "message": "कनेक्ट हुई साइटें ",
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
@@ -292,23 +292,23 @@
     "description": "English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt": {
-    "message": "इसके आइकॉन पर ब्लॉक किये चीज़ो की गिनती दिखाओ",
+    "message": "ब्लॉक कि गयी चीज़ो की गिनती आइकॉन पर दिखाओ",
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "टूलटिप्स मत दिखाओ",
+    "message": "टूलटिप्स बंद कीजिऐ",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
-    "message": "विकल्प सूचि का प्रयोग करें",
+    "message": "जहाँ उपयुक्त हो, संदर्भ मेनू का इस्तेमाल करें",
     "description": "English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt": {
-    "message": "वरणांध अनुकूल",
+    "message": "वरणांध अनुकूलित ",
     "description": "English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt": {
-    "message": "क्लाउड स्टोरिज समर्थन साझा करें",
+    "message": "क्लाउड स्टोरेज सपोर्ट चालू करें",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
@@ -320,15 +320,15 @@
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "प्री-फ़ेचिंग अक्षम करें (अवरुद्ध नेटवर्क रिक्वेस्ट को रोकने के लिए)",
+    "message": "प्री-फ़ेचिंग बंद करें (कोई भी ब्लॉक किये गए कनेक्शंनो से संपर्क न करने लिए)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
-    "message": "हाइपरलिंक जाँच को अवरुध करें",
+    "message": "हाइपरलिंक जाँच को बंद करें",
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
-    "message": "WebRTC को लोकल IP ऐड्रेस प्रकट करने से रोकें",
+    "message": "WebRTC को स्थानीय IP पतों लीक करने से रोकें ",
     "description": "English: "
   },
   "settingPerSiteSwitchGroup": {
@@ -340,15 +340,15 @@
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "काज़्मेटिक निस्पंदन को रोकें",
+    "message": "कॉस्मेटिक फ़िल्टरिंग बंद करें ",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "{{input:number}} kB से ज़्यादा अंश को रोकें",
+    "message": "{{input}} KB से बड़े मीडिया चीजें को बंद करें ",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
-    "message": "बाहरी अक्षराकृति को रोकें",
+    "message": "बाहरी फोंट्स को बंद करें ",
     "description": ""
   },
   "settingsNoScriptingPrompt": {
@@ -360,15 +360,15 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsStorageUsed": {
-    "message": "प्रचलित मैमोरी: {{value}} बाइट्स",
+    "message": "इस्तेमाल की होइ स्टोरेज: {{value}} बाइट्स",
     "description": "English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt": {
-    "message": "अंतिम बहाल:",
+    "message": " पिछला रिस्टोर:",
     "description": "English: Last restore:"
   },
   "settingsLastBackupPrompt": {
-    "message": "पिछला बेकप",
+    "message": "पिछला बैकअप",
     "description": "English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt": {
@@ -460,7 +460,7 @@
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pViewContent": {
-    "message": "view content",
+    "message": "चीजों को देखें ",
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
