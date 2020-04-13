@@ -10,6 +10,7 @@
 /* Internal CSS values */
 body {
     white-space: nowrap;
+    min-width: 375px;
     }
 
 a {
@@ -128,7 +129,6 @@ body.needSave #revertRules {
     display: flex;
     flex-direction: column;
     font-size: 1.4em;
-    min-width: 4em;
     }
 .toolRibbon [data-i18n] {
     font-size: x-small;

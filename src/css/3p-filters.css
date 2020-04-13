@@ -183,9 +183,6 @@ body.updating .listEntry.checked.obsolete .updating {
     }
 
 @media (pointer: coarse) {
-    body {
-        font: 16px/1.5 sans-serif;
-    }
     .listEntries {
         margin-inline-start: 0;
         -webkit-margin-start: 0;

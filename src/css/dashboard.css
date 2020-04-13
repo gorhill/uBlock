@@ -1,10 +1,6 @@
 html, body {
-    border: 0;
-    font: 14px/1.5 sans-serif;
     height: 100%;
-    margin: 0;
     overflow: hidden;
-    padding: 0;
     position: relative;
     width: 100%;
     }
@@ -83,7 +79,6 @@ body:not(.canUpdateShortcuts) .tabButton[data-pane="shortcuts.html"] {
 @media (pointer: coarse) {
     #dashboard-nav {
         flex-wrap: nowrap;
-        font: 16px/1.5 sans-serif;
         overflow-x: auto;
     }
     #dashboard-nav .logo {

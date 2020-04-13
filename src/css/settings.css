@@ -34,9 +34,3 @@ hr {
 body.advancedUser [href="advanced-settings.html"] {
     display: inline-flex;
     }
-
-@media (pointer: coarse) {
-    body {
-        font: 16px/1.5 sans-serif;
-    }
-}
