@@ -3006,6 +3006,7 @@ FilterContainer.prototype.compile = function(raw, writer) {
     if (
         parsed.isPureHostname &&
         parsed.domainOpt === '' &&
+        parsed.denyAllow === '' &&
         parsed.dataType === undefined
     ) {
         parsed.tokenHash = this.dotTokenHash;
