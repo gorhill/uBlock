@@ -59,12 +59,12 @@
     --fg-tooltip: var(--fg-0);
 
     /* popup panel */
-    --bg-popup-1: hsla(261, 0%, 93%, 1);
     --fg-popup-power: hsla(214, 100%, 44%, 1);
     --fg-popup-power-hover: opacity(80%);
+    --bg-popup-cell-1: hsla(261, 0%, 93%, 1);
+    --bg-popup-cell-2: rgb(224, 224, 230);
     --bg-popup-cell-label-filter: opacity(40%);
-    --fg-popup-fwcell-cname: hsla(240, 100%, 40%, 1);
-    --bg-popup-cell: var(--bg-popup-1);
+    --fg-popup-cell-cname: hsla(240, 100%, 40%, 1);
     --bg-popup-cell-allow: hsla(120, 40%, 75%, 1);
     --bg-popup-cell-allow-own: hsla(120, 100%, 30%, 1);
     --bg-popup-cell-noop: hsla(0, 0%, 75%, 1);

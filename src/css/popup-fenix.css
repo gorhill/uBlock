@@ -9,10 +9,15 @@
 
 /* Internal CSS values */
 body {
+    font: 14px/20px sans-serif;
+    min-width: 360px;
     white-space: nowrap;
-    min-width: 375px;
     }
-
+@media (pointer: coarse) {
+    body {
+        min-width: 100vw;
+    }
+}
 a {
     color: inherit;
     text-decoration: none;
@@ -130,11 +135,6 @@ body.needSave #revertRules {
     flex-direction: column;
     font-size: 1.4em;
     }
-.toolRibbon [data-i18n] {
-    font-size: x-small;
-    margin-top: 0.8em;
-    text-align: center;
-    }
 
 .tool {
     cursor: pointer;
@@ -147,6 +147,9 @@ body.needSave #revertRules {
     }
 .tool [data-i18n] {
     display: var(--fg-popup-icon-caption-display);
+    font: 10px/12px sans-serif;
+    margin-top: 0.8em;
+    text-align: center;
     }
 
 .statValue {
@@ -239,7 +242,7 @@ body[dir="rtl"] #tooltip {
     display: none;
     }
 #firewallContainer > div > span {
-    background-color: var(--bg-popup-cell);
+    background-color: var(--bg-popup-cell-2);
     border: none;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -262,7 +265,7 @@ body[dir="rtl"] #tooltip {
     word-break: break-word;
     }
 #firewallContainer > div.isCname > span:first-of-type {
-    color: var(--fg-popup-fwcell-cname);
+    color: var(--fg-popup-cell-cname);
     }
 #firewallContainer > div > span:first-of-type > sub {
     display: inline-block;

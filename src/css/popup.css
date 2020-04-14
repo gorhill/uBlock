@@ -8,7 +8,7 @@ body {
     }
 
 h2 {
-    background-color: var(--bg-popup-cell);
+    background-color: var(--bg-popup-cell-1);
     border: 0;
     color: var(--fg-0-70);
     cursor: pointer;
@@ -140,7 +140,7 @@ body.off #switch .fa-icon {
     margin: 0;
     }
 #extraTools {
-    background-color: var(--bg-popup-cell);
+    background-color: var(--bg-popup-cell-1);
     border: 0;
     display: flex;
     justify-content: center;
@@ -261,7 +261,7 @@ body[dir="rtl"] #tooltip {
     display: none;
     }
 #firewallContainer > div > span {
-    background-color: var(--bg-popup-cell);
+    background-color: var(--bg-popup-cell-1);
     border: none;
     box-sizing: border-box;
     display: inline-flex;
@@ -283,7 +283,7 @@ body[dir="rtl"] #tooltip {
     word-break: break-word;
     }
 #firewallContainer > div.isCname > span:first-of-type {
-    color: var(--fg-popup-fwcell-cname);
+    color: var(--fg-popup-cell-cname);
     }
 #firewallContainer > div > span:first-of-type > sub {
     display: inline-block;
