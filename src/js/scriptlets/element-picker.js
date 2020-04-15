@@ -1678,6 +1678,8 @@ const pickerCSSStyle = [
     'margin: 0',
     'max-height: none',
     'max-width: none',
+    'min-height: unset',
+    'min-width: unset',
     'opacity: 1',
     'outline: 0',
     'padding: 0',
