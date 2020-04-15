@@ -491,6 +491,7 @@
 
 /// requestAnimationFrame-if.js
 /// alias raf-if.js
+// Deprecated, use "no-requestAnimationFrame-if.js"
 (function() {
     let needle = '{{1}}';
     const not = needle.charAt(0) === '!';
@@ -510,6 +511,38 @@
             if ( log !== undefined ) {
                 log('uBO: requestAnimationFrame("%s")', a);
             } else if ( needle.test(a) === not ) {
+                args[0] = function(){};
+            }
+            return target.apply(thisArg, args);
+        }
+    });
+})();
+
+
+/// no-requestAnimationFrame-if.js
+/// alias norafif.js
+(function() {
+    let needle = '{{1}}';
+    if ( needle === '{{1}}' ) { needle = ''; }
+    const needleNot = needle.charAt(0) === '!';
+    if ( needleNot ) { needle = needle.slice(1); }
+    if ( needle.startsWith('/') && needle.endsWith('/') ) {
+        needle = needle.slice(1, -1);
+    } else if ( needle !== '' ) {
+        needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+    const log = needleNot === false && needle === '' ? console.log : undefined;
+    const reNeedle = new RegExp(needle);
+    window.requestAnimationFrame = new Proxy(window.requestAnimationFrame, {
+        apply: function(target, thisArg, args) {
+            const a = String(args[0]);
+            let defuse = false;
+            if ( log !== undefined ) {
+                log('uBO: requestAnimationFrame("%s")', a);
+            } else {
+                defuse = reNeedle.test(a) !== needleNot;
+            }
+            if ( defuse ) {
                 args[0] = function(){};
             }
             return target.apply(thisArg, args);
