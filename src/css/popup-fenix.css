@@ -15,7 +15,8 @@ body {
     }
 @media (pointer: coarse) {
     body {
-        min-width: 100vw;
+        min-width: unset;
+        width: 100%;
     }
 }
 a {
@@ -148,7 +149,7 @@ body.needSave #revertRules {
 .tool [data-i18n] {
     display: var(--fg-popup-icon-caption-display);
     font: 10px/12px sans-serif;
-    margin-top: 0.8em;
+    margin-top: 0.5em;
     text-align: center;
     }
 

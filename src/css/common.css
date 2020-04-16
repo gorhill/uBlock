@@ -74,7 +74,11 @@ button.custom.important[disabled] {
     }
 button.custom.iconifiable > .fa,
 button.custom.iconifiable > .fa-icon {
-    padding-right: 0.5em;
+    padding-left: 0;
+    padding-right: 0.4em;
+    }
+button.custom.iconifiable > .fa-icon {
+    font-size: 120%;
     }
 body[dir="rtl"] button.custom.iconifiable > .fa,
 body[dir="rtl"] button.custom.iconifiable > .fa-icon {

@@ -23,7 +23,7 @@ a {
 .fa-icon.info {
     color: var(--fg-icon-info-lvl-0-dimmed);
     fill: var(--fg-icon-info-lvl-0-dimmed);
-    font-size: 110%;
+    font-size: 120%;
     }
 .fa.info:hover,
 .fa-icon.info:hover {

@@ -77,7 +77,7 @@ body.hideUnused #listsOfBlockedHostsPrompt::before,
     color: var(--fg-0-50);
     display: none;
     fill: var(--fg-0-50);
-    font-size: 110%;
+    font-size: 120%;
     margin: 0 0.2em 0 0;
     }
 .listEntry .fa:hover,
@@ -91,7 +91,7 @@ body.hideUnused #listsOfBlockedHostsPrompt::before,
 .listEntry a.towiki {
     display: inline-flex;
     }
-.listEntry.support > a.support {
+.listEntry.support a.support {
     display: inline-flex;
     }
 .listEntry .remove,

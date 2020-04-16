@@ -5,7 +5,7 @@
     display: inline-flex;
     justify-content: center;
     margin: 0;
-    padding: 0.1em;
+    padding: 0 0.1em;
     position: relative;
     user-select: none;
     vertical-align: text-bottom;
