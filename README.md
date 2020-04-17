@@ -100,15 +100,9 @@ There is no guarantee the package will be available on your specific platform --
 
 #### Microsoft Edge
 
-Developer: [@nikrolls](https://github.com/nikrolls).
+Publisher: [Nik Rolls](https://github.com/nikrolls/uBlock-Edge).
 
-Chromium-based Edge: Stable version available in [Microsoft Edge Insider Addons](https://microsoftedge.microsoft.com/insider-addons/detail/odfafepnkmbhccpbejgmiehpchacaeak).
-
-Legacy Edge: Stable version available in [Microsoft Store](https://www.microsoft.com/store/p/app/9nblggh444l4).
-
-Development version available at <https://github.com/nikrolls/uBlock-Edge#edge>.
-
-Note that issues specific to the Edge fork are the responsibility of the current maintainer, I have no control over the code base of the fork.
+Chromium-based Edge: Stable version available in [Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/odfafepnkmbhccpbejgmiehpchacaeak).
 
 #### Safari (macOS)
 
