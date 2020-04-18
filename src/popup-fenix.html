@@ -12,7 +12,7 @@
 </head>
 
 <body>
-<div id="main" class="tooltipContainer">
+<div id="panes">
     <div id="sticky">
         <div>
             <div class="rulesetTools">
@@ -28,32 +28,32 @@
         </div>
         <hr>
     </div>
-    <div id="basicTools" class="toolRibbon">
-        <span id="gotoZap" class="fa-icon tool">bolt<span data-i18n="popupTipZapper"></span></span>
-        <span id="gotoPick" class="fa-icon tool">eye-dropper<span data-i18n="popupTipPicker"></span></span>
-        <a href="logger-ui.html#_" class="fa-icon tool enabled" aria-label="data-tip" target="uBOLogger" tabindex="0">list-alt<span data-i18n="popupTipLog"></span></a>
-        <a href="dashboard.html" class="fa-icon tool enabled" aria-label="data-tip" target="uBODashboard" tabindex="0">sliders<span data-i18n="popupTipDashboard"></span></a>
+    <div id="main">
+        <div id="basicTools" class="toolRibbon">
+            <span id="gotoZap" class="fa-icon tool">bolt<span data-i18n="popupTipZapper"></span></span>
+            <span id="gotoPick" class="fa-icon tool">eye-dropper<span data-i18n="popupTipPicker"></span></span>
+            <a href="logger-ui.html#_" class="fa-icon tool enabled" aria-label="data-tip" target="uBOLogger" tabindex="0">list-alt<span data-i18n="popupTipLog"></span></a>
+            <a href="dashboard.html" class="fa-icon tool enabled" aria-label="data-tip" target="uBODashboard" tabindex="0">sliders<span data-i18n="popupTipDashboard"></span></a>
+        </div>
+        <hr>
+        <div id="basicStats" class="itemRibbon">
+            <span data-i18n="popupBlockedOnThisPage_v2"></span><span></span>
+            <span data-i18n="popupBlockedSinceInstall_v2"></span><span></span>
+            <span data-i18n="popupDomainsConnected_v2"></span><span></span>
+        </div>
+        <hr>
+        <div id="extraTools" class="toolRibbon">
+            <span id="no-large-media" class="hnSwitch tool enabled" role="button" aria-label tabindex="0"><span class="fa-icon fa-icon-badged">film<svg class="nope" viewBox="0 0 20 20"><path d="M1,1 19,19M1,19 19,1" /></svg></span><span data-i18n="popupNoLargeMedia_v2"></span></span>
+            <span id="no-cosmetic-filtering" class="hnSwitch tool enabled" role="button" aria-label tabindex="0"><span class="fa-icon fa-icon-badged">eye-slash<svg class="nope" viewBox="0 0 20 20"><path d="M1,1 19,19M1,19 19,1" /></svg></span><span data-i18n="popupNoCosmeticFiltering_v2"></span></span>
+            <span id="no-remote-fonts" class="hnSwitch tool enabled" role="button" aria-label tabindex="0"><span class="fa-icon fa-icon-badged">font<svg class="nope" viewBox="0 0 20 20"><path d="M1,1 19,19M1,19 19,1" /></svg></span><span data-i18n="popupNoRemoteFonts_v2"></span></span>
+            <span id="no-scripting" class="hnSwitch tool enabled" role="button" aria-label tabindex="0"><span class="fa-icon fa-icon-badged">code<svg class="nope" viewBox="0 0 20 20"><path d="M1,1 19,19M1,19 19,1" /></svg></span><span data-i18n="popupNoScripting_v2"></span></span>
+        </div>
+        <hr>
+        <div id="moreButton" class="itemRibbon">
+            <span data-i18n="popupMoreButton_v2"></span><span class="fa-icon">angle-up</span>
+        </div>
     </div>
-    <hr>
-    <div id="basicStats" class="itemRibbon">
-        <span data-i18n="popupBlockedOnThisPage_v2"></span><span></span>
-        <span class="h-gutter"></span><span></span>
-        <span data-i18n="popupBlockedSinceInstall_v2"></span><span></span>
-        <span class="h-gutter"></span><span></span>
-        <span data-i18n="popupDomainsConnected_v2"></span><span></span>
-    </div>
-    <hr>
-    <div id="extraTools" class="toolRibbon">
-        <span id="no-large-media" class="hnSwitch tool enabled" role="button" aria-label tabindex="0"><span class="fa-icon fa-icon-badged">film<svg class="nope" viewBox="0 0 20 20"><path d="M1,1 19,19M1,19 19,1" /></svg></span><span data-i18n="popupNoLargeMedia_v2"></span></span>
-        <span id="no-cosmetic-filtering" class="hnSwitch tool enabled" role="button" aria-label tabindex="0"><span class="fa-icon fa-icon-badged">eye-slash<svg class="nope" viewBox="0 0 20 20"><path d="M1,1 19,19M1,19 19,1" /></svg></span><span data-i18n="popupNoCosmeticFiltering_v2"></span></span>
-        <span id="no-remote-fonts" class="hnSwitch tool enabled" role="button" aria-label tabindex="0"><span class="fa-icon fa-icon-badged">font<svg class="nope" viewBox="0 0 20 20"><path d="M1,1 19,19M1,19 19,1" /></svg></span><span data-i18n="popupNoRemoteFonts_v2"></span></span>
-        <span id="no-scripting" class="hnSwitch tool enabled" role="button" aria-label tabindex="0"><span class="fa-icon fa-icon-badged">code<svg class="nope" viewBox="0 0 20 20"><path d="M1,1 19,19M1,19 19,1" /></svg></span><span data-i18n="popupNoScripting_v2"></span></span>
-    </div>
-    <hr>
-    <div id="moreButton" class="itemRibbon">
-        <span data-i18n="popupMoreButton_v2"></span><span class="fa-icon">angle-up</span>
-    </div>
-    <div id="firewallContainer">
+    <div id="firewall">
         <div data-des="*" data-type="*"><span data-i18n="popupAnyRulePrompt"></span><span data-src="/" data-i18n-tip="popupTipGlobalRules" data-tip-position="under"> </span><span data-src="." data-i18n-tip="popupTipLocalRules" data-tip-position="under"> </span></div>
         <div data-des="*" data-type="image"><span data-i18n="popupImageRulePrompt"></span><span data-src="/"> </span><span data-src="."> </span></div>
         <div data-des="*" data-type="3p"><span data-i18n="popup3pAnyRulePrompt"></span><span data-src="/"> </span><span data-src="."> </span></div>

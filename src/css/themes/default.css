@@ -92,12 +92,8 @@
 
 /* Default dark theme starts here */
 
-@media (prefers-color-scheme: dark) {
+:root.darkTheme {
+}
 
-    :root {
-    }
-
-    :root.colorBlind {
-    }
-
+:root.darkTheme.colorBlind {
 }

@@ -1,17 +1,10 @@
 body {
-    font: 14px/1.5 sans-serif;
-    }
-@media (pointer: coarse) {
-    body {
-        font: 16px/1.5 sans-serif;
-    }
-}
-body {
     background-color: var(--bg-0);
     border: 0;
     box-sizing: border-box;
     color: var(--fg-0);
     fill: var(--fg-0);
+    font: 14px/1.5 sans-serif;
     margin: 0;
     padding: 0;
     }
@@ -94,11 +87,6 @@ label {
     align-items: center;
     display: inline-flex;
     }
-@media (pointer: coarse) {
-    label {
-        flex-grow: 1
-        }
-}
 input[type="checkbox"] {
     margin: 0;
     margin-inline-start: 0.4em;
@@ -155,4 +143,12 @@ input[type="checkbox"] {
 .ubo-icon > svg {
     height: 1em;
     width: 1em;
+    }
+
+/* touch-screen devices */
+:root.mobile body {
+    font: 16px/1.5 sans-serif;
+    }
+:root.mobile label {
+    flex-grow: 1
     }

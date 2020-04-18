@@ -182,22 +182,25 @@ body.updating .listEntry.checked.obsolete .updating {
     visibility: visible;
     }
 
-@media (pointer: coarse) {
-    .listEntries {
-        margin-inline-start: 0;
-        -webkit-margin-start: 0;
-        }
-    .li.listEntry {
-        background-color: var(--bg-1);
-        overflow-x: auto;
-        }
-    .li.listEntry label > span {
-        flex-grow: 1;
-        padding-inline-start: 0.3em;
-        }
-    .li.listEntry .listname,
-    .li.listEntry .iconbar,
-    .li.listEntry.checked .counts {
-        display: block;
-        }
-}
+/* touch-screen devices */
+:root.mobile .listEntry .fa-icon {
+    font-size: 120%;
+    margin: 0 0.5em 0 0;
+    }
+:root.mobile .listEntries {
+    margin-inline-start: 0;
+    -webkit-margin-start: 0;
+    }
+:root.mobile .li.listEntry {
+    background-color: var(--bg-1);
+    overflow-x: auto;
+    }
+:root.mobile .li.listEntry label > span {
+    flex-grow: 1;
+    padding-inline-start: 0.3em;
+    }
+:root.mobile .li.listEntry .listname,
+:root.mobile .li.listEntry .iconbar,
+:root.mobile .li.listEntry.checked .counts {
+    display: block;
+    }

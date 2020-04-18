@@ -10,15 +10,8 @@
 /* Internal CSS values */
 body {
     font: 14px/20px sans-serif;
-    min-width: 360px;
-    white-space: nowrap;
+    width: 100%;
     }
-@media (pointer: coarse) {
-    body {
-        min-width: unset;
-        width: 100%;
-    }
-}
 a {
     color: inherit;
     text-decoration: none;
@@ -27,7 +20,7 @@ a {
     outline: 0;
     }
 
-#main {
+#panes {
     align-items: stretch;
     display: flex;
     flex-direction: column;
@@ -109,18 +102,18 @@ body.needSave #revertRules {
 
 .itemRibbon {
     display: grid;
+    gap: 0.8em 1em;
     grid-template: auto / auto auto;
     padding: 1em 1em;
     }
 .itemRibbon > [data-i18n] + span {
     justify-self: end;
+    text-align: end;
+    white-space: nowrap;
     }
 .itemRibbon > .h-gutter {
     display: inline-block;
     height: 1em;
-    }
-
-#basicStats {
     }
 
 .toolRibbon {
@@ -173,7 +166,7 @@ body.needSave #revertRules {
     visibility: visible;
     }
 
-#main:not(.dfEnabled) #moreButton .fa-icon {
+body:not(.dfEnabled) #moreButton .fa-icon {
     transform: rotate(180deg);
     }
 
@@ -210,7 +203,7 @@ body[dir="rtl"] #tooltip {
     opacity: 1;
     }
 
-#firewallContainer {
+#firewall {
     border: 0;
     flex-shrink: 0;
     font-family: "Noto Sans", sans-serif;
@@ -220,10 +213,10 @@ body[dir="rtl"] #tooltip {
     overflow: hidden;
     text-align: right;
     }
-#main:not(.dfEnabled) #firewallContainer {
+body:not(.dfEnabled) #firewall {
     display: none;
     }
-#firewallContainer > div {
+#firewall > div {
     border: 0;
     direction: ltr;
     display: flex;
@@ -232,17 +225,17 @@ body[dir="rtl"] #tooltip {
     margin-top: 1px;
     padding: 0;
     }
-#firewallContainer > div:first-child {
+#firewall > div:first-child {
     margin-top: 0;
     }
-#firewallContainer > div:first-child ~ div[data-des="*"] {
+#firewall > div:first-child ~ div[data-des="*"] {
     display: none;
     }
-#firewallContainer:not(.expanded) > div.isSubDomain:not(.expandException):not(.isRootContext),
-#firewallContainer.expanded > div.isSubDomain.expandException:not(.isRootContext) {
+#firewall:not(.expanded) > div.isSubDomain:not(.expandException):not(.isRootContext),
+#firewall.expanded > div.isSubDomain.expandException:not(.isRootContext) {
     display: none;
     }
-#firewallContainer > div > span {
+#firewall > div > span {
     background-color: var(--bg-popup-cell-2);
     border: none;
     box-sizing: border-box;
@@ -251,11 +244,11 @@ body[dir="rtl"] #tooltip {
     padding: 0.4em 0;
     position: relative;
     }
-#firewallContainer > div:first-of-type > span:first-of-type {
+#firewall > div:first-of-type > span:first-of-type {
     cursor: pointer;
     flex-direction: unset;
     }
-#firewallContainer > div > span:first-of-type {
+#firewall > div > span:first-of-type {
     align-items: flex-end;
     flex-direction: column;
     flex-grow: 1;
@@ -265,116 +258,116 @@ body[dir="rtl"] #tooltip {
     width: calc(100% - 5em);
     word-break: break-word;
     }
-#firewallContainer > div.isCname > span:first-of-type {
+#firewall > div.isCname > span:first-of-type {
     color: var(--fg-popup-cell-cname);
     }
-#firewallContainer > div > span:first-of-type > sub {
+#firewall > div > span:first-of-type > sub {
     display: inline-block;
     font-size: 85%;
     font-weight: normal;
     padding: 0.25em 0 0 0;
     }
-#firewallContainer > div > span:first-of-type > sub:empty {
+#firewall > div > span:first-of-type > sub:empty {
     display: none;
     }
-#firewallContainer > div > span:first-of-type ~ span {
+#firewall > div > span:first-of-type ~ span {
     flex-shrink: 0;
     margin-left: 1px;
     width: 5em;
     }
-#firewallContainer > div > span:nth-of-type(2) {
+#firewall > div > span:nth-of-type(2) {
     display: none;
     }
-#firewallContainer > div > span:nth-of-type(3),
-#firewallContainer > div > span:nth-of-type(4) {
+#firewall > div > span:nth-of-type(3),
+#firewall > div > span:nth-of-type(4) {
     color: var(--fg-0-70);
     display: none;
     font-family: monospace;
     text-align: center;
     }
-#firewallContainer > div.isDomain > span:first-of-type {
+#firewall > div.isDomain > span:first-of-type {
     font-weight: bold;
     }
-#firewallContainer > div:first-of-type > span:first-of-type::before {
+#firewall > div:first-of-type > span:first-of-type::before {
     color: var(--fg-0-50);
     content: '+';
     padding-right: 0.25em;
     }
-#firewallContainer.expanded > div:first-of-type > span:first-of-type::before {
+#firewall.expanded > div:first-of-type > span:first-of-type::before {
     content: '\2012';
     }
-#firewallContainer > div[data-des="*"] > span:nth-of-type(3),
-#firewallContainer > div.isSubDomain > span:nth-of-type(3),
-#firewallContainer > div.isSubDomain.isRootContext > span:nth-of-type(3),
-#firewallContainer.expanded > div:not(.expandException) > span:nth-of-type(3),
-#firewallContainer:not(.expanded) > div.expandException > span:nth-of-type(3),
-#firewallContainer:not(.expanded) > div.isDomain:not(.expandException) > span:nth-of-type(4),
-#firewallContainer.expanded > div.isDomain.expandException > span:nth-of-type(4) {
+#firewall > div[data-des="*"] > span:nth-of-type(3),
+#firewall > div.isSubDomain > span:nth-of-type(3),
+#firewall > div.isSubDomain.isRootContext > span:nth-of-type(3),
+#firewall.expanded > div:not(.expandException) > span:nth-of-type(3),
+#firewall:not(.expanded) > div.expandException > span:nth-of-type(3),
+#firewall:not(.expanded) > div.isDomain:not(.expandException) > span:nth-of-type(4),
+#firewall.expanded > div.isDomain.expandException > span:nth-of-type(4) {
     display: inline-flex;
     justify-content: space-between;
     }
-#firewallContainer > div > span[data-acount]::before,
-#firewallContainer > div > span[data-bcount]::after,
-#firewallContainer > div > span[data-acount] > #actionSelector > #dynaCounts::before,
-#firewallContainer > div > span[data-acount] > #actionSelector > #dynaCounts::after {
+#firewall > div > span[data-acount]::before,
+#firewall > div > span[data-bcount]::after,
+#firewall > div > span[data-acount] > #actionSelector > #dynaCounts::before,
+#firewall > div > span[data-acount] > #actionSelector > #dynaCounts::after {
     content: ' ';
     }
-#firewallContainer > div > span[data-acount]::before,
-#firewallContainer > div > span[data-acount] > #actionSelector > #dynaCounts::before {
+#firewall > div > span[data-acount]::before,
+#firewall > div > span[data-acount] > #actionSelector > #dynaCounts::before {
     padding-left: 0.1em;
     }
-#firewallContainer > div > span[data-acount="1"]::before,
-#firewallContainer > div > span[data-acount="1"] > #actionSelector > #dynaCounts::before {
+#firewall > div > span[data-acount="1"]::before,
+#firewall > div > span[data-acount="1"] > #actionSelector > #dynaCounts::before {
     content: '+';
     }
-#firewallContainer > div > span[data-acount="2"]::before,
-#firewallContainer > div > span[data-acount="2"] > #actionSelector > #dynaCounts::before {
+#firewall > div > span[data-acount="2"]::before,
+#firewall > div > span[data-acount="2"] > #actionSelector > #dynaCounts::before {
     content: '++';
     }
-#firewallContainer > div > span[data-acount="3"]::before,
-#firewallContainer > div > span[data-acount="3"] > #actionSelector > #dynaCounts::before {
+#firewall > div > span[data-acount="3"]::before,
+#firewall > div > span[data-acount="3"] > #actionSelector > #dynaCounts::before {
     content: '+++';
     }
-#firewallContainer > div > span[data-bcount]::after,
-#firewallContainer > div > span[data-bcount] > #actionSelector > #dynaCounts::after {
+#firewall > div > span[data-bcount]::after,
+#firewall > div > span[data-bcount] > #actionSelector > #dynaCounts::after {
     padding-right: 0.1em;
     }
-#firewallContainer > div > span[data-bcount="1"]::after,
-#firewallContainer > div > span[data-bcount="1"] > #actionSelector > #dynaCounts::after {
+#firewall > div > span[data-bcount="1"]::after,
+#firewall > div > span[data-bcount="1"] > #actionSelector > #dynaCounts::after {
     content: '\2212';
     }
-#firewallContainer > div > span[data-bcount="2"]::after,
-#firewallContainer > div > span[data-bcount="2"] > #actionSelector > #dynaCounts::after {
+#firewall > div > span[data-bcount="2"]::after,
+#firewall > div > span[data-bcount="2"] > #actionSelector > #dynaCounts::after {
     content: '\2212\2212';
     }
-#firewallContainer > div > span[data-bcount="3"]::after,
-#firewallContainer > div > span[data-bcount="3"] > #actionSelector > #dynaCounts::after {
+#firewall > div > span[data-bcount="3"]::after,
+#firewall > div > span[data-bcount="3"] > #actionSelector > #dynaCounts::after {
     content: '\2212\2212\2212';
     }
 
-body.advancedUser #firewallContainer > div > span:first-of-type {
+body.advancedUser #firewall > div > span:first-of-type {
     width: calc(100% - 10em);
     }
-body.advancedUser #firewallContainer > div > span:nth-of-type(2) {
+body.advancedUser #firewall > div > span:nth-of-type(2) {
     display: inline-flex;
     }
-body.advancedUser #firewallContainer > div:first-child ~ div[data-des="*"] {
+body.advancedUser #firewall > div:first-child ~ div[data-des="*"] {
     display: flex;
     }
-body.advancedUser #firewallContainer > div > span:first-of-type ~ span {
+body.advancedUser #firewall > div > span:first-of-type ~ span {
     cursor: pointer;
     }
 
 /**
  Small coloured label at the left of a row
  */
-#firewallContainer > div.isRootContext > span:first-of-type::before,
-#firewallContainer > div.allowed > span:first-of-type::before,
-#firewallContainer > div.blocked > span:first-of-type::before,
-#firewallContainer:not(.expanded) > div.isDomain.totalAllowed:not(.expandException) > span:first-of-type::before,
-#firewallContainer:not(.expanded) > div.isDomain.totalBlocked:not(.expandException) > span:first-of-type::before,
-#firewallContainer.expanded > div.isDomain.totalAllowed.expandException > span:first-of-type::before,
-#firewallContainer.expanded > div.isDomain.totalBlocked.expandException > span:first-of-type::before {
+#firewall > div.isRootContext > span:first-of-type::before,
+#firewall > div.allowed > span:first-of-type::before,
+#firewall > div.blocked > span:first-of-type::before,
+#firewall:not(.expanded) > div.isDomain.totalAllowed:not(.expandException) > span:first-of-type::before,
+#firewall:not(.expanded) > div.isDomain.totalBlocked:not(.expandException) > span:first-of-type::before,
+#firewall.expanded > div.isDomain.totalAllowed.expandException > span:first-of-type::before,
+#firewall.expanded > div.isDomain.totalBlocked.expandException > span:first-of-type::before {
     box-sizing: border-box;
     content: '';
     display: inline-block;
@@ -385,48 +378,48 @@ body.advancedUser #firewallContainer > div > span:first-of-type ~ span {
     top: 0;
     width: 7px;
     }
-#firewallContainer > div.isRootContext > span:first-of-type::before {
+#firewall > div.isRootContext > span:first-of-type::before {
     background-color: var(--fg-0-50);
     width: 14px !important;
     }
-#firewallContainer > div.allowed > span:first-of-type::before,
-#firewallContainer > div.isDomain.totalAllowed > span:first-of-type::before {
+#firewall > div.allowed > span:first-of-type::before,
+#firewall > div.isDomain.totalAllowed > span:first-of-type::before {
     background-color: var(--bg-popup-cell-allow-own);
     }
-#firewallContainer > div.blocked > span:first-of-type::before,
-#firewallContainer > div.isDomain.totalBlocked > span:first-of-type::before {
+#firewall > div.blocked > span:first-of-type::before,
+#firewall > div.isDomain.totalBlocked > span:first-of-type::before {
     background-color: var(--bg-popup-cell-block-own);
     }
-#firewallContainer > div.allowed.blocked > span:first-of-type::before,
-#firewallContainer > div.isDomain.totalAllowed.totalBlocked > span:first-of-type::before {
+#firewall > div.allowed.blocked > span:first-of-type::before,
+#firewall > div.isDomain.totalAllowed.totalBlocked > span:first-of-type::before {
     background-color: var(--bg-popup-cell-label-mixed);
     }
 /* Rule cells */
-body.advancedUser #firewallContainer > div > span.allowRule,
+body.advancedUser #firewall > div > span.allowRule,
 #actionSelector > #dynaAllow {
     background-color: var(--bg-popup-cell-allow);
     }
-body.advancedUser #firewallContainer > div > span.blockRule,
+body.advancedUser #firewall > div > span.blockRule,
 #actionSelector > #dynaBlock {
     background-color: var(--bg-popup-cell-block);
     }
-body.advancedUser #firewallContainer > div > span.noopRule,
+body.advancedUser #firewall > div > span.noopRule,
 #actionSelector > #dynaNoop {
     background-color: var(--bg-popup-cell-noop);
     }
-body.advancedUser #firewallContainer > div > span.ownRule,
-#firewallContainer > div > span.ownRule {
+body.advancedUser #firewall > div > span.ownRule,
+#firewall > div > span.ownRule {
     color: var(--bg-0);
     }
-body.advancedUser #firewallContainer > div > span.allowRule.ownRule,
+body.advancedUser #firewall > div > span.allowRule.ownRule,
 #actionSelector > #dynaAllow:hover {
     background-color: var(--bg-popup-cell-allow-own);
     }
-body.advancedUser #firewallContainer > div > span.blockRule.ownRule,
+body.advancedUser #firewall > div > span.blockRule.ownRule,
 #actionSelector > #dynaBlock:hover {
     background-color: var(--bg-popup-cell-block-own);
     }
-body.advancedUser #firewallContainer > div > span.noopRule.ownRule,
+body.advancedUser #firewall > div > span.noopRule.ownRule,
 #actionSelector > #dynaNoop:hover {
     background-color: var(--bg-popup-cell-noop-own);
     }
@@ -464,4 +457,38 @@ body.advancedUser #firewallContainer > div > span.noopRule.ownRule,
     position: absolute;
     top: 0;
     width: 100%;
+    }
+
+/* mouse-driven devices */
+:root.desktop body {
+    overflow: hidden;
+    }
+:root.desktop #panes {
+    flex-direction: row-reverse;
+    width: unset;
+    }
+:root.desktop #main {
+    max-width: 300px;
+    width: max-content;
+    }
+:root.desktop #firewall {
+    direction: rtl;
+    flex-grow: 1;
+    line-height: 1.4;
+    max-height: 540px;
+    min-height: 100vh;
+    max-width: 400px;
+    min-width: 360px;
+    overflow-y: auto;
+    width: max-content;
+    }
+:root.desktop .tool {
+    padding: 0.5em;
+    }
+:root.desktop .tool:hover {
+    background-color: var(--bg-button);
+    }
+:root.desktop .tool [data-i18n] {
+    /* display: none; */
+    width: min-content;
     }

@@ -44,9 +44,19 @@ let dfPaneVisibleStored;
 vAPI.localStorage.getItemAsync('popupFirewallPane').then(value => {
     dfPaneVisibleStored = value === true || value === 'true';
     if ( dfPaneVisibleStored ) {
-        document.getElementById('main').classList.add('dfEnabled');
+        document.body.classList.add('dfEnabled');
     }
 });
+
+/******************************************************************************/
+
+if ( uDom.root.classList.contains('desktop') ) {
+    const sticky = document.getElementById('sticky');
+    const main = document.getElementById('main');
+    if ( sticky.parentElement !== main ) {
+        document.getElementById('main').prepend(sticky);
+    }
+}
 
 /******************************************************************************/
 
@@ -178,7 +188,7 @@ const rulekeyCompare = function(a, b) {
 
 const updateFirewallCell = function(scope, des, type, rule) {
     const row = document.querySelector(
-        `#firewallContainer div[data-des="${des}"][data-type="${type}"]`
+        `#firewall div[data-des="${des}"][data-type="${type}"]`
     );
     if ( row === null ) { return; }
 
@@ -271,7 +281,7 @@ const buildAllFirewallRows = function() {
     dfHotspots.remove();
 
     // Update incrementally: reuse existing rows if possible.
-    const rowContainer = document.getElementById('firewallContainer');
+    const rowContainer = document.getElementById('firewall');
     const toAppend = document.createDocumentFragment();
     const rowTemplate = document.querySelector('#templates > div:nth-of-type(1)');
     let row = rowContainer.querySelector('div:nth-of-type(7) + div');
@@ -332,7 +342,7 @@ const buildAllFirewallRows = function() {
     }
 
     if ( dfPaneBuilt !== true && popupData.advancedUserEnabled ) {
-        uDom('#firewallContainer')
+        uDom('#firewall')
             .on('click', 'span[data-src]', unsetFirewallRuleHandler)
             .on('mouseenter', '[data-src]', mouseenterCellHandler)
             .on('mouseleave', '[data-src]', mouseleaveCellHandler);
@@ -473,7 +483,7 @@ const renderPopup = function() {
         vAPI.localStorage.setItem('popupFirewallPane', dfPaneVisibleStored);
     }
 
-    uDom.nodeFromId('main').classList.toggle(
+    document.body.classList.toggle(
         'dfEnabled',
         dfPaneVisible === true
     );
@@ -578,7 +588,7 @@ let renderOnce = function() {
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/22
     if ( popupData.advancedUserEnabled !== true ) {
-        uDom('#firewallContainer [data-i18n-tip][data-src]').removeAttr('data-tip');
+        uDom('#firewall [data-i18n-tip][data-src]').removeAttr('data-tip');
     }
 };
 
@@ -718,7 +728,7 @@ const toggleFirewallPane = function() {
     vAPI.localStorage.setItem('popupFirewallPane', dfPaneVisibleStored);
 
     // Dynamic filtering pane may not have been built yet
-    uDom.nodeFromId('main').classList.toggle('dfEnabled', popupData.dfEnabled);
+    document.body.classList.toggle('dfEnabled', popupData.dfEnabled);
     if ( popupData.dfEnabled && dfPaneBuilt === false ) {
         buildAllFirewallRows();
     }
@@ -868,9 +878,9 @@ const saveExpandExceptions = function() {
 const setGlobalExpand = function(state, internal = false) {
     uDom('.expandException').removeClass('expandException');
     if ( state ) {
-        uDom('#firewallContainer').addClass('expanded');
+        uDom('#firewall').addClass('expanded');
     } else {
-        uDom('#firewallContainer').removeClass('expanded');
+        uDom('#firewall').removeClass('expanded');
     }
     if ( internal ) { return; }
     popupData.firewallPaneMinimized = !state;
@@ -917,11 +927,11 @@ uDom('[data-i18n="popupAnyRulePrompt"]').on('click', ev => {
     }
 
     setGlobalExpand(
-        uDom('#firewallContainer').hasClass('expanded') === false
+        uDom('#firewall').hasClass('expanded') === false
     );
 });
 
-uDom('#firewallContainer').on(
+uDom('#firewall').on(
     'click', '.isDomain[data-type="*"] > span:first-of-type',
     ev => {
         const div = ev.target.closest('[data-des]');

@@ -76,12 +76,11 @@ body:not(.canUpdateShortcuts) .tabButton[data-pane="shortcuts.html"] {
     display: none;
     }
 
-@media (pointer: coarse) {
-    #dashboard-nav {
-        flex-wrap: nowrap;
-        overflow-x: auto;
+/* touch-screen devices */
+:root.mobile #dashboard-nav {
+    flex-wrap: nowrap;
+    overflow-x: auto;
     }
-    #dashboard-nav .logo {
-        display: none;
+:root.mobile #dashboard-nav .logo {
+    display: none;
     }
-}
