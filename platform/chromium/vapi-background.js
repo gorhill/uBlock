@@ -982,7 +982,6 @@ vAPI.messaging = {
             break;
         }
         case 'extendClient':
-            if ( fromDetails.privileged !== true ) { break; }
             vAPI.tabs.executeScript(tabId, {
                 file: '/js/vapi-client-extra.js',
             }).then(( ) => {
