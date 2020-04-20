@@ -404,7 +404,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "Los filtros cosméticos genéricos son aquellos filtros cosméticos que se aplican a todos los sitios web. Habilitar esta opción disminuirá el uso de la CPU y exceso de uso de la memoria que resulta del procesamiento de los filtros cosméticos genéricos.\n\nSe recomienda habilitar esta opción en dispositivos poco potentes.",
+    "message": "Los filtros cosméticos genéricos son aquellos filtros cosméticos que se aplican a todos los sitios web. Al habilitar esta opción se elimina el riesgo de sobrecarga a la CPU y exceso de uso de la memoria que resulta del procesamiento de los filtros cosméticos genéricos.\n\nSe recomienda habilitar esta opción en dispositivos poco potentes.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -476,7 +476,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Un filtro por línea. Los filtros pueden ser un nombre de dominio, o un filtro compatible con Adblock Plus. Las líneas que comiencen con <code>!</code> serán ignoradas.",
+    "message": "Un filtro por línea. El filtro puede ser un nombre de dominio, o un filtro compatible con Adblock Plus. Las líneas que comiencen con <code>!</code> serán ignoradas.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -868,7 +868,7 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: ¿Desea añadir la siguiente URL a tus listas de filtros personalizados?\n\nTítulo: \"{{title}}\"\nURL: {{url}}",
+    "message": "uBlock₀: ¿Deseas añadir la siguiente URL a tus listas de filtros personalizados?\n\nTítulo: \"{{title}}\"\nURL: {{url}}",
     "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo": {
