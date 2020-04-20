@@ -1,32 +1,8 @@
-hr {
-    border: 0;
-    border-top: 1px solid var(--hline-1);
-    margin: 1.5em 0;
-    }
-.body {
-    margin-top: 1em;
-    }
-.entries {
-    margin: 0.5em 0;
-    }
 .section {
     font-weight: bold;
-    margin-top: 0.75em;
     }
 .synopsis {
     font-size: 90%;
-    }
-.entry {
-    align-items: center;
-    display: flex;
-    margin: 0.5em 0;
-    }
-.entry > * {
-    margin-inline-end: 0.5em;
-    -webkit-margin-end: 0.5em;
-    }
-.entry > input[type="checkbox"] {
-    align-self: center;
     }
 [href="advanced-settings.html"] {
     display: none;

@@ -1,15 +1,24 @@
 /*
 
-    Notes:
-
-    `--fg-...`: used for color of text or small icons
-    `--bg-...`: used to color large areas on which text will be rendered
+    References:
+    - https://protocol.mozilla.org/
+    - https://material.io/
 
 */
 
+/* color names */
+:root {
+    --blue-50: #0060df;
+    --ink-80: #20123a;
+    --ink-80-a4: #20123a0a;
+    --light-gray-30: #e0e0e6;
+    --violet-70: #592acb;
+}
+
+/* components */
 :root {
     --bg-0: #fff;
-    --fg-0: hsla(261, 53%, 15%, 1);
+    --fg-0: var(--ink-80);
 
     --bg-1: hsla(240, 20%, 98%, 1);
     --bg-1-border: hsla(240, 20%, 90%, 1);
@@ -27,7 +36,9 @@
     --fg-0-30: hsla(261, 53%, 15%, 0.3);
     --fg-0-20: hsla(261, 53%, 15%, 0.2);
 
-    --hline-1: hsla(261, 53%, 15%, 0.2);
+    --link-ink: var(--violet-70);
+
+    --hor-separator-color: var(--light-gray-30);
 
     --bg-button: hsla(0, 0%, 90%, 1);
     --bg-button-hover: hsla(0, 0%, 83%, 1);
@@ -39,8 +50,9 @@
 
     --bg-transient-notice: hsla(60, 100%, 95%, 1);
 
-    --fg-dashboard-nav-off: var(--fg-0);
-    --fg-dashboard-nav-on: #592acb;
+    --dashboard-tab-ink: var(--ink-80);
+    --dashboard-tab-active-ink: var(--violet-70);
+    --dashboard-tab-surface-hover: var(--ink-80-a4);
 
     --fg-icon-info-lvl-0-dimmed: #888;
     --fg-icon-info-lvl-0: inherit;
@@ -56,10 +68,10 @@
     --large-icon-info-lvl-2: hsla(41, 100%, 47%, 1);
 
     --bg-tooltip: hsla(60, 100%, 97%, 1);
-    --fg-tooltip: var(--fg-0);
+    --fg-tooltip: var(--ink-80);
 
     /* popup panel */
-    --fg-popup-power: hsla(214, 100%, 44%, 1);
+    --fg-popup-power: var(--blue-50);
     --fg-popup-power-hover: opacity(80%);
     --bg-popup-cell-1: hsla(261, 0%, 93%, 1);
     --bg-popup-cell-2: rgb(224, 224, 230);
