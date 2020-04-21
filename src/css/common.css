@@ -1,18 +1,45 @@
+/* https://protocol.mozilla.org/assets/docs/css/protocol.css */
+@charset "UTF-8";
+@font-face {
+    font-display: block;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: normal;
+    src: url('fonts/Inter/Inter-Regular.woff2') format('woff2');
+}
+@font-face {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 600;
+    src: url('fonts/Inter/Inter-SemiBold.woff2') format('woff2');
+}
+@font-face {
+    font-family: Metropolis;
+    font-style: normal;
+    font-weight: 600;
+    src: url('fonts/Metropolis/Metropolis-SemiBold.woff2') format('woff2');
+}
+
+/* Usage of FontAwesome is deprecated and will be removed eventually */
+@font-face {
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    src: url('fonts/fontawesome-webfont.ttf') format('truetype');
+    }
+
+/* Common uBO styles */
 body {
-    background-color: var(--bg-0);
+    background-color: var(--default-surface);
     border: 0;
     box-sizing: border-box;
     color: var(--fg-0);
     fill: var(--fg-0);
-    font: 14px/1.5 sans-serif;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
     margin: 0;
     padding: 0;
-    }
-@font-face {
-    font-family: 'FontAwesome';
-    font-weight: normal;
-    font-style: normal;
-    src: url('fonts/fontawesome-webfont.ttf') format('truetype');
     }
 .fa {
     display: inline-block;
@@ -39,50 +66,58 @@ hr {
 textarea {
     font-size: 90%;
     }
-/* I designed the button with: http://charliepark.org/bootstrap_buttons/ */
-button.custom {
-    align-items: flex-end;
+button {
+    align-items: center;
+    appearance: none;
     border: 1px solid transparent;
-    border-radius: 3px;
-    background-color: var(--bg-button);
-    color: var(--fg-button)
+    border-radius: 4px;
+    background-color: var(--button-surface);
+    color: var(--button-ink);
     display: inline-flex;
-    padding: 0.6em 1em;
+    fill: var(--button-ink);
+    font-family: Metropolis, sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    justify-content: center;
+    letter-spacing: 0.5px;
+    min-height: 36px;
+    padding: 0 16px;
     -moz-appearance: none;
     -webkit-appearance: none;
     }
-button.custom.vflex {
+button.vflex {
     height: 100%;
+    min-height: unset;
     padding-bottom: 0;
     padding-top: 0;
     }
-button.custom:hover {
-    background-color: var(--bg-button-hover);
+button:hover {
+    background-color: var(--button-surface-hover);
     }
-button.custom.important {
+button.important {
     background-color: var(--bg-button-important);
     }
-button.custom.important:hover {
+button.important:hover {
     background-color: var(--bg-button-important-hover);
     }
-button.custom.disabled,
-button.custom[disabled],
-button.custom.important.disabled,
-button.custom.important[disabled] {
+button.disabled,
+button[disabled],
+button.important.disabled,
+button.important[disabled] {
     background-color: var(--bg-button-disabled);
     color: var(--fg-button-disabled);
     pointer-events: none;
     }
-button.custom.iconifiable > .fa,
-button.custom.iconifiable > .fa-icon {
+button.iconifiable > .fa,
+button.iconifiable > .fa-icon {
     padding-left: 0;
     padding-right: 0.4em;
     }
-button.custom.iconifiable > .fa-icon {
+button.iconifiable > .fa-icon {
     font-size: 120%;
     }
-body[dir="rtl"] button.custom.iconifiable > .fa,
-body[dir="rtl"] button.custom.iconifiable > .fa-icon {
+body[dir="rtl"] button.iconifiable > .fa,
+body[dir="rtl"] button.iconifiable > .fa-icon {
     padding-left: 0.5em;
     }
 .hidden {
@@ -102,13 +137,23 @@ input[type="checkbox"] {
     margin-inline-end: 0.4em;
     -webkit-margin-end: 0.4em;
     }
+.fieldset {
+    margin: 1em 0.5em;
+    }
+.fieldset-header {
+    color: var(--fieldset-header-ink);
+    font-family: Metropolis, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    }
 .ul {
     margin: 1em 0;
     }
 .li {
     align-items: center;
     display: flex;
-    margin: 0.5em 0;
+    margin: 12px 0;
     }
 .liul {
     margin: 0.5em 0;
@@ -116,12 +161,12 @@ input[type="checkbox"] {
     -webkit-margin-start: 2em;
     }
 @media (max-width: 640px) {
-    button.custom.iconifiable > .fa,
-    button.custom.iconifiable > .fa-icon {
+    button.iconifiable > .fa,
+    button.iconifiable > .fa-icon {
         font-size: 1.2rem;
         padding: 0;
         }
-    button.custom.iconifiable > [data-i18n] {
+    button.iconifiable > [data-i18n] {
         display: none;
         }
     }
@@ -155,7 +200,7 @@ input[type="checkbox"] {
 
 /* touch-screen devices */
 :root.mobile body {
-    font: 16px/1.5 sans-serif;
+    font-size: 16px;
     }
 :root.mobile label {
     flex-grow: 1

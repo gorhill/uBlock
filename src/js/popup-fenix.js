@@ -50,16 +50,6 @@ vAPI.localStorage.getItemAsync('popupFirewallPane').then(value => {
 
 /******************************************************************************/
 
-if ( uDom.root.classList.contains('desktop') ) {
-    const sticky = document.getElementById('sticky');
-    const main = document.getElementById('main');
-    if ( sticky.parentElement !== main ) {
-        document.getElementById('main').prepend(sticky);
-    }
-}
-
-/******************************************************************************/
-
 const messaging = vAPI.messaging;
 const reIP = /^\d+(?:\.\d+){1,3}$/;
 const scopeToSrcHostnameMap = {
@@ -575,13 +565,15 @@ const tooltipTargetSelectors = new Map([
 let renderOnce = function() {
     renderOnce = function(){};
 
+    const body = document.body;
+
     if ( popupData.fontSize !== popupFontSize ) {
         popupFontSize = popupData.fontSize;
         if ( popupFontSize !== 'unset' ) {
-            document.body.style.setProperty('font-size', popupFontSize);
+            body.style.setProperty('font-size', popupFontSize);
             vAPI.localStorage.setItem('popupFontSize', popupFontSize);
         } else {
-            document.body.style.removeProperty('font-size');
+            body.style.removeProperty('font-size');
             vAPI.localStorage.removeItem('popupFontSize');
         }
     }
@@ -590,6 +582,11 @@ let renderOnce = function() {
     if ( popupData.advancedUserEnabled !== true ) {
         uDom('#firewall [data-i18n-tip][data-src]').removeAttr('data-tip');
     }
+
+    body.classList.toggle(
+        'no-tooltips',
+        popupData.tooltipsDisabled === true
+    );
 };
 
 /******************************************************************************/
@@ -1067,45 +1064,6 @@ const getPopupData = async function(tabId) {
 
 /******************************************************************************/
 
-const onShowTooltip = function(ev) {
-    if ( popupData.tooltipsDisabled ) { return; }
-
-    const target = ev.target;
-
-    // Tooltip container
-    const ttc = uDom(target).ancestors('.tooltipContainer').nodeAt(0) ||
-                document.body;
-    const ttcRect = ttc.getBoundingClientRect();
-
-    // Tooltip itself
-    const tip = uDom.nodeFromId('tooltip');
-    tip.textContent = target.getAttribute('data-tip');
-    tip.style.removeProperty('top');
-    tip.style.removeProperty('bottom');
-    ttc.appendChild(tip);
-
-    // Target rect
-    const targetRect = target.getBoundingClientRect();
-
-    // Default is "over"
-    let pos;
-    if ( target.getAttribute('data-tip-position') !== 'under' ) {
-        pos = ttcRect.height - targetRect.top + ttcRect.top;
-        tip.style.setProperty('bottom', pos + 'px');
-    } else {
-        pos = targetRect.bottom - ttcRect.top;
-        tip.style.setProperty('top', pos + 'px');
-    }
-
-    tip.classList.add('show');
-};
-
-const onHideTooltip = function() {
-    uDom.nodeFromId('tooltip').classList.remove('show');
-};
-
-/******************************************************************************/
-
 // Popup DOM is assumed to be loaded at this point -- because this script
 // is loaded after everything else..
 
@@ -1119,7 +1077,35 @@ const onHideTooltip = function() {
     if ( matches && matches.length === 2 ) {
         tabId = parseInt(matches[1], 10) || 0;
     }
-    getPopupData(tabId);
+
+    // The purpose of the following code is to reset to a vertical layout
+    // should the viewport be not enough wide to accomodate the horizontal
+    // layout.
+    const checkViewport = function() {
+        const root = document.querySelector(':root');
+        if ( root.classList.contains('desktop') ) {
+            const main = document.getElementById('main');
+            const firewall = document.getElementById('firewall');
+            const minWidth = Math.floor(main.offsetWidth + firewall.offsetWidth);
+            if ( document.body.offsetWidth < minWidth ) {
+                root.classList.remove('desktop');
+            } else {
+                const sticky = document.getElementById('sticky');
+                if ( sticky.parentElement !== main ) {
+                    main.prepend(sticky);
+                }
+            }
+        }
+        document.body.classList.remove('loading');
+    };
+
+    getPopupData(tabId).then(( ) => {
+        if ( document.readyState !== 'complete' ) {
+            window.addEventListener('load', checkViewport, { once: true });
+        } else {
+            checkViewport();
+        }
+    });
 }
 
 uDom('#switch').on('click', toggleNetFilteringSwitch);
@@ -1129,10 +1115,6 @@ uDom('#moreButton').on('click', toggleFirewallPane);
 uDom('.hnSwitch').on('click', ev => { toggleHostnameSwitch(ev); });
 uDom('#saveRules').on('click', saveFirewallRules);
 uDom('#revertRules').on('click', ( ) => { revertFirewallRules(); });
-
-uDom('body').on('mouseenter', '[data-tip]', onShowTooltip)
-            .on('mouseleave', '[data-tip]', onHideTooltip);
-
 uDom('a[href]').on('click', gotoURL);
 
 /******************************************************************************/

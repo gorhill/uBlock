@@ -38,9 +38,6 @@ a {
 .fa-icon.info.important:hover {
     color: var(--fg-icon-info-lvl-3);
     }
-button {
-    padding: 0.33em;
-    }
 input[type="number"] {
     width: 5em;
     }

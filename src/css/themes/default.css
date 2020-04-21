@@ -9,16 +9,22 @@
 /* color names */
 :root {
     --blue-50: #0060df;
+    --ink-20: #312a64;
     --ink-80: #20123a;
     --ink-80-a4: #20123a0a;
+    --light-gray-10: #f9f9fb;
     --light-gray-30: #e0e0e6;
+    --light-gray-40: #cfcfd8;
     --violet-70: #592acb;
+    --black: #000;
+    --white: #fff;
 }
 
 /* components */
 :root {
-    --bg-0: #fff;
+    --bg-0: var(--white);
     --fg-0: var(--ink-80);
+    --default-surface: var(--light-gray-10);
 
     --bg-1: hsla(240, 20%, 98%, 1);
     --bg-1-border: hsla(240, 20%, 90%, 1);
@@ -38,10 +44,15 @@
 
     --link-ink: var(--violet-70);
 
+    --fieldset-header-surface: transparent;
+    --fieldset-header-ink: var(--ink-20);
+
     --hor-separator-color: var(--light-gray-30);
 
+    --button-surface: var(--light-gray-30);
+    --button-ink: var(--ink-20);
+    --button-surface-hover: var(--light-gray-40);
     --bg-button: hsla(0, 0%, 90%, 1);
-    --bg-button-hover: hsla(0, 0%, 83%, 1);
     --bg-button-important: hsla(36, 100%, 85%, 1);
     --bg-button-important-hover: hsla(36, 100%, 77%, 1);
     --fg-button: var(--fg-0);
@@ -50,6 +61,11 @@
 
     --bg-transient-notice: hsla(60, 100%, 95%, 1);
 
+    --dashboard-bar-shadow:
+        0px 0px 0px 1px rgba(32, 18, 58, 0.04),
+        0px 1px 2px 0px rgba(34, 0, 51, 0.04),
+        0px 2px 1px -1px rgba(7, 48, 114, 0.12),
+        0px 1px 6px 0px rgba(14, 13, 26, 0.12);
     --dashboard-tab-ink: var(--ink-80);
     --dashboard-tab-active-ink: var(--violet-70);
     --dashboard-tab-surface-hover: var(--ink-80-a4);
@@ -84,7 +100,6 @@
     --bg-popup-cell-block: hsla(0, 50%, 80%, 1);
     --bg-popup-cell-block-own: hsla(0, 100%, 40%, 1);
     --bg-popup-cell-label-mixed: hsla(45, 100%, 38%, 1);
-    --fg-popup-icon-caption-display: unset;
     --fg-popup-icon-x: hsla(0, 100%, 50%, 1);
 }
 

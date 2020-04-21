@@ -1,6 +1,3 @@
-.section {
-    font-weight: bold;
-    }
 .synopsis {
     font-size: 90%;
     }
@@ -9,4 +6,29 @@
     }
 body.advancedUser [href="advanced-settings.html"] {
     display: inline-flex;
+    }
+#localData {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    white-space: nowrap;
+    }
+#localData > div {
+    flex-grow: 1;
+    margin-bottom: 1em;
+    }
+#localData > div:last-of-type {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+    flex-shrink: 0;
+    }
+#localData > div:last-of-type > button {
+    margin-bottom: 0.5em;
+    }
+
+/* small-screen devices */
+:root.mobile #localData {
+    flex-direction: column;
+    white-space: unset;
     }

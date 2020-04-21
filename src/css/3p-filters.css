@@ -3,7 +3,7 @@
     100% { transform: rotate(360deg); }
     }
 .root {
-    background-color: var(--bg-0);
+    background-color: var(--default-surface);
     overflow: auto;
     padding: 0.5em 0;
     }

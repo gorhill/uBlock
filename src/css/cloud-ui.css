@@ -62,7 +62,7 @@
     fill: inherit;
     }
 #cloudWidget #cloudOptions {
-    background-color: var(--bg-0);
+    background-color: var(--default-surface);
     border: 1px solid var(--bg-1-border);
     bottom: 0;
     display: none;
@@ -76,10 +76,4 @@
     }
 #cloudWidget #cloudOptions.show {
     display: block;
-    }
-#cloudWidget #cloudOptions > div {
-    background-color: var(--bg-0);
-    border-radius: 3px;
-    padding: 1em;
-    text-align: center;
     }

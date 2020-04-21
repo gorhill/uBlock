@@ -5,9 +5,9 @@ html, body {
     width: 100%;
     }
 #dashboard-nav {
-    background-color: var(--bg-1);
+    background-color: var(--default-surface);
     border: 0;
-    border-bottom: 1px solid var(--bg-1-border);
+    box-shadow: var(--dashboard-bar-shadow);
     display: flex;
     flex-wrap: wrap;
     overflow-x: hidden;
@@ -29,9 +29,13 @@ html, body {
 .tabButton {
     border: 0;
     border-bottom: 3px solid var(--bg-1);
+    border-top: 3px solid transparent;
     color: var(--dashboard-tab-ink);
     fill: var(--dashboard-tab-ink);
-    padding: 0.5em 1.4em 0.3em 1.4em;
+    font-family: Metropolis, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 0.5em 1.4em calc(0.5em - 3px);
     text-decoration: none;
     white-space: nowrap;
     }
@@ -84,7 +88,7 @@ body:not(.canUpdateShortcuts) .tabButton[data-pane="shortcuts.html"] {
     }
 :root.desktop .tabButton:not(.selected):hover {
     background-color: var(--dashboard-tab-surface-hover);
-    border-color: var(--dashboard-tab-surface-hover);
+    border-bottom-color: var(--dashboard-tab-surface-hover);
     }
 
 /* touch-screen devices */

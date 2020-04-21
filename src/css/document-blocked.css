@@ -19,7 +19,7 @@
 */
 
 body {
-    font-size: large;
+    padding: 0.5em;
     text-align: center;
     }
 
@@ -29,23 +29,17 @@ body {
         }
 }
 body > div {
-    margin: 0 0 1.5em 0;
+    margin: 0 0 1em 0;
     }
 body > div > p,
 body > div > div {
     margin: 4px 0;
     }
 body > div > p:first-child {
-    margin: 1.5em 0 0 0;
+    margin: 1em 0 0 0;
     }
 a {
     text-decoration: none;
-    }
-button {
-    cursor: pointer;
-    margin: 0 1em 0.25em 1em;
-    padding: 0.25em 0.5em;
-    font-size: inherit;
     }
 select {
     font: inherit;
