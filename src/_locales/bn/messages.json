@@ -8,7 +8,7 @@
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
-    "message": "uBlock₀ — ড্যাশবোর্ড",
+    "message": "ইউব্লক₀ — ড্যাশবোর্ড",
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
@@ -16,7 +16,7 @@
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "অবস্থান করুন।",
+    "message": "অবস্থান করে পরিবর্তন বা সংরক্ষণ করুন।",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -64,7 +64,7 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "ক্লিক: এই সাইটের জন্য uBlock₀ নিষ্ক্রিয়/সক্রিয় করবে।\n\nCtrl+ক্লিক: শুধু এই পাতার জন্য uBlock₀ নিষ্ক্রিয় করবে।",
+    "message": "ক্লিক: এই সাইটের জন্য ইউব্লক₀ নিষ্ক্রিয়/সক্রিয় করবে।\n\nCtrl+ক্লিক: শুধু এই পাতার জন্য ইউব্লক₀ নিষ্ক্রিয় করবে।",
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
@@ -108,7 +108,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
-    "message": "ড্যাশবোর্ড খোলার জন্য ক্লিক করুন",
+    "message": "ড্যাশবোর্ড খুলুন",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
@@ -124,7 +124,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "এই সাইটের জন্য সব পপআপ প্রতিরোধ অদলবদল করুন",
+    "message": "এই সাইটের জন্য সব পপআপ প্রতিরোধ চালু/বন্ধ করুন",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
@@ -136,7 +136,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "এই সাইটের জন্য বড় মিডিয়া উপাদান অবরোধ অদলবদল করুন",
+    "message": "এই সাইটের জন্য বড় মিডিয়া উপাদান অবরোধ চালু/বন্ধ করুন",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
@@ -160,7 +160,7 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "এই সাইটের রিমোট ফন্টের অবরোধ অদলবদল করুন",
+    "message": "এই সাইটের রিমোট ফন্টের অবরোধ চালু/বন্ধ করুন",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
@@ -172,11 +172,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "এই সাইটের জাভা স্ক্রিপ্ট বন্ধ করতে ক্লিক করুণ",
+    "message": "এই সাইটের জাভাস্ক্রিপ্ট চালু করতে ক্লিক করুণ",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "এই সাইটের জাভা স্ক্রিপ্ট চালু করতে ক্লিক করুণ",
+    "message": "এই সাইটের জাভাস্ক্রিপ্ট চালু করতে ক্লিক করুণ",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoLargeMedia_v2": {
@@ -248,7 +248,7 @@
     "description": ""
   },
   "popupHitDomainCountPrompt": {
-    "message": "সংযুক্ত ডোমেইন",
+    "message": "যুক্ত ডোমেন ",
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
@@ -320,7 +320,7 @@
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "অগ্রিম নিয়ে আসা নিষ্ক্রিয় করুন (অবরুদ্ধ নেটওয়ার্ক অনুরোধের জন্য যে কোনো সংযোগ প্রতিরোধ করতে)",
+    "message": "প্রি-ফেচিং বন্ধ করুন (অবরুদ্ধ নেটওয়ার্ক থেকে যে কোনো সংযোগ প্রতিরোধ করতে)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
@@ -460,7 +460,7 @@
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pViewContent": {
-    "message": "view content",
+    "message": "কন্টেন্ট দেখুন",
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
@@ -472,15 +472,15 @@
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
-    "message": "একটি নেটওয়ার্ক ত্রুটি রিসোর্স হালনাগাদ হওয়া থেকে রোধ করেছে।",
+    "message": "একটি নেটওয়ার্ক ত্রুটি রিসোর্স বা তথ্য হালনাগাদ হওয়া রোধ করেছে।",
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "লাইন প্রতি একটি ফিল্টার। একটি ফিল্টার স্পষ্ট হোস্টনেম বা অ্যাডব্লক প্লাস-সামঞ্জস্যপূর্ণ ফিল্টার হতে পারে। &lsquo;!&rsquo; সহ উপসর্গ লাইন উপেক্ষা করা হবে।",
+    "message": "লাইন প্রতি একটি ফিল্টার। একটি ফিল্টার শুধু হোস্টনেম বা অ্যাডব্লক প্লাস-এর সাথে সামঞ্জস্যপূর্ণ ফিল্টার হতে পারে। <code>!</code> দিয়ে শুরু হওয়া লাইন উপেক্ষা করা হবে।",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
-    "message": "আমদানি ও পরিশেষে যোগ করুন",
+    "message": "আমদানি করে পরিশেষে যোগ করুন",
     "description": "English: Import and append"
   },
   "1pExport": {
@@ -684,7 +684,7 @@
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
-    "message": "টাইপ করা",
+    "message": "ধরন",
     "description": "Label to identify the type of an entry"
   },
   "loggerEntryDetailsURL": {
