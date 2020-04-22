@@ -106,8 +106,11 @@ DOMListFactory.nodeFromSelector = function(selector) {
     ) {
         root.classList.add('desktop');
     }
+    if ( window.matchMedia('(min-resolution: 150dpi)').matches ) {
+        root.classList.add('hidpi');
+    }
     if ( window.matchMedia('(prefers-color-scheme: dark)').matches ) {
-        root.classList.add('darkTheme');
+        root.classList.add('dark');
     }
 }
 

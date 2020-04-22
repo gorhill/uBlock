@@ -81,8 +81,6 @@ button {
     color: var(--button-ink);
     display: inline-flex;
     fill: var(--button-ink);
-    font-family: Metropolis, sans-serif;
-    font-weight: 600;
     font-size: 14px;
     justify-content: center;
     letter-spacing: 0.5px;
@@ -148,7 +146,6 @@ input[type="checkbox"] {
     }
 .fieldset-header {
     color: var(--fieldset-header-ink);
-    font-family: Metropolis, sans-serif;
     font-size: 14px;
     font-weight: 600;
     letter-spacing: 0.5px;
@@ -202,6 +199,15 @@ input[type="checkbox"] {
 .ubo-icon > svg {
     height: 1em;
     width: 1em;
+    }
+
+/* high dpi devices */
+:root.hidpi button {
+    font-family: Metropolis, sans-serif;
+    font-weight: 600;
+    }
+:root.hidpi .fieldset-header {
+    font-family: Metropolis, sans-serif;
     }
 
 /* touch-screen devices */
