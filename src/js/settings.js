@@ -117,11 +117,29 @@ const exportToFile = async function() {
 /******************************************************************************/
 
 const onLocalDataReceived = function(details) {
-    uDom.nodeFromId('storageUsed').textContent =
-        vAPI.i18n('settingsStorageUsed').replace(
-            '{{value}}',
-            typeof details.storageUsed === 'number' ? details.storageUsed.toLocaleString() : '?'
-        );
+    let storageUsed;
+    if ( typeof details.storageUsed === 'number' ) {
+        const units = [
+            vAPI.i18n('genericBytes'),
+            vAPI.i18n('KB'),
+            vAPI.i18n('MB'),
+            vAPI.i18n('GB'),
+        ];
+        const s = details.storageUsed.toLocaleString(undefined, {
+            maximumSignificantDigits: 3,
+            notation: 'engineering',
+        });
+        const pos = s.lastIndexOf('E');
+        const vu = parseInt(s.slice(pos + 1), 10) / 3;
+        const vm = parseFloat(s.slice(0, pos));
+        storageUsed =
+            vAPI.i18n('storageUsed')
+                .replace('{{value}}', vm.toLocaleString())
+                .replace('{{unit}}', units[vu]);
+    } else {
+        storageUsed = '?';
+    }
+    uDom.nodeFromId('storageUsed').textContent = storageUsed;
 
     const timeOptions = {
         weekday: 'long',
