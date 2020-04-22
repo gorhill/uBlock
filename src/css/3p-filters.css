@@ -124,7 +124,7 @@ body.hideUnused #listsOfBlockedHostsPrompt::before,
     font-size: smaller;
 }
 .listEntry.checked .counts {
-    display: inline;
+    display: inline-block;
 }
 .listEntry .status {
     cursor: default;
@@ -200,7 +200,11 @@ body.updating .listEntry.checked.obsolete .updating {
     padding-inline-start: 0.3em;
     }
 :root.mobile .li.listEntry .listname,
-:root.mobile .li.listEntry .iconbar,
-:root.mobile .li.listEntry.checked .counts {
-    display: block;
+:root.mobile .li.listEntry .iconbar {
+    align-items: flex-start;
+    display: flex;
+    white-space: nowrap;
+    }
+:root.mobile .li.listEntry .iconbar {
+    margin-top: 0.2em;
     }

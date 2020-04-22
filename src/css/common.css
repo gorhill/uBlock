@@ -16,6 +16,12 @@
 @font-face {
     font-family: Metropolis;
     font-style: normal;
+    font-weight: normal;
+    src: url('fonts/Metropolis/Metropolis-Regular.woff2') format('woff2');
+}
+@font-face {
+    font-family: Metropolis;
+    font-style: normal;
     font-weight: 600;
     src: url('fonts/Metropolis/Metropolis-SemiBold.woff2') format('woff2');
 }
@@ -33,8 +39,8 @@ body {
     background-color: var(--default-surface);
     border: 0;
     box-sizing: border-box;
-    color: var(--fg-0);
-    fill: var(--fg-0);
+    color: var(--default-ink);
+    fill: var(--default-ink);
     font-family: Inter, sans-serif;
     font-size: 14px;
     line-height: 1.5;

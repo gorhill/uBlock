@@ -1073,7 +1073,7 @@ const getPopupData = async function(tabId) {
     let tabId = null;
 
     // Extract the tab id of the page this popup is for
-    const matches = window.location.search.match(/[\?&]tabId=([^&]+)/);
+    const matches = self.location.search.match(/[\?&]tabId=([^&]+)/);
     if ( matches && matches.length === 2 ) {
         tabId = parseInt(matches[1], 10) || 0;
     }
@@ -1096,12 +1096,14 @@ const getPopupData = async function(tabId) {
                 }
             }
         }
-        document.body.classList.remove('loading');
+        self.requestAnimationFrame(( ) => {
+            document.body.classList.remove('loading');
+        });
     };
 
     getPopupData(tabId).then(( ) => {
         if ( document.readyState !== 'complete' ) {
-            window.addEventListener('load', checkViewport, { once: true });
+            self.addEventListener('load', checkViewport, { once: true });
         } else {
             checkViewport();
         }

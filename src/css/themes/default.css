@@ -6,24 +6,34 @@
 
 */
 
-/* color names */
+/**
+    Color names from:
+    https://protocol.mozilla.org/fundamentals/color.html
+*/
 :root {
     --blue-50: #0060df;
     --ink-20: #312a64;
+    --ink-50: #291d4f;
     --ink-80: #20123a;
     --ink-80-a4: #20123a0a;
+    --ink-90: #1d1133;
     --light-gray-10: #f9f9fb;
     --light-gray-30: #e0e0e6;
     --light-gray-40: #cfcfd8;
     --violet-70: #592acb;
+    --violet-80: #45278d;
     --black: #000;
     --white: #fff;
 }
 
-/* components */
+/**
+    Components
+*/
 :root {
     --bg-0: var(--white);
     --fg-0: var(--ink-80);
+    --default-ink: var(--ink-80);
+    --default-ink-a4: var(--ink-80-a4);
     --default-surface: var(--light-gray-10);
 
     --bg-1: hsla(240, 20%, 98%, 1);
@@ -68,7 +78,7 @@
         0px 1px 6px 0px rgba(14, 13, 26, 0.12);
     --dashboard-tab-ink: var(--ink-80);
     --dashboard-tab-active-ink: var(--violet-70);
-    --dashboard-tab-surface-hover: var(--ink-80-a4);
+    --dashboard-tab-surface-hover: var(--default-ink-a4);
 
     --fg-icon-info-lvl-0-dimmed: #888;
     --fg-icon-info-lvl-0: inherit;
@@ -101,6 +111,19 @@
     --bg-popup-cell-block-own: hsla(0, 100%, 40%, 1);
     --bg-popup-cell-label-mixed: hsla(45, 100%, 38%, 1);
     --fg-popup-icon-x: hsla(0, 100%, 50%, 1);
+}
+
+/**
+    Use slightly darker inks on lower pixel-density devices to improve
+    contrast.
+*/
+@media (max-resolution: 150dpi) {
+    :root {
+        --default-ink: var(--ink-90);
+        --button-ink: var(--ink-50);
+        --fieldset-header-ink: var(--ink-50);
+        --link-ink: var(--violet-80);
+    }
 }
 
 /**
