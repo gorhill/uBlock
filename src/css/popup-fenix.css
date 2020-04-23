@@ -466,6 +466,8 @@ body.advancedUser #firewall > div > span.noopRule.ownRule,
 /* mouse-driven devices */
 :root.desktop body {
     overflow: auto;
+    transition-duration: 0.2s;
+    transition-property: opacity;
     }
 :root.desktop body.loading {
     opacity: 0;

@@ -120,7 +120,7 @@
 @media (max-resolution: 150dpi) {
     :root {
         --default-ink: var(--ink-90);
-        --button-ink: var(--ink-50);
+        --button-ink: var(--ink-90);
         --fieldset-header-ink: var(--ink-50);
         --link-ink: var(--violet-80);
     }

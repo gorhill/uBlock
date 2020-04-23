@@ -152,7 +152,18 @@ const hashFromPopupData = function(reset) {
 /******************************************************************************/
 
 const formatNumber = function(count) {
-    return typeof count === 'number' ? count.toLocaleString() : '';
+    if ( typeof count !== 'number' ) { return ''; }
+    if ( count < 1e6 ) { return count.toLocaleString(); }
+    let unit;
+    if ( count < 1e9 ) {
+        count /= 1e6;
+        unit = 'M';
+    } else {
+        count /= 1e9;
+        unit = 'G';
+    }
+    return count.toLocaleString(undefined, { maximumSignificantDigits: 4 }) +
+           `\u2009${vAPI.i18n(unit)}`;
 };
 
 /******************************************************************************/
@@ -423,9 +434,9 @@ const renderPopup = function() {
     uDom.nodeFromId('gotoPick').classList.toggle('enabled', canElementPicker);
     uDom.nodeFromId('gotoZap').classList.toggle('enabled', canElementPicker);
 
-    let blocked = popupData.pageBlockedRequestCount,
-        total = popupData.pageAllowedRequestCount + blocked,
-        text;
+    let blocked = popupData.pageBlockedRequestCount;
+    let total = popupData.pageAllowedRequestCount + blocked;
+    let text;
     if ( total === 0 ) {
         text = formatNumber(0);
     } else {

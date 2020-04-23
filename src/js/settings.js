@@ -119,23 +119,23 @@ const exportToFile = async function() {
 const onLocalDataReceived = function(details) {
     let storageUsed;
     if ( typeof details.storageUsed === 'number' ) {
-        const units = [
-            vAPI.i18n('genericBytes'),
-            vAPI.i18n('KB'),
-            vAPI.i18n('MB'),
-            vAPI.i18n('GB'),
-        ];
-        const s = details.storageUsed.toLocaleString(undefined, {
-            maximumSignificantDigits: 3,
-            notation: 'engineering',
-        });
-        const pos = s.lastIndexOf('E');
-        const vu = parseInt(s.slice(pos + 1), 10) / 3;
-        const vm = parseFloat(s.slice(0, pos));
-        storageUsed =
-            vAPI.i18n('storageUsed')
-                .replace('{{value}}', vm.toLocaleString())
-                .replace('{{unit}}', units[vu]);
+        let v = details.storageUsed;
+        let unit;
+        if ( v < 1e3 ) {
+            unit = 'genericBytes';
+        } else if ( v < 1e6 ) {
+            v /= 1e3;
+            unit = 'KB';
+        } else if ( v < 1e9 ) {
+            v /= 1e6;
+            unit = 'MB';
+        } else {
+            v /= 1e9;
+            unit = 'GB';
+        }
+        storageUsed = vAPI.i18n('storageUsed')
+            .replace('{{value}}', v.toLocaleString(undefined, { maximumSignificantDigits: 3 }))
+            .replace('{{unit}}', vAPI.i18n(unit));
     } else {
         storageUsed = '?';
     }
