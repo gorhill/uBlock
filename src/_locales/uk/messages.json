@@ -361,7 +361,7 @@
   },
   "settingsStorageUsed": {
     "message": "Використано: {{value}} байт",
-    "description": "English: Storage used: {{}} bytes"
+    "description": "Deprecated, will be removed"
   },
   "settingsLastRestorePrompt": {
     "message": "Востаннє відновлено:",
@@ -1006,6 +1006,30 @@
   "relaxBlockingMode": {
     "message": "Послаблений режим блокування",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
+  "storageUsed": {
+    "message": "Використано: {{value}} {{unit}}",
+    "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
+  },
+  "M": {
+    "message": "млн",
+    "description": "abbreviation for 'millions': metric system's 'mega'"
+  },
+  "G": {
+    "message": "млд",
+    "description": "abbreviation for 'billions': metric system's 'giga'"
+  },
+  "KB": {
+    "message": "КБ",
+    "description": "short for 'kilobytes'"
+  },
+  "MB": {
+    "message": "МБ",
+    "description": "short for 'megabytes'"
+  },
+  "GB": {
+    "message": "ГБ",
+    "description": "short for 'gigabytes'"
   },
   "dummy": {
     "message": "Цей запис має бути останнім",

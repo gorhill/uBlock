@@ -361,7 +361,7 @@
   },
   "settingsStorageUsed": {
     "message": "Korišteno prostora: {{value}} bajtova",
-    "description": "English: Storage used: {{}} bytes"
+    "description": "Deprecated, will be removed"
   },
   "settingsLastRestorePrompt": {
     "message": "Posljednji povratak na prijašnje:",
@@ -396,7 +396,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Ova opcija omogućava raščlambu i provođenje <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">Adblock Plus-kompatibilnih filtera sa &ldquo;elementima za skrivanje&rdquo; </a>. Ovi filteri su uglavnom estetski, oni služe za skrivanje elemenata na web-stranici koja se smatra da je vizualna smetnja, a koja ne može biti blokirana od strane mrežnih zahtjeva temeljenih na filtriranju.</p><p>Omogućavanje ove značajke povećava <i>uBlock₀ </i>memorijski otisak.</p>",
+    "message": "Estetski filteri služe za skrivanje elementa web stranice koji se smatraju vizualnim smetanjem i koji ne mogu biti blokirani filtriranjem mrežnih zahtjeva.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -404,7 +404,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Generički estetski filteri su takvi filteri koji su namijenjeni svim web stranicama.<p>Iako efikasno korišteni sa uBlock₀ blokerom, generički estetski filteri svejedno mogu doprinijeti dodatnoj mjerljivoj memorijskoj i procesorskoj upotrebi na nekim stranicama, posebno za velike i dugovječne stranice.<p>Omogućavanjem ove postavke eliminirati će se memorijska i procesorska dodatna upotreba na web stranicama kao rezultat korištenja generičkih estetskih filtera i tako smanjiti ukupna memorijska potrošnja proširenja uBlock₀.<p>Preporučeno je omogućiti ovu postavku na slabijim uređajima.",
+    "message": "Generički estetski filteri su takvi filteri koji su namijenjeni svim web stranicama. Omogućavanjem ove postavke eliminirati će se memorijska i procesorska dodatna upotreba na web stranicama kao rezultat korištenja generičkih estetskih filtera.\n\nPreporučeno je omogućiti ovu postavku na slabijim uređajima.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -1006,6 +1006,30 @@
   "relaxBlockingMode": {
     "message": "Opušteni način blokiranja",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
+  "storageUsed": {
+    "message": "Korišteno prostora: {{value}} {{unit}}",
+    "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
+  },
+  "M": {
+    "message": "M",
+    "description": "abbreviation for 'millions': metric system's 'mega'"
+  },
+  "G": {
+    "message": "G",
+    "description": "abbreviation for 'billions': metric system's 'giga'"
+  },
+  "KB": {
+    "message": "KB",
+    "description": "short for 'kilobytes'"
+  },
+  "MB": {
+    "message": "MB",
+    "description": "short for 'megabytes'"
+  },
+  "GB": {
+    "message": "GB",
+    "description": "short for 'gigabytes'"
   },
   "dummy": {
     "message": "Ova stavka mora biti posljednja",

@@ -361,7 +361,7 @@
   },
   "settingsStorageUsed": {
     "message": "Prostoru využito: {{value}} bajtů",
-    "description": "English: Storage used: {{}} bytes"
+    "description": "Deprecated, will be removed"
   },
   "settingsLastRestorePrompt": {
     "message": "Poslední obnova:",
@@ -1006,6 +1006,30 @@
   "relaxBlockingMode": {
     "message": "Uvolnit režim blokování",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
+  "storageUsed": {
+    "message": "Storage used: {{value}} {{unit}}",
+    "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
+  },
+  "M": {
+    "message": "M",
+    "description": "abbreviation for 'millions': metric system's 'mega'"
+  },
+  "G": {
+    "message": "G",
+    "description": "abbreviation for 'billions': metric system's 'giga'"
+  },
+  "KB": {
+    "message": "KB",
+    "description": "short for 'kilobytes'"
+  },
+  "MB": {
+    "message": "MB",
+    "description": "short for 'megabytes'"
+  },
+  "GB": {
+    "message": "GB",
+    "description": "short for 'gigabytes'"
   },
   "dummy": {
     "message": "This entry must be the last one",

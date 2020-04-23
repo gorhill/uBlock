@@ -361,7 +361,7 @@
   },
   "settingsStorageUsed": {
     "message": "Użycie pamięci masowej: {{value}} bajtów",
-    "description": "English: Storage used: {{}} bytes"
+    "description": "Deprecated, will be removed"
   },
   "settingsLastRestorePrompt": {
     "message": "Ostatnie przywrócenie wykonano:",
@@ -396,7 +396,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Opcja ta włącza przetwarzanie i używanie filtrów <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">ukrywania elementów kompatybilnych z Adblock Plus</a>. Filtry te są głównie kosmetyczne, służą do ukrycia elementów uważanych za wizualne uciążliwe, które nie mogą zostać ukryte przez blokowanie żądań sieciowych.</p><p>Włączenie tej funkcji zwiększa zużycie pamięci przez <i>uBlock</i>.</p>",
+    "message": "Filtry kosmetyczne służą do ukrywania elementów stron internetowych uważanych za wizualne uciążliwe, które to nie mogą zostać zablokowane za pomocą filtrów żądań sieciowych.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -404,7 +404,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Ogólne filtry kosmetyczne, to filtry które mają być zastosowane na wszystkich stronach internetowych.<p>Choć dobrze obsługiwane przez uBlock₀ mogą na niektórych stronach, szczególnie dużych i otwartych przez dłuższy czas, przyczyniać się do obciążenia procesora i pamięci operacyjnej.<p>Włącznie tej funkcji wyeliminuje obciążenie procesora i pamięci operacyjnej powodowane stosowaniem ogólnych filtrów kosmetycznych, a także zmniejszy zapotrzebowanie na pamięć samego uBlocka₀.<p>Zaleca się włączenie tej funkcji na mniej wydajnych urządzeniach.",
+    "message": "Ogólne filtry kosmetyczne, to filtry które mają być zastosowane na wszystkich stronach internetowych. Włącznie tej funkcji zmniejszy obciążenie procesora i pamięci.\n\nZaleca się włączenie tej funkcji na mniej wydajnych urządzeniach.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -1006,6 +1006,30 @@
   "relaxBlockingMode": {
     "message": "Rozluźnij tryb blokowania",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
+  "storageUsed": {
+    "message": "Użycie pamięci masowej: {{value}} {{unit}}",
+    "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
+  },
+  "M": {
+    "message": "M",
+    "description": "abbreviation for 'millions': metric system's 'mega'"
+  },
+  "G": {
+    "message": "G",
+    "description": "abbreviation for 'billions': metric system's 'giga'"
+  },
+  "KB": {
+    "message": "KB",
+    "description": "short for 'kilobytes'"
+  },
+  "MB": {
+    "message": "MB",
+    "description": "short for 'megabytes'"
+  },
+  "GB": {
+    "message": "GB",
+    "description": "short for 'gigabytes'"
   },
   "dummy": {
     "message": "Ten wpis musi być ostatni",

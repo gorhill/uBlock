@@ -361,7 +361,7 @@
   },
   "settingsStorageUsed": {
     "message": "Espace de stockage utilisé : {{value}} octet(s)",
-    "description": "English: Storage used: {{}} bytes"
+    "description": "Deprecated, will be removed"
   },
   "settingsLastRestorePrompt": {
     "message": "Date de la dernière restauration :",
@@ -1006,6 +1006,30 @@
   "relaxBlockingMode": {
     "message": "Détendre le mode de blocage",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
+  "storageUsed": {
+    "message": "Espace de stockage utilisé : {{value}} {{unit}}",
+    "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
+  },
+  "M": {
+    "message": "M",
+    "description": "abbreviation for 'millions': metric system's 'mega'"
+  },
+  "G": {
+    "message": "G",
+    "description": "abbreviation for 'billions': metric system's 'giga'"
+  },
+  "KB": {
+    "message": "Ko",
+    "description": "short for 'kilobytes'"
+  },
+  "MB": {
+    "message": "Mo",
+    "description": "short for 'megabytes'"
+  },
+  "GB": {
+    "message": "Go",
+    "description": "short for 'gigabytes'"
   },
   "dummy": {
     "message": "This entry must be the last one",
