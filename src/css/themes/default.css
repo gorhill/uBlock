@@ -22,6 +22,8 @@
     --light-gray-40: #cfcfd8;
     --violet-70: #592acb;
     --violet-80: #45278d;
+    --yellow-50: #ffa436;
+    --yellow-60: #e27f2e;
     --black: #000;
     --white: #fff;
 }
@@ -84,8 +86,8 @@
     --fg-icon-info-lvl-0: inherit;
     --fg-icon-info-lvl-1-dimmed: hsla(240, 100%, 40%, 0.5);
     --fg-icon-info-lvl-1: hsla(240, 100%, 40%, 1);
-    --fg-icon-info-lvl-2-dimmed: hsla(36, 100%, 40%, 0.5);
-    --fg-icon-info-lvl-2: hsla(36, 100%, 40%, 1);
+    --info-lvl-2-ink: var(--yellow-50);
+    --info-lvl-2-ink-hover: var(--yellow-60);
     --fg-icon-info-lvl-3-dimmed: hsla(16, 100%, 50%, 0.5);
     --fg-icon-info-lvl-3: hsla(16, 100%, 50%, 1);
     --fg-icon-info-lvl-4-dimmed: hsla(0, 100%, 35%, 0.5);

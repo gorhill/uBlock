@@ -12,7 +12,12 @@
 :root.mobile body {
     font-size: 14px;
     line-height: 20px;
+    transition-duration: 0.2s;
+    transition-property: opacity;
     width: 100%;
+    }
+:root body.loading {
+    opacity: 0;
     }
 a {
     color: inherit;
@@ -466,11 +471,6 @@ body.advancedUser #firewall > div > span.noopRule.ownRule,
 /* mouse-driven devices */
 :root.desktop body {
     overflow: auto;
-    transition-duration: 0.2s;
-    transition-property: opacity;
-    }
-:root.desktop body.loading {
-    opacity: 0;
     }
 :root.desktop #panes {
     flex-direction: row-reverse;

@@ -146,12 +146,12 @@ body.hideUnused #listsOfBlockedHostsPrompt::before,
     display: inline-flex;
     }
 .listEntry .obsolete {
-    color: var(--fg-icon-info-lvl-2-dimmed);
-    fill: var(--fg-icon-info-lvl-2-dimmed);
+    color: var(--info-lvl-2-ink);
+    fill: var(--info-lvl-2-ink);
     }
 .listEntry .obsolete:hover {
-    color: var(--fg-icon-info-lvl-2);
-    fill: var(--fg-icon-info-lvl-2);
+    color: var(--info-lvl-2-ink-hover);
+    fill: var(--info-lvl-2-ink-hover);
     }
 body:not(.updating) .listEntry.checked.obsolete .obsolete {
     display: inline-flex;

@@ -154,20 +154,10 @@ const hashFromPopupData = function(reset) {
 const formatNumber = function(count) {
     if ( typeof count !== 'number' ) { return ''; }
     if ( count < 1e6 ) { return count.toLocaleString(); }
-    const mln = vAPI.i18n('M');
-    if ( count < 1e7 && mln.length > 2 ) { // Maybe not worth abbreviating
-        return count.toLocaleString();
-    }
-    let unit;
-    if ( count < 1e9 ) {
-        count /= 1e6;
-        unit = mln;
-    } else {
-        count /= 1e9;
-        unit = vAPI.i18n('G');
-    }
-    return count.toLocaleString(undefined, { maximumSignificantDigits: 4 }) +
-           `\u2009${unit}`;
+    return count.toLocaleString(undefined, {
+        notation: 'compact',
+        maximumSignificantDigits: 4,
+    });
 };
 
 /******************************************************************************/
