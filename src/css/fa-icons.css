@@ -15,9 +15,7 @@
     pointer-events: none;
     }
 .fa-icon.disabled,
-.disabled > .fa-icon,
-.fa-icon[disabled],
-[disabled] > .fa-icon {
+.fa-icon[disabled] {
     color: var(--button-disabled-ink);
     fill: var(--button-disabled-ink);
     filter: var(--button-disabled-filter);
