@@ -98,18 +98,23 @@ button.vflex {
 button:hover {
     background-color: var(--button-surface-hover);
     }
+button.active {
+    background-color: var(--button-active-surface);
+    }
 button.important {
-    background-color: var(--bg-button-important);
+    background-color: var(--button-important-surface);
     }
 button.important:hover {
-    background-color: var(--bg-button-important-hover);
+    background-color: var(--button-important-surface-hover);
     }
 button.disabled,
 button[disabled],
 button.important.disabled,
 button.important[disabled] {
-    background-color: var(--bg-button-disabled);
-    color: var(--fg-button-disabled);
+    background-color: var(--button-disabled-surface);
+    color: var(--button-disabled-ink);
+    fill: var(--button-disabled-ink);
+    filter: var(--button-disabled-filter);
     pointer-events: none;
     }
 button.iconifiable > .fa,
@@ -191,9 +196,10 @@ input[type="checkbox"] {
 .disabled > .ubo-icon,
 .ubo-icon[disabled],
 [disabled] > .ubo-icon {
-    color: var(--fg-button-disabled);
-    fill: var(--fg-button-disabled);
-    stroke: var(--fg-button-disabled);
+    color: var(--button-disabled-ink);
+    fill: var(--button-disabled-ink);
+    filter: var(--button-disabled-filter);
+    stroke: var(--button-disabled-ink);
     pointer-events: none;
     }
 .ubo-icon > svg {

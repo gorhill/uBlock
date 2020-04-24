@@ -43,21 +43,23 @@ body {
 #commitButton,
 body.editing #diff #exportButton,
 body.editing #diff #importButton {
-    background-color: var(--bg-button-disabled);
-    color: var(--fg-button-disabled);
-    fill: var(--fg-button-disabled);
+    background-color: var(--button-disabled-surface);
+    color: var(--button-disabled-ink);
+    fill: var(--button-disabled-ink);
+    filter: var(--button-disabled-filter);
     pointer-events: none;
     }
 body:not(.editing) #diff.dirty #revertButton,
 body:not(.editing) #diff.dirty #commitButton {
-    background-color: var(--bg-button);
-    color: var(--fg-button);
-    fill: var(--fg-button);
+    background-color: var(--button-surface);
+    color: var(--button-ink);
+    fill: var(--button-ink);
+    filter: none;
     pointer-events: auto;
     }
 body:not(.editing) #diff.dirty #revertButton:hover,
 body:not(.editing) #diff.dirty #commitButton:hover {
-    background-color: var(--bg-button-hover);
+    background-color: var(--button-surface-hover);
     }
 
 .codeMirrorContainer {

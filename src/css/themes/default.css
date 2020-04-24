@@ -11,7 +11,9 @@
     https://protocol.mozilla.org/fundamentals/color.html
 */
 :root {
+    --blue-10: #80ebff;
     --blue-50: #0060df;
+    --blue-60: #0250bb;
     --ink-20: #312a64;
     --ink-50: #291d4f;
     --ink-80: #20123a;
@@ -22,6 +24,8 @@
     --light-gray-40: #cfcfd8;
     --violet-70: #592acb;
     --violet-80: #45278d;
+    --yellow-30: #ffd567;
+    --yellow-40: #ffbd4f;
     --yellow-50: #ffa436;
     --yellow-60: #e27f2e;
     --black: #000;
@@ -64,12 +68,13 @@
     --button-surface: var(--light-gray-30);
     --button-ink: var(--ink-20);
     --button-surface-hover: var(--light-gray-40);
-    --bg-button: hsla(0, 0%, 90%, 1);
-    --bg-button-important: hsla(36, 100%, 85%, 1);
-    --bg-button-important-hover: hsla(36, 100%, 77%, 1);
-    --fg-button: var(--fg-0);
-    --bg-button-disabled: hsla(0, 0%, 93%, 1);
-    --fg-button-disabled: hsla(0, 0%, 60%, 1);
+    --button-active-surface: var(--blue-10);
+    --button-important-surface: var(--yellow-30);
+    --button-important-surface-hover: var(--yellow-40);
+    /* https://material.io/design/interaction/states.html#disabled */
+    --button-disabled-filter: opacity(38%);
+    --button-disabled-surface: var(--light-gray-30);
+    --button-disabled-ink: var(--ink-20);
 
     --bg-transient-notice: hsla(60, 100%, 95%, 1);
 
@@ -99,8 +104,8 @@
     --fg-tooltip: var(--ink-80);
 
     /* popup panel */
-    --fg-popup-power: var(--blue-50);
-    --fg-popup-power-hover: opacity(80%);
+    --popup-power-ink: var(--blue-50);
+    --popup-power-ink-hover: var(--blue-60);
     --bg-popup-cell-1: hsla(261, 0%, 93%, 1);
     --bg-popup-cell-2: rgb(224, 224, 230);
     --bg-popup-cell-label-filter: opacity(40%);

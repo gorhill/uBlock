@@ -12,7 +12,10 @@
     top: 0;
     z-index: 10;
     }
-body.updating #buttonUpdate .fa-icon svg {
+#buttonUpdate.active {
+    pointer-events: none;
+    }
+#buttonUpdate.active .fa-icon svg {
     animation: spin 1s linear infinite;
     transform-origin: 50%;
     }

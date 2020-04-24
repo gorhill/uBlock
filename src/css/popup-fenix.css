@@ -63,15 +63,16 @@ hr {
     margin: 0.5em 0;
     }
 #switch .fa-icon {
-    color: var(--fg-popup-power);
-    fill: var(--fg-popup-power);
+    color: var(--popup-power-ink);
+    fill: var(--popup-power-ink);
     cursor: pointer;
     font-size: 700%;
     margin: 0;
     padding: 0;
     }
 #switch .fa-icon:hover {
-    filter: var(--fg-popup-power-hover);
+    color: var(--popup-power-ink-hover);
+    fill: var(--popup-power-ink-hover);
     }
 body.off #switch .fa-icon {
     color: var(--fg-0-20);
@@ -221,6 +222,7 @@ body[dir="rtl"] #tooltip {
     padding: 0;
     overflow: hidden;
     text-align: right;
+    --rule-cell-width: 5em;
     }
 body:not(.dfEnabled) #firewall {
     display: none;
@@ -264,7 +266,7 @@ body:not(.dfEnabled) #firewall {
     justify-content: flex-end;
     padding-right: 2px;
     white-space: normal;
-    width: calc(100% - 5em);
+    width: calc(100% - var(--rule-cell-width));
     word-break: break-word;
     }
 #firewall > div.isCname > span:first-of-type {
@@ -282,7 +284,7 @@ body:not(.dfEnabled) #firewall {
 #firewall > div > span:first-of-type ~ span {
     flex-shrink: 0;
     margin-left: 1px;
-    width: 5em;
+    width: var(--rule-cell-width);
     }
 #firewall > div > span:nth-of-type(2) {
     display: none;
@@ -355,7 +357,7 @@ body:not(.dfEnabled) #firewall {
     }
 
 body.advancedUser #firewall > div > span:first-of-type {
-    width: calc(100% - 10em);
+    width: calc(100% - 2 * var(--rule-cell-width));
     }
 body.advancedUser #firewall > div > span:nth-of-type(2) {
     display: inline-flex;
@@ -470,6 +472,7 @@ body.advancedUser #firewall > div > span.noopRule.ownRule,
 
 /* mouse-driven devices */
 :root.desktop body {
+    max-width: max(100vw, 800px);
     overflow: auto;
     }
 :root.desktop #panes {
@@ -485,7 +488,7 @@ body.advancedUser #firewall > div > span.noopRule.ownRule,
     flex-grow: 1;
     line-height: 1.4;
     max-height: 540px;
-    min-height: 100vh;
+    max-height: max(100vh, 600px);
     min-width: 360px;
     overflow-y: auto;
     width: max-content;
@@ -494,7 +497,7 @@ body.advancedUser #firewall > div > span.noopRule.ownRule,
     padding: 0.5em;
     }
 :root.desktop .tool:hover {
-    background-color: var(--bg-button);
+    background-color: var(--button-surface);
     }
 :root.desktop .tool [data-i18n] {
     width: min-content;

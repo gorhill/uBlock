@@ -313,17 +313,23 @@ const renderFilterLists = function(soft) {
 /******************************************************************************/
 
 const renderWidgets = function() {
-    uDom('#buttonApply').toggleClass(
+    let cl = uDom.nodeFromId('buttonApply').classList;
+    cl.toggle(
         'disabled',
         filteringSettingsHash === hashFromCurrentFromSettings()
     );
-    uDom('#buttonPurgeAll').toggleClass(
+    const updating = document.body.classList.contains('updating');
+    cl = uDom.nodeFromId('buttonUpdate').classList;
+    cl.toggle('active', updating);
+    cl.toggle(
         'disabled',
-        document.querySelector('#lists .listEntry.cached:not(.obsolete)') === null
-    );
-    uDom('#buttonUpdate').toggleClass(
+        updating === false &&
+        document.querySelector('#lists .listEntry.obsolete:not(.toRemove) input[type="checkbox"]:checked') === null
+        );
+    cl = uDom.nodeFromId('buttonPurgeAll').classList;
+    cl.toggle(
         'disabled',
-        document.querySelector('body:not(.updating) #lists .listEntry.obsolete:not(.toRemove) input[type="checkbox"]:checked') === null
+        updating || document.querySelector('#lists .listEntry.cached:not(.obsolete)') === null
     );
 };
 
