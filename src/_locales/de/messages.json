@@ -1008,16 +1008,8 @@
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "storageUsed": {
-    "message": "Verwendeter Speicherplatz: {{value}} {{unit}}",
+    "message": "Genutzter Speicherplatz: {{value}} {{unit}}",
     "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
-  },
-  "M": {
-    "message": "M",
-    "description": "abbreviation for 'millions': metric system's 'mega'"
-  },
-  "G": {
-    "message": "G",
-    "description": "abbreviation for 'billions': metric system's 'giga'"
   },
   "KB": {
     "message": "KB",
