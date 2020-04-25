@@ -30,16 +30,6 @@
 
 /******************************************************************************/
 
-const resizeFrame = function() {
-    const navRect = document.getElementById('dashboard-nav')
-                            .getBoundingClientRect();
-    const viewRect = document.documentElement.getBoundingClientRect();
-    document.getElementById('iframe').style.setProperty(
-        'height',
-        (viewRect.height - navRect.height) + 'px'
-    );
-};
-
 const discardUnsavedData = function(synchronous = false) {
     const paneFrame = document.getElementById('iframe');
     const paneWindow = paneFrame.contentWindow;
@@ -121,12 +111,9 @@ vAPI.messaging.send('dashboard', {
     document.body.classList.toggle('canUpdateShortcuts', response === true);
 });
 
-resizeFrame();
-
 vAPI.localStorage.getItemAsync('dashboardLastVisitedPane').then(value => {
     loadDashboardPanel(value !== null ? value : 'settings.html', true);
 
-    window.addEventListener('resize', resizeFrame);
     uDom('.tabButton').on('click', onTabClickHandler);
 
     // https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
