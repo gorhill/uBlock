@@ -91,15 +91,16 @@ p {
     margin: 0.8em 0;
     }
 #switch .fa-icon {
-    color: var(--fg-popup-power);
-    fill: var(--fg-popup-power);
+    color: var(--popup-power-ink);
+    fill: var(--popup-power-ink);
     cursor: pointer;
     font-size: 700%;
     margin: 0;
     padding: 0;
     }
 #switch .fa-icon:hover {
-    filter: var(--fg-popup-power-hover);
+    color: var(--popup-power-ink-hover);
+    fill: var(--popup-power-ink-hover);
     }
 body.off #switch .fa-icon {
     color: var(--fg-0-20);
