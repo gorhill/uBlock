@@ -359,10 +359,6 @@
     "message": "CSP-Berichte blockieren",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "Verwendeter Speicherplatz: {{value}} Bytes",
-    "description": "Deprecated, will be removed"
-  },
   "settingsLastRestorePrompt": {
     "message": "Letzte Wiederherstellung:",
     "description": "English: Last restore:"
@@ -830,6 +826,18 @@
   "aboutContributors": {
     "message": "Mitwirkende",
     "description": "English: Contributors"
+  },
+  "aboutSourceCode": {
+    "message": "Quelltext",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "Übersetzungen",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "Filterlisten",
+    "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
     "message": "Externe Abhängigkeiten (GPLv3-kompatibel):",

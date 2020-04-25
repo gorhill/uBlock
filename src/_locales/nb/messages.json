@@ -359,10 +359,6 @@
     "message": "Blokker CSP-rapporter",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "Brukt lagringsplass: {{value}} bytes",
-    "description": "Deprecated, will be removed"
-  },
   "settingsLastRestorePrompt": {
     "message": "Siste gjenoppretting:",
     "description": "English: Last restore:"
@@ -831,6 +827,18 @@
     "message": "Bidragsytere",
     "description": "English: Contributors"
   },
+  "aboutSourceCode": {
+    "message": "Kildekode",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "Oversettelser",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "Filterlister",
+    "description": "Link text to uBO's own filter lists repo"
+  },
   "aboutDependencies": {
     "message": "Eksterne avhengigheter (GPLv3-kompatible):",
     "description": "Shown in the About pane"
@@ -1008,7 +1016,7 @@
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "storageUsed": {
-    "message": "Storage used: {{value}} {{unit}}",
+    "message": "Brukt lagringsplass: {{value}} {{unit}}",
     "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
   },
   "KB": {

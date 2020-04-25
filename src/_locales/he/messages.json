@@ -359,10 +359,6 @@
     "message": "חסום דיווחי CSP",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "אחסון בשימוש: {{value}} בתים",
-    "description": "Deprecated, will be removed"
-  },
   "settingsLastRestorePrompt": {
     "message": "שחזור אחרון:",
     "description": "English: Last restore:"
@@ -830,6 +826,18 @@
   "aboutContributors": {
     "message": "תורמים",
     "description": "English: Contributors"
+  },
+  "aboutSourceCode": {
+    "message": "קוד מקור",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "תרגומים",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "רשימות מסננים",
+    "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
     "message": "תלויות חיצוניות (תואם-GPLv3):",

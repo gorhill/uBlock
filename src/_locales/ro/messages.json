@@ -359,10 +359,6 @@
     "message": "Blochează rapoartele CSP",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "Spațiu de stocare utilizat: {{value}} octeți",
-    "description": "Deprecated, will be removed"
-  },
   "settingsLastRestorePrompt": {
     "message": "Ultima restaurare:",
     "description": "English: Last restore:"
@@ -830,6 +826,18 @@
   "aboutContributors": {
     "message": "Contribuitori",
     "description": "English: Contributors"
+  },
+  "aboutSourceCode": {
+    "message": "Source code",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "Translations",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "Filter lists",
+    "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
     "message": "Dependențe externe (compatibile GPLv3):",

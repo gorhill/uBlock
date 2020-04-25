@@ -359,10 +359,6 @@
     "message": "屏蔽 CSP 报告",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "已用空间：{{value}} 字节",
-    "description": "Deprecated, will be removed"
-  },
   "settingsLastRestorePrompt": {
     "message": "上次恢复：",
     "description": "English: Last restore:"
@@ -830,6 +826,18 @@
   "aboutContributors": {
     "message": "贡献者",
     "description": "English: Contributors"
+  },
+  "aboutSourceCode": {
+    "message": "源代码",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "翻译",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "过滤规则列表",
+    "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
     "message": "外部依赖（兼容 GPLv3 协议）：",

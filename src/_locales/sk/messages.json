@@ -359,10 +359,6 @@
     "message": "Zablokovať CSP hlásenia",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "Využité miesto: {{value}} bajtov",
-    "description": "Deprecated, will be removed"
-  },
   "settingsLastRestorePrompt": {
     "message": "Posledná obnova:",
     "description": "English: Last restore:"
@@ -830,6 +826,18 @@
   "aboutContributors": {
     "message": "Prispievatelia",
     "description": "English: Contributors"
+  },
+  "aboutSourceCode": {
+    "message": "Zdrojový kód",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "Preklady",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "Zoznam filtrov",
+    "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
     "message": "Externé závislosti (kompatibilné s GPLv3):",

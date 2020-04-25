@@ -359,10 +359,6 @@
     "message": "CSPレポートをブロックする",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "使用中のストレージ: {{value}} バイト",
-    "description": "Deprecated, will be removed"
-  },
   "settingsLastRestorePrompt": {
     "message": "最後の復元:",
     "description": "English: Last restore:"
@@ -760,7 +756,7 @@
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "タブあたりで最大 {{input}} ページ分の読み込みを保持する",
+    "message": "タブあたり最大 {{input}} ページ分の読み込みを保持する",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
@@ -830,6 +826,18 @@
   "aboutContributors": {
     "message": "貢献者達",
     "description": "English: Contributors"
+  },
+  "aboutSourceCode": {
+    "message": "ソースコード",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "翻訳",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "内製フィルター",
+    "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
     "message": "外部依存関係（GPLv3 互換）",

@@ -359,10 +359,6 @@
     "message": "Chặn các báo cáo CSP",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "Bộ nhớ đã dùng: {{value}} byte",
-    "description": "Deprecated, will be removed"
-  },
   "settingsLastRestorePrompt": {
     "message": "Lần phục hồi trước:",
     "description": "English: Last restore:"
@@ -830,6 +826,18 @@
   "aboutContributors": {
     "message": "Những người đóng góp",
     "description": "English: Contributors"
+  },
+  "aboutSourceCode": {
+    "message": "Mã nguồn",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "Bản dịch",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "Danh sách bộ lọc",
+    "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
     "message": "Các phụ thuộc bên ngoài (tương thích GPLv3):",

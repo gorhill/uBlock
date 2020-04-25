@@ -359,10 +359,6 @@
     "message": "Блокиране на CSP отчетите",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "Използвана памет за съхранение: {{value}} байта",
-    "description": "Deprecated, will be removed"
-  },
   "settingsLastRestorePrompt": {
     "message": "Последно възстановяване:",
     "description": "English: Last restore:"
@@ -830,6 +826,18 @@
   "aboutContributors": {
     "message": "Сътрудници",
     "description": "English: Contributors"
+  },
+  "aboutSourceCode": {
+    "message": "Програмен код",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "Преводи",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "Списъци с филтри",
+    "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
     "message": "Външни зависимости (съвместими с GPLv3):",

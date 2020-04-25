@@ -359,10 +359,6 @@
     "message": "CSP მოხსენებების აკრძალვა",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "გამოყენებული მოცულობა: {{value}} ბაიტი",
-    "description": "Deprecated, will be removed"
-  },
   "settingsLastRestorePrompt": {
     "message": "ბოლო აღდგენა:",
     "description": "English: Last restore:"
@@ -830,6 +826,18 @@
   "aboutContributors": {
     "message": "მოხალისეები",
     "description": "English: Contributors"
+  },
+  "aboutSourceCode": {
+    "message": "Source code",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "Translations",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "Filter lists",
+    "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
     "message": "ცალკეული დაქვემდებარებული პროექტები (GPLv3-თან თავსებადი):",

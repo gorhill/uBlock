@@ -359,10 +359,6 @@
     "message": "CSP raporlarını engelle",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "Kullanılan Alan: {{value}} byte",
-    "description": "Deprecated, will be removed"
-  },
   "settingsLastRestorePrompt": {
     "message": "Son geri yükleme:",
     "description": "English: Last restore:"
@@ -830,6 +826,18 @@
   "aboutContributors": {
     "message": "Katkıda bulunanlar",
     "description": "English: Contributors"
+  },
+  "aboutSourceCode": {
+    "message": "Kaynak kodu",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "Çeviriler",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "Filtre listeleri",
+    "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
     "message": "Dış bağımlılıklar (GPLv3-uyumlu):",
