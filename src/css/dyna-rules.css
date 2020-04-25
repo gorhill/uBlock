@@ -1,18 +1,22 @@
 html {
     height: 100vh;
     overflow: hidden;
+    width: 100vw;
     }
 body {
     display: flex;
     flex-direction: column;
+    height: 100%;
+    justify-content: stretch;
     overflow: hidden;
+    width: 100%;
+    }
+.body {
+    flex-shrink: 0;
     }
 #diff {
     border: 0;
     border-top: 1px solid #eee;
-    flex-grow: 1;
-    margin: 0;
-    padding: 0;
     white-space: nowrap;
 }
 #diff .tools > * {
@@ -28,8 +32,7 @@ body {
     width: 50%;
     white-space: nowrap;
     }
-#diff .ruleActions h3 {
-    font-weight: normal;
+#diff .ruleActions .fieldset-header {
     margin: 0.5em 0;
     }
 #ruleFilter {
@@ -63,7 +66,7 @@ body:not(.editing) #diff.dirty #commitButton:hover {
     }
 
 .codeMirrorContainer {
-    height: 60vh;
+    flex-grow: 1;
     }
 .CodeMirror-merge, .CodeMirror-merge-pane, .CodeMirror-merge .CodeMirror {
     box-sizing: border-box;
@@ -83,3 +86,8 @@ body[dir="rtl"] .CodeMirror-merge-pane-rightmost {
     right: unset;
     left: 0;
 }
+
+/* mobile devices */
+:root.mobile #diff .tools {
+    overflow: auto;
+    }

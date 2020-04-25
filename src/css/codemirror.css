@@ -96,3 +96,7 @@
     background-image: none;
     font-weight: bold;
     }
+/* This probably needs to be added to CodeMirror repo */
+.CodeMirror-merge-gap {
+    vertical-align: top;
+    }

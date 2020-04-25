@@ -39,7 +39,7 @@ const cmEditor = new CodeMirror(
     {
         autofocus: true,
         lineNumbers: true,
-        lineWrapping: true,
+        lineWrapping: false,
         styleActiveLine: true
     }
 );

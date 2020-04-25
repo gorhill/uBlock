@@ -53,9 +53,15 @@ input[type="checkbox"][disabled] + * {
         display: none !important;
         }
     }
-@media (max-height: 400px) {
-    html {
-        min-height: 400px !important;
-        overflow: auto !important;
-        }
+/**
+    On mobile device, the on-screen keyboard may take up
+    so much space that it overlaps the content being edited.
+    The rule below makes it possible to scroll the edited
+    content within view.
+*/
+:root.mobile {
+    overflow: auto;
+    }
+:root.mobile body {
+    min-height: 600px;
     }
