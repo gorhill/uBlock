@@ -22,6 +22,7 @@
     --light-gray-10: #f9f9fb;
     --light-gray-30: #e0e0e6;
     --light-gray-40: #cfcfd8;
+    --light-gray-90: #80808f;
     --violet-70: #592acb;
     --violet-80: #45278d;
     --yellow-30: #ffd567;
@@ -33,9 +34,22 @@
 }
 
 /**
+    Font size
+*/
+:root {
+    --font-size: 14px;
+}
+
+:root.mobile {
+    --font-size: 16px;
+}
+
+/**
     Components
 */
 :root {
+    --font-size: 14px;
+
     --bg-0: var(--white);
     --fg-0: var(--ink-80);
     --default-ink: var(--ink-80);
@@ -75,6 +89,10 @@
     --button-disabled-filter: opacity(38%);
     --button-disabled-surface: var(--light-gray-30);
     --button-disabled-ink: var(--ink-20);
+
+    --checkbox-size: calc(var(--font-size) + 2px);
+    --checkbox-ink: var(--light-gray-90);
+    --checkbox-checked-ink: var(--ink-20);
 
     --bg-transient-notice: hsla(60, 100%, 95%, 1);
 

@@ -68,7 +68,8 @@ body.hideUnused #listsOfBlockedHostsPrompt::before,
 .listEntry .listname {
     white-space: nowrap;
     }
-.listEntry.toRemove input[type="checkbox"] {
+.listEntry.toRemove input[type="checkbox"],
+.listEntry.toRemove .checkbox {
     visibility: hidden;
     }
 .listEntry.toRemove .listname {
@@ -198,9 +199,8 @@ body.updating .listEntry.checked.obsolete .updating {
     background-color: var(--bg-1);
     overflow-x: auto;
     }
-:root.mobile .li.listEntry label > span {
+:root.mobile .li.listEntry label > span:not([class]) {
     flex-grow: 1;
-    padding-inline-start: 0.3em;
     }
 :root.mobile .li.listEntry .listname,
 :root.mobile .li.listEntry .iconbar {

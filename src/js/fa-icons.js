@@ -35,7 +35,6 @@ const faIconsInit = function(root) {
         const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
         const href = '/img/fontawesome/fontawesome-defs.svg#' + name;
         use.setAttribute('href', href);
-        use.setAttribute('xlink:href', href);
         svg.appendChild(use);
         icon.replaceChild(svg, icon.firstChild);
         if ( icon.classList.contains('fa-icon-badged') ) {

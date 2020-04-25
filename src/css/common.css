@@ -42,7 +42,7 @@ body {
     color: var(--default-ink);
     fill: var(--default-ink);
     font-family: Inter, sans-serif;
-    font-size: 14px;
+    font-size: var(--font-size);
     line-height: 1.5;
     margin: 0;
     padding: 0;
@@ -85,7 +85,7 @@ button {
     justify-content: center;
     letter-spacing: 0.5px;
     min-height: 36px;
-    padding: 0 16px;
+    padding: 0 var(--font-size);
     -moz-appearance: none;
     -webkit-appearance: none;
     }
@@ -129,25 +129,62 @@ body[dir="rtl"] button.iconifiable > .fa,
 body[dir="rtl"] button.iconifiable > .fa-icon {
     padding-left: 0.5em;
     }
+label {
+    align-items: center;
+    display: inline-flex;
+    position: relative;
+    }
+
+/**
+    Checkbox design borrowed from:
+    - https://material.io/components/selection-controls
+    Motivation:
+    - To comply with design suggestions to make uBO comply with
+      Firefox Preview design guidelines.
+    - To have a single checkbox design across all platforms.
+*/
+input[type="checkbox"] {
+    --margin-end: calc(var(--font-size) * 0.75);
+    height: var(--checkbox-size);
+    margin: 0;
+    margin-inline-end: var(--margin-end);
+    -webkit-margin-end: var(--margin-end);
+    min-width: var(--checkbox-size);
+    opacity: 0;
+    width: var(--checkbox-size);
+    }
+input[type="checkbox"] + .checkbox {
+    background-color: transparent;
+    border: 2px solid var(--checkbox-ink);
+    border-radius: 2px;
+    box-sizing: border-box;
+    display: inline-flex;
+    height: var(--checkbox-size);
+    pointer-events: none;
+    position: absolute;
+    width: var(--checkbox-size);
+    }
+input[type="checkbox"] + .checkbox > svg {
+    fill: none;
+    height: 100%;
+    width: 100%;
+    }
+input[type="checkbox"]:checked + .checkbox {
+    background-color: var(--checkbox-checked-ink);
+    border-color: var(--checkbox-checked-ink);
+    fill: var(--checkbox-checked-ink);
+    stroke: var(--default-surface);
+    stroke-width: 3.12px;
+    }
+
 .hidden {
     display: none;
     height: 0;
     visibility: hidden;
     width: 0;
     }
-label {
-    align-items: center;
-    display: inline-flex;
-    }
-input[type="checkbox"] {
-    margin: 0;
-    margin-inline-start: 0.4em;
-    -webkit-margin-start: 0.4em;
-    margin-inline-end: 0.4em;
-    -webkit-margin-end: 0.4em;
-    }
 .fieldset {
-    margin: 1em 0.5em;
+    margin: var(--font-size);
     }
 .fieldset-header {
     color: var(--fieldset-header-ink);
@@ -161,7 +198,7 @@ input[type="checkbox"] {
 .li {
     align-items: center;
     display: flex;
-    margin: 12px 0;
+    margin: calc(var(--font-size) * 0.75) 0;
     }
 .liul {
     margin: 0.5em 0;
@@ -217,9 +254,6 @@ input[type="checkbox"] {
     }
 
 /* touch-screen devices */
-:root.mobile body {
-    font-size: 16px;
-    }
 :root.mobile label {
     flex-grow: 1
     }

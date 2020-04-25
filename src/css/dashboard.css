@@ -39,6 +39,7 @@ html, body {
     letter-spacing: 0.5px;
     padding: 0.5em 1.4em calc(0.5em - 3px);
     text-decoration: none;
+    user-select: none;
     white-space: nowrap;
     }
 .tabButton:focus {
