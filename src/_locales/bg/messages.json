@@ -828,7 +828,7 @@
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Програмен код",
+    "message": "Изходен код",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
