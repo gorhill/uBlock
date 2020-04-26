@@ -147,6 +147,7 @@ label {
     --margin-end: calc(var(--font-size) * 0.75);
     box-sizing: border-box;
     display: inline-flex;
+    flex-shrink: 0;
     height: var(--checkbox-size);
     margin: 0;
     margin-inline-end: var(--margin-end);
