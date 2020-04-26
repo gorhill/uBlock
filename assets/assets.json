@@ -31,7 +31,8 @@
 		],
 		"cdnURLs": [
 			"https://gitcdn.xyz/repo/uBlockOrigin/uAssets/master/filters/filters.txt",
-			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssets@master/filters/filters.txt"
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssets@master/filters/filters.txt",
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssets/master/filters/filters.txt"
 		],
 		"supportURL": "https://github.com/uBlockOrigin/uAssets/issues"
 	},
@@ -74,7 +75,8 @@
 		],
 		"cdnURLs": [
 			"https://gitcdn.xyz/repo/uBlockOrigin/uAssets/master/filters/unbreak.txt",
-			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssets@master/filters/unbreak.txt"
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssets@master/filters/unbreak.txt",
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssets/master/filters/unbreak.txt"
 		]
 	},
 	"adguard-generic": {
@@ -231,7 +233,12 @@
 		"group": "social",
 		"title": "uBlock filters – Annoyances",
 		"off": true,
-		"contentURL": "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/annoyances.txt"
+		"contentURL": "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/annoyances.txt",
+		"cdnURLs": [
+			"https://gitcdn.xyz/repo/uBlockOrigin/uAssets/master/filters/annoyances.txt",
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssets@master/filters/annoyances.txt",
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssets/master/filters/annoyances.txt"
+		]
 	},
 	"dpollock-0": {
 		"content": "filters",
