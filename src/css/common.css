@@ -143,38 +143,43 @@ label {
       Firefox Preview design guidelines.
     - To have a single checkbox design across all platforms.
 */
-input[type="checkbox"]:not(.native) {
+.checkbox {
     --margin-end: calc(var(--font-size) * 0.75);
+    box-sizing: border-box;
+    display: inline-flex;
     height: var(--checkbox-size);
     margin: 0;
     margin-inline-end: var(--margin-end);
     -webkit-margin-end: var(--margin-end);
-    min-width: var(--checkbox-size);
-    opacity: 0;
+    position: relative;
     width: var(--checkbox-size);
     }
-input[type="checkbox"] + .checkbox {
+.checkbox > input[type="checkbox"] {
+    box-sizing: border-box;
+    height: 100%;
+    margin: 0;
+    min-width: var(--checkbox-size);
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    }
+.checkbox > input[type="checkbox"] + svg {
     background-color: transparent;
     border: 2px solid var(--checkbox-ink);
     border-radius: 2px;
     box-sizing: border-box;
-    display: inline-flex;
-    height: var(--checkbox-size);
-    pointer-events: none;
-    position: absolute;
-    width: var(--checkbox-size);
-    }
-input[type="checkbox"] + .checkbox > svg {
     fill: none;
     height: 100%;
+    pointer-events: none;
+    position: absolute;
+    stroke: none;
+    stroke-width: 3.12px;
     width: 100%;
     }
-input[type="checkbox"]:checked + .checkbox {
+.checkbox > input[type="checkbox"]:checked + svg {
     background-color: var(--checkbox-checked-ink);
     border-color: var(--checkbox-checked-ink);
-    fill: var(--checkbox-checked-ink);
     stroke: var(--default-surface);
-    stroke-width: 3.12px;
     }
 
 .hidden {

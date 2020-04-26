@@ -68,7 +68,6 @@ body.hideUnused #listsOfBlockedHostsPrompt::before,
 .listEntry .listname {
     white-space: nowrap;
     }
-.listEntry.toRemove input[type="checkbox"],
 .listEntry.toRemove .checkbox {
     visibility: hidden;
     }

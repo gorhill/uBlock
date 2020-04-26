@@ -26,7 +26,8 @@
 // This file should always be included at the end of the `body` tag, so as
 // to ensure all i18n targets are already loaded.
 
-(function() {
+{
+// >>>>> start of local scope
 
 /******************************************************************************/
 
@@ -187,8 +188,22 @@ vAPI.i18n.render = function(context) {
                 if ( pos !== -1 ) {
                     part = part.slice(0, pos) + part.slice(-2);
                 }
-                const node = elem.querySelector(part.slice(2, -2));
-                if ( node !== null ) {
+                const selector = part.slice(2, -2);
+                let node;
+                // Ideally, the i18n strings explicitly refer to the
+                // class of the element to insert. However for now we
+                // will create a class from what is currently found in
+                // the placeholder and first try to lookup the resulting
+                // selector. This way we don't have to revisit all
+                // translations just for the sake of declaring the proper
+                // selector in the placeholder field.
+                if ( selector.charCodeAt(0) !== 0x2E /* '.' */ ) {
+                    node = elem.querySelector(`.${selector}`);
+                }
+                if ( node instanceof Element === false ) {
+                    node = elem.querySelector(selector);
+                }
+                if ( node instanceof Element ) {
                     safeTextToDOM(textBefore, fragment);
                     fragment.appendChild(node);
                     textBefore = '';
@@ -255,6 +270,7 @@ vAPI.i18n.renderElapsedTimeToString = function(tstamp) {
 
 /******************************************************************************/
 
-})();
+// <<<<< end of local scope
+}
 
 /******************************************************************************/
