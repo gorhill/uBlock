@@ -165,7 +165,7 @@ body.responsive #extraTools {
 #extraTools > span > .nope {
     left: 50%;
     position: absolute;
-    stroke: var(--fg-popup-icon-x);
+    stroke: var(--popup-icon-x-ink);
     stroke-width: 2;
     transform: translateX(-50%);
     visibility: hidden;

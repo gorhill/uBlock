@@ -162,6 +162,17 @@ const formatNumber = function(count) {
 
 /******************************************************************************/
 
+const safePunycodeToUnicode = function(hn) {
+    const pretty = punycode.toUnicode(hn);
+    return pretty === hn ||
+           reCyrillicAmbiguous.test(pretty) === false ||
+           reCyrillicNonAmbiguous.test(pretty)
+        ? pretty
+        : hn;
+};
+
+/******************************************************************************/
+
 const rulekeyCompare = function(a, b) {
     let ha = a.slice(2, a.indexOf(' ', 2));
     if ( !reIP.test(ha) ) {
@@ -413,18 +424,27 @@ const renderPopup = function() {
         document.title = popupData.appName + ' - ' + popupData.tabTitle;
     }
 
-    let elem = document.body;
-    elem.classList.toggle(
-        'advancedUser',
-        popupData.advancedUserEnabled === true
-    );
-    elem.classList.toggle(
-        'off',
-        popupData.pageURL === '' || popupData.netFilteringSwitch !== true
-    );
+    const isFiltering = popupData.netFilteringSwitch;
 
-    const canElementPicker = popupData.canElementPicker === true &&
-                           popupData.netFilteringSwitch === true;
+    const body = document.body;
+    body.classList.toggle('advancedUser', popupData.advancedUserEnabled === true);
+    body.classList.toggle('off', popupData.pageURL === '' || isFiltering !== true);
+
+    // The hostname information below the power switch
+    {
+        const [ elemHn, elemDn ] = uDom.nodeFromId('hostname').children;
+        const { pageDomain, pageHostname } = popupData;
+        if ( pageDomain !== '' ) {
+            elemDn.textContent = safePunycodeToUnicode(pageDomain);
+            elemHn.textContent = pageHostname !== pageDomain
+                ? safePunycodeToUnicode(pageHostname.slice(0, -pageDomain.length - 1)) + '.'
+                : '';
+        } else {
+            elemHn.textContent = elemDn.textContent = '';
+        }
+    }
+
+    const canElementPicker = popupData.canElementPicker === true && isFiltering;
     uDom.nodeFromId('gotoPick').classList.toggle('enabled', canElementPicker);
     uDom.nodeFromId('gotoZap').classList.toggle('enabled', canElementPicker);
 
@@ -478,10 +498,7 @@ const renderPopup = function() {
         vAPI.localStorage.setItem('popupFirewallPane', dfPaneVisibleStored);
     }
 
-    document.body.classList.toggle(
-        'dfEnabled',
-        dfPaneVisible === true
-    );
+    body.classList.toggle('dfEnabled', dfPaneVisible === true);
 
     document.documentElement.classList.toggle(
         'colorBlind',

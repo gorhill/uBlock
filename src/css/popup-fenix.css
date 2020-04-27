@@ -10,6 +10,7 @@
 /* Internal CSS values */
 :root body,
 :root.mobile body {
+    --popup-default-gap: 1em;
     font-size: 14px;
     line-height: 20px;
     transition-duration: 0.2s;
@@ -51,16 +52,16 @@ hr {
     top: 0;
     z-index: 100;
     }
-#sticky > div {
+#basicTools {
     align-items: stretch;
     display: flex;
     justify-content: space-between;
+    margin: var(--popup-default-gap) 0.5em;
     }
 #switch {
     display: flex;
     flex-grow: 2;
     justify-content: center;
-    margin: 0.5em 0;
     }
 #switch .fa-icon {
     color: var(--popup-power-ink);
@@ -86,7 +87,6 @@ body.off #switch .fa-icon {
     flex-direction: column;
     flex-grow: 1;
     justify-content: space-evenly;
-    padding: 0.5em;
     }
 .rulesetTools [id] {
     background-color: var(--bg-transient-notice);
@@ -107,21 +107,24 @@ body.needSave #saveRules,
 body.needSave #revertRules {
     visibility: visible;
     }
+#hostname {
+    margin: var(--popup-default-gap) 0.2em;
+    text-align: center;
+    }
+#hostname > span + span {
+    font-weight: 600;
+    }
 
 .itemRibbon {
     display: grid;
-    gap: 0.8em 1em;
+    gap: var(--popup-default-gap);
     grid-template: auto / auto auto;
-    padding: 1em 1em;
+    margin: var(--popup-default-gap);
     }
 .itemRibbon > [data-i18n] + span {
     justify-self: end;
     text-align: end;
     white-space: nowrap;
-    }
-.itemRibbon > .h-gutter {
-    display: inline-block;
-    height: 1em;
     }
 
 .toolRibbon {
@@ -131,7 +134,7 @@ body.needSave #revertRules {
     grid-auto-flow: column;
     grid-template: auto / repeat(4, 1fr);
     justify-items: center;
-    margin: 1em 0;
+    margin: var(--popup-default-gap) 0;
     white-space: normal;
     }
 .toolRibbon .tool {
@@ -161,13 +164,14 @@ body.mobile.no-tooltips .toolRibbon .tool {
     position: relative;
     }
 #extraTools .fa-icon > .nope {
+    height: 1.1em;
     left: 50%;
     position: absolute;
-    stroke: var(--fg-popup-icon-x);
+    stroke: var(--popup-icon-x-ink);
     stroke-width: 2;
     transform: translateX(-50%);
     visibility: hidden;
-    width: 1em;
+    width: 1.1em;
     }
 #extraTools > span.on .fa-icon >.nope {
     visibility: visible;
@@ -490,6 +494,7 @@ body.advancedUser #firewall > div > span.noopRule.ownRule,
     overflow: hidden;
     }
 :root.desktop body {
+    --popup-default-gap: 0.8em;
     max-width: max(100vw, 800px);
     }
 :root.desktop #panes {
