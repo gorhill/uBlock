@@ -433,7 +433,7 @@ body.advancedUser #firewallContainer > div > span.noopRule,
     }
 body.advancedUser #firewallContainer > div > span.ownRule,
 #firewallContainer > div > span.ownRule {
-    color: var(--bg-0);
+    color: var(--bg-popup-cell-block-own);
     }
 body.advancedUser #firewallContainer > div > span.allowRule.ownRule,
 #actionSelector > #dynaAllow:hover {

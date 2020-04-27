@@ -70,6 +70,7 @@ const µBlock = (( ) => { // jshint ignore:line
         selfieAfter: 3,
         strictBlockingBypassDuration: 120,
         suspendTabsUntilReady: 'unset',
+        uiPopupConfig: 'undocumented',
         uiFlavor: 'unset',
         updateAssetBypassBrowserCache: false,
         userResourcesLocation: 'unset',

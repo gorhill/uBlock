@@ -40,6 +40,7 @@
 
 .fa-icon > svg {
     height: 1em;
+    overflow: visible;
     width: 1em;
     }
 

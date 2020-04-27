@@ -50,8 +50,6 @@
 :root {
     --font-size: 14px;
 
-    --bg-0: var(--white);
-    --fg-0: var(--ink-80);
     --default-ink: var(--ink-80);
     --default-ink-a4: var(--ink-80-a4);
     --default-surface: var(--light-gray-10);
@@ -142,13 +140,11 @@
     Use slightly darker inks on lower pixel-density devices to improve
     contrast.
 */
-@media (max-resolution: 150dpi) {
-    :root {
-        --default-ink: var(--ink-90);
-        --button-ink: var(--ink-90);
-        --fieldset-header-ink: var(--ink-50);
-        --link-ink: var(--violet-80);
-    }
+:root:not(.hidpi) {
+    --default-ink: var(--ink-90);
+    --button-ink: var(--ink-90);
+    --fieldset-header-ink: var(--ink-50);
+    --link-ink: var(--violet-80);
 }
 
 /**

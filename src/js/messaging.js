@@ -288,6 +288,10 @@ const popupDataFromTabId = function(tabId, tabTitle) {
         tooltipsDisabled: µb.userSettings.tooltipsDisabled
     };
 
+    if ( µb.hiddenSettings.uiPopupConfig !== 'undocumented' ) {
+        r.uiPopupConfig = µb.hiddenSettings.uiPopupConfig;
+    }
+
     const pageStore = µb.pageStoreFromTabId(tabId);
     if ( pageStore ) {
         // https://github.com/gorhill/uBlock/issues/2105

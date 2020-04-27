@@ -127,39 +127,35 @@ body.needSave #revertRules {
 .toolRibbon {
     align-items: start;
     display: grid;
-    grid-template: auto / 25% 25% 25% 25%;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+    grid-template: auto / repeat(4, 1fr);
     justify-items: center;
     margin: 1em 0;
     white-space: normal;
     }
 .toolRibbon .tool {
+    cursor: pointer;
     display: flex;
     flex-direction: column;
     font-size: 1.4em;
     min-width: 32px;
-    }
-
-.tool {
-    cursor: pointer;
     padding: 0 0.5em;
     unicode-bidi: embed;
     visibility: hidden;
     }
-.tool.enabled {
+.toolRibbon .tool.enabled {
     visibility: visible;
     }
-.tool [data-i18n] {
+.toolRibbon .tool .caption {
     font: 10px/12px sans-serif;
     margin-top: 0.5em;
     text-align: center;
     }
-body.no-tooltips .tool [data-i18n] {
-    display: none;
+body.mobile.no-tooltips .toolRibbon .tool {
+    font-size: 1.6em;
     }
 
-.statValue {
-    margin: 0;
-    }
 #extraTools .fa-icon {
     align-self: center;
     position: relative;
@@ -470,10 +466,31 @@ body.advancedUser #firewall > div > span.noopRule.ownRule,
     width: 100%;
     }
 
+/* configurable UI elements */
+:root.desktop .toolRibbon .caption,
+:root.mobile body.no-tooltips .toolRibbon .caption,
+:root.mobile body[data-ui~="-captions"] .toolRibbon .caption {
+    display: none;
+    }
+:root.mobile .toolRibbon .caption,
+:root.desktop body[data-ui~="+captions"] .toolRibbon .caption {
+    display: inherit;
+    }
+:root.mobile #no-popups,
+:root body[data-ui~="-no-popups"] #no-popups {
+    display: none;
+    }
+:root.desktop #no-popups,
+:root body[data-ui~="+no-popups"] #no-popups {
+    display: flex;
+    }
+
 /* mouse-driven devices */
+:root.desktop {
+    overflow: hidden;
+    }
 :root.desktop body {
     max-width: max(100vw, 800px);
-    overflow: auto;
     }
 :root.desktop #panes {
     flex-direction: row-reverse;
@@ -498,7 +515,4 @@ body.advancedUser #firewall > div > span.noopRule.ownRule,
     }
 :root.desktop .tool:hover {
     background-color: var(--button-surface);
-    }
-:root.desktop .tool [data-i18n] {
-    width: min-content;
     }

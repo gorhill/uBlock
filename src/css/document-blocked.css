@@ -88,8 +88,8 @@ body[dir="rtl"] #theURL > p > span {
     left: 0;
     }
 #theURL > p:hover > span {
-    color: var(--fg-0);
-    fill: var(--fg-0);
+    color: var(--default-ink);
+    fill: var(--default-ink);
     }
 #theURL > p > span:before {
     content: '\f010';

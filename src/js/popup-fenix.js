@@ -504,24 +504,16 @@ const renderPopup = function() {
 //   Use tooltip for ARIA purpose.
 
 const renderTooltips = function(selector) {
-    for ( const entry of tooltipTargetSelectors ) {
-        if ( selector !== undefined && entry[0] !== selector ) { continue; }
+    for ( const [ key, details ] of tooltipTargetSelectors ) {
+        if ( selector !== undefined && key !== selector ) { continue; }
+        const elem = uDom.nodeFromSelector(key);
+        if ( elem.hasAttribute('title') === false ) { continue; }
         const text = vAPI.i18n(
-            entry[1].i18n +
-            (uDom.nodeFromSelector(entry[1].state) === null ? '1' : '2')
+            details.i18n +
+            (uDom.nodeFromSelector(details.state) === null ? '1' : '2')
         );
-        const elem = uDom.nodeFromSelector(entry[0]);
         elem.setAttribute('aria-label', text);
-        const tip = elem.querySelector('.tip');
-        if ( tip !== null ) {
-            tip.textContent = text;
-        } else {
-            elem.setAttribute('data-tip', text);
-        }
-        if ( tip === null && selector !== undefined ) {
-            uDom.nodeFromId('tooltip').textContent =
-                elem.getAttribute('data-tip');
-        }
+        elem.setAttribute('title', text);
     }
 };
 
@@ -531,6 +523,13 @@ const tooltipTargetSelectors = new Map([
         {
             state: 'body.off',
             i18n: 'popupPowerSwitchInfo',
+        }
+    ],
+    [
+        '#no-popups',
+        {
+            state: '#no-popups.on',
+            i18n: 'popupTipNoPopups'
         }
     ],
     [
@@ -585,13 +584,17 @@ let renderOnce = function() {
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/22
     if ( popupData.advancedUserEnabled !== true ) {
-        uDom('#firewall [data-i18n-tip][data-src]').removeAttr('data-tip');
+        uDom('#firewall [title][data-src]').removeAttr('title');
     }
 
-    body.classList.toggle(
-        'no-tooltips',
-        popupData.tooltipsDisabled === true
-    );
+    if ( popupData.uiPopupConfig !== undefined ) {
+        document.body.setAttribute('data-ui', popupData.uiPopupConfig);
+    }
+
+    body.classList.toggle('no-tooltips', popupData.tooltipsDisabled === true);
+    if ( popupData.tooltipsDisabled === true ) {
+        uDom('[title]').removeAttr('title');
+    }
 };
 
 /******************************************************************************/
@@ -986,7 +989,7 @@ const toggleHostnameSwitch = async function(ev) {
         return;
     }
     target.classList.toggle('on');
-    renderTooltips('#' + switchName);
+    renderTooltips(`#${switchName}`);
 
     const response = await messaging.send('popupPanel', {
         what: 'toggleHostnameSwitch',
