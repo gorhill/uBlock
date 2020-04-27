@@ -150,7 +150,7 @@ vAPI.webextFlavor = {
     };
 
     const reHostnameFromNetworkURL =
-        /^(?:http|ws|ftp)s?:\/\/([0-9a-z_][0-9a-z._-]*[0-9a-z])\//;
+        /^(?:http|ws|ftp)s?:\/\/([0-9a-z_][0-9a-z._-]*[0-9a-z])(?::\d+)?\//;
 
     vAPI.hostnameFromNetworkURL = function(url) {
         const matches = reHostnameFromNetworkURL.exec(url);
