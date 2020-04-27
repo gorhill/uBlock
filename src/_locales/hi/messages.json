@@ -179,21 +179,25 @@
     "message": "जावास्क्रिप्ट को अब और न बंद करने के लिए दबाएं",
     "description": "Tooltip for the no-scripting per-site switch"
   },
+  "popupNoPopups_v2": {
+    "message": "पॉप-अप विंडोज",
+    "description": "Caption for the no-popups per-site switch"
+  },
   "popupNoLargeMedia_v2": {
     "message": "बड़े मीडिया एलिमेंट्स ",
-    "description": "Tip for the no-large-media per-site switch"
+    "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
     "message": "कॉस्मेटिक फिल्टर",
-    "description": "Tip for the no-cosmetic-filtering per-site switch"
+    "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
     "message": "रिमोट फोंट्स\n",
-    "description": "Tip for the no-remote-fonts per-site switch"
+    "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
     "message": "जावास्क्रिप्ट ",
-    "description": "Tip for the no-scripting per-site switch"
+    "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
     "message": "और",
@@ -676,7 +680,7 @@
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
-    "message": "Partyness",
+    "message": "पर्टिनेस",
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
@@ -740,23 +744,23 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Static filter <code>{{filter}}</code> found in:",
+    "message": "<code>{{filter}}</code>  में पाया गया स्टैटिक फ़िल्टर ",
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Static filter could not be found in any of the currently enabled filter lists",
+    "message": "फिलहाल चालू  की गई हुई कोई भी फिल्टर्स सूची में स्टैटिक फिल्टर नहीं पाया गया",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
-    "message": "Logger entries which do not fulfill all three conditions below will be automatically discarded:",
+    "message": "नीचे दी गई तीनों सूचियों से जो नहीं मिलते उनको ऑटोमेटिकली निकाल दिया जाएगा:",
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
-    "message": "Preserve entries from the last {{input}} minutes",
+    "message": "आखरी {{input}} मिनट की जो एंट्रेंस हैं उन्हें बचा कर रखें",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "Preserve at most {{input}} page loads per tab",
+    "message": "ज्यादा-से-ज्यादा इतनी पेज लोड्स को बचा कर रखें {{input}}",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {

@@ -179,21 +179,25 @@
     "message": "Click to no longer disable JavaScript on this site",
     "description": "Tooltip for the no-scripting per-site switch"
   },
+  "popupNoPopups_v2": {
+    "message": "Pop-Up prozor",
+    "description": "Caption for the no-popups per-site switch"
+  },
   "popupNoLargeMedia_v2": {
     "message": "Veliki medija elementi",
-    "description": "Tip for the no-large-media per-site switch"
+    "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
     "message": "Estetski filteri",
-    "description": "Tip for the no-cosmetic-filtering per-site switch"
+    "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
     "message": "Udaljeni fontovi",
-    "description": "Tip for the no-remote-fonts per-site switch"
+    "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
     "message": "JavaScript",
-    "description": "Tip for the no-scripting per-site switch"
+    "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
     "message": "Više",
@@ -828,15 +832,15 @@
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Source code",
+    "message": "Izvorni kod",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
-    "message": "Translations",
+    "message": "Prijevodi",
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
-    "message": "Filter lists",
+    "message": "Liste filtera",
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {

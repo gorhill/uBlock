@@ -179,21 +179,25 @@
     "message": "Kattints, hogy JavaScript ne legyen teljesen letiltva ezen az oldalon",
     "description": "Tooltip for the no-scripting per-site switch"
   },
+  "popupNoPopups_v2": {
+    "message": "Felugró ablakok",
+    "description": "Caption for the no-popups per-site switch"
+  },
   "popupNoLargeMedia_v2": {
     "message": "Nagy média elemek",
-    "description": "Tip for the no-large-media per-site switch"
+    "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
     "message": "Kozmetikai szűrés",
-    "description": "Tip for the no-cosmetic-filtering per-site switch"
+    "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
     "message": "Távoli betűtípusok",
-    "description": "Tip for the no-remote-fonts per-site switch"
+    "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
     "message": "JavaScript",
-    "description": "Tip for the no-scripting per-site switch"
+    "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
     "message": "Több",

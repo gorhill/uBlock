@@ -179,21 +179,25 @@
     "message": "Alklaku por ne plu malaktivigi JavaScript en tiu ĉi retejo",
     "description": "Tooltip for the no-scripting per-site switch"
   },
+  "popupNoPopups_v2": {
+    "message": "Pop-up windows",
+    "description": "Caption for the no-popups per-site switch"
+  },
   "popupNoLargeMedia_v2": {
     "message": "Large media elements",
-    "description": "Tip for the no-large-media per-site switch"
+    "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
     "message": "Cosmetic filtering",
-    "description": "Tip for the no-cosmetic-filtering per-site switch"
+    "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
     "message": "Remote fonts",
-    "description": "Tip for the no-remote-fonts per-site switch"
+    "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
     "message": "JavaScript",
-    "description": "Tip for the no-scripting per-site switch"
+    "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
     "message": "Pli",
