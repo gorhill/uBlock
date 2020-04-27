@@ -154,6 +154,7 @@ const redirectableResources = new Map([
         alias: 'scorecardresearch.com/beacon.js',
     } ],
     [ 'window.open-defuser.js', {
+        alias: 'nowoif.js',
         data: 'text',
     } ],
 ]);
