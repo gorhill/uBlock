@@ -41,26 +41,22 @@ CodeMirror.defineMode('raw-settings', function() {
     return {
         token: function(stream) {
             if ( stream.sol() ) {
-                const match = stream.match(/\s*\S+/);
-                if ( match !== null ) {
-                    lastSetting = match[0].trim();
-                    if ( defaultSettings.has(lastSetting) ) {
-                        return 'keyword';
-                    }
-                }
-                lastSetting = '';
-                stream.skipToEnd();
-                return 'error';
-            }
-            if ( lastSetting !== '' ) {
                 stream.eatSpace();
-                const match = stream.match(/\S+.*$/);
-                if ( match !== null ) {
-                    if ( match[0] !== defaultSettings.get(lastSetting) ) {
-                        return 'strong';
-                    }
+                const match = stream.match(/\S+/);
+                if ( match !== null && defaultSettings.has(match[0]) ) {
+                    lastSetting = match[0];
+                    return 'keyword';
                 }
-                lastSetting = '';
+                stream.skipToEnd();
+                return 'line-cm-error';
+            }
+            stream.eatSpace();
+            const match = stream.match(/.*$/);
+            if (
+                match !== null &&
+                match[0].trim() !== defaultSettings.get(lastSetting)
+            ) {
+                return 'line-cm-strong';
             }
             stream.skipToEnd();
             return null;

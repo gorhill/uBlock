@@ -52,7 +52,7 @@ hr {
     top: 0;
     z-index: 100;
     }
-#basicTools {
+#stickyTools {
     align-items: stretch;
     display: flex;
     justify-content: space-between;
