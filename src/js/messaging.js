@@ -1163,7 +1163,10 @@ const onMessage = function(request, sender, callback) {
         break;
 
     case 'readHiddenSettings':
-        response = µb.stringFromHiddenSettings();
+        response = {
+            current: µb.hiddenSettings,
+            default: µb.hiddenSettingsDefault,
+        };
         break;
 
     case 'restoreUserData':
