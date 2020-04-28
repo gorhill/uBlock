@@ -240,7 +240,7 @@
             apply: function(target, thisArg, args) {
                 const type = args[0].toString();
                 const handler = String(args[1]);
-                log('addEventListener("%s", %s)', type, handler);
+                log('uBO: addEventListener("%s", %s)', type, handler);
                 return target.apply(thisArg, args);
             }
         }
@@ -308,7 +308,7 @@
             if ( log !== undefined ) {
                 const json = JSON.stringify(r, null, 2);
                 if ( reLogNeedle.test(json) ) {
-                    log(location.hostname, json);
+                    log('uBO:', location.hostname, json);
                 }
                 return r;
             }
@@ -851,7 +851,7 @@
         new Proxy(peerConnectionProto.createDataChannel, {
             apply: function(target, thisArg, args) {
                 if ( isGoodConfig(target, args[1]) === false ) {
-                    log(args[1]);
+                    log('uBO:', args[1]);
                     return Reflect.apply(target, thisArg, args.slice(0, 1));
                 }
                 return Reflect.apply(target, thisArg, args);
@@ -861,7 +861,7 @@
         new Proxy(peerConnectionCtor, {
             construct: function(target, args) {
                 if ( isGoodConfig(target, args[0]) === false ) {
-                    log(args[0]);
+                    log('uBO:', args[0]);
                     return Reflect.construct(target);
                 }
                 return Reflect.construct(target, args);
