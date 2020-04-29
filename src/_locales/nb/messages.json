@@ -180,7 +180,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
-    "message": "Pop-up windows",
+    "message": "Oppspretts-vinduer",
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
