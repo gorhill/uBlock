@@ -264,14 +264,14 @@ const getFirewallRules = function(srcHostname, desHostnames) {
 const popupDataFromTabId = function(tabId, tabTitle) {
     const tabContext = µb.tabContextManager.mustLookup(tabId);
     const rootHostname = tabContext.rootHostname;
+    const µbus = µb.userSettings;
     const r = {
-        advancedUserEnabled: µb.userSettings.advancedUserEnabled,
+        advancedUserEnabled: µbus.advancedUserEnabled,
         appName: vAPI.app.name,
         appVersion: vAPI.app.version,
-        colorBlindFriendly: µb.userSettings.colorBlindFriendly,
+        colorBlindFriendly: µbus.colorBlindFriendly,
         cosmeticFilteringSwitch: false,
-        dfEnabled: µb.userSettings.dynamicFilteringEnabled,
-        firewallPaneMinimized: µb.userSettings.firewallPaneMinimized,
+        firewallPaneMinimized: µbus.firewallPaneMinimized,
         globalAllowedRequestCount: µb.localSettings.allowedRequestCount,
         globalBlockedRequestCount: µb.localSettings.blockedRequestCount,
         fontSize: µb.hiddenSettings.popupFontSize,
@@ -283,9 +283,11 @@ const popupDataFromTabId = function(tabId, tabTitle) {
         pageAllowedRequestCount: 0,
         pageBlockedRequestCount: 0,
         popupBlockedCount: 0,
+        popupPanelSections: µbus.popupPanelSections,
+        popupPanelDisabledSections: µbus.popupPanelDisabledSections,
         tabId: tabId,
         tabTitle: tabTitle,
-        tooltipsDisabled: µb.userSettings.tooltipsDisabled
+        tooltipsDisabled: µbus.tooltipsDisabled
     };
 
     if ( µb.hiddenSettings.uiPopupConfig !== 'undocumented' ) {

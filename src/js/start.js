@@ -114,6 +114,15 @@ const onVersionReady = function(lastVersion) {
         µb.saveHostnameSwitches();
     }
 
+    // Configure new popup panel according to classic popup panel
+    // configuration.
+    if ( lastVersionInt !== 0 && lastVersionInt <= 1026003014 ) {
+        µb.userSettings.popupPanelSections =
+            µb.userSettings.dynamicFilteringEnabled === true ? 0b1111 : 0b0111;
+        µb.userSettings.dynamicFilteringEnabled = undefined;
+        µb.saveUserSettings();
+    }
+
     vAPI.storage.set({ version: vAPI.app.version });
 };
 
@@ -356,14 +365,16 @@ if (
     browser.browserAction instanceof Object &&
     browser.browserAction.setPopup instanceof Function
 ) {
-    let uiFlavor = µb.hiddenSettings.uiFlavor;
-    if ( uiFlavor === 'unset' && vAPI.webextFlavor.soup.has('mobile') ) {
-        uiFlavor = 'fenix';
-    }
-    if ( uiFlavor !== 'unset' && /\w+/.test(uiFlavor) ) {
-        browser.browserAction.setPopup({
-            popup: vAPI.getURL(`popup-${uiFlavor}.html`)
-        });
+    const env = vAPI.webextFlavor;
+    if (
+        µb.hiddenSettings.uiFlavor === 'classic' || (
+            µb.hiddenSettings.uiFlavor === 'unset' && (
+                env.soup.has('chromium') && env.major < 66 ||
+                env.soup.has('firefox') && env.major < 68
+            )
+        )
+    ) {
+        browser.browserAction.setPopup({ popup: vAPI.getURL('popup.html') });
     }
 }
 

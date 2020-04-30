@@ -30,22 +30,21 @@
 
 /******************************************************************************/
 
+/*
 let popupFontSize;
 vAPI.localStorage.getItemAsync('popupFontSize').then(value => {
     if ( typeof value !== 'string' || value === 'unset' ) { return; }
     document.body.style.setProperty('font-size', value);
     popupFontSize = value;
 });
+*/
 
 // https://github.com/chrisaljoudi/uBlock/issues/996
 //   Experimental: mitigate glitchy popup UI: immediately set the firewall
 //   pane visibility to its last known state. By default the pane is hidden.
-let dfPaneVisibleStored;
-vAPI.localStorage.getItemAsync('popupFirewallPane').then(value => {
-    dfPaneVisibleStored = value === true || value === 'true';
-    if ( dfPaneVisibleStored ) {
-        document.body.classList.add('dfEnabled');
-    }
+vAPI.localStorage.getItemAsync('popupPanelSections').then(bits => {
+    if ( typeof bits !== 'number' ) { return; }
+    sectionBitsToAttribute(bits);
 });
 
 /******************************************************************************/
@@ -485,21 +484,6 @@ const renderPopup = function() {
     uDom.nodeFromSelector('#no-remote-fonts .fa-icon-badge')
         .textContent = total ? Math.min(total, 99).toLocaleString() : '';
 
-    // https://github.com/chrisaljoudi/uBlock/issues/470
-    // This must be done here, to be sure the popup is resized properly
-    const dfPaneVisible = popupData.dfEnabled;
-
-    // https://github.com/chrisaljoudi/uBlock/issues/1068
-    // Remember the last state of the firewall pane. This allows to
-    // configure the popup size early next time it is opened, which means a
-    // less glitchy popup at open time.
-    if ( dfPaneVisible !== dfPaneVisibleStored ) {
-        dfPaneVisibleStored = dfPaneVisible;
-        vAPI.localStorage.setItem('popupFirewallPane', dfPaneVisibleStored);
-    }
-
-    body.classList.toggle('dfEnabled', dfPaneVisible === true);
-
     document.documentElement.classList.toggle(
         'colorBlind',
         popupData.colorBlindFriendly === true
@@ -508,7 +492,7 @@ const renderPopup = function() {
     setGlobalExpand(popupData.firewallPaneMinimized === false, true);
 
     // Build dynamic filtering pane only if in use
-    if ( dfPaneVisible ) {
+    if ( (popupData.popupPanelSections & ~popupData.popupPanelDisabledSections & 0b1000) !== 0 ) {
         buildAllFirewallRows();
     }
 
@@ -588,6 +572,7 @@ let renderOnce = function() {
 
     const body = document.body;
 
+/*
     if ( popupData.fontSize !== popupFontSize ) {
         popupFontSize = popupData.fontSize;
         if ( popupFontSize !== 'unset' ) {
@@ -598,11 +583,13 @@ let renderOnce = function() {
             vAPI.localStorage.removeItem('popupFontSize');
         }
     }
+*/
 
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/22
-    if ( popupData.advancedUserEnabled !== true ) {
-        uDom('#firewall [title][data-src]').removeAttr('title');
-    }
+    uDom.nodeFromId('version').textContent = popupData.appVersion;
+
+    sectionBitsToAttribute(
+        popupData.popupPanelSections & ~popupData.popupPanelDisabledSections
+    );
 
     if ( popupData.uiPopupConfig !== undefined ) {
         document.body.setAttribute('data-ui', popupData.uiPopupConfig);
@@ -611,6 +598,11 @@ let renderOnce = function() {
     body.classList.toggle('no-tooltips', popupData.tooltipsDisabled === true);
     if ( popupData.tooltipsDisabled === true ) {
         uDom('[title]').removeAttr('title');
+    }
+
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/22
+    if ( popupData.advancedUserEnabled !== true ) {
+        uDom('#firewall [title][data-src]').removeAttr('title');
     }
 };
 
@@ -733,28 +725,70 @@ const gotoURL = function(ev) {
 
 /******************************************************************************/
 
-const toggleFirewallPane = function() {
-    popupData.dfEnabled = !popupData.dfEnabled;
+// The popup panel is made of sections. Visiblity of sections can
+// be toggle on/off.
 
+const maxNumberOfSections = 5;
+
+const sectionBitsFromAttribute = function() {
+    const attr = document.body.dataset.more;
+    if ( attr === '' ) { return 0; }
+    let bits = 0;
+    for ( const c of attr.split(' ') ) {
+        bits |= 1 << (c.charCodeAt(0) - 97);
+    }
+    return bits;
+};
+
+const sectionBitsToAttribute = function(bits) {
+    const attr = [];
+    for ( let i = 0; i < maxNumberOfSections; i++ ) {
+        const bit = 1 << i;
+        if ( (bits & bit) === 0 ) { continue; }
+        attr.push(String.fromCharCode(97 + i));
+    }
+    document.body.dataset.more = attr.join(' ');
+};
+
+const toggleSections = function(more) {
+    const mask = ~popupData.popupPanelDisabledSections;
+    let currentBits = sectionBitsFromAttribute();
+    let newBits = currentBits;
+    for ( let i = 0; i < maxNumberOfSections; i++ ) {
+        const bit = 1 << (more ? i : maxNumberOfSections - i - 1);
+        if ( (mask & bit) === 0 ) { continue; }
+        if ( more ) {
+            newBits |= bit;
+        } else {
+            newBits &= ~bit;
+        }
+        if ( newBits !== currentBits ) { break; }
+    }
+    if ( newBits === currentBits ) { return; }
+
+    sectionBitsToAttribute(newBits);
+
+    popupData.popupPanelSections = newBits;
     messaging.send('popupPanel', {
         what: 'userSettings',
-        name: 'dynamicFilteringEnabled',
-        value: popupData.dfEnabled,
+        name: 'popupPanelSections',
+        value: newBits,
     });
 
     // https://github.com/chrisaljoudi/uBlock/issues/996
-    // Remember the last state of the firewall pane. This allows to
-    // configure the popup size early next time it is opened, which means a
-    // less glitchy popup at open time.
-    dfPaneVisibleStored = popupData.dfEnabled;
-    vAPI.localStorage.setItem('popupFirewallPane', dfPaneVisibleStored);
+    //   Remember the last state of the firewall pane. This allows to
+    //   configure the popup size early next time it is opened, which means a
+    //   less glitchy popup at open time.
+    vAPI.localStorage.setItem('popupPanelSections', newBits);
 
     // Dynamic filtering pane may not have been built yet
-    document.body.classList.toggle('dfEnabled', popupData.dfEnabled);
-    if ( popupData.dfEnabled && dfPaneBuilt === false ) {
+    if ( (newBits & 0b1000) !== 0 && dfPaneBuilt === false ) {
         buildAllFirewallRows();
     }
 };
+
+uDom('#moreButton').on('click', ( ) => { toggleSections(true); });
+uDom('#lessButton').on('click', ( ) => { toggleSections(false); });
 
 /******************************************************************************/
 
@@ -1138,7 +1172,6 @@ const getPopupData = async function(tabId) {
 uDom('#switch').on('click', toggleNetFilteringSwitch);
 uDom('#gotoZap').on('click', gotoZap);
 uDom('#gotoPick').on('click', gotoPick);
-uDom('#moreButton').on('click', toggleFirewallPane);
 uDom('.hnSwitch').on('click', ev => { toggleHostnameSwitch(ev); });
 uDom('#saveRules').on('click', saveFirewallRules);
 uDom('#revertRules').on('click', ( ) => { revertFirewallRules(); });

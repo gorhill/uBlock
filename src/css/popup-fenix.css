@@ -56,11 +56,11 @@ hr {
     align-items: stretch;
     display: flex;
     justify-content: space-between;
-    margin: var(--popup-default-gap) 0.5em;
+    margin: 0.5em 0.5em var(--popup-default-gap) 0.5em;
     }
 #switch {
     display: flex;
-    flex-grow: 2;
+    flex-grow: 3;
     justify-content: center;
     }
 #switch .fa-icon {
@@ -70,10 +70,6 @@ hr {
     font-size: 700%;
     margin: 0;
     padding: 0;
-    }
-#switch .fa-icon:hover {
-    color: var(--popup-power-ink-hover);
-    fill: var(--popup-power-ink-hover);
     }
 body.off #switch .fa-icon {
     color: var(--fg-0-20);
@@ -85,7 +81,7 @@ body.off #switch .fa-icon {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
+    flex-grow: 2;
     justify-content: space-evenly;
     }
 .rulesetTools [id] {
@@ -93,7 +89,7 @@ body.off #switch .fa-icon {
     border: 1px solid #ddc;
     border-radius: 4px;
     cursor: pointer;
-    fill: #888;
+    fill: var(--default-ink-a50);
     flex-grow: 1;
     font-size: 2.2em;
     padding: 0;
@@ -177,8 +173,22 @@ body.mobile.no-tooltips .toolRibbon .tool {
     visibility: visible;
     }
 
-body:not(.dfEnabled) #moreButton .fa-icon {
+.moreOrLess > span {
+    cursor: pointer;
+    }
+#moreButton .fa-icon {
     transform: rotate(180deg);
+    }
+#lessButton {
+    text-align: right;
+    }
+body[data-more="a b c d e"] #moreButton {
+    pointer-events: none;
+    visibility: hidden;
+    }
+body[data-more=""] #lessButton {
+    pointer-events: none;
+    visibility: hidden;
     }
 
 #tooltip {
@@ -224,9 +234,6 @@ body[dir="rtl"] #tooltip {
     text-align: right;
     --rule-cell-width: 5em;
     }
-body:not(.dfEnabled) #firewall {
-    display: none;
-    }
 #firewall > div {
     border: 0;
     direction: ltr;
@@ -246,11 +253,11 @@ body:not(.dfEnabled) #firewall {
 #firewall.expanded > div.isSubDomain.expandException:not(.isRootContext) {
     display: none;
     }
-#firewall > div > span {
+#firewall > div > span,
+#actionSelector > #dynaCounts {
     background-color: var(--bg-popup-cell-2);
     border: none;
     box-sizing: border-box;
-    -moz-box-sizing: border-box;
     display: inline-flex;
     padding: 0.4em 0;
     position: relative;
@@ -313,7 +320,8 @@ body:not(.dfEnabled) #firewall {
 #firewall.expanded > div:not(.expandException) > span:nth-of-type(3),
 #firewall:not(.expanded) > div.expandException > span:nth-of-type(3),
 #firewall:not(.expanded) > div.isDomain:not(.expandException) > span:nth-of-type(4),
-#firewall.expanded > div.isDomain.expandException > span:nth-of-type(4) {
+#firewall.expanded > div.isDomain.expandException > span:nth-of-type(4),
+#actionSelector > #dynaCounts {
     display: inline-flex;
     justify-content: space-between;
     }
@@ -423,15 +431,15 @@ body.advancedUser #firewall > div > span.ownRule,
     color: var(--default-surface);
     }
 body.advancedUser #firewall > div > span.allowRule.ownRule,
-#actionSelector > #dynaAllow:hover {
+:root.desktop #actionSelector > #dynaAllow:hover {
     background-color: var(--bg-popup-cell-allow-own);
     }
 body.advancedUser #firewall > div > span.blockRule.ownRule,
-#actionSelector > #dynaBlock:hover {
+:root.desktop #actionSelector > #dynaBlock:hover {
     background-color: var(--bg-popup-cell-block-own);
     }
 body.advancedUser #firewall > div > span.noopRule.ownRule,
-#actionSelector > #dynaNoop:hover {
+:root.desktop #actionSelector > #dynaNoop:hover {
     background-color: var(--bg-popup-cell-noop-own);
     }
 
@@ -458,11 +466,8 @@ body.advancedUser #firewall > div > span.noopRule.ownRule,
     width: 33.5%;
     }
 #actionSelector > #dynaCounts {
-    align-items: center;
     background-color: transparent;
-    display: inline-flex;
     height: 100%;
-    justify-content: space-between;
     left: 0;
     pointer-events: none;
     position: absolute;
@@ -488,6 +493,19 @@ body.advancedUser #firewall > div > span.noopRule.ownRule,
 :root body[data-ui~="+no-popups"] #no-popups {
     display: flex;
     }
+body:not([data-more~="a"]) [data-more="a"],
+body:not([data-more~="b"]) [data-more="b"],
+body:not([data-more~="c"]) [data-more="c"],
+body:not([data-more~="e"]) [data-more="e"] {
+    height: 0;
+    margin-bottom: 0;
+    margin-top: 0;
+    overflow-y: hidden;
+    visibility: hidden;
+    }
+body:not([data-more~="d"]) [data-more="d"] {
+    display: none;
+    }
 
 /* mouse-driven devices */
 :root.desktop {
@@ -505,6 +523,13 @@ body.advancedUser #firewall > div > span.noopRule.ownRule,
     max-width: 300px;
     width: max-content;
     }
+:root.desktop #switch .fa-icon:hover {
+    color: var(--popup-power-ink-hover);
+    fill: var(--popup-power-ink-hover);
+    }
+:root.desktop .rulesetTools [id]:hover {
+    fill: var(--default-ink);
+    }
 :root.desktop #firewall {
     direction: rtl;
     flex-grow: 1;
@@ -513,11 +538,14 @@ body.advancedUser #firewall > div > span.noopRule.ownRule,
     max-height: max(100vh, 600px);
     min-width: 360px;
     overflow-y: auto;
-    width: max-content;
+    width: min-content;
     }
 :root.desktop .tool {
     padding: 0.5em;
     }
 :root.desktop .tool:hover {
+    background-color: var(--button-surface);
+    }
+:root.desktop .moreOrLess > span:hover {
     background-color: var(--button-surface);
     }

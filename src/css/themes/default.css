@@ -18,6 +18,7 @@
     --ink-50: #291d4f;
     --ink-80: #20123a;
     --ink-80-a4: #20123a0a;
+    --ink-80-a50: #20123a88;
     --ink-90: #1d1133;
     --light-gray-10: #f9f9fb;
     --light-gray-30: #e0e0e6;
@@ -53,6 +54,7 @@
 
     --default-ink: var(--ink-80);
     --default-ink-a4: var(--ink-80-a4);
+    --default-ink-a50: var(--ink-80-a50);
     --default-surface: var(--light-gray-10);
 
     --bg-1: hsla(240, 20%, 98%, 1);
