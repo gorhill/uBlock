@@ -173,8 +173,12 @@ body.mobile.no-tooltips .toolRibbon .tool {
     visibility: visible;
     }
 
+.moreOrLess {
+    margin: 0;
+    }
 .moreOrLess > span {
     cursor: pointer;
+    padding: var(--popup-default-gap);
     }
 #moreButton .fa-icon {
     transform: rotate(180deg);
@@ -534,7 +538,6 @@ body:not([data-more~="d"]) [data-more="d"] {
     direction: rtl;
     flex-grow: 1;
     line-height: 1.4;
-    max-height: 540px;
     max-height: max(100vh, 600px);
     min-width: 360px;
     overflow-y: auto;
