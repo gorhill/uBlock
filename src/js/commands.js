@@ -179,7 +179,15 @@ vAPI.commands.onCommand.addListener(async command => {
         µb.openNewTab({
             url: `logger-ui.html${hash}`,
             select: true,
-            index: -1
+            index: -1,
+        });
+        break;
+    }
+    case 'open-dashboard': {
+        µb.openNewTab({
+            url: 'dashboard.html',
+            select: true,
+            index: -1,
         });
         break;
     }

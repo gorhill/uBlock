@@ -21,6 +21,9 @@
     "launch-logger": {
       "description": "__MSG_popupTipLog__"
     },
+    "open-dashboard": {
+      "description": "__MSG_popupTipDashboard__"
+    },
     "relax-blocking-mode": {
       "description": "__MSG_relaxBlockingMode__"
     }
