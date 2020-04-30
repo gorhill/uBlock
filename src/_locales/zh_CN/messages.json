@@ -201,7 +201,11 @@
   },
   "popupMoreButton_v2": {
     "message": "更多",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "更少",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "全局规则：此列的规则作用于所有网站。",
@@ -258,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{count}} / {{total}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "版本",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "创建",

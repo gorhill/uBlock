@@ -148,15 +148,15 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "এই সাইটের জন্য বাহ্যিক ছাকন চালু/বন্ধ করুন",
+    "message": "এই সাইটের জন্য কসমেটিক ছাঁকন চালু/বন্ধ করুন",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "এই সাইটে প্রসাধনী ছাকন নিষ্ক্রিয় করতে ক্লিক করুন",
+    "message": "এই সাইটে কসমেটিক ফিল্টার নিষ্ক্রিয় করতে ক্লিক করুন",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "এই সাইটে প্রসাধনী ছাকন সক্রিয় করতে ক্লিক করুন",
+    "message": "এই সাইটে কসমেটিক ফিল্টার সক্রিয় করতে ক্লিক করুন",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -172,7 +172,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "এই সাইটের জাভাস্ক্রিপ্ট চালু করতে ক্লিক করুণ",
+    "message": "এই সাইটের জাভাস্ক্রিপ্ট বন্ধ করতে ক্লিক করুণ",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
@@ -180,7 +180,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
-    "message": "Pop-up windows",
+    "message": "পপ-আপ উইন্ডো",
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
@@ -201,7 +201,11 @@
   },
   "popupMoreButton_v2": {
     "message": "আরো",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "কম",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "সার্বজনীন নিয়ম: এই স্তম্ভ সেইসব নিয়মের জন্য যা সকল সাইটের উপর প্রযোজ্য।",
@@ -258,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{total}}টির মধ্যে {{count}}টি",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "সংস্করণ",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "তৈরি করুন",
@@ -680,7 +688,7 @@
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
-    "message": "দল",
+    "message": "দলমত",
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
@@ -872,7 +880,7 @@
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
-    "message": "আপনার সব সেটিংস বাতিল করা হবে, এবং uBlock₀ পুনরায় চালু হবে।\n\nuBlock₀ সেটিংস পুনঃস্থাপন করবেন?",
+    "message": "আপনার সব সেটিংস বাতিল করা হবে, এবং uBlock₀ পুনরায় চালু হবে।\n\nইউব্লক₀ সেটিংস পুনঃস্থাপন করবেন?",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
@@ -1024,15 +1032,15 @@
     "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
   },
   "KB": {
-    "message": "KB",
+    "message": "কিলোবাইট",
     "description": "short for 'kilobytes'"
   },
   "MB": {
-    "message": "MB",
+    "message": "মেগাবাইট",
     "description": "short for 'megabytes'"
   },
   "GB": {
-    "message": "GB",
+    "message": "গিগাবাইট",
     "description": "short for 'gigabytes'"
   },
   "dummy": {

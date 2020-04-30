@@ -201,7 +201,11 @@
   },
   "popupMoreButton_v2": {
     "message": "More",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "Less",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "ആഗോള നിയമങ്ങൾ: ഈ കോളത്തിലെ നിയമങ്ങൾ എല്ലാ സൈറ്റുകളിലും പ്രയോഗിക്കുന്ന നിയമങ്ങള് ആണ്.",
@@ -258,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{total}} ല്‍ നിന്നും {{count}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "Version",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "ക്രിയേറ്റ് ചെയ്യുക",

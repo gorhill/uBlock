@@ -12,7 +12,7 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "注意！保存していない変更があります",
+    "message": "注意！　保存していない変更があります",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -200,8 +200,12 @@
     "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
-    "message": "詳細",
-    "description": "Label to be used to toggle overview panel"
+    "message": "詳細を表示",
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "詳細を非表示",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "グローバルルール: この列にあるルールは、すべてのサイトに適用されます。",
@@ -258,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{count}} / {{total}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "バージョン",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "作成",
@@ -672,11 +680,11 @@
     "description": "Label to identify a rule field"
   },
   "loggerEntryDetailsContext": {
-    "message": "配信元",
+    "message": "リクエストが発生した場所",
     "description": "Label to identify a context field (typically a hostname)"
   },
   "loggerEntryDetailsRootContext": {
-    "message": "大本の配信元",
+    "message": "最初にリクエストが発生した場所",
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
@@ -696,7 +704,7 @@
     "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
-    "message": "対象:",
+    "message": "リクエストが発生した場所: ",
     "description": "Label for the context selector"
   },
   "loggerURLFilteringTypeLabel": {
@@ -784,11 +792,11 @@
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
-    "message": "{{input}} 配信元",
+    "message": "{{input}} リクエストが発生した場所",
     "description": "A label for the context column"
   },
   "loggerSettingHideColumnPartyness": {
-    "message": "{{input}} パーティー種別",
+    "message": "{{input}} ファースト/サードパーティー種別",
     "description": "A label for the partyness column"
   },
   "loggerExportFormatList": {

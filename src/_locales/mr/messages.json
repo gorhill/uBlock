@@ -201,7 +201,11 @@
   },
   "popupMoreButton_v2": {
     "message": "More",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "Less",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "Global rules: this column is for rules which apply to all sites.",
@@ -258,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{count}} पैकी {{total}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "Version",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "निर्माण करा",

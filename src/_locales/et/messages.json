@@ -201,7 +201,11 @@
   },
   "popupMoreButton_v2": {
     "message": "Rohkem",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "Vähem",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "Üldised reeglid: selle veeru reeglid kehtivad kõikidele saitidele.",
@@ -258,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{count}}/{{total}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "Versioon",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "Loo",

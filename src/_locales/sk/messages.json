@@ -201,7 +201,11 @@
   },
   "popupMoreButton_v2": {
     "message": "Viac",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "Menej",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "Globálne pravidlá: tento stĺpec slúži pre pravidlá, ktoré platia pre všetky weby.",
@@ -258,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{count}} z {{total}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "Verzia",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "Vytvoriť",

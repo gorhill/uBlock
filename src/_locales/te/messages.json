@@ -201,7 +201,11 @@
   },
   "popupMoreButton_v2": {
     "message": "More",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "Less",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "సామాన్య నియమాలు: ఈ నిలువరుసలో వున్న నియమాలు అన్ని సైట్లకు వర్తిస్తాయి.",
@@ -258,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{total}} లో {{count}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "Version",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "సృష్టించు",

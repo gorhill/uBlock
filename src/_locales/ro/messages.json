@@ -201,7 +201,11 @@
   },
   "popupMoreButton_v2": {
     "message": "Mai multe",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "Mai puțin",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "Reguli globale: această coloană este pentru regulile care se aplică tuturor site-urilor.",
@@ -258,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{count}} din {{total}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "Versiune",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "Creează",
@@ -832,15 +840,15 @@
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Source code",
+    "message": "Cod sursă",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
-    "message": "Translations",
+    "message": "Traduceri:",
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
-    "message": "Filter lists",
+    "message": "Liste de filtre",
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {

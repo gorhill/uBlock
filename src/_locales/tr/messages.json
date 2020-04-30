@@ -201,7 +201,11 @@
   },
   "popupMoreButton_v2": {
     "message": "Daha fazla",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "Daha az",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "Genel kurallar: bu sütun tüm sitelere uygulanan kurallar içindir.",
@@ -258,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{total}} taneden {{count}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "Sürüm",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "Oluştur",

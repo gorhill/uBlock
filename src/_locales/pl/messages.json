@@ -201,7 +201,11 @@
   },
   "popupMoreButton_v2": {
     "message": "Więcej",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "Mniej",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "Reguły globalne. W tej kolumnie znajdują się reguły stosowane na wszystkich witrynach.",
@@ -258,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{count}} z {{total}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "Wersja",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "Utwórz",

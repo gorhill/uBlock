@@ -201,7 +201,11 @@
   },
   "popupMoreButton_v2": {
     "message": "Більше",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "Менше",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "Глобальні правила: цей стовпчик для правил, що застосовуються для всіх сайтів.",
@@ -258,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{count}} з {{total}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "Версія",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "Створити",

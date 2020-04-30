@@ -201,7 +201,11 @@
   },
   "popupMoreButton_v2": {
     "message": "Více",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "Less",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "Globální pravidla: tento sloupec slouží pro pravidla, která platí pro všechny weby.",
@@ -258,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{count}} z {{total}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "Version",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "Vytvořit",

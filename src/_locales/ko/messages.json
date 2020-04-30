@@ -201,7 +201,11 @@
   },
   "popupMoreButton_v2": {
     "message": "더보기",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "Less",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "공용 규칙: 이 열은 모든 사이트에 적용되는 규칙 열 입니다.",
@@ -258,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{total}}개 중 {{count}}개",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "Version",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "생성",

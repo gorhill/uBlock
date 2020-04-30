@@ -201,7 +201,11 @@
   },
   "popupMoreButton_v2": {
     "message": "Több",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "Kevesebb",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "Globális szabályok: ebben az oszlopban azok a szabályok vannak, amelyek minden weboldalra vonatkoznak.",
@@ -258,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{count}}, összesen: {{total}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "Verzió",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "Létrehoz",
