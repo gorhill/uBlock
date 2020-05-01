@@ -72,7 +72,7 @@ hr {
     flex-grow: 3;
     font-size: 700%;
     justify-content: center;
-    margin: 0;
+    margin: 0 var(--popup-gap-thin);
     padding: 0;
     }
 body.off #switch {
