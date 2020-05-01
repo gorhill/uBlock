@@ -21,8 +21,13 @@
     --ink-80-a50: #20123a88;
     --ink-90: #1d1133;
     --light-gray-10: #f9f9fb;
+    --light-gray-20: #f0f0f4;
     --light-gray-30: #e0e0e6;
+    --light-gray-30-a75: #e0e0e6bf;
     --light-gray-40: #cfcfd8;
+    --light-gray-50: #bfbfc9;
+    --light-gray-60: #afafba;
+    --light-gray-70: #9f9fad;
     --light-gray-90: #80808f;
     --red-70-a80: #c50042cc;
     --violet-70: #592acb;
@@ -56,6 +61,7 @@
     --default-ink-a4: var(--ink-80-a4);
     --default-ink-a50: var(--ink-80-a50);
     --default-surface: var(--light-gray-10);
+    --default-surface-hover: var(--light-gray-30-a75);
 
     --bg-1: hsla(240, 20%, 98%, 1);
     --bg-1-border: hsla(240, 20%, 90%, 1);
@@ -124,6 +130,7 @@
 
     /* popup panel */
     --popup-power-ink: var(--blue-50);
+    --popup-power-disabled-ink: var(--light-gray-70);
     --popup-power-ink-hover: var(--blue-60);
     --bg-popup-cell-1: hsla(261, 0%, 93%, 1);
     --bg-popup-cell-2: rgb(224, 224, 230);

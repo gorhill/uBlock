@@ -10,8 +10,11 @@
 /* Internal CSS values */
 :root body,
 :root.mobile body {
-    --popup-default-gap: 1em;
-    font-size: 14px;
+    --font-size: 14px;
+    --popup-gap: var(--font-size);
+    --popup-gap-thin: calc(0.5 * var(--popup-gap));
+    --popup-gap-extra-thin: calc(0.25 * var(--font-size));
+    font-size: var(--font-size);
     line-height: 20px;
     transition-duration: 0.2s;
     transition-property: opacity;
@@ -56,24 +59,25 @@ hr {
     align-items: stretch;
     display: flex;
     justify-content: space-between;
-    margin: 0.5em 0.5em var(--popup-default-gap) 0.5em;
+    margin: var(--popup-gap-thin)
+            var(--popup-gap-thin)
+            var(--popup-gap)
+            var(--popup-gap-thin);
     }
 #switch {
-    display: flex;
-    flex-grow: 3;
-    justify-content: center;
-    }
-#switch .fa-icon {
     color: var(--popup-power-ink);
-    fill: var(--popup-power-ink);
     cursor: pointer;
+    display: flex;
+    fill: var(--popup-power-ink);
+    flex-grow: 3;
     font-size: 700%;
+    justify-content: center;
     margin: 0;
     padding: 0;
     }
-body.off #switch .fa-icon {
-    color: var(--fg-0-20);
-    fill: var(--fg-0-20);
+body.off #switch {
+    color: var(--popup-power-disabled-ink);
+    fill: var(--popup-power-disabled-ink);
     }
 .rulesetTools {
     background-color: transparent;
@@ -104,7 +108,7 @@ body.needSave #revertRules {
     visibility: visible;
     }
 #hostname {
-    margin: var(--popup-default-gap) 0.2em;
+    margin: var(--popup-gap) var(--popup-gap-extra-thin);
     text-align: center;
     }
 #hostname > span + span {
@@ -113,9 +117,9 @@ body.needSave #revertRules {
 
 .itemRibbon {
     display: grid;
-    gap: var(--popup-default-gap);
+    gap: var(--popup-gap);
     grid-template: auto / auto auto;
-    margin: var(--popup-default-gap);
+    margin: var(--popup-gap);
     }
 .itemRibbon > [data-i18n] + span {
     justify-self: end;
@@ -130,7 +134,7 @@ body.needSave #revertRules {
     grid-auto-flow: column;
     grid-template: auto / repeat(4, 1fr);
     justify-items: center;
-    margin: var(--popup-default-gap) 0;
+    margin: 0;
     white-space: normal;
     }
 .toolRibbon .tool {
@@ -139,7 +143,8 @@ body.needSave #revertRules {
     flex-direction: column;
     font-size: 1.4em;
     min-width: 32px;
-    padding: 0 0.5em;
+    padding: var(--popup-gap)
+             var(--popup-gap-thin);
     unicode-bidi: embed;
     visibility: hidden;
     }
@@ -148,7 +153,7 @@ body.needSave #revertRules {
     }
 .toolRibbon .tool .caption {
     font: 10px/12px sans-serif;
-    margin-top: 0.5em;
+    margin-top: 6px;
     text-align: center;
     }
 body.mobile.no-tooltips .toolRibbon .tool {
@@ -178,7 +183,7 @@ body.mobile.no-tooltips .toolRibbon .tool {
     }
 .moreOrLess > span {
     cursor: pointer;
-    padding: var(--popup-default-gap);
+    padding: var(--popup-gap);
     }
 #moreButton .fa-icon {
     transform: rotate(180deg);
@@ -193,39 +198,6 @@ body[data-more="a b c d e"] #moreButton {
 body[data-more=""] #lessButton {
     pointer-events: none;
     visibility: hidden;
-    }
-
-#tooltip {
-    background-color: var(--bg-tooltip);
-    border: 1px solid gray;
-    border-radius: 3px;
-    box-shadow: 1px 1px 3px gray;
-    box-sizing: border-box;
-    color: var(--fg-tooltip);
-    cursor: pointer;
-    direction: ltr;
-    font: 12px sans-serif;
-    left: 5%;
-    line-height: 130%;
-    margin: 0.5em 0;
-    opacity: 0;
-    padding: 4px 6px;
-    pointer-events: none;
-    position: absolute;
-    text-align: center;
-    visibility: hidden;
-    white-space: pre-line;
-    width: 90%;
-    z-index: 100;
-    }
-body[dir="rtl"] #tooltip {
-    direction: rtl;
-    }
-#tooltip.show {
-    transition: opacity 0.15s 0.5s;
-    -webkit-transition: opacity 0.15s 0.5s;
-    visibility: visible;
-    opacity: 1;
     }
 
 #firewall {
@@ -489,6 +461,12 @@ body.advancedUser #firewall > div > span.noopRule.ownRule,
 :root.desktop body[data-ui~="+captions"] .toolRibbon .caption {
     display: inherit;
     }
+:root.desktop .toolRibbon .tool,
+:root.mobile body.no-tooltips .toolRibbon .tool,
+:root.mobile body[data-ui~="-captions"] .toolRibbon .tool {
+    padding: calc(var(--popup-gap) + var(--popup-gap-thin))
+             var(--popup-gap-thin);
+    }
 :root.mobile #no-popups,
 :root body[data-ui~="-no-popups"] #no-popups {
     display: none;
@@ -516,7 +494,7 @@ body:not([data-more~="d"]) [data-more="d"] {
     overflow: hidden;
     }
 :root.desktop body {
-    --popup-default-gap: 0.8em;
+    --popup-gap: 12px;
     max-width: max(100vw, 800px);
     }
 :root.desktop #panes {
@@ -527,9 +505,8 @@ body:not([data-more~="d"]) [data-more="d"] {
     max-width: 300px;
     width: max-content;
     }
-:root.desktop #switch .fa-icon:hover {
-    color: var(--popup-power-ink-hover);
-    fill: var(--popup-power-ink-hover);
+:root.desktop #switch:hover {
+    background-color: var(--default-surface-hover);
     }
 :root.desktop .rulesetTools [id]:hover {
     fill: var(--default-ink);
@@ -543,12 +520,9 @@ body:not([data-more~="d"]) [data-more="d"] {
     overflow-y: auto;
     width: min-content;
     }
-:root.desktop .tool {
-    padding: 0.5em;
-    }
 :root.desktop .tool:hover {
-    background-color: var(--button-surface);
+    background-color: var(--default-surface-hover);
     }
 :root.desktop .moreOrLess > span:hover {
-    background-color: var(--button-surface);
+    background-color: var(--default-surface-hover);
     }
