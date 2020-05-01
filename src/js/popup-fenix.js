@@ -428,6 +428,7 @@ const renderPopup = function() {
     const body = document.body;
     body.classList.toggle('advancedUser', popupData.advancedUserEnabled === true);
     body.classList.toggle('off', popupData.pageURL === '' || isFiltering !== true);
+    body.classList.toggle('needSave', popupData.matrixIsDirty === true);
 
     // The hostname information below the power switch
     {
