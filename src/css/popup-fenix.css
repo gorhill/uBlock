@@ -74,10 +74,11 @@ hr {
     justify-content: center;
     margin: 0 var(--popup-gap-thin);
     padding: 0;
+    stroke: none;
     }
 body.off #switch {
-    color: var(--popup-power-disabled-ink);
-    fill: var(--popup-power-disabled-ink);
+    fill: var(--default-surface);
+    stroke: var(--checkbox-ink);
     }
 .rulesetTools {
     background-color: transparent;
@@ -116,10 +117,16 @@ body.needSave #revertRules {
     }
 
 .itemRibbon {
+    column-gap: var(--popup-gap);
     display: grid;
-    gap: var(--popup-gap);
     grid-template: auto / auto auto;
-    margin: var(--popup-gap);
+    margin: var(--popup-gap) var(--popup-gap) 0 var(--popup-gap);
+    }
+.itemRibbon > span {
+    margin-bottom: var(--popup-gap);
+    }
+.itemRibbon > [data-i18n] {
+    min-width: 10em;
     }
 .itemRibbon > [data-i18n] + span {
     justify-self: end;
@@ -183,7 +190,9 @@ body.mobile.no-tooltips .toolRibbon .tool {
     }
 .moreOrLess > span {
     cursor: pointer;
+    margin: 0;
     padding: var(--popup-gap);
+    user-select: none;
     }
 #moreButton .fa-icon {
     transform: rotate(180deg);
@@ -191,7 +200,7 @@ body.mobile.no-tooltips .toolRibbon .tool {
 #lessButton {
     text-align: right;
     }
-body[data-more="a b c d e"] #moreButton {
+body[data-more="a b c d e f"] #moreButton {
     pointer-events: none;
     visibility: hidden;
     }
@@ -478,14 +487,15 @@ body.advancedUser #firewall > div > span.noopRule.ownRule,
 body:not([data-more~="a"]) [data-more="a"],
 body:not([data-more~="b"]) [data-more="b"],
 body:not([data-more~="c"]) [data-more="c"],
-body:not([data-more~="e"]) [data-more="e"] {
+body:not([data-more~="d"]) [data-more="d"],
+body:not([data-more~="f"]) [data-more="f"] {
     height: 0;
     margin-bottom: 0;
     margin-top: 0;
     overflow-y: hidden;
     visibility: hidden;
     }
-body:not([data-more~="d"]) [data-more="d"] {
+body:not([data-more~="e"]) [data-more="e"] {
     display: none;
     }
 

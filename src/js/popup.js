@@ -506,7 +506,7 @@ const renderPopup = function() {
 
     // https://github.com/chrisaljoudi/uBlock/issues/470
     // This must be done here, to be sure the popup is resized properly
-    const dfPaneVisible = (popupData.popupPanelSections & 0b1000) !== 0;
+    const dfPaneVisible = (popupData.popupPanelSections & 0b10000) !== 0;
 
     // https://github.com/chrisaljoudi/uBlock/issues/1068
     // Remember the last state of the firewall pane. This allows to
@@ -792,19 +792,19 @@ const gotoURL = function(ev) {
 /******************************************************************************/
 
 const toggleFirewallPane = function() {
-    popupData.popupPanelSections = popupData.popupPanelSections ^ 0b1000;
+    popupData.popupPanelSections = popupData.popupPanelSections ^ 0b10000;
 
     messaging.send('popupPanel', {
         what: 'userSettings',
         name: 'popupPanelSections',
-        value: popupData.popupPanelSections | 0b0111,
+        value: popupData.popupPanelSections | 0b01111,
     });
 
     // https://github.com/chrisaljoudi/uBlock/issues/996
     // Remember the last state of the firewall pane. This allows to
     // configure the popup size early next time it is opened, which means a
     // less glitchy popup at open time.
-    dfPaneVisibleStored = (popupData.popupPanelSections & 0b1000) !== 0;
+    dfPaneVisibleStored = (popupData.popupPanelSections & 0b10000) !== 0;
     vAPI.localStorage.setItem('popupFirewallPane', dfPaneVisibleStored);
 
     // Dynamic filtering pane may not have been built yet
@@ -1073,7 +1073,7 @@ const toggleHostnameSwitch = async function(ev) {
         hostname: popupData.pageHostname,
         state: target.classList.contains('on'),
         tabId: popupData.tabId,
-        persist: (popupData.popupPanelSections & 0b1000) === 0 || ev.ctrlKey || ev.metaKey,
+        persist: (popupData.popupPanelSections & 0b10000) === 0 || ev.ctrlKey || ev.metaKey,
     });
 
     cachePopupData(response);

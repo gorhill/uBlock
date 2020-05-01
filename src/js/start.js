@@ -116,11 +116,20 @@ const onVersionReady = function(lastVersion) {
 
     // Configure new popup panel according to classic popup panel
     // configuration.
-    if ( lastVersionInt !== 0 && lastVersionInt <= 1026003014 ) {
-        µb.userSettings.popupPanelSections =
-            µb.userSettings.dynamicFilteringEnabled === true ? 0b1111 : 0b0111;
-        µb.userSettings.dynamicFilteringEnabled = undefined;
-        µb.saveUserSettings();
+    if ( lastVersionInt !== 0 ) {
+        if ( lastVersionInt <= 1026003014 ) {
+            µb.userSettings.popupPanelSections =
+                µb.userSettings.dynamicFilteringEnabled === true ? 0b11111 : 0b01111;
+            µb.userSettings.dynamicFilteringEnabled = undefined;
+            µb.saveUserSettings();
+        } else if (
+            lastVersionInt <= 1026003016 &&
+            (µb.userSettings.popupPanelSections & 1) !== 0
+        ) {
+            µb.userSettings.popupPanelSections =
+                (µb.userSettings.popupPanelSections << 1 | 1) & 0b111111;
+            µb.saveUserSettings();
+        }
     }
 
     vAPI.storage.set({ version: vAPI.app.version });

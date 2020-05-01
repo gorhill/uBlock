@@ -23,7 +23,7 @@
     --light-gray-10: #f9f9fb;
     --light-gray-20: #f0f0f4;
     --light-gray-30: #e0e0e6;
-    --light-gray-30-a75: #e0e0e6bf;
+    --light-gray-30-a50: #e0e0e680;
     --light-gray-40: #cfcfd8;
     --light-gray-50: #bfbfc9;
     --light-gray-60: #afafba;
@@ -61,7 +61,7 @@
     --default-ink-a4: var(--ink-80-a4);
     --default-ink-a50: var(--ink-80-a50);
     --default-surface: var(--light-gray-10);
-    --default-surface-hover: var(--light-gray-30-a75);
+    --default-surface-hover: var(--light-gray-30-a50);
 
     --bg-1: hsla(240, 20%, 98%, 1);
     --bg-1-border: hsla(240, 20%, 90%, 1);
@@ -110,7 +110,7 @@
         0px 1px 6px 0px rgba(14, 13, 26, 0.12);
     --dashboard-tab-ink: var(--ink-80);
     --dashboard-tab-active-ink: var(--violet-70);
-    --dashboard-tab-surface-hover: var(--default-ink-a4);
+    --dashboard-tab-surface-hover: var(--default-surface-hover);
 
     --fg-icon-info-lvl-0-dimmed: #888;
     --fg-icon-info-lvl-0: inherit;

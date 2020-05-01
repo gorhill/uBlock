@@ -493,7 +493,7 @@ const renderPopup = function() {
     setGlobalExpand(popupData.firewallPaneMinimized === false, true);
 
     // Build dynamic filtering pane only if in use
-    if ( (popupData.popupPanelSections & ~popupData.popupPanelDisabledSections & 0b1000) !== 0 ) {
+    if ( (computedSections() & 0b10000) !== 0 ) {
         buildAllFirewallRows();
     }
 
@@ -588,9 +588,7 @@ let renderOnce = function() {
 
     uDom.nodeFromId('version').textContent = popupData.appVersion;
 
-    sectionBitsToAttribute(
-        popupData.popupPanelSections & ~popupData.popupPanelDisabledSections
-    );
+    sectionBitsToAttribute(computedSections());
 
     if ( popupData.uiPopupConfig !== undefined ) {
         document.body.setAttribute('data-ui', popupData.uiPopupConfig);
@@ -729,7 +727,12 @@ const gotoURL = function(ev) {
 // The popup panel is made of sections. Visiblity of sections can
 // be toggle on/off.
 
-const maxNumberOfSections = 5;
+const maxNumberOfSections = 6;
+
+const computedSections = ( ) =>
+    popupData.popupPanelSections &
+   ~popupData.popupPanelDisabledSections |
+    popupData.popupPanelLockedSections;
 
 const sectionBitsFromAttribute = function() {
     const attr = document.body.dataset.more;
@@ -752,17 +755,18 @@ const sectionBitsToAttribute = function(bits) {
 };
 
 const toggleSections = function(more) {
-    const mask = ~popupData.popupPanelDisabledSections;
+    const offbits = ~popupData.popupPanelDisabledSections;
+    const onbits = popupData.popupPanelLockedSections;
     let currentBits = sectionBitsFromAttribute();
     let newBits = currentBits;
     for ( let i = 0; i < maxNumberOfSections; i++ ) {
         const bit = 1 << (more ? i : maxNumberOfSections - i - 1);
-        if ( (mask & bit) === 0 ) { continue; }
         if ( more ) {
             newBits |= bit;
         } else {
             newBits &= ~bit;
         }
+        newBits = newBits & offbits | onbits;
         if ( newBits !== currentBits ) { break; }
     }
     if ( newBits === currentBits ) { return; }
@@ -783,7 +787,7 @@ const toggleSections = function(more) {
     vAPI.localStorage.setItem('popupPanelSections', newBits);
 
     // Dynamic filtering pane may not have been built yet
-    if ( (newBits & 0b1000) !== 0 && dfPaneBuilt === false ) {
+    if ( (newBits & 0b10000) !== 0 && dfPaneBuilt === false ) {
         buildAllFirewallRows();
     }
 };

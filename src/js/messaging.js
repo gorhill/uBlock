@@ -284,7 +284,8 @@ const popupDataFromTabId = function(tabId, tabTitle) {
         pageBlockedRequestCount: 0,
         popupBlockedCount: 0,
         popupPanelSections: µbus.popupPanelSections,
-        popupPanelDisabledSections: µbus.popupPanelDisabledSections,
+        popupPanelDisabledSections: µb.hiddenSettings.popupPanelDisabledSections,
+        popupPanelLockedSections: µb.hiddenSettings.popupPanelLockedSections,
         tabId: tabId,
         tabTitle: tabTitle,
         tooltipsDisabled: µbus.tooltipsDisabled
