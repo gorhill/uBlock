@@ -264,7 +264,7 @@
     "description": "appears in popup"
   },
   "popupVersion": {
-    "message": "Version",
+    "message": "เวอร์ชัน",
     "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {

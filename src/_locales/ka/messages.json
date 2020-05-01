@@ -204,7 +204,7 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton_v2": {
-    "message": "Less",
+    "message": "მოკლედ",
     "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
@@ -264,7 +264,7 @@
     "description": "appears in popup"
   },
   "popupVersion": {
-    "message": "Version",
+    "message": "ვერსია",
     "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
