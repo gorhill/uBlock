@@ -184,15 +184,15 @@
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
-    "message": "Phần tử đa phương tiện kích thước lớn",
+    "message": "Thành phần đa phương tiện kích thước lớn",
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
-    "message": "Lọc phần tử trang điểm",
+    "message": "Lọc phần tử ẩn",
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
-    "message": "Phông điều khiển từ xa",
+    "message": "Phông từ xa",
     "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
