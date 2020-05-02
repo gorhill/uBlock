@@ -29,7 +29,7 @@
     --light-gray-60: #afafba;
     --light-gray-70: #9f9fad;
     --light-gray-90: #80808f;
-    --red-70-a80: #c50042cc;
+    --red-60: #e22850;
     --violet-70: #592acb;
     --violet-80: #45278d;
     --yellow-30: #ffd567;
@@ -143,7 +143,7 @@
     --bg-popup-cell-block: hsla(0, 50%, 80%, 1);
     --bg-popup-cell-block-own: hsla(0, 100%, 40%, 1);
     --bg-popup-cell-label-mixed: hsla(45, 100%, 38%, 1);
-    --popup-icon-x-ink: var(--red-70-a80);
+    --popup-icon-x-ink: var(--red-60);
 }
 
 /**

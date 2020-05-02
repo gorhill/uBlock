@@ -29,9 +29,10 @@ const faIconsInit = function(root) {
         if ( icon.firstChild === null || icon.firstChild.nodeType !== 3 ) {
             continue;
         }
+        const name = icon.firstChild.nodeValue.trim();
+        if ( name === '' ) { continue; }
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-        const name = icon.firstChild.nodeValue;
         let file;
         if ( name.startsWith('ph-') ) {
             file = 'photon';

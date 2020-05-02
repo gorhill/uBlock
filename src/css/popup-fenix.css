@@ -75,6 +75,7 @@ hr {
     margin: 0 var(--popup-gap-thin);
     padding: 0;
     stroke: none;
+    stroke-width: 64;
     }
 body.off #switch {
     fill: var(--default-surface);

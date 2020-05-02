@@ -20,7 +20,19 @@
                 <span id="revertRules" class="fa-icon" data-i18n-title="popupTipRevertRules">eraser</span>
             </div>
             <div id="switch" role="button" aria-label tabindex="0" title>
-                <span class="fa-icon">power-off</span>
+                <span class="fa-icon"><!--
+                    Power button taken from Font Awesome v4.7.0 by Dave Gandy.
+                    Unlike other FA icons, the power button is inlined here so
+                    that we can use a clip-path in order to ensure that the stroke
+                    does not "bleed" outside the fill area.
+                    --><svg viewBox="0 0 1536 1664">
+                        <defs>
+                        <path id="power-off-path" d="m 1536,896 q 0,156 -61,298 -61,142 -164,245 -103,103 -245,164 -142,61 -298,61 -156,0 -298,-61 Q 328,1542 225,1439 122,1336 61,1194 0,1052 0,896 0,714 80.5,553 161,392 307,283 q 43,-32 95.5,-25 52.5,7 83.5,50 32,42 24.5,94.5 Q 503,455 461,487 363,561 309.5,668 256,775 256,896 q 0,104 40.5,198.5 40.5,94.5 109.5,163.5 69,69 163.5,109.5 94.5,40.5 198.5,40.5 104,0 198.5,-40.5 Q 1061,1327 1130,1258 1199,1189 1239.5,1094.5 1280,1000 1280,896 1280,775 1226.5,668 1173,561 1075,487 1033,455 1025.5,402.5 1018,350 1050,308 q 31,-43 84,-50 53,-7 95,25 146,109 226.5,270 80.5,161 80.5,343 z m -640,-768 0,640 q 0,52 -38,90 -38,38 -90,38 -52,0 -90,-38 -38,-38 -38,-90 l 0,-640 q 0,-52 38,-90 38,-38 90,-38 52,0 90,38 38,38 38,90 z"/>
+                        <clipPath id="power-off-clip"><use href="#power-off-path"/></clipPath>
+                        </defs>
+                        <use href="#power-off-path" clip-path="url(#power-off-clip)"/>
+                    </svg><!--
+             --></span>
             </div>
             <div class="rulesetTools">
                 <span id="refresh" class="fa-icon">refresh</span>

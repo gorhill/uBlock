@@ -397,6 +397,9 @@ const renderPrivacyExposure = function() {
 /******************************************************************************/
 
 const updateHnSwitches = function() {
+    uDom.nodeFromId('no-popups').classList.toggle(
+        'on', popupData.noPopups === true
+    );
     uDom.nodeFromId('no-large-media').classList.toggle(
         'on', popupData.noLargeMedia === true
     );
@@ -474,6 +477,11 @@ const renderPopup = function() {
 
     // Extra tools
     updateHnSwitches();
+
+    // Report popup count on badge
+    total = popupData.popupBlockedCount;
+    uDom.nodeFromSelector('#no-popups .fa-icon-badge')
+        .textContent = total ? Math.min(total, 99).toLocaleString() : '';
 
     // Report large media count on badge
     total = popupData.largeMediaCount;
