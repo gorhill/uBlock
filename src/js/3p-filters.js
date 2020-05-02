@@ -95,7 +95,7 @@ const renderFilterLists = function(soft) {
             elem = li.querySelector('.listname');
             elem.textContent = listNameFromListKey(listKey);
             elem = li.querySelector('a.content');
-            elem.setAttribute('href', 'asset-viewer.html?url=' + encodeURI(listKey));
+            elem.setAttribute('href', 'asset-viewer.html?url=' + encodeURIComponent(listKey));
             elem.setAttribute('type', 'text/html');
             li.classList.remove('toRemove');
             if ( entry.supportName ) {
