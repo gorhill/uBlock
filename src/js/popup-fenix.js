@@ -1169,7 +1169,7 @@ const getPopupData = async function(tabId) {
         if ( root.classList.contains('desktop') ) {
             const main = document.getElementById('main');
             const firewall = document.getElementById('firewall');
-            const minWidth = Math.floor(main.offsetWidth + firewall.offsetWidth);
+            const minWidth = Math.floor(main.offsetWidth + firewall.offsetWidth) - 4;
             if ( document.body.offsetWidth < minWidth ) {
                 root.classList.remove('desktop');
             } else {
