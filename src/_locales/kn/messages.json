@@ -8,7 +8,7 @@
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
-    "message": "uBlock₀ - ಡ್ಯಾಶ್ಬೋರ್ಡು",
+    "message": "uBlock₀ - ಡ್ಯಾಶ್ಬೋರ್ಡ",
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
@@ -24,7 +24,7 @@
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
-    "message": "ಬದಲಾವಣೆ",
+    "message": "ಸೆಟ್ಟಿಂಗ್ಸ್",
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "ಬಿಳಿಪಟ್ಟಿ",
+    "message": "ವೈಟ್ ಲಿಸ್ಟ್",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -48,7 +48,7 @@
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
-    "message": "uBlock₀ — ಜಾಲ ವಿನಂತಿಗಳ ದಾಖಲೆ",
+    "message": "uBlock₀ —  ಲಾಗರ್",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
@@ -108,7 +108,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
-    "message": "ಡ್ಯಾಶ್ಬೋರ್ಡು ತೆರೆಯಲು ಕ್ಲಿಕಿಸಿ",
+    "message": "ಡ್ಯಾಶ್ಬೋರ್ಡ ತೆರೆಯಲು ಕ್ಲಿಕಿಸಿ",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
@@ -120,7 +120,7 @@
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "ಜಾಲ ವಿನಂತಿಗಳ ದಾಖಲೆಗೆ ಹೋಗಿ",
+    "message": "ಲಾಗರ್ ತೆರೆಯಿರಿ",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
@@ -464,7 +464,7 @@
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
-    "message": "ಹಳೆಯದು",
+    "message": "ಹಳೆಯದಾಗಿದೆ",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pViewContent": {
