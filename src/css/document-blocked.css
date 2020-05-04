@@ -19,46 +19,32 @@
 */
 
 body {
-    padding: 0.5em;
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 40px;
     text-align: center;
     }
-
-@media (max-height: 640px) {
-    body {
-        font-size: small;
-        }
-}
 body > div {
-    margin: 0 0 1em 0;
+    margin: 0 0 var(--default-gap-large) 0;
     }
-body > div > p,
-body > div > div {
-    margin: 4px 0;
-    }
-body > div > p:first-child {
-    margin: 1em 0 0 0;
+body > div > * {
+    margin: 0 0 var(--default-gap-xsmall) 0;
     }
 a {
     text-decoration: none;
     }
-select {
-    font: inherit;
-    padding: 2px;
-    }
 .code {
-    background-color: var(--bg-code);
-    font-family: monospace;
-    line-height: 1;
-    padding: 4px;
+    font-size: 13px;
     word-break: break-all;
     }
 #warningSign {
     width: 100%;
     }
 #warningSign > a {
-    fill: var(--large-icon-info-lvl-2);
-    font-size: 10em;
-    padding: 0;
+    fill: var(--yellow-50);
+    font-size: 96px;
     }
 #theURL {
     padding: 0;
@@ -77,7 +63,7 @@ select {
     color: var(--fg-0-60);
     cursor: pointer;
     fill: var(--fg-0-60);
-    padding: 0.2em;
+    padding: var(--default-gap-xxsmall);
     position: absolute;
     transform: translate(0, -50%);
     }
@@ -103,8 +89,8 @@ body[dir="rtl"] #theURL > p > span {
     border-top: none;
     color: var(--fg-0-80);
     font-size: small;
-    overflow-x: hidden;
-    padding: 4px;
+    overflow-x: auto;
+    padding: var(--default-gap-xxsmall);
     text-align: initial;
     text-overflow: ellipsis; 
     }
@@ -126,8 +112,17 @@ body[dir="rtl"] #theURL > p > span {
 #whyex a {
     white-space: nowrap;
 }
-.proceedChoice {
-    text-align: left;
+#proceed {
+    margin-bottom: var(--default-gap);
+    }
+:root.mobile .proceedButtons {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    }
+.proceedButtons > button {
+    margin-inline-end: var(--default-gap);
+    margin-block-end: var(--default-gap-xsmall);
     }
 
 .filterList:first-child .filterListSeparator {
@@ -135,4 +130,9 @@ body[dir="rtl"] #theURL > p > span {
     }
 .filterList .filterListSupport[href=""] {
     display: none;
+    }
+
+/* Small-screen devices */
+:root.mobile button {
+    width: 100%;
     }

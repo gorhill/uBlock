@@ -17,36 +17,35 @@
     <div id="theURL" class="collapsed">
         <p class="code"></p>
         <ul id="parsed"></ul>
-        </div>
     </div>
+</div>
 
 <div>
     <p data-i18n="docblockedPrompt2"></p>
-    <p id="why" class="code"></p><!--
- --><p id="whyex" style="display: none;"><span data-i18n="docblockedFoundIn"></span> <span></span></p>
+    <p id="why" class="code"></p>
+    <p id="whyex" style="display: none;"><span data-i18n="docblockedFoundIn"></span> <span></span></p>
     </div>
 
 <div>
-    <p><button id="back" data-i18n="docblockedBack" type="button"></button>
-    <button id="bye" data-i18n="docblockedClose" type="button"></button></p>
-    </div>
+    <button id="back" class="preferred" data-i18n="docblockedBack" type="button"></button>
+    <button id="bye" class="preferred" data-i18n="docblockedClose" type="button"></button>
+</div>
 
 <div>
     <p id="proceed"></p>
-    <p><button id="proceedTemporary" data-i18n="docblockedDisableTemporary" type="button"></button>
-    <button id="proceedPermanent" data-i18n="docblockedDisablePermanent" type="button"></button></p>
-    </div>
+    <p class="proceedButtons">
+        <button id="proceedTemporary" data-i18n="docblockedDisableTemporary" type="button"></button>
+        <button id="proceedPermanent" data-i18n="docblockedDisablePermanent" type="button"></button>
+    </p>
+</div>
 
 <div id="templates" style="display: none;">
     <span class="proceed">
         <span></span>
-        <span class="proceedChoice">
-            <select>
-                <option class="hn" value="" selected>
-                <option class="dn" value="">
-            </select> 
-        </span>
-        <span class="proceedChoice code hn"></span>
+        <select>
+            <option class="hn" value="" selected>
+            <option class="dn" value="">
+        </select> 
         <span></span>
     </span>
     <span class="filterList">

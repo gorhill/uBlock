@@ -34,6 +34,19 @@
     src: url('fonts/fontawesome-webfont.ttf') format('truetype');
     }
 
+/**
+    Common uBO spacing.
+    Ref: https://github.com/uBlockOrigin/uBlock-issues/issues/1005
+*/
+:root {
+    --default-gap-xlarge: 32px;
+    --default-gap-large: 24px;
+    --default-gap: 16px;
+    --default-gap-small: 12px;
+    --default-gap-xsmall: 8px;
+    --default-gap-xxsmall: 4px;
+    }
+
 /* Common uBO styles */
 body {
     background-color: var(--default-surface);
@@ -60,9 +73,10 @@ body {
 a {
     color: var(--link-ink);
     }
-code {
-    background-color: var(--bg-code);
-    padding: 0 0.25em;
+code, .code {
+    background-color: var(--button-surface);
+    font-family: monospace;
+    padding: 4px;
     }
 hr {
     border: 0;
@@ -75,8 +89,10 @@ textarea {
 button {
     align-items: center;
     appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
     border: 1px solid transparent;
-    border-radius: 4px;
+    border-radius: 5px;
     background-color: var(--button-surface);
     color: var(--button-ink);
     display: inline-flex;
@@ -86,8 +102,7 @@ button {
     letter-spacing: 0.5px;
     min-height: 36px;
     padding: 0 var(--font-size);
-    -moz-appearance: none;
-    -webkit-appearance: none;
+    vertical-align: middle;
     }
 button.vflex {
     height: 100%;
@@ -116,6 +131,10 @@ button.important[disabled] {
     fill: var(--button-disabled-ink);
     filter: var(--button-disabled-filter);
     pointer-events: none;
+    }
+button.preferred {
+    background-color: var(--button-preferred-surface);
+    color: var(--button-preferred-ink);
     }
 button.iconifiable > .fa,
 button.iconifiable > .fa-icon {
@@ -181,6 +200,16 @@ label {
     background-color: var(--checkbox-checked-ink);
     border-color: var(--checkbox-checked-ink);
     stroke: var(--default-surface);
+    }
+
+select {
+    padding: 2px;
+    }
+:root.desktop select {
+    appearance: none;
+    --webkit-appearance: none;
+    background-color: var(--select-surface);
+    font: inherit;
     }
 
 .hidden {

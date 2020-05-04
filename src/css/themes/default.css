@@ -14,7 +14,7 @@
     --blue-10: #80ebff;
     --blue-50: #0060df;
     --blue-60: #0250bb;
-    --ink-20: #312a64;
+    --ink-20: #312a65;
     --ink-50: #291d4f;
     --ink-80: #20123a;
     --ink-80-a4: #20123a0a;
@@ -96,10 +96,14 @@
     --button-disabled-filter: opacity(38%);
     --button-disabled-surface: var(--light-gray-30);
     --button-disabled-ink: var(--ink-20);
+    --button-preferred-surface: var(--ink-20);
+    --button-preferred-ink: white;
 
     --checkbox-size: calc(var(--font-size) + 2px);
     --checkbox-ink: var(--light-gray-90);
     --checkbox-checked-ink: var(--ink-20);
+
+    --select-surface: white;
 
     --bg-transient-notice: hsla(60, 100%, 95%, 1);
 
