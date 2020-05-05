@@ -2787,7 +2787,7 @@ logger.resize = (function() {
             const crect = elem.getBoundingClientRect();
             const dh = crect.bottom - vrect.bottom;
             if ( dh === 0 ) { continue; }
-            elem.style.height = (crect.height - dh) + 'px';
+            elem.style.height = Math.ceil(crect.height - dh) + 'px';
         }
     };
 
