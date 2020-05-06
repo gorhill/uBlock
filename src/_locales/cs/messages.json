@@ -204,7 +204,7 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton_v2": {
-    "message": "Less",
+    "message": "Méně",
     "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
@@ -264,7 +264,7 @@
     "description": "appears in popup"
   },
   "popupVersion": {
-    "message": "Version",
+    "message": "Verze",
     "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
@@ -840,15 +840,15 @@
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Source code",
+    "message": "Zdrojový kód",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
-    "message": "Translations",
+    "message": "Překlady",
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
-    "message": "Filter lists",
+    "message": "Seznam filtrů",
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
