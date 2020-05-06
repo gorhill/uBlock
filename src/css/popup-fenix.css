@@ -501,7 +501,7 @@ body:not([data-more~="e"]) [data-more="e"] {
     }
 :root:not(.mobile) body {
     --popup-gap: 12px;
-    max-width: max(100vw, 800px);
+    max-width: 800px;
     }
 :root.desktop #panes {
     flex-direction: row-reverse;
