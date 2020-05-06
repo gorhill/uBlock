@@ -414,15 +414,15 @@ body.advancedUser #firewall > div > span.ownRule,
     color: var(--default-surface);
     }
 body.advancedUser #firewall > div > span.allowRule.ownRule,
-:root.desktop #actionSelector > #dynaAllow:hover {
+:root:not(.mobile) #actionSelector > #dynaAllow:hover {
     background-color: var(--bg-popup-cell-allow-own);
     }
 body.advancedUser #firewall > div > span.blockRule.ownRule,
-:root.desktop #actionSelector > #dynaBlock:hover {
+:root:not(.mobile) #actionSelector > #dynaBlock:hover {
     background-color: var(--bg-popup-cell-block-own);
     }
 body.advancedUser #firewall > div > span.noopRule.ownRule,
-:root.desktop #actionSelector > #dynaNoop:hover {
+:root:not(.mobile) #actionSelector > #dynaNoop:hover {
     background-color: var(--bg-popup-cell-noop-own);
     }
 
@@ -459,16 +459,16 @@ body.advancedUser #firewall > div > span.noopRule.ownRule,
     }
 
 /* configurable UI elements */
-:root.desktop .toolRibbon .caption,
+:root:not(.mobile) .toolRibbon .caption,
 :root.mobile body.no-tooltips .toolRibbon .caption,
 :root.mobile body[data-ui~="-captions"] .toolRibbon .caption {
     display: none;
     }
 :root.mobile .toolRibbon .caption,
-:root.desktop body[data-ui~="+captions"] .toolRibbon .caption {
+:root:not(.mobile) body[data-ui~="+captions"] .toolRibbon .caption {
     display: inherit;
     }
-:root.desktop .toolRibbon .tool,
+:root:not(.mobile) .toolRibbon .tool,
 :root.mobile body.no-tooltips .toolRibbon .tool,
 :root.mobile body[data-ui~="-captions"] .toolRibbon .tool {
     padding: calc(var(--popup-gap) + var(--popup-gap-thin))
@@ -478,7 +478,7 @@ body.advancedUser #firewall > div > span.noopRule.ownRule,
 :root body[data-ui~="-no-popups"] #no-popups {
     display: none;
     }
-:root.desktop #no-popups,
+:root:not(.mobile) #no-popups,
 :root body[data-ui~="+no-popups"] #no-popups {
     display: flex;
     }
@@ -501,7 +501,7 @@ body:not([data-more~="e"]) [data-more="e"] {
 :root.desktop {
     overflow: hidden;
     }
-:root.desktop body {
+:root:not(.mobile) body {
     --popup-gap: 12px;
     max-width: max(100vw, 800px);
     }
@@ -513,24 +513,26 @@ body:not([data-more~="e"]) [data-more="e"] {
     max-width: 300px;
     width: max-content;
     }
-:root.desktop #switch:hover {
+:root:not(.mobile) #switch:hover {
     background-color: var(--default-surface-hover);
     }
-:root.desktop .rulesetTools [id]:hover {
+:root:not(.mobile) .rulesetTools [id]:hover {
     fill: var(--default-ink);
     }
-:root.desktop #firewall {
+:root:not(.mobile) #firewall {
     direction: rtl;
     flex-grow: 1;
     line-height: 1.4;
+    }
+:root.desktop #firewall {
     max-height: max(100vh, 600px);
     min-width: 360px;
     overflow-y: auto;
     width: min-content;
     }
-:root.desktop .tool:hover {
+:root:not(.mobile) .tool:hover {
     background-color: var(--default-surface-hover);
     }
-:root.desktop .moreOrLess > span:hover {
+:root:not(.mobile) .moreOrLess > span:hover {
     background-color: var(--default-surface-hover);
     }

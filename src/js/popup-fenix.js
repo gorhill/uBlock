@@ -501,7 +501,7 @@ const renderPopup = function() {
     setGlobalExpand(popupData.firewallPaneMinimized === false, true);
 
     // Build dynamic filtering pane only if in use
-    if ( (computedSections() & 0b10000) !== 0 ) {
+    if ( (computedSections() & sectionFirewallBit) !== 0 ) {
         buildAllFirewallRows();
     }
 
@@ -736,6 +736,7 @@ const gotoURL = function(ev) {
 // be toggle on/off.
 
 const maxNumberOfSections = 6;
+const sectionFirewallBit = 0b10000;
 
 const computedSections = ( ) =>
     popupData.popupPanelSections &
@@ -795,7 +796,7 @@ const toggleSections = function(more) {
     vAPI.localStorage.setItem('popupPanelSections', newBits);
 
     // Dynamic filtering pane may not have been built yet
-    if ( (newBits & 0b10000) !== 0 && dfPaneBuilt === false ) {
+    if ( (newBits & sectionFirewallBit) !== 0 && dfPaneBuilt === false ) {
         buildAllFirewallRows();
     }
 };
@@ -1162,14 +1163,21 @@ const getPopupData = async function(tabId) {
     // To avoid querying a spurious viewport width -- it happens sometimes,
     // somehow -- we delay layout-changing operations to the next paint
     // frames.
+    // Force a layout recalculation by querying the body width. To be
+    // honest, I have no clue if this makes a difference in the end.
+    //   https://gist.github.com/paulirish/5d52fb081b3570c81e3a
+    // Use a tolerance proportional to the sum of the width of the panes
+    // when testing against viewport width.
     const checkViewport = async function() {
+        void document.body.offsetWidth;
+
         await nextFrame();
-    
+
         const root = document.querySelector(':root');
         if ( root.classList.contains('desktop') ) {
             const main = document.getElementById('main');
             const firewall = document.getElementById('firewall');
-            const minWidth = Math.floor(main.offsetWidth + firewall.offsetWidth) - 4;
+            const minWidth = (main.offsetWidth + firewall.offsetWidth) / 1.1;
             if ( document.body.offsetWidth < minWidth ) {
                 root.classList.remove('desktop');
             } else {
@@ -1179,9 +1187,9 @@ const getPopupData = async function(tabId) {
                 }
             }
         }
-    
+
         await nextFrame();
-    
+
         document.body.classList.remove('loading');
     };
 
