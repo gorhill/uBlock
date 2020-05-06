@@ -13,8 +13,6 @@
     --popup-gap-extra-thin: calc(0.25 * var(--font-size));
     font-size: var(--font-size);
     line-height: 20px;
-    transition-duration: 0.1s;
-    transition-property: opacity;
     width: 100%;
     }
 :root body.loading {
