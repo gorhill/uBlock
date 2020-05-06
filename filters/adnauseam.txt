@@ -25,6 +25,9 @@ freebitcoin.win##iframe[src*="coinad"]
 freebitcoin.win##iframe[src*="mellowads"]
 rockpapershotgun.com##*[id^="google_ads"]
 
+# facebook
+facebook.com##.ego_section a[href^="https://l.facebook.com/l.php?u="][target="_blank"]
+
 atptour.com##.adtech-wrapper-ad
 
 deathbyfilms.com##img[src*="advert"]
