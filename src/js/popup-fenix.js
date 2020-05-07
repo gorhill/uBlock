@@ -1178,7 +1178,7 @@ const getPopupData = async function(tabId) {
             const main = document.getElementById('main');
             const firewall = document.getElementById('firewall');
             const minWidth = (main.offsetWidth + firewall.offsetWidth) / 1.1;
-            if ( document.body.offsetWidth < minWidth ) {
+            if ( window.innerWidth < minWidth ) {
                 root.classList.remove('desktop');
             } else {
                 const sticky = document.getElementById('sticky');
