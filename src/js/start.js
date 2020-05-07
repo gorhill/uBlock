@@ -268,15 +268,11 @@ try {
     await µb.loadHiddenSettings();
     log.info(`Hidden settings ready ${Date.now()-vAPI.T0} ms after launch`);
 
-    // By default network requests are always suspended, so we must
-    // unsuspend immediately if commanded by platform + advanced settings.
-    if (
-        vAPI.net.canSuspend() &&
-            µb.hiddenSettings.suspendTabsUntilReady === 'no' ||
-        vAPI.net.canSuspend() !== true &&
-            µb.hiddenSettings.suspendTabsUntilReady !== 'yes'
-    ) {
+    // Maybe override current network listener suspend state
+    if ( µb.hiddenSettings.suspendTabsUntilReady === 'no' ) {
         vAPI.net.unsuspend(true);
+    } else if ( µb.hiddenSettings.suspendTabsUntilReady === 'yes' ) {
+        vAPI.net.suspend();
     }
 
     if ( µb.hiddenSettings.disableWebAssembly !== true ) {
