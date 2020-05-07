@@ -1157,6 +1157,12 @@ const getPopupData = async function(tabId) {
         });
     };
 
+    const nextFrames = async n => {
+        for ( let i = 0; i < n; i++ ) {
+            await nextFrame();
+        }
+    };
+
     // The purpose of the following code is to reset to a vertical layout
     // should the viewport not be enough wide to accomodate the horizontal
     // layout.
@@ -1171,7 +1177,7 @@ const getPopupData = async function(tabId) {
     const checkViewport = async function() {
         void document.body.offsetWidth;
 
-        await nextFrame();
+        await nextFrames(4);
 
         const root = document.querySelector(':root');
         if ( root.classList.contains('desktop') ) {
