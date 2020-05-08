@@ -205,13 +205,6 @@ label {
 select {
     padding: 2px;
     }
-:root.desktop select {
-    appearance: none;
-    --webkit-appearance: none;
-    background-color: var(--select-surface);
-    font: inherit;
-    font-size: var(--font-size);
-    }
 
 .hidden {
     display: none;

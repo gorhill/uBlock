@@ -37,8 +37,9 @@ textarea {
     background-color: #eee;
     }
 #pageSelector {
+    min-width: 10em;
     padding: 0.25em 0;
-    width: 28em;
+    width: 50vw;
     }
 body[dir="ltr"] #pageSelector {
     margin-right: 1em;
@@ -518,7 +519,6 @@ body[dir="rtl"] #modalOverlay > div > div:nth-of-type(2) {
 #netFilteringDialog select {
     max-width: 75%;
     outline: none;
-    padding: 0.2em;
 }
 #netFilteringDialog > .preview {
     align-items: center;
