@@ -1151,15 +1151,11 @@ const getPopupData = async function(tabId) {
         tabId = parseInt(matches[1], 10) || 0;
     }
 
-    const nextFrame = ( ) => {
-        return new Promise(resolve => {
-            self.requestAnimationFrame(( ) => { resolve(); });
-        });
-    };
-
     const nextFrames = async n => {
         for ( let i = 0; i < n; i++ ) {
-            await nextFrame();
+            await new Promise(resolve => {
+                self.requestAnimationFrame(( ) => { resolve(); });
+            });
         }
     };
 
@@ -1175,27 +1171,23 @@ const getPopupData = async function(tabId) {
     // Use a tolerance proportional to the sum of the width of the panes
     // when testing against viewport width.
     const checkViewport = async function() {
-        void document.body.offsetWidth;
-
-        await nextFrames(4);
-
         const root = document.querySelector(':root');
         if ( root.classList.contains('desktop') ) {
             const main = document.getElementById('main');
+            const sticky = document.getElementById('sticky');
+            const stickyParent = sticky.parentElement;
+            if ( stickyParent !== main ) {
+                main.prepend(sticky);
+            }
+            await nextFrames(4);
             const firewall = document.getElementById('firewall');
             const minWidth = (main.offsetWidth + firewall.offsetWidth) / 1.1;
             if ( window.innerWidth < minWidth ) {
+                stickyParent.prepend(sticky);
                 root.classList.remove('desktop');
-            } else {
-                const sticky = document.getElementById('sticky');
-                if ( sticky.parentElement !== main ) {
-                    main.prepend(sticky);
-                }
             }
         }
-
-        await nextFrame();
-
+        await nextFrames(1);
         document.body.classList.remove('loading');
     };
 
