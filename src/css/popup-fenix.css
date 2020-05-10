@@ -428,6 +428,7 @@ body.advancedUser #firewall > div > span.noopRule.ownRule,
     box-sizing: border-box;
     height: 100%;
     left: 0;
+    overflow: hidden;
     position: absolute;
     top: 0;
     width: 100%;
@@ -497,6 +498,8 @@ body:not([data-more~="e"]) [data-more="e"] {
 
 /* mouse-driven devices */
 :root.desktop {
+    display: flex;
+    justify-content: flex-end;
     overflow: hidden;
     }
 :root:not(.mobile) body {
