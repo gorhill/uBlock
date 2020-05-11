@@ -59,6 +59,8 @@ const redirectableResources = new Map([
     [ 'amazon_ads.js', {
         alias: 'amazon-adsystem.com/aax2/amzn_ads.js',
     } ],
+    [ 'amazon_apstag.js', {
+    } ],
     [ 'ampproject_v0.js', {
         alias: 'ampproject.org/v0.js',
     } ],
