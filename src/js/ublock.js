@@ -331,7 +331,7 @@ const matchBucket = function(url, hostname, bucket, start) {
     switch ( name ) {
     case 'advancedUserEnabled':
         if ( value === true ) {
-            us.popupPanelSections = 0b1111;
+            us.popupPanelSections |= 0b11111;
         }
         break;
     case 'autoUpdate':
