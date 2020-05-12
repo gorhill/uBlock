@@ -404,7 +404,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Ky opsion lejon analizimin dhe zbatimin e <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">filtrave &ldquo;eliminues&rdquo; njësoj si në Adblock Plus</a>. Këta filtra kozmetikë shërbejnë kryesisht për të fshehur nga ana vizive elementet e padëshirueshme të cilat nuk bllokohen me metodën standarde të filtrimit.</p><p>Aktivizimi i kësaj veçorie rrit impaktin e uBlock₀ te memoria e kompjuterit.</p>",
+    "message": "Filtrat kozmetikë shërbejnë për të fshehur nga ana vizive elementet e padëshirueshme të faqes, të cilat nuk bllokohen me metodën standarde të filtrimit sipas kërkesave.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -412,7 +412,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Filtrat kozmetikë jospecifikë janë filtra kozmetikë të cilët aplikohen për të gjitha faqet e internetit.<p>Megjithëse uBlock₀ i përdor ata me efikasitet, filtrat kozmetikë jospecifikë përsëri mund të rëndojnë memorien dhe procesorin e kompjuterit kur faqet janë të mëdha dhe komplekse.<p>Aktivizimi i këtij opsioni eliminon peshën e tepërt te memoria dhe procesori, dhe zvogëlon impaktin e uBlock₀ te memoria e kompjuterit.<p>Ky opsion rekomandohet për aparatet kompjuterike jo shumë të shpejta.",
+    "message": "Filtrat kozmetikë jospecifikë janë filtra kozmetikë të cilët aplikohen për të gjitha faqet e internetit. Aktivizimi i këtij opsioni eliminon peshën e tepërt te memoria dhe procesori.\n\nKy opsion rekomandohet për aparatet kompjuterike jo shumë të shpejta.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -840,7 +840,7 @@
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Burimi i kodit",
+    "message": "Materiali burimor",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
