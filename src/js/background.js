@@ -94,7 +94,7 @@ const µBlock = (( ) => { // jshint ignore:line
             ignoreGenericCosmeticFilters: vAPI.webextFlavor.soup.has('mobile'),
             largeMediaSize: 50,
             parseAllABPHideFilters: true,
-            popupPanelSections: 0b1111,
+            popupPanelSections: 0b111,
             prefetchingDisabled: true,
             requestLogMaxEntries: 1000,
             showIconBadge: true,
