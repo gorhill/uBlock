@@ -58,6 +58,12 @@ command "${FIREFOX}" -v || { echo >&2 "Firefox is not installed."; exit 1; }
 web-ext build -s ${DES}/adnauseam.firefox -a ${ARTS}
 mv ${ARTS}/adnauseam-${VERSION}.zip ${ARTS}/adnauseam-${VERSION}.firefox.zip
 
+# EDGE (ZIP)
+printf '%s' "*** Target -> Edge"
+./tools/make-edge.sh
+web-ext build -s ${DES}/adnauseam.edge -a ${ARTS}
+mv ${ARTS}/adnauseam-${VERSION}.zip ${ARTS}/adnauseam-${VERSION}.edge.zip
+
 
 # NO PEMS
 mv ${DES}/*.pem /tmp
