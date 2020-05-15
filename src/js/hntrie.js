@@ -411,25 +411,20 @@ const HNTrieContainer = class {
         if ( typeof WebAssembly !== 'object' ) { return false; }
         if ( this.wasmMemory instanceof WebAssembly.Memory ) { return true; }
         const module = await getWasmModule();
-        if ( module instanceof WebAssembly.Module === false ) {
-            return false;
-        }
+        if ( module instanceof WebAssembly.Module === false ) { return false; }
         const memory = new WebAssembly.Memory({ initial: 2 });
-        const instance = await WebAssembly.instantiate(
-            module,
-            {
-                imports: {
-                    memory,
-                    growBuf: this.growBuf.bind(this, 24, 256)
-                }
+        const instance = await WebAssembly.instantiate(module, {
+            imports: {
+                memory,
+                growBuf: this.growBuf.bind(this, 24, 256)
             }
-        );
+        });
         if ( instance instanceof WebAssembly.Instance === false ) {
             return false;
         }
         this.wasmMemory = memory;
         const curPageCount = memory.buffer.byteLength >>> 16;
-        const newPageCount = this.buf.byteLength + PAGE_SIZE-1 >>> 16;
+        const newPageCount = roundToPageSize(this.buf.byteLength) >>> 16;
         if ( newPageCount > curPageCount ) {
             memory.grow(newPageCount - curPageCount);
         }

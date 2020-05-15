@@ -690,22 +690,19 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
         if ( typeof WebAssembly !== 'object' ) { return false; }
         if ( this.wasmMemory instanceof WebAssembly.Memory ) { return true; }
         const module = await getWasmModule();
-        if ( module instanceof WebAssembly.Module === false ) {
-            return false;
-        }
+        if ( module instanceof WebAssembly.Module === false ) { return false; }
         const memory = new WebAssembly.Memory({
-            initial: this.buf8.length >>> 16
+            initial: roundToPageSize(this.buf8.length) >>> 16
         });
-        const instance = await WebAssembly.instantiate(
-            module,
-            { imports: { memory, extraHandler: this.extraHandler } }
-        );
+        const instance = await WebAssembly.instantiate(module, {
+            imports: { memory, extraHandler: this.extraHandler }
+        });
         if ( instance instanceof WebAssembly.Instance === false ) {
             return false;
         }
         this.wasmMemory = memory;
         const curPageCount = memory.buffer.byteLength >>> 16;
-        const newPageCount = this.buf8.byteLength + PAGE_SIZE-1 >>> 16;
+        const newPageCount = roundToPageSize(this.buf8.byteLength) >>> 16;
         if ( newPageCount > curPageCount ) {
             memory.grow(newPageCount - curPageCount);
         }
