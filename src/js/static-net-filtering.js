@@ -864,45 +864,7 @@ registerFilterClass(FilterPatternGeneric);
 
 /******************************************************************************/
 
-const FilterPlainHostname = class {
-    constructor(s) {
-        this.s = s;
-    }
-
-    match() {
-        if ( $requestHostname.endsWith(this.s) === false ) { return false; }
-        const offset = $requestHostname.length - this.s.length;
-        return offset === 0 ||
-               $requestHostname.charCodeAt(offset - 1) === 0x2E /* '.' */;
-    }
-
-    logData(details) {
-        details.pattern.push('||', this.s, '^');
-        details.regex.push(restrFromPlainPattern(this.s), restrSeparator);
-    }
-
-    toSelfie() {
-        return [ this.fid, this.s ];
-    }
-
-    static compile(details) {
-        return [ FilterPlainHostname.fid, details.f ];
-    }
-
-    static fromCompiled(args) {
-        return new FilterPlainHostname(args[1]);
-    }
-
-    static fromSelfie(args) {
-        return new FilterPlainHostname(args[1]);
-    }
-};
-
-registerFilterClass(FilterPlainHostname);
-
-/******************************************************************************/
-
-const FilterAnchorHn = class {
+const FilterAnchorHnLeft = class {
     constructor() {
         this.lastLen = 0;
         this.lastBeg = -1;
@@ -946,6 +908,41 @@ const FilterAnchorHn = class {
 
     logData(details) {
         details.pattern.unshift('||');
+    }
+
+    toSelfie() {
+        return [ this.fid ];
+    }
+
+    static compile() {
+        return [ FilterAnchorHnLeft.fid ];
+    }
+
+    static fromCompiled() {
+        return new FilterAnchorHnLeft();
+    }
+
+    static fromSelfie() {
+        return new FilterAnchorHnLeft();
+    }
+
+    static keyFromArgs() {
+    }
+};
+
+registerFilterClass(FilterAnchorHnLeft);
+
+/******************************************************************************/
+
+const FilterAnchorHn = class extends FilterAnchorHnLeft {
+    match() {
+        return super.match() && this.lastEnd === $patternMatchRight;
+    }
+
+    logData(details) {
+        super.logData(details);
+        details.pattern.push('^');
+        details.regex.push(restrSeparator);
     }
 
     toSelfie() {
@@ -2468,7 +2465,7 @@ const FilterParser = class {
 
         // hostname-anchored
         if ( s.startsWith('||') ) {
-            this.anchor |= 0x4;
+            this.anchor |= 0b100;
             s = s.slice(2);
 
             // convert hostname to punycode if needed
@@ -3018,34 +3015,27 @@ FilterContainer.prototype.compile = function(raw, writer) {
 
     const units = [];
 
-    // Pattern
-    if ( parsed.isPureHostname ) {
-        parsed.anchor = 0;
-        units.push(FilterPlainHostname.compile(parsed));
-    } else if ( parsed.isJustOrigin() ) {
+    // Special pattern/option cases:
+    // - `*$domain=...`
+    // - `|http://$domain=...`
+    // - `|https://$domain=...`
+    if ( parsed.isJustOrigin() ) {
         const hostnames = parsed.domainOpt.split('|');
         if ( parsed.f === '*' ) {
             parsed.tokenHash = this.anyTokenHash;
-            for ( const hn of hostnames ) {
-                this.compileToAtomicFilter(parsed, hn, writer);
-            }
-            return true;
-        }
-        if ( parsed.f.startsWith('https') ) {
+        } else if /* 'https:' */ ( parsed.f.startsWith('https') ) {
             parsed.tokenHash = this.anyHTTPSTokenHash;
-            for ( const hn of hostnames ) {
-                this.compileToAtomicFilter(parsed, hn, writer);
-            }
-            return true;
+        } else /* 'http:' */ {
+            parsed.tokenHash = this.anyHTTPTokenHash;
         }
-        parsed.tokenHash = this.anyHTTPTokenHash;
         for ( const hn of hostnames ) {
             this.compileToAtomicFilter(parsed, hn, writer);
         }
         return true;
-    } else {
-        filterPattern.compile(parsed, units);
     }
+
+    // Pattern
+    filterPattern.compile(parsed, units);
 
     // Type
     // EXPERIMENT: $requestTypeBit
@@ -3056,7 +3046,11 @@ FilterContainer.prototype.compile = function(raw, writer) {
 
     // Anchor
     if ( (parsed.anchor & 0b100) !== 0 ) {
-        units.push(FilterAnchorHn.compile());
+        if ( parsed.isPureHostname ) {
+            units.push(FilterAnchorHn.compile());
+        } else {
+            units.push(FilterAnchorHnLeft.compile());
+        }
     } else if ( (parsed.anchor & 0b010) !== 0 ) {
         units.push(FilterAnchorLeft.compile());
     }
@@ -3668,63 +3662,37 @@ FilterContainer.prototype.bucketHistogram = function() {
 
     With default filter lists:
 
-    As of 2019-04-25:
+    As of 2020-05-15:
 
-        {"FilterPlainHnAnchored" => 11078}
-        {"FilterPlainPrefix1" => 7195}
-        {"FilterPrefix1Trie" => 5720}
-        {"FilterOriginHit" => 3561}
-        {"FilterWildcard2HnAnchored" => 2943}
-        {"FilterPair" => 2391}
-        {"FilterBucket" => 1922}
-        {"FilterWildcard1HnAnchored" => 1910}
-        {"FilterHnAnchoredTrie" => 1586}
-        {"FilterPlainHostname" => 1391}
-        {"FilterOriginHitSet" => 1155}
-        {"FilterPlain" => 634}
-        {"FilterWildcard1" => 423}
-        {"FilterGenericHnAnchored" => 389}
-        {"FilterOriginMiss" => 302}
-        {"FilterGeneric" => 163}
-        {"FilterOriginMissSet" => 150}
-        {"FilterRegex" => 124}
-        {"FilterPlainRightAnchored" => 110}
-        {"FilterGenericHnAndRightAnchored" => 95}
-        {"FilterHostnameDict" => 59}
-        {"FilterPlainLeftAnchored" => 30}
-        {"FilterJustOrigin" => 22}
-        {"FilterHTTPJustOrigin" => 19}
-        {"FilterHTTPSJustOrigin" => 18}
-        {"FilterExactMatch" => 5}
-        {"FilterOriginMixedSet" => 3}
-
-    As of 2019-10-21:
-
-        "FilterPatternPlain" => 27542}
-        "FilterComposite" => 17249}
-        "FilterPlainTrie" => 13235}
-        "FilterAnchorHn" => 11938}
-        "FilterPatternRightEx" => 4446}
-        "FilterOriginHit" => 4435}
-        "FilterBucket" => 3833}
-        "FilterPatternRight" => 3426}
-        "FilterPlainHostname" => 2786}
-        "FilterOriginHitSet" => 1433}
-        "FilterDataHolder" => 666}
-        "FilterPatternGeneric" => 548}
-        "FilterOriginMiss" => 441}
-        "FilterOriginMissSet" => 208}
-        "FilterTrailingSeparator" => 188}
-        "FilterRegex" => 181}
-        "FilterPatternLeft" => 172}
-        "FilterAnchorRight" => 100}
-        "FilterPatternLeftEx" => 82}
-        "FilterHostnameDict" => 60}
-        "FilterAnchorLeft" => 50}
-        "FilterJustOrigin" => 24}
-        "FilterHTTPJustOrigin" => 18}
-        "FilterTrue" => 17}
-        "FilterHTTPSJustOrigin" => 17}
+        "FilterHostnameDict" Content => 60772}
+        "FilterPatternPlain" => 26432}
+        "FilterComposite" => 17125}
+        "FilterPlainTrie Content" => 13519}
+        "FilterAnchorHnLeft" => 11931}
+        "FilterOriginHit" => 5524}
+        "FilterPatternRight" => 3376}
+        "FilterPatternRightEx" => 3130}
+        "FilterBucket" => 1961}
+        "FilterPlainTrie" => 1578}
+        "FilterOriginHitSet" => 1475}
+        "FilterAnchorHn" => 1453}
+        "FilterOriginMiss" => 730}
+        "FilterPatternGeneric" => 601}
+        "FilterDataHolder" => 404}
+        "FilterOriginMissSet" => 316}
+        "FilterTrailingSeparator" => 235}
+        "FilterAnchorRight" => 174}
+        "FilterPatternLeft" => 164}
+        "FilterRegex" => 125}
+        "FilterPatternLeftEx" => 68}
+        "FilterHostnameDict" => 62}
+        "FilterAnchorLeft" => 51}
+        "FilterJustOrigin" => 25}
+        "FilterTrue" => 18}
+        "FilterHTTPSJustOrigin" => 16}
+        "FilterHTTPJustOrigin" => 16}
+        "FilterType" => 0}
+        "FilterDenyAllow" => 0}
 
 */
 
