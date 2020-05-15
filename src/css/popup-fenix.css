@@ -511,7 +511,7 @@ body:not([data-more~="e"]) [data-more="e"] {
     width: unset;
     }
 :root.desktop #main {
-    max-width: 300px;
+    max-width: 340px;
     width: max-content;
     }
 :root:not(.mobile) #switch:hover {
