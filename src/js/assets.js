@@ -227,7 +227,11 @@ api.fetchFilterList = async function(mainlistURL) {
     //   Anything under URL's root directory is allowed to be fetched. The
     //   URL of a sublist will always be relative to the URL of the parent
     //   list (instead of the URL of the root list).
-    let rootDirectoryURL = toParsedURL(mainlistURL);
+    let rootDirectoryURL = toParsedURL(
+        reIsExternalPath.test(mainlistURL)
+            ? mainlistURL
+            : vAPI.getURL(mainlistURL)
+    );
     if ( rootDirectoryURL !== undefined ) {
         const pos = rootDirectoryURL.pathname.lastIndexOf('/');
         if ( pos !== -1 ) {
@@ -257,18 +261,14 @@ api.fetchFilterList = async function(mainlistURL) {
                 if ( match === null ) { break; }
                 if ( toParsedURL(match[1]) !== undefined ) { continue; }
                 if ( match[1].indexOf('..') !== -1 ) { continue; }
-                const subURL = toParsedURL(result.url);
-                subURL.pathname = subURL.pathname.replace(/[^/]+$/, match[1]);
-                if ( subURL.href.startsWith(rootDirectoryURL.href) === false ) {
-                    continue;
-                }
-                if ( sublistURLs.has(subURL.href) ) { continue; }
-                sublistURLs.add(subURL.href);
+                const subURL = rootDirectoryURL.href + match[1];
+                if ( sublistURLs.has(subURL) ) { continue; }
+                sublistURLs.add(subURL);
                 out.push(
                     content.slice(lastIndex, match.index),
-                    `! >>>>>>>> ${subURL.href}`,
-                    api.fetchText(subURL.href),
-                    `! <<<<<<<< ${subURL.href}`
+                    `! >>>>>>>> ${subURL}`,
+                    api.fetchText(subURL),
+                    `! <<<<<<<< ${subURL}`
                 );
                 lastIndex = reInclude.lastIndex;
             }
