@@ -198,7 +198,7 @@ body.dirty #refresh {
     display: flex;
     }
 body.dirty #refresh:hover {
-    fill: inherit
+    fill: inherit;
     }
 
 #tooltip {
