@@ -127,7 +127,6 @@ body.needSave #revertRules {
 .itemRibbon > [data-i18n] + span {
     justify-self: end;
     text-align: end;
-    white-space: nowrap;
     }
 
 .toolRibbon {
@@ -512,7 +511,7 @@ body:not([data-more~="e"]) [data-more="e"] {
     }
 :root.desktop #main {
     max-width: 340px;
-    width: max-content;
+    min-width: 290px;
     }
 :root:not(.mobile) #switch:hover {
     background-color: var(--default-surface-hover);
