@@ -1,4 +1,4 @@
-/*
+/**
 
     References:
       https://protocol.mozilla.org/
@@ -185,7 +185,20 @@
     --bg-popup-cell-label-mixed: hsla(25, 100%, 50%, 1);
 }
 
-/* Default dark theme starts here */
+/**
+    Default dark theme starts here
+
+    Assign a default background color if dark mode is enabled -- hopefully
+    this will avoid flashes of white background until the document's own CSS
+    overrides the default color value below.
+    https://github.com/uBlockOrigin/uBlock-issues/issues/1027#issuecomment-629641072
+*/
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: var(--dark-gray-90);
+    }
+}
 
 :root.dark {
 }
