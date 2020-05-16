@@ -152,11 +152,41 @@ const hashFromPopupData = function(reset) {
 const formatNumber = function(count) {
     if ( typeof count !== 'number' ) { return ''; }
     if ( count < 1e6 ) { return count.toLocaleString(); }
-    return count.toLocaleString(undefined, {
-        notation: 'compact',
-        maximumSignificantDigits: 4,
-    });
-};
+
+    if (
+        intlNumberFormat === undefined &&
+        Intl.NumberFormat instanceof Function
+    ) {
+        const intl = new Intl.NumberFormat(undefined, {
+            notation: 'compact',
+            maximumSignificantDigits: 4
+        });
+        if (
+            intl.resolvedOptions instanceof Function &&
+            intl.resolvedOptions().hasOwnProperty('notation')
+        ) {
+            intlNumberFormat = intl;
+        }
+    }
+
+    if ( intlNumberFormat ) {
+        return intlNumberFormat.format(count);
+    }
+
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1027#issuecomment-629696676
+    //   For platforms which do not support proper number formatting, use
+    //   a poor's man compact form, which unfortunately is not i18n-friendly.
+    count /= 1000000;
+    if ( count >= 100 ) {
+      count = Math.floor(count * 10) / 10;
+    } else if ( count > 10 ) {
+      count = Math.floor(count * 100) / 100;
+    } else {
+      count = Math.floor(count * 1000) / 1000;
+    }
+    return (count).toLocaleString(undefined) + '\u2009M';};
+
+let intlNumberFormat;
 
 /******************************************************************************/
 

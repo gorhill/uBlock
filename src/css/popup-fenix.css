@@ -522,9 +522,9 @@ body:not([data-more~="e"]) [data-more="e"] {
     }
 :root.desktop #firewall {
     max-height: 600px;
-    min-width: 360px;
+    max-width: 460px;
     overflow-y: auto;
-    width: min-content;
+    width: 32em;
     }
 :root:not(.mobile) .tool:hover {
     background-color: var(--default-surface-hover);

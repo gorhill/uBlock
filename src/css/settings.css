@@ -7,28 +7,27 @@
 body.advancedUser [href="advanced-settings.html"] {
     display: inline-flex;
     }
-#localData {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    white-space: nowrap;
-    }
 #localData > div {
-    flex-grow: 1;
-    margin-bottom: 1em;
+    margin-bottom: var(--default-gap-small);
     }
 #localData > div:last-of-type {
+    align-items: flex-start;
     display: flex;
     flex-direction: column;
-    flex-grow: 0;
-    flex-shrink: 0;
     }
 #localData > div:last-of-type > button {
-    margin-bottom: 0.5em;
+    margin-bottom: var(--default-gap-small);
+    min-width: 280px;
     }
 
-/* small-screen devices */
+/* Mobile devices */
+
 :root.mobile #localData {
-    flex-direction: column;
-    white-space: unset;
+    max-width: 100vw;
+    }
+:root.mobile #localData > div:last-of-type {
+    align-items: stretch;
+    }
+:root.mobile #localData > div:last-of-type > button {
+    min-width: unset;
     }
