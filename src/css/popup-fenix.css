@@ -511,7 +511,7 @@ body:not([data-more~="e"]) [data-more="e"] {
     }
 :root.desktop #main {
     max-width: 340px;
-    min-width: 290px;
+    width: 22em;
     }
 :root:not(.mobile) #switch:hover {
     background-color: var(--default-surface-hover);

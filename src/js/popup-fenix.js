@@ -30,14 +30,13 @@
 
 /******************************************************************************/
 
-/*
-let popupFontSize;
+
+let popupFontSize = 'unset';
 vAPI.localStorage.getItemAsync('popupFontSize').then(value => {
     if ( typeof value !== 'string' || value === 'unset' ) { return; }
     document.body.style.setProperty('font-size', value);
     popupFontSize = value;
 });
-*/
 
 // https://github.com/chrisaljoudi/uBlock/issues/996
 //   Experimental: mitigate glitchy popup UI: immediately set the firewall
@@ -581,7 +580,6 @@ let renderOnce = function() {
 
     const body = document.body;
 
-/*
     if ( popupData.fontSize !== popupFontSize ) {
         popupFontSize = popupData.fontSize;
         if ( popupFontSize !== 'unset' ) {
@@ -592,7 +590,6 @@ let renderOnce = function() {
             vAPI.localStorage.removeItem('popupFontSize');
         }
     }
-*/
 
     uDom.nodeFromId('version').textContent = popupData.appVersion;
 
