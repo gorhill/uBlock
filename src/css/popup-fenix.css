@@ -525,7 +525,7 @@ body:not([data-more~="e"]) [data-more="e"] {
     line-height: 1.4;
     }
 :root.desktop #firewall {
-    max-height: max(100vh, 600px);
+    max-height: 600px;
     min-width: 360px;
     overflow-y: auto;
     width: min-content;
