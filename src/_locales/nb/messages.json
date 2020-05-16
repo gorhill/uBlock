@@ -468,7 +468,7 @@
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pViewContent": {
-    "message": "vis innhold",
+    "message": "Vis innhold",
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
