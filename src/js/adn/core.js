@@ -12,7 +12,8 @@
       clearVisitData = 0,
       // testing ['selenium' or 'sessbench']
       automatedMode = 0,
-      disableIdler = 0; // don't wait for user to be idle
+      // don't wait for user to be idle
+      disableIdler = 0; 
 
   const µb = µBlock;
   const production = 1;
@@ -27,11 +28,7 @@
   const pollQueueInterval = 5000;
   const redactMarker = '********';
   const repeatVisitInterval = Number.MAX_VALUE;
-  let xhr;
-  let idgen;
-  let admap;
-  let inspected;
-  let listEntries;
+  let xhr, idgen, admap, inspected, listEntries;
   const visitedURLs = new Set();
 
   // blocks requests to/from these domains even if the list is not in enabledBlockLists
@@ -260,97 +257,75 @@
 
   const pollQueue = function (interval) {
     interval = interval || pollQueueInterval;
-
     markActivity();
 
-    let next;
-    const pending = pendingAds();
+    // changes for #1657
+    //const pending = pendingAds();
     const settings = µb.userSettings;
-
-    if (pending.length && settings.clickingAds && !isAutomated()) { // no visits if automated
+    if (/*pending.length && */settings.clickingAds && !isAutomated()) { // no visits if automated
 
       // check whether an idle timeout has been specified
       const idleMs = disableIdler ? 0 : settings.clickOnlyWhenIdleFor;
       if (!idleMs || (millis() - lastUserActivity > idleMs)) {
 
         //idleMs && log("[IDLER] "+(millis() - lastUserActivity)+"ms, clicking resumed...");
-
-        // if an unvisited ad is being inspected, visit it next
+        let next;
         if (visitPending(inspected)) {
-
+          // if an unvisited ad is being inspected, visit it next
           next = inspected;
-
         } else {
-
-          // else take the most recent ad needing a visit
-          next = pending.sort(byField('-foundTs'))[0];
+          // else we pick the next ad needing a visit
+          next = nextPending();
         }
-
         visitAd(next);
       }
       else if (idleMs) {
-
         log('[IDLER] '+(millis() - lastUserActivity)+'ms, waiting until '+ idleMs +'ms...'); // TMP
       }
     }
-
     // next poll
-    setTimeout(pollQueue, Math.max(1, interval - (millis() - lastActivity)));
+    //setTimeout(pollQueue, Math.max(1, interval - (millis() - lastActivity)));
+    setTimeout(pollQueue, Math.max(interval/2, interval - (millis() - lastActivity)));
   }
 
   const markActivity = function () {
-
     return (lastActivity = millis());
   }
 
-  const pendingAds = function () {
+  const nextPending = function () {
+    let ads = adlist(); 
+    
+    // @SALLY: if we sort here newer ads are visited first ?
+    //ads = ads.sort(byField('-foundTs'));
 
+    for (let i = 0; i < ads.length; i++) {
+      if (visitPending(ads[i])) return ads[i];
+    }
+  }
+
+  const pendingAds = function () {
     return adlist().filter(function (a) {
       return visitPending(a);
     });
   }
 
   const visitPending = function (ad) {
-
     let pending = ad && ad.attempts < maxAttemptsPerAd &&
       ad.visitedTs <= 0 && !ad.dntAllowed && !ad.noVisit;
-
-    //  DH: moved to registerAd() as part of #1168
-    //
-    // if (pending && µb.adnauseam.dnt.mustNotVisit(ad)) {
-    //
-    //   log('[DNT] (NoVisit) ' + adinfo(ad), ad.pageDomain + ' => ' + ad.targetDomain);
-    //
-    //   ad.noVisit = true; // so we don't recheck it
-    //   ad.dntAllowed = true;
-    //
-    //   // S: why do we need this?
-    //   // vAPI.messaging.broadcast({
-    //   //   what: 'updateDNT',
-    //   //   ad: ad
-    //   // });
-    //
-    //   pending = false;
-    // }
-
     if (pending && visitedURLs.has(ad.targetUrl)) {
-
       log('[NOVISIT] User has already clicked the ad', ad.targetUrl);
       ad.noVisit = true; // so we don't recheck it
       ad.clickedByUser = true;
       pending = false;
     }
-
     return pending;
   }
 
   const isPopupOpen = function () {
-
     return vAPI.getViews({ type: "popup" }).length;
   };
 
   const getExtPageTabId = function (htmlPage) {
-
     const pageUrl = vAPI.getURL(htmlPage);
     for (let e of µb.pageStores) {
       const pageStore = e[1];
@@ -1135,11 +1110,8 @@
   const isBlockableDomain = function (context) {
 
     //console.log('isBlockableDomain',context.docDomain, context);
-
     const domain = context.docDomain, host = context.getHostname();
-
     for (let i = 0; i < allowAnyBlockOnDomains.length; i++) {
-
       const dom = allowAnyBlockOnDomains[i];
       if (dom === domain || host.indexOf(dom) > -1) {
         return true;
@@ -1166,19 +1138,16 @@
   const isBlockableRequest = function (context) {
 
     if (µb.userSettings.blockingMalware === false) {
-
       logNetAllow('NoBlock', context.docDomain + ' => ' + context.url);
       return false;
     }
 
     if (!listsLoaded) {
-
       logNetAllow('Loading', context.docDomain  + ' => ' + context.url);
       return false;
     }
 
     if (isBlockableDomain(context)) {
-
       logNetBlock('Domains', context.docDomain + ' => ' + context.url);
       return true;
     }
@@ -1231,15 +1200,13 @@
   };
 
   const adCount = function () {
-
     return adlist().length;
   }
 
   const dntAllowsRequest = function(url, hostname) {
 
-    //if (!url) throw Error("No URL!",hostname);
-
-    const us = µb.userSettings, dntHides = us.hidingAds && us.disableHidingForDNT, dntClicks = us.clickingAds && us.disableClickingForDNT;
+    const us = µb.userSettings, dntHides = us.hidingAds && us.disableHidingForDNT,
+      dntClicks = us.clickingAds && us.disableClickingForDNT;
 
     // 1st-party: only check original-request per EFF spec
     return ((dntHides || dntClicks) && us.dntDomains.contains(hostname));
@@ -1420,12 +1387,10 @@
   };
 
   exports.adsForVault = function (request, pageStore, tabId) {
-
     return adsForUI();
   };
 
   exports.mustAllowRequest = function (result, context) {
-
     return result !== 0 && !isBlockableRequest(context);
   };
 
@@ -1472,10 +1437,7 @@
     //console.log('PAGE: ', requestURL, ads.length);
     visitedURLs.add(requestURL);
 
-    ads.forEach(function (ad) {
-      ad.current = false;
-    });
-
+    ads.forEach(function (ad) { ad.current = false; });
     if (automatedMode === 'selenium' && requestURL === 'http://rednoise.org/ad-auto-export') {
       exportAds();
     }
@@ -1557,10 +1519,7 @@
 
   exports.lookupAd = function (url, requestId) {
 
-    //url = trimChar(url, '/'); // no trailing slash
-
     const ads = adlist();
-
     for (let i = 0; i < ads.length; i++) {
 
       if (ads[i].attemptedTs) {
@@ -1575,11 +1534,7 @@
   exports.registerAd = function (request, pageStore, tabId) {
     if (!request.ad) return;
 
-    let json;
-    let adhash;
-    let pageHash;
-    let msSinceFound;
-    let orig;
+    let json, adhash, pageHash, msSinceFound, orig;
     const ad = request.ad;
 
     ad.current = true;
@@ -1591,13 +1546,9 @@
 
     //console.log('registerAd: '+pageStore.tabHostname+' -> '+ad.pageDomain);
 
-    if (!validate(ad)) {
-
-      return warn(ad);
-    }
+    if (!validate(ad)) return warn(ad);
 
     if (!internalLinkDomains.contains(ad.pageDomain) && internalTarget(ad)) {
-
       return warn('[INTERN] Ignoring Ad on '+ad.pageDomain+', target: '+ad.targetUrl);
     }
 
@@ -1773,34 +1724,21 @@
    * Called also from tab.js::µb.updateBadgeAsync()
    */
   const adlist = exports.adlist = function (pageUrl, currentOnly) {
-
     admap = admap || µb.userSettings.admap;
-
-    const result = [],
-          pages = pageUrl ? [ YaMD5.hashStr(pageUrl) ]
-            : Object.keys(admap);
-
+    const result = [], pages = pageUrl ? 
+      [ YaMD5.hashStr(pageUrl) ] : Object.keys(admap);
     for (let i = 0; admap && i < pages.length; i++) {
-
       if (admap[pages[i]]) {
-
         const hashes = Object.keys(admap[pages[i]]);
-
         for (let j = 0; j < hashes.length; j++) {
-
           const ad = admap[pages[i]][hashes[j]];
-
           // ignore text-ads according to parseTextAds prefe
           if (ad && (µb.userSettings.parseTextAds || ad.contentType !== 'text')) {
-
-            if (!currentOnly || ad.current) {
-              result.push(ad);
-            }
+            if (!currentOnly || ad.current) result.push(ad);
           }
         }
       }
     }
-
     return result;
   };
 
