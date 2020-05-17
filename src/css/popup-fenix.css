@@ -508,8 +508,7 @@ body.advancedUser #firewall > div > span.noopRule.ownRule,
 :root:not(.mobile) .toolRibbon .tool,
 :root.mobile body.no-tooltips .toolRibbon .tool,
 :root.mobile body[data-ui~="-captions"] .toolRibbon .tool {
-    padding: calc(var(--popup-gap) + var(--popup-gap-thin))
-             var(--popup-gap-thin);
+    padding: var(--popup-gap) var(--popup-gap-thin);
     }
 :root.mobile #no-popups,
 :root body[data-ui~="-no-popups"] #no-popups {
