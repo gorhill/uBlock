@@ -81,9 +81,9 @@
 
     updateMenuState();
 
-    ads = json && onPage(json.data, page);
+    ads = json && json.data;
 
-    setCounts(ads, json && json.data && json.data.length);
+    setCounts(ads, json && json.data && json.total);
 
     const $items = uDom('#ad-list-items');
 
@@ -91,8 +91,6 @@
 
     if (ads) {
 
-      // if we have no page ads, use the most recent
-      if (!ads.length) ads = doRecent(json.data);
 
       for (let i = 0, j = ads.length; i < j; i++) {
         appendAd($items, ads[i]);
@@ -182,8 +180,8 @@
 
     if (ads) {
 
-      // if we have no page ads, use the most recent
-      if (!ads.length) ads = doRecent(json.data);
+      // if we have no page ads, use the most recent -> moved to core
+      if (json.recent) ads = doRecent();
 
       for (let i = 0, j = ads.length; i < j; i++)
         appendAd($items, ads[i]);
@@ -244,38 +242,11 @@
     return false;
   }
 
-  const doRecent = function (data) { // return 6 newest ads
+  const doRecent = function () {
 
     uDom("#alert").removeClass('hide');
     uDom('#ad-list-items').addClass('recent-ads');
 
-    return data.sort(byField('-foundTs')).slice(0, 6);
-  }
-
-  const onPage = function (ads, pageUrl) {
-
-    if (pageUrl) {
-
-      const res = [];
-
-      // first try current ads
-      for (let i = 0; i < ads.length; i++) {
-        if (ads[i] && ads[i].pageUrl === pageUrl && ads[i].current) {
-          res.push(ads[i]);
-        }
-      }
-
-      // then all page ads
-      if (res.length === 0) {
-        for (let i = 0; i < ads.length; i++) {
-          if (ads[i] && ads[i].pageUrl === pageUrl) {
-            res.push(ads[i]);
-          }
-        }
-      }
-
-      return res.sort(byField('-foundTs'));
-    }
   }
 
   const appendAd = function ($items, ad) {

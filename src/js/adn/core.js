@@ -866,12 +866,9 @@
     return false;
   }
 
-  // return ALL ads, regardless of pageUrl param
   const adsForUI = function (pageUrl) {
-
     return {
-
-      data: adlist(),
+      data: adlist(pageUrl),
       pageUrl: pageUrl,
       prefs: contentPrefs(),
       current: activeVisit(),
@@ -2114,7 +2111,20 @@ const verifyList = exports.verifyList = function (note, lists) {
         return;
     }
 
-    return adsForUI(reqPageStore.rawURL);
+    const allAds = adlist();
+    const json = adsForUI(reqPageStore.rawURL);
+    json.total = allAds.length;
+
+    // #1657: if data length is too long, get the first 6
+    if (json.data.length > 6) json.data = json.data.slice(0, 6);
+
+    // if we have no page ads, use the most recent(6), avoid sending too many ad data in messaging
+    if (!json.data.length) {
+      json.data = allAds.sort(byField('-foundTs')).slice(0, 6);
+      json.recent = true;
+    }
+
+    return json;
   };
 
   return exports;
