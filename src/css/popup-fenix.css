@@ -121,7 +121,7 @@ body.needSave #revertRules {
     column-gap: var(--popup-gap);
     display: grid;
     grid-template: auto / auto;
-    margin: var(--popup-gap) var(--popup-gap) 0 var(--popup-gap);
+    margin: var(--popup-gap) var(--popup-gap) var(--popup-gap-thin) var(--popup-gap);
     }
 #basicStats > span {
     justify-self: center;
@@ -132,10 +132,11 @@ body.needSave #revertRules {
     }
 #basicStats > [data-i18n] + span {
     font-size: 105%;
-    margin-bottom: var(--popup-gap);
+    margin-bottom: var(--popup-gap-thin);
     }
 :root.portrait #basicStats {
     grid-template: auto / auto auto;
+    margin-bottom: 0;
     }
 :root.portrait #basicStats > span {
     font-size: inherit;
