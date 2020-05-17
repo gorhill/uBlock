@@ -37,26 +37,23 @@
     left: 20
   };
 
-  let zoomStyle;
-  let animatorId;
-  let resizeId;
-  let selectedAdSet;
-  let showInterface = true;
   const animateMs = 2000;
   const viewState = {};
+  const messager = vAPI.messaging;
 
-  let // determined by mousewheel
-  userZoomScale = Zooms[Zooms.indexOf(100)];
+  // determined by mousewheel
+  let userZoomScale = Zooms[Zooms.indexOf(100)];
 
-  let // determined by zoom in / out buttons
-  zoomIdx = 0;
+  // determined by zoom in / out buttons
+  let zoomIdx = 0;
 
+  let zoomStyle, animatorId, resizeId, selectedAdSet;
+  let showInterface = true;
   let draggingVault = false;
   let vaultLoading = false;
 
-  let gAds, gAdSets, gMin, gMax, gSliderRight, gSliderLeft, settings, lastAdDetectedTime, waitingAds = []; // stateful
-
-  const messager = vAPI.messaging;
+  let gAds, gAdSets, gMin, gMax, gSliderRight, gSliderLeft, settings;
+  let lastAdDetectedTime, waitingAds = []; // stateful
 
   messager.addChannelListener('adnauseam', function (request) {
 
@@ -72,13 +69,14 @@
       waitingAds.push(request.ad);
       lastAdDetectedTime = new Date();
       const brush =  document.getElementsByClassName('chart-bg')[0];
-      const w = brush ? parseInt(brush.attributes.width.value) : null, sliderPos = gSliderLeft ? parseFloat(/\((.*?),/g.exec(gSliderLeft)[1]) : null;
+      const w = brush ? parseInt(brush.attributes.width.value) : null,
+        sliderPos = gSliderLeft ? parseFloat(/\((.*?),/g.exec(gSliderLeft)[1]) : null;
 
       // only when the slider covers 'now' or when there is no slider (empty vault or one ad)
       // console.log(w, sliderPos)
       if ( w - sliderPos <= 1 || sliderPos == 0) setTimeout(autoUpdateVault, 3000);
 
-      //  updatdVault() would normally be triggered by the 'adDetected' message (above),
+      //  updateVault() would normally be triggered by the 'adDetected' message (above),
       //  which contains the new ads, and is sent ONLY if the the vault is open
       break;
 
