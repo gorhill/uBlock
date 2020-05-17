@@ -34,7 +34,7 @@
 let popupFontSize = 'unset';
 vAPI.localStorage.getItemAsync('popupFontSize').then(value => {
     if ( typeof value !== 'string' || value === 'unset' ) { return; }
-    document.body.style.setProperty('font-size', value);
+    document.body.style.setProperty('--font-size', value);
     popupFontSize = value;
 });
 
@@ -184,7 +184,8 @@ const formatNumber = function(count) {
     } else {
       count = Math.floor(count * 1000) / 1000;
     }
-    return (count).toLocaleString(undefined) + '\u2009M';};
+    return (count).toLocaleString(undefined) + '\u2009M';
+};
 
 let intlNumberFormat;
 
@@ -613,10 +614,10 @@ let renderOnce = function() {
     if ( popupData.fontSize !== popupFontSize ) {
         popupFontSize = popupData.fontSize;
         if ( popupFontSize !== 'unset' ) {
-            body.style.setProperty('font-size', popupFontSize);
+            body.style.setProperty('--font-size', popupFontSize);
             vAPI.localStorage.setItem('popupFontSize', popupFontSize);
         } else {
-            body.style.removeProperty('font-size');
+            body.style.removeProperty('--font-size');
             vAPI.localStorage.removeItem('popupFontSize');
         }
     }
@@ -1200,18 +1201,22 @@ const getPopupData = async function(tabId) {
     const checkViewport = async function() {
         const root = document.querySelector(':root');
         if ( root.classList.contains('desktop') ) {
-            const main = document.getElementById('main');
-            const sticky = document.getElementById('sticky');
-            const stickyParent = sticky.parentElement;
-            if ( stickyParent !== main ) {
-                main.prepend(sticky);
-            }
             await nextFrames(4);
+            const main = document.getElementById('main');
             const firewall = document.getElementById('firewall');
             const minWidth = (main.offsetWidth + firewall.offsetWidth) / 1.1;
             if ( window.innerWidth < minWidth ) {
-                stickyParent.prepend(sticky);
-                root.classList.remove('desktop');
+                root.classList.add('portrait');
+            }
+        } else if ( root.classList.contains('mobile') ) {
+            root.classList.add('portrait');
+        }
+        if ( root.classList.contains('portrait') ) {
+            const panes = document.getElementById('panes');
+            const sticky = document.getElementById('sticky');
+            const stickyParent = sticky.parentElement;
+            if ( stickyParent !== panes ) {
+                panes.prepend(sticky);
             }
         }
         await nextFrames(1);

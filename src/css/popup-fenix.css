@@ -5,6 +5,9 @@
     }
 
 /* Internal CSS values */
+:root body {
+    overflow: hidden;
+    }
 :root body,
 :root.mobile body {
     --font-size: 14px;
@@ -28,10 +31,13 @@ a {
 #panes {
     align-items: stretch;
     display: flex;
-    flex-direction: column;
+    flex-direction: row-reverse;
     padding: 0;
     position: relative;
-    width: 100%;
+    }
+#main {
+    max-width: 340px;
+    min-width: 18em;
     }
 hr {
     border: 0;
@@ -111,17 +117,47 @@ body.needSave #revertRules {
     font-weight: 600;
     }
 
+#basicStats {
+    column-gap: var(--popup-gap);
+    display: grid;
+    grid-template: auto / auto;
+    margin: var(--popup-gap) var(--popup-gap) 0 var(--popup-gap);
+    }
+#basicStats > span {
+    justify-self: center;
+    white-space: nowrap;
+    }
+#basicStats > [data-i18n] {
+    font-size: 95%;
+    }
+#basicStats > [data-i18n] + span {
+    font-size: 105%;
+    margin-bottom: var(--popup-gap);
+    }
+:root.portrait #basicStats {
+    grid-template: auto / auto auto;
+    }
+:root.portrait #basicStats > span {
+    font-size: inherit;
+    justify-self: stretch;
+    margin-bottom: var(--popup-gap);
+    white-space: unset;
+    }
+:root.portrait #basicStats > [data-i18n] {
+    }
+:root.portrait #basicStats > [data-i18n] + span {
+    text-align: end;
+    }
+
 .itemRibbon {
     column-gap: var(--popup-gap);
     display: grid;
-    grid-template: auto / auto auto;
-    margin: var(--popup-gap) var(--popup-gap) 0 var(--popup-gap);
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+    grid-template: auto / 1fr 1fr;
+    margin: var(--popup-gap);
     }
-.itemRibbon > span {
-    margin-bottom: var(--popup-gap);
-    }
-.itemRibbon > [data-i18n] + span {
-    justify-self: end;
+.itemRibbon > span + span {
     text-align: end;
     }
 
@@ -176,10 +212,13 @@ body.mobile.no-tooltips .toolRibbon .tool {
     visibility: visible;
     }
 
-.moreOrLess {
+#moreOrLess {
+    column-gap: var(--popup-gap);
+    display: grid;
+    grid-template: auto / 1fr 1fr;
     margin: 0;
     }
-.moreOrLess > span {
+#moreOrLess > span {
     cursor: pointer;
     margin: 0;
     padding: var(--popup-gap);
@@ -189,7 +228,7 @@ body.mobile.no-tooltips .toolRibbon .tool {
     transform: rotate(180deg);
     }
 #lessButton {
-    text-align: right;
+    text-align: end;
     }
 body[data-more="a b c d e f"] #moreButton {
     pointer-events: none;
@@ -202,11 +241,14 @@ body[data-more=""] #lessButton {
 
 #firewall {
     border: 0;
-    flex-shrink: 0;
+    flex-shrink: 1;
     font-size: 90%;
     margin: 0;
+    max-height: 600px;
+    max-width: 460px;
+    min-width: 30em;
     padding: 0;
-    overflow: hidden;
+    overflow-y: auto;
     text-align: right;
     --rule-cell-width: 5em;
     }
@@ -491,44 +533,51 @@ body:not([data-more~="e"]) [data-more="e"] {
     display: none;
     }
 
+/* horizontally-constrained viewport */
+:root.portrait body {
+    overflow-y: auto;
+    width: 100%;
+    }
+:root.portrait #panes {
+    flex-direction: column;
+    }
+:root.portrait #main {
+    max-width: unset;
+    min-width: unset;
+    }
+:root.portrait #firewall {
+    max-height: unset;
+    max-width: unset;
+    min-width: unset;
+    overflow-y: hidden;
+    }
+
+/* touch-driven devices */
+:root.mobile #firewall {
+    line-height: 20px;
+    }
+
 /* mouse-driven devices */
 :root.desktop {
     display: flex;
     justify-content: flex-end;
-    overflow: hidden;
     }
-:root:not(.mobile) body {
-    --popup-gap: 12px;
-    max-width: 800px;
+:root.desktop body {
+    --popup-gap: calc(var(--font-size) * 0.875);
     }
-:root.desktop #panes {
-    flex-direction: row-reverse;
-    width: unset;
-    }
-:root.desktop #main {
-    max-width: 340px;
-    width: 21em;
-    }
-:root:not(.mobile) #switch:hover {
+:root.desktop #switch:hover {
     background-color: var(--default-surface-hover);
     }
-:root:not(.mobile) .rulesetTools [id]:hover {
+:root.desktop .rulesetTools [id]:hover {
     fill: var(--default-ink);
     }
-:root:not(.mobile) #firewall {
+:root.desktop #firewall {
     direction: rtl;
-    flex-grow: 1;
     line-height: 1.4;
     }
-:root.desktop #firewall {
-    max-height: 600px;
-    max-width: 460px;
-    overflow-y: auto;
-    width: 32em;
-    }
-:root:not(.mobile) .tool:hover {
+:root.desktop .tool:hover {
     background-color: var(--default-surface-hover);
     }
-:root:not(.mobile) .moreOrLess > span:hover {
+:root.desktop #moreOrLess > span:hover {
     background-color: var(--default-surface-hover);
     }
