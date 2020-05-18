@@ -85,7 +85,7 @@
   },
   "popupBlockedStats": {
     "message": "{{count}} ali {{percent}}%",
-    "description": "Example: 15 or 13%"
+    "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
     "message": "od namestitve",
@@ -840,15 +840,15 @@
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Source code",
+    "message": "Izvorna koda",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
-    "message": "Translations",
+    "message": "Prevodi",
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
-    "message": "Filter lists",
+    "message": "Seznami filtrov",
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {

@@ -85,7 +85,7 @@
   },
   "popupBlockedStats": {
     "message": "{{count}}, soit {{percent}}%",
-    "description": "Example: 15 or 13%"
+    "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
     "message": "depuis toujours :",
@@ -204,7 +204,7 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton_v2": {
-    "message": "Voir moins",
+    "message": "Moins",
     "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
