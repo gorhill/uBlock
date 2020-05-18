@@ -85,7 +85,7 @@
   },
   "popupBlockedStats": {
     "message": "{{count}}개 / {{percent}}%",
-    "description": "Example: 15 or 13%"
+    "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
     "message": "설치된 이후",
