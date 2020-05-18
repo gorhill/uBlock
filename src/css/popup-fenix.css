@@ -227,6 +227,7 @@ body.mobile.no-tooltips .toolRibbon .tool {
     margin: 0;
     padding: var(--popup-gap-thin) var(--popup-gap);
     user-select: none;
+    white-space: nowrap;
     }
 :root.mobile #moreOrLess > span {
     padding: var(--popup-gap);
