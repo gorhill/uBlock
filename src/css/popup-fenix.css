@@ -113,6 +113,9 @@ body.needSave #revertRules {
     margin: var(--popup-gap) var(--popup-gap-extra-thin);
     text-align: center;
     }
+#hostname > span {
+    word-break: break-all;
+    }
 #hostname > span + span {
     font-weight: 600;
     }
@@ -222,8 +225,11 @@ body.mobile.no-tooltips .toolRibbon .tool {
 #moreOrLess > span {
     cursor: pointer;
     margin: 0;
-    padding: var(--popup-gap);
+    padding: var(--popup-gap-thin) var(--popup-gap);
     user-select: none;
+    }
+:root.mobile #moreOrLess > span {
+    padding: var(--popup-gap);
     }
 #moreButton .fa-icon {
     transform: rotate(180deg);
@@ -524,8 +530,8 @@ body:not([data-more~="c"]) [data-more="c"],
 body:not([data-more~="d"]) [data-more="d"],
 body:not([data-more~="f"]) [data-more="f"] {
     height: 0;
-    margin-bottom: 0;
-    margin-top: 0;
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
     overflow-y: hidden;
     visibility: hidden;
     }
