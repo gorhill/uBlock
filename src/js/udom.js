@@ -105,6 +105,13 @@ DOMListFactory.nodeFromSelector = function(selector) {
     if ( window.matchMedia('(prefers-color-scheme: dark)').matches ) {
         root.classList.add('dark');
     }
+
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1044
+    //   Offer the possibility to bypass uBO's default styling
+    vAPI.messaging.send('uDom', { what: 'uiStyles' }).then(response => {
+        if ( typeof response !== 'string' || response === 'unset' ) { return; }
+        document.body.style.cssText = response;
+    });
 }
 
 /******************************************************************************/

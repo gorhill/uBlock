@@ -74,6 +74,7 @@ const µBlock = (( ) => { // jshint ignore:line
         suspendTabsUntilReady: 'unset',
         uiPopupConfig: 'undocumented',
         uiFlavor: 'unset',
+        uiStyles: 'unset',
         updateAssetBypassBrowserCache: false,
         userResourcesLocation: 'unset',
     };
