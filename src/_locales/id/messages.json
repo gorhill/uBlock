@@ -200,11 +200,11 @@
     "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
-    "message": "Lainnya",
+    "message": "Lebih banyak",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton_v2": {
-    "message": "Less",
+    "message": "Lebih sedikit",
     "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
