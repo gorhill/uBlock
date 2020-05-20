@@ -261,7 +261,10 @@ api.fetchFilterList = async function(mainlistURL) {
                 if ( match === null ) { break; }
                 if ( toParsedURL(match[1]) !== undefined ) { continue; }
                 if ( match[1].indexOf('..') !== -1 ) { continue; }
-                const subURL = rootDirectoryURL.href + match[1];
+                // Compute nested list path relative to parent list path
+                const pos = result.url.lastIndexOf('/');
+                if ( pos === -1 ) { continue; }
+                const subURL = result.url.slice(0, pos + 1) + match[1];
                 if ( sublistURLs.has(subURL) ) { continue; }
                 sublistURLs.add(subURL);
                 out.push(
