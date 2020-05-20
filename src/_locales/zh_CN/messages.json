@@ -196,7 +196,7 @@
     "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
-    "message": "网页脚本",
+    "message": "JavaScript",
     "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
