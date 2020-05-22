@@ -88,6 +88,7 @@ www.google.com##.ads-ad
 www.google.com###tads
 www.google.com##tadsb
 
+zerohedge.com##.ad__wrapper-element
 www.zam.com##.ad
 ##.GoogleActiveViewClass
 
