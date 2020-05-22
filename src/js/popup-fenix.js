@@ -639,6 +639,11 @@ let renderOnce = function() {
     if ( popupData.advancedUserEnabled !== true ) {
         uDom('#firewall [title][data-src]').removeAttr('title');
     }
+
+    // This must be done the firewall is populated
+    if ( popupData.popupPanelHeightMode === 1 ) {
+        body.classList.add('vMin');
+    }
 };
 
 /******************************************************************************/

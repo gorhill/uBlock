@@ -68,6 +68,7 @@ const µBlock = (( ) => { // jshint ignore:line
         popupFontSize: 'unset',
         popupPanelDisabledSections: 0,
         popupPanelLockedSections: 0,
+        popupPanelHeightMode: 0,
         requestJournalProcessPeriod: 1000,
         selfieAfter: 3,
         strictBlockingBypassDuration: 120,

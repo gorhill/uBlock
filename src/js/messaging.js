@@ -290,6 +290,7 @@ const popupDataFromTabId = function(tabId, tabTitle) {
         popupPanelSections: µbus.popupPanelSections,
         popupPanelDisabledSections: µb.hiddenSettings.popupPanelDisabledSections,
         popupPanelLockedSections: µb.hiddenSettings.popupPanelLockedSections,
+        popupPanelHeightMode: µb.hiddenSettings.popupPanelHeightMode,
         tabId: tabId,
         tabTitle: tabTitle,
         tooltipsDisabled: µbus.tooltipsDisabled
