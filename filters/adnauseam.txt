@@ -475,6 +475,7 @@ horriblesubs.info##img[src*="images/b/"]
 ||amazon-adsystem.com^$subdocument
 
 #opensubtitles
+opensubtitles.org###fcninnerbox
 ||dc5k8fg5ioc8s.cloudfront.net^
 
 # radikal.ru (video)
