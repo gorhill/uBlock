@@ -644,6 +644,13 @@ let renderOnce = function() {
     if ( popupData.popupPanelHeightMode === 1 ) {
         body.classList.add('vMin');
     }
+
+    // Prevent non-advanced user opting into advanced user mode from harming
+    // themselves by disabling by default features generally suitable to
+    // filter list maintainers and actual advanced users.
+    if ( popupData.godMode ) {
+        body.classList.add('godMode');
+    }
 };
 
 /******************************************************************************/

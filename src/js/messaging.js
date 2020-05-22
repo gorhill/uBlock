@@ -269,6 +269,7 @@ const popupDataFromTabId = function(tabId, tabTitle) {
     const tabContext = µb.tabContextManager.mustLookup(tabId);
     const rootHostname = tabContext.rootHostname;
     const µbus = µb.userSettings;
+    const µbhs = µb.hiddenSettings;
     const r = {
         advancedUserEnabled: µbus.advancedUserEnabled,
         appName: vAPI.app.name,
@@ -278,7 +279,8 @@ const popupDataFromTabId = function(tabId, tabTitle) {
         firewallPaneMinimized: µbus.firewallPaneMinimized,
         globalAllowedRequestCount: µb.localSettings.allowedRequestCount,
         globalBlockedRequestCount: µb.localSettings.blockedRequestCount,
-        fontSize: µb.hiddenSettings.popupFontSize,
+        fontSize: µbhs.popupFontSize,
+        godMode: µbhs.filterAuthorMode || µbhs.popupPanelGodMode,
         netFilteringSwitch: false,
         rawURL: tabContext.rawURL,
         pageURL: tabContext.normalURL,
@@ -288,16 +290,16 @@ const popupDataFromTabId = function(tabId, tabTitle) {
         pageBlockedRequestCount: 0,
         popupBlockedCount: 0,
         popupPanelSections: µbus.popupPanelSections,
-        popupPanelDisabledSections: µb.hiddenSettings.popupPanelDisabledSections,
-        popupPanelLockedSections: µb.hiddenSettings.popupPanelLockedSections,
-        popupPanelHeightMode: µb.hiddenSettings.popupPanelHeightMode,
+        popupPanelDisabledSections: µbhs.popupPanelDisabledSections,
+        popupPanelLockedSections: µbhs.popupPanelLockedSections,
+        popupPanelHeightMode: µbhs.popupPanelHeightMode,
         tabId: tabId,
         tabTitle: tabTitle,
         tooltipsDisabled: µbus.tooltipsDisabled
     };
 
-    if ( µb.hiddenSettings.uiPopupConfig !== 'undocumented' ) {
-        r.uiPopupConfig = µb.hiddenSettings.uiPopupConfig;
+    if ( µbhs.uiPopupConfig !== 'undocumented' ) {
+        r.uiPopupConfig = µbhs.uiPopupConfig;
     }
 
     const pageStore = µb.pageStoreFromTabId(tabId);

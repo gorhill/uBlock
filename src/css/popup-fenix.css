@@ -478,7 +478,9 @@ body.advancedUser #firewall > div > span.noopRule.ownRule,
 
 #actionSelector {
     box-sizing: border-box;
+    display: flex;
     height: 100%;
+    justify-items: stretch;
     left: 0;
     overflow: hidden;
     position: absolute;
@@ -488,16 +490,17 @@ body.advancedUser #firewall > div > span.noopRule.ownRule,
     }
 #actionSelector > span {
     display: inline-block;
-    height: 100%;
+    flex-grow: 1;
     }
 #actionSelector > #dynaAllow {
-    width: 33%;
+    display: none;
+    }
+body.godMode #actionSelector > #dynaAllow {
+    display: inline-block;
     }
 #actionSelector > #dynaNoop {
-    width: 33.5%;
     }
 #actionSelector > #dynaBlock {
-    width: 33.5%;
     }
 #actionSelector > #dynaCounts {
     background-color: transparent;
