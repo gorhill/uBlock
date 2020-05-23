@@ -310,8 +310,8 @@ const updateAllFirewallCells = function() {
 const buildAllFirewallRows = function() {
     // Do this before removing the rows
     if ( dfHotspots === null ) {
-        dfHotspots =
-            uDom('#actionSelector').on('click', 'span', setFirewallRuleHandler);
+        dfHotspots = uDom.nodeFromId('actionSelector');
+        dfHotspots.addEventListener('click', setFirewallRuleHandler);
     }
     dfHotspots.remove();
 
@@ -846,10 +846,10 @@ uDom('#lessButton').on('click', ( ) => { toggleSections(false); });
 
 /******************************************************************************/
 
-const mouseenterCellHandler = function() {
-    if ( uDom(this).hasClass('ownRule') === false ) {
-        dfHotspots.appendTo(this);
-    }
+const mouseenterCellHandler = function(ev) {
+    const target = ev.target;
+    if ( target.classList.contains('ownRule') ) { return; }
+    target.appendChild(dfHotspots);
 };
 
 const mouseleaveCellHandler = function() {
@@ -901,7 +901,7 @@ const unsetFirewallRuleHandler = function(ev) {
         0,
         ev.ctrlKey || ev.metaKey
     );
-    dfHotspots.appendTo(cell);
+    cell.appendChild(dfHotspots);
 };
 
 /******************************************************************************/
@@ -1109,6 +1109,20 @@ const toggleHostnameSwitch = async function(ev) {
     updateAllFirewallCells();
     hashFromPopupData();
 };
+
+/*******************************************************************************
+
+    Space bar: toggle god mode
+
+*/
+
+const keyboardHandler = function(ev) {
+    if ( ev.keyCode === 0x20 ) {
+        document.body.classList.toggle('godMode');
+    }
+};
+
+document.addEventListener('keydown', keyboardHandler);
 
 /******************************************************************************/
 
