@@ -1112,13 +1112,19 @@ const toggleHostnameSwitch = async function(ev) {
 
 /*******************************************************************************
 
-    Space bar: toggle god mode
+    Ctrl-Space bar: toggle god mode
 
 */
 
 const keyboardHandler = function(ev) {
-    if ( ev.keyCode === 0x20 ) {
+    let consumed = false;
+    if ( ev.ctrlKey && ev.key === ' ' ) {
         document.body.classList.toggle('godMode');
+        consumed = true;
+    }
+    if ( consumed ) {
+        ev.stopPropagation();
+        ev.preventDefault();
     }
 };
 
