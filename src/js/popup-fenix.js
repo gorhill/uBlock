@@ -1112,23 +1112,31 @@ const toggleHostnameSwitch = async function(ev) {
 
 /*******************************************************************************
 
-    Ctrl-Space bar: toggle god mode
+    Double tap ctrl key: toggle god mode
 
 */
 
-const keyboardHandler = function(ev) {
-    let consumed = false;
-    if ( ev.ctrlKey && ev.key === ' ' ) {
-        document.body.classList.toggle('godMode');
-        consumed = true;
-    }
-    if ( consumed ) {
-        ev.stopPropagation();
-        ev.preventDefault();
-    }
-};
+{
+    let eventCount = 0;
+    let eventTime = 0;
 
-document.addEventListener('keydown', keyboardHandler);
+    document.addEventListener('keydown', ev => {
+        if ( ev.key !== 'Control' ) {
+            eventCount = 0;
+            return;
+        }
+        const now = Date.now();
+        if ( (now - eventTime) >= 500 ) {
+            eventCount = 0;
+        }
+        eventCount += 1;
+        eventTime = now;
+        if ( eventCount < 2 ) { return; }
+        eventCount = 0;
+        document.body.classList.toggle('godMode');
+    });
+}
+
 
 /******************************************************************************/
 
