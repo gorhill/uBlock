@@ -204,7 +204,7 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton_v2": {
-    "message": "Less",
+    "message": "Mens",
     "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
@@ -224,7 +224,7 @@
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {
-    "message": "all",
+    "message": "totes",
     "description": ""
   },
   "popupImageRulePrompt": {
@@ -260,7 +260,7 @@
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
-    "message": "{{count}} out of {{total}}",
+    "message": "{{count}} de {{total}}",
     "description": "appears in popup"
   },
   "popupVersion": {
@@ -396,7 +396,7 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll": {
-    "message": "Purge all caches",
+    "message": "Purgar totes los caches",
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
@@ -420,7 +420,7 @@
     "description": "English: Lists of blocked hosts"
   },
   "3pApplyChanges": {
-    "message": "Apply changes",
+    "message": "Aplicar las modificacions",
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
@@ -464,7 +464,7 @@
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
-    "message": "Out of date.",
+    "message": "Obsolèt.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pViewContent": {
@@ -500,7 +500,7 @@
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges": {
-    "message": "Apply changes",
+    "message": "Aplicar las modificacions",
     "description": "English: Apply changes"
   },
   "rulesPermanentHeader": {
@@ -568,7 +568,7 @@
     "description": "English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply": {
-    "message": "Apply changes",
+    "message": "Aplicar las modificacions",
     "description": "English: Apply changes"
   },
   "logRequestsHeaderType": {
@@ -588,7 +588,7 @@
     "description": "English: Filter"
   },
   "logAll": {
-    "message": "All",
+    "message": "Totes",
     "description": "Appears in the logger's tab selector"
   },
   "logBehindTheScene": {
@@ -664,7 +664,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerEntryDetailsHeader": {
-    "message": "Details",
+    "message": "Detalhs",
     "description": "Small header to identify the 'Details' pane for a specific logger entry"
   },
   "loggerEntryDetailsFilter": {
@@ -952,7 +952,7 @@
     "description": "English: Close this window"
   },
   "docblockedProceed": {
-    "message": "Disable strict blocking for {{hostname}}",
+    "message": "Desactivar lo blocatge estric del domeni {{hostname}}",
     "description": "English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary": {
@@ -992,7 +992,7 @@
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Apply changes",
+    "message": "Aplicar las modificacions",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
