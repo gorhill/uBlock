@@ -103,8 +103,8 @@
 		"group": "ads",
 		"title": "EasyList",
 		"contentURL": [
-			"https://easylist.to/easylist/easylist.txt",
 			"https://secure.fanboy.co.nz/easylist.txt",
+			"https://easylist.to/easylist/easylist.txt",
 			"https://easylist-downloads.adblockplus.org/easylist.txt",
 			"assets/thirdparties/easylist-downloads.adblockplus.org/easylist.txt"
 		],
