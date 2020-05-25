@@ -280,7 +280,7 @@ const popupDataFromTabId = function(tabId, tabTitle) {
         globalAllowedRequestCount: µb.localSettings.allowedRequestCount,
         globalBlockedRequestCount: µb.localSettings.blockedRequestCount,
         fontSize: µbhs.popupFontSize,
-        godMode: µbhs.filterAuthorMode || µbhs.popupPanelGodMode,
+        godMode: µbhs.filterAuthorMode,
         netFilteringSwitch: false,
         rawURL: tabContext.rawURL,
         pageURL: tabContext.normalURL,
