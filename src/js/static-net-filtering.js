@@ -1188,7 +1188,7 @@ const filterOrigin = (( ) => {
                 compiledHit.push(FilterOriginHitSet.compile(hostnameHits.join('|')));
             }
             if ( compiledHit.length > 1 ) {
-                compiledHit[0] = [ FilterCompositeAny.compile(compiledHit.slice()) ];
+                compiledHit[0] = FilterCompositeAny.compile(compiledHit.slice());
                 compiledHit.length = 1;
             }
             const compiledMiss = [];
@@ -1804,7 +1804,7 @@ const FilterDenyAllow = class {
 
     static fromCompiled(args) {
         const f = new FilterDenyAllow(args[1]);
-        for ( const hn of args[1].split('|') ) {
+        for ( const hn of FilterParser.domainOptIterator(args[1]) ) {
             if ( hn === '' ) { continue; }
             f.hndict.add(hn);
         }
