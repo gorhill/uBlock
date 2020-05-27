@@ -69,7 +69,7 @@ const safeTextToTagNode = function(text) {
     }
 };
 
-const safeTextToTextNode = (function() {
+const expandHtmlEntities = (( ) => {
     const entities = new Map([
         // TODO: Remove quote entities once no longer present in translation
         // files. Other entities must stay.
@@ -88,9 +88,13 @@ const safeTextToTextNode = (function() {
         if ( text.indexOf('&') !== -1 ) {
             text = text.replace(/&[a-z]+;/g, decodeEntities);
         }
-        return document.createTextNode(text);
+        return text;
     };
 })();
+
+const safeTextToTextNode = function(text) {
+    return document.createTextNode(expandHtmlEntities(text));
+};
 
 const safeTextToDOM = function(text, parent) {
     if ( text === '' ) { return; }
@@ -221,7 +225,7 @@ vAPI.i18n.render = function(context) {
     for ( const elem of root.querySelectorAll('[data-i18n-title]') ) {
         const text = vAPI.i18n(elem.getAttribute('data-i18n-title'));
         if ( !text ) { continue; }
-        elem.setAttribute('title', text);
+        elem.setAttribute('title', expandHtmlEntities(text));
     }
 
     for ( const elem of root.querySelectorAll('[placeholder]') ) {
