@@ -412,7 +412,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "Generic cosmetic filters are those cosmetic filters which are meant to apply on all web sites. Enabling this option will eliminate the memory and CPU overhead added to web pages as a result of handling generic cosmetic filters.\n\nIt is recommended to enable this option on less powerful devices.",
+    "message": "Penapis kosmetik generik adalah penapis kosmetik itu mengubah kesemua laman web.\nMendayakan tetapan ini akan mengurangkan penggunaan memori dan overhed CPU dari laman web sebagai hasil pengendalian penapis kosmetik generik.\n\nIa disyorkan untuk mengaktifkan tetapan ini untuk peranti yang lemah.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -420,11 +420,11 @@
     "description": "English: Lists of blocked hosts"
   },
   "3pApplyChanges": {
-    "message": "Apply changes",
+    "message": "Terapkan perubahan",
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Built-in",
+    "message": "Terbina dalam",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -436,11 +436,11 @@
     "description": "English: Privacy"
   },
   "3pGroupMalware": {
-    "message": "Malware domains",
+    "message": "Domain perisian hasad",
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {
-    "message": "Annoyances",
+    "message": "Kejengkelan\n\t\n",
     "description": "The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose": {
@@ -448,7 +448,7 @@
     "description": "English: Multipurpose"
   },
   "3pGroupRegions": {
-    "message": "Regions, languages",
+    "message": "Wilayah, bahasa",
     "description": "English: Regions, languages"
   },
   "3pGroupCustom": {
@@ -472,7 +472,7 @@
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "Last update: {{ago}}.\nClick to force an update.",
+    "message": "Kemaskini terakhir: {{ago}}\nKlik untuk memaksa kemas kini.",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
@@ -500,7 +500,7 @@
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges": {
-    "message": "Apply changes",
+    "message": "Terapkan perubahan",
     "description": "English: Apply changes"
   },
   "rulesPermanentHeader": {
@@ -512,11 +512,11 @@
     "description": "header"
   },
   "rulesRevert": {
-    "message": "Revert",
+    "message": "Bebalik",
     "description": "This will remove all temporary rules"
   },
   "rulesCommit": {
-    "message": "Commit",
+    "message": "Keterikatan",
     "description": "This will persist temporary rules"
   },
   "rulesEdit": {
@@ -568,7 +568,7 @@
     "description": "English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply": {
-    "message": "Apply changes",
+    "message": "Terapkan perubahan",
     "description": "English: Apply changes"
   },
   "logRequestsHeaderType": {
