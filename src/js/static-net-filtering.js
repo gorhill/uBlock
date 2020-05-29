@@ -1381,7 +1381,7 @@ const FilterOriginMissSet = class extends FilterOriginHitSet {
 
     logData(details) {
         details.domains.push(
-            '~' + this.domainOpt.replace('|', '|~')
+            '~' + this.domainOpt.replace(/\|/g, '|~')
         );
     }
 
