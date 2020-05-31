@@ -379,7 +379,7 @@ if (
             )
         )
     ) {
-        browser.browserAction.setPopup({ popup: vAPI.getURL('popup.html') });
+        browser.browserAction.setPopup({ popup: 'popup.html' });
     }
 }
 
