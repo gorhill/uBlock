@@ -298,63 +298,7 @@ vAPI.Tabs = class {
                 details.tabId,
                 details.sourceTabId
             );
-<<<<<<< HEAD
-        }
-    };
-
-    var onBeforeNavigate = function(details) {
-        if ( details.frameId !== 0 ) {
-            return;
-        }
-    };
-
-    var onCommitted = function(details) {
-        if ( details.frameId !== 0 ) {
-            return;
-        }
-        details.url = sanitizeURL(details.url);
-        onNavigationClient(details);
-    };
-
-    var onActivated = function(details) {
-        if ( vAPI.contextMenu instanceof Object ) {
-            vAPI.contextMenu.onMustUpdate(details.tabId);
-        }
-    };
-
-    // https://github.com/gorhill/uBlock/issues/3073
-    // - Fall back to `tab.url` when `changeInfo.url` is not set.
-    var onUpdated = function(tabId, changeInfo, tab) {
-        if ( typeof changeInfo.url !== 'string' ) {
-            changeInfo.url = tab && tab.url;
-        }
-        if ( changeInfo.url ) {
-            changeInfo.url = sanitizeURL(changeInfo.url);
-        }
-        onUpdatedClient(tabId, changeInfo, tab);
-    };
-
-    chrome.webNavigation.onBeforeNavigate.addListener(onBeforeNavigate);
-    chrome.webNavigation.onCommitted.addListener(onCommitted);
-    // Not supported on Firefox WebExtensions yet.
-    if ( chrome.webNavigation.onCreatedNavigationTarget instanceof Object ) {
-        chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTarget);
-    }
-    chrome.tabs.onActivated.addListener(onActivated);
-    chrome.tabs.onUpdated.addListener(onUpdated);
-
-    if ( typeof this.onClosed === 'function' ) {
-        chrome.tabs.onRemoved.addListener(this.onClosed);
-    }
-
-};
-
-/******************************************************************************/
-
-// Caller must be prepared to deal with nil tab argument.
-=======
         });
->>>>>>> upstream1.22.0
 
         browser.webNavigation.onCommitted.addListener(details => {
             details.url = this.sanitizeURL(details.url);
@@ -677,213 +621,22 @@ vAPI.Tabs = class {
     onActivated(/* details */) {
     }
 
-<<<<<<< HEAD
-    chrome.tabs.update(tabId, { active: true }, function(tab) {
-        void chrome.runtime.lastError;
-        if ( !tab ) { return; }
-        chrome.windows.update(tab.windowId, { focused: true });
-    });
-};
-=======
     onClosed(/* tabId, details */) {
     }
->>>>>>> upstream1.22.0
 
     onCreated(/* openedTabId, openerTabId */) {
     }
 
-<<<<<<< HEAD
-vAPI.tabs.injectScript = function(tabId, details, callback) {
-    var onScriptExecuted = function() {
-        // https://code.google.com/p/chromium/issues/detail?id=410868#c8
-        void chrome.runtime.lastError;
-        if ( typeof callback === 'function' ) {
-            callback.apply(null, arguments);
-        }
-    };
-    if ( tabId ) {
-        //if (details.frameId) console.log('vAPI.tabs.injectScript: '+details.frameId);
-        chrome.tabs.executeScript(toChromiumTabId(tabId), details, onScriptExecuted);
-    } else {
-        chrome.tabs.executeScript(details, onScriptExecuted);
-=======
     onNavigation(/* details */) {
     }
 
     onUpdated(/* tabId, changeInfo, tab */) {
->>>>>>> upstream1.22.0
     }
 };
 
 /******************************************************************************/
 /******************************************************************************/
 
-// Must read: https://code.google.com/p/chromium/issues/detail?id=410868#c8
-
-// https://github.com/chrisaljoudi/uBlock/issues/19
-// https://github.com/chrisaljoudi/uBlock/issues/207
-// Since we may be called asynchronously, the tab id may not exist
-// anymore, so this ensures it does still exist.
-
-// https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/browserAction#Browser_compatibility
-//   Firefox for Android does no support browser.browserAction.setIcon().
-//   Performance: use ImageData for platforms supporting it.
-
-// https://github.com/uBlockOrigin/uBlock-issues/issues/32
-//   Ensure ImageData for toolbar icon is valid before use.
-<<<<<<< HEAD
-/*
-vAPI.setIcon = (function() {
-    const browserAction = chrome.browserAction,
-        titleTemplate =
-            chrome.runtime.getManifest().browser_action.default_title +
-            ' ({badge})';
-    const icons = [
-        {
-            tabId: 0,
-            path: { '16': 'img/icon_16-off.png', '32': 'img/icon_32-off.png' }
-        },
-        {
-            tabId: 0,
-            path: { '16': 'img/icon_16.png', '32': 'img/icon_32.png' }
-        }
-=======
-
-vAPI.setIcon = (( ) => {
-    const browserAction = chrome.browserAction;
-    const  titleTemplate =
-        browser.runtime.getManifest().browser_action.default_title +
-        ' ({badge})';
-    const icons = [
-        { path: { '16': 'img/icon_16-off.png', '32': 'img/icon_32-off.png' } },
-        { path: { '16':     'img/icon_16.png', '32':     'img/icon_32.png' } },
->>>>>>> upstream1.22.0
-    ];
-
-    (( ) => {
-        if ( browserAction.setIcon === undefined ) { return; }
-
-        // The global badge text and background color.
-        if ( browserAction.setBadgeBackgroundColor !== undefined ) {
-            browserAction.setBadgeBackgroundColor({ color: '#666666' });
-        }
-        if ( browserAction.setBadgeTextColor !== undefined ) {
-            browserAction.setBadgeTextColor({ color: '#FFFFFF' });
-        }
-
-        // As of 2018-05, benchmarks show that only Chromium benefits for sure
-        // from using ImageData.
-        //
-        // Chromium creates a new ImageData instance every call to setIcon
-        // with paths:
-        // https://cs.chromium.org/chromium/src/extensions/renderer/resources/set_icon.js?l=56&rcl=99be185c25738437ecfa0dafba72a26114196631
-        //
-        // Firefox uses an internal cache for each setIcon's paths:
-        // https://searchfox.org/mozilla-central/rev/5ff2d7683078c96e4b11b8a13674daded935aa44/browser/components/extensions/parent/ext-browserAction.js#631
-        if ( vAPI.webextFlavor.soup.has('chromium') === false ) { return; }
-
-        const imgs = [];
-        for ( let i = 0; i < icons.length; i++ ) {
-            const path = icons[i].path;
-            for ( const key in path ) {
-                if ( path.hasOwnProperty(key) === false ) { continue; }
-                imgs.push({ i: i, p: key });
-            }
-        }
-
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/296
-        const safeGetImageData = function(ctx, w, h) {
-            let data;
-            try {
-                data = ctx.getImageData(0, 0, w, h);
-            } catch(ex) {
-            }
-            return data;
-        };
-
-        const onLoaded = function() {
-            for ( const img of imgs ) {
-                if ( img.r.complete === false ) { return; }
-            }
-            const ctx = document.createElement('canvas').getContext('2d');
-            const iconData = [ null, null ];
-            for ( const img of imgs ) {
-                const w = img.r.naturalWidth, h = img.r.naturalHeight;
-                ctx.width = w; ctx.height = h;
-                ctx.clearRect(0, 0, w, h);
-                ctx.drawImage(img.r, 0, 0);
-                if ( iconData[img.i] === null ) { iconData[img.i] = {}; }
-                const imgData = safeGetImageData(ctx, w, h);
-                if (
-                    imgData instanceof Object === false ||
-                    imgData.data instanceof Uint8ClampedArray === false ||
-                    imgData.data[0] !== 0 ||
-                    imgData.data[1] !== 0 ||
-                    imgData.data[2] !== 0 ||
-                    imgData.data[3] !== 0
-                ) {
-                    return;
-                }
-                iconData[img.i][img.p] = imgData;
-            }
-            icons[0] = { tabId: 0, imageData: iconData[0] };
-            icons[1] = { tabId: 0, imageData: iconData[1] };
-        };
-        for ( const img of imgs ) {
-            img.r = new Image();
-            img.r.addEventListener('load', onLoaded, { once: true });
-            img.r.src = icons[img.i].path[img.p];
-        }
-    })();
-
-    const onTabReady = function(tab, details) {
-        if ( vAPI.lastError() || !tab ) { return; }
-
-        const { parts, state, badge, color } = details;
-
-        if ( browserAction.setIcon !== undefined ) {
-<<<<<<< HEAD
-            if ( parts === undefined || (parts & 0x01) !== 0 ) {
-                icons[state].tabId = tab.id;
-                browserAction.setIcon(icons[state]);
-=======
-            if ( parts === undefined || (parts & 0b001) !== 0 ) {
-                browserAction.setIcon(
-                    Object.assign({ tabId: tab.id }, icons[state])
-                );
->>>>>>> upstream1.22.0
-            }
-            if ( (parts & 0b010) !== 0 ) {
-                browserAction.setBadgeText({ tabId: tab.id, text: badge });
-            }
-            if ( (parts & 0b100) !== 0 ) {
-                browserAction.setBadgeBackgroundColor({ tabId: tab.id, color });
-            }
-        }
-
-        if ( browserAction.setTitle !== undefined ) {
-            browserAction.setTitle({
-                tabId: tab.id,
-                title: titleTemplate.replace(
-                    '{badge}',
-                    state === 1 ? (badge !== '' ? badge : '0') : 'off'
-                )
-            });
-        }
-    };
-
-    // parts: bit 0 = icon
-    //        bit 1 = badge
-    //        bit 2 = badge color
-
-    return function(tabId, details) {
-        tabId = toChromiumTabId(tabId);
-        if ( tabId === 0 ) { return; }
-
-        browser.tabs.get(tabId, tab => onTabReady(tab, details));
-
-    var iconPaths;
-};*/
 
 vAPI.setIcon = (function() {
     var browserAction = chrome.browserAction,

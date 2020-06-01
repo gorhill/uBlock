@@ -835,28 +835,6 @@ vAPI.Tabs = class extends vAPI.Tabs {
             if ( pageStore !== null && pageStore.getNetFilteringSwitch() ) {
                 µb.scriptletFilteringEngine.injectNow(details);
             }
-<<<<<<< HEAD
-            fctxt.toLogger();
-        }
-
-        // Not blocked
-        if ( result !== 1 ) {
-            return;
-        }
-
-        // Only if a popup was blocked do we report it in the dynamic
-        // filtering pane.
-        const pageStore = µb.pageStoreFromTabId(openerTabId);
-        if ( pageStore ) {
-            pageStore.journalAddRequest(fctxt.getHostname(), result);
-            pageStore.popupBlockedCount += 1;
-        }
-
-        // Blocked
-        if ( µb.userSettings.showIconBadge ) {
-            µb.updateToolbarIcon(openerTabId);
-=======
->>>>>>> upstream1.22.0
         }
     }
 
@@ -880,13 +858,8 @@ vAPI.tabs = new vAPI.Tabs();
 
 // Create an entry for the tab if it doesn't exist.
 
-<<<<<<< HEAD
-µb.bindTabToPageStats = function(tabId, context) {
-    µb.updateToolbarIcon(tabId);
-=======
 µBlock.bindTabToPageStats = function(tabId, context) {
-    this.updateToolbarIcon(tabId, 0b111);
->>>>>>> upstream1.22.0
+    µBlock.updateToolbarIcon(tabId);
 
     // Do not create a page store for URLs which are of no interests
     if ( this.tabContextManager.exists(tabId) === false ) {
@@ -1008,7 +981,6 @@ vAPI.tabs = new vAPI.Tabs();
         let badge = '';
         let color = '#666';
 
-<<<<<<< HEAD
         let pageStore = µb.pageStoreFromTabId(tabId),
             pageDomain = pageStore ? µb.URI.domainFromHostname(pageStore.tabHostname) : null, // ADN
             isDNT = pageStore ? µb.userSettings.dntDomains.contains(pageDomain) : false; // ADN
@@ -1028,44 +1000,6 @@ vAPI.tabs = new vAPI.Tabs();
 
         if (iconStatus !== 'off') {
             iconStatus += (isClick ? 'active' : '');
-=======
-        let pageStore = µb.pageStoreFromTabId(tabId);
-        if ( pageStore !== null ) {
-            state = pageStore.getNetFilteringSwitch() ? 1 : 0;
-            if ( state === 1 && µb.userSettings.showIconBadge ) {
-                if ( (parts & 0b010) !== 0 && pageStore.perLoadBlockedRequestCount ) {
-                    badge = µb.formatCount(
-                        pageStore.perLoadBlockedRequestCount
-                    );
-                }
-                if ( (parts & 0b100) !== 0 ) {
-                    color = computeBadgeColor(
-                        µb.blockingModeFromHostname(pageStore.tabHostname)
-                    );
-                }
-            }
-        }
-
-        vAPI.setIcon(tabId, { parts, state, badge, color });
-    };
-
-    // parts: bit 0 = icon
-    //        bit 1 = badge
-    //        bit 2 = badge color
-
-    return function(tabId, newParts = 0b111) {
-        if ( typeof tabId !== 'number' ) { return; }
-        if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
-        let currentParts = tabIdToDetails.get(tabId);
-        if ( currentParts === newParts ) { return; }
-        if ( currentParts === undefined ) {
-            self.requestIdleCallback(
-                ( ) => updateBadge(tabId),
-                { timeout: 701 }
-            );
-        } else {
-            newParts |= currentParts;
->>>>>>> upstream1.22.0
         }
         vAPI.setIcon(tabId, iconStatus, badge);
         //     let pageStore = this.pageStoreFromTabId(tabId);

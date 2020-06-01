@@ -31,13 +31,9 @@ cp -R ./thirdparties/www.eff.org                                 $DES/thirdparti
 mkdir $DES/ublock
 cp -R ../uAssets/filters/*                                       $DES/ublock/
 # Optional filter lists: do not include in package
-<<<<<<< HEAD
-rm    $DES/ublock/annoyances.txt 2> /dev/null
 
-cp -R ./filters/adnauseam.txt                                    $DES/ublock/ # ADN
-=======
 rm    $DES/ublock/annoyances.txt
 rm    $DES/ublock/resources.txt
->>>>>>> upstream1.22.0
+cp -R ./filters/adnauseam.txt                                    $DES/ublock/ # ADN
 
 echo "done."

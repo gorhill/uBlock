@@ -6,15 +6,8 @@ set -e
 echo "*** AdNauseam.firefox: Creating web store package"
 echo "*** AdNauseam.firefox: Copying files"
 
-<<<<<<< HEAD
 BLDIR=dist/build
 DES="$BLDIR"/adnauseam.firefox
-=======
-echo "*** uBlock0.firefox: Creating web store package"
-
-BLDIR=dist/build
-DES="$BLDIR"/uBlock0.firefox
->>>>>>> upstream1.22.0
 rm -rf $DES
 mkdir -p $DES/webextension
 

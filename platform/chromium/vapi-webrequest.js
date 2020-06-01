@@ -151,7 +151,7 @@
 
 // TODO: Add back adnauseam functions
 
-vAPI.net.onBeforeReady = vAPI.net.onBeforeReady || (function() {
+vAPI.Net.onBeforeReady = vAPI.Net.onBeforeReady || (function() {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/407
     if ( vAPI.webextFlavor.soup.has('firefox') ) { return; }
 
