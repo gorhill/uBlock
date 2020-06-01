@@ -963,6 +963,14 @@
     "message": "Copy to clipboard",
     "description": "Label for buttons used to copy something to the clipboard"
   },
+  "toggleBlockingProfile": {
+    "message": "Toggle blocking profile",
+    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  },
+  "relaxBlockingMode": {
+    "message": "Relax blocking mode",
+    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
   "dummy": {
     "message": "Esta ten que ser a derradeira entrada",
     "description": "so we dont need to deal with comma for last entry"

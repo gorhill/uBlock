@@ -27,6 +27,7 @@
     "background": {
         "page": "background.html"
     },
+<<<<<<< HEAD
     "content_scripts":[
        {
           "matches":[
@@ -58,6 +59,29 @@
     "options_ui": {
         "page": "options.html",
         "open_in_tab": true
+=======
+    "launch-logger": {
+      "description": "__MSG_popupTipLog__"
+    },
+    "relax-blocking-mode": {
+      "description": "__MSG_relaxBlockingMode__"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "file://*/*"
+      ],
+      "js": [
+        "/js/vapi.js",
+        "/js/vapi-client.js",
+        "/js/contentscript.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+>>>>>>> upstream1.22.0
     },
     "permissions": [
         "contextMenus",

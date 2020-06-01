@@ -455,6 +455,7 @@ var onMessage = function(request, sender, callback) {
             request.srcHostname,
             'net'
         );
+        µb.updateToolbarIcon(request.tabId, 0b100);
         response = popupDataFromTabId(request.tabId);
         break;
 
@@ -492,7 +493,11 @@ var onMessage = function(request, sender, callback) {
         pageStore = µb.pageStoreFromTabId(request.tabId);
         if ( pageStore ) {
             pageStore.toggleNetFilteringSwitch(request.url, request.scope, request.state);
+<<<<<<< HEAD
             µb.updateToolbarIcon(request.tabId);
+=======
+            µb.updateToolbarIcon(request.tabId, 0b111);
+>>>>>>> upstream1.22.0
         }
         break;
 
@@ -793,9 +798,9 @@ var µb = µBlock;
 
 // Settings
 
-var getLocalData = function(callback) {
-    var onStorageInfoReady = function(bytesInUse) {
-        var o = µb.restoreBackupSettings;
+const getLocalData = function(callback) {
+    const onStorageInfoReady = function(bytesInUse) {
+        const o = µb.restoreBackupSettings;
         callback({
             storageUsed: bytesInUse,
             lastRestoreFile: o.lastRestoreFile,
@@ -810,13 +815,15 @@ var getLocalData = function(callback) {
     µb.getBytesInUse(onStorageInfoReady);
 };
 
-var backupUserData = function(callback) {
-    var userData = {
+const backupUserData = function(callback) {
+    const userData = {
         timeStamp: Date.now(),
         version: vAPI.app.version,
         userSettings: µb.userSettings,
         selectedFilterLists: µb.selectedFilterLists,
         hiddenSettings: µb.hiddenSettings,
+        whitelist: µb.arrayFromWhitelist(µb.netWhitelist),
+        // String representation eventually to be deprecated
         netWhitelist: µb.stringFromWhitelist(µb.netWhitelist),
         dynamicFilteringString: µb.permanentFirewall.toString(),
         urlFilteringString: µb.permanentURLFiltering.toString(),
@@ -824,9 +831,9 @@ var backupUserData = function(callback) {
         userFilters: ''
     };
 
-    var onUserFiltersReady = function(details) {
+    const onUserFiltersReady = function(details) {
         userData.userFilters = details.content;
-        var filename = vAPI.i18n('aboutBackupFilename')
+        const filename = vAPI.i18n('aboutBackupFilename')
             .replace('{{datetime}}', µb.dateNowToSensibleString())
             .replace(/ +/g, '_');
         µb.restoreBackupSettings.lastBackupFile = filename;
@@ -856,9 +863,19 @@ var restoreUserData = function(request) {
                 userData.hiddenSettingsString || ''
             );
         }
+        // Whitelist directives can be represented as an array or as a
+        // (eventually to be deprecated) string.
+        let whitelist = userData.whitelist;
+        if (
+            Array.isArray(whitelist) === false &&
+            typeof userData.netWhitelist === 'string' &&
+            userData.netWhitelist !== ''
+        ) {
+            whitelist = userData.netWhitelist.split('\n');
+        }
         vAPI.storage.set({
             hiddenSettings: hiddenSettings,
-            netWhitelist: userData.netWhitelist || '',
+            netWhitelist: whitelist || [],
             dynamicFilteringString: userData.dynamicFilteringString || '',
             urlFilteringString: userData.urlFilteringString || '',
             hostnameSwitchesString: userData.hostnameSwitchesString || '',
@@ -1128,11 +1145,6 @@ var onMessage = function(request, sender, callback) {
     case 'purgeCache':
         µb.assets.purge(request.assetKey);
         µb.assets.remove('compiled/' + request.assetKey);
-        // https://github.com/gorhill/uBlock/pull/2314#issuecomment-278716960
-        if ( request.assetKey === 'ublock-filters' ) {
-            µb.assets.purge('ublock-resources');
-            µb.redirectEngine.invalidateResourcesSelfie();
-        }
         break;
 
     case 'readHiddenSettings':

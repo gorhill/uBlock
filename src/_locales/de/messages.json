@@ -12,7 +12,7 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Warnung! Nicht gespeicherte Änderungen",
+    "message": "Achtung! Du hast deine Änderungen nicht gespeichert",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -962,6 +962,14 @@
   "genericCopyToClipboard": {
     "message": "In die Zwischenablage kopieren",
     "description": "Label for buttons used to copy something to the clipboard"
+  },
+  "toggleBlockingProfile": {
+    "message": "Sperrprofil umschalten",
+    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  },
+  "relaxBlockingMode": {
+    "message": "Entspannter Sperrmodus",
+    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "dummy": {
     "message": "Dieser Eintrag muss der letzte sein",

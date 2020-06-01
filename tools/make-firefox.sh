@@ -6,27 +6,25 @@ set -e
 echo "*** AdNauseam.firefox: Creating web store package"
 echo "*** AdNauseam.firefox: Copying files"
 
-DES=dist/build/adnauseam.firefox
+<<<<<<< HEAD
+BLDIR=dist/build
+DES="$BLDIR"/adnauseam.firefox
+=======
+echo "*** uBlock0.firefox: Creating web store package"
+
+BLDIR=dist/build
+DES="$BLDIR"/uBlock0.firefox
+>>>>>>> upstream1.22.0
 rm -rf $DES
 mkdir -p $DES/webextension
 
 VERSION=`jq .version manifest.json` # top-level adnauseam manifest
 UBLOCK=`jq .version platform/chromium/manifest.json | tr -d '"'` # ublock-version no quotes
 
-bash ./tools/make-assets.sh $DES
-bash ./tools/make-locales.sh $DES
 
-cp -R src/css                    $DES/
-cp -R src/img                    $DES/
-cp -R src/js                     $DES/
-cp -R src/lib                    $DES/
-#cp -R src/_locales               $DES/
-#cp -R $DES/_locales/nb           $DES/_locales/no
-cp src/*.html                    $DES/
-cp platform/chromium/*.js        $DES/js/
-cp platform/chromium/*.html      $DES/
-cp platform/chromium/*.json      $DES/
-cp LICENSE.txt                   $DES/
+echo "*** AdNauseam.firefox: copying common files"
+bash ./tools/copy-common-files.sh  $DES
+
 
 cp platform/firefox/manifest.json        $DES/
 cp platform/firefox/vapi-usercss.js      $DES/js/
@@ -53,9 +51,8 @@ sed -i '' "s/\"{version}\"/${VERSION}/" $DES/manifest.json
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
 
-printf "*** AdNauseam.firefox: Generating web accessible resources...\n"
-cp -R src/web_accessible_resources $DES/
-python3 tools/import-war.py $DES/
+echo "*** AdNauseam.firefox: Generating meta..."
+python tools/make-firefox-meta.py $DES/
 
 if [ "$1" = all ]; then
     echo "*** AdNauseam.firefox: Creating package..."

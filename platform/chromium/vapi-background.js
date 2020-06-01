@@ -265,10 +265,6 @@ vAPI.browserSettings = (function() {
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.tabs = {};
-
-/******************************************************************************/
-
 vAPI.isBehindTheSceneTabId = function(tabId) {
     return tabId < 0;
 };
@@ -276,65 +272,33 @@ vAPI.isBehindTheSceneTabId = function(tabId) {
 vAPI.unsetTabId = 0;
 vAPI.noTabId = -1;      // definitely not any existing tab
 
-/******************************************************************************/
-
 // To remove when tabId-as-integer has been tested enough.
 
-var toChromiumTabId = function(tabId) {
-    return typeof tabId === 'number' && !isNaN(tabId) && tabId > 0 ?
-        tabId :
-        0;
+const toChromiumTabId = function(tabId) {
+    return typeof tabId === 'number' && isNaN(tabId) === false
+        ? tabId
+        : 0;
 };
 
-/******************************************************************************/
+// https://developer.chrome.com/extensions/webNavigation
+// https://developer.chrome.com/extensions/tabs
 
-vAPI.tabs.registerListeners = function() {
-    var onNavigationClient = this.onNavigation || noopFunc;
-    var onUpdatedClient = this.onUpdated || noopFunc;
-
-    // https://developer.chrome.com/extensions/webNavigation
-    // [onCreatedNavigationTarget ->]
-    //  onBeforeNavigate ->
-    //  onCommitted ->
-    //  onDOMContentLoaded ->
-    //  onCompleted
-
-    // The chrome.webRequest.onBeforeRequest() won't be called for everything
-    // else than `http`/`https`. Thus, in such case, we will bind the tab as
-    // early as possible in order to increase the likelihood of a context
-    // properly setup if network requests are fired from within the tab.
-    // Example: Chromium + case #6 at
-    //          http://raymondhill.net/ublock/popup.html
-    var reGoodForWebRequestAPI = /^https?:\/\//;
-
-    // https://forums.lanik.us/viewtopic.php?f=62&t=32826
-    //   Chromium-based browsers: sanitize target URL. I've seen data: URI with
-    //   newline characters in standard fields, possibly as a way of evading
-    //   filters. As per spec, there should be no whitespaces in a data: URI's
-    //   standard fields.
-    var sanitizeURL = function(url) {
-        if ( url.startsWith('data:') === false ) { return url; }
-        var pos = url.indexOf(',');
-        if ( pos === -1 ) { return url; }
-        var s = url.slice(0, pos);
-        if ( s.search(/\s/) === -1 ) { return url; }
-        return s.replace(/\s+/, '') + url.slice(pos);
-    };
-
-    var onCreatedNavigationTarget = function(details) {
-        if ( typeof details.url !== 'string' ) {
-            details.url = '';
-        }
-        if ( reGoodForWebRequestAPI.test(details.url) === false ) {
-            details.frameId = 0;
-            details.url = sanitizeURL(details.url);
-            onNavigationClient(details);
-        }
-        if ( typeof vAPI.tabs.onPopupCreated === 'function' ) {
-            vAPI.tabs.onPopupCreated(
+vAPI.Tabs = class {
+    constructor() {
+        browser.webNavigation.onCreatedNavigationTarget.addListener(details => {
+            if ( typeof details.url !== 'string' ) {
+                details.url = '';
+            }
+            if ( /^https?:\/\//.test(details.url) === false ) {
+                details.frameId = 0;
+                details.url = this.sanitizeURL(details.url);
+                this.onNavigation(details);
+            }
+            this.onCreated(
                 details.tabId,
                 details.sourceTabId
             );
+<<<<<<< HEAD
         }
     };
 
@@ -388,70 +352,97 @@ vAPI.tabs.registerListeners = function() {
 /******************************************************************************/
 
 // Caller must be prepared to deal with nil tab argument.
+=======
+        });
+>>>>>>> upstream1.22.0
 
-// https://code.google.com/p/chromium/issues/detail?id=410868#c8
+        browser.webNavigation.onCommitted.addListener(details => {
+            details.url = this.sanitizeURL(details.url);
+            this.onNavigation(details);
+        });
 
-vAPI.tabs.get = function(tabId, callback) {
-    if ( tabId === null ) {
-        chrome.tabs.query(
-            { active: true, currentWindow: true },
-            function(tabs) {
-                void chrome.runtime.lastError;
-                callback(
-                    Array.isArray(tabs) && tabs.length !== 0 ? tabs[0] : null
-                );
+        // https://github.com/gorhill/uBlock/issues/3073
+        //   Fall back to `tab.url` when `changeInfo.url` is not set.
+        browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+            if ( typeof changeInfo.url !== 'string' ) {
+                changeInfo.url = tab && tab.url;
             }
-        );
-        return;
+            if ( changeInfo.url ) {
+                changeInfo.url = this.sanitizeURL(changeInfo.url);
+            }
+            this.onUpdated(tabId, changeInfo, tab);
+        });
+
+        browser.tabs.onActivated.addListener(details => {
+            this.onActivated(details);
+        });
+
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/151
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/680#issuecomment-515215220
+        if ( browser.windows instanceof Object ) {
+            browser.windows.onFocusChanged.addListener(windowId => {
+                if ( windowId === browser.windows.WINDOW_ID_NONE ) { return; }
+                browser.tabs.query({ active: true, windowId }, tabs => {
+                    if ( Array.isArray(tabs) === false ) { return; }
+                    if ( tabs.length === 0 ) { return; }
+                    const tab = tabs[0];
+                    this.onActivated({
+                        tabId: tab.id,
+                        windowId: tab.windowId,
+                    });
+                });
+            });
+        }
+
+        browser.tabs.onRemoved.addListener((tabId, details) => {
+            this.onClosed(tabId, details);
+        });
+     }
+
+    get(tabId, callback) {
+        if ( tabId === null ) {
+            browser.tabs.query(
+                { active: true, currentWindow: true },
+                tabs => {
+                    void browser.runtime.lastError;
+                    callback(
+                        Array.isArray(tabs) && tabs.length !== 0
+                            ? tabs[0]
+                            : null
+                    );
+                }
+            );
+            return;
+        }
+
+        tabId = toChromiumTabId(tabId);
+        if ( tabId === 0 ) {
+            callback(null);
+            return;
+        }
+
+        browser.tabs.get(tabId, function(tab) {
+            void browser.runtime.lastError;
+            callback(tab);
+        });
     }
 
-    tabId = toChromiumTabId(tabId);
-    if ( tabId === 0 ) {
-        callback(null);
-        return;
-    }
+    // Properties of the details object:
+    // - url: 'URL',    => the address that will be opened
+    // - index: -1,     => undefined: end of the list, -1: following tab, or
+    //                     after index
+    // - active: false, => opens the tab in background - true and undefined:
+    //                     foreground
+    // - popup: true    => open in a new window
 
-    chrome.tabs.get(tabId, function(tab) {
-        void chrome.runtime.lastError;
-        callback(tab);
-    });
-};
-
-/*******************************************************************************
-
-    Properties of the details object:
-    - url: 'URL',    => the address that will be opened
-    - tabId: 1,      => the tab is used if set, instead of creating a new one
-    - index: -1,     => undefined: end of the list, -1: following tab, or
-                        after index
-    - active: false, => opens the tab in background - true and undefined:
-                        foreground
-    - select: true,  => if a tab is already opened with that url, then select
-                        it instead of opening a new one
-    - popup: true    => open in a new window
-
-*/
-
-vAPI.tabs.open = function(details) {
-    let targetURL = details.url;
-    if ( typeof targetURL !== 'string' || targetURL === '' ) {
-        return null;
-    }
-
-    // extension pages
-    if ( /^[\w-]{2,}:/.test(targetURL) !== true ) {
-        targetURL = vAPI.getURL(targetURL);
-    }
-
-    // dealing with Chrome's asynchronous API
-    const wrapper = ( ) => {
+    create(url, details) {
         if ( details.active === undefined ) {
             details.active = true;
         }
 
         const subWrapper = ( ) => {
             const updateDetails = {
-                url: targetURL,
+                url: url,
                 active: !!details.active
             };
 
@@ -533,108 +524,175 @@ vAPI.tabs.open = function(details) {
 
             subWrapper();
         });
-    };
-
-    if ( !details.select ) {
-        wrapper();
-        return;
     }
 
-    // https://github.com/gorhill/uBlock/issues/3053#issuecomment-332276818
-    // - Do not try to lookup uBO's own pages with FF 55 or less.
-    if (
-        vAPI.webextFlavor.soup.has('firefox') &&
-        vAPI.webextFlavor.major < 56
-    ) {
-        wrapper();
-        return;
-    }
+    // Properties of the details object:
+    // - url: 'URL',    => the address that will be opened
+    // - tabId: 1,      => the tab is used if set, instead of creating a new one
+    // - index: -1,     => undefined: end of the list, -1: following tab, or
+    //                     after index
+    // - active: false, => opens the tab in background - true and undefined:
+    //                     foreground
+    // - select: true,  => if a tab is already opened with that url, then select
+    //                     it instead of opening a new one
+    // - popup: true    => open in a new window
 
-    // https://developer.chrome.com/extensions/tabs#method-query
-    //   "Note that fragment identifiers are not matched."
-    //   It's a lie, fragment identifiers ARE matched. So we need to remove
-    //   the fragment.
-    const pos = targetURL.indexOf('#');
-    const targetURLWithoutHash = pos === -1
-        ? targetURL
-        : targetURL.slice(0, pos);
+    open(details) {
+        let targetURL = details.url;
+        if ( typeof targetURL !== 'string' || targetURL === '' ) {
+            return null;
+        }
 
-    browser.tabs.query({ url: targetURLWithoutHash }, tabs => {
-        void browser.runtime.lastError;
-        const tab = Array.isArray(tabs) && tabs[0];
-        if ( !tab ) {
-            wrapper();
+        // extension pages
+        if ( /^[\w-]{2,}:/.test(targetURL) !== true ) {
+            targetURL = vAPI.getURL(targetURL);
+        }
+
+        if ( !details.select ) {
+            this.create(targetURL, details);
             return;
         }
-        const updateDetails = { active: true };
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/592
-        if ( tab.url.startsWith(targetURL) === false ) {
-            updateDetails.url = targetURL;
+
+        // https://github.com/gorhill/uBlock/issues/3053#issuecomment-332276818
+        //   Do not try to lookup uBO's own pages with FF 55 or less.
+        if (
+            vAPI.webextFlavor.soup.has('firefox') &&
+            vAPI.webextFlavor.major < 56
+        ) {
+            this.create(targetURL, details);
+            return;
         }
-        browser.tabs.update(tab.id, updateDetails, tab => {
+
+        // https://developer.chrome.com/extensions/tabs#method-query
+        //   "Note that fragment identifiers are not matched."
+        //   It's a lie, fragment identifiers ARE matched. So we need to remove
+        //   the fragment.
+        const pos = targetURL.indexOf('#');
+        const targetURLWithoutHash = pos === -1
+            ? targetURL
+            : targetURL.slice(0, pos);
+
+        browser.tabs.query({ url: targetURLWithoutHash }, tabs => {
+            void browser.runtime.lastError;
+            const tab = Array.isArray(tabs) && tabs[0];
+            if ( !tab ) {
+                this.create(targetURL, details);
+                return;
+            }
+            const updateDetails = { active: true };
+            // https://github.com/uBlockOrigin/uBlock-issues/issues/592
+            if ( tab.url.startsWith(targetURL) === false ) {
+                updateDetails.url = targetURL;
+            }
+            browser.tabs.update(tab.id, updateDetails, tab => {
+                if ( browser.windows instanceof Object === false ) { return; }
+                browser.windows.update(tab.windowId, { focused: true });
+            });
+        });
+    }
+
+    // Replace the URL of a tab. Noop if the tab does not exist.
+
+    replace(tabId, url) {
+        tabId = toChromiumTabId(tabId);
+        if ( tabId === 0 ) { return; }
+
+        let targetURL = url;
+
+        // extension pages
+        if ( /^[\w-]{2,}:/.test(targetURL) !== true ) {
+            targetURL = vAPI.getURL(targetURL);
+        }
+
+        browser.tabs.update(tabId, { url: targetURL }, vAPI.resetLastError);
+    }
+
+    remove(tabId) {
+        tabId = toChromiumTabId(tabId);
+        if ( tabId === 0 ) { return; }
+
+        browser.tabs.remove(tabId, vAPI.resetLastError);
+    }
+
+    reload(tabId, bypassCache = false) {
+        tabId = toChromiumTabId(tabId);
+        if ( tabId === 0 ) { return; }
+
+        browser.tabs.reload(
+            tabId,
+            { bypassCache: bypassCache === true },
+            vAPI.resetLastError
+        );
+    }
+
+    select(tabId) {
+        tabId = toChromiumTabId(tabId);
+        if ( tabId === 0 ) { return; }
+
+        browser.tabs.update(tabId, { active: true }, function(tab) {
+            void browser.runtime.lastError;
+            if ( !tab ) { return; }
             if ( browser.windows instanceof Object === false ) { return; }
             browser.windows.update(tab.windowId, { focused: true });
         });
-    });
-};
-
-/******************************************************************************/
-
-// Replace the URL of a tab. Noop if the tab does not exist.
-
-vAPI.tabs.replace = function(tabId, url) {
-    tabId = toChromiumTabId(tabId);
-    if ( tabId === 0 ) { return; }
-
-    var targetURL = url;
-
-    // extension pages
-    if ( /^[\w-]{2,}:/.test(targetURL) !== true ) {
-        targetURL = vAPI.getURL(targetURL);
     }
 
-    chrome.tabs.update(tabId, { url: targetURL }, vAPI.resetLastError);
-};
+    injectScript(tabId, details, callback) {
+        const onScriptExecuted = function() {
+            // https://code.google.com/p/chromium/issues/detail?id=410868#c8
+            void browser.runtime.lastError;
+            if ( typeof callback === 'function' ) {
+                callback.apply(null, arguments);
+            }
+        };
+        if ( tabId ) {
+            browser.tabs.executeScript(
+                toChromiumTabId(tabId),
+                details,
+                onScriptExecuted
+            );
+        } else {
+            browser.tabs.executeScript(
+                details,
+                onScriptExecuted
+            );
+        }
+    }
 
-/******************************************************************************/
+    // https://forums.lanik.us/viewtopic.php?f=62&t=32826
+    //   Chromium-based browsers: sanitize target URL. I've seen data: URI with
+    //   newline characters in standard fields, possibly as a way of evading
+    //   filters. As per spec, there should be no whitespaces in a data: URI's
+    //   standard fields.
 
-vAPI.tabs.remove = function(tabId) {
-    tabId = toChromiumTabId(tabId);
-    if ( tabId === 0 ) { return; }
+    sanitizeURL(url) {
+        if ( url.startsWith('data:') === false ) { return url; }
+        const pos = url.indexOf(',');
+        if ( pos === -1 ) { return url; }
+        const s = url.slice(0, pos);
+        if ( s.search(/\s/) === -1 ) { return url; }
+        return s.replace(/\s+/, '') + url.slice(pos);
+    }
 
-    chrome.tabs.remove(tabId, vAPI.resetLastError);
-};
+    onActivated(/* details */) {
+    }
 
-/******************************************************************************/
-
-vAPI.tabs.reload = function(tabId, bypassCache) {
-    tabId = toChromiumTabId(tabId);
-    if ( tabId === 0 ) { return; }
-
-    chrome.tabs.reload(
-        tabId,
-        { bypassCache: bypassCache === true },
-        vAPI.resetLastError
-    );
-};
-
-/******************************************************************************/
-
-// Select a specific tab.
-
-vAPI.tabs.select = function(tabId) {
-    tabId = toChromiumTabId(tabId);
-    if ( tabId === 0 ) { return; }
-
+<<<<<<< HEAD
     chrome.tabs.update(tabId, { active: true }, function(tab) {
         void chrome.runtime.lastError;
         if ( !tab ) { return; }
         chrome.windows.update(tab.windowId, { focused: true });
     });
 };
+=======
+    onClosed(/* tabId, details */) {
+    }
+>>>>>>> upstream1.22.0
 
-/******************************************************************************/
+    onCreated(/* openedTabId, openerTabId */) {
+    }
 
+<<<<<<< HEAD
 vAPI.tabs.injectScript = function(tabId, details, callback) {
     var onScriptExecuted = function() {
         // https://code.google.com/p/chromium/issues/detail?id=410868#c8
@@ -648,6 +706,12 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
         chrome.tabs.executeScript(toChromiumTabId(tabId), details, onScriptExecuted);
     } else {
         chrome.tabs.executeScript(details, onScriptExecuted);
+=======
+    onNavigation(/* details */) {
+    }
+
+    onUpdated(/* tabId, changeInfo, tab */) {
+>>>>>>> upstream1.22.0
     }
 };
 
@@ -667,6 +731,7 @@ vAPI.tabs.injectScript = function(tabId, details, callback) {
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/32
 //   Ensure ImageData for toolbar icon is valid before use.
+<<<<<<< HEAD
 /*
 vAPI.setIcon = (function() {
     const browserAction = chrome.browserAction,
@@ -682,16 +747,28 @@ vAPI.setIcon = (function() {
             tabId: 0,
             path: { '16': 'img/icon_16.png', '32': 'img/icon_32.png' }
         }
+=======
+
+vAPI.setIcon = (( ) => {
+    const browserAction = chrome.browserAction;
+    const  titleTemplate =
+        browser.runtime.getManifest().browser_action.default_title +
+        ' ({badge})';
+    const icons = [
+        { path: { '16': 'img/icon_16-off.png', '32': 'img/icon_32-off.png' } },
+        { path: { '16':     'img/icon_16.png', '32':     'img/icon_32.png' } },
+>>>>>>> upstream1.22.0
     ];
 
-    (function() {
+    (( ) => {
         if ( browserAction.setIcon === undefined ) { return; }
 
-        // The global badge background color.
+        // The global badge text and background color.
         if ( browserAction.setBadgeBackgroundColor !== undefined ) {
-            browserAction.setBadgeBackgroundColor({
-                color: [ 0x66, 0x66, 0x66, 0xFF ]
-            });
+            browserAction.setBadgeBackgroundColor({ color: '#666666' });
+        }
+        if ( browserAction.setBadgeTextColor !== undefined ) {
+            browserAction.setBadgeTextColor({ color: '#FFFFFF' });
         }
 
         // As of 2018-05, benchmarks show that only Chromium benefits for sure
@@ -707,7 +784,7 @@ vAPI.setIcon = (function() {
 
         const imgs = [];
         for ( let i = 0; i < icons.length; i++ ) {
-            let path = icons[i].path;
+            const path = icons[i].path;
             for ( const key in path ) {
                 if ( path.hasOwnProperty(key) === false ) { continue; }
                 imgs.push({ i: i, p: key });
@@ -728,10 +805,10 @@ vAPI.setIcon = (function() {
             for ( const img of imgs ) {
                 if ( img.r.complete === false ) { return; }
             }
-            let ctx = document.createElement('canvas').getContext('2d');
-            let iconData = [ null, null ];
+            const ctx = document.createElement('canvas').getContext('2d');
+            const iconData = [ null, null ];
             for ( const img of imgs ) {
-                let w = img.r.naturalWidth, h = img.r.naturalHeight;
+                const w = img.r.naturalWidth, h = img.r.naturalHeight;
                 ctx.width = w; ctx.height = h;
                 ctx.clearRect(0, 0, w, h);
                 ctx.drawImage(img.r, 0, 0);
@@ -759,15 +836,29 @@ vAPI.setIcon = (function() {
         }
     })();
 
-    var onTabReady = function(tab, state, badge, parts) {
+    const onTabReady = function(tab, details) {
         if ( vAPI.lastError() || !tab ) { return; }
 
+        const { parts, state, badge, color } = details;
+
         if ( browserAction.setIcon !== undefined ) {
+<<<<<<< HEAD
             if ( parts === undefined || (parts & 0x01) !== 0 ) {
                 icons[state].tabId = tab.id;
                 browserAction.setIcon(icons[state]);
+=======
+            if ( parts === undefined || (parts & 0b001) !== 0 ) {
+                browserAction.setIcon(
+                    Object.assign({ tabId: tab.id }, icons[state])
+                );
+>>>>>>> upstream1.22.0
             }
-            browserAction.setBadgeText({ tabId: tab.id, text: badge });
+            if ( (parts & 0b010) !== 0 ) {
+                browserAction.setBadgeText({ tabId: tab.id, text: badge });
+            }
+            if ( (parts & 0b100) !== 0 ) {
+                browserAction.setBadgeBackgroundColor({ tabId: tab.id, color });
+            }
         }
 
         if ( browserAction.setTitle !== undefined ) {
@@ -783,14 +874,13 @@ vAPI.setIcon = (function() {
 
     // parts: bit 0 = icon
     //        bit 1 = badge
+    //        bit 2 = badge color
 
-    return function(tabId, state, badge, parts) {
+    return function(tabId, details) {
         tabId = toChromiumTabId(tabId);
         if ( tabId === 0 ) { return; }
 
-        chrome.tabs.get(tabId, function(tab) {
-            onTabReady(tab, state, badge, parts);
-        });
+        browser.tabs.get(tabId, tab => onTabReady(tab, details));
 
     var iconPaths;
 };*/
@@ -1121,9 +1211,9 @@ vAPI.messaging.broadcast = function(message) {
 // https://github.com/gorhill/uBlock/issues/3497
 //   Prevent web pages from interfering with uBO's element picker
 // https://github.com/uBlockOrigin/uBlock-issues/issues/550
-//   A specific secret can be used for at most one second.
+//   Support using a new secret for every network request.
 
-vAPI.warSecret = (function() {
+vAPI.warSecret = (( ) => {
     const generateSecret = ( ) => {
         return Math.floor(Math.random() * 982451653 + 982451653).toString(36) +
                Math.floor(Math.random() * 982451653 + 982451653).toString(36);
@@ -1144,7 +1234,7 @@ vAPI.warSecret = (function() {
         secrets.splice(pos, 1);
     };
 
-    chrome.webRequest.onBeforeRequest.addListener(
+    browser.webRequest.onBeforeRequest.addListener(
         guard,
         {
             urls: [ root + 'web_accessible_resources/*' ]
@@ -1167,59 +1257,106 @@ vAPI.warSecret = (function() {
     };
 })();
 
-vAPI.net = {
-    listenerMap: new WeakMap(),
-    // legacy Chromium understands only these network request types.
-    validTypes: (function() {
-        let types = new Set([
-            'main_frame',
-            'sub_frame',
-            'stylesheet',
-            'script',
-            'image',
-            'object',
-            'xmlhttprequest',
-            'other'
-        ]);
-        let wrrt = browser.webRequest.ResourceType;
-        if ( wrrt instanceof Object ) {
-            for ( let typeKey in wrrt ) {
+/******************************************************************************/
+
+vAPI.Net = class {
+    constructor() {
+        this.validTypes = new Set();
+        {
+            const wrrt = browser.webRequest.ResourceType;
+            for ( const typeKey in wrrt ) {
                 if ( wrrt.hasOwnProperty(typeKey) ) {
-                    types.add(wrrt[typeKey]);
+                    this.validTypes.add(wrrt[typeKey]);
                 }
             }
         }
+        this.suspendableListener = undefined;
+        this.listenerMap = new WeakMap();
+        this.suspendDepth = 0;
+
+        browser.webRequest.onBeforeRequest.addListener(
+            details => {
+                this.normalizeDetails(details);
+                if ( this.suspendDepth === 0 ) {
+                    if ( this.suspendableListener === undefined ) { return; }
+                    return this.suspendableListener(details);
+                }
+                if ( details.tabId < 0 ) { return; }
+                return this.suspendOneRequest(details);
+            },
+            this.denormalizeFilters({ urls: [ 'http://*/*', 'https://*/*' ] }),
+            [ 'blocking' ]
+        );
+    }
+    normalizeDetails(/* details */) {
+    }
+    denormalizeFilters(filters) {
+        const urls = filters.urls || [ '<all_urls>' ];
+        let types = filters.types;
+        if ( Array.isArray(types) ) {
+            types = this.denormalizeTypes(types);
+        }
+        if (
+            (this.validTypes.has('websocket')) &&
+            (types === undefined || types.indexOf('websocket') !== -1) &&
+            (urls.indexOf('<all_urls>') === -1)
+        ) {
+            if ( urls.indexOf('ws://*/*') === -1 ) {
+                urls.push('ws://*/*');
+            }
+            if ( urls.indexOf('wss://*/*') === -1 ) {
+                urls.push('wss://*/*');
+            }
+        }
+        return { types, urls };
+    }
+    denormalizeTypes(types) {
         return types;
-    })(),
-    denormalizeFilters: null,
-    normalizeDetails: null,
-    addListener: function(which, clientListener, filters, options) {
-        if ( typeof this.denormalizeFilters === 'function' ) {
-            filters = this.denormalizeFilters(filters);
-        }
-        let actualListener;
-        if ( typeof this.normalizeDetails === 'function' ) {
-            actualListener = function(details) {
-                vAPI.net.normalizeDetails(details);
-                return clientListener(details);
-            };
-            this.listenerMap.set(clientListener, actualListener);
-        }
+    }
+    addListener(which, clientListener, filters, options) {
+        const actualFilters = this.denormalizeFilters(filters);
+        const actualListener = this.makeNewListenerProxy(clientListener);
         browser.webRequest[which].addListener(
-            actualListener || clientListener,
-            filters,
+            actualListener,
+            actualFilters,
             options
         );
-    },
-    removeListener: function(which, clientListener) {
-        let actualListener = this.listenerMap.get(clientListener);
-        if ( actualListener !== undefined ) {
-            this.listenerMap.delete(clientListener);
+    }
+    setSuspendableListener(listener) {
+        this.suspendableListener = listener;
+    }
+    removeListener(which, clientListener) {
+        const actualListener = this.listenerMap.get(clientListener);
+        if ( actualListener === undefined ) { return; }
+        this.listenerMap.delete(clientListener);
+        browser.webRequest[which].removeListener(actualListener);
+    }
+    makeNewListenerProxy(clientListener) {
+        const actualListener = details => {
+            this.normalizeDetails(details);
+            return clientListener(details);
+        };
+        this.listenerMap.set(clientListener, actualListener);
+        return actualListener;
+    }
+    suspendOneRequest() {
+    }
+    unsuspendAllRequests() {
+    }
+    suspend(force = false) {
+        if ( this.canSuspend() || force ) {
+            this.suspendDepth += 1;
         }
-        browser.webRequest[which].removeListener(
-            actualListener || clientListener
-        );
-    },
+    }
+    unsuspend() {
+        if ( this.suspendDepth === 0 ) { return; }
+        this.suspendDepth -= 1;
+        if ( this.suspendDepth !== 0 ) { return; }
+        this.unsuspendAllRequests(this.suspendableListener);
+    }
+    canSuspend() {
+        return false;
+    }
 };
 
 /******************************************************************************/

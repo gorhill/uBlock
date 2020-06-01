@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "終於出現了，一個高效率的阻擋器，使用不多的 CPU 及記憶體資源。",
+    "message": "一個高效率的網路資源過濾器，使用不多的 CPU 及記憶體資源。",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
@@ -44,7 +44,7 @@
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "快速鍵",
+    "message": "快捷鍵",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -116,11 +116,11 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "點擊以封鎖此網站所有彈窗",
+    "message": "點擊以封鎖此網站的所有彈出型視窗",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "點擊以停止封鎖此網站所有彈窗",
+    "message": "點擊以停止封鎖此網站的所有彈出型視窗",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -268,7 +268,7 @@
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
-    "message": "當適用時改進右鍵選單",
+    "message": "使用階層式內容功能表",
     "description": "English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt": {
@@ -308,7 +308,7 @@
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "停用元素隱藏過濾規則",
+    "message": "停用網頁元素過濾",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
@@ -364,15 +364,15 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>啟用此選項後，您就可以使用 <a href=\"https:\/\/adblockplus.org\/zh_TW\/faq_internal#elemhide\">與 Adblock Plus 相容的「元素隱藏」過濾規則<\/a>。這些過濾規則可用來隱藏網頁中礙眼，卻又不能被網路請求的過濾引擎所阻擋的元素。<\/p><p>啟用這項功能後將增加 <i>uBlock₀ <\/i> 的記憶體使用量。<\/p>",
+    "message": "<p>啟用此選項後，您就可以使用 <a href=\"https:\/\/adblockplus.org\/zh_TW\/faq_internal#elemhide\">與 Adblock Plus 相容的「元素隱藏」過濾規則<\/a>。這些過濾規則可用來隱藏網頁中礙眼，卻又不能被以網路請求為主的過濾引擎所阻擋的元素。<\/p><p>啟用此功能將增加 <i>uBlock₀ <\/i> 的記憶體使用量。<\/p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
-    "message": "忽略通用元素隱藏過濾規則",
+    "message": "忽略一般元素隱藏過濾規則",
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>一般元素過濾規則是指會套用於所有網站的規則。<p>雖然 uBlock₀ 會有效率地處理這些規則，但這些規則還是可能會在某些網頁中造成許多多餘的記憶體與 CPU 使用率，尤其是在較長又較舊的網頁。<p>開啟此選項後將可避免處理一般元素過濾規則時，所造成多餘的記憶體與 CPU 使用率，也能降低 uBlock₀ 本身的記憶體用量。<p>建議您在效能較差的裝置中開啟此選項。",
+    "message": "<p>一般元素過濾規則是指會套用於所有網站的規則。<p>雖然 uBlock₀ 會有效率地處理這些規則，但還是可能會在某些網頁中造成許多多餘的記憶體與 CPU 使用率，尤其是在較大又較舊的網頁中。<p>開啟此選項可避免在處理一般元素過濾規則時，造成多餘的記憶體與 CPU 使用率，也能降低 uBlock₀ 本身的記憶體用量。<p>建議您在效能較差的裝置中開啟此選項。",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -440,7 +440,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "每行一個過濾規則。規則可以單純是主機名稱，或是 Adblock Plus 相容格式的過濾規則，以 <code>!<\/code> 開頭的行將被忽略。",
+    "message": "每行一個過濾規則。規則可以單純是主機名稱，或是與 Adblock Plus 相容的過濾規則。以 <code>!<\/code> 開頭的行將被忽略。",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -962,6 +962,14 @@
   "genericCopyToClipboard": {
     "message": "複製到剪貼簿",
     "description": "Label for buttons used to copy something to the clipboard"
+  },
+  "toggleBlockingProfile": {
+    "message": "切換封鎖設定檔",
+    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  },
+  "relaxBlockingMode": {
+    "message": "放寬封鎖量模式",
+    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "dummy": {
     "message": "此條目須為最後一個",

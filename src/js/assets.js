@@ -23,7 +23,7 @@
 
 /******************************************************************************/
 
-µBlock.assets = (function() {
+µBlock.assets = (( ) => {
 
 /******************************************************************************/
 
@@ -36,7 +36,7 @@ const api = {};
 
 /******************************************************************************/
 
-var observers = [];
+const observers = [];
 
 api.addObserver = function(observer) {
     if ( observers.indexOf(observer) === -1 ) {
@@ -45,16 +45,16 @@ api.addObserver = function(observer) {
 };
 
 api.removeObserver = function(observer) {
-    var pos;
+    let pos;
     while ( (pos = observers.indexOf(observer)) !== -1 ) {
         observers.splice(pos, 1);
     }
 };
 
-var fireNotification = function(topic, details) {
-    var result, r;
-    for ( var i = 0; i < observers.length; i++ ) {
-        r = observers[i](topic, details);
+const fireNotification = function(topic, details) {
+    let result;
+    for ( const observer of observers ) {
+        const r = observer(topic, details);
         if ( r !== undefined ) { result = r; }
     }
     return result;
@@ -62,28 +62,8 @@ var fireNotification = function(topic, details) {
 
 /******************************************************************************/
 
-api.fetchText = function(url, onLoad, onError) {
-    const isExternal = reIsExternalPath.test(url);
-    let actualUrl = isExternal ? url : vAPI.getURL(url);
-
-    // https://github.com/gorhill/uBlock/issues/2592
-    //   Force browser cache to be bypassed, but only for resources which have
-    //   been fetched more than one hour ago.
-    if ( isExternal ) {
-        const queryValue = `_=${Math.floor(Date.now() / 3600000) % 12}`;
-        if ( actualUrl.indexOf('?') === -1 ) {
-            actualUrl += '?';
-        } else {
-            actualUrl += '&';
-        }
-        actualUrl += queryValue;
-    }
-
-    if ( typeof onError !== 'function' ) {
-        onError = onLoad;
-    }
-
-    return new Promise(resolve => {
+api.fetch = function(url, options = {}) {
+    return new Promise((resolve, reject) => {
     // Start of executor
 
     const timeoutAfter = µBlock.hiddenSettings.assetFetchTimeout * 1000 || 30000;
@@ -102,20 +82,6 @@ api.fetchText = function(url, onLoad, onError) {
         }
     };
 
-    const onResolve = function(details) {
-        if ( onLoad instanceof Function ) {
-            return onLoad(details);
-        }
-        resolve(details);
-    };
-
-    const onReject = function(details) {
-        if ( onError instanceof Function ) {
-            return onError(details);
-        }
-        resolve(details);
-    };
-
     // https://github.com/gorhill/uMatrix/issues/15
     const onLoadEvent = function() {
         cleanup();
@@ -127,25 +93,14 @@ api.fetchText = function(url, onLoad, onError) {
             statusText: this.statusText || ''
         };
         if ( details.statusCode < 200 || details.statusCode >= 300 ) {
-            return onReject(details);
+            return reject(details);
         }
-        // consider an empty result to be an error
-        if ( stringIsNotEmpty(this.responseText) === false ) {
-            return onReject(details);
-        }
-        // we never download anything else than plain text: discard if response
-        // appears to be a HTML document: could happen when server serves
-        // some kind of error page I suppose
-        const text = this.responseText.trim();
-        if ( text.startsWith('<') && text.endsWith('>') ) {
-            return onReject(details);
-        }
-        details.content = this.responseText;
+        details.content = this.response;
         // ADN: If we've loaded a DNT list, we need to parse it
         if (µBlock.adnauseam.dnt.isDoNotTrackUrl(url)) {
-            µBlock.adnauseam.dnt.processEntries(this.responseText);
+            µBlock.adnauseam.dnt.processEntries(this.response);
         }
-        onResolve(details);
+        resolve(details);
     };
 
     const onErrorEvent = function() {
@@ -153,9 +108,9 @@ api.fetchText = function(url, onLoad, onError) {
         µBlock.logger.writeOne({
             realm: 'message',
             type: 'error',
-            text: errorCantConnectTo.replace('{{msg}}', actualUrl)
+            text: errorCantConnectTo.replace('{{msg}}', url)
         });
-        onReject({ url, content: '' });
+        reject({ url, content: '' });
     };
 
     const onTimeout = function() {
@@ -177,12 +132,12 @@ api.fetchText = function(url, onLoad, onError) {
     // I am pretty sure it used to work, but now using a URL such as
     // `file:///` on Chromium 40 results in an exception being thrown.
     try {
-        xhr.open('get', actualUrl, true);
+        xhr.open('get', url, true);
         xhr.addEventListener('load', onLoadEvent);
         xhr.addEventListener('error', onErrorEvent);
         xhr.addEventListener('abort', onErrorEvent);
         xhr.addEventListener('progress', onProgressEvent);
-        xhr.responseType = 'text';
+        xhr.responseType = options.responseType || 'text';
         xhr.send();
         timeoutTimer = vAPI.setTimeout(onTimeout, timeoutAfter);
     } catch (e) {
@@ -190,6 +145,70 @@ api.fetchText = function(url, onLoad, onError) {
     }
 
     // End of executor
+    });
+};
+
+/******************************************************************************/
+
+api.fetchText = function(url, onLoad, onError) {
+    const isExternal = reIsExternalPath.test(url);
+    let actualUrl = isExternal ? url : vAPI.getURL(url);
+
+    // https://github.com/gorhill/uBlock/issues/2592
+    //   Force browser cache to be bypassed, but only for resources which have
+    //   been fetched more than one hour ago.
+    //
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/682#issuecomment-515197130
+    //   Provide filter list authors a way to completely bypass
+    //   the browser cache.
+    if ( isExternal ) {
+        const cacheBypassToken =
+            µBlock.hiddenSettings.updateAssetBypassBrowserCache
+                ? Math.floor(Date.now() /    1000) % 86400
+                : Math.floor(Date.now() / 3600000) %    12;
+        const queryValue = `_=${cacheBypassToken}`;
+        if ( actualUrl.indexOf('?') === -1 ) {
+            actualUrl += '?';
+        } else {
+            actualUrl += '&';
+        }
+        actualUrl += queryValue;
+    }
+
+    if ( typeof onError !== 'function' ) {
+        onError = onLoad;
+    }
+
+    const onResolve = function(details) {
+        if ( onLoad instanceof Function ) {
+            return onLoad(details);
+        }
+        return details;
+    };
+
+    const onReject = function(details) {
+        details.content = '';
+        if ( onError instanceof Function ) {
+            return onError(details);
+        }
+        return details;
+    };
+
+    return api.fetch(url).then(details => {
+        // consider an empty result to be an error
+        if ( stringIsNotEmpty(details.content) === false ) {
+            return onReject(details);
+        }
+        // we never download anything else than plain text: discard if response
+        // appears to be a HTML document: could happen when server serves
+        // some kind of error page I suppose
+        const text = details.content.trim();
+        if ( text.startsWith('<') && text.endsWith('>') ) {
+            return onReject(details);
+        }
+        return onResolve(details);
+    }).catch(details => {
+        return onReject(details);
     });
 };
 
@@ -418,7 +437,7 @@ const updateAssetSourceRegistry = function(json, silent) {
     saveAssetSourceRegistry();
 };
 
-const getAssetSourceRegistry = function(callback) {
+const getAssetSourceRegistry = function() {
     if ( assetSourceRegistryPromise === undefined ) {
         assetSourceRegistryPromise = µBlock.cacheStorage.get(
             'assetSourceRegistry'
@@ -428,34 +447,33 @@ const getAssetSourceRegistry = function(callback) {
                 bin.assetSourceRegistry instanceof Object
             ) {
                 assetSourceRegistry = bin.assetSourceRegistry;
-                return;
+                return assetSourceRegistry;
             }
-            return new Promise(resolve => {
-                api.fetchText(
-                    µBlock.assetsBootstrapLocation || 'assets/assets.json',
-                    details => {
-                        updateAssetSourceRegistry(details.content, true);
-                        resolve();
-                    }
-                );
+            return api.fetchText(
+                µBlock.assetsBootstrapLocation || 'assets/assets.json'
+            ).then(details => {
+                return details.content !== ''
+                    ? details
+                    : api.fetchText('assets/assets.json');
+            }).then(details => {
+                updateAssetSourceRegistry(details.content, true);
+                return assetSourceRegistry;
             });
         });
     }
 
-    assetSourceRegistryPromise.then(( ) => {
-        callback(assetSourceRegistry);
-    });
+    return assetSourceRegistryPromise;
 };
 
 api.registerAssetSource = function(assetKey, details) {
-    getAssetSourceRegistry(function() {
+    getAssetSourceRegistry().then(( ) => {
         registerAssetSource(assetKey, details);
         saveAssetSourceRegistry(true);
     });
 };
 
 api.unregisterAssetSource = function(assetKey) {
-    getAssetSourceRegistry(function() {
+    getAssetSourceRegistry().then(( ) => {
         unregisterAssetSource(assetKey);
         saveAssetSourceRegistry(true);
     });
@@ -775,7 +793,7 @@ api.get = function(assetKey, options, callback) {
         if ( details.content !== '' ) {
             return reportBack(details.content);
         }
-        getAssetSourceRegistry(function(registry) {
+        getAssetSourceRegistry().then(registry => {
             assetDetails = registry[assetKey] || {};
             if ( typeof assetDetails.contentURL === 'string' ) {
                 contentURLs = [ assetDetails.contentURL ];
@@ -796,12 +814,12 @@ api.get = function(assetKey, options, callback) {
 /******************************************************************************/
 
 const getRemote = function(assetKey, callback) {
-   var assetDetails = {},
-        contentURLs,
-        contentURL;
+    let assetDetails = {};
+    let contentURLs;
+    let contentURL;
 
-    var reportBack = function(content, err) {
-        var details = { assetKey: assetKey, content: content };
+    const reportBack = function(content, err) {
+        const details = { assetKey: assetKey, content: content };
         if ( err ) {
             details.error = assetDetails.lastError = err;
         } else {
@@ -810,7 +828,7 @@ const getRemote = function(assetKey, callback) {
         callback(details);
     };
 
-    var onRemoteContentLoaded = function(details) {
+    const onRemoteContentLoaded = function(details) {
         if ( stringIsNotEmpty(details.content) === false ) {
             registerAssetSource(assetKey, { error: { time: Date.now(), error: 'No content' } });
             tryLoading();
@@ -829,8 +847,8 @@ const getRemote = function(assetKey, callback) {
         reportBack(details.content);
     };
 
-    var onRemoteContentError = function(details) {
-        var text = details.statusText;
+    const onRemoteContentError = function(details) {
+        let text = details.statusText;
         if ( details.statusCode === 0 ) {
             text = 'network error';
         }
@@ -838,7 +856,7 @@ const getRemote = function(assetKey, callback) {
         tryLoading();
     };
 
-    var tryLoading = function() {
+    const tryLoading = function() {
         while ( (contentURL = contentURLs.shift()) ) {
             if ( reIsExternalPath.test(contentURL) ) { break; }
         }
@@ -852,7 +870,7 @@ const getRemote = function(assetKey, callback) {
         }
     };
 
-    getAssetSourceRegistry(function(registry) {
+    getAssetSourceRegistry().then(registry => {
         assetDetails = registry[assetKey] || {};
         if ( typeof assetDetails.contentURL === 'string' ) {
             contentURLs = [ assetDetails.contentURL ];
@@ -886,9 +904,6 @@ api.put = function(assetKey, content, callback) {
 /******************************************************************************/
 
 api.metadata = function(callback) {
-    let assetRegistryReady = false,
-        cacheRegistryReady = false;
-
     const onReady = function() {
         const assetDict = JSON.parse(JSON.stringify(assetSourceRegistry));
         const cacheDict = assetCacheRegistry;
@@ -914,15 +929,12 @@ api.metadata = function(callback) {
         callback(assetDict);
     };
 
-    getAssetSourceRegistry(( ) => {
-        assetRegistryReady = true;
-        if ( cacheRegistryReady ) { onReady(); }
-    });
-
-    getAssetCacheRegistry().then(( ) => {
-        cacheRegistryReady = true;
-        if ( assetRegistryReady ) { onReady(); }
-    });
+    Promise.all([
+        getAssetSourceRegistry(),
+        getAssetCacheRegistry(),
+    ]).then(
+        ( ) => onReady()
+    );
 };
 
 /******************************************************************************/
@@ -946,22 +958,9 @@ const updaterFetched = new Set();
 
 let updaterStatus,
     updaterTimer,
-    updaterAssetDelay = updaterAssetDelayDefault,
-    noRemoteResources;
+    updaterAssetDelay = updaterAssetDelayDefault;
 
 const updateFirst = function() {
-    // https://github.com/gorhill/uBlock/commit/126110c9a0a0630cd556f5cb215422296a961029
-    //   Firefox extension reviewers do not want uBO/webext to fetch its own
-    //   scriptlets/resources asset from the project's own repo (github.com).
-    // https://github.com/uBlockOrigin/uAssets/issues/1647#issuecomment-371456830
-    //   Allow self-hosted dev build to update: if update_url is present but
-    //   null, assume the extension is hosted on AMO.
-    if ( noRemoteResources === undefined ) {
-        noRemoteResources =
-            vAPI.webextFlavor.soup.has('firefox') &&
-            vAPI.webextFlavor.soup.has('webext') &&
-            vAPI.webextFlavor.soup.has('devbuild') === false;
-    }
     updaterStatus = 'updating';
     updaterFetched.clear();
     updaterUpdated.length = 0;
@@ -991,10 +990,6 @@ const updateNext = function() {
                 cacheEntry &&
                 (cacheEntry.writeTime + assetEntry.updateAfter * 86400000) > now
             ) {
-                continue;
-            }
-            // Update of user scripts/resources forbidden?
-            if ( assetKey === 'ublock-resources' && noRemoteResources ) {
                 continue;
             }
             if (
@@ -1034,15 +1029,12 @@ const updateNext = function() {
         getRemote(assetKey, updatedOne);
     };
 
-    getAssetSourceRegistry(function(dict) {
-        assetDict = dict;
-        if ( !cacheDict ) { return; }
-        updateOne();
-    });
-
-    getAssetCacheRegistry().then(dict => {
-        cacheDict = dict;
-        if ( !assetDict ) { return; }
+    Promise.all([
+        getAssetSourceRegistry(),
+        getAssetCacheRegistry(),
+    ]).then(results => {
+        assetDict = results[0];
+        cacheDict = results[1];
         updateOne();
     });
 };

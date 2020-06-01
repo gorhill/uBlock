@@ -42,11 +42,13 @@ const µBlock = (function() { // jshint ignore:line
         autoUpdateAssetFetchPeriod: 120,
         autoUpdateDelayAfterLaunch: 180,
         autoUpdatePeriod: 7,
+        blockingProfiles: '11111/#F00 11011/#C0F 11001/#00F 00001',
         cacheStorageAPI: 'unset',
         cacheStorageCompression: true,
         cacheControlForFirefox1376932: 'no-cache, no-store, must-revalidate',
         consoleLogLevel: 'unset',
         debugScriptlets: false,
+        debugScriptletInjector: false,
         disableWebAssembly: false,
         ignoreRedirectFilters: false,
         ignoreScriptInjectFilters: false,
@@ -56,6 +58,7 @@ const µBlock = (function() { // jshint ignore:line
         selfieAfter: 3,
         strictBlockingBypassDuration: 120,
         suspendTabsUntilReady: 'unset',
+        updateAssetBypassBrowserCache: false,
         userResourcesLocation: 'unset',
     };
 
@@ -105,7 +108,7 @@ const µBlock = (function() { // jshint ignore:line
         },
 
         hiddenSettingsDefault: hiddenSettingsDefault,
-        hiddenSettings: (function() {
+        hiddenSettings: (( ) => {
             const out = Object.assign({}, hiddenSettingsDefault);
             const json = vAPI.localStorage.getItem('immediateHiddenSettings');
             if ( typeof json !== 'string' ) { return out; }
@@ -136,7 +139,7 @@ const µBlock = (function() { // jshint ignore:line
 
         // https://github.com/chrisaljoudi/uBlock/issues/180
         // Whitelist directives need to be loaded once the PSL is available
-        netWhitelist: {},
+        netWhitelist: new Map(),
         netWhitelistModifyTime: 0,
         netWhitelistDefault: [
             'about-scheme',
@@ -157,8 +160,8 @@ const µBlock = (function() { // jshint ignore:line
 
         // Read-only
         systemSettings: {
-            compiledMagic: 16,  // Increase when compiled format changes
-            selfieMagic: 16     // Increase when selfie format changes
+            compiledMagic: 18,  // Increase when compiled format changes
+            selfieMagic: 18     // Increase when selfie format changes
         },
 
         restoreBackupSettings: {
@@ -173,7 +176,7 @@ const µBlock = (function() { // jshint ignore:line
         // Allows to fully customize uBO's assets, typically set through admin
         // settings. The content of 'assets.json' will also tell which filter
         // lists to enable by default when uBO is first installed.
-        assetsBootstrapLocation: 'assets/assets.json',
+        assetsBootstrapLocation: undefined,
 
         userFiltersPath: 'user-filters',
         pslAssetKey: 'public_suffix_list.dat',
@@ -207,6 +210,9 @@ const µBlock = (function() { // jshint ignore:line
         cspNoInlineScript: "script-src 'unsafe-eval' * blob: data:",
         cspNoScripting: 'script-src http: https:',
         cspNoInlineFont: 'font-src *',
+
+        liveBlockingProfiles: [],
+        blockingProfileColorCache: new Map(),
     };
 
 })();

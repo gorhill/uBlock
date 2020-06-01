@@ -417,6 +417,7 @@ body[dir="rtl"] #vwRenderer .logEntry > div > span:first-child {
 #vwRenderer #vwContent .logEntry > div > span:nth-of-type(6) {
     }
 #vwRenderer .logEntry > div > span:nth-of-type(7) {
+    position: relative;
     }
 #vwRenderer #vwContent .logEntry > div > span:nth-of-type(7) {
     text-overflow: ellipsis;
@@ -425,11 +426,8 @@ body[dir="rtl"] #vwRenderer .logEntry > div > span:first-child {
     overflow-y: auto;
     white-space: pre-line;
     }
-#vwRenderer .logEntry > div > span:nth-of-type(7) > span > b {
-    font-weight: bold;
-    }
 #vwRenderer .logEntry > div > span:nth-of-type(7) b {
-    font-weight: normal;
+    font-weight: bold;
     }
 #vwRenderer .logEntry > div[data-status="1"] > span:nth-of-type(7) b,
 #netFilteringDialog > .panes > .details > div[data-status="1"] b {
@@ -453,6 +451,35 @@ body.colorBlind #vwRenderer .logEntry > div[data-status="2"] > span:nth-of-type(
 body.colorBlind #netFilteringDialog > .panes > .details > div[data-status="2"] b {
     background-color: rgba(255, 194, 57, 0.2);
     }
+#vwRenderer .logEntry > div > span:nth-of-type(7) a {
+    background-color: dimgray;
+    color: white;
+    display: none;
+    height: 100%;
+    padding: 0 0.25em;
+    opacity: 0.4;
+    position: absolute;
+    right: 0;
+    text-decoration: none;
+    top: 0;
+    }
+#netInspector.vExpanded #vwRenderer .logEntry > div > span:nth-of-type(7) a {
+    bottom: 0px;
+    height: unset;
+    padding: 0.25em;
+    top: unset;
+    }
+#vwRenderer .logEntry > div > span:nth-of-type(7) a::after {
+    content: '\2197';
+    }
+#vwRenderer .logEntry > div.networkRealm > span:nth-of-type(7):hover a {
+    align-items: center;
+    display: inline-flex;
+    }
+#vwRenderer .logEntry > div > span:nth-of-type(7) a:hover {
+    opacity: 1;
+    }
+
 #vwRenderer #vwBottom {
     background-color: #00F;
     height: 0;
@@ -575,11 +602,11 @@ body[dir="rtl"] #modalOverlay > div > div:nth-of-type(2) {
     text-align: center;
     }
 #netFilteringDialog > .preview > * {
-    background-color: white;
     max-width: 100%;
     max-height: 20vh;
     }
 #netFilteringDialog > .preview > span {
+    background-color: white;
     cursor: pointer;
     padding: 0.5em;
     }

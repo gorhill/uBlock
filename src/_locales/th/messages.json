@@ -12,15 +12,15 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Warning! You have unsaved changes",
+    "message": "คำเตือน! คุณมีการเปลี่ยนแปลงที่ยังไม่ได้บันทึก",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Stay",
+    "message": "อยู่ต่อ",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Ignore",
+    "message": "ไม่สนใจ",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
@@ -116,11 +116,11 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Click to block all popups on this site",
+    "message": "คลิกเพื่อบล็อกป๊อปอัปทั้งหมดในเว็บไซต์นี้",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Click to no longer block all popups on this site",
+    "message": "คลิกเพื่อยกเลิกการบล็อกป๊อปอัปทั้งหมดในเว็บไซต์นี้",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -128,11 +128,11 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Click to block large media elements on this site",
+    "message": "คลิกเพื่อปิดกั้นองค์ประกอบชนิด Media ที่มีขนาดใหญ่ในเว็บไซต์นี้",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Click to no longer block large media elements on this site",
+    "message": "คลิกเพื่อยกเลิกการปิดกั้นองค์ประกอบชนิด Media ที่มีขนาดใหญ่ในเว็บไซต์นี้",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -312,7 +312,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Block media elements larger than {{input}} KB",
+    "message": "ปิดกั้นองค์ประกอบชนิด Media ที่มีขนาดใหญ่กว่า {{input}} KB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -348,15 +348,15 @@
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
-    "message": "Auto-update filter lists",
+    "message": "อัปเดตรายการตัวกรองอัตโนมัติ",
     "description": "A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow": {
-    "message": "Update now",
+    "message": "อัปเดตเดี๋ยวนี้",
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll": {
-    "message": "Purge all caches",
+    "message": "ล้างแคชทั้งหมด",
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
@@ -392,7 +392,7 @@
     "description": "English: Ads"
   },
   "3pGroupPrivacy": {
-    "message": "Privacy",
+    "message": "ความเป็นส่วนตัว",
     "description": "English: Privacy"
   },
   "3pGroupMalware": {
@@ -408,11 +408,11 @@
     "description": "English: Multipurpose"
   },
   "3pGroupRegions": {
-    "message": "Regions, languages",
+    "message": "ภูมิภาค, ภาษา",
     "description": "English: Regions, languages"
   },
   "3pGroupCustom": {
-    "message": "Custom",
+    "message": "กำหนดเอง",
     "description": "English: Custom"
   },
   "3pImport": {
@@ -424,7 +424,7 @@
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
-    "message": "Out of date.",
+    "message": "ล้าสมัย",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate": {
@@ -832,31 +832,31 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: Add the following URL to your custom filter lists?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
+    "message": "uBlock₀: เพิ่ม URL ต่อไปนี้ในรายการตัวกรองแบบกำหนดเองของคุณหรือไม่ ?\n\nชื่อ: \"{{title}}\"\nURL: {{url}}",
     "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo": {
-    "message": "a minute ago",
+    "message": "เมื่อนาทีที่แล้ว",
     "description": "English: a minute ago"
   },
   "elapsedManyMinutesAgo": {
-    "message": "{{value}} minutes ago",
+    "message": "{{value}} นาทีที่แล้ว",
     "description": "English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo": {
-    "message": "an hour ago",
+    "message": "เมื่อชั่วโมงที่แล้ว",
     "description": "English: an hour ago"
   },
   "elapsedManyHoursAgo": {
-    "message": "{{value}} hours ago",
+    "message": "{{value}} ชั่วโมงที่แล้ว",
     "description": "English: {{value}} hours ago"
   },
   "elapsedOneDayAgo": {
-    "message": "a day ago",
+    "message": "เมื่อวันก่อน",
     "description": "English: a day ago"
   },
   "elapsedManyDaysAgo": {
-    "message": "{{value}} days ago",
+    "message": "{{value}} วันที่แล้ว",
     "description": "English: {{value}} days ago"
   },
   "showDashboardButton": {
@@ -872,11 +872,11 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1": {
-    "message": "uBlock Origin has prevented the following page from loading:",
+    "message": "uBlock Origin ป้องกันไม่ให้โหลดหน้าต่อไปนี้:",
     "description": "English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2": {
-    "message": "Because of the following filter",
+    "message": "เนื่องจากตัวกรองดังต่อไปนี้",
     "description": "English: Because of the following filter"
   },
   "docblockedNoParamsPrompt": {
@@ -884,11 +884,11 @@
     "description": "label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {
-    "message": "Found in:",
+    "message": "พบใน:",
     "description": "English: List of filter list names follows"
   },
   "docblockedBack": {
-    "message": "Go back",
+    "message": "ย้อนกลับ",
     "description": "English: Go back"
   },
   "docblockedClose": {
@@ -896,15 +896,15 @@
     "description": "English: Close this window"
   },
   "docblockedProceed": {
-    "message": "Disable strict blocking for {{hostname}}",
+    "message": "ปิดใช้งานการปิดกั้นสำหรับ {{hostname}}",
     "description": "English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary": {
-    "message": "Temporarily",
+    "message": "ชั่วคราว",
     "description": "English: Temporarily"
   },
   "docblockedDisablePermanent": {
-    "message": "Permanently",
+    "message": "ถาวร",
     "description": "English: Permanently"
   },
   "cloudPush": {
@@ -924,7 +924,7 @@
     "description": ""
   },
   "cloudDeviceNamePrompt": {
-    "message": "This device name:",
+    "message": "ชื่ออุปกรณ์นี้:",
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
@@ -948,7 +948,7 @@
     "description": ""
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
-    "message": "Temporarily allow large media elements",
+    "message": "อนุญาตองค์ประกอบชนิด Media ขนาดใหญ่ชั่วคราว",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
@@ -962,6 +962,14 @@
   "genericCopyToClipboard": {
     "message": "Copy to clipboard",
     "description": "Label for buttons used to copy something to the clipboard"
+  },
+  "toggleBlockingProfile": {
+    "message": "Toggle blocking profile",
+    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  },
+  "relaxBlockingMode": {
+    "message": "Relax blocking mode",
+    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "dummy": {
     "message": "This entry must be the last one",

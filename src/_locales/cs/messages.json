@@ -724,7 +724,7 @@
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "Zachovat nejvýše {{input}} načtení stránky pro list",
+    "message": "Zachovat nejvýše {{input}} načtení stránky pro kartu",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
@@ -962,6 +962,14 @@
   "genericCopyToClipboard": {
     "message": "Kopírovat do schránky",
     "description": "Label for buttons used to copy something to the clipboard"
+  },
+  "toggleBlockingProfile": {
+    "message": "Přepnout blokovací profil",
+    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  },
+  "relaxBlockingMode": {
+    "message": "Relaxační mód blokování",
+    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "dummy": {
     "message": "This entry must be the last one",

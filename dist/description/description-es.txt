@@ -1,4 +1,4 @@
-Un bloqueador eficiente: capaz de cargar y aplicar miles más de filtros en comparación con otros populares bloqueadores, manteniendo un mínimo consumo de memoria y CPU.
+Un bloqueador eficiente: capaz de cargar y aplicar miles más de filtros en comparación con otros bloqueadores populares, manteniendo un mínimo consumo de memoria y CPU.
 
 Ejemplo con imágenes ilustrando su eficiencia (en inglés): https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
@@ -30,7 +30,7 @@ También tenga en cuenta que seleccionar algunas de estas listas adicionales pue
 
 ***
 
-Sin las listas preestablecidas de filtros, esta extensión no sería nada. Así que si alguna vez realmente quieres aportar algo, piensa en las personas que trabajan duro para mantener estas listas de filtros,  disponibles de forma gratuita para todos.
+Sin las listas de filtros preestablecidas, esta extensión no sería nada. Así que si alguna vez realmente quieres aportar algo, piensa en las personas que trabajan duro para mantener estas listas de filtros,  disponibles de forma gratuita para todos.
 
 ***
 

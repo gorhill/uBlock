@@ -19,10 +19,7 @@
 	"ublock-resources": {
 		"content": "internal",
 		"updateAfter": 7,
-		"contentURL": [
-			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/resources.txt",
-			"assets/ublock/resources.txt"
-		]
+		"contentURL": "assets/ublock/resources.txt"
 	},
 	"adnauseam-filters": {
 		"content": "filters",

@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Konečne efektívny blokovač, ktorý nezaťažuje CPU a pamäť.",
+    "message": "Konečne efektívny blokovač. Nezaťažuje CPU ani pamäť.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
@@ -962,6 +962,14 @@
   "genericCopyToClipboard": {
     "message": "Kopírovať do schránky",
     "description": "Label for buttons used to copy something to the clipboard"
+  },
+  "toggleBlockingProfile": {
+    "message": "Prepnúť profil blokovania",
+    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  },
+  "relaxBlockingMode": {
+    "message": "Zmierniť režim blokovania",
+    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "dummy": {
     "message": "This entry must be the last one",

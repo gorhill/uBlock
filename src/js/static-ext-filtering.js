@@ -68,9 +68,9 @@
         parsed.suffix = '';
     };
 
-    const isValidCSSSelector = (function() {
-        var div = document.createElement('div'),
-            matchesFn;
+    const isValidCSSSelector = (( ) => {
+        const div = document.createElement('div');
+        let matchesFn;
         // Keep in mind:
         //   https://github.com/gorhill/uBlock/issues/693
         //   https://github.com/gorhill/uBlock/issues/1955
@@ -95,11 +95,11 @@
         }
         // Quick regex-based validation -- most cosmetic filters are of the
         // simple form and in such case a regex is much faster.
-        var reSimple = /^[#.][\w-]+$/;
-        return function(s) {
+        const reSimple = /^[#.][\w-]+$/;
+        return s => {
             if ( reSimple.test(s) ) { return true; }
             try {
-                matchesFn(s + ', ' + s + ':not(#foo)');
+                matchesFn(`${s}, ${s}:not(#foo)`);
             } catch (ex) {
                 return false;
             }
@@ -152,7 +152,7 @@
         return hostnames;
     };
 
-    const compileProceduralSelector = (function() {
+    const compileProceduralSelector = (( ) => {
         const reProceduralOperator = new RegExp([
             '^(?:',
                 [
@@ -166,8 +166,10 @@
                 'matches-css',
                 'matches-css-after',
                 'matches-css-before',
+                'min-text-length',
                 'not',
                 'nth-ancestor',
+                'watch-attr',
                 'watch-attrs',
                 'xpath'
                 ].join('|'),
@@ -176,8 +178,9 @@
 
         const reEatBackslashes = /\\([()])/g;
         const reEscapeRegex = /[.*+?^${}()|[\]\\]/g;
-        const reNeedScope = /^\s*[+>~]/;
-        const reIsDanglingSelector = /(?:[+>~]\s*|\s+)$/;
+        const reNeedScope = /^\s*>/;
+        const reIsDanglingSelector = /[+>~\s]\s*$/;
+        const reIsSiblingSelector = /^\s*[+~]/;
 
         const regexToRawValue = new Map();
         let lastProceduralSelector = '',
@@ -224,11 +227,19 @@
 
         const compileConditionalSelector = function(s) {
             // https://github.com/AdguardTeam/ExtendedCss/issues/31#issuecomment-302391277
-            // Prepend `:scope ` if needed.
+            //   Prepend `:scope ` if needed.
             if ( reNeedScope.test(s) ) {
-                s = ':scope ' + s;
+                s = `:scope ${s}`;
             }
             return compile(s);
+        };
+
+        const compileInteger = function(s, min = 0, max = 0x7FFFFFFF) {
+            if ( /^\d+$/.test(s) === false ) { return; }
+            const n = parseInt(s, 10);
+            if ( n >= min && n < max ) {
+                return n;
+            }
         };
 
         const compileNotSelector = function(s) {
@@ -242,10 +253,7 @@
         };
 
         const compileNthAncestorSelector = function(s) {
-            const n = parseInt(s, 10);
-            if ( isNaN(n) === false && n >= 1 && n < 256 ) {
-                return n;
-            }
+            return compileInteger(s, 1, 256);
         };
 
         const compileSpathExpression = function(s) {
@@ -279,6 +287,7 @@
             [ ':-abp-contains', ':has-text' ],
             [ ':-abp-has', ':has' ],
             [ ':contains', ':has-text' ],
+            [ ':watch-attrs', ':watch-attr' ],
         ]);
 
         const compileArgument = new Map([
@@ -289,10 +298,11 @@
             [ ':matches-css', compileCSSDeclaration ],
             [ ':matches-css-after', compileCSSDeclaration ],
             [ ':matches-css-before', compileCSSDeclaration ],
+            [ ':min-text-length', compileInteger ],
             [ ':not', compileNotSelector ],
             [ ':nth-ancestor', compileNthAncestorSelector ],
             [ ':spath', compileSpathExpression ],
-            [ ':watch-attrs', compileAttrList ],
+            [ ':watch-attr', compileAttrList ],
             [ ':xpath', compileXpathExpression ]
         ]);
 
@@ -344,13 +354,12 @@
                 case ':if-not':
                     raw.push(`:not(${decompile(task[1])})`);
                     break;
-                case ':nth-ancestor':
-                    raw.push(`:nth-ancestor(${task[1]})`);
-                    break;
                 case ':spath':
                     raw.push(task[1]);
                     break;
-                case ':watch-attrs':
+                case ':min-text-length':
+                case ':nth-ancestor':
+                case ':watch-attr':
                 case ':xpath':
                     raw.push(`${task[0]}(${task[1]})`);
                     break;
@@ -359,7 +368,7 @@
             return raw.join('');
         };
 
-        const compile = function(raw) {
+        const compile = function(raw, root = false) {
             if ( raw === '' ) { return; }
             let prefix = '',
                 tasks = [];
@@ -428,16 +437,31 @@
             // At least one task found: nothing should be left to parse.
             if ( tasks.length === 0 ) {
                 prefix = raw;
-                tasks = undefined;
             } else if ( opPrefixBeg < n ) {
                 const spath = compileSpathExpression(raw.slice(opPrefixBeg));
                 if ( spath === undefined ) { return; }
                 tasks.push([ ':spath', spath ]);
             }
             // https://github.com/NanoAdblocker/NanoCore/issues/1#issuecomment-354394894
+            // https://www.reddit.com/r/uBlockOrigin/comments/c6iem5/
+            //   Convert sibling-selector prefix into :spath operator, but
+            //   only if context is not the root.
             if ( prefix !== '' ) {
                 if ( reIsDanglingSelector.test(prefix) ) { prefix += '*'; }
-                if ( isValidCSSSelector(prefix) === false ) { return; }
+                if ( isValidCSSSelector(prefix) === false ) {
+                    if (
+                        root ||
+                        reIsSiblingSelector.test(prefix) === false ||
+                        compileSpathExpression(prefix) === undefined
+                    ) {
+                        return;
+                    }
+                    tasks.unshift([ ':spath', prefix ]);
+                    prefix = '';
+                }
+            }
+            if ( tasks.length === 0 ) {
+                tasks = undefined;
             }
             return { selector: prefix, tasks: tasks };
         };
@@ -447,7 +471,7 @@
                 return lastProceduralSelectorCompiled;
             }
             lastProceduralSelector = raw;
-            let compiled = compile(raw);
+            let compiled = compile(raw, true);
             if ( compiled !== undefined ) {
                 compiled.raw = decompile(compiled);
                 compiled = JSON.stringify(compiled);
@@ -492,14 +516,13 @@
             this.nBits = nBits;
             this.timer = undefined;
             this.strToIdMap = new Map();
-            if ( selfie !== undefined ) {
-                this.fromSelfie(selfie);
-                return;
-            }
             this.hostnameToSlotIdMap = new Map();
             this.hostnameSlots = [];
             this.strSlots = [];
             this.size = 0;
+            if ( selfie !== undefined ) {
+                this.fromSelfie(selfie);
+            }
         }
 
         store(hn, bits, s) {
@@ -628,7 +651,6 @@
     api.compileSelector = (function() {
         const reAfterBeforeSelector = /^(.+?)(::?after|::?before|::[a-z-]+)$/;
         const reStyleSelector = /^(.+?):style\((.+?)\)$/;
-        const reStyleBad = /url\(/;
         const reExtendedSyntax = /\[-(?:abp|ext)-[a-z-]+=(['"])(?:.+?)(?:\1)\]/;
         const reExtendedSyntaxParser = /\[-(?:abp|ext)-([a-z-]+)=(['"])(.+?)\2\]/;
         const div = document.createElement('div');
@@ -648,6 +670,8 @@
             div.style.cssText = '';
             return true;
         };
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/668
+        const reStyleBad = /url\(|\\/i;
 
         const entryPoint = function(raw) {
             entryPoint.pseudoclass = false;
@@ -709,8 +733,8 @@
             }
 
             // Procedural selector?
-            let compiled;
-            if ( (compiled = compileProceduralSelector(raw)) ) {
+            const compiled = compileProceduralSelector(raw);
+            if ( compiled !== undefined ) {
                 return compiled;
             }
         };

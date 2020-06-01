@@ -50,14 +50,10 @@
             }
             this.needle = new RegExp(arg0, arg1);
         }
-        exec(input) {
-            const output = [];
-            for ( const node of input ) {
-                if ( this.needle.test(node.textContent) ) {
-                    output.push(node);
-                }
+        transpose(node, output) {
+            if ( this.needle.test(node.textContent) ) {
+                output.push(node);
             }
-            return output;
         }
     };
 
@@ -65,14 +61,10 @@
         constructor(task) {
             this.pselector = new PSelector(task[1]);
         }
-        exec(input) {
-            const output = [];
-            for ( const node of input ) {
-                if ( this.pselector.test(node) === this.target ) {
-                    output.push(node);
-                }
+        transpose(node, output) {
+            if ( this.pselector.test(node) === this.target ) {
+                output.push(node);
             }
-            return output;
         }
         get invalid() {
             return this.pselector.invalid;
@@ -81,9 +73,17 @@
     PSelectorIfTask.prototype.target = true;
 
     const PSelectorIfNotTask = class extends PSelectorIfTask {
+    };
+    PSelectorIfNotTask.prototype.target = false;
+
+    const PSelectorMinTextLengthTask = class {
         constructor(task) {
-            super.call(task);
-            this.target = false;
+            this.min = task[1];
+        }
+        transpose(node, output) {
+            if ( node.textContent.length >= this.min ) {
+                output.push(node);
+            }
         }
     };
 
@@ -91,20 +91,37 @@
         constructor(task) {
             this.nth = task[1];
         }
-        exec(input) {
-            const output = [];
-            for ( let node of input ) {
-                let nth = this.nth;
-                for (;;) {
-                    node = node.parentElement;
-                    if ( node === null ) { break; }
-                    nth -= 1;
-                    if ( nth !== 0 ) { continue; }
-                    output.push(node);
-                    break;
-                }
+        transpose(node, output) {
+            let nth = this.nth;
+            for (;;) {
+                node = node.parentElement;
+                if ( node === null ) { return; }
+                nth -= 1;
+                if ( nth === 0 ) { break; }
             }
-            return output;
+            output.push(node);
+        }
+    };
+
+    const PSelectorSpathTask = class {
+        constructor(task) {
+            this.spath = task[1];
+        }
+        transpose(node, output) {
+            const parent = node.parentElement;
+            if ( parent === null ) { return; }
+            let pos = 1;
+            for (;;) {
+                node = node.previousElementSibling;
+                if ( node === null ) { break; }
+                pos += 1;
+            }
+            const nodes = parent.querySelectorAll(
+                `:scope > :nth-child(${pos})${this.spath}`
+            );
+            for ( const node of nodes ) {
+                output.push(node);
+            }
         }
     };
 
@@ -112,25 +129,21 @@
         constructor(task) {
             this.xpe = task[1];
         }
-        exec(input) {
-            const output = [];
-            const xpe = docRegister.createExpression(this.xpe, null);
-            let xpr = null;
-            for ( const node of input ) {
-                xpr = xpe.evaluate(
-                    node,
-                    XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
-                    xpr
-                );
-                let j = xpr.snapshotLength;
-                while ( j-- ) {
-                    const node = xpr.snapshotItem(j);
-                    if ( node.nodeType === 1 ) {
-                        output.push(node);
-                    }
+        transpose(node, output) {
+            const xpr = docRegister.evaluate(
+                this.xpe,
+                node,
+                null,
+                XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
+                null
+            );
+            let j = xpr.snapshotLength;
+            while ( j-- ) {
+                const node = xpr.snapshotItem(j);
+                if ( node.nodeType === 1 ) {
+                    output.push(node);
                 }
             }
-            return output;
         }
     };
 
@@ -156,32 +169,36 @@
         }
         prime(input) {
             const root = input || docRegister;
-            if ( this.selector !== '' ) {
-                return root.querySelectorAll(this.selector);
-            }
-            return [ root ];
+            if ( this.selector === '' ) { return [ root ]; }
+            return root.querySelectorAll(this.selector);
         }
         exec(input) {
             if ( this.invalid ) { return []; }
             let nodes = this.prime(input);
             for ( const task of this.tasks ) {
                 if ( nodes.length === 0 ) { break; }
-                nodes = task.exec(nodes);
+                const transposed = [];
+                for ( const node of nodes ) {
+                    task.transpose(node, transposed);
+                }
+                nodes = transposed;
             }
             return nodes;
         }
         test(input) {
             if ( this.invalid ) { return false; }
             const nodes = this.prime(input);
-            const AA = [ null ];
             for ( const node of nodes ) {
-                AA[0] = node;
-                let aa = AA;
+                let output = [ node ];
                 for ( const task of this.tasks ) {
-                    aa = task.exec(aa);
-                    if ( aa.length === 0 ) { break; }
+                    const transposed = [];
+                    for ( const node of output ) {
+                        task.transpose(node, transposed);
+                    }
+                    output = transposed;
+                    if ( output.length === 0 ) { break; }
                 }
-                if ( aa.length !== 0 ) { return true; }
+                if ( output.length !== 0 ) { return true; }
             }
             return false;
         }
@@ -191,9 +208,11 @@
         [ ':has-text', PSelectorHasTextTask ],
         [ ':if', PSelectorIfTask ],
         [ ':if-not', PSelectorIfNotTask ],
+        [ ':min-text-length', PSelectorMinTextLengthTask ],
         [ ':not', PSelectorIfNotTask ],
         [ ':nth-ancestor', PSelectorNthAncestorTask ],
-        [ ':xpath', PSelectorXpathTask ]
+        [ ':spath', PSelectorSpathTask ],
+        [ ':xpath', PSelectorXpathTask ],
     ]);
     PSelector.prototype.invalid = false;
 

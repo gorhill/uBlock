@@ -963,6 +963,14 @@
     "message": "Panoya kopyala",
     "description": "Label for buttons used to copy something to the clipboard"
   },
+  "toggleBlockingProfile": {
+    "message": "Engelleme profilini aç\/kapa",
+    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  },
+  "relaxBlockingMode": {
+    "message": "Engelleme modunu gevşet",
+    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
   "dummy": {
     "message": "Bu girdi en sonda olmalıdır",
     "description": "so we dont need to deal with comma for last entry"

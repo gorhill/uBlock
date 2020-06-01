@@ -577,8 +577,6 @@ const PageStore = class {
                 result = 4; // ADN: adnauseamAllowed
                 if (fctxt.filter) fctxt.filter.result = 4;
             }
-
-
         }
 
         if ( cacheableResult ) {

@@ -180,15 +180,9 @@ const onCommandShortcutsReady = function(commandShortcuts) {
 const onVersionReady = function(lastVersion) {
     if ( lastVersion === vAPI.app.version ) { return; }
 
-    // Since AMO does not allow updating resources.txt, force a reload when a
-    // new version is detected, as resources.txt may have changed since last
-    // release. This will be done only for release versions of Firefox.
-    if (
-        vAPI.webextFlavor.soup.has('firefox') &&
-        vAPI.webextFlavor.soup.has('devbuild') === false
-    ) {
-        µb.redirectEngine.invalidateResourcesSelfie();
-    }
+    // Since built-in resources may have changed since last version, we
+    // force a reload of all resources.
+    µb.redirectEngine.invalidateResourcesSelfie();
 
     // If unused, just comment out for when we need to compare versions in the
     // future.
@@ -242,7 +236,10 @@ const onVersionReady = function(lastVersion) {
 // gorhill 2014-12-15: not anymore
 
 const onNetWhitelistReady = function(netWhitelistRaw) {
-    µb.netWhitelist = µb.whitelistFromString(netWhitelistRaw);
+    if ( typeof netWhitelistRaw === 'string' ) {
+        netWhitelistRaw = netWhitelistRaw.split('\n');
+    }
+    µb.netWhitelist = µb.whitelistFromArray(netWhitelistRaw);
     µb.netWhitelistModifyTime = Date.now();
 };
 
@@ -328,7 +325,6 @@ const onFirstFetchReady = function(fetched) {
     µb.loadPublicSuffixList().then(( ) => {
         onPSLReady();
     });
-    µb.loadRedirectResources();
 };
 
 /******************************************************************************/
@@ -369,7 +365,7 @@ const createDefaultProps = function() {
         'lastRestoreTime': 0,
         'lastBackupFile': '',
         'lastBackupTime': 0,
-        'netWhitelist': µb.netWhitelistDefault.join('\n'),
+        'netWhitelist': µb.netWhitelistDefault,
         'selfieMagic': 0,
         'version': '0.0.0.0'
     };

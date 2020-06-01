@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "uBlock₀",
+    "message": "uBlock Origin",
     "description": "extension name."
   },
   "extShortDesc": {
@@ -12,15 +12,15 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Kujdes! Keni ndryshime të paruajtura",
+    "message": "Kujdes! Nuk keni ruajtur ndryshimet",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Prit",
+    "message": "Pres",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Injoro",
+    "message": "Shpërfill",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
@@ -252,7 +252,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Bllokim i elementit",
+    "message": "Bllokoj elementin",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -312,7 +312,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Bllokim i elementeve mediatike më të mëdha se {{input:number}} kB",
+    "message": "Bllokoj elementet mediatike më të mëdha se {{input}} KB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -556,47 +556,47 @@
     "description": "Appears in the logger's tab selector"
   },
   "loggerReloadTip": {
-    "message": "Ringarko përmbajten e skedës",
+    "message": "Freskoj përmbajtjen e skedës",
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
-    "message": "Përdor ispektorin DOM",
+    "message": "Përdor strukturën DOM",
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "Përdor panelin e dritareve automatike",
+    "message": "Përdor panelin automatik",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
-    "message": "uBlock Origin wiki: Regjistri",
+    "message": "uBlock Origin wiki: Regjistri i kërkesave",
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
-    "message": "Pastro regjistrin",
+    "message": "Pastroj regjistrin",
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
-    "message": "Ndalo regjistrin (fshin të gjithë të dhënat në hyrje)",
+    "message": "Ndërpres regjistrimin (nuk pranohen të dhënat e reja)",
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {
-    "message": "Nis regjistrin",
+    "message": "Rifilloj regjistrimin",
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "Përdor filtrin e regjistrit",
+    "message": "Përdor filtrat e regjistrit",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
-    "message": "filtroni elementet në regjistër",
+    "message": "filtroni zërat në regjistër",
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
-    "message": "Zgjedhni filtrat e regjistrimit",
+    "message": "Opsionet e filtrimit të regjistrit",
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {
-    "message": "Nuk",
+    "message": "Jo",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinEventful": {
@@ -612,7 +612,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
-    "message": "palët e para",
+    "message": "palët kryesore",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin3p": {
@@ -624,7 +624,7 @@
     "description": "Small header to identify the 'Details' pane for a specific logger entry"
   },
   "loggerEntryDetailsFilter": {
-    "message": "Filtër",
+    "message": "Filtri",
     "description": "Label to identify a filter field"
   },
   "loggerEntryDetailsFilterList": {
@@ -640,11 +640,11 @@
     "description": "Label to identify a context field (typically a hostname)"
   },
   "loggerEntryDetailsRootContext": {
-    "message": "Konteksti kryesor",
+    "message": "Konteksti bazë",
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
-    "message": "Pjesa e kërkesës",
+    "message": "Palët",
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
@@ -656,7 +656,7 @@
     "description": "Label to identify the URL of an entry"
   },
   "loggerURLFilteringHeader": {
-    "message": "Filtrim dinamik i adresave",
+    "message": "Filtrimi sipas URL",
     "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
@@ -668,7 +668,7 @@
     "description": "Label for the type selector"
   },
   "loggerStaticFilteringHeader": {
-    "message": "Filtrim statik",
+    "message": "Filtrimi statik",
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
@@ -716,35 +716,35 @@
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
-    "message": "Të dhënat e regjistruara që nuk plotësojnë të treja kushtet e mëposhtme automatikisht do të fshihen:",
+    "message": "Do të fshihen automatikisht zërat në regjistër që nuk plotësojnë këto tre kushte:",
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
-    "message": "Ruaj shënimet për {{input}} minutat e fundit",
+    "message": "Ruaj zërat e {{input}} minutave të fundit",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "Ruaji më së shumti {{input}} ngarkime faqe për skedë",
+    "message": "Ruaj jo më shumë se {{input}} faqe të reja për skedë",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
-    "message": "Ruaji së paku {{input}} shënime për kartë",
+    "message": "Ruaj jo më shumë se {{input}} zëra për skedë",
     "description": "A logger setting"
   },
   "loggerSettingPerEntryLineCount": {
-    "message": "Përdor {{input}} rreshta për artikull në mënyrë të zgjeruar vertikalisht",
+    "message": "Në pamjen e zgjeruar përdor {{input}} rreshta për zë",
     "description": "A logger setting"
   },
   "loggerSettingHideColumnsPrompt": {
-    "message": "Fshih kolonat:",
+    "message": "Fsheh shtyllat:",
     "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
   },
   "loggerSettingHideColumnTime": {
-    "message": "{{input}} Koha",
+    "message": "{{input}} Ora",
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
-    "message": "{{input}} Filtra\/rregulla",
+    "message": "{{input}} Filtri\/rregulla",
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
@@ -752,19 +752,19 @@
     "description": "A label for the context column"
   },
   "loggerSettingHideColumnPartyness": {
-    "message": "{{input}} Pjesa e kërkesës",
+    "message": "{{input}} Palët",
     "description": "A label for the partyness column"
   },
   "loggerExportFormatList": {
-    "message": "Lista",
+    "message": "Listë",
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportFormatTable": {
-    "message": "Tabela",
+    "message": "Tabelë",
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportEncodePlain": {
-    "message": "Thjeshtë",
+    "message": "E paformatuar",
     "description": "Label for radio-button to pick export text format"
   },
   "loggerExportEncodeMarkdown": {
@@ -796,7 +796,7 @@
     "description": "English: Contributors"
   },
   "aboutDependencies": {
-    "message": "Programe kushtëzuese (përshtatet me GPLv3):",
+    "message": "Programe kushtëzuese (sipas GPLv3):",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
@@ -956,12 +956,20 @@
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "Bllokoj shiritin e lëvizjes",
+    "message": "Bllokoj lëvizjen me rrëshqitje",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
-    "message": "Kopjo në kujtesën",
+    "message": "Kopjoj përkohësisht",
     "description": "Label for buttons used to copy something to the clipboard"
+  },
+  "toggleBlockingProfile": {
+    "message": "Aktivizoj \/ Çaktivizoj bllokimin e profilit",
+    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  },
+  "relaxBlockingMode": {
+    "message": "Relax blocking mode",
+    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "dummy": {
     "message": "This entry must be the last one",

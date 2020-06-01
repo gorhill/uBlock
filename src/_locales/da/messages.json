@@ -236,7 +236,7 @@
     "description": "English: Quit"
   },
   "pickerPreview": {
-    "message": "Eksempel",
+    "message": "Forhåndsvisning",
     "description": "Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters": {
@@ -962,6 +962,14 @@
   "genericCopyToClipboard": {
     "message": "Kopiér til Udklipsholder",
     "description": "Label for buttons used to copy something to the clipboard"
+  },
+  "toggleBlockingProfile": {
+    "message": "Slå blokeringsprofil til\/fra",
+    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  },
+  "relaxBlockingMode": {
+    "message": "Lemp blokeringstilstand",
+    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "dummy": {
     "message": "Denne post skal være den sidste",

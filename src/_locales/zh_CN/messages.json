@@ -112,7 +112,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "是否禁止此网站的所有弹出窗口",
+    "message": "是否禁止此网站弹出任何窗口",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
@@ -268,7 +268,7 @@
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
-    "message": "当适用时改进右键菜单",
+    "message": "添加“屏蔽元素”到右键菜单",
     "description": "English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt": {
@@ -962,6 +962,14 @@
   "genericCopyToClipboard": {
     "message": "复制到剪贴板",
     "description": "Label for buttons used to copy something to the clipboard"
+  },
+  "toggleBlockingProfile": {
+    "message": "切换拦截方案",
+    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  },
+  "relaxBlockingMode": {
+    "message": "放宽拦截限制",
+    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "dummy": {
     "message": "此条目必须是最后一个",

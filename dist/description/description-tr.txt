@@ -12,9 +12,9 @@ Esnek, bir "reklam engelleyici"den daha fazlası: Ayrıca alan adları dosyalar�
 Hazır olarak şu süzgeç listeleri yüklüdür ve uygulanır:
 
 - EasyList
-- Peter Lowe'un reklam sunucu listesi
+- Peter Lowe'un Reklam sunucu listesi
 - EasyPrivacy
-- Zararlı alan adları
+- Malware domains
 
 İsterseniz seçebileceğiniz daha fazla liste var:
 
@@ -23,7 +23,7 @@ Hazır olarak şu süzgeç listeleri yüklüdür ve uygulanır:
 - hpHosts'un Reklam ve izleyici sunucuları
 - MVPS HOSTS
 - Spam404
-- Ve daha başkaları
+- Ve diğer birçoğu
 
 Elbette, daha çok süzgeç etkinleştirildikçe, bellek kullanımı da artar. Yine de, Fanboy'un iki ekstra listesi, hpHosts'un reklam ve izleyici sunucuları ekledikten sonra bile uBlock diğer oldukça popüler engelleyicilere göre daha az bellek kullanır.
 

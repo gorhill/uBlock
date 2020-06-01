@@ -20,7 +20,7 @@
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Ignori",
+    "message": "Ignoru",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
@@ -28,7 +28,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Filtriloj de eksteraj liverantoj",
+    "message": "Listoj de filtriloj",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Blanklisto",
+    "message": "Permeslisto",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -72,7 +72,7 @@
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Click to enable uBlock₀ for this site.",
+    "message": "Alklaku por aktivigi uBlock₀ en tiu ĉi retejo.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -100,7 +100,7 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Enter element zapper mode",
+    "message": "Eniri la reĝimon de forigo de elementoj",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
@@ -116,11 +116,11 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Click to block all popups on this site",
+    "message": "Alklaku por bloki ĉiujn ŝprucfenestrojn en tiu ĉi retejo",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Click to no longer block all popups on this site",
+    "message": "Alklaku por ne plu bloki ĉiujn ŝprucfenestrojn en tiu ĉi retejo",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -128,11 +128,11 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Click to block large media elements on this site",
+    "message": "Alklaku por bloki grandajn aŭdvidajn elementojn en tiu ĉi retejo",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Click to no longer block large media elements on this site",
+    "message": "Alklaku por ne plu bloki grandajn aŭdvidajn elementojn en tiu ĉi retejo",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -140,11 +140,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Click to disable cosmetic filtering on this site",
+    "message": "Alklaku por malaktivigi kosmetikan filtradon en tiu ĉi retejo",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Click to enable cosmetic filtering on this site",
+    "message": "Alklaku por aktivigi kosmetikan filtradon en tiu ĉi retejo",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -152,19 +152,19 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Click to block remote fonts on this site",
+    "message": "Alklaku por bloki forajn tiparojn en tiu ĉi retejo",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Click to no longer block remote fonts on this site",
+    "message": "Alklaku por ne plu bloki forajn tiparojn en tiu ĉi retejo",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Click to disable JavaScript on this site",
+    "message": "Alklaku por malaktivigi JavaScript en tiu ĉi retejo",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Click to no longer disable JavaScript on this site",
+    "message": "Alklaku por ne plu malaktivigi JavaScript en tiu ĉi retejo",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipGlobalRules": {
@@ -962,6 +962,14 @@
   "genericCopyToClipboard": {
     "message": "Kopii al tondujo",
     "description": "Label for buttons used to copy something to the clipboard"
+  },
+  "toggleBlockingProfile": {
+    "message": "Toggle blocking profile",
+    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  },
+  "relaxBlockingMode": {
+    "message": "Relax blocking mode",
+    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "dummy": {
     "message": "This entry must be the last one",

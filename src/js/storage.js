@@ -120,11 +120,9 @@
                         : 'unset';
             }
         }
-        if ( vAPI.localStorage.getItem('immediateHiddenSettings') === null ) {
-            this.saveImmediateHiddenSettings();
-        }
         self.log.verbosity = this.hiddenSettings.consoleLogLevel;
         resolve();
+        this.fireDOMEvent('hiddenSettingsChanged');
     });
 
     // <<<< end of executor
@@ -200,14 +198,25 @@
 // through the vAPI.localStorage. Add/remove settings as needed.
 
 µBlock.saveImmediateHiddenSettings = function() {
-    vAPI.localStorage.setItem(
-        'immediateHiddenSettings',
-        JSON.stringify({
-                  consoleLogLevel: this.hiddenSettings.consoleLogLevel,
-               disableWebAssembly: this.hiddenSettings.disableWebAssembly,
-            suspendTabsUntilReady: this.hiddenSettings.suspendTabsUntilReady,
-        })
-    );
+    const props = [
+        'consoleLogLevel',
+        'disableWebAssembly',
+        'suspendTabsUntilReady',
+    ];
+    const toSave = {};
+    for ( const prop of props ) {
+        if ( this.hiddenSettings[prop] !== this.hiddenSettingsDefault[prop] ) {
+            toSave[prop] = this.hiddenSettings[prop];
+        }
+    }
+    if ( Object.keys(toSave).length !== 0 ) {
+        vAPI.localStorage.setItem(
+            'immediateHiddenSettings',
+            JSON.stringify(toSave)
+        );
+    } else {
+        vAPI.localStorage.removeItem('immediateHiddenSettings');
+    }
 };
 
 /******************************************************************************/
@@ -238,7 +247,7 @@
 
 µBlock.saveWhitelist = function() {
     vAPI.storage.set({
-        netWhitelist: this.stringFromWhitelist(this.netWhitelist)
+        netWhitelist: this.arrayFromWhitelist(this.netWhitelist)
     });
     this.netWhitelistModifyTime = Date.now();
 };
@@ -460,6 +469,12 @@
         this.redirectEngine.freeze();
         this.staticExtFilteringEngine.freeze();
         this.selfieManager.destroy();
+
+        // https://www.reddit.com/r/uBlockOrigin/comments/cj7g7m/
+        // https://www.reddit.com/r/uBlockOrigin/comments/cnq0bi/
+        if ( options.killCache ) {
+            browser.webRequest.handlerBehaviorChanged();
+        }
     };
 
     const onLoaded = details => {
@@ -667,6 +682,8 @@
         this.staticNetFilteringEngine.freeze();
         this.staticExtFilteringEngine.freeze();
         this.redirectEngine.freeze();
+        vAPI.net.unsuspend();
+
         vAPI.storage.set({ 'availableFilterLists': this.availableFilterLists });
 
         vAPI.messaging.broadcast({
@@ -711,6 +728,7 @@
     const onFilterListsReady = lists => {
         this.availableFilterLists = lists;
 
+        vAPI.net.suspend();
         this.redirectEngine.reset();
         this.staticExtFilteringEngine.reset();
         this.staticNetFilteringEngine.reset();
@@ -990,8 +1008,10 @@
             if ( target ) { expr = expr.slice(1); }
             const token = this.processDirectives.tokens.get(expr);
             const startDiscard =
+                token === 'false' &&
+                    target === false ||
                 token !== undefined &&
-                vAPI.webextFlavor.soup.has(token) === target;
+                    vAPI.webextFlavor.soup.has(token) === target;
             if ( discard === false && startDiscard ) {
                 parts.push(content.slice(beg, match.index));
                 discard = true;
@@ -1028,16 +1048,19 @@
     [ 'env_mobile', 'mobile' ],
     [ 'env_safari', 'safari' ],
     [ 'cap_html_filtering', 'html_filtering' ],
-    [ 'cap_user_stylesheet', 'user_stylesheet' ]
+    [ 'cap_user_stylesheet', 'user_stylesheet' ],
+    [ 'false', 'false' ],
 ]);
 
 /******************************************************************************/
 
 µBlock.loadRedirectResources = function() {
     return this.redirectEngine.resourcesFromSelfie().then(success => {
-        if ( success === true ) { return; }
+        if ( success === true ) { return true; }
 
-        const fetchPromises = [ this.assets.get('ublock-resources') ];
+        const fetchPromises = [
+            this.redirectEngine.loadBuiltinResources()
+        ];
 
         const userResourcesLocation = this.hiddenSettings.userResourcesLocation;
         if ( userResourcesLocation !== 'unset' ) {
@@ -1048,11 +1071,11 @@
 
         return Promise.all(fetchPromises);
     }).then(results => {
-        if ( Array.isArray(results) === false ) { return; }
+        if ( Array.isArray(results) === false ) { return results; }
 
         let content = '';
-
-        for ( const result of results ) {
+        for ( let i = 1; i < results.length; i++ ) {
+            const result = results[i];
             if (
                 result instanceof Object === false ||
                 typeof result.content !== 'string' ||
@@ -1064,6 +1087,11 @@
         }
 
         this.redirectEngine.resourcesFromString(content);
+        this.redirectEngine.selfieFromResources();
+        return true;
+    }).catch(reason => {
+        log.info(reason);
+        return false;
     });
 };
 
@@ -1157,9 +1185,12 @@
             µb.redirectEngine.fromSelfie('selfie/redirectEngine'),
             µb.staticExtFilteringEngine.fromSelfie('selfie/staticExtFilteringEngine'),
             µb.staticNetFilteringEngine.fromSelfie('selfie/staticNetFilteringEngine'),
-        ]).then(results =>
-            results.reduce((acc, v) => acc && v, true)
-        ).catch(reason => {
+        ]).then(results => {
+            if ( results.reduce((acc, v) => acc && v, true) ) {
+                return µb.loadRedirectResources();
+            }
+            return false;
+        }).catch(reason => {
             log.info(reason);
             return false;
         });
@@ -1218,11 +1249,14 @@
         const bin = {};
         let binNotEmpty = false;
 
-        // Allows an admin to set their own 'assets.json' file, with their own
-        // set of stock assets.
-        if ( typeof data.assetsBootstrapLocation === 'string' ) {
-            bin.assetsBootstrapLocation = data.assetsBootstrapLocation;
-            binNotEmpty = true;
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/666
+        //   Allows an admin to set their own 'assets.json' file, with their
+        //   own set of stock assets.
+        if (
+            typeof data.assetsBootstrapLocation === 'string' &&
+            data.assetsBootstrapLocation !== ''
+        ) {
+            µBlock.assetsBootstrapLocation = data.assetsBootstrapLocation;
         }
 
         if ( typeof data.userSettings === 'object' ) {
@@ -1245,8 +1279,11 @@
             binNotEmpty = true;
         }
 
-        if ( typeof data.netWhitelist === 'string' ) {
-            bin.netWhitelist = data.netWhitelist;
+        if ( Array.isArray(data.whitelist) ) {
+            bin.netWhitelist = data.whitelist;
+            binNotEmpty = true;
+        } else if ( typeof data.netWhitelist === 'string' ) {
+            bin.netWhitelist = data.netWhitelist.split('\n');
             binNotEmpty = true;
         }
 
@@ -1378,15 +1415,6 @@
                 return;
             }
         }
-        // https://github.com/gorhill/uBlock/issues/2594
-        if ( details.assetKey === 'ublock-resources' ) {
-            if (
-                this.hiddenSettings.ignoreRedirectFilters === true &&
-                this.hiddenSettings.ignoreScriptInjectFilters === true
-            ) {
-                return;
-            }
-        }
         return true;
     }
 
@@ -1421,8 +1449,6 @@
             if ( cached ) {
                 this.compilePublicSuffixList(details.content);
             }
-        } else if ( details.assetKey === 'ublock-resources' ) {
-            this.redirectEngine.invalidateResourcesSelfie();
         }
         vAPI.messaging.broadcast({
             what: 'assetUpdated',
@@ -1450,6 +1476,13 @@
     // Reload all filter lists if needed.
     if ( topic === 'after-assets-updated' ) {
         if ( details.assetKeys.length !== 0 ) {
+            // https://github.com/gorhill/uBlock/pull/2314#issuecomment-278716960
+            if (
+                this.hiddenSettings.userResourcesLocation !== 'unset' ||
+                vAPI.webextFlavor.soup.has('devbuild')
+            ) {
+                this.redirectEngine.invalidateResourcesSelfie();
+            }
             this.loadFilterLists();
         }
         if ( this.userSettings.autoUpdate ) {

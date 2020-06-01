@@ -23,151 +23,267 @@
 
 /******************************************************************************/
 
-µBlock.redirectEngine = (function(){
+µBlock.redirectEngine = (( ) => {
 
 /******************************************************************************/
 /******************************************************************************/
 
-const warResolve = (function() {
-    let warPairs = [];
+// The resources referenced below are found in ./web_accessible_resources/
+//
+// The content of the resources which declare a `data` property will be loaded
+// in memory, and converted to a suitable internal format depending on the
+// type of the loaded data. The `data` property allows for manual injection
+// through `+js(...)`, or for redirection to a data: URI when a redirection
+// to a web accessible resource is not desirable.
 
-    const onPairsReady = function() {
-        const reng = µBlock.redirectEngine;
-        for ( let i = 0; i < warPairs.length; i += 2 ) {
-            const resource = reng.resources.get(warPairs[i+0]);
-            if ( resource === undefined ) { continue; }
-            resource.warURL = vAPI.getURL(
-                '/web_accessible_resources/' + warPairs[i+1]
-            );
+const redirectableResources = new Map([
+    [ '1x1.gif', {
+        alias: '1x1-transparent.gif',
+        data: 'blob',
+    } ],
+    [ '2x2.png', {
+        alias: '2x2-transparent.png',
+        data: 'blob',
+    } ],
+    [ '3x2.png', {
+        alias: '3x2-transparent.png',
+        data: 'blob',
+    } ],
+    [ '32x32.png', {
+        alias: '32x32-transparent.png',
+        data: 'blob',
+    } ],
+    [ 'addthis_widget.js', {
+        alias: 'addthis.com/addthis_widget.js',
+    } ],
+    [ 'amazon_ads.js', {
+        alias: 'amazon-adsystem.com/aax2/amzn_ads.js',
+    } ],
+    [ 'ampproject_v0.js', {
+        alias: 'ampproject.org/v0.js',
+    } ],
+    [ 'chartbeat.js', {
+        alias: 'static.chartbeat.com/chartbeat.js',
+    } ],
+    [ 'disqus_embed.js', {
+        alias: 'disqus.com/embed.js',
+    } ],
+    [ 'disqus_forums_embed.js', {
+        alias: 'disqus.com/forums/*/embed.js',
+    } ],
+    [ 'doubleclick_instream_ad_status.js', {
+        alias: 'doubleclick.net/instream/ad_status.js',
+    } ],
+    [ 'empty', {
+        data: 'text',   // Important!
+    } ],
+    [ 'google-analytics_analytics.js', {
+        alias: 'google-analytics.com/analytics.js',
+    } ],
+    [ 'google-analytics_cx_api.js', {
+        alias: 'google-analytics.com/cx/api.js',
+    } ],
+    [ 'google-analytics_ga.js', {
+        alias: 'google-analytics.com/ga.js',
+    } ],
+    [ 'google-analytics_inpage_linkid.js', {
+        alias: 'google-analytics.com/inpage_linkid.js',
+    } ],
+    [ 'googlesyndication_adsbygoogle.js', {
+        alias: 'googlesyndication.com/adsbygoogle.js',
+    } ],
+    [ 'googletagmanager_gtm.js', {
+        alias: 'googletagmanager.com/gtm.js',
+    } ],
+    [ 'googletagservices_gpt.js', {
+        alias: 'googletagservices.com/gpt.js',
+    } ],
+    [ 'hd-main.js', {
+    } ],
+    [ 'ligatus_angular-tag.js', {
+        alias: 'ligatus.com/*/angular-tag.js',
+    } ],
+    [ 'monkeybroker.js', {
+        alias: 'd3pkae9owd2lcf.cloudfront.net/mb105.js',
+    } ],
+    [ 'noeval.js', {
+        data: 'text',
+    } ],
+    [ 'noeval-silent.js', {
+        alias: 'silent-noeval.js',
+        data: 'text',
+    } ],
+    [ 'nobab.js', {
+        alias: 'bab-defuser.js',
+        data: 'text',
+    } ],
+    [ 'nofab.js', {
+        alias: 'fuckadblock.js-3.2.0',
+        data: 'text',
+    } ],
+    [ 'noop-0.1s.mp3', {
+        alias: 'noopmp3-0.1s',
+        data: 'blob',
+    } ],
+    [ 'noop-1s.mp4', {
+        alias: 'noopmp4-1s',
+        data: 'blob',
+    } ],
+    [ 'noop.html', {
+        alias: 'noopframe',
+    } ],
+    [ 'noop.js', {
+        alias: 'noopjs',
+        data: 'text',
+    } ],
+    [ 'noop.txt', {
+        alias: 'nooptext',
+        data: 'text',
+    } ],
+    [ 'outbrain-widget.js', {
+        alias: 'widgets.outbrain.com/outbrain.js',
+    } ],
+    [ 'popads.js', {
+        alias: 'popads.net.js',
+        data: 'text',
+    } ],
+    [ 'popads-dummy.js', {
+        data: 'text',
+    } ],
+    [ 'scorecardresearch_beacon.js', {
+        alias: 'scorecardresearch.com/beacon.js',
+    } ],
+    [ 'window.open-defuser.js', {
+        data: 'text',
+    } ],
+]);
+
+const extToMimeMap = new Map([
+    [  'gif', 'image/gif' ],
+    [ 'html', 'text/html' ],
+    [   'js', 'application/javascript' ],
+    [  'mp3', 'audio/mp3' ],
+    [  'mp4', 'video/mp4' ],
+    [  'png', 'image/png' ],
+    [  'txt', 'text/plain' ],
+]);
+
+const typeToMimeMap = new Map([
+    [     'main_frame', 'text/html' ],
+    [          'other', 'text/plain' ],
+    [         'script', 'application/javascript' ],
+    [     'stylesheet', 'text/css' ],
+    [      'sub_frame', 'text/html' ],
+    [ 'xmlhttprequest', 'text/plain' ],
+]);
+
+const validMimes = new Set(extToMimeMap.values());
+
+const mimeFromName = function(name) {
+    const match = /\.([^.]+)$/.exec(name);
+    if ( match !== null ) {
+        return extToMimeMap.get(match[1]);
+    }
+};
+
+/******************************************************************************/
+/******************************************************************************/
+
+const RedirectEntry = class {
+    constructor() {
+        this.mime = '';
+        this.data = '';
+        this.warURL = undefined;
+    }
+
+    // Prevent redirection to web accessible resources when the request is
+    // of type 'xmlhttprequest', because XMLHttpRequest.responseURL would
+    // cause leakage of extension id. See:
+    // - https://stackoverflow.com/a/8056313
+    // - https://bugzilla.mozilla.org/show_bug.cgi?id=998076
+    // https://www.reddit.com/r/uBlockOrigin/comments/cpxm1v/
+    //   User-supplied resources may already be base64 encoded.
+
+    toURL(fctxt, asDataURI = false) {
+        if (
+            this.warURL !== undefined &&
+            asDataURI !== true &&
+            fctxt instanceof Object &&
+            fctxt.type !== 'xmlhttprequest'
+        ) {
+            return `${this.warURL}${vAPI.warSecret()}`;
         }
-        reng.selfieFromResources();
-    };
-
-    return function() {
-        if ( vAPI.warSecret === undefined || warPairs.length !== 0 ) {
-            return onPairsReady();
+        if ( this.data === undefined ) { return; }
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/701
+        if ( this.data === '' ) {
+            const mime = typeToMimeMap.get(fctxt.type);
+            if ( mime === undefined ) { return; }
+            return `data:${mime},`;
         }
-
-        const onPairsLoaded = function(details) {
-            const marker = '>>>>>';
-            const pos = details.content.indexOf(marker);
-            if ( pos === -1 ) { return; }
-            const pairs = details.content.slice(pos + marker.length)
-                                      .trim()
-                                      .split('\n');
-            if ( (pairs.length & 1) !== 0 ) { return; }
-            for ( let i = 0; i < pairs.length; i++ ) {
-                pairs[i] = pairs[i].trim();
+        if ( this.data.startsWith('data:') === false ) {
+            if ( this.mime.indexOf(';') === -1 ) {
+                this.data = `data:${this.mime};base64,${btoa(this.data)}`;
+            } else {
+                this.data = `data:${this.mime},${this.data}`;
             }
-            warPairs = pairs;
-            onPairsReady();
-        };
-
-        µBlock.assets.fetchText(
-            `/web_accessible_resources/imported.txt${vAPI.warSecret()}`,
-            onPairsLoaded
-        );
-    };
-})();
-
-// https://github.com/gorhill/uBlock/issues/3639
-// https://github.com/EFForg/https-everywhere/issues/14961
-// https://bugs.chromium.org/p/chromium/issues/detail?id=111700
-//   Do not redirect to a WAR if the platform suffers from spurious redirect
-//   conflicts, and the request to redirect is not `https:`.
-//   This special handling code can removed once the Chromium issue is fixed.
-const suffersSpuriousRedirectConflicts = vAPI.webextFlavor.soup.has('chromium');
-
-/******************************************************************************/
-/******************************************************************************/
-
-const RedirectEntry = function() {
-    this.mime = '';
-    this.data = '';
-    this.warURL = undefined;
-};
-
-/******************************************************************************/
-
-// Prevent redirection to web accessible resources when the request is
-// of type 'xmlhttprequest', because XMLHttpRequest.responseURL would
-// cause leakage of extension id. See:
-// - https://stackoverflow.com/a/8056313
-// - https://bugzilla.mozilla.org/show_bug.cgi?id=998076
-
-RedirectEntry.prototype.toURL = function(fctxt) {
-    if (
-        this.warURL !== undefined &&
-        fctxt instanceof Object &&
-        fctxt.type !== 'xmlhttprequest' &&
-        (
-            suffersSpuriousRedirectConflicts === false ||
-            fctxt.url.startsWith('https:')
-        )
-    ) {
-        return `${this.warURL}${vAPI.warSecret()}`;
-    }
-    if ( this.data.startsWith('data:') === false ) {
-        if ( this.mime.indexOf(';') === -1 ) {
-            this.data = 'data:' + this.mime + ';base64,' + btoa(this.data);
-        } else {
-            this.data = 'data:' + this.mime + ',' + this.data;
         }
+        return this.data;
     }
-    return this.data;
-};
 
-/******************************************************************************/
-
-RedirectEntry.prototype.toContent = function() {
-    if ( this.data.startsWith('data:') ) {
-        var pos = this.data.indexOf(',');
-        var base64 = this.data.endsWith(';base64', pos);
-        this.data = this.data.slice(pos + 1);
-        if ( base64 ) {
-            this.data = atob(this.data);
+    toContent() {
+        if ( this.data.startsWith('data:') ) {
+            const pos = this.data.indexOf(',');
+            const base64 = this.data.endsWith(';base64', pos);
+            this.data = this.data.slice(pos + 1);
+            if ( base64 ) {
+                this.data = atob(this.data);
+            }
         }
+        return this.data;
     }
-    return this.data;
-};
 
-/******************************************************************************/
+    static fromContent(mime, content) {
+        const r = new RedirectEntry();
+        r.mime = mime;
+        r.data = content;
+        return r;
+    }
 
-RedirectEntry.fromFields = function(mime, lines) {
-    var r = new RedirectEntry();
-    r.mime = mime;
-    r.data = lines.join(mime.indexOf(';') !== -1 ? '' : '\n');
-    return r;
-};
-
-/******************************************************************************/
-
-RedirectEntry.fromSelfie = function(selfie) {
-    var r = new RedirectEntry();
-    r.mime = selfie.mime;
-    r.data = selfie.data;
-    r.warURL = selfie.warURL;
-    return r;
+    static fromSelfie(selfie) {
+        const r = new RedirectEntry();
+        r.mime = selfie.mime;
+        r.data = selfie.data;
+        r.warURL = selfie.warURL;
+        return r;
+    }
 };
 
 /******************************************************************************/
 /******************************************************************************/
 
 const RedirectEngine = function() {
+    this.aliases = new Map();
     this.resources = new Map();
     this.reset();
     this.resourceNameRegister = '';
-    this._desAll = []; // re-use better than re-allocate
 };
 
 /******************************************************************************/
 
 RedirectEngine.prototype.reset = function() {
     this.rules = new Map();
-    this.ruleTypes = new Set();
     this.ruleSources = new Set();
     this.ruleDestinations = new Set();
+    this.resetCache();
     this.modifyTime = Date.now();
+};
+
+RedirectEngine.prototype.resetCache = function() {
+    this._missedQueryHash = '';
+    this._src = '';
+    this._srcAll = [ '*' ];
+    this._des = '';
+    this._desAll = [ '*' ];
 };
 
 /******************************************************************************/
@@ -178,7 +294,7 @@ RedirectEngine.prototype.freeze = function() {
 /******************************************************************************/
 
 RedirectEngine.prototype.toBroaderHostname = function(hostname) {
-    var pos = hostname.indexOf('.');
+    const pos = hostname.indexOf('.');
     if ( pos !== -1 ) {
         return hostname.slice(pos + 1);
     }
@@ -187,46 +303,69 @@ RedirectEngine.prototype.toBroaderHostname = function(hostname) {
 
 /******************************************************************************/
 
-RedirectEngine.prototype.lookup = function(fctxt) {
-    const type = fctxt.type;
-    if ( this.ruleTypes.has(type) === false ) { return; }
-    const desAll = this._desAll;
-    const reqURL = fctxt.url;
-    let src = fctxt.getDocHostname();
-    let des = fctxt.getHostname();
-    let n = 0;
+RedirectEngine.prototype.decomposeHostname = function(hn, dict, out) {
+    let i = 0;
     for (;;) {
-        if ( this.ruleDestinations.has(des) ) {
-            desAll[n] = des; n += 1;
+        if ( dict.has(hn) ) {
+            out[i] = hn; i += 1;
         }
-        des = this.toBroaderHostname(des);
-        if ( des === '' ) { break; }
+        hn = this.toBroaderHostname(hn);
+        if ( hn === '' ) { break; }
     }
-    if ( n === 0 ) { return; }
-    for (;;) {
-        if ( this.ruleSources.has(src) ) {
-            for ( let i = 0; i < n; i++ ) {
-                const entries = this.rules.get(src + ' ' + desAll[i] + ' ' + type);
-                if ( entries && this.lookupToken(entries, reqURL) ) {
-                    return this.resourceNameRegister;
-                }
-            }
-        }
-        src = this.toBroaderHostname(src);
-        if ( src === '' ) { break; }
-    }
+    out.length = i;
 };
 
-RedirectEngine.prototype.lookupToken = function(entries, reqURL) {
-    let j = entries.length;
-    while ( j-- ) {
-        let entry = entries[j];
+/******************************************************************************/
+
+RedirectEngine.prototype.lookup = function(fctxt) {
+    const src = fctxt.getDocHostname();
+    const des = fctxt.getHostname();
+    const type = fctxt.type;
+    const queryHash = `${src} ${des} ${type}`;
+    if ( queryHash === this._missedQueryHash ) {
+        return;
+    }
+    if ( src !== this._src ) {
+        this._src = src;
+        this.decomposeHostname(src, this.ruleSources, this._srcAll);
+    }
+    if ( this._srcAll.length === 0 ) {
+        this._missedQueryHash = queryHash;
+        return;
+    }
+    if ( des !== this._des ) {
+        this._des = des;
+        this.decomposeHostname(des, this.ruleDestinations, this._desAll);
+    }
+    if ( this._desAll.length === 0 ) {
+        this._missedQueryHash = queryHash;
+        return;
+    }
+    const reqURL = fctxt.url;
+    for ( const src of this._srcAll ) {
+        for ( const des of this._desAll ) {
+            let entries = this.rules.get(`${src} ${des} ${type}`);
+            if ( entries !== undefined ) {
+                const rule = this.lookupRule(entries, reqURL);
+                if ( rule !== undefined ) { return rule; }
+            }
+            entries = this.rules.get(`${src} ${des} *`);
+            if ( entries !== undefined ) {
+                const rule = this.lookupRule(entries, reqURL);
+                if ( rule !== undefined ) { return rule; }
+            }
+        }
+    }
+    this._missedQueryHash = queryHash;
+};
+
+RedirectEngine.prototype.lookupRule = function(entries, reqURL) {
+    for ( const entry of entries ) {
         if ( entry.pat instanceof RegExp === false ) {
             entry.pat = new RegExp(entry.pat, 'i');
         }
         if ( entry.pat.test(reqURL) ) {
-            this.resourceNameRegister = entry.tok;
-            return true;
+            return entry;
         }
     }
 };
@@ -234,19 +373,17 @@ RedirectEngine.prototype.lookupToken = function(entries, reqURL) {
 /******************************************************************************/
 
 RedirectEngine.prototype.toURL = function(fctxt) {
-    let token = this.lookup(fctxt);
-    if ( token === undefined ) { return; }
-    let entry = this.resources.get(token);
-    if ( entry !== undefined ) {
-        return entry.toURL(fctxt);
+    const rule = this.lookup(fctxt);
+    if ( rule === undefined ) { return; }
+    let token = this.resourceNameRegister = rule.tok;
+    const asDataURI = token.charCodeAt(0) === 0x25 /* '%' */;
+    if ( asDataURI ) {
+        token = token.slice(1);
     }
-};
-
-/******************************************************************************/
-
-RedirectEngine.prototype.matches = function(context) {
-    var token = this.lookup(context);
-    return token !== undefined && this.resources.has(token);
+    const entry = this.resources.get(this.aliases.get(token) || token);
+    if ( entry !== undefined ) {
+        return entry.toURL(fctxt, asDataURI);
+    }
 };
 
 /******************************************************************************/
@@ -254,15 +391,14 @@ RedirectEngine.prototype.matches = function(context) {
 RedirectEngine.prototype.addRule = function(src, des, type, pattern, redirect) {
     this.ruleSources.add(src);
     this.ruleDestinations.add(des);
-    this.ruleTypes.add(type);
-    var key = src + ' ' + des + ' ' + type,
+    const key = `${src} ${des} ${type}`,
         entries = this.rules.get(key);
     if ( entries === undefined ) {
         this.rules.set(key, [ { tok: redirect, pat: pattern } ]);
         this.modifyTime = Date.now();
         return;
     }
-    var entry;
+    let entry;
     for ( var i = 0, n = entries.length; i < n; i++ ) {
         entry = entries[i];
         if ( redirect === entry.tok ) { break; }
@@ -271,12 +407,12 @@ RedirectEngine.prototype.addRule = function(src, des, type, pattern, redirect) {
         entries.push({ tok: redirect, pat: pattern });
         return;
     }
-    var p = entry.pat;
+    let p = entry.pat;
     if ( p instanceof RegExp ) {
         p = p.source;
     }
     // Duplicate?
-    var pos = p.indexOf(pattern);
+    let pos = p.indexOf(pattern);
     if ( pos !== -1 ) {
         if ( pos === 0 || p.charAt(pos - 1) === '|' ) {
             pos += pattern.length;
@@ -316,14 +452,18 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
         }
     }
 
-    const pattern =
+    const path = matches[2] || '';
+    let pattern =
             des
                 .replace(/\*/g, '[\\w.%-]*')
                 .replace(/\./g, '\\.') +
-            matches[2]
+            path
                 .replace(/[.+?{}()|[\]\/\\]/g, '\\$&')
                 .replace(/\^/g, '[^\\w.%-]')
                 .replace(/\*/g, '.*?');
+    if ( pattern === '' ) {
+        pattern = '^';
+    }
 
     let type,
         redirect = '',
@@ -331,6 +471,18 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
     for ( const option of matches[3].split(',') ) {
         if ( option.startsWith('redirect=') ) {
             redirect = option.slice(9);
+            continue;
+        }
+        if ( option.startsWith('redirect-rule=') ) {
+            redirect = option.slice(14);
+            continue;
+        }
+        if ( option === 'empty' ) {
+            redirect = 'empty';
+            continue;
+        }
+        if ( option === 'mp4' ) {
+            redirect = 'noopmp4-1s';
             continue;
         }
         if ( option.startsWith('domain=') ) {
@@ -353,7 +505,15 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
     if ( redirect === '' ) { return; }
 
     // Need one single type -- not negated.
-    if ( type === undefined ) { return; }
+    if ( type === undefined ) {
+        if ( redirect === 'empty' ) {
+            type = '*';
+        } else if ( redirect === 'noopmp4-1s' ) {
+            type = 'media';
+        } else {
+            return;
+        }
+    }
 
     if ( deshn === '' ) {
         deshn = '*';
@@ -367,15 +527,17 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
     for ( const srchn of srchns ) {
         if ( srchn === '' ) { continue; }
         if ( srchn.startsWith('~') ) { continue; }
-        out.push(srchn + '\t' + deshn + '\t' + type + '\t' + pattern + '\t' + redirect);
+        out.push(`${srchn}\t${deshn}\t${type}\t${pattern}\t${redirect}`);
     }
+
+    if ( out.length === 0 ) { return; }
 
     return out;
 };
 
 /******************************************************************************/
 
-RedirectEngine.prototype.reFilterParser = /^(?:\|\|([^\/:?#^]+)|\*)([^$]+)\$([^$]+)$/;
+RedirectEngine.prototype.reFilterParser = /^(?:\|\|([^\/:?#^]+)|\*)([^$]+)?\$([^$]+)$/;
 
 RedirectEngine.prototype.supportedTypes = new Map([
     [ 'css', 'stylesheet' ],
@@ -415,7 +577,6 @@ RedirectEngine.prototype.toSelfie = function(path) {
         `${path}/main`,
         JSON.stringify({
             rules: rules,
-            ruleTypes: Array.from(this.ruleTypes),
             ruleSources: Array.from(this.ruleSources),
             ruleDestinations: Array.from(this.ruleDestinations)
         })
@@ -433,9 +594,9 @@ RedirectEngine.prototype.fromSelfie = function(path) {
         }
         if ( selfie instanceof Object === false ) { return false; }
         this.rules = new Map(selfie.rules);
-        this.ruleTypes = new Set(selfie.ruleTypes);
         this.ruleSources = new Set(selfie.ruleSources);
         this.ruleDestinations = new Set(selfie.ruleDestinations);
+        this.resetCache();
         this.modifyTime = Date.now();
         return true;
     });
@@ -443,25 +604,9 @@ RedirectEngine.prototype.fromSelfie = function(path) {
 
 /******************************************************************************/
 
-RedirectEngine.prototype.resourceURIFromName = function(name, mime) {
-    var entry = this.resources.get(name);
-    if ( entry && (mime === undefined || entry.mime.startsWith(mime)) ) {
-        return entry.toURL();
-    }
-};
-
-/******************************************************************************/
-
 RedirectEngine.prototype.resourceContentFromName = function(name, mime) {
-    var entry;
-    for (;;) {
-        entry = this.resources.get(name);
-        if ( entry === undefined ) { return; }
-        if ( entry.mime.startsWith('alias/') === false ) {
-            break;
-        }
-        name = entry.mime.slice(6);
-    }
+    const entry = this.resources.get(this.aliases.get(name) || name);
+    if ( entry === undefined ) { return; }
     if ( mime === undefined || entry.mime.startsWith(mime) ) {
         return entry.toContent();
     }
@@ -475,22 +620,45 @@ RedirectEngine.prototype.resourceContentFromName = function(name, mime) {
 //   Consider 'none' a reserved keyword, to be used to disable redirection.
 
 RedirectEngine.prototype.resourcesFromString = function(text) {
-    let fields, encoded,
-        reNonEmptyLine = /\S/,
-        lineIter = new µBlock.LineIterator(text);
-
-    this.resources = new Map();
+    const lineIter = new µBlock.LineIterator(removeTopCommentBlock(text));
+    const reNonEmptyLine = /\S/;
+    let fields, encoded, details;
 
     while ( lineIter.eot() === false ) {
         let line = lineIter.next();
         if ( line.startsWith('#') ) { continue; }
+        if ( line.startsWith('// ') ) { continue; }
 
         if ( fields === undefined ) {
-            let head = line.trim().split(/\s+/);
+            if ( line === '' ) { continue; }
+            // Modern parser
+            if ( line.startsWith('/// ') ) {
+                const name = line.slice(4).trim();
+                fields = [ name, mimeFromName(name) ];
+                continue;
+            }
+            // Legacy parser
+            const head = line.trim().split(/\s+/);
             if ( head.length !== 2 ) { continue; }
             if ( head[0] === 'none' ) { continue; }
+            let pos = head[1].indexOf(';');
+            if ( pos === -1 ) { pos = head[1].length; }
+            if ( validMimes.has(head[1].slice(0, pos)) === false ) {
+                continue;
+            }
             encoded = head[1].indexOf(';') !== -1;
             fields = head;
+            continue;
+        }
+
+        if ( line.startsWith('/// ') ) {
+            if ( details === undefined ) {
+                details = {};
+            }
+            const [ prop, value ] = line.slice(4).trim().split(/\s+/);
+            if ( value !== undefined ) {
+                details[prop] = value;
+            }
             continue;
         }
 
@@ -499,38 +667,135 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
             continue;
         }
 
-        // No more data, add the resource.
-        this.resources.set(
-            fields[0],
-            RedirectEntry.fromFields(fields[1], fields.slice(2))
+        const name = this.aliases.get(fields[0]) || fields[0];
+        const mime = fields[1];
+        const content = µBlock.orphanizeString(
+            fields.slice(2).join(encoded ? '' : '\n')
         );
 
+        // No more data, add the resource.
+        this.resources.set(
+            name,
+            RedirectEntry.fromContent(mime, content)
+        );
+
+        if ( details instanceof Object && details.alias ) {
+            this.aliases.set(details.alias, name);
+        }
+
         fields = undefined;
+        details = undefined;
     }
 
     // Process pending resource data.
     if ( fields !== undefined ) {
-        this.resources.set(
-            fields[0],
-            RedirectEntry.fromFields(fields[1], fields.slice(2))
+        const name = fields[0];
+        const mime = fields[1];
+        const content = µBlock.orphanizeString(
+            fields.slice(2).join(encoded ? '' : '\n')
         );
+        this.resources.set(
+            name,
+            RedirectEntry.fromContent(mime, content)
+        );
+        if ( details instanceof Object && details.alias ) {
+            this.aliases.set(details.alias, name);
+        }
     }
-
-    warResolve();
 
     this.modifyTime = Date.now();
 };
 
+const removeTopCommentBlock = function(text) {
+    return text.replace(/^\/\*[\S\s]+?\n\*\/\s*/, '');
+};
+
 /******************************************************************************/
 
-const resourcesSelfieVersion = 3;
+RedirectEngine.prototype.loadBuiltinResources = function() {
+    // TODO: remove once usage of uBO 1.20.4 is widespread.
+    µBlock.assets.remove('ublock-resources');
+
+    this.resources = new Map();
+    this.aliases = new Map();
+
+    const fetches = [
+        µBlock.assets.fetchText(
+            '/assets/resources/scriptlets.js'
+        ).then(result => {
+            const content = result.content;
+            if ( typeof content === 'string' && content.length !== 0 ) {
+                this.resourcesFromString(content);
+            }
+        }),
+    ];
+
+    const store = (name, data = undefined) => {
+        const details = redirectableResources.get(name);
+        const entry = RedirectEntry.fromSelfie({
+            mime: mimeFromName(name),
+            data,
+            warURL: vAPI.getURL(`/web_accessible_resources/${name}`),
+        });
+        this.resources.set(name, entry);
+        if ( details.alias !== undefined ) {
+            this.aliases.set(details.alias, name);
+        }
+    };
+
+    const processBlob = (name, blob) => {
+        return new Promise(resolve => {
+            const reader = new FileReader();
+            reader.onload = ( ) => {
+                store(name, reader.result);
+                resolve();
+            };
+            reader.readAsDataURL(blob);
+        });
+    };
+
+    const processText = (name, text) => {
+        store(name, removeTopCommentBlock(text));
+    };
+
+    const process = result => {
+        const match = /^\/web_accessible_resources\/([^?]+)/.exec(result.url);
+        if ( match === null ) { return; }
+        const name = match[1];
+        return result.content instanceof Blob
+            ? processBlob(name, result.content)
+            : processText(name, result.content);
+    };
+
+    for ( const [ name, details ] of redirectableResources ) {
+        if ( typeof details.data !== 'string' ) {
+            store(name);
+            continue;
+        }
+        fetches.push(
+            µBlock.assets.fetch(
+                `/web_accessible_resources/${name}${vAPI.warSecret()}`,
+                { responseType: details.data }
+            ).then(
+                result => process(result)
+            )
+        );
+    }
+
+    return Promise.all(fetches);
+}; 
+
+/******************************************************************************/
+
+const resourcesSelfieVersion = 5;
 
 RedirectEngine.prototype.selfieFromResources = function() {
     µBlock.assets.put(
         'compiled/redirectEngine/resources',
         JSON.stringify({
             version: resourcesSelfieVersion,
-            resources: Array.from(this.resources)
+            aliases: Array.from(this.aliases),
+            resources: Array.from(this.resources),
         })
     );
 };
@@ -551,6 +816,7 @@ RedirectEngine.prototype.resourcesFromSelfie = function() {
         ) {
             return false;
         }
+        this.aliases = new Map(selfie.aliases);
         this.resources = new Map();
         for ( const [ token, entry ] of selfie.resources ) {
             this.resources.set(token, RedirectEntry.fromSelfie(entry));

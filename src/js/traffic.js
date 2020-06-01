@@ -25,7 +25,7 @@
 
 // Start isolation from global scope
 
-µBlock.webRequest = (function() {
+µBlock.webRequest = (( ) => {
 
 /******************************************************************************/
 
@@ -417,9 +417,11 @@ const toBlockDocResult = function(url, hostname, logData) {
 
     // https://github.com/chrisaljoudi/uBlock/issues/1128
     // https://github.com/chrisaljoudi/uBlock/issues/1212
-    // Relax the rule: verify that the match is completely before the path part
-    return (match.index + match[0].length) <=
-           (url.indexOf(hostname) + hostname.length + 1);
+    //   Verify that the end of the match is anchored to the end of the
+    //   hostname.
+    const end = match.index + match[0].length -
+                url.indexOf(hostname) - hostname.length;
+    return end === 0 || end === 1;
 };
 
 /******************************************************************************/
@@ -655,7 +657,7 @@ const onHeadersReceived = function(details) {
         if ( isRootDoc === false ) { return; }
         pageStore = µb.bindTabToPageStats(fctxt.tabId, 'beforeRequest');
     }
-    if ( pageStore.getNetFilteringSwitch() === false ) { return; }
+    if ( pageStore.getNetFilteringSwitch(fctxt) === false ) { return; }
 
     // Keep in mind response headers will be modified in-place if needed, so
     // `details.responseHeaders` will always point to the modified response
@@ -697,14 +699,16 @@ const onHeadersReceived = function(details) {
     //   Use `no-cache` instead of `no-cache, no-store, must-revalidate`, this
     //   allows Firefox's offline mode to work as expected.
     if ( (filteredHTML || modifiedHeaders) && dontCacheResponseHeaders ) {
-        let i = headerIndexFromName('cache-control', responseHeaders);
         let cacheControl = µb.hiddenSettings.cacheControlForFirefox1376932;
-        if ( i !== -1 ) {
-            responseHeaders[i].value = cacheControl;
-        } else {
-            responseHeaders.push({ name: 'Cache-Control', value: cacheControl });
+        if ( cacheControl !== 'unset' ) {
+            let i = headerIndexFromName('cache-control', responseHeaders);
+            if ( i !== -1 ) {
+                responseHeaders[i].value = cacheControl;
+            } else {
+                responseHeaders.push({ name: 'Cache-Control', value: cacheControl });
+            }
+            modifiedHeaders = true;
         }
-        modifiedHeaders = true;
     }
 
     if ( modifiedHeaders ) {
@@ -1253,26 +1257,20 @@ const strictBlockBypasser = {
 /******************************************************************************/
 
 return {
-    start: (function() {
+    start: (( ) => {
+        vAPI.net = new vAPI.Net();
+
         if (
-            vAPI.net.onBeforeReady instanceof Object &&
-            (
-                vAPI.net.onBeforeReady.experimental !== true &&
-                µBlock.hiddenSettings.suspendTabsUntilReady !== 'no' ||
-                vAPI.net.onBeforeReady.experimental &&
-                µBlock.hiddenSettings.suspendTabsUntilReady === 'yes'
-            )
+            vAPI.net.canSuspend() &&
+            µBlock.hiddenSettings.suspendTabsUntilReady !== 'no' ||
+            vAPI.net.canSuspend() !== true &&
+            µBlock.hiddenSettings.suspendTabsUntilReady === 'yes'
         ) {
-            vAPI.net.onBeforeReady.start();
+            vAPI.net.suspend(true);
         }
 
         return function() {
-            vAPI.net.addListener(
-                'onBeforeRequest',
-                onBeforeRequest,
-                { urls: [ 'http://*/*', 'https://*/*' ] },
-                [ 'blocking' ]
-            );
+            vAPI.net.setSuspendableListener(onBeforeRequest);
             vAPI.net.addListener(
                 'onHeadersReceived',
                 onHeadersReceived,
@@ -1308,9 +1306,7 @@ return {
                     [ 'blocking', 'requestBody' ]
                 );
             }
-            if ( vAPI.net.onBeforeReady instanceof Object ) {
-                vAPI.net.onBeforeReady.stop(onBeforeRequest);
-            }
+            vAPI.net.unsuspend();
         };
     })(),
 

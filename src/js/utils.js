@@ -544,7 +544,7 @@
     }
 
     encode(arrbuf, arrlen) {
-        const inputLength = arrlen >>> 2;
+        const inputLength = (arrlen + 3) >>> 2;
         const inbuf = new Uint32Array(arrbuf, 0, inputLength);
         const outputLength = this.magic.length + 7 + inputLength * 7;
         const outbuf = new Uint8Array(outputLength);
@@ -700,3 +700,15 @@
         return datasetPromise;
     };
 })();
+
+/******************************************************************************/
+
+µBlock.fireDOMEvent = function(name) {
+    if (
+        window instanceof Object &&
+        window.dispatchEvent instanceof Function &&
+        window.CustomEvent instanceof Function
+    ) {
+        window.dispatchEvent(new CustomEvent(name));
+    }
+};

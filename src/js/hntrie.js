@@ -20,9 +20,13 @@
 */
 
 /* globals WebAssembly */
-/* exported HNTrieContainer */
 
 'use strict';
+
+// *****************************************************************************
+// start of local namespace
+
+{
 
 /*******************************************************************************
 
@@ -115,26 +119,26 @@
 
 */
 
-const HNTRIE_PAGE_SIZE   = 65536;
-                                                          // i32 /  i8
-const HNTRIE_TRIE0_SLOT  = 256 >>> 2;                     //  64 / 256
-const HNTRIE_TRIE1_SLOT  = HNTRIE_TRIE0_SLOT + 1;         //  65 / 260
-const HNTRIE_CHAR0_SLOT  = HNTRIE_TRIE0_SLOT + 2;         //  66 / 264
-const HNTRIE_CHAR1_SLOT  = HNTRIE_TRIE0_SLOT + 3;         //  67 / 268
-const HNTRIE_TRIE0_START = HNTRIE_TRIE0_SLOT + 4 << 2;    //       272
+const PAGE_SIZE   = 65536;
+                                            // i32 /  i8
+const TRIE0_SLOT  = 256 >>> 2;              //  64 / 256
+const TRIE1_SLOT  = TRIE0_SLOT + 1;         //  65 / 260
+const CHAR0_SLOT  = TRIE0_SLOT + 2;         //  66 / 264
+const CHAR1_SLOT  = TRIE0_SLOT + 3;         //  67 / 268
+const TRIE0_START = TRIE0_SLOT + 4 << 2;    //       272
 
 const HNTrieContainer = class {
 
     constructor(details) {
         if ( details instanceof Object === false ) { details = {}; }
-        let len = (details.byteLength || 0) + HNTRIE_PAGE_SIZE-1 & ~(HNTRIE_PAGE_SIZE-1);
+        let len = (details.byteLength || 0) + PAGE_SIZE-1 & ~(PAGE_SIZE-1);
         this.buf = new Uint8Array(Math.max(len, 131072));
         this.buf32 = new Uint32Array(this.buf.buffer);
         this.needle = '';
-        this.buf32[HNTRIE_TRIE0_SLOT] = HNTRIE_TRIE0_START;
-        this.buf32[HNTRIE_TRIE1_SLOT] = this.buf32[HNTRIE_TRIE0_SLOT];
-        this.buf32[HNTRIE_CHAR0_SLOT] = details.char0 || 65536;
-        this.buf32[HNTRIE_CHAR1_SLOT] = this.buf32[HNTRIE_CHAR0_SLOT];
+        this.buf32[TRIE0_SLOT] = TRIE0_START;
+        this.buf32[TRIE1_SLOT] = this.buf32[TRIE0_SLOT];
+        this.buf32[CHAR0_SLOT] = details.char0 || 65536;
+        this.buf32[CHAR1_SLOT] = this.buf32[CHAR0_SLOT];
         this.wasmInstancePromise = null;
         this.wasmMemory = null;
         this.readyToUse();
@@ -145,8 +149,8 @@ const HNTrieContainer = class {
     //--------------------------------------------------------------------------
 
     reset() {
-        this.buf32[HNTRIE_TRIE1_SLOT] = this.buf32[HNTRIE_TRIE0_SLOT];
-        this.buf32[HNTRIE_CHAR1_SLOT] = this.buf32[HNTRIE_CHAR0_SLOT];
+        this.buf32[TRIE1_SLOT] = this.buf32[TRIE0_SLOT];
+        this.buf32[CHAR1_SLOT] = this.buf32[CHAR0_SLOT];
     }
 
     readyToUse() {
@@ -162,7 +166,7 @@ const HNTrieContainer = class {
         if ( needle !== this.needle ) {
             const buf = this.buf;
             let i = needle.length;
-            if ( i > 254 ) { i = 254; }
+            if ( i > 255 ) { i = 255; }
             buf[255] = i;
             while ( i-- ) {
                 buf[i] = needle.charCodeAt(i);
@@ -173,21 +177,23 @@ const HNTrieContainer = class {
     }
 
     matchesJS(iroot) {
-        const char0 = this.buf32[HNTRIE_CHAR0_SLOT];
-        let ineedle = this.buf[255];
-        let icell = this.buf32[iroot+0];
+        const buf32 = this.buf32;
+        const buf8 = this.buf;
+        const char0 = buf32[CHAR0_SLOT];
+        let ineedle = buf8[255];
+        let icell = buf32[iroot+0];
         if ( icell === 0 ) { return -1; }
         for (;;) {
             if ( ineedle === 0 ) { return -1; }
             ineedle -= 1;
-            let c = this.buf[ineedle];
+            let c = buf8[ineedle];
             let v, i0;
             // find first segment with a first-character match
             for (;;) {
-                v = this.buf32[icell+2];
+                v = buf32[icell+2];
                 i0 = char0 + (v & 0x00FFFFFF);
-                if ( this.buf[i0] === c ) { break; }
-                icell = this.buf32[icell+0];
+                if ( buf8[i0] === c ) { break; }
+                icell = buf32[icell+0];
                 if ( icell === 0 ) { return -1; }
             }
             // all characters in segment must match
@@ -199,21 +205,21 @@ const HNTrieContainer = class {
                 const i1 = i0 + n;
                 do {
                     ineedle -= 1;
-                    if ( this.buf[i0] !== this.buf[ineedle] ) { return -1; }
+                    if ( buf8[i0] !== buf8[ineedle] ) { return -1; }
                     i0 += 1;
                 } while ( i0 < i1 );
             }
             // next segment
-            icell = this.buf32[icell+1];
+            icell = buf32[icell+1];
             if ( icell === 0 ) { break; }
-            if ( this.buf32[icell+2] === 0 ) {
-                if ( ineedle === 0 || this.buf[ineedle-1] === 0x2E ) {
+            if ( buf32[icell+2] === 0 ) {
+                if ( ineedle === 0 || buf8[ineedle-1] === 0x2E ) {
                     return ineedle;
                 }
-                icell = this.buf32[icell+1];
+                icell = buf32[icell+1];
             }
         }
-        return ineedle === 0 || this.buf[ineedle-1] === 0x2E ? ineedle : -1;
+        return ineedle === 0 || buf8[ineedle-1] === 0x2E ? ineedle : -1;
     }
 
     createOne(args) {
@@ -221,11 +227,11 @@ const HNTrieContainer = class {
             return new this.HNTrieRef(this, args[0], args[1]);
         }
         // grow buffer if needed
-        if ( (this.buf32[HNTRIE_CHAR0_SLOT] - this.buf32[HNTRIE_TRIE1_SLOT]) < 12 ) {
+        if ( (this.buf32[CHAR0_SLOT] - this.buf32[TRIE1_SLOT]) < 12 ) {
             this.growBuf(12, 0);
         }
-        const iroot = this.buf32[HNTRIE_TRIE1_SLOT] >>> 2;
-        this.buf32[HNTRIE_TRIE1_SLOT] += 12;
+        const iroot = this.buf32[TRIE1_SLOT] >>> 2;
+        this.buf32[TRIE1_SLOT] += 12;
         this.buf32[iroot+0] = 0;
         this.buf32[iroot+1] = 0;
         this.buf32[iroot+2] = 0;
@@ -241,8 +247,8 @@ const HNTrieContainer = class {
         if ( lhnchar === 0 ) { return 0; }
         // grow buffer if needed
         if (
-            (this.buf32[HNTRIE_CHAR0_SLOT] - this.buf32[HNTRIE_TRIE1_SLOT]) < 24 ||
-            (this.buf.length - this.buf32[HNTRIE_CHAR1_SLOT]) < 256
+            (this.buf32[CHAR0_SLOT] - this.buf32[TRIE1_SLOT]) < 24 ||
+            (this.buf.length - this.buf32[CHAR1_SLOT]) < 256
         ) {
             this.growBuf(24, 256);
         }
@@ -253,7 +259,7 @@ const HNTrieContainer = class {
             return 1;
         }
         //
-        const char0 = this.buf32[HNTRIE_CHAR0_SLOT];
+        const char0 = this.buf32[CHAR0_SLOT];
         let inext;
         // find a matching cell: move down
         for (;;) {
@@ -344,7 +350,7 @@ const HNTrieContainer = class {
         this.shrinkBuf();
         return {
             byteLength: this.buf.byteLength,
-            char0: this.buf32[HNTRIE_CHAR0_SLOT],
+            char0: this.buf32[CHAR0_SLOT],
         };
     }
 
@@ -361,14 +367,14 @@ const HNTrieContainer = class {
         if ( encoder instanceof Object ) {
             return encoder.encode(
                 this.buf32.buffer,
-                this.buf32[HNTRIE_CHAR1_SLOT]
+                this.buf32[CHAR1_SLOT]
             );
         }
         return Array.from(
             new Uint32Array(
                 this.buf32.buffer,
                 0,
-                this.buf32[HNTRIE_CHAR1_SLOT] + 3 >>> 2
+                this.buf32[CHAR1_SLOT] + 3 >>> 2
             )
         );
     }
@@ -380,7 +386,7 @@ const HNTrieContainer = class {
             ? decoder.decodeSize(selfie)
             : selfie.length << 2;
         if ( byteLength === 0 ) { return false; }
-        byteLength = byteLength + HNTRIE_PAGE_SIZE-1 & ~(HNTRIE_PAGE_SIZE-1);
+        byteLength = byteLength + PAGE_SIZE-1 & ~(PAGE_SIZE-1);
         if ( this.wasmMemory !== null ) {
             const pageCountBefore = this.buf.length >>> 16;
             const pageCountAfter = byteLength >>> 16;
@@ -406,8 +412,8 @@ const HNTrieContainer = class {
     //--------------------------------------------------------------------------
 
     addCell(idown, iright, v) {
-        let icell = this.buf32[HNTRIE_TRIE1_SLOT];
-        this.buf32[HNTRIE_TRIE1_SLOT] = icell + 12;
+        let icell = this.buf32[TRIE1_SLOT];
+        this.buf32[TRIE1_SLOT] = icell + 12;
         icell >>>= 2;
         this.buf32[icell+0] = idown;
         this.buf32[icell+1] = iright;
@@ -417,24 +423,24 @@ const HNTrieContainer = class {
 
     addSegment(lsegchar) {
         if ( lsegchar === 0 ) { return 0; }
-        let char1 = this.buf32[HNTRIE_CHAR1_SLOT];
-        const isegchar = char1 - this.buf32[HNTRIE_CHAR0_SLOT];
+        let char1 = this.buf32[CHAR1_SLOT];
+        const isegchar = char1 - this.buf32[CHAR0_SLOT];
         let i = lsegchar;
         do {
             this.buf[char1++] = this.buf[--i];
         } while ( i !== 0 );
-        this.buf32[HNTRIE_CHAR1_SLOT] = char1;
+        this.buf32[CHAR1_SLOT] = char1;
         return (lsegchar << 24) | isegchar;
     }
 
     growBuf(trieGrow, charGrow) {
         const char0 = Math.max(
-            (this.buf32[HNTRIE_TRIE1_SLOT] + trieGrow + HNTRIE_PAGE_SIZE-1) & ~(HNTRIE_PAGE_SIZE-1),
-            this.buf32[HNTRIE_CHAR0_SLOT]
+            (this.buf32[TRIE1_SLOT] + trieGrow + PAGE_SIZE-1) & ~(PAGE_SIZE-1),
+            this.buf32[CHAR0_SLOT]
         );
-        const char1 = char0 + this.buf32[HNTRIE_CHAR1_SLOT] - this.buf32[HNTRIE_CHAR0_SLOT];
+        const char1 = char0 + this.buf32[CHAR1_SLOT] - this.buf32[CHAR0_SLOT];
         const bufLen = Math.max(
-            (char1 + charGrow + HNTRIE_PAGE_SIZE-1) & ~(HNTRIE_PAGE_SIZE-1),
+            (char1 + charGrow + PAGE_SIZE-1) & ~(PAGE_SIZE-1),
             this.buf.length
         );
         this.resizeBuf(bufLen, char0);
@@ -443,21 +449,21 @@ const HNTrieContainer = class {
     shrinkBuf() {
         // Can't shrink WebAssembly.Memory
         if ( this.wasmMemory !== null ) { return; }
-        const char0 = this.buf32[HNTRIE_TRIE1_SLOT] + 24;
-        const char1 = char0 + this.buf32[HNTRIE_CHAR1_SLOT] - this.buf32[HNTRIE_CHAR0_SLOT];
+        const char0 = this.buf32[TRIE1_SLOT] + 24;
+        const char1 = char0 + this.buf32[CHAR1_SLOT] - this.buf32[CHAR0_SLOT];
         const bufLen = char1 + 256;
         this.resizeBuf(bufLen, char0);
     }
 
     resizeBuf(bufLen, char0) {
-        bufLen = bufLen + HNTRIE_PAGE_SIZE-1 & ~(HNTRIE_PAGE_SIZE-1);
+        bufLen = bufLen + PAGE_SIZE-1 & ~(PAGE_SIZE-1);
         if (
             bufLen === this.buf.length &&
-            char0 === this.buf32[HNTRIE_CHAR0_SLOT]
+            char0 === this.buf32[CHAR0_SLOT]
         ) {
             return;
         }
-        const charDataLen = this.buf32[HNTRIE_CHAR1_SLOT] - this.buf32[HNTRIE_CHAR0_SLOT];
+        const charDataLen = this.buf32[CHAR1_SLOT] - this.buf32[CHAR0_SLOT];
         if ( this.wasmMemory !== null ) {
             const pageCount = (bufLen >>> 16) - (this.buf.byteLength >>> 16);
             if ( pageCount > 0 ) {
@@ -471,34 +477,34 @@ const HNTrieContainer = class {
                 new Uint8Array(
                     this.buf.buffer,
                     0,
-                    this.buf32[HNTRIE_TRIE1_SLOT]
+                    this.buf32[TRIE1_SLOT]
                 ),
                 0
             );
             newBuf.set(
                 new Uint8Array(
                     this.buf.buffer,
-                    this.buf32[HNTRIE_CHAR0_SLOT],
+                    this.buf32[CHAR0_SLOT],
                     charDataLen
                 ),
                 char0
             );
             this.buf = newBuf;
             this.buf32 = new Uint32Array(this.buf.buffer);
-            this.buf32[HNTRIE_CHAR0_SLOT] = char0;
-            this.buf32[HNTRIE_CHAR1_SLOT] = char0 + charDataLen;
+            this.buf32[CHAR0_SLOT] = char0;
+            this.buf32[CHAR1_SLOT] = char0 + charDataLen;
         }
-        if ( char0 !== this.buf32[HNTRIE_CHAR0_SLOT] ) {
+        if ( char0 !== this.buf32[CHAR0_SLOT] ) {
             this.buf.set(
                 new Uint8Array(
                     this.buf.buffer,
-                    this.buf32[HNTRIE_CHAR0_SLOT],
+                    this.buf32[CHAR0_SLOT],
                     charDataLen
                 ),
                 char0
             );
-            this.buf32[HNTRIE_CHAR0_SLOT] = char0;
-            this.buf32[HNTRIE_CHAR1_SLOT] = char0 + charDataLen;
+            this.buf32[CHAR0_SLOT] = char0;
+            this.buf32[CHAR1_SLOT] = char0 + charDataLen;
         }
     }
 
@@ -520,7 +526,7 @@ const HNTrieContainer = class {
             this.wasmInstancePromise.then(instance => {
                 this.wasmMemory = memory;
                 const curPageCount = memory.buffer.byteLength >>> 16;
-                const newPageCount = this.buf.byteLength + HNTRIE_PAGE_SIZE-1 >>> 16;
+                const newPageCount = this.buf.byteLength + PAGE_SIZE-1 >>> 16;
                 if ( newPageCount > curPageCount ) {
                     memory.grow(newPageCount - curPageCount);
                 }
@@ -644,7 +650,7 @@ HNTrieContainer.prototype.HNTrieRef = class {
                         this.forks.push(idown, this.charPtr);
                     }
                     const v = this.container.buf32[this.icell+2];
-                    let i0 = this.container.buf32[HNTRIE_CHAR0_SLOT] + (v & 0x00FFFFFF);
+                    let i0 = this.container.buf32[CHAR0_SLOT] + (v & 0x00FFFFFF);
                     const i1 = i0 + (v >>> 24);
                     while ( i0 < i1 ) {
                         this.charPtr -= 1;
@@ -690,7 +696,7 @@ HNTrieContainer.prototype.HNTrieRef.prototype.needle = '';
 // The WASM module is entirely optional, the JS implementations will be
 // used should the WASM module be unavailable for whatever reason.
 
-(function() {
+(( ) => {
     HNTrieContainer.wasmModulePromise = null;
 
     if (
@@ -748,3 +754,12 @@ HNTrieContainer.prototype.HNTrieRef.prototype.needle = '';
         log.info(reason);
     });
 })();
+
+/******************************************************************************/
+
+µBlock.HNTrieContainer = HNTrieContainer;
+
+// end of local namespace
+// *****************************************************************************
+
+}

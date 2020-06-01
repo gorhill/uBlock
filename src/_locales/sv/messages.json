@@ -220,7 +220,7 @@
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
-    "message": "{{count}} utav {{total}}",
+    "message": "{{count}} av {{total}}",
     "description": "appears in popup"
   },
   "pickerCreate": {
@@ -252,7 +252,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Blockera element",
+    "message": "Blockera element...",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -488,7 +488,7 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Importera från fil",
+    "message": "Importera från fil...",
     "description": ""
   },
   "rulesExport": {
@@ -672,7 +672,7 @@
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "{{action}} nätverksförfrågningar av {{type}} {{br}}vilkas URL matchar {{url}} {{br}}och som kommer {{origin}},{{br}}{{importance}} det finns ett matchande undantagsfilter.",
+    "message": "{{action}} nätverksförfrågningar av {{type}} {{br}}vilkas webbadresser matchar {{url}} {{br}}och som kommer från {{origin}},{{br}}{{importance}} det finns ett matchande undantagsfilter.",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
@@ -808,7 +808,7 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Återställ från fil",
+    "message": "Återställ från fil...",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
@@ -832,7 +832,7 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: Lägg till följande URL till din skräddarsydda filterlista?\n\nTitel: \"{{title}}\"\nURL: {{url}}",
+    "message": "uBlock₀: Lägg till följande webbadress till din skräddarsydda filterlista?\n\nTitel: \"{{title}}\"\nWebbadress: {{url}}",
     "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo": {
@@ -962,6 +962,14 @@
   "genericCopyToClipboard": {
     "message": "Kopiera till urklipp",
     "description": "Label for buttons used to copy something to the clipboard"
+  },
+  "toggleBlockingProfile": {
+    "message": "Växla blockeringsprofil",
+    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  },
+  "relaxBlockingMode": {
+    "message": "Lätta på blockeringsläge",
+    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "dummy": {
     "message": "This entry must be the last one",

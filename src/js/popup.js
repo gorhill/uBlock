@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-(function() {
+(( ) => {
 
 /******************************************************************************/
 
@@ -894,21 +894,34 @@ const reloadTab = function(ev) {
         {
             what: 'reloadTab',
             tabId: popupData.tabId,
-            select: true,
+            select: vAPI.webextFlavor.soup.has('mobile'),
             bypassCache: ev.ctrlKey || ev.metaKey || ev.shiftKey
         }
     );
 
     // Polling will take care of refreshing the popup content
-
     // https://github.com/chrisaljoudi/uBlock/issues/748
-    // User forces a reload, assume the popup has to be updated regardless if
-    // there were changes or not.
+    //   User forces a reload, assume the popup has to be updated regardless
+    //   if there were changes or not.
     popupData.contentLastModified = -1;
 
     // No need to wait to remove this.
     uDom('body').toggleClass('dirty', false);
 };
+
+uDom('#refresh').on('click', reloadTab);
+
+// https://github.com/uBlockOrigin/uBlock-issues/issues/672
+document.addEventListener(
+    'keydown',
+    ev => {
+        if ( ev.code !== 'F5' ) { return; }
+        reloadTab(ev);
+        ev.preventDefault();
+        ev.stopPropagation();
+    },
+    { capture: true }
+);
 
 /******************************************************************************/
 
@@ -1121,7 +1134,7 @@ const onHideTooltip = function() {
 // Popup DOM is assumed to be loaded at this point -- because this script
 // is loaded after everything else..
 
-(function() {
+(( ) => {
     // If there's no tab id specified in the query string,
     // it will default to current tab.
     let tabId = null;
@@ -1138,7 +1151,6 @@ uDom('#switch').on('click', toggleNetFilteringSwitch);
 uDom('#gotoZap').on('click', gotoZap);
 uDom('#gotoPick').on('click', gotoPick);
 uDom('h2').on('click', toggleFirewallPane);
-uDom('#refresh').on('click', reloadTab);
 uDom('.hnSwitch').on('click', toggleHostnameSwitch);
 uDom('#saveRules').on('click', saveFirewallRules);
 uDom('#revertRules').on('click', revertFirewallRules);

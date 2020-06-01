@@ -27,8 +27,6 @@
     const µb = µBlock,
         duplicates = new Set(),
         scriptletCache = new µb.MRUCache(32),
-        scriptletsRegister = new Map(),
-        exceptionsRegister = new Set(),
         reEscapeScriptArg = /[\\'"]/g;
 
     let acceptedCount = 0,
@@ -66,7 +64,7 @@
     // Consequently, the programmatic-injection code path is taken only with
     // Chromium-based browsers.
 
-    const contentscriptCode = (function() {
+    const contentscriptCode = (( ) => {
         const parts = [
             '(',
             function(hostname, scriptlets) {
@@ -76,7 +74,7 @@
                 ) {
                     return;
                 }
-                let injectScriptlets = function(d) {
+                const injectScriptlets = function(d) {
                     let script;
                     try {
                         script = d.createElement('script');
@@ -94,17 +92,17 @@
                     }
                 };
                 injectScriptlets(document);
-                let processIFrame = function(iframe) {
-                    let src = iframe.src;
+                const processIFrame = function(iframe) {
+                    const src = iframe.src;
                     if ( /^https?:\/\//.test(src) === false ) {
                         injectScriptlets(iframe.contentDocument);
                     }
                 };
                 let observerTimer,
                     observerLists = [];
-                let observerAsync = function() {
-                    for ( let nodelist of observerLists ) {
-                        for ( let node of nodelist ) {
+                const observerAsync = function() {
+                    for ( const nodelist of observerLists ) {
+                        for ( const node of nodelist ) {
                             if ( node.nodeType !== 1 ) { continue; }
                             if ( node.parentElement === null ) { continue; }
                             if ( node.localName === 'iframe' ) {
@@ -112,7 +110,7 @@
                             }
                             if ( node.childElementCount === 0 ) { continue; }
                             let iframes = node.querySelectorAll('iframe');
-                            for ( let iframe of iframes ) {
+                            for ( const iframe of iframes ) {
                                 processIFrame(iframe);
                             }
                         }
@@ -120,17 +118,17 @@
                     observerLists = [];
                     observerTimer = undefined;
                 };
-                let ready = function(ev) {
+                const ready = function(ev) {
                     if ( ev !== undefined ) {
                         window.removeEventListener(ev.type, ready);
                     }
-                    let iframes = document.getElementsByTagName('iframe');
+                    const iframes = document.getElementsByTagName('iframe');
                     if ( iframes.length !== 0 ) {
                         observerLists.push(iframes);
                         observerTimer = setTimeout(observerAsync, 1);
                     }
-                    let observer = new MutationObserver(function(mutations) {
-                        for ( let mutation of mutations ) {
+                    const observer = new MutationObserver(function(mutations) {
+                        for ( const mutation of mutations ) {
                             if ( mutation.addedNodes.length !== 0 ) {
                                 observerLists.push(mutation.addedNodes);
                             }
@@ -170,23 +168,52 @@
             }
         };
     })();
-    
-    const lookupScriptlet = function(raw, reng, toInject) {
-        if ( toInject.has(raw) ) { return; }
+
+    const normalizeRawFilter = function(rawFilter) {
+        let rawToken = rawFilter.slice(4, -1);
+        let rawEnd = rawToken.length;
+        let end = rawToken.indexOf(',');
+        if ( end === -1 ) {
+            end = rawEnd;
+        }
+        let token = rawToken.slice(0, end).trim();
+        let normalized = token.endsWith('.js') ? token.slice(0, -3) : token;
+        let beg = end + 1;
+        while ( beg < rawEnd ) {
+            end = rawToken.indexOf(',', beg);
+            if ( end === -1 ) { end = rawEnd; }
+            normalized += ', ' + rawToken.slice(beg, end).trim();
+            beg = end + 1;
+        }
+        return `+js(${normalized})`;
+    };
+
+    const lookupScriptlet = function(rawToken, reng, toInject) {
+        if ( toInject.has(rawToken) ) { return; }
         if ( scriptletCache.resetTime < reng.modifyTime ) {
             scriptletCache.reset();
         }
-        let content = scriptletCache.lookup(raw);
+        let content = scriptletCache.lookup(rawToken);
         if ( content === undefined ) {
-            const pos = raw.indexOf(',');
+            const pos = rawToken.indexOf(',');
             let token, args;
             if ( pos === -1 ) {
-                token = raw;
+                token = rawToken;
             } else {
-                token = raw.slice(0, pos).trim();
-                args = raw.slice(pos + 1).trim();
+                token = rawToken.slice(0, pos).trim();
+                args = rawToken.slice(pos + 1).trim();
             }
-            content = reng.resourceContentFromName(token, 'application/javascript');
+            // TODO: The alias lookup can be removed once scriptlet resources
+            //       with obsolete name are converted to their new name.
+            if ( reng.aliases.has(token) ) {
+                token = reng.aliases.get(token);
+            } else {
+                token = `${token}.js`;
+            }
+            content = reng.resourceContentFromName(
+                token,
+                'application/javascript'
+            );
             if ( !content ) { return; }
             if ( args ) {
                 content = patchScriptlet(content, args);
@@ -196,22 +223,31 @@
                 'try {\n' +
                     content + '\n' +
                 '} catch ( e ) { }';
-            scriptletCache.add(raw, content);
+            scriptletCache.add(rawToken, content);
         }
-        toInject.set(raw, content);
+        toInject.set(rawToken, content);
     };
 
-    // Fill template placeholders. Return falsy if:
-    // - At least one argument contains anything else than /\w/ and `.`
-
+    // Fill-in scriptlet argument placeholders.
     const patchScriptlet = function(content, args) {
+        let s = args;
+        let len = s.length;
+        let beg = 0, pos = 0;
         let i = 1;
-        while ( args !== '' ) {
-            let pos = args.indexOf(',');
-            if ( pos === -1 ) { pos = args.length; }
-            const arg = args.slice(0, pos).trim().replace(reEscapeScriptArg, '\\$&');
-            content = content.replace('{{' + i + '}}', arg);
-            args = args.slice(pos + 1).trim();
+        while ( beg < len ) {
+            pos = s.indexOf(',', pos);
+            // Escaped comma? If so, skip.
+            if ( pos > 0 && s.charCodeAt(pos - 1) === 0x5C /* '\\' */ ) {
+                s = s.slice(0, pos - 1) + s.slice(pos);
+                len -= 1;
+                continue;
+            }
+            if ( pos === -1 ) { pos = len; }
+            content = content.replace(
+                `{{${i}}}`,
+                s.slice(beg, pos).trim().replace(reEscapeScriptArg, '\\$&')
+            );
+            beg = pos = pos + 1;
             i++;
         }
         return content;
@@ -227,7 +263,7 @@
             .setDocOriginFromURL(details.url)
             .setFilter({
                 source: 'cosmetic',
-                raw: (isException ? '#@#' : '##') + '+js(' + token + ')'
+                raw: (isException ? '#@#' : '##') + `+js(${token})`
             })
             .toLogger();
     };
@@ -249,10 +285,16 @@
         writer.select(1001);
 
         // Only exception filters are allowed to be global.
+        const normalized = normalizeRawFilter(parsed.suffix);
+
+        // Tokenless is meaningful only for exception filters.
+        if ( normalized === '+js()' && parsed.exception === false ) {
+            return;
+        }
 
         if ( parsed.hostnames.length === 0 ) {
             if ( parsed.exception ) {
-                writer.push([ 32, '', 1, parsed.suffix ]);
+                writer.push([ 32, '', 1, normalized ]);
             }
             return;
         }
@@ -273,7 +315,7 @@
             } else if ( negated ) {
                 kind |= 1;
             }
-            writer.push([ 32, hn, kind, parsed.suffix ]);
+            writer.push([ 32, hn, kind, normalized ]);
         }
     };
 
@@ -319,7 +361,7 @@
         }
 
         const scriptlets = new Set();
-        const exceptions = exceptionsRegister;
+        const exceptions = new Set();
 
         scriptletDB.retrieve(
             hostname,
@@ -331,30 +373,55 @@
                 [ scriptlets, exceptions ]
             );
         }
+        if ( scriptlets.size === 0 ) { return; }
 
-        for ( const token of scriptlets ) {
-            lookupScriptlet(token, reng, scriptletsRegister);
+        const loggerEnabled = µb.logger.enabled;
+
+        // Wholly disable scriptlet injection?
+        if ( exceptions.has('') ) {
+            if ( loggerEnabled ) {
+                logOne(true, '', request);
+            }
+            return;
         }
 
-        if ( scriptletsRegister.size === 0 ) { return; }
+        const scriptletToCodeMap = new Map();
+        for ( const rawToken of scriptlets ) {
+            lookupScriptlet(rawToken, reng, scriptletToCodeMap);
+        }
+        if ( scriptletToCodeMap.size === 0 ) { return; }
 
-        // Return an array of scriptlets, and log results if needed. 
+        // Return an array of scriptlets, and log results if needed.
         const out = [];
-        const loggerEnabled = µb.logger.enabled;
-        for ( const [ token, code ] of scriptletsRegister ) {
-            const isException = exceptionsRegister.has(token);
+        for ( const [ rawToken, code ] of scriptletToCodeMap ) {
+            const isException = exceptions.has(rawToken);
             if ( isException === false ) {
                 out.push(code);
             }
             if ( loggerEnabled ) {
-                logOne(isException, token, request);
+                logOne(isException, rawToken, request);
             }
         }
 
-        scriptletsRegister.clear();
-        exceptionsRegister.clear();
-
         if ( out.length === 0 ) { return; }
+
+        if ( µb.hiddenSettings.debugScriptlets ) {
+            out.unshift('debugger;');
+        }
+
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/156
+        //   Provide a private Map() object available for use by all
+        //   scriptlets.
+        out.unshift(
+            '(function() {',
+            '// >>>> start of private namespace',
+            ''
+        );
+        out.push(
+            '',
+            '// <<<< end of private namespace',
+            '})();'
+        );
 
         return out.join('\n');
     };
@@ -375,7 +442,7 @@
         const scriptlets = µb.scriptletFilteringEngine.retrieve(request);
         if ( scriptlets === undefined ) { return; }
         let code = contentscriptCode.assemble(request.hostname, scriptlets);
-        if ( µb.hiddenSettings.debugScriptlets ) {
+        if ( µb.hiddenSettings.debugScriptletInjector ) {
             code = 'debugger;\n' + code;
         }
         vAPI.tabs.injectScript(
@@ -395,6 +462,38 @@
 
     api.fromSelfie = function(selfie) {
         scriptletDB = new µb.staticExtFilteringEngine.HostnameBasedDB(1, selfie);
+    };
+
+    api.benchmark = async function() {
+        const requests = await µb.loadBenchmarkDataset();
+        if ( Array.isArray(requests) === false || requests.length === 0 ) {
+            console.info('No requests found to benchmark');
+            return;
+        }
+        console.info('Benchmarking scriptletFilteringEngine.retrieve()...');
+        const details = {
+            domain: '',
+            entity: '',
+            hostname: '',
+            tabId: 0,
+            url: '',
+        };
+        let count = 0;
+        const t0 = self.performance.now();
+        for ( let i = 0; i < requests.length; i++ ) {
+            const request = requests[i];
+            if ( request.cpt !== 'document' ) { continue; }
+            count += 1;
+            details.url = request.url;
+            details.hostname = µb.URI.hostnameFromURI(request.url);
+            details.domain = µb.URI.domainFromHostname(details.hostname);
+            details.entity = µb.URI.entityFromDomain(details.domain);
+            void this.retrieve(details);
+        }
+        const t1 = self.performance.now();
+        const dur = t1 - t0;
+        console.info(`Evaluated ${count} requests in ${dur.toFixed(0)} ms`);
+        console.info(`\tAverage: ${(dur / count).toFixed(3)} ms per request`);
     };
 
     return api;

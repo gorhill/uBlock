@@ -15,20 +15,8 @@ mkdir -p $DES
 VERSION=`jq .version manifest.json` # top-level adnauseam manifest
 UBLOCK=`jq .version platform/chromium/manifest.json | tr -d '"'` # ublock-version no quotes
 
-bash ./tools/make-assets.sh $DES
-bash ./tools/make-locales.sh $DES
-
-cp -R src/css $DES/
-cp -R src/img $DES/
-cp -R src/js $DES/
-cp -R src/lib $DES/
-
-cp src/*.html $DES/
-cp platform/chromium/*.html $DES/
-cp platform/chromium/*.js   $DES/js/
-cp platform/chromium/*.html $DES/
-cp platform/chromium/*.json $DES/
-cp LICENSE.txt              $DES/
+echo "*** AdNauseam.opera: copying common files"
+bash ./tools/copy-common-files.sh  $DES
 
 echo "*** AdNauseam.opera: concatenating content scripts"
 cat $DES/js/vapi-usercss.js > /tmp/contentscript.js
@@ -43,8 +31,8 @@ rm $DES/js/vapi-usercss.js
 rm $DES/js/vapi-usercss.real.js
 rm $DES/js/vapi-usercss.pseudo.js
 
+# Opera-specific
 cp platform/opera/manifest.json $DES/  # adn: overwrites chromium manifest
-cp LICENSE.txt $DES/
 
 sed -i '' "s/\"{version}\"/${VERSION}/" $DES/manifest.json
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
@@ -53,6 +41,16 @@ sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
 # Remove the following files
 rm $DES/js/adn/tests.js
 rm -R $DES/lib/qunit
+
+rm -r $DES/_locales/az
+rm -r $DES/_locales/bs
+rm -r $DES/_locales/cv
+rm -r $DES/_locales/hi
+rm -r $DES/_locales/ka
+rm -r $DES/_locales/kk
+rm -r $DES/_locales/mr
+rm -r $DES/_locales/ta
+rm -r $DES/_locales/th
 
 # Removing WASM modules until I receive an answer from Opera people: Opera's
 # uploader issue an error for hntrie.wasm and this prevents me from
@@ -65,9 +63,7 @@ rm $DES/lib/lz4/*.wat
 rm $DES/lib/publicsuffixlist/wasm/*.wasm
 rm $DES/lib/publicsuffixlist/wasm/*.wat
 
-echo "*** AdNauseam.opera: Package Done."
-echo
+echo "*** AdNauseam.opera: Generating meta..."
+python tools/make-opera-meta.py $DES/
 
-# printf "*** AdNauseam.opera: Generating web accessible resources...\n"
-cp -R src/web_accessible_resources $DES/
-python3 tools/import-war.py $DES/
+echo "*** AdNauseam.opera: Package done."

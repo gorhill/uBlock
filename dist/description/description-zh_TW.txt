@@ -39,7 +39,7 @@
 獻給所有人。
 
 貢獻者 @ Github: https://github.com/gorhill/uBlock/graphs/contributors
-貢獻者 @ Crowdin: https://crowdin.net/project/ublock
+翻譯者 @ Crowdin: https://crowdin.net/project/ublock
 
 ***
 

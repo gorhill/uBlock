@@ -252,7 +252,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Blok elemen",
+    "message": "Blok elemen...",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -412,7 +412,7 @@
     "description": "English: Regions, languages"
   },
   "3pGroupCustom": {
-    "message": "Tersesuai",
+    "message": "Khusus",
     "description": "English: Custom"
   },
   "3pImport": {
@@ -962,6 +962,14 @@
   "genericCopyToClipboard": {
     "message": "Salin ke papan klip",
     "description": "Label for buttons used to copy something to the clipboard"
+  },
+  "toggleBlockingProfile": {
+    "message": "Aktif\/Nonaktifkan pemblokiran profil",
+    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  },
+  "relaxBlockingMode": {
+    "message": "Perlonggar mode pemblokiran",
+    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "dummy": {
     "message": "Entri ini harus menjadi yang terakhir",

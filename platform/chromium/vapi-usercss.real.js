@@ -132,13 +132,12 @@ vAPI.DOMFilterer = class {
         }
     }
 
-    addCSSRule(selectors, declarations, details) {
+    addCSSRule(selectors, declarations, details = {}) {
         if ( selectors === undefined ) { return; }
         const selectorsStr = Array.isArray(selectors)
                 ? selectors.join(',\n')
                 : selectors;
         if ( selectorsStr.length === 0 ) { return; }
-        if ( details === undefined ) { details = {}; }
         const entry = {
             selectors: selectorsStr,
             declarations,
@@ -164,7 +163,7 @@ vAPI.DOMFilterer = class {
             vAPI.userStylesheet.add(selectorsStr + '\n{' + declarations + '}');
         }
         this.commit();
-        if ( this.hasListeners() ) {
+        if ( details.silent !== true && this.hasListeners() ) {
             this.triggerListeners({
                 declarative: [ [ selectorsStr, declarations ] ]
             });
@@ -214,13 +213,13 @@ vAPI.DOMFilterer = class {
         if ( this.hideNodeAttr === undefined ) { return; }
 
         node.setAttribute(this.hideNodeAttr, '');
-        if ( this.hideNodeStyleSheetInjected === false ) {
-            this.hideNodeStyleSheetInjected = true;
-            this.addCSSRule(
-                `[${this.hideNodeAttr}]`,
-                'display:none!important;'
-            );
-        }
+        if ( this.hideNodeStyleSheetInjected ) { return; }
+        this.hideNodeStyleSheetInjected = true;
+        this.addCSSRule(
+            `[${this.hideNodeAttr}]`,
+            'display:none!important;',
+            { silent: true }
+        );
     }
 
     unhideNode(node) {

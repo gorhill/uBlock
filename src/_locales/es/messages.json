@@ -963,6 +963,14 @@
     "message": "Copiar al portapapeles",
     "description": "Label for buttons used to copy something to the clipboard"
   },
+  "toggleBlockingProfile": {
+    "message": "Alternar perfil de bloqueo",
+    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  },
+  "relaxBlockingMode": {
+    "message": "Modo de bloqueo relajado",
+    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
   "dummy": {
     "message": "Esta entrada debe ser la última",
     "description": "so we dont need to deal with comma for last entry"

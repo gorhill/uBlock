@@ -206,7 +206,8 @@ vAPI.SafeAnimationFrame.prototype = {
 //   are properly reported in the logger.
 
 {
-    const events = new Set();
+    const newEvents = new Set();
+    const allEvents = new Set();
     let timer;
 
     const send = function() {
@@ -216,14 +217,17 @@ vAPI.SafeAnimationFrame.prototype = {
                 what: 'securityPolicyViolation',
                 type: 'net',
                 docURL: document.location.href,
-                violations: Array.from(events),
+                violations: Array.from(newEvents),
             },
             response => {
                 if ( response === true ) { return; }
                 stop();
             }
         );
-        events.clear();
+        for ( const event of newEvents ) {
+            allEvents.add(event);
+        }
+        newEvents.clear();
     };
 
     const sendAsync = function() {
@@ -237,16 +241,19 @@ vAPI.SafeAnimationFrame.prototype = {
     const listener = function(ev) {
         if ( ev.isTrusted !== true ) { return; }
         if ( ev.disposition !== 'enforce' ) { return; }
-        events.add(JSON.stringify({
+        const json = JSON.stringify({
             url: ev.blockedURL || ev.blockedURI,
             policy: ev.originalPolicy,
             directive: ev.effectiveDirective || ev.violatedDirective,
-        }));
+        });
+        if ( allEvents.has(json) ) { return; }
+        newEvents.add(json);
         sendAsync();
     };
 
     const stop = function() {
-        events.clear();
+        newEvents.clear();
+        allEvents.clear();
         if ( timer !== undefined ) {
             self.cancelIdleCallback(timer);
             timer = undefined;
@@ -473,14 +480,10 @@ vAPI.DOMFilterer = (function() {
             }
             this.needle = new RegExp(arg0, arg1);
         }
-        exec(input) {
-            const output = [];
-            for ( const node of input ) {
-                if ( this.needle.test(node.textContent) ) {
-                    output.push(node);
-                }
+        transpose(node, output) {
+            if ( this.needle.test(node.textContent) ) {
+                output.push(node);
             }
-            return output;
         }
     };
 
@@ -488,24 +491,17 @@ vAPI.DOMFilterer = (function() {
         constructor(task) {
             this.pselector = new PSelector(task[1]);
         }
-        exec(input) {
-            const output = [];
-            for ( const node of input ) {
-                if ( this.pselector.test(node) === this.target ) {
-                    output.push(node);
-                }
+        transpose(node, output) {
+            if ( this.pselector.test(node) === this.target ) {
+                output.push(node);
             }
-            return output;
         }
     };
     PSelectorIfTask.prototype.target = true;
 
     const PSelectorIfNotTask = class extends PSelectorIfTask {
-        constructor(task) {
-            super(task);
-            this.target = false;
-        }
     };
+    PSelectorIfNotTask.prototype.target = false;
 
     const PSelectorMatchesCSSTask = class {
         constructor(task) {
@@ -516,31 +512,31 @@ vAPI.DOMFilterer = (function() {
             }
             this.value = new RegExp(arg0, arg1);
         }
-        exec(input) {
-            const output = [];
-            for ( const node of input ) {
-                const style = window.getComputedStyle(node, this.pseudo);
-                if ( style === null ) { return null; } /* FF */
-                if ( this.value.test(style[this.name]) ) {
-                    output.push(node);
-                }
+        transpose(node, output) {
+            const style = window.getComputedStyle(node, this.pseudo);
+            if ( style !== null && this.value.test(style[this.name]) ) {
+                output.push(node);
             }
-            return output;
         }
     };
     PSelectorMatchesCSSTask.prototype.pseudo = null;
 
     const PSelectorMatchesCSSAfterTask = class extends PSelectorMatchesCSSTask {
-        constructor(task) {
-            super(task);
-            this.pseudo = ':after';
-        }
     };
+    PSelectorMatchesCSSAfterTask.prototype.pseudo = ':after';
 
     const PSelectorMatchesCSSBeforeTask = class extends PSelectorMatchesCSSTask {
+    };
+    PSelectorMatchesCSSBeforeTask.prototype.pseudo = ':before';
+
+    const PSelectorMinTextLengthTask = class {
         constructor(task) {
-            super(task);
-            this.pseudo = ':before';
+            this.min = task[1];
+        }
+        transpose(node, output) {
+            if ( node.textContent.length >= this.min ) {
+                output.push(node);
+            }
         }
     };
 
@@ -548,20 +544,15 @@ vAPI.DOMFilterer = (function() {
         constructor(task) {
             this.nth = task[1];
         }
-        exec(input) {
-            const output = [];
-            for ( let node of input ) {
-                let nth = this.nth;
-                for (;;) {
-                    node = node.parentElement;
-                    if ( node === null ) { break; }
-                    nth -= 1;
-                    if ( nth !== 0 ) { continue; }
-                    output.push(node);
-                    break;
-                }
+        transpose(node, output) {
+            let nth = this.nth;
+            for (;;) {
+                node = node.parentElement;
+                if ( node === null ) { return; }
+                nth -= 1;
+                if ( nth === 0 ) { break; }
             }
-            return output;
+            output.push(node);
         }
     };
 
@@ -569,25 +560,21 @@ vAPI.DOMFilterer = (function() {
         constructor(task) {
             this.spath = task[1];
         }
-        exec(input) {
-            const output = [];
-            for ( let node of input ) {
-                const parent = node.parentElement;
-                if ( parent === null ) { continue; }
-                let pos = 1;
-                for (;;) {
-                    node = node.previousElementSibling;
-                    if ( node === null ) { break; }
-                    pos += 1;
-                }
-                const nodes = parent.querySelectorAll(
-                    ':scope > :nth-child(' + pos + ')' + this.spath
-                );
-                for ( const node of nodes ) {
-                    output.push(node);
-                }
+        transpose(node, output) {
+            const parent = node.parentElement;
+            if ( parent === null ) { return; }
+            let pos = 1;
+            for (;;) {
+                node = node.previousElementSibling;
+                if ( node === null ) { break; }
+                pos += 1;
             }
-            return output;
+            const nodes = parent.querySelectorAll(
+                `:scope > :nth-child(${pos})${this.spath}`
+            );
+            for ( const node of nodes ) {
+                output.push(node);
+            }
         }
     };
 
@@ -612,17 +599,14 @@ vAPI.DOMFilterer = (function() {
                 filterer.onDOMChanged([ null ]);
             }
         }
-        exec(input) {
-            if ( input.length === 0 ) { return input; }
+        transpose(node, output) {
+            output.push(node);
+            if ( this.observed.has(node) ) { return; }
             if ( this.observer === null ) {
                 this.observer = new MutationObserver(this.handler);
             }
-            for ( const node of input ) {
-                if ( this.observed.has(node) ) { continue; }
-                this.observer.observe(node, this.observerOptions);
-                this.observed.add(node);
-            }
-            return input;
+            this.observer.observe(node, this.observerOptions);
+            this.observed.add(node);
         }
     };
 
@@ -631,23 +615,19 @@ vAPI.DOMFilterer = (function() {
             this.xpe = document.createExpression(task[1], null);
             this.xpr = null;
         }
-        exec(input) {
-            const output = [];
-            for ( const node of input ) {
-                this.xpr = this.xpe.evaluate(
-                    node,
-                    XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
-                    this.xpr
-                );
-                let j = this.xpr.snapshotLength;
-                while ( j-- ) {
-                    const node = this.xpr.snapshotItem(j);
-                    if ( node.nodeType === 1 ) {
-                        output.push(node);
-                    }
+        transpose(node, output) {
+            this.xpr = this.xpe.evaluate(
+                node,
+                XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
+                this.xpr
+            );
+            let j = this.xpr.snapshotLength;
+            while ( j-- ) {
+                const node = this.xpr.snapshotItem(j);
+                if ( node.nodeType === 1 ) {
+                    output.push(node);
                 }
             }
-            return output;
         }
     };
 
@@ -662,10 +642,11 @@ vAPI.DOMFilterer = (function() {
                     [ ':matches-css', PSelectorMatchesCSSTask ],
                     [ ':matches-css-after', PSelectorMatchesCSSAfterTask ],
                     [ ':matches-css-before', PSelectorMatchesCSSBeforeTask ],
+                    [ ':min-text-length', PSelectorMinTextLengthTask ],
                     [ ':not', PSelectorIfNotTask ],
                     [ ':nth-ancestor', PSelectorNthAncestorTask ],
                     [ ':spath', PSelectorSpathTask ],
-                    [ ':watch-attrs', PSelectorWatchAttrs ],
+                    [ ':watch-attr', PSelectorWatchAttrs ],
                     [ ':xpath', PSelectorXpathTask ],
                 ]);
             }
@@ -683,30 +664,34 @@ vAPI.DOMFilterer = (function() {
         }
         prime(input) {
             const root = input || document;
-            if ( this.selector !== '' ) {
-                return root.querySelectorAll(this.selector);
-            }
-            return [ root ];
+            if ( this.selector === '' ) { return [ root ]; }
+            return root.querySelectorAll(this.selector);
         }
         exec(input) {
             let nodes = this.prime(input);
             for ( const task of this.tasks ) {
                 if ( nodes.length === 0 ) { break; }
-                nodes = task.exec(nodes);
+                const transposed = [];
+                for ( const node of nodes ) {
+                    task.transpose(node, transposed);
+                }
+                nodes = transposed;
             }
             return nodes;
         }
         test(input) {
             const nodes = this.prime(input);
-            const AA = [ null ];
             for ( const node of nodes ) {
-                AA[0] = node;
-                let aa = AA;
+                let output = [ node ];
                 for ( const task of this.tasks ) {
-                    aa = task.exec(aa);
-                    if ( aa.length === 0 ) { break; }
+                    const transposed = [];
+                    for ( const node of output ) {
+                        task.transpose(node, transposed);
+                    }
+                    output = transposed;
+                    if ( output.length === 0 ) { break; }
                 }
-                if ( aa.length !== 0 ) { return true; }
+                if ( output.length !== 0 ) { return true; }
             }
             return false;
         }
