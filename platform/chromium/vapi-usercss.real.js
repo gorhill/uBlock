@@ -38,8 +38,11 @@ vAPI.userStylesheet = {
         vAPI.messaging.send('vapi', {
             what: 'userCSS',
             add: Array.from(this.added),
-            remove: Array.from(this.removed)
-        }, callback);
+            remove: Array.from(this.removed),
+        }).then(( ) => {
+            if ( callback instanceof Function === false ) { return; }
+            callback();
+        });
         this.added.clear();
         this.removed.clear();
     },

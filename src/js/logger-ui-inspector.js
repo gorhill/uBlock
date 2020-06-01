@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-(function() {
+(( ) => {
 
 /******************************************************************************/
 
@@ -55,9 +55,10 @@ var filterToIdMap = new Map();
 
 /******************************************************************************/
 
-var messaging = vAPI.messaging;
+const messaging = vAPI.messaging;
 
-messaging.addChannelListener('loggerUI', function(msg) {
+vAPI.MessagingConnection.addListener(function(msg) {
+    if ( msg.from !== 'domInspector' || msg.to !== 'loggerUI' ) { return; }
     switch ( msg.what ) {
     case 'connectionBroken':
         if ( inspectorConnectionId === msg.id ) {
@@ -77,12 +78,8 @@ messaging.addChannelListener('loggerUI', function(msg) {
         }
         break;
     case 'connectionRequested':
-        if ( msg.from !== 'domInspector' ) { return false; }
-        if (
-            msg.tabId === undefined ||
-            msg.tabId !== inspectedTabId
-        ) {
-            return false;
+        if ( msg.tabId === undefined || msg.tabId !== inspectedTabId ) {
+            return;
         }
         filterToIdMap.clear();
         logger.removeAllChildren(domTree);
@@ -93,7 +90,7 @@ messaging.addChannelListener('loggerUI', function(msg) {
 
 /******************************************************************************/
 
-var nodeFromDomEntry = function(entry) {
+const nodeFromDomEntry = function(entry) {
     var node, value;
     var li = document.createElement('li');
     li.setAttribute('id', entry.nid);
@@ -130,25 +127,21 @@ var nodeFromDomEntry = function(entry) {
 
 /******************************************************************************/
 
-var appendListItem = function(ul, li) {
+const appendListItem = function(ul, li) {
     ul.appendChild(li);
     // Ancestor nodes of a node which is affected by a cosmetic filter will
     // be marked as "containing cosmetic filters", for user convenience.
-    if ( li.classList.contains('isCosmeticHide') === false ) {
-        return;
-    }
+    if ( li.classList.contains('isCosmeticHide') === false ) { return; }
     for (;;) {
         li = li.parentElement.parentElement;
-        if ( li === null ) {
-            break;
-        }
+        if ( li === null ) { break; }
         li.classList.add('hasCosmeticHide');
     }
 };
 
 /******************************************************************************/
 
-var renderDOMFull = function(response) {
+const renderDOMFull = function(response) {
     var domTreeParent = domTree.parentElement;
     var ul = domTreeParent.removeChild(domTree);
     logger.removeAllChildren(domTree);
@@ -197,7 +190,7 @@ var renderDOMFull = function(response) {
 
 /******************************************************************************/
 
-var patchIncremental = function(from, delta) {
+const patchIncremental = function(from, delta) {
     var span, cnt;
     var li = from.parentElement.parentElement;
     var patchCosmeticHide = delta >= 0 &&
@@ -222,7 +215,7 @@ var patchIncremental = function(from, delta) {
 
 /******************************************************************************/
 
-var renderDOMIncremental = function(response) {
+const renderDOMIncremental = function(response) {
     // Process each journal entry:
     //  1 = node added
     // -1 = node removed
@@ -284,7 +277,7 @@ var renderDOMIncremental = function(response) {
 
 /******************************************************************************/
 
-var countFromNode = function(li) {
+const countFromNode = function(li) {
     var span = li.children[2];
     var cnt = parseInt(span.getAttribute('data-cnt'), 10);
     return isNaN(cnt) ? 0 : cnt;
@@ -292,7 +285,7 @@ var countFromNode = function(li) {
 
 /******************************************************************************/
 
-var selectorFromNode = function(node) {
+const selectorFromNode = function(node) {
     var selector = '';
     var code;
     while ( node !== null ) {
@@ -312,7 +305,7 @@ var selectorFromNode = function(node) {
 
 /******************************************************************************/
 
-var selectorFromFilter = function(node) {
+const selectorFromFilter = function(node) {
     while ( node !== null ) {
         if ( node.localName === 'li' ) {
             var code = node.querySelector('code:nth-of-type(2)');
@@ -327,7 +320,7 @@ var selectorFromFilter = function(node) {
 
 /******************************************************************************/
 
-var nidFromNode = function(node) {
+const nidFromNode = function(node) {
     var li = node;
     while ( li !== null ) {
         if ( li.localName === 'li' ) {
@@ -385,15 +378,21 @@ const startDialog = (function() {
         ev.stopPropagation();
 
         if ( target.id === 'createCosmeticFilters' ) {
-            messaging.send('loggerUI', { what: 'createUserFilter', filters: textarea.value });
+            messaging.send('loggerUI', {
+                what: 'createUserFilter',
+                filters: textarea.value,
+            });
             // Force a reload for the new cosmetic filter(s) to take effect
-            messaging.send('loggerUI', { what: 'reloadTab', tabId: inspectedTabId });
+            messaging.send('loggerUI', {
+                what: 'reloadTab',
+                tabId: inspectedTabId,
+            });
             return stop();
         }
     };
 
     const showCommitted = function() {
-        messaging.sendTo(inspectorConnectionId, {
+        vAPI.MessagingConnection.sendTo(inspectorConnectionId, {
             what: 'showCommitted',
             hide: hideSelectors.join(',\n'),
             unhide: unhideSelectors.join(',\n')
@@ -401,7 +400,7 @@ const startDialog = (function() {
     };
 
     const showInteractive = function() {
-        messaging.sendTo(inspectorConnectionId, {
+        vAPI.MessagingConnection.sendTo(inspectorConnectionId, {
             what: 'showInteractive',
             hide: hideSelectors.join(',\n'),
             unhide: unhideSelectors.join(',\n')
@@ -454,7 +453,7 @@ const startDialog = (function() {
 
 /******************************************************************************/
 
-var onClicked = function(ev) {
+const onClicked = function(ev) {
     ev.stopPropagation();
 
     if ( inspectedTabId === 0 ) { return; }
@@ -483,7 +482,7 @@ var onClicked = function(ev) {
 
     // Toggle cosmetic filter
     if ( target.classList.contains('filter') ) {
-        messaging.sendTo(inspectorConnectionId, {
+        vAPI.MessagingConnection.sendTo(inspectorConnectionId, {
             what: 'toggleFilter',
             original: false,
             target: target.classList.toggle('off'),
@@ -498,7 +497,7 @@ var onClicked = function(ev) {
     }
     // Toggle node
     else {
-        messaging.sendTo(inspectorConnectionId, {
+        vAPI.MessagingConnection.sendTo(inspectorConnectionId, {
             what: 'toggleNodes',
             original: true,
             target: target.classList.toggle('off') === false,
@@ -514,13 +513,13 @@ var onClicked = function(ev) {
 
 /******************************************************************************/
 
-var onMouseOver = (function() {
+const onMouseOver = (function() {
     var mouseoverTarget = null;
     var mouseoverTimer = null;
 
     var timerHandler = function() {
         mouseoverTimer = null;
-        messaging.sendTo(inspectorConnectionId, {
+        vAPI.MessagingConnection.sendTo(inspectorConnectionId, {
             what: 'highlightOne',
             selector: selectorFromNode(mouseoverTarget),
             nid: nidFromNode(mouseoverTarget),
@@ -561,16 +560,16 @@ const injectInspector = function() {
     inspectedTabId = tabId;
     messaging.send('loggerUI', {
         what: 'scriptlet',
-        tabId: tabId,
-        scriptlet: 'dom-inspector'
+        tabId,
+        scriptlet: 'dom-inspector',
     });
 };
 
 /******************************************************************************/
 
-var shutdownInspector = function() {
+const shutdownInspector = function() {
     if ( inspectorConnectionId !== undefined ) {
-        messaging.disconnectFrom(inspectorConnectionId);
+        vAPI.MessagingConnection.disconnectFrom(inspectorConnectionId);
         inspectorConnectionId = undefined;
     }
     logger.removeAllChildren(domTree);
@@ -580,7 +579,7 @@ var shutdownInspector = function() {
 
 /******************************************************************************/
 
-var onTabIdChanged = function() {
+const onTabIdChanged = function() {
     const tabId = currentTabId();
     if ( tabId <= 0 ) {
         return toggleOff();
@@ -593,7 +592,7 @@ var onTabIdChanged = function() {
 
 /******************************************************************************/
 
-var toggleVCompactView = function() {
+const toggleVCompactView = function() {
     var state = inspector.classList.toggle('vExpanded');
     var branches = document.querySelectorAll('#domInspector li.branch');
     for ( var branch of branches ) {
@@ -601,14 +600,14 @@ var toggleVCompactView = function() {
     }
 };
 
-var toggleHCompactView = function() {
+const toggleHCompactView = function() {
     inspector.classList.toggle('hCompact');
 };
 
 /******************************************************************************/
 /*
 var toggleHighlightMode = function() {
-    messaging.sendTo(inspectorConnectionId, {
+    vAPI.MessagingConnection.sendTo(inspectorConnectionId, {
         what: 'highlightMode',
         invert: uDom.nodeFromSelector('#domInspector .permatoolbar .highlightMode').classList.toggle('invert')
     });
@@ -616,9 +615,12 @@ var toggleHighlightMode = function() {
 */
 /******************************************************************************/
 
-var revert = function() {
+const revert = function() {
     uDom('#domTree .off').removeClass('off');
-    messaging.sendTo(inspectorConnectionId, { what: 'resetToggledNodes' });
+    vAPI.MessagingConnection.sendTo(
+        inspectorConnectionId,
+        { what: 'resetToggledNodes' }
+    );
     inspector.querySelector('.permatoolbar .revert').classList.add('disabled');
     inspector.querySelector('.permatoolbar .commit').classList.add('disabled');
 };

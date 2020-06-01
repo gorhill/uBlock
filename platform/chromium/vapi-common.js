@@ -1,7 +1,8 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-present The uBlock Origin authors
+    Copyright (C) 2014-2015 The uBlock Origin authors
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,10 +27,6 @@
 /******************************************************************************/
 /******************************************************************************/
 
-(function(self) {
-
-/******************************************************************************/
-
 vAPI.T0 = Date.now();
 
 /******************************************************************************/
@@ -43,7 +40,7 @@ vAPI.webextFlavor = {
     soup: new Set()
 };
 
-(function() {
+(( ) => {
     const ua = navigator.userAgent;
     const flavor = vAPI.webextFlavor;
     const soup = flavor.soup;
@@ -55,7 +52,7 @@ vAPI.webextFlavor = {
     soup.add('ublock').add('webext');
 
     // Whether this is a dev build.
-    if ( /^\d+\.\d+\.\d+\D/.test(chrome.runtime.getManifest().version) ) {
+    if ( /^\d+\.\d+\.\d+\D/.test(browser.runtime.getManifest().version) ) {
         soup.add('devbuild');
     }
 
@@ -65,10 +62,10 @@ vAPI.webextFlavor = {
 
     // Asynchronous
     if (
-        self.browser instanceof Object &&
-        typeof self.browser.runtime.getBrowserInfo === 'function'
+        browser instanceof Object &&
+        typeof browser.runtime.getBrowserInfo === 'function'
     ) {
-        self.browser.runtime.getBrowserInfo().then(info => {
+        browser.runtime.getBrowserInfo().then(info => {
             flavor.major = parseInt(info.version, 10) || 60;
             soup.add(info.vendor.toLowerCase())
                 .add(info.name.toLowerCase());
@@ -77,7 +74,7 @@ vAPI.webextFlavor = {
             }
             dispatch();
         });
-        if ( self.browser.runtime.getURL('').startsWith('moz-extension://') ) {
+        if ( browser.runtime.getURL('').startsWith('moz-extension://') ) {
             soup.add('mozilla')
                 .add('firefox')
                 .add('user_stylesheet')
@@ -120,11 +117,8 @@ vAPI.webextFlavor = {
 /******************************************************************************/
 
 vAPI.download = function(details) {
-    if ( !details.url ) {
-        return;
-    }
-
-    var a = document.createElement('a');
+    if ( !details.url ) { return; }
+    const a = document.createElement('a');
     a.href = details.url;
     a.setAttribute('download', details.filename || '');
     a.setAttribute('type', 'text/plain');
@@ -133,12 +127,12 @@ vAPI.download = function(details) {
 
 /******************************************************************************/
 
-vAPI.getURL = chrome.runtime.getURL;
+vAPI.getURL = browser.runtime.getURL;
 vAPI.getViews = chrome.extension.getViews; // ADN
 
 /******************************************************************************/
 
-vAPI.i18n = chrome.i18n.getMessage;
+vAPI.i18n = browser.i18n.getMessage;
 
 // http://www.w3.org/International/questions/qa-scripts#directions
 document.body.setAttribute(
@@ -206,10 +200,6 @@ vAPI.localStorage = {
         }
     }
 };
-
-/******************************************************************************/
-
-})(this);
 
 
 

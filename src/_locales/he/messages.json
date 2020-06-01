@@ -64,8 +64,8 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "לחיצה: כבה\/הפעל את uBlock₀ לאתר זה לצמיתות.\n\nCtrl+לחיצה: כבה את uBlock₀ רק בדף זה.",
-    "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message": "לחיצה: כבה/הפעל את uBlock₀ לאתר זה לצמיתות.\n\nCtrl+לחיצה: כבה את uBlock₀ רק בדף זה.",
+    "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
     "message": "לחיצה: כבה את uBlock₀ לאתר זה.\n\nCtrl+לחיצה: כבה את uBlock₀ רק בדף זה.",
@@ -112,7 +112,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "הפעל\/כבה את החסימה של חלונות קופצים באתר זה",
+    "message": "הפעל/כבה את החסימה של חלונות קופצים באתר זה",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
@@ -124,7 +124,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "הפעל\/כבה את החסימה של אלמנטי מדיה גדולים באתר זה",
+    "message": "הפעל/כבה את החסימה של אלמנטי מדיה גדולים באתר זה",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
@@ -136,7 +136,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "הפעל\/כבה מסננים קוסמטיים באתר זה",
+    "message": "הפעל/כבה מסננים קוסמטיים באתר זה",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
@@ -148,7 +148,7 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "הפעל\/כבה את החסימה של פונטים חיצוניים באתר זה",
+    "message": "הפעל/כבה את החסימה של פונטים חיצוניים באתר זה",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
@@ -196,7 +196,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "CSS\/תמונות צד-3",
+    "message": "CSS/תמונות צד-3",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -280,7 +280,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "אני משתמש מתקדם (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>נדרש לקרוא<\/a>)",
+    "message": "אני משתמש מתקדם (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>נדרש לקרוא</a>)",
     "description": ""
   },
   "settingsAdvancedUserSettings": {
@@ -325,7 +325,7 @@
   },
   "settingsNoCSPReportsPrompt": {
     "message": "חסום דיווחי CSP",
-    "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsStorageUsed": {
     "message": "אחסון בשימוש: {{value}} בתים",
@@ -364,7 +364,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>אפשרות זו מאפשרת פירסור ואיפשור של <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">מסנני &ldquo;ההסתרת האלמנטים&rdquo; התואמים ל Adblock Plus<\/a>. מסננים אלו הם קוסמטיים, הם נועדו להסתיר אלמנטים בדף אשר נחשבים למטרד חזותי, ואשר לא יכולים להיחסם על ידי מנוע חסימת בקשות רשת.<\/p><p>הפעלת פיצ'ר זה מעלה את צריכת הזיכרון של <i>uBlock₀<\/i><\/p>",
+    "message": "<p>אפשרות זו מאפשרת פירסור ואיפשור של <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">מסנני &ldquo;ההסתרת האלמנטים&rdquo; התואמים ל Adblock Plus</a>. מסננים אלו הם קוסמטיים, הם נועדו להסתיר אלמנטים בדף אשר נחשבים למטרד חזותי, ואשר לא יכולים להיחסם על ידי מנוע חסימת בקשות רשת.</p><p>הפעלת פיצ'ר זה מעלה את צריכת הזיכרון של <i>uBlock₀</i></p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -440,7 +440,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "מסנן אחד לכל שורה. המסנן יכול להיות דומיין פשוט, או מסנן המותאם ל- Adblock Plus. שורות עם קידומת <code>!<\/code> לא יפורשו.",
+    "message": "מסנן אחד לכל שורה. המסנן יכול להיות דומיין פשוט, או מסנן המותאם ל- Adblock Plus. שורות עם קידומת <code>!</code> לא יפורשו.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -504,7 +504,7 @@
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
-    "message": "סינטקס חוק: <code>פעולה סוג יעד מקור<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>תיעוד מלא<\/a>).",
+    "message": "סינטקס חוק: <code>פעולה סוג יעד מקור</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>תיעוד מלא</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
@@ -708,11 +708,11 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "המסנן הסטאטי <code>{{filter}}<\/code> נמצא ב:",
+    "message": "המסנן הסטאטי <code>{{filter}}</code> נמצא ב:",
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "המסנן הסטאטי <code>{{filter}}<\/code> לא נמצא בשום אחת מרשימות המסננים המופעלות כרגע",
+    "message": "המסנן הסטאטי <code>{{filter}}</code> לא נמצא בשום אחת מרשימות המסננים המופעלות כרגע",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
@@ -744,7 +744,7 @@
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
-    "message": "{{input}} מסנן\/כלל",
+    "message": "{{input}} מסנן/כלל",
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
@@ -861,11 +861,11 @@
   },
   "showDashboardButton": {
     "message": "הצג את פאנל הקונפיגורציות",
-    "description": "Firefox\/Fennec-specific: Show Dashboard"
+    "description": "Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
     "message": "הצג את המתעד",
-    "description": "Firefox\/Fennec-specific: Show Logger"
+    "description": "Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
     "message": "מכובה",
@@ -881,7 +881,7 @@
   },
   "docblockedNoParamsPrompt": {
     "message": "ללא פרמטרים",
-    "description": "label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
+    "description": "label to be used for the parameter-less URL: https://cloud.githubusercontent.com/assets/585534/9832014/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {
     "message": "נמצא ב:",

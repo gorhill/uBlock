@@ -371,15 +371,12 @@ const netFilterFromUnion = function(toMergeURL, out) {
     ) {
         lastNetFilterHostname = parsedURL.host;
         lastNetFilterUnion = toMergeURL;
-        vAPI.messaging.send(
-            'elementPicker',
-            {
-                what: 'elementPickerEprom',
-                lastNetFilterSession: lastNetFilterSession,
-                lastNetFilterHostname: lastNetFilterHostname,
-                lastNetFilterUnion: lastNetFilterUnion
-            }
-        );
+        vAPI.messaging.send('elementPicker', {
+            what: 'elementPickerEprom',
+            lastNetFilterSession: lastNetFilterSession,
+            lastNetFilterHostname: lastNetFilterHostname,
+            lastNetFilterUnion: lastNetFilterUnion,
+        });
         return;
     }
 
@@ -398,15 +395,12 @@ const netFilterFromUnion = function(toMergeURL, out) {
     lastNetFilterUnion = mergedURL;
 
     // Remember across element picker sessions
-    vAPI.messaging.send(
-        'elementPicker',
-        {
-            what: 'elementPickerEprom',
-            lastNetFilterSession: lastNetFilterSession,
-            lastNetFilterHostname: lastNetFilterHostname,
-            lastNetFilterUnion: lastNetFilterUnion
-        }
-    );
+    vAPI.messaging.send('elementPicker', {
+        what: 'elementPickerEprom',
+        lastNetFilterSession: lastNetFilterSession,
+        lastNetFilterHostname: lastNetFilterHostname,
+        lastNetFilterUnion: lastNetFilterUnion,
+    });
 };
 
 /******************************************************************************/
@@ -854,7 +848,7 @@ const filterToDOMInterface = (( ) => {
         applied = false,
         previewing = false;
 
-    const queryAll = function(filter, callback) {
+    const queryAll = async function(filter, callback) {
         filter = filter.trim();
         if ( filter === lastFilter ) {
             callback(lastResultset);
@@ -883,15 +877,13 @@ const filterToDOMInterface = (( ) => {
             return;
         }
         // Procedural cosmetic filter
-        vAPI.messaging.send(
-            'elementPicker',
-            { what: 'compileCosmeticFilterSelector', selector: selector },
-            response => {
-                lastResultset = fromCompiledCosmeticFilter(response);
-                if ( previewing ) { apply(); }
-                callback(lastResultset);
-            }
-        );
+        const response = await vAPI.messaging.send('elementPicker', {
+            what: 'compileCosmeticFilterSelector',
+            selector,
+        });
+        lastResultset = fromCompiledCosmeticFilter(response);
+        if ( previewing ) { apply(); }
+        callback(lastResultset);
     };
 
     // https://github.com/gorhill/uBlock/issues/1629
@@ -1190,17 +1182,14 @@ const onDialogClicked = function(ev) {
         filterToDOMInterface.preview(false);
         userFilterFromCandidate((filter = undefined, isCosmetic = false) => {
             if ( filter === undefined ) { return; }
-            vAPI.messaging.send(
-                'elementPicker',
-                {
-                    what: 'createUserFilter',
-                    autoComment: true,
-                    filters: filter,
-                    origin: window.location.origin,
-                    pageDomain: window.location.hostname,
-                    killCache: isCosmetic === false,
-                }
-            );
+            vAPI.messaging.send('elementPicker', {
+                what: 'createUserFilter',
+                autoComment: true,
+                filters: filter,
+                origin: window.location.origin,
+                pageDomain: window.location.hostname,
+                killCache: isCosmetic === false,
+            });
             filterToDOMInterface.preview(rawFilterFromTextarea(), true);
             stopPicker();
         });
@@ -1647,8 +1636,12 @@ const startPicker = function(details) {
     highlightElements([], true);
 
     // Try using mouse position
-    if ( details.clientX !== -1 ) {
-        if ( filtersFrom(details.clientX, details.clientY) !== 0 ) {
+    if (
+        details.mouse &&
+        typeof vAPI.mouseClick.x === 'number' &&
+        vAPI.mouseClick.x > 0
+    ) {
+        if ( filtersFrom(vAPI.mouseClick.x, vAPI.mouseClick.y) !== 0 ) {
             showDialog();
             return;
         }
@@ -1697,14 +1690,12 @@ const startPicker = function(details) {
 
 /******************************************************************************/
 
-const bootstrapPicker = function() {
-    pickerRoot.removeEventListener('load', bootstrapPicker);
+const bootstrapPicker = async function() {
     vAPI.shutdown.add(stopPicker);
-    vAPI.messaging.send(
-        'elementPicker',
-        { what: 'elementPickerArguments' },
-        startPicker
-    );
+    const details = await vAPI.messaging.send('elementPicker', {
+        what: 'elementPickerArguments',
+    });
+    startPicker(details);
 };
 
 /******************************************************************************/
@@ -1762,7 +1753,11 @@ vAPI.userStylesheet.apply();
 // https://github.com/gorhill/uBlock/issues/2060
 vAPI.domFilterer.excludeNode(pickerRoot);
 
-pickerRoot.addEventListener('load', bootstrapPicker);
+pickerRoot.addEventListener(
+    'load',
+    ( ) => { bootstrapPicker(); },
+    { once: true }
+);
 document.documentElement.appendChild(pickerRoot);
 
 /******************************************************************************/

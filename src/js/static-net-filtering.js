@@ -63,17 +63,20 @@ const typeNameToTypeValue = {
               'font':  7 << 4,
              'media':  8 << 4,
          'websocket':  9 << 4,
-             'other': 10 << 4,
-             'popup': 11 << 4,  // start of behavorial filtering
-          'popunder': 12 << 4,
-        'main_frame': 13 << 4,  // start of 1st-party-only behavorial filtering
-       'generichide': 14 << 4,
-       'inline-font': 15 << 4,
-     'inline-script': 16 << 4,
-              'data': 17 << 4,  // special: a generic data holder
-          'redirect': 18 << 4,
-            'webrtc': 19 << 4,
-       'unsupported': 20 << 4
+            'beacon': 10 << 4,
+              'ping': 10 << 4,
+             'other': 11 << 4,
+             'popup': 12 << 4,  // start of behavorial filtering
+          'popunder': 13 << 4,
+        'main_frame': 14 << 4,  // start of 1st-party-only behavorial filtering
+       'generichide': 15 << 4,
+      'specifichide': 16 << 4,
+       'inline-font': 17 << 4,
+     'inline-script': 18 << 4,
+              'data': 19 << 4,  // special: a generic data holder
+          'redirect': 20 << 4,
+            'webrtc': 21 << 4,
+       'unsupported': 22 << 4,
 };
 
 const otherTypeBitValue = typeNameToTypeValue.other;
@@ -105,17 +108,54 @@ const typeValueToTypeName = {
      7: 'font',
      8: 'media',
      9: 'websocket',
-    10: 'other',
-    11: 'popup',
-    12: 'popunder',
-    13: 'document',
-    14: 'generichide',
-    15: 'inline-font',
-    16: 'inline-script',
-    17: 'data',
-    18: 'redirect',
-    19: 'webrtc',
-    20: 'unsupported'
+    10: 'ping',
+    11: 'other',
+    12: 'popup',
+    13: 'popunder',
+    14: 'document',
+    15: 'generichide',
+    16: 'specifichide',
+    17: 'inline-font',
+    18: 'inline-script',
+    19: 'data',
+    20: 'redirect',
+    21: 'webrtc',
+    22: 'unsupported',
+};
+
+// https://github.com/gorhill/uBlock/issues/1493
+//   Transpose `ping` into `other` for now.
+const toNormalizedType = {
+               'all': 'all',
+            'beacon': 'ping',
+               'css': 'stylesheet',
+              'data': 'data',
+               'doc': 'main_frame',
+          'document': 'main_frame',
+              'font': 'font',
+             'frame': 'sub_frame',
+      'genericblock': 'unsupported',
+       'generichide': 'generichide',
+             'ghide': 'generichide',
+             'image': 'image',
+       'inline-font': 'inline-font',
+     'inline-script': 'inline-script',
+             'media': 'media',
+            'object': 'object',
+ 'object-subrequest': 'object',
+             'other': 'other',
+              'ping': 'ping',
+          'popunder': 'popunder',
+             'popup': 'popup',
+            'script': 'script',
+      'specifichide': 'specifichide',
+             'shide': 'specifichide',
+        'stylesheet': 'stylesheet',
+       'subdocument': 'sub_frame',
+               'xhr': 'xmlhttprequest',
+    'xmlhttprequest': 'xmlhttprequest',
+            'webrtc': 'unsupported',
+         'websocket': 'websocket',
 };
 
 const BlockImportant = BlockAction | Important;
@@ -130,9 +170,9 @@ const reIsWildcarded = /[\^\*]/;
 // See the following as short-lived registers, used during evaluation. They are
 // valid until the next evaluation.
 
-let urlRegister = '';
-let pageHostnameRegister = '';
-let requestHostnameRegister = '';
+let $requestURL = '';
+let $requestHostname = '';
+let $docHostname = '';
 
 /******************************************************************************/
 
@@ -145,7 +185,7 @@ const isHnAnchored = (( ) => {
     let lastLen = 0, lastBeg = -1, lastEnd = -1;
 
     return (url, matchStart) => {
-        const len = requestHostnameRegister.length;
+        const len = $requestHostname.length;
         if ( len !== lastLen || url.endsWith('://', lastBeg) === false ) {
             lastBeg = len !== 0 ? url.indexOf('://') : -1;
             if ( lastBeg !== -1 ) {
@@ -154,6 +194,7 @@ const isHnAnchored = (( ) => {
             } else {
                 lastEnd = -1;
             }
+            lastLen = len;
         }
         return matchStart < lastEnd && (
             matchStart === lastBeg ||
@@ -237,9 +278,9 @@ const toLogDataInternal = function(categoryBits, tokenHash, filter) {
         opts.push('important');
     }
     if ( categoryBits & 0x008 ) {
-        opts.push('third-party');
+        opts.push('3p');
     } else if ( categoryBits & 0x004 ) {
-        opts.push('first-party');
+        opts.push('1p');
     }
     const type = categoryBits & 0x1F0;
     if ( type !== 0 && type !== typeNameToTypeValue.data ) {
@@ -394,7 +435,7 @@ const FilterPlainHostname = class {
     }
 
     match() {
-        const haystack = requestHostnameRegister;
+        const haystack = $requestHostname;
         const needle = this.s;
         if ( haystack.endsWith(needle) === false ) { return false; }
         const offset = haystack.length - needle.length;
@@ -1057,7 +1098,7 @@ const FilterOriginHit = class {
     }
 
     match(url, tokenBeg) {
-        const haystack = pageHostnameRegister;
+        const haystack = $docHostname;
         const offset = haystack.length - this.hostname.length;
         if ( offset < 0 ) { return false; }
         if ( haystack.charCodeAt(offset) !== this.hostname.charCodeAt(0) ) {
@@ -1106,7 +1147,7 @@ const FilterOriginMiss = class {
     }
 
     match(url, tokenBeg) {
-        const haystack = pageHostnameRegister;
+        const haystack = $docHostname;
         if ( haystack.endsWith(this.hostname) ) {
             const offset = haystack.length - this.hostname.length;
             if (
@@ -1162,7 +1203,7 @@ const FilterOriginHitSet = class {
                 filterOrigin.strFromSlotId(this.domainOpt).split('|')
             );
         }
-        return this.oneOf.matches(pageHostnameRegister) !== -1 &&
+        return this.oneOf.matches($docHostname) !== -1 &&
                this.wrapped.match(url, tokenBeg);
     }
 
@@ -1220,7 +1261,7 @@ const FilterOriginMissSet = class {
                     .split('|')
             );
         }
-        return this.noneOf.matches(pageHostnameRegister) === -1 &&
+        return this.noneOf.matches($docHostname) === -1 &&
                this.wrapped.match(url, tokenBeg);
     }
 
@@ -1288,7 +1329,7 @@ const FilterOriginMixedSet = class {
 
     match(url, tokenBeg) {
         if ( this.oneOf === null ) { this.init(); }
-        let needle = pageHostnameRegister;
+        let needle = $docHostname;
         return this.oneOf.matches(needle) !== -1 &&
                this.noneOf.matches(needle) === -1 &&
                this.wrapped.match(url, tokenBeg);
@@ -1332,9 +1373,9 @@ registerFilterClass(FilterOriginMixedSet);
 /******************************************************************************/
 
 const FilterDataHolder = class {
-    constructor(dataType, dataStr) {
+    constructor(dataType, data) {
         this.dataType = dataType;
-        this.dataStr = dataStr;
+        this.data = data;
         this.wrapped = undefined;
     }
 
@@ -1342,12 +1383,18 @@ const FilterDataHolder = class {
         return this.wrapped.match(url, tokenBeg);
     }
 
+    matchAndFetchData(type, url, tokenBeg, out) {
+        if ( this.dataType === type && this.match(url, tokenBeg) ) {
+            out.push(this);
+        }
+    }
+
     logData() {
         const out = this.wrapped.logData();
-        out.compiled = [ this.fid, this.dataType, this.dataStr, out.compiled ];
+        out.compiled = [ this.fid, this.dataType, this.data, out.compiled ];
         let opt = this.dataType;
-        if ( this.dataStr !== '' ) {
-            opt += `=${this.dataStr}`;
+        if ( this.data !== '' ) {
+            opt += `=${this.data}`;
         }
         if ( out.opts === undefined ) {
             out.opts = opt;
@@ -1361,13 +1408,13 @@ const FilterDataHolder = class {
         return [
             this.fid,
             this.dataType,
-            this.dataStr,
+            this.data,
             this.wrapped.compile(toSelfie)
         ];
     }
 
     static compile(details) {
-        return [ FilterDataHolder.fid, details.dataType, details.dataStr ];
+        return [ FilterDataHolder.fid, details.dataType, details.data ];
     }
 
     static load(args) {
@@ -1379,26 +1426,29 @@ const FilterDataHolder = class {
 
 registerFilterClass(FilterDataHolder);
 
-// Helper class for storing instances of FilterDataHolder.
+// Helper class for storing instances of FilterDataHolder which were found to
+// be a match.
 
-const FilterDataHolderEntry = class {
-    constructor(categoryBits, tokenHash, fdata) {
-        this.categoryBits = categoryBits;
-        this.tokenHash = tokenHash;
-        this.filter = filterFromCompiledData(fdata);
-        this.next = undefined;
+const FilterDataHolderResult = class {
+    constructor(bits, th, f) {
+        this.bits = bits;
+        this.th = th;
+        this.f = f;
+    }
+
+    get data() {
+        return this.f.data;
+    }
+
+    get result() {
+        return (this.bits & AllowAction) === 0 ? 1 : 2;
     }
 
     logData() {
-        return toLogDataInternal(this.categoryBits, this.tokenHash, this.filter);
-    }
-
-    compile() {
-        return [ this.categoryBits, this.tokenHash, this.filter.compile() ];
-    }
-
-    static load(data) {
-        return new FilterDataHolderEntry(data[0], data[1], data[2]);
+        const r = toLogDataInternal(this.bits, this.th, this.f);
+        r.source = 'static';
+        r.result = this.result;
+        return r;
     }
 };
 
@@ -1421,9 +1471,9 @@ const FilterHostnameDict = class {
     }
 
     match() {
-        const pos = this.dict.matches(requestHostnameRegister);
+        const pos = this.dict.matches($requestHostname);
         if ( pos === -1 ) { return false; }
-        this.h = requestHostnameRegister.slice(pos);
+        this.h = $requestHostname.slice(pos);
         return true;
     }
 
@@ -1493,9 +1543,9 @@ const FilterJustOrigin = class {
     }
 
     match() {
-        const pos = this.dict.matches(pageHostnameRegister);
+        const pos = this.dict.matches($docHostname);
         if ( pos === -1 ) { return false; }
-        this.h = pageHostnameRegister.slice(pos);
+        this.h = $docHostname.slice(pos);
         return true;
     }
 
@@ -1583,6 +1633,11 @@ const FilterPair = class {
             return true;
         }
         return false;
+    }
+
+    matchAndFetchData(type, url, tokenBeg, out) {
+        this.f1.matchAndFetchData(type, url, tokenBeg, out);
+        this.f2.matchAndFetchData(type, url, tokenBeg, out);
     }
 
     logData() {
@@ -1704,12 +1759,18 @@ const FilterBucket = class {
         return false;
     }
 
+    matchAndFetchData(type, url, tokenBeg, out) {
+        for ( const f of this.filters ) {
+            f.matchAndFetchData(type, url, tokenBeg, out);
+        }
+    }
+
     logData() {
         if (
             this.f === this.plainFilter ||
             this.f === this.plainHnAnchoredFilter
         ) {
-            this.f.s = urlRegister.slice(
+            this.f.s = $requestURL.slice(
                 this.trieResult >>> 16,
                 this.trieResult & 0xFFFF
             );
@@ -1838,48 +1899,12 @@ const FilterParser = function() {
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/1493
-//   Transpose `ping` into `other` for now.
-
-FilterParser.prototype.toNormalizedType = {
-               'all': 'all',
-            'beacon': 'other',
-               'css': 'stylesheet',
-              'data': 'data',
-               'doc': 'main_frame',
-          'document': 'main_frame',
-          'elemhide': 'generichide',
-              'font': 'font',
-             'frame': 'sub_frame',
-      'genericblock': 'unsupported',
-       'generichide': 'generichide',
-             'image': 'image',
-       'inline-font': 'inline-font',
-     'inline-script': 'inline-script',
-             'media': 'media',
-            'object': 'object',
- 'object-subrequest': 'object',
-             'other': 'other',
-              'ping': 'other',
-          'popunder': 'popunder',
-             'popup': 'popup',
-            'script': 'script',
-        'stylesheet': 'stylesheet',
-       'subdocument': 'sub_frame',
-               'xhr': 'xmlhttprequest',
-    'xmlhttprequest': 'xmlhttprequest',
-            'webrtc': 'unsupported',
-         'websocket': 'websocket',
-};
-
-/******************************************************************************/
-
 FilterParser.prototype.reset = function() {
     this.action = BlockAction;
     this.anchor = 0;
     this.badFilter = false;
     this.dataType = undefined;
-    this.dataStr = undefined;
+    this.data = undefined;
     this.elemHiding = false;
     this.f = '';
     this.firstParty = false;
@@ -1915,7 +1940,7 @@ FilterParser.prototype.bitFromType = function(type) {
 
 FilterParser.prototype.parseTypeOption = function(raw, not) {
     const typeBit = raw !== 'all'
-        ? this.bitFromType(this.toNormalizedType[raw])
+        ? this.bitFromType(toNormalizedType[raw])
         : allTypesBits;
 
     if ( not ) {
@@ -1974,7 +1999,7 @@ FilterParser.prototype.parseOptions = function(s) {
             this.parsePartyOption(true, not);
             continue;
         }
-        if ( this.toNormalizedType.hasOwnProperty(opt) ) {
+        if ( toNormalizedType.hasOwnProperty(opt) ) {
             this.parseTypeOption(opt, not);
             continue;
         }
@@ -2008,16 +2033,17 @@ FilterParser.prototype.parseOptions = function(s) {
         ) {
             this.parseTypeOption('data', not);
             this.dataType = 'csp';
-            this.dataStr = opt.slice(4).trim();
+            this.data = opt.slice(4).trim();
             continue;
         }
         if ( opt === 'csp' && this.action === AllowAction ) {
             this.parseTypeOption('data', not);
             this.dataType = 'csp';
-            this.dataStr = '';
+            this.data = '';
             continue;
         }
-        // Used by Adguard, purpose is unclear -- just ignore for now.
+        // Used by Adguard:
+        // https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters?aid=16593#empty-modifier
         if ( opt === 'empty' || opt === 'mp4' ) {
             if ( this.redirect !== 0 ) {
                 this.unsupported = true;
@@ -2029,6 +2055,13 @@ FilterParser.prototype.parseOptions = function(s) {
         // https://github.com/uBlockOrigin/uAssets/issues/192
         if ( opt === 'badfilter' ) {
             this.badFilter = true;
+            continue;
+        }
+        // https://www.reddit.com/r/uBlockOrigin/comments/d6vxzj/
+        //   Add support for `elemhide`. Rarely used but it happens.
+        if ( opt === 'elemhide' || opt === 'ehide' ) {
+            this.parseTypeOption('specifichide', not);
+            this.parseTypeOption('generichide', not);
             continue;
         }
         // Unrecognized filter option: ignore whole filter.
@@ -2385,9 +2418,9 @@ FilterContainer.prototype.reset = function() {
     FilterBucket.reset();
 
     // Runtime registers
-    this.catbitsRegister = 0;
-    this.tokenRegister = 0;
-    this.filterRegister = null;
+    this.$catbits = 0;
+    this.$tokenHash = 0;
+    this.$filter = null;
 };
 
 /******************************************************************************/
@@ -2395,7 +2428,6 @@ FilterContainer.prototype.reset = function() {
 FilterContainer.prototype.freeze = function() {
     const filterPairId = FilterPair.fid;
     const filterBucketId = FilterBucket.fid;
-    const filterDataHolderId = FilterDataHolder.fid;
     const redirectTypeValue = typeNameToTypeValue.redirect;
     const unserialize = µb.CompiledLineIO.unserialize;
 
@@ -2418,20 +2450,6 @@ FilterContainer.prototype.freeze = function() {
         // Plain static filters.
         const tokenHash = args[1];
         const fdata = args[2];
-
-        // Special treatment: data-holding filters are stored separately
-        // because they require special matching algorithm (unlike other
-        // filters, ALL hits must be reported).
-        if ( fdata[0] === filterDataHolderId ) {
-            let entry = new FilterDataHolderEntry(bits, tokenHash, fdata);
-            let bucket = this.dataFilters.get(tokenHash);
-            if ( bucket !== undefined ) {
-                entry.next = bucket;
-            }
-            this.dataFilters.set(tokenHash, entry);
-            this.urlTokenizer.addKnownToken(tokenHash);
-            continue;
-        }
 
         let bucket = this.categories.get(bits);
         if ( bucket === undefined ) {
@@ -2531,17 +2549,6 @@ FilterContainer.prototype.toSelfie = function(path) {
         return selfie;
     };
 
-    const dataFiltersToSelfie = function(dataFilters) {
-        const selfie = [];
-        for ( let entry of dataFilters.values() ) {
-            do {
-                selfie.push(entry.compile(true));
-                entry = entry.next;
-            } while ( entry !== undefined );
-        }
-        return selfie;
-    };
-
     filterOrigin.optimize();
 
     return Promise.all([
@@ -2567,7 +2574,6 @@ FilterContainer.prototype.toSelfie = function(path) {
                 blockFilterCount: this.blockFilterCount,
                 discardedCount: this.discardedCount,
                 categories: categoriesToSelfie(this.categories),
-                dataFilters: dataFiltersToSelfie(this.dataFilters),
                 urlTokenizer: this.urlTokenizer.toSelfie(),
                 filterOriginStrSlots: filterOrigin.strSlots,
             })
@@ -2619,14 +2625,6 @@ FilterContainer.prototype.fromSelfie = function(path) {
                     tokenMap.set(token, filterFromCompiledData(fdata));
                 }
                 this.categories.set(catbits, tokenMap);
-            }
-            for ( const dataEntry of selfie.dataFilters ) {
-                const entry = FilterDataHolderEntry.load(dataEntry);
-                const bucket = this.dataFilters.get(entry.tokenHash);
-                if ( bucket !== undefined ) {
-                    entry.next = bucket;
-                }
-                this.dataFilters.set(entry.tokenHash, entry);
             }
             return true;
         }),
@@ -2835,99 +2833,109 @@ FilterContainer.prototype.fromCompiledContent = function(reader) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.matchAndFetchData = function(
-    dataType,
-    requestURL,
-    out,
-    outlog
+FilterContainer.prototype.realmMatchAndFetchData = function(
+    realmBits,
+    partyBits,
+    type,
+    out
 ) {
-    if ( this.dataFilters.size === 0 ) { return; }
+    const bits01 = realmBits | typeNameToTypeValue.data;
+    const bits11 = realmBits | typeNameToTypeValue.data | partyBits;
 
-    const url = this.urlTokenizer.setURL(requestURL);
+    const bucket01 = this.categories.get(bits01);
+    const bucket11 = partyBits !== 0
+        ? this.categories.get(bits11)
+        : undefined;
 
-    pageHostnameRegister = requestHostnameRegister =
-        µb.URI.hostnameFromURI(url);
+    if ( bucket01 === undefined && bucket11 === undefined ) { return false; }
 
-    // We need to visit ALL the matching filters.
-    const toAddImportant = new Map();
-    const toAdd = new Map();
-    const toRemove = new Map();
-
+    const url = $requestURL;
     const tokenHashes = this.urlTokenizer.getTokens();
-    let i = 0;
-    while ( i < 32 ) {
-        const tokenHash = tokenHashes[i++];
-        if ( tokenHash === 0 ) { break; }
-        const tokenOffset = tokenHashes[i++];
-        let entry = this.dataFilters.get(tokenHash);
-        while ( entry !== undefined ) {
-            const f = entry.filter;
-            if ( f.match(url, tokenOffset) === true ) {
-                if ( entry.categoryBits & 0x001 ) {
-                    toRemove.set(f.dataStr, entry);
-                } else if ( entry.categoryBits & 0x002 ) {
-                    toAddImportant.set(f.dataStr, entry);
-                } else {
-                    toAdd.set(f.dataStr, entry);
-                }
-            }
-            entry = entry.next;
-        }
-    }
-    let entry = this.dataFilters.get(this.noTokenHash);
-    while ( entry !== undefined ) {
-        const f = entry.filter;
-        if ( f.match(url) === true ) {
-            if ( entry.categoryBits & 0x001 ) {
-                toRemove.set(f.dataStr, entry);
-            } else if ( entry.categoryBits & 0x002 ) {
-                toAddImportant.set(f.dataStr, entry);
-            } else {
-                toAdd.set(f.dataStr, entry);
+    const filters = [];
+    let i = 0, tokenBeg = 0, f;
+    for (;;) {
+        const th = tokenHashes[i];
+        if ( th === 0 ) { return; }
+        tokenBeg = tokenHashes[i+1];
+        if (
+            (bucket01 !== undefined) &&
+            (f = bucket01.get(th)) !== undefined
+        ) {
+            filters.length = 0;
+            f.matchAndFetchData(type, url, tokenBeg, filters);
+            for ( f of filters ) {
+                out.set(f.data, new FilterDataHolderResult(bits01, th, f));
             }
         }
-        entry = entry.next;
+        if (
+            (bucket11 !== undefined) &&
+            (f = bucket11.get(th)) !== undefined
+        ) {
+            filters.length = 0;
+            f.matchAndFetchData(type, url, tokenBeg, filters);
+            for ( f of filters ) {
+                out.set(f.data, new FilterDataHolderResult(bits11, th, f));
+            }
+        }
+        i += 2;
     }
+};
 
-    if ( toAddImportant.size === 0 && toAdd.size === 0 ) { return; }
+/******************************************************************************/
 
-    // Remove entries overriden by other filters.
+FilterContainer.prototype.matchAndFetchData = function(fctxt, type) {
+    $requestURL = this.urlTokenizer.setURL(fctxt.url);
+    $docHostname = fctxt.getDocHostname();
+    $requestHostname = fctxt.getHostname();
+
+    const partyBits = fctxt.is3rdPartyToDoc() ? ThirdParty : FirstParty;
+
+    const toAddImportant = new Map();
+    this.realmMatchAndFetchData(BlockImportant, partyBits, type, toAddImportant);
+
+    const toAdd = new Map();
+    this.realmMatchAndFetchData(BlockAction, partyBits, type, toAdd);
+
+    if ( toAddImportant.size === 0 && toAdd.size === 0 ) { return []; }
+
+    const toRemove = new Map();
+    this.realmMatchAndFetchData(AllowAction, partyBits, type, toRemove);
+
+    // Remove entries overriden by important block filters.
     for ( const key of toAddImportant.keys() ) {
         toAdd.delete(key);
         toRemove.delete(key);
     }
-    for ( const key of toRemove.keys() ) {
-        if ( key === '' ) {
+
+    // Special case, except-all:
+    // - Except-all applies only if there is at least one normal block filters.
+    // - Except-all does not apply to important block filters.
+    if ( toRemove.has('') ) {
+        if ( toAdd.size !== 0 ) {
             toAdd.clear();
-            break;
+            toRemove.forEach((v, k, m) => {
+                if ( k !== '' ) { m.delete(k); }
+            });
+        } else {
+            toRemove.clear();
         }
-        toAdd.delete(key);
+    }
+    // Remove excepted block filters and unused exception filters.
+    else {
+        for ( const key of toRemove.keys() ) {
+            if ( toAdd.has(key) ) {
+                toAdd.delete(key);
+            } else {
+                toRemove.delete(key);
+            }
+        }
     }
 
-    for ( const entry of toAddImportant ) {
-        out.push(entry[0]);
-        if ( outlog === undefined ) { continue; }
-        let logData = entry[1].logData();
-        logData.source = 'static';
-        logData.result = 1;
-        outlog.push(logData);
+    // Merge important and normal block filters
+    for ( const [ key, entry ] of toAddImportant ) {
+        toAdd.set(key, entry);
     }
-    for ( const entry of toAdd ) {
-        out.push(entry[0]);
-        if ( outlog === undefined ) { continue; }
-        let logData = entry[1].logData();
-        logData.source = 'static';
-        logData.result = 1;
-        outlog.push(logData);
-    }
-    if ( outlog !== undefined ) {
-        for ( const entry of toRemove.values()) {
-            const logData = entry.logData();
-            logData.source = 'static';
-            logData.result = 2;
-            outlog.push(logData);
-        }
-    }
+    return Array.from(toAdd.values()).concat(Array.from(toRemove.values()));
 };
 
 /******************************************************************************/
@@ -2996,7 +3004,7 @@ FilterContainer.prototype.realmMatchString = function(
     }
     // Pattern-based filters
     else {
-        const url = urlRegister;
+        const url = $requestURL;
         const tokenHashes = this.urlTokenizer.getTokens();
         let i = 0, tokenBeg = 0;
         for (;;) {
@@ -3039,9 +3047,9 @@ FilterContainer.prototype.realmMatchString = function(
         }
     }
 
-    this.catbitsRegister = catBits;
-    this.tokenRegister = tokenHash;
-    this.filterRegister = f;
+    this.$catbits = catBits;
+    this.$tokenHash = tokenHash;
+    this.$filter = f;
     return true;
 };
 
@@ -3055,17 +3063,18 @@ FilterContainer.prototype.realmMatchString = function(
 //   filter if and only if there was a hit on an exception filter.
 // https://github.com/gorhill/uBlock/issues/2103
 //   User may want to override `generichide` exception filters.
+// https://www.reddit.com/r/uBlockOrigin/comments/d6vxzj/
+//   Add support for `specifichide`.
 
-FilterContainer.prototype.matchStringGenericHide = function(requestURL) {
-    const typeBits = typeNameToTypeValue['generichide'] | 0x80000000;
+FilterContainer.prototype.matchStringElementHide = function(type, url) {
+    const typeBits = typeNameToTypeValue[`${type}hide`] | 0x80000000;
 
     // Prime tokenizer: we get a normalized URL in return.
-    urlRegister = this.urlTokenizer.setURL(requestURL);
-    this.filterRegister = null;
+    $requestURL = this.urlTokenizer.setURL(url);
+    this.$filter = null;
 
     // These registers will be used by various filters
-    pageHostnameRegister = requestHostnameRegister =
-        µb.URI.hostnameFromURI(requestURL);
+    $docHostname = $requestHostname = µb.URI.hostnameFromURI(url);
 
     // Exception filters
     if ( this.realmMatchString(AllowAction, typeBits, FirstParty) ) {
@@ -3105,12 +3114,12 @@ FilterContainer.prototype.matchString = function(fctxt, modifiers = 0) {
     const partyBits = fctxt.is3rdPartyToDoc() ? ThirdParty : FirstParty;
 
     // Prime tokenizer: we get a normalized URL in return.
-    urlRegister = this.urlTokenizer.setURL(fctxt.url);
-    this.filterRegister = null;
+    $requestURL = this.urlTokenizer.setURL(fctxt.url);
+    this.$filter = null;
 
     // These registers will be used by various filters
-    pageHostnameRegister = fctxt.getDocHostname();
-    requestHostnameRegister = fctxt.getHostname();
+    $docHostname = fctxt.getDocHostname();
+    $requestHostname = fctxt.getHostname();
 
     // Important block filters.
     if ( this.realmMatchString(BlockImportant, typeBits, partyBits) ) {
@@ -3130,17 +3139,21 @@ FilterContainer.prototype.matchString = function(fctxt, modifiers = 0) {
 /******************************************************************************/
 
 FilterContainer.prototype.toLogData = function() {
-    if ( this.filterRegister === null ) { return; }
+    if ( this.$filter === null ) { return; }
     const logData = toLogDataInternal(
-        this.catbitsRegister,
-        this.tokenRegister,
-        this.filterRegister
+        this.$catbits,
+        this.$tokenHash,
+        this.$filter
     );
     logData.source = 'static';
-    logData.tokenHash = this.tokenRegister;
-    logData.result = this.filterRegister === null
+    logData.tokenHash = this.$tokenHash;
+    logData.result = this.$filter === null
         ? 0
-        : (this.catbitsRegister & 1 ? 2 : 1);
+        : (
+            (this.$catbits & 1) !== 0
+                ? 2
+                : 1
+        );
     return logData;
 };
 

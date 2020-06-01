@@ -11,6 +11,7 @@
 		"safari": false,
 		"self": false,
 		"vAPI": false,
+		"webext": false,
 		"µBlock": false
 	},
 	"laxbreak": true,

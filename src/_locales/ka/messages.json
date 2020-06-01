@@ -64,8 +64,8 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "დაწკაპუნება: ამ საიტისთვის uBlock-ის ჩართვა\/გამორთვა.\n\nCtrl+დაწკაპუნება: uBlock-ის მხოლოდ ამ გვერდზე გამორთვა.",
-    "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message": "დაწკაპუნება: ამ საიტისთვის uBlock-ის ჩართვა/გამორთვა.\n\nCtrl+დაწკაპუნება: uBlock-ის მხოლოდ ამ გვერდზე გამორთვა.",
+    "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
     "message": "დააწკაპეთ uBlock₀-ის გამოსართავად ამ საიტზე.\n\nCtrl+დაწკაპებით uBlock₀ მხოლოდ ამ გვერდზე გამოირთვება.",
@@ -112,7 +112,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "ამ საიტზე ყველა ამომხტომი ფირნიშის შეზღუდვის ჩართვა\/გამორთვა",
+    "message": "ამ საიტზე ყველა ამომხტომი ფირნიშის შეზღუდვის ჩართვა/გამორთვა",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
@@ -124,7 +124,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "დიდი მედია-ელემენტების შეზღუდვის ჩართვა\/გამორთვა ამ საიტზე",
+    "message": "დიდი მედია-ელემენტების შეზღუდვის ჩართვა/გამორთვა ამ საიტზე",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
@@ -136,7 +136,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "ხილული ელემენტების ფილტრაციის ჩართვა\/გამორთვა ამ საიტზე",
+    "message": "ხილული ელემენტების ფილტრაციის ჩართვა/გამორთვა ამ საიტზე",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
@@ -148,7 +148,7 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "ვებშრიფტების შეზღუდვის ჩართვა\/გამორთვა ამ საიტზე",
+    "message": "ვებშრიფტების შეზღუდვის ჩართვა/გამორთვა ამ საიტზე",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
@@ -196,7 +196,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "მესამე მხრის css\/ნახატები",
+    "message": "მესამე მხრის css/ნახატები",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -280,7 +280,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "მე ვარ გამოცდილი მომხმარებელი (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>აუცილებლად წასაკითხი<\/a>)",
+    "message": "მე ვარ გამოცდილი მომხმარებელი (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>აუცილებლად წასაკითხი</a>)",
     "description": ""
   },
   "settingsAdvancedUserSettings": {
@@ -325,7 +325,7 @@
   },
   "settingsNoCSPReportsPrompt": {
     "message": "CSP მოხსენებების აკრძალვა",
-    "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsStorageUsed": {
     "message": "გამოყენებული მოცულობა: {{value}} ბაიტი",
@@ -364,7 +364,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>ეს პარამეტრი <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-სთან თავსებადი &ldquo;ელემენტის დასამალი&rdquo; ფილტრების<\/a> დამუშავებისა და გამოყენების შესაძლებლობას იძლევა. ეს ფილტრები, ძირითადად, იმ ხილული ელემენტების დასამალად გამოიყენება ვებგვერდზე, რომელსაც ქსელის მოთხოვნაზე დაფუძნებული ფილტრაციის საშუალებები ვერ ზღუდავს.<\/p><p>ამ შესაძლებლობის ჩართვის შედეგად გაიზრდება uBlock₀-ის მიერ მეხსიერების მოხმარება.<\/p>",
+    "message": "<p>ეს პარამეტრი <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">Adblock Plus-სთან თავსებადი &ldquo;ელემენტის დასამალი&rdquo; ფილტრების</a> დამუშავებისა და გამოყენების შესაძლებლობას იძლევა. ეს ფილტრები, ძირითადად, იმ ხილული ელემენტების დასამალად გამოიყენება ვებგვერდზე, რომელსაც ქსელის მოთხოვნაზე დაფუძნებული ფილტრაციის საშუალებები ვერ ზღუდავს.</p><p>ამ შესაძლებლობის ჩართვის შედეგად გაიზრდება uBlock₀-ის მიერ მეხსიერების მოხმარება.</p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -504,7 +504,7 @@
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
-    "message": "წესის აგებულება: <code>წყარო დანიშნულება მოთხოვნის სახე მოქმედება<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>მასალები სრულად<\/a>).",
+    "message": "წესის აგებულება: <code>წყარო დანიშნულება მოთხოვნის სახე მოქმედება</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>მასალები სრულად</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
@@ -560,11 +560,11 @@
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
-    "message": "DOM-დამკვირვებლის ჩართვა\/გამორთვა",
+    "message": "DOM-დამკვირვებლის ჩართვა/გამორთვა",
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "ამომხტომი არეს ჩართვა\/გამორთვა",
+    "message": "ამომხტომი არეს ჩართვა/გამორთვა",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
@@ -584,7 +584,7 @@
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "ჩანაწერების გამორჩევის ჩართვა\/გამორთვა",
+    "message": "ჩანაწერების გამორჩევის ჩართვა/გამორთვა",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
@@ -708,11 +708,11 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "მუდმივი ფილტრი <code>{{filter}}<\/code> ნაპოვნია სიაში:",
+    "message": "მუდმივი ფილტრი <code>{{filter}}</code> ნაპოვნია სიაში:",
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "მუდმივი ფილტრი <code>{{filter}}<\/code> ვერ მოიძებნა ამჟამად გამოყენებულ ფილტრებს შორის",
+    "message": "მუდმივი ფილტრი <code>{{filter}}</code> ვერ მოიძებნა ამჟამად გამოყენებულ ფილტრებს შორის",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
@@ -744,7 +744,7 @@
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
-    "message": "{{input}} ფილტრი\/წესი",
+    "message": "{{input}} ფილტრი/წესი",
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
@@ -861,11 +861,11 @@
   },
   "showDashboardButton": {
     "message": "ხელსაწყოების გვერდის ჩვენება",
-    "description": "Firefox\/Fennec-specific: Show Dashboard"
+    "description": "Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
     "message": "აღრიცხვის ჩვენება",
-    "description": "Firefox\/Fennec-specific: Show Logger"
+    "description": "Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
     "message": "გამორთული",
@@ -881,7 +881,7 @@
   },
   "docblockedNoParamsPrompt": {
     "message": "პარამეტრების გარეშე",
-    "description": "label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
+    "description": "label to be used for the parameter-less URL: https://cloud.githubusercontent.com/assets/585534/9832014/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {
     "message": "პოვნა:",
@@ -956,7 +956,7 @@
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "ჩაკეტილი გადაადგილების ჩართვა\/გამორთვა",
+    "message": "ჩაკეტილი გადაადგილების ჩართვა/გამორთვა",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {

@@ -64,11 +64,11 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Klik: gaitu\/ezgaitu uBlock₀ gune honetan.\n\nKtrl+klik: ezgaitu uBlock₀ orri honetan soilik.",
-    "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message": "Klik: gaitu/ezgaitu uBlock₀ gune honetan.\n\nKtrl+klik: ezgaitu uBlock₀ orri honetan soilik.",
+    "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Klik: Gaitu\/ezgaitu uBlock₀ gune honetan.\n\nKtrl+klik: Desgaitu uBlock₀ orri honetan soilik.",
+    "message": "Klik: Gaitu/ezgaitu uBlock₀ gune honetan.\n\nKtrl+klik: Desgaitu uBlock₀ orri honetan soilik.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
@@ -196,7 +196,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "Hirugarrengoen CSS\/Irudiak",
+    "message": "Hirugarrengoen CSS/Irudiak",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -220,7 +220,7 @@
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
-    "message": "{{count}} \/ {{total}}",
+    "message": "{{count}} / {{total}}",
     "description": "appears in popup"
   },
   "pickerCreate": {
@@ -252,7 +252,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Blokeatu elementua",
+    "message": "Blokeatu elementua...",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -280,7 +280,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Erabiltzaile aurreratua naiz (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Irakurri beharrekoa<\/a>)",
+    "message": "Erabiltzaile aurreratua naiz (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>Irakurri beharrekoa</a>)",
     "description": ""
   },
   "settingsAdvancedUserSettings": {
@@ -325,7 +325,7 @@
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Blokeatu CSP txostenak",
-    "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsStorageUsed": {
     "message": "Erabilitako biltegiratzea: {{value}} byte",
@@ -364,7 +364,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Aukera honek <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plusekin bateragarriak diren &ldquo;elementuak ezkutatzeko&rdquo; iragazkiak<\/a> prozesatzea eta ezartzea gaitzen du. Iragazki hauek nagusiki kosmetikoak dira, web orri batean itsusitzat jo diren eta sare iragazkien bidez blokeatzerik ez dauden elementuak ezkutatzeko balio dute.<\/p><p>Ezaugarri hau gaitzeak uBlock₀en memoria erabilera handitzen du.<\/p>",
+    "message": "<p>Aukera honek <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">Adblock Plusekin bateragarriak diren &ldquo;elementuak ezkutatzeko&rdquo; iragazkiak</a> prozesatzea eta ezartzea gaitzen du. Iragazki hauek nagusiki kosmetikoak dira, web orri batean itsusitzat jo diren eta sare iragazkien bidez blokeatzerik ez dauden elementuak ezkutatzeko balio dute.</p><p>Ezaugarri hau gaitzeak uBlock₀en memoria erabilera handitzen du.</p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -440,7 +440,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Iragazki bat lerroko. Iragazkia hostalari izen soila izan daiteke, edo Adblock Plusekin bateragarria den iragazki bat. Hasieran <code>!<\/code> duten lerroak ezikusiko dira.",
+    "message": "Iragazki bat lerroko. Iragazkia hostalari izen soila izan daiteke, edo Adblock Plusekin bateragarria den iragazki bat. Hasieran <code>!</code> duten lerroak ezikusiko dira.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -504,7 +504,7 @@
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
-    "message": "Arauen sintaxia: <code>jatorria helburua mota ekintza<\/code>(<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>Dokumentazio osoa<\/a>).",
+    "message": "Arauen sintaxia: <code>jatorria helburua mota ekintza</code>(<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>Dokumentazio osoa</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
@@ -708,11 +708,11 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "<code>{{filter}}<\/code> iragazki estatikoa aurkitu da hemen:",
+    "message": "<code>{{filter}}</code> iragazki estatikoa aurkitu da hemen:",
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "<code>{{filter}}<\/code> iragazki estatikoa ezin izan da aurkitu orain aktibatutako iragazki zerrendetan",
+    "message": "<code>{{filter}}</code> iragazki estatikoa ezin izan da aurkitu orain aktibatutako iragazki zerrendetan",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
@@ -744,7 +744,7 @@
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
-    "message": "{{input}} Iragazkia\/araua",
+    "message": "{{input}} Iragazkia/araua",
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
@@ -861,11 +861,11 @@
   },
   "showDashboardButton": {
     "message": "Bistaratu kontrol panela",
-    "description": "Firefox\/Fennec-specific: Show Dashboard"
+    "description": "Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
     "message": "Bistaratu egunkaria",
-    "description": "Firefox\/Fennec-specific: Show Logger"
+    "description": "Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
     "message": "itzalita",
@@ -881,7 +881,7 @@
   },
   "docblockedNoParamsPrompt": {
     "message": "parametrorik gabe",
-    "description": "label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
+    "description": "label to be used for the parameter-less URL: https://cloud.githubusercontent.com/assets/585534/9832014/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {
     "message": "Hemen aurkitua:",

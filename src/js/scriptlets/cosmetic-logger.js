@@ -24,6 +24,7 @@
 /******************************************************************************/
 
 (( ) => {
+// >>>>>>>> start of private namespace
 
 /******************************************************************************/
 
@@ -45,6 +46,7 @@ let declarativeStyleStr;
 const proceduralDict = new Map();
 const exceptionDict = new Map();
 let exceptionStr;
+const proceduralExceptionDict = new Map();
 const nodesToProcess = new Set();
 const loggedSelectors = new Set();
 
@@ -129,13 +131,15 @@ const processDeclarativeStyle = function(out) {
         declarativeStyleStr = safeGroupSelectors(declarativeStyleDict.keys());
     }
     if ( document.querySelector(declarativeStyleStr) === null ) { return; }
-    for ( const [ selector, style ] of declarativeStyleDict ) {
+    for ( const selector of declarativeStyleDict.keys() ) {
         if ( safeQuerySelector(selector) === null ) { continue; }
-        const raw = `##${selector}:style(${style})`;
-        out.push(raw);
+        for ( const style of declarativeStyleDict.get(selector) ) {
+            const raw = `##${selector}:style(${style})`;
+            out.push(raw);
+            loggedSelectors.add(raw);
+        }
         declarativeStyleDict.delete(selector);
         declarativeStyleStr = undefined;
-        loggedSelectors.add(raw);
     }
 };
 
@@ -169,6 +173,17 @@ const processExceptions = function(out) {
 
 /******************************************************************************/
 
+const processProceduralExceptions = function(out) {
+    if ( proceduralExceptionDict.size === 0 ) { return; }
+    for ( const exception of proceduralExceptionDict.values() ) {
+        if ( exception.test() === false ) { continue; }
+        out.push(`#@#${exception.raw}`);
+        proceduralExceptionDict.delete(exception.raw);
+    }
+};
+
+/******************************************************************************/
+
 const processTimer = new vAPI.SafeAnimationFrame(( ) => {
     //console.time('dom logger/scanning for matches');
     processTimer.clear();
@@ -190,20 +205,18 @@ const processTimer = new vAPI.SafeAnimationFrame(( ) => {
     processDeclarativeStyle(toLog);
     processProcedural(toLog);
     processExceptions(toLog);
+    processProceduralExceptions(toLog);
 
     nodesToProcess.clear();
 
     if ( toLog.length === 0 ) { return; }
 
-    vAPI.messaging.send(
-        'scriptlets',
-        {
-            what: 'logCosmeticFilteringData',
-            frameURL: window.location.href,
-            frameHostname: window.location.hostname,
-            matchedSelectors: toLog,
-        }
-    );
+    vAPI.messaging.send('scriptlets', {
+        what: 'logCosmeticFilteringData',
+        frameURL: window.location.href,
+        frameHostname: window.location.hostname,
+        matchedSelectors: toLog,
+    });
     //console.timeEnd('dom logger/scanning for matches');
 });
 
@@ -229,8 +242,13 @@ const handlers = {
         for ( const entry of (changes.declarative || []) ) {
             for ( let selector of entry[0].split(',\n') ) {
                 if ( entry[1] !== 'display:none!important;' ) {
-                    declarativeStyleDict.set(selector, entry[1]);
                     declarativeStyleStr = undefined;
+                    const styles = declarativeStyleDict.get(selector);
+                    if ( styles === undefined ) {
+                        declarativeStyleDict.set(selector, [ entry[1] ]);
+                        continue;
+                    }
+                    styles.push(entry[1]);
                     continue;
                 }
                 if ( loggedSelectors.has(selector) ) { continue; }
@@ -254,12 +272,19 @@ const handlers = {
         if ( Array.isArray(changes.exceptions) ) {
             for ( const selector of changes.exceptions ) {
                 if ( loggedSelectors.has(selector) ) { continue; }
-                if ( selector.charCodeAt(0) === 0x7B /* '{' */ ) {
-                    const details = JSON.parse(selector);
-                    exceptionDict.set(details.style[0], details.raw);
-                } else {
+                if ( selector.charCodeAt(0) !== 0x7B /* '{' */ ) {
                     exceptionDict.set(selector, selector);
+                    continue;
                 }
+                const details = JSON.parse(selector);
+                if ( Array.isArray(details.style) ) {
+                    exceptionDict.set(details.style[0], details.raw);
+                    continue;
+                }
+                proceduralExceptionDict.set(
+                    details.raw,
+                    vAPI.domFilterer.createProceduralFilter(details)
+                );
             }
             exceptionStr = undefined;
         }
@@ -292,21 +317,25 @@ const handlers = {
 
 /******************************************************************************/
 
-const onMessage = function(msg) {
-    if ( msg.what === 'loggerDisabled' ) {
-        processTimer.clear();
-        attributeObserver.disconnect();
-        vAPI.domFilterer.removeListener(handlers);
-        vAPI.domWatcher.removeListener(handlers);
-        vAPI.messaging.removeChannelListener('domLogger', onMessage);
-    }
-};
-vAPI.messaging.addChannelListener('domLogger', onMessage);
+vAPI.messaging.extend().then(extended => {
+    if ( extended !== true ) { return; }
+    const broadcastListener = msg => {
+        if ( msg.what === 'loggerDisabled' ) {
+            processTimer.clear();
+            attributeObserver.disconnect();
+            vAPI.domFilterer.removeListener(handlers);
+            vAPI.domWatcher.removeListener(handlers);
+            vAPI.broadcastListener.remove(broadcastListener);
+        }
+    };
+    vAPI.broadcastListener.add(broadcastListener);
+});
 
 vAPI.domWatcher.addListener(handlers);
 
 /******************************************************************************/
 
+// <<<<<<<< end of private namespace
 })();
 
 

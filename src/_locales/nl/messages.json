@@ -65,7 +65,7 @@
   },
   "popupPowerSwitchInfo": {
     "message": "Klikken: uBlock₀ voor deze website in- of uitschakelen.\n\nCtrl+klikken: uBlock₀ alleen voor deze pagina uitschakelen.",
-    "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
     "message": "Klik om uBlock₀ voor deze website uit te schakelen.\n\nCtrl+klik om uBlock₀ alleen op deze pagina uit te schakelen.",
@@ -112,7 +112,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Alle pop-ups voor deze website in-\/uitschakelen",
+    "message": "Alle pop-ups voor deze website in-/uitschakelen",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
@@ -124,7 +124,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Grote media-elementen voor deze website in-\/uitschakelen",
+    "message": "Grote media-elementen voor deze website in-/uitschakelen",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
@@ -136,7 +136,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Cosmetische filters voor deze website in-\/uitschakelen",
+    "message": "Cosmetische filters voor deze website in-/uitschakelen",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
@@ -148,7 +148,7 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Blokkeren van externe lettertypen voor deze website in-\/uitschakelen",
+    "message": "Blokkeren van externe lettertypen voor deze website in-/uitschakelen",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
@@ -196,7 +196,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "CSS\/afbeeldingen van derden",
+    "message": "CSS/afbeeldingen van derden",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -280,7 +280,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Ik ben een ervaren gebruiker (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Lees dit eerst<\/a>)",
+    "message": "Ik ben een ervaren gebruiker (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>Lees dit eerst</a>)",
     "description": ""
   },
   "settingsAdvancedUserSettings": {
@@ -325,7 +325,7 @@
   },
   "settingsNoCSPReportsPrompt": {
     "message": "CSP-rapporten blokkeren",
-    "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsStorageUsed": {
     "message": "Gebruikte opslagruimte: {{value}} bytes",
@@ -364,7 +364,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Deze optie schakelt het inlezen en toepassen van <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">Adblock Plus-compatibele &lsquo;elementverbergende&rsquo; filters<\/a> in. Deze filters zijn puur cosmetisch; ze verbergen elementen in de webpagina die visueel storend kunnen zijn en niet door de op netwerkaanvragen gebaseerde filter-engine kunnen worden geblokkeerd.<\/p><p>Het inschakelen van deze functie verhoogt het geheugengebruik van uBlock₀.<\/p>",
+    "message": "<p>Deze optie schakelt het inlezen en toepassen van <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">Adblock Plus-compatibele &lsquo;elementverbergende&rsquo; filters</a> in. Deze filters zijn puur cosmetisch; ze verbergen elementen in de webpagina die visueel storend kunnen zijn en niet door de op netwerkaanvragen gebaseerde filter-engine kunnen worden geblokkeerd.</p><p>Het inschakelen van deze functie verhoogt het geheugengebruik van uBlock₀.</p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -440,7 +440,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Eén filter per regel. Een filter kan een gewone hostnaam of een Adblock Plus-compatibel filter zijn. Regels beginnend met <code>!<\/code> worden genegeerd.",
+    "message": "Eén filter per regel. Een filter kan een gewone hostnaam of een Adblock Plus-compatibel filter zijn. Regels beginnend met <code>!</code> worden genegeerd.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -504,7 +504,7 @@
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
-    "message": "Regelsyntaxis: <code>bron bestemming type actie<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>volledige documentatie<\/a>).",
+    "message": "Regelsyntaxis: <code>bron bestemming type actie</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>volledige documentatie</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
@@ -560,11 +560,11 @@
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
-    "message": "De DOM-inspector in-\/uitschakelen",
+    "message": "De DOM-inspector in-/uitschakelen",
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "Het pop-uppaneel in-\/uitschakelen",
+    "message": "Het pop-uppaneel in-/uitschakelen",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
@@ -584,7 +584,7 @@
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "Loggerfiltering in-\/uitschakelen",
+    "message": "Loggerfiltering in-/uitschakelen",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
@@ -644,7 +644,7 @@
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
-    "message": "1e\/3e partij",
+    "message": "1e/3e partij",
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
@@ -708,11 +708,11 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Statisch filter <code>{{filter}}<\/code> gevonden in:",
+    "message": "Statisch filter <code>{{filter}}</code> gevonden in:",
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Statisch filter <code>{{filter}}<\/code> kon niet in een van de momenteel ingeschakelde filterlijsten worden gevonden",
+    "message": "Statisch filter <code>{{filter}}</code> kon niet in een van de momenteel ingeschakelde filterlijsten worden gevonden",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
@@ -744,7 +744,7 @@
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
-    "message": "{{input}} Filter\/regel",
+    "message": "{{input}} Filter/regel",
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
@@ -752,7 +752,7 @@
     "description": "A label for the context column"
   },
   "loggerSettingHideColumnPartyness": {
-    "message": "{{input}} 1e\/3e partij",
+    "message": "{{input}} 1e/3e partij",
     "description": "A label for the partyness column"
   },
   "loggerExportFormatList": {
@@ -861,11 +861,11 @@
   },
   "showDashboardButton": {
     "message": "Dashboard tonen",
-    "description": "Firefox\/Fennec-specific: Show Dashboard"
+    "description": "Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
     "message": "Logger tonen",
-    "description": "Firefox\/Fennec-specific: Show Logger"
+    "description": "Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
     "message": "uitgeschakeld",
@@ -881,7 +881,7 @@
   },
   "docblockedNoParamsPrompt": {
     "message": "zonder parameters",
-    "description": "label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
+    "description": "label to be used for the parameter-less URL: https://cloud.githubusercontent.com/assets/585534/9832014/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {
     "message": "Gevonden in:",
@@ -956,7 +956,7 @@
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "Vergrendeld scrollen in-\/uitschakelen",
+    "message": "Vergrendeld scrollen in-/uitschakelen",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {

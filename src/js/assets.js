@@ -27,10 +27,9 @@
 
 /******************************************************************************/
 
-const reIsExternalPath = /^(?:[a-z-]+):\/\//,
-    reIsUserAsset = /^user-/,
-    errorCantConnectTo = vAPI.i18n('errorCantConnectTo'),
-    noopfunc = function(){};
+const reIsExternalPath = /^(?:[a-z-]+):\/\//;
+const reIsUserAsset = /^user-/;
+const errorCantConnectTo = vAPI.i18n('errorCantConnectTo');
 
 const api = {};
 
@@ -82,18 +81,28 @@ api.fetch = function(url, options = {}) {
         }
     };
 
+    const fail = function(details, msg) {
+        µBlock.logger.writeOne({
+            realm: 'message',
+            type: 'error',
+            text: msg,
+        });
+        details.content = '';
+        details.error = msg;
+        reject(details);
+    };
+
     // https://github.com/gorhill/uMatrix/issues/15
     const onLoadEvent = function() {
         cleanup();
         // xhr for local files gives status 0, but actually succeeds
         const details = {
             url,
-            content: '',
             statusCode: this.status || 200,
             statusText: this.statusText || ''
         };
         if ( details.statusCode < 200 || details.statusCode >= 300 ) {
-            return reject(details);
+            return fail(details, `${url}: ${details.statusCode} ${details.statusText}`);
         }
         details.content = this.response;
         // ADN: If we've loaded a DNT list, we need to parse it
@@ -105,12 +114,7 @@ api.fetch = function(url, options = {}) {
 
     const onErrorEvent = function() {
         cleanup();
-        µBlock.logger.writeOne({
-            realm: 'message',
-            type: 'error',
-            text: errorCantConnectTo.replace('{{msg}}', url)
-        });
-        reject({ url, content: '' });
+        fail({ url }, errorCantConnectTo.replace('{{msg}}', url));
     };
 
     const onTimeout = function() {
@@ -150,7 +154,7 @@ api.fetch = function(url, options = {}) {
 
 /******************************************************************************/
 
-api.fetchText = function(url, onLoad, onError) {
+api.fetchText = async function(url) {
     const isExternal = reIsExternalPath.test(url);
     let actualUrl = isExternal ? url : vAPI.getURL(url);
 
@@ -175,41 +179,31 @@ api.fetchText = function(url, onLoad, onError) {
         actualUrl += queryValue;
     }
 
-    if ( typeof onError !== 'function' ) {
-        onError = onLoad;
-    }
+    let details = { content: '' };
+    try {
+        details = await api.fetch(actualUrl);
 
-    const onResolve = function(details) {
-        if ( onLoad instanceof Function ) {
-            return onLoad(details);
-        }
-        return details;
-    };
-
-    const onReject = function(details) {
-        details.content = '';
-        if ( onError instanceof Function ) {
-            return onError(details);
-        }
-        return details;
-    };
-
-    return api.fetch(url).then(details => {
-        // consider an empty result to be an error
+        // Consider an empty result to be an error
         if ( stringIsNotEmpty(details.content) === false ) {
-            return onReject(details);
+            details.content = '';
         }
-        // we never download anything else than plain text: discard if response
-        // appears to be a HTML document: could happen when server serves
-        // some kind of error page I suppose
+
+        // We never download anything else than plain text: discard if
+        // response appears to be a HTML document: could happen when server
+        // serves some kind of error page for example.
         const text = details.content.trim();
         if ( text.startsWith('<') && text.endsWith('>') ) {
-            return onReject(details);
+            details.content = '';
         }
-        return onResolve(details);
-    }).catch(details => {
-        return onReject(details);
-    });
+    } catch(ex) {
+        details = ex;
+    }
+
+    // We want to return the caller's URL, not our internal one which may
+    // differ from the caller's one.
+    details.url = url;
+
+    return details;
 };
 
 /******************************************************************************/
@@ -217,116 +211,86 @@ api.fetchText = function(url, onLoad, onError) {
 // https://github.com/gorhill/uBlock/issues/3331
 //   Support the seamless loading of sublists.
 
-api.fetchFilterList = function(mainlistURL, onLoad, onError) {
-    const content = [];
-    const pendingSublistURLs = new Set([ mainlistURL ]);
-    const loadedSublistURLs = new Set();
-    const toParsedURL = api.fetchFilterList.toParsedURL;
+api.fetchFilterList = async function(mainlistURL) {
+    const toParsedURL = url => {
+        try {
+            return new URL(url);
+        } catch (ex) {
+        }
+    };
 
     // https://github.com/NanoAdblocker/NanoCore/issues/239
     //   Anything under URL's root directory is allowed to be fetched. The
     //   URL of a sublist will always be relative to the URL of the parent
     //   list (instead of the URL of the root list).
-    const rootDirectoryURL = toParsedURL(mainlistURL);
+    let rootDirectoryURL = toParsedURL(mainlistURL);
     if ( rootDirectoryURL !== undefined ) {
         const pos = rootDirectoryURL.pathname.lastIndexOf('/');
         if ( pos !== -1 ) {
             rootDirectoryURL.pathname =
                 rootDirectoryURL.pathname.slice(0, pos + 1);
+        } else {
+            rootDirectoryURL = undefined;
         }
     }
 
-    let errored = false;
+    const sublistURLs = new Set();
 
-    const processIncludeDirectives = function(details) {
-        const reInclude = /^!#include +(\S+)/gm;
+    const processIncludeDirectives = function(results) {
         const out = [];
-        const content = details.content;
-        let lastIndex = 0;
-        for (;;) {
-            const match = reInclude.exec(content);
-            if ( match === null ) { break; }
-            if ( toParsedURL(match[1]) !== undefined ) { continue; }
-            if ( match[1].indexOf('..') !== -1 ) { continue; }
-            const subURL = toParsedURL(details.url);
-            subURL.pathname = subURL.pathname.replace(/[^/]+$/, match[1]);
-            if ( subURL.href.startsWith(rootDirectoryURL.href) === false ) {
+        const reInclude = /^!#include +(\S+)/gm;
+        for ( const result of results ) {
+            if ( typeof result === 'string' ) {
+                out.push(result);
                 continue;
             }
-            if ( pendingSublistURLs.has(subURL.href) ) { continue; }
-            if ( loadedSublistURLs.has(subURL.href) ) { continue; }
-            pendingSublistURLs.add(subURL.href);
-            api.fetchText(subURL.href, onLocalLoadSuccess, onLocalLoadError);
-            out.push(content.slice(lastIndex, match.index).trim(), subURL.href);
-            lastIndex = reInclude.lastIndex;
-        }
-        out.push(lastIndex === 0 ? content : content.slice(lastIndex).trim());
-        return out;
-    };
-
-    const onLocalLoadSuccess = function(details) {
-        if ( errored ) { return; }
-
-        const isSublist = details.url !== mainlistURL;
-
-        pendingSublistURLs.delete(details.url);
-        loadedSublistURLs.add(details.url);
-
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/329
-        //   Insert fetched content at position of related #!include directive
-        let slot = isSublist ? content.indexOf(details.url) : 0;
-        if ( isSublist ) {
-            content.splice(
-                slot,
-                1,
-                '! >>>>>>>> ' + details.url,
-                details.content.trim(),
-                '! <<<<<<<< ' + details.url
-            );
-            slot += 1;
-        } else {
-            content[0] = details.content.trim();
-        }
-
-        // Find and process #!include directives
-        if (
-            rootDirectoryURL !== undefined &&
-            rootDirectoryURL.pathname.length > 0
-        ) {
-            const processed = processIncludeDirectives(details);
-            if ( processed.length > 1 ) {
-                content.splice(slot, 1, ...processed);
+            if ( result instanceof Object === false ) { continue; }
+            const content = result.content;
+            let lastIndex = 0;
+            for (;;) {
+                if ( rootDirectoryURL === undefined ) { break; }
+                const match = reInclude.exec(content);
+                if ( match === null ) { break; }
+                if ( toParsedURL(match[1]) !== undefined ) { continue; }
+                if ( match[1].indexOf('..') !== -1 ) { continue; }
+                const subURL = toParsedURL(result.url);
+                subURL.pathname = subURL.pathname.replace(/[^/]+$/, match[1]);
+                if ( subURL.href.startsWith(rootDirectoryURL.href) === false ) {
+                    continue;
+                }
+                if ( sublistURLs.has(subURL.href) ) { continue; }
+                sublistURLs.add(subURL.href);
+                out.push(
+                    content.slice(lastIndex, match.index),
+                    `! >>>>>>>> ${subURL.href}`,
+                    api.fetchText(subURL.href),
+                    `! <<<<<<<< ${subURL.href}`
+                );
+                lastIndex = reInclude.lastIndex;
             }
+            out.push(lastIndex === 0 ? content : content.slice(lastIndex));
         }
-
-        if ( pendingSublistURLs.size !== 0 ) { return; }
-
-        details.url = mainlistURL;
-        details.content = content.join('\n').trim();
-        onLoad(details);
+        return out;
     };
 
     // https://github.com/AdguardTeam/FiltersRegistry/issues/82
     //   Not checking for `errored` status was causing repeated notifications
     //   to the caller. This can happen when more than one out of multiple
     //   sublists can't be fetched.
-    const onLocalLoadError = function(details) {
-        if ( errored ) { return; }
 
-        errored = true;
-        details.url = mainlistURL;
-        details.content = '';
-        onError(details);
-    };
-
-    this.fetchText(mainlistURL, onLocalLoadSuccess, onLocalLoadError);
-};
-
-api.fetchFilterList.toParsedURL = function(url) {
-    try {
-        return new URL(url);
-    } catch (ex) {
+    let allParts = [
+        this.fetchText(mainlistURL)
+    ];
+    for (;;) {
+        allParts = processIncludeDirectives(await Promise.all(allParts));
+        if ( allParts.every(v => typeof v === 'string') ) { break; }
     }
+    return {
+        url: mainlistURL,
+        content: allParts.length === 1
+            ? allParts[0]
+            : allParts.map(s => s.trim()).filter(s => s !== '').join('\n') + '\n'
+    };
 };
 
 /*******************************************************************************
@@ -344,6 +308,34 @@ api.fetchFilterList.toParsedURL = function(url) {
 
 let assetSourceRegistryPromise,
     assetSourceRegistry = Object.create(null);
+
+const getAssetSourceRegistry = function() {
+    if ( assetSourceRegistryPromise === undefined ) {
+        assetSourceRegistryPromise = µBlock.cacheStorage.get(
+            'assetSourceRegistry'
+        ).then(bin => {
+            if (
+                bin instanceof Object &&
+                bin.assetSourceRegistry instanceof Object
+            ) {
+                assetSourceRegistry = bin.assetSourceRegistry;
+                return assetSourceRegistry;
+            }
+            return api.fetchText(
+                µBlock.assetsBootstrapLocation || 'assets/assets.json'
+            ).then(details => {
+                return details.content !== ''
+                    ? details
+                    : api.fetchText('assets/assets.json');
+            }).then(details => {
+                updateAssetSourceRegistry(details.content, true);
+                return assetSourceRegistry;
+            });
+        });
+    }
+
+    return assetSourceRegistryPromise;
+};
 
 const registerAssetSource = function(assetKey, dict) {
     const entry = assetSourceRegistry[assetKey] || {};
@@ -387,11 +379,11 @@ const unregisterAssetSource = function(assetKey) {
     delete assetSourceRegistry[assetKey];
 };
 
-const saveAssetSourceRegistry = (function() {
+const saveAssetSourceRegistry = (( ) => {
     let timer;
     const save = function() {
         timer = undefined;
-        µBlock.cacheStorage.set({ assetSourceRegistry: assetSourceRegistry });
+        µBlock.cacheStorage.set({ assetSourceRegistry });
     };
     return function(lazily) {
         if ( timer !== undefined ) {
@@ -437,46 +429,16 @@ const updateAssetSourceRegistry = function(json, silent) {
     saveAssetSourceRegistry();
 };
 
-const getAssetSourceRegistry = function() {
-    if ( assetSourceRegistryPromise === undefined ) {
-        assetSourceRegistryPromise = µBlock.cacheStorage.get(
-            'assetSourceRegistry'
-        ).then(bin => {
-            if (
-                bin instanceof Object &&
-                bin.assetSourceRegistry instanceof Object
-            ) {
-                assetSourceRegistry = bin.assetSourceRegistry;
-                return assetSourceRegistry;
-            }
-            return api.fetchText(
-                µBlock.assetsBootstrapLocation || 'assets/assets.json'
-            ).then(details => {
-                return details.content !== ''
-                    ? details
-                    : api.fetchText('assets/assets.json');
-            }).then(details => {
-                updateAssetSourceRegistry(details.content, true);
-                return assetSourceRegistry;
-            });
-        });
-    }
-
-    return assetSourceRegistryPromise;
+api.registerAssetSource = async function(assetKey, details) {
+    await getAssetSourceRegistry();
+    registerAssetSource(assetKey, details);
+    saveAssetSourceRegistry(true);
 };
 
-api.registerAssetSource = function(assetKey, details) {
-    getAssetSourceRegistry().then(( ) => {
-        registerAssetSource(assetKey, details);
-        saveAssetSourceRegistry(true);
-    });
-};
-
-api.unregisterAssetSource = function(assetKey) {
-    getAssetSourceRegistry().then(( ) => {
-        unregisterAssetSource(assetKey);
-        saveAssetSourceRegistry(true);
-    });
+api.unregisterAssetSource = async function(assetKey) {
+    await getAssetSourceRegistry();
+    unregisterAssetSource(assetKey);
+    saveAssetSourceRegistry(true);
 };
 
 /*******************************************************************************
@@ -501,13 +463,14 @@ const getAssetCacheRegistry = function() {
             ) {
                 assetCacheRegistry = bin.assetCacheRegistry;
             }
+            return assetCacheRegistry;
         });
     }
 
-    return assetCacheRegistryPromise.then(( ) => assetCacheRegistry);
+    return assetCacheRegistryPromise;
 };
 
-const saveAssetCacheRegistry = (function() {
+const saveAssetCacheRegistry = (( ) => {
     let timer;
     const save = function() {
         timer = undefined;
@@ -516,49 +479,48 @@ const saveAssetCacheRegistry = (function() {
     return function(lazily) {
         if ( timer !== undefined ) { clearTimeout(timer); }
         if ( lazily ) {
-            timer = vAPI.setTimeout(save, 500);
+            timer = vAPI.setTimeout(save, 30000);
         } else {
             save();
         }
     };
 })();
 
-const assetCacheRead = function(assetKey, callback) {
-    const internalKey = 'cache/' + assetKey;
+const assetCacheRead = async function(assetKey, updateReadTime = false) {
+    const internalKey = `cache/${assetKey}`;
 
     const reportBack = function(content) {
         if ( content instanceof Blob ) { content = ''; }
-        let details = { assetKey: assetKey, content: content };
-        if ( content === '' ) { details.error = 'E_NOTFOUND'; }
-        callback(details);
+        const details = { assetKey: assetKey, content: content };
+        if ( content === '' ) { details.error = 'ENOTFOUND'; }
+        return details;
     };
 
-    const onAssetRead = function(bin) {
-        if (
-            bin instanceof Object === false ||
-            bin.hasOwnProperty(internalKey) === false
-        ) {
-            return reportBack('');
-        }
-        let entry = assetCacheRegistry[assetKey];
-        if ( entry === undefined ) {
-            return reportBack('');
-        }
-        entry.readTime = Date.now();
-        saveAssetCacheRegistry(true);
-        reportBack(bin[internalKey]);
-    };
-
-    Promise.all([
+    const [ , bin ] = await Promise.all([
         getAssetCacheRegistry(),
         µBlock.cacheStorage.get(internalKey),
-    ]).then(results => {
-        onAssetRead(results[1]);
-    });
+    ]);
+    if (
+        bin instanceof Object === false ||
+        bin.hasOwnProperty(internalKey) === false
+    ) {
+        return reportBack('');
+    }
+
+    const entry = assetCacheRegistry[assetKey];
+    if ( entry === undefined ) {
+        return reportBack('');
+    }
+
+    entry.readTime = Date.now();
+    if ( updateReadTime ) {
+        saveAssetCacheRegistry(true);
+    }
+
+    return reportBack(bin[internalKey]);
 };
 
-const assetCacheWrite = function(assetKey, details, callback) {
-    let internalKey = 'cache/' + assetKey;
+const assetCacheWrite = async function(assetKey, details) {
     let content = '';
     if ( typeof details === 'string' ) {
         content = details;
@@ -567,95 +529,83 @@ const assetCacheWrite = function(assetKey, details, callback) {
     }
 
     if ( content === '' ) {
-        return assetCacheRemove(assetKey, callback);
+        return assetCacheRemove(assetKey);
     }
 
-    const onReady = function() {
-        let entry = assetCacheRegistry[assetKey];
-        if ( entry === undefined ) {
-            entry = assetCacheRegistry[assetKey] = {};
-        }
-        entry.writeTime = entry.readTime = Date.now();
-        if ( details instanceof Object && typeof details.url === 'string' ) {
-            entry.remoteURL = details.url;
-        }
-        µBlock.cacheStorage.set({ assetCacheRegistry, [internalKey]: content });
-        const result = { assetKey, content };
-        if ( typeof callback === 'function' ) {
-            callback(result);
-        }
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/248
-        fireNotification('after-asset-updated', result);
-    };
+    const cacheDict = await getAssetCacheRegistry();
 
-    getAssetCacheRegistry().then(( ) => onReady());
-};
-
-const assetCacheRemove = function(pattern, callback) {
-    getAssetCacheRegistry().then(cacheDict => {
-        const removedEntries = [];
-        const removedContent = [];
-        for ( const assetKey in cacheDict ) {
-            if ( pattern instanceof RegExp && !pattern.test(assetKey) ) {
-                continue;
-            }
-            if ( typeof pattern === 'string' && assetKey !== pattern ) {
-                continue;
-            }
-            removedEntries.push(assetKey);
-            removedContent.push('cache/' + assetKey);
-            delete cacheDict[assetKey];
-        }
-        if ( removedContent.length !== 0 ) {
-            µBlock.cacheStorage.remove(removedContent);
-            µBlock.cacheStorage.set({ assetCacheRegistry });
-        }
-        if ( typeof callback === 'function' ) {
-            callback();
-        }
-        for ( let i = 0; i < removedEntries.length; i++ ) {
-            fireNotification(
-                'after-asset-updated',
-                { assetKey: removedEntries[i] }
-            );
-        }
-    });
-};
-
-const assetCacheMarkAsDirty = function(pattern, exclude, callback) {
-    if ( typeof exclude === 'function' ) {
-        callback = exclude;
-        exclude = undefined;
+    let entry = cacheDict[assetKey];
+    if ( entry === undefined ) {
+        entry = cacheDict[assetKey] = {};
     }
-    getAssetCacheRegistry().then(cacheDict => {
-        let mustSave = false;
-        for ( const assetKey in cacheDict ) {
-            if ( pattern instanceof RegExp ) {
-                if ( pattern.test(assetKey) === false ) { continue; }
-            } else if ( typeof pattern === 'string' ) {
-                if ( assetKey !== pattern ) { continue; }
-            } else if ( Array.isArray(pattern) ) {
-                if ( pattern.indexOf(assetKey) === -1 ) { continue; }
-            }
-            if ( exclude instanceof RegExp ) {
-                if ( exclude.test(assetKey) ) { continue; }
-            } else if ( typeof exclude === 'string' ) {
-                if ( assetKey === exclude ) { continue; }
-            } else if ( Array.isArray(exclude) ) {
-                if ( exclude.indexOf(assetKey) !== -1 ) { continue; }
-            }
-            const cacheEntry = cacheDict[assetKey];
-            if ( !cacheEntry.writeTime ) { continue; }
-            cacheDict[assetKey].writeTime = 0;
-            mustSave = true;
-        }
-        if ( mustSave ) {
-            µBlock.cacheStorage.set({ assetCacheRegistry });
-        }
-        if ( typeof callback === 'function' ) {
-            callback();
-        }
+    entry.writeTime = entry.readTime = Date.now();
+    if ( details instanceof Object && typeof details.url === 'string' ) {
+        entry.remoteURL = details.url;
+    }
+    µBlock.cacheStorage.set({
+        assetCacheRegistry,
+        [`cache/${assetKey}`]: content
     });
+
+    const result = { assetKey, content };
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/248
+    fireNotification('after-asset-updated', result);
+    return result;
+};
+
+const assetCacheRemove = async function(pattern) {
+    const cacheDict = await getAssetCacheRegistry();
+    const removedEntries = [];
+    const removedContent = [];
+    for ( const assetKey in cacheDict ) {
+        if ( pattern instanceof RegExp && !pattern.test(assetKey) ) {
+            continue;
+        }
+        if ( typeof pattern === 'string' && assetKey !== pattern ) {
+            continue;
+        }
+        removedEntries.push(assetKey);
+        removedContent.push('cache/' + assetKey);
+        delete cacheDict[assetKey];
+    }
+    if ( removedContent.length !== 0 ) {
+        µBlock.cacheStorage.remove(removedContent);
+        µBlock.cacheStorage.set({ assetCacheRegistry });
+    }
+    for ( let i = 0; i < removedEntries.length; i++ ) {
+        fireNotification(
+            'after-asset-updated',
+            { assetKey: removedEntries[i] }
+        );
+    }
+};
+
+const assetCacheMarkAsDirty = async function(pattern, exclude) {
+    const cacheDict = await getAssetCacheRegistry();
+    let mustSave = false;
+    for ( const assetKey in cacheDict ) {
+        if ( pattern instanceof RegExp ) {
+            if ( pattern.test(assetKey) === false ) { continue; }
+        } else if ( typeof pattern === 'string' ) {
+            if ( assetKey !== pattern ) { continue; }
+        } else if ( Array.isArray(pattern) ) {
+            if ( pattern.indexOf(assetKey) === -1 ) { continue; }
+        }
+        if ( exclude instanceof RegExp ) {
+            if ( exclude.test(assetKey) ) { continue; }
+        } else if ( typeof exclude === 'string' ) {
+            if ( assetKey === exclude ) { continue; }
+        } else if ( Array.isArray(exclude) ) {
+            if ( exclude.indexOf(assetKey) !== -1 ) { continue; }
+        }
+        const cacheEntry = cacheDict[assetKey];
+        if ( !cacheEntry.writeTime ) { continue; }
+        cacheDict[assetKey].writeTime = 0;
+        mustSave = true;
+    }
+    if ( mustSave ) {
+        µBlock.cacheStorage.set({ assetCacheRegistry });
+    }
 };
 
 /******************************************************************************/
@@ -682,141 +632,100 @@ const stringIsNotEmpty = function(s) {
 
 **/
 
-const readUserAsset = function(assetKey, callback) {
-    const reportBack = function(content) {
-        callback({ assetKey, content });
-    };
-    vAPI.storage.get(assetKey, bin => {
-        const content =
-            bin instanceof Object && typeof bin[assetKey] === 'string'
-                ? bin[assetKey]
-                : '';
-        return reportBack(content);
-    });
+const readUserAsset = async function(assetKey) {
+    const bin = await vAPI.storage.get(assetKey);
+    const content =
+        bin instanceof Object && typeof bin[assetKey] === 'string'
+            ? bin[assetKey]
+            : '';
+
     // Remove obsolete entry
     // TODO: remove once everybody is well beyond 1.18.6
     vAPI.storage.remove('assets/user/filters.txt');
+
+    return { assetKey, content };
 };
 
-const saveUserAsset = function(assetKey, content, callback) {
-    vAPI.storage.set({ [assetKey]: content }, ( ) => {
-        if ( callback instanceof Function ) {
-            callback({ assetKey, content });
-        }
+const saveUserAsset = function(assetKey, content) {
+    return vAPI.storage.set({ [assetKey]: content }).then(( ) => {
+        return { assetKey, content };
     });
 };
 
 /******************************************************************************/
 
-api.get = function(assetKey, options, callback) {
-    if ( typeof options === 'function' ) {
-        callback = options;
-        options = {};
-    } else if ( typeof callback !== 'function' ) {
-        callback = noopfunc;
-    }
-    // This can happen if the method was called as a thenable.
-    if ( options instanceof Object === false ) {
-        options = {};
-    }
-
-    return new Promise(resolve => {
-    // start of executor
+api.get = async function(assetKey, options = {}) {
     if ( assetKey === µBlock.userFiltersPath ) {
-        readUserAsset(assetKey, details => {
-            callback(details);
-            resolve(details);
-        });
-        return;
+        return readUserAsset(assetKey);
     }
 
-    let assetDetails = {},
-        contentURLs,
-        contentURL;
+    let assetDetails = {};
 
-    const reportBack = (content, err) => {
+    const reportBack = (content, url = '', err = undefined) => {
         const details = { assetKey, content };
-        if ( err ) {
+        if ( err !== undefined ) {
             details.error = assetDetails.lastError = err;
         } else {
             assetDetails.lastError = undefined;
         }
         if ( options.needSourceURL ) {
             if (
-                contentURL === undefined &&
+                url === '' &&
                 assetCacheRegistry instanceof Object &&
                 assetCacheRegistry[assetKey] instanceof Object
             ) {
                 details.sourceURL = assetCacheRegistry[assetKey].remoteURL;
             }
-            if ( reIsExternalPath.test(contentURL) ) {
-                details.sourceURL = contentURL;
+            if ( reIsExternalPath.test(url) ) {
+                details.sourceURL = url;
             }
         }
-        callback(details);
-        resolve(details);
+        return details;
     };
 
-    const onContentNotLoaded = ( ) => {
-        let isExternal;
-        while ( (contentURL = contentURLs.shift()) ) {
-            isExternal = reIsExternalPath.test(contentURL);
-            if ( isExternal === false || assetDetails.hasLocalURL !== true ) {
-                break;
-            }
-        }
-        if ( !contentURL ) {
-            return reportBack('', 'E_NOTFOUND');
-        }
-        if ( assetDetails.content === 'filters' ) {
-            api.fetchFilterList(contentURL, onContentLoaded, onContentNotLoaded);
-        } else {
-            api.fetchText(contentURL, onContentLoaded, onContentNotLoaded);
-        }
-    };
+    // Skip read-time property for non-updatable assets: the property is
+    // completely unused for such assets and thus there is no point incurring
+    // storage write overhead at launch when reading compiled or selfie assets.
+    const updateReadTime = /^(?:compiled|selfie)\//.test(assetKey) === false;
 
-    const onContentLoaded = details => {
-        if ( stringIsNotEmpty(details.content) === false ) {
-            onContentNotLoaded();
-            return;
+    const details = await assetCacheRead(assetKey, updateReadTime);
+    if ( details.content !== '' ) {
+        return reportBack(details.content);
+    }
+
+    const assetRegistry = await getAssetSourceRegistry();
+    assetDetails = assetRegistry[assetKey] || {};
+    let contentURLs = [];
+    if ( typeof assetDetails.contentURL === 'string' ) {
+        contentURLs = [ assetDetails.contentURL ];
+    } else if ( Array.isArray(assetDetails.contentURL) ) {
+        contentURLs = assetDetails.contentURL.slice(0);
+    }
+
+    for ( const contentURL of contentURLs ) {
+        if ( reIsExternalPath.test(contentURL) && assetDetails.hasLocalURL ) {
+            continue;
         }
+        const details = assetDetails.content === 'filters'
+            ? await api.fetchFilterList(contentURL)
+            : await api.fetchText(contentURL);
+        if ( details.content === '' ) { continue; }
         if ( reIsExternalPath.test(contentURL) && options.dontCache !== true ) {
             assetCacheWrite(assetKey, {
                 content: details.content,
-                url: contentURL
+                url: contentURL,
             });
         }
-        reportBack(details.content);
-    };
-
-    const onCachedContentLoaded = details => {
-        if ( details.content !== '' ) {
-            return reportBack(details.content);
-        }
-        getAssetSourceRegistry().then(registry => {
-            assetDetails = registry[assetKey] || {};
-            if ( typeof assetDetails.contentURL === 'string' ) {
-                contentURLs = [ assetDetails.contentURL ];
-            } else if ( Array.isArray(assetDetails.contentURL) ) {
-                contentURLs = assetDetails.contentURL.slice(0);
-            } else {
-                contentURLs = [];
-            }
-            onContentNotLoaded();
-        });
-    };
-
-    assetCacheRead(assetKey, onCachedContentLoaded);
-    // end of executor
-    });
+        return reportBack(details.content, contentURL);
+    }
+    return reportBack('', '', 'ENOTFOUND');
 };
 
 /******************************************************************************/
 
-const getRemote = function(assetKey, callback) {
-    let assetDetails = {};
-    let contentURLs;
-    let contentURL;
+const getRemote = async function(assetKey) {
+    const assetRegistry = await getAssetSourceRegistry();
+    const assetDetails = assetRegistry[assetKey] || {};
 
     const reportBack = function(content, err) {
         const details = { assetKey: assetKey, content: content };
@@ -825,128 +734,103 @@ const getRemote = function(assetKey, callback) {
         } else {
             assetDetails.lastError = undefined;
         }
-        callback(details);
+        return details;
     };
 
-    const onRemoteContentLoaded = function(details) {
-        if ( stringIsNotEmpty(details.content) === false ) {
-            registerAssetSource(assetKey, { error: { time: Date.now(), error: 'No content' } });
-            tryLoading();
-            return;
+    let contentURLs = [];
+    if ( typeof assetDetails.contentURL === 'string' ) {
+        contentURLs = [ assetDetails.contentURL ];
+    } else if ( Array.isArray(assetDetails.contentURL) ) {
+        contentURLs = assetDetails.contentURL.slice(0);
+    }
+
+    for ( const contentURL of contentURLs ) {
+        if ( reIsExternalPath.test(contentURL) === false ) { continue; }
+
+        const result = assetDetails.content === 'filters'
+            ? await api.fetchFilterList(contentURL)
+            : await api.fetchText(contentURL);
+
+        // Failure
+        if ( stringIsNotEmpty(result.content) === false ) {
+            let error = result.statusText;
+            if ( result.statusCode === 0 ) {
+                error = 'network error';
+            }
+            registerAssetSource(
+                assetKey,
+                { error: { time: Date.now(), error } }
+            );
+            continue;
         }
+
+        // Success
+        assetCacheWrite(
+            assetKey,
+            { content: result.content, url: contentURL }
+        );
         // ADN: If we've loaded a DNT list, we need to parse it
         if (µBlock.adnauseam.dnt.isDoNotTrackUrl(assetKey)) {
-            µBlock.adnauseam.dnt.processEntries(this.responseText);
+            µBlock.adnauseam.dnt.processEntries(result.content);
         }
-
-        assetCacheWrite(assetKey, {
-            content: details.content,
-            url: contentURL
-        });
         registerAssetSource(assetKey, { error: undefined });
-        reportBack(details.content);
-    };
+        return reportBack(result.content);
+    }
 
-    const onRemoteContentError = function(details) {
-        let text = details.statusText;
-        if ( details.statusCode === 0 ) {
-            text = 'network error';
-        }
-        registerAssetSource(assetKey, { error: { time: Date.now(), error: text } });
-        tryLoading();
-    };
-
-    const tryLoading = function() {
-        while ( (contentURL = contentURLs.shift()) ) {
-            if ( reIsExternalPath.test(contentURL) ) { break; }
-        }
-        if ( !contentURL ) {
-            return reportBack('', 'E_NOTFOUND');
-        }
-        if ( assetDetails.content === 'filters' ) {
-            api.fetchFilterList(contentURL, onRemoteContentLoaded, onRemoteContentError);
-        } else {
-            api.fetchText(contentURL, onRemoteContentLoaded, onRemoteContentError);
-        }
-    };
-
-    getAssetSourceRegistry().then(registry => {
-        assetDetails = registry[assetKey] || {};
-        if ( typeof assetDetails.contentURL === 'string' ) {
-            contentURLs = [ assetDetails.contentURL ];
-        } else if ( Array.isArray(assetDetails.contentURL) ) {
-            contentURLs = assetDetails.contentURL.slice(0);
-        } else {
-            contentURLs = [];
-        }
-        tryLoading();
-    });
+    return reportBack('', 'ENOTFOUND');
 };
 
 /******************************************************************************/
 
-api.put = function(assetKey, content, callback) {
-    return new Promise(resolve => {
-        const onDone = function(details) {
-            if ( typeof callback === 'function' ) {
-                callback(details);
-            }
-            resolve(details);
-        };
-        if ( reIsUserAsset.test(assetKey) ) {
-            saveUserAsset(assetKey, content, onDone);
-        } else {
-            assetCacheWrite(assetKey, content, onDone);
-        }
-    });
+api.put = async function(assetKey, content) {
+    return reIsUserAsset.test(assetKey)
+        ? await saveUserAsset(assetKey, content)
+        : await assetCacheWrite(assetKey, content);
 };
 
 /******************************************************************************/
 
-api.metadata = function(callback) {
-    const onReady = function() {
-        const assetDict = JSON.parse(JSON.stringify(assetSourceRegistry));
-        const cacheDict = assetCacheRegistry;
-        const now = Date.now();
-        for ( const assetKey in assetDict ) {
-            const assetEntry = assetDict[assetKey];
-            const cacheEntry = cacheDict[assetKey];
-            if ( cacheEntry ) {
-                assetEntry.cached = true;
-                assetEntry.writeTime = cacheEntry.writeTime;
-                const obsoleteAfter =
-                    cacheEntry.writeTime + assetEntry.updateAfter * 86400000;
-                assetEntry.obsolete = obsoleteAfter < now;
-                assetEntry.remoteURL = cacheEntry.remoteURL;
-            } else if (
-                assetEntry.contentURL &&
-                assetEntry.contentURL.length !== 0
-            ) {
-                assetEntry.writeTime = 0;
-                assetEntry.obsolete = true;
-            }
-        }
-        callback(assetDict);
-    };
-
-    Promise.all([
+api.metadata = async function() {
+    await Promise.all([
         getAssetSourceRegistry(),
         getAssetCacheRegistry(),
-    ]).then(
-        ( ) => onReady()
-    );
+    ]);
+
+    const assetDict = JSON.parse(JSON.stringify(assetSourceRegistry));
+    const cacheDict = assetCacheRegistry;
+    const now = Date.now();
+    for ( const assetKey in assetDict ) {
+        const assetEntry = assetDict[assetKey];
+        const cacheEntry = cacheDict[assetKey];
+        if ( cacheEntry ) {
+            assetEntry.cached = true;
+            assetEntry.writeTime = cacheEntry.writeTime;
+            const obsoleteAfter =
+                cacheEntry.writeTime + assetEntry.updateAfter * 86400000;
+            assetEntry.obsolete = obsoleteAfter < now;
+            assetEntry.remoteURL = cacheEntry.remoteURL;
+        } else if (
+            assetEntry.contentURL &&
+            assetEntry.contentURL.length !== 0
+        ) {
+            assetEntry.writeTime = 0;
+            assetEntry.obsolete = true;
+        }
+    }
+
+    return assetDict;
 };
 
 /******************************************************************************/
 
 api.purge = assetCacheMarkAsDirty;
 
-api.remove = function(pattern, callback) {
-    assetCacheRemove(pattern, callback);
+api.remove = function(pattern) {
+    return assetCacheRemove(pattern);
 };
 
 api.rmrf = function() {
-    assetCacheRemove(/./);
+    return assetCacheRemove(/./);
 };
 
 /******************************************************************************/
@@ -968,75 +852,58 @@ const updateFirst = function() {
     updateNext();
 };
 
-const updateNext = function() {
-    let assetDict, cacheDict;
-
-    // This will remove a cached asset when it's no longer in use.
-    const garbageCollectOne = function(assetKey) {
-        const cacheEntry = cacheDict[assetKey];
-        if ( cacheEntry && cacheEntry.readTime < assetCacheRegistryStartTime ) {
-            assetCacheRemove(assetKey);
-        }
-    };
-
-    const findOne = function() {
-        const now = Date.now();
-        for ( const assetKey in assetDict ) {
-            const assetEntry = assetDict[assetKey];
-            if ( assetEntry.hasRemoteURL !== true ) { continue; }
-            if ( updaterFetched.has(assetKey) ) { continue; }
-            const cacheEntry = cacheDict[assetKey];
-            if (
-                cacheEntry &&
-                (cacheEntry.writeTime + assetEntry.updateAfter * 86400000) > now
-            ) {
-                continue;
-            }
-            if (
-                fireNotification(
-                    'before-asset-updated',
-                    { assetKey: assetKey,  type: assetEntry.content }
-                ) === true
-            ) {
-                return assetKey;
-            }
-            garbageCollectOne(assetKey);
-        }
-    };
-
-    const updatedOne = function(details) {
-        if ( details.content !== '' ) {
-            updaterUpdated.push(details.assetKey);
-            if ( details.assetKey === 'assets.json' ) {
-                updateAssetSourceRegistry(details.content);
-            }
-        } else {
-            fireNotification('asset-update-failed', { assetKey: details.assetKey });
-        }
-        if ( findOne() !== undefined ) {
-            vAPI.setTimeout(updateNext, updaterAssetDelay);
-        } else {
-            updateDone();
-        }
-    };
-
-    const updateOne = function() {
-        const assetKey = findOne();
-        if ( assetKey === undefined ) {
-            return updateDone();
-        }
-        updaterFetched.add(assetKey);
-        getRemote(assetKey, updatedOne);
-    };
-
-    Promise.all([
+const updateNext = async function() {
+    const [ assetDict, cacheDict ] = await Promise.all([
         getAssetSourceRegistry(),
         getAssetCacheRegistry(),
-    ]).then(results => {
-        assetDict = results[0];
-        cacheDict = results[1];
-        updateOne();
-    });
+    ]);
+
+    const now = Date.now();
+    let assetKeyToUpdate;
+    for ( const assetKey in assetDict ) {
+        const assetEntry = assetDict[assetKey];
+        if ( assetEntry.hasRemoteURL !== true ) { continue; }
+        if ( updaterFetched.has(assetKey) ) { continue; }
+        const cacheEntry = cacheDict[assetKey];
+        if (
+            cacheEntry &&
+            (cacheEntry.writeTime + assetEntry.updateAfter * 86400000) > now
+        ) {
+            continue;
+        }
+        if (
+            fireNotification(
+                'before-asset-updated',
+                { assetKey: assetKey,  type: assetEntry.content }
+            ) === true
+        ) {
+            assetKeyToUpdate = assetKey;
+            break;
+        }
+        // This will remove a cached asset when it's no longer in use.
+        if (
+            cacheEntry &&
+            cacheEntry.readTime < assetCacheRegistryStartTime
+        ) {
+            assetCacheRemove(assetKey);
+        }
+    }
+    if ( assetKeyToUpdate === undefined ) {
+        return updateDone();
+    }
+    updaterFetched.add(assetKeyToUpdate);
+
+    const result = await getRemote(assetKeyToUpdate);
+    if ( result.content !== '' ) {
+        updaterUpdated.push(result.assetKey);
+        if ( result.assetKey === 'assets.json' ) {
+            updateAssetSourceRegistry(result.content);
+        }
+    } else {
+        fireNotification('asset-update-failed', { assetKey: result.assetKey });
+    }
+
+    vAPI.setTimeout(updateNext, updaterAssetDelay);
 };
 
 const updateDone = function() {

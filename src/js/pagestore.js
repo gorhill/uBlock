@@ -41,10 +41,6 @@ const µb = µBlock;
 
 /******************************************************************************/
 
-// To mitigate memory churning
-const netFilteringCacheJunkyard = [];
-const netFilteringCacheJunkyardMax = 10;
-
 const NetFilteringResultCache = class {
     constructor() {
         this.init();
@@ -56,14 +52,6 @@ const NetFilteringResultCache = class {
         this.hash = 0;
         this.timer = undefined;
         return this;
-    }
-
-    dispose() {
-        this.empty();
-        if ( netFilteringCacheJunkyard.length < netFilteringCacheJunkyardMax ) {
-            netFilteringCacheJunkyard.push(this);
-        }
-        return null;
     }
 
     rememberResult(fctxt, result) {
@@ -155,10 +143,7 @@ const NetFilteringResultCache = class {
     }
 
     static factory() {
-        const entry = netFilteringCacheJunkyard.pop();
-        return entry !== undefined
-            ? entry.init()
-            : new NetFilteringResultCache();
+        return new NetFilteringResultCache();
     }
 };
 
@@ -218,6 +203,7 @@ const PageStore = class {
         this.journalTimer = null;
         this.journalLastCommitted = this.journalLastUncommitted = undefined;
         this.journalLastUncommittedURL = undefined;
+        this.netFilteringCache = NetFilteringResultCache.factory();
         this.init(tabId, context);
     }
 
@@ -257,13 +243,10 @@ const PageStore = class {
         this.logData = undefined;
         this.perLoadBlockedRequestCount = 0;
         this.perLoadAllowedRequestCount = 0;
-        this.hiddenElementCount = ''; // Empty string means "unknown"
         this.remoteFontCount = 0;
-        this.scriptCount = 0;
         this.popupBlockedCount = 0;
         this.largeMediaCount = 0;
         this.largeMediaTimer = null;
-        this.netFilteringCache = NetFilteringResultCache.factory();
         this.internalRedirectionCount = 0;
         this.extraData.clear();
 
@@ -329,7 +312,6 @@ const PageStore = class {
             this.largeMediaTimer = null;
         }
         this.disposeFrameStores();
-        this.netFilteringCache = this.netFilteringCache.dispose();
         this.init(this.tabId, context);
         return this;
     }
@@ -339,13 +321,13 @@ const PageStore = class {
         this.title = '';
         this.rawURL = '';
         this.hostnameToCountMap = null;
+        this.netFilteringCache.empty();
         this.allowLargeMediaElementsUntil = 0;
         if ( this.largeMediaTimer !== null ) {
             clearTimeout(this.largeMediaTimer);
             this.largeMediaTimer = null;
         }
         this.disposeFrameStores();
-        this.netFilteringCache = this.netFilteringCache.dispose();
         if ( this.journalTimer !== null ) {
             clearTimeout(this.journalTimer);
             this.journalTimer = null;
@@ -394,7 +376,7 @@ const PageStore = class {
     }
 
     injectLargeMediaElementScriptlet() {
-        vAPI.tabs.injectScript(this.tabId, {
+        vAPI.tabs.executeScript(this.tabId, {
             file: '/js/scriptlets/load-large-media-interactive.js',
             allFrames: true,
             runAt: 'document_idle',

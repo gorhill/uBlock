@@ -1,8 +1,8 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-present The uBlock Origin authors
-    Copyright (C) 2015-present Raymond Hill
+    Copyright (C) 2014-2015 The uBlock Origin authors
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -30,16 +30,18 @@
 //   Skip if already injected.
 
 // >>>>>>>> start of HUGE-IF-BLOCK
-if ( typeof vAPI === 'object' && !vAPI.clientScript ) {
+if (
+    typeof vAPI === 'object' &&
+    vAPI.randomToken instanceof Function === false
+) {
 
 /******************************************************************************/
 /******************************************************************************/
-
-vAPI.clientScript = true;
 
 vAPI.randomToken = function() {
-    return String.fromCharCode(Date.now() % 26 + 97) +
-           Math.floor(Math.random() * 982451653 + 982451653).toString(36);
+    const now = Date.now();
+    return String.fromCharCode(now % 26 + 97) +
+           Math.floor((1 + Math.random()) * now).toString(36);
 };
 
 vAPI.sessionId = vAPI.randomToken();
@@ -77,35 +79,11 @@ vAPI.messaging = {
     port: null,
     portTimer: null,
     portTimerDelay: 10000,
-    channels: new Map(),
-    connections: new Map(),
+    extended: undefined,
+    extensions: [],
+    msgIdGenerator: 1,
     pending: new Map(),
-    auxProcessId: 1,
     shuttingDown: false,
-
-    Connection: function(handler, details) {
-        this.messaging = vAPI.messaging;
-        this.handler = handler;
-        this.id = details.id;
-        this.to = details.to;
-        this.toToken = details.toToken;
-        this.from = details.from;
-        this.fromToken = details.fromToken;
-        this.checkTimer = undefined;
-        // On Firefox it appears ports are not automatically disconnected
-        // when navigating to another page.
-        const ctor = this.messaging.Connection;
-        if ( ctor.pagehide !== undefined ) { return; }
-        ctor.pagehide = ( ) => {
-            for ( const connection of this.messaging.connections.values() ) {
-                connection.disconnect();
-                connection.handler(
-                    connection.toDetails('connectionBroken')
-                );
-            }
-        };
-        window.addEventListener('pagehide', ctor.pagehide);
-    },
 
     shutdown: function() {
         this.shuttingDown = true;
@@ -125,73 +103,40 @@ vAPI.messaging = {
     disconnectListenerBound: null,
 
     messageListener: function(details) {
-        if ( !details ) { return; }
-
-        // Sent to all channels
-        if ( details.broadcast ) {
-            for ( const channelName of this.channels.keys() ) {
-                this.sendToChannelListeners(channelName, details.msg);
-            }
-            return;
-        }
+        if ( details instanceof Object === false ) { return; }
 
         // Response to specific message previously sent
-        if ( details.auxProcessId ) {
-            const listener = this.pending.get(details.auxProcessId);
-            if ( listener !== undefined ) {
-                this.pending.delete(details.auxProcessId);
-                listener(details.msg);
+        if ( details.msgId !== undefined ) {
+            const resolver = this.pending.get(details.msgId);
+            if ( resolver !== undefined ) {
+                this.pending.delete(details.msgId);
+                resolver(details.msg);
                 return;
             }
         }
 
-        if ( details.channelName !== 'vapi' ) { return; }
-
-        // Internal handler
-        let connection;
-
-        switch ( details.msg.what ) {
-        case 'connectionAccepted':
-        case 'connectionBroken':
-        case 'connectionCheck':
-        case 'connectionMessage':
-        case 'connectionRefused':
-            connection = this.connections.get(details.msg.id);
-            if ( connection === undefined ) { return; }
-            connection.receive(details.msg);
-            break;
-        case 'connectionRequested':
-            const listeners = this.channels.get(details.msg.to);
-            if ( listeners === undefined ) { return; }
-            const port = this.getPort();
-            if ( port === null ) { return; }
-            for ( const listener of listeners ) {
-                if ( listener(details.msg) !== true ) { continue; }
-                details.msg.what = 'connectionAccepted';
-                details.msg.toToken = port.name;
-                connection = new this.Connection(listener, details.msg);
-                this.connections.set(connection.id, connection);
-                break;
-            }
-            if ( details.msg.what !== 'connectionAccepted' ) {
-                details.msg.what = 'connectionRefused';
-            }
-            port.postMessage(details);
-            break;
-        default:
-            break;
-        }
+        // Unhandled messages
+        this.extensions.every(ext => ext.canProcessMessage(details) !== true);
     },
-    messageListenerCallback: null,
+    messageListenerBound: null,
+
+    canDestroyPort: function() {
+        return this.pending.size === 0 &&
+            (
+                this.extensions.length === 0 ||
+                this.extensions.every(e => e.canDestroyPort())
+            );
+    },
+
+    mustDestroyPort: function() {
+        if ( this.extensions.length === 0 ) { return; }
+        this.extensions.forEach(e => e.mustDestroyPort());
+        this.extensions.length = 0;
+    },
 
     portPoller: function() {
         this.portTimer = null;
-        if (
-            this.port !== null &&
-            this.channels.size === 0 &&
-            this.connections.size === 0 &&
-            this.pending.size === 0
-        ) {
+        if ( this.port !== null && this.canDestroyPort() ) {
             return this.destroyPort();
         }
         this.portTimer = vAPI.setTimeout(this.portPollerBound, this.portTimerDelay);
@@ -207,38 +152,30 @@ vAPI.messaging = {
         const port = this.port;
         if ( port !== null ) {
             port.disconnect();
-            port.onMessage.removeListener(this.messageListenerCallback);
+            port.onMessage.removeListener(this.messageListenerBound);
             port.onDisconnect.removeListener(this.disconnectListenerBound);
             this.port = null;
         }
-        this.channels.clear();
-        if ( this.connections.size !== 0 ) {
-            for ( const connection of this.connections.values() ) {
-                connection.receive({ what: 'connectionBroken' });
-            }
-            this.connections.clear();
-        }
+        this.mustDestroyPort();
         // service pending callbacks
         if ( this.pending.size !== 0 ) {
             const pending = this.pending;
             this.pending = new Map();
-            for ( const callback of pending.values() ) {
-                if ( typeof callback === 'function' ) {
-                    callback(null);
-                }
+            for ( const resolver of pending.values() ) {
+                resolver();
             }
         }
     },
 
     createPort: function() {
         if ( this.shuttingDown ) { return null; }
-        if ( this.messageListenerCallback === null ) {
-            this.messageListenerCallback = this.messageListener.bind(this);
+        if ( this.messageListenerBound === null ) {
+            this.messageListenerBound = this.messageListener.bind(this);
             this.disconnectListenerBound = this.disconnectListener.bind(this);
             this.portPollerBound = this.portPoller.bind(this);
         }
         try {
-            this.port = chrome.runtime.connect({name: vAPI.sessionId}) || null;
+            this.port = browser.runtime.connect({name: vAPI.sessionId}) || null;
         } catch (ex) {
             this.port = null;
         }
@@ -248,7 +185,7 @@ vAPI.messaging = {
             vAPI.shutdown.exec();
             return null;
         }
-        this.port.onMessage.addListener(this.messageListenerCallback);
+        this.port.onMessage.addListener(this.messageListenerBound);
         this.port.onDisconnect.addListener(this.disconnectListenerBound);
         this.portTimerDelay = 10000;
         if ( this.portTimer === null ) {
@@ -264,8 +201,7 @@ vAPI.messaging = {
         return this.port !== null ? this.port : this.createPort();
     },
 
-    send: function(channelName, message, callback) {
-
+    send: function(channel, msg) {
         // Too large a gap between the last request and the last response means
         // the main process is no longer reachable: memory leaks and bad
         // performance become a risk -- especially for long-lived, dynamic
@@ -275,185 +211,32 @@ vAPI.messaging = {
         }
         const port = this.getPort();
         if ( port === null ) {
-            if ( typeof callback === 'function' ) { callback(); }
-            return;
+            return Promise.resolve();
         }
-        let auxProcessId;
-        if ( callback ) {
-            auxProcessId = this.auxProcessId++;
-            this.pending.set(auxProcessId, callback);
-        }
-        port.postMessage({
-            channelName: channelName,
-            auxProcessId: auxProcessId,
-            msg: message
+        const msgId = this.msgIdGenerator++;
+        const promise = new Promise(resolve => {
+            this.pending.set(msgId, resolve);
         });
+        port.postMessage({ channel, msgId, msg });
+        return promise;
     },
 
-    connectTo: function(from, to, handler) {
-        const port = this.getPort();
-        if ( port === null ) { return; }
-        const connection = new this.Connection(handler, {
-            id: `${from}-${to}-${vAPI.sessionId}`,
-            to: to,
-            from: from,
-            fromToken: port.name
-        });
-        this.connections.set(connection.id, connection);
-        port.postMessage({
-            channelName: 'vapi',
-            msg: {
-                what: 'connectionRequested',
-                id: connection.id,
-                from: from,
-                fromToken: port.name,
-                to: to
-            }
-        });
-        return connection.id;
-    },
-
-    disconnectFrom: function(connectionId) {
-        const connection = this.connections.get(connectionId);
-        if ( connection === undefined ) { return; }
-        connection.disconnect();
-    },
-
-    sendTo: function(connectionId, payload) {
-        const connection = this.connections.get(connectionId);
-        if ( connection === undefined ) { return; }
-        connection.send(payload);
-    },
-
-    addChannelListener: function(channelName, listener) {
-        const listeners = this.channels.get(channelName);
-        if ( listeners === undefined ) {
-            this.channels.set(channelName, [ listener ]);
-        } else if ( listeners.indexOf(listener) === -1 ) {
-            listeners.push(listener);
+    // Dynamically extend capabilities.
+    extend: function() {
+        if ( this.extended === undefined ) {
+            this.extended = vAPI.messaging.send('vapi', {
+                what: 'extendClient'
+            }).then(( ) => {
+                return self.vAPI instanceof Object &&
+                       this.extensions.length !== 0;
+            }).catch(( ) => {
+            });
         }
-        this.getPort();
+        return this.extended;
     },
-
-    removeChannelListener: function(channelName, listener) {
-        const listeners = this.channels.get(channelName);
-        if ( listeners === undefined ) { return; }
-        const pos = listeners.indexOf(listener);
-        if ( pos === -1 ) { return; }
-        listeners.splice(pos, 1);
-        if ( listeners.length === 0 ) {
-            this.channels.delete(channelName);
-        }
-    },
-
-    removeAllChannelListeners: function(channelName) {
-        this.channels.delete(channelName);
-    },
-
-    sendToChannelListeners: function(channelName, msg) {
-        let listeners = this.channels.get(channelName);
-        if ( listeners === undefined ) { return; }
-        listeners = listeners.slice(0);
-        let response;
-        for ( const listener of listeners ) {
-            response = listener(msg);
-            if ( response !== undefined ) { break; }
-        }
-        return response;
-    }
 };
 
-/******************************************************************************/
-
-vAPI.messaging.Connection.prototype = {
-    toDetails: function(what, payload) {
-        return {
-            what: what,
-            id: this.id,
-            from: this.from,
-            fromToken: this.fromToken,
-            to: this.to,
-            toToken: this.toToken,
-            payload: payload
-        };
-    },
-    disconnect: function() {
-        if ( this.checkTimer !== undefined ) {
-            clearTimeout(this.checkTimer);
-            this.checkTimer = undefined;
-        }
-        this.messaging.connections.delete(this.id);
-        const port = this.messaging.getPort();
-        if ( port === null ) { return; }
-        port.postMessage({
-            channelName: 'vapi',
-            msg:  this.toDetails('connectionBroken')
-        });
-    },
-    checkAsync: function() {
-        if ( this.checkTimer !== undefined ) {
-            clearTimeout(this.checkTimer);
-        }
-        this.checkTimer = vAPI.setTimeout(
-            ( ) => { this.check(); },
-            499
-        );
-    },
-    check: function() {
-        this.checkTimer = undefined;
-        if ( this.messaging.connections.has(this.id) === false ) { return; }
-        const port = this.messaging.getPort();
-        if ( port === null ) { return; }
-        port.postMessage({
-            channelName: 'vapi',
-            msg: this.toDetails('connectionCheck')
-        });
-        this.checkAsync();
-    },
-    receive: function(details) {
-        switch ( details.what ) {
-        case 'connectionAccepted':
-            this.toToken = details.toToken;
-            this.handler(details);
-            this.checkAsync();
-            break;
-        case 'connectionBroken':
-            this.messaging.connections.delete(this.id);
-            this.handler(details);
-            break;
-        case 'connectionMessage':
-            this.handler(details);
-            this.checkAsync();
-            break;
-        case 'connectionCheck':
-            const port = this.messaging.getPort();
-            if ( port === null ) { return; }
-            if ( this.messaging.connections.has(this.id) ) {
-                this.checkAsync();
-            } else {
-                details.what = 'connectionBroken';
-                port.postMessage({ channelName: 'vapi', msg: details });
-            }
-            break;
-        case 'connectionRefused':
-            this.messaging.connections.delete(this.id);
-            this.handler(details);
-            break;
-        }
-    },
-    send: function(payload) {
-        const port = this.messaging.getPort();
-        if ( port === null ) { return; }
-        port.postMessage({
-            channelName: 'vapi',
-            msg: this.toDetails('connectionMessage', payload)
-        });
-    }
-};
-
-/******************************************************************************/
-
-vAPI.shutdown.add(function() {
+vAPI.shutdown.add(( ) => {
     vAPI.messaging.shutdown();
     window.vAPI = undefined;
 });

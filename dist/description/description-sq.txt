@@ -1,0 +1,49 @@
+Një bllokues efikas: me impakt të vogël te memoria dhe procesori, por mund të hapë dhe të zbatojë mijëra filtra më shumë sesa bllokuesit e tjerë të njohur.
+
+Përmbledhje e ilustruar e efikasitetit të tij: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+
+Përdorimi: Çelësi i komandimit te dritarja e vogël e bën uBlock përherë joaktiv/aktiv për uebsajtin aktual. Ai vlen vetëm për uebsajtin aktual, nuk është një çelës i përgjithshëm.
+
+***
+
+Është fleksibël dhe jo thjesht një "bllokues reklamash": mund të lexojë dhe të krijojë filtra nga skedarët "hosts".
+
+Filtrat e listuar këtu hapen dhe zbatohen pas instalimit:
+
+- EasyList
+- Peter Lowe’s Ad server list
+- EasyPrivacy
+- Malware domains
+
+Po të doni, ka edhe shumë lista të tjera të gatshme:
+
+- Fanboy’s Enhanced Tracking List
+- Dan Pollock’s hosts file
+- hpHosts’s Ad and tracking servers
+- MVPS HOSTS
+- Spam404
+- Dhe shumë të tjera
+
+Sigurisht që sa më shumë filtra të aktivizoni, aq më i madh do të jetë impakti te memoria. Edhe sikur të shtoni dy listat e tjera të Fanboy, hpHosts’s Ad and tracking servers, uBlock përsëri ka impakt më të ulët te memoria sesa bllokuesit e tjerë shumë të njohur.
+
+Por, kujdes, sepse duke përzgjedhur disa prej këtyre listave, gjasat që faqet të shfaqin probleme do të jenë më të mëdha -- sidomos listat që normalisht përdoren si skedarë "hosts".
+
+***
+
+Pa listat e programuara, ky program nuk ka asnjë vlerë. Prandaj, po të doni të kontribuoni diçka, mendoni pak për njerëzit që punojnë fort për mirëmbajtjen e listave me filtra që po përdorni, të cilat na ofrohen të gjithëve pa pagesë.
+
+***
+
+Falas.
+Material i hapur me licencë publike (GPLv3)
+Krijuar nga përdoruesit për përdoruesit.
+
+Kontributorët @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Kontributorët @ Crowdin: https://crowdin.net/project/ublock
+
+***
+
+Kur bëni vlerësimin e programit, mos harroni se ky është një version paraprak.
+
+Ditari i projektit:
+https://github.com/gorhill/uBlock/releases

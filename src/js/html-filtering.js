@@ -28,10 +28,18 @@
     const pselectors = new Map();
     const duplicates = new Set();
 
-    let filterDB = new µb.staticExtFilteringEngine.HostnameBasedDB(2),
-        acceptedCount = 0,
-        discardedCount = 0,
-        docRegister;
+    const filterDB = new µb.staticExtFilteringEngine.HostnameBasedDB(2);
+    const sessionFilterDB = new (
+        class extends µb.staticExtFilteringEngine.SessionDB {
+            compile(s) {
+                return µb.staticExtFilteringEngine.compileSelector(s.slice(1));
+            }
+        }
+    )();
+
+    let acceptedCount = 0;
+    let discardedCount = 0;
+    let docRegister;
 
     const api = {
         get acceptedCount() {
@@ -334,6 +342,10 @@
         }
     };
 
+    api.getSession = function() {
+        return sessionFilterDB;
+    };
+
     api.retrieve = function(details) {
         const hostname = details.hostname;
 
@@ -350,13 +362,16 @@
         const procedurals = new Set();
         const exceptions = new Set();
 
+        if ( sessionFilterDB.isNotEmpty ) {
+            sessionFilterDB.retrieve([ null, exceptions ]);
+        }
         filterDB.retrieve(
             hostname,
             [ plains, exceptions, procedurals, exceptions ]
         );
         if ( details.entity !== '' ) {
             filterDB.retrieve(
-                `${hostname.slice(0, -details.domain)}${details.entity}`,
+                `${hostname.slice(0, -details.domain.length)}${details.entity}`,
                 [ plains, exceptions, procedurals, exceptions ]
             );
         }
@@ -410,7 +425,7 @@
     };
 
     api.fromSelfie = function(selfie) {
-        filterDB = new µb.staticExtFilteringEngine.HostnameBasedDB(2, selfie);
+        filterDB.fromSelfie(selfie);
         pselectors.clear();
     };
 

@@ -44,13 +44,13 @@
   optional.
 
   The static extended filtering engine also offers parsing capabilities which
-  are available to all other specialized fitlering engines. For example,
+  are available to all other specialized filtering engines. For example,
   cosmetic and html filtering can ask the extended filtering engine to
   compile/validate selectors.
 
 **/
 
-µBlock.staticExtFilteringEngine = (function() {
+µBlock.staticExtFilteringEngine = (( ) => {
     const µb = µBlock;
     const reHasUnicode = /[^\x00-\x7F]/;
     const reParseRegexLiteral = /^\/(.+)\/([imu]+)?$/;
@@ -303,7 +303,7 @@
             [ ':nth-ancestor', compileNthAncestorSelector ],
             [ ':spath', compileSpathExpression ],
             [ ':watch-attr', compileAttrList ],
-            [ ':xpath', compileXpathExpression ]
+            [ ':xpath', compileXpathExpression ],
         ]);
 
         // https://github.com/gorhill/uBlock/issues/2793#issuecomment-333269387
@@ -511,13 +511,14 @@
     //--------------------------------------------------------------------------
 
     api.HostnameBasedDB = class {
-
         constructor(nBits, selfie = undefined) {
             this.nBits = nBits;
             this.timer = undefined;
             this.strToIdMap = new Map();
             this.hostnameToSlotIdMap = new Map();
+            // Array of integer pairs
             this.hostnameSlots = [];
+            // Array of strings (selectors and pseudo-selectors)
             this.strSlots = [];
             this.size = 0;
             if ( selfie !== undefined ) {
@@ -537,18 +538,18 @@
                 }
             }
             const strId = iStr << this.nBits | bits;
-            const iHn = this.hostnameToSlotIdMap.get(hn);
+            let iHn = this.hostnameToSlotIdMap.get(hn);
             if ( iHn === undefined ) {
                 this.hostnameToSlotIdMap.set(hn, this.hostnameSlots.length);
-                this.hostnameSlots.push(strId);
+                this.hostnameSlots.push(strId, 0);
                 return;
             }
-            const bucket = this.hostnameSlots[iHn];
-            if ( Array.isArray(bucket) ) {
-                bucket.push(strId);
-            } else {
-                this.hostnameSlots[iHn] = [ bucket, strId ];
+            // Add as last item.
+            while ( this.hostnameSlots[iHn+1] !== 0 ) {
+                iHn = this.hostnameSlots[iHn+1];
             }
+            this.hostnameSlots[iHn+1] = this.hostnameSlots.length;
+            this.hostnameSlots.push(strId, 0);
         }
 
         clear() {
@@ -559,8 +560,8 @@
             this.size = 0;
         }
 
-        collectGarbage(async = false) {
-            if ( async === false ) {
+        collectGarbage(later = false) {
+            if ( later === false ) {
                 if ( this.timer !== undefined ) {
                     self.cancelIdleCallback(this.timer);
                     this.timer = undefined;
@@ -578,23 +579,33 @@
             );
         }
 
-        retrieve(hostname, out) {
+        // modifiers = 1: return only specific items
+        // modifiers = 2: return only generic items
+        //
+        retrieve(hostname, out, modifiers = 0) {
+            if ( modifiers === 2 ) {
+                hostname = '';
+            }
             const mask = out.length - 1; // out.length must be power of two
             for (;;) {
-                const filterId = this.hostnameToSlotIdMap.get(hostname);
-                if ( filterId !== undefined ) {
-                    const bucket = this.hostnameSlots[filterId];
-                    if ( Array.isArray(bucket) ) {
-                        for ( const id of bucket ) {
-                            out[id & mask].add(this.strSlots[id >>> this.nBits]);
-                        }
-                    } else {
-                        out[bucket & mask].add(this.strSlots[bucket >>> this.nBits]);
-                    }
+                let iHn = this.hostnameToSlotIdMap.get(hostname);
+                if ( iHn !== undefined ) {
+                    do {
+                        const strId = this.hostnameSlots[iHn+0];
+                        out[strId & mask].add(
+                            this.strSlots[strId >>> this.nBits]
+                        );
+                        iHn = this.hostnameSlots[iHn+1];
+                    } while ( iHn !== 0 );
                 }
                 if ( hostname === '' ) { break; }
                 const pos = hostname.indexOf('.');
-                hostname = pos !== -1 ? hostname.slice(pos + 1) : '';
+                if ( pos === -1 ) {
+                    if ( modifiers === 1 ) { break; }
+                    hostname = '';
+                } else {
+                    hostname = hostname.slice(pos + 1);
+                }
             }
         }
 
@@ -612,6 +623,50 @@
             this.hostnameSlots = selfie.hostnameSlots;
             this.strSlots = selfie.strSlots;
             this.size = selfie.size;
+        }
+    };
+
+    api.SessionDB = class {
+        constructor() {
+            this.db = new Map();
+        }
+        compile(s) {
+            return s;
+        }
+        add(bits, s) {
+            const bucket = this.db.get(bits);
+            if ( bucket === undefined ) {
+                this.db.set(bits, new Set([ s ]));
+            } else {
+                bucket.add(s);
+            }
+        }
+        remove(bits, s) {
+            const bucket = this.db.get(bits);
+            if ( bucket === undefined ) { return; }
+            bucket.delete(s);
+            if ( bucket.size !== 0 ) { return; }
+            this.db.delete(bits);
+        }
+        retrieve(out) {
+            const mask = out.length - 1;
+            for ( const [ bits, bucket ] of this.db ) {
+                const i = bits & mask;
+                if ( out[i] instanceof Object === false ) { continue; }
+                for ( const s of bucket ) {
+                    out[i].add(s);
+                }
+            }
+        }
+        has(bits, s) {
+            const selectors = this.db.get(bits);
+            return selectors !== undefined && selectors.has(s);
+        }
+        clear() {
+            this.db.clear();
+        }
+        get isNotEmpty() {
+            return this.db.size !== 0;
         }
     };
 
@@ -648,7 +703,7 @@
     // https://github.com/uBlockOrigin/uBlock-issues/issues/89
     //   Do not discard unknown pseudo-elements.
 
-    api.compileSelector = (function() {
+    api.compileSelector = (( ) => {
         const reAfterBeforeSelector = /^(.+?)(::?after|::?before|::[a-z-]+)$/;
         const reStyleSelector = /^(.+?):style\((.+?)\)$/;
         const reExtendedSyntax = /\[-(?:abp|ext)-[a-z-]+=(['"])(?:.+?)(?:\1)\]/;

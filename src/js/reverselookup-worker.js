@@ -38,7 +38,7 @@ const extractBlocks = function(content, begId, endId) {
         const beg = match.index + match[0].length;
         const blockId = parseInt(match[1], 10);
         if ( blockId >= begId && blockId < endId ) {
-            var end = content.indexOf('#block-end-' + match[1], beg);
+            const end = content.indexOf('#block-end-' + match[1], beg);
             out.push(content.slice(beg, end));
             reBlockStart.lastIndex = end;
         }
@@ -49,6 +49,9 @@ const extractBlocks = function(content, begId, endId) {
 
 /******************************************************************************/
 
+// https://github.com/MajkiIT/polish-ads-filter/issues/14768#issuecomment-536006312
+//   Avoid reporting badfilter-ed filters.
+
 const fromNetFilter = function(details) {
     const lists = [];
     const compiledFilter = details.compiledFilter;
@@ -56,7 +59,7 @@ const fromNetFilter = function(details) {
     for ( const assetKey in listEntries ) {
         const entry = listEntries[assetKey];
         if ( entry === undefined ) { continue; }
-        const content = extractBlocks(entry.content, 0, 1000);
+        const content = extractBlocks(entry.content, 0, 1);
         let pos = 0;
         for (;;) {
             pos = content.indexOf(compiledFilter, pos);
@@ -176,17 +179,18 @@ const fromCosmeticFilter = function(details) {
             let end = content.indexOf('\n', pos);
             if ( end === -1 ) { end = content.length; }
             pos = end;
-            let fargs = JSON.parse(content.slice(beg, end));
+            const fargs = JSON.parse(content.slice(beg, end));
+            const filterType = fargs[0];
 
             // https://github.com/gorhill/uBlock/issues/2763
-            if ( fargs[0] >= 0 && fargs[0] <= 5 && details.ignoreGeneric ) {
+            if ( filterType >= 0 && filterType <= 5 && details.ignoreGeneric ) {
                 continue;
             }
 
             // Do not confuse cosmetic filters with HTML ones.
-            if ( (fargs[0] === 64) !== isHtmlFilter ) { continue; }
+            if ( (filterType === 64) !== isHtmlFilter ) { continue; }
 
-            switch ( fargs[0] ) {
+            switch ( filterType ) {
             // Lowly generic cosmetic filters
             case 0: // simple id-based
                 if (
@@ -232,9 +236,17 @@ const fromCosmeticFilter = function(details) {
                 ) {
                     break;
                 }
-                if ( hostnameMatches(fargs[1]) ) {
-                    found = fargs[1] + prefix + selector;
+                if ( hostnameMatches(fargs[1]) === false ) { break; }
+                // https://www.reddit.com/r/uBlockOrigin/comments/d6vxzj/
+                //   Ignore match if specific cosmetic filters are disabled
+                if (
+                    filterType === 8 &&
+                    exception === false &&
+                    details.ignoreSpecific
+                ) {
+                    break;
                 }
+                found = fargs[1] + prefix + selector;
                 break;
             // Scriptlet injection
             case 32:

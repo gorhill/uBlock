@@ -119,7 +119,9 @@ const onTabClickHandler = function(ev) {
 };
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/106
-vAPI.messaging.send('dashboard', { what: 'canUpdateShortcuts' }, response => {
+vAPI.messaging.send('dashboard', {
+    what: 'canUpdateShortcuts',
+}).then(response => {
     document.body.classList.toggle('canUpdateShortcuts', response === true);
 });
 

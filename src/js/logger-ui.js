@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-(function() {
+(( ) => {
 
 /******************************************************************************/
 
@@ -42,6 +42,7 @@ let filteredLoggerEntryVoidedCount = 0;
 let popupLoggerBox;
 let popupLoggerTooltips;
 let activeTabId = 0;
+let filterAuthorMode = false;
 let selectedTabId = 0;
 let netInspectorPaused = false;
 
@@ -65,7 +66,7 @@ const tabIdFromAttribute = function(elem) {
 
 // Current design allows for only one modal DOM-based dialog at any given time.
 //
-const modalDialog = (function() {
+const modalDialog = (( ) => {
     const overlay = uDom.nodeFromId('modalOverlay');
     const container = overlay.querySelector(
         ':scope > div > div:nth-of-type(1)'
@@ -975,6 +976,8 @@ const onLogBufferRead = function(response) {
         allTabIdsToken = response.tabIdsToken;
     }
 
+    filterAuthorMode = response.filterAuthorMode === true;
+
     if ( activeTabIdChanged ) {
         pageSelectorFromURLHash();
     }
@@ -1001,7 +1004,7 @@ const onLogBufferRead = function(response) {
 const readLogBuffer = (( ) => {
     let timer;
 
-    const readLogBufferNow = function() {
+    const readLogBufferNow = async function() {
         if ( logger.ownerId === undefined ) { return; }
 
         const msg = {
@@ -1028,11 +1031,11 @@ const readLogBuffer = (( ) => {
             msg.popupLoggerBoxChanged = true;
         }
 
-        vAPI.messaging.send('loggerUI', msg, response => {
-            timer = undefined;
-            onLogBufferRead(response);
-            readLogBufferLater();
-        });
+        const response = await vAPI.messaging.send('loggerUI', msg);
+
+        timer = undefined;
+        onLogBufferRead(response);
+        readLogBufferLater();
     };
 
     const readLogBufferLater = function() {
@@ -1104,24 +1107,22 @@ const reloadTab = function(ev) {
     messaging.send('loggerUI', {
         what: 'reloadTab',
         tabId: tabId,
-        bypassCache: ev && (ev.ctrlKey || ev.metaKey || ev.shiftKey)
+        bypassCache: ev && (ev.ctrlKey || ev.metaKey || ev.shiftKey),
     });
 };
 
 /******************************************************************************/
 /******************************************************************************/
 
-(function() {
+(( ) => {
     const reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
     const reSchemeOnly = /^[\w-]+:$/;
     const staticFilterTypes = {
-        'beacon': 'other',
+        'beacon': 'ping',
         'doc': 'document',
         'css': 'stylesheet',
         'frame': 'subdocument',
-        'ping': 'other',
         'object_subrequest': 'object',
-        'xhr': 'xmlhttprequest'
     };
     const createdStaticFilters = {};
 
@@ -1170,17 +1171,14 @@ const reloadTab = function(ev) {
         }
     };
 
-    const colorize = function() {
-        messaging.send(
-            'loggerUI',
-            {
-                what: 'getURLFilteringData',
-                context: selectValue('select.dynamic.origin'),
-                urls: targetURLs,
-                type: uglyTypeFromSelector('dynamic')
-            },
-            onColorsReady
-        );
+    const colorize = async function() {
+        const response = await messaging.send('loggerUI', {
+            what: 'getURLFilteringData',
+            context: selectValue('select.dynamic.origin'),
+            urls: targetURLs,
+            type: uglyTypeFromSelector('dynamic'),
+        });
+        onColorsReady(response);
     };
 
     const parseStaticInputs = function() {
@@ -1211,7 +1209,7 @@ const reloadTab = function(ev) {
         value = selectValue('select.static.origin');
         if ( value !== '' ) {
             if ( value === targetDomain ) {
-                options.push('first-party');
+                options.push('1p');
             } else {
                 options.push('domain=' + value);
             }
@@ -1234,55 +1232,59 @@ const reloadTab = function(ev) {
         );
     };
 
-    const onClick = function(ev) {
+    const onClick = async function(ev) {
         const target = ev.target;
         const tcl = target.classList;
 
         // Select a mode
         if ( tcl.contains('header') ) {
-            dialog.setAttribute('data-pane', target.getAttribute('data-pane') );
             ev.stopPropagation();
+            dialog.setAttribute('data-pane', target.getAttribute('data-pane') );
             return;
         }
 
+        // Toggle temporary exception filter
+        if ( tcl.contains('exceptor') ) {
+            ev.stopPropagation();
+            const status = await messaging.send('loggerUI', {
+                what: 'toggleTemporaryException',
+                filter: filterFromTargetRow(),
+            });
+            const row = target.closest('div');
+            row.classList.toggle('exceptored', status);
+            return;
+        }
+        
         // Create static filter
         if ( target.id === 'createStaticFilter' ) {
+            ev.stopPropagation();
             const value = staticFilterNode().value;
             // Avoid duplicates
-            if ( createdStaticFilters.hasOwnProperty(value) ) {
-                return;
-            }
+            if ( createdStaticFilters.hasOwnProperty(value) ) { return; }
             createdStaticFilters[value] = true;
             if ( value !== '' ) {
-                messaging.send(
-                    'loggerUI',
-                    {
-                        what: 'createUserFilter',
-                        autoComment: true,
-                        filters: value,
-                        origin: targetPageDomain,
-                        pageDomain: targetPageDomain,
-                    }
-                );
+                messaging.send('loggerUI', {
+                    what: 'createUserFilter',
+                    autoComment: true,
+                    filters: value,
+                    origin: targetPageDomain,
+                    pageDomain: targetPageDomain,
+                });
             }
             updateWidgets();
-            ev.stopPropagation();
             return;
         }
 
         // Save url filtering rule(s)
         if ( target.id === 'saveRules' ) {
-                messaging.send(
-                'loggerUI',
-                {
-                    what: 'saveURLFilteringRules',
-                    context: selectValue('select.dynamic.origin'),
-                    urls: targetURLs,
-                    type: uglyTypeFromSelector('dynamic')
-                },
-                colorize
-            );
             ev.stopPropagation();
+            await messaging.send('loggerUI', {
+                what: 'saveURLFilteringRules',
+                context: selectValue('select.dynamic.origin'),
+                urls: targetURLs,
+                type: uglyTypeFromSelector('dynamic'),
+            });
+            colorize();
             return;
         }
 
@@ -1290,101 +1292,83 @@ const reloadTab = function(ev) {
 
         // Remove url filtering rule
         if ( tcl.contains('action') ) {
-            messaging.send(
-                'loggerUI',
-                {
-                    what: 'setURLFilteringRule',
-                    context: selectValue('select.dynamic.origin'),
-                    url: target.getAttribute('data-url'),
-                    type: uglyTypeFromSelector('dynamic'),
-                    action: 0,
-                    persist: persist
-                },
-                colorize
-            );
             ev.stopPropagation();
+            await messaging.send('loggerUI', {
+                what: 'setURLFilteringRule',
+                context: selectValue('select.dynamic.origin'),
+                url: target.getAttribute('data-url'),
+                type: uglyTypeFromSelector('dynamic'),
+                action: 0,
+                persist: persist,
+            });
+            colorize();
             return;
         }
 
         // add "allow" url filtering rule
         if ( tcl.contains('allow') ) {
-            messaging.send(
-                'loggerUI',
-                {
-                    what: 'setURLFilteringRule',
-                    context: selectValue('select.dynamic.origin'),
-                    url: target.parentNode.getAttribute('data-url'),
-                    type: uglyTypeFromSelector('dynamic'),
-                    action: 2,
-                    persist: persist
-                },
-                colorize
-            );
             ev.stopPropagation();
+            await messaging.send('loggerUI', {
+                what: 'setURLFilteringRule',
+                context: selectValue('select.dynamic.origin'),
+                url: target.parentNode.getAttribute('data-url'),
+                type: uglyTypeFromSelector('dynamic'),
+                action: 2,
+                persist: persist,
+            });
+            colorize();
             return;
         }
 
         // add "block" url filtering rule
         if ( tcl.contains('noop') ) {
-            messaging.send(
-                'loggerUI',
-                {
-                    what: 'setURLFilteringRule',
-                    context: selectValue('select.dynamic.origin'),
-                    url: target.parentNode.getAttribute('data-url'),
-                    type: uglyTypeFromSelector('dynamic'),
-                    action: 3,
-                    persist: persist
-                },
-                colorize
-            );
             ev.stopPropagation();
+            await messaging.send('loggerUI', {
+                what: 'setURLFilteringRule',
+                context: selectValue('select.dynamic.origin'),
+                url: target.parentNode.getAttribute('data-url'),
+                type: uglyTypeFromSelector('dynamic'),
+                action: 3,
+                persist: persist,
+            });
+            colorize();
             return;
         }
 
         // add "block" url filtering rule
         if ( tcl.contains('block') ) {
-            messaging.send(
-                'loggerUI',
-                {
-                    what: 'setURLFilteringRule',
-                    context: selectValue('select.dynamic.origin'),
-                    url: target.parentNode.getAttribute('data-url'),
-                    type: uglyTypeFromSelector('dynamic'),
-                    action: 1,
-                    persist: persist
-                },
-                colorize
-            );
             ev.stopPropagation();
+            await messaging.send('loggerUI', {
+                what: 'setURLFilteringRule',
+                context: selectValue('select.dynamic.origin'),
+                url: target.parentNode.getAttribute('data-url'),
+                type: uglyTypeFromSelector('dynamic'),
+                action: 1,
+                persist: persist,
+            });
+            colorize();
             return;
         }
 
         // Force a reload of the tab
         if ( tcl.contains('reload') ) {
-            messaging.send(
-                'loggerUI',
-                {
-                    what: 'reloadTab',
-                    tabId: targetTabId
-                }
-            );
             ev.stopPropagation();
+            messaging.send('loggerUI', {
+                what: 'reloadTab',
+                tabId: targetTabId,
+            });
             return;
         }
 
         // Hightlight corresponding element in target web page
         if ( tcl.contains('picker') ) {
-            messaging.send(
-                'loggerUI',
-                {
-                    what: 'launchElementPicker',
-                    tabId: targetTabId,
-                    targetURL: 'img\t' + targetURLs[0],
-                    select: true
-                }
-            );
             ev.stopPropagation();
+            messaging.send('loggerUI', {
+                what: 'launchElementPicker',
+                tabId: targetTabId,
+                targetURL: 'img\t' + targetURLs[0],
+                select: true,
+            });
             return;
         }
     };
@@ -1476,7 +1460,36 @@ const reloadTab = function(ev) {
         return urls;
     };
 
-    const fillSummaryPaneFilterList = function(rows) {
+    const filterFromTargetRow = function() {
+        return targetRow.children[1].textContent;
+    };
+
+    const toSummaryPaneFilterNode = async function(receiver, filter) {
+        receiver.children[1].textContent = filter;
+        if ( filterAuthorMode !== true ) { return; }
+        const match = /#@?#/.exec(filter);
+        if ( match === null ) { return; }
+        const fragment = document.createDocumentFragment();
+        const pos = match.index + match[0].length;
+        fragment.appendChild(document.createTextNode(filter.slice(0, pos)));
+        const selector = filter.slice(pos);
+        const span = document.createElement('span');
+        span.className = 'filter';
+        span.textContent = selector;
+        fragment.appendChild(span);
+        const isTemporaryException = await messaging.send('loggerUI', {
+            what: 'hasTemporaryException',
+            filter,
+        });
+        receiver.classList.toggle('exceptored', isTemporaryException);
+        if ( match[0] === '##' || isTemporaryException ) {
+            receiver.children[2].style.visibility = '';
+        }
+        receiver.children[1].textContent = '';
+        receiver.children[1].appendChild(fragment);
+    };
+
+    const fillSummaryPaneFilterList = async function(rows) {
         const rawFilter = targetRow.children[1].textContent;
         const compiledFilter = targetRow.getAttribute('data-filter');
 
@@ -1518,7 +1531,7 @@ const reloadTab = function(ev) {
                 bestMatchFilter !== '' &&
                 Array.isArray(response[bestMatchFilter])
             ) {
-                rows[0].children[1].textContent = bestMatchFilter;
+                toSummaryPaneFilterNode(rows[0], bestMatchFilter);
                 rows[1].children[1].appendChild(nodeFromFilter(
                     bestMatchFilter,
                     response[bestMatchFilter]
@@ -1535,27 +1548,21 @@ const reloadTab = function(ev) {
         };
 
         if ( targetRow.classList.contains('networkRealm') ) {
-            messaging.send(
-                'loggerUI',
-                {
-                    what: 'listsFromNetFilter',
-                    compiledFilter: compiledFilter,
-                    rawFilter: rawFilter
-                },
-                handleResponse
-            );
+            const response = await messaging.send('loggerUI', {
+                what: 'listsFromNetFilter',
+                compiledFilter: compiledFilter,
+                rawFilter: rawFilter,
+            });
+            handleResponse(response);
         } else if ( targetRow.classList.contains('cosmeticRealm') ) {
-            messaging.send(
-                'loggerUI',
-                {
-                    what: 'listsFromCosmeticFilter',
-                    url: targetRow.children[6].textContent,
-                    rawFilter: rawFilter,
-                },
-                handleResponse
-            );
+            const response = await messaging.send('loggerUI', {
+                what: 'listsFromCosmeticFilter',
+                url: targetRow.children[6].textContent,
+                rawFilter: rawFilter,
+            });
+            handleResponse(response);
         }
-    };
+    } ;
 
     const fillSummaryPane = function() {
         const rows = dialog.querySelectorAll('.pane.details > div');
@@ -1564,12 +1571,12 @@ const reloadTab = function(ev) {
         const trch = tr.children;
         let text;
         // Filter and context
-        text = trch[1].textContent;
+        text = filterFromTargetRow();
         if (
             (text !== '') &&
             (trcl.contains('cosmeticRealm') || trcl.contains('networkRealm'))
         ) {
-            rows[0].children[1].textContent = text;
+            toSummaryPaneFilterNode(rows[0], text);
         } else {
             rows[0].style.display = 'none';
         }
@@ -1809,13 +1816,13 @@ const reloadTab = function(ev) {
         fillSummaryPane();
         fillDynamicPane();
         fillStaticPane();
-        dialog.addEventListener('click', onClick, true);
+        dialog.addEventListener('click', ev => { onClick(ev); }, true);
         dialog.addEventListener('change', onSelectChange, true);
         dialog.addEventListener('input', onInputChange, true);
         modalDialog.show();
     };
 
-    const toggleOn = function(ev) {
+    const toggleOn = async function(ev) {
         targetRow = ev.target.closest('.canDetails');
         if ( targetRow === null ) { return; }
         ev.stopPropagation();
@@ -1826,24 +1833,21 @@ const reloadTab = function(ev) {
         targetFrameHostname = targetRow.getAttribute('data-dochn') || '';
 
         // We need the root domain names for best user experience.
-        messaging.send(
-            'loggerUI',
-            {
-                what: 'getDomainNames',
-                targets: [
-                    targetURLs[0],
-                    targetPageHostname,
-                    targetFrameHostname
-                ]
-            },
-            fillDialog
-        );
+        const domains = await messaging.send('loggerUI', {
+            what: 'getDomainNames',
+            targets: [
+                targetURLs[0],
+                targetPageHostname,
+                targetFrameHostname
+            ],
+        });
+        fillDialog(domains);
     };
 
     uDom('#netInspector').on(
         'click',
         '.canDetails > span:nth-of-type(2),.canDetails > span:nth-of-type(3),.canDetails > span:nth-of-type(5)',
-        toggleOn
+        ev => { toggleOn(ev); }
     );
 })();
 
@@ -2792,10 +2796,10 @@ const grabView = function() {
 
 const releaseView = function() {
     if ( logger.ownerId === undefined ) { return; }
-    vAPI.messaging.send(
-        'loggerUI',
-        { what: 'releaseView', ownerId: logger.ownerId }
-    );
+    vAPI.messaging.send('loggerUI', {
+        what: 'releaseView',
+        ownerId: logger.ownerId,
+    });
     logger.ownerId = undefined;
 };
 

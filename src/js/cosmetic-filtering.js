@@ -23,7 +23,7 @@
 
 /******************************************************************************/
 
-µBlock.cosmeticFilteringEngine = (function(){
+µBlock.cosmeticFilteringEngine = (( ) => {
 
 /******************************************************************************/
 
@@ -223,6 +223,15 @@ const FilterContainer = function() {
     // specific filters
     this.specificFilters = new µb.staticExtFilteringEngine.HostnameBasedDB(2);
 
+    // temporary filters
+    this.sessionFilterDB = new (
+        class extends µb.staticExtFilteringEngine.SessionDB {
+            compile(s) {
+                return µb.staticExtFilteringEngine.compileSelector(s);
+            }
+        }
+    )();
+
     // low generic cosmetic filters, organized by id/class then simple/complex.
     this.lowlyGeneric = Object.create(null);
     this.lowlyGeneric.id = {
@@ -257,10 +266,12 @@ const FilterContainer = function() {
     // is to prevent repeated allocation/deallocation overheads -- the
     // constructors/destructors of javascript Set/Map is assumed to be costlier
     // than just calling clear() on these.
-    this.setRegister0 = new Set();
-    this.setRegister1 = new Set();
-    this.setRegister2 = new Set();
-    this.mapRegister0 = new Map();
+    this.$simpleSet = new Set();
+    this.$complexSet = new Set();
+    this.$specificSet = new Set();
+    this.$exceptionSet = new Set();
+    this.$proceduralSet = new Set();
+    this.$dummySet = new Set();
 
     this.reset();
 };
@@ -769,8 +780,8 @@ FilterContainer.prototype.addToSelectorCache = function(details) {
 /******************************************************************************/
 
 FilterContainer.prototype.removeFromSelectorCache = function(
-    targetHostname,
-    type
+    targetHostname = '*',
+    type = undefined
 ) {
     let targetHostnameLength = targetHostname.length;
     for ( let entry of this.selectorCache ) {
@@ -836,8 +847,15 @@ FilterContainer.prototype.pruneSelectorCacheAsync = function() {
 /******************************************************************************/
 
 FilterContainer.prototype.randomAlphaToken = function() {
-    return String.fromCharCode(Date.now() % 26 + 97) +
-           Math.floor(Math.random() * 982451653 + 982451653).toString(36);
+    const now = Date.now();
+    return String.fromCharCode(now % 26 + 97) +
+           Math.floor((1 + Math.random()) * now).toString(36);
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.getSession = function() {
+    return this.sessionFilterDB;
 };
 
 /******************************************************************************/
@@ -848,11 +866,11 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
 
     //console.time('cosmeticFilteringEngine.retrieveGenericSelectors');
 
-    const simpleSelectors = this.setRegister0;
-    const complexSelectors = this.setRegister1;
+    const simpleSelectors = this.$simpleSet;
+    const complexSelectors = this.$complexSet;
 
     const cacheEntry = this.selectorCache.get(request.hostname);
-    const previousHits = cacheEntry && cacheEntry.cosmetic || this.setRegister2;
+    const previousHits = cacheEntry && cacheEntry.cosmetic || this.$dummySet;
 
     for ( const type in this.lowlyGeneric ) {
         const entry = this.lowlyGeneric[type];
@@ -913,6 +931,10 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
         excepted,
     } ;
 
+    // Important: always clear used registers before leaving.
+    simpleSelectors.clear();
+    complexSelectors.clear();
+
     // Cache and inject (if user stylesheets supported) looked-up low generic
     // cosmetic filters.
     if (
@@ -949,8 +971,6 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
         out.injected = injected.join(',\n');
         //Adn
         const values = checkFakeEntries(out.injected);
-        out.injected = values[0];
-        out.fake = values[1];
         vAPI.insertCSS(request.tabId, {
             code: out.injected + '\n{display:none!important;}',
             cssOrigin: 'user',
@@ -966,10 +986,6 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
         });
     }
 
-    // Important: always clear used registers before leaving.
-    this.setRegister0.clear();
-    this.setRegister1.clear();
-
     //console.timeEnd('cosmeticFilteringEngine.retrieveGenericSelectors');
 
     return out;
@@ -981,8 +997,6 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
     request,
     options
 ) {
-    //console.time('cosmeticFilteringEngine.retrieveSpecificSelectors');
-
     const hostname = request.hostname;
     const cacheEntry = this.selectorCache.get(hostname);
 
@@ -1012,7 +1026,11 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
     };
 
     if ( options.noCosmeticFiltering !== true ) {
-        const specificSet = this.setRegister1;
+        const specificSet = this.$specificSet;
+        const proceduralSet = this.$proceduralSet;
+        const exceptionSet = this.$exceptionSet;
+        const dummySet = this.$dummySet;
+
         // Cached cosmetic filters: these are always declarative.
         if ( cacheEntry !== undefined ) {
             cacheEntry.retrieve('cosmetic', specificSet);
@@ -1022,17 +1040,35 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
             }
         }
 
-        const exceptionSet = this.setRegister0;
-        const proceduralSet = this.setRegister2;
+        // Retrieve temporary filters
+        if ( this.sessionFilterDB.isNotEmpty ) {
+            this.sessionFilterDB.retrieve([ null, exceptionSet ]);
+        }
 
+        // Retrieve filters with a non-empty hostname
         this.specificFilters.retrieve(
             hostname,
-            [ specificSet, exceptionSet, proceduralSet, exceptionSet ]
+            options.noSpecificCosmeticFiltering !== true
+                ? [ specificSet, exceptionSet, proceduralSet, exceptionSet ]
+                : [ dummySet, exceptionSet ],
+            1
         );
+        // Retrieve filters with an empty hostname
+        this.specificFilters.retrieve(
+            hostname,
+            options.noGenericCosmeticFiltering !== true
+                ? [ specificSet, exceptionSet, proceduralSet, exceptionSet ]
+                : [ dummySet, exceptionSet ],
+            2
+        );
+        // Retrieve filters with a non-empty entity
         if ( request.entity !== '' ) {
             this.specificFilters.retrieve(
                 `${hostname.slice(0, -request.domain.length)}${request.entity}`,
-                [ specificSet, exceptionSet, proceduralSet, exceptionSet ]
+                options.noSpecificCosmeticFiltering !== true
+                    ? [ specificSet, exceptionSet, proceduralSet, exceptionSet ]
+                    : [ dummySet, exceptionSet ],
+                1
             );
         }
 
@@ -1096,9 +1132,10 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
         }
 
         // Important: always clear used registers before leaving.
-        this.setRegister0.clear();
-        this.setRegister1.clear();
-        this.setRegister2.clear();
+        specificSet.clear();
+        proceduralSet.clear();
+        exceptionSet.clear();
+        dummySet.clear();
     }
 
     // CSS selectors for collapsible blocked elements
@@ -1148,12 +1185,12 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
 
         if ( out.injectedHideFilters.length !== 0 ) {
             details.code = out.injectedHideFilters + '\n{display:none!important;}';
-            vAPI.insertCSS(request.tabId, details);
+            vAPI.tabs.insertCSS(request.tabId, details);
         }
 
         if ( out.networkFilters.length !== 0 ) {
             details.code = out.networkFilters + '\n{display:none!important;}';
-            vAPI.insertCSS(request.tabId, details);
+            vAPI.tabs.insertCSS(request.tabId, details);
             out.networkFilters = '';
         }
 

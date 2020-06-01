@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2015-2018 Raymond Hill
+    Copyright (C) 2015-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 
 /******************************************************************************/
 
-(function() {
+(( ) => {
 
 /******************************************************************************/
 
@@ -48,61 +48,57 @@ if ( typeof vAPI !== 'object' ) {
 
 /******************************************************************************/
 
-var onMaybeAbpLinkClicked = function(ev) {
-    if ( ev.button !== 0 ) {
-        return;
-    }
+const processSubscription = async function(location, title) {
+    const details = await vAPI.messaging.send('scriptlets', {
+        what: 'subscriberData',
+    });
+
+    const confirmStr = details.confirmStr
+                        .replace('{{url}}', location)
+                        .replace('{{title}}', title);
+    if ( window.confirm(confirmStr) === false ) { return; }
+
+    await vAPI.messaging.send('scriptlets', {
+        what: 'applyFilterListSelection',
+        toImport: location,
+    });
+
+    vAPI.messaging.send('scriptlets', {
+        what: 'reloadAllFilters',
+    });
+};
+
+/******************************************************************************/
+
+const onMaybeAbpLinkClicked = function(ev) {
+    if ( ev.button !== 0 ) { return; }
     // This addresses https://github.com/easylist/EasyListHebrew/issues/89
     // Also, as per feedback to original fix:
     // https://github.com/gorhill/uBlock/commit/99a3d9631047d33dc7a454296ab3dd0a1e91d6f1
-    var target = ev.target;
+    const target = ev.target;
     if (
         ev.isTrusted === false ||
         target instanceof HTMLAnchorElement === false
     ) {
         return;
     }
-    var href = target.href || '';
-    if ( href === '' ) {
-        return;
-    }
-    var matches = /^(?:abp|ubo):\/*subscribe\/*\?location=([^&]+).*title=([^&]+)/.exec(href);
+
+    const href = target.href || '';
+    if ( href === '' ) { return; }
+
+    let matches = /^(?:abp|ubo):\/*subscribe\/*\?location=([^&]+).*title=([^&]+)/.exec(href);
     if ( matches === null ) {
         matches = /^https?:\/\/.*?[&?]location=([^&]+).*?&title=([^&]+)/.exec(href);
         if ( matches === null ) { return; }
     }
 
-    var location = decodeURIComponent(matches[1]);
-    var title = decodeURIComponent(matches[2]);
-    var messaging = vAPI.messaging;
+    const location = decodeURIComponent(matches[1]);
+    const title = decodeURIComponent(matches[2]);
+
+    processSubscription(location, title);
 
     ev.stopPropagation();
     ev.preventDefault();
-
-    var onListsSelectionDone = function() {
-        messaging.send('scriptlets', { what: 'reloadAllFilters' });
-    };
-
-    var onSubscriberDataReady = function(details) {
-        var confirmStr = details.confirmStr
-                            .replace('{{url}}', location)
-                            .replace('{{title}}', title);
-        if ( !window.confirm(confirmStr) ) { return; }
-        messaging.send(
-            'scriptlets',
-            {
-                what: 'applyFilterListSelection',
-                toImport: location
-            },
-            onListsSelectionDone
-        );
-    };
-
-    messaging.send(
-        'scriptlets',
-        { what: 'subscriberData' },
-        onSubscriberDataReady
-    );
 };
 
 /******************************************************************************/

@@ -705,6 +705,7 @@ body[dir="rtl"] #netFilteringDialog > .panes > .details > div > span:nth-of-type
     border-left: 1px solid white;
     }
 #netFilteringDialog > .panes > .details > div > span:nth-of-type(2) {
+    flex-grow: 1;
     max-height: 20vh;
     overflow: hidden auto;
     white-space: pre-line
@@ -719,6 +720,26 @@ body[dir="rtl"] #netFilteringDialog > .panes > .details > div > span:nth-of-type
     }
 #netFilteringDialog > .panes > .details > div > span:nth-of-type(2) .fa-icon:hover {
     opacity: 1;
+    }
+#netFilteringDialog > .panes > .details .exceptor {
+    align-items: center;
+    border-left: 1px solid white;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: monospace;
+    opacity: 0.8;
+    }
+#netFilteringDialog > .panes > .details .exceptor:hover {
+    opacity: 1;
+    }
+#netFilteringDialog > .panes > .details .exceptored .filter {
+    text-decoration: line-through;
+    }
+#netFilteringDialog > .panes > .details .exceptored .exceptor {
+    background-color: lightblue;
+    }
+#netFilteringDialog > .panes > .details .exceptor::before {
+    content: '#@#';
     }
 #netFilteringDialog > div.panes > .dynamic > .toolbar {
     padding-bottom: 1em;

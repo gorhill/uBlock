@@ -225,7 +225,10 @@ self.uBlockDashboard.openOrSelectPage = function(url, options = {}) {
         url = ev.target.getAttribute('href');
     } 
     const details = Object.assign({ url, select: true, index: -1 }, options);
-    vAPI.messaging.send('default', { what: 'gotoURL', details });
+    vAPI.messaging.send('default', {
+        what: 'gotoURL',
+        details,
+    });
     if ( ev ) {
         ev.preventDefault();
     }

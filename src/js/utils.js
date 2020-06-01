@@ -146,7 +146,7 @@
         const tokens = this._tokens;
         let url = this._urlOut;
         let l = url.length;
-        if ( l === 0 ) { return this.emptyTokenHash; }
+        if ( l === 0 ) { return 0; }
         if ( l > 2048 ) {
             url = url.slice(0, 2048);
             l = 2048;
@@ -184,7 +184,7 @@
     if ( typeof count !== 'number' ) {
         return '';
     }
-    var s = count.toFixed(0);
+    let s = count.toFixed(0);
     if ( count >= 1000 ) {
         if ( count < 10000 ) {
             s = '>' + s.slice(0,1) + 'k';
@@ -206,7 +206,7 @@
 /******************************************************************************/
 
 µBlock.dateNowToSensibleString = function() {
-    var now = new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000);
+    const now = new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000);
     return now.toISOString().replace(/\.\d+Z$/, '')
                             .replace(/:/g, '.')
                             .replace('T', '_');
@@ -214,34 +214,33 @@
 
 /******************************************************************************/
 
-µBlock.LineIterator = function(text, offset) {
-    this.text = text;
-    this.textLen = this.text.length;
-    this.offset = offset || 0;
-};
-
-µBlock.LineIterator.prototype.next = function(offset) {
-    if ( offset !== undefined ) {
-        this.offset += offset;
+µBlock.LineIterator = class {
+    constructor(text, offset) {
+        this.text = text;
+        this.textLen = this.text.length;
+        this.offset = offset || 0;
     }
-    var lineEnd = this.text.indexOf('\n', this.offset);
-    if ( lineEnd === -1 ) {
-        lineEnd = this.text.indexOf('\r', this.offset);
-        if ( lineEnd === -1 ) {
-            lineEnd = this.textLen;
+    next(offset) {
+        if ( offset !== undefined ) {
+            this.offset += offset;
         }
+        let lineEnd = this.text.indexOf('\n', this.offset);
+        if ( lineEnd === -1 ) {
+            lineEnd = this.text.indexOf('\r', this.offset);
+            if ( lineEnd === -1 ) {
+                lineEnd = this.textLen;
+            }
+        }
+        const line = this.text.slice(this.offset, lineEnd);
+        this.offset = lineEnd + 1;
+        return line;
     }
-    var line = this.text.slice(this.offset, lineEnd);
-    this.offset = lineEnd + 1;
-    return line;
-};
-
-µBlock.LineIterator.prototype.charCodeAt = function(offset) {
-    return this.text.charCodeAt(this.offset + offset);
-};
-
-µBlock.LineIterator.prototype.eot = function() {
-    return this.offset >= this.textLen;
+    charCodeAt(offset) {
+        return this.text.charCodeAt(this.offset + offset);
+    }
+    eot() {
+        return this.offset >= this.textLen;
+    }
 };
 
 /******************************************************************************/
@@ -249,31 +248,30 @@
 // The field iterator is less CPU-intensive than when using native
 // String.split().
 
-µBlock.FieldIterator = function(sep) {
-    this.text = '';
-    this.sep = sep;
-    this.sepLen = sep.length;
-    this.offset = 0;
-};
-
-µBlock.FieldIterator.prototype.first = function(text) {
-    this.text = text;
-    this.offset = 0;
-    return this.next();
-};
-
-µBlock.FieldIterator.prototype.next = function() {
-    var end = this.text.indexOf(this.sep, this.offset);
-    if ( end === -1 ) {
-        end = this.text.length;
+µBlock.FieldIterator = class {
+    constructor(sep) {
+        this.text = '';
+        this.sep = sep;
+        this.sepLen = sep.length;
+        this.offset = 0;
     }
-    var field = this.text.slice(this.offset, end);
-    this.offset = end + this.sepLen;
-    return field;
-};
-
-µBlock.FieldIterator.prototype.remainder = function() {
-    return this.text.slice(this.offset);
+    first(text) {
+        this.text = text;
+        this.offset = 0;
+        return this.next();
+    }
+    next() {
+        let end = this.text.indexOf(this.sep, this.offset);
+        if ( end === -1 ) {
+            end = this.text.length;
+        }
+        const field = this.text.slice(this.offset, end);
+        this.offset = end + this.sepLen;
+        return field;
+    }
+    remainder() {
+        return this.text.slice(this.offset);
+    }
 };
 
 /******************************************************************************/
@@ -284,95 +282,93 @@
     blockStartPrefix: '#block-start-',  // ensure no special regex characters
     blockEndPrefix: '#block-end-',      // ensure no special regex characters
 
-    Writer: function() {
-        this.io = µBlock.CompiledLineIO;
-        this.blockId = undefined;
-        this.block = undefined;
-        this.stringifier = this.io.serialize;
-        this.blocks = new Map();
-        this.properties = new Map();
-    },
-
-    Reader: function(raw, blockId) {
-        this.io = µBlock.CompiledLineIO;
-        this.block = '';
-        this.len = 0;
-        this.offset = 0;
-        this.line = '';
-        this.parser = this.io.unserialize;
-        this.blocks = new Map();
-        this.properties = new Map();
-        let reBlockStart = new RegExp(
-            '^' + this.io.blockStartPrefix + '(\\d+)\\n',
-            'gm'
-        );
-        let match = reBlockStart.exec(raw);
-        while ( match !== null ) {
-            let beg = match.index + match[0].length;
-            let end = raw.indexOf(this.io.blockEndPrefix + match[1], beg);
-            this.blocks.set(parseInt(match[1], 10), raw.slice(beg, end));
-            reBlockStart.lastIndex = end;
-            match = reBlockStart.exec(raw);
+    Writer: class {
+        constructor() {
+            this.io = µBlock.CompiledLineIO;
+            this.blockId = undefined;
+            this.block = undefined;
+            this.stringifier = this.io.serialize;
+            this.blocks = new Map();
+            this.properties = new Map();
         }
-        if ( blockId !== undefined ) {
-            this.select(blockId);
+        push(args) {
+            this.block[this.block.length] = this.stringifier(args);
         }
-    }
-};
-
-µBlock.CompiledLineIO.Writer.prototype = {
-    push: function(args) {
-        this.block[this.block.length] = this.stringifier(args);
-    },
-    select: function(blockId) {
-        if ( blockId === this.blockId ) { return; }
-        this.blockId = blockId;
-        this.block = this.blocks.get(blockId);
-        if ( this.block === undefined ) {
-            this.blocks.set(blockId, (this.block = []));
+        select(blockId) {
+            if ( blockId === this.blockId ) { return; }
+            this.blockId = blockId;
+            this.block = this.blocks.get(blockId);
+            if ( this.block === undefined ) {
+                this.blocks.set(blockId, (this.block = []));
+            }
+        }
+        toString() {
+            let result = [];
+            for ( let [ id, lines ] of this.blocks ) {
+                if ( lines.length === 0 ) { continue; }
+                result.push(
+                    this.io.blockStartPrefix + id,
+                    lines.join('\n'),
+                    this.io.blockEndPrefix + id
+                );
+            }
+            return result.join('\n');
         }
     },
-    toString: function() {
-        let result = [];
-        for ( let [ id, lines ] of this.blocks ) {
-            if ( lines.length === 0 ) { continue; }
-            result.push(
-                this.io.blockStartPrefix + id,
-                lines.join('\n'),
-                this.io.blockEndPrefix + id
-            );
-        }
-        return result.join('\n');
-    }
-};
 
-µBlock.CompiledLineIO.Reader.prototype = {
-    next: function() {
-        if ( this.offset === this.len ) {
+    Reader: class {
+        constructor(raw, blockId) {
+            this.io = µBlock.CompiledLineIO;
+            this.block = '';
+            this.len = 0;
+            this.offset = 0;
             this.line = '';
-            return false;
+            this.parser = this.io.unserialize;
+            this.blocks = new Map();
+            this.properties = new Map();
+            let reBlockStart = new RegExp(
+                '^' + this.io.blockStartPrefix + '(\\d+)\\n',
+                'gm'
+            );
+            let match = reBlockStart.exec(raw);
+            while ( match !== null ) {
+                let beg = match.index + match[0].length;
+                let end = raw.indexOf(this.io.blockEndPrefix + match[1], beg);
+                this.blocks.set(parseInt(match[1], 10), raw.slice(beg, end));
+                reBlockStart.lastIndex = end;
+                match = reBlockStart.exec(raw);
+            }
+            if ( blockId !== undefined ) {
+                this.select(blockId);
+            }
         }
-        let pos = this.block.indexOf('\n', this.offset);
-        if ( pos !== -1 ) {
-            this.line = this.block.slice(this.offset, pos);
-            this.offset = pos + 1;
-        } else {
-            this.line = this.block.slice(this.offset);
-            this.offset = this.len;
+        next() {
+            if ( this.offset === this.len ) {
+                this.line = '';
+                return false;
+            }
+            let pos = this.block.indexOf('\n', this.offset);
+            if ( pos !== -1 ) {
+                this.line = this.block.slice(this.offset, pos);
+                this.offset = pos + 1;
+            } else {
+                this.line = this.block.slice(this.offset);
+                this.offset = this.len;
+            }
+            return true;
         }
-        return true;
-    },
-    select: function(blockId) {
-        this.block = this.blocks.get(blockId) || '';
-        this.len = this.block.length;
-        this.offset = 0;
-        return this;
-    },
-    fingerprint: function() {
-        return this.line;
-    },
-    args: function() {
-        return this.parser(this.line);
+        select(blockId) {
+            this.block = this.blocks.get(blockId) || '';
+            this.len = this.block.length;
+            this.offset = 0;
+            return this;
+        }
+        fingerprint() {
+            return this.line;
+        }
+        args() {
+            return this.parser(this.line);
+        }
     }
 };
 
@@ -386,8 +382,8 @@
                 !this.userSettings.alwaysDetachLogger
             );
         }
-        details.popup = this.userSettings.alwaysDetachLogger;
-        if ( details.popup ) {
+        if ( this.userSettings.alwaysDetachLogger ) {
+            details.popup = this.hiddenSettings.loggerPopupType;
             const url = new URL(vAPI.getURL(details.url));
             url.searchParams.set('popup', '1');
             details.url = url.href;
@@ -408,16 +404,15 @@
 
 /******************************************************************************/
 
-µBlock.MRUCache = function(size) {
-    this.size = size;
-    this.array = [];
-    this.map = new Map();
-    this.resetTime = Date.now();
-};
-
-µBlock.MRUCache.prototype = {
-    add: function(key, value) {
-        var found = this.map.has(key);
+µBlock.MRUCache = class {
+    constructor(size) {
+        this.size = size;
+        this.array = [];
+        this.map = new Map();
+        this.resetTime = Date.now();
+    }
+    add(key, value) {
+        const found = this.map.has(key);
         this.map.set(key, value);
         if ( !found ) {
             if ( this.array.length === this.size ) {
@@ -425,24 +420,24 @@
             }
             this.array.unshift(key);
         }
-    },
-    remove: function(key) {
+    }
+    remove(key) {
         if ( this.map.has(key) ) {
             this.array.splice(this.array.indexOf(key), 1);
         }
-    },
-    lookup: function(key) {
-        var value = this.map.get(key);
+    }
+    lookup(key) {
+        const value = this.map.get(key);
         if ( value !== undefined && this.array[0] !== key ) {
-            var i = this.array.indexOf(key);
+            let i = this.array.indexOf(key);
             do {
                 this.array[i] = this.array[i-1];
             } while ( --i );
             this.array[0] = key;
         }
         return value;
-    },
-    reset: function() {
+    }
+    reset() {
         this.array = [];
         this.map.clear();
         this.resetTime = Date.now();
@@ -459,27 +454,27 @@
 
 /******************************************************************************/
 
-µBlock.decomposeHostname = (function() {
+µBlock.decomposeHostname = (( ) => {
     // For performance purpose, as simple tests as possible
-    let reHostnameVeryCoarse = /[g-z_-]/;
-    let reIPv4VeryCoarse = /\.\d+$/;
+    const reHostnameVeryCoarse = /[g-z_-]/;
+    const reIPv4VeryCoarse = /\.\d+$/;
 
-    let toBroaderHostname = function(hostname) {
-        let pos = hostname.indexOf('.');
+    const toBroaderHostname = function(hostname) {
+        const pos = hostname.indexOf('.');
         if ( pos !== -1 ) {
             return hostname.slice(pos + 1);
         }
         return hostname !== '*' && hostname !== '' ? '*' : '';
     };
 
-    let toBroaderIPv4Address = function(ipaddress) {
+    const toBroaderIPv4Address = function(ipaddress) {
         if ( ipaddress === '*' || ipaddress === '' ) { return ''; }
-        let pos = ipaddress.lastIndexOf('.');
+        const pos = ipaddress.lastIndexOf('.');
         if ( pos === -1 ) { return '*'; }
         return ipaddress.slice(0, pos);
     };
 
-    let toBroaderIPv6Address = function(ipaddress) {
+    const toBroaderIPv6Address = function(ipaddress) {
         return ipaddress !== '*' && ipaddress !== '' ? '*' : '';
     };
 
@@ -590,7 +585,7 @@
         }
         const inputLength = instr.length;
         const outbuf = arrbuf instanceof ArrayBuffer === false
-            ? new Uint32Array(this.decodeSize(instr))
+            ? new Uint32Array(this.decodeSize(instr) >> 2)
             : new Uint32Array(arrbuf);
         let i = instr.indexOf(' ', this.magic.length) + 1;
         if ( i === -1 ) {
@@ -656,7 +651,7 @@
 // Rename ./tmp/requests.json.gz to something else if you no longer want
 // ./assets/requests.json in the build.
 
-µBlock.loadBenchmarkDataset = (function() {
+µBlock.loadBenchmarkDataset = (( ) => {
     let datasetPromise;
     let ttlTimer;
 
@@ -711,4 +706,19 @@
     ) {
         window.dispatchEvent(new CustomEvent(name));
     }
+};
+
+/******************************************************************************/
+
+µBlock.getMessageSenderDetails = function(sender) {
+    const r = {};
+    if ( sender instanceof Object ) {
+        r.url = sender.url;
+        r.frameId = sender.frameId;
+        const tab = sender.tab;
+        if ( tab instanceof Object ) {
+            r.tabId = tab.id;
+        }
+    }
+    return r;
 };

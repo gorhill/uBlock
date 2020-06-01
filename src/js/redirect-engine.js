@@ -279,7 +279,6 @@ RedirectEngine.prototype.reset = function() {
 };
 
 RedirectEngine.prototype.resetCache = function() {
-    this._missedQueryHash = '';
     this._src = '';
     this._srcAll = [ '*' ];
     this._des = '';
@@ -321,26 +320,16 @@ RedirectEngine.prototype.lookup = function(fctxt) {
     const src = fctxt.getDocHostname();
     const des = fctxt.getHostname();
     const type = fctxt.type;
-    const queryHash = `${src} ${des} ${type}`;
-    if ( queryHash === this._missedQueryHash ) {
-        return;
-    }
     if ( src !== this._src ) {
         this._src = src;
         this.decomposeHostname(src, this.ruleSources, this._srcAll);
     }
-    if ( this._srcAll.length === 0 ) {
-        this._missedQueryHash = queryHash;
-        return;
-    }
+    if ( this._srcAll.length === 0 ) { return; }
     if ( des !== this._des ) {
         this._des = des;
         this.decomposeHostname(des, this.ruleDestinations, this._desAll);
     }
-    if ( this._desAll.length === 0 ) {
-        this._missedQueryHash = queryHash;
-        return;
-    }
+    if ( this._desAll.length === 0 ) { return; }
     const reqURL = fctxt.url;
     for ( const src of this._srcAll ) {
         for ( const des of this._desAll ) {
@@ -356,7 +345,6 @@ RedirectEngine.prototype.lookup = function(fctxt) {
             }
         }
     }
-    this._missedQueryHash = queryHash;
 };
 
 RedirectEngine.prototype.lookupRule = function(entries, reqURL) {
@@ -585,21 +573,20 @@ RedirectEngine.prototype.toSelfie = function(path) {
 
 /******************************************************************************/
 
-RedirectEngine.prototype.fromSelfie = function(path) {
-    return µBlock.assets.get(`${path}/main`).then(details => {
-        let selfie;
-        try {
-            selfie = JSON.parse(details.content);
-        } catch (ex) {
-        }
-        if ( selfie instanceof Object === false ) { return false; }
-        this.rules = new Map(selfie.rules);
-        this.ruleSources = new Set(selfie.ruleSources);
-        this.ruleDestinations = new Set(selfie.ruleDestinations);
-        this.resetCache();
-        this.modifyTime = Date.now();
-        return true;
-    });
+RedirectEngine.prototype.fromSelfie = async function(path) {
+    const result = await µBlock.assets.get(`${path}/main`);
+    let selfie;
+    try {
+        selfie = JSON.parse(result.content);
+    } catch (ex) {
+    }
+    if ( selfie instanceof Object === false ) { return false; }
+    this.rules = new Map(selfie.rules);
+    this.ruleSources = new Set(selfie.ruleSources);
+    this.ruleDestinations = new Set(selfie.ruleDestinations);
+    this.resetCache();
+    this.modifyTime = Date.now();
+    return true;
 };
 
 /******************************************************************************/
@@ -800,29 +787,26 @@ RedirectEngine.prototype.selfieFromResources = function() {
     );
 };
 
-RedirectEngine.prototype.resourcesFromSelfie = function() {
-    return µBlock.assets.get(
-        'compiled/redirectEngine/resources'
-    ).then(details => {
-        let selfie;
-        try {
-            selfie = JSON.parse(details.content);
-        } catch(ex) {
-        }
-        if (
-            selfie instanceof Object === false ||
-            selfie.version !== resourcesSelfieVersion ||
-            Array.isArray(selfie.resources) === false
-        ) {
-            return false;
-        }
-        this.aliases = new Map(selfie.aliases);
-        this.resources = new Map();
-        for ( const [ token, entry ] of selfie.resources ) {
-            this.resources.set(token, RedirectEntry.fromSelfie(entry));
-        }
-        return true;
-    });
+RedirectEngine.prototype.resourcesFromSelfie = async function() {
+    const result = await µBlock.assets.get('compiled/redirectEngine/resources');
+    let selfie;
+    try {
+        selfie = JSON.parse(result.content);
+    } catch(ex) {
+    }
+    if (
+        selfie instanceof Object === false ||
+        selfie.version !== resourcesSelfieVersion ||
+        Array.isArray(selfie.resources) === false
+    ) {
+        return false;
+    }
+    this.aliases = new Map(selfie.aliases);
+    this.resources = new Map();
+    for ( const [ token, entry ] of selfie.resources ) {
+        this.resources.set(token, RedirectEntry.fromSelfie(entry));
+    }
+    return true;
 };
 
 RedirectEngine.prototype.invalidateResourcesSelfie = function() {

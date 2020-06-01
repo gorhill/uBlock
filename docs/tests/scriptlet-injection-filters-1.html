@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Scriptlet injection filters / setTimeout-if</title>
+<title>Scriptlet injection filters / no-setTimeout-if</title>
 <style>
     .filters {
         font-family: monospace;
@@ -73,7 +73,7 @@
 </style>
 </head>
 <body>
-<h1>Scriptlet injection filters / setTimeout-if</h1>
+<h1>Scriptlet injection filters / no-setTimeout-if</h1>
 <p><a href="./.">Back</a>
 <br><br></p>
 <h3>Filters</h3>
@@ -162,21 +162,21 @@ time. When you try a filter, ensure the result is what is expected.</p>
     const hostname = self.location.hostname;
     const fragment = document.createDocumentFragment();
     const filters = [
-        [ [ '!bad' ], 'GGGG' ],
-        [ [ 'good' ], 'GGGG' ],
-        [ [ '', '!33' ], 'GRRG' ],
-        [ [ '', '66' ], 'GRRG' ],
-        [ [ '!bad', '!33' ], 'GGRG' ],
-        [ [ 'good', '66' ], 'GGRG' ],
-        [ [ '!bad', '33' ], 'GGGR' ],
-        [ [ 'good', '!66' ], 'GGGR' ],
-        [ [ 'bad', '!33' ], 'GRRR' ],
-        [ [ '!good', '66' ], 'GRRR' ],
+        [ [ 'bad' ], 'GGGG' ],
+        [ [ '!good' ], 'GGGG' ],
+        [ [ '', '33' ], 'GRRG' ],
+        [ [ '', '!66' ], 'GRRG' ],
+        [ [ 'bad', '33' ], 'GRGG' ],
+        [ [ '!good', '!66' ], 'GRGG' ],
+        [ [ 'bad', '!33' ], 'RGGG' ],
+        [ [ '!good', '66' ], 'RGGG' ],
+        [ [ '!bad', '33' ], 'RRRG' ],
+        [ [ 'good', '!66' ], 'RRRG' ],
     ];
     for ( const [ args, result ] of filters ) {
         const tr = document.createElement('tr');
         let td = document.createElement('td');
-        td.textContent = `${hostname}##+js(stif, ${args.join(', ')})`;
+        td.textContent = `${hostname}##+js(nostif, ${args.join(', ')})`;
         tr.appendChild(td);
         td = document.createElement('td');
         for ( let i = 0; i < result.length; i++ ) {

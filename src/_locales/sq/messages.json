@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Më në fund, një bllokues efikas që nuk e rëndon procesorin dhe memorjen.",
+    "message": "Më në fund, një bllokues efikas që nuk e rëndon procesorin dhe memorien.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
@@ -64,8 +64,8 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Kliko: uBlock₀ bëhet joaktiv\/aktiv te ky uebsajti.\n\nKliko+Ctrl: uBlock₀ bëhet joaktiv vetëm te kjo faqja.",
-    "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message": "Kliko: uBlock₀ bëhet joaktiv/aktiv te ky uebsajti.\n\nKliko+Ctrl: uBlock₀ bëhet joaktiv vetëm te kjo faqja.",
+    "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
     "message": "Çaktivizoj uBlock₀ te ky uebsajti.\n\nKlikimi+Ctrl do të çaktivizojë uBlock₀ vetëm te kjo faqja.",
@@ -112,7 +112,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Bllokoj të gjitha dritaret automatike që hap faqja",
+    "message": "Ç/Bllokoj të gjitha dritaret automatike që hap faqja",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
@@ -124,7 +124,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Bllokoj elementet e mëdha multimediale te faqja",
+    "message": "Ç/Bllokoj elementet e mëdha multimediale te faqja",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
@@ -136,7 +136,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Përdor filtrat kozmetikë te faqja",
+    "message": "Ç/Aktivizoj filtrat kozmetikë te faqja",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
@@ -148,15 +148,15 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Bllokoj sistemin e shkronjave jashtë faqes",
+    "message": "Ç/Bllokoj modelet shkronjore të jashtme te faqja",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Bllokoj sistemin e shkronjave jashtë faqes",
+    "message": "Bllokoj modelet shkronjore të jashtme te faqja",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Zhbllokoj sistemin e shkronjave jashtë faqes",
+    "message": "Zhbllokoj modelet shkronjore të jashtme te faqja",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
@@ -196,7 +196,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "CSS\/imazhet nga palët e treta",
+    "message": "CSS/imazhet nga palët e treta",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -280,7 +280,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Kam njohuri të avancuara (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Lexim i detyruar<\/a>)",
+    "message": "Kam njohuri të avancuara (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>Lexim i detyruar</a>)",
     "description": ""
   },
   "settingsAdvancedUserSettings": {
@@ -316,7 +316,7 @@
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
-    "message": "Bllokoj sistemin e shkronjave jashtë faqes",
+    "message": "Bllokoj modelet shkronjore të jashtme",
     "description": ""
   },
   "settingsNoScriptingPrompt": {
@@ -325,7 +325,7 @@
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Bllokoj raportet e CSP-së",
-    "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsStorageUsed": {
     "message": "Hapësira e përdorur: {{value}} bajt",
@@ -364,7 +364,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Ky opsion lejon analizimin dhe zbatimin e <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtrave &ldquo;eliminues&rdquo; njësoj si në Adblock Plus<\/a>. Këta filtra kozmetikë shërbejnë kryesisht për të fshehur nga ana vizive elementet e padëshirueshme të cilat nuk bllokohen me metodën standarde të filtrimit.<\/p><p>Aktivizimi i kësaj veçorie rrit impaktin e <i>uBlock₀<\/i> te memorja e kompjuterit.<\/p>",
+    "message": "<p>Ky opsion lejon analizimin dhe zbatimin e <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">filtrave &ldquo;eliminues&rdquo; njësoj si në Adblock Plus</a>. Këta filtra kozmetikë shërbejnë kryesisht për të fshehur nga ana vizive elementet e padëshirueshme të cilat nuk bllokohen me metodën standarde të filtrimit.</p><p>Aktivizimi i kësaj veçorie rrit impaktin e uBlock₀ te memoria e kompjuterit.</p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -372,7 +372,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Filtrat kozmetikë jospecifikë janë filtra kozmetikë të cilët aplikohen për të gjitha faqet e internetit.<p>Megjithëse uBlock₀ i përdor ata me efikasitet, filtrat kozmetikë jospecifikë përsëri mund të rëndojnë memorjen dhe procesorin e kompjuterit në faqet e gjata.<p>Aktivizimi i këtij opsioni eliminon peshën e tepërt te memorja dhe procesori, dhe zvogëlon impaktin e uBlock₀ te memorja e kompjuterit.<p>Rekomandohet që ky opsion të aktivizohet për aparatet jo shumë të shpejta.",
+    "message": "<p>Filtrat kozmetikë jospecifikë janë filtra kozmetikë të cilët aplikohen për të gjitha faqet e internetit.<p>Megjithëse uBlock₀ i përdor ata me efikasitet, filtrat kozmetikë jospecifikë përsëri mund të rëndojnë memorien dhe procesorin e kompjuterit në faqet e gjata.<p>Aktivizimi i këtij opsioni eliminon peshën e tepërt te memoria dhe procesori, dhe zvogëlon impaktin e uBlock₀ te memoria e kompjuterit.<p>Rekomandohet që ky opsion të aktivizohet për aparatet jo shumë të shpejta.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -440,7 +440,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Një filtër për rresht. Filtri mund të jetë thjesht emri i një hosti ose i ngjashëm me ata që përdor Adblock Plus. Nuk do të merren parasysh rreshtat që fillojnë me <code>!<\/code>.",
+    "message": "Një filtër për rresht. Filtri mund të jetë thjesht emri i një hosti ose i ngjashëm me ata që përdor Adblock Plus. Nuk do të merren parasysh rreshtat që fillojnë me <code>!</code>.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -492,7 +492,7 @@
     "description": ""
   },
   "rulesExport": {
-    "message": "Ruaj në skedar",
+    "message": "Eksportoj në skedar",
     "description": ""
   },
   "rulesDefaultFileName": {
@@ -504,7 +504,7 @@
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
-    "message": "Rregullat e sintaksës: <code>burimi destinacioni lloji veprimi<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>dokumentimi i plotë<\/a>).",
+    "message": "Rregullat e sintaksës: <code>burimi destinacioni lloji veprimi</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>dokumentimi i plotë</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
@@ -560,11 +560,11 @@
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
-    "message": "Përdor strukturën DOM",
+    "message": "Ç/Aktivizoj strukturën DOM",
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "Përdor panelin automatik",
+    "message": "Ç/Aktivizoj panelin automatik",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
@@ -584,7 +584,7 @@
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "Përdor filtrat e regjistrit",
+    "message": "Ç/Aktivizoj filtrat e regjistrit",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
@@ -708,15 +708,15 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Filtri statik <code>{{filter}}<\/code> gjendet në:",
+    "message": "Filtri statik <code>{{filter}}</code> gjendet në:",
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Filtri statik <code>{{filter}}<\/code> nuk gjendet në asnjërën nga listat aktive",
+    "message": "Filtri statik <code>{{filter}}</code> nuk gjendet në asnjërën nga listat aktive",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
-    "message": "Do të fshihen automatikisht zërat në regjistër që nuk plotësojnë këto tre kushte:",
+    "message": "Do të fshihen automatikisht zërat në regjistër që nuk plotësojnë këto tri kushte:",
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
@@ -744,7 +744,7 @@
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
-    "message": "{{input}} Filtri\/rregulla",
+    "message": "{{input}} Filtri/rregulla",
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
@@ -861,11 +861,11 @@
   },
   "showDashboardButton": {
     "message": "Paneli i kontrollit",
-    "description": "Firefox\/Fennec-specific: Show Dashboard"
+    "description": "Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
     "message": "Regjistri i kërkesave",
-    "description": "Firefox\/Fennec-specific: Show Logger"
+    "description": "Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
     "message": "fikur",
@@ -881,7 +881,7 @@
   },
   "docblockedNoParamsPrompt": {
     "message": "pa parametra",
-    "description": "label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
+    "description": "label to be used for the parameter-less URL: https://cloud.githubusercontent.com/assets/585534/9832014/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {
     "message": "Gjendet në:",
@@ -956,7 +956,7 @@
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "Bllokoj lëvizjen me rrëshqitje",
+    "message": "Ç/Aktivizoj lëvizjen me rrëshqitje",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
@@ -964,11 +964,11 @@
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "toggleBlockingProfile": {
-    "message": "Aktivizoj \/ Çaktivizoj bllokimin e profilit",
+    "message": "Ç/Aktivizoj profilin e bllokimit",
     "description": "Label for keyboard shortcut used to toggle blocking profile"
   },
   "relaxBlockingMode": {
-    "message": "Relax blocking mode",
+    "message": "Dobësoj mënyrën e bllokimit",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "dummy": {
