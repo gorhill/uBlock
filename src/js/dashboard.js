@@ -125,15 +125,14 @@ vAPI.messaging.send('dashboard', {
     document.body.classList.toggle('canUpdateShortcuts', response === true);
 });
 
-
-vAPI.messaging.addChannelListener('adnauseam', function (request) {
-  switch (request.what) {
-  case 'notifications':
-    renderNotifications(request.notifications, "dashboard");
-    resizeFrame();
-    break;
-  }
-});
+vAPI.broadcastListener.add(msg => {
+    switch (msg.what) {
+    case 'notifications':
+      renderNotifications(request.notifications, "dashboard");
+      resizeFrame();
+      break;
+    }
+  });
 
 resizeFrame();
 loadDashboardPanel();

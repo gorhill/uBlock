@@ -55,10 +55,9 @@
   let gAds, gAdSets, gMin, gMax, gSliderRight, gSliderLeft, settings;
   let lastAdDetectedTime, waitingAds = []; // stateful
 
-  messager.addChannelListener('adnauseam', function (request) {
-
+  vAPI.broadcastListener.add(msg => {
     //console.log("GOT BROADCAST", request);
-    switch (request.what) {
+    switch (msg.what) {
 
     case 'adAttempt':
       setCurrent(request.ad);
