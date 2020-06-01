@@ -13,7 +13,7 @@
       // testing ['selenium' or 'sessbench']
       automatedMode = 0,
       // don't wait for user to be idle
-      disableIdler = 0; 
+      disableIdler = 0;
 
   const µb = µBlock;
   const production = 1;
@@ -293,8 +293,8 @@
   }
 
   const nextPending = function () {
-    let ads = adlist(); 
-    
+    let ads = adlist();
+
     // @SALLY: if we sort here newer ads are visited first ?
     //ads = ads.sort(byField('-foundTs'));
 
@@ -547,7 +547,7 @@
       });
     }
 
-    const url = ad.targetUrl, now = markActivity();
+    const url = ad && ad.targetUrl, now = markActivity();
 
     // tell menu/vault we have a new attempt
     vAPI.messaging.broadcast({
@@ -1722,7 +1722,7 @@
    */
   const adlist = exports.adlist = function (pageUrl, currentOnly) {
     admap = admap || µb.userSettings.admap;
-    const result = [], pages = pageUrl ? 
+    const result = [], pages = pageUrl ?
       [ YaMD5.hashStr(pageUrl) ] : Object.keys(admap);
     for (let i = 0; admap && i < pages.length; i++) {
       if (admap[pages[i]]) {
