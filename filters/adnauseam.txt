@@ -447,6 +447,8 @@ bitcoin.treasurebits.net##iframe[src="about:blank"]
 horriblesubs.info##img[src*="play-asia"]
 horriblesubs.info##img[src*="images/b/"]
 ##################### Blocking rules ########################
+# found on wpri.com
+gfp_video_ads/
 
 # 4archive.prg
 ||rawybznxrp.bid/^
