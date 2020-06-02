@@ -2136,7 +2136,7 @@ const verifyList = exports.verifyList = function (note, lists) {
 
   'use strict';
 
-  vAPI.messaging.listen('adnauseam', function (request, sender, callback) {
+  const onMessage = function(request, sender, callback) {
     //console.log("adnauseam.MSG: "+request.what, sender.frameId);
 
     switch (request.what) {
@@ -2165,7 +2165,12 @@ const verifyList = exports.verifyList = function (note, lists) {
 
       return vAPI.messaging.UNHANDLED;
     }
-  });
+  }
+
+  vAPI.messaging.listen({
+        name: 'adnauseam',
+        listener: onMessage
+  })
 
 })();
 

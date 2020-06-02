@@ -971,14 +971,14 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
         out.injected = injected.join(',\n');
         //Adn
         const values = checkFakeEntries(out.injected);
-        vAPI.insertCSS(request.tabId, {
+        vAPI.tabs.insertCSS(request.tabId, {
             code: out.injected + '\n{display:none!important;}',
             cssOrigin: 'user',
             frameId: request.frameId,
             runAt: 'document_start'
         });
         out.fake = out.fake.join(',\n');
-        vAPI.insertCSS(request.tabId, {
+        vAPI.tabs.insertCSS(request.tabId, {
             code: out.fake + '\n{height:0px!important;}',
             cssOrigin: 'user',
             frameId: request.frameId,
@@ -1196,7 +1196,7 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
 
         if ( out.fake.length !== 0 ) {
             details.code = out.fake + '\n{height:0px!important;}';
-            vAPI.insertCSS(request.tabId, details);
+            vAPI.tabs.insertCSS(request.tabId, details);
             out.networkFilters = '';
         }
 

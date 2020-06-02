@@ -1271,12 +1271,12 @@ vAPI.contextMenu = webext.menus && {
     _callback: null,
     _entries: [],
     _createEntry: function(entry) {
-        if (typeof chrome.contextMenus !== 'object') return; // ADN
+        if (typeof browser.contextMenus !== 'object') return; // ADN
         webext.menus.create(JSON.parse(JSON.stringify(entry)));
     },
     onMustUpdate: function() {},
     setEntries: function(entries, callback) {
-        if (typeof chrome.contextMenus !== 'object') return; // ADN
+        if (typeof browser.contextMenus !== 'object') return; // ADN
         entries = entries || [];
         let n = Math.max(this._entries.length, entries.length);
         for ( let i = 0; i < n; i++ ) {
@@ -1340,7 +1340,7 @@ vAPI.onLoadAllCompleted = function(tabId, frameId) { //ADN
     };
 
     var scriptStart = function(tabId, frameId) {
-        var manifest = chrome.runtime.getManifest();
+        var manifest = browser.runtime.getManifest();
         if ( manifest instanceof Object === false ) { return; }
         for ( var contentScript of manifest.content_scripts ) {
             for ( var file of contentScript.js ) {
@@ -1381,14 +1381,14 @@ vAPI.onLoadAllCompleted = function(tabId, frameId) { //ADN
     if (tabId)  {
 // console.log('tabId: ');
 
-        chrome.tabs.get(tabId, function(tab) {
+        browser.tabs.get(tabId, function(tab) {
           if (tab) startInTab(tab, frameId); }
         ); // ADN
     }
     else {
 // console.log('no-tab: ');
 
-        chrome.tabs.query({ url: '<all_urls>' }, bindToTabs);
+        browser.tabs.query({ url: '<all_urls>' }, bindToTabs);
     }
 };
 

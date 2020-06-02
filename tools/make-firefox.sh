@@ -18,8 +18,6 @@ UBLOCK=`jq .version platform/chromium/manifest.json | tr -d '"'` # ublock-versio
 echo "*** AdNauseam.firefox: copying common files"
 bash ./tools/copy-common-files.sh  $DES
 
-cp -R $DES/_locales/nb                 $DES/_locales/no
-
 cp platform/firefox/manifest.json      $DES/
 cp platform/firefox/webext.js          $DES/js/
 cp platform/firefox/vapi-usercss.js    $DES/js/

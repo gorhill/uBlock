@@ -117,12 +117,11 @@
     vAPI.messaging.send(
         'adnauseam', {
             what: 'verifyAdBlockers'
-        },function() {
-        if (json.notifications && json.notifications.length)
-            renderNotifications(json.notifications, 'vault');
-            adjustHeight();
-    });
-
+        }).then(json => {
+          if (json.notifications && json.notifications.length)
+              renderNotifications(json.notifications, 'vault');
+              adjustHeight();
+        })
   };
 
   const autoUpdateVault = function(){
@@ -1034,10 +1033,10 @@
           what: 'logAdSet',
           gid: selectedAdSet.gid,
           ids: selectedAdSet.childIds()
-        },
-        function (data) {
-          location.href = "data:text/plain," +  encodeURI(data);
-        });
+        }).then(data => {
+            location.href = "data:text/plain," +  encodeURI(data);
+        })
+
     }
   }
 
@@ -2058,7 +2057,9 @@
 
   messager.send('adnauseam', {
     what: 'adsForVault'
-  }, renderAds);
+  }).then(details => {
+      renderAds(details);
+  })
 
   $('#export').on('click', exportToFile);
   $('#import').on('click', startImportFilePicker);
