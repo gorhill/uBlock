@@ -153,9 +153,7 @@ vAPI.localStorage.getItemAsync('dashboardLastVisitedPane').then(value => {
                   renderNotifications(notifications, 'dashboard');
                   resizeFrame();
             })
-        })
-  });
-
+    });
 
     // https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
     window.addEventListener('beforeunload', ( ) => {
