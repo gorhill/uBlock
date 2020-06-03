@@ -303,7 +303,7 @@ const appendNotifyDiv = function (notify, template) {
   node.addClass(notify.type);
   node.attr('id', notify.name);
   const text = document.querySelectorAll('span[data-i18n=' + notify.text + ']');
-  node.descendants('#notify-text').text(text[0].innerHTML);
+  text.length > 0 && node.descendants('#notify-text').text(text[0].innerHTML);
 
   const button = document.querySelectorAll('span[data-i18n=' + notify.button + ']');
   if (button && button[0]) {

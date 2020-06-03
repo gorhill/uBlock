@@ -277,7 +277,7 @@
           // else we pick the next ad needing a visit
           next = nextPending();
         }
-        visitAd(next);
+        next != undefined && visitAd(next);
       }
       else if (idleMs) {
         log('[IDLER] '+(millis() - lastUserActivity)+'ms, waiting until '+ idleMs +'ms...'); // TMP

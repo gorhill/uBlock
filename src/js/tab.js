@@ -1081,7 +1081,7 @@ vAPI.tabs = new vAPI.Tabs();
             newParts |= currentParts;
         }
         tabIdToDetails.set(tabId, newParts);
-        vAPI.setTimeout(updateBadge(tabId, isClick), 222); // ADN
+        // vAPI.setTimeout(updateBadge(tabId, isClick), 222); // ADN
     };
 })();
 
