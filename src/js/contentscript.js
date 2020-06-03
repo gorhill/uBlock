@@ -417,24 +417,6 @@ vAPI.domWatcher = (( ) => {
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.matchesProp = (( ) => {
-    const docElem = document.documentElement;
-    if ( typeof docElem.matches !== 'function' ) {
-        if ( typeof docElem.mozMatchesSelector === 'function' ) {
-            return 'mozMatchesSelector';
-        } else if ( typeof docElem.webkitMatchesSelector === 'function' ) {
-            return 'webkitMatchesSelector';
-        } else if ( typeof docElem.msMatchesSelector === 'function' ) {
-            return 'msMatchesSelector';
-        }
-    }
-    return 'matches';
-})();
-
-/******************************************************************************/
-/******************************************************************************/
-/******************************************************************************/
-
 vAPI.injectScriptlet = function(doc, text) {
     if ( !doc ) { return; }
     let script;
@@ -537,18 +519,10 @@ vAPI.DOMFilterer = (function() {
         }
     };
 
-    const PSelectorNthAncestorTask = class {
-        constructor(task) {
-            this.nth = task[1];
+    const PSelectorPassthru = class {
+        constructor() {
         }
         transpose(node, output) {
-            let nth = this.nth;
-            for (;;) {
-                node = node.parentElement;
-                if ( node === null ) { return; }
-                nth -= 1;
-                if ( nth === 0 ) { break; }
-            }
             output.push(node);
         }
     };
@@ -574,6 +548,36 @@ vAPI.DOMFilterer = (function() {
             }
         }
     };
+
+    const PSelectorUpwardTask = class {
+        constructor(task) {
+            const arg = task[1];
+            if ( typeof arg === 'number' ) {
+                this.i = arg;
+            } else {
+                this.s = arg;
+            }
+        }
+        transpose(node, output) {
+            if ( this.s !== '' ) {
+                const parent = node.parentElement;
+                if ( parent === null ) { return; }
+                node = parent.closest(this.s);
+                if ( node === null ) { return; }
+            } else {
+                let nth = this.i;
+                for (;;) {
+                    node = node.parentElement;
+                    if ( node === null ) { return; }
+                    nth -= 1;
+                    if ( nth === 0 ) { break; }
+                }
+            }
+            output.push(node);
+        }
+    };
+    PSelectorUpwardTask.prototype.i = 0;
+    PSelectorUpwardTask.prototype.s = '';
 
     const PSelectorWatchAttrs = class {
         constructor(task) {
@@ -641,8 +645,10 @@ vAPI.DOMFilterer = (function() {
                     [ ':matches-css-before', PSelectorMatchesCSSBeforeTask ],
                     [ ':min-text-length', PSelectorMinTextLengthTask ],
                     [ ':not', PSelectorIfNotTask ],
-                    [ ':nth-ancestor', PSelectorNthAncestorTask ],
+                    [ ':nth-ancestor', PSelectorUpwardTask ],
+                    [ ':remove', PSelectorPassthru ],
                     [ ':spath', PSelectorSpathTask ],
+                    [ ':upward', PSelectorUpwardTask ],
                     [ ':watch-attr', PSelectorWatchAttrs ],
                     [ ':xpath', PSelectorXpathTask ],
                 ]);
@@ -654,15 +660,21 @@ vAPI.DOMFilterer = (function() {
             this.selector = o.selector;
             this.tasks = [];
             const tasks = o.tasks;
-            if ( !tasks ) { return; }
-            for ( const task of tasks ) {
-                this.tasks.push(new (this.operatorToTaskMap.get(task[0]))(task));
+            if ( Array.isArray(tasks) ) {
+                for ( const task of tasks ) {
+                    this.tasks.push(
+                        new (this.operatorToTaskMap.get(task[0]))(task)
+                    );
+                }
+            }
+            if ( o.action !== undefined ) {
+                this.action = o.action;
             }
         }
         prime(input) {
             const root = input || document;
             if ( this.selector === '' ) { return [ root ]; }
-            return root.querySelectorAll(this.selector);
+            return Array.from(root.querySelectorAll(this.selector));
         }
         exec(input) {
             let nodes = this.prime(input);
@@ -693,6 +705,8 @@ vAPI.DOMFilterer = (function() {
             return false;
         }
     };
+    PSelector.prototype.action = undefined;
+    PSelector.prototype.hit = false;
     PSelector.prototype.operatorToTaskMap = undefined;
 
     const DOMProceduralFilterer = class {
@@ -711,20 +725,20 @@ vAPI.DOMFilterer = (function() {
             for ( let i = 0, n = aa.length; i < n; i++ ) {
                 const raw = aa[i];
                 const o = JSON.parse(raw);
-                if ( o.style ) {
-                    this.domFilterer.addCSSRule(o.style[0], o.style[1]);
+                if ( o.action === 'style' ) {
+                    this.domFilterer.addCSSRule(o.selector, o.tasks[0][1]);
                     mustCommit = true;
                     continue;
                 }
-                if ( o.pseudoclass ) {
+                if ( o.pseudo !== undefined ) {
                     this.domFilterer.addCSSRule(
-                        o.raw,
+                        o.selector,
                         'display:none!important;'
                     );
                     mustCommit = true;
                     continue;
                 }
-                if ( o.tasks ) {
+                if ( o.tasks !== undefined ) {
                     if ( this.selectors.has(raw) === false ) {
                         const pselector = new PSelector(o);
                         this.selectors.set(raw, pselector);
@@ -761,8 +775,7 @@ vAPI.DOMFilterer = (function() {
 
             let t0 = Date.now();
 
-            for ( const entry of this.selectors ) {
-                const pselector = entry[1];
+            for ( const pselector of this.selectors.values() ) {
                 const allowance = Math.floor((t0 - pselector.lastAllowanceTime) / 2000);
                 if ( allowance >= 1 ) {
                     pselector.budget += allowance * 50;
@@ -778,9 +791,12 @@ vAPI.DOMFilterer = (function() {
                     pselector.budget = -0x7FFFFFFF;
                 }
                 t0 = t1;
-                for ( const node of nodes ) {
-                    this.domFilterer.hideNode(node);
-                    this.hiddenNodes.add(node);
+                if ( nodes.length === 0 ) { continue; }
+                pselector.hit = true;
+                if ( pselector.action === 'remove' ) {
+                    this.removeNodes(nodes);
+                } else {
+                    this.hideNodes(nodes);
                 }
             }
 
@@ -789,6 +805,21 @@ vAPI.DOMFilterer = (function() {
                 this.domFilterer.unhideNode(node);
             }
             //console.timeEnd('procedural selectors/dom layout changed');
+        }
+
+        hideNodes(nodes) {
+            for ( const node of nodes ) {
+                if ( node.parentElement === null ) { continue; }
+                this.domFilterer.hideNode(node);
+                this.hiddenNodes.add(node);
+            }
+        }
+
+        removeNodes(nodes) {
+            for ( const node of nodes ) {
+                node.textContent = '';
+                node.remove();
+            }
         }
 
         createProceduralFilter(o) {

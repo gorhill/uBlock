@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Procedural HTML filters</title>
+<title>CSS selector-based cosmetic filters</title>
 <style>
     .filters {
         font-family: monospace;
@@ -61,91 +61,68 @@
     .tests b::after {
         opacity: 0;
     }
+    .fail-pseudo::before {
+        align-items: center;
+        background-color: red;
+        content: 'fail';
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
 </style>
 </head>
 <body>
-<h1>Procedural HTML filters</h1>
+<h1>CSS selector-based cosmetic filters</h1>
 <p><a href="./.">Back</a>
 <br><br></p>
 <h3>Filters</h3>
 <div class="filters"><noscript>Enable JavaScript to see needed filters</noscript></div>
 
 <h3>Tests</h3>
-<div id="phf" class="tests">
+<div id="ccf" class="tests">
 
 <div id="a1" class="tile">
     <div class="pass"><div class="fail"><a><b></b></a></div></div>
-    <code>^#phf #a1 .fail:has(b)</code>
+    <code class="generic">#ccf #a1 .fail</code>
     </div>
 
 <div id="a2" class="tile">
     <div class="pass"><div class="fail"><a><b></b></a></div></div>
-    <code>^#phf #a2 .fail:has(> a > b)</code>
+    <code class="generic">#ccf #a2 .fail:not(.a2)</code>
     </div>
 
 <div id="a3" class="tile">
     <div class="pass"><div class="fail"><a><b></b></a></div></div>
-    <code>^#phf #a3 .fail:not(:has(c))</code>
+    <code>#ccf #a3 .fail</code>
     </div>
 
 <div id="a4" class="tile">
-    <div class="pass"><div class="fail"><a><b>I am a needle!!!</b></a></div></div>
-    <code>^#phf #a4 .fail:has-text(needle)</code>
+    <div class="pass"><div class="fail"><a><b></b></a></div></div>
+    <code>#ccf #a4 .fail:not(.a4)</code>
     </div>
 
 <div id="a5" class="tile">
-    <div class="pass"><div class="fail"><a><b>I am a needle!!!</b></a></div></div>
-    <code>^#phf #a5 .fail:has-text(/NEEDLE/i)</code>
+    <div class="pass"><div class="fail"><a><b></b></a></div></div>
+    <code>#ccf #a5 .fail:style(visibility: hidden)</code>
     </div>
 
 <div id="a6" class="tile">
-    <div class="pass"><div class="fail"><a><b>I am a needle!!!</b></a></div></div>
-    <code>^#phf #a6 .fail:not(:has-text(haystack))</code>
+    <div class="pass"><div class="fail-pseudo"><a><b></b></a></div></div>
+    <code class="generic">#ccf #a6 .fail-pseudo::before</code>
     </div>
 
 <div id="a7" class="tile">
-    <div class="pass"><div class="fail"><a><b></b></a></div></div>
-    <code>^#phf #a7 .fail > a > b:nth-ancestor(2)</code>
+    <div class="pass"><div class="fail-pseudo"><a><b></b></a></div></div>
+    <code>#ccf #a7 .fail-pseudo::before</code>
     </div>
 
 <div id="a8" class="tile">
-    <div class="pass"><div class="fail"><a><b></b></a></div></div>
-    <code>^#phf #a8:xpath(.//b/../..)</code>
-    </div>
-
-<div id="a9" class="tile">
-    <div class="pass"><div class="fail"><a>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna<b>aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</b>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</a></div></div>
-    <code>^#phf #a9 .fail:min-text-length(300)</code>
-    </div>
-
-<div id="a10" class="tile">
-    <div class="pass"><a><b></b></a><div class="fail"></div></div>
-    <code>^#phf #a10 .pass > a:has(b) + .fail</code>
-    </div>
-
-<div id="a11" class="tile">
-    <div class="pass"><a><b></b></a><div class="fail"><a><b></b></a></div></div>
-    <code>^#phf #a11 .pass > a:has(b) + .fail:has(b)</code>
-    </div>
-
-<div id="a12" class="tile">
-    <div class="pass"><div class="fail"></div><a></a><b></b></div>
-    <code>^#phf #a12 .fail:has(+ a)</code>
-    </div>
-
-<div id="a13" class="tile">
-    <div class="pass"><div class="fail"></div><a><b></b></a></div>
-    <code>^#phf #a13 .fail:has(~ a:has(b))</code>
-    </div>
-
-<div id="a14" class="tile">
-    <div class="pass"><div class="fail"><a><b></b></a></div></div>
-    <code>^#phf #a14 b:upward(2)</code>
-    </div>
-
-<div id="a15" class="tile">
-    <div class="pass"><div class="fail"><a><b></b></a></div></div>
-    <code>^#phf #a15 b:upward(.fail)</code>
+    <div class="pass"><div class="fail-pseudo"><a><b></b></a></div></div>
+    <code>#ccf #a8 .fail-pseudo::before:style(visibility: hidden)</code>
     </div>
 
 </div>
@@ -156,7 +133,11 @@
     const fragment = document.createDocumentFragment();
     for ( const node of document.querySelectorAll('code') ) {
         const div = document.createElement('div');
-        div.textContent = `${hostname}##${node.textContent}`;
+        let text = '##' + node.textContent;
+        if ( node.classList.contains('generic') === false ) {
+            text = hostname + text;
+        }
+        div.textContent = text;
         fragment.appendChild(div);
     }
     const parent = document.querySelector('.filters');

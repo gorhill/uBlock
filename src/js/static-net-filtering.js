@@ -75,10 +75,11 @@ const typeNameToTypeValue = {
       'specifichide': 16 << 4,
        'inline-font': 17 << 4,
      'inline-script': 18 << 4,
-              'data': 19 << 4,  // special: a generic data holder
-          'redirect': 20 << 4,
-            'webrtc': 21 << 4,
-       'unsupported': 22 << 4,
+             'cname': 19 << 4,
+              'data': 20 << 4,  // special: a generic data holder
+          'redirect': 21 << 4,
+            'webrtc': 22 << 4,
+       'unsupported': 23 << 4,
 };
 
 const otherTypeBitValue = typeNameToTypeValue.other;
@@ -119,10 +120,11 @@ const typeValueToTypeName = {
     16: 'specifichide',
     17: 'inline-font',
     18: 'inline-script',
-    19: 'data',
-    20: 'redirect',
-    21: 'webrtc',
-    22: 'unsupported',
+    19: 'cname',
+    20: 'data',
+    21: 'redirect',
+    22: 'webrtc',
+    23: 'unsupported',
 };
 
 // https://github.com/gorhill/uBlock/issues/1493
@@ -130,6 +132,7 @@ const typeValueToTypeName = {
 const toNormalizedType = {
                'all': 'all',
             'beacon': 'ping',
+             'cname': 'cname',
                'css': 'stylesheet',
               'data': 'data',
                'doc': 'main_frame',
@@ -220,8 +223,16 @@ const toLogDataInternal = function(categoryBits, tokenHash, iunit) {
     const pattern = [];
     const regex = [];
     const options = [];
+    const denyallow = [];
     const domains = [];
-    const logData = { pattern, regex, domains, options, isRegex: false };
+    const logData = {
+        pattern,
+        regex,
+        denyallow,
+        domains,
+        options,
+        isRegex: false,
+    };
     filterUnits[iunit].logData(logData);
     if ( categoryBits & 0x002 ) {
         logData.options.unshift('important');
@@ -245,6 +256,9 @@ const toLogDataInternal = function(categoryBits, tokenHash, iunit) {
     }
     if ( categoryBits & 0x001 ) {
         raw = '@@' + raw;
+    }
+    if ( denyallow.length !== 0 ) {
+        options.push(`denyallow=${denyallow.join('|')}`);
     }
     if ( domains.length !== 0 ) {
         options.push(`domain=${domains.join('|')}`);
@@ -311,27 +325,14 @@ const bidiTrieMatchExtra = function(l, r, ix) {
     return 0;
 };
 
-const bidiTrie = (( ) => {
-    let trieDetails;
-    try {
-        trieDetails = JSON.parse(
-            vAPI.localStorage.getItem('SNFE.bidiTrieDetails')
-        );
-    } catch(ex) {
-    }
-    const trie = new µb.BidiTrieContainer(trieDetails, bidiTrieMatchExtra);
-    if ( µb.hiddenSettings.disableWebAssembly !== true ) {
-        trie.enableWASM();
-    }
-    return trie;
-})();
+const bidiTrie = new µb.BidiTrieContainer(bidiTrieMatchExtra);
+
+const bidiTriePrime = function() {
+    bidiTrie.reset(vAPI.localStorage.getItem('SNFE.bidiTrie'));
+};
 
 const bidiTrieOptimize = function(shrink = false) {
-    const trieDetails = bidiTrie.optimize(shrink);
-    vAPI.localStorage.setItem(
-        'SNFE.bidiTrieDetails',
-        JSON.stringify(trieDetails)
-    );
+    vAPI.localStorage.setItem('SNFE.bidiTrie', bidiTrie.optimize(shrink));
 };
 
 /*******************************************************************************
@@ -344,6 +345,7 @@ const bidiTrieOptimize = function(shrink = false) {
 */
 
 const filterClasses = [];
+const filterArgsToUnit = new Map();
 let   filterClassIdGenerator = 0;
 
 const registerFilterClass = function(ctor) {
@@ -364,7 +366,21 @@ const filterFromCtor = function(ctor, ...args) {
 
 const filterUnitFromCompiled = function(args) {
     const ctor = filterClasses[args[0]];
-    return ctor.unitFromCompiled(args);
+    const keygen = ctor.keyFromArgs;
+    if ( keygen === undefined ) {
+        return filterUnits.push(ctor.fromCompiled(args)) - 1;
+    }
+    let key = `${ctor.fid}`;
+    const keyargs = keygen(args);
+    if ( keyargs !== undefined ) {
+        key += `\t${keyargs}`;
+    }
+    let iunit = filterArgsToUnit.get(key);
+    if ( iunit === undefined ) {
+        iunit = filterUnits.push(ctor.fromCompiled(args)) - 1;
+        filterArgsToUnit.set(key, iunit);
+    }
+    return iunit;
 };
 
 const filterFromSelfie = function(args) {
@@ -477,17 +493,17 @@ const FilterTrue = class {
         return [ FilterTrue.fid ];
     }
 
-    static unitFromCompiled() {
-        return FilterTrue.filterUnit;
+    static fromCompiled() {
+        return new FilterTrue();
     }
 
     static fromSelfie() {
-        return FilterTrue.instance;
+        return new FilterTrue();
+    }
+
+    static keyFromArgs() {
     }
 };
-
-FilterTrue.instance = new FilterTrue();
-FilterTrue.filterUnit = filterUnits.push(FilterTrue.instance) - 1;
 
 registerFilterClass(FilterTrue);
 
@@ -538,18 +554,16 @@ const FilterPatternPlain = class {
         return [ FilterPatternPlain.fid, details.f, details.tokenBeg ];
     }
 
-    static unitFromCompiled(args) {
+    static fromCompiled(args) {
         const i = bidiTrie.storeString(args[1]);
         const n = args[1].length;
-        let f;
         if ( args[2] === 0 ) {
-            f = new FilterPatternPlain(i, n);
-        } else if ( args[2] === 1 ) {
-            f = new FilterPatternPlain1(i, n);
-        } else {
-            f = new FilterPatternPlainX(i, n, args[2]);
+            return new FilterPatternPlain(i, n);
         }
-        return filterUnits.push(f) - 1;
+        if ( args[2] === 1 ) {
+            return new FilterPatternPlain1(i, n);
+        }
+        return new FilterPatternPlainX(i, n, args[2]);
     }
 
     static fromSelfie(args) {
@@ -654,10 +668,9 @@ const FilterPatternLeft = class {
         ];
     }
 
-    static unitFromCompiled(args) {
+    static fromCompiled(args) {
         const i = bidiTrie.storeString(args[1]);
-        const f = new FilterPatternLeft(i, args[1].length);
-        return filterUnits.push(f) - 1;
+        return new FilterPatternLeft(i, args[1].length);
     }
 
     static fromSelfie(args) {
@@ -692,10 +705,9 @@ const FilterPatternLeftEx = class extends FilterPatternLeft {
         details.regex.unshift(restrFromPlainPattern(s), restrSeparator, '.*');
     }
 
-    static unitFromCompiled(args) {
+    static fromCompiled(args) {
         const i = bidiTrie.storeString(args[1]);
-        const f = new FilterPatternLeftEx(i, args[1].length);
-        return filterUnits.push(f) - 1;
+        return new FilterPatternLeftEx(i, args[1].length);
     }
 
     static fromSelfie(args) {
@@ -740,10 +752,9 @@ const FilterPatternRight = class {
         ];
     }
 
-    static unitFromCompiled(args) {
+    static fromCompiled(args) {
         const i = bidiTrie.storeString(args[1]);
-        const f = new FilterPatternRight(i, args[1].length);
-        return filterUnits.push(f) - 1;
+        return new FilterPatternRight(i, args[1].length);
     }
 
     static fromSelfie(args) {
@@ -775,10 +786,9 @@ const FilterPatternRightEx = class extends FilterPatternRight {
         details.regex.push(restrSeparator, '.*', restrFromPlainPattern(s));
     }
 
-    static unitFromCompiled(args) {
+    static fromCompiled(args) {
         const i = bidiTrie.storeString(args[1]);
-        const f = new FilterPatternRightEx(i, args[1].length);
-        return filterUnits.push(f) - 1;
+        return new FilterPatternRightEx(i, args[1].length);
     }
 
     static fromSelfie(args) {
@@ -832,13 +842,16 @@ const FilterPatternGeneric = class {
         return [ FilterPatternGeneric.fid, details.f, anchor ];
     }
 
-    static unitFromCompiled(args) {
-        const f = new FilterPatternGeneric(args[1], args[2]);
-        return filterUnits.push(f) - 1;
+    static fromCompiled(args) {
+        return new FilterPatternGeneric(args[1], args[2]);
     }
 
     static fromSelfie(args) {
         return new FilterPatternGeneric(args[1], args[2]);
+    }
+
+    static keyFromArgs(args) {
+        return `${args[1]}\t${args[2]}`;
     }
 };
 
@@ -876,9 +889,8 @@ const FilterPlainHostname = class {
         return [ FilterPlainHostname.fid, details.f ];
     }
 
-    static unitFromCompiled(args) {
-        const f = new FilterPlainHostname(args[1]);
-        return filterUnits.push(f) - 1;
+    static fromCompiled(args) {
+        return new FilterPlainHostname(args[1]);
     }
 
     static fromSelfie(args) {
@@ -944,18 +956,17 @@ const FilterAnchorHn = class {
         return [ FilterAnchorHn.fid ];
     }
 
-    static unitFromCompiled() {
-        return FilterAnchorHn.filterUnit;
+    static fromCompiled() {
+        return new FilterAnchorHn();
     }
 
     static fromSelfie() {
-        return FilterAnchorHn.instance;
+        return new FilterAnchorHn();
+    }
+
+    static keyFromArgs() {
     }
 };
-
-FilterAnchorHn.instance = new FilterAnchorHn();
-FilterAnchorHn.filterUnit = filterUnits.length;
-filterUnits.push(FilterAnchorHn.instance);
 
 registerFilterClass(FilterAnchorHn);
 
@@ -979,18 +990,17 @@ const FilterAnchorLeft = class {
         return [ FilterAnchorLeft.fid ];
     }
 
-    static unitFromCompiled() {
-        return FilterAnchorLeft.filterUnit;
+    static fromCompiled() {
+        return new FilterAnchorLeft();
     }
 
     static fromSelfie() {
-        return FilterAnchorLeft.instance;
+        return new FilterAnchorLeft();
+    }
+
+    static keyFromArgs() {
     }
 };
-
-FilterAnchorLeft.instance = new FilterAnchorLeft();
-FilterAnchorLeft.filterUnit = filterUnits.length;
-filterUnits.push(FilterAnchorLeft.instance);
 
 registerFilterClass(FilterAnchorLeft);
 
@@ -1014,18 +1024,17 @@ const FilterAnchorRight = class {
         return [ FilterAnchorRight.fid ];
     }
 
-    static unitFromCompiled() {
-        return FilterAnchorRight.filterUnit;
+    static fromCompiled() {
+        return new FilterAnchorRight();
     }
 
     static fromSelfie() {
-        return FilterAnchorRight.instance;
+        return new FilterAnchorRight();
+    }
+
+    static keyFromArgs() {
     }
 };
-
-FilterAnchorRight.instance = new FilterAnchorRight();
-FilterAnchorRight.filterUnit = filterUnits.length;
-filterUnits.push(FilterAnchorRight.instance);
 
 registerFilterClass(FilterAnchorRight);
 
@@ -1050,18 +1059,17 @@ const FilterTrailingSeparator = class {
         return [ FilterTrailingSeparator.fid ];
     }
 
-    static unitFromCompiled() {
-        return FilterTrailingSeparator.filterUnit;
+    static fromCompiled() {
+        return new FilterTrailingSeparator();
     }
 
     static fromSelfie() {
-        return FilterTrailingSeparator.instance;
+        return new FilterTrailingSeparator();
+    }
+
+    static keyFromArgs() {
     }
 };
-
-FilterTrailingSeparator.instance = new FilterTrailingSeparator();
-FilterTrailingSeparator.filterUnit = filterUnits.length;
-filterUnits.push(FilterTrailingSeparator.instance);
 
 registerFilterClass(FilterTrailingSeparator);
 
@@ -1087,9 +1095,8 @@ const FilterType = class {
         return [ FilterType.fid, details.typeBits & allNetworkTypesBits ];
     }
 
-    static unitFromCompiled(args) {
-        const f = new FilterType(args[1]);
-        return filterUnits.push(f) - 1;
+    static fromCompiled(args) {
+        return new FilterType(args[1]);
     }
 
     static fromSelfie(args) {
@@ -1133,13 +1140,16 @@ const FilterRegex = class {
         return [ FilterRegex.fid, details.f ];
     }
 
-    static unitFromCompiled(args) {
-        const f = new FilterRegex(args[1]);
-        return filterUnits.push(f) - 1;
+    static fromCompiled(args) {
+        return new FilterRegex(args[1]);
     }
 
     static fromSelfie(args) {
         return new FilterRegex(args[1]);
+    }
+
+    static keyFromArgs(args) {
+        return args[1];
     }
 };
 
@@ -1157,16 +1167,7 @@ registerFilterClass(FilterRegex);
 
 const filterOrigin = new (class {
     constructor() {
-        let trieDetails;
-        try {
-            trieDetails = JSON.parse(
-                vAPI.localStorage.getItem('FilterOrigin.trieDetails')
-            );
-        } catch(ex) {
-        }
-        this.trieContainer = new µb.HNTrieContainer(trieDetails);
-        this.strToUnitMap = new Map();
-        this.gcTimer = undefined;
+        this.trieContainer = new µb.HNTrieContainer();
     }
 
     compile(details, prepend, units) {
@@ -1221,33 +1222,20 @@ const filterOrigin = new (class {
         }
     }
 
-    unitFromCompiled(ctor, s) {
-        let iunit = this.strToUnitMap.get(s);
-        if ( iunit !== undefined ) { return iunit; }
-        const f = new ctor(s);
-        iunit = filterUnits.push(f) - 1;
-        this.strToUnitMap.set(s, iunit);
-        if ( this.gcTimer !== undefined ) { return iunit; }
-        this.gcTimer = self.setTimeout(
-            ( ) => {
-                this.gcTimer = undefined;
-                this.strToUnitMap.clear();
-            },
-            5000
+    prime() {
+        this.trieContainer.reset(
+            vAPI.localStorage.getItem('SNFE.filterOrigin.trieDetails')
         );
-        return iunit;
     }
 
     reset() {
         this.trieContainer.reset();
-        this.strToUnitMap.clear();
     }
 
     optimize() {
-        const trieDetails = this.trieContainer.optimize();
         vAPI.localStorage.setItem(
-            'FilterOrigin.trieDetails',
-            JSON.stringify(trieDetails)
+            'SNFE.filterOrigin.trieDetails',
+            this.trieContainer.optimize()
         );
     }
 
@@ -1289,8 +1277,8 @@ const FilterOriginHit = class {
         return [ FilterOriginHit.fid, domainOpt ];
     }
 
-    static unitFromCompiled(args) {
-        return filterOrigin.unitFromCompiled(FilterOriginHit, args[1]);
+    static fromCompiled(args) {
+        return new FilterOriginHit(args[1]);
     }
 
     static fromSelfie(args) {
@@ -1333,8 +1321,8 @@ const FilterOriginMiss = class {
         return [ FilterOriginMiss.fid, domainOpt ];
     }
 
-    static unitFromCompiled(args) {
-        return filterOrigin.unitFromCompiled(FilterOriginMiss, args[1]);
+    static fromCompiled(args) {
+        return new FilterOriginMiss(args[1]);
     }
 
     static fromSelfie(args) {
@@ -1381,12 +1369,16 @@ const FilterOriginHitSet = class {
         return [ FilterOriginHitSet.fid, domainOpt ];
     }
 
-    static unitFromCompiled(args) {
-        return filterOrigin.unitFromCompiled(FilterOriginHitSet, args[1]);
+    static fromCompiled(args) {
+        return new FilterOriginHitSet(args[1]);
     }
 
     static fromSelfie(args) {
         return new FilterOriginHitSet(args[1], args[2]);
+    }
+
+    static keyFromArgs(args) {
+        return args[1];
     }
 };
 
@@ -1429,12 +1421,16 @@ const FilterOriginMissSet = class {
         return [ FilterOriginMissSet.fid, domainOpt ];
     }
 
-    static unitFromCompiled(args) {
-        return filterOrigin.unitFromCompiled(FilterOriginMissSet, args[1]);
+    static fromCompiled(args) {
+        return new FilterOriginMissSet(args[1]);
     }
 
     static fromSelfie(args) {
         return new FilterOriginMissSet(args[1], args[2]);
+    }
+
+    static keyFromArgs(args) {
+        return args[1];
     }
 };
 
@@ -1479,13 +1475,16 @@ const FilterDataHolder = class {
         return [ FilterDataHolder.fid, details.dataType, details.data ];
     }
 
-    static unitFromCompiled(args) {
-        const f = new FilterDataHolder(args[1], args[2]);
-        return filterUnits.push(f) - 1;
+    static fromCompiled(args) {
+        return new FilterDataHolder(args[1], args[2]);
     }
 
     static fromSelfie(args) {
         return new FilterDataHolder(args[1], args[2]);
+    }
+
+    static keyFromArgs(args) {
+        return `${args[1]}\t${args[2]}`;
     }
 };
 
@@ -1561,7 +1560,7 @@ const FilterCollection = class {
         return [ ctor.fid, fdata ];
     }
 
-    static unitFromCompiled(ctor, args) {
+    static fromCompiled(ctor, args) {
         let iprev = 0, i0 = 0;
         const n = args[1].length;
         for ( let i = 0; i < n; i++ ) {
@@ -1574,7 +1573,7 @@ const FilterCollection = class {
             }
             iprev = inext;
         }
-        return filterUnits.push(new ctor(i0, args[1].length)) - 1;
+        return new ctor(i0, args[1].length);
     }
 
     static fromSelfie(ctor, args) {
@@ -1636,8 +1635,8 @@ const FilterComposite = class extends FilterCollection {
         return FilterCollection.compile(FilterComposite, fdata);
     }
 
-    static unitFromCompiled(args) {
-        return FilterCollection.unitFromCompiled(FilterComposite, args);
+    static fromCompiled(args) {
+        return FilterCollection.fromCompiled(FilterComposite, args);
     }
 
     static fromSelfie(args) {
@@ -1684,15 +1683,20 @@ const FilterHostnameDict = class {
         ];
     }
 
+    static prime() {
+        return FilterHostnameDict.trieContainer.reset(
+            vAPI.localStorage.getItem('SNFE.FilterHostnameDict.trieDetails')
+        );
+    }
+
     static reset() {
         return FilterHostnameDict.trieContainer.reset();
     }
 
     static optimize() {
-        const trieDetails = FilterHostnameDict.trieContainer.optimize();
         vAPI.localStorage.setItem(
-            'FilterHostnameDict.trieDetails',
-            JSON.stringify(trieDetails)
+            'SNFE.FilterHostnameDict.trieDetails',
+            FilterHostnameDict.trieContainer.optimize()
         );
     }
 
@@ -1701,18 +1705,57 @@ const FilterHostnameDict = class {
     }
 };
 
-FilterHostnameDict.trieContainer = (( ) => {
-    let trieDetails;
-    try {
-        trieDetails = JSON.parse(
-            vAPI.localStorage.getItem('FilterHostnameDict.trieDetails')
-        );
-    } catch(ex) {
-    }
-    return new µb.HNTrieContainer(trieDetails);
-})();
+FilterHostnameDict.trieContainer = new µb.HNTrieContainer();
 
 registerFilterClass(FilterHostnameDict);
+
+/******************************************************************************/
+
+const FilterDenyAllow = class {
+    constructor(s, trieArgs) {
+        this.s = s;
+        this.hndict = FilterHostnameDict.trieContainer.createOne(trieArgs);
+    }
+
+    match() {
+        return this.hndict.matches($requestHostname) === -1;
+    }
+
+    logData(details) {
+        details.denyallow.push(this.s);
+    }
+
+    toSelfie() {
+        return [
+            this.fid,
+            this.s,
+            FilterHostnameDict.trieContainer.compileOne(this.hndict),
+        ];
+    }
+
+    static compile(details) {
+        return [ FilterDenyAllow.fid, details.denyallow ];
+    }
+
+    static fromCompiled(args) {
+        const f = new FilterDenyAllow(args[1]);
+        for ( const hn of args[1].split('|') ) {
+            if ( hn === '' ) { continue; }
+            f.hndict.add(hn);
+        }
+        return f;
+    }
+
+    static fromSelfie(args) {
+        return new FilterDenyAllow(...args.slice(1));
+    }
+
+    static keyFromArgs(args) {
+        return args[1];
+    }
+};
+
+registerFilterClass(FilterDenyAllow);
 
 /******************************************************************************/
 
@@ -1750,9 +1793,8 @@ const FilterJustOrigin = class {
         return [ this.fid, filterOrigin.trieContainer.compileOne(this.dict) ];
     }
 
-    static unitFromCompiled(args) {
-        const f = new FilterJustOrigin(args[1]);
-        return filterUnits.push(f) - 1;
+    static fromCompiled(args) {
+        return new FilterJustOrigin(args[1]);
     }
 
     static fromSelfie(args) {
@@ -1775,9 +1817,8 @@ const FilterHTTPSJustOrigin = class extends FilterJustOrigin {
         details.domains.push(this.$h);
     }
 
-    static unitFromCompiled(args) {
-        const f = new FilterHTTPSJustOrigin(args[1]);
-        return filterUnits.push(f) - 1;
+    static fromCompiled(args) {
+        return new FilterHTTPSJustOrigin(args[1]);
     }
 
     static fromSelfie(args) {
@@ -1800,9 +1841,8 @@ const FilterHTTPJustOrigin = class extends FilterJustOrigin {
         details.domains.push(this.$h);
     }
 
-    static unitFromCompiled(args) {
-        const f = new FilterHTTPJustOrigin(args[1]);
-        return filterUnits.push(f) - 1;
+    static fromCompiled(args) {
+        return new FilterHTTPJustOrigin(args[1]);
     }
 
     static fromSelfie(args) {
@@ -2145,6 +2185,7 @@ const FilterParser = class {
         this.party = AnyParty;
         this.fopts = '';
         this.domainOpt = '';
+        this.denyallow = '';
         this.isPureHostname = false;
         this.isRegex = false;
         this.raw = '';
@@ -2203,7 +2244,7 @@ const FilterParser = class {
         }
     }
 
-    parseDomainOption(s) {
+    parseHostnameList(s) {
         if ( this.reHasUnicode.test(s) ) {
             const hostnames = s.split('|');
             let i = hostnames.length;
@@ -2241,8 +2282,16 @@ const FilterParser = class {
             // Detect and discard filter if domain option contains nonsensical
             // characters.
             if ( opt.startsWith('domain=') ) {
-                this.domainOpt = this.parseDomainOption(opt.slice(7));
+                this.domainOpt = this.parseHostnameList(opt.slice(7));
                 if ( this.domainOpt === '' ) {
+                    this.unsupported = true;
+                    break;
+                }
+                continue;
+            }
+            if ( opt.startsWith('denyallow=') ) {
+                this.denyallow = this.parseHostnameList(opt.slice(10));
+                if ( this.denyallow === '' ) {
                     this.unsupported = true;
                     break;
                 }
@@ -2393,7 +2442,7 @@ const FilterParser = class {
                     this.unsupported = true;
                     return this;
                 }
-                this.parseOptions(s.slice(pos + 1));
+                this.parseOptions(s.slice(pos + 1).trim());
                 if ( this.unsupported ) { return this; }
                 s = s.slice(0, pos);
             }
@@ -2532,20 +2581,6 @@ const FilterParser = class {
         this.token = matches[0];
         this.tokenHash = urlTokenizer.tokenHashFromString(this.token);
         this.tokenBeg = matches.index;
-
-        // https://www.reddit.com/r/uBlockOrigin/comments/dpcvfx/
-        //   Since we found a valid token, we can get rid of trailing
-        //   wildcards if any.
-        if ( this.firstWildcardPos !== -1 ) {
-            const lastCharPos = this.f.length - 1;
-            if ( this.firstWildcardPos === lastCharPos ) {
-                this.f = this.f.slice(0, -1);
-                this.firstWildcardPos = -1;
-            } else if ( this.secondWildcardPos === lastCharPos ) {
-                this.f = this.f.slice(0, -1);
-                this.secondWildcardPos = -1;
-            }
-        }
     }
 
     findGoodToken() {
@@ -2662,8 +2697,15 @@ const FilterContainer = function() {
 
 /******************************************************************************/
 
+FilterContainer.prototype.prime = function() {
+    FilterHostnameDict.prime();
+    filterOrigin.prime();
+    bidiTriePrime();
+};
+
+/******************************************************************************/
+
 FilterContainer.prototype.reset = function() {
-    this.frozen = false;
     this.processedFilterCount = 0;
     this.acceptedCount = 0;
     this.rejectedCount = 0;
@@ -2680,6 +2722,7 @@ FilterContainer.prototype.reset = function() {
     FilterHostnameDict.reset();
     filterOrigin.reset();
     bidiTrie.reset();
+    filterArgsToUnit.clear();
 
     filterUnits = filterUnits.slice(0, FILTER_UNITS_MIN);
     filterSequenceWritePtr = FILTER_SEQUENCES_MIN;
@@ -2802,7 +2845,7 @@ FilterContainer.prototype.freeze = function() {
 
     FilterHostnameDict.optimize();
     bidiTrieOptimize();
-    this.frozen = true;
+    filterArgsToUnit.clear();
 
     log.info(`staticNetFilteringEngine.freeze() took ${Date.now()-t0} ms`);
 };
@@ -2900,7 +2943,6 @@ FilterContainer.prototype.fromSelfie = function(path) {
             } catch (ex) {
             }
             if ( selfie instanceof Object === false ) { return false; }
-            this.frozen = true;
             this.processedFilterCount = selfie.processedFilterCount;
             this.acceptedCount = selfie.acceptedCount;
             this.rejectedCount = selfie.rejectedCount;
@@ -3027,6 +3069,11 @@ FilterContainer.prototype.compile = function(raw, writer) {
             units.length !== 0 && filterClasses[units[0][0]].isSlow === true,
             units
         );
+    }
+
+    // Deny-allow
+    if ( parsed.denyallow !== '' ) {
+        units.push(FilterDenyAllow.compile(parsed));
     }
 
     // Data
@@ -3348,8 +3395,8 @@ FilterContainer.prototype.realmMatchString = function(
 // https://www.reddit.com/r/uBlockOrigin/comments/d6vxzj/
 //   Add support for `specifichide`.
 
-FilterContainer.prototype.matchStringElementHide = function(type, url) {
-    const typeBits = typeNameToTypeValue[`${type}hide`] | 0x80000000;
+FilterContainer.prototype.matchStringReverse = function(type, url) {
+    const typeBits = typeNameToTypeValue[type] | 0x80000000;
 
     // Prime tokenizer: we get a normalized URL in return.
     $requestURL = urlTokenizer.setURL(url);
@@ -3439,8 +3486,24 @@ FilterContainer.prototype.toLogData = function() {
 
 /******************************************************************************/
 
+FilterContainer.prototype.isBlockImportant = function() {
+    return (this.$catbits & BlockImportant) === BlockImportant;
+};
+
+/******************************************************************************/
+
 FilterContainer.prototype.getFilterCount = function() {
     return this.acceptedCount - this.discardedCount;
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.enableWASM = function() {
+    return Promise.all([
+        bidiTrie.enableWASM(),
+        filterOrigin.trieContainer.enableWASM(),
+        FilterHostnameDict.trieContainer.enableWASM(),
+    ]);
 };
 
 /******************************************************************************/
@@ -3455,7 +3518,9 @@ FilterContainer.prototype.benchmark = async function(action, target) {
         return;
     }
 
-    console.info(`Benchmarking staticNetFilteringEngine.matchString()...`);
+    const print = log.print;
+
+    print(`Benchmarking staticNetFilteringEngine.matchString()...`);
     const fctxt = µb.filteringContext.duplicate();
 
     if ( typeof target === 'number' ) {
@@ -3464,10 +3529,13 @@ FilterContainer.prototype.benchmark = async function(action, target) {
         fctxt.setDocOriginFromURL(request.frameUrl);
         fctxt.setType(request.cpt);
         const r = this.matchString(fctxt);
-        console.log(`Result=${r}:`);
-        console.log(`\ttype=${fctxt.type}`);
-        console.log(`\turl=${fctxt.url}`);
-        console.log(`\tdocOrigin=${fctxt.getDocOrigin()}`);
+        print(`Result=${r}:`);
+        print(`\ttype=${fctxt.type}`);
+        print(`\turl=${fctxt.url}`);
+        print(`\tdocOrigin=${fctxt.getDocOrigin()}`);
+        if ( r !== 0 ) {
+            console.log(this.toLogData());
+        }
         return;
     }
 
@@ -3493,21 +3561,21 @@ FilterContainer.prototype.benchmark = async function(action, target) {
         const r = this.matchString(fctxt);
         if ( recorded !== undefined ) { recorded.push(r); }
         if ( expected !== undefined && r !== expected[i] ) {
-            console.log(`Mismatch with reference results at ${i}:`);
-            console.log(`\tExpected ${expected[i]}, got ${r}:`);
-            console.log(`\ttype=${fctxt.type}`);
-            console.log(`\turl=${fctxt.url}`);
-            console.log(`\tdocOrigin=${fctxt.getDocOrigin()}`);
+            print(`Mismatch with reference results at ${i}:`);
+            print(`\tExpected ${expected[i]}, got ${r}:`);
+            print(`\ttype=${fctxt.type}`);
+            print(`\turl=${fctxt.url}`);
+            print(`\tdocOrigin=${fctxt.getDocOrigin()}`);
         }
     }
     const t1 = self.performance.now();
     const dur = t1 - t0;
 
-    console.info(`Evaluated ${requests.length} requests in ${dur.toFixed(0)} ms`);
-    console.info(`\tAverage: ${(dur / requests.length).toFixed(3)} ms per request`);
+    print(`Evaluated ${requests.length} requests in ${dur.toFixed(0)} ms`);
+    print(`\tAverage: ${(dur / requests.length).toFixed(3)} ms per request`);
     if ( expected !== undefined ) {
-        console.info(`\tBlocked: ${expected.reduce((n,r)=>{return r===1?n+1:n;},0)}`);
-        console.info(`\tExcepted: ${expected.reduce((n,r)=>{return r===2?n+1:n;},0)}`);
+        print(`\tBlocked: ${expected.reduce((n,r)=>{return r===1?n+1:n;},0)}`);
+        print(`\tExcepted: ${expected.reduce((n,r)=>{return r===2?n+1:n;},0)}`);
     }
     if ( recorded !== undefined ) {
         vAPI.localStorage.setItem(

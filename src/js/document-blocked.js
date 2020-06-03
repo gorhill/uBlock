@@ -194,10 +194,12 @@ uDom.nodeFromId('why').textContent = details.fs;
         );
     });
 
-    uDom.nodeFromId('theURL').classList.toggle(
-        'collapsed',
-        vAPI.localStorage.getItem('document-blocked-expand-url') !== 'true'
-    );
+    vAPI.localStorage.getItemAsync('document-blocked-expand-url').then(value => {
+        uDom.nodeFromId('theURL').classList.toggle(
+            'collapsed',
+            value !== 'true' && value !== true
+        );
+    });
 })();
 
 /******************************************************************************/

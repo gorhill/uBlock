@@ -4,191 +4,191 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Konečně efektivní blokovač. Nezatěžuje CPU a paměť.",
+    "message": "Finally, an efficient blocker. Easy on CPU and memory.",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
-    "message": "uBlock₀ — Ovládací panel",
+    "message": "uBlock₀ — Tablèu de bòrd",
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Varování! Máte neuložené změny",
+    "message": "Atencion ! Avètz de modificacions pas enregistradas",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Zůstat",
+    "message": "Demorar",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Ignorovat",
+    "message": "Ignorar",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
-    "message": "Nastavení",
+    "message": "Paramètres",
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Filtry třetích stran",
+    "message": "Listas de filtre",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
-    "message": "Vaše filtry",
+    "message": "Mos filtres",
     "description": "appears as tab name in dashboard"
   },
   "rulesPageName": {
-    "message": "Vaše pravidla",
+    "message": "Mas règlas",
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Povolené domény",
+    "message": "Lista blanca",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "Zkratky",
+    "message": "Acorchis",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
-    "message": "uBlock₀ — Protokol požadavků",
+    "message": "uBlock₀ — Jornals d’eveniments",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
-    "message": "O rozšíření",
+    "message": "A prepaus",
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
-    "message": "uBlock₀ — Prohlížeč zdrojů",
+    "message": "uBlock₀ — Visualizaira d’elements",
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
-    "message": "Pokročilá nastavení",
+    "message": "Paramètres avançats",
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Kliknutí: trvale zakázat uBlock₀ pro celý tento web.\n\nCtrl+kliknutí: zakázat uBlock₀ pouze pro tuto stránku.",
+    "message": "Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page.",
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Kliknutí: trvale zakázat uBlock₀ pro celý tento web.\n\nCtrl+kliknutí: zakázat uBlock₀ pouze pro tuto stránku.",
+    "message": "Click to disable uBlock₀ for this site.\n\nCtrl+click to disable uBlock₀ only on this page.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Kliknutím povolíte uBlock₀ pro tento web.",
+    "message": "Click to enable uBlock₀ for this site.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
-    "message": "zablokované požadavky",
+    "message": "requèstas blocadas",
     "description": "English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt": {
-    "message": "na této stránce",
+    "message": "sus aquesta pagina",
     "description": "English: on this page"
   },
   "popupBlockedStats": {
-    "message": "{{count}} neboli {{percent}} %",
+    "message": "{{count}} o {{percent}}%",
     "description": "Example: 15 or 13%"
   },
   "popupBlockedSinceInstallPrompt": {
-    "message": "od instalace",
+    "message": "dempuèi l’installacion",
     "description": "English: since install"
   },
   "popupOr": {
-    "message": "neboli",
+    "message": "o",
     "description": "English: or"
   },
   "popupBlockedOnThisPage_v2": {
-    "message": "Zablokováno na této stránce",
+    "message": "Blocats sus aquesta pagina",
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "Zablokováno od instalace",
+    "message": "Blocats dempuèi l’installacion",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
-    "message": "Počet připojených domén",
+    "message": "Domenis connectats",
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
-    "message": "Otevřít ovládací panel",
+    "message": "Dobrir lo tablèu de bòrd",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Zapnout režim likvidace prvků",
+    "message": "Enter element zapper mode",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Zapnout režim výběru prvků",
+    "message": "Enter element picker mode",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "Otevřít protokol požadavků",
+    "message": "Dobrir la visualizaira d’eveniments",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Přepnout blokování všech vyskakovacích oken na tomto webu",
+    "message": "Toggle the blocking of all popups for this site",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Kliknutím zablokujete všechny popupy pro tento web",
+    "message": "Click to block all popups on this site",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Kliknutím vypnete blokování všech popupů pro tento web",
+    "message": "Click to no longer block all popups on this site",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Přepnout blokování velkých multimediálních prvků na tomto webu",
+    "message": "Toggle the blocking of large media elements for this site",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Kliknutím zablokujete velké multimediální prvky na tomto webu",
+    "message": "Click to block large media elements on this site",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Kliknutím vypnete blokování velkých multimediálních prvků na tomto webu",
+    "message": "Click to no longer block large media elements on this site",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Přepnout kosmetické filtrování na tomto webu",
+    "message": "Toggle cosmetic filtering for this site",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Kliknutím zakážete kosmetické filtrování na tomto webu",
+    "message": "Click to disable cosmetic filtering on this site",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Kliknutím povolíte kosmetické filtrování na tomto webu",
+    "message": "Click to enable cosmetic filtering on this site",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Přepnout blokování vzdálených fontů pro tento web",
+    "message": "Toggle the blocking of remote fonts for this site",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Kliknutím zablokujete externí/vzdálené fonty na tomto webu",
+    "message": "Click to block remote fonts on this site",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Kliknutím vypnete blokování externích/vzdálených fontů na tomto webu",
+    "message": "Click to no longer block remote fonts on this site",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Kliknutím zakážete JavaScript na této stránce",
+    "message": "Click to disable JavaScript on this site",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Kliknutím znovu povolíte JavaScript na této stránce",
+    "message": "Click to no longer disable JavaScript on this site",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoLargeMedia_v2": {
-    "message": "Velké multimediální prvky",
+    "message": "Large media elements",
     "description": "Tip for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
-    "message": "Kosmetické filtrování",
+    "message": "Cosmetic filtering",
     "description": "Tip for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
-    "message": "Vzdálená písma",
+    "message": "Poliças distantas",
     "description": "Tip for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
@@ -196,375 +196,375 @@
     "description": "Tip for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
-    "message": "Více",
+    "message": "Mai",
     "description": "Label to be used to toggle overview panel"
   },
   "popupTipGlobalRules": {
-    "message": "Globální pravidla: tento sloupec slouží pro pravidla, která platí pro všechny weby.",
+    "message": "Global rules: this column is for rules which apply to all sites.",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Lokální pravidla: tento sloupec slouží pro pravidla, která platí pouze pro aktuální web.\nLokální pravidla přepisují globální pravidla.",
+    "message": "Local rules: this column is for rules which apply to the current site only.\nLocal rules override global rules.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
-    "message": "Kliknutím natrvalo uložíte provedené změny.",
+    "message": "Click to make your changes permanent.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Kliknutím zrušíte provedené změny.",
+    "message": "Click to revert your changes.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {
-    "message": "vše",
+    "message": "all",
     "description": ""
   },
   "popupImageRulePrompt": {
-    "message": "obrázky",
+    "message": "imatges",
     "description": ""
   },
   "popup3pAnyRulePrompt": {
-    "message": "z třetí strany",
+    "message": "3rd-party",
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "CSS/obrázky třetích stran",
+    "message": "3rd-party CSS/images",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
-    "message": "řádkové skripty",
+    "message": "inline scripts",
     "description": ""
   },
   "popup1pScriptRulePrompt": {
-    "message": "skripty první strany",
+    "message": "1st-party scripts",
     "description": ""
   },
   "popup3pScriptRulePrompt": {
-    "message": "skripty třetích stran",
+    "message": "3rd-party scripts",
     "description": ""
   },
   "popup3pFrameRulePrompt": {
-    "message": "rámce třetích stran",
+    "message": "3rd-party frames",
     "description": ""
   },
   "popupHitDomainCountPrompt": {
-    "message": "domén připojeno",
+    "message": "domains connected",
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
-    "message": "{{count}} z {{total}}",
+    "message": "{{count}} out of {{total}}",
     "description": "appears in popup"
   },
   "pickerCreate": {
-    "message": "Vytvořit",
+    "message": "Create",
     "description": "English: Create"
   },
   "pickerPick": {
-    "message": "Vybrat",
+    "message": "Pick",
     "description": "English: Pick"
   },
   "pickerQuit": {
-    "message": "Ukončit",
+    "message": "Quitar",
     "description": "English: Quit"
   },
   "pickerPreview": {
-    "message": "Náhled",
+    "message": "Preview",
     "description": "Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters": {
-    "message": "Síťové filtry",
+    "message": "Network filters",
     "description": "English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters": {
-    "message": "Kosmetické filtry",
+    "message": "Cosmetic filters",
     "description": "English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint": {
-    "message": "Kliknutí, Ctrl+Kliknutí",
+    "message": "Click, Ctrl-click",
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Blokovat prvek...",
+    "message": "Block element...",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
-    "message": "Skrýt zástupné objekty zablokovaných prvků",
+    "message": "Hide placeholders of blocked elements",
     "description": "English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt": {
-    "message": "Zobrazit počet blokovaných požadavků u ikony",
+    "message": "Show the number of blocked requests on the icon",
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "Skrýt nápovědu při najetí",
+    "message": "Disable tooltips",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
-    "message": "Využít kontextovou nabídku kde je to možné",
+    "message": "Make use of context menu where appropriate",
     "description": "English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt": {
-    "message": "Styl pro barvoslepé",
+    "message": "Color-blind friendly",
     "description": "English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt": {
-    "message": "Povolit podporu cloudového úložiště",
+    "message": "Enable cloud storage support",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Jsem pokročilý uživatel (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>nutno přečíst</a>)",
+    "message": "I am an advanced user (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>required reading</a>)",
     "description": ""
   },
   "settingsAdvancedUserSettings": {
-    "message": "pokročilá nastavení",
+    "message": "advanced settings",
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Zakázat přednačítání (zakáže jakékoliv spojení pro zablokované síťové požadavky)",
+    "message": "Disable pre-fetching (to prevent any connection for blocked network requests)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
-    "message": "Vypnout auditování hypertextových odkazů",
+    "message": "Disable hyperlink auditing",
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
-    "message": "Předejít úniku lokálních IP adres přes WebRTC",
+    "message": "Prevent WebRTC from leaking local IP addresses",
     "description": "English: "
   },
   "settingPerSiteSwitchGroup": {
-    "message": "Výchozí chování",
+    "message": "Default behavior",
     "description": ""
   },
   "settingPerSiteSwitchGroupSynopsis": {
-    "message": "Tato výchozí chování mohou být přepsána u jednotlivých webů",
+    "message": "These default behaviors can be overridden on a per-site basis",
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "Zakázat kosmetické filtrování",
+    "message": "Disable cosmetic filtering",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Blokovat multimediální prvky větší než {{input}} kB",
+    "message": "Block media elements larger than {{input}} KB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
-    "message": "Blokovat externí fonty",
+    "message": "Block remote fonts",
     "description": ""
   },
   "settingsNoScriptingPrompt": {
-    "message": "Zakázat JavaScript",
+    "message": "Disable JavaScript",
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
-    "message": "Blokovat CSP reporty",
+    "message": "Block CSP reports",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsStorageUsed": {
-    "message": "Prostoru využito: {{value}} bajtů",
+    "message": "Storage used: {{value}} bytes",
     "description": "English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt": {
-    "message": "Poslední obnova:",
+    "message": "Last restore:",
     "description": "English: Last restore:"
   },
   "settingsLastBackupPrompt": {
-    "message": "Poslední záloha:",
+    "message": "Last backup:",
     "description": "English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt": {
-    "message": "{{netFilterCount}} síťových filtrů ＋ {{cosmeticFilterCount}} kosmetických filtrů z:",
+    "message": "{{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:",
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
-    "message": "{{used}} použito z celkových {{total}}",
+    "message": "{{used}} used out of {{total}}",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
-    "message": "Automaticky aktualizovat seznamy filtrů.",
+    "message": "Auto-update filter lists",
     "description": "A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow": {
-    "message": "Aktualizovat nyní",
+    "message": "Metre a jorn ara",
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll": {
-    "message": "Vyčistit celou mezipaměť",
+    "message": "Purge all caches",
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
-    "message": "Zpracovat a použít kosmetické filtry.",
+    "message": "Parse and enforce cosmetic filters",
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Tímto povolíte zpracovávání a používání <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">&ldquo;element hiding&rdquo; filtrů kompatibilních s Adblockem Plus</a>. Tyto filtry jsou převážně kosmetické. Skrývají prvky webových stránek, které jsou vizuálně na obtíž a nemohou být zablokovány síťovým požadavkem.</p><p>Povolení této funkce zvětšuje stopy uBlocku₀ v paměti.</p>",
+    "message": "<p>This option enables the parsing and enforcing of <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters</a>. These filters are essentially cosmetic, they serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the net request-based filtering engine.</p><p>Enabling this feature increases uBlock₀'s memory footprint.</p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
-    "message": "Ignorovat obecné kosmetické filtry",
+    "message": "Ignore generic cosmetic filters",
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Obecné kosmetické filtry jsou kosmetické filtry vytvořené k použití se všemi webovými stránkami.<p>Přestože je uBlock₀ používá velmi efektivně, kosmetické filtry mohou přispět ke zvýšenému využití operační paměti a procesoru na některých webech, zejména těch velkých a složitých.<p>Zapnutím této volby se lze vyhnout nadbytečnému zatížení paměti i procesoru vyvolaném použitím obecných kosmetických filtrů a rovněž snížit využití paměti samotným uBlock₀ rozšířením.<p>Na méně výkonných zařízeních je doporučeno tuto volbu povolit.",
+    "message": "<p>Generic cosmetic filters are those cosmetic filters which are meant to apply on all web sites.<p>Though handled efficiently by uBlock₀, generic cosmetic filters may still contribute measurable memory and CPU overhead on some web pages, especially for large and long-lived ones.<p>Enabling this option will eliminate the memory and CPU overhead added to web pages as a result of handling generic cosmetic filters, and also lower the memory footprint of uBlock₀ itself.<p>It is recommended to enable this option on less powerful devices.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
-    "message": "Seznamy blokovaných hostitelů",
+    "message": "Lists of blocked hosts",
     "description": "English: Lists of blocked hosts"
   },
   "3pApplyChanges": {
-    "message": "Použít změny",
+    "message": "Apply changes",
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Zabudované",
+    "message": "Built-in",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
-    "message": "Reklamy",
+    "message": "Ads",
     "description": "English: Ads"
   },
   "3pGroupPrivacy": {
-    "message": "Soukromí",
+    "message": "Privacy",
     "description": "English: Privacy"
   },
   "3pGroupMalware": {
-    "message": "Malware domény",
+    "message": "Malware domains",
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {
-    "message": "Dotěrnosti",
+    "message": "Annoyances",
     "description": "The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose": {
-    "message": "Víceúčelové",
+    "message": "Multipurpose",
     "description": "English: Multipurpose"
   },
   "3pGroupRegions": {
-    "message": "Regionální, jazykové",
+    "message": "Regions, lengas",
     "description": "English: Regions, languages"
   },
   "3pGroupCustom": {
-    "message": "Vlastní",
+    "message": "Custom",
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Importovat…",
+    "message": "Import...",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "Jedna URL adresa na řádek. Neplatné URL adresy budou tiše ignorovány.",
+    "message": "One URL per line. Invalid URLs will be silently ignored.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
-    "message": "Zastaralé.",
+    "message": "Out of date.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "Poslední aktualizace: {{ago}}.\nKliknutím vynutíte aktualizaci.",
+    "message": "Last update: {{ago}}.\nClick to force an update.",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Aktualizování...",
+    "message": "Mesa a jorn...",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
-    "message": "Chyba sítě znemožnila aktualizaci tohoto zdroje.",
+    "message": "A network error prevented the resource from being updated.",
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Jeden filtr na řádek. Filtr může být prostý název hostitele nebo filtr kompatibilní s Adblock Plus. Řádky začínající vykřičníkem <code>!</code> budou ignorovány.",
+    "message": "One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with <code>!</code> will be ignored.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
-    "message": "Importovat a připojit",
+    "message": "Import and append",
     "description": "English: Import and append"
   },
   "1pExport": {
-    "message": "Exportovat",
+    "message": "Export",
     "description": "English: Export"
   },
   "1pExportFilename": {
-    "message": "ublock-me-vlastni-filtry_{{datetime}}.txt",
+    "message": "my-ublock-static-filters_{{datetime}}.txt",
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges": {
-    "message": "Použít změny",
+    "message": "Apply changes",
     "description": "English: Apply changes"
   },
   "rulesPermanentHeader": {
-    "message": "Permanentní pravidla",
+    "message": "Permanent rules",
     "description": "header"
   },
   "rulesTemporaryHeader": {
-    "message": "Dočasná pravidla",
+    "message": "Temporary rules",
     "description": "header"
   },
   "rulesRevert": {
-    "message": "Vrátit",
+    "message": "Revert",
     "description": "This will remove all temporary rules"
   },
   "rulesCommit": {
-    "message": "Potvrdit",
+    "message": "Commit",
     "description": "This will persist temporary rules"
   },
   "rulesEdit": {
-    "message": "Upravit",
+    "message": "Edit",
     "description": "Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave": {
-    "message": "Uložit",
+    "message": "Enregistrar",
     "description": "Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard": {
-    "message": "Zrušit",
+    "message": "Anullar",
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Načíst ze souboru…",
+    "message": "Import from file...",
     "description": ""
   },
   "rulesExport": {
-    "message": "Exportovat do souboru",
+    "message": "Export to file",
     "description": ""
   },
   "rulesDefaultFileName": {
-    "message": "ublock-ma-dynamicka-pravidla_{{datetime}}.txt",
+    "message": "my-ublock-dynamic-rules_{{datetime}}.txt",
     "description": "default file name to use"
   },
   "rulesHint": {
-    "message": "Seznam vašich pravidel pro dynamické filtrování.",
+    "message": "List of your dynamic filtering rules.",
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
-    "message": "Syntaxe pravidel: <code>zdroj destinace typ akce</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>kompletní dokumentace</a>).",
+    "message": "Rule syntax: <code>source destination type action</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>full documentation</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Pokyny whitelistu určují, pro které webové stránky bude uBlock Origin zakázán. Jedna položka na řádek. Neplatné pokyny budou tiše ignorovány a zakomentovány.",
+    "message": "The whitelist directives dictate on which web pages uBlock Origin should be disabled. One entry per line. Invalid directives will be silently ignored and commented out.",
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
-    "message": "Importovat a připojit",
+    "message": "Import and append",
     "description": "English: Import and append"
   },
   "whitelistExport": {
-    "message": "Exportovat",
+    "message": "Export",
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "ublock-muj-whitelist_{{datetime}}.txt",
+    "message": "my-ublock-whitelist_{{datetime}}.txt",
     "description": "English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply": {
-    "message": "Použít změny",
+    "message": "Apply changes",
     "description": "English: Apply changes"
   },
   "logRequestsHeaderType": {
-    "message": "Typ",
+    "message": "Tipe",
     "description": "English: Type"
   },
   "logRequestsHeaderDomain": {
-    "message": "Doména",
+    "message": "Domeni",
     "description": "English: Domain"
   },
   "logRequestsHeaderURL": {
@@ -572,63 +572,63 @@
     "description": "English: URL"
   },
   "logRequestsHeaderFilter": {
-    "message": "Filtr",
+    "message": "Filter",
     "description": "English: Filter"
   },
   "logAll": {
-    "message": "Všechny stránky",
+    "message": "All",
     "description": "Appears in the logger's tab selector"
   },
   "logBehindTheScene": {
-    "message": "Za oponou",
+    "message": "Tabless",
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
-    "message": "Aktivní list",
+    "message": "Current tab",
     "description": "Appears in the logger's tab selector"
   },
   "loggerReloadTip": {
-    "message": "Znovu načíst obsah listu",
+    "message": "Reload the tab content",
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
-    "message": "Přepnout DOM inspektor",
+    "message": "Toggle the DOM inspector",
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "Přepnout vyskakovací panel",
+    "message": "Toggle the popup panel",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
-    "message": "uBlock Origin wiki: Logger",
+    "message": "uBlock Origin wiki: The logger",
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
-    "message": "Vyčistit logger",
+    "message": "Clear logger",
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
-    "message": "Zastavit logování (ignorovat všechny příchozí údaje)",
+    "message": "Pause logger (discard all incoming data)",
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {
-    "message": "Pokračovat v logování",
+    "message": "Unpause logger",
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "Přepnout filtrování loggeru",
+    "message": "Toggle logger filtering",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
-    "message": "filtrovat obsah loggeru",
+    "message": "filter logger content",
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
-    "message": "Možnosti filtrování loggeru",
+    "message": "Logger filtering options",
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {
-    "message": "Není",
+    "message": "Not",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinEventful": {
@@ -636,51 +636,51 @@
     "description": "A keyword in the built-in row filtering expression: all items corresponding to uBO doing something (blocked, allowed, redirected, etc.)"
   },
   "loggerRowFiltererBuiltinBlocked": {
-    "message": "blokováno",
+    "message": "blocked",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinAllowed": {
-    "message": "povoleno",
+    "message": "allowed",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
-    "message": "vlastní doména",
+    "message": "1st-party",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin3p": {
-    "message": "třetí strany",
+    "message": "3rd-party",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerEntryDetailsHeader": {
-    "message": "Podrobnosti",
+    "message": "Details",
     "description": "Small header to identify the 'Details' pane for a specific logger entry"
   },
   "loggerEntryDetailsFilter": {
-    "message": "Filtr",
+    "message": "Filter",
     "description": "Label to identify a filter field"
   },
   "loggerEntryDetailsFilterList": {
-    "message": "Seznam filtrů",
+    "message": "Filter list",
     "description": "Label to identify a filter list field"
   },
   "loggerEntryDetailsRule": {
-    "message": "Pravidlo",
+    "message": "Rule",
     "description": "Label to identify a rule field"
   },
   "loggerEntryDetailsContext": {
-    "message": "Kontext",
+    "message": "Context",
     "description": "Label to identify a context field (typically a hostname)"
   },
   "loggerEntryDetailsRootContext": {
-    "message": "Kořenový kontext",
+    "message": "Root context",
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
-    "message": "Strana",
+    "message": "Partyness",
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
-    "message": "Typ",
+    "message": "Tipe",
     "description": "Label to identify the type of an entry"
   },
   "loggerEntryDetailsURL": {
@@ -688,115 +688,115 @@
     "description": "Label to identify the URL of an entry"
   },
   "loggerURLFilteringHeader": {
-    "message": "Dynamické filtrování URL adres",
+    "message": "URL rule",
     "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
-    "message": "Kontext:",
+    "message": "Context:",
     "description": "Label for the context selector"
   },
   "loggerURLFilteringTypeLabel": {
-    "message": "Typ:",
+    "message": "Type:",
     "description": "Label for the type selector"
   },
   "loggerStaticFilteringHeader": {
-    "message": "Statický filtr",
+    "message": "Static filter",
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "{{action}} síťové požadavky {{type}} {{br}}jejichž URL adresa se shoduje s {{url}} {{br}}a pochází {{origin}},{{br}}{{importance}} shodný výjimkový filtr.",
+    "message": "{{action}} network requests of {{type}} {{br}}which URL address matches {{url}} {{br}}and which originates {{origin}},{{br}}{{importance}} there is a matching exception filter.",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
-    "message": "Blokovat",
+    "message": "Blocar",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAllow": {
-    "message": "Povolit",
+    "message": "Autorizar",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType": {
-    "message": "typu “{{type}}”",
+    "message": "type “{{type}}”",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyType": {
-    "message": "jakéhokoliv typu",
+    "message": "any type",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin": {
-    "message": "z “{{origin}}”",
+    "message": "from “{{origin}}”",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin": {
-    "message": "odkudkoliv",
+    "message": "from anywhere",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant": {
-    "message": "pokud neexistuje",
+    "message": "except when",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartImportant": {
-    "message": "i když existuje",
+    "message": "even if",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Statický filtr <code>{{filter}}</code> nalezen v seznamech:",
+    "message": "Static filter <code>{{filter}}</code> found in:",
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Statický filtr <code>{{filter}}</code> nebyl nalezen v žádném aktuálně povoleném seznamu filtrů",
+    "message": "Static filter could not be found in any of the currently enabled filter lists",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
-    "message": "Záznamy logu, které nesplní všechny uvedené podmínky, budou automaticky zahozeny:",
+    "message": "Logger entries which do not fulfill all three conditions below will be automatically discarded:",
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
-    "message": "Zachovat záznamy z posledních {{input}} minut",
+    "message": "Preserve entries from the last {{input}} minutes",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "Zachovat nejvýše {{input}} načtení stránky pro list",
+    "message": "Preserve at most {{input}} page loads per tab",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
-    "message": "Zachovat nejvýše {{input}} záznamů pro list",
+    "message": "Preserve at most {{input}} entries per tab",
     "description": "A logger setting"
   },
   "loggerSettingPerEntryLineCount": {
-    "message": "Použít {{input}} řádků pro jeden záznam v režimu svislého rozbalení",
+    "message": "Use {{input}} lines per entry in vertically expanded mode",
     "description": "A logger setting"
   },
   "loggerSettingHideColumnsPrompt": {
-    "message": "Skrýt sloupce:",
+    "message": "Hide columns:",
     "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
   },
   "loggerSettingHideColumnTime": {
-    "message": "{{input}} Čas",
+    "message": "{{input}} Time",
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
-    "message": "{{input}} Filtr/pravidlo",
+    "message": "{{input}} Filter/rule",
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
-    "message": "{{input}} Kontext",
+    "message": "{{input}} Context",
     "description": "A label for the context column"
   },
   "loggerSettingHideColumnPartyness": {
-    "message": "{{input}} strana",
+    "message": "{{input}} Partyness",
     "description": "A label for the partyness column"
   },
   "loggerExportFormatList": {
-    "message": "Seznam",
+    "message": "List",
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportFormatTable": {
-    "message": "Tabulka",
+    "message": "Table",
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportEncodePlain": {
-    "message": "Prostý text",
+    "message": "Plain",
     "description": "Label for radio-button to pick export text format"
   },
   "loggerExportEncodeMarkdown": {
@@ -804,7 +804,7 @@
     "description": "Label for radio-button to pick export text format"
   },
   "aboutChangelog": {
-    "message": "Přehled změn",
+    "message": "Changelog",
     "description": ""
   },
   "aboutWiki": {
@@ -812,143 +812,143 @@
     "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
-    "message": "Podpora",
+    "message": "Support",
     "description": "A link for where to get support"
   },
   "aboutIssues": {
-    "message": "Evidence problémů",
+    "message": "Issue tracker",
     "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
-    "message": "Zdrojový kód (GPLv3)",
+    "message": "Source code (GPLv3)",
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Přispěvatelé",
+    "message": "Contributors",
     "description": "English: Contributors"
   },
   "aboutDependencies": {
-    "message": "Externí závislosti (kompatibilní s GPLv3):",
+    "message": "External dependencies (GPLv3-compatible):",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "Zálohovat do souboru...",
+    "message": "Back up to file",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
-    "message": "ublock-moje-zaloha_{{datetime}}.txt",
+    "message": "my-ublock-backup_{{datetime}}.txt",
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Obnovit ze souboru...",
+    "message": "Restore from file...",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Obnovit výchozí nastavení...",
+    "message": "Reset to default settings...",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
-    "message": "Všechna nastavení budou přepsána těmi zálohovanými {{time}} a uBlock₀ se restartuje.\n\nPřepsat všechna existující nastavení zálohovanými daty?",
+    "message": "All your settings will be overwritten using data backed up on {{time}}, and uBlock₀ will restart.\n\nOverwrite all existing settings using backed up data?",
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {
-    "message": "Data nemohla být načtena nebo jsou neplatná",
+    "message": "The data could not be read or is invalid",
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
-    "message": "Všechna nastavení budou smazána a uBlock₀ se restaruje.\n\nObnovit uBlock₀ do továrního nastavení?",
+    "message": "All your settings will be removed, and uBlock₀ will restart.\n\nReset uBlock₀ to factory settings?",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
-    "message": "Chyba sítě: {{msg}}",
+    "message": "Network error: {{msg}}",
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: Přidat následující URL adresu do seznamů vlastních filtrů?\n\nNázev: \"{{title}}\"\nURL: {{url}}",
+    "message": "uBlock₀: Add the following URL to your custom filter lists?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
     "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo": {
-    "message": "před minutou",
+    "message": "a minute ago",
     "description": "English: a minute ago"
   },
   "elapsedManyMinutesAgo": {
-    "message": "před {{value}} minutami",
+    "message": "{{value}} minutes ago",
     "description": "English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo": {
-    "message": "před hodinou",
+    "message": "an hour ago",
     "description": "English: an hour ago"
   },
   "elapsedManyHoursAgo": {
-    "message": "před {{value}} hodinami",
+    "message": "{{value}} hours ago",
     "description": "English: {{value}} hours ago"
   },
   "elapsedOneDayAgo": {
-    "message": "včera",
+    "message": "a day ago",
     "description": "English: a day ago"
   },
   "elapsedManyDaysAgo": {
-    "message": "před {{value}} dny",
+    "message": "{{value}} days ago",
     "description": "English: {{value}} days ago"
   },
   "showDashboardButton": {
-    "message": "Zobrazit řídící panel",
+    "message": "Show Dashboard",
     "description": "Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
-    "message": "Zobrazit Zaznamenávač",
+    "message": "Show Logger",
     "description": "Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
-    "message": "vypnutý",
+    "message": "off",
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1": {
-    "message": "uBlock Origin zabránil následující stránce v načtení:",
+    "message": "uBlock Origin has prevented the following page from loading:",
     "description": "English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2": {
-    "message": "Kvůli následujícímu filtru",
+    "message": "Because of the following filter",
     "description": "English: Because of the following filter"
   },
   "docblockedNoParamsPrompt": {
-    "message": "bez parametrů",
+    "message": "without parameters",
     "description": "label to be used for the parameter-less URL: https://cloud.githubusercontent.com/assets/585534/9832014/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {
-    "message": "Nalezeno v:",
+    "message": "Found in:",
     "description": "English: List of filter list names follows"
   },
   "docblockedBack": {
-    "message": "Jít zpět",
+    "message": "Go back",
     "description": "English: Go back"
   },
   "docblockedClose": {
-    "message": "Zavřít toto okno",
+    "message": "Close this window",
     "description": "English: Close this window"
   },
   "docblockedProceed": {
-    "message": "Zakázat striktní blokování pro {{hostname}}",
+    "message": "Disable strict blocking for {{hostname}}",
     "description": "English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary": {
-    "message": "Dočasně",
+    "message": "Temporarily",
     "description": "English: Temporarily"
   },
   "docblockedDisablePermanent": {
-    "message": "Trvale",
+    "message": "Permanently",
     "description": "English: Permanently"
   },
   "cloudPush": {
-    "message": "Exportovat do cloudového úložiště",
+    "message": "Export to cloud storage",
     "description": "tooltip"
   },
   "cloudPull": {
-    "message": "Importovat z cloudového úložiště",
+    "message": "Import from cloud storage",
     "description": "tooltip"
   },
   "cloudPullAndMerge": {
-    "message": "Importovat z cloudového úložiště a sloučit se současným nastavením",
+    "message": "Import from cloud storage and merge with current settings",
     "description": "tooltip"
   },
   "cloudNoData": {
@@ -956,51 +956,51 @@
     "description": ""
   },
   "cloudDeviceNamePrompt": {
-    "message": "Název tohoto zařízení:",
+    "message": "This device name:",
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
-    "message": "Pozor! Tato pokročilá nastavení měníte na vlastní nebezpečí.",
+    "message": "Warning! Change these advanced settings at your own risk.",
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {
-    "message": "Odeslat",
+    "message": "Submit",
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Použít změny",
+    "message": "Apply changes",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
-    "message": "Vrátit",
+    "message": "Revert",
     "description": "for generic 'Revert' buttons"
   },
   "genericBytes": {
-    "message": "bajtů",
+    "message": "bytes",
     "description": ""
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
-    "message": "Dočasně povolit velké multimediální prvky",
+    "message": "Temporarily allow large media elements",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Stiskněte zkratku",
+    "message": "Type a shortcut",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "Přepnout uzamčení posuvu",
+    "message": "Toggle locked scrolling",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
-    "message": "Kopírovat do schránky",
+    "message": "Copy to clipboard",
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "toggleBlockingProfile": {
-    "message": "Přepnout blokovací profil",
+    "message": "Toggle blocking profile",
     "description": "Label for keyboard shortcut used to toggle blocking profile"
   },
   "relaxBlockingMode": {
-    "message": "Uvolnit režim blokování",
+    "message": "Relax blocking mode",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "dummy": {

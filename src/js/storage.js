@@ -130,19 +130,20 @@
         }
     }
     vAPI.storage.set(bin);
-    this.saveImmediateHiddenSettings();
 };
 
 self.addEventListener('hiddenSettingsChanged', ( ) => {
-    self.log.verbosity = µBlock.hiddenSettings.consoleLogLevel;
+    const µbhs = µBlock.hiddenSettings;
+    self.log.verbosity = µbhs.consoleLogLevel;
     vAPI.net.setOptions({
-        cnameIgnoreList: µBlock.hiddenSettings.cnameIgnoreList,
-        cnameIgnore1stParty: µBlock.hiddenSettings.cnameIgnore1stParty,
-        cnameIgnoreExceptions: µBlock.hiddenSettings.cnameIgnoreExceptions,
-        cnameIgnoreRootDocument: µBlock.hiddenSettings.cnameIgnoreRootDocument,
-        cnameMaxTTL: µBlock.hiddenSettings.cnameMaxTTL,
-        cnameReplayFullURL: µBlock.hiddenSettings.cnameReplayFullURL,
-        cnameUncloak: µBlock.hiddenSettings.cnameUncloak,
+        cnameIgnoreList: µbhs.cnameIgnoreList,
+        cnameIgnore1stParty: µbhs.cnameIgnore1stParty,
+        cnameIgnoreExceptions: µbhs.cnameIgnoreExceptions,
+        cnameIgnoreRootDocument: µbhs.cnameIgnoreRootDocument,
+        cnameMaxTTL: µbhs.cnameMaxTTL,
+        cnameReplayFullURL: µbhs.cnameReplayFullURL,
+        cnameUncloak: µbhs.cnameUncloak,
+        cnameUncloakProxied: µbhs.cnameUncloakProxied,
     });
 });
 
@@ -188,33 +189,6 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         out.push(key + ' ' + this.hiddenSettings[key]);
     }
     return out.join('\n');
-};
-
-/******************************************************************************/
-
-// These settings must be available immediately on startup, without delay
-// through the vAPI.localStorage. Add/remove settings as needed.
-
-µBlock.saveImmediateHiddenSettings = function() {
-    const props = [
-        'consoleLogLevel',
-        'disableWebAssembly',
-        'suspendTabsUntilReady',
-    ];
-    const toSave = {};
-    for ( const prop of props ) {
-        if ( this.hiddenSettings[prop] !== this.hiddenSettingsDefault[prop] ) {
-            toSave[prop] = this.hiddenSettings[prop];
-        }
-    }
-    if ( Object.keys(toSave).length !== 0 ) {
-        vAPI.localStorage.setItem(
-            'immediateHiddenSettings',
-            JSON.stringify(toSave)
-        );
-    } else {
-        vAPI.localStorage.removeItem('immediateHiddenSettings');
-    }
 };
 
 /******************************************************************************/
@@ -636,8 +610,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 µBlock.loadFilterLists = (( ) => {
     const loadedListKeys = [];
     let loadingPromise;
-
-    const t0 = Date.now();
+    let t0 = 0;
 
     const onDone = function() {
         log.info(`loadFilterLists() took ${Date.now()-t0} ms`);
@@ -716,6 +689,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
     return function() {
         if ( loadingPromise instanceof Promise === false ) {
+            t0 = Date.now();
             loadedListKeys.length = 0;
             loadingPromise = Promise.all([
                 this.getAvailableLists().then(lists =>
@@ -839,11 +813,13 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     const lineIter = new this.LineIterator(this.processDirectives(rawText));
 
     while ( lineIter.eot() === false ) {
-        // rhill 2014-04-18: The trim is important here, as without it there
-        // could be a lingering `\r` which would cause problems in the
-        // following parsing code.
         let line = lineIter.next().trim();
         if ( line.length === 0 ) { continue; }
+
+        while ( line.endsWith(' \\') ) {
+            if ( lineIter.peek(4) !== '    ' ) { break; }
+            line = line.slice(0, -2).trim() + lineIter.next().trim();
+        }
 
         // Strip comments
         const c = line.charAt(0);
@@ -1060,7 +1036,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 /******************************************************************************/
 
 µBlock.loadPublicSuffixList = async function() {
-    if ( this.hiddenSettings.disableWebAssembly === false ) {
+    if ( this.hiddenSettings.disableWebAssembly !== true ) {
         publicSuffixList.enableWASM();
     }
 

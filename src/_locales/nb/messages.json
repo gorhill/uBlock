@@ -96,15 +96,15 @@
     "description": "English: or"
   },
   "popupBlockedOnThisPage_v2": {
-    "message": "Blocked on this page",
+    "message": "Blokkert på denne siden",
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "Blocked since install",
+    "message": "Blokkert siden installering",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
-    "message": "Domains connected",
+    "message": "Domener tilkoblet",
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
@@ -180,15 +180,15 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoLargeMedia_v2": {
-    "message": "Large media elements",
+    "message": "Store mediaelementer",
     "description": "Tip for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
-    "message": "Cosmetic filtering",
+    "message": "Kosmetisk filtrering",
     "description": "Tip for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
-    "message": "Remote fonts",
+    "message": "Eksterne skrifttyper",
     "description": "Tip for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
@@ -196,7 +196,7 @@
     "description": "Tip for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
-    "message": "More",
+    "message": "Mer",
     "description": "Label to be used to toggle overview panel"
   },
   "popupTipGlobalRules": {
@@ -744,7 +744,7 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Statisk filter <code>{{filter}}</code> ble ikke funnet i noen av filterlistene som er aktiverte nå",
+    "message": "Statisk filter ble ikke funnet i noen av filterlistene som er aktiverte nå",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {

@@ -15,10 +15,6 @@ fi
 rm -rf $DES
 cp -R ./assets $DES/
 
-if [ -f ./tmp/requests.json.gz ]; then
-    gunzip -c ./tmp/requests.json.gz > $DES/requests.json
-fi
-
 mkdir $DES/thirdparties
 cp -R ../uAssets/thirdparties/easylist-downloads.adblockplus.org $DES/thirdparties/
 cp -R ../uAssets/thirdparties/mirror1.malwaredomains.com         $DES/thirdparties/

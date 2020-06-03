@@ -21,23 +21,69 @@
 
 (function() {
     'use strict';
-    let result = parseInt('{{1}}', 10);
-    result = isNaN(result) === false && result === 0;
-    let needle = '{{2}}';
-    if ( needle === '' || needle === '{{2}}' ) {
-        needle = '.?';
-    } else if ( /^\/.+\/$/.test(needle) ) {
-        needle = needle.slice(1,-1);
+    let arg1 = '{{1}}';
+    if ( arg1 === '{{1}}' ) { arg1 = ''; }
+    let arg2 = '{{2}}';
+    if ( arg2 === '{{2}}' ) { arg2 = ''; }
+    let arg3 = '{{3}}';
+    if ( arg3 === '{{3}}' ) { arg3 = ''; }
+    const log = arg3 !== ''
+        ? console.log.bind(console)
+        : ( ) => { };
+    const newSyntax = /^[01]?$/.test(arg1) === false;
+    let pattern = '';
+    let targetResult = true;
+    let autoRemoveAfter = -1;
+    if ( newSyntax ) {
+        pattern = arg1;
+        if ( pattern.startsWith('!') ) {
+            targetResult = false;
+            pattern = pattern.slice(1);
+        }
+        autoRemoveAfter = parseInt(arg2);
+        if ( isNaN(autoRemoveAfter) ) {
+            autoRemoveAfter = -1;
+        } 
     } else {
-        needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        pattern = arg2;
+        if ( arg1 === '0' ) {
+            targetResult = false;
+        }
     }
-    needle = new RegExp(needle);
+    if ( pattern === '' ) {
+        pattern = '.?';
+    } else if ( /^\/.+\/$/.test(pattern) ) {
+        pattern = pattern.slice(1,-1);
+    } else {
+        pattern = pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+    const rePattern = new RegExp(pattern);
     window.open = new Proxy(window.open, {
         apply: function(target, thisArg, args) {
+            log('window.open:', ...args);
             const url = args[0];
-            if ( needle.test(url) === result ) {
+            if ( rePattern.test(url) !== targetResult ) {
                 return target.apply(thisArg, args);
             }
+            if ( autoRemoveAfter < 0 ) { return null; }
+            const iframe = document.createElement('iframe');
+            iframe.src = url;
+            iframe.style.setProperty('display','none', 'important');
+            iframe.style.setProperty('height','1px', 'important');
+            iframe.style.setProperty('width','1px', 'important');
+            document.body.appendChild(iframe);
+            setTimeout(( ) => iframe.remove(), autoRemoveAfter * 1000);
+            if ( arg3 === '' ) { return iframe.contentWindow; }
+            return new Proxy(iframe.contentWindow, {
+                get: function(target, prop) {
+                    log('window.open / get', prop, '===', target[prop]);
+                    return target[prop];
+                },
+                set: function(target, prop, value) {
+                    log('window.open / set', prop, '=', value);
+                    target[prop] = value;
+                },
+            });
         }
     });
 })();

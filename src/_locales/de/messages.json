@@ -44,7 +44,7 @@
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "Tastaturkürzel",
+    "message": "Tastenkürzel",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -228,7 +228,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "CSS/Bilder von Drittseiten",
+    "message": "CSS/Bilder von Drittanbietern",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -596,7 +596,7 @@
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "Popup-Fenster umschalten",
+    "message": "Popup-Tafel umschalten",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
@@ -604,7 +604,7 @@
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
-    "message": "Protokollierung leeren",
+    "message": "Protokoll leeren",
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
@@ -636,7 +636,7 @@
     "description": "A keyword in the built-in row filtering expression: all items corresponding to uBO doing something (blocked, allowed, redirected, etc.)"
   },
   "loggerRowFiltererBuiltinBlocked": {
-    "message": "Gesperrt",
+    "message": "blockiert",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinAllowed": {
@@ -648,7 +648,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin3p": {
-    "message": "Ressourcen von Drittseiten",
+    "message": "Drittanbieter",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerEntryDetailsHeader": {
@@ -688,7 +688,7 @@
     "description": "Label to identify the URL of an entry"
   },
   "loggerURLFilteringHeader": {
-    "message": "Dynamische URL-Filter",
+    "message": "URL-Regeln",
     "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
@@ -756,11 +756,11 @@
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "Höchstens {{input}} Seitenladevorgänge pro Tab behalten",
+    "message": "Höchstens {{input}} Seitenladevorgänge pro Tab beibehalten",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
-    "message": "Höchstens {{input}} Einträge pro Tab behalten",
+    "message": "Höchstens {{input}} Einträge pro Tab beibehalten",
     "description": "A logger setting"
   },
   "loggerSettingPerEntryLineCount": {
@@ -1000,7 +1000,7 @@
     "description": "Label for keyboard shortcut used to toggle blocking profile"
   },
   "relaxBlockingMode": {
-    "message": "Entspannter Sperrmodus",
+    "message": "Lockere Blockiermodus",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "dummy": {

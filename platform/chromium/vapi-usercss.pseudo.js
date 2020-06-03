@@ -184,7 +184,7 @@ vAPI.DOMFilterer = class {
                     Array.from(this.specificSimpleHide).join(',\n');
             }
             for ( const node of this.addedNodes ) {
-                if ( node[vAPI.matchesProp](this.specificSimpleHideAggregated) ) {
+                if ( node.matches(this.specificSimpleHideAggregated) ) {
                     this.hideNode(node);
                 }
                 const nodes = node.querySelectorAll(this.specificSimpleHideAggregated);

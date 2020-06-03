@@ -275,6 +275,23 @@ try {
     await µb.loadHiddenSettings();
     log.info(`Hidden settings ready ${Date.now()-vAPI.T0} ms after launch`);
 
+    // By default network requests are always suspended, so we must
+    // unsuspend immediately if commanded by platform + advanced settings.
+    if (
+        vAPI.net.canSuspend() &&
+            µb.hiddenSettings.suspendTabsUntilReady === 'no' ||
+        vAPI.net.canSuspend() !== true &&
+            µb.hiddenSettings.suspendTabsUntilReady !== 'yes'
+    ) {
+        vAPI.net.unsuspend(true);
+    }
+
+    if ( µb.hiddenSettings.disableWebAssembly !== true ) {
+        µb.staticNetFilteringEngine.enableWASM().then(( ) => {
+            log.info(`WASM modules ready ${Date.now()-vAPI.T0} ms after launch`);
+        });
+    }
+
     const cacheBackend = await µb.cacheStorage.select(
         µb.hiddenSettings.cacheStorageAPI
     );
@@ -301,6 +318,9 @@ try {
 } catch (ex) {
     console.trace(ex);
 }
+
+// Prime the filtering engines before first use.
+µb.staticNetFilteringEngine.prime();
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/817#issuecomment-565730122
 //   Still try to load filter lists regardless of whether a serious error

@@ -282,7 +282,9 @@ body[dir="rtl"] #tooltip {
     flex-direction: column;
     justify-content: flex-end;
     padding-right: 2px;
+    white-space: normal;
     width: calc(100% - 4em);
+    word-break: break-word;
     }
 #firewallContainer > div.isCname > span:first-of-type {
     color: mediumblue;

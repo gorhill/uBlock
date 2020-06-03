@@ -453,7 +453,7 @@ FilterContainer.prototype.compileGenericHideSelector = function(
     if (
         compiled === undefined ||
         compiled !== selector &&
-        µb.staticExtFilteringEngine.compileSelector.pseudoclass !== true
+        µb.staticExtFilteringEngine.compileSelector.pseudoclass === -1
     ) {
         if ( µb.hiddenSettings.allowGenericProceduralFilters === true ) {
             return this.compileSpecificSelector('', parsed, writer);

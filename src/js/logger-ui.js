@@ -2701,9 +2701,9 @@ const loggerSettings = (( ) => {
         linesPerEntry: 4,
     };
 
-    {
+    vAPI.localStorage.getItemAsync('loggerSettings').then(value => {
         try {
-            const stored = JSON.parse(vAPI.localStorage.getItem('loggerSettings'));
+            const stored = JSON.parse(value);
             if ( typeof stored.discard.maxAge === 'number' ) {
                 settings.discard.maxAge = stored.discard.maxAge;
             }
@@ -2721,7 +2721,7 @@ const loggerSettings = (( ) => {
             }
         } catch(ex) {
         }
-    }
+    });
 
     const valueFromInput = function(input, def) {
         let value = parseInt(input.value, 10);

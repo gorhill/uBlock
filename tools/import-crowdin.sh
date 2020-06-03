@@ -10,11 +10,7 @@ echo "*** AdNauseam: Importing from Crowdin archive"
 
 SRC=~/Downloads/adnauseam
 rm -r $SRC
-<<<<<<< HEAD
 unzip -q ~/Downloads/adnauseam.zip -d $SRC
-=======
-unzip -q ~/Downloads/uBlock.zip -d $SRC
->>>>>>> upstream1.23.0
 
 DES=./src/_locales
 

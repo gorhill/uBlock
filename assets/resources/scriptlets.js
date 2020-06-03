@@ -56,12 +56,13 @@
         if ( owner instanceof Object === false ) { return; }
     }
     let value;
-    const desc = Object.getOwnPropertyDescriptor(owner, prop);
+    let desc = Object.getOwnPropertyDescriptor(owner, prop);
     if (
         desc instanceof Object === false ||
         desc.get instanceof Function === false
     ) {
         value = owner[prop];
+        desc = undefined;
     }
     const magic = String.fromCharCode(Date.now() % 26 + 97) +
                   Math.floor(Math.random() * 982451653 + 982451653).toString(36);
@@ -79,11 +80,17 @@
     Object.defineProperty(owner, prop, {
         get: function() {
             validate();
-            return value;
+            return desc instanceof Object
+                ? desc.get()
+                : value;
         },
         set: function(a) {
             validate();
-            value = a;
+            if ( desc instanceof Object ) {
+                desc.set(a);
+            } else {
+                value = a;
+            }
         }
     });
     const oe = window.onerror;
@@ -451,6 +458,37 @@
 })();
 
 
+/// remove-class.js
+/// alias rc.js
+(function() {
+    const token = '{{1}}';
+    if ( token === '' || token === '{{1}}' ) { return; }
+    const tokens = token.split(/\s*\|\s*/);
+    let selector = '{{2}}';
+    if ( selector === '' || selector === '{{2}}' ) {
+        selector = '.' + tokens.map(a => CSS.escape(a)).join(',.');
+    }
+    const rmclass = function() {
+        try {
+            const nodes = document.querySelectorAll(selector);
+            for ( const node of nodes ) {
+                node.classList.remove(...tokens);
+            }
+        } catch(ex) {
+        }
+    };
+    if ( document.readyState === 'loading' ) {
+        window.addEventListener(
+            'DOMContentLoaded',
+            rmclass,
+            { capture: true, once: true }
+        );
+    } else {
+        rmclass();
+    }
+})();
+
+
 /// requestAnimationFrame-if.js
 /// alias raf-if.js
 (function() {
@@ -542,7 +580,10 @@
         const prop = chain.slice(0, pos);
         let v = owner[prop];
         chain = chain.slice(pos + 1);
-        if ( v !== undefined ) {
+        if (
+            (v instanceof Object) ||
+            (typeof v === 'object' && v !== null)
+        ) {
             makeProxy(v, chain);
             return;
         }

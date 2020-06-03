@@ -147,10 +147,10 @@ const processDeclarativeStyle = function(out) {
 
 const processProcedural = function(out) {
     if ( proceduralDict.size === 0 ) { return; }
-    for ( const entry of proceduralDict ) {
-        if ( entry[1].test() === false ) { continue; }
-        out.push(`##${entry[1].raw}`);
-        proceduralDict.delete(entry[0]);
+    for ( const [ raw, pselector ] of proceduralDict ) {
+        if ( pselector.hit === false ) { continue; }
+        out.push(`##${raw}`);
+        proceduralDict.delete(raw);
     }
 };
 
@@ -277,8 +277,8 @@ const handlers = {
                     continue;
                 }
                 const details = JSON.parse(selector);
-                if ( Array.isArray(details.style) ) {
-                    exceptionDict.set(details.style[0], details.raw);
+                if ( details.action === 'style' ) {
+                    exceptionDict.set(details.selector, details.raw);
                     continue;
                 }
                 proceduralExceptionDict.set(

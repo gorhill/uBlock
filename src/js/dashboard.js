@@ -25,7 +25,8 @@
 
 /******************************************************************************/
 
-(( ) => {
+{
+// >>>>> start of local scope
 
   'use strict';
 
@@ -85,14 +86,8 @@ const discardUnsavedData = function(synchronous = false) {
     });
 };
 
-const loadDashboardPanel = function(pane = '') {
-    if ( pane === '' ) {
-        pane = vAPI.localStorage.getItem('dashboardLastVisitedPane');
+const loadDashboardPanel = function(pane, first) {
 
-        if ( pane === null ) {
-             pane = 'options.html';
-        }
-    }
     const tabButton = uDom(`[href="#${pane}"]`);
     if ( !tabButton || tabButton.hasClass('selected') ) { return; }
     const loadPane = ( ) => {
@@ -102,6 +97,9 @@ const loadDashboardPanel = function(pane = '') {
         uDom.nodeFromId('iframe').setAttribute('src', pane);
         vAPI.localStorage.setItem('dashboardLastVisitedPane', pane);
     };
+    if ( first ) {
+        return loadPane();
+    }
     const r = discardUnsavedData();
     if ( r === false ) { return; }
     if ( r === true ) {
@@ -135,26 +133,13 @@ vAPI.broadcastListener.add(msg => {
   });
 
 resizeFrame();
-loadDashboardPanel();
 
-window.addEventListener('resize', resizeFrame);
-uDom('.tabButton').on('click', onTabClickHandler);
-
-// https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
-window.addEventListener('beforeunload', ( ) => {
-    if ( discardUnsavedData(true) ) { return; }
-    event.preventDefault();
-});
-
-
-/******************************************************************************/
-
-
-uDom.onLoad(function () {
+vAPI.localStorage.getItemAsync('dashboardLastVisitedPane').then(value => {
+    loadDashboardPanel(value !== null ? value : 'settings.html', true);
     resizeFrame();
     window.addEventListener('resize', resizeFrame);
     uDom('.tabButton').on('click', onTabClickHandler);
-    uDom('#notifications').on('click', resizeFrame);
+    uDom('#notifications').on('click', resizeFrame); //ADN
 
     vAPI.messaging.send(
         'adnauseam', {
@@ -172,4 +157,16 @@ uDom.onLoad(function () {
   });
 
 
-})();
+    // https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
+    window.addEventListener('beforeunload', ( ) => {
+        if ( discardUnsavedData(true) ) { return; }
+        event.preventDefault();
+        event.returnValue = '';
+    });
+});
+
+
+/******************************************************************************/
+
+// <<<<< end of local scope
+}

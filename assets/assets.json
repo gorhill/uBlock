@@ -97,14 +97,6 @@
 			"assets/ublock/unbreak.txt"
 		]
 	},
-	"awrl-0": {
-		"content": "filters",
-		"group": "ads",
-		"off": true,
-		"title": "Adblock Warning Removal",
-		"contentURL": "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt",
-		"supportURL": "https://forums.lanik.us/"
-	},
 	"adguard-generic": {
 		"content": "filters",
 		"group": "ads",
@@ -277,19 +269,6 @@
 		"title": "Dan Pollock’s hosts file",
 		"contentURL": "https://someonewhocares.org/hosts/hosts",
 		"supportURL": "https://someonewhocares.org/hosts/"
-	},
-	"hphosts": {
-		"content": "filters",
-		"group": "multipurpose",
-		"updateAfter": 11,
-		"off": true,
-		"hidden": true,
-		"title": "hpHosts’ Ad and tracking servers",
-		"contentURL": [
-			"https://hosts-file.net/.%5Cad_servers.txt",
-			"http://hosts-file.net/.%5Cad_servers.txt"
-		],
-		"supportURL": "https://hosts-file.net/"
 	},
 	"mvps-0": {
 		"content": "filters",
@@ -481,15 +460,6 @@
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/7.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
 		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
-	},
-	"KOR-0": {
-		"content": "filters",
-		"group": "regions",
-		"off": true,
-		"title": "KOR: Korean Adblock List",
-		"lang": "ko",
-		"contentURL": "https://raw.githubusercontent.com/gfmaster/adblock-korea-contrib/master/filter.txt",
-		"supportURL": "https://github.com/gfmaster/adblock-korea-contrib"
 	},
 	"KOR-1": {
 		"content": "filters",

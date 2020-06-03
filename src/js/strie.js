@@ -114,7 +114,6 @@ const RESULT_L_SLOT  = HAYSTACK_SIZE_SLOT + 5;      //   517 / 2068
 const RESULT_R_SLOT  = HAYSTACK_SIZE_SLOT + 6;      //   518 / 2072
 const RESULT_IU_SLOT = HAYSTACK_SIZE_SLOT + 7;      //   519 / 2076
 const TRIE0_START    = HAYSTACK_SIZE_SLOT + 8 << 2; //         2080
-// TODO: need a few slots for result values if WASM-ing
 
 const CELL_BYTE_LENGTH = 12;
 const MIN_FREE_CELL_BYTE_LENGTH = CELL_BYTE_LENGTH * 8;
@@ -133,15 +132,13 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
 
 µBlock.BidiTrieContainer = class {
 
-    constructor(details, extraHandler) {
-        if ( details instanceof Object === false ) { details = {}; }
-        const len = roundToPageSize(details.byteLength || 0);
-        const minInitialSize = PAGE_SIZE * 4;
-        this.buf8 = new Uint8Array(Math.max(len, minInitialSize));
+    constructor(extraHandler) {
+        const len = PAGE_SIZE * 4;
+        this.buf8 = new Uint8Array(len);
         this.buf32 = new Uint32Array(this.buf8.buffer);
         this.buf32[TRIE0_SLOT] = TRIE0_START;
         this.buf32[TRIE1_SLOT] = this.buf32[TRIE0_SLOT];
-        this.buf32[CHAR0_SLOT] = details.char0 || (minInitialSize >>> 1);
+        this.buf32[CHAR0_SLOT] = len >>> 1;
         this.buf32[CHAR1_SLOT] = this.buf32[CHAR0_SLOT];
         this.haystack = this.buf8.subarray(
             HAYSTACK_START,
@@ -164,7 +161,17 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
         this.buf32[HAYSTACK_SIZE_SLOT] = v;
     }
 
-    reset() {
+    reset(details) {
+        if (
+            details instanceof Object &&
+            typeof details.byteLength === 'number' &&
+            typeof details.char0 === 'number'
+        ) {
+            if ( details.byteLength > this.buf8.byteLength ) {
+                this.reallocateBuf(details.byteLength);
+            }
+            this.buf32[CHAR0_SLOT] = details.char0;
+        }
         this.buf32[TRIE1_SLOT] = this.buf32[TRIE0_SLOT];
         this.buf32[CHAR1_SLOT] = this.buf32[CHAR0_SLOT];
     }
@@ -659,6 +666,7 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
     // Find the right-most instance of substring in main string.
     // WASMable.
     lastIndexOf(haystackBeg, haystackEnd, needleLeft, needleLen) {
+        if ( needleLen === 0 ) { return haystackBeg; }
         let haystackLeft = haystackEnd - needleLen;
         if ( haystackLeft < haystackBeg ) { return -1; }
         needleLeft += this.buf32[CHAR0_SLOT];
@@ -679,6 +687,7 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
     }
 
     async enableWASM() {
+        if ( typeof WebAssembly !== 'object' ) { return false; }
         if ( this.wasmMemory instanceof WebAssembly.Memory ) { return true; }
         const module = await getWasmModule();
         if ( module instanceof WebAssembly.Module === false ) {
@@ -913,7 +922,20 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
 const getWasmModule = (( ) => {
     let wasmModulePromise;
 
-    return function() {
+    // The directory from which the current script was fetched should also
+    // contain the related WASM file. The script is fetched from a trusted
+    // location, and consequently so will be the related WASM file.
+    let workingDir;
+    {
+        const url = new URL(document.currentScript.src);
+        const match = /[^\/]+$/.exec(url.pathname);
+        if ( match !== null ) {
+            url.pathname = url.pathname.slice(0, match.index);
+        }
+        workingDir = url.href;
+    }
+
+    return async function() {
         if ( wasmModulePromise instanceof Promise ) {
             return wasmModulePromise;
         }
@@ -935,19 +957,6 @@ const getWasmModule = (( ) => {
         const uint8s = new Uint8Array(uint32s.buffer);
         uint32s[0] = 1;
         if ( uint8s[0] !== 1 ) { return; }
-
-        // The directory from which the current script was fetched should also
-        // contain the related WASM file. The script is fetched from a trusted
-        // location, and consequently so will be the related WASM file.
-        let workingDir;
-        {
-            const url = new URL(document.currentScript.src);
-            const match = /[^\/]+$/.exec(url.pathname);
-            if ( match !== null ) {
-                url.pathname = url.pathname.slice(0, match.index);
-            }
-            workingDir = url.href;
-        }
 
         wasmModulePromise = fetch(
             workingDir + 'wasm/biditrie.wasm',

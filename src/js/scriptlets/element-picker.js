@@ -26,94 +26,6 @@
 /******************************************************************************/
 /******************************************************************************/
 
-/*! http://mths.be/cssescape v0.2.1 by @mathias | MIT license */
-;(function(root) {
-
-    if (!root.CSS) {
-        root.CSS = {};
-    }
-
-    var CSS = root.CSS;
-
-    var InvalidCharacterError = function(message) {
-        this.message = message;
-    };
-    InvalidCharacterError.prototype = new Error();
-    InvalidCharacterError.prototype.name = 'InvalidCharacterError';
-
-    if (!CSS.escape) {
-        // http://dev.w3.org/csswg/cssom/#serialize-an-identifier
-        CSS.escape = function(value) {
-            var string = String(value);
-            var length = string.length;
-            var index = -1;
-            var codeUnit;
-            var result = '';
-            var firstCodeUnit = string.charCodeAt(0);
-            while (++index < length) {
-                codeUnit = string.charCodeAt(index);
-                // Note: there’s no need to special-case astral symbols, surrogate
-                // pairs, or lone surrogates.
-
-                // If the character is NULL (U+0000), then throw an
-                // `InvalidCharacterError` exception and terminate these steps.
-                if (codeUnit === 0x0000) {
-                    throw new InvalidCharacterError(
-                        'Invalid character: the input contains U+0000.'
-                    );
-                }
-
-                if (
-                    // If the character is in the range [\1-\1F] (U+0001 to U+001F) or is
-                    // U+007F, […]
-                    (codeUnit >= 0x0001 && codeUnit <= 0x001F) || codeUnit === 0x007F ||
-                    // If the character is the first character and is in the range [0-9]
-                    // (U+0030 to U+0039), […]
-                    (index === 0 && codeUnit >= 0x0030 && codeUnit <= 0x0039) ||
-                    // If the character is the second character and is in the range [0-9]
-                    // (U+0030 to U+0039) and the first character is a `-` (U+002D), […]
-                    (
-                        index === 1 &&
-                        codeUnit >= 0x0030 && codeUnit <= 0x0039 &&
-                        firstCodeUnit === 0x002D
-                    )
-                ) {
-                    // http://dev.w3.org/csswg/cssom/#escape-a-character-as-code-point
-                    result += '\\' + codeUnit.toString(16) + ' ';
-                    continue;
-                }
-
-                // If the character is not handled by one of the above rules and is
-                // greater than or equal to U+0080, is `-` (U+002D) or `_` (U+005F), or
-                // is in one of the ranges [0-9] (U+0030 to U+0039), [A-Z] (U+0041 to
-                // U+005A), or [a-z] (U+0061 to U+007A), […]
-                if (
-                    codeUnit >= 0x0080 ||
-                    codeUnit === 0x002D ||
-                    codeUnit === 0x005F ||
-                    codeUnit >= 0x0030 && codeUnit <= 0x0039 ||
-                    codeUnit >= 0x0041 && codeUnit <= 0x005A ||
-                    codeUnit >= 0x0061 && codeUnit <= 0x007A
-                ) {
-                    // the character itself
-                    result += string.charAt(index);
-                    continue;
-                }
-
-                // Otherwise, the escaped character.
-                // http://dev.w3.org/csswg/cssom/#escape-a-character
-                result += '\\' + string.charAt(index);
-
-            }
-            return result;
-        };
-    }
-
-}(self));
-
-/******************************************************************************/
-/******************************************************************************/
-
 (( ) => {
 
 /******************************************************************************/
@@ -291,16 +203,24 @@ const mergeStrings = function(urls) {
             } else {
                 result.push(diff[1].replace(/\n+/g, ''));
             }
+            merged = result.join('');
         }
-        // Keep usage of wildcards to a sane level, too many of them can cause
-        // high overhead filters
-        merged =
-            result.join('')
-                .replace(/\*+$/, '')
-                .replace(/\*{2,}/g, '*')
-                .replace(/([^*]{1,2}\*)(?:[^*]{1,2}\*)+/g, '$1');
     }
+    // Keep usage of wildcards to a sane level, too many of them can cause
+    // high overhead filters
+    merged = merged.replace(/^\*+$/, '')
+                   .replace(/\*{2,}/g, '*')
+                   .replace(/([^*]{1,3}\*)(?:[^*]{1,3}\*)+/g, '$1');
     return merged;
+};
+
+/******************************************************************************/
+
+// Remove fragment part from a URL.
+
+const trimFragmentFromURL = function(url) {
+    const pos = url.indexOf('#');
+    return pos !== -1 ? url.slice(0, pos) : url;
 };
 
 /******************************************************************************/
@@ -313,7 +233,9 @@ const backgroundImageURLFromElement = function(elem) {
     const bgImg = style.backgroundImage || '';
     const matches = /^url\((["']?)([^"']+)\1\)$/.exec(bgImg);
     const url = matches !== null && matches.length === 3 ? matches[2] : '';
-    return url.lastIndexOf('data:', 0) === -1 ? url.slice(0, 1024) : '';
+    return url.lastIndexOf('data:', 0) === -1
+        ? trimFragmentFromURL(url.slice(0, 1024))
+        : '';
 };
 
 /******************************************************************************/
@@ -322,84 +244,73 @@ const backgroundImageURLFromElement = function(elem) {
 //   Limit returned string to 1024 characters.
 //   Also, return only URLs which will be seen by an HTTP observer.
 
-const resourceURLFromElement = function(elem) {
+const resourceURLsFromElement = function(elem) {
+    const urls = [];
     const tagName = elem.localName;
     const prop = netFilter1stSources[tagName];
-    if ( prop ) {
-        let src = '';
-        {
-            let s = elem[prop];
-            if ( typeof s === 'string' && /^https?:\/\//.test(s) ) {
-                src = s.slice(0, 1024);
-            }
-        }
-        if ( typeof elem.srcset === 'string' && elem.srcset !== '' ) {
-            const ss = [];
-            for ( let s of elem.srcset.split(',') ) {
-                s = s.trim();
-                const pos = s.indexOf(' ');
-                if ( pos !== -1 ) { s = s.slice(0, pos); }
-                const parsedURL = new URL(s, document.baseURI);
-                if ( parsedURL.pathname.length > 1 ) {
-                    ss.push(parsedURL.href);
-                }
-            }
-            if ( ss.length !== 0 ) {
-                if ( src !== '' ) {
-                    ss.push(src);
-                }
-                src = mergeStrings(ss);
-            }
-        }
-        return src;
+    if ( prop === undefined ) {
+        const url = backgroundImageURLFromElement(elem);
+        if ( url !== '' ) { urls.push(url); }
+        return urls;
     }
-    return backgroundImageURLFromElement(elem);
+    {
+        const s = elem[prop];
+        if ( typeof s === 'string' && /^https?:\/\//.test(s) ) {
+            urls.push(trimFragmentFromURL(s.slice(0, 1024)));
+        }
+    }
+    if ( typeof elem.srcset === 'string' && elem.srcset !== '' ) {
+        for ( let s of elem.srcset.split(',') ) {
+            s = s.trim();
+            const pos = s.indexOf(' ');
+            if ( pos !== -1 ) { s = s.slice(0, pos); }
+            const parsedURL = new URL(s, document.baseURI);
+            if ( parsedURL.pathname.length > 1 ) {
+                urls.push(trimFragmentFromURL(parsedURL.href));
+            }
+        }
+    }
+    return urls;
 };
 
 /******************************************************************************/
 
-const netFilterFromUnion = function(toMergeURL, out) {
-    const parsedURL = new URL(toMergeURL, document.baseURI);
-
-    toMergeURL = parsedURL.pathname + parsedURL.search;
-
+const netFilterFromUnion = function(patternIn, out) {
     // Reset reference filter when dealing with unrelated URLs
+    const currentHostname = self.location.hostname;
     if (
         lastNetFilterUnion === '' ||
-        parsedURL.host === '' ||
-        parsedURL.host !== lastNetFilterHostname
+        currentHostname === '' ||
+        currentHostname !== lastNetFilterHostname
     ) {
-        lastNetFilterHostname = parsedURL.host;
-        lastNetFilterUnion = toMergeURL;
+        lastNetFilterHostname = currentHostname;
+        lastNetFilterUnion = patternIn;
         vAPI.messaging.send('elementPicker', {
             what: 'elementPickerEprom',
-            lastNetFilterSession: lastNetFilterSession,
-            lastNetFilterHostname: lastNetFilterHostname,
-            lastNetFilterUnion: lastNetFilterUnion,
+            lastNetFilterSession,
+            lastNetFilterHostname,
+            lastNetFilterUnion,
         });
         return;
     }
 
     // Related URLs
-    lastNetFilterHostname = parsedURL.host;
-
-    let mergedURL = mergeStrings([ toMergeURL, lastNetFilterUnion ]);
-    if ( mergedURL !== '/*' && mergedURL !== toMergeURL ) {
-        const filter = '||' + lastNetFilterHostname + mergedURL;
+    lastNetFilterHostname = currentHostname;
+    let patternOut = mergeStrings([ patternIn, lastNetFilterUnion ]);
+    if ( patternOut !== '/*' && patternOut !== patternIn ) {
+        const filter = `||${patternOut}`;
         if ( out.indexOf(filter) === -1 ) {
             out.push(filter);
         }
-    } else {
-        mergedURL = toMergeURL;
+        lastNetFilterUnion = patternOut;
     }
-    lastNetFilterUnion = mergedURL;
 
     // Remember across element picker sessions
     vAPI.messaging.send('elementPicker', {
         what: 'elementPickerEprom',
-        lastNetFilterSession: lastNetFilterSession,
-        lastNetFilterHostname: lastNetFilterHostname,
-        lastNetFilterUnion: lastNetFilterUnion,
+        lastNetFilterSession,
+        lastNetFilterHostname,
+        lastNetFilterUnion,
     });
 };
 
@@ -410,8 +321,8 @@ const netFilterFromUnion = function(toMergeURL, out) {
 const netFilterFromElement = function(elem) {
     if ( elem === null ) { return 0; }
     if ( elem.nodeType !== 1 ) { return 0; }
-    let src = resourceURLFromElement(elem);
-    if ( src === '' ) { return 0; }
+    const urls = resourceURLsFromElement(elem);
+    if ( urls.length === 0 ) { return 0; }
 
     if ( candidateElements.indexOf(elem) === -1 ) {
         candidateElements.push(elem);
@@ -420,13 +331,11 @@ const netFilterFromElement = function(elem) {
     const candidates = netFilterCandidates;
     const len = candidates.length;
 
-    // Remove fragment
-    let pos = src.indexOf('#');
-    if ( pos !== -1 ) {
-        src = src.slice(0, pos);
+    for ( let i = 0; i < urls.length; i++ ) {
+        urls[i] = urls[i].replace(/^https?:\/\//, '');
     }
+    const pattern = mergeStrings(urls);
 
-    const filter = src.replace(/^https?:\/\//, '||');
 
     if ( bestCandidateFilter === null ) {
         bestCandidateFilter = {
@@ -436,16 +345,16 @@ const netFilterFromElement = function(elem) {
         };
     }
 
-    candidates.push(filter);
+    candidates.push(`||${pattern}`);
 
     // Suggest a less narrow filter if possible
-    pos = filter.indexOf('?');
+    const pos = pattern.indexOf('?');
     if ( pos !== -1 ) {
-        candidates.push(filter.slice(0, pos));
+        candidates.push(`||${pattern.slice(0, pos)}`);
     }
 
     // Suggest a filter which is a result of combining more than one URL.
-    netFilterFromUnion(src, candidates);
+    netFilterFromUnion(pattern, candidates);
 
     return candidates.length - len;
 };
@@ -738,7 +647,7 @@ const filterToDOMInterface = (( ) => {
         }
         let reFilter = null;
         try {
-            reFilter = new RegExp(reStr);
+            reFilter = new RegExp(reStr, 'i');
         }
         catch (e) {
             return out;
@@ -822,11 +731,11 @@ const filterToDOMInterface = (( ) => {
         let elems;
         try {
             const o = JSON.parse(raw);
-            if ( o.style ) {
+            if ( o.action === 'style' ) {
                 elems = document.querySelectorAll(
-                    o.style[0].replace(rePseudoElements, '')
+                    o.selector.replace(rePseudoElements, '')
                 );
-                lastAction = o.style[0] + ' {' + o.style[1] + '}';
+                lastAction = o.selector + ' {' + o.tasks[0][1] + '}';
             } else if ( o.tasks ) {
                 elems = vAPI.domFilterer.createProceduralFilter(o).exec();
             }
@@ -1489,7 +1398,10 @@ const svgListening = function(on) {
 
 const onKeyPressed = function(ev) {
     // Delete
-    if ( ev.key === 'Delete' && pickerBody.classList.contains('zap') ) {
+    if (
+        (ev.key === 'Delete' || ev.key === 'Backspace') &&
+        pickerBody.classList.contains('zap')
+    ) {
         ev.stopPropagation();
         ev.preventDefault();
         zap();

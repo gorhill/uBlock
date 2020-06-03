@@ -30,5 +30,6 @@ self.log = (function() {
             this.info = console.info = level === 'info' ? info : noopFunc;
         },
         info: noopFunc,
+        print: info,
     };
 })();
