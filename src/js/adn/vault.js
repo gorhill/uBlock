@@ -117,11 +117,13 @@
     vAPI.messaging.send(
         'adnauseam', {
             what: 'verifyAdBlockers'
-        }).then(json => {
-          if (json.notifications && json.notifications.length)
-              renderNotifications(json.notifications, 'vault');
+        }).then(notifications => {
+          if (notifications && notifications.length)
+              renderNotifications(notifications, 'vault');
               adjustHeight();
         })
+
+
   };
 
   const autoUpdateVault = function(){

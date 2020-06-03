@@ -156,22 +156,15 @@ uDom.onLoad(function () {
     uDom('.tabButton').on('click', onTabClickHandler);
     uDom('#notifications').on('click', resizeFrame);
 
-     vAPI.messaging.send(
-      'adnauseam', {
-          what: 'verifyAdBlockers'
-        }, function() {
-          vAPI.messaging.send(
-          'adnauseam', {
-            what: 'getNotifications'
-          }, function(notifications){
-            renderNotifications(notifications,"dashboard");
-            resizeFrame();
-          });
-      });
-
+    vAPI.messaging.send(
+        'adnauseam', {
+            what: 'verifyAdBlockers'
+        }).then(notifications => {
+          if (notifications && notifications.length)
+              renderNotifications(notifications, "dashboard");
+              resizeFrame();
+        })
   });
-
-
 
 
 })();
