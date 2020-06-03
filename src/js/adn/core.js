@@ -1356,7 +1356,6 @@
     const settings = await vAPI.storage.get(µb.userSettings);
     // start by grabbing user-settings, then calling initialize()
 
-    console.log(settings);
     // this for backwards compatibility only ---------------------
     const mapSz = Object.keys(settings.admap).length;
     if (!mapSz && µb.adnSettings && µb.adnSettings.admap) {
@@ -1457,7 +1456,6 @@
       entries.forEach((value, key) => {
         listEntries[key] = value;
       });
-      console.log(listEntries);
 
       log("[LOAD] Compiled " + entries.size +
         " 3rd-party lists in " + (+new Date() - profiler) + "ms");
