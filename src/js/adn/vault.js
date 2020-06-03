@@ -117,10 +117,15 @@
     vAPI.messaging.send(
         'adnauseam', {
             what: 'verifyAdBlockers'
-        }).then(notifications => {
-          if (notifications && notifications.length)
-              renderNotifications(notifications, 'vault');
-              adjustHeight();
+        }).then(n => {
+          vAPI.messaging.send(
+              'adnauseam', {
+                  what: 'getNotifications'
+              }).then(notifications => {
+              if (notifications && notifications.length)
+                  renderNotifications(notifications, 'vault');
+                  adjustHeight();
+            })
         })
 
 

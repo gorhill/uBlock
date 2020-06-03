@@ -159,10 +159,15 @@ uDom.onLoad(function () {
     vAPI.messaging.send(
         'adnauseam', {
             what: 'verifyAdBlockers'
-        }).then(notifications => {
-          if (notifications && notifications.length)
-              renderNotifications(notifications, "dashboard");
-              resizeFrame();
+        }).then(n => {
+          vAPI.messaging.send(
+              'adnauseam', {
+                  what: 'getNotifications'
+              }).then(notifications => {
+              if (notifications && notifications.length)
+                  renderNotifications(notifications, 'dashboard');
+                  resizeFrame();
+            })
         })
   });
 

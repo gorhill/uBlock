@@ -1761,7 +1761,8 @@ const verifyAdBlockers = exports.verifyAdBlockers = function () {
 
       modified && sendNotifications(notes);
     });
-    return notifications;
+    
+    return notifications.indexOf(AdBlockerEnabled) > -1 ? [AdBlockerEnabled] : [];
   };
 
   exports.verifyAdBlockersAndDNT = function (request) {
