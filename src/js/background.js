@@ -66,6 +66,7 @@ const µBlock = (( ) => { // jshint ignore:line
     };
 
     return {
+        firstInstall: true,
         userSettings: {
             admap: {},          // ADN //////////////////
             dntDomains: [],

@@ -78,7 +78,6 @@ const initWorker = function() {
     needLists = false;
 
     const entries = new Map();
-
     const onListLoaded = function(details) {
         const entry = entries.get(details.assetKey);
         entry.content = details.content; // ADN
@@ -95,11 +94,7 @@ const initWorker = function() {
                 content: details.content
             }
         });
-        //
-        // countdown -= 1;
-        // if ( countdown === 0 ) {
-        //     callback(entries); // ADN
-        // }
+
     };
 
     const µb = µBlock;
@@ -116,6 +111,7 @@ const initWorker = function() {
             supportURL: entry.supportURL || ''
         });
     }
+
     if ( entries.size === 0 ) {
         return Promise.resolve();
     }
@@ -128,7 +124,9 @@ const initWorker = function() {
             })
         );
     }
-    return Promise.all(promises);
+    return Promise.all(promises).then(data => {
+      return entries;
+    });
 };
 
 /******************************************************************************/
@@ -143,7 +141,7 @@ const fromNetFilter = async function(compiledFilter, rawFilter, callback) {
         return;
     }
 
-    await initWorker();
+    const entries = await initWorker();
 
     const id = messageId++;
     const message = {

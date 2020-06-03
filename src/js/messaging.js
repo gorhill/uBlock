@@ -984,7 +984,7 @@ const prepListEntries = function(entries) {
     const µburi = µb.URI;
     for ( const k in entries ) {
         if ( entries.hasOwnProperty(k) === false ) { continue; }
-        entry = entries[k];
+        let entry = entries[k];
         if ( typeof entry.supportURL === 'string' && entry.supportURL !== '' ) {
             entry.supportName = µburi.hostnameFromURI(entry.supportURL);
         } else if ( typeof entry.homeURL === 'string' && entry.homeURL !== '' ) {

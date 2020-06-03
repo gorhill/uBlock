@@ -1630,6 +1630,41 @@ vAPI.cloud = (( ) => {
 /******************************************************************************/
 /******************************************************************************/
 
+vAPI.getAddonInfo = function (callback) { // ADN
+
+  var uBlockConflict = false, adBlockConflict = false;
+
+  // Note this is not yet implemented in Firefox/WebExtensions
+  // https://bugzilla.mozilla.org/show_bug.cgi?id=1282981
+  // See https://github.com/dhowe/AdNauseam/issues/801
+  if (typeof chrome.management.getAll === 'function') {
+
+    chrome.management.getAll(function (extensions) {
+
+      if (chrome.runtime.lastError) {
+
+        // do nothing
+
+      } else {
+
+        extensions.forEach(function (extension) {
+
+          if ((extension.name.startsWith("Adblock") || extension.name.startsWith("AdBlock")) && extension.enabled)
+            adBlockConflict = true;
+          else if (extension.name.startsWith("uBlock") && extension.enabled)
+            uBlockConflict = true;
+        });
+
+        callback(uBlockConflict, adBlockConflict);
+      }
+    });
+  }
+}
+
+
+/******************************************************************************/
+/******************************************************************************/
+
 // <<<<< end of local scope
 }
 

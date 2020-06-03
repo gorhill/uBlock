@@ -207,6 +207,9 @@ const onFirstFetchReady = function(fetched) {
         fetched = createDefaultProps();
     }
 
+    // ADN
+    µb.firstInstall = fetched.version === '0.0.0.0';
+
     // Order is important -- do not change:
     onSystemSettingsReady(fetched);
     fromFetch(µb.localSettings, fetched);
@@ -331,6 +334,8 @@ initializeTabs();
 // Force an update of the context menu according to the currently
 // active tab.
 µb.contextMenu.update();
+µb.adnauseam.onListsLoaded(µb.firstInstall && µb.restoreBackupSettings.lastRestoreFile === ""); // ADN
+µb.firstInstall = false;
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/717
 //   Prevent the extension from being restarted mid-session.

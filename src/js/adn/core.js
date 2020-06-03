@@ -1448,14 +1448,16 @@
     listEntries[path].content = content;
   }
 
-  exports.onListsLoaded = function (firstRun) {
+  exports.onListsLoaded = async function (firstRun) {
 
-    µb.staticFilteringReverseLookup.initWorker(function (entries) {
+      const entries = await µb.staticFilteringReverseLookup.initWorker();
+      listEntries = [];
+      entries.forEach((value, key) => {
+        listEntries[key] = value;
+      });
+      console.log(listEntries);
 
-      listEntries = entries;
-      //console.log('listEntries:', listEntries);
-      const keys = Object.keys(entries);
-      log("[LOAD] Compiled " + keys.length +
+      log("[LOAD] Compiled " + entries.size +
         " 3rd-party lists in " + (+new Date() - profiler) + "ms");
       listsLoaded = true;
 
@@ -1464,7 +1466,6 @@
       verifyLists();
 
       µb.adnauseam.dnt.updateFilters();
-    });
 
     if (firstRun && !isAutomated()) {
 
