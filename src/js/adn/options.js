@@ -25,48 +25,118 @@
 
   'use strict';
 
-  /******************************************************************************/
-
-  const messager = vAPI.messaging;
 
   /******************************************************************************/
 
-  const onLocalDataReceived = function (details) {
+  const handleImportFilePicker = function() {
+      const file = this.files[0];
+      if ( file === undefined || file.name === '' ) { return; }
+      if ( file.type.indexOf('text') !== 0 ) { return; }
 
-    if (details.storageUsed)
-     uDom('#localData > ul > li:nth-of-type(1)').text(
-         vAPI.i18n('settingsStorageUsed').replace('{{value}}', details.storageUsed.toLocaleString())
-     );
+      const filename = file.name;
 
-    let elem, dt;
-    const timeOptions = {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      timeZoneName: 'short'
-    };
+      const fileReaderOnLoadHandler = function() {
+          let userData;
+          try {
+              userData = JSON.parse(this.result);
+              if ( typeof userData !== 'object' ) {
+                  throw 'Invalid';
+              }
+              if ( typeof userData.userSettings !== 'object' ) {
+                  throw 'Invalid';
+              }
+              if (
+                  Array.isArray(userData.whitelist) === false &&
+                  typeof userData.netWhitelist !== 'string'
+              ) {
+                  throw 'Invalid';
+              }
+              if (
+                  typeof userData.filterLists !== 'object' &&
+                  Array.isArray(userData.selectedFilterLists) === false
+              ) {
+                  throw 'Invalid';
+              }
+          }
+          catch (e) {
+              userData = undefined;
+          }
+          if ( userData === undefined ) {
+              window.alert(vAPI.i18n('aboutRestoreDataError').replace(/uBlock₀/g, 'AdNauseam'));
+              return;
+          }
+          const time = new Date(userData.timeStamp);
+          const msg = vAPI.i18n('aboutRestoreDataConfirm')
+                          .replace('{{time}}', time.toLocaleString());
+          const proceed = window.confirm(msg);
+          if ( proceed !== true ) { return; }
+          vAPI.messaging.send('dashboard', {
+              what: 'restoreUserData',
+              userData,
+              file: filename,
+          });
+      };
 
-    // var lastBackupFile = details.lastBackupFile || '';
-    // if (lastBackupFile !== '') {
-    //   dt = new Date(details.lastBackupTime);
-    //   uDom('#localData > ul > li:nth-of-type(2) > ul > li:nth-of-type(1)').text(dt.toLocaleString('fullwide', timeOptions));
-    //   //uDom('#localData > ul > li:nth-of-type(2) > ul > li:nth-of-type(2)').text(lastBackupFile);
-    //   uDom('#localData > ul > li:nth-of-type(2)').css('display', '');
-    // }
-
-    const lastRestoreFile = details.lastRestoreFile || '';
-    elem = uDom('#localData > p:nth-of-type(3)');
-    if (lastRestoreFile !== '') {
-      dt = new Date(details.lastRestoreTime);
-      uDom('#localData > ul > li:nth-of-type(3) > ul > li:nth-of-type(1)').text(dt.toLocaleString('fullwide', timeOptions));
-      uDom('#localData > ul > li:nth-of-type(3) > ul > li:nth-of-type(2)').text(lastRestoreFile);
-      uDom('#localData > ul > li:nth-of-type(3)').css('display', '');
-    }
+      const fr = new FileReader();
+      fr.onload = fileReaderOnLoadHandler;
+      fr.readAsText(file);
   };
 
+  /******************************************************************************/
+
+  const startImportFilePicker = function() {
+      const input = document.getElementById('restoreFilePicker');
+      // Reset to empty string, this will ensure an change event is properly
+      // triggered if the user pick a file, even if it is the same as the last
+      // one picked.
+      input.value = '';
+      input.click();
+  };
+
+  /******************************************************************************/
+
+  const onLocalDataReceived = function(details) {
+      uDom('#localData > ul > li:nth-of-type(1)').text(
+          vAPI.i18n('settingsStorageUsed').replace('{{value}}', details.storageUsed.toLocaleString()).replace(/uBlock₀/g, 'AdNauseam')
+      );
+
+      const timeOptions = {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+          timeZoneName: 'short'
+      };
+
+      const lastBackupFile = details.lastBackupFile || '';
+      if ( lastBackupFile !== '' ) {
+          const dt = new Date(details.lastBackupTime);
+          uDom('#localData > ul > li:nth-of-type(2) > ul > li:nth-of-type(1)').text(dt.toLocaleString('fullwide', timeOptions));
+          //uDom('#localData > ul > li:nth-of-type(2) > ul > li:nth-of-type(2)').text(lastBackupFile);
+          uDom('#localData > ul > li:nth-of-type(2)').css('display', '');
+      }
+
+      const lastRestoreFile = details.lastRestoreFile || '';
+      uDom('#localData > p:nth-of-type(3)');
+      if ( lastRestoreFile !== '' ) {
+          const dt = new Date(details.lastRestoreTime);
+          uDom('#localData > ul > li:nth-of-type(3) > ul > li:nth-of-type(1)').text(dt.toLocaleString('fullwide', timeOptions));
+          uDom('#localData > ul > li:nth-of-type(3) > ul > li:nth-of-type(2)').text(lastRestoreFile);
+          uDom('#localData > ul > li:nth-of-type(3)').css('display', '');
+      }
+
+      if ( details.cloudStorageSupported === false ) {
+          uDom('#cloud-storage-enabled').attr('disabled', '');
+      }
+
+      if ( details.privacySettingsSupported === false ) {
+          uDom('#prefetching-disabled').attr('disabled', '');
+          uDom('#hyperlink-auditing-disabled').attr('disabled', '');
+          uDom('#webrtc-ipaddress-hidden').attr('disabled', '');
+      }
+  };
 
   /******************************************************************************/
 
@@ -80,20 +150,16 @@
 
   /******************************************************************************/
 
-  const changeUserSettings = function (name, value) {
-
-    //console.log('changeUserSettings',name, value);
-
-    messager.send('dashboard', {
-      what: 'userSettings',
-      name: name,
-      value: value
-    },
-    function(details) {
-      updateGroupState();
-    });
+  const changeUserSettings = function(name, value) {
+      vAPI.messaging.send('dashboard', {
+          what: 'userSettings',
+          name,
+          value,
+      });
   };
 
+  /******************************************************************************/
+  // ADN
   const ClickProbabilityChanged = function() {
       const selection = uDom('input[id="slider"]');
       const slideVal = selection.nodes[0].value;
@@ -110,21 +176,27 @@
 
   /******************************************************************************/
 
-  const onInputChanged = function (ev) {
-    const name = this.getAttribute('data-setting-name');
-    let input = ev.target;
-    let value = input.value;
-
-    if (name === 'largeMediaSize') {
-      value = Math.min(Math.max(Math.floor(parseInt(value, 10) || 0), 0), 1000000);
-    }
-    if (value !== input.value) {
-      input.value = value;
-    }
-
-    changeUserSettings(name, value);
+  const onInputChanged = function(ev) {
+      const input = ev.target;
+      const name = this.getAttribute('data-setting-name');
+      let value = input.value;
+      if ( name === 'largeMediaSize' ) {
+          value = Math.min(Math.max(Math.floor(parseInt(value, 10) || 0), 0), 1000000);
+      }
+      if ( value !== input.value ) {
+          input.value = value;
+      }
+      changeUserSettings(name, value);
   };
+  /******************************************************************************/
 
+  // Workaround for:
+  // https://github.com/gorhill/uBlock/issues/1448
+
+  const onPreventDefault = function(ev) {
+      ev.target.focus();
+      ev.preventDefault();
+  };
   /******************************************************************************/
 
   // if any of 3 main toggles are off, disabled their subgroups
@@ -161,44 +233,32 @@
 
     // console.log('onUserSettingsReceived', details);
 
-    if (isMobile()) {
+    if (isMobile()) { // ADN
       uDom('.dntOption').css('display', 'none');
     }
 
-    uDom('[data-setting-type="bool"]').forEach(function (uNode) {
+    uDom('input[type="range"]').on('change', ClickProbabilityChanged); //ADN
 
-      const name = uNode.attr('data-setting-name'), value = details[name];
-      const selection = uDom('input[id="slider"]');
-
-
-      //updateSubgroupState(name, value);
-
-      selection.val(details.clickProbability);
-
-      uNode.prop('checked', value === true)
-        .on('change', function () {
-          changeUserSettings(
-            this.getAttribute('data-setting-name'),
-            this.checked
-          );
-        });
-
-        const id = "#slider";
-        uDom(id).prop('checked',true);
-
+    uDom('[data-setting-type="bool"]').forEach(function(uNode) {
+        uNode.prop('checked', details[uNode.attr('data-setting-name')] === true)
+             .on('change', function() {
+                    changeUserSettings(
+                        this.getAttribute('data-setting-name'),
+                        this.checked
+                    );
+                    synchronizeDOM();
+                });
     });
 
-    uDom('input[type="range"]').on('change', ClickProbabilityChanged);
-
     uDom('[data-setting-name="noLargeMedia"] ~ label:first-of-type > input[type="number"]')
-      .attr('data-setting-name', 'largeMediaSize')
-      .attr('data-setting-type', 'input');
+        .attr('data-setting-name', 'largeMediaSize')
+        .attr('data-setting-type', 'input');
 
-      uDom('[data-setting-type="input"]').forEach(function (uNode) {
+    uDom('[data-setting-type="input"]').forEach(function(uNode) {
         uNode.val(details[uNode.attr('data-setting-name')])
-          .on('change', onInputChanged);
-      });
-
+             .on('change', onInputChanged)
+             .on('click', onPreventDefault);
+    });
 
     // Minor text fixes
     if (uDom('#exportDialog').text() === "Back up to file")
@@ -224,16 +284,12 @@
 
   /******************************************************************************/
 
-  uDom.onLoad(function () {
-
-    messager.send('dashboard', {
-      what: 'userSettings'
-    }, onUserSettingsReceived);
-
-    messager.send('dashboard', {
-      what: 'getLocalData'
-    }, onLocalDataReceived);
-
+  Promise.all([
+      vAPI.messaging.send('dashboard', { what: 'userSettings' }),
+      vAPI.messaging.send('dashboard', { what: 'getLocalData' }),
+  ]).then(results => {
+      onUserSettingsReceived(results[0]);
+      onLocalDataReceived(results[1]);
   });
 
   // https://github.com/uBlockOrigin/uBlock-issues/issues/591
