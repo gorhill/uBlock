@@ -56,8 +56,8 @@
     const reParseRegexLiteral = /^\/(.+)\/([imu]+)?$/;
     const emptyArray = [];
     const parsed = {
-        hostnames: [],
         exception: false,
+        hostnames: [],
         suffix: ''
     };
 
@@ -871,7 +871,7 @@
             }
         }
 
-        let c0 = suffix.charCodeAt(0);
+        const c0 = suffix.charCodeAt(0);
 
         // New shorter syntax for scriptlet injection engine.
         if ( c0 === 0x2B /* '+' */ && suffix.startsWith('+js') ) {

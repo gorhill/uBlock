@@ -44,9 +44,9 @@ When you uninstall the extension, Firefox deletes that file, so all your setting
 
 ### Firefox legacy
 
-Compatible with Firefox 24 to Firefox 56.
+Compatible with Firefox 24-56, [Pale Moon](https://www.palemoon.org/) and [SeaMonkey](http://www.seamonkey-project.org/).
 
-- Download `ublock0.firefox-legacy.xpi` ([latest release desirable](https://github.com/gorhill/uBlock/releases)).
+- Download `ublock0.firefox-legacy.xpi` ([latest release desirable](https://github.com/gorhill/uBlock-for-firefox-legacy/releases)).
     - Right-click and select "Save Link As..."
 - Drag and drop the previously downloaded `ublock0.firefox-legacy.xpi` into Firefox
 
@@ -57,6 +57,8 @@ Your uBlock Origin settings are kept intact even after you uninstall the addon.
 On Linux, the settings are saved in a SQlite file located at `~/.mozilla/firefox/[profile name]/extension-data/ublock0.sqlite`.
 
 On Windows, the settings are saved in a SQlite file located at `%APPDATA%\Mozilla\Firefox\Profiles\[profile name]\extension-data\ublock0.sqlite`.
+
+If you want to automatically receive updates for this version, you can also install [uBlock Origin Updater](https://github.com/JustOff/ublock0-updater).
 
 ### Build instructions (for developers)
 

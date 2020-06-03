@@ -95,6 +95,18 @@
     "message": "eller",
     "description": "English: or"
   },
+  "popupBlockedOnThisPage_v2": {
+    "message": "Blokeret på denne side",
+    "description": "For the new mobile-friendly popup design"
+  },
+  "popupBlockedSinceInstall_v2": {
+    "message": "Blokeret siden installation",
+    "description": "For the new mobile-friendly popup design"
+  },
+  "popupDomainsConnected_v2": {
+    "message": "Tilknyttede domæner",
+    "description": "For the new mobile-friendly popup design"
+  },
   "popupTipDashboard": {
     "message": "Åbn kontrolpanelet",
     "description": "English: Click to open the dashboard"
@@ -166,6 +178,26 @@
   "popupTipNoScripting2": {
     "message": "Klik for ikke længere at deaktivere JavaScript på dette websted",
     "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupNoLargeMedia_v2": {
+    "message": "Store medieelementer",
+    "description": "Tip for the no-large-media per-site switch"
+  },
+  "popupNoCosmeticFiltering_v2": {
+    "message": "Kosmetisk filtrering",
+    "description": "Tip for the no-cosmetic-filtering per-site switch"
+  },
+  "popupNoRemoteFonts_v2": {
+    "message": "Fjernskrifttyper",
+    "description": "Tip for the no-remote-fonts per-site switch"
+  },
+  "popupNoScripting_v2": {
+    "message": "JavaScript",
+    "description": "Tip for the no-scripting per-site switch"
+  },
+  "popupMoreButton_v2": {
+    "message": "Mere",
+    "description": "Label to be used to toggle overview panel"
   },
   "popupTipGlobalRules": {
     "message": "Globale regler: Denne kolonne er til regler gældende alle websteder.",

@@ -298,16 +298,29 @@ try {
             log.info(`PSL ready ${Date.now()-vAPI.T0} ms after launch`);
         }),
     ]);
+} catch (ex) {
+    console.trace(ex);
+}
 
-    const selfieIsValid = await µb.selfieManager.load();
+// https://github.com/uBlockOrigin/uBlock-issues/issues/817#issuecomment-565730122
+//   Still try to load filter lists regardless of whether a serious error
+//   occurred in the previous initialization steps.
+let selfieIsValid = false;
+try {
+    selfieIsValid = await µb.selfieManager.load();
     if ( selfieIsValid === true ) {
         log.info(`Selfie ready ${Date.now()-vAPI.T0} ms after launch`);
-    } else {
-        await µb.loadFilterLists();
-        log.info(`Filter lists ready ${Date.now()-vAPI.T0} ms after launch`);
     }
 } catch (ex) {
     console.trace(ex);
+}
+if ( selfieIsValid !== true ) {
+    try {
+        await µb.loadFilterLists();
+        log.info(`Filter lists ready ${Date.now()-vAPI.T0} ms after launch`);
+    } catch (ex) {
+        console.trace(ex);
+    }
 }
 
 // Final initialization steps after all needed assets are in memory.
@@ -339,6 +352,23 @@ initializeTabs();
 µb.contextMenu.update();
 µb.adnauseam.onListsLoaded(µb.firstInstall && µb.restoreBackupSettings.lastRestoreFile === ""); // ADN
 µb.firstInstall = false;
+
+// Maybe install non-default popup document, or automatically select
+// default UI according to platform.
+if (
+    browser.browserAction instanceof Object &&
+    browser.browserAction.setPopup instanceof Function
+) {
+    let uiFlavor = µb.hiddenSettings.uiFlavor;
+    if ( uiFlavor === 'unset' && vAPI.webextFlavor.soup.has('mobile') ) {
+        uiFlavor = 'fenix';
+    }
+    if ( uiFlavor !== 'unset' && /\w+/.test(uiFlavor) ) {
+        browser.browserAction.setPopup({
+            popup: vAPI.getURL(`popup-${uiFlavor}.html`)
+        });
+    }
+}
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/717
 //   Prevent the extension from being restarted mid-session.

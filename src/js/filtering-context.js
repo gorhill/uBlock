@@ -29,8 +29,10 @@
     }
     this.tstamp = 0;
     this.realm = '';
+    this.id = undefined;
     this.type = undefined;
     this.url = undefined;
+    this.aliasURL = undefined;
     this.hostname = undefined;
     this.domain = undefined;
     this.docId = undefined;
@@ -63,8 +65,10 @@
         }
         this.fromTabId(tabId);
         this.realm = '';
+        this.id = details.requestId;
         this.type = details.type;
         this.setURL(details.url);
+        this.aliasURL = details.aliasURL || undefined;
         this.docId = details.type !== 'sub_frame'
             ? details.frameId
             : details.parentFrameId;

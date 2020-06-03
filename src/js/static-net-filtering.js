@@ -223,9 +223,6 @@ const toLogDataInternal = function(categoryBits, tokenHash, iunit) {
     const domains = [];
     const logData = { pattern, regex, domains, options, isRegex: false };
     filterUnits[iunit].logData(logData);
-    if ( categoryBits & 0x001 ) {
-        logData.pattern.unshift('@@');
-    }
     if ( categoryBits & 0x002 ) {
         logData.options.unshift('important');
     }
@@ -245,6 +242,9 @@ const toLogDataInternal = function(categoryBits, tokenHash, iunit) {
         raw.charCodeAt(raw.length - 1) === 0x2F /* '/' */
     ) {
         raw += '*';
+    }
+    if ( categoryBits & 0x001 ) {
+        raw = '@@' + raw;
     }
     if ( domains.length !== 0 ) {
         options.push(`domain=${domains.join('|')}`);
@@ -616,6 +616,9 @@ const FilterPatternPlainX = class extends FilterPatternPlain {
 
 /******************************************************************************/
 
+// https://github.com/gorhill/uBlock/commit/7971b223855d#commitcomment-37077525
+//   Mind that the left part may be empty.
+
 const FilterPatternLeft = class {
     constructor(i, n) {
         this.i = i | 0;
@@ -633,8 +636,10 @@ const FilterPatternLeft = class {
     }
 
     logData(details) {
+        details.pattern.unshift('*');
+        if ( this.n === 0 ) { return; }
         const s = bidiTrie.extractString(this.i, this.n);
-        details.pattern.unshift(s, '*');
+        details.pattern.unshift(s);
         details.regex.unshift(restrFromPlainPattern(s), '.*');
     }
 
@@ -2529,13 +2534,8 @@ const FilterParser = class {
         this.tokenBeg = matches.index;
 
         // https://www.reddit.com/r/uBlockOrigin/comments/dpcvfx/
-        //   Since we found a valid token, we can get rid of leading/trailing
+        //   Since we found a valid token, we can get rid of trailing
         //   wildcards if any.
-        if ( this.firstWildcardPos === 0 ) {
-            this.f = this.f.slice(1);
-            this.firstWildcardPos = this.secondWildcardPos;
-            this.secondWildcardPos = -1;
-        }
         if ( this.firstWildcardPos !== -1 ) {
             const lastCharPos = this.f.length - 1;
             if ( this.firstWildcardPos === lastCharPos ) {
@@ -2591,8 +2591,12 @@ const FilterParser = class {
             const prefix = s.slice(0, matches.index);
             if ( this.reRegexTokenAbort.test(prefix) ) { return; }
             if (
-                this.reRegexBadPrefix.test(prefix) ||
-                this.reRegexBadSuffix.test(s.slice(this.reRegexToken.lastIndex))
+                this.reRegexBadPrefix.test(prefix) || (
+                    matches[0].length < this.maxTokenLen &&
+                    this.reRegexBadSuffix.test(
+                        s.slice(this.reRegexToken.lastIndex)
+                    )
+                )
             ) {
                 continue;
             }
@@ -2913,7 +2917,7 @@ FilterContainer.prototype.fromSelfie = function(path) {
             return true;
         }),
     ]).then(results =>
-        results.reduce((acc, v) => acc && v, true)
+        results.every(v => v === true)
     );
 };
 

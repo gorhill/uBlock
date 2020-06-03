@@ -95,6 +95,18 @@
     "message": "lub",
     "description": "English: or"
   },
+  "popupBlockedOnThisPage_v2": {
+    "message": "Zablokowane na tej stronie",
+    "description": "For the new mobile-friendly popup design"
+  },
+  "popupBlockedSinceInstall_v2": {
+    "message": "Zablokowane od instalacji",
+    "description": "For the new mobile-friendly popup design"
+  },
+  "popupDomainsConnected_v2": {
+    "message": "Domeny podłączone",
+    "description": "For the new mobile-friendly popup design"
+  },
   "popupTipDashboard": {
     "message": "Otwórz panel sterowania",
     "description": "English: Click to open the dashboard"
@@ -166,6 +178,26 @@
   "popupTipNoScripting2": {
     "message": "Kliknij, aby JavaScript nie był już wyłączony na tej witrynie",
     "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupNoLargeMedia_v2": {
+    "message": "Duże elementy multimedialne",
+    "description": "Tip for the no-large-media per-site switch"
+  },
+  "popupNoCosmeticFiltering_v2": {
+    "message": "Filtrowanie kosmetyczne",
+    "description": "Tip for the no-cosmetic-filtering per-site switch"
+  },
+  "popupNoRemoteFonts_v2": {
+    "message": "Zdalne czcionki",
+    "description": "Tip for the no-remote-fonts per-site switch"
+  },
+  "popupNoScripting_v2": {
+    "message": "JavaScript",
+    "description": "Tip for the no-scripting per-site switch"
+  },
+  "popupMoreButton_v2": {
+    "message": "Więcej",
+    "description": "Label to be used to toggle overview panel"
   },
   "popupTipGlobalRules": {
     "message": "Reguły globalne. W tej kolumnie znajdują się reguły stosowane na wszystkich witrynach.",

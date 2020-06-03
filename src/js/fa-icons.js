@@ -23,7 +23,7 @@
 
 /******************************************************************************/
 
-let faIconsInit = function(root) {
+const faIconsInit = function(root) {
     const icons = (root || document).querySelectorAll('.fa-icon');
     for ( const icon of icons ) {
         if ( icon.firstChild === null || icon.firstChild.nodeType !== 3 ) {

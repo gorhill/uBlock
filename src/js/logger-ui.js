@@ -45,6 +45,7 @@ let activeTabId = 0;
 let filterAuthorMode = false;
 let selectedTabId = 0;
 let netInspectorPaused = false;
+let cnameOfEnabled = false;
 
 /******************************************************************************/
 
@@ -157,9 +158,12 @@ const regexFromURLFilteringResult = function(result) {
 
 const nodeFromURL = function(parent, url, re) {
     const fragment = document.createDocumentFragment();
-    if ( re instanceof RegExp === false ) {
+    if ( re === undefined ) {
         fragment.textContent = url;
     } else {
+        if ( typeof re === 'string' ) {
+            re = new RegExp(re.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
+        }
         const matches = re.exec(url);
         if ( matches === null || matches[0].length === 0 ) {
             fragment.textContent = url;
@@ -211,6 +215,9 @@ const LogEntry = function(details) {
             this[prop] = details[prop];
         }
     }
+    if ( details.aliasURL !== undefined ) {
+        this.aliased = true;
+    }
     if ( this.tabDomain === '' ) {
         this.tabDomain = this.tabHostname || '';
     }
@@ -222,11 +229,13 @@ const LogEntry = function(details) {
     }
 };
 LogEntry.prototype = {
+    aliased: false,
     dead: false,
     docDomain: '',
     docHostname: '',
     domain: '',
     filter: undefined,
+    id: '',
     realm: '',
     tabDomain: '',
     tabHostname: '',
@@ -293,7 +302,7 @@ const processLoggerEntries = function(response) {
             if ( autoDeleteVoidedRows ) { continue; }
             parsed.voided = true;
         }
-        if ( parsed.type === 'main_frame' ) {
+        if ( parsed.type === 'main_frame' && parsed.aliased === false ) {
             const separator = createLogSeparator(parsed, unboxed.url);
             loggerEntries.unshift(separator);
             if ( rowFilterer.filterOne(separator) ) {
@@ -302,6 +311,10 @@ const processLoggerEntries = function(response) {
                     filteredLoggerEntryVoidedCount += 1;
                 }
             }
+        }
+        if ( cnameOfEnabled === false && parsed.aliased ) {
+            uDom.nodeFromId('filterExprCnameOf').style.display = '';
+            cnameOfEnabled = true;
         }
         loggerEntries.unshift(parsed);
         if ( rowFilterer.filterOne(parsed) ) {
@@ -379,7 +392,7 @@ const parseLogEntry = function(details) {
     // Cell 3
     textContent.push(normalizeToStr(entry.docHostname));
 
-    // Cell 4
+    // Cell 4: partyness
     if (
         entry.realm === 'network' &&
         typeof entry.domain === 'string' &&
@@ -415,6 +428,13 @@ const parseLogEntry = function(details) {
 
     // Cell 6
     textContent.push(normalizeToStr(details.url));
+
+    // Hidden cells -- useful for row-filtering purpose
+
+    // Cell 7
+    if ( entry.aliased ) {
+        textContent.push(`aliasURL=${details.aliasURL}`);
+    }
 
     entry.textContent = textContent.join('\t');
     return entry;
@@ -735,13 +755,21 @@ const viewPort = (( ) => {
         span.textContent = cells[5];
 
         // URL
-        let re = null;
+        let re;
         if ( filteringType === 'static' ) {
             re = new RegExp(filter.regex, 'gi');
         } else if ( filteringType === 'dynamicUrl' ) {
             re = regexFromURLFilteringResult(filter.rule.join(' '));
         }
         nodeFromURL(div.children[6], cells[6], re);
+
+        // Alias URL (CNAME, etc.)
+        if ( cells.length > 7 ) {
+            const pos = details.textContent.lastIndexOf('\taliasURL=');
+            if ( pos !== -1 ) {
+                div.setAttribute('data-aliasid', details.id);
+            }
+        }
 
         return div;
     };
@@ -1463,6 +1491,16 @@ const reloadTab = function(ev) {
         return targetRow.children[1].textContent;
     };
 
+    const aliasURLFromID = function(id) {
+        if ( id === '' ) { return ''; }
+        for ( const entry of loggerEntries ) {
+            if ( entry.id !== id || entry.aliased ) { continue; }
+            const fields = entry.textContent.split('\t');
+            return fields[6] || '';
+        }
+        return '';
+    };
+
     const toSummaryPaneFilterNode = async function(receiver, filter) {
         receiver.children[1].textContent = filter;
         if ( filterAuthorMode !== true ) { return; }
@@ -1624,8 +1662,8 @@ const reloadTab = function(ev) {
             rows[6].style.display = 'none';
         }
         // URL
-        text = trch[6].textContent;
-        if ( text !== '' ) {
+        const canonicalURL = trch[6].textContent;
+        if ( canonicalURL !== '' ) {
             const attr = tr.getAttribute('data-status') || '';
             if ( attr !== '' ) {
                 rows[7].setAttribute('data-status', attr);
@@ -1633,6 +1671,18 @@ const reloadTab = function(ev) {
             rows[7].children[1].appendChild(trch[6].cloneNode(true));
         } else {
             rows[7].style.display = 'none';
+        }
+        // Alias URL
+        text = tr.getAttribute('data-aliasid');
+        const aliasURL = text ? aliasURLFromID(text) : '';
+        if ( aliasURL !== '' ) {
+            rows[8].children[1].textContent =
+                vAPI.hostnameFromURI(aliasURL) + ' \u21d2\n\u2003' +
+                vAPI.hostnameFromURI(canonicalURL);
+            rows[9].children[1].textContent = aliasURL;
+        } else {
+            rows[8].style.display = 'none';
+            rows[9].style.display = 'none';
         }
     };
 
@@ -1977,14 +2027,14 @@ const rowFilterer = (( ) => {
         );
     };
 
-    const onFilterChangedAsync = (function() {
+    const onFilterChangedAsync = (( ) => {
         let timer;
         const commit = ( ) => {
             timer = undefined;
             parseInput();
             filterAll();
         };
-        return function() {
+        return ( ) => {
             if ( timer !== undefined ) {
                 clearTimeout(timer);
             }

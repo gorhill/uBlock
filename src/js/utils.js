@@ -61,7 +61,9 @@
         this._urlIn = '';
         this._urlOut = '';
         this._tokenized = false;
-        this._tokens = new Uint32Array(1024);
+        // https://www.reddit.com/r/uBlockOrigin/comments/dzw57l/
+        //   Remember: 1 token needs two slots
+        this._tokens = new Uint32Array(2064);
 
         this.knownTokens = new Uint8Array(65536);
         this.resetKnownTokens();
@@ -553,16 +555,19 @@
         const inbuf = new Uint32Array(arrbuf, 0, inputLength);
         const outputLength = this.magic.length + 7 + inputLength * 7;
         const outbuf = new Uint8Array(outputLength);
+        // magic bytes
         let j = 0;
         for ( let i = 0; i < this.magic.length; i++ ) {
             outbuf[j++] = this.magic.charCodeAt(i);
         }
+        // array size
         let v = inputLength;
         do {
             outbuf[j++] = this.valToDigit[v & 0b111111];
             v >>>= 6;
         } while ( v !== 0 );
         outbuf[j++] = 0x20 /* ' ' */;
+        // array content
         for ( let i = 0; i < inputLength; i++ ) {
             v = inbuf[i];
             do {
@@ -594,16 +599,18 @@
             throw new Error('Invalid µBlock.base64 encoding');
         }
         const inputLength = instr.length;
+        const outputLength = this.decodeSize(instr) >> 2;
         const outbuf = arrbuf instanceof ArrayBuffer === false
-            ? new Uint32Array(this.decodeSize(instr) >> 2)
+            ? new Uint32Array(outputLength)
             : new Uint32Array(arrbuf);
         let i = instr.indexOf(' ', this.magic.length) + 1;
         if ( i === -1 ) {
             throw new Error('Invalid µBlock.base64 encoding');
         }
+        // array content
         let j = 0;
         for (;;) {
-            if ( i === inputLength ) { break; }
+            if ( j === outputLength || i >= inputLength ) { break; }
             let v = 0, l = 0;
             for (;;) {
                 const c = instr.charCodeAt(i++);
@@ -612,6 +619,9 @@
                 l += 6;
             }
             outbuf[j++] = v;
+        }
+        if ( i < inputLength || j < outputLength ) {
+            throw new Error('Invalid µBlock.base64 encoding');
         }
         return outbuf;
     }

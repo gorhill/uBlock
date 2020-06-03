@@ -1,27 +1,25 @@
+ /* External CSS values override */
+body {
+    color: #20123a;
+    fill: #20123a;
+    }
+.fa-icon {
+    padding: 0 0.1em;
+    }
+.fa-icon.fa-icon-badged > .fa-icon-badge {
+    bottom: auto;
+    top: -20%;
+    }
+
+/* Internal CSS values */
 body {
     background-color: white;
     border: 0;
-    display: flex;
-    flex-direction: column;
     margin: 0;
-    opacity: 1;
-    overflow: hidden;
     padding: 0;
     white-space: nowrap;
-    width: fit-content;
-    width: -moz-fit-content;
     }
 
-h2 {
-    background-color: #eee;
-    border: 0;
-    color: #666;
-    cursor: pointer;
-    font-size: 100%;
-    font-weight: normal;
-    padding: 0.2em;
-    text-align: center;
-    }
 a {
     color: inherit;
     text-decoration: none;
@@ -29,74 +27,44 @@ a {
 :focus {
     outline: 0;
     }
-#appinfo {
-    align-items: flex-end;
-    background-color: #444;
-    border: 0;
-    color: #bbb;
+
+#main {
+    align-items: stretch;
     display: flex;
-    font-size: smaller;
-    justify-content: center;
-    margin: 0;
-    padding: 1px 0;
+    flex-direction: column;
+    padding: 0;
+    position: relative;
     width: 100%;
     }
-
-#panes {
-    display: flex;
-    flex-direction: row-reverse;
-    }
-#panes > div {
-    display: inline-block;
-    position: relative;
-    vertical-align: top;
-    }
-body[dir="ltr"] #panes > div {
-    direction: ltr;
-    }
-body[dir="rtl"] #panes > div {
-    direction: rtl;
-    }
-#panes > div:nth-of-type(2) {
-    flex-shrink: 0;
-    font-family: "Noto Sans", sans-serif;
-    overflow-y: auto;
-    overflow-x: hidden;
-    width: 24em;
-    }
-/**
- Scroll bar to the left.
- */
-body[dir="ltr"] #panes > div:nth-of-type(2) {
-    direction: rtl;
-    margin-right: 1px;
-    }
-body[dir="rtl"] #panes > div:nth-of-type(2) {
-    direction: ltr;
-    margin-left: 1px;
-    }
-#panes:not(.dfEnabled) > div:nth-of-type(2) {
-    display: none;
-    }
-#panes > div:first-of-type {
-    min-width: 11em;
+hr {
+    border: 0;
+    border-top: 1px solid #e3e2e3;
+    margin: 0;
     padding: 0;
-    }
-p {
-    display: flex;
-    justify-content: center;
-    }
-.fa-icon {
-    font-size: 120%;
     }
 .fa {
     font-size: 120%;
     }
+
+#sticky {
+    background-color: white;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    }
+#sticky > div {
+    align-items: stretch;
+    display: flex;
+    justify-content: space-between;
+    }
 #switch {
-    margin: 0.8em 0;
+    display: flex;
+    flex-grow: 2;
+    justify-content: center;
+    margin: 0.5em 0;
     }
 #switch .fa-icon {
-    fill: #0046ff;
+    fill: #0060df;
     cursor: pointer;
     font-size: 700%;
     margin: 0;
@@ -108,63 +76,90 @@ p {
 body.off #switch .fa-icon {
     fill: #ccc;
     }
-#basicTools {
-    margin: 1.2em 0 0.5em 0;
+.rulesetTools {
+    background-color: transparent;
+    border: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-evenly;
+    padding: 0.5em;
     }
-.tool:first-child {
-    margin-left: 0;
-    }
-.tool {
-    color: #aaa;
+.rulesetTools [id] {
+    background-color: #ffe;
+    border: 1px solid #ddc;
+    border-radius: 4px;
     cursor: pointer;
-    fill: #aaa;
-    margin-left: 0.8em;
-    min-width: 1em;
-    padding: 0 0.2em;
+    fill: #888;
+    flex-grow: 1;
+    font-size: 2.2em;
+    padding: 0;
+    visibility: hidden;
+    }
+.rulesetTools [id]:not(:first-of-type) {
+    margin-top: 0.2em;
+    }
+body.needReload #refresh,
+body.needSave #saveRules,
+body.needSave #revertRules {
+    visibility: visible;
+    }
+
+.itemRibbon {
+    display: grid;
+    grid-template: auto / auto auto;
+    padding: 1em 1em;
+    }
+.itemRibbon > [data-i18n] + span {
+    justify-self: end;
+    }
+.itemRibbon > .h-gutter {
+    display: inline-block;
+    height: 1em;
+    }
+
+#basicStats {
+    }
+
+.toolRibbon {
+    align-items: start;
+    display: grid;
+    grid-template: auto / 25% 25% 25% 25%;
+    justify-items: center;
+    margin: 1em 0;
+    white-space: normal;
+    }
+.toolRibbon .tool {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.4em;
+    min-width: 4em;
+    }
+.toolRibbon [data-i18n] {
+    font-size: x-small;
+    margin-top: 0.8em;
+    text-align: center;
+    }
+
+.tool {
+    cursor: pointer;
+    padding: 0 0.5em;
     unicode-bidi: embed;
     visibility: hidden;
     }
 .tool.enabled {
     visibility: visible;
     }
-.tool.enabled:hover {
-    color: #444;
-    fill: #444;
-    }
-#page-blocked {
-    font-size: 1.25em;
-    }
-.statName {
-    color: #888;
-    font-size: 85%;
-    margin: 0.8em 0.2em 0.4em 0.2em;
-    }
+
 .statValue {
     margin: 0;
     }
-#extraTools {
-    background-color: #eee;
-    border: 0;
-    color: #888;
-    display: flex;
-    fill: #888;
-    justify-content: center;
-    margin: 0.8em 0 0 0;
-    padding: 0.2em 0;
-    }
-body.responsive #extraTools {
-    justify-content: space-evenly;
-    }
-#extraTools > span {
-    cursor: pointer;
-    font-size: 1.2em;
-    margin: 0 0.8em 0 0;
+#extraTools .fa-icon {
+    align-self: center;
     position: relative;
     }
-#extraTools > span:first-of-type {
-    margin-left: 0.9em;
-    }
-#extraTools > span > .nope {
+#extraTools .fa-icon > .nope {
     left: 50%;
     position: absolute;
     stroke: red;
@@ -173,34 +168,12 @@ body.responsive #extraTools {
     visibility: hidden;
     width: 1em;
     }
-#extraTools > span.on > .nope {
+#extraTools > span.on .fa-icon >.nope {
     visibility: visible;
     }
-#extraTools > span:hover {
-    color: #222;
-    fill: #222;
-    }
 
-#refresh {
-    background-color: #ffe;
-    border: 1px solid #ddc;
-    border-radius: 4px;
-    cursor: pointer;
-    display: none;
-    fill: #888;
-    font-size: 3em;
-    justify-content: center;
-    left: 4px;
-    line-height: 1;
-    padding: 0.15em;
-    position: absolute;
-    right: 4px;
-    }
-body.dirty #refresh {
-    display: flex;
-    }
-body.dirty #refresh:hover {
-    fill: #000
+#main:not(.dfEnabled) #moreButton .fa-icon {
+    transform: rotate(180deg);
     }
 
 #tooltip {
@@ -234,14 +207,21 @@ body[dir="rtl"] #tooltip {
     -webkit-transition: opacity 0.15s 0.5s;
     visibility: visible;
     opacity: 1;
-}
+    }
 
 #firewallContainer {
     border: 0;
-    font-size: 85%;
+    flex-shrink: 0;
+    font-family: "Noto Sans", sans-serif;
+    font-size: 90%;
     margin: 0;
     padding: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
     text-align: right;
+    }
+#main:not(.dfEnabled) #firewallContainer {
+    display: none;
     }
 #firewallContainer > div {
     border: 0;
@@ -263,14 +243,13 @@ body[dir="rtl"] #tooltip {
     display: none;
     }
 #firewallContainer > div > span {
-    background-color: #e6e6e6;
+    background-color: #e0e0e6;
     border: none;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     color: #000;
     display: inline-flex;
-    flex-shrink: 0;
-    padding: 0.33em 0;
+    padding: 0.35em 0;
     position: relative;
     }
 #firewallContainer > div:first-of-type > span:first-of-type {
@@ -280,6 +259,7 @@ body[dir="rtl"] #tooltip {
 #firewallContainer > div > span:first-of-type {
     align-items: flex-end;
     flex-direction: column;
+    flex-grow: 1;
     justify-content: flex-end;
     padding-right: 2px;
     width: calc(100% - 4em);
@@ -297,8 +277,9 @@ body[dir="rtl"] #tooltip {
     display: none;
     }
 #firewallContainer > div > span:first-of-type ~ span {
+    flex-shrink: 0;
     margin-left: 1px;
-    width: 4em;
+    width: 5em;
     }
 #firewallContainer > div > span:nth-of-type(2) {
     display: none;
@@ -333,7 +314,9 @@ body[dir="rtl"] #tooltip {
     }
 #firewallContainer > div > span[data-acount]::before,
 #firewallContainer > div > span[data-bcount]::after {
+    align-items: center;
     content: ' ';
+    display: inline-flex;
     }
 #firewallContainer > div > span[data-acount]::before {
     padding-left: 0.1em;
@@ -360,9 +343,6 @@ body[dir="rtl"] #tooltip {
     content: '\2212\2212\2212';
     }
 
-body.advancedUser #firewallContainer > div > span:first-of-type {
-    width: calc(100% - 8em);
-    }
 body.advancedUser #firewallContainer > div > span:nth-of-type(2) {
     display: inline-flex;
     }
@@ -435,9 +415,6 @@ body.advancedUser #firewallContainer.colorBlind > div > span.blockRule {
     background-color: rgba(0, 19, 110, 0.4);
     }
 body.advancedUser #firewallContainer > div > span.noopRule {
-    background-color: rgba(108, 108, 108, 0.3);
-    }
-body.advancedUser #firewallContainer.colorBlind > div > span.noopRule {
     background-color: rgba(96, 96, 96, 0.4);
     }
 body.advancedUser #firewallContainer > div > span.ownRule {
@@ -456,7 +433,7 @@ body.advancedUser #firewallContainer.colorBlind > div > span.blockRule.ownRule {
     background-color: rgba(0, 19, 110, 1);
     }
 body.advancedUser #firewallContainer > div > span.noopRule.ownRule {
-    background-color: rgba(108, 108, 108, 1);
+    background-color: rgba(96, 96, 96, 1);
     }
 
 #actionSelector {
@@ -464,7 +441,7 @@ body.advancedUser #firewallContainer > div > span.noopRule.ownRule {
     left: 0;
     position: absolute;
     top: 0;
-    width: 4em;
+    width: 100%;
     z-index: 1;
     }
 #actionSelector > span {
@@ -498,53 +475,4 @@ body.advancedUser #firewallContainer > div > span.noopRule.ownRule {
     }
 #actionSelector.colorBlind > span:nth-of-type(3) {
     background-color: rgb(0, 19, 110);
-    }
-
-#rulesetTools {
-    background-color: transparent;
-    border: 0;
-    fill: #888;
-    display: none;
-    left: 4px;
-    padding: 0;
-    position: fixed;
-    top: 4px;
-    }
-#rulesetTools > span {
-    background-color: #ffe;
-    border: 1px solid #ddc;
-    border-radius: 4px;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 1.8em;
-    line-height: 1.0;
-    margin: 0;
-    margin-right: 0.1em;
-    padding: 0.2em 0.4em;
-    text-align: center;
-    width: 1em;
-    }
-#firewallContainer.dirty ~ #rulesetTools {
-    display: block;
-    }
-#firewallContainer.dirty ~ #rulesetTools > span:hover {
-    fill: black;
-    }
-
-
-body.responsive {
-    overflow-y: auto;
-    width: auto;
-    }
-body.responsive #panes {
-    flex-wrap: wrap;
-    }
-body.responsive #panes > div:nth-of-type(1) {
-    flex-shrink: 0;
-    flex-grow: 1;
-    }
-body.responsive #panes > div:nth-of-type(2) {
-    flex-grow: 8;
-    flex-shrink: 1;
-    width: auto;
     }

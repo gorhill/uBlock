@@ -44,7 +44,7 @@
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "الإختصارات",
+    "message": "الاختصارات",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -94,6 +94,18 @@
   "popupOr": {
     "message": "أو",
     "description": "English: or"
+  },
+  "popupBlockedOnThisPage_v2": {
+    "message": "Blocked on this page",
+    "description": "For the new mobile-friendly popup design"
+  },
+  "popupBlockedSinceInstall_v2": {
+    "message": "Blocked since install",
+    "description": "For the new mobile-friendly popup design"
+  },
+  "popupDomainsConnected_v2": {
+    "message": "Domains connected",
+    "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
     "message": "إضغط لفتح لوحة التحكم",
@@ -166,6 +178,26 @@
   "popupTipNoScripting2": {
     "message": "انقر لإلغاء تعطيل الجافا سكريبت كُليًا على هذا الموقع",
     "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupNoLargeMedia_v2": {
+    "message": "Large media elements",
+    "description": "Tip for the no-large-media per-site switch"
+  },
+  "popupNoCosmeticFiltering_v2": {
+    "message": "Cosmetic filtering",
+    "description": "Tip for the no-cosmetic-filtering per-site switch"
+  },
+  "popupNoRemoteFonts_v2": {
+    "message": "Remote fonts",
+    "description": "Tip for the no-remote-fonts per-site switch"
+  },
+  "popupNoScripting_v2": {
+    "message": "JavaScript",
+    "description": "Tip for the no-scripting per-site switch"
+  },
+  "popupMoreButton_v2": {
+    "message": "More",
+    "description": "Label to be used to toggle overview panel"
   },
   "popupTipGlobalRules": {
     "message": "القواعد العامة: هذا العمود يتعلق بالقواعد التي تنطبق على جميع الموقع.",

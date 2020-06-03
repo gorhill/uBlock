@@ -76,6 +76,7 @@
     "open_in_tab": true
   },
   "permissions": [
+    "dns",
     "menus",
     "privacy",
     "storage",

@@ -446,6 +446,7 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
                 .replace(/\*/g, '[\\w.%-]*')
                 .replace(/\./g, '\\.') +
             path
+                .replace(/\|$/, '$')
                 .replace(/[.+?{}()|[\]\/\\]/g, '\\$&')
                 .replace(/\^/g, '[^\\w.%-]')
                 .replace(/\*/g, '.*?');

@@ -60,6 +60,28 @@
         constructor() {
             super();
             this.pendingRequests = [];
+            this.cnames = new Map([ [ '', '' ] ]);
+            this.cnameIgnoreList = null;
+            this.cnameIgnore1stParty = true;
+            this.cnameIgnoreExceptions = true;
+            this.cnameIgnoreRootDocument = true;
+            this.cnameMaxTTL = 120;
+            this.cnameReplayFullURL = false;
+            this.cnameFlushTime = Date.now() + this.cnameMaxTTL * 60000;
+            this.cnameUncloak = browser.dns instanceof Object;
+        }
+        setOptions(options) {
+            super.setOptions(options);
+            this.cnameUncloak = browser.dns instanceof Object &&
+                                options.cnameUncloak !== false;
+            this.cnameIgnoreList = this.regexFromStrList(options.cnameIgnoreList);
+            this.cnameIgnore1stParty = options.cnameIgnore1stParty !== false;
+            this.cnameIgnoreExceptions = options.cnameIgnoreExceptions !== false;
+            this.cnameIgnoreRootDocument = options.cnameIgnoreRootDocument !== false;
+            this.cnameMaxTTL = options.cnameMaxTTL || 120;
+            this.cnameReplayFullURL = options.cnameReplayFullURL === true;
+            this.cnames.clear(); this.cnames.set('', '');
+            this.cnameFlushTime = Date.now() + this.cnameMaxTTL * 60000;
         }
         normalizeDetails(details) {
             if ( mustPunycode && !reAsciiHostname.test(details.url) ) {
@@ -109,6 +131,116 @@
             }
             return Array.from(out);
         }
+        canonicalNameFromHostname(hn) {
+            const cn = this.cnames.get(hn);
+            if ( cn !== undefined && cn !== '' ) {
+                return cn;
+            }
+        }
+        processCanonicalName(hn, cn, details) {
+            const hnBeg = details.url.indexOf(hn);
+            if ( hnBeg === -1 ) { return; }
+            const oldURL = details.url;
+            let newURL = oldURL.slice(0, hnBeg) + cn;
+            const hnEnd = hnBeg + hn.length;
+            if ( this.cnameReplayFullURL ) {
+                newURL += oldURL.slice(hnEnd);
+            } else {
+                const pathBeg = oldURL.indexOf('/', hnEnd);
+                if ( pathBeg !== -1 ) {
+                    newURL += oldURL.slice(hnEnd, pathBeg + 1);
+                }
+            }
+            details.url = newURL;
+            details.aliasURL = oldURL;
+            return super.onBeforeSuspendableRequest(details);
+        }
+        recordCanonicalName(hn, record) {
+            if ( (this.cnames.size & 0b111111) === 0 ) {
+                const now = Date.now();
+                if ( now >= this.cnameFlushTime ) {
+                    this.cnames.clear(); this.cnames.set('', '');
+                    this.cnameFlushTime = now + this.cnameMaxTTL * 60000;
+                }
+            }
+            let cname =
+                typeof record.canonicalName === 'string' &&
+                record.canonicalName !== hn
+                    ? record.canonicalName
+                    : '';
+            if (
+                cname !== '' &&
+                this.cnameIgnore1stParty &&
+                vAPI.domainFromHostname(cname) === vAPI.domainFromHostname(hn)
+            ) {
+                cname = '';
+            }
+            if (
+                cname !== '' &&
+                this.cnameIgnoreList !== null &&
+                this.cnameIgnoreList.test(cname)
+            ) {
+                cname = '';
+            }
+            this.cnames.set(hn, cname);
+            return cname;
+        }
+        regexFromStrList(list) {
+            if (
+                typeof list !== 'string' ||
+                list.length === 0 ||
+                list === 'unset' ||
+                browser.dns instanceof Object === false
+            ) {
+                return null;
+            }
+            if ( list === '*' ) {
+                return /^./;
+            }
+            return new RegExp(
+                '(?:^|\.)(?:' +
+                list.trim()
+                    .split(/\s+/)
+                    .map(a => a.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+                    .join('|') +
+                ')$'
+            );
+        }
+        onBeforeSuspendableRequest(details) {
+            const r = super.onBeforeSuspendableRequest(details);
+            if ( this.cnameUncloak === false ) { return r; }
+            if ( r !== undefined ) {
+                if (
+                    r.cancel === true ||
+                    r.redirectUrl !== undefined ||
+                    this.cnameIgnoreExceptions
+                ) {
+                    return r;
+                }
+            }
+            if (
+                details.type === 'main_frame' &&
+                this.cnameIgnoreRootDocument
+            ) {
+                return;
+            }
+            const hn = vAPI.hostnameFromNetworkURL(details.url);
+            const cname = this.cnames.get(hn);
+            if ( cname === '' ) { return; }
+            if ( cname !== undefined ) {
+                return this.processCanonicalName(hn, cname, details);
+            }
+            return browser.dns.resolve(hn, [ 'canonical_name' ]).then(
+                rec => {
+                    const cname = this.recordCanonicalName(hn, rec);
+                    if ( cname === '' ) { return; }
+                    return this.processCanonicalName(hn, cname, details);
+                },
+                ( ) => {
+                    this.cnames.set(hn, '');
+                }
+            );
+        }
         suspendOneRequest(details) {
             const pending = {
                 details: Object.assign({}, details),
@@ -121,11 +253,11 @@
             this.pendingRequests.push(pending);
             return pending.promise;
         }
-        unsuspendAllRequests(resolver) {
+        unsuspendAllRequests() {
             const pendingRequests = this.pendingRequests;
             this.pendingRequests = [];
             for ( const entry of pendingRequests ) {
-                entry.resolve(resolver(entry.details));
+                entry.resolve(this.onBeforeSuspendableRequest(entry.details));
             }
         }
         canSuspend() {

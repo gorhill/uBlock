@@ -544,6 +544,10 @@
     (local $c0 i32)
     block $fail
     block $succeed
+    ;; if ( needleLen === 0 ) { return haystackLeft; }
+    get_local $needleLen
+    i32.eqz
+    br_if $succeed
     ;; haystackEnd -= needleLen;
     get_local $haystackEnd
     get_local $needleLen

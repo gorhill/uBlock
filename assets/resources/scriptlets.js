@@ -55,11 +55,16 @@
         owner = owner[prop];
         if ( owner instanceof Object === false ) { return; }
     }
+    let value;
     const desc = Object.getOwnPropertyDescriptor(owner, prop);
-    if ( desc && desc.get !== undefined ) { return; }
+    if (
+        desc instanceof Object === false ||
+        desc.get instanceof Function === false
+    ) {
+        value = owner[prop];
+    }
     const magic = String.fromCharCode(Date.now() % 26 + 97) +
                   Math.floor(Math.random() * 982451653 + 982451653).toString(36);
-    let value = owner[prop];
     const validate = function() {
         const e = document.currentScript;
         if (
@@ -506,7 +511,10 @@
     let aborted = false;
     const mustAbort = function(v) {
         if ( aborted ) { return true; }
-        aborted = v !== undefined && cValue !== undefined && typeof v !== typeof cValue;
+        aborted =
+            (v !== undefined && v !== null) &&
+            (cValue !== undefined && cValue !== null) &&
+            (typeof v !== typeof cValue);
         return aborted;
     };
     const makeProxy = function(owner, chain) {

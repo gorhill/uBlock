@@ -95,6 +95,18 @@
     "message": "ანუ",
     "description": "English: or"
   },
+  "popupBlockedOnThisPage_v2": {
+    "message": "შეზღუდული ამ გვერდზე",
+    "description": "For the new mobile-friendly popup design"
+  },
+  "popupBlockedSinceInstall_v2": {
+    "message": "შეზღუდული დაყენების შემდგომ",
+    "description": "For the new mobile-friendly popup design"
+  },
+  "popupDomainsConnected_v2": {
+    "message": "დაკავშირებული დომენები",
+    "description": "For the new mobile-friendly popup design"
+  },
   "popupTipDashboard": {
     "message": "სამართავი დაფის გახსნა",
     "description": "English: Click to open the dashboard"
@@ -108,19 +120,19 @@
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "ქსელის მოთხოვნების ჩანაწერები",
+    "message": "აღმრიცხავის გახსნა",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "ამ საიტზე ყველა ამომხტომი ფირნიშის შეზღუდვის ჩართვა/გამორთვა",
+    "message": "ამ საიტზე ყველა ამომხტომი ფანჯრის შეზღუდვის ჩართვა/გამორთვა",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "დააწკაპეთ ყველა ამომხტომი ფირნიშის შესაზღუდად ამ საიტზე",
+    "message": "დააწკაპეთ ყველა ამომხტომი ფანჯრის შესაზღუდად ამ საიტზე",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "დააწკაპეთ, ამომხტომი ფირნიშების შეზღუდვის გასაუქმებლად ამ საიტზე",
+    "message": "დააწკაპეთ, ამომხტომი ფანჯრების შეზღუდვის გასაუქმებლად ამ საიტზე",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -166,6 +178,26 @@
   "popupTipNoScripting2": {
     "message": "დააწკაპეთ JavaScript-ზე შეზღუდვის მოსახსნელად ამ საიტზე",
     "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupNoLargeMedia_v2": {
+    "message": "დიდი მედიაფაილები",
+    "description": "Tip for the no-large-media per-site switch"
+  },
+  "popupNoCosmeticFiltering_v2": {
+    "message": "ხილული ელემენტების გაფილტვრა",
+    "description": "Tip for the no-cosmetic-filtering per-site switch"
+  },
+  "popupNoRemoteFonts_v2": {
+    "message": "ვებშრიფტები",
+    "description": "Tip for the no-remote-fonts per-site switch"
+  },
+  "popupNoScripting_v2": {
+    "message": "JavaScript",
+    "description": "Tip for the no-scripting per-site switch"
+  },
+  "popupMoreButton_v2": {
+    "message": "სხვა",
+    "description": "Label to be used to toggle overview panel"
   },
   "popupTipGlobalRules": {
     "message": "გლობალური წესები: ეს სვეტი არის წესებისთვის, რომლებიც მოქმედებს ყველა საიტზე.",
@@ -584,7 +616,7 @@
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "ჩანაწერების გამორჩევის ჩართვა/გამორთვა",
+    "message": "აღრიცხულის გამორჩევის ჩართვა/გამორთვა",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
@@ -592,7 +624,7 @@
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
-    "message": "ჩანაწერების გამორჩევის პარამეტრები",
+    "message": "აღრიცხულის გამორჩევის პარამეტრები",
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {

@@ -956,7 +956,7 @@ vAPI.domCollapser = (function() {
             if ( netSelectorCacheCount <= netSelectorCacheCountMax ) {
                 const value = target.getAttribute(prop);
                 if ( value ) {
-                    selectors.push(tag + '[' + prop + '="' + value + '"]');
+                    selectors.push(`${tag}[${prop}="${CSS.escape(value)}"]`);
                     netSelectorCacheCount += 1;
                 }
             }

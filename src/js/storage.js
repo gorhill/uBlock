@@ -112,7 +112,6 @@
                     : 'unset';
         }
     }
-    self.log.verbosity = this.hiddenSettings.consoleLogLevel;
     this.fireDOMEvent('hiddenSettingsChanged');
 };
 
@@ -132,8 +131,20 @@
     }
     vAPI.storage.set(bin);
     this.saveImmediateHiddenSettings();
-    self.log.verbosity = this.hiddenSettings.consoleLogLevel;
 };
+
+self.addEventListener('hiddenSettingsChanged', ( ) => {
+    self.log.verbosity = µBlock.hiddenSettings.consoleLogLevel;
+    vAPI.net.setOptions({
+        cnameIgnoreList: µBlock.hiddenSettings.cnameIgnoreList,
+        cnameIgnore1stParty: µBlock.hiddenSettings.cnameIgnore1stParty,
+        cnameIgnoreExceptions: µBlock.hiddenSettings.cnameIgnoreExceptions,
+        cnameIgnoreRootDocument: µBlock.hiddenSettings.cnameIgnoreRootDocument,
+        cnameMaxTTL: µBlock.hiddenSettings.cnameMaxTTL,
+        cnameReplayFullURL: µBlock.hiddenSettings.cnameReplayFullURL,
+        cnameUncloak: µBlock.hiddenSettings.cnameUncloak,
+    });
+});
 
 /******************************************************************************/
 
@@ -156,7 +167,7 @@
             }
             break;
         case 'string':
-            out[name] = value;
+            out[name] = value.trim();
             break;
         case 'number':
             out[name] = parseInt(value, 10);
@@ -824,7 +835,7 @@
     const reIsWhitespaceChar = /\s/;
     const reMaybeLocalIp = /^[\d:f]/;
     const reIsLocalhostRedirect = /\s+(?:0\.0\.0\.0|broadcasthost|localhost|local|ip6-\w+)\b/;
-    const reLocalIp = /^(?:0\.0\.0\.0|127\.0\.0\.1|::1|fe80::1%lo0)/;
+    const reLocalIp = /^(?:(0\.0\.0\.)?0|127\.0\.0\.1|::1?|fe80::1%lo0)\s+/;
     const lineIter = new this.LineIterator(this.processDirectives(rawText));
 
     while ( lineIter.eot() === false ) {
@@ -995,6 +1006,7 @@
     [ 'env_chromium', 'chromium' ],
     [ 'env_edge', 'edge' ],
     [ 'env_firefox', 'firefox' ],
+    [ 'env_legacy', 'legacy' ],
     [ 'env_mobile', 'mobile' ],
     [ 'env_safari', 'safari' ],
     [ 'cap_html_filtering', 'html_filtering' ],
@@ -1058,8 +1070,7 @@
             return;
         }
     } catch (ex) {
-        console.error(ex);
-        return;
+        log.info(ex);
     }
 
     const result = await this.assets.get(this.pslAssetKey);

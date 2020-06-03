@@ -636,6 +636,7 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
     // Find the left-most instance of substring in main string
     // WASMable.
     indexOf(haystackLeft, haystackEnd, needleLeft, needleLen) {
+        if ( needleLen === 0 ) { return haystackLeft; }
         haystackEnd -= needleLen;
         if ( haystackEnd < haystackLeft ) { return -1; }
         needleLeft += this.buf32[CHAR0_SLOT];

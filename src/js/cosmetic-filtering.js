@@ -210,7 +210,7 @@ const FilterContainer = function() {
     this.rePlainSelectorEscaped = /^[#.](?:\\[0-9A-Fa-f]+ |\\.|\w|-)+/;
     this.rePlainSelectorEx = /^[^#.\[(]+([#.][\w-]+)|([#.][\w-]+)$/;
     this.reEscapeSequence = /\\([0-9A-Fa-f]+ |.)/g;
-    this.reSimpleHighGeneric1 = /^[a-z]*\[[^[]+]$/;
+    this.reSimpleHighGeneric = /^(?:[a-z]*\[[^\]]+\]|\S+)$/;
     this.reHighMedium = /^\[href\^="https?:\/\/([^"]{8})[^"]*"\]$/;
 
     this.selectorCache = new Map();
@@ -293,8 +293,8 @@ FilterContainer.prototype.reset = function() {
         this.selectorCacheTimer = null;
     }
 
-    // generic filters
-    this.hasGenericHide = false;
+    // whether there is at least one surveyor-based filter
+    this.needDOMSurveyor = false;
 
     // hostname, entity-based filters
     this.specificFilters.clear();
@@ -320,13 +320,11 @@ FilterContainer.prototype.freeze = function() {
     this.duplicateBuster.clear();
     this.specificFilters.collectGarbage();
 
-    this.hasGenericHide =
+    this.needDOMSurveyor =
         this.lowlyGeneric.id.simple.size !== 0 ||
         this.lowlyGeneric.id.complex.size !== 0 ||
         this.lowlyGeneric.cl.simple.size !== 0 ||
-        this.lowlyGeneric.cl.complex.size !== 0 ||
-        this.highlyGeneric.simple.dict.size !== 0 ||
-        this.highlyGeneric.complex.dict.size !== 0;
+        this.lowlyGeneric.cl.complex.size !== 0;
 
     this.highlyGeneric.simple.str = Array.from(this.highlyGeneric.simple.dict).join(',\n');
     this.highlyGeneric.simple.mru.reset();
@@ -352,8 +350,8 @@ FilterContainer.prototype.keyFromSelector = function(selector) {
     matches = this.rePlainSelectorEscaped.exec(selector);
     if ( matches === null ) { return; }
     key = '';
-    let escaped = matches[0],
-        beg = 0;
+    const escaped = matches[0];
+    let beg = 0;
     this.reEscapeSequence.lastIndex = 0;
     for (;;) {
         matches = this.reEscapeSequence.exec(escaped);
@@ -421,22 +419,19 @@ FilterContainer.prototype.compileGenericHideSelector = function(
     const type = selector.charCodeAt(0);
     let key;
 
+    // Simple selector-based CSS rule: no need to test for whether the
+    // selector is valid, the regex took care of this. Most generic selector
+    // falls into that category:
+    // - ###ad-bigbox
+    // - ##.ads-bigbox
     if ( type === 0x23 /* '#' */ ) {
         key = this.keyFromSelector(selector);
-        // Simple selector-based CSS rule: no need to test for whether the
-        // selector is valid, the regex took care of this. Most generic
-        // selector falls into that category.
-        // - ###ad-bigbox
         if ( key === selector ) {
             writer.push([ 0, key.slice(1) ]);
             return;
         }
     } else if ( type === 0x2E /* '.' */ ) {
         key = this.keyFromSelector(selector);
-        // Simple selector-based CSS rule: no need to test for whether the
-        // selector is valid, the regex took care of this. Most generic
-        // selector falls into that category.
-        // - ##.ads-bigbox
         if ( key === selector ) {
             writer.push([ 2, key.slice(1) ]);
             return;
@@ -503,12 +498,7 @@ FilterContainer.prototype.compileGenericHideSelector = function(
     // For efficiency purpose, we will distinguish between simple and complex
     // selectors.
 
-    if ( this.reSimpleHighGeneric1.test(selector) ) {
-        writer.push([ 4 /* simple */, selector ]);
-        return;
-    }
-
-    if ( selector.indexOf(' ') === -1 ) {
+    if ( this.reSimpleHighGeneric.test(selector) ) {
         writer.push([ 4 /* simple */, selector ]);
     } else {
         writer.push([ 5 /* complex */, selector ]);
@@ -570,10 +560,13 @@ FilterContainer.prototype.compileSpecificSelector = function(
 
     let kind = 0;
     if ( unhide === 1 ) {
-        kind |= 0b01;     // Exception
+        kind |= 0b001;     // Exception
     }
     if ( compiled.charCodeAt(0) === 0x7B /* '{' */ ) {
-        kind |= 0b10;     // Procedural
+        kind |= 0b010;     // Procedural
+    }
+    if ( hostname === '*' ) {
+        kind |= 0b100;     // Applies everywhere
     }
 
     writer.push([ 8, hostname, kind, compiled ]);
@@ -656,8 +649,21 @@ FilterContainer.prototype.fromCompiledContent = function(reader, options) {
 
         // hash,  example.com, .promoted-tweet
         // hash,  example.*, .promoted-tweet
+        //
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/803
+        //   Handle specific filters meant to apply everywhere, i.e. selectors
+        //   not to be injected conditionally through the DOM surveyor.
+        //   hash,  *, .promoted-tweet
         case 8:
-            this.specificFilters.store(args[1], args[2], args[3]);
+            if ( args[2] === 0b100 ) {
+                if ( this.reSimpleHighGeneric.test(args[3]) )
+                    this.highlyGeneric.simple.dict.add(args[3]);
+                else {
+                    this.highlyGeneric.complex.dict.add(args[3]);
+                }
+                break;
+            }
+            this.specificFilters.store(args[1], args[2] & 0b011, args[3]);
             break;
 
         default:
@@ -685,11 +691,21 @@ FilterContainer.prototype.skipGenericCompiledContent = function(reader) {
 
         switch ( args[0] ) {
 
-        // hash,  example.com, .promoted-tweet
-        // hash,  example.*, .promoted-tweet
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/803
+        //   Handle specific filters meant to apply everywhere, i.e. selectors
+        //   not to be injected conditionally through the DOM surveyor.
+        //   hash,  *, .promoted-tweet
         case 8:
             this.duplicateBuster.add(fingerprint);
-            this.specificFilters.store(args[1], args[2], args[3]);
+            if ( args[2] === 0b100 ) {
+                if ( this.reSimpleHighGeneric.test(args[3]) )
+                    this.highlyGeneric.simple.dict.add(args[3]);
+                else {
+                    this.highlyGeneric.complex.dict.add(args[3]);
+                }
+                break;
+            }
+            this.specificFilters.store(args[1], args[2] & 0b011, args[3]);
             break;
 
         default:
@@ -718,7 +734,6 @@ FilterContainer.prototype.toSelfie = function() {
         acceptedCount: this.acceptedCount,
         discardedCount: this.discardedCount,
         specificFilters: this.specificFilters.toSelfie(),
-        hasGenericHide: this.hasGenericHide,
         lowlyGenericSID: Array.from(this.lowlyGeneric.id.simple),
         lowlyGenericCID: Array.from(this.lowlyGeneric.id.complex),
         lowlyGenericSCL: Array.from(this.lowlyGeneric.cl.simple),
@@ -734,7 +749,6 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
     this.acceptedCount = selfie.acceptedCount;
     this.discardedCount = selfie.discardedCount;
     this.specificFilters.fromSelfie(selfie.specificFilters);
-    this.hasGenericHide = selfie.hasGenericHide;
     this.lowlyGeneric.id.simple = new Set(selfie.lowlyGenericSID);
     this.lowlyGeneric.id.complex = new Map(selfie.lowlyGenericCID);
     this.lowlyGeneric.cl.simple = new Set(selfie.lowlyGenericSCL);
@@ -743,6 +757,11 @@ FilterContainer.prototype.fromSelfie = function(selfie) {
     this.highlyGeneric.simple.str = selfie.highSimpleGenericHideArray.join(',\n');
     this.highlyGeneric.complex.dict = new Set(selfie.highComplexGenericHideArray);
     this.highlyGeneric.complex.str = selfie.highComplexGenericHideArray.join(',\n');
+    this.needDOMSurveyor =
+        selfie.lowlyGenericSID.length !== 0 ||
+        selfie.lowlyGenericCID.length !== 0 ||
+        selfie.lowlyGenericSCL.length !== 0 ||
+        selfie.lowlyGenericCCL.length !== 0;
     this.frozen = true;
 };
 
@@ -1020,7 +1039,7 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
         highGenericHideComplex: '',
         injectedHideFilters: '',
         networkFilters: '',
-        noDOMSurveying: this.hasGenericHide === false,
+        noDOMSurveying: this.needDOMSurveyor === false,
         proceduralFilters: [],
         fake:[]
     };

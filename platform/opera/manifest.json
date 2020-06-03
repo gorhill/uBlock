@@ -16,25 +16,9 @@
     "default_title": "AdNauseam",
     "default_popup": "menu.html"
   },
-<<<<<<< HEAD
   "author": "Daniel C. Howe",
   "background": {
     "page": "background.html"
-=======
-  "commands": {
-    "launch-element-picker": {
-      "description": "__MSG_popupTipPicker__"
-    },
-    "launch-element-zapper": {
-      "description": "__MSG_popupTipZapper__"
-    },
-    "launch-logger": {
-      "description": "__MSG_popupTipLog__"
-    },
-    "relax-blocking-mode": {
-      "description": "__MSG_relaxBlockingMode__"
-    }
->>>>>>> upstream1.22.0
   },
   "commands": {
       "launch-element-zapper": {
@@ -45,6 +29,9 @@
       },
       "launch-logger": {
           "description": "__MSG_popupTipLog__"
+      },
+      "relax-blocking-mode": {
+        "description": "__MSG_relaxBlockingMode__"
       }
   },
   "content_scripts": [{

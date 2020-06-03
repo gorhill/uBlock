@@ -25,7 +25,8 @@
 
 /******************************************************************************/
 
-(( ) => {
+{
+// >>>>> start of local scope
 
 /******************************************************************************/
 
@@ -34,26 +35,13 @@ if ( typeof popupFontSize === 'string' && popupFontSize !== 'unset' ) {
     document.body.style.setProperty('font-size', popupFontSize);
 }
 
-// https://github.com/gorhill/uBlock/issues/3032
-// Popup panel can be in one of two modes:
-// - not responsive: viewport is expected to adjust to popup panel size
-// - responsive: popup panel must adjust to viewport size -- this happens
-//   when the viewport is not resized by the browser to perfectly fits uBO's
-//   popup panel.
-if (
-    vAPI.webextFlavor.soup.has('mobile') ||
-    /[\?&]responsive=1/.test(window.location.search)
-) {
-    document.body.classList.add('responsive');
-}
-
 // https://github.com/chrisaljoudi/uBlock/issues/996
 // Experimental: mitigate glitchy popup UI: immediately set the firewall
 // pane visibility to its last known state. By default the pane is hidden.
 let dfPaneVisibleStored =
     vAPI.localStorage.getItem('popupFirewallPane') === 'true';
 if ( dfPaneVisibleStored ) {
-    document.getElementById('panes').classList.add('dfEnabled');
+    document.getElementById('main').classList.add('dfEnabled');
 }
 
 /******************************************************************************/
@@ -87,24 +75,6 @@ let cachedPopupHash = '';
 // - https://www.chromium.org/developers/design-documents/idn-in-google-chrome
 const reCyrillicNonAmbiguous = /[\u0400-\u042b\u042d-\u042f\u0431\u0432\u0434\u0436-\u043d\u0442\u0444\u0446-\u0449\u044b-\u0454\u0457\u0459-\u0460\u0462-\u0474\u0476-\u04ba\u04bc\u04be-\u04ce\u04d0-\u0500\u0502-\u051a\u051c\u051e-\u052f]/;
 const reCyrillicAmbiguous = /[\u042c\u0430\u0433\u0435\u043e\u043f\u0440\u0441\u0443\u0445\u044a\u0455\u0456\u0458\u0461\u0475\u04bb\u04bd\u04cf\u0501\u051b\u051d]/;
-
-/******************************************************************************/
-
-// The padlock/eraser must be manually positioned:
-// - Its vertical position depends on the height of the popup title bar
-// - Its horizontal position depends on whether there is a vertical scrollbar.
-
-const positionRulesetTools = function() {
-    const vpos = document.getElementById('appinfo')
-                         .getBoundingClientRect()
-                         .bottom + window.scrollY + 3;
-    const hpos = document.getElementById('firewallContainer')
-                         .getBoundingClientRect()
-                         .left + window.scrollX + 3;
-    const style = document.getElementById('rulesetTools').style;
-    style.setProperty('top', (vpos >>> 0) + 'px');
-    style.setProperty('left', (hpos >>> 0) + 'px');
-};
 
 /******************************************************************************/
 
@@ -145,7 +115,7 @@ const cachePopupData = function(data) {
 const hashFromPopupData = function(reset) {
     // It makes no sense to offer to refresh the behind-the-scene scope
     if ( popupData.pageHostname === 'behind-the-scene' ) {
-        uDom('body').toggleClass('dirty', false);
+        document.body.classList.remove('needReload');
         return;
     }
 
@@ -172,7 +142,7 @@ const hashFromPopupData = function(reset) {
     if ( reset ) {
         cachedPopupHash = hash;
     }
-    uDom('body').toggleClass('dirty', hash !== cachedPopupHash);
+    document.body.classList.toggle('needReload', hash !== cachedPopupHash);
 };
 
 /******************************************************************************/
@@ -283,12 +253,7 @@ const updateAllFirewallCells = function() {
             rules[key]
         );
     }
-
-    const dirty = popupData.matrixIsDirty === true;
-    if ( dirty ) {
-        positionRulesetTools();
-    }
-    uDom.nodeFromId('firewallContainer').classList.toggle('dirty', dirty);
+    document.body.classList.toggle('needSave', popupData.matrixIsDirty === true);
 };
 
 /******************************************************************************/
@@ -331,7 +296,7 @@ const buildAllFirewallRows = function() {
             desExtra = punycode.toUnicode(popupData.cnameMap.get(des));
         } else if (
             isDomain && isPunycoded &&
-            reCyrillicAmbiguous.test(prettyDomainName) === true &&
+            reCyrillicAmbiguous.test(prettyDomainName) &&
             reCyrillicNonAmbiguous.test(prettyDomainName) === false
         ) {
             desExtra = des;
@@ -408,16 +373,12 @@ const renderPrivacyExposure = function() {
     const summary = domainsHitStr
                     .replace('{{count}}', touchedDomainCount.toLocaleString())
                     .replace('{{total}}', allDomainCount.toLocaleString());
-    uDom.nodeFromId('popupHitDomainCount').textContent = summary;
+    uDom.nodeFromSelector('[data-i18n^="popupDomainsConnected"] + span').textContent = summary;
 };
 
 /******************************************************************************/
 
 const updateHnSwitches = function() {
-    uDom.nodeFromId('no-popups').classList.toggle(
-        'on',
-        popupData.noPopups === true
-    );
     uDom.nodeFromId('no-large-media').classList.toggle(
         'on', popupData.noLargeMedia === true
     );
@@ -468,7 +429,7 @@ const renderPopup = function() {
         text = statsStr.replace('{{count}}', formatNumber(blocked))
                        .replace('{{percent}}', formatNumber(Math.floor(blocked * 100 / total)));
     }
-    uDom.nodeFromId('page-blocked').textContent = text;
+    uDom.nodeFromSelector('[data-i18n^="popupBlockedOnThisPage"] + span').textContent = text;
 
     blocked = popupData.globalBlockedRequestCount;
     total = popupData.globalAllowedRequestCount + blocked;
@@ -478,7 +439,7 @@ const renderPopup = function() {
         text = statsStr.replace('{{count}}', formatNumber(blocked))
                        .replace('{{percent}}', formatNumber(Math.floor(blocked * 100 / total)));
     }
-    uDom.nodeFromId('total-blocked').textContent = text;
+    uDom.nodeFromSelector('[data-i18n^="popupBlockedSinceInstall"] + span').textContent = text;
 
     // This will collate all domains, touched or not
     renderPrivacyExposure();
@@ -486,19 +447,14 @@ const renderPopup = function() {
     // Extra tools
     updateHnSwitches();
 
-    // Report blocked popup count on badge
-    total = popupData.popupBlockedCount;
-    uDom.nodeFromSelector('#no-popups > span.fa-icon-badge')
-        .textContent = total ? Math.min(total, 99).toLocaleString() : '';
-
     // Report large media count on badge
     total = popupData.largeMediaCount;
-    uDom.nodeFromSelector('#no-large-media > span.fa-icon-badge')
+    uDom.nodeFromSelector('#no-large-media .fa-icon-badge')
         .textContent = total ? Math.min(total, 99).toLocaleString() : '';
 
     // Report remote font count on badge
     total = popupData.remoteFontCount;
-    uDom.nodeFromSelector('#no-remote-fonts > span.fa-icon-badge')
+    uDom.nodeFromSelector('#no-remote-fonts .fa-icon-badge')
         .textContent = total ? Math.min(total, 99).toLocaleString() : '';
 
     // https://github.com/chrisaljoudi/uBlock/issues/470
@@ -514,7 +470,7 @@ const renderPopup = function() {
         vAPI.localStorage.setItem('popupFirewallPane', dfPaneVisibleStored);
     }
 
-    uDom.nodeFromId('panes').classList.toggle(
+    uDom.nodeFromId('main').classList.toggle(
         'dfEnabled',
         dfPaneVisible === true
     );
@@ -548,8 +504,13 @@ const renderTooltips = function(selector) {
         );
         const elem = uDom.nodeFromSelector(entry[0]);
         elem.setAttribute('aria-label', text);
-        elem.setAttribute('data-tip', text);
-        if ( selector !== undefined ) {
+        const tip = elem.querySelector('.tip');
+        if ( tip !== null ) {
+            tip.textContent = text;
+        } else {
+            elem.setAttribute('data-tip', text);
+        }
+        if ( tip === null && selector !== undefined ) {
             uDom.nodeFromId('tooltip').textContent =
                 elem.getAttribute('data-tip');
         }
@@ -562,13 +523,6 @@ const tooltipTargetSelectors = new Map([
         {
             state: 'body.off',
             i18n: 'popupPowerSwitchInfo',
-        }
-    ],
-    [
-        '#no-popups',
-        {
-            state: '#no-popups.on',
-            i18n: 'popupTipNoPopups'
         }
     ],
     [
@@ -619,57 +573,10 @@ let renderOnce = function() {
         }
     }
 
-    uDom.nodeFromId('appname').textContent = popupData.appName;
-    uDom.nodeFromId('version').textContent = popupData.appVersion;
-
     // https://github.com/uBlockOrigin/uBlock-issues/issues/22
     if ( popupData.advancedUserEnabled !== true ) {
         uDom('#firewallContainer [data-i18n-tip][data-src]').removeAttr('data-tip');
     }
-
-    // https://github.com/gorhill/uBlock/issues/2274
-    //   Make use of the whole viewport when in responsive mode.
-    if ( document.body.classList.contains('responsive') ) { return; }
-
-    // For large displays: we do not want the left pane -- optional and
-    // hidden by defaut -- to dictate the height of the popup. The right pane
-    // dictates the height of the popup, and the left pane will have a
-    // scrollbar if ever its height is more than what is available.
-    // For small displays: we use the whole viewport.
-
-    const rpane = uDom.nodeFromSelector('#panes > div:first-of-type');
-    const lpane = uDom.nodeFromSelector('#panes > div:last-of-type');
-
-    lpane.style.setProperty('height', rpane.offsetHeight + 'px');
-
-    // Be prepared to fall into responsive mode if ever it is found the
-    // viewport is not a perfect match for the popup panel.
-
-    let resizeTimer;
-    const resize = function() {
-        resizeTimer = undefined;
-        // Do not use equality, fractional pixel dimension occurs and must
-        // be ignored.
-        // https://www.reddit.com/r/uBlockOrigin/comments/8qodpw/how_to_hide_the_info_shown_of_what_is_currently/e0lglrr/
-        //   Tolerance of 2px fixes the issue.
-        if (
-            Math.abs(document.body.offsetWidth - window.innerWidth) <= 2 &&
-            Math.abs(document.body.offsetHeight - window.innerHeight) <= 2
-        ) {
-            return;
-        }
-        document.body.classList.add('responsive');
-        lpane.style.removeProperty('height');
-        window.removeEventListener('resize', resizeAsync);
-    };
-    const resizeAsync = function() {
-        if ( resizeTimer !== undefined ) {
-            clearTimeout(resizeTimer);
-        }
-        resizeTimer = vAPI.setTimeout(resize, 67);
-    };
-    window.addEventListener('resize', resizeAsync);
-    resizeAsync();
 };
 
 /******************************************************************************/
@@ -682,7 +589,7 @@ const renderPopupLazy = (( ) => {
     //   demand only.
     {
         const sw = uDom.nodeFromId('no-cosmetic-filtering');
-        const badge = sw.querySelector(':scope > span.fa-icon-badge');
+        const badge = sw.querySelector(':scope .fa-icon-badge');
         badge.textContent = '\u22EF';
 
         const render = ( ) => {
@@ -715,7 +622,7 @@ const renderPopupLazy = (( ) => {
             what: 'getScriptCount',
             tabId: popupData.tabId,
         });
-        uDom.nodeFromSelector('#no-scripting > span.fa-icon-badge')
+        uDom.nodeFromSelector('#no-scripting .fa-icon-badge')
             .textContent = (count || 0) !== 0
                 ? Math.min(count, 99).toLocaleString()
                 : '';
@@ -808,7 +715,7 @@ const toggleFirewallPane = function() {
     vAPI.localStorage.setItem('popupFirewallPane', dfPaneVisibleStored);
 
     // Dynamic filtering pane may not have been built yet
-    uDom.nodeFromId('panes').classList.toggle('dfEnabled', popupData.dfEnabled);
+    uDom.nodeFromId('main').classList.toggle('dfEnabled', popupData.dfEnabled);
     if ( popupData.dfEnabled && dfPaneBuilt === false ) {
         buildAllFirewallRows();
     }
@@ -910,7 +817,7 @@ const reloadTab = function(ev) {
     popupData.contentLastModified = -1;
 
     // No need to wait to remove this.
-    uDom('body').toggleClass('dirty', false);
+    document.body.classList.remove('needReload');
 };
 
 uDom('#refresh').on('click', reloadTab);
@@ -960,7 +867,6 @@ const setGlobalExpand = function(state, internal = false) {
     } else {
         uDom('#firewallContainer').removeClass('expanded');
     }
-    positionRulesetTools();
     if ( internal ) { return; }
     popupData.firewallPaneMinimized = !state;
     expandExceptions.clear();
@@ -996,7 +902,7 @@ uDom('[data-i18n="popupAnyRulePrompt"]').on('click', ev => {
         messaging.send('popupPanel', {
             what: 'gotoURL',
             details: {
-                url: `popup.html?tabId=${popupData.tabId}&responsive=1`,
+                url: `popup-fenix.html?tabId=${popupData.tabId}`,
                 select: true,
                 index: -1,
             },
@@ -1030,13 +936,13 @@ const saveFirewallRules = function() {
         srcHostname: popupData.pageHostname,
         desHostnames: popupData.hostnameDict,
     });
-    uDom.nodeFromId('firewallContainer').classList.remove('dirty');
+    document.body.classList.remove('needSave');
 };
 
 /******************************************************************************/
 
 const revertFirewallRules = async function() {
-    uDom.nodeFromId('firewallContainer').classList.remove('dirty');
+    document.body.classList.remove('needSave');
     const response = await messaging.send('popupPanel', {
         what: 'revertFirewallRules',
         srcHostname: popupData.pageHostname,
@@ -1071,7 +977,7 @@ const toggleHostnameSwitch = async function(ev) {
         hostname: popupData.pageHostname,
         state: target.classList.contains('on'),
         tabId: popupData.tabId,
-        persist: popupData.dfEnabled === false || ev.ctrlKey || ev.metaKey,
+        persist: ev.ctrlKey || ev.metaKey,
     });
 
     cachePopupData(response);
@@ -1188,7 +1094,7 @@ const onHideTooltip = function() {
 // Popup DOM is assumed to be loaded at this point -- because this script
 // is loaded after everything else..
 
-(( ) => {
+{
     // If there's no tab id specified in the query string,
     // it will default to current tab.
     let tabId = null;
@@ -1199,12 +1105,12 @@ const onHideTooltip = function() {
         tabId = parseInt(matches[1], 10) || 0;
     }
     getPopupData(tabId);
-})();
+}
 
 uDom('#switch').on('click', toggleNetFilteringSwitch);
 uDom('#gotoZap').on('click', gotoZap);
 uDom('#gotoPick').on('click', gotoPick);
-uDom('h2').on('click', toggleFirewallPane);
+uDom('#moreButton').on('click', toggleFirewallPane);
 uDom('.hnSwitch').on('click', ev => { toggleHostnameSwitch(ev); });
 uDom('#saveRules').on('click', saveFirewallRules);
 uDom('#revertRules').on('click', ( ) => { revertFirewallRules(); });
@@ -1216,4 +1122,5 @@ uDom('a[href]').on('click', gotoURL);
 
 /******************************************************************************/
 
-})();
+// <<<<< end of local scope
+}
