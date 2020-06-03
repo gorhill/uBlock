@@ -198,8 +198,6 @@
         vAPI.messaging.send('adnauseam', { // fix to #1032
           what: 'closeExtPage',
           page: 'firstrun.html'
-        }, function(n) {
-          // console.log('closeExtPage done', n);
         });
       }
     });
@@ -215,22 +213,15 @@
   /******************************************************************************/
 
   uDom.onLoad(function () {
+    // user settings, verifyAdBlockers, notifications
+    Promise.all([
+        vAPI.messaging.send('dashboard', { what: 'userSettings' }),
+        vAPI.messaging.send('adnauseam', { what: 'verifyAdBlockers' }),
+    ]).then(results => {
+        onUserSettingsReceived(results[0]);
+        renderNotifications(results[1]);
+    });
 
-    vAPI.messaging.send('dashboard', {
-      what: 'userSettings'
-    }, onUserSettingsReceived);
-
-    vAPI.messaging.send('adnauseam', {
-      what: 'verifyAdBlockers' },
-        function() {
-          vAPI.messaging.send(
-              'adnauseam', {
-                  what: 'getNotifications'
-              },
-              function(n) {
-                  renderNotifications(n, 'firstrun');
-              });
-        });
   });
 
   /******************************************************************************/

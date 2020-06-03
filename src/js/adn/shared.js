@@ -338,33 +338,38 @@ const modifyDNTNotifications = function () {
 };
 
 function reactivateSetting() {
+  Promise.resolve(
+     vAPI.messaging.send('dashboard', {
+       what: 'userSettings',
+       name: this.prop,
+       value: this.expected
+     }),
+     ).then(() => {
+       reloadPane();
+ });
 
-  vAPI.messaging.send('dashboard', {
-
-      what: 'userSettings',
-      name: this.prop,
-      value: this.expected
-    }, reloadPane);
 }
 
 function onSelectionDone() {
-
-    vAPI.messaging.send('dashboard', {
-      what: 'reloadAllFilters'
-    }, reloadPane);
-
+  Promise.resolve(
+     vAPI.messaging.send('dashboard', {
+       what: 'reloadAllFilters'
+     }),
+     ).then(() => {
+       reloadPane();
+ });
 };
 
 function reactivateList() {
-
-  vAPI.messaging.send(
-  'dashboard', {
-    what: 'reactivateList',
-    list: this.listName
-  }, function(){
-    vAPI.messaging.send('adnauseam', { what: 'verifyLists' });
-    vAPI.messaging.send('dashboard', { what: 'reloadAllFilters' });
-    reloadPane();
+   Promise.resolve(
+      vAPI.messaging.send('dashboard', {
+        what: 'reactivateList',
+        list: this.listName
+      }),
+      ).then(() => {
+        vAPI.messaging.send('adnauseam', { what: 'verifyLists' });
+        vAPI.messaging.send('dashboard', { what: 'reloadAllFilters' });
+        reloadPane();
   });
 }
 
@@ -638,21 +643,31 @@ const exportToFile = function (action) {
 
   switch(action){
     case 'backupUserData':
-       vAPI.messaging.send('dashboard', { what: 'backupUserData' }, function(response){
-          outputData(JSON.stringify(response.userData, null, '  '), "Settings_and_Ads");
+        Promise.resolve(
+           vAPI.messaging.send('dashboard', {
+             what: 'backupUserData'
+           }),
+         ).then(response => {
+             outputData(JSON.stringify(response.userData, null, '  '), "Settings_and_Ads");
        });
       break;
     case 'exportSettings':
-       vAPI.messaging.send('dashboard', { what: 'backupUserData' }, function(response){
-          delete response.userData.userSettings.admap
-          outputData(JSON.stringify(response.userData, null, '  '),"Settings");
+        Promise.resolve(
+           vAPI.messaging.send('dashboard', {
+             what: 'backupUserData'
+           }),
+         ).then(response => {
+           delete response.userData.userSettings.admap
+           outputData(JSON.stringify(response.userData, null, '  '),"Settings");
        });
       break;
     default:
        vAPI.messaging.send('adnauseam', {
          what: "exportAds",
          includeImages: false
-       }, outputData);
+       }).then(data => {
+          outputData(data);
+       })
 
   }
 
@@ -717,7 +732,9 @@ const adsOnLoadHandler = function(adData, file) {
       what: 'importAds',
       data: adData,
       file: file
-    }, postImportAlert);
+    }).then(data => {
+       postImportAlert(data);
+    })
 }
 
 function handleImportAds(evt) {
@@ -775,9 +792,7 @@ const clearAds = function () {
   const msg = vAPI.i18n('adnClearConfirm');
   const proceed = window.confirm(msg); // changed from vAPI.confirm merge1.14.12
   if (proceed) {
-    vAPI.messaging.send('adnauseam', {
-      what: 'clearAds'
-    });
+    vAPI.messaging.send('adnauseam', {what: 'clearAds'});
   }
 };
 

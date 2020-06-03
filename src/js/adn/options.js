@@ -150,6 +150,15 @@
 
   /******************************************************************************/
 
+  const synchronizeDOM = function() {
+      document.body.classList.toggle(
+          'advancedUser',
+          uDom.nodeFromId('advanced-user-enabled').checked === true
+      );
+  };
+  
+  /******************************************************************************/
+
   const changeUserSettings = function(name, value) {
       vAPI.messaging.send('dashboard', {
           what: 'userSettings',

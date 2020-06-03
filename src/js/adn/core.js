@@ -1352,9 +1352,11 @@
     return JSON.stringify(map, null, 2);
   };
 
-  // start by grabbing user-settings, then calling initialize()
-  vAPI.storage.get(µb.userSettings, function (settings) {
+  const initUserSettings = async function () {
+    const settings = await vAPI.storage.get(µb.userSettings);
+    // start by grabbing user-settings, then calling initialize()
 
+    console.log(settings);
     // this for backwards compatibility only ---------------------
     const mapSz = Object.keys(settings.admap).length;
     if (!mapSz && µb.adnSettings && µb.adnSettings.admap) {
@@ -1367,10 +1369,10 @@
         storeUserData(true);
       }, 2000);
     }
-
     initialize(settings);
-  });
+  }
 
+  initUserSettings();
 
   /********************************** API *************************************/
 

@@ -1016,15 +1016,19 @@ vAPI.tabs = new vAPI.Tabs();
         return color;
     };
 
-    const updateBadge = (tabId) => {
+    const updateBadge = (tabId, isClick) => {
         let parts = tabIdToDetails.get(tabId);
         tabIdToDetails.delete(tabId);
 
         let state = 0;
         let badge = '';
         let color = '#666';
+        let count = 0; //ADN
 
-        let pageStore = µb.pageStoreFromTabId(tabId);
+        let pageStore = µb.pageStoreFromTabId(tabId),
+            pageDomain = pageStore ? µb.URI.domainFromHostname(pageStore.tabHostname) : null, // ADN
+            isDNT = pageStore ? µb.userSettings.dntDomains.contains(pageDomain) : false; // ADN;
+
         if ( pageStore !== null ) {
             state = pageStore.getNetFilteringSwitch() ? 1 : 0;
             if ( state === 1 ) {
@@ -1039,6 +1043,9 @@ vAPI.tabs = new vAPI.Tabs();
                     );
                 }
             }
+
+          count = µb.adnauseam.currentCount(pageStore.rawURL); // ADN
+          badge = µb.formatCount(count);
         }
 
         // https://www.reddit.com/r/uBlockOrigin/comments/d33d37/
@@ -1046,7 +1053,13 @@ vAPI.tabs = new vAPI.Tabs();
             parts |= 0b1000;
         }
 
-        vAPI.setIcon(tabId, { parts, state, badge, color });
+        let iconStatus = state ? (isDNT ? 'dnt' : 'on') : 'off'; // ADN
+
+        if (iconStatus !== 'off') {
+            iconStatus += (isClick ? 'active' : '');
+        }
+
+        vAPI.setIcon(tabId, { parts, state, badge, color, iconStatus});
     };
 
     // parts: bit 0 = icon
@@ -1054,7 +1067,7 @@ vAPI.tabs = new vAPI.Tabs();
     //        bit 2 = badge color
     //        bit 3 = hide badge
 
-    return function(tabId, newParts = 0b0111) {
+    return function(tabId, newParts = 0b0111, isClick) {
         if ( typeof tabId !== 'number' ) { return; }
         if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
         let currentParts = tabIdToDetails.get(tabId);
@@ -1068,6 +1081,7 @@ vAPI.tabs = new vAPI.Tabs();
             newParts |= currentParts;
         }
         tabIdToDetails.set(tabId, newParts);
+        vAPI.setTimeout(updateBadge(tabId, isClick), 222); // ADN
     };
 })();
 

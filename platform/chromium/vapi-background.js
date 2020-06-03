@@ -705,9 +705,9 @@ vAPI.setIcon = (( ) => {
     const icons = [
         { path: { '16': 'img/adn_off_16.png', '32': 'img/adn_off_32.png' } },
         { path: { '16': 'img/adn_on_16.png', '32': 'img/adn_on_32.png' } },
-        { path: { '16': 'img/adn_active_16.png', '32': 'img/adn_active_32.png' } },
-        { path: { '16': 'img/adn_dnt_on_16.png', '32': 'img/adn_dnt_on_32.png' } },
-        { path: { '16': 'img/adn_dnt_active_16.png', '32': 'img/adn_dnt_active_32.png' } },
+        // { path: { '16': 'img/adn_active_16.png', '32': 'img/adn_active_32.png' } },
+        // { path: { '16': 'img/adn_dnt_on_16.png', '32': 'img/adn_dnt_on_32.png' } },
+        // { path: { '16': 'img/adn_dnt_active_16.png', '32': 'img/adn_dnt_active_32.png' } },
     ];
 
     (( ) => {
@@ -801,7 +801,8 @@ vAPI.setIcon = (( ) => {
         const tab = await vAPI.tabs.get(tabId);
         if ( tab === null ) { return; }
 
-        const { parts, state, badge, color } = details;
+        const { parts, state, badge, color, iconStatus} = details; //ADN
+        //TODO: Add back iconStatus for adnauseam
 
         if ( browserAction.setIcon !== undefined ) {
             if ( parts === undefined || (parts & 0b0001) !== 0 ) {
