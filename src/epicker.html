@@ -20,6 +20,14 @@ html#ublock0-epicker,
 #ublock0-epicker div {
     display: block !important;
 }
+#ublock0-epicker #toolbar {
+    cursor: grab;
+    display: flex !important;
+    justify-content: space-between;
+}
+#ublock0-epicker aside.moving #toolbar {
+    cursor: grabbing;
+}
 #ublock0-epicker ul {
     margin: 0.25em 0 0 0 !important;
 }
@@ -31,12 +39,8 @@ html#ublock0-epicker,
     box-shadow: none !important;
     color: #000 !important;
     cursor: pointer !important;
-    margin: 0 0 0 2px !important;
     opacity: 0.7 !important;
     padding: 4px 6px !important;
-}
-#ublock0-epicker button:first-of-type {
-    margin-left: 0 !important;
 }
 #ublock0-epicker button:disabled {
     color: #999 !important;
@@ -218,12 +222,16 @@ html#ublock0-epicker,
         <textarea lang="en" dir="ltr" spellcheck="false"></textarea>
         <div id="resultsetCount"></div>
     </div>
-    <div><!--
-    --><button id="preview" type="button">{{preview}}</button><!--
-    --><button id="create" type="button" disabled>{{create}}</button><!--
-    --><button id="pick" type="button">{{pick}}</button><!--
-    --><button id="quit" type="button">{{quit}}</button><!--
-    --></div>
+    <div id="toolbar">
+        <div>
+            <button id="preview" type="button">{{preview}}</button>
+        </div>
+        <div>
+            <button id="create" type="button" disabled>{{create}}</button>
+            <button id="pick" type="button">{{pick}}</button>
+            <button id="quit" type="button">{{quit}}</button>
+        </div>
+    </div>
 </section>
 <ul>
     <li id="netFilters">

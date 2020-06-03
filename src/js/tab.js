@@ -311,7 +311,7 @@
         if ( targetURL.startsWith(vAPI.getURL('document-blocked.html')) ) {
             const matches = /details=([^&]+)/.exec(targetURL);
             if ( matches !== null ) {
-                targetURL = JSON.parse(atob(matches[1])).url;
+                targetURL = JSON.parse(decodeURIComponent(matches[1])).url;
             }
         }
 
@@ -464,7 +464,7 @@ housekeep itself.
                 frameId: createDetails.sourceFrameId,
                 frameURL: openerDetails[1].url,
                 popunder: false,
-                trustedURL: createDetails.tabId === µb.maybeGoodPopup.tabId
+                trustedURL: createDetails.sourceTabId === µb.maybeGoodPopup.tabId
                     ? µb.maybeGoodPopup.url
                     : ''
             };

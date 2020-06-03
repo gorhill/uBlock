@@ -43,7 +43,6 @@ rm $DES/js/adn/tests.js
 rm -R $DES/lib/qunit
 
 rm -r $DES/_locales/az
-rm -r $DES/_locales/bs
 rm -r $DES/_locales/cv
 rm -r $DES/_locales/hi
 rm -r $DES/_locales/ka

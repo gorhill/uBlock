@@ -556,7 +556,7 @@
     "description": "Appears in the logger's tab selector"
   },
   "loggerReloadTip": {
-    "message": "أعِد تحميل محتوى اللسان",
+    "message": "إعادة تحميل علامة التبويب",
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
@@ -592,7 +592,7 @@
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
-    "message": "خيارات ترشيح حافظ السجلات",
+    "message": "خيارات التصفية للمسجّل",
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {
@@ -624,11 +624,11 @@
     "description": "Small header to identify the 'Details' pane for a specific logger entry"
   },
   "loggerEntryDetailsFilter": {
-    "message": "المرشّح",
+    "message": "فلتر",
     "description": "Label to identify a filter field"
   },
   "loggerEntryDetailsFilterList": {
-    "message": "قائمة المرشحات",
+    "message": "قائمة الفلتر",
     "description": "Label to identify a filter list field"
   },
   "loggerEntryDetailsRule": {

@@ -1,49 +1,47 @@
-An efficient blocker: easy on memory and CPU footprint, and yet can load and enforce thousands more filters than other popular blockers out there.
+Efikasan bloker: lagan je na otisak/zahtjev memorije i procesora, a može učitati i primijeniti tisuće/hiljade više filtera nego ostali popularni blokeri.
 
-Illustrated overview of its efficiency: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+Ilustrovani/Ilustrirani pregled njegove efikasnosti: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
-Usage: The big power button in the popup is to permanently disable/enable uBlock for the current web site. It applies to the current web site only, it is not a global power button.
+Korištenje/Upotreba: Veliko dugme/gumb u iskočnom prozoru je da se trajno omogući/onemogući uBlock na trenutačnoj stranici. To se odnosi samo na trenutnu web-stranicu, nije da se kompletno isključi.
 
 ***
 
-Flexible, it's more than an "ad blocker": it can also read and create filters from hosts files.
+Fleksibilan je, više je od "blokatora reklama": može i učitati i napraviti filtere iz izvornih datoteka.
 
-Out of the box, these lists of filters are loaded and enforced:
+Odmah po instalaciji/instaliranju, ovi slijedeći popisi/spisci filtera su pokrenuti i provođeni:
 
 - EasyList
 - Peter Lowe’s Ad server list
 - EasyPrivacy
 - Malware domains
 
-More lists are available for you to select if you wish:
+Ostale liste/spisci su dostupni za odabir/izbor ako ih želite:
 
 - Fanboy’s Enhanced Tracking List
 - Dan Pollock’s hosts file
 - hpHosts’s Ad and tracking servers
 - MVPS HOSTS
 - Spam404
-- And many others
+- I mnogi drugi
 
-Of course, the more filters enabled, the higher the memory footprint. Yet, even after adding Fanboy's two extra lists, hpHosts’s Ad and tracking servers, uBlock still has a lower memory footprint than other very popular blockers out there.
+Naravno, što je više omogućeno filtera, veća je i upotreba memorije. Ipak, čak i nakon dodavanja Fanboy-ova dva dodatna popisa/spiska, hpHosts servera za reklame i praćenje, uBlock još uvijek ima manji memorijski otisak/zahtjev od drugih/ostalih poznatih blokera.
 
-Also, be aware that selecting some of these extra lists may lead to higher likelihood of web site breakage -- especially those lists which are normally used as hosts file.
-
-***
-
-Without the preset lists of filters, this extension is nothing. So if ever you really do want to contribute something, think about the people working hard to maintain the filter lists you are using, which were made available to use by all for free.
+Također, čuvajte na umu da odabirom/izbor nekih od ovih dodatnih popisa može povećati prilike da se web-stranica pokvari -- posebno/naručito onih popisa/spiskova koji se obično koriste kao izvorne datoteke.
 
 ***
 
-Free.
-Open source with public license (GPLv3)
-For users by users.
-
-Contributors @ Github: https://github.com/gorhill/uBlock/graphs/contributors
-Contributors @ Crowdin: https://crowdin.net/project/ublock
+Bez napredne liste/spiska filtera, ovo proširenje neće raditi. Tako da ako ikad želite doprinijeti nešto, razmislite o ljudima koji naporno rade održavajući popise/spiskove filtera koje vi koristite, i koji su dostupni svima za besplatnu korist.
 
 ***
 
-It's quite an early version, keep this in mind when you review.
+Besplatno.
+Otvorenog koda sa javnom licencom (GPLv3)
+Za korisnike od korisnika.
 
-Project change log:
+Suradnici @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Suradnici @ Crowdin: https://crowdin.net/project/ublock
+
+***
+
+Popis/izvješće promjena:
 https://github.com/gorhill/uBlock/releases

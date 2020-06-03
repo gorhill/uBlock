@@ -39,7 +39,14 @@ vAPI.cantWebsocket =
     browser.webRequest.ResourceType instanceof Object === false  ||
     browser.webRequest.ResourceType.WEBSOCKET !== 'websocket';
 
+vAPI.canWASM = vAPI.webextFlavor.soup.has('chromium') === false;
+if ( vAPI.canWASM === false ) {
+    const csp = manifest.content_security_policy;
+    vAPI.canWASM = csp !== undefined && csp.indexOf("'wasm-eval'") !== -1;
+}
+
 vAPI.supportsUserStylesheets = vAPI.webextFlavor.soup.has('user_stylesheet');
+
 // The real actual webextFlavor value may not be set in stone, so listen
 // for possible future changes.
 window.addEventListener('webextFlavor', function() {
@@ -1251,9 +1258,13 @@ vAPI.Net = class {
             this.suspendDepth += 1;
         }
     }
-    unsuspend() {
+    unsuspend(all = false) {
         if ( this.suspendDepth === 0 ) { return; }
-        this.suspendDepth -= 1;
+        if ( all ) {
+            this.suspendDepth = 0;
+        } else {
+            this.suspendDepth -= 1;
+        }
         if ( this.suspendDepth !== 0 ) { return; }
         this.unsuspendAllRequests(this.suspendableListener);
     }

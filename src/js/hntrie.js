@@ -560,6 +560,8 @@ HNTrieContainer.prototype.HNTrieRef = class {
         this.container = container;
         this.iroot = iroot;
         this.size = size;
+        this.needle = '';
+        this.last = -1;
     }
 
     add(hn) {
@@ -708,12 +710,7 @@ HNTrieContainer.prototype.HNTrieRef.prototype.needle = '';
 
     // Soft-dependency on vAPI so that the code here can be used outside of
     // uBO (i.e. tests, benchmarks)
-    if (
-        typeof vAPI === 'object' &&
-        vAPI.webextFlavor.soup.has('firefox') === false
-    ) {
-        return;
-    }
+    if ( typeof vAPI === 'object' && vAPI.canWASM !== true ) { return; }
 
     // Soft-dependency on µBlock's advanced settings so that the code here can
     // be used outside of uBO (i.e. tests, benchmarks)

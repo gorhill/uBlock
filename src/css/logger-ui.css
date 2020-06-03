@@ -125,20 +125,15 @@ body[dir="rtl"] #pageSelector {
     opacity: 1;
     }
 #netInspector #filterInput {
+    border: 1px solid gray;
     display: inline-flex;
     }
 #netInspector #filterInput > input {
-    min-width: 18em;
+    border: 0;
+    min-width: 16em;
     }
 #netInspector #filterExprButton {
-    position: absolute;
     transform: scaleY(-1);
-    }
-body[dir="ltr"] #netInspector #filterExprButton {
-    right: 0;
-    }
-body[dir="rtl"] #netInspector #filterExprButton {
-    left: 0;
     }
 #netInspector #filterExprButton:hover {
     background-color: transparent;

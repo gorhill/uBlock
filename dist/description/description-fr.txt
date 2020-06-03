@@ -1,4 +1,4 @@
-uBlock₀ est un bloqueur efficace de publicités et de pisteurs; utilisant peu de mémoire vive & de ressources du processeur, il est pourtant capable de charger & d'appliquer des milliers de filtres de plus que d'autres bloqueurs populaires.
+uBlock₀ est un bloqueur efficace de publicités et de pisteurs. Utilisant peu de mémoire vive et de ressources du processeur, il est pourtant capable d'appliquer des milliers de filtres de plus que d'autres bloqueurs populaires.
 
 Consultez cette page en Anglais pour avoir une vue d'ensemble illustrée de son efficacité : https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
@@ -6,9 +6,9 @@ Utilisation : Le gros bouton "Power" dans la fenêtre pop-up permet de désactiv
 
 ***
 
-Flexible, uBlock₀ n'est pas qu'un simple bloqueur de publicités, il peut également lire et créer des filtres depuis des fichiers hosts.
+Flexible, uBlock₀ n'est pas qu'un simple bloqueur de publicités. Il peut également lire et créer des filtres depuis des fichiers hosts.
 
-Par défaut, ces listes de filtrage sont chargées et appliquées :
+Par défaut, ces listes de filtres sont chargées et appliquées :
 
 - EasyList (Liste anti-publicités maintenue fréquemment à jour par la communauté)
 - Peter Lowe’s Ad server list (Liste de serveurs publicitaires maintenue à jour par Peter Lowe)
@@ -19,12 +19,12 @@ Davantage de listes sont disponibles si vous souhaitez renforcer le blocage :
 
 - Fanboy’s Enhanced Tracking List (Liste de protection avancée contre le pistage maintenue à jour par Fanboy)
 - Dan Pollock’s hosts file (Fichier hosts bloquant publicités, domaines malveillants et autres pisteurs, maintenue fréquemment à jour par Dan Pollock)
-- hpHosts’s Ad and tracking servers (Fichier hosts bloquant des serveurs publicitaires & des serveurs de pistage, maintenue à jour par hpHosts)
+- hpHosts’s Ad and tracking servers (Fichier hosts bloquant des serveurs publicitaires et des serveurs de pistage, maintenue à jour par hpHosts)
 - MVPS HOSTS (Fichier Hosts bloquant publicités, domaines malveillants et autres pisteurs, maintenue à jour par MVPS)
 - Spam404 (Liste de protection contre les spams, maintenue fréquemment à jour par la communauté)
-- Et de nombreuses autres
+- Et de nombreuses autres listes
 
-Bien évidemment, plus vous activez de filtres, plus l'empreinte mémoire augmentera. Pourtant, même après avoir ajouté deux listes supplémentaires crées par Fanboy et le fichier hosts d'hpHosts, uBlock₀ utilise moins de mémoire vive que tous les autres bloqueurs populaires.
+Bien évidemment, plus vous activez de filtres, plus l'empreinte mémoire augmentera. Pourtant, même après avoir ajouté deux listes supplémentaires créées par Fanboy et le fichier hosts d'hpHosts, uBlock₀ utilise moins de mémoire vive que tous les autres bloqueurs populaires.
 
 Veuillez tout de même prendre en compte qu'utiliser certaines listes supplémentaires peut conduire à quelques incompatibilités sur les sites Web que vous visitez - en particulier les fichiers hosts.
 
@@ -38,8 +38,8 @@ Gratuit.
 Source libre sous licence publique GPLv3
 Conçu par des utilisateurs pour des utilisateurs.
 
-Contributeurs sur Github: https://github.com/gorhill/uBlock/graphs/contributors
-Contributeurs sur Crowdin: https://crowdin.net/project/ublock
+Contributeurs sur Github : https://github.com/gorhill/uBlock/graphs/contributors
+Contributeurs sur Crowdin : https://crowdin.net/project/ublock
 
 ***
 

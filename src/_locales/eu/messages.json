@@ -72,7 +72,7 @@
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Kilk: Gaitu uBlock₀ gune honetan.",
+    "message": "Klik: Gaitu uBlock₀ gune honetan.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -116,11 +116,11 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Click: Blokeatu gune honetako laster leiho guztiak",
+    "message": "Klik: Blokeatu gune honetako laster leiho guztiak",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Click: Utzi gune honetako laster-leihoak blokeatzeari",
+    "message": "Klik: Utzi gune honetako laster-leihoak blokeatzeari",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {

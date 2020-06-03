@@ -35,7 +35,7 @@ let details = {};
 {
     const matches = /details=([^&]+)/.exec(window.location.search);
     if ( matches !== null ) {
-        details = JSON.parse(atob(matches[1]));
+        details = JSON.parse(decodeURIComponent(matches[1]));
     }
 }
 
@@ -44,7 +44,6 @@ let details = {};
 (async ( ) => {
     const response = await messaging.send('documentBlocked', {
         what: 'listsFromNetFilter',
-        compiledFilter: details.fc,
         rawFilter: details.fs,
     });
     if ( response instanceof Object === false ) { return; }

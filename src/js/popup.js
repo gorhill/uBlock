@@ -668,24 +668,54 @@ let renderOnce = function() {
 
 /******************************************************************************/
 
-const renderPopupLazy = async function() {
-    const result = await messaging.send('popupPanel', {
-        what: 'getPopupLazyData',
-        tabId: popupData.tabId,
-    });
-    if ( result instanceof Object === false ) { return; }
+const renderPopupLazy = (( ) => {
+    let mustRenderCosmeticFilteringBadge = true;
 
-    let count = result.elementCount || 0;
-    uDom.nodeFromSelector('#no-cosmetic-filtering > span.fa-icon-badge')
-        .textContent = count !== 0
-            ? Math.min(count, 99).toLocaleString()
-            : '';
-    count = result.scriptCount || 0;
-    uDom.nodeFromSelector('#no-scripting > span.fa-icon-badge')
-        .textContent = count !== 0
-            ? Math.min(count, 99).toLocaleString()
-            : '';
-};
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/756
+    //   Launch potentially expensive hidden elements-counting scriptlet on
+    //   demand only.
+    {
+        const sw = uDom.nodeFromId('no-cosmetic-filtering');
+        const badge = sw.querySelector(':scope > span.fa-icon-badge');
+        badge.textContent = '\u22EF';
+
+        const render = ( ) => {
+            if ( mustRenderCosmeticFilteringBadge === false ) { return; }
+            mustRenderCosmeticFilteringBadge = false;
+            if ( sw.classList.contains('hnSwitchBusy') ) { return; }
+            sw.classList.add('hnSwitchBusy');
+            messaging.send('popupPanel', {
+                what: 'getHiddenElementCount',
+                tabId: popupData.tabId,
+            }).then(count => {
+                let text;
+                if ( (count || 0) === 0 ) {
+                    text = '';
+                } else if ( count === -1 ) {
+                    text = '?';
+                } else {
+                    text = Math.min(count, 99).toLocaleString();
+                }
+                badge.textContent = text;
+                sw.classList.remove('hnSwitchBusy');
+            });
+        };
+
+        sw.addEventListener('mouseenter', render, { passive: true });
+    }
+
+    return async function() {
+        const count = await messaging.send('popupPanel', {
+            what: 'getScriptCount',
+            tabId: popupData.tabId,
+        });
+        uDom.nodeFromSelector('#no-scripting > span.fa-icon-badge')
+            .textContent = (count || 0) !== 0
+                ? Math.min(count, 99).toLocaleString()
+                : '';
+        mustRenderCosmeticFilteringBadge = true;
+    };
+})();
 
 /******************************************************************************/
 
@@ -954,6 +984,13 @@ const toggleHostnameSwitch = async function(ev) {
     const target = ev.currentTarget;
     const switchName = target.getAttribute('id');
     if ( !switchName ) { return; }
+    // For touch displays, process click only if the switch is not "busy".
+    if (
+        vAPI.webextFlavor.soup.has('mobile') &&
+        target.classList.contains('hnSwitchBusy')
+    ) {
+        return;
+    }
     target.classList.toggle('on');
     renderTooltips('#' + switchName);
 

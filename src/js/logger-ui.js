@@ -676,7 +676,6 @@ const viewPort = (( ) => {
             }
             if ( filteringType === 'static' ) {
                 divcl.add('canLookup');
-                div.setAttribute('data-filter', filter.compiled);
             } else if ( filteringType === 'cosmetic' ) {
                 divcl.add('canLookup');
                 divcl.toggle('isException', filter.raw.startsWith('#@#'));
@@ -1491,7 +1490,6 @@ const reloadTab = function(ev) {
 
     const fillSummaryPaneFilterList = async function(rows) {
         const rawFilter = targetRow.children[1].textContent;
-        const compiledFilter = targetRow.getAttribute('data-filter');
 
         const nodeFromFilter = function(filter, lists) {
             const fragment = document.createDocumentFragment();
@@ -1550,7 +1548,6 @@ const reloadTab = function(ev) {
         if ( targetRow.classList.contains('networkRealm') ) {
             const response = await messaging.send('loggerUI', {
                 what: 'listsFromNetFilter',
-                compiledFilter: compiledFilter,
                 rawFilter: rawFilter,
             });
             handleResponse(response);
