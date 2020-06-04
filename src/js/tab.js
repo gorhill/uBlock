@@ -1026,8 +1026,7 @@ vAPI.tabs = new vAPI.Tabs();
         let count = 0; //ADN
 
         let pageStore = µb.pageStoreFromTabId(tabId),
-            pageDomain = pageStore ? µb.URI.domainFromHostname(pageStore.tabHostname) : null, // ADN
-            isDNT = pageStore ? µb.userSettings.dntDomains.contains(pageDomain) : false; // ADN;
+            pageDomain = pageStore ? µb.URI.domainFromHostname(pageStore.tabHostname) : null; // ADN;
 
         if ( pageStore !== null ) {
             state = pageStore.getNetFilteringSwitch() ? 1 : 0;
@@ -1044,6 +1043,7 @@ vAPI.tabs = new vAPI.Tabs();
                 }
             }
 
+          state = µb.adnauseam.getIconState(state, pageDomain, isClick); // ADN
           count = µb.adnauseam.currentCount(pageStore.rawURL); // ADN
           badge = µb.formatCount(count);
         }
@@ -1053,13 +1053,12 @@ vAPI.tabs = new vAPI.Tabs();
             parts |= 0b1000;
         }
 
-        let iconStatus = state ? (isDNT ? 'dnt' : 'on') : 'off'; // ADN
+         vAPI.setIcon(tabId, { parts, state, badge, color });
+         isClick && vAPI.setTimeout(( ) => {
+             state = µb.adnauseam.getIconState(state, pageDomain, false);
+             vAPI.setIcon(tabId, { parts, state, badge, color });
+         }, 600);
 
-        if (iconStatus !== 'off') {
-            iconStatus += (isClick ? 'active' : '');
-        }
-
-        vAPI.setIcon(tabId, { parts, state, badge, color, iconStatus});
     };
 
     // parts: bit 0 = icon
@@ -1074,14 +1073,14 @@ vAPI.tabs = new vAPI.Tabs();
         if ( currentParts === newParts ) { return; }
         if ( currentParts === undefined ) {
             self.requestIdleCallback(
-                ( ) => updateBadge(tabId),
+                ( ) => updateBadge(tabId, isClick),
                 { timeout: 701 }
             );
         } else {
             newParts |= currentParts;
         }
         tabIdToDetails.set(tabId, newParts);
-        // vAPI.setTimeout(updateBadge(tabId, isClick), 222); // ADN
+
     };
 })();
 

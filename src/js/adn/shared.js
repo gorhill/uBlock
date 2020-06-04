@@ -337,6 +337,7 @@ const modifyDNTNotifications = function () {
    }
 };
 
+
 function reactivateSetting() {
   Promise.resolve(
      vAPI.messaging.send('dashboard', {
