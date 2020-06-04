@@ -84,13 +84,16 @@ const typeNameToTypeValue = {
 
 const otherTypeBitValue = typeNameToTypeValue.other;
 
+const bitFromType = type =>
+    1 << ((typeNameToTypeValue[type] >>> 4) - 1);
+
 // All network request types to bitmap
 //   bring origin to 0 (from 4 -- see typeNameToTypeValue)
 //   left-shift 1 by the above-calculated value
 //   subtract 1 to set all type bits
 const allNetworkTypesBits =
     (1 << (otherTypeBitValue >>> 4)) - 1;
-    
+
 const allTypesBits =
     allNetworkTypesBits |
     1 << (typeNameToTypeValue['popup'] >>> 4) - 1 |
@@ -125,42 +128,6 @@ const typeValueToTypeName = {
     21: 'redirect',
     22: 'webrtc',
     23: 'unsupported',
-};
-
-// https://github.com/gorhill/uBlock/issues/1493
-//   Transpose `ping` into `other` for now.
-const toNormalizedType = {
-               'all': 'all',
-            'beacon': 'ping',
-             'cname': 'cname',
-               'css': 'stylesheet',
-              'data': 'data',
-               'doc': 'main_frame',
-          'document': 'main_frame',
-              'font': 'font',
-             'frame': 'sub_frame',
-      'genericblock': 'unsupported',
-       'generichide': 'generichide',
-             'ghide': 'generichide',
-             'image': 'image',
-       'inline-font': 'inline-font',
-     'inline-script': 'inline-script',
-             'media': 'media',
-            'object': 'object',
- 'object-subrequest': 'object',
-             'other': 'other',
-              'ping': 'ping',
-          'popunder': 'popunder',
-             'popup': 'popup',
-            'script': 'script',
-      'specifichide': 'specifichide',
-             'shide': 'specifichide',
-        'stylesheet': 'stylesheet',
-       'subdocument': 'sub_frame',
-               'xhr': 'xmlhttprequest',
-    'xmlhttprequest': 'xmlhttprequest',
-            'webrtc': 'unsupported',
-         'websocket': 'websocket',
 };
 
 const typeValueFromCatBits = catBits => (catBits >>> 4) & 0b11111;
@@ -409,7 +376,7 @@ const filterPattern = {
             units.push(FilterRegex.compile(parsed));
             return;
         }
-        const pattern = parsed.f;
+        const pattern = parsed.pattern;
         if ( pattern === '*' ) {
             units.push(FilterTrue.compile());
             return;
@@ -439,27 +406,27 @@ const filterPattern = {
             hasCaretCombo ? parsed.firstCaretPos : parsed.firstWildcardPos
         );
         if ( parsed.tokenBeg < parsed.firstWildcardPos ) {
-            parsed.f = sleft;
+            parsed.pattern = sleft;
             units.push(FilterPatternPlain.compile(parsed));
-            parsed.f = sright;
+            parsed.pattern = sright;
             units.push(FilterPatternRight.compile(parsed, hasCaretCombo));
             return;
         }
         // parsed.tokenBeg > parsed.firstWildcardPos
-        parsed.f = sright;
+        parsed.pattern = sright;
         parsed.tokenBeg -= parsed.firstWildcardPos + 1;
         units.push(FilterPatternPlain.compile(parsed));
-        parsed.f = sleft;
+        parsed.pattern = sleft;
         units.push(FilterPatternLeft.compile(parsed, hasCaretCombo));
     },
     compileGeneric: function(parsed, units) {
-        const pattern = parsed.f;
+        const pattern = parsed.pattern;
         // Optimize special case: plain pattern with trailing caret
         if (
             parsed.firstWildcardPos === -1 &&
             parsed.firstCaretPos === (pattern.length - 1)
         ) {
-            parsed.f = pattern.slice(0, -1);
+            parsed.pattern = pattern.slice(0, -1);
             units.push(FilterPatternPlain.compile(parsed));
             units.push(FilterTrailingSeparator.compile());
             return;
@@ -479,10 +446,10 @@ const filterPattern = {
         //    if ( c === 0x2A /* '*' */ || c === 0x5E /* '^' */ ) { break; }
         //    right += 1;
         //}
-        //parsed.f = pattern.slice(left, right);
+        //parsed.pattern = pattern.slice(left, right);
         //parsed.tokenBeg -= left;
         //units.push(FilterPatternPlain.compile(parsed));
-        //parsed.f = pattern;
+        //parsed.pattern = pattern;
         units.push(FilterPatternGeneric.compile(parsed));
     },
 };
@@ -565,7 +532,7 @@ const FilterPatternPlain = class {
     }
 
     static compile(details) {
-        return [ FilterPatternPlain.fid, details.f, details.tokenBeg ];
+        return [ FilterPatternPlain.fid, details.pattern, details.tokenBeg ];
     }
 
     static fromCompiled(args) {
@@ -678,7 +645,7 @@ const FilterPatternLeft = class {
     static compile(details, ex) {
         return [
             ex ? FilterPatternLeftEx.fid : FilterPatternLeft.fid,
-            details.f
+            details.pattern
         ];
     }
 
@@ -762,7 +729,7 @@ const FilterPatternRight = class {
     static compile(details, ex) {
         return [
             ex ? FilterPatternRightEx.fid : FilterPatternRight.fid,
-            details.f
+            details.pattern
         ];
     }
 
@@ -853,7 +820,7 @@ const FilterPatternGeneric = class {
     static compile(details) {
         const anchor = details.anchor;
         details.anchor = 0;
-        return [ FilterPatternGeneric.fid, details.f, anchor ];
+        return [ FilterPatternGeneric.fid, details.pattern, anchor ];
     }
 
     static fromCompiled(args) {
@@ -1115,7 +1082,7 @@ const FilterRegex = class {
     }
 
     static compile(details) {
-        return [ FilterRegex.fid, details.f ];
+        return [ FilterRegex.fid, details.pattern ];
     }
 
     static fromCompiled(args) {
@@ -2101,25 +2068,42 @@ const FILTER_SEQUENCES_MIN = filterSequenceWritePtr;
 /******************************************************************************/
 
 const FilterParser = class {
-    constructor() {
+    constructor(parser) {
         this.cantWebsocket = vAPI.cantWebsocket;
         this.domainOpt = '';
         this.noTokenHash = urlTokenizer.noTokenHash;
         this.reBadDomainOptChars = /[+?^${}()[\]\\]/;
-        this.reHostnameRule1 = /^\w[\w.-]*[a-z]$/i;
-        this.reHostnameRule2 = /^\w[\w.-]*[a-z]\^?$/i;
-        this.reCanTrimCarets1 = /^[^*]*$/;
-        this.reCanTrimCarets2 = /^\^?[^^]+[^^][^^]+\^?$/;
         this.reIsolateHostname = /^(\*?\.)?([^\x00-\x24\x26-\x2C\x2F\x3A-\x5E\x60\x7B-\x7F]+)(.*)/;
         this.reHasUnicode = /[^\x00-\x7F]/;
-        this.reWebsocketAny = /^ws[s*]?(?::\/?\/?)?\*?$/;
         this.reBadCSP = /(?:=|;)\s*report-(?:to|uri)\b/;
-        this.reGoodToken = /[%0-9a-z]{1,}/g;
-        this.reSeparator = /[\/^]/;
         this.reRegexToken = /[%0-9A-Za-z]{2,}/g;
         this.reRegexTokenAbort = /[([]/;
         this.reRegexBadPrefix = /(^|[^\\]\.|[*?{}\\])$/;
         this.reRegexBadSuffix = /^([^\\]\.|\\[dw]|[([{}?*.]|$)/;
+        this.reGoodToken = /[%0-9a-z]{1,}/g;
+        this.tokenIdToNormalizedType = new Map([
+            [ parser.OPTTokenCname, bitFromType('cname') ],
+            [ parser.OPTTokenCss, bitFromType('stylesheet') ],
+            [ parser.OPTTokenDoc, bitFromType('main_frame') ],
+            [ parser.OPTTokenFont, bitFromType('font') ],
+            [ parser.OPTTokenFrame, bitFromType('sub_frame') ],
+            [ parser.OPTTokenGenericblock, bitFromType('unsupported') ],
+            [ parser.OPTTokenGhide, bitFromType('generichide') ],
+            [ parser.OPTTokenImage, bitFromType('image') ],
+            [ parser.OPTTokenInlineFont, bitFromType('inline-font') ],
+            [ parser.OPTTokenInlineScript, bitFromType('inline-script') ],
+            [ parser.OPTTokenMedia, bitFromType('media') ],
+            [ parser.OPTTokenObject, bitFromType('object') ],
+            [ parser.OPTTokenOther, bitFromType('other') ],
+            [ parser.OPTTokenPing, bitFromType('ping') ],
+            [ parser.OPTTokenPopunder, bitFromType('popunder') ],
+            [ parser.OPTTokenPopup, bitFromType('popup') ],
+            [ parser.OPTTokenScript, bitFromType('script') ],
+            [ parser.OPTTokenShide, bitFromType('specifichide') ],
+            [ parser.OPTTokenXhr, bitFromType('xmlhttprequest') ],
+            [ parser.OPTTokenWebrtc, bitFromType('unsupported') ],
+            [ parser.OPTTokenWebsocket, bitFromType('websocket') ],
+        ]);
         // These top 100 "bad tokens" are collated using the "miss" histogram
         // from tokenHistograms(). The "score" is their occurrence among the
         // 200K+ URLs used in the benchmark and executed against default
@@ -2224,7 +2208,7 @@ const FilterParser = class {
             [ 'scripts',1446 ],
             [ 'twitter',1440 ],
             [ 'crop',1431 ],
-            [ 'new',1412]
+            [ 'new',1412],
         ]);
         this.maxTokenLen = urlTokenizer.MAX_TOKEN_LENGTH;
         this.reset();
@@ -2244,16 +2228,14 @@ const FilterParser = class {
         this.dataType = undefined;
         this.data = undefined;
         this.invalid = false;
-        this.f = '';
+        this.pattern = '';
         this.firstParty = false;
         this.thirdParty = false;
         this.party = AnyParty;
-        this.fopts = '';
         this.domainOpt = '';
         this.denyallow = '';
         this.isPureHostname = false;
         this.isRegex = false;
-        this.raw = '';
         this.redirect = 0;
         this.token = '*';
         this.tokenHash = this.noTokenHash;
@@ -2278,16 +2260,12 @@ const FilterParser = class {
         return '';
     }
 
-    bitFromType(type) {
-        return 1 << ((typeNameToTypeValue[type] >>> 4) - 1);
-    }
-
     // https://github.com/chrisaljoudi/uBlock/issues/589
     // Be ready to handle multiple negated types
 
-    parseTypeOption(raw, not) {
-        const typeBit = raw !== 'all'
-            ? this.bitFromType(toNormalizedType[raw])
+    parseTypeOption(id, not) {
+        const typeBit = id !== -1
+            ? this.tokenIdToNormalizedType.get(id)
             : allTypesBits;
         if ( not ) {
             this.notTypes |= typeBit;
@@ -2309,8 +2287,8 @@ const FilterParser = class {
         }
     }
 
-    parseHostnameList(s) {
-        if ( this.reHasUnicode.test(s) ) {
+    parseHostnameList(parser, s) {
+        if ( parser.optionHasUnicode() ) {
             const hostnames = s.split('|');
             let i = hostnames.length;
             while ( i-- ) {
@@ -2320,106 +2298,74 @@ const FilterParser = class {
             }
             s = hostnames.join('|');
         }
+        // TODO: revisit
         if ( this.reBadDomainOptChars.test(s) ) { return ''; }
         return s;
     }
 
-    parseOptions(s) {
-        this.fopts = s;
-        for ( let opt of s.split(/\s*,\s*/) ) {
-            const not = opt.startsWith('~');
-            if ( not ) {
-                opt = opt.slice(1);
-            }
-            if ( opt === 'third-party' || opt === '3p' ) {
+    parseOptions(parser) {
+        for ( let { id, val, not, bad } of parser.options() ) {
+            if ( bad ) { return false; }
+            switch ( id ) {
+            case parser.OPTToken3p:
                 this.parsePartyOption(false, not);
-                continue;
-            }
-            if ( opt === 'first-party' || opt === '1p' ) {
+                break;
+            case parser.OPTToken1p:
                 this.parsePartyOption(true, not);
-                continue;
-            }
-            if ( toNormalizedType.hasOwnProperty(opt) ) {
-                this.parseTypeOption(opt, not);
-                continue;
-            }
-            // https://github.com/gorhill/uBlock/issues/2294
-            // Detect and discard filter if domain option contains nonsensical
-            // characters.
-            if ( opt.startsWith('domain=') ) {
-                this.domainOpt = this.parseHostnameList(opt.slice(7));
-                if ( this.domainOpt === '' ) {
-                    this.unsupported = true;
-                    break;
-                }
-                continue;
-            }
-            if ( opt.startsWith('denyallow=') ) {
-                this.denyallow = this.parseHostnameList(opt.slice(10));
-                if ( this.denyallow === '' ) {
-                    this.unsupported = true;
-                    break;
-                }
-                continue;
-            }
-            if ( opt === 'important' ) {
-                this.important = Important;
-                continue;
-            }
-            if ( /^redirect(?:-rule)?=/.test(opt) ) {
-                if ( this.redirect !== 0 ) {
-                    this.unsupported = true;
-                    break;
-                }
-                this.redirect = opt.charCodeAt(8) === 0x3D /* '=' */ ? 1 : 2;
-                continue;
-            }
-            if (
-                opt.startsWith('csp=') &&
-                opt.length > 4 &&
-                this.reBadCSP.test(opt) === false
-            ) {
-                this.parseTypeOption('data', not);
-                this.dataType = 'csp';
-                this.data = opt.slice(4).trim();
-                continue;
-            }
-            if ( opt === 'csp' && this.action === AllowAction ) {
-                this.parseTypeOption('data', not);
-                this.dataType = 'csp';
-                this.data = '';
-                continue;
-            }
-            // Used by Adguard:
-            // https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters#empty-modifier
-            if ( opt === 'empty' || opt === 'mp4' ) {
-                if ( this.redirect !== 0 ) {
-                    this.unsupported = true;
-                    break;
-                }
-                this.redirect = 1;
-                continue;
-            }
+                break;
+            case parser.OPTTokenAll:
+                this.parseTypeOption(-1);
+                break;
             // https://github.com/uBlockOrigin/uAssets/issues/192
-            if ( opt === 'badfilter' ) {
+            case parser.OPTTokenBadfilter:
                 this.badFilter = true;
-                continue;
-            }
+                break;
+            case parser.OPTTokenCsp:
+                this.typeBits = bitFromType('data');
+                this.dataType = 'csp';
+                if ( val !== undefined ) {
+                    if ( this.reBadCSP.test(val) ) { return false; }
+                    this.data = val;
+                } else if ( this.action === AllowAction ) {
+                    this.data = '';
+                }
+                break;
+            // https://github.com/gorhill/uBlock/issues/2294
+            //   Detect and discard filter if domain option contains nonsensical
+            //   characters.
+            case parser.OPTTokenDomain:
+                this.domainOpt = this.parseHostnameList(parser, val);
+                if ( this.domainOpt === '' ) { return false; }
+                break;
+            case parser.OPTTokenDenyAllow:
+                this.denyallow = this.parseHostnameList(parser, val);
+                if ( this.denyallow === '' ) { return false; }
+                break;
             // https://www.reddit.com/r/uBlockOrigin/comments/d6vxzj/
             //   Add support for `elemhide`. Rarely used but it happens.
-            if ( opt === 'elemhide' || opt === 'ehide' ) {
-                this.parseTypeOption('specifichide', not);
-                this.parseTypeOption('generichide', not);
-                continue;
+            case parser.OPTTokenEhide:
+                this.parseTypeOption(parser.OPTTokenShide, not);
+                this.parseTypeOption(parser.OPTTokenGhide, not);
+                break;
+            case parser.OPTTokenImportant:
+                this.important = Important;
+                break;
+            // Used by Adguard:
+            // https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters#empty-modifier
+            case parser.OPTTokenEmpty:
+            case parser.OPTTokenMp4:
+            case parser.OPTTokenRedirect:
+            case parser.OPTTokenRedirectRule:
+                if ( this.redirect !== 0 ) { return false; }
+                this.redirect = id === parser.OPTTokenRedirectRule ? 2 : 1;
+                break;
+            default:
+                if ( this.tokenIdToNormalizedType.has(id) === false ) {
+                    return false;
+                }
+                this.parseTypeOption(id, not);
+                break;
             }
-            // Unrecognized filter option: ignore whole filter.
-            this.unsupported = true;
-            break;
-        }
-
-        // Redirect rules can't be exception filters.
-        if ( this.redirect !== 0 && this.action !== BlockAction ) {
-            this.unsupported = true;
         }
 
         // Negated network types? Toggle on all network type bits.
@@ -2429,9 +2375,7 @@ const FilterParser = class {
         }
         if ( this.notTypes !== 0 ) {
             this.typeBits &= ~this.notTypes;
-            if ( this.typeBits === 0 ) {
-                this.unsupported = true;
-            }
+            if ( this.typeBits === 0 ) { return false; }
         }
 
         // https://github.com/gorhill/uBlock/issues/2283
@@ -2439,193 +2383,99 @@ const FilterParser = class {
         //   toggle off `unsupported` bit.
         if ( this.typeBits & unsupportedTypeBit ) {
             this.typeBits &= ~unsupportedTypeBit;
-            if ( this.typeBits === 0 ) {
-                this.unsupported = true;
-            }
+            if ( this.typeBits === 0 ) { return false; }
         }
+        return true;
     }
 
-    // TODO: use charCodeAt where possible.
-
-    parse(raw) {
+    parse(parser) {
         // important!
         this.reset();
 
-        let s = this.raw = raw.trim();
-
-        if ( s.length === 0 ) {
+        if ( parser.hasError() ) {
             this.invalid = true;
             return this;
         }
 
-        // Filters which are a single alphanumeric character are discarded
-        // as unsupported.
-        if ( s.length === 1 && /[0-9a-z]/i.test(s) ) {
-            this.unsupported = true;
+        // Filters which pattern is a single character other than `*` and have
+        // no narrowing options are discarded as invalid.
+        if ( parser.patternIsDubious() ) {
+            this.invalid = true;
             return this;
-        }
-
-        // plain hostname? (from HOSTS file)
-        if ( this.reHostnameRule1.test(s) ) {
-            this.f = s.toLowerCase();
-            this.isPureHostname = true;
-            this.anchor |= 0b100;
-            return this;
-        }
-
-        // element hiding filter?
-        let pos = s.indexOf('#');
-        if ( pos !== -1 ) {
-            const c = s.charAt(pos + 1);
-            if ( c === '#' || c === '@' ) {
-                console.error('static-net-filtering.js > unexpected cosmetic filters');
-                this.invalid = true;
-                return this;
-            }
         }
 
         // block or allow filter?
         // Important: this must be executed before parsing options
-        if ( s.startsWith('@@') ) {
+        if ( parser.isException() ) {
             this.action = AllowAction;
-            s = s.slice(2);
         }
 
-        // options
-        // https://github.com/gorhill/uBlock/issues/842
-        // - ensure sure we are not dealing with a regex-based filter.
-        // - lookup the last occurrence of `$`.
-        if (
-            s.charCodeAt(0) !== 0x2F /* '/' */ ||
-            s.charCodeAt(s.length - 1) !== 0x2F /* '/' */
-        ) {
-            pos = s.lastIndexOf('$');
-            if ( pos !== -1 ) {
-                // https://github.com/gorhill/uBlock/issues/952
-                //   Discard Adguard-specific `$$` filters.
-                if ( s.indexOf('$$') !== -1 ) {
-                    this.unsupported = true;
-                    return this;
-                }
-                this.parseOptions(s.slice(pos + 1).trim());
-                if ( this.unsupported ) { return this; }
-                s = s.slice(0, pos);
-            }
-        }
+        this.isPureHostname = parser.patternIsPlainHostname();
 
-        // regex?
-        if (
-            s.length > 2 &&
-            s.charCodeAt(0) === 0x2F /* '/' */ &&
-            s.charCodeAt(s.length - 1) === 0x2F /* '/' */
-        ) {
-            this.isRegex = true;
-            this.f = s.slice(1, -1);
-            // https://github.com/gorhill/uBlock/issues/1246
-            //   If the filter is valid, use the corrected version of the
-            //   source string -- this ensure reverse-lookup will work fine.
-            this.f = this.normalizeRegexSource(this.f);
-            if ( this.f === '' ) {
-                this.unsupported = true;
-            }
+        // Plain hostname? (from HOSTS file)
+        if ( this.isPureHostname && parser.hasOptions() === false ) {
+            this.pattern = parser.patternToLowercase();
+            this.anchor |= 0b100;
             return this;
         }
 
-        // hostname-anchored
-        if ( s.startsWith('||') ) {
-            this.anchor |= 0b100;
-            s = s.slice(2);
-
-            // convert hostname to punycode if needed
-            // https://github.com/gorhill/uBlock/issues/2599
-            if ( this.reHasUnicode.test(s) ) {
-                const matches = this.reIsolateHostname.exec(s);
-                if ( matches ) {
-                    s = (matches[1] !== undefined ? matches[1] : '') +
-                        punycode.toASCII(matches[2]) +
-                        matches[3];
-                }
-            }
-
-            // https://github.com/chrisaljoudi/uBlock/issues/1096
-            if ( s.startsWith('^') ) {
-                this.unsupported = true;
-                return this;
-            }
-
-            // plain hostname? (from ABP filter list)
-            // https://github.com/gorhill/uBlock/issues/1757
-            // A filter can't be a pure-hostname one if there is a domain or
-            // csp option present.
-            if ( this.reHostnameRule2.test(s) ) {
-                if ( s.charCodeAt(s.length - 1) === 0x5E /* '^' */ ) {
-                    s = s.slice(0, -1);
-                }
-                this.f = s.toLowerCase();
-                this.isPureHostname = true;
-                return this;
-            }
-        }
-
-        // left-anchored
-        else if ( s.startsWith('|') ) {
-            this.anchor |= 0x2;
-            s = s.slice(1);
-        }
-
-        // right-anchored
-        if ( s.endsWith('|') ) {
-            this.anchor |= 0x1;
-            s = s.slice(0, -1);
-        }
-
-        // https://github.com/gorhill/uBlock/issues/1669#issuecomment-224822448
-        //   Remove pointless leading *.
-        // https://github.com/gorhill/uBlock/issues/3034
-        //   We can remove anchoring if we need to match all at the start.
-        if ( s.startsWith('*') ) {
-            s = s.replace(/^\*+([^%0-9a-z])/i, '$1');
-            this.anchor &= ~0x6;
-        }
-        // Remove pointless trailing *
-        // https://github.com/gorhill/uBlock/issues/3034
-        //   We can remove anchoring if we need to match all at the end.
-        if ( s.endsWith('*') ) {
-            s = s.replace(/([^%0-9a-z])\*+$/i, '$1');
-            this.anchor &= ~0x1;
-        }
-
-        // nothing left?
-        if ( s === '' ) {
-            s = '*';
-        }
-        // TODO: remove once redirect rules with `*/*` pattern are no longer
-        //       used.
-        else if ( this.redirect !== 0 && s === '/' ) {
-            s = '*';
-        }
-
-        // https://github.com/gorhill/uBlock/issues/1047
-        //   Hostname-anchored makes no sense if matching all requests.
-        if ( s === '*' ) {
-            this.anchor = 0;
-        }
-
-        this.firstWildcardPos = s.indexOf('*');
-        if ( this.firstWildcardPos !== -1 ) {
-            this.secondWildcardPos = s.indexOf('*', this.firstWildcardPos + 1);
-        }
-        this.firstCaretPos = s.indexOf('^');
-        if ( this.firstCaretPos !== -1 ) {
-            this.secondCaretPos = s.indexOf('^', this.firstCaretPos + 1);
-        }
-
-        if ( s.length > 1024 ) {
+        // options
+        if ( parser.hasOptions() && this.parseOptions(parser) === false ) {
             this.unsupported = true;
             return this;
         }
 
-        this.f = s.toLowerCase();
+        // regex?
+        if ( parser.patternIsRegex() ) {
+            this.isRegex = true;
+            // https://github.com/gorhill/uBlock/issues/1246
+            //   If the filter is valid, use the corrected version of the
+            //   source string -- this ensure reverse-lookup will work fine.
+            this.pattern = this.normalizeRegexSource(parser.getPattern());
+            if ( this.pattern === '' ) {
+                this.unsupported = true;
+            }
+            return this;
+        }
+
+        let pattern;
+        if ( parser.patternIsMatchAll() ) {
+            pattern = '*';
+        } else {
+            pattern = parser.patternToLowercase();
+        }
+
+        if ( parser.patternIsLeftHostnameAnchored() ) {
+            this.anchor |= 0b100;
+        } else if ( parser.patternIsLeftAnchored() ) {
+            this.anchor |= 0b010;
+        }
+        if ( parser.patternIsRightAnchored() ) {
+            this.anchor |= 0b001;
+        }
+
+        if ( parser.patternHasWildcard() ) {
+            this.firstWildcardPos = pattern.indexOf('*');
+            if ( this.firstWildcardPos !== -1 ) {
+                this.secondWildcardPos =
+                    pattern.indexOf('*', this.firstWildcardPos + 1);
+            }
+        }
+
+        if ( parser.patternHasCaret() ) {
+            this.firstCaretPos = pattern.indexOf('^');
+            if ( this.firstCaretPos !== -1 ) {
+                this.secondCaretPos =
+                    pattern.indexOf('^', this.firstCaretPos + 1);
+            }
+        }
+
+        if ( pattern.length > 1024 ) {
+            this.unsupported = true;
+            return this;
+        }
+
+        this.pattern = pattern;
 
         return this;
     }
@@ -2635,41 +2485,24 @@ const FilterParser = class {
     // are not good. Avoid if possible. This has a significant positive
     // impact on performance.
 
-    makeToken() {
+    makeToken(parser) {
         if ( this.isRegex ) {
-            this.extractTokenFromRegex();
-            return;
+            return this.extractTokenFromRegex();
         }
-        if ( this.f === '*' ) { return; }
-        const matches = this.findGoodToken();
-        if ( matches === null ) { return; }
-        this.token = matches[0];
+        const match = this.findGoodToken(parser);
+        if ( match === null ) { return; }
+        this.token = match.token;
         this.tokenHash = urlTokenizer.tokenHashFromString(this.token);
-        this.tokenBeg = matches.index;
+        this.tokenBeg = match.pos;
     }
 
-    findGoodToken() {
-        this.reGoodToken.lastIndex = 0;
-        const s = this.f;
+    // Note: a one-char token is better than a documented bad token.
+    findGoodToken(parser) {
         let bestMatch = null;
         let bestBadness = 0;
-        let match;
-        while ( (match = this.reGoodToken.exec(s)) !== null ) {
-            const token = match[0];
-            // https://github.com/gorhill/uBlock/issues/997
-            //   Ignore token if preceded by wildcard.
-            const pos = match.index;
-            if (
-                pos !== 0 &&
-                    s.charCodeAt(pos - 1) === 0x2A /* '*' */ ||
-                token.length < this.maxTokenLen &&
-                    s.charCodeAt(pos + token.length) === 0x2A /* '*' */
-            ) {
-                continue;
-            }
-            // A one-char token is better than a documented bad token.
-            const badness = token.length > 1
-                ? this.badTokens.get(token) || 0
+        for ( const match of parser.patternTokens() ) {
+            const badness = match.token.length > 1
+                ? this.badTokens.get(match.token) || 0
                 : 1;
             if ( badness === 0 ) { return match; }
             if ( bestBadness === 0 || badness < bestBadness ) {
@@ -2685,7 +2518,7 @@ const FilterParser = class {
     //   a regex-based filter.
     extractTokenFromRegex() {
         this.reRegexToken.lastIndex = 0;
-        const s = this.f;
+        const s = this.pattern;
         let matches;
         while ( (matches = this.reRegexToken.exec(s)) !== null ) {
             const prefix = s.slice(0, matches.index);
@@ -2712,9 +2545,9 @@ const FilterParser = class {
             this.dataType === undefined &&
             this.denyallow === '' &&
             this.domainOpt !== '' && (
-                this.f === '*' || (
+                this.pattern === '*' || (
                     this.anchor === 0b010 &&
-                    /^(?:http[s*]?:(?:\/\/)?)$/.test(this.f)
+                    /^(?:http[s*]?:(?:\/\/)?)$/.test(this.pattern)
                 )
             ) &&
             this.domainOpt.indexOf('~') === -1;
@@ -2778,15 +2611,15 @@ FilterParser.parse = (( ) => {
         ttlTimer = vAPI.setTimeout(ttlProcess, 10007);
     };
 
-    return s => {
+    return p => {
         if ( parser === undefined ) {
-            parser = new FilterParser();
+            parser = new FilterParser(p);
         }
         last = Date.now();
         if ( ttlTimer === undefined ) {
             ttlTimer = vAPI.setTimeout(ttlProcess, 10007);
         }
-        return parser.parse(s);
+        return parser.parse(p);
     };
 })();
 
@@ -3072,10 +2905,10 @@ FilterContainer.prototype.fromSelfie = function(path) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.compile = function(raw, writer) {
+FilterContainer.prototype.compile = function(parser, writer) {
     // ORDER OF TESTS IS IMPORTANT!
 
-    const parsed = FilterParser.parse(raw);
+    const parsed = FilterParser.parse(parser);
 
     // Ignore non-static network filters
     if ( parsed.invalid ) { return false; }
@@ -3086,20 +2919,20 @@ FilterContainer.prototype.compile = function(raw, writer) {
         µb.logger.writeOne({
             realm: 'message',
             type: 'error',
-            text: `Invalid network filter in ${who}: ${raw}`
+            text: `Invalid network filter in ${who}: ${parser.raw}`
         });
         return false;
     }
 
     // Redirect rule
     if ( parsed.redirect !== 0 ) {
-        const result = this.compileRedirectRule(parsed, writer);
+        const result = this.compileRedirectRule(parser.raw, parsed.badFilter, writer);
         if ( result === false ) {
             const who = writer.properties.get('assetKey') || '?';
             µb.logger.writeOne({
                 realm: 'message',
                 type: 'error',
-                text: `Invalid redirect rule in ${who}: ${raw}`
+                text: `Invalid redirect rule in ${who}: ${parser.raw}`
             });
             return false;
         }
@@ -3116,11 +2949,13 @@ FilterContainer.prototype.compile = function(raw, writer) {
         parsed.dataType === undefined
     ) {
         parsed.tokenHash = this.dotTokenHash;
-        this.compileToAtomicFilter(parsed, parsed.f, writer);
+        this.compileToAtomicFilter(parsed, parsed.pattern, writer);
         return true;
     }
 
-    parsed.makeToken();
+    if ( parser.patternIsMatchAll() === false ) {
+        parsed.makeToken(parser);
+    }
 
     // Special pattern/option cases:
     // - `*$domain=...`
@@ -3131,9 +2966,9 @@ FilterContainer.prototype.compile = function(raw, writer) {
     // are entries in the `domain=` option.
     if ( parsed.isJustOrigin() ) {
         const tokenHash = parsed.tokenHash;
-        if ( parsed.f === '*' || parsed.f.startsWith('http*') ) {
+        if ( parsed.pattern === '*' || parsed.pattern.startsWith('http*') ) {
             parsed.tokenHash = this.anyTokenHash;
-        } else if /* 'https:' */ ( parsed.f.startsWith('https') ) {
+        } else if /* 'https:' */ ( parsed.pattern.startsWith('https') ) {
             parsed.tokenHash = this.anyHTTPSTokenHash;
         } else /* 'http:' */ {
             parsed.tokenHash = this.anyHTTPTokenHash;
@@ -3251,10 +3086,10 @@ FilterContainer.prototype.compileToAtomicFilter = function(
 
 /******************************************************************************/
 
-FilterContainer.prototype.compileRedirectRule = function(parsed, writer) {
-    const redirects = µb.redirectEngine.compileRuleFromStaticFilter(parsed.raw);
+FilterContainer.prototype.compileRedirectRule = function(raw, badFilter, writer) {
+    const redirects = µb.redirectEngine.compileRuleFromStaticFilter(raw);
     if ( Array.isArray(redirects) === false ) { return false; }
-    writer.select(parsed.badFilter ? 1 : 0);
+    writer.select(badFilter ? 1 : 0);
     const type = typeNameToTypeValue.redirect;
     for ( const redirect of redirects ) {
         writer.push([ type, redirect ]);

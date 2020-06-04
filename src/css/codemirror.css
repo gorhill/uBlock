@@ -22,7 +22,17 @@
     word-break: break-all;
     }
 
+/* CodeMirror theme overrides */
+.cm-s-default .cm-string-2 { color: #a30; }
 .cm-s-default .cm-comment { color: #777; }
+.cm-s-default .cm-keyword { color: #90b; }
+.cm-s-default .cm-error,
+.CodeMirror-linebackground.error {
+    background-color: #ff000018;
+    text-decoration: underline red;
+    text-underline-position: under;
+    }
+
 .cm-directive { color: #333; font-weight: bold; }
 .cm-staticext { color: #008; }
 .cm-staticnetBlock { color: #800; }

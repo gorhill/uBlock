@@ -799,60 +799,36 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     //    https://adblockplus.org/en/filters
     const staticNetFilteringEngine = this.staticNetFilteringEngine;
     const staticExtFilteringEngine = this.staticExtFilteringEngine;
-    const reIsWhitespaceChar = /\s/;
-    const reMaybeLocalIp = /^[\d:f]/;
-    const reIsLocalhostRedirect = /\s+(?:0\.0\.0\.0|broadcasthost|localhost|local|ip6-\w+)\b/;
-    const reLocalIp = /^(?:(0\.0\.0\.)?0|127\.0\.0\.1|::1?|fe80::1%lo0)\s+/;
     const lineIter = new this.LineIterator(this.processDirectives(rawText));
+    const parser = new vAPI.StaticFilteringParser();
+
+    parser.setMaxTokenLength(this.urlTokenizer.MAX_TOKEN_LENGTH);
 
     while ( lineIter.eot() === false ) {
-        let line = lineIter.next().trim();
-        if ( line.length === 0 ) { continue; }
+        let line = lineIter.next();
 
         while ( line.endsWith(' \\') ) {
             if ( lineIter.peek(4) !== '    ' ) { break; }
             line = line.slice(0, -2).trim() + lineIter.next().trim();
         }
 
-        // Strip comments
-        const c = line.charAt(0);
-        if ( c === '!' || c === '[' ) { continue; }
+        parser.analyze(line);
 
-        // Parse or skip cosmetic filters
-        // All cosmetic filters are caught here
-        if ( staticExtFilteringEngine.compile(line, writer) ) { continue; }
+        if ( parser.shouldIgnore() ) { continue; }
 
-        // Whatever else is next can be assumed to not be a cosmetic filter
-
-        // Most comments start in first column
-        if ( c === '#' ) { continue; }
-
-        // Catch comments somewhere on the line
-        // Remove:
-        //   ... #blah blah blah
-        //   ... # blah blah blah
-        // Don't remove:
-        //   ...#blah blah blah
-        // because some ABP filters uses the `#` character (URL fragment)
-        const pos = line.indexOf('#');
-        if ( pos !== -1 && reIsWhitespaceChar.test(line.charAt(pos - 1)) ) {
-            line = line.slice(0, pos).trim();
+        if ( parser.category === parser.CATStaticExtFilter ) {
+            staticExtFilteringEngine.compile(parser, writer);
+            continue;
         }
 
-        // https://github.com/gorhill/httpswitchboard/issues/15
-        // Ensure localhost et al. don't end up in the ubiquitous blacklist.
-        // With hosts files, we need to remove local IP redirection
-        if ( reMaybeLocalIp.test(c) ) {
-            // Ignore hosts file redirect configuration
-            // 127.0.0.1 localhost
-            // 255.255.255.255 broadcasthost
-            if ( reIsLocalhostRedirect.test(line) ) { continue; }
-            line = line.replace(reLocalIp, '').trim();
+        if ( parser.category !== parser.CATStaticNetFilter ) { continue; }
+
+        // https://github.com/gorhill/uBlock/issues/2599
+        //   convert hostname to punycode if needed
+        if ( parser.patternHasUnicode() ) {
+            parser.toPunycode();
         }
-
-        if ( line.length === 0 ) { continue; }
-
-        staticNetFilteringEngine.compile(line, writer);
+        staticNetFilteringEngine.compile(parser, writer);
     }
 
     return writer.toString();

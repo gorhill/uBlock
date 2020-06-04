@@ -52,7 +52,6 @@
 
 µBlock.staticExtFilteringEngine = (( ) => {
     const µb = µBlock;
-    const reHasUnicode = /[^\x00-\x7F]/;
     const reParseRegexLiteral = /^\/(.+)\/([imu]+)?$/;
     const emptyArray = [];
     const parsed = {
@@ -142,23 +141,16 @@
             : `${selector}:style(${style})`;
     };
 
-    const hostnamesFromPrefix = function(s) {
+    const hostnamesFromPrefix = function(parser) {
         const hostnames = [];
-        const hasUnicode = reHasUnicode.test(s);
-        let beg = 0;
-        while ( beg < s.length ) {
-            let end = s.indexOf(',', beg);
-            if ( end === -1 ) { end = s.length; }
-            let hostname = s.slice(beg, end).trim();
-            if ( hostname.length !== 0 ) {
-                if ( hasUnicode ) {
-                    hostname = hostname.charCodeAt(0) === 0x7E /* '~' */
-                        ? '~' + punycode.toASCII(hostname.slice(1))
-                        : punycode.toASCII(hostname);
-                }
-                hostnames.push(hostname);
+        const hasUnicode = parser.optionHasUnicode();
+        for ( let { hn, not } of parser.options() ) {
+            hn = hn.trim();
+            if ( hn.length === 0 ) { continue; }
+            if ( hasUnicode ) {
+                hn = punycode.toASCII(hn);
             }
-            beg = end + 1;
+            hostnames.push(not ? `~${hn}` : hn);
         }
         return hostnames;
     };
@@ -844,34 +836,16 @@
         return entryPoint;
     })();
 
-    api.compile = function(raw, writer) {
-        let lpos = raw.indexOf('#');
-        if ( lpos === -1 ) { return false; }
-        let rpos = lpos + 1;
-        if ( raw.charCodeAt(rpos) !== 0x23 /* '#' */ ) {
-            rpos = raw.indexOf('#', rpos + 1);
-            if ( rpos === -1 ) { return false; }
-        }
+    api.compile = function(parser, writer) {
+        if ( parser.category !== parser.CATStaticExtFilter ) { return false; }
 
-        // https://github.com/AdguardTeam/AdguardFilters/commit/4fe02d73cee6
-        //   AdGuard also uses `$?` to force inline-based style rather than
-        //   stylesheet-based style.
-        // Coarse-check that the anchor is valid.
-        // `##`: l === 1
-        // `#@#`, `#$#`, `#%#`, `#?#`: l === 2
-        // `#@$#`, `#@%#`, `#@?#`, `#$?#`: l === 3
-        // `#@$?#`: l === 4
-        const anchorLen = rpos - lpos;
-        if ( anchorLen > 4 ) { return false; }
-        if (
-            anchorLen > 1 &&
-            /^@?(?:\$\??|%|\?)?$/.test(raw.slice(lpos + 1, rpos)) === false
-        ) {
-            return false;
+        // Adguard's scriptlet injection: not supported.
+        if ( (parser.flavorBits & parser.BITFlavorUnsupported) !== 0 ) {
+            return true;
         }
 
         // Extract the selector.
-        let suffix = raw.slice(rpos + 1).trim();
+        let suffix = parser.strFromSpan(parser.patternSpan);
         if ( suffix.length === 0 ) { return false; }
         parsed.suffix = suffix;
 
@@ -882,29 +856,21 @@
         //   We have an Adguard/ABP cosmetic filter if and only if the
         //   character is `$`, `%` or `?`, otherwise it's not a cosmetic
         //   filter.
-        let cCode = raw.charCodeAt(rpos - 1);
-        if ( cCode !== 0x23 /* '#' */ && cCode !== 0x40 /* '@' */ ) {
-            // Adguard's scriptlet injection: not supported.
-            if ( cCode === 0x25 /* '%' */ ) { return true; }
-            if ( cCode === 0x3F /* '?' */ && anchorLen > 2 ) {
-                cCode = raw.charCodeAt(rpos - 2);
-            }
-            // Adguard's style injection: translate to uBO's format.
-            if ( cCode === 0x24 /* '$' */ ) {
-                suffix = translateAdguardCSSInjectionFilter(suffix);
-                if ( suffix === '' ) { return true; }
-                parsed.suffix = suffix;
-            }
+        // Adguard's style injection: translate to uBO's format.
+        if ( (parser.flavorBits & parser.BITFlavorExtStyle) !== 0 ) {
+            suffix = translateAdguardCSSInjectionFilter(suffix);
+            if ( suffix === '' ) { return true; }
+            parsed.suffix = suffix;
         }
 
         // Exception filter?
-        parsed.exception = raw.charCodeAt(lpos + 1) === 0x40 /* '@' */;
+        parsed.exception = parser.isException();
 
         // Extract the hostname(s), punycode if required.
-        if ( lpos === 0 ) {
-            parsed.hostnames = emptyArray;
+        if ( parser.hasOptions() ) {
+            parsed.hostnames = hostnamesFromPrefix(parser);
         } else {
-            parsed.hostnames = hostnamesFromPrefix(raw.slice(0, lpos));
+            parsed.hostnames = emptyArray;
         }
 
         // Backward compatibility with deprecated syntax.

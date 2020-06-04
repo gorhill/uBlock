@@ -24,117 +24,155 @@
 'use strict';
 
 CodeMirror.defineMode("ubo-static-filtering", function() {
-    const reDirective = /^\s*!#(?:if|endif|include)\b/;
-    const reComment1 = /^\s*!/;
-    const reComment2 = /^\s*#/;
-    const reExt = /(#@?(?:\$\??|\?)?#)(?!##)/;
-    const reNet = /^\s*(?:@@)?.*(?:(\$)(?:[^$]+)?)?$/;
-    let lineStyle = null;
-    let anchorOptPos = null;
-    
-    const lines = [];
-    let iLine = 0;
+    const parser = new vAPI.StaticFilteringParser(true);
+    const reDirective = /^!#(?:if|endif|include)\b/;
+    let parserSlot = 0;
+    let netOptionValueMode = false;
 
-    const lineFromLineBuffer = function() {
-        return lines.length === 1
-            ? lines[0]
-            : lines.filter(a => a.replace(/^\s*|\s+\\$/g, '')).join('');
-    };
-
-    const parseExtFilter = function() {
-        lineStyle = 'staticext';
-        for ( let i = 0; i < lines.length; i++ ) {
-            const match = reExt.exec(lines[i]);
-            if ( match === null ) { continue; }
-            anchorOptPos = { y: i, x: match.index, l: match[1].length };
-            break;
+    const colorSpan = function(stream) {
+        if ( parser.category === parser.CATNone || parser.shouldIgnore() ) {
+            stream.skipToEnd();
+            return 'comment';
         }
-    };
-
-    const parseNetFilter = function() {
-        lineStyle = lineFromLineBuffer().startsWith('@@')
-            ? 'staticnetAllow'
-            : 'staticnetBlock';
-        let i = lines.length;
-        while ( i-- ) {
-            const pos = lines[i].lastIndexOf('$');
-            if ( pos === -1 ) { continue; }
-            anchorOptPos = { y: i, x: pos, l: 1 };
-            break;
+        if ( parser.category === parser.CATComment ) {
+            stream.skipToEnd();
+            return reDirective.test(stream.string)
+                ? 'variable strong'
+                : 'comment';
         }
-    };
-
-    const highlight = function(stream) {
-        if ( anchorOptPos !== null && iLine === anchorOptPos.y ) {
-            if ( stream.pos === anchorOptPos.x ) {
-                stream.pos += anchorOptPos.l;
-                return `${lineStyle} staticOpt`;
+        if ( (parser.slices[parserSlot] & parser.BITIgnore) !== 0 ) {
+            stream.pos += parser.slices[parserSlot+2];
+            parserSlot += 3;
+            return 'comment';
+        }
+        if ( (parser.slices[parserSlot] & parser.BITError) !== 0 ) {
+            stream.pos += parser.slices[parserSlot+2];
+            parserSlot += 3;
+            return 'error';
+        }
+        if ( parser.category === parser.CATStaticExtFilter ) {
+            if ( parserSlot < parser.optionsAnchorSpan.i ) {
+                const style = (parser.slices[parserSlot] & parser.BITComma) === 0
+                    ? 'string-2'
+                    : 'def';
+                stream.pos += parser.slices[parserSlot+2];
+                parserSlot += 3;
+                return style;
             }
-            if ( stream.pos < anchorOptPos.x ) {
-                stream.pos = anchorOptPos.x;
-                return lineStyle;
+            if (
+                parserSlot >= parser.optionsAnchorSpan.i &&
+                parserSlot < parser.patternSpan.i
+            ) {
+                const style = (parser.flavorBits & parser.BITFlavorException) !== 0
+                    ? 'tag'
+                    : 'def';
+                stream.pos += parser.slices[parserSlot+2];
+                parserSlot += 3;
+                return `${style} strong`;
             }
+            if ( parserSlot >= parser.patternSpan.i ) {
+                stream.skipToEnd();
+                return 'variable';
+            }
+            stream.skipToEnd();
+            return '';
+        }
+        if ( parserSlot < parser.exceptionSpan.i ) {
+            stream.pos += parser.slices[parserSlot+2];
+            parserSlot += 3;
+            return '';
+        }
+        if (
+            parserSlot === parser.exceptionSpan.i &&
+            parser.exceptionSpan.l !== 0
+        ) {
+            stream.pos += parser.slices[parserSlot+2];
+            parserSlot += 3;
+            return 'tag strong';
+        }
+        if (
+            parserSlot === parser.patternLeftAnchorSpan.i &&
+            parser.patternLeftAnchorSpan.l !== 0 ||
+            parserSlot === parser.patternRightAnchorSpan.i &&
+            parser.patternRightAnchorSpan.l !== 0
+        ) {
+            stream.pos += parser.slices[parserSlot+2];
+            parserSlot += 3;
+            return 'keyword strong';
+        }
+        if (
+            parserSlot >= parser.patternSpan.i &&
+            parserSlot < parser.patternRightAnchorSpan.i
+        ) {
+            if ( (parser.slices[parserSlot] & (parser.BITAsterisk | parser.BITCaret)) !== 0 ) {
+                stream.pos += parser.slices[parserSlot+2];
+                parserSlot += 3;
+                return 'keyword strong';
+            }
+            const nextSlot = parser.skipUntil(
+                parserSlot,
+                parser.patternRightAnchorSpan.i,
+                parser.BITAsterisk | parser.BITCaret
+            );
+            stream.pos = parser.slices[nextSlot+1];
+            parserSlot = nextSlot;
+            return 'variable';
+        }
+        if (
+            parserSlot === parser.optionsAnchorSpan.i &&
+            parser.optionsAnchorSpan.l !== 0
+        ) {
+            stream.pos += parser.slices[parserSlot+2];
+            parserSlot += 3;
+            return 'def strong';
+        }
+        if (
+            parserSlot >= parser.optionsSpan.i &&
+            parser.optionsSpan.l !== 0
+        ) {
+            const bits = parser.slices[parserSlot];
+            let style;
+            if ( (bits & parser.BITComma) !== 0  ) {
+                style = 'def strong';
+                netOptionValueMode = false;
+            } else if ( (bits & parser.BITTilde) !== 0 ) {
+                style = 'keyword strong';
+            } else if ( (bits & parser.BITPipe) !== 0 ) {
+                style = 'def';
+            } else if ( netOptionValueMode ) {
+                style = 'string-2';
+            } else if ( (bits & parser.BITEqual) !== 0 ) {
+                netOptionValueMode = true;
+            }
+            stream.pos += parser.slices[parserSlot+2];
+            parserSlot += 3;
+            return style || 'def';
+        }
+        if (
+            parserSlot >= parser.commentSpan.i &&
+            parser.commentSpan.l !== 0
+        ) {
+            stream.skipToEnd();
+            return 'comment';
         }
         stream.skipToEnd();
-        return lineStyle;
-    };
-
-    const parseMultiLine = function() {
-        anchorOptPos = null;
-        const line = lineFromLineBuffer();
-        if ( reDirective.test(line) ) {
-            lineStyle = 'directive';
-            return;
-        }
-        if ( reComment1.test(line) ) {
-            lineStyle = 'comment';
-            return;
-        }
-        if ( line.indexOf('#') !== -1 ) {
-            if ( reExt.test(line) ) {
-                return parseExtFilter();
-            }
-            if ( reComment2.test(line) ) {
-                lineStyle = 'comment';
-                return;
-            }
-        }
-        if ( reNet.test(line) ) {
-            return parseNetFilter();
-        }
-        lineStyle = null;
+        return '';
     };
 
     return {
-        startState: function() {
-        },
         token: function(stream) {
-            if ( iLine === lines.length || stream.string !== lines[iLine] ) {
-                iLine = 0;
+            if ( stream.sol() ) {
+                parser.analyze(stream.string);
+                parser.analyzeExtra(stream.string);
+                parserSlot = 0;
+                netOptionValueMode = false;
             }
-            if ( iLine === 0 ) {
-                if ( lines.length > 1 ) {
-                    lines.length = 1;
-                }
-                let line = stream.string;
-                lines[0] = line;
-                if ( line.endsWith(' \\') ) {
-                    do {
-                        line = stream.lookAhead(lines.length);
-                        if (
-                            line === undefined ||
-                            line.startsWith('    ') === false
-                        ) { break; }
-                        lines.push(line);
-                    } while ( line.endsWith(' \\') );
-                }
-                parseMultiLine();
+            let style = colorSpan(stream);
+            if ( (parser.flavorBits & parser.BITFlavorError) !== 0 ) {
+                style += ' line-background-error';
             }
-            const style = highlight(stream);
-            if ( stream.eol() ) {
-                iLine += 1;
-            }
-            return style;
+            style = style.trim();
+            return style !== '' ? style : null;
         },
     };
 });
