@@ -38,18 +38,14 @@ sed -i '' "s/\"{version}\"/${VERSION}/" $DES/manifest.json
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
 sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
 
-# Remove the following files
-rm $DES/js/adn/tests.js
-rm -R $DES/lib/qunit
-
-rm -r $DES/_locales/az
-rm -r $DES/_locales/cv
-rm -r $DES/_locales/hi
-rm -r $DES/_locales/ka
-rm -r $DES/_locales/kk
-rm -r $DES/_locales/mr
-rm -r $DES/_locales/ta
-rm -r $DES/_locales/th
+# rm -r $DES/_locales/az
+# rm -r $DES/_locales/cv
+# rm -r $DES/_locales/hi
+# rm -r $DES/_locales/ka
+# rm -r $DES/_locales/kk
+# rm -r $DES/_locales/mr
+# rm -r $DES/_locales/ta
+# rm -r $DES/_locales/th
 
 # Removing WASM modules until I receive an answer from Opera people: Opera's
 # uploader issue an error for hntrie.wasm and this prevents me from

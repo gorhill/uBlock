@@ -20,7 +20,7 @@ manifest_out_file = os.path.join(build_dir, 'manifest.json')
 with open(manifest_out_file) as f:
     manifest_out = json.load(f)
 
-manifest_out['version'] = version
+# manifest_out['version'] = version
 
 # Development build? If so, modify name accordingly.
 match = re.search('^\d+\.\d+\.\d+\.\d+$', version)

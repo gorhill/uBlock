@@ -14,7 +14,6 @@ fi
 rm -rf $DES
 mkdir -p $DES
 
-UBLOCK=`jq .version platform/chromium/manifest.json | tr -d '"'` # ublock-version
 
 echo "*** AdNauseam.chromium: copying common files"
 bash ./tools/copy-common-files.sh  $DES
@@ -37,12 +36,6 @@ rm $DES/js/vapi-usercss.pseudo.js
 
 echo "*** AdNauseam: Generating meta..."
 python tools/make-chromium-meta.py $DES/
-sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
-sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
-
-# Remove the following files
-rm $DES/js/adn/tests.js
-rm -R $DES/lib/qunit
 
 if [ "$1" = all ]; then
     echo "*** AdNauseam.chromium: Creating package..."

@@ -12,8 +12,6 @@ rm -rf $DES
 mkdir -p $DES/webextension
 
 VERSION=`jq .version manifest.json` # top-level adnauseam manifest
-UBLOCK=`jq .version platform/chromium/manifest.json | tr -d '"'` # ublock-version no quotes
-
 
 echo "*** AdNauseam.firefox: copying common files"
 bash ./tools/copy-common-files.sh  $DES
@@ -36,13 +34,8 @@ rm $DES/js/vapi-usercss.pseudo.js
 
 # Webext-specific
 rm $DES/img/icon_128.png
-# Remove the following files
-rm $DES/js/adn/tests.js
-rm -R $DES/lib/qunit
 
 sed -i '' "s/\"{version}\"/${VERSION}/" $DES/manifest.json
-sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
-sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
 
 echo "*** AdNauseam.firefox: Generating meta..."
 python tools/make-firefox-meta.py $DES/

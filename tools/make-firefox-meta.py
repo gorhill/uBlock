@@ -29,7 +29,7 @@ if 'sidebar_action' in firefox_manifest:
         # Remove sidebarAction support for stable release of uBO.
         del firefox_manifest['sidebar_action']
 
-firefox_manifest['version'] = version
+# firefox_manifest['version'] = version
 
 with open(firefox_manifest_file, 'w') as f2:
     json.dump(firefox_manifest, f2, indent=2, separators=(',', ': '), sort_keys=True)
