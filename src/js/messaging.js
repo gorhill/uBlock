@@ -1253,6 +1253,7 @@ var µb = µBlock,
     extensionOriginURL = vAPI.getURL('');
 
 const getLoggerData = async function(details, activeTabId, callback) {
+    let tabIds = new Map();
     const response = {
         activeTabId,
         colorBlind: µb.userSettings.colorBlindFriendly,

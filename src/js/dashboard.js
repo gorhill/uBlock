@@ -135,7 +135,7 @@ vAPI.broadcastListener.add(msg => {
 resizeFrame();
 
 vAPI.localStorage.getItemAsync('dashboardLastVisitedPane').then(value => {
-    loadDashboardPanel(value !== null ? value : 'settings.html', true);
+    loadDashboardPanel(value !== null ? value : 'options.html', true);
     resizeFrame();
     window.addEventListener('resize', resizeFrame);
     uDom('.tabButton').on('click', onTabClickHandler);
