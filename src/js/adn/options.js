@@ -156,7 +156,7 @@
           uDom.nodeFromId('advanced-user-enabled').checked === true
       );
   };
-  
+
   /******************************************************************************/
 
   const changeUserSettings = function(name, value) {

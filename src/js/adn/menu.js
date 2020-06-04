@@ -26,9 +26,9 @@
 
   let ads, page, settings; // remove? only if we can find an updated ad already in the DOM
 
-  vAPI.broadcastListener.add(msg => {
+  vAPI.broadcastListener.add(request => {
 
-    switch (msg.what) {
+    switch (request.what) {
 
     case 'adAttempt':
       setAttempting(request.ad);

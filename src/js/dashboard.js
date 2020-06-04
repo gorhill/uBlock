@@ -123,8 +123,8 @@ vAPI.messaging.send('dashboard', {
     document.body.classList.toggle('canUpdateShortcuts', response === true);
 });
 
-vAPI.broadcastListener.add(msg => {
-    switch (msg.what) {
+vAPI.broadcastListener.add(request => {
+    switch (request.what) {
     case 'notifications':
       renderNotifications(request.notifications, "dashboard");
       resizeFrame();

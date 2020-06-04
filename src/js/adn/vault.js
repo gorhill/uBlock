@@ -55,9 +55,9 @@
   let gAds, gAdSets, gMin, gMax, gSliderRight, gSliderLeft, settings;
   let lastAdDetectedTime, waitingAds = []; // stateful
 
-  vAPI.broadcastListener.add(msg => {
+  vAPI.broadcastListener.add(request => {
     //console.log("GOT BROADCAST", request);
-    switch (msg.what) {
+    switch (request.what) {
 
     case 'adAttempt':
       setCurrent(request.ad);

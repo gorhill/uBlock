@@ -934,6 +934,10 @@ vAPI.messaging = {
     },
 
     broadcast: function(message) {
+        if (message.what === 'notifications') { // ADN
+
+          makeCloneable(message.notifications); // #1163
+        }
         const messageWrapper = { broadcast: true, msg: message };
         for ( const { port } of this.ports.values() ) {
             try {
@@ -1102,26 +1106,6 @@ vAPI.messaging = {
     },
 };
 
-/******************************************************************************/
-vAPI.messaging.broadcast = function(message) {
-
-    if (message.what === 'notifications') { // ADN
-
-      makeCloneable(message.notifications); // #1163
-    }
-
-    const messageWrapper = {
-        broadcast: true,
-        msg: message
-    };
-    for ( const port of this.ports.values() ) {
-      try {
-          port.postMessage(messageWrapper);
-      } catch(ex) {
-          this.ports.delete(port.name);
-      }
-    }
-}
 
 /******************************************************************************/
 
