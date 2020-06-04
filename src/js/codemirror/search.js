@@ -96,11 +96,11 @@
     }
 
     function queryTextFromSearchWidget(cm) {
-        return getSearchState(cm).widget.querySelector('input[type="text"]').value;
+        return getSearchState(cm).widget.querySelector('input[type="search"]').value;
     }
 
     function queryTextToSearchWidget(cm, q) {
-        var input = getSearchState(cm).widget.querySelector('input[type="text"]');
+        var input = getSearchState(cm).widget.querySelector('input[type="search"]');
         if ( typeof q === 'string' && q !== input.value ) {
             input.value = q;
         }
@@ -160,11 +160,15 @@
         );
     }
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/658
+    //   Modified to backslash-escape ONLY widely-used control characters.
     function parseString(string) {
-        return string.replace(/\\(.)/g, function(_, ch) {
-            if (ch === "n") return "\n";
-            if (ch === "r") return "\r";
-            return ch;
+        return string.replace(/\\[nrt\\]/g, function(match) {
+            if (match === "\\n") return "\n";
+            if (match === "\\r") return "\r";
+            if (match === '\\t') return '\t';
+            if (match === '\\\\') return '\\';
+            return match;
         });
     }
 
@@ -306,7 +310,7 @@
               '<div class="cm-search-widget">' +
                 '<span class="fa-icon fa-icon-ro">search</span>&ensp;' +
                 '<span class="cm-search-widget-input">' +
-                  '<input type="text">' +
+                  '<input type="search">' +
                   '<span class="cm-search-widget-count">' +
                     '<span><!-- future use --></span><span>0</span>' +
                   '</span>' +

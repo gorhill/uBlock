@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-2017 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -33,10 +33,6 @@
 
 /******************************************************************************/
 
-const messaging = vAPI.messaging;
-
-/******************************************************************************/
-
 const handleImportFilePicker = function() {
     const file = this.files[0];
     if ( file === undefined || file.name === '' ) { return; }
@@ -54,7 +50,10 @@ const handleImportFilePicker = function() {
             if ( typeof userData.userSettings !== 'object' ) {
                 throw 'Invalid';
             }
-            if ( typeof userData.netWhitelist !== 'string' ) {
+            if (
+                Array.isArray(userData.whitelist) === false &&
+                typeof userData.netWhitelist !== 'string'
+            ) {
                 throw 'Invalid';
             }
             if (
@@ -71,20 +70,16 @@ const handleImportFilePicker = function() {
             window.alert(vAPI.i18n('aboutRestoreDataError').replace(/uBlock₀/g, 'AdNauseam'));
             return;
         }
-        var time = new Date(userData.timeStamp);
-        var msg = vAPI.i18n('aboutRestoreDataConfirm')
-                      .replace('{{time}}', time.toLocaleString()).replace(/uBlock₀/g, 'AdNauseam');
-        var proceed = window.confirm(msg);
-        if ( proceed ) {
-            messaging.send(
-                'dashboard',
-                {
-                    what: 'restoreUserData',
-                    userData: userData,
-                    file: filename
-                }
-            );
-        }
+        const time = new Date(userData.timeStamp);
+        const msg = vAPI.i18n('aboutRestoreDataConfirm')
+                        .replace('{{time}}', time.toLocaleString());
+        const proceed = window.confirm(msg);
+        if ( proceed !== true ) { return; }
+        vAPI.messaging.send('dashboard', {
+            what: 'restoreUserData',
+            userData,
+            file: filename,
+        });
     };
 
     const fr = new FileReader();
@@ -105,21 +100,22 @@ const startImportFilePicker = function() {
 
 /******************************************************************************/
 
-const exportToFile = function() {
-    messaging.send('dashboard', { what: 'backupUserData' }, response => {
-        if (
-            response instanceof Object === false ||
-            response.userData instanceof Object === false
-        ) {
-            return;
-        }
-        vAPI.download({
-            'url': 'data:text/plain;charset=utf-8,' +
-                   encodeURIComponent(JSON.stringify(response.userData, null, '  ')),
-            'filename': response.localData.lastBackupFile
-        });
-        onLocalDataReceived(response.localData);
+const exportToFile = async function() {
+    const response = await vAPI.messaging.send('dashboard', {
+        what: 'backupUserData',
     });
+    if (
+        response instanceof Object === false ||
+        response.userData instanceof Object === false
+    ) {
+        return;
+    }
+    vAPI.download({
+        'url': 'data:text/plain;charset=utf-8,' +
+               encodeURIComponent(JSON.stringify(response.userData, null, '  ')),
+        'filename': response.localData.lastBackupFile
+    });
+    onLocalDataReceived(response.localData);
 };
 
 /******************************************************************************/
@@ -169,12 +165,13 @@ const onLocalDataReceived = function(details) {
 
 /******************************************************************************/
 
-var resetUserData = function() {
+const resetUserData = function() {
     var msg = vAPI.i18n('adnAboutResetDataConfirm');
-    var proceed = window.confirm(msg);
-    if ( proceed ) {
-        messaging.send('dashboard', { what: 'resetUserData' });
-    }
+    const proceed = window.confirm(msg);
+    if ( proceed !== true ) { return; }
+    vAPI.messaging.send('dashboard', {
+        what: 'resetUserData',
+    });
 };
 
 /******************************************************************************/
@@ -189,14 +186,11 @@ const synchronizeDOM = function() {
 /******************************************************************************/
 
 const changeUserSettings = function(name, value) {
-    messaging.send(
-        'dashboard',
-        {
-            what: 'userSettings',
-            name: name,
-            value: value
-        }
-    );
+    vAPI.messaging.send('dashboard', {
+        what: 'userSettings',
+        name,
+        value,
+    });
 };
 
 /******************************************************************************/
@@ -250,7 +244,7 @@ const onUserSettingsReceived = function(details) {
              .on('click', onPreventDefault);
     });
 
-    uDom('#export').on('click', exportToFile);
+    uDom('#export').on('click', ( ) => { exportToFile(); });
     uDom('#import').on('click', startImportFilePicker);
     uDom('#reset').on('click', resetUserData);
     uDom('#restoreFilePicker').on('change', handleImportFilePicker);
@@ -260,8 +254,13 @@ const onUserSettingsReceived = function(details) {
 
 /******************************************************************************/
 
-messaging.send('dashboard', { what: 'userSettings' }, onUserSettingsReceived);
-messaging.send('dashboard', { what: 'getLocalData' }, onLocalDataReceived);
+Promise.all([
+    vAPI.messaging.send('dashboard', { what: 'userSettings' }),
+    vAPI.messaging.send('dashboard', { what: 'getLocalData' }),
+]).then(results => {
+    onUserSettingsReceived(results[0]);
+    onLocalDataReceived(results[1]);
+});
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/591
 document.querySelector(

@@ -19,18 +19,16 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/******************************************************************************/
-/******************************************************************************/
-
-(function() {
-
 'use strict';
 
 /******************************************************************************/
+/******************************************************************************/
 
-if ( typeof vAPI !== 'object' || !vAPI.domFilterer ) {
-    return;
-}
+(( ) => {
+
+/******************************************************************************/
+
+if ( typeof vAPI !== 'object' || !vAPI.domFilterer ) { return; }
 
 /******************************************************************************/
 
@@ -49,7 +47,7 @@ if ( document.querySelector('iframe.dom-inspector.' + sessionId) !== null ) {
 // Added serializeAsString parameter.
 
 /*! http://mths.be/cssescape v0.2.1 by @mathias | MIT license */
-var cssEscape = (function(/*root*/) {
+const cssEscape = (function(/*root*/) {
 
     var InvalidCharacterError = function(message) {
         this.message = message;
@@ -137,29 +135,29 @@ var cssEscape = (function(/*root*/) {
 /******************************************************************************/
 /******************************************************************************/
 
-var loggerConnectionId;
+let loggerConnectionId;
 
 // Highlighter-related
-var svgRoot = null;
-var pickerRoot = null;
+let svgRoot = null;
+let pickerRoot = null;
 
-var nodeToIdMap = new WeakMap(); // No need to iterate
+let nodeToIdMap = new WeakMap(); // No need to iterate
 
-var blueNodes = [];
-var roRedNodes = new Map();    // node => current cosmetic filter
-var rwRedNodes = new Set();    // node => new cosmetic filter (toggle node)
+let blueNodes = [];
+const roRedNodes = new Map();    // node => current cosmetic filter
+const rwRedNodes = new Set();    // node => new cosmetic filter (toggle node)
 //var roGreenNodes = new Map();  // node => current exception cosmetic filter (can't toggle)
-var rwGreenNodes = new Set();  // node => new exception cosmetic filter (toggle filter)
+const rwGreenNodes = new Set();  // node => new exception cosmetic filter (toggle filter)
 
-var reHasCSSCombinators = /[ >+~]/;
+const reHasCSSCombinators = /[ >+~]/;
 
 /******************************************************************************/
 
-var domLayout = (function() {
-    var skipTagNames = new Set([
+const domLayout = (function() {
+    const skipTagNames = new Set([
         'br', 'head', 'link', 'meta', 'script', 'style', 'title'
     ]);
-    var resourceAttrNames = new Map([
+    const resourceAttrNames = new Map([
         [ 'a', 'href' ],
         [ 'iframe', 'src' ],
         [ 'img', 'src' ],
@@ -170,13 +168,13 @@ var domLayout = (function() {
 
     // This will be used to uniquely identify nodes across process.
 
-    var newNodeId = function(node) {
+    const newNodeId = function(node) {
         var nid = 'n' + (idGenerator++).toString(36);
         nodeToIdMap.set(node, nid);
         return nid;
     };
 
-    var selectorFromNode = function(node) {
+    const selectorFromNode = function(node) {
         var str, attr, pos, sw, i;
         var tag = node.localName;
         var selector = cssEscape(tag);
@@ -217,7 +215,7 @@ var domLayout = (function() {
         return selector;
     };
 
-    var DomRoot = function() {
+    const DomRoot = function() {
         this.nid = newNodeId(document.body);
         this.lvl = 0;
         this.sel = 'body';
@@ -225,7 +223,7 @@ var domLayout = (function() {
         this.filter = roRedNodes.get(document.body);
     };
 
-    var DomNode = function(node, level) {
+    const DomNode = function(node, level) {
         this.nid = newNodeId(node);
         this.lvl = level;
         this.sel = selectorFromNode(node);
@@ -233,7 +231,7 @@ var domLayout = (function() {
         this.filter = roRedNodes.get(node);
     };
 
-    var domNodeFactory = function(level, node) {
+    const domNodeFactory = function(level, node) {
         var localName = node.localName;
         if ( skipTagNames.has(localName) ) { return null; }
         // skip uBlock's own nodes
@@ -246,7 +244,7 @@ var domLayout = (function() {
 
     // Collect layout data.
 
-    var getLayoutData = function() {
+    const getLayoutData = function() {
         var layout = [];
         var stack = [];
         var node = document.documentElement;
@@ -282,7 +280,7 @@ var domLayout = (function() {
 
     // Descendant count for each node.
 
-    var patchLayoutData = function(layout) {
+    const patchLayoutData = function(layout) {
         var stack = [], ptr;
         var lvl = 0;
         var domNode, cnt;
@@ -320,7 +318,7 @@ var domLayout = (function() {
     var addedNodelists = [];
     var removedNodelist = [];
 
-    var previousElementSiblingId = function(node) {
+    const previousElementSiblingId = function(node) {
         var sibling = node;
         for (;;) {
             sibling = sibling.previousElementSibling;
@@ -330,7 +328,7 @@ var domLayout = (function() {
         }
     };
 
-    var journalFromBranch = function(root, newNodes, newNodeToIdMap) {
+    const journalFromBranch = function(root, newNodes, newNodeToIdMap) {
         var domNode;
         var node = root.firstElementChild;
         while ( node !== null ) {
@@ -361,7 +359,7 @@ var domLayout = (function() {
         }
     };
 
-    var journalFromMutations = function() {
+    const journalFromMutations = function() {
         var nodelist, node, domNode, nid;
         mutationTimer = undefined;
 
@@ -408,7 +406,7 @@ var domLayout = (function() {
 
         if ( journalEntries.length === 0 ) { return; }
 
-        vAPI.messaging.sendTo(loggerConnectionId, {
+        vAPI.MessagingConnection.sendTo(loggerConnectionId, {
             what: 'domLayoutIncremental',
             url: window.location.href,
             hostname: window.location.hostname,
@@ -417,7 +415,7 @@ var domLayout = (function() {
         });
     };
 
-    var onMutationObserved = function(mutationRecords) {
+    const onMutationObserved = function(mutationRecords) {
         for ( var record of mutationRecords ) {
             if ( record.addedNodes.length !== 0 ) {
                 addedNodelists.push(record.addedNodes);
@@ -433,7 +431,7 @@ var domLayout = (function() {
 
     // API
 
-    var getLayout = function() {
+    const getLayout = function() {
         cosmeticFilterMapper.reset();
         mutationObserver = new MutationObserver(onMutationObserved);
         mutationObserver.observe(document.body, {
@@ -449,11 +447,11 @@ var domLayout = (function() {
         };
     };
 
-    var reset = function() {
+    const reset = function() {
         shutdown();
     };
 
-    var shutdown = function() {
+    const shutdown = function() {
         if ( mutationTimer !== undefined ) {
             clearTimeout(mutationTimer);
             mutationTimer = undefined;
@@ -482,7 +480,7 @@ var domLayout = (function() {
 // For browsers not supporting `:scope`, it's not the end of the world: the
 // suggested CSS selectors may just end up being more verbose.
 
-var cssScope = ':scope > ';
+let cssScope = ':scope > ';
 try {
     document.querySelector(':scope *');
 } catch (e) {
@@ -491,7 +489,7 @@ try {
 
 /******************************************************************************/
 
-var cosmeticFilterMapper = (function() {
+const cosmeticFilterMapper = (function() {
     // https://github.com/gorhill/uBlock/issues/546
     var matchesFnName;
     if ( typeof document.body.matches === 'function' ) {
@@ -502,7 +500,7 @@ var cosmeticFilterMapper = (function() {
         matchesFnName = 'webkitMatchesSelector';
     }
 
-    var nodesFromStyleTag = function(rootNode) {
+    const nodesFromStyleTag = function(rootNode) {
         var filterMap = roRedNodes,
             entry, selector, canonical, nodes, node;
 
@@ -544,16 +542,16 @@ var cosmeticFilterMapper = (function() {
         }
     };
 
-    var incremental = function(rootNode) {
+    const incremental = function(rootNode) {
         nodesFromStyleTag(rootNode);
     };
 
-    var reset = function() {
-        roRedNodes = new Map();
+    const reset = function() {
+        roRedNodes.clear();
         incremental(document.documentElement);
     };
 
-    var shutdown = function() {
+    const shutdown = function() {
         vAPI.domFilterer.toggle(true);
     };
 
@@ -566,26 +564,23 @@ var cosmeticFilterMapper = (function() {
 
 /******************************************************************************/
 
-var elementsFromSelector = function(selector, context) {
+const elementsFromSelector = function(selector, context) {
     if ( !context ) {
         context = document;
     }
-    var out;
     if ( selector.indexOf(':') !== -1 ) {
-        out = elementsFromSpecialSelector(selector);
-        if ( out !== undefined ) {
-            return out;
-        }
+        const out = elementsFromSpecialSelector(selector);
+        if ( out !== undefined ) { return out; }
     }
     // plain CSS selector
     try {
-        out = context.querySelectorAll(selector);
+        return context.querySelectorAll(selector);
     } catch (ex) {
     }
-    return out || [];
+    return [];
 };
 
-var elementsFromSpecialSelector = function(selector) {
+const elementsFromSpecialSelector = function(selector) {
     var out = [], i;
     var matches = /^(.+?):has\((.+?)\)$/.exec(selector);
     if ( matches !== null ) {
@@ -606,36 +601,35 @@ var elementsFromSpecialSelector = function(selector) {
     }
 
     matches = /^:xpath\((.+?)\)$/.exec(selector);
-    if ( matches !== null ) {
-        var xpr = document.evaluate(
-            matches[1],
-            document,
-            null,
-            XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
-            null
-        );
-        i = xpr.snapshotLength;
-        while ( i-- ) {
-            out.push(xpr.snapshotItem(i));
-        }
-        return out;
+    if ( matches === null ) { return; }
+    const xpr = document.evaluate(
+        matches[1],
+        document,
+        null,
+        XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
+        null
+    );
+    i = xpr.snapshotLength;
+    while ( i-- ) {
+        out.push(xpr.snapshotItem(i));
     }
+    return out;
 };
 
 /******************************************************************************/
 
-var getSvgRootChildren = function() {
+const getSvgRootChildren = function() {
     if ( svgRoot.children ) {
         return svgRoot.children;
     } else {
-        var childNodes = Array.prototype.slice.apply(svgRoot.childNodes);
+        const childNodes = Array.prototype.slice.apply(svgRoot.childNodes);
         return childNodes.filter(function(node) {
             return node.nodeType === Node.ELEMENT_NODE;
         });
     }
 };
 
-var highlightElements = function() {
+const highlightElements = function() {
     var islands;
     var elem, rect, poly;
     var xl, xr, yt, yb, w, h, ws;
@@ -729,9 +723,9 @@ var highlightElements = function() {
 
 /******************************************************************************/
 
-var onScrolled = (function() {
-    var buffered = false;
-    var timerHandler = function() {
+const onScrolled = (function() {
+    let buffered = false;
+    const timerHandler = function() {
         buffered = false;
         highlightElements();
     };
@@ -745,10 +739,10 @@ var onScrolled = (function() {
 
 /******************************************************************************/
 
-var selectNodes = function(selector, nid) {
-    var nodes = elementsFromSelector(selector);
+const selectNodes = function(selector, nid) {
+    const nodes = elementsFromSelector(selector);
     if ( nid === '' ) { return nodes; }
-    for ( var node of nodes ) {
+    for ( const node of nodes ) {
         if ( nodeToIdMap.get(node) === nid ) {
             return [ node ];
         }
@@ -758,9 +752,9 @@ var selectNodes = function(selector, nid) {
 
 /******************************************************************************/
 
-var nodesFromFilter = function(selector) {
-    var out = [];
-    for ( var entry of roRedNodes ) {
+const nodesFromFilter = function(selector) {
+    const out = [];
+    for ( const entry of roRedNodes ) {
         if ( entry[1] === selector ) {
             out.push(entry[0]);
         }
@@ -770,8 +764,8 @@ var nodesFromFilter = function(selector) {
 
 /******************************************************************************/
 
-var toggleExceptions = function(nodes, targetState) {
-    for ( var node of nodes ) {
+const toggleExceptions = function(nodes, targetState) {
+    for ( const node of nodes ) {
         if ( targetState ) {
             rwGreenNodes.add(node);
         } else {
@@ -780,8 +774,8 @@ var toggleExceptions = function(nodes, targetState) {
     }
 };
 
-var toggleFilter = function(nodes, targetState) {
-    for ( var node of nodes ) {
+const toggleFilter = function(nodes, targetState) {
+    for ( const node of nodes ) {
         if ( targetState ) {
             rwRedNodes.delete(node);
         } else {
@@ -790,21 +784,19 @@ var toggleFilter = function(nodes, targetState) {
     }
 };
 
-var resetToggledNodes = function() {
+const resetToggledNodes = function() {
     rwGreenNodes.clear();
     rwRedNodes.clear();
 };
 
-// https://www.youtube.com/watch?v=L5jRewnxSBY
-
 /******************************************************************************/
 
-var start = function() {
-    var onReady = function(ev) {
+const start = function() {
+    const onReady = function(ev) {
         if ( ev ) {
             document.removeEventListener(ev.type, onReady);
         }
-        vAPI.messaging.sendTo(loggerConnectionId, domLayout.get());
+        vAPI.MessagingConnection.sendTo(loggerConnectionId, domLayout.get());
         vAPI.domFilterer.toggle(false, highlightElements);
     };
     if ( document.readyState === 'loading' ) {
@@ -816,10 +808,10 @@ var start = function() {
 
 /******************************************************************************/
 
-var shutdown = function() {
+const shutdown = function() {
     cosmeticFilterMapper.shutdown();
     domLayout.shutdown();
-    vAPI.messaging.disconnectFrom(loggerConnectionId);
+    vAPI.MessagingConnection.disconnectFrom(loggerConnectionId);
     window.removeEventListener('scroll', onScrolled, true);
     document.documentElement.removeChild(pickerRoot);
     pickerRoot = svgRoot = null;
@@ -828,7 +820,7 @@ var shutdown = function() {
 /******************************************************************************/
 /******************************************************************************/
 
-var onMessage = function(request) {
+const onMessage = function(request) {
     var response,
         nodes;
 
@@ -888,32 +880,17 @@ var onMessage = function(request) {
     return response;
 };
 
-var messagingHandler = function(msg) {
-    switch ( msg.what ) {
-    case 'connectionAccepted':
-        loggerConnectionId = msg.id;
-        start();
-        break;
-    case 'connectionBroken':
-        shutdown();
-        break;
-    case 'connectionMessage':
-        onMessage(msg.payload);
-        break;
-    }
-};
-
 /******************************************************************************/
 
 // Install DOM inspector widget
 
-var bootstrap = function(ev) {
+const bootstrap = function(ev) {
     if ( ev ) {
         pickerRoot.removeEventListener(ev.type, bootstrap);
     }
-    var pickerDoc = this.contentDocument;
+    const pickerDoc = ev.target.contentDocument;
 
-    var style = pickerDoc.createElement('style');
+    const style = pickerDoc.createElement('style');
     style.textContent = [
         'body {',
             'background-color: transparent;',
@@ -955,7 +932,25 @@ var bootstrap = function(ev) {
 
     window.addEventListener('scroll', onScrolled, true);
 
-    vAPI.messaging.connectTo('domInspector', 'loggerUI', messagingHandler);
+    // Dynamically add direct connection abilities so that we can establish
+    // a direct, fast messaging connection to the logger.
+    vAPI.messaging.extend().then(extended => {
+        if ( extended !== true ) { return; }
+        vAPI.MessagingConnection.connectTo('domInspector', 'loggerUI', msg => {
+            switch ( msg.what ) {
+            case 'connectionAccepted':
+                loggerConnectionId = msg.id;
+                start();
+                break;
+            case 'connectionBroken':
+                shutdown();
+                break;
+            case 'connectionMessage':
+                onMessage(msg.payload);
+                break;
+            }
+        });
+    });
 };
 
 pickerRoot = document.createElement('iframe');
@@ -982,7 +977,7 @@ pickerRoot.style.cssText = [
     ''
 ].join(' !important;\n');
 
-pickerRoot.addEventListener('load', bootstrap);
+pickerRoot.addEventListener('load', ev => { bootstrap(ev); });
 document.documentElement.appendChild(pickerRoot);
 
 /******************************************************************************/

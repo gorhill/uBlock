@@ -1,7 +1,7 @@
 
   'use strict';
 
-(( ) => {
+(async ( ) => {
 
     vAPI.messaging.send('dashboard', { what: 'getAppData' }, appData => {
         uDom('#aboutNameVer').text(appData.name + ' v' + appData.version);
@@ -14,4 +14,8 @@
     //     self.uBlockDashboard.openOrSelectPage
     // );
 
+    const appData = await vAPI.messaging.send('dashboard', {
+        what: 'getAppData',
+    });
+    uDom('#aboutNameVer').text(appData.name + ' v' + appData.version);
 })();

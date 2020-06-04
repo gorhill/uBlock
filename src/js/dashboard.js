@@ -25,7 +25,8 @@
 
 /******************************************************************************/
 
-(( ) => {
+{
+// >>>>> start of local scope
 
   'use strict';
 
@@ -85,14 +86,8 @@ const discardUnsavedData = function(synchronous = false) {
     });
 };
 
-const loadDashboardPanel = function(pane = '') {
-    if ( pane === '' ) {
-        pane = vAPI.localStorage.getItem('dashboardLastVisitedPane');
+const loadDashboardPanel = function(pane, first) {
 
-        if ( pane === null ) {
-             pane = 'options.html';
-        }
-    }
     const tabButton = uDom(`[href="#${pane}"]`);
     if ( !tabButton || tabButton.hasClass('selected') ) { return; }
     const loadPane = ( ) => {
@@ -102,6 +97,9 @@ const loadDashboardPanel = function(pane = '') {
         uDom.nodeFromId('iframe').setAttribute('src', pane);
         vAPI.localStorage.setItem('dashboardLastVisitedPane', pane);
     };
+    if ( first ) {
+        return loadPane();
+    }
     const r = discardUnsavedData();
     if ( r === false ) { return; }
     if ( r === true ) {
@@ -119,58 +117,54 @@ const onTabClickHandler = function(ev) {
 };
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/106
-vAPI.messaging.send('dashboard', { what: 'canUpdateShortcuts' }, response => {
+vAPI.messaging.send('dashboard', {
+    what: 'canUpdateShortcuts',
+}).then(response => {
     document.body.classList.toggle('canUpdateShortcuts', response === true);
 });
 
-
-vAPI.messaging.addChannelListener('adnauseam', function (request) {
-  switch (request.what) {
-  case 'notifications':
-    renderNotifications(request.notifications, "dashboard");
-    resizeFrame();
-    break;
-  }
-});
+vAPI.broadcastListener.add(request => {
+    switch (request.what) {
+    case 'notifications':
+      renderNotifications(request.notifications, "dashboard");
+      resizeFrame();
+      break;
+    }
+  });
 
 resizeFrame();
-loadDashboardPanel();
 
-window.addEventListener('resize', resizeFrame);
-uDom('.tabButton').on('click', onTabClickHandler);
+vAPI.localStorage.getItemAsync('dashboardLastVisitedPane').then(value => {
+    loadDashboardPanel(value !== null ? value : 'options.html', true);
+    resizeFrame();
+    window.addEventListener('resize', resizeFrame);
+    uDom('.tabButton').on('click', onTabClickHandler);
+    uDom('#notifications').on('click', resizeFrame); //ADN
 
-// https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
-window.addEventListener('beforeunload', ( ) => {
-    if ( discardUnsavedData(true) ) { return; }
-    event.preventDefault();
+    vAPI.messaging.send(
+        'adnauseam', {
+            what: 'verifyAdBlockers'
+        }).then(n => {
+          vAPI.messaging.send(
+              'adnauseam', {
+                  what: 'getNotifications'
+              }).then(notifications => {
+              if (notifications && notifications.length)
+                  renderNotifications(notifications, 'dashboard');
+                  resizeFrame();
+            })
+    });
+
+    // https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
+    window.addEventListener('beforeunload', ( ) => {
+        if ( discardUnsavedData(true) ) { return; }
+        event.preventDefault();
+        event.returnValue = '';
+    });
 });
 
 
 /******************************************************************************/
 
-
-uDom.onLoad(function () {
-    resizeFrame();
-    window.addEventListener('resize', resizeFrame);
-    uDom('.tabButton').on('click', onTabClickHandler);
-    uDom('#notifications').on('click', resizeFrame);
-
-     vAPI.messaging.send(
-      'adnauseam', {
-          what: 'verifyAdBlockers'
-        }, function() {
-          vAPI.messaging.send(
-          'adnauseam', {
-            what: 'getNotifications'
-          }, function(notifications){
-            renderNotifications(notifications,"dashboard");
-            resizeFrame();
-          });
-      });
-
-  });
-
-
-
-
-})();
+// <<<<< end of local scope
+}

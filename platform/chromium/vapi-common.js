@@ -1,7 +1,8 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2014-present The uBlock Origin authors
+    Copyright (C) 2014-2015 The uBlock Origin authors
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,10 +27,6 @@
 /******************************************************************************/
 /******************************************************************************/
 
-(function(self) {
-
-/******************************************************************************/
-
 vAPI.T0 = Date.now();
 
 /******************************************************************************/
@@ -43,7 +40,7 @@ vAPI.webextFlavor = {
     soup: new Set()
 };
 
-(function() {
+(( ) => {
     const ua = navigator.userAgent;
     const flavor = vAPI.webextFlavor;
     const soup = flavor.soup;
@@ -55,7 +52,7 @@ vAPI.webextFlavor = {
     soup.add('ublock').add('webext');
 
     // Whether this is a dev build.
-    if ( /^\d+\.\d+\.\d+\D/.test(chrome.runtime.getManifest().version) ) {
+    if ( /^\d+\.\d+\.\d+\D/.test(browser.runtime.getManifest().version) ) {
         soup.add('devbuild');
     }
 
@@ -65,10 +62,10 @@ vAPI.webextFlavor = {
 
     // Asynchronous
     if (
-        self.browser instanceof Object &&
-        typeof self.browser.runtime.getBrowserInfo === 'function'
+        browser instanceof Object &&
+        typeof browser.runtime.getBrowserInfo === 'function'
     ) {
-        self.browser.runtime.getBrowserInfo().then(info => {
+        browser.runtime.getBrowserInfo().then(info => {
             flavor.major = parseInt(info.version, 10) || 60;
             soup.add(info.vendor.toLowerCase())
                 .add(info.name.toLowerCase());
@@ -77,7 +74,7 @@ vAPI.webextFlavor = {
             }
             dispatch();
         });
-        if ( self.browser.runtime.getURL('').startsWith('moz-extension://') ) {
+        if ( browser.runtime.getURL('').startsWith('moz-extension://') ) {
             soup.add('mozilla')
                 .add('firefox')
                 .add('user_stylesheet')
@@ -119,12 +116,62 @@ vAPI.webextFlavor = {
 
 /******************************************************************************/
 
-vAPI.download = function(details) {
-    if ( !details.url ) {
-        return;
-    }
+{
+    const punycode = self.punycode;
+    const reCommonHostnameFromURL  = /^https?:\/\/([0-9a-z_][0-9a-z._-]*[0-9a-z])\//;
+    const reAuthorityFromURI       = /^(?:[^:\/?#]+:)?(\/\/[^\/?#]+)/;
+    const reHostFromNakedAuthority = /^[0-9a-z._-]+[0-9a-z]$/i;
+    const reHostFromAuthority      = /^(?:[^@]*@)?([^:]+)(?::\d*)?$/;
+    const reIPv6FromAuthority      = /^(?:[^@]*@)?(\[[0-9a-f:]+\])(?::\d*)?$/i;
+    const reMustNormalizeHostname  = /[^0-9a-z._-]/;
 
-    var a = document.createElement('a');
+    vAPI.hostnameFromURI = function(uri) {
+        let matches = reCommonHostnameFromURL.exec(uri);
+        if ( matches !== null ) { return matches[1]; }
+        matches = reAuthorityFromURI.exec(uri);
+        if ( matches === null ) { return ''; }
+        const authority = matches[1].slice(2);
+        if ( reHostFromNakedAuthority.test(authority) ) {
+            return authority.toLowerCase();
+        }
+        matches = reHostFromAuthority.exec(authority);
+        if ( matches === null ) {
+            matches = reIPv6FromAuthority.exec(authority);
+            if ( matches === null ) { return ''; }
+        }
+        let hostname = matches[1];
+        while ( hostname.endsWith('.') ) {
+            hostname = hostname.slice(0, -1);
+        }
+        if ( reMustNormalizeHostname.test(hostname) ) {
+            hostname = punycode.toASCII(hostname.toLowerCase());
+        }
+        return hostname;
+    };
+
+    const reHostnameFromNetworkURL =
+        /^(?:http|ws|ftp)s?:\/\/([0-9a-z_][0-9a-z._-]*[0-9a-z])\//;
+
+    vAPI.hostnameFromNetworkURL = function(url) {
+        const matches = reHostnameFromNetworkURL.exec(url);
+        return matches !== null ? matches[1] : '';
+    };
+
+    const psl = self.publicSuffixList;
+    const reIPAddressNaive = /^\d+\.\d+\.\d+\.\d+$|^\[[\da-zA-Z:]+\]$/;
+
+    vAPI.domainFromHostname = function(hostname) {
+        return reIPAddressNaive.test(hostname)
+            ? hostname
+            : psl.getDomain(hostname);
+    };
+}
+
+/******************************************************************************/
+
+vAPI.download = function(details) {
+    if ( !details.url ) { return; }
+    const a = document.createElement('a');
     a.href = details.url;
     a.setAttribute('download', details.filename || '');
     a.setAttribute('type', 'text/plain');
@@ -133,12 +180,12 @@ vAPI.download = function(details) {
 
 /******************************************************************************/
 
-vAPI.getURL = chrome.runtime.getURL;
+vAPI.getURL = browser.runtime.getURL;
 vAPI.getViews = chrome.extension.getViews; // ADN
 
 /******************************************************************************/
 
-vAPI.i18n = chrome.i18n.getMessage;
+vAPI.i18n = browser.i18n.getMessage;
 
 // http://www.w3.org/International/questions/qa-scripts#directions
 document.body.setAttribute(
@@ -172,46 +219,96 @@ vAPI.closePopup = function() {
 // background page or auxiliary pages.
 // This storage is optional, but it is nice to have, for a more polished user
 // experience.
-
+//
 // https://github.com/gorhill/uBlock/issues/2824
 //   Use a dummy localStorage if for some reasons it's not available.
-
+//
 // https://github.com/gorhill/uMatrix/issues/840
 //   Always use a wrapper to seamlessly handle exceptions
+//
+// https://github.com/uBlockOrigin/uBlock-issues/issues/899
+//   Convert into asynchronous access API.
 
 vAPI.localStorage = {
+    start: function() {
+        if ( this.cache instanceof Promise ) { return this.cache; }
+        if ( this.cache instanceof Object ) { return Promise.resolve(); }
+        const onChanged = (changes, area) => {
+            if (
+                area !== 'local' ||
+                changes instanceof Object === false ||
+                changes.localStorage instanceof Object === false
+            ) {
+                return;
+            }
+            const newValue = changes.localStorage.newValue;
+            this.cache = newValue instanceof Object ? newValue : {};
+        };
+        this.cache = new Promise(resolve => {
+            browser.storage.local.get('localStorage', bin => {
+                this.cache = undefined;
+                try {
+                    if (
+                        bin instanceof Object === false ||
+                        bin.localStorage instanceof Object === false
+                    ) {
+                        this.cache = {};
+                        const ls = self.localStorage;
+                        for ( let i = 0; i < ls.length; i++ ) {
+                            const key = ls.key(i);
+                            this.cache[key] = ls.getItem(key);
+                        }
+                        browser.storage.local.set({ localStorage: this.cache });
+                    } else {
+                        this.cache = bin.localStorage;
+                    }
+                } catch(ex) {
+                }
+                if ( this.cache instanceof Object === false ) {
+                    this.cache = {};
+                }
+                resolve();
+                browser.storage.onChanged.addListener(onChanged);
+                self.addEventListener('beforeunload', ( ) => {
+                    this.cache = undefined;
+                    browser.storage.onChanged.removeListener(onChanged);
+                });
+            });
+        });
+        return this.cache;
+    },
     clear: function() {
-        try {
-            window.localStorage.clear();
-        } catch(ex) {
-        }
+        this.cache = {};
+        return browser.storage.local.set({ localStorage: this.cache });
     },
     getItem: function(key) {
-        try {
-            return window.localStorage.getItem(key);
-        } catch(ex) {
+        if ( this.cache instanceof Object === false ) {
+            console.info(`localStorage.getItem('${key}') not ready`);
+            return null;
         }
-        return null;
+        const value = this.cache[key];
+        return value !== undefined ? value : null;
+    },
+    getItemAsync: function(key) {
+        return this.start().then(( ) => {
+            const value = this.cache[key];
+            return value !== undefined ? value : null;
+        });
     },
     removeItem: function(key) {
-        try {
-            window.localStorage.removeItem(key);
-        } catch(ex) {
-        }
+        this.setItem(key);
     },
-    setItem: function(key, value) {
-        try {
-            window.localStorage.setItem(key, value);
-        } catch(ex) {
-        }
-    }
+    setItem: function(key, value = undefined) {
+        return this.start().then(( ) => {
+            if ( value === this.cache[key] ) { return; }
+            this.cache[key] = value;
+            return browser.storage.local.set({ localStorage: this.cache });
+        });
+    },
+    cache: undefined,
 };
 
-/******************************************************************************/
-
-})(this);
-
-
+vAPI.localStorage.start();
 
 
 

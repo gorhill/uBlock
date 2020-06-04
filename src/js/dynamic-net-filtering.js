@@ -546,31 +546,29 @@ Matrix.prototype.fromSelfie = function(selfie) {
 
 /******************************************************************************/
 
-Matrix.prototype.benchmark = function() {
-    µBlock.loadBenchmarkDataset().then(requests => {
-        if ( Array.isArray(requests) === false || requests.length === 0 ) {
-            console.info('No requests found to benchmark');
-            return;
-        }
-        console.info(`Benchmarking sessionFirewall.evaluateCellZY()...`);
-        const fctxt = µBlock.filteringContext.duplicate();
-        const t0 = self.performance.now();
-        for ( const request of requests ) {
-            fctxt.setURL(request.url);
-            fctxt.setTabOriginFromURL(request.frameUrl);
-            fctxt.setType(request.cpt);
-            this.evaluateCellZY(
-                fctxt.getTabHostname(),
-                fctxt.getHostname(),
-                fctxt.type
-            );
-        }
-        const t1 = self.performance.now();
-        const dur = t1 - t0;
-        console.info(`Evaluated ${requests.length} requests in ${dur.toFixed(0)} ms`);
-        console.info(`\tAverage: ${(dur / requests.length).toFixed(3)} ms per request`);
-    });
-    return 'ok';
+Matrix.prototype.benchmark = async function() {
+    const requests = await µBlock.loadBenchmarkDataset();
+    if ( Array.isArray(requests) === false || requests.length === 0 ) {
+        console.info('No requests found to benchmark');
+        return;
+    }
+    console.info(`Benchmarking sessionFirewall.evaluateCellZY()...`);
+    const fctxt = µBlock.filteringContext.duplicate();
+    const t0 = self.performance.now();
+    for ( const request of requests ) {
+        fctxt.setURL(request.url);
+        fctxt.setTabOriginFromURL(request.frameUrl);
+        fctxt.setType(request.cpt);
+        this.evaluateCellZY(
+            fctxt.getTabHostname(),
+            fctxt.getHostname(),
+            fctxt.type
+        );
+    }
+    const t1 = self.performance.now();
+    const dur = t1 - t0;
+    console.info(`Evaluated ${requests.length} requests in ${dur.toFixed(0)} ms`);
+    console.info(`\tAverage: ${(dur / requests.length).toFixed(3)} ms per request`);
 };
 
 /******************************************************************************/

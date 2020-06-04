@@ -28,10 +28,18 @@
     const pselectors = new Map();
     const duplicates = new Set();
 
-    let filterDB = new µb.staticExtFilteringEngine.HostnameBasedDB(2),
-        acceptedCount = 0,
-        discardedCount = 0,
-        docRegister;
+    const filterDB = new µb.staticExtFilteringEngine.HostnameBasedDB(2);
+    const sessionFilterDB = new (
+        class extends µb.staticExtFilteringEngine.SessionDB {
+            compile(s) {
+                return µb.staticExtFilteringEngine.compileSelector(s.slice(1));
+            }
+        }
+    )();
+
+    let acceptedCount = 0;
+    let discardedCount = 0;
+    let docRegister;
 
     const api = {
         get acceptedCount() {
@@ -50,14 +58,10 @@
             }
             this.needle = new RegExp(arg0, arg1);
         }
-        exec(input) {
-            const output = [];
-            for ( const node of input ) {
-                if ( this.needle.test(node.textContent) ) {
-                    output.push(node);
-                }
+        transpose(node, output) {
+            if ( this.needle.test(node.textContent) ) {
+                output.push(node);
             }
-            return output;
         }
     };
 
@@ -65,14 +69,10 @@
         constructor(task) {
             this.pselector = new PSelector(task[1]);
         }
-        exec(input) {
-            const output = [];
-            for ( const node of input ) {
-                if ( this.pselector.test(node) === this.target ) {
-                    output.push(node);
-                }
+        transpose(node, output) {
+            if ( this.pselector.test(node) === this.target ) {
+                output.push(node);
             }
-            return output;
         }
         get invalid() {
             return this.pselector.invalid;
@@ -81,56 +81,91 @@
     PSelectorIfTask.prototype.target = true;
 
     const PSelectorIfNotTask = class extends PSelectorIfTask {
+    };
+    PSelectorIfNotTask.prototype.target = false;
+
+    const PSelectorMinTextLengthTask = class {
         constructor(task) {
-            super.call(task);
-            this.target = false;
+            this.min = task[1];
+        }
+        transpose(node, output) {
+            if ( node.textContent.length >= this.min ) {
+                output.push(node);
+            }
         }
     };
 
-    const PSelectorNthAncestorTask = class {
+    const PSelectorSpathTask = class {
         constructor(task) {
-            this.nth = task[1];
+            this.spath = task[1];
         }
-        exec(input) {
-            const output = [];
-            for ( let node of input ) {
-                let nth = this.nth;
-                for (;;) {
-                    node = node.parentElement;
-                    if ( node === null ) { break; }
-                    nth -= 1;
-                    if ( nth !== 0 ) { continue; }
-                    output.push(node);
-                    break;
-                }
+        transpose(node, output) {
+            const parent = node.parentElement;
+            if ( parent === null ) { return; }
+            let pos = 1;
+            for (;;) {
+                node = node.previousElementSibling;
+                if ( node === null ) { break; }
+                pos += 1;
             }
-            return output;
+            const nodes = parent.querySelectorAll(
+                `:scope > :nth-child(${pos})${this.spath}`
+            );
+            for ( const node of nodes ) {
+                output.push(node);
+            }
         }
     };
+
+    const PSelectorUpwardTask = class {
+        constructor(task) {
+            const arg = task[1];
+            if ( typeof arg === 'number' ) {
+                this.i = arg;
+            } else {
+                this.s = arg;
+            }
+        }
+        transpose(node, output) {
+            if ( this.s !== '' ) {
+                const parent = node.parentElement;
+                if ( parent === null ) { return; }
+                node = parent.closest(this.s);
+                if ( node === null ) { return; }
+            } else {
+                let nth = this.i;
+                for (;;) {
+                    node = node.parentElement;
+                    if ( node === null ) { return; }
+                    nth -= 1;
+                    if ( nth === 0 ) { break; }
+                }
+            }
+            output.push(node);
+        }
+    };
+    PSelectorUpwardTask.prototype.i = 0;
+    PSelectorUpwardTask.prototype.s = '';
 
     const PSelectorXpathTask = class {
         constructor(task) {
             this.xpe = task[1];
         }
-        exec(input) {
-            const output = [];
-            const xpe = docRegister.createExpression(this.xpe, null);
-            let xpr = null;
-            for ( const node of input ) {
-                xpr = xpe.evaluate(
-                    node,
-                    XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
-                    xpr
-                );
-                let j = xpr.snapshotLength;
-                while ( j-- ) {
-                    const node = xpr.snapshotItem(j);
-                    if ( node.nodeType === 1 ) {
-                        output.push(node);
-                    }
+        transpose(node, output) {
+            const xpr = docRegister.evaluate(
+                this.xpe,
+                node,
+                null,
+                XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
+                null
+            );
+            let j = xpr.snapshotLength;
+            while ( j-- ) {
+                const node = xpr.snapshotItem(j);
+                if ( node.nodeType === 1 ) {
+                    output.push(node);
                 }
             }
-            return output;
         }
     };
 
@@ -156,32 +191,36 @@
         }
         prime(input) {
             const root = input || docRegister;
-            if ( this.selector !== '' ) {
-                return root.querySelectorAll(this.selector);
-            }
-            return [ root ];
+            if ( this.selector === '' ) { return [ root ]; }
+            return Array.from(root.querySelectorAll(this.selector));
         }
         exec(input) {
             if ( this.invalid ) { return []; }
             let nodes = this.prime(input);
             for ( const task of this.tasks ) {
                 if ( nodes.length === 0 ) { break; }
-                nodes = task.exec(nodes);
+                const transposed = [];
+                for ( const node of nodes ) {
+                    task.transpose(node, transposed);
+                }
+                nodes = transposed;
             }
             return nodes;
         }
         test(input) {
             if ( this.invalid ) { return false; }
             const nodes = this.prime(input);
-            const AA = [ null ];
             for ( const node of nodes ) {
-                AA[0] = node;
-                let aa = AA;
+                let output = [ node ];
                 for ( const task of this.tasks ) {
-                    aa = task.exec(aa);
-                    if ( aa.length === 0 ) { break; }
+                    const transposed = [];
+                    for ( const node of output ) {
+                        task.transpose(node, transposed);
+                    }
+                    output = transposed;
+                    if ( output.length === 0 ) { break; }
                 }
-                if ( aa.length !== 0 ) { return true; }
+                if ( output.length !== 0 ) { return true; }
             }
             return false;
         }
@@ -191,9 +230,12 @@
         [ ':has-text', PSelectorHasTextTask ],
         [ ':if', PSelectorIfTask ],
         [ ':if-not', PSelectorIfNotTask ],
+        [ ':min-text-length', PSelectorMinTextLengthTask ],
         [ ':not', PSelectorIfNotTask ],
-        [ ':nth-ancestor', PSelectorNthAncestorTask ],
-        [ ':xpath', PSelectorXpathTask ]
+        [ ':nth-ancestor', PSelectorUpwardTask ],
+        [ ':spath', PSelectorSpathTask ],
+        [ ':upward', PSelectorUpwardTask ],
+        [ ':xpath', PSelectorXpathTask ],
     ]);
     PSelector.prototype.invalid = false;
 
@@ -219,14 +261,10 @@
             pselectors.set(selector, pselector);
         }
         const nodes = pselector.exec();
-        let i = nodes.length,
-            modified = false;
-        while ( i-- ) {
-            const node = nodes[i];
-            if ( node.parentNode !== null ) {
-                node.parentNode.removeChild(node);
-                modified = true;
-            }
+        let modified = false;
+        for ( const node of nodes ) {
+            node.remove();
+            modified = true;
         }
         if ( modified && µb.logger.enabled ) {
             logOne(details, 0, pselector.raw);
@@ -236,14 +274,10 @@
 
     const applyCSSSelector = function(details, selector) {
         const nodes = docRegister.querySelectorAll(selector);
-        let i = nodes.length,
-            modified = false;
-        while ( i-- ) {
-            const node = nodes[i];
-            if ( node.parentNode !== null ) {
-                node.parentNode.removeChild(node);
-                modified = true;
-            }
+        let modified = false;
+        for ( const node of nodes ) {
+            node.remove();
+            modified = true;
         }
         if ( modified && µb.logger.enabled ) {
             logOne(details, 0, selector);
@@ -315,6 +349,10 @@
         }
     };
 
+    api.getSession = function() {
+        return sessionFilterDB;
+    };
+
     api.retrieve = function(details) {
         const hostname = details.hostname;
 
@@ -331,13 +369,16 @@
         const procedurals = new Set();
         const exceptions = new Set();
 
+        if ( sessionFilterDB.isNotEmpty ) {
+            sessionFilterDB.retrieve([ null, exceptions ]);
+        }
         filterDB.retrieve(
             hostname,
             [ plains, exceptions, procedurals, exceptions ]
         );
         if ( details.entity !== '' ) {
             filterDB.retrieve(
-                `${hostname.slice(0, -details.domain)}${details.entity}`,
+                `${hostname.slice(0, -details.domain.length)}${details.entity}`,
                 [ plains, exceptions, procedurals, exceptions ]
             );
         }
@@ -391,7 +432,7 @@
     };
 
     api.fromSelfie = function(selfie) {
-        filterDB = new µb.staticExtFilteringEngine.HostnameBasedDB(2, selfie);
+        filterDB.fromSelfie(selfie);
         pselectors.clear();
     };
 

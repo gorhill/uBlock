@@ -19,6 +19,8 @@
     }
   },
   "commands": {
+    "_execute_browser_action": {
+    },
     "launch-element-zapper": {
       "description": "__MSG_popupTipZapper__"
     },
@@ -27,6 +29,9 @@
     },
     "launch-logger": {
       "description": "__MSG_popupTipLog__"
+    },
+    "relax-blocking-mode": {
+      "description": "__MSG_relaxBlockingMode__"
     }
   },
   "content_scripts": [
@@ -71,7 +76,8 @@
     "open_in_tab": true
   },
   "permissions": [
-    "contextMenus",
+    "dns",
+    "menus",
     "privacy",
     "storage",
     "tabs",
@@ -88,7 +94,7 @@
     "default_icon": "img/ublock.svg",
     "open_at_install": false
   },
-  "version": "3.9.103",
+  "version": "{version}",
   "web_accessible_resources": [
     "/web_accessible_resources/*"
   ]

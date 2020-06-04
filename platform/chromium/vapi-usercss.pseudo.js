@@ -184,7 +184,7 @@ vAPI.DOMFilterer = class {
                     Array.from(this.specificSimpleHide).join(',\n');
             }
             for ( const node of this.addedNodes ) {
-                if ( node[vAPI.matchesProp](this.specificSimpleHideAggregated) ) {
+                if ( node.matches(this.specificSimpleHideAggregated) ) {
                     this.hideNode(node);
                 }
                 const nodes = node.querySelectorAll(this.specificSimpleHideAggregated);
@@ -221,10 +221,8 @@ vAPI.DOMFilterer = class {
         }
     }
 
-    addCSSRule(selectors, declarations, details) {
+    addCSSRule(selectors, declarations, details = {}) {
         if ( selectors === undefined ) { return; }
-
-        if ( details === undefined ) { details = {}; }
 
         const selectorsStr = Array.isArray(selectors) ?
             selectors.join(',\n') :
@@ -235,7 +233,7 @@ vAPI.DOMFilterer = class {
           vAPI.userStylesheet.add(selectorsStr + '\n{' + declarations + '}');
         }
         this.commit();
-        if ( this.hasListeners() ) {
+        if ( details.silent !== true && this.hasListeners() ) {
             this.triggerListeners({
                 declarative: [ [ selectorsStr, declarations ] ]
             });
@@ -248,9 +246,6 @@ vAPI.DOMFilterer = class {
             });
             return;
         }
-
-        // Do not strongly enforce internal CSS rules.
-        if ( details.internal ) { return; }
 
         const isGeneric= details.lazy === true;
         const isSimple = details.type === 'simple';

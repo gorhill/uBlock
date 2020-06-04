@@ -25,48 +25,44 @@
 
 /******************************************************************************/
 
-µBlock.getBytesInUse = function(callback) {
-    if ( typeof callback !== 'function' ) {
-        callback = this.noopFunc;
-    }
+µBlock.getBytesInUse = async function() {
+    const promises = [];
     let bytesInUse;
-    let countdown = 0;
-
-    const process = count => {
-        if ( typeof count === 'number' ) {
-            if ( bytesInUse === undefined ) {
-                bytesInUse = 0;
-            }
-            bytesInUse += count;
-        }
-        countdown -= 1;
-        if ( countdown > 0 ) { return; }
-        µBlock.storageUsed = bytesInUse;
-        callback(bytesInUse);
-    };
 
     // Not all platforms implement this method.
-    if ( vAPI.storage.getBytesInUse instanceof Function ) {
-        countdown += 1;
-        vAPI.storage.getBytesInUse(null, process);
-    }
+    promises.push(
+        vAPI.storage.getBytesInUse instanceof Function
+            ? vAPI.storage.getBytesInUse(null)
+            : undefined
+    );
+
     if (
         navigator.storage instanceof Object &&
         navigator.storage.estimate instanceof Function
     ) {
-        countdown += 1;
-        navigator.storage.estimate().then(estimate => {
-            process(estimate.usage);
-        });
+        promises.push(navigator.storage.estimate());
     }
-    if ( countdown === 0 ) {
-        callback();
+
+    const results = await Promise.all(promises);
+
+    const processCount = count => {
+        if ( typeof count !== 'number' ) { return; }
+        if ( bytesInUse === undefined ) { bytesInUse = 0; }
+        bytesInUse += count;
+        return bytesInUse;
+    };
+
+    processCount(results[0]);
+    if ( results.length > 1 && results[1] instanceof Object ) {
+        processCount(results[1].usage);
     }
+    µBlock.storageUsed = bytesInUse;
+    return bytesInUse;
 };
 
 /******************************************************************************/
 
-µBlock.saveLocalSettings = (function() {
+µBlock.saveLocalSettings = (( ) => {
     const saveAfter = 4 * 60 * 1000;
 
     const onTimeout = ( ) => {
@@ -79,9 +75,9 @@
 
     vAPI.setTimeout(onTimeout, saveAfter);
 
-    return function(callback) {
+    return function() {
         this.localSettingsLastSaved = Date.now();
-        vAPI.storage.set(this.localSettings, callback);
+        return vAPI.storage.set(this.localSettings);
     };
 })();
 
@@ -93,49 +89,37 @@
 
 /******************************************************************************/
 
-µBlock.loadHiddenSettings = function() {
-    return new Promise(resolve => {
-    // >>>> start of executor
+µBlock.loadHiddenSettings = async function() {
+    const bin = await vAPI.storage.get('hiddenSettings');
+    if ( bin instanceof Object === false ) { return; }
 
-    vAPI.storage.get('hiddenSettings', bin => {
-        if ( bin instanceof Object === false ) {
-            return resolve();
-        }
-        const hs = bin.hiddenSettings;
-        if ( hs instanceof Object ) {
-            const hsDefault = this.hiddenSettingsDefault;
-            for ( const key in hsDefault ) {
-                if (
-                    hsDefault.hasOwnProperty(key) &&
-                    hs.hasOwnProperty(key) &&
-                    typeof hs[key] === typeof hsDefault[key]
-                ) {
-                    this.hiddenSettings[key] = hs[key];
-                }
-            }
-            if ( typeof this.hiddenSettings.suspendTabsUntilReady === 'boolean' ) {
-                this.hiddenSettings.suspendTabsUntilReady =
-                    this.hiddenSettings.suspendTabsUntilReady
-                        ? 'yes'
-                        : 'unset';
+    const hs = bin.hiddenSettings;
+    if ( hs instanceof Object ) {
+        const hsDefault = this.hiddenSettingsDefault;
+        for ( const key in hsDefault ) {
+            if (
+                hsDefault.hasOwnProperty(key) &&
+                hs.hasOwnProperty(key) &&
+                typeof hs[key] === typeof hsDefault[key]
+            ) {
+                this.hiddenSettings[key] = hs[key];
             }
         }
-        if ( vAPI.localStorage.getItem('immediateHiddenSettings') === null ) {
-            this.saveImmediateHiddenSettings();
+        if ( typeof this.hiddenSettings.suspendTabsUntilReady === 'boolean' ) {
+            this.hiddenSettings.suspendTabsUntilReady =
+                this.hiddenSettings.suspendTabsUntilReady
+                    ? 'yes'
+                    : 'unset';
         }
-        self.log.verbosity = this.hiddenSettings.consoleLogLevel;
-        resolve();
-    });
-
-    // <<<< end of executor
-    });
+    }
+    this.fireDOMEvent('hiddenSettingsChanged');
 };
 
 // Note: Save only the settings which values differ from the default ones.
 // This way the new default values in the future will properly apply for those
 // which were not modified by the user.
 
-µBlock.saveHiddenSettings = function(callback) {
+µBlock.saveHiddenSettings = function() {
     const bin = { hiddenSettings: {} };
     for ( const prop in this.hiddenSettings ) {
         if (
@@ -145,10 +129,23 @@
             bin.hiddenSettings[prop] = this.hiddenSettings[prop];
         }
     }
-    vAPI.storage.set(bin, callback);
-    this.saveImmediateHiddenSettings();
-    self.log.verbosity = this.hiddenSettings.consoleLogLevel;
+    vAPI.storage.set(bin);
 };
+
+self.addEventListener('hiddenSettingsChanged', ( ) => {
+    const µbhs = µBlock.hiddenSettings;
+    self.log.verbosity = µbhs.consoleLogLevel;
+    vAPI.net.setOptions({
+        cnameIgnoreList: µbhs.cnameIgnoreList,
+        cnameIgnore1stParty: µbhs.cnameIgnore1stParty,
+        cnameIgnoreExceptions: µbhs.cnameIgnoreExceptions,
+        cnameIgnoreRootDocument: µbhs.cnameIgnoreRootDocument,
+        cnameMaxTTL: µbhs.cnameMaxTTL,
+        cnameReplayFullURL: µbhs.cnameReplayFullURL,
+        cnameUncloak: µbhs.cnameUncloak,
+        cnameUncloakProxied: µbhs.cnameUncloakProxied,
+    });
+});
 
 /******************************************************************************/
 
@@ -171,7 +168,7 @@
             }
             break;
         case 'string':
-            out[name] = value;
+            out[name] = value.trim();
             break;
         case 'number':
             out[name] = parseInt(value, 10);
@@ -192,22 +189,6 @@
         out.push(key + ' ' + this.hiddenSettings[key]);
     }
     return out.join('\n');
-};
-
-/******************************************************************************/
-
-// These settings must be available immediately on startup, without delay
-// through the vAPI.localStorage. Add/remove settings as needed.
-
-µBlock.saveImmediateHiddenSettings = function() {
-    vAPI.localStorage.setItem(
-        'immediateHiddenSettings',
-        JSON.stringify({
-                  consoleLogLevel: this.hiddenSettings.consoleLogLevel,
-               disableWebAssembly: this.hiddenSettings.disableWebAssembly,
-            suspendTabsUntilReady: this.hiddenSettings.suspendTabsUntilReady,
-        })
-    );
 };
 
 /******************************************************************************/
@@ -238,7 +219,7 @@
 
 µBlock.saveWhitelist = function() {
     vAPI.storage.set({
-        netWhitelist: this.stringFromWhitelist(this.netWhitelist)
+        netWhitelist: this.arrayFromWhitelist(this.netWhitelist)
     });
     this.netWhitelistModifyTime = Date.now();
 };
@@ -252,56 +233,39 @@
 
 **/
 
-µBlock.loadSelectedFilterLists = function() {
-    return new Promise(resolve => {
-    // >>>> start of executor
-
-    vAPI.storage.get('selectedFilterLists', bin => {
-        // Select default filter lists if first-time launch.
-        if (
-            bin instanceof Object === false ||
-            Array.isArray(bin.selectedFilterLists) === false
-        ) {
-            this.assets.metadata(availableLists => {
-                this.saveSelectedFilterLists(
-                    this.autoSelectRegionalFilterLists(availableLists)
-                );
-                resolve();
-            });
-            return;
-        }
+µBlock.loadSelectedFilterLists = async function() {
+    const bin = await vAPI.storage.get('selectedFilterLists');
+    if ( bin instanceof Object && Array.isArray(bin.selectedFilterLists) ) {
         this.selectedFilterLists = bin.selectedFilterLists;
-        resolve();
-    });
+        return;
+    }
 
-    // <<<< end of executor
-    });
+    // https://github.com/gorhill/uBlock/issues/747
+    //   Select default filter lists if first-time launch.
+    const lists = await this.assets.metadata();
+    this.saveSelectedFilterLists(this.autoSelectRegionalFilterLists(lists));
 };
 
-µBlock.saveSelectedFilterLists = function(newKeys, append, callback) {
-    if ( typeof append === 'function' ) {
-        callback = append;
-        append = false;
-    }
+µBlock.saveSelectedFilterLists = function(newKeys, append = false) {
     const oldKeys = this.selectedFilterLists.slice();
     if ( append ) {
         newKeys = newKeys.concat(oldKeys);
     }
     const newSet = new Set(newKeys);
     // Purge unused filter lists from cache.
-    for ( let i = 0, n = oldKeys.length; i < n; i++ ) {
-        if ( newSet.has(oldKeys[i]) === false ) {
-            this.removeFilterList(oldKeys[i]);
+    for ( const oldKey of oldKeys ) {
+        if ( newSet.has(oldKey) === false ) {
+            this.removeFilterList(oldKey);
         }
     }
     newKeys = Array.from(newSet);
     this.selectedFilterLists = newKeys;
-    vAPI.storage.set({ selectedFilterLists: newKeys }, callback);
+    return vAPI.storage.set({ selectedFilterLists: newKeys });
 };
 
 /******************************************************************************/
 
-µBlock.applyFilterListSelection = function(details, callback) {
+µBlock.applyFilterListSelection = function(details) {
     let selectedListKeySet = new Set(this.selectedFilterLists);
     let externalLists = this.userSettings.externalLists;
 
@@ -378,9 +342,6 @@
         vAPI.storage.set({ externalLists: externalLists });
     }
     this.saveSelectedFilterLists(result);
-    if ( typeof callback === 'function' ) {
-        callback(result);
-    }
 };
 
 /******************************************************************************/
@@ -400,22 +361,20 @@
 
 /******************************************************************************/
 
-µBlock.saveUserFilters = function(content, callback) {
+µBlock.saveUserFilters = function(content) {
     // https://github.com/gorhill/uBlock/issues/1022
     //   Be sure to end with an empty line.
     content = content.trim();
     if ( content !== '' ) { content += '\n'; }
-    this.assets.put(this.userFiltersPath, content, callback);
     this.removeCompiledFilterList(this.userFiltersPath);
+    return this.assets.put(this.userFiltersPath, content);
 };
 
-µBlock.loadUserFilters = function(callback) {
-    return this.assets.get(this.userFiltersPath, callback);
+µBlock.loadUserFilters = function() {
+    return this.assets.get(this.userFiltersPath);
 };
 
-/******************************************************************************/
-
-µBlock.appendUserFilters = function(filters, options) {
+µBlock.appendUserFilters = async function(filters, options) {
     filters = filters.trim();
     if ( filters.length === 0 ) { return; }
 
@@ -436,53 +395,62 @@
                 .replace('{{origin}}', options.origin);
     }
 
-    const onSaved = ( ) => {
-        const compiledFilters = this.compileFilters(
-            filters,
-            { assetKey: this.userFiltersPath }
-        );
-        const snfe = this.staticNetFilteringEngine;
-        const cfe = this.cosmeticFilteringEngine;
-        const acceptedCount = snfe.acceptedCount + cfe.acceptedCount;
-        const discardedCount = snfe.discardedCount + cfe.discardedCount;
-        this.applyCompiledFilters(compiledFilters, true);
-        const entry = this.availableFilterLists[this.userFiltersPath];
-        const deltaEntryCount =
-            snfe.acceptedCount +
-            cfe.acceptedCount - acceptedCount;
-        const deltaEntryUsedCount =
-            deltaEntryCount -
-            (snfe.discardedCount + cfe.discardedCount - discardedCount);
-        entry.entryCount += deltaEntryCount;
-        entry.entryUsedCount += deltaEntryUsedCount;
-        vAPI.storage.set({ 'availableFilterLists': this.availableFilterLists });
-        this.staticNetFilteringEngine.freeze();
-        this.redirectEngine.freeze();
-        this.staticExtFilteringEngine.freeze();
-        this.selfieManager.destroy();
-    };
+    const details = await this.loadUserFilters();
+    if ( details.error ) { return; }
 
-    const onLoaded = details => {
-        if ( details.error ) { return; }
-        // The comment, if any, will be applied if and only if it is different
-        // from the last comment found in the user filter list.
-        if ( comment !== '' ) {
-            const pos = details.content.lastIndexOf(comment);
-            if (
-                pos === -1 ||
-                details.content.indexOf('\n!', pos + 1) !== -1
-            ) {
-                filters = '\n' + comment + '\n' + filters;
-            }
+    // The comment, if any, will be applied if and only if it is different
+    // from the last comment found in the user filter list.
+    if ( comment !== '' ) {
+        const pos = details.content.lastIndexOf(comment);
+        if (
+            pos === -1 ||
+            details.content.indexOf('\n!', pos + 1) !== -1
+        ) {
+            filters = '\n' + comment + '\n' + filters;
         }
-        // https://github.com/chrisaljoudi/uBlock/issues/976
-        //   If we reached this point, the filter quite probably needs to be
-        //   added for sure: do not try to be too smart, trying to avoid
-        //   duplicates at this point may lead to more issues.
-        this.saveUserFilters(details.content.trim() + '\n' + filters, onSaved);
-    };
+    }
 
-    this.loadUserFilters(onLoaded);
+    // https://github.com/chrisaljoudi/uBlock/issues/976
+    //   If we reached this point, the filter quite probably needs to be
+    //   added for sure: do not try to be too smart, trying to avoid
+    //   duplicates at this point may lead to more issues.
+    await this.saveUserFilters(details.content.trim() + '\n' + filters);
+
+    const compiledFilters = this.compileFilters(
+        filters,
+        { assetKey: this.userFiltersPath }
+    );
+    const snfe = this.staticNetFilteringEngine;
+    const cfe = this.cosmeticFilteringEngine;
+    const acceptedCount = snfe.acceptedCount + cfe.acceptedCount;
+    const discardedCount = snfe.discardedCount + cfe.discardedCount;
+    this.applyCompiledFilters(compiledFilters, true);
+    const entry = this.availableFilterLists[this.userFiltersPath];
+    const deltaEntryCount =
+        snfe.acceptedCount +
+        cfe.acceptedCount - acceptedCount;
+    const deltaEntryUsedCount =
+        deltaEntryCount -
+        (snfe.discardedCount + cfe.discardedCount - discardedCount);
+    entry.entryCount += deltaEntryCount;
+    entry.entryUsedCount += deltaEntryUsedCount;
+    vAPI.storage.set({ 'availableFilterLists': this.availableFilterLists });
+    this.staticNetFilteringEngine.freeze();
+    this.redirectEngine.freeze();
+    this.staticExtFilteringEngine.freeze();
+    this.selfieManager.destroy();
+
+    // https://www.reddit.com/r/uBlockOrigin/comments/cj7g7m/
+    // https://www.reddit.com/r/uBlockOrigin/comments/cnq0bi/
+    if ( options.killCache ) {
+        browser.webRequest.handlerBehaviorChanged();
+    }
+};
+
+µBlock.createUserFilters = function(details) {
+    this.appendUserFilters(details.filters, details);
+    // https://github.com/gorhill/uBlock/issues/1786
+    this.cosmeticFilteringEngine.removeFromSelectorCache(details.pageDomain);
 };
 
 /******************************************************************************/
@@ -506,15 +474,13 @@
 
 /******************************************************************************/
 
-µBlock.getAvailableLists = function(callback) {
+µBlock.getAvailableLists = async function() {
+  function adnListGroup(key) { // ADN tmp
+      return (key === 'https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/resource-abuse.txt')
+          ? 'default' : 'custom';
+  }
 
-    function adnListGroup(key) { // ADN tmp
-        return (key === 'https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/resource-abuse.txt')
-            ? 'default' : 'custom';
-    }
-
-    let µb = this,
-        oldAvailableLists = {},
+    let oldAvailableLists = {},
         newAvailableLists = {};
 
     // User filter list.
@@ -565,108 +531,95 @@
         this.saveSelectedFilterLists([ listURL ], true);
     };
 
+    // Load previously saved available lists -- these contains data
+    // computed at run-time, we will reuse this data if possible.
+    const [ bin, entries ] = await Promise.all([
+        vAPI.storage.get('availableFilterLists'),
+        this.assets.metadata(),
+    ]);
+
+    oldAvailableLists = bin && bin.availableFilterLists || {};
+
+    for ( const assetKey in entries ) {
+        if ( entries.hasOwnProperty(assetKey) === false ) { continue; }
+        const entry = entries[assetKey];
+        if ( entry.content !== 'filters' ) { continue; }
+        newAvailableLists[assetKey] = Object.assign({}, entry);
+    }
+
+    // Load set of currently selected filter lists.
+    const listKeySet = new Set(this.selectedFilterLists);
+    for ( const listKey in newAvailableLists ) {
+        if ( newAvailableLists.hasOwnProperty(listKey) ) {
+            newAvailableLists[listKey].off = !listKeySet.has(listKey);
+        }
+    }
+
+    //finalize();
     // Final steps:
     // - reuse existing list metadata if any;
     // - unregister unreferenced imported filter lists if any.
-    const finalize = ( ) => {
-        // Reuse existing metadata.
-        for ( const assetKey in oldAvailableLists ) {
-            const oldEntry = oldAvailableLists[assetKey];
-            const newEntry = newAvailableLists[assetKey];
-            // List no longer exists. If a stock list, try to convert to
-            // imported list if it was selected.
-            if ( newEntry === undefined ) {
-                this.removeFilterList(assetKey);
-                if ( assetKey.indexOf('://') === -1 ) {
-                    customListFromStockList(assetKey);
-                }
-                continue;
-            }
-            if ( oldEntry.entryCount !== undefined ) {
-                newEntry.entryCount = oldEntry.entryCount;
-            }
-            if ( oldEntry.entryUsedCount !== undefined ) {
-                newEntry.entryUsedCount = oldEntry.entryUsedCount;
-            }
-            // This may happen if the list name was pulled from the list
-            // content.
-            // https://github.com/chrisaljoudi/uBlock/issues/982
-            // There is no guarantee the title was successfully extracted from
-            // the list content.
-            if (
-                newEntry.title === '' &&
-                typeof oldEntry.title === 'string' &&
-                oldEntry.title !== ''
-            ) {
-                newEntry.title = oldEntry.title;
-            }
-        }
-
-        // Remove unreferenced imported filter lists.
-        const dict = new Set(importedListKeys);
-        for ( const assetKey in newAvailableLists ) {
-            const newEntry = newAvailableLists[assetKey];
-            if ( newEntry.submitter !== 'user' ) { continue; }
-            if ( dict.has(assetKey) ) { continue; }
-            delete newAvailableLists[assetKey];
-            this.assets.unregisterAssetSource(assetKey);
+    // Reuse existing metadata.
+    for ( const assetKey in oldAvailableLists ) {
+        const oldEntry = oldAvailableLists[assetKey];
+        const newEntry = newAvailableLists[assetKey];
+        // List no longer exists. If a stock list, try to convert to
+        // imported list if it was selected.
+        if ( newEntry === undefined ) {
             this.removeFilterList(assetKey);
-        }
-    };
-
-    // Built-in filter lists loaded.
-    const onBuiltinListsLoaded = entries => {
-        for ( const assetKey in entries ) {
-            if ( entries.hasOwnProperty(assetKey) === false ) { continue; }
-            const entry = entries[assetKey];
-            if ( entry.content !== 'filters' ) { continue; }
-            newAvailableLists[assetKey] = Object.assign({}, entry);
-        }
-
-        // Load set of currently selected filter lists.
-        const listKeySet = new Set(this.selectedFilterLists);
-        for ( const listKey in newAvailableLists ) {
-            if ( newAvailableLists.hasOwnProperty(listKey) ) {
-                newAvailableLists[listKey].off = !listKeySet.has(listKey);
+            if ( assetKey.indexOf('://') === -1 ) {
+                customListFromStockList(assetKey);
             }
+            continue;
         }
+        if ( oldEntry.entryCount !== undefined ) {
+            newEntry.entryCount = oldEntry.entryCount;
+        }
+        if ( oldEntry.entryUsedCount !== undefined ) {
+            newEntry.entryUsedCount = oldEntry.entryUsedCount;
+        }
+        // This may happen if the list name was pulled from the list
+        // content.
+        // https://github.com/chrisaljoudi/uBlock/issues/982
+        // There is no guarantee the title was successfully extracted from
+        // the list content.
+        if (
+            newEntry.title === '' &&
+            typeof oldEntry.title === 'string' &&
+            oldEntry.title !== ''
+        ) {
+            newEntry.title = oldEntry.title;
+        }
+    }
 
-        finalize();
-        callback(newAvailableLists);
-    };
+    // Remove unreferenced imported filter lists.
+    for ( const assetKey in newAvailableLists ) {
+        const newEntry = newAvailableLists[assetKey];
+        if ( newEntry.submitter !== 'user' ) { continue; }
+        if ( importedListKeys.indexOf(assetKey) !== -1 ) { continue; }
+        delete newAvailableLists[assetKey];
+        this.assets.unregisterAssetSource(assetKey);
+        this.removeFilterList(assetKey);
+    }
 
-    // Available lists previously computed.
-    const onOldAvailableListsLoaded = bin => {
-        oldAvailableLists = bin && bin.availableFilterLists || {};
-        this.assets.metadata(onBuiltinListsLoaded);
-    };
-
-    // Load previously saved available lists -- these contains data
-    // computed at run-time, we will reuse this data if possible.
-    vAPI.storage.get('availableFilterLists', onOldAvailableListsLoaded);
+    return newAvailableLists;
 };
 
 /******************************************************************************/
 
-// This is used to be re-entrancy resistant.
-µBlock.loadingFilterLists = false;
-
-µBlock.loadFilterLists = function(callback) {
-    // Callers are expected to check this first.
-    if ( this.loadingFilterLists ) { return; }
-    this.loadingFilterLists = true;
-
+µBlock.loadFilterLists = (( ) => {
     const loadedListKeys = [];
-    let filterlistsCount = 0;
+    let loadingPromise;
+    let t0 = 0;
 
-    if ( typeof callback !== 'function' ) {
-        callback = this.noopFunc;
-    }
+    const onDone = function() {
+        log.info(`loadFilterLists() took ${Date.now()-t0} ms`);
 
-    const onDone = ( ) => {
         this.staticNetFilteringEngine.freeze();
         this.staticExtFilteringEngine.freeze();
         this.redirectEngine.freeze();
+        vAPI.net.unsuspend();
+
         vAPI.storage.set({ 'availableFilterLists': this.availableFilterLists });
 
         vAPI.messaging.broadcast({
@@ -676,15 +629,14 @@
             listKeys: loadedListKeys
         });
 
-        callback();
-
         this.selfieManager.destroy();
         this.lz4Codec.relinquish();
+        this.compiledFormatChanged = false;
 
-        this.loadingFilterLists = false;
+        loadingPromise = undefined;
     };
 
-    const applyCompiledFilters = (assetKey, compiled) => {
+    const applyCompiledFilters = function(assetKey, compiled) {
         const snfe = this.staticNetFilteringEngine;
         const sxfe = this.staticExtFilteringEngine;
         let acceptedCount = snfe.acceptedCount + sxfe.acceptedCount,
@@ -700,17 +652,10 @@
         loadedListKeys.push(assetKey);
     };
 
-    const onCompiledListLoaded = details => {
-        applyCompiledFilters(details.assetKey, details.content);
-        filterlistsCount -= 1;
-        if ( filterlistsCount === 0 ) {
-            onDone();
-        }
-    };
-
-    const onFilterListsReady = lists => {
+    const onFilterListsReady = function(lists) {
         this.availableFilterLists = lists;
 
+        vAPI.net.suspend();
         this.redirectEngine.reset();
         this.staticExtFilteringEngine.reset();
         this.staticNetFilteringEngine.reset();
@@ -727,66 +672,74 @@
         for ( const assetKey in lists ) {
             if ( lists.hasOwnProperty(assetKey) === false ) { continue; }
             if ( lists[assetKey].off ) { continue; }
-            toLoad.push(assetKey);
-        }
-        filterlistsCount = toLoad.length;
-        if ( filterlistsCount === 0 ) {
-            return onDone();
+
+            toLoad.push(
+                this.getCompiledFilterList(assetKey).then(details => {
+                    applyCompiledFilters.call(
+                        this,
+                        details.assetKey,
+                        details.content
+                    );
+                })
+            );
         }
 
-        let i = toLoad.length;
-        while ( i-- ) {
-            this.getCompiledFilterList(toLoad[i], onCompiledListLoaded);
-        }
+        return Promise.all(toLoad);
     };
 
-    this.getAvailableLists(onFilterListsReady);
-    this.loadRedirectResources();
-};
+    return function() {
+        if ( loadingPromise instanceof Promise === false ) {
+            t0 = Date.now();
+            loadedListKeys.length = 0;
+            loadingPromise = Promise.all([
+                this.getAvailableLists().then(lists =>
+                    onFilterListsReady.call(this, lists)
+                ),
+                this.loadRedirectResources(),
+            ]).then(( ) => {
+                onDone.call(this);
+            });
+        }
+        return loadingPromise;
+    };
+})();
 
 /******************************************************************************/
 
-µBlock.getCompiledFilterList = function(assetKey, callback) {
+µBlock.getCompiledFilterList = async function(assetKey) {
     const compiledPath = 'compiled/' + assetKey;
-    let rawContent;
 
-    const onCompiledListLoaded2 = details => {
-        if ( details.content === '' ) {
-            details.content = this.compileFilters(
-                rawContent,
-                { assetKey: assetKey }
-            );
-            this.assets.put(compiledPath, details.content);
+    if ( this.compiledFormatChanged === false ) {
+        let compiledDetails = await this.assets.get(compiledPath);
+        if ( compiledDetails.content !== '' ) {
+            compiledDetails.assetKey = assetKey;
+            return compiledDetails;
         }
-        rawContent = undefined;
-        details.assetKey = assetKey;
-        callback(details);
-    };
+    }
 
-    const onRawListLoaded = details => {
-        if ( details.content === '' ) {
-            details.assetKey = assetKey;
-            callback(details);
-            return;
-        }
-        this.extractFilterListMetadata(assetKey, details.content);
-        // Fectching the raw content may cause the compiled content to be
-        // generated somewhere else in uBO, hence we try one last time to
-        // fetch the compiled content in case it has become available.
-        rawContent = details.content;
-        this.assets.get(compiledPath, onCompiledListLoaded2);
-    };
+    const rawDetails = await this.assets.get(assetKey);
+    // Compiling an empty string results in an empty string.
+    if ( rawDetails.content === '' ) {
+        rawDetails.assetKey = assetKey;
+        return rawDetails;
+    }
 
-    const onCompiledListLoaded1 = details => {
-        if ( details.content === '' ) {
-            this.assets.get(assetKey, onRawListLoaded);
-            return;
-        }
-        details.assetKey = assetKey;
-        callback(details);
-    };
+    this.extractFilterListMetadata(assetKey, rawDetails.content);
 
-    this.assets.get(compiledPath, onCompiledListLoaded1);
+    // Fetching the raw content may cause the compiled content to be
+    // generated somewhere else in uBO, hence we try one last time to
+    // fetch the compiled content in case it has become available.
+    let compiledDetails = await this.assets.get(compiledPath);
+    if ( compiledDetails.content === '' ) {
+        compiledDetails.content = this.compileFilters(
+            rawDetails.content,
+            { assetKey: assetKey }
+        );
+        this.assets.put(compiledPath, compiledDetails.content);
+    }
+
+    compiledDetails.assetKey = assetKey;
+    return compiledDetails;
 };
 
 /******************************************************************************/
@@ -838,7 +791,7 @@
 /******************************************************************************/
 
 µBlock.compileFilters = function(rawText, details) {
-    let writer = new this.CompiledLineIO.Writer();
+    const writer = new this.CompiledLineIO.Writer();
 
     // Populate the writer with information potentially useful to the
     // client compilers.
@@ -856,15 +809,17 @@
     const reIsWhitespaceChar = /\s/;
     const reMaybeLocalIp = /^[\d:f]/;
     const reIsLocalhostRedirect = /\s+(?:0\.0\.0\.0|broadcasthost|localhost|local|ip6-\w+)\b/;
-    const reLocalIp = /^(?:0\.0\.0\.0|127\.0\.0\.1|::1|fe80::1%lo0)/;
+    const reLocalIp = /^(?:(0\.0\.0\.)?0|127\.0\.0\.1|::1?|fe80::1%lo0)\s+/;
     const lineIter = new this.LineIterator(this.processDirectives(rawText));
 
     while ( lineIter.eot() === false ) {
-        // rhill 2014-04-18: The trim is important here, as without it there
-        // could be a lingering `\r` which would cause problems in the
-        // following parsing code.
         let line = lineIter.next().trim();
         if ( line.length === 0 ) { continue; }
+
+        while ( line.endsWith(' \\') ) {
+            if ( lineIter.peek(4) !== '    ' ) { break; }
+            line = line.slice(0, -2).trim() + lineIter.next().trim();
+        }
 
         // Strip comments
         const c = line.charAt(0);
@@ -990,8 +945,10 @@
             if ( target ) { expr = expr.slice(1); }
             const token = this.processDirectives.tokens.get(expr);
             const startDiscard =
+                token === 'false' &&
+                    target === false ||
                 token !== undefined &&
-                vAPI.webextFlavor.soup.has(token) === target;
+                    vAPI.webextFlavor.soup.has(token) === target;
             if ( discard === false && startDiscard ) {
                 parts.push(content.slice(beg, match.index));
                 discard = true;
@@ -1025,19 +982,24 @@
     [ 'env_chromium', 'chromium' ],
     [ 'env_edge', 'edge' ],
     [ 'env_firefox', 'firefox' ],
+    [ 'env_legacy', 'legacy' ],
     [ 'env_mobile', 'mobile' ],
     [ 'env_safari', 'safari' ],
     [ 'cap_html_filtering', 'html_filtering' ],
-    [ 'cap_user_stylesheet', 'user_stylesheet' ]
+    [ 'cap_user_stylesheet', 'user_stylesheet' ],
+    [ 'false', 'false' ],
 ]);
 
 /******************************************************************************/
 
-µBlock.loadRedirectResources = function() {
-    return this.redirectEngine.resourcesFromSelfie().then(success => {
-        if ( success === true ) { return; }
+µBlock.loadRedirectResources = async function() {
+    try {
+        const success = await this.redirectEngine.resourcesFromSelfie();
+        if ( success === true ) { return true; }
 
-        const fetchPromises = [ this.assets.get('ublock-resources') ];
+        const fetchPromises = [
+            this.redirectEngine.loadBuiltinResources()
+        ];
 
         const userResourcesLocation = this.hiddenSettings.userResourcesLocation;
         if ( userResourcesLocation !== 'unset' ) {
@@ -1046,13 +1008,12 @@
             }
         }
 
-        return Promise.all(fetchPromises);
-    }).then(results => {
-        if ( Array.isArray(results) === false ) { return; }
+        const results = await Promise.all(fetchPromises);
+        if ( Array.isArray(results) === false ) { return results; }
 
         let content = '';
-
-        for ( const result of results ) {
+        for ( let i = 1; i < results.length; i++ ) {
+            const result = results[i];
             if (
                 result instanceof Object === false ||
                 typeof result.content !== 'string' ||
@@ -1064,31 +1025,34 @@
         }
 
         this.redirectEngine.resourcesFromString(content);
-    });
+        this.redirectEngine.selfieFromResources();
+    } catch(ex) {
+        log.info(ex);
+        return false;
+    }
+    return true;
 };
 
 /******************************************************************************/
 
-µBlock.loadPublicSuffixList = function() {
-    if ( this.hiddenSettings.disableWebAssembly === false ) {
+µBlock.loadPublicSuffixList = async function() {
+    if ( this.hiddenSettings.disableWebAssembly !== true ) {
         publicSuffixList.enableWASM();
     }
 
-    return this.assets.get(
-        'compiled/' + this.pslAssetKey
-    ).then(details =>
-        publicSuffixList.fromSelfie(details.content, µBlock.base64)
-    ).catch(reason => {
-        console.info(reason);
-        return false;
-    }).then(success => {
-        if ( success ) { return; }
-        return this.assets.get(this.pslAssetKey, details => {
-            if ( details.content !== '' ) {
-                this.compilePublicSuffixList(details.content);
-            }
-        });
-    });
+    try {
+        const result = await this.assets.get(`compiled/${this.pslAssetKey}`);
+        if ( publicSuffixList.fromSelfie(result.content, this.base64) ) {
+            return;
+        }
+    } catch (ex) {
+        log.info(ex);
+    }
+
+    const result = await this.assets.get(this.pslAssetKey);
+    if ( result.content !== '' ) {
+        this.compilePublicSuffixList(result.content);
+    }
 };
 
 µBlock.compilePublicSuffixList = function(content) {
@@ -1105,16 +1069,17 @@
 // be generated if the user doesn't change his filter lists selection for
 // some set time.
 
-µBlock.selfieManager = (function() {
+µBlock.selfieManager = (( ) => {
     const µb = µBlock;
-    let timer;
+    let createTimer;
+    let destroyTimer;
 
     // As of 2018-05-31:
     //   JSON.stringify-ing ourselves results in a better baseline
     //   memory usage at selfie-load time. For some reasons.
 
-    const create = function() {
-        Promise.all([
+    const create = async function() {
+        await Promise.all([
             µb.assets.put(
                 'selfie/main',
                 JSON.stringify({
@@ -1123,65 +1088,94 @@
                 })
             ),
             µb.redirectEngine.toSelfie('selfie/redirectEngine'),
-            µb.staticExtFilteringEngine.toSelfie('selfie/staticExtFilteringEngine'),
-            µb.staticNetFilteringEngine.toSelfie('selfie/staticNetFilteringEngine'),
-        ]).then(( ) => {
-            µb.lz4Codec.relinquish();
-        });
+            µb.staticExtFilteringEngine.toSelfie(
+                'selfie/staticExtFilteringEngine'
+            ),
+            µb.staticNetFilteringEngine.toSelfie(
+                'selfie/staticNetFilteringEngine'
+            ),
+        ]);
+        µb.lz4Codec.relinquish();
+        µb.selfieIsInvalid = false;
     };
 
-    const load = function() {
-        return Promise.all([
-            µb.assets.get('selfie/main').then(details => {
-                if (
-                    details instanceof Object === false ||
-                    typeof details.content !== 'string' ||
-                    details.content === ''
-                ) {
-                    return false;
-                }
-                let selfie;
-                try {
-                    selfie = JSON.parse(details.content);
-                } catch(ex) {
-                }
-                if (
-                    selfie instanceof Object === false ||
-                    selfie.magic !== µb.systemSettings.selfieMagic
-                ) {
-                    return false;
-                }
-                µb.availableFilterLists = selfie.availableFilterLists;
-                return true;
-            }),
-            µb.redirectEngine.fromSelfie('selfie/redirectEngine'),
-            µb.staticExtFilteringEngine.fromSelfie('selfie/staticExtFilteringEngine'),
-            µb.staticNetFilteringEngine.fromSelfie('selfie/staticNetFilteringEngine'),
-        ]).then(results =>
-            results.reduce((acc, v) => acc && v, true)
-        ).catch(reason => {
-            log.info(reason);
+    const loadMain = async function() {
+        const details = await µb.assets.get('selfie/main');
+        if (
+            details instanceof Object === false ||
+            typeof details.content !== 'string' ||
+            details.content === ''
+        ) {
             return false;
-        });
+        }
+        let selfie;
+        try {
+            selfie = JSON.parse(details.content);
+        } catch(ex) {
+        }
+        if (
+            selfie instanceof Object === false ||
+            selfie.magic !== µb.systemSettings.selfieMagic
+        ) {
+            return false;
+        }
+        µb.availableFilterLists = selfie.availableFilterLists;
+        return true;
+    };
+
+    const load = async function() {
+        if ( µb.selfieIsInvalid ) {
+            return false;
+        }
+        try {
+            const results = await Promise.all([
+                loadMain(),
+                µb.redirectEngine.fromSelfie('selfie/redirectEngine'),
+                µb.staticExtFilteringEngine.fromSelfie(
+                    'selfie/staticExtFilteringEngine'
+                ),
+                µb.staticNetFilteringEngine.fromSelfie(
+                    'selfie/staticNetFilteringEngine'
+                ),
+            ]);
+            if ( results.every(v => v) ) {
+                return µb.loadRedirectResources();
+            }
+        }
+        catch (reason) {
+            log.info(reason);
+        }
+        destroy();
+        return false;
     };
 
     const destroy = function() {
-        if ( timer !== undefined ) {
-            clearTimeout(timer);
-            timer = undefined;
-        }
         µb.cacheStorage.remove('selfie'); // TODO: obsolete, remove eventually.
         µb.assets.remove(/^selfie\//);
-        timer = vAPI.setTimeout(( ) => {
-            timer = undefined;
+        µb.selfieIsInvalid = true;
+        createTimer = vAPI.setTimeout(( ) => {
+            createTimer = undefined;
             create();
         }, µb.hiddenSettings.selfieAfter * 60000);
     };
 
-    return {
-        load: load,
-        destroy: destroy
+    const destroyAsync = function() {
+        if ( destroyTimer !== undefined ) { return; }
+        if ( createTimer !== undefined ) {
+            clearTimeout(createTimer);
+            createTimer = undefined;
+        }
+        destroyTimer = vAPI.setTimeout(
+            ( ) => {
+                destroyTimer = undefined;
+                destroy();
+            },
+            1019
+        );
+        µb.selfieIsInvalid = true;
     };
+
+    return { load, destroy: destroyAsync };
 })();
 
 /******************************************************************************/
@@ -1193,91 +1187,82 @@
 // necessarily present, i.e. administrators may removed entries which
 // values are left to the user's choice.
 
-µBlock.restoreAdminSettings = function() {
-    return new Promise(resolve => {
-    // >>>> start of executor
-
-    if ( vAPI.adminStorage instanceof Object === false ) {
-        return resolve();
+µBlock.restoreAdminSettings = async function() {
+    let data;
+    try {
+        const json = await vAPI.adminStorage.getItem('adminSettings');
+        if ( typeof json === 'string' && json !== '' ) {
+            data = JSON.parse(json);
+        }
+    } catch (ex) {
+        console.error(ex);
     }
 
-    vAPI.adminStorage.getItem('adminSettings', json => {
-        let data;
-        if ( typeof json === 'string' && json !== '' ) {
-            try {
-                data = JSON.parse(json);
-            } catch (ex) {
-                console.error(ex);
+    if ( data instanceof Object === false ) { return; }
+
+    const bin = {};
+    let binNotEmpty = false;
+
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/666
+    //   Allows an admin to set their own 'assets.json' file, with their
+    //   own set of stock assets.
+    if (
+        typeof data.assetsBootstrapLocation === 'string' &&
+        data.assetsBootstrapLocation !== ''
+    ) {
+        µBlock.assetsBootstrapLocation = data.assetsBootstrapLocation;
+    }
+
+    if ( typeof data.userSettings === 'object' ) {
+        for ( const name in this.userSettings ) {
+            if ( this.userSettings.hasOwnProperty(name) === false ) {
+                continue;
             }
-        }
-
-        if ( data instanceof Object === false ) {
-            return resolve();
-        }
-
-        const bin = {};
-        let binNotEmpty = false;
-
-        // Allows an admin to set their own 'assets.json' file, with their own
-        // set of stock assets.
-        if ( typeof data.assetsBootstrapLocation === 'string' ) {
-            bin.assetsBootstrapLocation = data.assetsBootstrapLocation;
-            binNotEmpty = true;
-        }
-
-        if ( typeof data.userSettings === 'object' ) {
-            for ( const name in this.userSettings ) {
-                if ( this.userSettings.hasOwnProperty(name) === false ) {
-                    continue;
-                }
-                if ( data.userSettings.hasOwnProperty(name) === false ) {
-                    continue;
-                }
-                bin[name] = data.userSettings[name];
-                binNotEmpty = true;
+            if ( data.userSettings.hasOwnProperty(name) === false ) {
+                continue;
             }
-        }
-
-        // 'selectedFilterLists' is an array of filter list tokens. Each token
-        // is a reference to an asset in 'assets.json'.
-        if ( Array.isArray(data.selectedFilterLists) ) {
-            bin.selectedFilterLists = data.selectedFilterLists;
+            bin[name] = data.userSettings[name];
             binNotEmpty = true;
         }
+    }
 
-        if ( typeof data.netWhitelist === 'string' ) {
-            bin.netWhitelist = data.netWhitelist;
-            binNotEmpty = true;
-        }
+    // 'selectedFilterLists' is an array of filter list tokens. Each token
+    // is a reference to an asset in 'assets.json'.
+    if ( Array.isArray(data.selectedFilterLists) ) {
+        bin.selectedFilterLists = data.selectedFilterLists;
+        binNotEmpty = true;
+    }
 
-        if ( typeof data.dynamicFilteringString === 'string' ) {
-            bin.dynamicFilteringString = data.dynamicFilteringString;
-            binNotEmpty = true;
-        }
+    if ( Array.isArray(data.whitelist) ) {
+        bin.netWhitelist = data.whitelist;
+        binNotEmpty = true;
+    } else if ( typeof data.netWhitelist === 'string' ) {
+        bin.netWhitelist = data.netWhitelist.split('\n');
+        binNotEmpty = true;
+    }
 
-        if ( typeof data.urlFilteringString === 'string' ) {
-            bin.urlFilteringString = data.urlFilteringString;
-            binNotEmpty = true;
-        }
+    if ( typeof data.dynamicFilteringString === 'string' ) {
+        bin.dynamicFilteringString = data.dynamicFilteringString;
+        binNotEmpty = true;
+    }
 
-        if ( typeof data.hostnameSwitchesString === 'string' ) {
-            bin.hostnameSwitchesString = data.hostnameSwitchesString;
-            binNotEmpty = true;
-        }
+    if ( typeof data.urlFilteringString === 'string' ) {
+        bin.urlFilteringString = data.urlFilteringString;
+        binNotEmpty = true;
+    }
 
-        if ( binNotEmpty ) {
-            vAPI.storage.set(bin);
-        }
+    if ( typeof data.hostnameSwitchesString === 'string' ) {
+        bin.hostnameSwitchesString = data.hostnameSwitchesString;
+        binNotEmpty = true;
+    }
 
-        if ( typeof data.userFilters === 'string' ) {
-            this.assets.put(this.userFiltersPath, data.userFilters);
-        }
+    if ( binNotEmpty ) {
+        vAPI.storage.set(bin);
+    }
 
-        resolve();
-    });
-
-    // <<<< end of executor
-    });
+    if ( typeof data.userFilters === 'string' ) {
+        this.saveUserFilters(data.userFilters);
+    }
 };
 
 /******************************************************************************/
@@ -1378,15 +1363,6 @@
                 return;
             }
         }
-        // https://github.com/gorhill/uBlock/issues/2594
-        if ( details.assetKey === 'ublock-resources' ) {
-            if (
-                this.hiddenSettings.ignoreRedirectFilters === true &&
-                this.hiddenSettings.ignoreScriptInjectFilters === true
-            ) {
-                return;
-            }
-        }
         return true;
     }
 
@@ -1421,8 +1397,6 @@
             if ( cached ) {
                 this.compilePublicSuffixList(details.content);
             }
-        } else if ( details.assetKey === 'ublock-resources' ) {
-            this.redirectEngine.invalidateResourcesSelfie();
         }
         vAPI.messaging.broadcast({
             what: 'assetUpdated',
@@ -1450,6 +1424,13 @@
     // Reload all filter lists if needed.
     if ( topic === 'after-assets-updated' ) {
         if ( details.assetKeys.length !== 0 ) {
+            // https://github.com/gorhill/uBlock/pull/2314#issuecomment-278716960
+            if (
+                this.hiddenSettings.userResourcesLocation !== 'unset' ||
+                vAPI.webextFlavor.soup.has('devbuild')
+            ) {
+                this.redirectEngine.invalidateResourcesSelfie();
+            }
             this.loadFilterLists();
         }
         if ( this.userSettings.autoUpdate ) {

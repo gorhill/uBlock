@@ -64,8 +64,8 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Klik: nonfungsi\/fungsikan uBlock₀ untuk situs ini.\n\nCtrl+klik: nonfungsikan uBlock₀ hanya di halaman ini.",
-    "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message": "Klik: nonfungsi/fungsikan uBlock₀ untuk situs ini.\n\nCtrl+klik: nonfungsikan uBlock₀ hanya di halaman ini.",
+    "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
     "message": "Klik untuk menonaktifkan uBlock₀ pada situs ini.\n\nCtrl+klik untuk menonaktifkan uBlock₀ hanya di laman ini.",
@@ -94,6 +94,18 @@
   "popupOr": {
     "message": "atau",
     "description": "English: or"
+  },
+  "popupBlockedOnThisPage_v2": {
+    "message": "Diblokir di laman ini",
+    "description": "For the new mobile-friendly popup design"
+  },
+  "popupBlockedSinceInstall_v2": {
+    "message": "Diblokir sejak dipasang",
+    "description": "For the new mobile-friendly popup design"
+  },
+  "popupDomainsConnected_v2": {
+    "message": "Domain terhubung",
+    "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
     "message": "Buka dasbor",
@@ -124,7 +136,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Aktifkan\/Nonaktifkan pemblokiran elemen media besar untuk situs ini",
+    "message": "Aktifkan/Nonaktifkan pemblokiran elemen media besar untuk situs ini",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
@@ -136,7 +148,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Aktif\/Nonaktifkan filter tampilan untuk situs ini",
+    "message": "Aktif/Nonaktifkan filter tampilan untuk situs ini",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
@@ -148,7 +160,7 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Jungkit pemblokiran fon pihak ketiga untuk situs ini",
+    "message": "Aktif/Nonaktifkan pemblokiran fon eksternal untuk situs ini",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
@@ -166,6 +178,26 @@
   "popupTipNoScripting2": {
     "message": "Klik untuk tidak lagi menonaktifkan total JavaScript di situs ini",
     "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupNoLargeMedia_v2": {
+    "message": "Elemen media besar",
+    "description": "Tip for the no-large-media per-site switch"
+  },
+  "popupNoCosmeticFiltering_v2": {
+    "message": "Filter tampilan",
+    "description": "Tip for the no-cosmetic-filtering per-site switch"
+  },
+  "popupNoRemoteFonts_v2": {
+    "message": "Fon eksternal",
+    "description": "Tip for the no-remote-fonts per-site switch"
+  },
+  "popupNoScripting_v2": {
+    "message": "JavaScript",
+    "description": "Tip for the no-scripting per-site switch"
+  },
+  "popupMoreButton_v2": {
+    "message": "Lainnya",
+    "description": "Label to be used to toggle overview panel"
   },
   "popupTipGlobalRules": {
     "message": "Aturan global: kolom ini untuk aturan yang diterapkan ke semua situs.",
@@ -196,7 +228,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "CSS\/gambar pihak ke-3",
+    "message": "CSS/gambar pihak ke-3",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -252,7 +284,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Blok elemen",
+    "message": "Blok elemen...",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -280,7 +312,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Saya pengguna tingkat lanjut (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>bacaan wajib<\/a>)",
+    "message": "Saya pengguna tingkat lanjut (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>bacaan wajib</a>)",
     "description": ""
   },
   "settingsAdvancedUserSettings": {
@@ -316,7 +348,7 @@
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
-    "message": "Blokir fon rajuh",
+    "message": "Blokir fon eksternal",
     "description": ""
   },
   "settingsNoScriptingPrompt": {
@@ -325,7 +357,7 @@
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Blokir laporan CSP",
-    "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsStorageUsed": {
     "message": "Penyimpanan terpakai: {{value}} bita",
@@ -364,7 +396,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Opsi ini memfungsikan penguraian dan memaksa-jalankan <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filter &ldquo;penyembunyian elemen&rdquo; yang kompatibel dengan Adblock Plus<\/a>. Filter ini pada dasarnya hanya sekedar penyaring tampilan, berfungsi untuk menyembunyikan elemen di halaman web yang dianggap sebagai gangguan visual, dan tidak dapat diblokir oleh filter berbasis permintaan jaringan.<\/p><p>Memfungsikan fitur ini akan meningkatkan penggunaan memori <i>uBlock₀<\/i>.<\/p>",
+    "message": "<p>Opsi ini memfungsikan penguraian dan memaksa-jalankan <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">filter &ldquo;penyembunyian elemen&rdquo; yang kompatibel dengan Adblock Plus</a>. Filter ini pada dasarnya hanya sekedar penyaring tampilan, berfungsi untuk menyembunyikan elemen di halaman web yang dianggap sebagai gangguan visual, dan tidak dapat diblokir oleh filter berbasis permintaan jaringan.</p><p>Memfungsikan fitur ini akan meningkatkan penggunaan memori <i>uBlock₀</i>.</p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -412,7 +444,7 @@
     "description": "English: Regions, languages"
   },
   "3pGroupCustom": {
-    "message": "Tersesuai",
+    "message": "Khusus",
     "description": "English: Custom"
   },
   "3pImport": {
@@ -440,7 +472,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Satu filter per baris. Filter dapat berupa nama host, atau filter yang kompatibel dengan Adblock Plus. Baris yang diawali dengan <code>!<\/code> akan diabaikan.",
+    "message": "Satu filter per baris. Filter dapat berupa nama host, atau filter yang kompatibel dengan Adblock Plus. Baris yang diawali dengan <code>!</code> akan diabaikan.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -504,7 +536,7 @@
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
-    "message": "Aturan sintaksis: <code>sumber tujuan jenis tindakan<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>dokumentasi lengkap<\/a>).",
+    "message": "Aturan sintaksis: <code>sumber tujuan jenis tindakan</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>dokumentasi lengkap</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
@@ -560,11 +592,11 @@
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
-    "message": "Aktif\/Nonaktifkan inspeksi DOM",
+    "message": "Aktif/Nonaktifkan inspeksi DOM",
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "Aktif\/Nonaktifkan panel popup",
+    "message": "Aktif/Nonaktifkan panel popup",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
@@ -584,15 +616,15 @@
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "Aktif\/Nonaktifkan penyaringan pencatat log",
+    "message": "Aktif/Nonaktifkan penyaringan pencatat log",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
-    "message": "saring konten pencatat log",
+    "message": "filter konten pencatat log",
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
-    "message": "Opsi penyaringan pencatat log",
+    "message": "Opsi filter pencatat log",
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {
@@ -644,7 +676,7 @@
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
-    "message": "Relasi",
+    "message": "Hubungan",
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
@@ -708,15 +740,15 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Filter statis <code>{{filter}}<\/code> ditemukan di dalam:",
+    "message": "Filter statis <code>{{filter}}</code> ditemukan di dalam:",
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Filter statis <code>{{filter}}<\/code> tidak dapat ditemukan di salah satu daftar filter yang aktif saat ini",
+    "message": "Filter statis <code>{{filter}}</code> tidak dapat ditemukan di salah satu daftar filter yang aktif saat ini",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
-    "message": "Entri pencatat log yang tidak memenuhi ketiga kondisi di bawah akan secara otomatis dibuang:",
+    "message": "Entri pencatat log yang tidak memenuhi ketiga kondisi di bawah akan otomatis dibuang:",
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
@@ -744,7 +776,7 @@
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
-    "message": "{{input}} Filter\/aturan",
+    "message": "{{input}} Filter/aturan",
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
@@ -861,11 +893,11 @@
   },
   "showDashboardButton": {
     "message": "Tampilkan Dasbor",
-    "description": "Firefox\/Fennec-specific: Show Dashboard"
+    "description": "Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
     "message": "Tampilkan Pencatat Log",
-    "description": "Firefox\/Fennec-specific: Show Logger"
+    "description": "Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
     "message": "mati",
@@ -881,7 +913,7 @@
   },
   "docblockedNoParamsPrompt": {
     "message": "tanpa parameter",
-    "description": "label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
+    "description": "label to be used for the parameter-less URL: https://cloud.githubusercontent.com/assets/585534/9832014/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {
     "message": "Ditemukan di:",
@@ -956,12 +988,20 @@
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "Aktif\/Nonaktifkan bilah gulir",
+    "message": "Aktif/Nonaktifkan bilah gulir",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
     "message": "Salin ke papan klip",
     "description": "Label for buttons used to copy something to the clipboard"
+  },
+  "toggleBlockingProfile": {
+    "message": "Aktif/Nonaktifkan pemblokiran profil",
+    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  },
+  "relaxBlockingMode": {
+    "message": "Perlonggar mode pemblokiran",
+    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "dummy": {
     "message": "Entri ini harus menjadi yang terakhir",

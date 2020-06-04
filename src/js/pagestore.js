@@ -41,10 +41,6 @@ const µb = µBlock;
 
 /******************************************************************************/
 
-// To mitigate memory churning
-const netFilteringCacheJunkyard = [];
-const netFilteringCacheJunkyardMax = 10;
-
 const NetFilteringResultCache = class {
     constructor() {
         this.init();
@@ -56,14 +52,6 @@ const NetFilteringResultCache = class {
         this.hash = 0;
         this.timer = undefined;
         return this;
-    }
-
-    dispose() {
-        this.empty();
-        if ( netFilteringCacheJunkyard.length < netFilteringCacheJunkyardMax ) {
-            netFilteringCacheJunkyard.push(this);
-        }
-        return null;
     }
 
     rememberResult(fctxt, result) {
@@ -155,10 +143,7 @@ const NetFilteringResultCache = class {
     }
 
     static factory() {
-        const entry = netFilteringCacheJunkyard.pop();
-        return entry !== undefined
-            ? entry.init()
-            : new NetFilteringResultCache();
+        return new NetFilteringResultCache();
     }
 };
 
@@ -166,10 +151,7 @@ NetFilteringResultCache.prototype.shelfLife = 15000;
 
 /******************************************************************************/
 
-// Frame stores are used solely to associate a URL with a frame id. The
-// name `pageHostname` is used because of historical reasons. A more
-// appropriate name is `frameHostname` -- something to do in a future
-// refactoring.
+// Frame stores are used solely to associate a URL with a frame id.
 
 // To mitigate memory churning
 const frameStoreJunkyard = [];
@@ -181,15 +163,19 @@ const FrameStore = class {
     }
 
     init(frameURL) {
-        const µburi = µb.URI;
-        this.pageHostname = µburi.hostnameFromURI(frameURL);
-        this.pageDomain =
-            µburi.domainFromHostname(this.pageHostname) || this.pageHostname;
+        this.exceptCname = undefined;
+        this.rawURL = frameURL;
+        if ( frameURL !== undefined ) {
+            this.hostname = vAPI.hostnameFromURI(frameURL);
+            this.domain =
+                vAPI.domainFromHostname(this.hostname) || this.hostname;
+        }
         return this;
     }
 
     dispose() {
-        this.pageHostname = this.pageDomain = '';
+        this.exceptCname = undefined;
+        this.rawURL = this.hostname = this.domain = '';
         if ( frameStoreJunkyard.length < frameStoreJunkyardMax ) {
             frameStoreJunkyard.push(this);
         }
@@ -218,6 +204,7 @@ const PageStore = class {
         this.journalTimer = null;
         this.journalLastCommitted = this.journalLastUncommitted = undefined;
         this.journalLastUncommittedURL = undefined;
+        this.netFilteringCache = NetFilteringResultCache.factory();
         this.init(tabId, context);
     }
 
@@ -253,19 +240,18 @@ const PageStore = class {
         this.rawURL = tabContext.rawURL;
         this.hostnameToCountMap = new Map();
         this.contentLastModified = 0;
-        this.frames = new Map();
         this.logData = undefined;
         this.perLoadBlockedRequestCount = 0;
         this.perLoadAllowedRequestCount = 0;
-        this.hiddenElementCount = ''; // Empty string means "unknown"
         this.remoteFontCount = 0;
-        this.scriptCount = 0;
         this.popupBlockedCount = 0;
         this.largeMediaCount = 0;
         this.largeMediaTimer = null;
-        this.netFilteringCache = NetFilteringResultCache.factory();
         this.internalRedirectionCount = 0;
         this.extraData.clear();
+
+        this.frames = new Map();
+        this.setFrame(0, tabContext.rawURL);
 
         // The current filtering context is cloned because:
         // - We may be called with or without the current context having been
@@ -320,6 +306,7 @@ const PageStore = class {
             // As part of https://github.com/chrisaljoudi/uBlock/issues/405
             // URL changed, force a re-evaluation of filtering switch
             this.rawURL = tabContext.rawURL;
+            this.setFrame(0, this.rawURL);
             return this;
         }
 
@@ -329,7 +316,6 @@ const PageStore = class {
             this.largeMediaTimer = null;
         }
         this.disposeFrameStores();
-        this.netFilteringCache = this.netFilteringCache.dispose();
         this.init(this.tabId, context);
         return this;
     }
@@ -339,13 +325,13 @@ const PageStore = class {
         this.title = '';
         this.rawURL = '';
         this.hostnameToCountMap = null;
+        this.netFilteringCache.empty();
         this.allowLargeMediaElementsUntil = 0;
         if ( this.largeMediaTimer !== null ) {
             clearTimeout(this.largeMediaTimer);
             this.largeMediaTimer = null;
         }
         this.disposeFrameStores();
-        this.netFilteringCache = this.netFilteringCache.dispose();
         if ( this.journalTimer !== null ) {
             clearTimeout(this.journalTimer);
             this.journalTimer = null;
@@ -394,7 +380,7 @@ const PageStore = class {
     }
 
     injectLargeMediaElementScriptlet() {
-        vAPI.tabs.injectScript(this.tabId, {
+        vAPI.tabs.executeScript(this.tabId, {
             file: '/js/scriptlets/load-large-media-interactive.js',
             allFrames: true,
             runAt: 'document_idle',
@@ -569,16 +555,27 @@ const PageStore = class {
 
         // Static filtering has lowest precedence.
         if ( result === 0 || result === 3 ) {
-            result = µb.staticNetFilteringEngine.matchString(fctxt);
-            if ( result !== 0 && µb.logger.enabled ) {
-                fctxt.filter = µb.staticNetFilteringEngine.toLogData();
+            const snfe = µb.staticNetFilteringEngine;
+            result = snfe.matchString(fctxt);
+            if ( result !== 0 ) {
+                if ( µb.logger.enabled ) {
+                    fctxt.filter = snfe.toLogData();
+                }
+                // https://github.com/uBlockOrigin/uBlock-issues/issues/943
+                //   Blanket-except blocked aliased canonical hostnames?
+                if (
+                    result === 1 &&
+                    fctxt.aliasURL !== undefined &&
+                    snfe.isBlockImportant() === false &&
+                    this.shouldExceptCname(fctxt)
+                ) {
+                    return 2;
+                }
             }
             if ( result !== 2 && µb.adnauseam.mustAllowRequest(result, fctxt)) {
                 result = 4; // ADN: adnauseamAllowed
                 if (fctxt.filter) fctxt.filter.result = 4;
             }
-
-
         }
 
         if ( cacheableResult ) {
@@ -678,6 +675,40 @@ const PageStore = class {
         }
 
         return 1;
+    }
+
+    shouldExceptCname(fctxt) {
+        let exceptCname;
+        let frameStore;
+        if ( fctxt.docId !== undefined ) {
+            frameStore = this.getFrame(fctxt.docId);
+            if ( frameStore instanceof Object ) {
+                exceptCname = frameStore.exceptCname;
+            }
+        }
+        if ( exceptCname === undefined ) {
+            const result = µb.staticNetFilteringEngine.matchStringReverse(
+                'cname',
+                frameStore instanceof Object
+                    ? frameStore.rawURL
+                    : fctxt.getDocOrigin()
+            );
+            if ( result === 2 ) {
+                exceptCname = µb.logger.enabled
+                    ? µb.staticNetFilteringEngine.toLogData()
+                    : true;
+            } else {
+                exceptCname = false;
+            }
+            if ( frameStore instanceof Object ) {
+                frameStore.exceptCname = exceptCname;
+            }
+        }
+        if ( exceptCname === false ) { return false; }
+        if ( exceptCname instanceof Object ) {
+            fctxt.setFilter(exceptCname);
+        }
+        return true;
     }
 
     getBlockedResources(request, response) {

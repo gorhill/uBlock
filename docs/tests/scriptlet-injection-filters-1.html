@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scriptlet injection filters / no-setTimeout-if</title>
+<style>
+    .filters {
+        font-family: monospace;
+        white-space: pre;
+    }
+    .filters td >  b {
+        display: inline-block;
+        height: 1em;
+        margin-left: 2px;
+        width: 2em;
+    }
+    .filters td > b.G {
+        background-color: green;
+    }
+    .filters td > b.R {
+        background-color: red;
+    }
+    .tests {
+        align-items: flex-start;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .tile {
+        display: inline-flex;
+        flex-direction: column;
+        margin: 0 20px 10px 0;
+        min-width: 200px;
+    }
+    .tile div {
+        align-items: center;
+        color: white;
+        display: flex;
+        justify-content: center;
+    }
+    .tile > div {
+        height: 50px;
+        position: relative;
+    }
+    .tile > div > div {
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+    .tile > code {
+        align-self: center;
+    }
+    .cell.bad {
+        background-color: red;
+    }
+    .cell.bad.notexecuted {
+        background-color: green;
+    }
+    .cell.good {
+        background-color: green;
+    }
+    .cell.good.notexecuted {
+        background-color: red;
+    }
+    .cell::before {
+        content: 'executed';
+    }
+    .cell.notexecuted::before {
+        content: 'not executed';
+    }
+</style>
+</head>
+<body>
+<h1>Scriptlet injection filters / no-setTimeout-if</h1>
+<p><a href="./.">Back</a>
+<br><br></p>
+<h3>Filters</h3>
+<p>The filters below must be tried one by one, not all at the same
+time. When you try a filter, ensure the result is what is expected.</p>
+<noscript>Enable JavaScript to see needed filter</noscript>
+<table class="filters">
+<tr><th>Filter<th>Expected
+<tr><td>None<td><b class="R">&nbsp;</b><b class="R">&nbsp;</b><b class="G">&nbsp;</b><b class="G">&nbsp;</b>
+</table>
+
+<h3>Results</h3>
+<div id="sif" class="tests">
+
+<script>
+    function createSetTimeout(fn, delay) {
+        self.addEventListener('load', ( ) => {
+            self.setTimeout(fn, delay)
+        });
+    }
+    function removeClass(sel, cls) {
+        document.querySelector(sel).classList.remove(cls);
+    }
+</script>
+
+
+<div id="a1" class="tile">
+    <div class="cell bad notexecuted"></div>
+    <code>bad, 33</code>
+    <script>
+        createSetTimeout(
+            function() {
+                'bad';
+                removeClass('#a1 .cell', 'notexecuted');
+            },
+            33
+        );
+    </script>
+    </div>
+
+<div id="a2" class="tile">
+    <div class="cell bad notexecuted"></div>
+    <code>bad, 66</code>
+    <script>
+        createSetTimeout(
+            function() {
+                'bad';
+                removeClass('#a2 .cell', 'notexecuted');
+            },
+            66
+        );
+    </script>
+    </div>
+
+<div id="a3" class="tile">
+    <div class="cell good notexecuted"></div>
+    <code>good, 33</code>
+    <script>
+        createSetTimeout(
+            function() {
+                'good';
+                removeClass('#a3 .cell', 'notexecuted');
+            },
+            33
+        );
+    </script>
+    </div>
+
+<div id="a4" class="tile">
+    <div class="cell good notexecuted"></div>
+    <code>good, 66</code>
+    <script>
+        createSetTimeout(
+            function() {
+                'good';
+                removeClass('#a4 .cell', 'notexecuted');
+            },
+            66
+        );
+    </script>
+    </div>
+
+</div>
+
+<script>
+    const hostname = self.location.hostname;
+    const fragment = document.createDocumentFragment();
+    const filters = [
+        [ [ 'bad' ], 'GGGG' ],
+        [ [ '!good' ], 'GGGG' ],
+        [ [ '', '33' ], 'GRRG' ],
+        [ [ '', '!66' ], 'GRRG' ],
+        [ [ 'bad', '33' ], 'GRGG' ],
+        [ [ '!good', '!66' ], 'GRGG' ],
+        [ [ 'bad', '!33' ], 'RGGG' ],
+        [ [ '!good', '66' ], 'RGGG' ],
+        [ [ '!bad', '33' ], 'RRRG' ],
+        [ [ 'good', '!66' ], 'RRRG' ],
+    ];
+    for ( const [ args, result ] of filters ) {
+        const tr = document.createElement('tr');
+        let td = document.createElement('td');
+        td.textContent = `${hostname}##+js(nostif, ${args.join(', ')})`;
+        tr.appendChild(td);
+        td = document.createElement('td');
+        for ( let i = 0; i < result.length; i++ ) {
+            const b = document.createElement('b');
+            b.className = result.charAt(i);
+            b.textContent = '\xA0';
+            td.appendChild(b);
+        }
+        tr.appendChild(td);
+        fragment.appendChild(tr);
+    }
+    document.querySelector('.filters').appendChild(fragment);
+</script>
+</body>
+</html>

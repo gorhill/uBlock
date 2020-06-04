@@ -25,7 +25,7 @@
 
 /******************************************************************************/
 
-(function() {
+(( ) => {
 
 /******************************************************************************/
 
@@ -42,8 +42,10 @@ let filteredLoggerEntryVoidedCount = 0;
 let popupLoggerBox;
 let popupLoggerTooltips;
 let activeTabId = 0;
+let filterAuthorMode = false;
 let selectedTabId = 0;
 let netInspectorPaused = false;
+let cnameOfEnabled = false;
 
 /******************************************************************************/
 
@@ -65,7 +67,7 @@ const tabIdFromAttribute = function(elem) {
 
 // Current design allows for only one modal DOM-based dialog at any given time.
 //
-const modalDialog = (function() {
+const modalDialog = (( ) => {
     const overlay = uDom.nodeFromId('modalOverlay');
     const container = overlay.querySelector(
         ':scope > div > div:nth-of-type(1)'
@@ -154,22 +156,41 @@ const regexFromURLFilteringResult = function(result) {
 
 // Emphasize hostname in URL, as this is what matters in uMatrix's rules.
 
-const nodeFromURL = function(url, re) {
-    if ( re instanceof RegExp === false ) {
-        return document.createTextNode(url);
+const nodeFromURL = function(parent, url, re) {
+    const fragment = document.createDocumentFragment();
+    if ( re === undefined ) {
+        fragment.textContent = url;
+    } else {
+        if ( typeof re === 'string' ) {
+            re = new RegExp(re.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
+        }
+        const matches = re.exec(url);
+        if ( matches === null || matches[0].length === 0 ) {
+            fragment.textContent = url;
+        } else {
+            if ( matches.index !== 0 ) {
+                fragment.appendChild(
+                    document.createTextNode(url.slice(0, matches.index))
+                );
+            }
+            const b = document.createElement('b');
+            b.textContent = url.slice(matches.index, re.lastIndex);
+            fragment.appendChild(b);
+            if ( re.lastIndex !== url.length ) {
+                fragment.appendChild(
+                    document.createTextNode(url.slice(re.lastIndex))
+                );
+            }
+        }
     }
-    const matches = re.exec(url);
-    if ( matches === null || matches[0].length === 0 ) {
-        return document.createTextNode(url);
+    if ( /^https?:\/\//.test(url) ) {
+        const a = document.createElement('a');
+        a.setAttribute('href', url);
+        a.setAttribute('target', '_blank');
+        fragment.appendChild(a);
     }
-    const node = renderedURLTemplate.cloneNode(true);
-    node.childNodes[0].textContent = url.slice(0, matches.index);
-    node.childNodes[1].textContent = url.slice(matches.index, re.lastIndex);
-    node.childNodes[2].textContent = url.slice(re.lastIndex);
-    return node;
+    parent.appendChild(fragment);
 };
-
-const renderedURLTemplate = document.querySelector('#renderedURLTemplate > span');
 
 /******************************************************************************/
 
@@ -194,6 +215,9 @@ const LogEntry = function(details) {
             this[prop] = details[prop];
         }
     }
+    if ( details.aliasURL !== undefined ) {
+        this.aliased = true;
+    }
     if ( this.tabDomain === '' ) {
         this.tabDomain = this.tabHostname || '';
     }
@@ -205,11 +229,13 @@ const LogEntry = function(details) {
     }
 };
 LogEntry.prototype = {
+    aliased: false,
     dead: false,
     docDomain: '',
     docHostname: '',
     domain: '',
     filter: undefined,
+    id: '',
     realm: '',
     tabDomain: '',
     tabHostname: '',
@@ -276,7 +302,7 @@ const processLoggerEntries = function(response) {
             if ( autoDeleteVoidedRows ) { continue; }
             parsed.voided = true;
         }
-        if ( parsed.type === 'main_frame' ) {
+        if ( parsed.type === 'main_frame' && parsed.aliased === false ) {
             const separator = createLogSeparator(parsed, unboxed.url);
             loggerEntries.unshift(separator);
             if ( rowFilterer.filterOne(separator) ) {
@@ -285,6 +311,10 @@ const processLoggerEntries = function(response) {
                     filteredLoggerEntryVoidedCount += 1;
                 }
             }
+        }
+        if ( cnameOfEnabled === false && parsed.aliased ) {
+            uDom.nodeFromId('filterExprCnameOf').style.display = '';
+            cnameOfEnabled = true;
         }
         loggerEntries.unshift(parsed);
         if ( rowFilterer.filterOne(parsed) ) {
@@ -362,7 +392,7 @@ const parseLogEntry = function(details) {
     // Cell 3
     textContent.push(normalizeToStr(entry.docHostname));
 
-    // Cell 4
+    // Cell 4: partyness
     if (
         entry.realm === 'network' &&
         typeof entry.domain === 'string' &&
@@ -398,6 +428,13 @@ const parseLogEntry = function(details) {
 
     // Cell 6
     textContent.push(normalizeToStr(details.url));
+
+    // Hidden cells -- useful for row-filtering purpose
+
+    // Cell 7
+    if ( entry.aliased ) {
+        textContent.push(`aliasURL=${details.aliasURL}`);
+    }
 
     entry.textContent = textContent.join('\t');
     return entry;
@@ -659,7 +696,6 @@ const viewPort = (( ) => {
             }
             if ( filteringType === 'static' ) {
                 divcl.add('canLookup');
-                div.setAttribute('data-filter', filter.compiled);
             } else if ( filteringType === 'cosmetic' ) {
                 divcl.add('canLookup');
                 divcl.toggle('isException', filter.raw.startsWith('#@#'));
@@ -719,14 +755,21 @@ const viewPort = (( ) => {
         span.textContent = cells[5];
 
         // URL
-        let re = null;
+        let re;
         if ( filteringType === 'static' ) {
             re = new RegExp(filter.regex, 'gi');
         } else if ( filteringType === 'dynamicUrl' ) {
             re = regexFromURLFilteringResult(filter.rule.join(' '));
         }
-        span = div.children[6];
-        span.appendChild(nodeFromURL(cells[6], re));
+        nodeFromURL(div.children[6], cells[6], re);
+
+        // Alias URL (CNAME, etc.)
+        if ( cells.length > 7 ) {
+            const pos = details.textContent.lastIndexOf('\taliasURL=');
+            if ( pos !== -1 ) {
+                div.setAttribute('data-aliasid', details.id);
+            }
+        }
 
         return div;
     };
@@ -960,6 +1003,8 @@ const onLogBufferRead = function(response) {
         allTabIdsToken = response.tabIdsToken;
     }
 
+    filterAuthorMode = response.filterAuthorMode === true;
+
     if ( activeTabIdChanged ) {
         pageSelectorFromURLHash();
     }
@@ -986,7 +1031,7 @@ const onLogBufferRead = function(response) {
 const readLogBuffer = (( ) => {
     let timer;
 
-    const readLogBufferNow = function() {
+    const readLogBufferNow = async function() {
         if ( logger.ownerId === undefined ) { return; }
 
         const msg = {
@@ -1013,11 +1058,11 @@ const readLogBuffer = (( ) => {
             msg.popupLoggerBoxChanged = true;
         }
 
-        vAPI.messaging.send('loggerUI', msg, response => {
-            timer = undefined;
-            onLogBufferRead(response);
-            readLogBufferLater();
-        });
+        const response = await vAPI.messaging.send('loggerUI', msg);
+
+        timer = undefined;
+        onLogBufferRead(response);
+        readLogBufferLater();
     };
 
     const readLogBufferLater = function() {
@@ -1089,24 +1134,22 @@ const reloadTab = function(ev) {
     messaging.send('loggerUI', {
         what: 'reloadTab',
         tabId: tabId,
-        bypassCache: ev && (ev.ctrlKey || ev.metaKey || ev.shiftKey)
+        bypassCache: ev && (ev.ctrlKey || ev.metaKey || ev.shiftKey),
     });
 };
 
 /******************************************************************************/
 /******************************************************************************/
 
-(function() {
+(( ) => {
     const reRFC3986 = /^([^:\/?#]+:)?(\/\/[^\/?#]*)?([^?#]*)(\?[^#]*)?(#.*)?/;
     const reSchemeOnly = /^[\w-]+:$/;
     const staticFilterTypes = {
-        'beacon': 'other',
+        'beacon': 'ping',
         'doc': 'document',
         'css': 'stylesheet',
         'frame': 'subdocument',
-        'ping': 'other',
         'object_subrequest': 'object',
-        'xhr': 'xmlhttprequest'
     };
     const createdStaticFilters = {};
 
@@ -1155,17 +1198,14 @@ const reloadTab = function(ev) {
         }
     };
 
-    const colorize = function() {
-        messaging.send(
-            'loggerUI',
-            {
-                what: 'getURLFilteringData',
-                context: selectValue('select.dynamic.origin'),
-                urls: targetURLs,
-                type: uglyTypeFromSelector('dynamic')
-            },
-            onColorsReady
-        );
+    const colorize = async function() {
+        const response = await messaging.send('loggerUI', {
+            what: 'getURLFilteringData',
+            context: selectValue('select.dynamic.origin'),
+            urls: targetURLs,
+            type: uglyTypeFromSelector('dynamic'),
+        });
+        onColorsReady(response);
     };
 
     const parseStaticInputs = function() {
@@ -1196,7 +1236,7 @@ const reloadTab = function(ev) {
         value = selectValue('select.static.origin');
         if ( value !== '' ) {
             if ( value === targetDomain ) {
-                options.push('first-party');
+                options.push('1p');
             } else {
                 options.push('domain=' + value);
             }
@@ -1219,55 +1259,59 @@ const reloadTab = function(ev) {
         );
     };
 
-    const onClick = function(ev) {
+    const onClick = async function(ev) {
         const target = ev.target;
         const tcl = target.classList;
 
         // Select a mode
         if ( tcl.contains('header') ) {
-            dialog.setAttribute('data-pane', target.getAttribute('data-pane') );
             ev.stopPropagation();
+            dialog.setAttribute('data-pane', target.getAttribute('data-pane') );
             return;
         }
 
+        // Toggle temporary exception filter
+        if ( tcl.contains('exceptor') ) {
+            ev.stopPropagation();
+            const status = await messaging.send('loggerUI', {
+                what: 'toggleTemporaryException',
+                filter: filterFromTargetRow(),
+            });
+            const row = target.closest('div');
+            row.classList.toggle('exceptored', status);
+            return;
+        }
+        
         // Create static filter
         if ( target.id === 'createStaticFilter' ) {
+            ev.stopPropagation();
             const value = staticFilterNode().value;
             // Avoid duplicates
-            if ( createdStaticFilters.hasOwnProperty(value) ) {
-                return;
-            }
+            if ( createdStaticFilters.hasOwnProperty(value) ) { return; }
             createdStaticFilters[value] = true;
             if ( value !== '' ) {
-                messaging.send(
-                    'loggerUI',
-                    {
-                        what: 'createUserFilter',
-                        autoComment: true,
-                        filters: value,
-                        origin: targetPageDomain,
-                        pageDomain: targetPageDomain,
-                    }
-                );
+                messaging.send('loggerUI', {
+                    what: 'createUserFilter',
+                    autoComment: true,
+                    filters: value,
+                    origin: targetPageDomain,
+                    pageDomain: targetPageDomain,
+                });
             }
             updateWidgets();
-            ev.stopPropagation();
             return;
         }
 
         // Save url filtering rule(s)
         if ( target.id === 'saveRules' ) {
-                messaging.send(
-                'loggerUI',
-                {
-                    what: 'saveURLFilteringRules',
-                    context: selectValue('select.dynamic.origin'),
-                    urls: targetURLs,
-                    type: uglyTypeFromSelector('dynamic')
-                },
-                colorize
-            );
             ev.stopPropagation();
+            await messaging.send('loggerUI', {
+                what: 'saveURLFilteringRules',
+                context: selectValue('select.dynamic.origin'),
+                urls: targetURLs,
+                type: uglyTypeFromSelector('dynamic'),
+            });
+            colorize();
             return;
         }
 
@@ -1275,101 +1319,83 @@ const reloadTab = function(ev) {
 
         // Remove url filtering rule
         if ( tcl.contains('action') ) {
-            messaging.send(
-                'loggerUI',
-                {
-                    what: 'setURLFilteringRule',
-                    context: selectValue('select.dynamic.origin'),
-                    url: target.getAttribute('data-url'),
-                    type: uglyTypeFromSelector('dynamic'),
-                    action: 0,
-                    persist: persist
-                },
-                colorize
-            );
             ev.stopPropagation();
+            await messaging.send('loggerUI', {
+                what: 'setURLFilteringRule',
+                context: selectValue('select.dynamic.origin'),
+                url: target.getAttribute('data-url'),
+                type: uglyTypeFromSelector('dynamic'),
+                action: 0,
+                persist: persist,
+            });
+            colorize();
             return;
         }
 
         // add "allow" url filtering rule
         if ( tcl.contains('allow') ) {
-            messaging.send(
-                'loggerUI',
-                {
-                    what: 'setURLFilteringRule',
-                    context: selectValue('select.dynamic.origin'),
-                    url: target.parentNode.getAttribute('data-url'),
-                    type: uglyTypeFromSelector('dynamic'),
-                    action: 2,
-                    persist: persist
-                },
-                colorize
-            );
             ev.stopPropagation();
+            await messaging.send('loggerUI', {
+                what: 'setURLFilteringRule',
+                context: selectValue('select.dynamic.origin'),
+                url: target.parentNode.getAttribute('data-url'),
+                type: uglyTypeFromSelector('dynamic'),
+                action: 2,
+                persist: persist,
+            });
+            colorize();
             return;
         }
 
         // add "block" url filtering rule
         if ( tcl.contains('noop') ) {
-            messaging.send(
-                'loggerUI',
-                {
-                    what: 'setURLFilteringRule',
-                    context: selectValue('select.dynamic.origin'),
-                    url: target.parentNode.getAttribute('data-url'),
-                    type: uglyTypeFromSelector('dynamic'),
-                    action: 3,
-                    persist: persist
-                },
-                colorize
-            );
             ev.stopPropagation();
+            await messaging.send('loggerUI', {
+                what: 'setURLFilteringRule',
+                context: selectValue('select.dynamic.origin'),
+                url: target.parentNode.getAttribute('data-url'),
+                type: uglyTypeFromSelector('dynamic'),
+                action: 3,
+                persist: persist,
+            });
+            colorize();
             return;
         }
 
         // add "block" url filtering rule
         if ( tcl.contains('block') ) {
-            messaging.send(
-                'loggerUI',
-                {
-                    what: 'setURLFilteringRule',
-                    context: selectValue('select.dynamic.origin'),
-                    url: target.parentNode.getAttribute('data-url'),
-                    type: uglyTypeFromSelector('dynamic'),
-                    action: 1,
-                    persist: persist
-                },
-                colorize
-            );
             ev.stopPropagation();
+            await messaging.send('loggerUI', {
+                what: 'setURLFilteringRule',
+                context: selectValue('select.dynamic.origin'),
+                url: target.parentNode.getAttribute('data-url'),
+                type: uglyTypeFromSelector('dynamic'),
+                action: 1,
+                persist: persist,
+            });
+            colorize();
             return;
         }
 
         // Force a reload of the tab
         if ( tcl.contains('reload') ) {
-            messaging.send(
-                'loggerUI',
-                {
-                    what: 'reloadTab',
-                    tabId: targetTabId
-                }
-            );
             ev.stopPropagation();
+            messaging.send('loggerUI', {
+                what: 'reloadTab',
+                tabId: targetTabId,
+            });
             return;
         }
 
         // Hightlight corresponding element in target web page
         if ( tcl.contains('picker') ) {
-            messaging.send(
-                'loggerUI',
-                {
-                    what: 'launchElementPicker',
-                    tabId: targetTabId,
-                    targetURL: 'img\t' + targetURLs[0],
-                    select: true
-                }
-            );
             ev.stopPropagation();
+            messaging.send('loggerUI', {
+                what: 'launchElementPicker',
+                tabId: targetTabId,
+                targetURL: 'img\t' + targetURLs[0],
+                select: true,
+            });
             return;
         }
     };
@@ -1461,9 +1487,47 @@ const reloadTab = function(ev) {
         return urls;
     };
 
-    const fillSummaryPaneFilterList = function(rows) {
+    const filterFromTargetRow = function() {
+        return targetRow.children[1].textContent;
+    };
+
+    const aliasURLFromID = function(id) {
+        if ( id === '' ) { return ''; }
+        for ( const entry of loggerEntries ) {
+            if ( entry.id !== id || entry.aliased ) { continue; }
+            const fields = entry.textContent.split('\t');
+            return fields[6] || '';
+        }
+        return '';
+    };
+
+    const toSummaryPaneFilterNode = async function(receiver, filter) {
+        receiver.children[1].textContent = filter;
+        if ( filterAuthorMode !== true ) { return; }
+        const match = /#@?#/.exec(filter);
+        if ( match === null ) { return; }
+        const fragment = document.createDocumentFragment();
+        const pos = match.index + match[0].length;
+        fragment.appendChild(document.createTextNode(filter.slice(0, pos)));
+        const selector = filter.slice(pos);
+        const span = document.createElement('span');
+        span.className = 'filter';
+        span.textContent = selector;
+        fragment.appendChild(span);
+        const isTemporaryException = await messaging.send('loggerUI', {
+            what: 'hasTemporaryException',
+            filter,
+        });
+        receiver.classList.toggle('exceptored', isTemporaryException);
+        if ( match[0] === '##' || isTemporaryException ) {
+            receiver.children[2].style.visibility = '';
+        }
+        receiver.children[1].textContent = '';
+        receiver.children[1].appendChild(fragment);
+    };
+
+    const fillSummaryPaneFilterList = async function(rows) {
         const rawFilter = targetRow.children[1].textContent;
-        const compiledFilter = targetRow.getAttribute('data-filter');
 
         const nodeFromFilter = function(filter, lists) {
             const fragment = document.createDocumentFragment();
@@ -1503,7 +1567,7 @@ const reloadTab = function(ev) {
                 bestMatchFilter !== '' &&
                 Array.isArray(response[bestMatchFilter])
             ) {
-                rows[0].children[1].textContent = bestMatchFilter;
+                toSummaryPaneFilterNode(rows[0], bestMatchFilter);
                 rows[1].children[1].appendChild(nodeFromFilter(
                     bestMatchFilter,
                     response[bestMatchFilter]
@@ -1520,27 +1584,20 @@ const reloadTab = function(ev) {
         };
 
         if ( targetRow.classList.contains('networkRealm') ) {
-            messaging.send(
-                'loggerUI',
-                {
-                    what: 'listsFromNetFilter',
-                    compiledFilter: compiledFilter,
-                    rawFilter: rawFilter
-                },
-                handleResponse
-            );
+            const response = await messaging.send('loggerUI', {
+                what: 'listsFromNetFilter',
+                rawFilter: rawFilter,
+            });
+            handleResponse(response);
         } else if ( targetRow.classList.contains('cosmeticRealm') ) {
-            messaging.send(
-                'loggerUI',
-                {
-                    what: 'listsFromCosmeticFilter',
-                    url: targetRow.children[6].textContent,
-                    rawFilter: rawFilter,
-                },
-                handleResponse
-            );
+            const response = await messaging.send('loggerUI', {
+                what: 'listsFromCosmeticFilter',
+                url: targetRow.children[6].textContent,
+                rawFilter: rawFilter,
+            });
+            handleResponse(response);
         }
-    };
+    } ;
 
     const fillSummaryPane = function() {
         const rows = dialog.querySelectorAll('.pane.details > div');
@@ -1549,12 +1606,12 @@ const reloadTab = function(ev) {
         const trch = tr.children;
         let text;
         // Filter and context
-        text = trch[1].textContent;
+        text = filterFromTargetRow();
         if (
             (text !== '') &&
             (trcl.contains('cosmeticRealm') || trcl.contains('networkRealm'))
         ) {
-            rows[0].children[1].textContent = text;
+            toSummaryPaneFilterNode(rows[0], text);
         } else {
             rows[0].style.display = 'none';
         }
@@ -1605,8 +1662,8 @@ const reloadTab = function(ev) {
             rows[6].style.display = 'none';
         }
         // URL
-        text = trch[6].textContent;
-        if ( text !== '' ) {
+        const canonicalURL = trch[6].textContent;
+        if ( canonicalURL !== '' ) {
             const attr = tr.getAttribute('data-status') || '';
             if ( attr !== '' ) {
                 rows[7].setAttribute('data-status', attr);
@@ -1615,11 +1672,26 @@ const reloadTab = function(ev) {
         } else {
             rows[7].style.display = 'none';
         }
+        // Alias URL
+        text = tr.getAttribute('data-aliasid');
+        const aliasURL = text ? aliasURLFromID(text) : '';
+        if ( aliasURL !== '' ) {
+            rows[8].children[1].textContent =
+                vAPI.hostnameFromURI(aliasURL) + ' \u21d2\n\u2003' +
+                vAPI.hostnameFromURI(canonicalURL);
+            rows[9].children[1].textContent = aliasURL;
+        } else {
+            rows[8].style.display = 'none';
+            rows[9].style.display = 'none';
+        }
     };
 
     // Fill dynamic URL filtering pane
     const fillDynamicPane = function() {
         if ( targetRow.classList.contains('cosmeticRealm') ) { return; }
+
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/662#issuecomment-509220702
+        if ( targetType === 'doc' ) { return; }
 
         // https://github.com/gorhill/uBlock/issues/2469
         if ( targetURLs.length === 0 || reSchemeOnly.test(targetURLs[0]) ) {
@@ -1791,13 +1863,13 @@ const reloadTab = function(ev) {
         fillSummaryPane();
         fillDynamicPane();
         fillStaticPane();
-        dialog.addEventListener('click', onClick, true);
+        dialog.addEventListener('click', ev => { onClick(ev); }, true);
         dialog.addEventListener('change', onSelectChange, true);
         dialog.addEventListener('input', onInputChange, true);
         modalDialog.show();
     };
 
-    const toggleOn = function(ev) {
+    const toggleOn = async function(ev) {
         targetRow = ev.target.closest('.canDetails');
         if ( targetRow === null ) { return; }
         ev.stopPropagation();
@@ -1808,24 +1880,21 @@ const reloadTab = function(ev) {
         targetFrameHostname = targetRow.getAttribute('data-dochn') || '';
 
         // We need the root domain names for best user experience.
-        messaging.send(
-            'loggerUI',
-            {
-                what: 'getDomainNames',
-                targets: [
-                    targetURLs[0],
-                    targetPageHostname,
-                    targetFrameHostname
-                ]
-            },
-            fillDialog
-        );
+        const domains = await messaging.send('loggerUI', {
+            what: 'getDomainNames',
+            targets: [
+                targetURLs[0],
+                targetPageHostname,
+                targetFrameHostname
+            ],
+        });
+        fillDialog(domains);
     };
 
     uDom('#netInspector').on(
         'click',
         '.canDetails > span:nth-of-type(2),.canDetails > span:nth-of-type(3),.canDetails > span:nth-of-type(5)',
-        toggleOn
+        ev => { toggleOn(ev); }
     );
 })();
 
@@ -1958,14 +2027,14 @@ const rowFilterer = (( ) => {
         );
     };
 
-    const onFilterChangedAsync = (function() {
+    const onFilterChangedAsync = (( ) => {
         let timer;
         const commit = ( ) => {
             timer = undefined;
             parseInput();
             filterAll();
         };
-        return function() {
+        return ( ) => {
             if ( timer !== undefined ) {
                 clearTimeout(timer);
             }
@@ -2632,9 +2701,9 @@ const loggerSettings = (( ) => {
         linesPerEntry: 4,
     };
 
-    {
+    vAPI.localStorage.getItemAsync('loggerSettings').then(value => {
         try {
-            const stored = JSON.parse(vAPI.localStorage.getItem('loggerSettings'));
+            const stored = JSON.parse(value);
             if ( typeof stored.discard.maxAge === 'number' ) {
                 settings.discard.maxAge = stored.discard.maxAge;
             }
@@ -2652,7 +2721,7 @@ const loggerSettings = (( ) => {
             }
         } catch(ex) {
         }
-    }
+    });
 
     const valueFromInput = function(input, def) {
         let value = parseInt(input.value, 10);
@@ -2774,10 +2843,10 @@ const grabView = function() {
 
 const releaseView = function() {
     if ( logger.ownerId === undefined ) { return; }
-    vAPI.messaging.send(
-        'loggerUI',
-        { what: 'releaseView', ownerId: logger.ownerId }
-    );
+    vAPI.messaging.send('loggerUI', {
+        what: 'releaseView',
+        ownerId: logger.ownerId,
+    });
     logger.ownerId = undefined;
 };
 

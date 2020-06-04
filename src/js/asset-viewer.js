@@ -25,26 +25,10 @@
 
 /******************************************************************************/
 
-(( ) => {
+(async ( ) => {
     const params = new URL(document.location).searchParams;
     const assetKey = params.get('url');
     if ( assetKey === null ) { return; }
-
-    vAPI.messaging.send(
-        'default',
-        {
-            what : 'getAssetContent',
-            url: assetKey,
-        },
-        details => {
-            cmEditor.setValue(details && details.content || '');
-            if ( details.sourceURL ) {
-                const a = document.querySelector('.cm-search-widget .sourceURL');
-                a.setAttribute('href', details.sourceURL);
-                a.setAttribute('title', details.sourceURL);
-            }
-        }
-    );
 
     const cmEditor = new CodeMirror(
         document.getElementById('content'),
@@ -59,4 +43,15 @@
     );
 
     uBlockDashboard.patchCodeMirrorEditor(cmEditor);
+
+    const details = await vAPI.messaging.send('default', {
+        what : 'getAssetContent',
+        url: assetKey,
+    });
+    cmEditor.setValue(details && details.content || '');
+    if ( details.sourceURL ) {
+        const a = document.querySelector('.cm-search-widget .sourceURL');
+        a.setAttribute('href', details.sourceURL);
+        a.setAttribute('title', details.sourceURL);
+    }
 })();

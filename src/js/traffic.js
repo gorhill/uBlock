@@ -25,7 +25,7 @@
 
 // Start isolation from global scope
 
-µBlock.webRequest = (function() {
+µBlock.webRequest = (( ) => {
 
 /******************************************************************************/
 
@@ -261,8 +261,15 @@ const onBeforeRequest = function(details) {
 
     // Not blocked
     if ( result !== 1 ) {
-        if ( details.parentFrameId !== -1 && details.type === 'sub_frame' ) {
+        if (
+            details.parentFrameId !== -1 &&
+            details.type === 'sub_frame' &&
+            details.aliasURL === undefined
+        ) {
             pageStore.setFrame(details.frameId, details.url);
+        }
+        if ( result === 2 ) {
+            return { cancel: false };
         }
         return;
     }
@@ -389,11 +396,10 @@ const onBeforeRootFrameRequest = function(fctxt) {
     if ( logData === undefined  ) { return; }
 
     // Blocked
-    const query = btoa(JSON.stringify({
+    const query = encodeURIComponent(JSON.stringify({
         url: requestURL,
         hn: requestHostname,
         dn: fctxt.getDomain() || requestHostname,
-        fc: logData.compiled,
         fs: logData.raw
     }));
 
@@ -417,9 +423,11 @@ const toBlockDocResult = function(url, hostname, logData) {
 
     // https://github.com/chrisaljoudi/uBlock/issues/1128
     // https://github.com/chrisaljoudi/uBlock/issues/1212
-    // Relax the rule: verify that the match is completely before the path part
-    return (match.index + match[0].length) <=
-           (url.indexOf(hostname) + hostname.length + 1);
+    //   Verify that the end of the match is anchored to the end of the
+    //   hostname.
+    const end = match.index + match[0].length -
+                url.indexOf(hostname) - hostname.length;
+    return end === 0 || end === 1;
 };
 
 /******************************************************************************/
@@ -655,7 +663,7 @@ const onHeadersReceived = function(details) {
         if ( isRootDoc === false ) { return; }
         pageStore = µb.bindTabToPageStats(fctxt.tabId, 'beforeRequest');
     }
-    if ( pageStore.getNetFilteringSwitch() === false ) { return; }
+    if ( pageStore.getNetFilteringSwitch(fctxt) === false ) { return; }
 
     // Keep in mind response headers will be modified in-place if needed, so
     // `details.responseHeaders` will always point to the modified response
@@ -663,10 +671,7 @@ const onHeadersReceived = function(details) {
     const responseHeaders = details.responseHeaders;
 
     if ( requestType === 'image' || requestType === 'media' ) {
-        result = foilLargeMediaElement(fctxt,
-            pageStore,
-            responseHeaders);
-        return result
+        return foilLargeMediaElement(fctxt, pageStore, responseHeaders);
     }
 
     if ( isDoc === false ) { return; }
@@ -697,14 +702,16 @@ const onHeadersReceived = function(details) {
     //   Use `no-cache` instead of `no-cache, no-store, must-revalidate`, this
     //   allows Firefox's offline mode to work as expected.
     if ( (filteredHTML || modifiedHeaders) && dontCacheResponseHeaders ) {
-        let i = headerIndexFromName('cache-control', responseHeaders);
         let cacheControl = µb.hiddenSettings.cacheControlForFirefox1376932;
-        if ( i !== -1 ) {
-            responseHeaders[i].value = cacheControl;
-        } else {
-            responseHeaders.push({ name: 'Cache-Control', value: cacheControl });
+        if ( cacheControl !== 'unset' ) {
+            let i = headerIndexFromName('cache-control', responseHeaders);
+            if ( i !== -1 ) {
+                responseHeaders[i].value = cacheControl;
+            } else {
+                responseHeaders.push({ name: 'Cache-Control', value: cacheControl });
+            }
+            modifiedHeaders = true;
         }
-        modifiedHeaders = true;
     }
 
     if ( modifiedHeaders ) {
@@ -1066,14 +1073,12 @@ const injectCSP = function(fctxt, pageStore, responseHeaders) {
 
     // Static filtering.
 
-    const logDataEntries = loggerEnabled ? [] : undefined;
-
-    µb.staticNetFilteringEngine.matchAndFetchData(
-        'csp',
-        fctxt.url,
-        cspSubsets,
-        logDataEntries
-    );
+    const staticDirectives =
+        µb.staticNetFilteringEngine.matchAndFetchData(fctxt, 'csp');
+    for ( const directive of staticDirectives ) {
+        if ( directive.result !== 1 ) { continue; }
+        cspSubsets.push(directive.getData('csp'));
+    }
 
     // URL filtering `allow` rules override static filtering.
     if (
@@ -1115,10 +1120,11 @@ const injectCSP = function(fctxt, pageStore, responseHeaders) {
     // <<<<<<<< All policies have been collected
 
     // Static CSP policies will be applied.
-    if ( logDataEntries !== undefined ) {
+
+    if ( loggerEnabled && staticDirectives.length !== 0 ) {
         fctxt.setRealm('network').setType('csp');
-        for ( const entry of logDataEntries ) {
-            fctxt.setFilter(entry).toLogger();
+        for ( const directive of staticDirectives ) {
+            fctxt.setFilter(directive.logData()).toLogger();
         }
     }
 
@@ -1253,26 +1259,12 @@ const strictBlockBypasser = {
 /******************************************************************************/
 
 return {
-    start: (function() {
-        if (
-            vAPI.net.onBeforeReady instanceof Object &&
-            (
-                vAPI.net.onBeforeReady.experimental !== true &&
-                µBlock.hiddenSettings.suspendTabsUntilReady !== 'no' ||
-                vAPI.net.onBeforeReady.experimental &&
-                µBlock.hiddenSettings.suspendTabsUntilReady === 'yes'
-            )
-        ) {
-            vAPI.net.onBeforeReady.start();
-        }
+    start: (( ) => {
+        vAPI.net = new vAPI.Net();
+        vAPI.net.suspend(true);
 
         return function() {
-            vAPI.net.addListener(
-                'onBeforeRequest',
-                onBeforeRequest,
-                { urls: [ 'http://*/*', 'https://*/*' ] },
-                [ 'blocking' ]
-            );
+            vAPI.net.setSuspendableListener(onBeforeRequest);
             vAPI.net.addListener(
                 'onHeadersReceived',
                 onHeadersReceived,
@@ -1308,9 +1300,7 @@ return {
                     [ 'blocking', 'requestBody' ]
                 );
             }
-            if ( vAPI.net.onBeforeReady instanceof Object ) {
-                vAPI.net.onBeforeReady.stop(onBeforeRequest);
-            }
+            vAPI.net.unsuspend(true);
         };
     })(),
 

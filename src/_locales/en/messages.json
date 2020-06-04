@@ -95,6 +95,18 @@
     "message":"or",
     "description":"English: or"
   },
+  "popupBlockedOnThisPage_v2":{
+    "message":"Blocked on this page",
+    "description":"For the new mobile-friendly popup design"
+  },
+  "popupBlockedSinceInstall_v2":{
+    "message":"Blocked since install",
+    "description":"For the new mobile-friendly popup design"
+  },
+  "popupDomainsConnected_v2":{
+    "message":"Domains connected",
+    "description":"For the new mobile-friendly popup design"
+  },
   "popupTipDashboard":{
     "message":"Open the dashboard",
     "description":"English: Click to open the dashboard"
@@ -166,6 +178,26 @@
   "popupTipNoScripting2":{
     "message":"Click to no longer disable JavaScript on this site",
     "description":"Tooltip for the no-scripting per-site switch"
+  },
+  "popupNoLargeMedia_v2":{
+    "message":"Large media elements",
+    "description":"Tip for the no-large-media per-site switch"
+  },
+  "popupNoCosmeticFiltering_v2":{
+    "message":"Cosmetic filtering",
+    "description":"Tip for the no-cosmetic-filtering per-site switch"
+  },
+  "popupNoRemoteFonts_v2":{
+    "message":"Remote fonts",
+    "description":"Tip for the no-remote-fonts per-site switch"
+  },
+  "popupNoScripting_v2":{
+    "message":"JavaScript",
+    "description":"Tip for the no-scripting per-site switch"
+  },
+  "popupMoreButton_v2":{
+    "message":"More",
+    "description":"Label to be used to toggle overview panel"
   },
   "popupTipGlobalRules":{
     "message":"Global rules: this column is for rules which apply to all sites.",
@@ -712,7 +744,7 @@
     "description":"Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2":{
-    "message":"Static filter <code>{{filter}}</code> could not be found in any of the currently enabled filter lists",
+    "message":"Static filter could not be found in any of the currently enabled filter lists",
     "description":"Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt":{
@@ -962,6 +994,14 @@
   "genericCopyToClipboard":{
     "message":"Copy to clipboard",
     "description":"Label for buttons used to copy something to the clipboard"
+  },
+  "toggleBlockingProfile":{
+    "message":"Toggle blocking profile",
+    "description":"Label for keyboard shortcut used to toggle blocking profile"
+  },
+  "relaxBlockingMode":{
+    "message":"Relax blocking mode",
+    "description":"Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "dummy":{
     "message":"This entry must be the last one",

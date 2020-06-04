@@ -56,7 +56,7 @@
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
-    "message": "uBlock₀ — Asset viewer",
+    "message": "uBlock₀ — pregled sredstev",
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
@@ -64,8 +64,8 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Klik: onemogoči\/omogoči uBlock₀ za to stran.\n\nCtrl+klik: onemogoči uBlock₀ samo na tej strani.",
-    "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message": "Klik: onemogoči/omogoči uBlock₀ za to stran.\n\nCtrl+klik: onemogoči uBlock₀ samo na tej strani.",
+    "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
     "message": "Kliknite, da onemogočite uBlock₀ za to stran.\n\nPritisnite Ctrl in kliknite, da onemogočite uBlock₀ samo na tej strani.",
@@ -95,6 +95,18 @@
     "message": "ali",
     "description": "English: or"
   },
+  "popupBlockedOnThisPage_v2": {
+    "message": "Blocked on this page",
+    "description": "For the new mobile-friendly popup design"
+  },
+  "popupBlockedSinceInstall_v2": {
+    "message": "Blocked since install",
+    "description": "For the new mobile-friendly popup design"
+  },
+  "popupDomainsConnected_v2": {
+    "message": "Domains connected",
+    "description": "For the new mobile-friendly popup design"
+  },
   "popupTipDashboard": {
     "message": "Klikni za odpiranje nadzorne plošče",
     "description": "English: Click to open the dashboard"
@@ -112,7 +124,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Vklop\/Izklop blokiranja vseh pojavnih oken za to stran",
+    "message": "Vklop/Izklop blokiranja vseh pojavnih oken za to stran",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
@@ -124,7 +136,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Vklop\/izklop blokiranja večjih medijev za to stran",
+    "message": "Vklop/izklop blokiranja večjih medijev za to stran",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
@@ -136,7 +148,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Vklop\/Izklop kozmetičnih filtrov za to stran",
+    "message": "Vklop/Izklop kozmetičnih filtrov za to stran",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
@@ -148,7 +160,7 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Vklopi\/izklopi blokiranje oddaljenih pisav za to stran",
+    "message": "Vklopi/izklopi blokiranje oddaljenih pisav za to stran",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
@@ -166,6 +178,26 @@
   "popupTipNoScripting2": {
     "message": "Klikni, da prenehaš onemogočati JavaScript na tej strani",
     "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupNoLargeMedia_v2": {
+    "message": "Large media elements",
+    "description": "Tip for the no-large-media per-site switch"
+  },
+  "popupNoCosmeticFiltering_v2": {
+    "message": "Cosmetic filtering",
+    "description": "Tip for the no-cosmetic-filtering per-site switch"
+  },
+  "popupNoRemoteFonts_v2": {
+    "message": "Remote fonts",
+    "description": "Tip for the no-remote-fonts per-site switch"
+  },
+  "popupNoScripting_v2": {
+    "message": "JavaScript",
+    "description": "Tip for the no-scripting per-site switch"
+  },
+  "popupMoreButton_v2": {
+    "message": "More",
+    "description": "Label to be used to toggle overview panel"
   },
   "popupTipGlobalRules": {
     "message": "Globalna pravila: ta stolpec je za pravila, ki se uveljavljajo za vse strani.",
@@ -196,7 +228,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "css\/slike tretje osebe",
+    "message": "css/slike tretje osebe",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -280,7 +312,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Sem napreden uporabnik (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>Potrebno branje<\/a>)",
+    "message": "Sem napreden uporabnik (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>Potrebno branje</a>)",
     "description": ""
   },
   "settingsAdvancedUserSettings": {
@@ -325,7 +357,7 @@
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Blokiraj CSP poročila",
-    "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsStorageUsed": {
     "message": "Uporabljenega prostora: {{value}} bajtov",
@@ -364,7 +396,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Ta opcija omogoči razčlenjevanje in uveljavljanje <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\"> Adblock Plus kompatibilnih filtrov za &ldquo;skrivanje elementov&rdquo;<\/a> Le-ti filtri so v bistvu kozmetični in služijo skrivanju elementov na spletnih straneh, ki jih lahko obravnavamo kot \"vizualna nadloga\", in taki, ki se jih preko filtrov zahtev omrežja ne da blokirati.<\/p>\n<p>Vklop te funkcije poveča spominski odtis uBlock₀.<\/p>",
+    "message": "<p>Ta opcija omogoči razčlenjevanje in uveljavljanje <a href=\"https://adblockplus.org/en/faq_internal#elemhide\"> Adblock Plus kompatibilnih filtrov za &ldquo;skrivanje elementov&rdquo;</a> Le-ti filtri so v bistvu kozmetični in služijo skrivanju elementov na spletnih straneh, ki jih lahko obravnavamo kot \"vizualna nadloga\", in taki, ki se jih preko filtrov zahtev omrežja ne da blokirati.</p>\n<p>Vklop te funkcije poveča spominski odtis uBlock₀.</p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -504,7 +536,7 @@
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
-    "message": "Sintaksa pravil: <code>vir destinacija tip akcija<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>polna dokumentacija (v angleščini)<\/a>).",
+    "message": "Sintaksa pravil: <code>vir destinacija tip akcija</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>polna dokumentacija (v angleščini)</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
@@ -708,11 +740,11 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Statičen filter <code>{{filter}}<\/code> najden v:",
+    "message": "Statičen filter <code>{{filter}}</code> najden v:",
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Statični filter <code>{{filter}}<\/code> ni bil najden v nobenem izmed trenutno izbranih seznamov",
+    "message": "Statični filter <code>{{filter}}</code> ni bil najden v nobenem izmed trenutno izbranih seznamov",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
@@ -744,7 +776,7 @@
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
-    "message": "{{input}} Filter\/rule",
+    "message": "{{input}} Filter/rule",
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
@@ -861,11 +893,11 @@
   },
   "showDashboardButton": {
     "message": "Prikaži nadzorno ploščo",
-    "description": "Firefox\/Fennec-specific: Show Dashboard"
+    "description": "Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
     "message": "Prikaži dnevnik",
-    "description": "Firefox\/Fennec-specific: Show Logger"
+    "description": "Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
     "message": "izklop",
@@ -881,7 +913,7 @@
   },
   "docblockedNoParamsPrompt": {
     "message": "brez parametrov",
-    "description": "label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
+    "description": "label to be used for the parameter-less URL: https://cloud.githubusercontent.com/assets/585534/9832014/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {
     "message": "Najden v:",
@@ -962,6 +994,14 @@
   "genericCopyToClipboard": {
     "message": "Kopiraj v odložišče",
     "description": "Label for buttons used to copy something to the clipboard"
+  },
+  "toggleBlockingProfile": {
+    "message": "Toggle blocking profile",
+    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  },
+  "relaxBlockingMode": {
+    "message": "Relax blocking mode",
+    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "dummy": {
     "message": "This entry must be the last one",

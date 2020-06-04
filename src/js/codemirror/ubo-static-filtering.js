@@ -24,76 +24,114 @@
 'use strict';
 
 CodeMirror.defineMode("ubo-static-filtering", function() {
-    const reDirective = /^\s*!#(?:if|endif)\b/;
+    const reDirective = /^\s*!#(?:if|endif|include)\b/;
     const reComment1 = /^\s*!/;
     const reComment2 = /^\s*#/;
-    const reExt = /^(\s*[^#]*)(#@?(?:\$\??|\?)?#)(.+)$/;
-    const reNet = /^(.*?)(?:(\$)([^$]+)?)?$/;
-    const reNetAllow = /^\s*@@/;
+    const reExt = /(#@?(?:\$\??|\?)?#)(?!##)/;
+    const reNet = /^\s*(?:@@)?.*(?:(\$)(?:[^$]+)?)?$/;
     let lineStyle = null;
-    let lineMatches = null;
+    let anchorOptPos = null;
+    
+    const lines = [];
+    let iLine = 0;
 
-    const lineStyles = new Map([
-        [ 'staticext',      [ '', 'staticOpt', '' ] ],
-        [ 'staticnetAllow', [ '', 'staticOpt', '' ] ],
-        [ 'staticnetBlock', [ '', 'staticOpt', '' ] ],
-    ]);
+    const lineFromLineBuffer = function() {
+        return lines.length === 1
+            ? lines[0]
+            : lines.filter(a => a.replace(/^\s*|\s+\\$/g, '')).join('');
+    };
 
-    const styleFromStream = function(stream) {
-        for ( let i = 1, l = 0; i < lineMatches.length; i++ ) {
-            if ( typeof lineMatches[i] !== 'string' ) { continue; }
-            l += lineMatches[i].length;
-            if ( stream.pos < l ) {
-                stream.pos = l;
-                let style = lineStyle;
-                const xstyle = lineStyles.get(style)[i-1];
-                if ( xstyle !== '' ) { style += ' ' + xstyle; }
-                return style;
+    const parseExtFilter = function() {
+        lineStyle = 'staticext';
+        for ( let i = 0; i < lines.length; i++ ) {
+            const match = reExt.exec(lines[i]);
+            if ( match === null ) { continue; }
+            anchorOptPos = { y: i, x: match.index, l: match[1].length };
+            break;
+        }
+    };
+
+    const parseNetFilter = function() {
+        lineStyle = lineFromLineBuffer().startsWith('@@')
+            ? 'staticnetAllow'
+            : 'staticnetBlock';
+        let i = lines.length;
+        while ( i-- ) {
+            const pos = lines[i].lastIndexOf('$');
+            if ( pos === -1 ) { continue; }
+            anchorOptPos = { y: i, x: pos, l: 1 };
+            break;
+        }
+    };
+
+    const highlight = function(stream) {
+        if ( anchorOptPos !== null && iLine === anchorOptPos.y ) {
+            if ( stream.pos === anchorOptPos.x ) {
+                stream.pos += anchorOptPos.l;
+                return `${lineStyle} staticOpt`;
+            }
+            if ( stream.pos < anchorOptPos.x ) {
+                stream.pos = anchorOptPos.x;
+                return lineStyle;
             }
         }
         stream.skipToEnd();
-        return '';
+        return lineStyle;
+    };
+
+    const parseMultiLine = function() {
+        anchorOptPos = null;
+        const line = lineFromLineBuffer();
+        if ( reDirective.test(line) ) {
+            lineStyle = 'directive';
+            return;
+        }
+        if ( reComment1.test(line) ) {
+            lineStyle = 'comment';
+            return;
+        }
+        if ( line.indexOf('#') !== -1 ) {
+            if ( reExt.test(line) ) {
+                return parseExtFilter();
+            }
+            if ( reComment2.test(line) ) {
+                lineStyle = 'comment';
+                return;
+            }
+        }
+        if ( reNet.test(line) ) {
+            return parseNetFilter();
+        }
+        lineStyle = null;
     };
 
     return {
+        startState: function() {
+        },
         token: function(stream) {
-            if ( stream.sol() ) {
-                lineStyle = null;
-                lineMatches = null;
-            } else if ( lineStyle !== null ) {
-                return styleFromStream(stream);
+            if ( iLine === lines.length || stream.string !== lines[iLine] ) {
+                iLine = 0;
             }
-            if ( reDirective.test(stream.string) ) {
-                stream.skipToEnd();
-                return 'directive';
-            }
-            if ( reComment1.test(stream.string) ) {
-                stream.skipToEnd();
-                return 'comment';
-            }
-            if ( stream.string.indexOf('#') !== -1 ) {
-                lineMatches = reExt.exec(stream.string);
-                if (
-                    lineMatches !== null &&
-                    lineMatches[3].startsWith('##') === false
-                ) {
-                    lineStyle = 'staticext';
-                    return styleFromStream(stream);
+            if ( iLine === 0 ) {
+                if ( lines.length > 1 ) {
+                    lines.length = 1;
                 }
-                if ( reComment2.test(stream.string) ) {
-                    stream.skipToEnd();
-                    return 'comment';
+                let line = stream.string;
+                lines[0] = line;
+                if ( line.endsWith(' \\') ) {
+                    do {
+                        line = stream.lookAhead(lines.length);
+                        if ( line.startsWith('    ') === false ) { break; }
+                        lines.push(line);
+                    } while ( line.endsWith(' \\') );
                 }
+                parseMultiLine();
             }
-            lineMatches = reNet.exec(stream.string);
-            if ( lineMatches !== null ) {
-                lineStyle = reNetAllow.test(stream.string) ?
-                    'staticnetAllow' :
-                    'staticnetBlock';
-                return styleFromStream(stream);
+            const style = highlight(stream);
+            if ( stream.eol() ) {
+                iLine += 1;
             }
-            stream.skipToEnd();
-            return null;
-        }
+            return style;
+        },
     };
 });

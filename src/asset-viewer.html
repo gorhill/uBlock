@@ -13,22 +13,18 @@
 body {
     border: 0;
     margin: 0;
+    overflow: hidden;
     padding: 0;
     }
 #content {
     height: 100vh;
     width: 100vw;
     }
-
-/* https://github.com/uBlockOrigin/uBlock-issues/issues/292 */
-.CodeMirror-wrap pre {
-    word-break: break-all;
-    }
 </style>
 </head>
 <body>
 
-<div id="content" class="codeMirrorContainer"></div>
+<div id="content" class="codeMirrorContainer codeMirrorBreakAll"></div>
 
 <script src="lib/codemirror/lib/codemirror.js"></script>
 <script src="lib/codemirror/addon/display/panel.js"></script>

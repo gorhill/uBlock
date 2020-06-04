@@ -25,14 +25,16 @@
 
 /******************************************************************************/
 
-(function() {
+(( ) => {
 
 /******************************************************************************/
 
-let popupFontSize = vAPI.localStorage.getItem('popupFontSize');
-if ( typeof popupFontSize === 'string' && popupFontSize !== 'unset' ) {
-    document.body.style.setProperty('font-size', popupFontSize);
-}
+let popupFontSize;
+vAPI.localStorage.getItemAsync('popupFontSize').then(value => {
+    if ( typeof value !== 'string' || value === 'unset' ) { return; }
+    document.body.style.setProperty('font-size', value);
+    popupFontSize = value;
+});
 
 // https://github.com/gorhill/uBlock/issues/3032
 // Popup panel can be in one of two modes:
@@ -48,13 +50,15 @@ if (
 }
 
 // https://github.com/chrisaljoudi/uBlock/issues/996
-// Experimental: mitigate glitchy popup UI: immediately set the firewall
-// pane visibility to its last known state. By default the pane is hidden.
-let dfPaneVisibleStored =
-    vAPI.localStorage.getItem('popupFirewallPane') === 'true';
-if ( dfPaneVisibleStored ) {
-    document.getElementById('panes').classList.add('dfEnabled');
-}
+//   Experimental: mitigate glitchy popup UI: immediately set the firewall
+//   pane visibility to its last known state. By default the pane is hidden.
+let dfPaneVisibleStored;
+vAPI.localStorage.getItemAsync('popupFirewallPane').then(value => {
+    dfPaneVisibleStored = value === true || value === 'true';
+    if ( dfPaneVisibleStored ) {
+        document.getElementById('panes').classList.add('dfEnabled');
+    }
+});
 
 /******************************************************************************/
 
@@ -117,6 +121,7 @@ const cachePopupData = function(data) {
         return popupData;
     }
     popupData = data;
+    popupData.cnameMap = new Map(popupData.cnameMap);
     scopeToSrcHostnameMap['.'] = popupData.pageHostname || '';
     const hostnameDict = popupData.hostnameDict;
     if ( typeof hostnameDict !== 'object' ) {
@@ -244,12 +249,12 @@ const updateFirewallCell = function(scope, des, type, rule) {
     if ( hnDetails.allowCount !== 0 ) {
         cell.setAttribute('data-acount', Math.min(Math.ceil(Math.log(hnDetails.allowCount + 1) / Math.LN10), 3));
     } else {
-        cell.removeAttribute('data-acount');
+        cell.setAttribute('data-acount', '0');
     }
     if ( hnDetails.blockCount !== 0 ) {
         cell.setAttribute('data-bcount', Math.min(Math.ceil(Math.log(hnDetails.blockCount + 1) / Math.LN10), 3));
     } else {
-        cell.removeAttribute('data-bcount');
+        cell.setAttribute('data-bcount', '0');
     }
 
     if ( hnDetails.domain !== des ) {
@@ -260,12 +265,12 @@ const updateFirewallCell = function(scope, des, type, rule) {
     if ( hnDetails.totalAllowCount !== 0 ) {
         cell.setAttribute('data-acount', Math.min(Math.ceil(Math.log(hnDetails.totalAllowCount + 1) / Math.LN10), 3));
     } else {
-        cell.removeAttribute('data-acount');
+        cell.setAttribute('data-acount', '0');
     }
     if ( hnDetails.totalBlockCount !== 0 ) {
         cell.setAttribute('data-bcount', Math.min(Math.ceil(Math.log(hnDetails.totalBlockCount + 1) / Math.LN10), 3));
     } else {
-        cell.removeAttribute('data-bcount');
+        cell.setAttribute('data-bcount', '0');
     }
 };
 
@@ -302,9 +307,9 @@ const buildAllFirewallRows = function() {
     dfHotspots.detach();
 
     // Update incrementally: reuse existing rows if possible.
-    let rowContainer = document.getElementById('firewallContainer');
-    let toAppend = document.createDocumentFragment();
-    let rowTemplate = document.querySelector('#templates > div:nth-of-type(1)');
+    const rowContainer = document.getElementById('firewallContainer');
+    const toAppend = document.createDocumentFragment();
+    const rowTemplate = document.querySelector('#templates > div:nth-of-type(1)');
     let row = rowContainer.querySelector('div:nth-of-type(7) + div');
 
     for ( const des of allHostnameRows ) {
@@ -321,22 +326,30 @@ const buildAllFirewallRows = function() {
         const isPunycoded = prettyDomainName !== des;
 
         const span = row.querySelector('span:first-of-type');
-        span.classList.toggle(
-            'isIDN',
-            isPunycoded &&
-                reCyrillicAmbiguous.test(prettyDomainName) === true &&
-                reCyrillicNonAmbiguous.test(prettyDomainName) === false
-        );
         span.querySelector('span').textContent = prettyDomainName;
-        span.title = isDomain && isPunycoded ? des : '';
 
         const classList = row.classList;
+
+        let desExtra = '';
+        if ( classList.toggle('isCname', popupData.cnameMap.has(des)) ) {
+            desExtra = punycode.toUnicode(popupData.cnameMap.get(des));
+        } else if (
+            isDomain && isPunycoded &&
+            reCyrillicAmbiguous.test(prettyDomainName) === true &&
+            reCyrillicNonAmbiguous.test(prettyDomainName) === false
+        ) {
+            desExtra = des;
+        }
+        span.querySelector('sub').textContent = desExtra;
+
+        classList.toggle('isRootContext', des === popupData.pageHostname);
         classList.toggle('isDomain', isDomain);
         classList.toggle('isSubDomain', !isDomain);
         classList.toggle('allowed', hnDetails.allowCount !== 0);
         classList.toggle('blocked', hnDetails.blockCount !== 0);
         classList.toggle('totalAllowed', hnDetails.totalAllowCount !== 0);
         classList.toggle('totalBlocked', hnDetails.totalBlockCount !== 0);
+        classList.toggle('expandException', expandExceptions.has(hnDetails.domain));
 
         row = row.nextElementSibling;
     }
@@ -445,7 +458,7 @@ const renderPopup = function() {
         popupData.pageURL === '' || popupData.netFilteringSwitch !== true
     );
 
-    let canElementPicker = popupData.canElementPicker === true &&
+    const canElementPicker = popupData.canElementPicker === true &&
                            popupData.netFilteringSwitch === true;
     uDom.nodeFromId('gotoPick').classList.toggle('enabled', canElementPicker);
     uDom.nodeFromId('gotoZap').classList.toggle('enabled', canElementPicker);
@@ -510,15 +523,12 @@ const renderPopup = function() {
         dfPaneVisible === true
     );
 
-    elem = uDom.nodeFromId('firewallContainer');
-    elem.classList.toggle(
-        'minimized',
-        popupData.firewallPaneMinimized === true
-    );
-    elem.classList.toggle(
+    uDom.nodeFromId('firewallContainer').classList.toggle(
         'colorBlind',
         popupData.colorBlindFriendly === true
     );
+
+    setGlobalExpand(popupData.firewallPaneMinimized === false, true);
 
     // Build dynamic filtering pane only if in use
     if ( dfPaneVisible ) {
@@ -668,49 +678,66 @@ let renderOnce = function() {
 
 /******************************************************************************/
 
-const renderPopupLazy = function() {
-    messaging.send(
-        'popupPanel',
-        { what: 'getPopupLazyData', tabId: popupData.tabId }
-    );
-};
+const renderPopupLazy = (( ) => {
+    let mustRenderCosmeticFilteringBadge = true;
 
-const onPopupMessage = function(data) {
-    if ( !data ) { return; }
-    if ( data.tabId !== popupData.tabId ) { return; }
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/756
+    //   Launch potentially expensive hidden elements-counting scriptlet on
+    //   demand only.
+    {
+        const sw = uDom.nodeFromId('no-cosmetic-filtering');
+        const badge = sw.querySelector(':scope > span.fa-icon-badge');
+        badge.textContent = '\u22EF';
 
-    switch ( data.what ) {
-    case 'domSurveyFinalReport':
-        let count = data.affectedElementCount || '';
-        uDom.nodeFromSelector('#no-cosmetic-filtering > span.fa-icon-badge')
-            .textContent = typeof count === 'number'
-                ? Math.min(count, 99).toLocaleString()
-                : count;
-        count = data.scriptCount || '';
-        uDom.nodeFromSelector('#no-scripting > span.fa-icon-badge')
-            .textContent = typeof count === 'number'
-                ? Math.min(count, 99).toLocaleString()
-                : count;
-        break;
+        const render = ( ) => {
+            if ( mustRenderCosmeticFilteringBadge === false ) { return; }
+            mustRenderCosmeticFilteringBadge = false;
+            if ( sw.classList.contains('hnSwitchBusy') ) { return; }
+            sw.classList.add('hnSwitchBusy');
+            messaging.send('popupPanel', {
+                what: 'getHiddenElementCount',
+                tabId: popupData.tabId,
+            }).then(count => {
+                let text;
+                if ( (count || 0) === 0 ) {
+                    text = '';
+                } else if ( count === -1 ) {
+                    text = '?';
+                } else {
+                    text = Math.min(count, 99).toLocaleString();
+                }
+                badge.textContent = text;
+                sw.classList.remove('hnSwitchBusy');
+            });
+        };
+
+        sw.addEventListener('mouseenter', render, { passive: true });
     }
-};
 
-messaging.addChannelListener('popup', onPopupMessage);
+    return async function() {
+        const count = await messaging.send('popupPanel', {
+            what: 'getScriptCount',
+            tabId: popupData.tabId,
+        });
+        uDom.nodeFromSelector('#no-scripting > span.fa-icon-badge')
+            .textContent = (count || 0) !== 0
+                ? Math.min(count, 99).toLocaleString()
+                : '';
+        mustRenderCosmeticFilteringBadge = true;
+    };
+})();
 
 /******************************************************************************/
 
 const toggleNetFilteringSwitch = function(ev) {
     if ( !popupData || !popupData.pageURL ) { return; }
-    messaging.send(
-        'popupPanel',
-        {
-            what: 'toggleNetFiltering',
-            url: popupData.pageURL,
-            scope: ev.ctrlKey || ev.metaKey ? 'page' : '',
-            state: !uDom('body').toggleClass('off').hasClass('off'),
-            tabId: popupData.tabId
-        }
-    );
+    messaging.send('popupPanel', {
+        what: 'toggleNetFiltering',
+        url: popupData.pageURL,
+        scope: ev.ctrlKey || ev.metaKey ? 'page' : '',
+        state: !uDom('body').toggleClass('off').hasClass('off'),
+        tabId: popupData.tabId,
+    });
     renderTooltips('#switch');
     hashFromPopupData();
 };
@@ -718,14 +745,11 @@ const toggleNetFilteringSwitch = function(ev) {
 /******************************************************************************/
 
 const gotoZap = function() {
-    messaging.send(
-        'popupPanel',
-        {
-            what: 'launchElementPicker',
-            tabId: popupData.tabId,
-            zap: true
-        }
-    );
+    messaging.send('popupPanel', {
+        what: 'launchElementPicker',
+        tabId: popupData.tabId,
+        zap: true,
+    });
 
     vAPI.closePopup();
 };
@@ -733,13 +757,10 @@ const gotoZap = function() {
 /******************************************************************************/
 
 const gotoPick = function() {
-    messaging.send(
-        'popupPanel',
-        {
-            what: 'launchElementPicker',
-            tabId: popupData.tabId
-        }
-    );
+    messaging.send('popupPanel', {
+        what: 'launchElementPicker',
+        tabId: popupData.tabId,
+    });
 
     vAPI.closePopup();
 };
@@ -759,18 +780,15 @@ const gotoURL = function(ev) {
         url += '+' + popupData.tabId;
     }
 
-    messaging.send(
-        'popupPanel',
-        {
-            what: 'gotoURL',
-            details: {
-                url: url,
-                select: true,
-                index: -1,
-                shiftKey: ev.shiftKey
-            }
-        }
-    );
+    messaging.send('popupPanel', {
+        what: 'gotoURL',
+        details: {
+            url: url,
+            select: true,
+            index: -1,
+            shiftKey: ev.shiftKey
+        },
+    });
 
     vAPI.closePopup();
 };
@@ -780,14 +798,11 @@ const gotoURL = function(ev) {
 const toggleFirewallPane = function() {
     popupData.dfEnabled = !popupData.dfEnabled;
 
-    messaging.send(
-        'popupPanel',
-        {
-            what: 'userSettings',
-            name: 'dynamicFilteringEnabled',
-            value: popupData.dfEnabled
-        }
-    );
+    messaging.send('popupPanel', {
+        what: 'userSettings',
+        name: 'dynamicFilteringEnabled',
+        value: popupData.dfEnabled,
+    });
 
     // https://github.com/chrisaljoudi/uBlock/issues/996
     // Remember the last state of the firewall pane. This allows to
@@ -817,7 +832,7 @@ const mouseleaveCellHandler = function() {
 
 /******************************************************************************/
 
-const setFirewallRule = function(src, des, type, action, persist) {
+const setFirewallRule = async function(src, des, type, action, persist) {
     // This can happen on pages where uBlock does not work
     if (
         typeof popupData.pageHostname !== 'string' ||
@@ -826,24 +841,20 @@ const setFirewallRule = function(src, des, type, action, persist) {
         return;
     }
 
-    messaging.send(
-        'popupPanel',
-        {
-            what: 'toggleFirewallRule',
-            tabId: popupData.tabId,
-            pageHostname: popupData.pageHostname,
-            srcHostname: src,
-            desHostname: des,
-            requestType: type,
-            action: action,
-            persist: persist
-        },
-        response => {
-            cachePopupData(response);
-            updateAllFirewallCells();
-            hashFromPopupData();
-        }
-    );
+    const response = await messaging.send('popupPanel', {
+        what: 'toggleFirewallRule',
+        tabId: popupData.tabId,
+        pageHostname: popupData.pageHostname,
+        srcHostname: src,
+        desHostname: des,
+        requestType: type,
+        action: action,
+        persist: persist,
+    });
+
+    cachePopupData(response);
+    updateAllFirewallCells();
+    hashFromPopupData();
 };
 
 /******************************************************************************/
@@ -889,122 +900,183 @@ const setFirewallRuleHandler = function(ev) {
 /******************************************************************************/
 
 const reloadTab = function(ev) {
-    messaging.send(
-        'popupPanel',
-        {
-            what: 'reloadTab',
-            tabId: popupData.tabId,
-            select: true,
-            bypassCache: ev.ctrlKey || ev.metaKey || ev.shiftKey
-        }
-    );
+    messaging.send('popupPanel', {
+        what: 'reloadTab',
+        tabId: popupData.tabId,
+        select: vAPI.webextFlavor.soup.has('mobile'),
+        bypassCache: ev.ctrlKey || ev.metaKey || ev.shiftKey,
+    });
 
     // Polling will take care of refreshing the popup content
-
     // https://github.com/chrisaljoudi/uBlock/issues/748
-    // User forces a reload, assume the popup has to be updated regardless if
-    // there were changes or not.
+    //   User forces a reload, assume the popup has to be updated regardless
+    //   if there were changes or not.
     popupData.contentLastModified = -1;
 
     // No need to wait to remove this.
     uDom('body').toggleClass('dirty', false);
 };
 
+uDom('#refresh').on('click', reloadTab);
+
+// https://github.com/uBlockOrigin/uBlock-issues/issues/672
+document.addEventListener(
+    'keydown',
+    ev => {
+        if ( ev.code !== 'F5' ) { return; }
+        reloadTab(ev);
+        ev.preventDefault();
+        ev.stopPropagation();
+    },
+    { capture: true }
+);
+
 /******************************************************************************/
 
-const toggleMinimize = function(ev) {
+const expandExceptions = new Set();
+
+vAPI.localStorage.getItemAsync('popupExpandExceptions').then(exceptions => {
+    try {
+        if ( Array.isArray(exceptions) === false ) { return; }
+        for ( const exception of exceptions ) {
+            expandExceptions.add(exception);
+        }
+    }
+    catch(ex) {
+    }
+});
+
+const saveExpandExceptions = function() {
+    vAPI.localStorage.setItem(
+        'popupExpandExceptions',
+        Array.from(expandExceptions)
+    );
+};
+
+const setGlobalExpand = function(state, internal = false) {
+    uDom('.expandException').removeClass('expandException');
+    if ( state ) {
+        uDom('#firewallContainer').addClass('expanded');
+    } else {
+        uDom('#firewallContainer').removeClass('expanded');
+    }
+    positionRulesetTools();
+    if ( internal ) { return; }
+    popupData.firewallPaneMinimized = !state;
+    expandExceptions.clear();
+    saveExpandExceptions();
+    messaging.send('popupPanel', {
+        what: 'userSettings',
+        name: 'firewallPaneMinimized',
+        value: popupData.firewallPaneMinimized,
+    });
+};
+
+const setSpecificExpand = function(domain, state, internal = false) {
+    const unodes = uDom(`[data-des="${domain}"],[data-des$=".${domain}"]`);
+    if ( state ) {
+        unodes.addClass('expandException');
+    } else {
+        unodes.removeClass('expandException');
+    }
+    if ( internal ) { return; }
+    if ( state ) {
+        expandExceptions.add(domain);
+    } else {
+        expandExceptions.delete(domain);
+    }
+    saveExpandExceptions();
+};
+
+uDom('[data-i18n="popupAnyRulePrompt"]').on('click', ev => {
     // Special display mode: in its own tab/window, with no vertical restraint.
     // Useful to take snapshots of the whole list of domains -- example:
     //   https://github.com/gorhill/uBlock/issues/736#issuecomment-178879944
     if ( ev.shiftKey && ev.ctrlKey ) {
-        messaging.send(
-            'popupPanel',
-            {
-                what: 'gotoURL',
-                details: {
-                    url: 'popup.html?tabId=' + popupData.tabId + '&responsive=1',
-                    select: true,
-                    index: -1
-                }
-            }
-        );
+        messaging.send('popupPanel', {
+            what: 'gotoURL',
+            details: {
+                url: `popup.html?tabId=${popupData.tabId}&responsive=1`,
+                select: true,
+                index: -1,
+            },
+        });
         vAPI.closePopup();
         return;
     }
 
-    popupData.firewallPaneMinimized =
-        uDom.nodeFromId('firewallContainer').classList.toggle('minimized');
-
-    messaging.send(
-        'popupPanel',
-        {
-            what: 'userSettings',
-            name: 'firewallPaneMinimized',
-            value: popupData.firewallPaneMinimized
-        }
+    setGlobalExpand(
+        uDom('#firewallContainer').hasClass('expanded') === false
     );
-    positionRulesetTools();
-};
+});
+
+uDom('#firewallContainer').on(
+    'click', '.isDomain[data-type="*"] > span:first-of-type',
+    ev => {
+        const div = ev.target.closest('[data-des]');
+        if ( div === null ) { return; }
+        setSpecificExpand(
+            div.getAttribute('data-des'),
+            div.classList.contains('expandException') === false
+        );
+    }
+);
 
 /******************************************************************************/
 
 const saveFirewallRules = function() {
-    messaging.send(
-        'popupPanel',
-        {
-            what: 'saveFirewallRules',
-            srcHostname: popupData.pageHostname,
-            desHostnames: popupData.hostnameDict
-        }
-    );
+    messaging.send('popupPanel', {
+        what: 'saveFirewallRules',
+        srcHostname: popupData.pageHostname,
+        desHostnames: popupData.hostnameDict,
+    });
     uDom.nodeFromId('firewallContainer').classList.remove('dirty');
 };
 
 /******************************************************************************/
 
-const revertFirewallRules = function() {
-    messaging.send(
-        'popupPanel',
-        {
-            what: 'revertFirewallRules',
-            srcHostname: popupData.pageHostname,
-            desHostnames: popupData.hostnameDict,
-            tabId: popupData.tabId
-        },
-        response => {
-            cachePopupData(response);
-            updateAllFirewallCells();
-            updateHnSwitches();
-            hashFromPopupData();
-        }
-    );
+const revertFirewallRules = async function() {
     uDom.nodeFromId('firewallContainer').classList.remove('dirty');
+    const response = await messaging.send('popupPanel', {
+        what: 'revertFirewallRules',
+        srcHostname: popupData.pageHostname,
+        desHostnames: popupData.hostnameDict,
+        tabId: popupData.tabId,
+    });
+    cachePopupData(response);
+    updateAllFirewallCells();
+    updateHnSwitches();
+    hashFromPopupData();
 };
 
 /******************************************************************************/
 
-const toggleHostnameSwitch = function(ev) {
+const toggleHostnameSwitch = async function(ev) {
     const target = ev.currentTarget;
     const switchName = target.getAttribute('id');
     if ( !switchName ) { return; }
+    // For touch displays, process click only if the switch is not "busy".
+    if (
+        vAPI.webextFlavor.soup.has('mobile') &&
+        target.classList.contains('hnSwitchBusy')
+    ) {
+        return;
+    }
     target.classList.toggle('on');
-    messaging.send(
-        'popupPanel',
-        {
-            what: 'toggleHostnameSwitch',
-            name: switchName,
-            hostname: popupData.pageHostname,
-            state: target.classList.contains('on'),
-            tabId: popupData.tabId,
-            persist: popupData.dfEnabled === false || ev.ctrlKey || ev.metaKey
-        },
-        response => {
-            cachePopupData(response);
-            updateAllFirewallCells();
-            hashFromPopupData();
-        }
-    );
     renderTooltips('#' + switchName);
+
+    const response = await messaging.send('popupPanel', {
+        what: 'toggleHostnameSwitch',
+        name: switchName,
+        hostname: popupData.pageHostname,
+        state: target.classList.contains('on'),
+        tabId: popupData.tabId,
+        persist: popupData.dfEnabled === false || ev.ctrlKey || ev.metaKey,
+    });
+
+    cachePopupData(response);
+    updateAllFirewallCells();
+    hashFromPopupData();
 };
 
 /******************************************************************************/
@@ -1027,20 +1099,17 @@ const toggleHostnameSwitch = function(ev) {
 // on demand rather than forcing the main process to assume a client may need
 // it and thus having to push it all the time unconditionally.
 
-const pollForContentChange = (function() {
+const pollForContentChange = (( ) => {
     let pollTimer;
 
-    const pollCallback = function() {
+    const pollCallback = async function() {
         pollTimer = undefined;
-        messaging.send(
-            'popupPanel',
-            {
-                what: 'hasPopupContentChanged',
-                tabId: popupData.tabId,
-                contentLastModified: popupData.contentLastModified
-            },
-            queryCallback
-        );
+        const response = await messaging.send('popupPanel', {
+            what: 'hasPopupContentChanged',
+            tabId: popupData.tabId,
+            contentLastModified: popupData.contentLastModified,
+        });
+        queryCallback(response);
     };
 
     const queryCallback = function(response) {
@@ -1061,20 +1130,18 @@ const pollForContentChange = (function() {
 
 /******************************************************************************/
 
-const getPopupData = function(tabId) {
-    const onDataReceived = function(response) {
-        cachePopupData(response);
-        renderOnce();
-        renderPopup();
-        renderPopupLazy(); // low priority rendering
-        hashFromPopupData(true);
-        pollForContentChange();
-    };
-    messaging.send(
-        'popupPanel',
-        { what: 'getPopupData', tabId: tabId },
-        onDataReceived
-    );
+const getPopupData = async function(tabId) {
+    const response = await messaging.send('popupPanel', {
+        what: 'getPopupData',
+        tabId,
+    });
+
+    cachePopupData(response);
+    renderOnce();
+    renderPopup();
+    renderPopupLazy(); // low priority rendering
+    hashFromPopupData(true);
+    pollForContentChange();
 };
 
 /******************************************************************************/
@@ -1121,7 +1188,7 @@ const onHideTooltip = function() {
 // Popup DOM is assumed to be loaded at this point -- because this script
 // is loaded after everything else..
 
-(function() {
+(( ) => {
     // If there's no tab id specified in the query string,
     // it will default to current tab.
     let tabId = null;
@@ -1138,11 +1205,9 @@ uDom('#switch').on('click', toggleNetFilteringSwitch);
 uDom('#gotoZap').on('click', gotoZap);
 uDom('#gotoPick').on('click', gotoPick);
 uDom('h2').on('click', toggleFirewallPane);
-uDom('#refresh').on('click', reloadTab);
-uDom('.hnSwitch').on('click', toggleHostnameSwitch);
+uDom('.hnSwitch').on('click', ev => { toggleHostnameSwitch(ev); });
 uDom('#saveRules').on('click', saveFirewallRules);
-uDom('#revertRules').on('click', revertFirewallRules);
-uDom('[data-i18n="popupAnyRulePrompt"]').on('click', toggleMinimize);
+uDom('#revertRules').on('click', ( ) => { revertFirewallRules(); });
 
 uDom('body').on('mouseenter', '[data-tip]', onShowTooltip)
             .on('mouseleave', '[data-tip]', onHideTooltip);

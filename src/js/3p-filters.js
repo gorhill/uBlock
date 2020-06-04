@@ -34,11 +34,13 @@ const reValidExternalList = /[a-z-]+:\/\/\S*\/\S+/;
 
 let listDetails = {};
 let filteringSettingsHash = '';
-let hideUnusedSet = new Set();
+let hideUnusedSet = new Set([ '*' ]);
 
 /******************************************************************************/
 
-const onMessage = function(msg) {
+const messaging = vAPI.messaging;
+
+vAPI.broadcastListener.add(msg => {
     switch ( msg.what ) {
     case 'assetUpdated':
         updateAssetStatus(msg);
@@ -53,10 +55,7 @@ const onMessage = function(msg) {
     default:
         break;
     }
-};
-
-const messaging = vAPI.messaging;
-messaging.addChannelListener('dashboard', onMessage);
+});
 
 /******************************************************************************/
 
@@ -370,10 +369,6 @@ const renderFilterLists = function(soft) {
             let groupKey = groupKeys[i];
             let liGroup = liFromListGroup(groupKey, groups.get(groupKey));
             liGroup.setAttribute('data-groupkey', groupKey);
-            liGroup.classList.toggle(
-                'collapsed',
-                vAPI.localStorage.getItem('collapseGroup' + (i + 1)) === 'y'
-            );
             if ( liGroup.parentElement === null ) {
                 // console.log("1append", groupKey, liGroup.parentElement === null);
                 ulLists.appendChild(liGroup);
@@ -420,7 +415,11 @@ const renderFilterLists = function(soft) {
         renderWidgets();
     };
 
-    messaging.send('dashboard', { what: 'getLists' }, onListsReceived);
+    messaging.send('dashboard', {
+        what: 'getLists',
+    }).then(details => {
+        onListsReceived(details);
+    });
 };
 
 /******************************************************************************/
@@ -436,7 +435,7 @@ const renderWidgets = function() {
     );
     uDom('#buttonUpdate').toggleClass(
         'disabled',
-        document.querySelector('body:not(.updating) #lists .listEntry.obsolete > input[type="checkbox"]:checked') === null
+        document.querySelector('body:not(.updating) #lists .listEntry.obsolete:not(.toRemove) > input[type="checkbox"]:checked') === null
     );
 };
 
@@ -535,7 +534,10 @@ const onPurgeClicked = function(ev) {
 
     if ( !listKey ) { return; }
 
-    messaging.send('dashboard', { what: 'purgeCache', assetKey: listKey });
+    messaging.send('dashboard', {
+        what: 'purgeCache',
+        assetKey: listKey,
+    });
 
     // If the cached version is purged, the installed version must be assumed
     // to be obsolete.
@@ -552,17 +554,17 @@ const onPurgeClicked = function(ev) {
 
 /******************************************************************************/
 
-const selectFilterLists = function(callback) {
+const selectFilterLists = async function() {
     // Cosmetic filtering switch
     messaging.send('dashboard', {
         what: 'userSettings',
         name: 'parseAllABPHideFilters',
-        value: document.getElementById('parseCosmeticFilters').checked
+        value: document.getElementById('parseCosmeticFilters').checked,
     });
     messaging.send('dashboard', {
         what: 'userSettings',
         name: 'ignoreGenericCosmeticFilters',
-        value: document.getElementById('ignoreGenericCosmeticFilters').checked
+        value: document.getElementById('ignoreGenericCosmeticFilters').checked,
     });
 
     // Filter lists to select
@@ -587,31 +589,29 @@ const selectFilterLists = function(callback) {
     externalListsElem.value = '';
     uDom.nodeFromId('importLists').checked = false;
 
-    messaging.send(
-        'dashboard',
-        {
-            what: 'applyFilterListSelection',
-            toSelect: toSelect,
-            toImport: toImport,
-            toRemove: toRemove
-        },
-        callback
-    );
+    await messaging.send('dashboard', {
+        what: 'applyFilterListSelection',
+        toSelect: toSelect,
+        toImport: toImport,
+        toRemove: toRemove,
+    });
+
     filteringSettingsHash = hashFromCurrentFromSettings();
 };
 
 /******************************************************************************/
 
-const buttonApplyHandler = function() {
+const buttonApplyHandler = async function() {
     uDom('#buttonApply').removeClass('enabled');
-    selectFilterLists(( ) => {
+    await selectFilterLists(( ) => {
         messaging.send('adnauseam', { what: 'verifyLists' });
     });
     renderWidgets();
+    messaging.send('dashboard', { what: 'reloadAllFilters' });
 };
 /******************************************************************************/
 
-const buttonUpdateAdNauseam = function() {
+const buttonUpdateAdNauseam = async function() {
     //only update adnauseam.txt
      let adnauseamEntry = uDom(".listEntry[data-listkey='adnauseam-filters']");
      adnauseamEntry.addClass('obsolete');
@@ -622,42 +622,32 @@ const buttonUpdateAdNauseam = function() {
 };
 /******************************************************************************/
 
-const buttonUpdateHandler = function() {
-    selectFilterLists(( ) => {
-        document.body.classList.add('updating');
-        messaging.send('dashboard', { what: 'forceUpdateAssets' });
-        renderWidgets();
-    });
+const buttonUpdateHandler = async function() {
+    await selectFilterLists();
+    document.body.classList.add('updating');
     renderWidgets();
+    messaging.send('dashboard', { what: 'forceUpdateAssets' });
 };
 
 /******************************************************************************/
 
-const buttonPurgeAllHandler = function(ev) {
+const buttonPurgeAllHandler = async function(hard) {
     uDom('#buttonPurgeAll').removeClass('enabled');
-    messaging.send(
-        'dashboard',
-        {
-            what: 'purgeAllCaches',
-            hard: ev.ctrlKey && ev.shiftKey
-        },
-        ( ) => {
-            renderFilterLists(true);
-        }
-    );
+    await messaging.send('dashboard', {
+        what: 'purgeAllCaches',
+        hard,
+    });
+    renderFilterLists(true);
 };
 
 /******************************************************************************/
 
 const autoUpdateCheckboxChanged = function() {
-    messaging.send(
-        'dashboard',
-        {
-            what: 'userSettings',
-            name: 'autoUpdate',
-            value: this.checked
-        }
-    );
+    messaging.send('dashboard', {
+        what: 'userSettings',
+        name: 'autoUpdate',
+        value: this.checked,
+    });
 };
 
 /******************************************************************************/
@@ -699,7 +689,7 @@ const toggleHideUnusedLists = function(which) {
         .toggleClass('unused', mustHide);
     vAPI.localStorage.setItem(
         'hideUnusedFilterLists',
-        JSON.stringify(Array.from(hideUnusedSet))
+        Array.from(hideUnusedSet)
     );
 };
 
@@ -722,20 +712,11 @@ uDom('#lists').on('click', '.groupEntry[data-groupkey] > .geDetails', function(e
 });
 
 // Initialize from saved state.
-{
-    let aa;
-    try {
-        const json = vAPI.localStorage.getItem('hideUnusedFilterLists');
-        if ( json !== null ) {
-            aa = JSON.parse(json);
-        }
-    } catch (ex) {
+vAPI.localStorage.getItemAsync('hideUnusedFilterLists').then(value => {
+    if ( Array.isArray(value) ) {
+        hideUnusedSet = new Set(value);
     }
-    if ( Array.isArray(aa) === false ) {
-        aa = [ '*' ];
-    }
-    hideUnusedSet = new Set(aa);
-}
+});
 
 /******************************************************************************/
 
@@ -818,11 +799,12 @@ self.hasUnsavedData = function() {
 uDom('#autoUpdate').on('change', autoUpdateCheckboxChanged);
 uDom('#parseCosmeticFilters').on('change', onFilteringSettingsChanged);
 uDom('#ignoreGenericCosmeticFilters').on('change', onFilteringSettingsChanged);
-uDom('#buttonApply').on('click', buttonApplyHandler);
-uDom('#buttonUpdate').on('click', buttonUpdateHandler);
-uDom('#buttonUpdateAdNauseam').on('click', buttonUpdateAdNauseam);
-
-uDom('#buttonPurgeAll').on('click', buttonPurgeAllHandler);
+uDom('#buttonApply').on('click', ( ) => { buttonApplyHandler(); });
+uDom('#buttonUpdate').on('click', ( ) => { buttonUpdateHandler(); });
+uDom('#buttonUpdateAdNauseam').on('click', ( ) => { buttonUpdateAdNauseam(); });
+uDom('#buttonPurgeAll').on('click', ev => {
+    buttonPurgeAllHandler(ev.ctrlKey && ev.shiftKey);
+});
 uDom('#lists').on('change', '.listEntry > input', onFilteringSettingsChanged);
 uDom('#lists').on('click', '.listEntry > a.remove', onRemoveExternalList);
 uDom('#lists').on('click', 'span.cache', onPurgeClicked);

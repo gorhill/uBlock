@@ -277,7 +277,7 @@
           // else we pick the next ad needing a visit
           next = nextPending();
         }
-        visitAd(next);
+        next != undefined && visitAd(next);
       }
       else if (idleMs) {
         log('[IDLER] '+(millis() - lastUserActivity)+'ms, waiting until '+ idleMs +'ms...'); // TMP
@@ -407,7 +407,7 @@
     return false;
   };
 
-  const updateAdOnSuccess = function (xhr, ad, title) {
+  const updateAdOnSuccess = async function (xhr, ad, title) {
 
     ad = xhr.delegate;
 
@@ -421,17 +421,13 @@
       ad.resolvedTargetUrl = xhr.responseURL; // URL after redirects
       ad.visitedTs = millis(); // successful visit time
 
-      vAPI.tabs.get(null, function (tab) {
+      const tab = await vAPI.tabs.getCurrent();
 
-        if (tab && tab.id) { // do click animation
-          const tabId = tab.id;
-          µb.updateToolbarIcon(tabId, true); // click icon
-          setTimeout(function () {
-            µb.updateToolbarIcon(tabId);
-          }, 600); // back to normal icon
-        }
-        // else warn('Null tab in click animation: ', tab); // not a problem
-      });
+      if (tab && tab.id) { // do click animation
+        const tabId = tab.id;
+        µb.updateToolbarIcon(tabId, 0b0111, true); // click icon
+      }
+      // else warn('Null tab in click animation: ', tab); // not a problem
 
       vAPI.messaging.broadcast({
         what: 'adVisited',
@@ -1352,8 +1348,9 @@
     return JSON.stringify(map, null, 2);
   };
 
-  // start by grabbing user-settings, then calling initialize()
-  vAPI.storage.get(µb.userSettings, function (settings) {
+  const initUserSettings = async function () {
+    const settings = await vAPI.storage.get(µb.userSettings);
+    // start by grabbing user-settings, then calling initialize()
 
     // this for backwards compatibility only ---------------------
     const mapSz = Object.keys(settings.admap).length;
@@ -1367,10 +1364,10 @@
         storeUserData(true);
       }, 2000);
     }
-
     initialize(settings);
-  });
+  }
 
+  initUserSettings();
 
   /********************************** API *************************************/
 
@@ -1448,14 +1445,15 @@
     listEntries[path].content = content;
   }
 
-  exports.onListsLoaded = function (firstRun) {
+  exports.onListsLoaded = async function (firstRun) {
 
-    µb.staticFilteringReverseLookup.initWorker(function (entries) {
+      const entries = await µb.staticFilteringReverseLookup.initWorker();
+      listEntries = [];
+      entries.forEach((value, key) => {
+        listEntries[key] = value;
+      });
 
-      listEntries = entries;
-      //console.log('listEntries:', listEntries);
-      const keys = Object.keys(entries);
-      log("[LOAD] Compiled " + keys.length +
+      log("[LOAD] Compiled " + entries.size +
         " 3rd-party lists in " + (+new Date() - profiler) + "ms");
       listsLoaded = true;
 
@@ -1464,7 +1462,6 @@
       verifyLists();
 
       µb.adnauseam.dnt.updateFilters();
-    });
 
     if (firstRun && !isAutomated()) {
 
@@ -1760,6 +1757,8 @@ const verifyAdBlockers = exports.verifyAdBlockers = function () {
 
       modified && sendNotifications(notes);
     });
+
+    return notifications.indexOf(AdBlockerEnabled) > -1 ? [AdBlockerEnabled] : [];
   };
 
   exports.verifyAdBlockersAndDNT = function (request) {
@@ -1976,6 +1975,36 @@ const verifyList = exports.verifyList = function (note, lists) {
     return adlist(url, true).length || adlist(url).length;
   };
 
+  const  getIconState = exports.getIconState = function(state, pageDomain, isClick) {
+    const isDNT = µb.userSettings.dntDomains.contains(pageDomain);
+    let iconStatus = state ? (isDNT ? 'dnt' : 'on') : 'off'; // ADN
+
+    if (iconStatus !== 'off') {
+        iconStatus += (isClick ? 'active' : '');
+    }
+
+    //replace state with adn's own definitation
+
+    switch (iconStatus) {
+      case 'on':
+        state = 1;
+        break;
+      case 'onactive':
+        state = 2;
+        break;
+      case 'dnt':
+        state = 3;
+        break;
+      case 'dntactive':
+        state = 4;
+        break;
+      default:
+        state = 0;
+    }
+
+    return state;
+  }
+
   const clearAds = exports.clearAds = function () {
 
     const pre = adCount();
@@ -2136,7 +2165,7 @@ const verifyList = exports.verifyList = function (note, lists) {
 
   'use strict';
 
-  vAPI.messaging.listen('adnauseam', function (request, sender, callback) {
+  const onMessage = function(request, sender, callback) {
     //console.log("adnauseam.MSG: "+request.what, sender.frameId);
 
     switch (request.what) {
@@ -2165,7 +2194,12 @@ const verifyList = exports.verifyList = function (note, lists) {
 
       return vAPI.messaging.UNHANDLED;
     }
-  });
+  }
+
+  vAPI.messaging.listen({
+        name: 'adnauseam',
+        listener: onMessage
+  })
 
 })();
 

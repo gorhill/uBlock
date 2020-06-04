@@ -48,7 +48,6 @@
         for ( let i = 0, n = this._chars.length; i < n; i++ ) {
             this._validTokenChars[this._chars.charCodeAt(i)] = i + 1;
         }
-
         // Four upper bits of token hash are reserved for built-in predefined
         // token hashes, which should never end up being used when tokenizing
         // any arbitrary string.
@@ -62,10 +61,13 @@
         this._urlIn = '';
         this._urlOut = '';
         this._tokenized = false;
-        this._tokens = [ 0 ];
+        // https://www.reddit.com/r/uBlockOrigin/comments/dzw57l/
+        //   Remember: 1 token needs two slots
+        this._tokens = new Uint32Array(2064);
 
         this.knownTokens = new Uint8Array(65536);
         this.resetKnownTokens();
+        this.MAX_TOKEN_LENGTH = 7;
     }
 
     setURL(url) {
@@ -91,17 +93,24 @@
     }
 
     // Tokenize on demand.
-    getTokens() {
+    getTokens(encodeInto) {
         if ( this._tokenized ) { return this._tokens; }
-        let i = this._tokenize();
-        i = this._appendTokenAt(i, this.anyTokenHash, 0);
+        let i = this._tokenize(encodeInto);
+        this._tokens[i+0] = this.anyTokenHash;
+        this._tokens[i+1] = 0;
+        i += 2;
         if ( this._urlOut.startsWith('https://') ) {
-            i = this._appendTokenAt(i, this.anyHTTPSTokenHash, 0);
+            this._tokens[i+0] = this.anyHTTPSTokenHash;
+            this._tokens[i+1] = 0;
+            i += 2;
         } else if ( this._urlOut.startsWith('http://') ) {
-            i = this._appendTokenAt(i, this.anyHTTPTokenHash, 0);
+            this._tokens[i+0] = this.anyHTTPTokenHash;
+            this._tokens[i+1] = 0;
+            i += 2;
         }
-        i = this._appendTokenAt(i, this.noTokenHash, 0);
-        this._tokens[i] = 0;
+        this._tokens[i+0] = this.noTokenHash;
+        this._tokens[i+1] = 0;
+        this._tokens[i+2] = 0;
         this._tokenized = true;
         return this._tokens;
     }
@@ -136,34 +145,32 @@
     // https://github.com/chrisaljoudi/uBlock/issues/1118
     // We limit to a maximum number of tokens.
 
-    _appendTokenAt(i, th, ti) {
-        this._tokens[i+0] = th;
-        this._tokens[i+1] = ti;
-        return i + 2;
-    }
-
-    _tokenize() {
+    _tokenize(encodeInto) {
         const tokens = this._tokens;
         let url = this._urlOut;
         let l = url.length;
-        if ( l === 0 ) { return this.emptyTokenHash; }
+        if ( l === 0 ) { return 0; }
         if ( l > 2048 ) {
             url = url.slice(0, 2048);
             l = 2048;
         }
+        encodeInto.haystackLen = l;
         const knownTokens = this.knownTokens;
         const vtc = this._validTokenChars;
-        let i = 0, j = 0, v, n, ti, th;
+        const charCodes = encodeInto.haystack;
+        let i = 0, j = 0, n, ti, th;
         for (;;) {
             for (;;) {
                 if ( i === l ) { return j; }
-                v = vtc[url.charCodeAt(i++)];
-                if ( v !== 0 ) { break; }
+                th = vtc[(charCodes[i] = url.charCodeAt(i))];
+                i += 1;
+                if ( th !== 0 ) { break; }
             }
-            th = v; ti = i - 1; n = 1;
+            ti = i - 1; n = 1;
             for (;;) {
                 if ( i === l ) { break; }
-                v = vtc[url.charCodeAt(i++)];
+                const v = vtc[(charCodes[i] = url.charCodeAt(i))];
+                i += 1;
                 if ( v === 0 ) { break; }
                 if ( n === 7 ) { continue; }
                 th = th << 4 ^ v;
@@ -184,7 +191,7 @@
     if ( typeof count !== 'number' ) {
         return '';
     }
-    var s = count.toFixed(0);
+    let s = count.toFixed(0);
     if ( count >= 1000 ) {
         if ( count < 10000 ) {
             s = '>' + s.slice(0,1) + 'k';
@@ -206,7 +213,7 @@
 /******************************************************************************/
 
 µBlock.dateNowToSensibleString = function() {
-    var now = new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000);
+    const now = new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000);
     return now.toISOString().replace(/\.\d+Z$/, '')
                             .replace(/:/g, '.')
                             .replace('T', '_');
@@ -214,34 +221,37 @@
 
 /******************************************************************************/
 
-µBlock.LineIterator = function(text, offset) {
-    this.text = text;
-    this.textLen = this.text.length;
-    this.offset = offset || 0;
-};
-
-µBlock.LineIterator.prototype.next = function(offset) {
-    if ( offset !== undefined ) {
-        this.offset += offset;
+µBlock.LineIterator = class {
+    constructor(text, offset) {
+        this.text = text;
+        this.textLen = this.text.length;
+        this.offset = offset || 0;
     }
-    var lineEnd = this.text.indexOf('\n', this.offset);
-    if ( lineEnd === -1 ) {
-        lineEnd = this.text.indexOf('\r', this.offset);
-        if ( lineEnd === -1 ) {
-            lineEnd = this.textLen;
+    next(offset) {
+        if ( offset !== undefined ) {
+            this.offset += offset;
         }
+        let lineEnd = this.text.indexOf('\n', this.offset);
+        if ( lineEnd === -1 ) {
+            lineEnd = this.text.indexOf('\r', this.offset);
+            if ( lineEnd === -1 ) {
+                lineEnd = this.textLen;
+            }
+        }
+        const line = this.text.slice(this.offset, lineEnd);
+        this.offset = lineEnd + 1;
+        return line;
     }
-    var line = this.text.slice(this.offset, lineEnd);
-    this.offset = lineEnd + 1;
-    return line;
-};
-
-µBlock.LineIterator.prototype.charCodeAt = function(offset) {
-    return this.text.charCodeAt(this.offset + offset);
-};
-
-µBlock.LineIterator.prototype.eot = function() {
-    return this.offset >= this.textLen;
+    peek(n) {
+        const offset = this.offset;
+        return this.text.slice(offset, offset + n);
+    }
+    charCodeAt(offset) {
+        return this.text.charCodeAt(this.offset + offset);
+    }
+    eot() {
+        return this.offset >= this.textLen;
+    }
 };
 
 /******************************************************************************/
@@ -249,31 +259,30 @@
 // The field iterator is less CPU-intensive than when using native
 // String.split().
 
-µBlock.FieldIterator = function(sep) {
-    this.text = '';
-    this.sep = sep;
-    this.sepLen = sep.length;
-    this.offset = 0;
-};
-
-µBlock.FieldIterator.prototype.first = function(text) {
-    this.text = text;
-    this.offset = 0;
-    return this.next();
-};
-
-µBlock.FieldIterator.prototype.next = function() {
-    var end = this.text.indexOf(this.sep, this.offset);
-    if ( end === -1 ) {
-        end = this.text.length;
+µBlock.FieldIterator = class {
+    constructor(sep) {
+        this.text = '';
+        this.sep = sep;
+        this.sepLen = sep.length;
+        this.offset = 0;
     }
-    var field = this.text.slice(this.offset, end);
-    this.offset = end + this.sepLen;
-    return field;
-};
-
-µBlock.FieldIterator.prototype.remainder = function() {
-    return this.text.slice(this.offset);
+    first(text) {
+        this.text = text;
+        this.offset = 0;
+        return this.next();
+    }
+    next() {
+        let end = this.text.indexOf(this.sep, this.offset);
+        if ( end === -1 ) {
+            end = this.text.length;
+        }
+        const field = this.text.slice(this.offset, end);
+        this.offset = end + this.sepLen;
+        return field;
+    }
+    remainder() {
+        return this.text.slice(this.offset);
+    }
 };
 
 /******************************************************************************/
@@ -284,95 +293,98 @@
     blockStartPrefix: '#block-start-',  // ensure no special regex characters
     blockEndPrefix: '#block-end-',      // ensure no special regex characters
 
-    Writer: function() {
-        this.io = µBlock.CompiledLineIO;
-        this.blockId = undefined;
-        this.block = undefined;
-        this.stringifier = this.io.serialize;
-        this.blocks = new Map();
-        this.properties = new Map();
-    },
-
-    Reader: function(raw, blockId) {
-        this.io = µBlock.CompiledLineIO;
-        this.block = '';
-        this.len = 0;
-        this.offset = 0;
-        this.line = '';
-        this.parser = this.io.unserialize;
-        this.blocks = new Map();
-        this.properties = new Map();
-        let reBlockStart = new RegExp(
-            '^' + this.io.blockStartPrefix + '(\\d+)\\n',
-            'gm'
-        );
-        let match = reBlockStart.exec(raw);
-        while ( match !== null ) {
-            let beg = match.index + match[0].length;
-            let end = raw.indexOf(this.io.blockEndPrefix + match[1], beg);
-            this.blocks.set(parseInt(match[1], 10), raw.slice(beg, end));
-            reBlockStart.lastIndex = end;
-            match = reBlockStart.exec(raw);
+    Writer: class {
+        constructor() {
+            this.io = µBlock.CompiledLineIO;
+            this.blockId = undefined;
+            this.block = undefined;
+            this.stringifier = this.io.serialize;
+            this.blocks = new Map();
+            this.properties = new Map();
         }
-        if ( blockId !== undefined ) {
-            this.select(blockId);
+        push(args) {
+            this.block.push(this.stringifier(args));
         }
-    }
-};
-
-µBlock.CompiledLineIO.Writer.prototype = {
-    push: function(args) {
-        this.block[this.block.length] = this.stringifier(args);
-    },
-    select: function(blockId) {
-        if ( blockId === this.blockId ) { return; }
-        this.blockId = blockId;
-        this.block = this.blocks.get(blockId);
-        if ( this.block === undefined ) {
-            this.blocks.set(blockId, (this.block = []));
+        last() {
+            if ( Array.isArray(this.block) && this.block.length !== 0 ) {
+                return this.block[this.block.length - 1];
+            }
+        }
+        select(blockId) {
+            if ( blockId === this.blockId ) { return; }
+            this.blockId = blockId;
+            this.block = this.blocks.get(blockId);
+            if ( this.block === undefined ) {
+                this.blocks.set(blockId, (this.block = []));
+            }
+        }
+        toString() {
+            let result = [];
+            for ( let [ id, lines ] of this.blocks ) {
+                if ( lines.length === 0 ) { continue; }
+                result.push(
+                    this.io.blockStartPrefix + id,
+                    lines.join('\n'),
+                    this.io.blockEndPrefix + id
+                );
+            }
+            return result.join('\n');
         }
     },
-    toString: function() {
-        let result = [];
-        for ( let [ id, lines ] of this.blocks ) {
-            if ( lines.length === 0 ) { continue; }
-            result.push(
-                this.io.blockStartPrefix + id,
-                lines.join('\n'),
-                this.io.blockEndPrefix + id
-            );
-        }
-        return result.join('\n');
-    }
-};
 
-µBlock.CompiledLineIO.Reader.prototype = {
-    next: function() {
-        if ( this.offset === this.len ) {
+    Reader: class {
+        constructor(raw, blockId) {
+            this.io = µBlock.CompiledLineIO;
+            this.block = '';
+            this.len = 0;
+            this.offset = 0;
             this.line = '';
-            return false;
+            this.parser = this.io.unserialize;
+            this.blocks = new Map();
+            this.properties = new Map();
+            let reBlockStart = new RegExp(
+                '^' + this.io.blockStartPrefix + '(\\d+)\\n',
+                'gm'
+            );
+            let match = reBlockStart.exec(raw);
+            while ( match !== null ) {
+                let beg = match.index + match[0].length;
+                let end = raw.indexOf(this.io.blockEndPrefix + match[1], beg);
+                this.blocks.set(parseInt(match[1], 10), raw.slice(beg, end));
+                reBlockStart.lastIndex = end;
+                match = reBlockStart.exec(raw);
+            }
+            if ( blockId !== undefined ) {
+                this.select(blockId);
+            }
         }
-        let pos = this.block.indexOf('\n', this.offset);
-        if ( pos !== -1 ) {
-            this.line = this.block.slice(this.offset, pos);
-            this.offset = pos + 1;
-        } else {
-            this.line = this.block.slice(this.offset);
-            this.offset = this.len;
+        next() {
+            if ( this.offset === this.len ) {
+                this.line = '';
+                return false;
+            }
+            let pos = this.block.indexOf('\n', this.offset);
+            if ( pos !== -1 ) {
+                this.line = this.block.slice(this.offset, pos);
+                this.offset = pos + 1;
+            } else {
+                this.line = this.block.slice(this.offset);
+                this.offset = this.len;
+            }
+            return true;
         }
-        return true;
-    },
-    select: function(blockId) {
-        this.block = this.blocks.get(blockId) || '';
-        this.len = this.block.length;
-        this.offset = 0;
-        return this;
-    },
-    fingerprint: function() {
-        return this.line;
-    },
-    args: function() {
-        return this.parser(this.line);
+        select(blockId) {
+            this.block = this.blocks.get(blockId) || '';
+            this.len = this.block.length;
+            this.offset = 0;
+            return this;
+        }
+        fingerprint() {
+            return this.line;
+        }
+        args() {
+            return this.parser(this.line);
+        }
     }
 };
 
@@ -386,8 +398,8 @@
                 !this.userSettings.alwaysDetachLogger
             );
         }
-        details.popup = this.userSettings.alwaysDetachLogger;
-        if ( details.popup ) {
+        if ( this.userSettings.alwaysDetachLogger ) {
+            details.popup = this.hiddenSettings.loggerPopupType;
             const url = new URL(vAPI.getURL(details.url));
             url.searchParams.set('popup', '1');
             details.url = url.href;
@@ -408,16 +420,15 @@
 
 /******************************************************************************/
 
-µBlock.MRUCache = function(size) {
-    this.size = size;
-    this.array = [];
-    this.map = new Map();
-    this.resetTime = Date.now();
-};
-
-µBlock.MRUCache.prototype = {
-    add: function(key, value) {
-        var found = this.map.has(key);
+µBlock.MRUCache = class {
+    constructor(size) {
+        this.size = size;
+        this.array = [];
+        this.map = new Map();
+        this.resetTime = Date.now();
+    }
+    add(key, value) {
+        const found = this.map.has(key);
         this.map.set(key, value);
         if ( !found ) {
             if ( this.array.length === this.size ) {
@@ -425,24 +436,24 @@
             }
             this.array.unshift(key);
         }
-    },
-    remove: function(key) {
+    }
+    remove(key) {
         if ( this.map.has(key) ) {
             this.array.splice(this.array.indexOf(key), 1);
         }
-    },
-    lookup: function(key) {
-        var value = this.map.get(key);
+    }
+    lookup(key) {
+        const value = this.map.get(key);
         if ( value !== undefined && this.array[0] !== key ) {
-            var i = this.array.indexOf(key);
+            let i = this.array.indexOf(key);
             do {
                 this.array[i] = this.array[i-1];
             } while ( --i );
             this.array[0] = key;
         }
         return value;
-    },
-    reset: function() {
+    }
+    reset() {
         this.array = [];
         this.map.clear();
         this.resetTime = Date.now();
@@ -459,27 +470,27 @@
 
 /******************************************************************************/
 
-µBlock.decomposeHostname = (function() {
+µBlock.decomposeHostname = (( ) => {
     // For performance purpose, as simple tests as possible
-    let reHostnameVeryCoarse = /[g-z_-]/;
-    let reIPv4VeryCoarse = /\.\d+$/;
+    const reHostnameVeryCoarse = /[g-z_-]/;
+    const reIPv4VeryCoarse = /\.\d+$/;
 
-    let toBroaderHostname = function(hostname) {
-        let pos = hostname.indexOf('.');
+    const toBroaderHostname = function(hostname) {
+        const pos = hostname.indexOf('.');
         if ( pos !== -1 ) {
             return hostname.slice(pos + 1);
         }
         return hostname !== '*' && hostname !== '' ? '*' : '';
     };
 
-    let toBroaderIPv4Address = function(ipaddress) {
+    const toBroaderIPv4Address = function(ipaddress) {
         if ( ipaddress === '*' || ipaddress === '' ) { return ''; }
-        let pos = ipaddress.lastIndexOf('.');
+        const pos = ipaddress.lastIndexOf('.');
         if ( pos === -1 ) { return '*'; }
         return ipaddress.slice(0, pos);
     };
 
-    let toBroaderIPv6Address = function(ipaddress) {
+    const toBroaderIPv6Address = function(ipaddress) {
         return ipaddress !== '*' && ipaddress !== '' ? '*' : '';
     };
 
@@ -544,20 +555,23 @@
     }
 
     encode(arrbuf, arrlen) {
-        const inputLength = arrlen >>> 2;
+        const inputLength = (arrlen + 3) >>> 2;
         const inbuf = new Uint32Array(arrbuf, 0, inputLength);
         const outputLength = this.magic.length + 7 + inputLength * 7;
         const outbuf = new Uint8Array(outputLength);
+        // magic bytes
         let j = 0;
         for ( let i = 0; i < this.magic.length; i++ ) {
             outbuf[j++] = this.magic.charCodeAt(i);
         }
+        // array size
         let v = inputLength;
         do {
             outbuf[j++] = this.valToDigit[v & 0b111111];
             v >>>= 6;
         } while ( v !== 0 );
         outbuf[j++] = 0x20 /* ' ' */;
+        // array content
         for ( let i = 0; i < inputLength; i++ ) {
             v = inbuf[i];
             do {
@@ -589,16 +603,18 @@
             throw new Error('Invalid µBlock.base64 encoding');
         }
         const inputLength = instr.length;
+        const outputLength = this.decodeSize(instr) >> 2;
         const outbuf = arrbuf instanceof ArrayBuffer === false
-            ? new Uint32Array(this.decodeSize(instr))
+            ? new Uint32Array(outputLength)
             : new Uint32Array(arrbuf);
         let i = instr.indexOf(' ', this.magic.length) + 1;
         if ( i === -1 ) {
             throw new Error('Invalid µBlock.base64 encoding');
         }
+        // array content
         let j = 0;
         for (;;) {
-            if ( i === inputLength ) { break; }
+            if ( j === outputLength || i >= inputLength ) { break; }
             let v = 0, l = 0;
             for (;;) {
                 const c = instr.charCodeAt(i++);
@@ -607,6 +623,9 @@
                 l += 6;
             }
             outbuf[j++] = v;
+        }
+        if ( i < inputLength || j < outputLength ) {
+            throw new Error('Invalid µBlock.base64 encoding');
         }
         return outbuf;
     }
@@ -656,7 +675,7 @@
 // Rename ./tmp/requests.json.gz to something else if you no longer want
 // ./assets/requests.json in the build.
 
-µBlock.loadBenchmarkDataset = (function() {
+µBlock.loadBenchmarkDataset = (( ) => {
     let datasetPromise;
     let ttlTimer;
 
@@ -669,15 +688,19 @@
         vAPI.setTimeout(( ) => {
             ttlTimer = undefined;
             datasetPromise = undefined;
-        }, 60000);
+        }, 5 * 60 * 1000);
 
         if ( datasetPromise !== undefined ) {
             return datasetPromise;
         }
 
+        const datasetURL = µBlock.hiddenSettings.benchmarkDatasetURL;
+        if ( datasetURL === 'unset' ) {
+            console.info(`No benchmark dataset available.`);
+            return Promise.resolve();
+        }
         console.info(`Loading benchmark dataset...`);
-        const url = vAPI.getURL('/assets/requests.json');
-        datasetPromise = µBlock.assets.fetchText(url).then(details => {
+        datasetPromise = µBlock.assets.fetchText(datasetURL).then(details => {
             console.info(`Parsing benchmark dataset...`);
             const requests = [];
             const lineIter = new µBlock.LineIterator(details.content);
@@ -700,3 +723,30 @@
         return datasetPromise;
     };
 })();
+
+/******************************************************************************/
+
+µBlock.fireDOMEvent = function(name) {
+    if (
+        window instanceof Object &&
+        window.dispatchEvent instanceof Function &&
+        window.CustomEvent instanceof Function
+    ) {
+        window.dispatchEvent(new CustomEvent(name));
+    }
+};
+
+/******************************************************************************/
+
+µBlock.getMessageSenderDetails = function(sender) {
+    const r = {};
+    if ( sender instanceof Object ) {
+        r.url = sender.url;
+        r.frameId = sender.frameId;
+        const tab = sender.tab;
+        if ( tab instanceof Object ) {
+            r.tabId = tab.id;
+        }
+    }
+    return r;
+};

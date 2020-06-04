@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Procedural HTML filters</title>
+<style>
+    .filters {
+        font-family: monospace;
+        white-space: pre;
+    }
+    .tests {
+        align-items: flex-start;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .tile {
+        display: inline-flex;
+        flex-direction: column;
+        margin: 0 20px 10px 0;
+        min-width: 200px;
+    }
+    .tile div {
+        align-items: center;
+        color: white;
+        display: flex;
+        justify-content: center;
+    }
+    .tile > div {
+        height: 50px;
+        position: relative;
+    }
+    .tile > div > div {
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+    .tile > code {
+        align-self: center;
+    }
+    .pass {
+        background-color: green;
+    }
+    .pass::before {
+        content: 'pass';
+    }
+    .fail {
+        background-color: red;
+    }
+    .fail::before {
+        content: 'fail';
+    }
+    .tests a, .tests b {
+        display: none;
+    }
+    .tests a::before {
+        opacity: 0;
+    }
+    .tests b::after {
+        opacity: 0;
+    }
+</style>
+</head>
+<body>
+<h1>Procedural HTML filters</h1>
+<p><a href="./.">Back</a>
+<br><br></p>
+<h3>Filters</h3>
+<div class="filters"><noscript>Enable JavaScript to see needed filters</noscript></div>
+
+<h3>Tests</h3>
+<div id="phf" class="tests">
+
+<div id="a1" class="tile">
+    <div class="pass"><div class="fail"><a><b></b></a></div></div>
+    <code>^#phf #a1 .fail:has(b)</code>
+    </div>
+
+<div id="a2" class="tile">
+    <div class="pass"><div class="fail"><a><b></b></a></div></div>
+    <code>^#phf #a2 .fail:has(> a > b)</code>
+    </div>
+
+<div id="a3" class="tile">
+    <div class="pass"><div class="fail"><a><b></b></a></div></div>
+    <code>^#phf #a3 .fail:not(:has(c))</code>
+    </div>
+
+<div id="a4" class="tile">
+    <div class="pass"><div class="fail"><a><b>I am a needle!!!</b></a></div></div>
+    <code>^#phf #a4 .fail:has-text(needle)</code>
+    </div>
+
+<div id="a5" class="tile">
+    <div class="pass"><div class="fail"><a><b>I am a needle!!!</b></a></div></div>
+    <code>^#phf #a5 .fail:has-text(/NEEDLE/i)</code>
+    </div>
+
+<div id="a6" class="tile">
+    <div class="pass"><div class="fail"><a><b>I am a needle!!!</b></a></div></div>
+    <code>^#phf #a6 .fail:not(:has-text(haystack))</code>
+    </div>
+
+<div id="a7" class="tile">
+    <div class="pass"><div class="fail"><a><b></b></a></div></div>
+    <code>^#phf #a7 .fail > a > b:nth-ancestor(2)</code>
+    </div>
+
+<div id="a8" class="tile">
+    <div class="pass"><div class="fail"><a><b></b></a></div></div>
+    <code>^#phf #a8:xpath(.//b/../..)</code>
+    </div>
+
+<div id="a9" class="tile">
+    <div class="pass"><div class="fail"><a>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna<b>aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</b>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</a></div></div>
+    <code>^#phf #a9 .fail:min-text-length(300)</code>
+    </div>
+
+<div id="a10" class="tile">
+    <div class="pass"><a><b></b></a><div class="fail"></div></div>
+    <code>^#phf #a10 .pass > a:has(b) + .fail</code>
+    </div>
+
+<div id="a11" class="tile">
+    <div class="pass"><a><b></b></a><div class="fail"><a><b></b></a></div></div>
+    <code>^#phf #a11 .pass > a:has(b) + .fail:has(b)</code>
+    </div>
+
+<div id="a12" class="tile">
+    <div class="pass"><div class="fail"></div><a></a><b></b></div>
+    <code>^#phf #a12 .fail:has(+ a)</code>
+    </div>
+
+<div id="a13" class="tile">
+    <div class="pass"><div class="fail"></div><a><b></b></a></div>
+    <code>^#phf #a13 .fail:has(~ a:has(b))</code>
+    </div>
+
+<div id="a14" class="tile">
+    <div class="pass"><div class="fail"><a><b></b></a></div></div>
+    <code>^#phf #a14 b:upward(2)</code>
+    </div>
+
+<div id="a15" class="tile">
+    <div class="pass"><div class="fail"><a><b></b></a></div></div>
+    <code>^#phf #a15 b:upward(.fail)</code>
+    </div>
+
+</div>
+
+<script>
+    const hostname = self.location.hostname;
+    const filters = [];
+    const fragment = document.createDocumentFragment();
+    for ( const node of document.querySelectorAll('code') ) {
+        const div = document.createElement('div');
+        div.textContent = `${hostname}##${node.textContent}`;
+        fragment.appendChild(div);
+    }
+    const parent = document.querySelector('.filters');
+    while ( parent.lastElementChild !== null ) {
+        parent.removeChild(parent.lastElementChild);
+    }
+    parent.appendChild(fragment);
+</script>
+</body>
+</html>

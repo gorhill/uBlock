@@ -44,20 +44,20 @@
   optional.
 
   The static extended filtering engine also offers parsing capabilities which
-  are available to all other specialized fitlering engines. For example,
+  are available to all other specialized filtering engines. For example,
   cosmetic and html filtering can ask the extended filtering engine to
   compile/validate selectors.
 
 **/
 
-µBlock.staticExtFilteringEngine = (function() {
+µBlock.staticExtFilteringEngine = (( ) => {
     const µb = µBlock;
     const reHasUnicode = /[^\x00-\x7F]/;
     const reParseRegexLiteral = /^\/(.+)\/([imu]+)?$/;
     const emptyArray = [];
     const parsed = {
-        hostnames: [],
         exception: false,
+        hostnames: [],
         suffix: ''
     };
 
@@ -68,45 +68,51 @@
         parsed.suffix = '';
     };
 
-    const isValidCSSSelector = (function() {
-        var div = document.createElement('div'),
-            matchesFn;
-        // Keep in mind:
-        //   https://github.com/gorhill/uBlock/issues/693
-        //   https://github.com/gorhill/uBlock/issues/1955
-        if ( div.matches instanceof Function ) {
-            matchesFn = div.matches.bind(div);
-        } else if ( div.mozMatchesSelector instanceof Function ) {
-            matchesFn = div.mozMatchesSelector.bind(div);
-        } else if ( div.webkitMatchesSelector instanceof Function ) {
-            matchesFn = div.webkitMatchesSelector.bind(div);
-        } else if ( div.msMatchesSelector instanceof Function ) {
-            matchesFn = div.msMatchesSelector.bind(div);
-        } else {
-            matchesFn = div.querySelector.bind(div);
-        }
-        // https://github.com/gorhill/uBlock/issues/3111
-        //   Workaround until https://bugzilla.mozilla.org/show_bug.cgi?id=1406817
-        //   is fixed.
-        try {
-            matchesFn(':scope');
-        } catch (ex) {
-            matchesFn = div.querySelector.bind(div);
-        }
-        // Quick regex-based validation -- most cosmetic filters are of the
-        // simple form and in such case a regex is much faster.
-        var reSimple = /^[#.][\w-]+$/;
+    const cssPseudoSelector = (( ) => {
+        const rePseudo = /:(?::?after|:?before|:[a-z][a-z-]*[a-z])$/;
         return function(s) {
-            if ( reSimple.test(s) ) { return true; }
-            try {
-                matchesFn(s + ', ' + s + ':not(#foo)');
-            } catch (ex) {
-                return false;
-            }
-            return true;
+            if ( s.lastIndexOf(':') === -1 ) { return -1; }
+            const match = rePseudo.exec(s);
+            return match !== null ? match.index : -1;
         };
     })();
 
+    // Return value:
+    //   0b00 (0) = not a valid CSS selector
+    //   0b01 (1) = valid CSS selector, without pseudo-element
+    //   0b11 (3) = valid CSS selector, with pseudo element
+    const cssSelectorType = (( ) => {
+        const div = document.createElement('div');
+        // Keep in mind:
+        //   https://github.com/gorhill/uBlock/issues/693
+        //   https://github.com/gorhill/uBlock/issues/1955
+        // https://github.com/gorhill/uBlock/issues/3111
+        //   Workaround until https://bugzilla.mozilla.org/show_bug.cgi?id=1406817
+        //   is fixed.
+        let matchFn; 
+        try {
+            div.matches(':scope');
+            matchFn = div.matches.bind(div); 
+        } catch (ex) {
+            matchFn = div.querySelector.bind(div);
+        }
+        // Quick regex-based validation -- most cosmetic filters are of the
+        // simple form and in such case a regex is much faster.
+        const reSimple = /^[#.][A-Za-z_][\w-]*$/;
+        return s => {
+            if ( reSimple.test(s) ) { return 1; }
+            const pos = cssPseudoSelector(s);
+            if ( pos !== -1 ) {
+                return cssSelectorType(s.slice(0, pos)) === 1 ? 3 : 0;
+            }
+            try {
+                matchFn(`${s}, ${s}:not(#foo)`);
+            } catch (ex) {
+                return 0;
+            }
+            return 1;
+        };
+    })();
 
     const isBadRegex = function(s) {
         try {
@@ -123,12 +129,17 @@
         if ( matches === null ) { return ''; }
         const selector = matches[1].trim();
         const style = matches[2].trim();
+        // Special style directive `remove: true` is converted into a
+        // `:remove()` operator.
+        if ( /^\s*remove:\s*true[; ]*$/.test(style) ) {
+            return `${selector}:remove()`;
+        }
         // For some reasons, many of Adguard's plain cosmetic filters are
         // "disguised" as style-based cosmetic filters: convert such filters
         // to plain cosmetic filters.
         return /display\s*:\s*none\s*!important;?$/.test(style)
             ? selector
-            : selector + ':style(' +  style + ')';
+            : `${selector}:style(${style})`;
     };
 
     const hostnamesFromPrefix = function(s) {
@@ -152,7 +163,7 @@
         return hostnames;
     };
 
-    const compileProceduralSelector = (function() {
+    const compileProceduralSelector = (( ) => {
         const reProceduralOperator = new RegExp([
             '^(?:',
                 [
@@ -166,8 +177,13 @@
                 'matches-css',
                 'matches-css-after',
                 'matches-css-before',
+                'min-text-length',
                 'not',
                 'nth-ancestor',
+                'remove',
+                'style',
+                'upward',
+                'watch-attr',
                 'watch-attrs',
                 'xpath'
                 ].join('|'),
@@ -176,8 +192,9 @@
 
         const reEatBackslashes = /\\([()])/g;
         const reEscapeRegex = /[.*+?^${}()|[\]\\]/g;
-        const reNeedScope = /^\s*[+>~]/;
-        const reIsDanglingSelector = /(?:[+>~]\s*|\s+)$/;
+        const reNeedScope = /^\s*>/;
+        const reIsDanglingSelector = /[+>~\s]\s*$/;
+        const reIsSiblingSelector = /^\s*[+~]/;
 
         const regexToRawValue = new Map();
         let lastProceduralSelector = '',
@@ -224,11 +241,18 @@
 
         const compileConditionalSelector = function(s) {
             // https://github.com/AdguardTeam/ExtendedCss/issues/31#issuecomment-302391277
-            // Prepend `:scope ` if needed.
+            //   Prepend `:scope ` if needed.
             if ( reNeedScope.test(s) ) {
-                s = ':scope ' + s;
+                s = `:scope ${s}`;
             }
             return compile(s);
+        };
+
+        const compileInteger = function(s, min = 0, max = 0x7FFFFFFF) {
+            if ( /^\d+$/.test(s) === false ) { return; }
+            const n = parseInt(s, 10);
+            if ( n < min || n >= max ) { return; }
+            return n;
         };
 
         const compileNotSelector = function(s) {
@@ -236,23 +260,41 @@
             //   Reject instances of :not() filters for which the argument is
             //   a valid CSS selector, otherwise we would be adversely
             //   changing the behavior of CSS4's :not().
-            if ( isValidCSSSelector(s) === false ) {
+            if ( cssSelectorType(s) === 0 ) {
                 return compileConditionalSelector(s);
             }
         };
 
-        const compileNthAncestorSelector = function(s) {
-            const n = parseInt(s, 10);
-            if ( isNaN(n) === false && n >= 1 && n < 256 ) {
-                return n;
-            }
+        const compileUpwardArgument = function(s) {
+            const i = compileInteger(s, 1, 256);
+            if ( i !== undefined ) { return i; }
+            if ( cssSelectorType(s) === 1 ) { return s; }
+        };
+
+        const compileRemoveSelector = function(s) {
+            if ( s === '' ) { return s; }
         };
 
         const compileSpathExpression = function(s) {
-            if ( isValidCSSSelector('*' + s) ) {
+            if ( cssSelectorType('*' + s) === 1 ) {
                 return s;
             }
         };
+
+        const compileStyleProperties = (( ) => {
+            let div;
+            // https://github.com/uBlockOrigin/uBlock-issues/issues/668
+            return function(s) {
+                if ( /url\(|\\/i.test(s) ) { return; }
+                if ( div === undefined ) {
+                    div = document.createElement('div');
+                }
+                div.style.cssText = s;
+                if ( div.style.cssText === '' ) { return; }
+                div.style.cssText = '';
+                return s;
+            };
+        })();
 
         const compileAttrList = function(s) {
             const attrs = s.split('\s*,\s*');
@@ -279,6 +321,8 @@
             [ ':-abp-contains', ':has-text' ],
             [ ':-abp-has', ':has' ],
             [ ':contains', ':has-text' ],
+            [ ':nth-ancestor', ':upward' ],
+            [ ':watch-attrs', ':watch-attr' ],
         ]);
 
         const compileArgument = new Map([
@@ -289,11 +333,19 @@
             [ ':matches-css', compileCSSDeclaration ],
             [ ':matches-css-after', compileCSSDeclaration ],
             [ ':matches-css-before', compileCSSDeclaration ],
+            [ ':min-text-length', compileInteger ],
             [ ':not', compileNotSelector ],
-            [ ':nth-ancestor', compileNthAncestorSelector ],
+            [ ':remove', compileRemoveSelector ],
             [ ':spath', compileSpathExpression ],
-            [ ':watch-attrs', compileAttrList ],
-            [ ':xpath', compileXpathExpression ]
+            [ ':style', compileStyleProperties ],
+            [ ':upward', compileUpwardArgument ],
+            [ ':watch-attr', compileAttrList ],
+            [ ':xpath', compileXpathExpression ],
+        ]);
+
+        const actionOperators = new Set([
+            ':remove',
+            ':style',
         ]);
 
         // https://github.com/gorhill/uBlock/issues/2793#issuecomment-333269387
@@ -344,13 +396,14 @@
                 case ':if-not':
                     raw.push(`:not(${decompile(task[1])})`);
                     break;
-                case ':nth-ancestor':
-                    raw.push(`:nth-ancestor(${task[1]})`);
-                    break;
                 case ':spath':
                     raw.push(task[1]);
                     break;
-                case ':watch-attrs':
+                case ':min-text-length':
+                case ':remove':
+                case ':style':
+                case ':upward':
+                case ':watch-attr':
                 case ':xpath':
                     raw.push(`${task[0]}(${task[1]})`);
                     break;
@@ -359,13 +412,16 @@
             return raw.join('');
         };
 
-        const compile = function(raw) {
+        const compile = function(raw, root = false) {
             if ( raw === '' ) { return; }
-            let prefix = '',
-                tasks = [];
-            let i = 0,
-                n = raw.length,
-                opPrefixBeg = 0;
+
+            const tasks = [];
+            const n = raw.length;
+            let prefix = '';
+            let i = 0;
+            let opPrefixBeg = 0;
+            let action;
+
             for (;;) {
                 let c, match;
                 // Advance to next operator.
@@ -401,45 +457,97 @@
                 if ( pcnt !== 0 && c !== 0x29 ) { return; }
                 // https://github.com/uBlockOrigin/uBlock-issues/issues/341#issuecomment-447603588
                 //   Maybe that one operator is a valid CSS selector and if so,
-                //   then consider it to be part of the prefix. If there is
-                //   at least one task present, then we fail, as we do not
-                //   support suffix CSS selectors.
-                if ( isValidCSSSelector(raw.slice(opNameBeg, i)) ) { continue; }
+                //   then consider it to be part of the prefix.
+                if ( cssSelectorType(raw.slice(opNameBeg, i)) === 1 ) {
+                    continue;
+                }
                 // Extract and remember operator details.
                 let operator = raw.slice(opNameBeg, opNameEnd);
                 operator = normalizedOperators.get(operator) || operator;
-                let args = raw.slice(opNameEnd + 1, i - 1);
-                args = compileArgument.get(operator)(args);
+                // Action operator can only be used as trailing operator in the
+                // root task list.
+                // Per-operator arguments validation
+                const args = compileArgument.get(operator)(
+                    raw.slice(opNameEnd + 1, i - 1)
+                );
                 if ( args === undefined ) { return; }
                 if ( opPrefixBeg === 0 ) {
                     prefix = raw.slice(0, opNameBeg);
                 } else if ( opNameBeg !== opPrefixBeg ) {
+                    if ( action !== undefined ) { return; }
                     const spath = compileSpathExpression(
                         raw.slice(opPrefixBeg, opNameBeg)
                     );
                     if ( spath === undefined ) { return; }
                     tasks.push([ ':spath', spath ]);
                 }
+                if ( action !== undefined ) { return; }
                 tasks.push([ operator, args ]);
+                if ( actionOperators.has(operator) ) {
+                    if ( root === false ) { return; }
+                    action = operator.slice(1);
+                }
                 opPrefixBeg = i;
                 if ( i === n ) { break; }
             }
+
             // No task found: then we have a CSS selector.
             // At least one task found: nothing should be left to parse.
             if ( tasks.length === 0 ) {
                 prefix = raw;
-                tasks = undefined;
             } else if ( opPrefixBeg < n ) {
+                if ( action !== undefined ) { return; }
                 const spath = compileSpathExpression(raw.slice(opPrefixBeg));
                 if ( spath === undefined ) { return; }
                 tasks.push([ ':spath', spath ]);
             }
+
             // https://github.com/NanoAdblocker/NanoCore/issues/1#issuecomment-354394894
+            // https://www.reddit.com/r/uBlockOrigin/comments/c6iem5/
+            //   Convert sibling-selector prefix into :spath operator, but
+            //   only if context is not the root.
             if ( prefix !== '' ) {
                 if ( reIsDanglingSelector.test(prefix) ) { prefix += '*'; }
-                if ( isValidCSSSelector(prefix) === false ) { return; }
+                if ( cssSelectorType(prefix) === 0 ) {
+                    if (
+                        root ||
+                        reIsSiblingSelector.test(prefix) === false ||
+                        compileSpathExpression(prefix) === undefined
+                    ) {
+                        return;
+                    }
+                    tasks.unshift([ ':spath', prefix ]);
+                    prefix = '';
+                }
             }
-            return { selector: prefix, tasks: tasks };
+
+            const out = { selector: prefix };
+
+            if ( tasks.length !== 0 ) {
+                out.tasks = tasks;
+            }
+
+            // Expose action to take in root descriptor.
+            //
+            // https://github.com/uBlockOrigin/uBlock-issues/issues/961
+            // https://github.com/uBlockOrigin/uBlock-issues/issues/382
+            //   For the time being, `style` action can't be used in a
+            //   procedural selector.
+            if ( action !== undefined ) {
+                if ( tasks.length > 1 && action === 'style' ) { return; }
+                out.action = action;
+            }
+
+            // Pseudo-selectors are valid only when used in a root task list.
+            if ( prefix !== '' ) {
+                const pos = cssPseudoSelector(prefix);
+                if ( pos !== -1 ) {
+                    if ( root === false ) { return; }
+                    out.pseudo = pos;
+                }
+            }
+
+            return out;
         };
 
         const entryPoint = function(raw) {
@@ -447,10 +555,9 @@
                 return lastProceduralSelectorCompiled;
             }
             lastProceduralSelector = raw;
-            let compiled = compile(raw);
+            let compiled = compile(raw, true);
             if ( compiled !== undefined ) {
                 compiled.raw = decompile(compiled);
-                compiled = JSON.stringify(compiled);
             }
             lastProceduralSelectorCompiled = compiled;
             return compiled;
@@ -487,19 +594,19 @@
     //--------------------------------------------------------------------------
 
     api.HostnameBasedDB = class {
-
         constructor(nBits, selfie = undefined) {
             this.nBits = nBits;
             this.timer = undefined;
             this.strToIdMap = new Map();
-            if ( selfie !== undefined ) {
-                this.fromSelfie(selfie);
-                return;
-            }
             this.hostnameToSlotIdMap = new Map();
+            // Array of integer pairs
             this.hostnameSlots = [];
+            // Array of strings (selectors and pseudo-selectors)
             this.strSlots = [];
             this.size = 0;
+            if ( selfie !== undefined ) {
+                this.fromSelfie(selfie);
+            }
         }
 
         store(hn, bits, s) {
@@ -514,18 +621,18 @@
                 }
             }
             const strId = iStr << this.nBits | bits;
-            const iHn = this.hostnameToSlotIdMap.get(hn);
+            let iHn = this.hostnameToSlotIdMap.get(hn);
             if ( iHn === undefined ) {
                 this.hostnameToSlotIdMap.set(hn, this.hostnameSlots.length);
-                this.hostnameSlots.push(strId);
+                this.hostnameSlots.push(strId, 0);
                 return;
             }
-            const bucket = this.hostnameSlots[iHn];
-            if ( Array.isArray(bucket) ) {
-                bucket.push(strId);
-            } else {
-                this.hostnameSlots[iHn] = [ bucket, strId ];
+            // Add as last item.
+            while ( this.hostnameSlots[iHn+1] !== 0 ) {
+                iHn = this.hostnameSlots[iHn+1];
             }
+            this.hostnameSlots[iHn+1] = this.hostnameSlots.length;
+            this.hostnameSlots.push(strId, 0);
         }
 
         clear() {
@@ -536,8 +643,8 @@
             this.size = 0;
         }
 
-        collectGarbage(async = false) {
-            if ( async === false ) {
+        collectGarbage(later = false) {
+            if ( later === false ) {
                 if ( this.timer !== undefined ) {
                     self.cancelIdleCallback(this.timer);
                     this.timer = undefined;
@@ -555,23 +662,33 @@
             );
         }
 
-        retrieve(hostname, out) {
+        // modifiers = 1: return only specific items
+        // modifiers = 2: return only generic items
+        //
+        retrieve(hostname, out, modifiers = 0) {
+            if ( modifiers === 2 ) {
+                hostname = '';
+            }
             const mask = out.length - 1; // out.length must be power of two
             for (;;) {
-                const filterId = this.hostnameToSlotIdMap.get(hostname);
-                if ( filterId !== undefined ) {
-                    const bucket = this.hostnameSlots[filterId];
-                    if ( Array.isArray(bucket) ) {
-                        for ( const id of bucket ) {
-                            out[id & mask].add(this.strSlots[id >>> this.nBits]);
-                        }
-                    } else {
-                        out[bucket & mask].add(this.strSlots[bucket >>> this.nBits]);
-                    }
+                let iHn = this.hostnameToSlotIdMap.get(hostname);
+                if ( iHn !== undefined ) {
+                    do {
+                        const strId = this.hostnameSlots[iHn+0];
+                        out[strId & mask].add(
+                            this.strSlots[strId >>> this.nBits]
+                        );
+                        iHn = this.hostnameSlots[iHn+1];
+                    } while ( iHn !== 0 );
                 }
                 if ( hostname === '' ) { break; }
                 const pos = hostname.indexOf('.');
-                hostname = pos !== -1 ? hostname.slice(pos + 1) : '';
+                if ( pos === -1 ) {
+                    if ( modifiers === 1 ) { break; }
+                    hostname = '';
+                } else {
+                    hostname = hostname.slice(pos + 1);
+                }
             }
         }
 
@@ -589,6 +706,50 @@
             this.hostnameSlots = selfie.hostnameSlots;
             this.strSlots = selfie.strSlots;
             this.size = selfie.size;
+        }
+    };
+
+    api.SessionDB = class {
+        constructor() {
+            this.db = new Map();
+        }
+        compile(s) {
+            return s;
+        }
+        add(bits, s) {
+            const bucket = this.db.get(bits);
+            if ( bucket === undefined ) {
+                this.db.set(bits, new Set([ s ]));
+            } else {
+                bucket.add(s);
+            }
+        }
+        remove(bits, s) {
+            const bucket = this.db.get(bits);
+            if ( bucket === undefined ) { return; }
+            bucket.delete(s);
+            if ( bucket.size !== 0 ) { return; }
+            this.db.delete(bits);
+        }
+        retrieve(out) {
+            const mask = out.length - 1;
+            for ( const [ bits, bucket ] of this.db ) {
+                const i = bits & mask;
+                if ( out[i] instanceof Object === false ) { continue; }
+                for ( const s of bucket ) {
+                    out[i].add(s);
+                }
+            }
+        }
+        has(bits, s) {
+            const selectors = this.db.get(bits);
+            return selectors !== undefined && selectors.has(s);
+        }
+        clear() {
+            this.db.clear();
+        }
+        get isNotEmpty() {
+            return this.db.size !== 0;
         }
     };
 
@@ -625,13 +786,9 @@
     // https://github.com/uBlockOrigin/uBlock-issues/issues/89
     //   Do not discard unknown pseudo-elements.
 
-    api.compileSelector = (function() {
-        const reAfterBeforeSelector = /^(.+?)(::?after|::?before|::[a-z-]+)$/;
-        const reStyleSelector = /^(.+?):style\((.+?)\)$/;
-        const reStyleBad = /url\(/;
+    api.compileSelector = (( ) => {
         const reExtendedSyntax = /\[-(?:abp|ext)-[a-z-]+=(['"])(?:.+?)(?:\1)\]/;
         const reExtendedSyntaxParser = /\[-(?:abp|ext)-([a-z-]+)=(['"])(.+?)\2\]/;
-        const div = document.createElement('div');
 
         const normalizedExtendedSyntaxOperators = new Map([
             [ 'contains', ':has-text' ],
@@ -641,26 +798,16 @@
             [ 'matches-css-before', ':matches-css-before' ],
         ]);
 
-        const isValidStyleProperty = function(cssText) {
-            if ( reStyleBad.test(cssText) ) { return false; }
-            div.style.cssText = cssText;
-            if ( div.style.cssText === '' ) { return false; }
-            div.style.cssText = '';
-            return true;
-        };
-
         const entryPoint = function(raw) {
-            entryPoint.pseudoclass = false;
+            entryPoint.pseudoclass = -1;
 
             const extendedSyntax = reExtendedSyntax.test(raw);
-            if ( isValidCSSSelector(raw) && extendedSyntax === false ) {
+            if ( cssSelectorType(raw) === 1 && extendedSyntax === false ) {
                 return raw;
             }
 
             // We  rarely reach this point -- majority of selectors are plain
             // CSS selectors.
-
-            let matches;
 
             // Supported Adguard/ABP advanced selector syntax: will translate
             // into uBO's syntax before further processing.
@@ -670,6 +817,7 @@
             // favor of the procedural one (i.e. `:operator(...)`).
             // See https://issues.adblockplus.org/ticket/5287
             if ( extendedSyntax ) {
+                let matches;
                 while ( (matches = reExtendedSyntaxParser.exec(raw)) !== null ) {
                     const operator = normalizedExtendedSyntaxOperators.get(matches[1]);
                     if ( operator === undefined ) { return; }
@@ -680,42 +828,18 @@
                 return entryPoint(raw);
             }
 
-            let selector = raw, pseudoclass, style;
-
-            // `:style` selector?
-            if ( (matches = reStyleSelector.exec(selector)) !== null ) {
-                selector = matches[1];
-                style = matches[2];
-            }
-
-            // https://github.com/gorhill/uBlock/issues/2448
-            // :after- or :before-based selector?
-            if ( (matches = reAfterBeforeSelector.exec(selector)) ) {
-                selector = matches[1];
-                pseudoclass = matches[2];
-            }
-
-            if ( style !== undefined || pseudoclass !== undefined ) {
-                if ( isValidCSSSelector(selector) === false ) { return; }
-                if ( pseudoclass !== undefined ) {
-                    selector += pseudoclass;
-                }
-                if ( style !== undefined ) {
-                    if ( isValidStyleProperty(style) === false ) { return; }
-                    return JSON.stringify({ raw, style: [ selector, style ] });
-                }
-                entryPoint.pseudoclass = true;
-                return JSON.stringify({ raw, pseudoclass: true });
-            }
-
             // Procedural selector?
-            let compiled;
-            if ( (compiled = compileProceduralSelector(raw)) ) {
-                return compiled;
+            const compiled = compileProceduralSelector(raw);
+            if ( compiled === undefined ) { return; }
+
+            if ( compiled.pseudo !== undefined ) {
+                entryPoint.pseudoclass = compiled.pseudo;
             }
+
+            return JSON.stringify(compiled);
         };
 
-        entryPoint.pseudoclass = false;
+        entryPoint.pseudoclass = -1;
 
         return entryPoint;
     })();
@@ -792,7 +916,7 @@
             }
         }
 
-        let c0 = suffix.charCodeAt(0);
+        const c0 = suffix.charCodeAt(0);
 
         // New shorter syntax for scriptlet injection engine.
         if ( c0 === 0x2B /* '+' */ && suffix.startsWith('+js') ) {

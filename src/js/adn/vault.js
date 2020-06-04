@@ -55,8 +55,7 @@
   let gAds, gAdSets, gMin, gMax, gSliderRight, gSliderLeft, settings;
   let lastAdDetectedTime, waitingAds = []; // stateful
 
-  messager.addChannelListener('adnauseam', function (request) {
-
+  vAPI.broadcastListener.add(request => {
     //console.log("GOT BROADCAST", request);
     switch (request.what) {
 
@@ -118,11 +117,17 @@
     vAPI.messaging.send(
         'adnauseam', {
             what: 'verifyAdBlockers'
-        },function() {
-        if (json.notifications && json.notifications.length)
-            renderNotifications(json.notifications, 'vault');
-            adjustHeight();
-    });
+        }).then(n => {
+          vAPI.messaging.send(
+              'adnauseam', {
+                  what: 'getNotifications'
+              }).then(notifications => {
+              if (notifications && notifications.length)
+                  renderNotifications(notifications, 'vault');
+                  adjustHeight();
+            })
+        })
+
 
   };
 
@@ -1035,10 +1040,10 @@
           what: 'logAdSet',
           gid: selectedAdSet.gid,
           ids: selectedAdSet.childIds()
-        },
-        function (data) {
-          location.href = "data:text/plain," +  encodeURI(data);
-        });
+        }).then(data => {
+            location.href = "data:text/plain," +  encodeURI(data);
+        })
+
     }
   }
 
@@ -2059,7 +2064,9 @@
 
   messager.send('adnauseam', {
     what: 'adsForVault'
-  }, renderAds);
+  }).then(details => {
+      renderAds(details);
+  })
 
   $('#export').on('click', exportToFile);
   $('#import').on('click', startImportFilePicker);

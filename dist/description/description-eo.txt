@@ -1,0 +1,49 @@
+Efika blokilo: malgranda spuro je memoro kaj ĉefprocesoro, tamen povas ŝarĝi kaj efikigi milojn pli da filtriloj ol aliaj popularaj blokiloj ekzistantaj.
+
+Ilustrita superrigardo de ĝia rendimento: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+
+Uzado: La granda ŝaltilo en la ŝpruc-fenestro estas por daŭre malebligi/ebligi uBlock-on por la aktuala retejo. Ĝi aplikas nur al la aktuala retejo; ĝi ne estas universala ŝaltilo.
+
+***
+
+Fleksebla, ĝi estas pli ol "reklamo-blokilo": ĝi ankaŭ povas legi kaj krei filtrilojn el host-aj dosieroj.
+
+Rekte el la kesto, la jenaj filtriloj estas ŝarĝitaj kaj efikigitaj:
+
+- EasyList
+- Listo de Peter Lowe de reklamaj serviloj
+- EasyPrivacy
+- Domajnoj kun fiprogramaro
+
+Pliaj listoj estas elekteblaj laŭvole:
+
+- Plibonigita listo de spurado de Fanboy
+- Gastiga dosiero de Dan Pollock
+- Reklamaj kaj spuradaj serviloj de hpHosts
+- MVPS HOSTS
+- Spam404
+- Kaj multaj aliaj
+
+Kompreneble, ju pli da filtriloj efikigitaj, des pli alta la memora spuro. Tamen, eĉ post aldoni la du aldonaj listoj de Fanboy kaj la reklamaj kaj spuradaj serviloj de hpHost, uBlock ankoraŭ havas pli malaltan memoran spuron ol aliaj tre popularaj blokiloj.
+
+Aldone, atentu ke elekti iuj el tiuj listoj eble kaŭzos pli altan probablecon de rompiĝo de retejoj -- aparte tiuj listoj kiuj ĝenerale funkcias kiel host-aj dosieroj.
+
+***
+
+Sen la defaŭltaj listoj de filtriloj, ĉi tiu aldonaĵo estas senutila. Do se vi iam vere volos kontribui ion, pensu pri la homoj pene laborantaj bonteni la filtrilajn listojn kiujn vi uzas, kiuj estis disponebligitaj por ĉies uzado.
+
+***
+
+Libera.
+Malfermitkoda kun publika permesilo (GPLv3)
+Por uzantoj de uzantoj.
+
+Kontribuantoj ĉe GitHub: https://github.com/gorhill/uBlock/graphs/contributors
+Kontribuantoj ĉe Crowdin: https://crowdin.net/project/ublock
+
+***
+
+Estas sufiĉe frue versio; konsideru tion kiam vi recenzas.
+
+Ŝanĝoprotokolo de la projekto:
+https://github.com/gorhill/uBlock/releases

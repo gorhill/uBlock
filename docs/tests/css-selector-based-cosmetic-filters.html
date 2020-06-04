@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSS selector-based cosmetic filters</title>
+<style>
+    .filters {
+        font-family: monospace;
+        white-space: pre;
+    }
+    .tests {
+        align-items: flex-start;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .tile {
+        display: inline-flex;
+        flex-direction: column;
+        margin: 0 20px 10px 0;
+        min-width: 200px;
+    }
+    .tile div {
+        align-items: center;
+        color: white;
+        display: flex;
+        justify-content: center;
+    }
+    .tile > div {
+        height: 50px;
+        position: relative;
+    }
+    .tile > div > div {
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+    .tile > code {
+        align-self: center;
+    }
+    .pass {
+        background-color: green;
+    }
+    .pass::before {
+        content: 'pass';
+    }
+    .fail {
+        background-color: red;
+    }
+    .fail::before {
+        content: 'fail';
+    }
+    .tests a, .tests b {
+        display: none;
+    }
+    .tests a::before {
+        opacity: 0;
+    }
+    .tests b::after {
+        opacity: 0;
+    }
+    .fail-pseudo::before {
+        align-items: center;
+        background-color: red;
+        content: 'fail';
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+</style>
+</head>
+<body>
+<h1>CSS selector-based cosmetic filters</h1>
+<p><a href="./.">Back</a>
+<br><br></p>
+<h3>Filters</h3>
+<div class="filters"><noscript>Enable JavaScript to see needed filters</noscript></div>
+
+<h3>Tests</h3>
+<div id="ccf" class="tests">
+
+<div id="a1" class="tile">
+    <div class="pass"><div class="fail"><a><b></b></a></div></div>
+    <code class="generic">#ccf #a1 .fail</code>
+    </div>
+
+<div id="a2" class="tile">
+    <div class="pass"><div class="fail"><a><b></b></a></div></div>
+    <code class="generic">#ccf #a2 .fail:not(.a2)</code>
+    </div>
+
+<div id="a3" class="tile">
+    <div class="pass"><div class="fail"><a><b></b></a></div></div>
+    <code>#ccf #a3 .fail</code>
+    </div>
+
+<div id="a4" class="tile">
+    <div class="pass"><div class="fail"><a><b></b></a></div></div>
+    <code>#ccf #a4 .fail:not(.a4)</code>
+    </div>
+
+<div id="a5" class="tile">
+    <div class="pass"><div class="fail"><a><b></b></a></div></div>
+    <code>#ccf #a5 .fail:style(visibility: hidden)</code>
+    </div>
+
+<div id="a6" class="tile">
+    <div class="pass"><div class="fail-pseudo"><a><b></b></a></div></div>
+    <code class="generic">#ccf #a6 .fail-pseudo::before</code>
+    </div>
+
+<div id="a7" class="tile">
+    <div class="pass"><div class="fail-pseudo"><a><b></b></a></div></div>
+    <code>#ccf #a7 .fail-pseudo::before</code>
+    </div>
+
+<div id="a8" class="tile">
+    <div class="pass"><div class="fail-pseudo"><a><b></b></a></div></div>
+    <code>#ccf #a8 .fail-pseudo::before:style(visibility: hidden)</code>
+    </div>
+
+</div>
+
+<script>
+    const hostname = self.location.hostname;
+    const filters = [];
+    const fragment = document.createDocumentFragment();
+    for ( const node of document.querySelectorAll('code') ) {
+        const div = document.createElement('div');
+        let text = '##' + node.textContent;
+        if ( node.classList.contains('generic') === false ) {
+            text = hostname + text;
+        }
+        div.textContent = text;
+        fragment.appendChild(div);
+    }
+    const parent = document.querySelector('.filters');
+    while ( parent.lastElementChild !== null ) {
+        parent.removeChild(parent.lastElementChild);
+    }
+    parent.appendChild(fragment);
+</script>
+</body>
+</html>

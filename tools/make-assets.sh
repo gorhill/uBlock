@@ -13,12 +13,7 @@ if [ -n "${TRAVIS_TAG}" ]; then
 fi
 
 rm -rf $DES
-mkdir $DES
-cp ./assets/assets.json $DES/
-
-if [ -f ./tmp/requests.json.gz ]; then
-    gunzip -c ./tmp/requests.json.gz > $DES/requests.json
-fi
+cp -R ./assets $DES/
 
 mkdir $DES/thirdparties
 cp -R ../uAssets/thirdparties/easylist-downloads.adblockplus.org $DES/thirdparties/
@@ -32,8 +27,9 @@ cp -R ./thirdparties/www.eff.org                                 $DES/thirdparti
 mkdir $DES/ublock
 cp -R ../uAssets/filters/*                                       $DES/ublock/
 # Optional filter lists: do not include in package
-rm    $DES/ublock/annoyances.txt 2> /dev/null
 
+rm    $DES/ublock/annoyances.txt
+rm    $DES/ublock/resources.txt
 cp -R ./filters/adnauseam.txt                                    $DES/ublock/ # ADN
 
 echo "done."

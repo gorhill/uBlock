@@ -152,6 +152,7 @@ vAPI.SafeAnimationFrame = function(callback) {
 
 vAPI.SafeAnimationFrame.prototype = {
     start: function(delay) {
+        if ( self.vAPI instanceof Object === false ) { return; }
         if ( delay === undefined ) {
             if ( this.fid === undefined ) {
                 this.fid = requestAnimationFrame(( ) => { this.onRAF(); } );
@@ -206,47 +207,50 @@ vAPI.SafeAnimationFrame.prototype = {
 //   are properly reported in the logger.
 
 {
-    const events = new Set();
+    const newEvents = new Set();
+    const allEvents = new Set();
     let timer;
 
     const send = function() {
-        vAPI.messaging.send(
-            'scriptlets',
-            {
-                what: 'securityPolicyViolation',
-                type: 'net',
-                docURL: document.location.href,
-                violations: Array.from(events),
-            },
-            response => {
-                if ( response === true ) { return; }
-                stop();
-            }
-        );
-        events.clear();
+        vAPI.messaging.send('scriptlets', {
+            what: 'securityPolicyViolation',
+            type: 'net',
+            docURL: document.location.href,
+            violations: Array.from(newEvents),
+        }).then(response => {
+            if ( response === true ) { return; }
+            stop();
+        });
+        for ( const event of newEvents ) {
+            allEvents.add(event);
+        }
+        newEvents.clear();
     };
 
     const sendAsync = function() {
         if ( timer !== undefined ) { return; }
         timer = self.requestIdleCallback(
             ( ) => { timer = undefined; send(); },
-            { timeout: 2000 }
+            { timeout: 2063 }
         );
     };
 
     const listener = function(ev) {
         if ( ev.isTrusted !== true ) { return; }
         if ( ev.disposition !== 'enforce' ) { return; }
-        events.add(JSON.stringify({
+        const json = JSON.stringify({
             url: ev.blockedURL || ev.blockedURI,
             policy: ev.originalPolicy,
             directive: ev.effectiveDirective || ev.violatedDirective,
-        }));
+        });
+        if ( allEvents.has(json) ) { return; }
+        newEvents.add(json);
         sendAsync();
     };
 
     const stop = function() {
-        events.clear();
+        newEvents.clear();
+        allEvents.clear();
         if ( timer !== undefined ) {
             self.cancelIdleCallback(timer);
             timer = undefined;
@@ -267,7 +271,8 @@ vAPI.SafeAnimationFrame.prototype = {
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.domWatcher = (function() {
+vAPI.domWatcher = (( ) => {
+    vAPI.domMutationTime = Date.now();
 
     const addedNodeLists = [];
     const removedNodeLists = [];
@@ -282,9 +287,7 @@ vAPI.domWatcher = (function() {
         safeObserverHandlerTimer;
 
     const safeObserverHandler = function() {
-        //console.time('dom watcher/safe observer handler');
-        let i = addedNodeLists.length,
-            j = addedNodes.length;
+        let i = addedNodeLists.length;
         while ( i-- ) {
             const nodeList = addedNodeLists[i];
             let iNode = nodeList.length;
@@ -293,7 +296,7 @@ vAPI.domWatcher = (function() {
                 if ( node.nodeType !== 1 ) { continue; }
                 if ( ignoreTags.has(node.localName) ) { continue; }
                 if ( node.parentElement === null ) { continue; }
-                addedNodes[j++] = node;
+                addedNodes.push(node);
             }
         }
         addedNodeLists.length = 0;
@@ -308,19 +311,19 @@ vAPI.domWatcher = (function() {
             }
         }
         removedNodeLists.length = 0;
-        //console.timeEnd('dom watcher/safe observer handler');
         if ( addedNodes.length === 0 && removedNodes === false ) { return; }
         for ( const listener of getListenerIterator() ) {
-            listener.onDOMChanged(addedNodes, removedNodes);
+            try { listener.onDOMChanged(addedNodes, removedNodes); }
+            catch (ex) { }
         }
         addedNodes.length = 0;
         removedNodes = false;
+        vAPI.domMutationTime = Date.now();
     };
 
     // https://github.com/chrisaljoudi/uBlock/issues/205
     // Do not handle added node directly from within mutation observer.
     const observerHandler = function(mutations) {
-        //console.time('dom watcher/observer handler');
         let i = mutations.length;
         while ( i-- ) {
             const mutation = mutations[i];
@@ -338,7 +341,6 @@ vAPI.domWatcher = (function() {
                 addedNodeLists.length < 100 ? 1 : undefined
             );
         }
-        //console.timeEnd('dom watcher/observer handler');
     };
 
     const startMutationObserver = function() {
@@ -373,7 +375,8 @@ vAPI.domWatcher = (function() {
         listeners.push(listener);
         listenerIteratorDirty = true;
         if ( domIsReady !== true ) { return; }
-        listener.onDOMCreated();
+        try { listener.onDOMCreated(); }
+        catch (ex) { }
         startMutationObserver();
     };
 
@@ -401,30 +404,13 @@ vAPI.domWatcher = (function() {
     const start = function() {
         domIsReady = true;
         for ( const listener of getListenerIterator() ) {
-            listener.onDOMCreated();
+            try { listener.onDOMCreated(); }
+            catch (ex) { }
         }
         startMutationObserver();
     };
 
     return { start, addListener, removeListener };
-})();
-
-/******************************************************************************/
-/******************************************************************************/
-/******************************************************************************/
-
-vAPI.matchesProp = (( ) => {
-    const docElem = document.documentElement;
-    if ( typeof docElem.matches !== 'function' ) {
-        if ( typeof docElem.mozMatchesSelector === 'function' ) {
-            return 'mozMatchesSelector';
-        } else if ( typeof docElem.webkitMatchesSelector === 'function' ) {
-            return 'webkitMatchesSelector';
-        } else if ( typeof docElem.msMatchesSelector === 'function' ) {
-            return 'msMatchesSelector';
-        }
-    }
-    return 'matches';
 })();
 
 /******************************************************************************/
@@ -473,14 +459,10 @@ vAPI.DOMFilterer = (function() {
             }
             this.needle = new RegExp(arg0, arg1);
         }
-        exec(input) {
-            const output = [];
-            for ( const node of input ) {
-                if ( this.needle.test(node.textContent) ) {
-                    output.push(node);
-                }
+        transpose(node, output) {
+            if ( this.needle.test(node.textContent) ) {
+                output.push(node);
             }
-            return output;
         }
     };
 
@@ -488,24 +470,17 @@ vAPI.DOMFilterer = (function() {
         constructor(task) {
             this.pselector = new PSelector(task[1]);
         }
-        exec(input) {
-            const output = [];
-            for ( const node of input ) {
-                if ( this.pselector.test(node) === this.target ) {
-                    output.push(node);
-                }
+        transpose(node, output) {
+            if ( this.pselector.test(node) === this.target ) {
+                output.push(node);
             }
-            return output;
         }
     };
     PSelectorIfTask.prototype.target = true;
 
     const PSelectorIfNotTask = class extends PSelectorIfTask {
-        constructor(task) {
-            super(task);
-            this.target = false;
-        }
     };
+    PSelectorIfNotTask.prototype.target = false;
 
     const PSelectorMatchesCSSTask = class {
         constructor(task) {
@@ -516,52 +491,39 @@ vAPI.DOMFilterer = (function() {
             }
             this.value = new RegExp(arg0, arg1);
         }
-        exec(input) {
-            const output = [];
-            for ( const node of input ) {
-                const style = window.getComputedStyle(node, this.pseudo);
-                if ( style === null ) { return null; } /* FF */
-                if ( this.value.test(style[this.name]) ) {
-                    output.push(node);
-                }
+        transpose(node, output) {
+            const style = window.getComputedStyle(node, this.pseudo);
+            if ( style !== null && this.value.test(style[this.name]) ) {
+                output.push(node);
             }
-            return output;
         }
     };
     PSelectorMatchesCSSTask.prototype.pseudo = null;
 
     const PSelectorMatchesCSSAfterTask = class extends PSelectorMatchesCSSTask {
-        constructor(task) {
-            super(task);
-            this.pseudo = ':after';
-        }
     };
+    PSelectorMatchesCSSAfterTask.prototype.pseudo = ':after';
 
     const PSelectorMatchesCSSBeforeTask = class extends PSelectorMatchesCSSTask {
+    };
+    PSelectorMatchesCSSBeforeTask.prototype.pseudo = ':before';
+
+    const PSelectorMinTextLengthTask = class {
         constructor(task) {
-            super(task);
-            this.pseudo = ':before';
+            this.min = task[1];
+        }
+        transpose(node, output) {
+            if ( node.textContent.length >= this.min ) {
+                output.push(node);
+            }
         }
     };
 
-    const PSelectorNthAncestorTask = class {
-        constructor(task) {
-            this.nth = task[1];
+    const PSelectorPassthru = class {
+        constructor() {
         }
-        exec(input) {
-            const output = [];
-            for ( let node of input ) {
-                let nth = this.nth;
-                for (;;) {
-                    node = node.parentElement;
-                    if ( node === null ) { break; }
-                    nth -= 1;
-                    if ( nth !== 0 ) { continue; }
-                    output.push(node);
-                    break;
-                }
-            }
-            return output;
+        transpose(node, output) {
+            output.push(node);
         }
     };
 
@@ -569,27 +531,53 @@ vAPI.DOMFilterer = (function() {
         constructor(task) {
             this.spath = task[1];
         }
-        exec(input) {
-            const output = [];
-            for ( let node of input ) {
-                const parent = node.parentElement;
-                if ( parent === null ) { continue; }
-                let pos = 1;
-                for (;;) {
-                    node = node.previousElementSibling;
-                    if ( node === null ) { break; }
-                    pos += 1;
-                }
-                const nodes = parent.querySelectorAll(
-                    ':scope > :nth-child(' + pos + ')' + this.spath
-                );
-                for ( const node of nodes ) {
-                    output.push(node);
-                }
+        transpose(node, output) {
+            const parent = node.parentElement;
+            if ( parent === null ) { return; }
+            let pos = 1;
+            for (;;) {
+                node = node.previousElementSibling;
+                if ( node === null ) { break; }
+                pos += 1;
             }
-            return output;
+            const nodes = parent.querySelectorAll(
+                `:scope > :nth-child(${pos})${this.spath}`
+            );
+            for ( const node of nodes ) {
+                output.push(node);
+            }
         }
     };
+
+    const PSelectorUpwardTask = class {
+        constructor(task) {
+            const arg = task[1];
+            if ( typeof arg === 'number' ) {
+                this.i = arg;
+            } else {
+                this.s = arg;
+            }
+        }
+        transpose(node, output) {
+            if ( this.s !== '' ) {
+                const parent = node.parentElement;
+                if ( parent === null ) { return; }
+                node = parent.closest(this.s);
+                if ( node === null ) { return; }
+            } else {
+                let nth = this.i;
+                for (;;) {
+                    node = node.parentElement;
+                    if ( node === null ) { return; }
+                    nth -= 1;
+                    if ( nth === 0 ) { break; }
+                }
+            }
+            output.push(node);
+        }
+    };
+    PSelectorUpwardTask.prototype.i = 0;
+    PSelectorUpwardTask.prototype.s = '';
 
     const PSelectorWatchAttrs = class {
         constructor(task) {
@@ -612,17 +600,14 @@ vAPI.DOMFilterer = (function() {
                 filterer.onDOMChanged([ null ]);
             }
         }
-        exec(input) {
-            if ( input.length === 0 ) { return input; }
+        transpose(node, output) {
+            output.push(node);
+            if ( this.observed.has(node) ) { return; }
             if ( this.observer === null ) {
                 this.observer = new MutationObserver(this.handler);
             }
-            for ( const node of input ) {
-                if ( this.observed.has(node) ) { continue; }
-                this.observer.observe(node, this.observerOptions);
-                this.observed.add(node);
-            }
-            return input;
+            this.observer.observe(node, this.observerOptions);
+            this.observed.add(node);
         }
     };
 
@@ -631,23 +616,19 @@ vAPI.DOMFilterer = (function() {
             this.xpe = document.createExpression(task[1], null);
             this.xpr = null;
         }
-        exec(input) {
-            const output = [];
-            for ( const node of input ) {
-                this.xpr = this.xpe.evaluate(
-                    node,
-                    XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
-                    this.xpr
-                );
-                let j = this.xpr.snapshotLength;
-                while ( j-- ) {
-                    const node = this.xpr.snapshotItem(j);
-                    if ( node.nodeType === 1 ) {
-                        output.push(node);
-                    }
+        transpose(node, output) {
+            this.xpr = this.xpe.evaluate(
+                node,
+                XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
+                this.xpr
+            );
+            let j = this.xpr.snapshotLength;
+            while ( j-- ) {
+                const node = this.xpr.snapshotItem(j);
+                if ( node.nodeType === 1 ) {
+                    output.push(node);
                 }
             }
-            return output;
         }
     };
 
@@ -662,10 +643,13 @@ vAPI.DOMFilterer = (function() {
                     [ ':matches-css', PSelectorMatchesCSSTask ],
                     [ ':matches-css-after', PSelectorMatchesCSSAfterTask ],
                     [ ':matches-css-before', PSelectorMatchesCSSBeforeTask ],
+                    [ ':min-text-length', PSelectorMinTextLengthTask ],
                     [ ':not', PSelectorIfNotTask ],
-                    [ ':nth-ancestor', PSelectorNthAncestorTask ],
+                    [ ':nth-ancestor', PSelectorUpwardTask ],
+                    [ ':remove', PSelectorPassthru ],
                     [ ':spath', PSelectorSpathTask ],
-                    [ ':watch-attrs', PSelectorWatchAttrs ],
+                    [ ':upward', PSelectorUpwardTask ],
+                    [ ':watch-attr', PSelectorWatchAttrs ],
                     [ ':xpath', PSelectorXpathTask ],
                 ]);
             }
@@ -676,41 +660,53 @@ vAPI.DOMFilterer = (function() {
             this.selector = o.selector;
             this.tasks = [];
             const tasks = o.tasks;
-            if ( !tasks ) { return; }
-            for ( const task of tasks ) {
-                this.tasks.push(new (this.operatorToTaskMap.get(task[0]))(task));
+            if ( Array.isArray(tasks) ) {
+                for ( const task of tasks ) {
+                    this.tasks.push(
+                        new (this.operatorToTaskMap.get(task[0]))(task)
+                    );
+                }
+            }
+            if ( o.action !== undefined ) {
+                this.action = o.action;
             }
         }
         prime(input) {
             const root = input || document;
-            if ( this.selector !== '' ) {
-                return root.querySelectorAll(this.selector);
-            }
-            return [ root ];
+            if ( this.selector === '' ) { return [ root ]; }
+            return Array.from(root.querySelectorAll(this.selector));
         }
         exec(input) {
             let nodes = this.prime(input);
             for ( const task of this.tasks ) {
                 if ( nodes.length === 0 ) { break; }
-                nodes = task.exec(nodes);
+                const transposed = [];
+                for ( const node of nodes ) {
+                    task.transpose(node, transposed);
+                }
+                nodes = transposed;
             }
             return nodes;
         }
         test(input) {
             const nodes = this.prime(input);
-            const AA = [ null ];
             for ( const node of nodes ) {
-                AA[0] = node;
-                let aa = AA;
+                let output = [ node ];
                 for ( const task of this.tasks ) {
-                    aa = task.exec(aa);
-                    if ( aa.length === 0 ) { break; }
+                    const transposed = [];
+                    for ( const node of output ) {
+                        task.transpose(node, transposed);
+                    }
+                    output = transposed;
+                    if ( output.length === 0 ) { break; }
                 }
-                if ( aa.length !== 0 ) { return true; }
+                if ( output.length !== 0 ) { return true; }
             }
             return false;
         }
     };
+    PSelector.prototype.action = undefined;
+    PSelector.prototype.hit = false;
     PSelector.prototype.operatorToTaskMap = undefined;
 
     const DOMProceduralFilterer = class {
@@ -729,20 +725,20 @@ vAPI.DOMFilterer = (function() {
             for ( let i = 0, n = aa.length; i < n; i++ ) {
                 const raw = aa[i];
                 const o = JSON.parse(raw);
-                if ( o.style ) {
-                    this.domFilterer.addCSSRule(o.style[0], o.style[1]);
+                if ( o.action === 'style' ) {
+                    this.domFilterer.addCSSRule(o.selector, o.tasks[0][1]);
                     mustCommit = true;
                     continue;
                 }
-                if ( o.pseudoclass ) {
+                if ( o.pseudo !== undefined ) {
                     this.domFilterer.addCSSRule(
-                        o.raw,
+                        o.selector,
                         'display:none!important;'
                     );
                     mustCommit = true;
                     continue;
                 }
-                if ( o.tasks ) {
+                if ( o.tasks !== undefined ) {
                     if ( this.selectors.has(raw) === false ) {
                         const pselector = new PSelector(o);
                         this.selectors.set(raw, pselector);
@@ -779,8 +775,7 @@ vAPI.DOMFilterer = (function() {
 
             let t0 = Date.now();
 
-            for ( const entry of this.selectors ) {
-                const pselector = entry[1];
+            for ( const pselector of this.selectors.values() ) {
                 const allowance = Math.floor((t0 - pselector.lastAllowanceTime) / 2000);
                 if ( allowance >= 1 ) {
                     pselector.budget += allowance * 50;
@@ -796,9 +791,12 @@ vAPI.DOMFilterer = (function() {
                     pselector.budget = -0x7FFFFFFF;
                 }
                 t0 = t1;
-                for ( const node of nodes ) {
-                    this.domFilterer.hideNode(node);
-                    this.hiddenNodes.add(node);
+                if ( nodes.length === 0 ) { continue; }
+                pselector.hit = true;
+                if ( pselector.action === 'remove' ) {
+                    this.removeNodes(nodes);
+                } else {
+                    this.hideNodes(nodes);
                 }
             }
 
@@ -807,6 +805,21 @@ vAPI.DOMFilterer = (function() {
                 this.domFilterer.unhideNode(node);
             }
             //console.timeEnd('procedural selectors/dom layout changed');
+        }
+
+        hideNodes(nodes) {
+            for ( const node of nodes ) {
+                if ( node.parentElement === null ) { continue; }
+                this.domFilterer.hideNode(node);
+                this.hiddenNodes.add(node);
+            }
+        }
+
+        removeNodes(nodes) {
+            for ( const node of nodes ) {
+                node.textContent = '';
+                node.remove();
+            }
         }
 
         createProceduralFilter(o) {
@@ -927,7 +940,8 @@ vAPI.domCollapser = (function() {
     // https://github.com/chrisaljoudi/uBlock/issues/174
     //   Do not remove fragment from src URL
     const onProcessed = function(response) {
-        if ( !response ) { // This happens if uBO is disabled or restarted.
+        // This happens if uBO is disabled or restarted.
+        if ( response instanceof Object === false ) {
             toCollapse.clear();
             return;
         }
@@ -973,7 +987,7 @@ vAPI.domCollapser = (function() {
             if ( netSelectorCacheCount <= netSelectorCacheCountMax ) {
                 const value = target.getAttribute(prop);
                 if ( value ) {
-                    selectors.push(tag + '[' + prop + '="' + value + '"]');
+                    selectors.push(`${tag}[${prop}="${CSS.escape(value)}"]`);
                     netSelectorCacheCount += 1;
                 }
             }
@@ -983,29 +997,27 @@ vAPI.domCollapser = (function() {
         }
 
         if ( selectors.length !== 0 ) {
-            messaging.send(
-                'contentscript',
-                {
-                    what: 'cosmeticFiltersInjected',
-                    type: 'net',
-                    hostname: window.location.hostname,
-                    selectors: selectors
-                }
-            );
+            messaging.send('contentscript', {
+                what: 'cosmeticFiltersInjected',
+                type: 'net',
+                hostname: window.location.hostname,
+                selectors,
+            });
         }
     };
 
     const send = function() {
         processTimer = undefined;
         toCollapse.set(resquestIdGenerator, toProcess);
-        const msg = {
+        messaging.send('contentscript', {
             what: 'getCollapsibleBlockedRequests',
             id: resquestIdGenerator,
             frameURL: window.location.href,
             resources: toFilter,
-            hash: cachedBlockedSetHash
-        };
-        messaging.send('contentscript', msg, onProcessed);
+            hash: cachedBlockedSetHash,
+        }).then(response => {
+            onProcessed(response);
+        });
         toProcess = [];
         toFilter = [];
         resquestIdGenerator += 1;
@@ -1124,7 +1136,7 @@ vAPI.domCollapser = (function() {
 
     const domWatcherInterface = {
         onDOMCreated: function() {
-            if ( vAPI instanceof Object === false ) { return; }
+            if ( self.vAPI instanceof Object === false ) { return; }
             if ( vAPI.domCollapser instanceof Object === false ) {
                 if ( vAPI.domWatcher instanceof Object ) {
                     vAPI.domWatcher.removeListener(domWatcherInterface);
@@ -1313,18 +1325,16 @@ vAPI.domSurveyor = (function() {
         //console.info(`domSurveyor> Surveyed ${processed} nodes in ${(t1-t0).toFixed(2)} ms`);
         // Phase 2: Ask main process to lookup relevant cosmetic filters.
         if ( ids.length !== 0 || classes.length !== 0 ) {
-            messaging.send(
-                'contentscript',
-                {
-                    what: 'retrieveGenericCosmeticSelectors',
-                    hostname: hostname,
-                    ids: ids,
-                    classes: classes,
-                    exceptions: domFilterer.exceptions,
-                    cost: surveyCost
-                },
-                surveyPhase3
-            );
+            messaging.send('contentscript', {
+                what: 'retrieveGenericCosmeticSelectors',
+                hostname,
+                ids,
+                classes,
+                exceptions: domFilterer.exceptions,
+                cost: surveyCost,
+            }).then(response => {
+                surveyPhase3(response);
+            });
         } else {
             surveyPhase3(null);
         }
@@ -1416,11 +1426,11 @@ vAPI.domSurveyor = (function() {
     const domWatcherInterface = {
         onDOMCreated: function() {
             if (
-                vAPI instanceof Object === false ||
+                self.vAPI instanceof Object === false ||
                 vAPI.domSurveyor instanceof Object === false ||
                 vAPI.domFilterer instanceof Object === false
             ) {
-                if ( vAPI instanceof Object ) {
+                if ( self.vAPI instanceof Object ) {
                     if ( vAPI.domWatcher instanceof Object ) {
                         vAPI.domWatcher.removeListener(domWatcherInterface);
                     }
@@ -1483,12 +1493,11 @@ vAPI.bootstrap = (function() {
         // This can happen on Firefox. For instance:
         // https://github.com/gorhill/uBlock/issues/1893
         if ( window.location === null ) { return; }
-        if ( vAPI instanceof Object === false ) { return; }
+        if ( self.vAPI instanceof Object === false ) { return; }
 
-        vAPI.messaging.send(
-            'contentscript',
-            { what: 'shouldRenderNoscriptTags' }
-        );
+        vAPI.messaging.send('contentscript', {
+            what: 'shouldRenderNoscriptTags',
+        });
 
         if ( vAPI.domWatcher instanceof Object ) {
             vAPI.domWatcher.start();
@@ -1502,27 +1511,25 @@ vAPI.bootstrap = (function() {
             return;
         }
 
-        // To send mouse coordinates to main process, as the chrome API fails
-        // to provide the mouse position to context menu listeners.
-        // https://github.com/chrisaljoudi/uBlock/issues/1143
-        // Also, find a link under the mouse, to try to avoid confusing new tabs
-        // as nuisance popups.
-        // Ref.: https://developer.mozilla.org/en-US/docs/Web/Events/contextmenu
+        // To be used by element picker/zapper.
+        vAPI.mouseClick = { x: -1, y: -1 };
 
         const onMouseClick = function(ev) {
-            let elem = ev.target;
-            while ( elem !== null && elem.localName !== 'a' ) {
-                elem = elem.parentElement;
-            }
-            vAPI.messaging.send(
-                'contentscript',
-                {
-                    what: 'mouseClick',
-                    x: ev.clientX,
-                    y: ev.clientY,
-                    url: elem !== null && ev.isTrusted !== false ? elem.href : ''
-                }
-            );
+            if ( ev.isTrusted === false ) { return; }
+            vAPI.mouseClick.x = ev.clientX;
+            vAPI.mouseClick.y = ev.clientY;
+
+            // https://github.com/chrisaljoudi/uBlock/issues/1143
+            //   Find a link under the mouse, to try to avoid confusing new tabs
+            //   as nuisance popups.
+            // https://github.com/uBlockOrigin/uBlock-issues/issues/777
+            //   Mind that href may not be a string.
+            const elem = ev.target.closest('a[href]');
+            if ( elem === null || typeof elem.href !== 'string' ) { return; }
+            vAPI.messaging.send('contentscript', {
+                what: 'maybeGoodPopup',
+                url: elem.href || '',
+            });
         };
 
         document.addEventListener('mousedown', onMouseClick, true);
@@ -1541,8 +1548,8 @@ vAPI.bootstrap = (function() {
 //   to try bootstrapping again later.
 
     const bootstrapPhase1 = function(response) {
+        if ( response instanceof Object === false ) { return; }
 
-        if ( response === null ) { return; }
         vAPI.bootstrap = undefined;
         if (response && response.prefs) vAPI.prefs = response.prefs; // ADN
         // cosmetic filtering engine aka 'cfe'
@@ -1624,16 +1631,14 @@ vAPI.bootstrap = (function() {
     };
 
     return function() {
-        vAPI.messaging.send(
-            'contentscript',
-            {
-                what: 'retrieveContentScriptParameters',
-                url: window.location.href,
-                isRootFrame: window === window.top,
-                charset: document.characterSet,
-            },
-            bootstrapPhase1
-        );
+        vAPI.messaging.send('contentscript', {
+            what: 'retrieveContentScriptParameters',
+            url: window.location.href,
+            isRootFrame: window === window.top,
+            charset: document.characterSet,
+        }).then(response => {
+            bootstrapPhase1(response);
+        });
     };
 })();
 

@@ -19,10 +19,7 @@
 	"ublock-resources": {
 		"content": "internal",
 		"updateAfter": 7,
-		"contentURL": [
-			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/resources.txt",
-			"assets/ublock/resources.txt"
-		]
+		"contentURL": "assets/ublock/resources.txt"
 	},
 	"adnauseam-filters": {
 		"content": "filters",
@@ -91,13 +88,6 @@
 			"assets/ublock/resource-abuse.txt"
 		]
 	},
-	"ublock-annoyances": {
-		"content": "filters",
-		"group": "default",
-		"title": "uBlock filters – Annoyances",
-		"off": true,
-		"contentURL": "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/annoyances.txt"
-	},
 	"ublock-unbreak": {
 		"content": "filters",
 		"group": "default",
@@ -107,19 +97,11 @@
 			"assets/ublock/unbreak.txt"
 		]
 	},
-	"awrl-0": {
-		"content": "filters",
-		"group": "ads",
-		"off": true,
-		"title": "Adblock Warning Removal List",
-		"contentURL": "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt",
-		"supportURL": "https://forums.lanik.us/"
-	},
 	"adguard-generic": {
 		"content": "filters",
 		"group": "ads",
 		"off": true,
-		"title": "AdGuard Base List",
+		"title": "AdGuard Base",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/2_without_easylist.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
 		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
@@ -230,7 +212,7 @@
 		"content": "filters",
 		"group": "social",
 		"off": true,
-		"title": "Anti-Facebook List",
+		"title": "Anti-Facebook",
 		"contentURL": "https://fanboy.co.nz/fanboy-antifacebook.txt",
 		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
 	},
@@ -238,7 +220,7 @@
 		"content": "filters",
 		"group": "social",
 		"off": true,
-		"title": "Fanboy’s Annoyance List",
+		"title": "Fanboy’s Annoyance",
 		"contentURL": [
 			"https://easylist.to/easylist/fanboy-annoyance.txt",
 			"https://fanboy.co.nz/fanboy-annoyance.txt"
@@ -249,15 +231,15 @@
 		"content": "filters",
 		"group": "social",
 		"off": true,
-		"title": "Fanboy's Cookie List",
-		"contentURL": "https://secure.fanboy.co.nz/fanboy-cookiemonster.txt",
-		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
+		"title": "EasyList Cookie",
+		"contentURL": "https://easylist-downloads.adblockplus.org/easylist-cookie.txt",
+		"supportURL": "https://github.com/easylist/easylist/issues"
 	},
 	"fanboy-social": {
 		"content": "filters",
 		"group": "social",
 		"off": true,
-		"title": "Fanboy’s Social Blocking List",
+		"title": "Fanboy’s Social",
 		"contentURL": [
 			"https://easylist.to/easylist/fanboy-social.txt",
 			"https://fanboy.co.nz/fanboy-social.txt"
@@ -272,6 +254,13 @@
 		"contentURL": "https://www.fanboy.co.nz/r/fanboy-ultimate.txt",
 		"supportURL": "https://forums.lanik.us/"
 	},
+	"ublock-annoyances": {
+		"content": "filters",
+		"group": "social",
+		"title": "uBlock filters – Annoyances",
+		"off": true,
+		"contentURL": "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/annoyances.txt"
+	},
 	"dpollock-0": {
 		"content": "filters",
 		"group": "multipurpose",
@@ -280,19 +269,6 @@
 		"title": "Dan Pollock’s hosts file",
 		"contentURL": "https://someonewhocares.org/hosts/hosts",
 		"supportURL": "https://someonewhocares.org/hosts/"
-	},
-	"hphosts": {
-		"content": "filters",
-		"group": "multipurpose",
-		"updateAfter": 11,
-		"off": true,
-		"hidden": true,
-		"title": "hpHosts’ Ad and tracking servers",
-		"contentURL": [
-			"https://hosts-file.net/.%5Cad_servers.txt",
-			"http://hosts-file.net/.%5Cad_servers.txt"
-		],
-		"supportURL": "https://hosts-file.net/"
 	},
 	"mvps-0": {
 		"content": "filters",
@@ -403,7 +379,7 @@
 		"contentURL": "https://easylist-downloads.adblockplus.org/liste_fr.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=91"
 	},
-	
+
 	"GRC-0": {
 		"content": "filters",
 		"group": "regions",
@@ -484,15 +460,6 @@
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/7.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
 		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
-	},
-	"KOR-0": {
-		"content": "filters",
-		"group": "regions",
-		"off": true,
-		"title": "KOR: Korean Adblock List",
-		"lang": "ko",
-		"contentURL": "https://raw.githubusercontent.com/gfmaster/adblock-korea-contrib/master/filter.txt",
-		"supportURL": "https://github.com/gfmaster/adblock-korea-contrib"
 	},
 	"KOR-1": {
 		"content": "filters",
@@ -582,16 +549,6 @@
 		"contentURL": "https://easylist-downloads.adblockplus.org/advblock+cssfixes.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=102",
 		"instructionURL": "https://forums.lanik.us/viewtopic.php?f=102&t=22512"
-	},
-	"RUS-2": {
-		"content": "filters",
-		"group": "regions",
-		"off": true,
-		"title": "RUS: AdGuard Russian",
-		"lang": "be kk ru uk uz",
-		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/1.txt",
-		"supportURL": "https://forum.adguard.com/forumdisplay.php?69-%D0%A4%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D1%8B-Adguard",
-		"instructionURL": "https://kb.adguard.com/ru/general/adguard-ad-filters#russian"
 	},
 	"spa-0": {
 		"content": "filters",

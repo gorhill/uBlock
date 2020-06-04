@@ -54,23 +54,24 @@
                 <span id="filterExprGroup">
                     <span id="filterButton" class="button fa-icon" data-i18n-title="loggerRowFiltererButtonTip">filter</span>
                     <span id="filterInput">
-                        <input type="text" placeholder="logFilterPrompt">
+                        <input type="search" placeholder="logFilterPrompt">
                         <span id="filterExprButton" class="button fa-icon expanded" data-i18n-title="loggerRowFiltererBuiltinTip">angle-up</span>
                         <div id="filterExprPicker">
                             <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span><span data-filtex="\t--\t|\t<<\t|\t##" data-i18n="loggerRowFiltererBuiltinBlocked"></span><span data-filtex="\t\+\+\t|\t\*\*\t|\t#@#" data-i18n="loggerRowFiltererBuiltinAllowed"></span></div>
                             <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span>
                                 <span style="flex-direction: column;">
                                     <div style="margin-bottom: 1px;"><span data-filtex="\t(?:css|(?:inline-)?font)\t">css/font</span><span data-filtex="\timage\t">image</span><span data-filtex="\tmedia\t">media</span><span data-filtex="\t(?:inline-)?script(?:ing)?\t">script</span></div>
-                                    <div><span data-filtex="\t(?:websocket|xhr)\t">xhr</span><span data-filtex="\tframe\t">frame</span><span data-filtex="\t(?:beacon|csp_report|ping|other)\t">other</span><span data-filtex="\t(?:dom|generichide)\t">dom</span></div>
+                                    <div><span data-filtex="\t(?:websocket|xhr)\t">xhr</span><span data-filtex="\tframe\t">frame</span><span data-filtex="\t(?:beacon|csp_report|ping|other)\t">other</span><span data-filtex="\t(?:dom|g(?:eneric)?hide|s(?:pecific)?hide)\t">dom</span></div>
                                 </span>
                             </div>
                             <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span><span data-filtex="\t(?:0,)?1\t" data-i18n="loggerRowFiltererBuiltin1p"></span><span data-filtex="\t(?:3(?:,\d)?|0,3)\t" data-i18n="loggerRowFiltererBuiltin3p"></span></div>
+                            <div id="filterExprCnameOf" style="display:none"><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span><span data-filtex="\taliasURL=.">CNAME</span></div>
                         </div>
                     </span>
                 </span>
             </div>
             <div>
-                <span id="loggerStats" class="button fa-icon">bar-chart</span>
+                <span id="loggerStats" class="button fa-icon" style="display: none;">bar-chart</span>
                 <span id="loggerExport" class="button fa-icon">clipboard</span>
                 <span id="loggerSettings" class="button fa-icon">cog</span>
             </div>
@@ -100,7 +101,6 @@
 
 <div id="templates" style="display: none;">
     <div id="logEntryTemplate"><div><span></span>&#8203;<span></span>&#8203;<span></span>&#8203;<span></span>&#8203;<span></span>&#8203;<span></span>&#8203;<span></span></div></div>
-    <div id="renderedURLTemplate"><span><span></span><b></b><span></span></span></div>
 
     <div id="netFilteringDialog" data-pane="details">
         <div class="hide preview"><span>click to preview</span></div>
@@ -113,7 +113,7 @@
         </div>
         <div class="panes">
             <div class="pane details" data-pane="details">
-                <div><span data-i18n="loggerEntryDetailsFilter"></span><span></span></div>
+                <div><span data-i18n="loggerEntryDetailsFilter"></span><span></span><span class="exceptor" style="visibility: collapse"></span></div>
                 <div><span data-i18n="loggerEntryDetailsFilterList"></span><span class="prose"></span></div>
                 <div><span data-i18n="loggerEntryDetailsRule"></span><span></span></div>
                 <div><span data-i18n="loggerEntryDetailsRootContext"></span><span></span></div>
@@ -121,6 +121,8 @@
                 <div><span data-i18n="loggerEntryDetailsPartyness"></span><span class="prose"></span></div>
                 <div><span data-i18n="loggerEntryDetailsType"></span><span></span></div>
                 <div><span data-i18n="loggerEntryDetailsURL"></span><span></span></div>
+                <div><span>CNAME</span><span></span></div>
+                <div><span>Original URL</span><span></span></div>
             </div>
             <div class="pane dynamic hide" data-pane="dynamic">
                 <div class="toolbar row">
@@ -206,6 +208,7 @@
 <script src="js/vapi.js"></script>
 <script src="js/vapi-common.js"></script>
 <script src="js/vapi-client.js"></script>
+<script src="js/vapi-client-extra.js"></script>
 <script src="js/udom.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/logger-ui.js"></script>

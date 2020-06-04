@@ -64,8 +64,8 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Clique: desativar\/ativar o uBlock₀ para este site.\n\nCtrl+clique: desativar o uBlock₀ apenas nesta página.",
-    "description": "English: Click: disable\/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+    "message": "Clique: desativar/ativar o uBlock₀ para este site.\n\nCtrl+clique: desativar o uBlock₀ apenas nesta página.",
+    "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
     "message": "Clique para desativar o uBlock₀ para este site.\n\nCtrl+clique para desativar o uBlock₀ apenas nesta página.",
@@ -94,6 +94,18 @@
   "popupOr": {
     "message": "ou",
     "description": "English: or"
+  },
+  "popupBlockedOnThisPage_v2": {
+    "message": "Bloqueado(s) nesta página",
+    "description": "For the new mobile-friendly popup design"
+  },
+  "popupBlockedSinceInstall_v2": {
+    "message": "Bloqueado(s) desde a instalação",
+    "description": "For the new mobile-friendly popup design"
+  },
+  "popupDomainsConnected_v2": {
+    "message": "Domínios ligados",
+    "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
     "message": "Abrir o painel de controlo",
@@ -167,6 +179,26 @@
     "message": "Clique para deixar de desativar JavaScript neste site",
     "description": "Tooltip for the no-scripting per-site switch"
   },
+  "popupNoLargeMedia_v2": {
+    "message": "Elementos multimédia grandes",
+    "description": "Tip for the no-large-media per-site switch"
+  },
+  "popupNoCosmeticFiltering_v2": {
+    "message": "Filtragem cosmética",
+    "description": "Tip for the no-cosmetic-filtering per-site switch"
+  },
+  "popupNoRemoteFonts_v2": {
+    "message": "Tipos de letra remotos",
+    "description": "Tip for the no-remote-fonts per-site switch"
+  },
+  "popupNoScripting_v2": {
+    "message": "JavaScript",
+    "description": "Tip for the no-scripting per-site switch"
+  },
+  "popupMoreButton_v2": {
+    "message": "Mais",
+    "description": "Label to be used to toggle overview panel"
+  },
   "popupTipGlobalRules": {
     "message": "Regras globais: esta coluna é para as regras que se aplicam a todos os sites.",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
@@ -196,7 +228,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "CSS\/imagens de terceiros",
+    "message": "CSS/imagens de terceiros",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -280,7 +312,7 @@
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "Sou um utilizador avançado (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Advanced-user-features'>leitura necessária<\/a>)",
+    "message": "Sou um utilizador avançado (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>leitura necessária</a>)",
     "description": ""
   },
   "settingsAdvancedUserSettings": {
@@ -325,7 +357,7 @@
   },
   "settingsNoCSPReportsPrompt": {
     "message": "Bloquear relatórios CSP",
-    "description": "background information: https:\/\/github.com\/gorhill\/uBlock\/issues\/3150"
+    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsStorageUsed": {
     "message": "Armazenamento utilizado: {{value}} bytes",
@@ -364,7 +396,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Esta opção permite a análise e aplicação de <a href=\"https:\/\/adblockplus.org\/en\/faq_internal#elemhide\">filtros de &ldquo;ocultação de elementos&rdquo; compatíveis com o Adblock Plus<\/a>. Estes filtros são essencialmente cosméticos, servindo para ocultar elementos numa página web que sejam considerados incómodo visual, e que não podem ser bloqueados pelo motor de filtragem baseado em pedidos de rede.<\/p><p>Ativar esta funcionalidade aumenta o consumo de memória do <i>uBlock₀<\/i>.<\/p>",
+    "message": "<p>Esta opção permite a análise e aplicação de <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">filtros de &ldquo;ocultação de elementos&rdquo; compatíveis com o Adblock Plus</a>. Estes filtros são essencialmente cosméticos, servindo para ocultar elementos numa página web que sejam considerados incómodo visual, e que não podem ser bloqueados pelo motor de filtragem baseado em pedidos de rede.</p><p>Ativar esta funcionalidade aumenta o consumo de memória do <i>uBlock₀</i>.</p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -440,7 +472,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Um filtro por linha. Um filtro pode ser um simples nome de servidor ou um filtro compatível com o Adblock Plus. Linhas começadas por <code>!<\/code> serão ignoradas.",
+    "message": "Um filtro por linha. Um filtro pode ser um simples nome de servidor ou um filtro compatível com o Adblock Plus. Linhas começadas por <code>!</code> serão ignoradas.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -504,7 +536,7 @@
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
-    "message": "Regra de sintaxe: <code>origem destino tipo ação<\/code> (<a href='https:\/\/github.com\/gorhill\/uBlock\/wiki\/Dynamic-filtering:-rule-syntax'>documentação completa<\/a>).",
+    "message": "Regra de sintaxe: <code>origem destino tipo ação</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>documentação completa</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
@@ -708,11 +740,11 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Filtro estático <code>{{filter}}<\/code> encontrado em:",
+    "message": "Filtro estático <code>{{filter}}</code> encontrado em:",
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "O filtro estático <code>{{filter}}<\/code> não pôde ser encontrado em quaisquer das listas de filtros ativadas atualmente",
+    "message": "Não foi possível encontrar o filtro estático em qualquer uma das listas ativas",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
@@ -744,7 +776,7 @@
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
-    "message": "{{input}} Filtro\/regra",
+    "message": "{{input}} Filtro/regra",
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
@@ -861,11 +893,11 @@
   },
   "showDashboardButton": {
     "message": "Mostrar painel de controlo",
-    "description": "Firefox\/Fennec-specific: Show Dashboard"
+    "description": "Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
     "message": "Mostrar registador",
-    "description": "Firefox\/Fennec-specific: Show Logger"
+    "description": "Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
     "message": "desativado",
@@ -881,7 +913,7 @@
   },
   "docblockedNoParamsPrompt": {
     "message": "sem parâmetros",
-    "description": "label to be used for the parameter-less URL: https:\/\/cloud.githubusercontent.com\/assets\/585534\/9832014\/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
+    "description": "label to be used for the parameter-less URL: https://cloud.githubusercontent.com/assets/585534/9832014/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {
     "message": "Encontrado em:",
@@ -962,6 +994,14 @@
   "genericCopyToClipboard": {
     "message": "Copiar para a área de transferência",
     "description": "Label for buttons used to copy something to the clipboard"
+  },
+  "toggleBlockingProfile": {
+    "message": "Alternar perfil de bloqueio",
+    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  },
+  "relaxBlockingMode": {
+    "message": "Relaxar modo de bloqueio",
+    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "dummy": {
     "message": "Esta entrada deve ser a última",

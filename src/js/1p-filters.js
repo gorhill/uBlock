@@ -29,7 +29,6 @@
 
 /******************************************************************************/
 
-const messaging = vAPI.messaging;
 const cmEditor = new CodeMirror(
     document.getElementById('userFilters'),
     {
@@ -47,20 +46,6 @@ let cachedUserFilters = '';
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/3706
-//   Save/restore cursor position
-//
-// CoreMirror reference: https://codemirror.net/doc/manual.html#api_selection
-
-window.addEventListener('beforeunload', ( ) => {
-    vAPI.localStorage.setItem(
-        'myFiltersCursorPosition',
-        JSON.stringify(cmEditor.getCursor().line)
-    );
-});
-
-/******************************************************************************/
-
 // This is to give a visual hint that the content of user blacklist has changed.
 
 const userFiltersChanged = function(changed) {
@@ -73,30 +58,20 @@ const userFiltersChanged = function(changed) {
 
 /******************************************************************************/
 
-const renderUserFilters = function(first) {
-    const onRead = function(details) {
-        if ( details.error ) { return; }
-        let content = details.content.trim();
-        cachedUserFilters = content;
-        if ( content.length !== 0 ) {
-            content += '\n';
-        }
-        cmEditor.setValue(content);
-        if ( first ) {
-            cmEditor.clearHistory();
-            try {
-                const line = JSON.parse(
-                    vAPI.localStorage.getItem('myFiltersCursorPosition')
-                );
-                if ( typeof line === 'number' ) {
-                    cmEditor.setCursor(line, 0);
-                }
-            } catch(ex) {
-            }
-        }
-        userFiltersChanged(false);
-    };
-    messaging.send('dashboard', { what: 'readUserFilters' }, onRead);
+const renderUserFilters = async function() {
+    const details = await vAPI.messaging.send('dashboard', {
+        what: 'readUserFilters',
+    });
+    if ( details instanceof Object === false || details.error ) { return; }
+
+    let content = details.content.trim();
+    cachedUserFilters = content;
+    if ( content.length !== 0 ) {
+        content += '\n';
+    }
+    cmEditor.setValue(content);
+
+    userFiltersChanged(false);
 };
 
 /******************************************************************************/
@@ -171,20 +146,18 @@ const exportUserFiltersToFile = function() {
 
 /******************************************************************************/
 
-const applyChanges = function() {
-    messaging.send(
-        'dashboard',
-        {
-            what: 'writeUserFilters',
-            content: cmEditor.getValue()
-        },
-        details => {
-            if ( details.error ) { return; }
-            cachedUserFilters = details.content.trim();
-            userFiltersChanged(false);
-            messaging.send('dashboard', { what: 'reloadAllFilters' });
-        }
-    );
+const applyChanges = async function() {
+    const details = await vAPI.messaging.send('dashboard', {
+        what: 'writeUserFilters',
+        content: cmEditor.getValue(),
+    });
+    if ( details instanceof Object === false || details.error ) { return; }
+
+    cachedUserFilters = details.content.trim();
+    userFiltersChanged(false);
+    vAPI.messaging.send('dashboard', {
+        what: 'reloadAllFilters',
+    });
 };
 
 const revertChanges = function() {
@@ -224,10 +197,27 @@ self.hasUnsavedData = function() {
 uDom('#importUserFiltersFromFile').on('click', startImportFilePicker);
 uDom('#importFilePicker').on('change', handleImportFilePicker);
 uDom('#exportUserFiltersToFile').on('click', exportUserFiltersToFile);
-uDom('#userFiltersApply').on('click', applyChanges);
+uDom('#userFiltersApply').on('click', ( ) => { applyChanges(); });
 uDom('#userFiltersRevert').on('click', revertChanges);
 
-renderUserFilters(true);
+// https://github.com/gorhill/uBlock/issues/3706
+//   Save/restore cursor position
+//
+// CoreMirror reference: https://codemirror.net/doc/manual.html#api_selection
+renderUserFilters().then(( ) => {
+    cmEditor.clearHistory();
+    return vAPI.localStorage.getItemAsync('myFiltersCursorPosition');
+}).then(line => {
+    if ( typeof line === 'number' ) {
+        cmEditor.setCursor(line, 0);
+    }
+    cmEditor.on('cursorActivity', ( ) => {
+        const line = cmEditor.getCursor().line;
+        if ( vAPI.localStorage.getItem('myFiltersCursorPosition') !== line ) {
+            vAPI.localStorage.setItem('myFiltersCursorPosition', line);
+        }
+    });
+});
 
 cmEditor.on('changes', userFiltersChanged);
 CodeMirror.commands.save = applyChanges;

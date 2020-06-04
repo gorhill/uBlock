@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html id="uBO-popup-panel">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/common.css" type="text/css">
+<link rel="stylesheet" href="css/fa-icons.css" type="text/css">
+<link rel="stylesheet" href="css/popup-fenix.css" type="text/css">
+<title data-i18n="extName"></title>
+</head>
+
+<body>
+<div id="main" class="tooltipContainer">
+    <div id="sticky">
+        <div>
+            <div class="rulesetTools">
+                <span id="saveRules" class="fa-icon" data-i18n-tip="popupTipSaveRules" data-tip-position="under">lock</span>
+                <span id="revertRules" class="fa-icon" data-i18n-tip="popupTipRevertRules" data-tip-position="under">eraser</span>
+            </div>
+            <div id="switch" role="button" aria-label data-tip-position="under" tabindex="0">
+                <span class="fa-icon">power-off</span>
+            </div>
+            <div class="rulesetTools">
+                <span id="refresh" class="fa-icon">refresh</span>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <div id="basicTools" class="toolRibbon">
+        <span id="gotoZap" class="fa-icon tool">bolt<span data-i18n="popupTipZapper"></span></span>
+        <span id="gotoPick" class="fa-icon tool">eye-dropper<span data-i18n="popupTipPicker"></span></span>
+        <a href="logger-ui.html#_" class="fa-icon tool enabled" aria-label="data-tip" target="uBOLogger" tabindex="0">list-alt<span data-i18n="popupTipLog"></span></a>
+        <a href="dashboard.html" class="fa-icon tool enabled" aria-label="data-tip" target="uBODashboard" tabindex="0">sliders<span data-i18n="popupTipDashboard"></span></a>
+    </div>
+    <hr>
+    <div id="basicStats" class="itemRibbon">
+        <span data-i18n="popupBlockedOnThisPage_v2"></span><span></span>
+        <span class="h-gutter"></span><span></span>
+        <span data-i18n="popupBlockedSinceInstall_v2"></span><span></span>
+        <span class="h-gutter"></span><span></span>
+        <span data-i18n="popupDomainsConnected_v2"></span><span></span>
+    </div>
+    <hr>
+    <div id="extraTools" class="toolRibbon">
+        <span id="no-large-media" class="hnSwitch tool enabled" role="button" aria-label tabindex="0"><span class="fa-icon fa-icon-badged">film<svg class="nope" viewBox="0 0 20 20"><path d="M1,1 19,19M1,19 19,1" /></svg></span><span data-i18n="popupNoLargeMedia_v2"></span></span>
+        <span id="no-cosmetic-filtering" class="hnSwitch tool enabled" role="button" aria-label tabindex="0"><span class="fa-icon fa-icon-badged">eye-slash<svg class="nope" viewBox="0 0 20 20"><path d="M1,1 19,19M1,19 19,1" /></svg></span><span data-i18n="popupNoCosmeticFiltering_v2"></span></span>
+        <span id="no-remote-fonts" class="hnSwitch tool enabled" role="button" aria-label tabindex="0"><span class="fa-icon fa-icon-badged">font<svg class="nope" viewBox="0 0 20 20"><path d="M1,1 19,19M1,19 19,1" /></svg></span><span data-i18n="popupNoRemoteFonts_v2"></span></span>
+        <span id="no-scripting" class="hnSwitch tool enabled" role="button" aria-label tabindex="0"><span class="fa-icon fa-icon-badged">code<svg class="nope" viewBox="0 0 20 20"><path d="M1,1 19,19M1,19 19,1" /></svg></span><span data-i18n="popupNoScripting_v2"></span></span>
+    </div>
+    <hr>
+    <div id="moreButton" class="itemRibbon">
+        <span data-i18n="popupMoreButton_v2"></span><span class="fa-icon">angle-up</span>
+    </div>
+    <div id="firewallContainer">
+        <div data-des="*" data-type="*"><span data-i18n="popupAnyRulePrompt"></span><span data-src="/" data-i18n-tip="popupTipGlobalRules" data-tip-position="under"> </span><span data-src="." data-i18n-tip="popupTipLocalRules" data-tip-position="under"> </span></div>
+        <div data-des="*" data-type="image"><span data-i18n="popupImageRulePrompt"></span><span data-src="/"> </span><span data-src="."> </span></div>
+        <div data-des="*" data-type="3p"><span data-i18n="popup3pAnyRulePrompt"></span><span data-src="/"> </span><span data-src="."> </span></div>
+        <div data-des="*" data-type="inline-script"><span data-i18n="popupInlineScriptRulePrompt"></span><span data-src="/"> </span><span data-src="."> </span></div>
+        <div data-des="*" data-type="1p-script"><span data-i18n="popup1pScriptRulePrompt"></span><span data-src="/"> </span><span data-src="."> </span></div>
+        <div data-des="*" data-type="3p-script"><span data-i18n="popup3pScriptRulePrompt"></span><span data-src="/"> </span><span data-src="."> </span></div>
+        <div data-des="*" data-type="3p-frame"><span data-i18n="popup3pFrameRulePrompt"></span><span data-src="/"> </span><span data-src="."> </span></div>
+    </div>
+</div>
+
+<div id="templates" style="display: none">
+    <div data-des="" data-type="*"><span><span></span><sub></sub></span><span data-src="/"></span><span data-src="."></span><span data-src="."></span></div>
+    <div id="actionSelector"><span id="dynaAllow"></span><span id="dynaNoop"></span><span id="dynaBlock"></span></div>
+    <div id="hotspotTip"></div>
+    <div id="tooltip"></div>
+</div>
+
+<script src="js/fa-icons.js"></script>
+<script src="lib/punycode.js"></script>
+<script src="js/vapi.js"></script>
+<script src="js/vapi-common.js"></script>
+<script src="js/vapi-client.js"></script>
+<script src="js/udom.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/popup-fenix.js"></script>
+
+</body>
+
+</html>

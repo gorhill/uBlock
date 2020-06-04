@@ -1,0 +1,1010 @@
+{
+  "extName": {
+    "message": "uBlock Origin",
+    "description": "extension name."
+  },
+  "extShortDesc": {
+    "message": "Konačno, efikasan bloker. Štedljiv na procesoru i memoriji.",
+    "description": "this will be in the Chrome web store: must be 132 characters or less"
+  },
+  "dashboardName": {
+    "message": "uBlock₀ — Kontrolna ploča",
+    "description": "English: uBlock₀ — Dashboard"
+  },
+  "dashboardUnsavedWarning": {
+    "message": "Upozorenje! Imate nesačuvane promjene",
+    "description": "A warning in the dashboard when navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningStay": {
+    "message": "Ostani",
+    "description": "Label for button to prevent navigating away from unsaved changes"
+  },
+  "dashboardUnsavedWarningIgnore": {
+    "message": "Ignoriši",
+    "description": "Label for button to ignore unsaved changes"
+  },
+  "settingsPageName": {
+    "message": "Postavke",
+    "description": "appears as tab name in dashboard"
+  },
+  "3pPageName": {
+    "message": "Liste filtera",
+    "description": "appears as tab name in dashboard"
+  },
+  "1pPageName": {
+    "message": "Moji filteri",
+    "description": "appears as tab name in dashboard"
+  },
+  "rulesPageName": {
+    "message": "Moja pravila",
+    "description": "appears as tab name in dashboard"
+  },
+  "whitelistPageName": {
+    "message": "Bijela lista",
+    "description": "appears as tab name in dashboard"
+  },
+  "shortcutsPageName": {
+    "message": "Prečice",
+    "description": "appears as tab name in dashboard"
+  },
+  "statsPageName": {
+    "message": "uBlock₀ — Izvještaj",
+    "description": "Title for the logger window"
+  },
+  "aboutPageName": {
+    "message": "O aplikaciji",
+    "description": "appears as tab name in dashboard"
+  },
+  "assetViewerPageName": {
+    "message": "uBlock₀ — Pregled sadržaja",
+    "description": "Title for the asset viewer page"
+  },
+  "advancedSettingsPageName": {
+    "message": "Napredne postavke",
+    "description": "Title for the advanced settings page"
+  },
+  "popupPowerSwitchInfo": {
+    "message": "Klik: isključi/uključi uBlock₀ za ovu stranicu.\n\nCtrl+klik: isključi uBlock₀ samo na ovoj stranici.",
+    "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
+  },
+  "popupPowerSwitchInfo1": {
+    "message": "Klikni da isključiš uBlock₀ za ovu stranicu.\n\nCtrl+klik da isključiš uBlock₀ samo na ovoj stranici.",
+    "description": "Message to be read by screen readers"
+  },
+  "popupPowerSwitchInfo2": {
+    "message": "Klikni da uključiš uBlock₀ za ovu stranicu.",
+    "description": "Message to be read by screen readers"
+  },
+  "popupBlockedRequestPrompt": {
+    "message": "zahtjeva blokirano",
+    "description": "English: requests blocked"
+  },
+  "popupBlockedOnThisPagePrompt": {
+    "message": "na ovoj stranici",
+    "description": "English: on this page"
+  },
+  "popupBlockedStats": {
+    "message": "{{count}} od {{percent}}%",
+    "description": "Example: 15 or 13%"
+  },
+  "popupBlockedSinceInstallPrompt": {
+    "message": "od instalacije",
+    "description": "English: since install"
+  },
+  "popupOr": {
+    "message": "ili",
+    "description": "English: or"
+  },
+  "popupBlockedOnThisPage_v2": {
+    "message": "Blokirano na ovoj stranici",
+    "description": "For the new mobile-friendly popup design"
+  },
+  "popupBlockedSinceInstall_v2": {
+    "message": "Blokirano od instalacije",
+    "description": "For the new mobile-friendly popup design"
+  },
+  "popupDomainsConnected_v2": {
+    "message": "Domena povezano",
+    "description": "For the new mobile-friendly popup design"
+  },
+  "popupTipDashboard": {
+    "message": "Otvori kontrolno ploču",
+    "description": "English: Click to open the dashboard"
+  },
+  "popupTipZapper": {
+    "message": "Uđi u mod za strujanje elemenata",
+    "description": "Tooltip for the element-zapper icon in the popup panel"
+  },
+  "popupTipPicker": {
+    "message": "Uđi u mod za kupljenje elemenata",
+    "description": "English: Enter element picker mode"
+  },
+  "popupTipLog": {
+    "message": "Otvori izvješće",
+    "description": "Tooltip used for the logger icon in the panel"
+  },
+  "popupTipNoPopups": {
+    "message": "Prebaci/Izmjeni blokiranje svih iskočaka za ovu stranicu",
+    "description": "Tooltip for the no-popups per-site switch"
+  },
+  "popupTipNoPopups1": {
+    "message": "Klikni da blokiraš sve iskočke na ovoj stranici",
+    "description": "Tooltip for the no-popups per-site switch"
+  },
+  "popupTipNoPopups2": {
+    "message": "Klikni da više ne blokiraš sve iskočke na ovoj stranici",
+    "description": "Tooltip for the no-popups per-site switch"
+  },
+  "popupTipNoLargeMedia": {
+    "message": "Prebaci/Izmjeni blokiranje velikih medijskih elemenata za ovu stranicu",
+    "description": "Tooltip for the no-large-media per-site switch"
+  },
+  "popupTipNoLargeMedia1": {
+    "message": "Klikni da blokiraš velike medijske elemente na ovoj stranici",
+    "description": "Tooltip for the no-large-media per-site switch"
+  },
+  "popupTipNoLargeMedia2": {
+    "message": "Klikni da više ne blokiraš velike medijske elemente na ovoj stranici",
+    "description": "Tooltip for the no-large-media per-site switch"
+  },
+  "popupTipNoCosmeticFiltering": {
+    "message": "Prebaci/Izmjeni kozmetičko filtriranje za ovu stranicu",
+    "description": "Tooltip for the no-cosmetic-filtering per-site switch"
+  },
+  "popupTipNoCosmeticFiltering1": {
+    "message": "Klikni da isključiš kozmetičko filtriranje na ovoj stranici",
+    "description": "Tooltip for the no-cosmetic-filtering per-site switch"
+  },
+  "popupTipNoCosmeticFiltering2": {
+    "message": "Klikni da uključiš kozmetičko filtriranje na ovoj stranici",
+    "description": "Tooltip for the no-cosmetic-filtering per-site switch"
+  },
+  "popupTipNoRemoteFonts": {
+    "message": "Prebaci/Izmjeni blokiranje udaljenih fontova za ovu stranicu",
+    "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoRemoteFonts1": {
+    "message": "Klikni da blokiraš udaljene fonte na ovoj stranici",
+    "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoRemoteFonts2": {
+    "message": "Klikni da više ne blokiraš udaljene fonte na ovoj stranici",
+    "description": "Tooltip for the no-remote-fonts per-site switch"
+  },
+  "popupTipNoScripting1": {
+    "message": "Klikni da isključiš JavaScript na ovoj stranici",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupTipNoScripting2": {
+    "message": "Klikni da više ne isključiš JavaScript na ovoj stranici",
+    "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupNoLargeMedia_v2": {
+    "message": "Veliki medija elementi",
+    "description": "Tip for the no-large-media per-site switch"
+  },
+  "popupNoCosmeticFiltering_v2": {
+    "message": "Estetski filteri",
+    "description": "Tip for the no-cosmetic-filtering per-site switch"
+  },
+  "popupNoRemoteFonts_v2": {
+    "message": "Udaljeni fontovi",
+    "description": "Tip for the no-remote-fonts per-site switch"
+  },
+  "popupNoScripting_v2": {
+    "message": "JavaScript",
+    "description": "Tip for the no-scripting per-site switch"
+  },
+  "popupMoreButton_v2": {
+    "message": "Više",
+    "description": "Label to be used to toggle overview panel"
+  },
+  "popupTipGlobalRules": {
+    "message": "Globalna pravila: ovaj stub je za pravila koja se primjenuju svim stranicama.",
+    "description": "Tooltip when hovering the top-most cell of the global-rules column."
+  },
+  "popupTipLocalRules": {
+    "message": "Lokalna pravila: ovaj stub je za pravila koja se primjenuju samo na ovoj stranici.\nLokalna pravila nadjačavaju globalna pravila.",
+    "description": "Tooltip when hovering the top-most cell of the local-rules column."
+  },
+  "popupTipSaveRules": {
+    "message": "Kliknite da vaše promjene učinite trajnim.",
+    "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
+  },
+  "popupTipRevertRules": {
+    "message": "Kliknite da poništite vaše promjene.",
+    "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
+  },
+  "popupAnyRulePrompt": {
+    "message": "sve",
+    "description": ""
+  },
+  "popupImageRulePrompt": {
+    "message": "slike",
+    "description": ""
+  },
+  "popup3pAnyRulePrompt": {
+    "message": "3rd-party",
+    "description": ""
+  },
+  "popup3pPassiveRulePrompt": {
+    "message": "3rd-party CSS/slike",
+    "description": ""
+  },
+  "popupInlineScriptRulePrompt": {
+    "message": "inline skripte",
+    "description": ""
+  },
+  "popup1pScriptRulePrompt": {
+    "message": "1st-party skripte",
+    "description": ""
+  },
+  "popup3pScriptRulePrompt": {
+    "message": "3rd-party skripte",
+    "description": ""
+  },
+  "popup3pFrameRulePrompt": {
+    "message": "3rd-party okviri",
+    "description": ""
+  },
+  "popupHitDomainCountPrompt": {
+    "message": "povezane domene",
+    "description": "appears in popup"
+  },
+  "popupHitDomainCount": {
+    "message": "{{count}} od {{total}}",
+    "description": "appears in popup"
+  },
+  "pickerCreate": {
+    "message": "Kreiraj",
+    "description": "English: Create"
+  },
+  "pickerPick": {
+    "message": "Odaberi",
+    "description": "English: Pick"
+  },
+  "pickerQuit": {
+    "message": "Zatvori",
+    "description": "English: Quit"
+  },
+  "pickerPreview": {
+    "message": "Pregled",
+    "description": "Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
+  },
+  "pickerNetFilters": {
+    "message": "Mrežni filteri",
+    "description": "English: header for a type of filter in the element picker dialog"
+  },
+  "pickerCosmeticFilters": {
+    "message": "Kozmetički filteri",
+    "description": "English: Cosmetic filters"
+  },
+  "pickerCosmeticFiltersHint": {
+    "message": "Klik, Ctrl-klik",
+    "description": "English: Click, Ctrl-click"
+  },
+  "pickerContextMenuEntry": {
+    "message": "Blokiraj element...",
+    "description": "An entry in the browser's contextual menu"
+  },
+  "settingsCollapseBlockedPrompt": {
+    "message": "Sakrij činovnike blokiranih elemenata",
+    "description": "English: Hide placeholders of blocked elements"
+  },
+  "settingsIconBadgePrompt": {
+    "message": "Pokaži broj blokiranih zahtjeva na ikoni",
+    "description": "English: Show the number of blocked requests on the icon"
+  },
+  "settingsTooltipsPrompt": {
+    "message": "Isključi naputke",
+    "description": "A checkbox in the Settings pane"
+  },
+  "settingsContextMenuPrompt": {
+    "message": "Uvedi u korist kontekstni izbornik gdje odgovara",
+    "description": "English: Make use of context menu where appropriate"
+  },
+  "settingsColorBlindPrompt": {
+    "message": "Ugodno za daltoniste",
+    "description": "English: Color-blind friendly"
+  },
+  "settingsCloudStorageEnabledPrompt": {
+    "message": "Uključi podršku za oblačnu pohranu",
+    "description": ""
+  },
+  "settingsAdvancedUserPrompt": {
+    "message": "Ja sam napredni korisnik (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>obavezno pročitati</a>)",
+    "description": ""
+  },
+  "settingsAdvancedUserSettings": {
+    "message": "napredne postavke",
+    "description": "For the tooltip of a link which gives access to advanced settings"
+  },
+  "settingsPrefetchingDisabledPrompt": {
+    "message": "Isključi pretpreuzimanje (da se spriječi bilo koja veza za blokirane mrežne zahtjeve)",
+    "description": "English: "
+  },
+  "settingsHyperlinkAuditingDisabledPrompt": {
+    "message": "Isključi reviziju hiperlinkova",
+    "description": "English: "
+  },
+  "settingsWebRTCIPAddressHiddenPrompt": {
+    "message": "Spriječi WebRTC da ne iscuri lokalnu IP adresu",
+    "description": "English: "
+  },
+  "settingPerSiteSwitchGroup": {
+    "message": "Zadano ponašanje",
+    "description": ""
+  },
+  "settingPerSiteSwitchGroupSynopsis": {
+    "message": "Ova zadana ponašanja mogu biti poništena bazom po stranici",
+    "description": ""
+  },
+  "settingsNoCosmeticFilteringPrompt": {
+    "message": "Isključi kozmetičko filtriranje",
+    "description": ""
+  },
+  "settingsNoLargeMediaPrompt": {
+    "message": "Blokiraj medijske elemente veće od {{input}} KB",
+    "description": ""
+  },
+  "settingsNoRemoteFontsPrompt": {
+    "message": "Blokiraj udaljene fonte",
+    "description": ""
+  },
+  "settingsNoScriptingPrompt": {
+    "message": "Isključi JavaScript",
+    "description": "The default state for the per-site no-scripting switch"
+  },
+  "settingsNoCSPReportsPrompt": {
+    "message": "Blokiraj CSP izvješća",
+    "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
+  },
+  "settingsStorageUsed": {
+    "message": "Iskorišten prostor: {{value}} bita",
+    "description": "English: Storage used: {{}} bytes"
+  },
+  "settingsLastRestorePrompt": {
+    "message": "Posljednja obnova:",
+    "description": "English: Last restore:"
+  },
+  "settingsLastBackupPrompt": {
+    "message": "Posljednja rezervna kopija:",
+    "description": "English: Last backup:"
+  },
+  "3pListsOfBlockedHostsPrompt": {
+    "message": "{{netFilterCount}} mrežni/ih filter/a ＋ {{cosmeticFilterCount}} kozmetički/ih filter/a iz:",
+    "description": "Appears at the top of the _3rd-party filters_ pane"
+  },
+  "3pListsOfBlockedHostsPerListStats": {
+    "message": "{{used}} iskorišteno od {{total}}",
+    "description": "Appears aside each filter list in the _3rd-party filters_ pane"
+  },
+  "3pAutoUpdatePrompt1": {
+    "message": "Automatsko ažurisanje liste filtera",
+    "description": "A checkbox in the _3rd-party filters_ pane"
+  },
+  "3pUpdateNow": {
+    "message": "Ažuriraj sada",
+    "description": "A button in the in the _3rd-party filters_ pane"
+  },
+  "3pPurgeAll": {
+    "message": "Obriši svu keš memoriju",
+    "description": "A button in the in the _3rd-party filters_ pane"
+  },
+  "3pParseAllABPHideFiltersPrompt1": {
+    "message": "Raščlaniti i primijeniti kozmetičke filtere",
+    "description": "English: Parse and enforce Adblock+ element hiding filters."
+  },
+  "3pParseAllABPHideFiltersInfo": {
+    "message": "<p>Ova opcija omogućava raščlambu i primjenu <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">Adblock Plus-kompatibilnih filtera sa &ldquo;elementima za skrivanje&rdquo; filtera</a>. Ovi filteri su uglavnom kozmetički, oni služe za skrivanje elemenata u web stranici koje se smatraju ko vidne smetnje, i koje se ne mogu blokirati od softverskog motora baziranog od mrežnih zahtjeva.</p><p>Omogućavanje ovog svojstva uvećava memorijski otisak uBlock₀-a.</p>",
+    "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
+  },
+  "3pIgnoreGenericCosmeticFilters": {
+    "message": "Zanemari opće kozmetičke filtere",
+    "description": "This will cause uBO to ignore all generic cosmetic filters."
+  },
+  "3pIgnoreGenericCosmeticFiltersInfo": {
+    "message": "<p>Generički kozmetički filteri su onakvi kozmetički filteri koji su namijenjeni primjeni na svim web stranicama.<p>Iako su efikasno rukovani sa uBlock₀ blokerom, generički kozmetički filteri bi mogli svejedno doprinijeti dodatnu mjerljivu memorijsku i procesorsku upotrebu na nekim stranicama, posebno na velikim i dugovječnim stranicama.<p>Omogućavanjem ove postavke će se eliminisati memorijska i procesorska dodatna upotreba na web stranicama ko rezultat korištenja generičkih kozmetičkih filtera, i tako smanjiti memorijski otisak samog uBlock₀.<p>Preporučeno je omogućiti ovu opciju na slabijim uređajima.",
+    "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
+  },
+  "3pListsOfBlockedHostsHeader": {
+    "message": "Lists of blocked hosts",
+    "description": "English: Lists of blocked hosts"
+  },
+  "3pApplyChanges": {
+    "message": "Primijeni promjene",
+    "description": "English: Apply changes"
+  },
+  "3pGroupDefault": {
+    "message": "Ugrađeno",
+    "description": "Header for the uBlock filters section in 'Filter lists pane'"
+  },
+  "3pGroupAds": {
+    "message": "Reklame",
+    "description": "English: Ads"
+  },
+  "3pGroupPrivacy": {
+    "message": "Privatnost",
+    "description": "English: Privacy"
+  },
+  "3pGroupMalware": {
+    "message": "Zlonamjerni domeni",
+    "description": "English: Malware domains"
+  },
+  "3pGroupAnnoyances": {
+    "message": "Smetnje",
+    "description": "The header identifying the filter lists in the category 'annoyances'"
+  },
+  "3pGroupMultipurpose": {
+    "message": "Višenamjenski",
+    "description": "English: Multipurpose"
+  },
+  "3pGroupRegions": {
+    "message": "Regije, jezici",
+    "description": "English: Regions, languages"
+  },
+  "3pGroupCustom": {
+    "message": "Prilagođeno",
+    "description": "English: Custom"
+  },
+  "3pImport": {
+    "message": "Uvezi...",
+    "description": "The label for the checkbox used to import external filter lists"
+  },
+  "3pExternalListsHint": {
+    "message": "Jedan URL po redu. Invalidni URL-ovi će je biti tiho zanemareni.",
+    "description": "Short information about how to use the textarea to import external filter lists by URL"
+  },
+  "3pExternalListObsolete": {
+    "message": "Zastarjelo.",
+    "description": "used as a tooltip for the out-of-date icon beside a list"
+  },
+  "3pLastUpdate": {
+    "message": "Posljednje ažurisanje: {{ago}}.\nKliknite da forsirate ažurisanje.",
+    "description": "used as a tooltip for the clock icon beside a list"
+  },
+  "3pUpdating": {
+    "message": "Ažurisanje u toku...",
+    "description": "used as a tooltip for the spinner icon beside a list"
+  },
+  "3pNetworkError": {
+    "message": "Greška sa mrežom je spriječila ažurisanje resursa.",
+    "description": "used as a tooltip for error icon beside a list"
+  },
+  "1pFormatHint": {
+    "message": "Jedan filter po redu. Filter može biti obično domaćinsko ime ili filter kompatibilan sa Adblock Plus-om. Linije sa <code>!</code> prefiksom će je biti zanemarene.",
+    "description": "Short information about how to create custom filters"
+  },
+  "1pImport": {
+    "message": "Uvezi i dodaj",
+    "description": "English: Import and append"
+  },
+  "1pExport": {
+    "message": "Izvoz",
+    "description": "English: Export"
+  },
+  "1pExportFilename": {
+    "message": "my-ublock-static-filters_{{datetime}}.txt",
+    "description": "English: my-ublock-static-filters_{{datetime}}.txt"
+  },
+  "1pApplyChanges": {
+    "message": "Primijeni promjene",
+    "description": "English: Apply changes"
+  },
+  "rulesPermanentHeader": {
+    "message": "Trajna/Stalna pravila",
+    "description": "header"
+  },
+  "rulesTemporaryHeader": {
+    "message": "Privremena pravila",
+    "description": "header"
+  },
+  "rulesRevert": {
+    "message": "Vratiti",
+    "description": "This will remove all temporary rules"
+  },
+  "rulesCommit": {
+    "message": "Potvrditi",
+    "description": "This will persist temporary rules"
+  },
+  "rulesEdit": {
+    "message": "Uredi",
+    "description": "Will enable manual-edit mode (textarea)"
+  },
+  "rulesEditSave": {
+    "message": "Snimi",
+    "description": "Will save manually-edited content and exit manual-edit mode"
+  },
+  "rulesEditDiscard": {
+    "message": "Odbaci",
+    "description": "Will discard manually-edited content and exit manual-edit mode"
+  },
+  "rulesImport": {
+    "message": "Uvezi iz fajla...",
+    "description": ""
+  },
+  "rulesExport": {
+    "message": "Izvezi u fajl",
+    "description": ""
+  },
+  "rulesDefaultFileName": {
+    "message": "my-ublock-dynamic-rules_{{datetime}}.txt",
+    "description": "default file name to use"
+  },
+  "rulesHint": {
+    "message": "Lista vaših dinamičkih pravila za filtriranje.",
+    "description": "English: List of your dynamic filtering rules."
+  },
+  "rulesFormatHint": {
+    "message": "Sintaksa pravila: <code>izvor destinaija tip akcija</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>puna dokumentacija</a>).",
+    "description": "English: dynamic rule syntax and full documentation."
+  },
+  "whitelistPrompt": {
+    "message": "Direktive bijele liste govore na kojim web stranicama bi uBlock Origin trebao biti isključen. Jedna stavka po redu. Netačne direktive će biti ignorisane i zakomentirane.",
+    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+  },
+  "whitelistImport": {
+    "message": "Uvezi i dodaj",
+    "description": "English: Import and append"
+  },
+  "whitelistExport": {
+    "message": "Izvoz",
+    "description": "English: Export"
+  },
+  "whitelistExportFilename": {
+    "message": "my-ublock-whitelist_{{datetime}}.txt",
+    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+  },
+  "whitelistApply": {
+    "message": "Primijeni promjene",
+    "description": "English: Apply changes"
+  },
+  "logRequestsHeaderType": {
+    "message": "Tip",
+    "description": "English: Type"
+  },
+  "logRequestsHeaderDomain": {
+    "message": "Domena",
+    "description": "English: Domain"
+  },
+  "logRequestsHeaderURL": {
+    "message": "URL",
+    "description": "English: URL"
+  },
+  "logRequestsHeaderFilter": {
+    "message": "Filter",
+    "description": "English: Filter"
+  },
+  "logAll": {
+    "message": "Sve",
+    "description": "Appears in the logger's tab selector"
+  },
+  "logBehindTheScene": {
+    "message": "Bez tabova",
+    "description": "Pretty name for behind-the-scene network requests"
+  },
+  "loggerCurrentTab": {
+    "message": "Trenutni tab",
+    "description": "Appears in the logger's tab selector"
+  },
+  "loggerReloadTip": {
+    "message": "Ponovo učitaj sadržaj taba",
+    "description": "Tooltip for the reload button in the logger page"
+  },
+  "loggerDomInspectorTip": {
+    "message": "(De)aktivacija DOM inspektora",
+    "description": "Tooltip for the DOM inspector button in the logger page"
+  },
+  "loggerPopupPanelTip": {
+    "message": "(De)aktivacija popup ploče",
+    "description": "Tooltip for the popup panel button in the logger page"
+  },
+  "loggerInfoTip": {
+    "message": "uBlock Origin wiki: izvještaji",
+    "description": "Tooltip for the top-right info label in the logger page"
+  },
+  "loggerClearTip": {
+    "message": "Očisti izvještaje",
+    "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
+  },
+  "loggerPauseTip": {
+    "message": "Pauziraj izvještaj (odbace sve dolazne podatke)",
+    "description": "Tooltip for the pause button in the logger page"
+  },
+  "loggerUnpauseTip": {
+    "message": "Pokreni izvještaj",
+    "description": "Tooltip for the play button in the logger page"
+  },
+  "loggerRowFiltererButtonTip": {
+    "message": "(De)aktivacija filtriranja izvještaja",
+    "description": "Tooltip for the row filterer button in the logger page"
+  },
+  "logFilterPrompt": {
+    "message": "filtriraj sadržaj izvještaja",
+    "description": "Placeholder string for logger output filtering input field"
+  },
+  "loggerRowFiltererBuiltinTip": {
+    "message": "Opcije fitriranja izvještaja",
+    "description": "Tooltip for the button to bring up logger output filtering options"
+  },
+  "loggerRowFiltererBuiltinNot": {
+    "message": "Nije",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinEventful": {
+    "message": "eventful",
+    "description": "A keyword in the built-in row filtering expression: all items corresponding to uBO doing something (blocked, allowed, redirected, etc.)"
+  },
+  "loggerRowFiltererBuiltinBlocked": {
+    "message": "blokirano",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinAllowed": {
+    "message": "dozvoljeno",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltin1p": {
+    "message": "1st-party",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltin3p": {
+    "message": "3rd-party",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerEntryDetailsHeader": {
+    "message": "Detalji",
+    "description": "Small header to identify the 'Details' pane for a specific logger entry"
+  },
+  "loggerEntryDetailsFilter": {
+    "message": "Filter",
+    "description": "Label to identify a filter field"
+  },
+  "loggerEntryDetailsFilterList": {
+    "message": "Lista filtera",
+    "description": "Label to identify a filter list field"
+  },
+  "loggerEntryDetailsRule": {
+    "message": "Pravilo",
+    "description": "Label to identify a rule field"
+  },
+  "loggerEntryDetailsContext": {
+    "message": "Kontekst",
+    "description": "Label to identify a context field (typically a hostname)"
+  },
+  "loggerEntryDetailsRootContext": {
+    "message": "Glavni konteksts",
+    "description": "Label to identify a root context field (typically a hostname)"
+  },
+  "loggerEntryDetailsPartyness": {
+    "message": "Partyness",
+    "description": "Label to identify a field providing partyness information"
+  },
+  "loggerEntryDetailsType": {
+    "message": "Tip",
+    "description": "Label to identify the type of an entry"
+  },
+  "loggerEntryDetailsURL": {
+    "message": "URL",
+    "description": "Label to identify the URL of an entry"
+  },
+  "loggerURLFilteringHeader": {
+    "message": "URL pravilo",
+    "description": "Small header to identify the dynamic URL filtering section"
+  },
+  "loggerURLFilteringContextLabel": {
+    "message": "Kontekst:",
+    "description": "Label for the context selector"
+  },
+  "loggerURLFilteringTypeLabel": {
+    "message": "Tip:",
+    "description": "Label for the type selector"
+  },
+  "loggerStaticFilteringHeader": {
+    "message": "Statični filter",
+    "description": "Small header to identify the static filtering section"
+  },
+  "loggerStaticFilteringSentence": {
+    "message": "{{action}} mrežni zahtjev od {{type}} {{br}}kojem URL adresa odgovora {{url}} {{br}}i koji izvire {{origin}},{{br}}{{importance}} postoji odgovarajući filter za izuzetak.",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartBlock": {
+    "message": "Blokiraj",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAllow": {
+    "message": "Dozvoli",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartType": {
+    "message": "tip “{{type}}”",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyType": {
+    "message": "bilo koji tip",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartOrigin": {
+    "message": "iz “{{origin}}”",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartAnyOrigin": {
+    "message": "iz bilo čega",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartNotImportant": {
+    "message": "osim kada",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringSentencePartImportant": {
+    "message": "čak i ako",
+    "description": "Used in the static filtering wizard"
+  },
+  "loggerStaticFilteringFinderSentence1": {
+    "message": "Statični filter <code>{{filter}}</code> pronađen u:",
+    "description": "Below this sentence, the filter list(s) in which the filter was found"
+  },
+  "loggerStaticFilteringFinderSentence2": {
+    "message": "Statični filter <code>{{filter}}</code> nije mogao biti pronađen niti u jednoj od trenutno uključenih listih filtera",
+    "description": "Message to show when a filter cannot be found in any filter lists"
+  },
+  "loggerSettingDiscardPrompt": {
+    "message": "Unosi u izvještaju koji ne ispunjavaju sva tri uvjeta/uslova navedena ispod će je biti automatski odbačeni:",
+    "description": "Logger setting: A sentence to describe the purpose of the settings below"
+  },
+  "loggerSettingPerEntryMaxAge": {
+    "message": "Zadržati unose od posljednjih {{input}} minuta",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerTabMaxLoads": {
+    "message": "Zadržati najviše {{input}} učitavanja stranica po kartici",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerTabMaxEntries": {
+    "message": "Zadržati najviše {{input}} unosa po kartici",
+    "description": "A logger setting"
+  },
+  "loggerSettingPerEntryLineCount": {
+    "message": "Koristi {{input}} linija po unosu u vertikalno proširenom načinu",
+    "description": "A logger setting"
+  },
+  "loggerSettingHideColumnsPrompt": {
+    "message": "Sakrij stubove:",
+    "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
+  },
+  "loggerSettingHideColumnTime": {
+    "message": "{{input}} Vrijeme",
+    "description": "A label for the time column"
+  },
+  "loggerSettingHideColumnFilter": {
+    "message": "{{input}} Filter/pravilo",
+    "description": "A label for the filter or rule column"
+  },
+  "loggerSettingHideColumnContext": {
+    "message": "{{input}} Kontekst",
+    "description": "A label for the context column"
+  },
+  "loggerSettingHideColumnPartyness": {
+    "message": "{{input}} Strana/Pripadnost",
+    "description": "A label for the partyness column"
+  },
+  "loggerExportFormatList": {
+    "message": "Lista/Popis",
+    "description": "Label for radio-button to pick export format"
+  },
+  "loggerExportFormatTable": {
+    "message": "Tabela",
+    "description": "Label for radio-button to pick export format"
+  },
+  "loggerExportEncodePlain": {
+    "message": "Obično",
+    "description": "Label for radio-button to pick export text format"
+  },
+  "loggerExportEncodeMarkdown": {
+    "message": "Markdown",
+    "description": "Label for radio-button to pick export text format"
+  },
+  "aboutChangelog": {
+    "message": "Spisak izmjena/promjena",
+    "description": ""
+  },
+  "aboutWiki": {
+    "message": "Wiki",
+    "description": "English: project' wiki on GitHub"
+  },
+  "aboutSupport": {
+    "message": "Podrška",
+    "description": "A link for where to get support"
+  },
+  "aboutIssues": {
+    "message": "Pratilac problema",
+    "description": "Text for a link to official issue tracker"
+  },
+  "aboutCode": {
+    "message": "Izvorni kod (GPLv3)",
+    "description": "English: Source code (GPLv3)"
+  },
+  "aboutContributors": {
+    "message": "Suradnici",
+    "description": "English: Contributors"
+  },
+  "aboutDependencies": {
+    "message": "Vanjske zavisnosti (GPLv3-kompatiblini):",
+    "description": "Shown in the About pane"
+  },
+  "aboutBackupDataButton": {
+    "message": "Spasi rezervnu kopiju u datoteku",
+    "description": "Text for button to create a backup of all settings"
+  },
+  "aboutBackupFilename": {
+    "message": "moja-ublock-sig_kopija_{{datetime}}.txt",
+    "description": "English: my-ublock-backup_{{datetime}}.txt"
+  },
+  "aboutRestoreDataButton": {
+    "message": "Vrati iz datoteke...",
+    "description": "English: Restore from file..."
+  },
+  "aboutResetDataButton": {
+    "message": "Vrati na zadane postavke/podešavanja...",
+    "description": "English: Reset to default settings..."
+  },
+  "aboutRestoreDataConfirm": {
+    "message": "Sve vaše postavke/podešavanja bit će je prereađena sa sačuvanim podacima na {{time}}, i uBlock₀ će se ponovno pokrenuti. \n\nPreraditi sve postojeće postavke/podešavanja pomoću sigurnosne kopije postavkih/podataka?",
+    "description": "Message asking user to confirm restore"
+  },
+  "aboutRestoreDataError": {
+    "message": "Podaci se ne mogu učitati ili su neispravni",
+    "description": "Message to display when an error occurred during restore"
+  },
+  "aboutResetDataConfirm": {
+    "message": "Sve vaše postavke/podešavanja će je biti obrisana i µBlock₀ će se ponovno pokrenuti. \n\nVrati µBlock₀ na tvorničke postavke/podešavanja?",
+    "description": "Message asking user to confirm reset"
+  },
+  "errorCantConnectTo": {
+    "message": "Greška sa mrežom {{msg}}",
+    "description": "English: Network error: {{msg}}"
+  },
+  "subscriberConfirm": {
+    "message": "uBlock₀: Dodajte sljedeću URL adresu u vašu izbornu listu filtera?\n\nNaslov/Naziv: \"{{title}}\"\nURL-adresa: {{url}}",
+    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+  },
+  "elapsedOneMinuteAgo": {
+    "message": "prije jedan minut",
+    "description": "English: a minute ago"
+  },
+  "elapsedManyMinutesAgo": {
+    "message": "prije {{value}} minute/a",
+    "description": "English: {{value}} minutes ago"
+  },
+  "elapsedOneHourAgo": {
+    "message": "prije jedan sat",
+    "description": "English: an hour ago"
+  },
+  "elapsedManyHoursAgo": {
+    "message": "prije {{value}} sata/i",
+    "description": "English: {{value}} hours ago"
+  },
+  "elapsedOneDayAgo": {
+    "message": "prije jedan dan",
+    "description": "English: a day ago"
+  },
+  "elapsedManyDaysAgo": {
+    "message": "prije {{value}} dana",
+    "description": "English: {{value}} days ago"
+  },
+  "showDashboardButton": {
+    "message": "Prikaži kontrolnu ploču/tablu",
+    "description": "Firefox/Fennec-specific: Show Dashboard"
+  },
+  "showNetworkLogButton": {
+    "message": "Prikaži izvještaj",
+    "description": "Firefox/Fennec-specific: Show Logger"
+  },
+  "fennecMenuItemBlockingOff": {
+    "message": "isključen",
+    "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
+  },
+  "docblockedPrompt1": {
+    "message": "uBlock Origin je onemogućio/spriječio učitavanje sljedeće stranice:",
+    "description": "English: uBlock₀ has prevented the following page from loading:"
+  },
+  "docblockedPrompt2": {
+    "message": "Zbog sljedećeg filtera",
+    "description": "English: Because of the following filter"
+  },
+  "docblockedNoParamsPrompt": {
+    "message": "bez parametara",
+    "description": "label to be used for the parameter-less URL: https://cloud.githubusercontent.com/assets/585534/9832014/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
+  },
+  "docblockedFoundIn": {
+    "message": "Pronađen u:",
+    "description": "English: List of filter list names follows"
+  },
+  "docblockedBack": {
+    "message": "Idi natrag/nazad",
+    "description": "English: Go back"
+  },
+  "docblockedClose": {
+    "message": "Zatvori ovaj prozor",
+    "description": "English: Close this window"
+  },
+  "docblockedProceed": {
+    "message": "Isključi strogo blokiranje za {{hostname}}",
+    "description": "English: Disable strict blocking for {{hostname}} ..."
+  },
+  "docblockedDisableTemporary": {
+    "message": "Privremeno",
+    "description": "English: Temporarily"
+  },
+  "docblockedDisablePermanent": {
+    "message": "Trajno",
+    "description": "English: Permanently"
+  },
+  "cloudPush": {
+    "message": "Izvezi u cloud pohranu",
+    "description": "tooltip"
+  },
+  "cloudPull": {
+    "message": "Uvezi iz cloud pohrane",
+    "description": "tooltip"
+  },
+  "cloudPullAndMerge": {
+    "message": "Uvezite iz cloud pohrane i spojite sa trenutnim postavkama",
+    "description": "tooltip"
+  },
+  "cloudNoData": {
+    "message": "...\n...",
+    "description": ""
+  },
+  "cloudDeviceNamePrompt": {
+    "message": "Naziv ovog uređaja:",
+    "description": "used as a prompt for the user to provide a custom device name"
+  },
+  "advancedSettingsWarning": {
+    "message": "Upozorenje! Napredne postavke mijenjate na vlastitu odgovornost.",
+    "description": "A warning to users at the top of 'Advanced settings' page"
+  },
+  "genericSubmit": {
+    "message": "Pošalji",
+    "description": "for generic 'Submit' buttons"
+  },
+  "genericApplyChanges": {
+    "message": "Primijeni promjene",
+    "description": "for generic 'Apply changes' buttons"
+  },
+  "genericRevert": {
+    "message": "Vrati",
+    "description": "for generic 'Revert' buttons"
+  },
+  "genericBytes": {
+    "message": "bajta",
+    "description": ""
+  },
+  "contextMenuTemporarilyAllowLargeMediaElements": {
+    "message": "Privremeno omogući velike medijske elemente",
+    "description": "A context menu entry, present when large media elements have been blocked on the current site"
+  },
+  "shortcutCapturePlaceholder": {
+    "message": "Upišite prečicu",
+    "description": "Placeholder string for input field used to capture a keyboard shortcut"
+  },
+  "genericMergeViewScrollLock": {
+    "message": "(De)aktivacija zaključanog scrollanja",
+    "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
+  },
+  "genericCopyToClipboard": {
+    "message": "Kopirano u međuspremnik",
+    "description": "Label for buttons used to copy something to the clipboard"
+  },
+  "toggleBlockingProfile": {
+    "message": "(De)aktivacija blokiranja profila",
+    "description": "Label for keyboard shortcut used to toggle blocking profile"
+  },
+  "relaxBlockingMode": {
+    "message": "Relaksirano mod blokiranja",
+    "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
+  "dummy": {
+    "message": "This entry must be the last one",
+    "description": "so we dont need to deal with comma for last entry"
+  }
+}

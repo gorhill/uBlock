@@ -26,7 +26,7 @@
 
   let ads, page, settings; // remove? only if we can find an updated ad already in the DOM
 
-  vAPI.messaging.addChannelListener('adnauseam', function (request) {
+  vAPI.broadcastListener.add(request => {
 
     switch (request.what) {
 
@@ -103,16 +103,15 @@
       'adnauseam', {
         what: 'verifyAdBlockersAndDNT',
         url: page
-      },
-      function () {
+      }).then(details => {
         vAPI.messaging.send(
           'adnauseam', {
             what: 'getNotifications'
-          },
-          function (notifications) {
-            renderNotifications(notifications);
-          });
-      });
+          }).then(notifications => {
+              renderNotifications(notifications);
+          })
+      })
+
   }
 
   const updateMenuState = function () {
@@ -432,14 +431,18 @@
         'adnauseam', {
           what: 'adsForPage',
           tabId: popupData.tabId
-        }, renderPage);
+        }).then(details => {
+            renderPage(details);
+        })
     };
 
     vAPI.messaging.send(
       'popupPanel', {
         what: 'getPopupData',
         tabId: tabId
-      }, onPopupData);
+      }).then(details => {
+          onPopupData(details);
+      })
   };
 
   const dval = function () {

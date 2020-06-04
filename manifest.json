@@ -1,13 +1,8 @@
 {
-  "manifest_version": 2,
-  "name": "AdNauseam",
-  "update_url": "https://rednoise.org/adnauseam/updates.xml",
-  "version": "3.9.104",
-  "default_locale": "en",
-  "description": "__MSG_extShortDesc__",
-  "icons": {
-    "16": "img/icon_16.png",
-    "128": "img/icon_128.png"
+  "author": "Daniel C. Howe",
+  "background": {
+    "page": "background.html",
+    "persistent":true
   },
   "browser_action": {
     "default_icon": {
@@ -17,38 +12,61 @@
     "default_title": "AdNauseam",
     "default_popup": "menu.html"
   },
-  "author": "Daniel C. Howe",
-  "background": {
-    "page": "background.html",
-    "persistent":true
+  "commands": {
+    "launch-element-zapper": {
+      "description": "__MSG_popupTipZapper__"
+    },
+    "launch-element-picker": {
+      "description": "__MSG_popupTipPicker__"
+    },
+    "launch-logger": {
+      "description": "__MSG_popupTipLog__"
+    },
+    "relax-blocking-mode": {
+      "description": "__MSG_relaxBlockingMode__"
+    }
   },
-  "content_scripts": [{
-    "matches": ["http://*/*", "https://*/*"],
-    "js": ["js/vapi.js", "js/vapi-client.js", "js/adn/textads.js", "js/adn/parser.js", "js/contentscript.js"],
+  "content_scripts": [
+    {
+    "matches": [
+      "http://*/*",
+      "https://*/*"
+    ],
+    "js": [
+      "js/vapi.js",
+      "js/vapi-client.js",
+      "js/adn/textads.js",
+      "js/adn/parser.js",
+      "js/contentscript.js"
+    ],
     "run_at": "document_start",
     "all_frames": true
   }, {
-    "matches": ["http://*/*", "https://*/*"],
-    "js": ["js/scriptlets/subscriber.js"],
+    "matches": [
+      "http://*/*",
+      "https://*/*"
+    ],
+    "js": [
+      "js/scriptlets/subscriber.js"
+    ],
     "run_at": "document_idle",
     "all_frames": false
-  }],
-  "commands": {
-      "launch-element-zapper": {
-          "description": "__MSG_popupTipZapper__"
-      },
-      "launch-element-picker": {
-          "description": "__MSG_popupTipPicker__"
-      },
-      "launch-logger": {
-          "description": "__MSG_popupTipLog__"
-      }
+    }
+  ],
+  "content_security_policy": "script-src 'self'; object-src 'self'",
+  "default_locale": "en",
+  "description": "__MSG_extShortDesc__",
+  "icons": {
+    "16": "img/icon_16.png",
+    "128": "img/icon_128.png"
   },
   "incognito": "split",
-  "minimum_chrome_version": "38.0",
-  "options_page": "dashboard.html",
+  "manifest_version": 2,
+  "minimum_chrome_version": "51.0",
+  "name": "AdNauseam",
   "options_ui": {
-    "page": "options.html"
+    "page": "options.html",
+    "open_in_tab": true
   },
   "permissions": [
     "contextMenus",
@@ -65,5 +83,10 @@
   "short_name": "AdNauseam",
   "storage": {
     "managed_schema": "managed_storage.json"
-  }
+  },
+  "version": "3.9.104",
+  "web_accessible_resources": [
+    "/web_accessible_resources/*"
+  ],
+  "update_url": "https://rednoise.org/adnauseam/updates.xml"
 }

@@ -19,21 +19,12 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-// https://github.com/gorhill/uBlock/issues/2720
-
-/******************************************************************************/
-/******************************************************************************/
-
-(function() {
-
 'use strict';
 
 /******************************************************************************/
-
-var µb = µBlock;
+/******************************************************************************/
 
 // https://github.com/gorhill/httpswitchboard/issues/303
-// Some kind of trick going on here:
 //   Any scheme other than 'http' and 'https' is remapped into a fake
 //   URL which trick the rest of µBlock into being able to process an
 //   otherwise unmanageable scheme. µBlock needs web page to have a proper
@@ -42,10 +33,7 @@ var µb = µBlock;
 //   hostname. This way, for a specific scheme you can create scope with
 //   rules which will apply only to that scheme.
 
-/******************************************************************************/
-/******************************************************************************/
-
-µb.normalizePageURL = function(tabId, pageURL) {
+µBlock.normalizePageURL = function(tabId, pageURL) {
     if ( tabId < 0 ) {
         return 'http://behind-the-scene/';
     }
@@ -63,471 +51,7 @@ var µb = µBlock;
         fakeHostname = uri.path + '.' + fakeHostname;
     }
 
-    return 'http://' + fakeHostname + '/';
-};
-
-/******************************************************************************/
-/******************************************************************************
-
-To keep track from which context *exactly* network requests are made. This is
-often tricky for various reasons, and the challenge is not specific to one
-browser.
-
-The time at which a URL is assigned to a tab and the time when a network
-request for a root document is made must be assumed to be unrelated: it's all
-asynchronous. There is no guaranteed order in which the two events are fired.
-
-Also, other "anomalies" can occur:
-
-- a network request for a root document is fired without the corresponding
-tab being really assigned a new URL
-<https://github.com/chrisaljoudi/uBlock/issues/516>
-
-- a network request for a secondary resource is labeled with a tab id for
-which no root document was pulled for that tab.
-<https://github.com/chrisaljoudi/uBlock/issues/1001>
-
-- a network request for a secondary resource is made without the root
-document to which it belongs being formally bound yet to the proper tab id,
-causing a bad scope to be used for filtering purpose.
-<https://github.com/chrisaljoudi/uBlock/issues/1205>
-<https://github.com/chrisaljoudi/uBlock/issues/1140>
-
-So the solution here is to keep a lightweight data structure which only
-purpose is to keep track as accurately as possible of which root document
-belongs to which tab. That's the only purpose, and because of this, there are
-no restrictions for when the URL of a root document can be associated to a tab.
-
-Before, the PageStore object was trying to deal with this, but it had to
-enforce some restrictions so as to not descend into one of the above issues, or
-other issues. The PageStore object can only be associated with a tab for which
-a definitive navigation event occurred, because it collects information about
-what occurred in the tab (for example, the number of requests blocked for a
-page).
-
-The TabContext objects do not suffer this restriction, and as a result they
-offer the most reliable picture of which root document URL is really associated
-to which tab. Moreover, the TabObject can undo an association from a root
-document, and automatically re-associate with the next most recent. This takes
-care of <https://github.com/chrisaljoudi/uBlock/issues/516>.
-
-The PageStore object no longer cache the various information about which
-root document it is currently bound. When it needs to find out, it will always
-defer to the TabContext object, which will provide the real answer. This takes
-case of <https://github.com/chrisaljoudi/uBlock/issues/1205>. In effect, the
-master switch and dynamic filtering rules can be evaluated now properly even
-in the absence of a PageStore object, this was not the case before.
-
-Also, the TabContext object will try its best to find a good candidate root
-document URL for when none exists. This takes care of
-<https://github.com/chrisaljoudi/uBlock/issues/1001>.
-
-The TabContext manager is self-contained, and it takes care to properly
-housekeep itself.
-
-*/
-
-µb.tabContextManager = (function() {
-    var tabContexts = new Map();
-
-    // https://github.com/chrisaljoudi/uBlock/issues/1001
-    // This is to be used as last-resort fallback in case a tab is found to not
-    // be bound while network requests are fired for the tab.
-    var mostRecentRootDocURL = '';
-    var mostRecentRootDocURLTimestamp = 0;
-
-    var popupCandidates = new Map();
-
-    var PopupCandidate = function(targetTabId, openerTabId) {
-        this.targetTabId = targetTabId;
-        this.opener = {
-            tabId: openerTabId,
-            popunder: false,
-            trustedURL: openerTabId === µb.mouseEventRegister.tabId ?
-                µb.mouseEventRegister.url :
-                ''
-        };
-        this.selfDestructionTimer = null;
-        this.launchSelfDestruction();
-    };
-
-    PopupCandidate.prototype.destroy = function() {
-        if ( this.selfDestructionTimer !== null ) {
-            clearTimeout(this.selfDestructionTimer);
-        }
-        popupCandidates.delete(this.targetTabId);
-    };
-
-    PopupCandidate.prototype.launchSelfDestruction = function() {
-        if ( this.selfDestructionTimer !== null ) {
-            clearTimeout(this.selfDestructionTimer);
-        }
-        this.selfDestructionTimer = vAPI.setTimeout(this.destroy.bind(this), 10000);
-    };
-
-    var popupCandidateTest = function(targetTabId) {
-        for ( var entry of popupCandidates ) {
-            var tabId = entry[0];
-            var candidate = entry[1];
-            if (
-                targetTabId !== tabId &&
-                targetTabId !== candidate.opener.tabId
-            ) {
-                continue;
-            }
-            // https://github.com/gorhill/uBlock/issues/3129
-            //   If the trigger is a change in the opener's URL, mark the entry
-            //   as candidate for popunder filtering.
-            if ( targetTabId === candidate.opener.tabId ) {
-                candidate.opener.popunder = true;
-            }
-            if ( vAPI.tabs.onPopupUpdated(tabId, candidate.opener) === true ) {
-                candidate.destroy();
-            } else {
-                candidate.launchSelfDestruction();
-            }
-        }
-    };
-
-    vAPI.tabs.onPopupCreated = function(targetTabId, openerTabId) {
-        var popup = popupCandidates.get(targetTabId);
-        if ( popup === undefined ) {
-            popupCandidates.set(
-                targetTabId,
-                new PopupCandidate(targetTabId, openerTabId)
-            );
-        }
-        popupCandidateTest(targetTabId);
-    };
-
-    var gcPeriod = 10 * 60 * 1000;
-
-    // A pushed entry is removed from the stack unless it is committed with
-    // a set time.
-    var StackEntry = function(url, commit) {
-        this.url = url;
-        this.committed = commit;
-        this.tstamp = Date.now();
-    };
-
-    var TabContext = function(tabId) {
-        this.tabId = tabId;
-        this.stack = [];
-        this.rawURL =
-        this.normalURL =
-        this.origin =
-        this.rootHostname =
-        this.rootDomain = '';
-        this.commitTimer = null;
-        this.gcTimer = null;
-        this.onGCBarrier = false;
-        this.netFiltering = true;
-        this.netFilteringReadTime = 0;
-
-        tabContexts.set(tabId, this);
-    };
-
-    TabContext.prototype.destroy = function() {
-        if ( vAPI.isBehindTheSceneTabId(this.tabId) ) { return; }
-        if ( this.gcTimer !== null ) {
-            clearTimeout(this.gcTimer);
-            this.gcTimer = null;
-        }
-        tabContexts.delete(this.tabId);
-    };
-
-    TabContext.prototype.onTab = function(tab) {
-        if ( tab ) {
-            this.gcTimer = vAPI.setTimeout(this.onGC.bind(this), gcPeriod);
-        } else {
-            this.destroy();
-        }
-    };
-
-    TabContext.prototype.onGC = function() {
-        if ( vAPI.isBehindTheSceneTabId(this.tabId) ) {
-            return;
-        }
-        // https://github.com/gorhill/uBlock/issues/1713
-        // For unknown reasons, Firefox's setTimeout() will sometimes
-        // causes the callback function to be called immediately, bypassing
-        // the main event loop. For now this should prevent uBO from crashing
-        // as a result of the bad setTimeout() behavior.
-        if ( this.onGCBarrier ) {
-            return;
-        }
-        this.onGCBarrier = true;
-        this.gcTimer = null;
-        vAPI.tabs.get(this.tabId, this.onTab.bind(this));
-        this.onGCBarrier = false;
-    };
-
-    // https://github.com/gorhill/uBlock/issues/248
-    // Stack entries have to be committed to stick. Non-committed stack
-    // entries are removed after a set delay.
-    TabContext.prototype.onCommit = function() {
-        if ( vAPI.isBehindTheSceneTabId(this.tabId) ) {
-            return;
-        }
-        this.commitTimer = null;
-        // Remove uncommitted entries at the top of the stack.
-        var i = this.stack.length;
-        while ( i-- ) {
-            if ( this.stack[i].committed ) {
-                break;
-            }
-        }
-        // https://github.com/gorhill/uBlock/issues/300
-        // If no committed entry was found, fall back on the bottom-most one
-        // as being the committed one by default.
-        if ( i === -1 && this.stack.length !== 0 ) {
-            this.stack[0].committed = true;
-            i = 0;
-        }
-        i += 1;
-        if ( i < this.stack.length ) {
-            this.stack.length = i;
-            this.update();
-        }
-    };
-
-    // This takes care of orphanized tab contexts. Can't be started for all
-    // contexts, as the behind-the-scene context is permanent -- so we do not
-    // want to flush it.
-    TabContext.prototype.autodestroy = function() {
-        if ( vAPI.isBehindTheSceneTabId(this.tabId) ) {
-            return;
-        }
-        this.gcTimer = vAPI.setTimeout(this.onGC.bind(this), gcPeriod);
-    };
-
-    // Update just force all properties to be updated to match the most recent
-    // root URL.
-    TabContext.prototype.update = function() {
-        this.netFilteringReadTime = 0;
-        if ( this.stack.length === 0 ) {
-            this.rawURL =
-            this.normalURL =
-            this.origin =
-            this.rootHostname =
-            this.rootDomain = '';
-            return;
-        }
-        var stackEntry = this.stack[this.stack.length - 1];
-        this.rawURL = stackEntry.url;
-        this.normalURL = µb.normalizePageURL(this.tabId, this.rawURL);
-        this.origin = µb.URI.originFromURI(this.normalURL);
-        this.rootHostname = µb.URI.hostnameFromURI(this.origin);
-        this.rootDomain =
-            µb.URI.domainFromHostname(this.rootHostname) ||
-            this.rootHostname;
-    };
-
-    // Called whenever a candidate root URL is spotted for the tab.
-    TabContext.prototype.push = function(url) {
-        if ( vAPI.isBehindTheSceneTabId(this.tabId) ) {
-            return;
-        }
-        var count = this.stack.length;
-        if ( count !== 0 && this.stack[count - 1].url === url ) {
-            return;
-        }
-        this.stack.push(new StackEntry(url));
-        this.update();
-        popupCandidateTest(this.tabId);
-        if ( this.commitTimer !== null ) {
-            clearTimeout(this.commitTimer);
-        }
-        this.commitTimer = vAPI.setTimeout(this.onCommit.bind(this), 500);
-    };
-
-    // This tells that the url is definitely the one to be associated with the
-    // tab, there is no longer any ambiguity about which root URL is really
-    // sitting in which tab.
-    TabContext.prototype.commit = function(url) {
-        if ( vAPI.isBehindTheSceneTabId(this.tabId) ) { return; }
-        if ( this.stack.length !== 0 ) {
-            var top = this.stack[this.stack.length - 1];
-            if ( top.url === url && top.committed ) {
-                return false;
-            }
-        }
-        this.stack = [new StackEntry(url, true)];
-        this.update();
-        return true;
-    };
-
-    TabContext.prototype.getNetFilteringSwitch = function() {
-        if ( this.netFilteringReadTime > µb.netWhitelistModifyTime ) {
-            return this.netFiltering;
-        }
-        // https://github.com/chrisaljoudi/uBlock/issues/1078
-        // Use both the raw and normalized URLs.
-        this.netFiltering = µb.getNetFilteringSwitch(this.normalURL);
-        if ( this.netFiltering && this.rawURL !== this.normalURL && this.rawURL !== '' ) {
-            this.netFiltering = µb.getNetFilteringSwitch(this.rawURL);
-        }
-        this.netFilteringReadTime = Date.now();
-        return this.netFiltering;
-    };
-
-    // These are to be used for the API of the tab context manager.
-
-    var push = function(tabId, url) {
-        var entry = tabContexts.get(tabId);
-        if ( entry === undefined ) {
-            entry = new TabContext(tabId);
-            entry.autodestroy();
-        }
-        entry.push(url);
-        mostRecentRootDocURL = url;
-        mostRecentRootDocURLTimestamp = Date.now();
-        return entry;
-    };
-
-    // Find a tab context for a specific tab.
-    var lookup = function(tabId) {
-        return tabContexts.get(tabId) || null;
-    };
-
-    // Find a tab context for a specific tab. If none is found, attempt to
-    // fix this. When all fail, the behind-the-scene context is returned.
-    var mustLookup = function(tabId) {
-        var entry = tabContexts.get(tabId);
-        if ( entry !== undefined ) {
-            return entry;
-        }
-        // https://github.com/chrisaljoudi/uBlock/issues/1025
-        // Google Hangout popup opens without a root frame. So for now we will
-        // just discard that best-guess root frame if it is too far in the
-        // future, at which point it ceases to be a "best guess".
-        if ( mostRecentRootDocURL !== '' && mostRecentRootDocURLTimestamp + 500 < Date.now() ) {
-            mostRecentRootDocURL = '';
-        }
-        // https://github.com/chrisaljoudi/uBlock/issues/1001
-        // Not a behind-the-scene request, yet no page store found for the
-        // tab id: we will thus bind the last-seen root document to the
-        // unbound tab. It's a guess, but better than ending up filtering
-        // nothing at all.
-        if ( mostRecentRootDocURL !== '' ) {
-            return push(tabId, mostRecentRootDocURL);
-        }
-        // If all else fail at finding a page store, re-categorize the
-        // request as behind-the-scene. At least this ensures that ultimately
-        // the user can still inspect/filter those net requests which were
-        // about to fall through the cracks.
-        // Example: Chromium + case #12 at
-        //          http://raymondhill.net/ublock/popup.html
-        return tabContexts.get(vAPI.noTabId);
-    };
-
-    // https://github.com/gorhill/uBlock/issues/1735
-    //   Filter for popups if actually committing.
-    var commit = function(tabId, url) {
-        var entry = tabContexts.get(tabId);
-        if ( entry === undefined ) {
-            entry = push(tabId, url);
-        } else if ( entry.commit(url) ) {
-            popupCandidateTest(tabId);
-        }
-        return entry;
-    };
-
-    var exists = function(tabId) {
-        return tabContexts.get(tabId) !== undefined;
-    };
-
-    // Behind-the-scene tab context
-    (function() {
-        const entry = new TabContext(vAPI.noTabId);
-        entry.stack.push(new StackEntry('', true));
-        entry.rawURL = '';
-        entry.normalURL = µb.normalizePageURL(entry.tabId);
-        entry.origin = µb.URI.originFromURI(entry.normalURL);
-        entry.rootHostname = µb.URI.hostnameFromURI(entry.origin);
-        entry.rootDomain = µb.URI.domainFromHostname(entry.rootHostname);
-    })();
-
-    // Context object, typically to be used to feed filtering engines.
-    var contextJunkyard = [];
-    var Context = function(tabId) {
-        this.init(tabId);
-    };
-    Context.prototype.init = function(tabId) {
-        var tabContext = lookup(tabId);
-        this.rootHostname = tabContext.rootHostname;
-        this.rootDomain = tabContext.rootDomain;
-        this.pageHostname =
-        this.pageDomain =
-        this.requestURL =
-        this.origin =
-        this.requestHostname =
-        this.requestDomain = '';
-        return this;
-    };
-    Context.prototype.dispose = function() {
-        contextJunkyard.push(this);
-    };
-
-    var createContext = function(tabId) {
-        if ( contextJunkyard.length ) {
-            return contextJunkyard.pop().init(tabId);
-        }
-        return new Context(tabId);
-    };
-
-    return {
-        push: push,
-        commit: commit,
-        lookup: lookup,
-        mustLookup: mustLookup,
-        exists: exists,
-        createContext: createContext
-    };
-})();
-
-/******************************************************************************/
-/******************************************************************************/
-
-// When the DOM content of root frame is loaded, this means the tab
-// content has changed.
-
-vAPI.tabs.onNavigation = function(details) {
-    if ( details.frameId === 0 ) {
-        µb.tabContextManager.commit(details.tabId, details.url);
-        let pageStore = µb.bindTabToPageStats(details.tabId, 'tabCommitted');
-        if ( pageStore ) {
-            pageStore.journalAddRootFrame('committed', details.url);
-        }
-    }
-    if ( µb.canInjectScriptletsNow ) {
-        let pageStore = µb.pageStoreFromTabId(details.tabId);
-        if ( pageStore !== null && pageStore.getNetFilteringSwitch() ) {
-            µb.scriptletFilteringEngine.injectNow(details);
-        }
-    }
-};
-
-/******************************************************************************/
-
-// It may happen the URL in the tab changes, while the page's document
-// stays the same (for instance, Google Maps). Without this listener,
-// the extension icon won't be properly refreshed.
-
-vAPI.tabs.onUpdated = function(tabId, changeInfo, tab) {
-    if ( !tab.url || tab.url === '' ) { return; }
-    if ( !changeInfo.url ) { return; }
-    µb.tabContextManager.commit(tabId, changeInfo.url);
-    µb.bindTabToPageStats(tabId, 'tabUpdated');
-};
-
-/******************************************************************************/
-
-vAPI.tabs.onClosed = function(tabId) {
-    if (  vAPI.isBehindTheSceneTabId(tabId) ) {
-        return;
-    }
-    µb.unbindTabFromPageStats(tabId);
+    return `http://${fakeHostname}/`;
 };
 
 /******************************************************************************/
@@ -554,10 +78,8 @@ vAPI.tabs.onClosed = function(tabId) {
 // c: close opener
 // d: close target
 
-vAPI.tabs.onPopupUpdated = (function() {
-    // The same context object will be reused everytime. This also allows to
-    // remember whether a popup or popunder was matched.
-    const fctxt = µBlock.filteringContext.setFilter(undefined);
+µBlock.onPopupUpdated = (( ) => {
+    const µb = µBlock;
 
     // https://github.com/gorhill/uBlock/commit/1d448b85b2931412508aa01bf899e0b6f0033626#commitcomment-14944764
     //   See if two URLs are different, disregarding scheme -- because the
@@ -579,9 +101,15 @@ vAPI.tabs.onPopupUpdated = (function() {
         return b !== a;
     };
 
-    const popupMatch = function(openerURL, targetURL, popupType) {
-        fctxt.setTabOriginFromURL(openerURL)
-             .setDocOriginFromURL(openerURL)
+    const popupMatch = function(
+        fctxt,
+        rootOpenerURL,
+        localOpenerURL,
+        targetURL,
+        popupType = 'popup'
+    ) {
+        fctxt.setTabOriginFromURL(rootOpenerURL)
+             .setDocOriginFromURL(localOpenerURL || rootOpenerURL)
              .setURL(targetURL)
              .setType('popup');
         let result;
@@ -668,7 +196,12 @@ vAPI.tabs.onPopupUpdated = (function() {
         return 0;
     };
 
-    const mapPopunderResult = function(popunderURL, popunderHostname, result) {
+    const mapPopunderResult = function(
+        fctxt,
+        popunderURL,
+        popunderHostname,
+        result
+    ) {
         if (
             fctxt.filter === undefined ||
             fctxt.filter !== 'static' ||
@@ -697,8 +230,19 @@ vAPI.tabs.onPopupUpdated = (function() {
             : 0;
     };
 
-    const popunderMatch = function(openerURL, targetURL) {
-        let result = popupMatch(targetURL, openerURL, 'popunder');
+    const popunderMatch = function(
+        fctxt,
+        rootOpenerURL,
+        localOpenerURL,
+        targetURL
+    ) {
+        let result = popupMatch(
+            fctxt,
+            targetURL,
+            undefined,
+            rootOpenerURL,
+            'popunder'
+        );
         if ( result === 1 ) { return result; }
 
         // https://github.com/gorhill/uBlock/issues/1010#issuecomment-186824878
@@ -707,14 +251,15 @@ vAPI.tabs.onPopupUpdated = (function() {
         //   a broad one, we will consider the opener tab to be a popunder tab.
         //   For now, a "broad" filter is one which does not touch any part of
         //   the hostname part of the opener URL.
-        let popunderURL = openerURL,
+        let popunderURL = rootOpenerURL,
             popunderHostname = µb.URI.hostnameFromURI(popunderURL);
         if ( popunderHostname === '' ) { return 0; }
 
         result = mapPopunderResult(
+            fctxt,
             popunderURL,
             popunderHostname,
-            popupMatch(targetURL, popunderURL, 'popup')
+            popupMatch(fctxt, targetURL, undefined, popunderURL)
         );
         if ( result !== 0 ) { return result; }
 
@@ -724,9 +269,10 @@ vAPI.tabs.onPopupUpdated = (function() {
         if ( popunderURL === '' ) { return 0; }
 
         return mapPopunderResult(
+            fctxt,
             popunderURL,
             popunderHostname,
-            popupMatch(targetURL, popunderURL, 'popup')
+            popupMatch(fctxt, targetURL, undefined, popunderURL)
         );
     };
 
@@ -735,8 +281,11 @@ vAPI.tabs.onPopupUpdated = (function() {
         const openerTabId = openerDetails.tabId;
         let tabContext = µb.tabContextManager.lookup(openerTabId);
         if ( tabContext === null ) { return; }
-        const openerURL = tabContext.rawURL;
-        if ( openerURL === '' ) { return; }
+        const rootOpenerURL = tabContext.rawURL;
+        if ( rootOpenerURL === '' ) { return; }
+        const localOpenerURL = openerDetails.frameId !== 0
+            ? openerDetails.frameURL
+            : undefined;
 
         // Popup details.
         tabContext = µb.tabContextManager.lookup(targetTabId);
@@ -745,27 +294,29 @@ vAPI.tabs.onPopupUpdated = (function() {
         if ( targetURL === '' ) { return; }
 
         // https://github.com/gorhill/uBlock/issues/341
-        // Allow popups if uBlock is turned off in opener's context.
-        if ( µb.getNetFilteringSwitch(openerURL) === false ) { return; }
+        //   Allow popups if uBlock is turned off in opener's context.
+        if ( µb.getNetFilteringSwitch(rootOpenerURL) === false ) { return; }
 
         // https://github.com/gorhill/uBlock/issues/1538
         if (
-            µb.getNetFilteringSwitch(µb.normalizePageURL(
-                openerTabId,
-                openerURL)
+            µb.getNetFilteringSwitch(
+                µb.normalizePageURL(openerTabId, rootOpenerURL)
             ) === false
         ) {
             return;
         }
 
-        // If the page URL is that of our "blocked page" URL, extract the URL of
-        // the page which was blocked.
+        // If the page URL is that of our "blocked page" URL, extract the URL
+        // of the page which was blocked.
         if ( targetURL.startsWith(vAPI.getURL('document-blocked.html')) ) {
             const matches = /details=([^&]+)/.exec(targetURL);
             if ( matches !== null ) {
-                targetURL = JSON.parse(atob(matches[1])).url;
+                targetURL = JSON.parse(decodeURIComponent(matches[1])).url;
             }
         }
+
+        // MUST be reset before code below is called.
+        const fctxt = µb.filteringContext.duplicate();
 
         // Popup test.
         let popupType = 'popup',
@@ -773,12 +324,12 @@ vAPI.tabs.onPopupUpdated = (function() {
         // https://github.com/gorhill/uBlock/issues/2919
         // - If the target tab matches a clicked link, assume it's legit.
         if ( areDifferentURLs(targetURL, openerDetails.trustedURL) ) {
-            result = popupMatch(openerURL, targetURL, 'popup');
+            result = popupMatch(fctxt, rootOpenerURL, localOpenerURL, targetURL);
         }
 
         // Popunder test.
         if ( result === 0 && openerDetails.popunder ) {
-            result = popunderMatch(openerURL, targetURL);
+            result = popunderMatch(fctxt, rootOpenerURL, localOpenerURL, targetURL);
             if ( result === 1 ) {
                 popupType = 'popunder';
             }
@@ -791,10 +342,10 @@ vAPI.tabs.onPopupUpdated = (function() {
             if ( popupType === 'popup' ) {
                 fctxt.setURL(targetURL)
                      .setTabId(openerTabId)
-                     .setTabOriginFromURL(openerURL)
-                     .setDocOriginFromURL(openerURL);
+                     .setTabOriginFromURL(rootOpenerURL)
+                     .setDocOriginFromURL(localOpenerURL);
             } else {
-                fctxt.setURL(openerURL)
+                fctxt.setURL(rootOpenerURL)
                      .setTabId(targetTabId)
                      .setTabOriginFromURL(targetURL)
                      .setDocOriginFromURL(targetURL);
@@ -803,9 +354,7 @@ vAPI.tabs.onPopupUpdated = (function() {
         }
 
         // Not blocked
-        if ( result !== 1 ) {
-            return;
-        }
+        if ( result !== 1 ) { return; }
 
         // Only if a popup was blocked do we report it in the dynamic
         // filtering pane.
@@ -817,7 +366,7 @@ vAPI.tabs.onPopupUpdated = (function() {
 
         // Blocked
         if ( µb.userSettings.showIconBadge ) {
-            µb.updateToolbarIcon(openerTabId);
+            µb.updateToolbarIcon(openerTabId, 0b010);
         }
 
         // It is a popup, block and remove the tab.
@@ -833,24 +382,535 @@ vAPI.tabs.onPopupUpdated = (function() {
     };
 })();
 
-vAPI.tabs.registerListeners();
+/******************************************************************************/
+/******************************************************************************
+
+To keep track from which context *exactly* network requests are made. This is
+often tricky for various reasons, and the challenge is not specific to one
+browser.
+
+The time at which a URL is assigned to a tab and the time when a network
+request for a root document is made must be assumed to be unrelated: it's all
+asynchronous. There is no guaranteed order in which the two events are fired.
+
+Also, other "anomalies" can occur:
+
+- a network request for a root document is fired without the corresponding
+tab being really assigned a new URL
+<https://github.com/chrisaljoudi/uBlock/issues/516>
+
+- a network request for a secondary resource is labeled with a tab id for
+which no root document was pulled for that tab.
+<https://github.com/chrisaljoudi/uBlock/issues/1001>
+
+- a network request for a secondary resource is made without the root
+document to which it belongs being formally bound yet to the proper tab id,
+causing a bad scope to be used for filtering purpose.
+<https://github.com/chrisaljoudi/uBlock/issues/1205>
+<https://github.com/chrisaljoudi/uBlock/issues/1140>
+
+So the solution here is to keep a lightweight data structure which only
+purpose is to keep track as accurately as possible of which root document
+belongs to which tab. That's the only purpose, and because of this, there are
+no restrictions for when the URL of a root document can be associated to a tab.
+
+Before, the PageStore object was trying to deal with this, but it had to
+enforce some restrictions so as to not descend into one of the above issues, or
+other issues. The PageStore object can only be associated with a tab for which
+a definitive navigation event occurred, because it collects information about
+what occurred in the tab (for example, the number of requests blocked for a
+page).
+
+The TabContext objects do not suffer this restriction, and as a result they
+offer the most reliable picture of which root document URL is really associated
+to which tab. Moreover, the TabObject can undo an association from a root
+document, and automatically re-associate with the next most recent. This takes
+care of <https://github.com/chrisaljoudi/uBlock/issues/516>.
+
+The PageStore object no longer cache the various information about which
+root document it is currently bound. When it needs to find out, it will always
+defer to the TabContext object, which will provide the real answer. This takes
+case of <https://github.com/chrisaljoudi/uBlock/issues/1205>. In effect, the
+master switch and dynamic filtering rules can be evaluated now properly even
+in the absence of a PageStore object, this was not the case before.
+
+Also, the TabContext object will try its best to find a good candidate root
+document URL for when none exists. This takes care of
+<https://github.com/chrisaljoudi/uBlock/issues/1001>.
+
+The TabContext manager is self-contained, and it takes care to properly
+housekeep itself.
+
+*/
+
+µBlock.tabContextManager = (( ) => {
+    const µb = µBlock;
+    const tabContexts = new Map();
+
+    // https://github.com/chrisaljoudi/uBlock/issues/1001
+    // This is to be used as last-resort fallback in case a tab is found to not
+    // be bound while network requests are fired for the tab.
+    let mostRecentRootDocURL = '';
+    let mostRecentRootDocURLTimestamp = 0;
+
+    const popupCandidates = new Map();
+
+    const PopupCandidate = class {
+        constructor(createDetails, openerDetails) {
+            this.targetTabId = createDetails.tabId;
+            this.opener = {
+                tabId: createDetails.sourceTabId,
+                tabURL: openerDetails[0].url,
+                frameId: createDetails.sourceFrameId,
+                frameURL: openerDetails[1].url,
+                popunder: false,
+                trustedURL: createDetails.sourceTabId === µb.maybeGoodPopup.tabId
+                    ? µb.maybeGoodPopup.url
+                    : ''
+            };
+            this.selfDestructionTimer = null;
+            this.launchSelfDestruction();
+        }
+
+        destroy() {
+            if ( this.selfDestructionTimer !== null ) {
+                clearTimeout(this.selfDestructionTimer);
+            }
+            popupCandidates.delete(this.targetTabId);
+        }
+
+        launchSelfDestruction() {
+            if ( this.selfDestructionTimer !== null ) {
+                clearTimeout(this.selfDestructionTimer);
+            }
+            this.selfDestructionTimer = vAPI.setTimeout(
+                ( ) => this.destroy(),
+                10000
+            );
+        }
+    };
+
+    const popupCandidateTest = async function(targetTabId) {
+        for ( const [ tabId, candidate ] of popupCandidates ) {
+            if (
+                targetTabId !== tabId &&
+                targetTabId !== candidate.opener.tabId
+            ) {
+                continue;
+            }
+            // https://github.com/gorhill/uBlock/issues/3129
+            //   If the trigger is a change in the opener's URL, mark the entry
+            //   as candidate for popunder filtering.
+            if ( targetTabId === candidate.opener.tabId ) {
+                candidate.opener.popunder = true;
+            }
+            const result = await µb.onPopupUpdated(tabId, candidate.opener);
+            if ( result === true ) {
+                candidate.destroy();
+            } else {
+                candidate.launchSelfDestruction();
+            }
+        }
+    };
+
+    const onTabCreated = async function(createDetails) {
+        const { sourceTabId, sourceFrameId, tabId } = createDetails;
+        const popup = popupCandidates.get(tabId);
+        if ( popup === undefined ) {
+            let openerDetails;
+            try {
+                openerDetails = await Promise.all([
+                    webext.webNavigation.getFrame({
+                        tabId: createDetails.sourceTabId,
+                        frameId: 0,
+                    }),
+                    webext.webNavigation.getFrame({
+                        tabId: sourceTabId,
+                        frameId: sourceFrameId,
+                    }),
+                ]);
+            }
+            catch (reason) {
+                return;
+            }
+            popupCandidates.set(
+                tabId,
+                new PopupCandidate(createDetails, openerDetails)
+            );
+        }
+        popupCandidateTest(tabId);
+    };
+
+    const gcPeriod = 10 * 60 * 1000;
+
+    // A pushed entry is removed from the stack unless it is committed with
+    // a set time.
+    const StackEntry = function(url, commit) {
+        this.url = url;
+        this.committed = commit;
+        this.tstamp = Date.now();
+    };
+
+    const TabContext = function(tabId) {
+        this.tabId = tabId;
+        this.stack = [];
+        this.rawURL =
+        this.normalURL =
+        this.origin =
+        this.rootHostname =
+        this.rootDomain = '';
+        this.commitTimer = null;
+        this.gcTimer = null;
+        this.onGCBarrier = false;
+        this.netFiltering = true;
+        this.netFilteringReadTime = 0;
+
+        tabContexts.set(tabId, this);
+    };
+
+    TabContext.prototype.destroy = function() {
+        if ( vAPI.isBehindTheSceneTabId(this.tabId) ) { return; }
+        if ( this.gcTimer !== null ) {
+            clearTimeout(this.gcTimer);
+            this.gcTimer = null;
+        }
+        tabContexts.delete(this.tabId);
+    };
+
+    TabContext.prototype.onTab = function(tab) {
+        if ( tab ) {
+            this.gcTimer = vAPI.setTimeout(( ) => this.onGC(), gcPeriod);
+        } else {
+            this.destroy();
+        }
+    };
+
+    TabContext.prototype.onGC = async function() {
+        if ( vAPI.isBehindTheSceneTabId(this.tabId) ) { return; }
+        // https://github.com/gorhill/uBlock/issues/1713
+        // For unknown reasons, Firefox's setTimeout() will sometimes
+        // causes the callback function to be called immediately, bypassing
+        // the main event loop. For now this should prevent uBO from crashing
+        // as a result of the bad setTimeout() behavior.
+        if ( this.onGCBarrier ) { return; }
+        this.onGCBarrier = true;
+        this.gcTimer = null;
+        const tab = await vAPI.tabs.get(this.tabId);
+        this.onTab(tab);
+        this.onGCBarrier = false;
+    };
+
+    // https://github.com/gorhill/uBlock/issues/248
+    // Stack entries have to be committed to stick. Non-committed stack
+    // entries are removed after a set delay.
+    TabContext.prototype.onCommit = function() {
+        if ( vAPI.isBehindTheSceneTabId(this.tabId) ) {
+            return;
+        }
+        this.commitTimer = null;
+        // Remove uncommitted entries at the top of the stack.
+        let i = this.stack.length;
+        while ( i-- ) {
+            if ( this.stack[i].committed ) { break; }
+        }
+        // https://github.com/gorhill/uBlock/issues/300
+        // If no committed entry was found, fall back on the bottom-most one
+        // as being the committed one by default.
+        if ( i === -1 && this.stack.length !== 0 ) {
+            this.stack[0].committed = true;
+            i = 0;
+        }
+        i += 1;
+        if ( i < this.stack.length ) {
+            this.stack.length = i;
+            this.update();
+        }
+    };
+
+    // This takes care of orphanized tab contexts. Can't be started for all
+    // contexts, as the behind-the-scene context is permanent -- so we do not
+    // want to flush it.
+    TabContext.prototype.autodestroy = function() {
+        if ( vAPI.isBehindTheSceneTabId(this.tabId) ) { return; }
+        this.gcTimer = vAPI.setTimeout(( ) => this.onGC(), gcPeriod);
+    };
+
+    // Update just force all properties to be updated to match the most recent
+    // root URL.
+    TabContext.prototype.update = function() {
+        this.netFilteringReadTime = 0;
+        if ( this.stack.length === 0 ) {
+            this.rawURL =
+            this.normalURL =
+            this.origin =
+            this.rootHostname =
+            this.rootDomain = '';
+            return;
+        }
+        const stackEntry = this.stack[this.stack.length - 1];
+        this.rawURL = stackEntry.url;
+        this.normalURL = µb.normalizePageURL(this.tabId, this.rawURL);
+        this.origin = µb.URI.originFromURI(this.normalURL);
+        this.rootHostname = µb.URI.hostnameFromURI(this.origin);
+        this.rootDomain =
+            µb.URI.domainFromHostname(this.rootHostname) ||
+            this.rootHostname;
+    };
+
+    // Called whenever a candidate root URL is spotted for the tab.
+    TabContext.prototype.push = function(url) {
+        if ( vAPI.isBehindTheSceneTabId(this.tabId) ) {
+            return;
+        }
+        const count = this.stack.length;
+        if ( count !== 0 && this.stack[count - 1].url === url ) {
+            return;
+        }
+        this.stack.push(new StackEntry(url));
+        this.update();
+        popupCandidateTest(this.tabId);
+        if ( this.commitTimer !== null ) {
+            clearTimeout(this.commitTimer);
+        }
+        this.commitTimer = vAPI.setTimeout(( ) => this.onCommit(), 500);
+    };
+
+    // This tells that the url is definitely the one to be associated with the
+    // tab, there is no longer any ambiguity about which root URL is really
+    // sitting in which tab.
+    TabContext.prototype.commit = function(url) {
+        if ( vAPI.isBehindTheSceneTabId(this.tabId) ) { return; }
+        if ( this.stack.length !== 0 ) {
+            const top = this.stack[this.stack.length - 1];
+            if ( top.url === url && top.committed ) { return false; }
+        }
+        this.stack = [new StackEntry(url, true)];
+        this.update();
+        return true;
+    };
+
+    TabContext.prototype.getNetFilteringSwitch = function() {
+        if ( this.netFilteringReadTime > µb.netWhitelistModifyTime ) {
+            return this.netFiltering;
+        }
+        // https://github.com/chrisaljoudi/uBlock/issues/1078
+        // Use both the raw and normalized URLs.
+        this.netFiltering = µb.getNetFilteringSwitch(this.normalURL);
+        if (
+            this.netFiltering &&
+            this.rawURL !== this.normalURL &&
+            this.rawURL !== ''
+        ) {
+            this.netFiltering = µb.getNetFilteringSwitch(this.rawURL);
+        }
+        this.netFilteringReadTime = Date.now();
+        return this.netFiltering;
+    };
+
+    // These are to be used for the API of the tab context manager.
+
+    const push = function(tabId, url) {
+        let entry = tabContexts.get(tabId);
+        if ( entry === undefined ) {
+            entry = new TabContext(tabId);
+            entry.autodestroy();
+        }
+        entry.push(url);
+        mostRecentRootDocURL = url;
+        mostRecentRootDocURLTimestamp = Date.now();
+        return entry;
+    };
+
+    // Find a tab context for a specific tab.
+    const lookup = function(tabId) {
+        return tabContexts.get(tabId) || null;
+    };
+
+    // Find a tab context for a specific tab. If none is found, attempt to
+    // fix this. When all fail, the behind-the-scene context is returned.
+    const mustLookup = function(tabId) {
+        const entry = tabContexts.get(tabId);
+        if ( entry !== undefined ) {
+            return entry;
+        }
+        // https://github.com/chrisaljoudi/uBlock/issues/1025
+        // Google Hangout popup opens without a root frame. So for now we will
+        // just discard that best-guess root frame if it is too far in the
+        // future, at which point it ceases to be a "best guess".
+        if (
+            mostRecentRootDocURL !== '' &&
+            mostRecentRootDocURLTimestamp + 500 < Date.now()
+        ) {
+            mostRecentRootDocURL = '';
+        }
+        // https://github.com/chrisaljoudi/uBlock/issues/1001
+        // Not a behind-the-scene request, yet no page store found for the
+        // tab id: we will thus bind the last-seen root document to the
+        // unbound tab. It's a guess, but better than ending up filtering
+        // nothing at all.
+        if ( mostRecentRootDocURL !== '' ) {
+            return push(tabId, mostRecentRootDocURL);
+        }
+        // If all else fail at finding a page store, re-categorize the
+        // request as behind-the-scene. At least this ensures that ultimately
+        // the user can still inspect/filter those net requests which were
+        // about to fall through the cracks.
+        // Example: Chromium + case #12 at
+        //          http://raymondhill.net/ublock/popup.html
+        return tabContexts.get(vAPI.noTabId);
+    };
+
+    // https://github.com/gorhill/uBlock/issues/1735
+    //   Filter for popups if actually committing.
+    const commit = function(tabId, url) {
+        let entry = tabContexts.get(tabId);
+        if ( entry === undefined ) {
+            entry = push(tabId, url);
+        } else if ( entry.commit(url) ) {
+            popupCandidateTest(tabId);
+        }
+        return entry;
+    };
+
+    const exists = function(tabId) {
+        return tabContexts.get(tabId) !== undefined;
+    };
+
+    // Behind-the-scene tab context
+    {
+        const entry = new TabContext(vAPI.noTabId);
+        entry.stack.push(new StackEntry('', true));
+        entry.rawURL = '';
+        entry.normalURL = µb.normalizePageURL(entry.tabId);
+        entry.origin = µb.URI.originFromURI(entry.normalURL);
+        entry.rootHostname = µb.URI.hostnameFromURI(entry.origin);
+        entry.rootDomain = µb.URI.domainFromHostname(entry.rootHostname);
+    }
+
+    // Context object, typically to be used to feed filtering engines.
+    const contextJunkyard = [];
+    const Context = class {
+        constructor(tabId) {
+            this.init(tabId);
+        }
+        init(tabId) {
+            const tabContext = lookup(tabId);
+            this.rootHostname = tabContext.rootHostname;
+            this.rootDomain = tabContext.rootDomain;
+            this.pageHostname =
+            this.pageDomain =
+            this.requestURL =
+            this.origin =
+            this.requestHostname =
+            this.requestDomain = '';
+            return this;
+        }
+        dispose() {
+            contextJunkyard.push(this);
+        }
+    };
+
+    const createContext = function(tabId) {
+        if ( contextJunkyard.length ) {
+            return contextJunkyard.pop().init(tabId);
+        }
+        return new Context(tabId);
+    };
+
+    return {
+        push,
+        commit,
+        lookup,
+        mustLookup,
+        exists,
+        createContext,
+        onTabCreated,
+    };
+})();
+
+/******************************************************************************/
+/******************************************************************************/
+
+vAPI.Tabs = class extends vAPI.Tabs {
+    onActivated(details) {
+        super.onActivated(details);
+        if ( vAPI.isBehindTheSceneTabId(details.tabId) ) { return; }
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/680
+        µBlock.updateToolbarIcon(details.tabId);
+        µBlock.contextMenu.update(details.tabId);
+    }
+
+    onClosed(tabId) {
+        super.onClosed(tabId);
+        if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
+        µBlock.unbindTabFromPageStats(tabId);
+        µBlock.contextMenu.update();
+    }
+
+    onCreated(details) {
+        super.onCreated(details);
+        µBlock.tabContextManager.onTabCreated(details);
+    }
+
+    // When the DOM content of root frame is loaded, this means the tab
+    // content has changed.
+    //
+    // The webRequest.onBeforeRequest() won't be called for everything
+    // else than http/https. Thus, in such case, we will bind the tab as
+    // early as possible in order to increase the likelihood of a context
+    // properly setup if network requests are fired from within the tab.
+    // Example: Chromium + case #6 at
+    //          http://raymondhill.net/ublock/popup.html
+
+    onNavigation(details) {
+        super.onNavigation(details);
+        const µb = µBlock;
+        if ( details.frameId === 0 ) {
+            µb.tabContextManager.commit(details.tabId, details.url);
+            let pageStore = µb.bindTabToPageStats(details.tabId, 'tabCommitted');
+            if ( pageStore ) {
+                pageStore.journalAddRootFrame('committed', details.url);
+            }
+        }
+        if ( µb.canInjectScriptletsNow ) {
+            let pageStore = µb.pageStoreFromTabId(details.tabId);
+            if ( pageStore !== null && pageStore.getNetFilteringSwitch() ) {
+                µb.scriptletFilteringEngine.injectNow(details);
+            }
+        }
+    }
+
+    // It may happen the URL in the tab changes, while the page's document
+    // stays the same (for instance, Google Maps). Without this listener,
+    // the extension icon won't be properly refreshed.
+
+    onUpdated(tabId, changeInfo, tab) {
+        super.onUpdated(tabId, changeInfo, tab);
+        if ( !tab.url || tab.url === '' ) { return; }
+        if ( !changeInfo.url ) { return; }
+        µBlock.tabContextManager.commit(tabId, changeInfo.url);
+        µBlock.bindTabToPageStats(tabId, 'tabUpdated');
+    }
+};
+
+vAPI.tabs = new vAPI.Tabs();
 
 /******************************************************************************/
 /******************************************************************************/
 
 // Create an entry for the tab if it doesn't exist.
 
-µb.bindTabToPageStats = function(tabId, context) {
-    µb.updateToolbarIcon(tabId);
+µBlock.bindTabToPageStats = function(tabId, context) {
+    µBlock.updateToolbarIcon(tabId);
 
     // Do not create a page store for URLs which are of no interests
-    if ( µb.tabContextManager.exists(tabId) === false ) {
+    if ( this.tabContextManager.exists(tabId) === false ) {
         this.unbindTabFromPageStats(tabId);
         return null;
     }
 
     // Reuse page store if one exists: this allows to guess if a tab is a popup
-    var pageStore = this.pageStores.get(tabId);
+    let pageStore = this.pageStores.get(tabId);
 
     // Tab is not bound
     if ( pageStore === undefined ) {
@@ -870,6 +930,7 @@ vAPI.tabs.registerListeners();
     // https://github.com/chrisaljoudi/uBlock/issues/516
     //   If context is 'beforeRequest', do not rebind, wait for confirmation.
     if ( context === 'beforeRequest' ) {
+        pageStore.netFilteringCache.empty();
         return pageStore;
     }
 
@@ -886,29 +947,32 @@ vAPI.tabs.registerListeners();
 
 /******************************************************************************/
 
-µb.unbindTabFromPageStats = function(tabId) {
+µBlock.unbindTabFromPageStats = function(tabId) {
     //console.debug('µBlock> unbindTabFromPageStats(%d)', tabId);
-    var pageStore = this.pageStores.get(tabId);
-    if ( pageStore !== undefined ) {
-        pageStore.dispose();
-        this.pageStores.delete(tabId);
-        this.pageStoresToken = Date.now();
-    }
+    const pageStore = this.pageStores.get(tabId);
+    if ( pageStore === undefined ) { return; }
+    pageStore.dispose();
+    this.pageStores.delete(tabId);
+    this.pageStoresToken = Date.now();
 };
 
 /******************************************************************************/
 
-µb.pageStoreFromTabId = function(tabId) {
+µBlock.pageStoreFromTabId = function(tabId) {
     return this.pageStores.get(tabId) || null;
 };
 
-µb.mustPageStoreFromTabId = function(tabId) {
+µBlock.mustPageStoreFromTabId = function(tabId) {
     return this.pageStores.get(tabId) || this.pageStores.get(vAPI.noTabId);
 };
 
 /******************************************************************************/
 
 // Permanent page store for behind-the-scene requests. Must never be removed.
+//
+// https://github.com/uBlockOrigin/uBlock-issues/issues/651
+//   The whitelist status of the tabless page store will be determined by
+//   the document context (if present) of the network request.
 
 {
     const NoPageStore = class extends µBlock.PageStore {
@@ -931,101 +995,115 @@ vAPI.tabs.registerListeners();
 
 // Update visual of extension icon.
 
-µb.updateToolbarIcon = (function() {
+µBlock.updateToolbarIcon = (( ) => {
+    const µb = µBlock;
+    const tabIdToDetails = new Map();
 
-    let tabIdToDetails = new Map();
+    const computeBadgeColor = (bits) => {
+        let color = µb.blockingProfileColorCache.get(bits);
+        if ( color !== undefined ) { return color; }
+        let max = 0;
+        for ( const profile of µb.liveBlockingProfiles ) {
+            const v = bits & (profile.bits & ~1);
+            if ( v < max ) { break; }
+            color = profile.color;
+            max = v;
+        }
+        if ( color === undefined ) {
+            color = '#666';
+        }
+        µb.blockingProfileColorCache.set(bits, color);
+        return color;
+    };
 
-    let updateBadge = function(tabId, isClick) {
+    const updateBadge = (tabId, isClick) => {
         let parts = tabIdToDetails.get(tabId);
         tabIdToDetails.delete(tabId);
 
         let state = 0;
         let badge = '';
+        let color = '#666';
+        let count = 0; //ADN
 
-        var pageStore = this.pageStoreFromTabId(tabId),
-            pageDomain = pageStore ? µb.URI.domainFromHostname(pageStore.tabHostname) : null, // ADN
-            isDNT = pageStore ? µb.userSettings.dntDomains.contains(pageDomain) : false; // ADN
+        let pageStore = µb.pageStoreFromTabId(tabId),
+            pageDomain = pageStore ? µb.URI.domainFromHostname(pageStore.tabHostname) : null; // ADN;
 
         if ( pageStore !== null ) {
-            state = pageStore.getNetFilteringSwitch();
-
-            if (state && this.userSettings.showIconBadge) {
-
-                var count = µb.adnauseam.currentCount(pageStore.rawURL); // ADN
-                badge = this.formatCount(count);
+            state = pageStore.getNetFilteringSwitch() ? 1 : 0;
+            if ( state === 1 ) {
+                if ( (parts & 0b0010) !== 0 && pageStore.perLoadBlockedRequestCount ) {
+                    badge = µb.formatCount(
+                        pageStore.perLoadBlockedRequestCount
+                    );
+                }
+                if ( (parts & 0b0100) !== 0 ) {
+                    color = computeBadgeColor(
+                        µb.blockingModeFromHostname(pageStore.tabHostname)
+                    );
+                }
             }
+
+          state = µb.adnauseam.getIconState(state, pageDomain, isClick); // ADN
+          count = µb.adnauseam.currentCount(pageStore.rawURL); // ADN
+          badge = µb.formatCount(count);
         }
 
-
-        var iconStatus = state ? (isDNT ? 'dnt' : 'on') : 'off'; // ADN
-
-        if (iconStatus !== 'off') {
-            iconStatus += (isClick ? 'active' : '');
+        // https://www.reddit.com/r/uBlockOrigin/comments/d33d37/
+        if ( µb.userSettings.showIconBadge === false ) {
+            parts |= 0b1000;
         }
-        vAPI.setIcon(tabId, iconStatus, badge);
-        //     let pageStore = this.pageStoreFromTabId(tabId);
-        //     if ( pageStore !== null ) {
-        //         state = pageStore.getNetFilteringSwitch() ? 1 : 0;
-        //         if (
-        //             state === 1 &&
-        //             this.userSettings.showIconBadge &&
-        //             pageStore.perLoadBlockedRequestCount
-        //         ) {
-        //             badge = this.formatCount(pageStore.perLoadBlockedRequestCount);
-        //         }
-        //     }
-        //
-        //     vAPI.setIcon(tabId, state, badge, parts);
-        // };
-        //
-        // // parts: bit 0 = icon
-        // //        bit 1 = badge
-        //
-        // return function(tabId, newParts) {
-        //     if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
-        //     if ( newParts === undefined ) { newParts = 0x03; }
-        //     let currentParts = tabIdToDetails.get(tabId);
-        //     if ( currentParts === newParts ) { return; }
-        //     if ( currentParts === undefined ) {
-        //         vAPI.setTimeout(updateBadge.bind(this, tabId), 701);
-        //     } else {
-        //         newParts |= currentParts;
-        //     }
-        //     tabIdToDetails.set(tabId, newParts);
+
+         vAPI.setIcon(tabId, { parts, state, badge, color });
+         isClick && vAPI.setTimeout(( ) => {
+             state = µb.adnauseam.getIconState(state, pageDomain, false);
+             vAPI.setIcon(tabId, { parts, state, badge, color });
+         }, 600);
+
     };
 
-     return function(tabId, isClick) {
-        if ( tabIdToDetails.has(tabId)) {
-            return;
-        }
-        if ( vAPI.isBehindTheSceneTabId(tabId) ) {
-            return;
-        }
+    // parts: bit 0 = icon
+    //        bit 1 = badge text
+    //        bit 2 = badge color
+    //        bit 3 = hide badge
 
-        tabIdToDetails[tabId] = vAPI.setTimeout(updateBadge.bind(this, tabId, isClick), 222); // ADN
-    }
+    return function(tabId, newParts = 0b0111, isClick) {
+        if ( typeof tabId !== 'number' ) { return; }
+        if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
+        let currentParts = tabIdToDetails.get(tabId);
+        if ( currentParts === newParts ) { return; }
+        if ( currentParts === undefined ) {
+            self.requestIdleCallback(
+                ( ) => updateBadge(tabId, isClick),
+                { timeout: 701 }
+            );
+        } else {
+            newParts |= currentParts;
+        }
+        tabIdToDetails.set(tabId, newParts);
+
+    };
 })();
 
 /******************************************************************************/
 
-µb.updateTitle = (function() {
-    var tabIdToTimer = new Map();
-    var delay = 499;
+µBlock.updateTitle = (( ) => {
+    const tabIdToTimer = new Map();
+    const delay = 499;
 
-    var tryAgain = function(entry) {
+    const tryAgain = function(entry) {
         if ( entry.count === 1 ) { return false; }
         entry.count -= 1;
         tabIdToTimer.set(
             entry.tabId,
-            vAPI.setTimeout(updateTitle.bind(null, entry), delay)
+            vAPI.setTimeout(( ) => { updateTitle(entry); }, delay)
         );
         return true;
     };
 
-    var onTabReady = function(entry, tab) {
+    const onTabReady = function(entry, tab) {
         if ( !tab ) { return; }
-        var µb = µBlock;
-        var pageStore = µb.pageStoreFromTabId(entry.tabId);
+        const µb = µBlock;
+        const pageStore = µb.pageStoreFromTabId(entry.tabId);
         if ( pageStore === null ) { return; }
         // Firefox needs this: if you detach a tab, the new tab won't have
         // its rawURL set. Concretely, this causes the logger to report an
@@ -1036,21 +1114,22 @@ vAPI.tabs.registerListeners();
         if ( !tab.title && tryAgain(entry) ) { return; }
         // https://github.com/gorhill/uMatrix/issues/225
         // Sometimes title changes while page is loading.
-        var settled = tab.title && tab.title === pageStore.title;
+        const settled = tab.title && tab.title === pageStore.title;
         pageStore.title = tab.title || tab.url || '';
         if ( !settled ) {
             tryAgain(entry);
         }
     };
 
-    var updateTitle = function(entry) {
+    const updateTitle = async function(entry) {
         tabIdToTimer.delete(entry.tabId);
-        vAPI.tabs.get(entry.tabId, onTabReady.bind(null, entry));
+        const tab = await vAPI.tabs.get(entry.tabId);
+        onTabReady(entry, tab);
     };
 
     return function(tabId) {
         if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
-        var timer = tabIdToTimer.get(tabId);
+        const timer = tabIdToTimer.get(tabId);
         if ( timer !== undefined ) {
             clearTimeout(timer);
         }
@@ -1066,41 +1145,39 @@ vAPI.tabs.registerListeners();
 
 /******************************************************************************/
 
-// Stale page store entries janitor
 // https://github.com/chrisaljoudi/uBlock/issues/455
+//   Stale page store entries janitor
 
-var pageStoreJanitorPeriod = 15 * 60 * 1000;
-var pageStoreJanitorSampleAt = 0;
-var pageStoreJanitorSampleSize = 10;
+{
+    const pageStoreJanitorPeriod = 15 * 60 * 1000;
+    let pageStoreJanitorSampleAt = 0;
+    let pageStoreJanitorSampleSize = 10;
 
-var pageStoreJanitor = function() {
-    var vapiTabs = vAPI.tabs;
-    var tabIds = Array.from(µb.pageStores.keys()).sort();
-    var checkTab = function(tabId) {
-        vapiTabs.get(tabId, function(tab) {
-            if ( !tab ) {
-                µb.unbindTabFromPageStats(tabId);
-            }
-        });
+    const pageStoreJanitor = function() {
+        const tabIds = Array.from(µBlock.pageStores.keys()).sort();
+        const checkTab = async tabId => {
+            const tab = await vAPI.tabs.get(tabId);
+            if ( tab ) { return; }
+            µBlock.unbindTabFromPageStats(tabId);
+        };
+        if ( pageStoreJanitorSampleAt >= tabIds.length ) {
+            pageStoreJanitorSampleAt = 0;
+        }
+        const n = Math.min(
+            pageStoreJanitorSampleAt + pageStoreJanitorSampleSize,
+            tabIds.length
+        );
+        for ( let i = pageStoreJanitorSampleAt; i < n; i++ ) {
+            const tabId = tabIds[i];
+            if ( vAPI.isBehindTheSceneTabId(tabId) ) { continue; }
+            checkTab(tabId);
+        }
+        pageStoreJanitorSampleAt = n;
+
+        vAPI.setTimeout(pageStoreJanitor, pageStoreJanitorPeriod);
     };
-    if ( pageStoreJanitorSampleAt >= tabIds.length ) {
-        pageStoreJanitorSampleAt = 0;
-    }
-    var n = Math.min(pageStoreJanitorSampleAt + pageStoreJanitorSampleSize, tabIds.length);
-    for ( var i = pageStoreJanitorSampleAt; i < n; i++ ) {
-        var tabId = tabIds[i];
-        if ( vAPI.isBehindTheSceneTabId(tabId) ) { continue; }
-        checkTab(tabId);
-    }
-    pageStoreJanitorSampleAt = n;
 
     vAPI.setTimeout(pageStoreJanitor, pageStoreJanitorPeriod);
-};
-
-vAPI.setTimeout(pageStoreJanitor, pageStoreJanitorPeriod);
-
-/******************************************************************************/
-
-})();
+}
 
 /******************************************************************************/
