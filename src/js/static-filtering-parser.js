@@ -1000,10 +1000,17 @@ const BITHostname      = BITNum | BITAlpha | BITUppercase | BITDash | BITPeriod 
 const BITPatternToken  = BITNum | BITAlpha | BITPercent;
 const BITLineComment   = BITExclamation | BITHash | BITSquareBracket;
 
+// Important: it is expected that lines passed to the parser have been
+// trimmed of new line characters. Given this, any newline characters found
+// will be interpreted as normal white spaces.
+
 const charDescBits = [
     /* 0x00 - 0x08 */ 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    /* 0x09   */ BITSpace,
-    /* 0x0A - 0x0F */ 0, 0, 0, 0, 0, 0,
+    /* 0x09   */ BITSpace,  // \t
+    /* 0x0A   */ BITSpace,  // \n
+    /* 0x0B - 0x0C */ 0, 0,
+    /* 0x0D   */ BITSpace,  // \r
+    /* 0x0E - 0x0F */ 0, 0,
     /* 0x10 - 0x1F */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     /* 0x20   */ BITSpace,
     /* 0x21 ! */ BITExclamation,
