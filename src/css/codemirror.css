@@ -23,7 +23,7 @@
     }
 
 /* CodeMirror theme overrides */
-.cm-s-default .cm-string-2 { color: #a30; }
+.cm-s-default .cm-string-2 { color: #930; }
 .cm-s-default .cm-comment { color: #777; }
 .cm-s-default .cm-keyword { color: #90b; }
 .cm-s-default .cm-error,
