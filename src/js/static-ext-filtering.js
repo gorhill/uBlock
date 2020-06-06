@@ -124,7 +124,7 @@
     };
 
     const translateAdguardCSSInjectionFilter = function(suffix) {
-        const matches = /^([^{]+)\{([^}]+)\}$/.exec(suffix);
+        const matches = /^([^{]+)\{([^}]+)\}\s*$/.exec(suffix);
         if ( matches === null ) { return ''; }
         const selector = matches[1].trim();
         const style = matches[2].trim();
