@@ -271,12 +271,12 @@ const onUserSettingsReceived = function(details) {
 
 /******************************************************************************/
 
-Promise.all([
-    vAPI.messaging.send('dashboard', { what: 'userSettings' }),
-    vAPI.messaging.send('dashboard', { what: 'getLocalData' }),
-]).then(results => {
-    onUserSettingsReceived(results[0]);
-    onLocalDataReceived(results[1]);
+vAPI.messaging.send('dashboard', { what: 'userSettings' }).then(result => {
+    onUserSettingsReceived(result);
+});
+
+vAPI.messaging.send('dashboard', { what: 'getLocalData' }).then(result => {
+    onLocalDataReceived(result);
 });
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/591
