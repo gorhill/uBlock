@@ -2304,8 +2304,7 @@ const FilterParser = class {
     }
 
     parseOptions(parser) {
-        for ( let { id, val, not, bad } of parser.options() ) {
-            if ( bad ) { return false; }
+        for ( let { id, val, not } of parser.options() ) {
             switch ( id ) {
             case parser.OPTToken3p:
                 this.parsePartyOption(false, not);
@@ -2359,6 +2358,8 @@ const FilterParser = class {
                 if ( this.redirect !== 0 ) { return false; }
                 this.redirect = id === parser.OPTTokenRedirectRule ? 2 : 1;
                 break;
+            case parser.OPTTokenInvalid:
+                return false;
             default:
                 if ( this.tokenIdToNormalizedType.has(id) === false ) {
                     return false;

@@ -552,64 +552,7 @@ const Parser = class {
             }
         }
 
-        this.analyzeNetOptions();
-
         this.category = CATStaticNetFilter;
-    }
-
-    // Further validate the options. Each option is encoded as follow:
-    //
-    // desc  ~token=value,
-    // 0     12    34    5
-    //
-    // At index 0 is the option descriptor.
-    // At indices 1-5 is a slice index.
-    analyzeNetOptions() {
-        if ( this.optionsSpan.l === 0 ) { return; }
-        const lopts =  this.optionsSpan.i;
-        const ropts =  lopts + this.optionsSpan.l;
-        const { slices, optSlices } = this;
-        let optSliceWritePtr = 0;
-        let lopt = lopts;
-        while ( lopt < ropts ) {
-            let ltok = hasBits(slices[lopt], BITTilde) ? lopt + 3 : lopt;
-            let lval = 0;
-            let i = ltok;
-            for (;;) {
-                if ( i === ropts ) { break; }
-                const bits = slices[i];
-                if ( hasBits(bits, BITComma) ) { break; }
-                if ( lval === 0 && hasBits(bits, BITEqual) ) {
-                    lval = i;
-                }
-                i += 3;
-            }
-            const rtok = lval === 0 ? i : lval;
-            const token = this.raw.slice(slices[ltok+1], slices[rtok+1]);
-            optSlices[optSliceWritePtr+0] = netOptionTokens.get(token) || OPTTokenInvalid;
-            optSlices[optSliceWritePtr+1] = lopt;
-            optSlices[optSliceWritePtr+2] = ltok;
-            if ( lval !== 0 ) {
-                optSlices[optSliceWritePtr+3] = lval;
-                optSlices[optSliceWritePtr+4] = lval+3;
-            } else {
-                optSlices[optSliceWritePtr+3] = i;
-                optSlices[optSliceWritePtr+4] = i;
-            }
-            optSlices[optSliceWritePtr+5] = i;
-            optSliceWritePtr += 6;
-            lopt = i + 3;
-        }
-        this.optSliceWritePtr = optSliceWritePtr;
-        // Dangling comma
-        if ( this.interactive && hasBits(this.slices[ropts-3], BITComma) ) {
-            this.slices[ropts-3] |= BITError;
-        }
-        // TODO: Now that all options are parsed, find out erroneous combinations
-        // of options:
-        // redirect(-rule) requires a single discrete type.
-        // csp can't be mixed with any other types.
-        // Etc...
     }
 
     analyzeNetExtra() {
@@ -1332,74 +1275,150 @@ const Span = class {
 const NetOptionsIterator = class {
     constructor(parser) {
         this.parser = parser;
-        this.l = this.r = 0;
+        this.exception = false;
+        this.interactive = false;
+        this.i = 0;
+        this.optSlices = [];
+        this.writePtr = 0;
+        this.item = {
+            id: OPTTokenInvalid,
+            val: undefined,
+            not: false,
+        };
         this.value = undefined;
         this.done = true;
     }
     [Symbol.iterator]() {
+        this.writePtr = 0;
+        const optSpan = this.parser.optionsSpan;
+        this.done = optSpan.l === 0;
+        if ( this.done ) {
+            this.value = undefined;
+            return this;
+        }
+        // Prime iterator
+        this.value = this.item;
         this.i = 0;
-        this.r = this.parser.optSliceWritePtr;
         this.exception = this.parser.isException();
-        this.done = false;
-        this.value = {
-            id: OPTTokenInvalid,
-            val: undefined,
-            not: false,
-            bad: false,
-        };
+        this.interactive = this.parser.interactive;
+        // Each option is encoded as follow:
+        //
+        // desc  ~token=value,
+        // 0     12    34    5
+        //
+        // At index 0 is the option descriptor.
+        // At indices 1-5 is a slice index.
+        const lopts =  optSpan.i;
+        const ropts =  lopts + optSpan.l;
+        const slices = this.parser.slices;
+        const optSlices = this.optSlices;
+        let writePtr = 0;
+        let lopt = lopts;
+        while ( lopt < ropts ) {
+            let good = true;
+            let ltok = lopt;
+            if ( hasBits(slices[lopt], BITTilde) ) {
+                if ( slices[lopt+2] > 1 ) { good = false; }
+                ltok += 3;
+            }
+            let lval = 0;
+            let i = ltok;
+            while ( i < ropts ) {
+                const bits = slices[i];
+                if ( hasBits(bits, BITComma) ) {
+                    if ( this.interactive && (i === lopt || slices[i+2] > 1) ) {
+                        slices[i] |= BITError;
+                    }
+                    break;
+                }
+                if ( lval === 0 && hasBits(bits, BITEqual) ) { lval = i; }
+                i += 3;
+            }
+            // Check for proper assignement
+            let assigned = false;
+            if ( good && lval !== 0 ) {
+                good = assigned = slices[lval+2] === 1 && lval + 3 !== i;
+            }
+            let descriptor;
+            if ( good ) {
+                const rtok = lval === 0 ? i : lval;
+                const token = this.parser.raw.slice(slices[ltok+1], slices[rtok+1]);
+                descriptor = netOptionTokens.get(token);
+            }
+            if (
+                descriptor === undefined ||
+                ltok !== lopt && hasNoBits(descriptor, OPTCanNegate) ||
+                this.exception && hasBits(descriptor, OPTBlockOnly) ||
+                this.exception === false && hasBits(descriptor, OPTAllowOnly) ||
+                assigned && hasNoBits(descriptor, OPTMustAssign) ||
+                assigned === false && hasBits(descriptor, OPTMustAssign) && (
+                    this.exception === false ||
+                    hasNoBits(descriptor, OPTAllowMayAssign)
+                )
+            ) {
+                descriptor = OPTTokenInvalid;
+            }
+            if (
+                this.interactive && (
+                    descriptor === OPTTokenInvalid ||
+                    hasBits(descriptor, OPTNotSupported)
+                )
+            ) {
+                this.parser.markSlices(lopt, i, BITError);
+            }
+            optSlices[writePtr+0] = descriptor;
+            optSlices[writePtr+1] = lopt;
+            optSlices[writePtr+2] = ltok;
+            if ( lval !== 0 ) {
+                optSlices[writePtr+3] = lval;
+                optSlices[writePtr+4] = lval+3;
+            } else {
+                optSlices[writePtr+3] = i;
+                optSlices[writePtr+4] = i;
+            }
+            optSlices[writePtr+5] = i;
+            writePtr += 6;
+            lopt = i + 3;
+        }
+        this.writePtr = writePtr;
+        // Dangling comma
+        if ( this.interactive && hasBits(this.parser.slices[ropts-3], BITComma) ) {
+            this.parser.slices[ropts-3] |= BITError;
+        }
+        // TODO: Now that all options are parsed, find out erroneous
+        // combinations of options:
+        // - redirect(-rule) requires a single discrete type
+        // - csp can't be mixed with any other types
+        // - any option should appear only once
+        // - etc.
         return this;
     }
     next() {
-        if ( this.i === this.r ) {
+        if ( this.i === this.writePtr ) {
             this.value = undefined;
             this.done = true;
             return this;
         }
-        // Remember:
-        // desc  ~token=value,
-        // 0     12    34    5
-        const parser = this.parser;
         const i = this.i;
-        const optSlices = parser.optSlices;
+        const optSlices = this.optSlices;
         const descriptor = optSlices[i+0];
-        this.value.id = descriptor & 0xFF;
-        this.value.not = optSlices[i+2] !== optSlices[i+1];
-        this.value.bad = false;
-        const assigned = optSlices[i+4] !== optSlices[i+5];
-        this.value.val = assigned
-            ? parser.raw.slice(
+        this.item.id = descriptor & 0xFF;
+        this.item.not = optSlices[i+2] !== optSlices[i+1];
+        this.item.val = undefined;
+        if ( optSlices[i+4] !== optSlices[i+5] ) {
+            const parser = this.parser;
+            this.item.val = parser.raw.slice(
                 parser.slices[optSlices[i+4]+1],
                 parser.slices[optSlices[i+5]+1]
-            )
-            : undefined;
-        if (
-            descriptor === OPTTokenInvalid ||
-            this.value.not && hasNoBits(descriptor, OPTCanNegate) ||
-            this.exception && hasBits(descriptor, OPTBlockOnly) ||
-            this.exception === false && hasBits(descriptor, OPTAllowOnly) ||
-            assigned && hasNoBits(descriptor, OPTMustAssign) ||
-            assigned === false && hasBits(descriptor, OPTMustAssign) && (
-                this.exception === false ||
-                hasNoBits(descriptor, OPTAllowMayAssign)
-            )
-        ) {
-            this.value.bad = true;
-        } else if (
-            parser.interactive &&
-            hasBits(descriptor, OPTDomainList)
-        ) {
-            parser.analyzeDomainList(
-                optSlices[i+4],
-                optSlices[i+5],
-                BITPipe,
-                this.value.id === OPTTokenDomain
             );
-        }
-        if (
-            parser.interactive &&
-            (this.value.bad || hasBits(descriptor, OPTNotSupported))
-        ) {
-            parser.markSlices(optSlices[i+1], optSlices[i+5], BITError);
+            if ( parser.interactive && hasBits(descriptor, OPTDomainList) ) {
+                parser.analyzeDomainList(
+                    optSlices[i+4],
+                    optSlices[i+5],
+                    BITPipe,
+                    this.item.id === OPTTokenDomain
+                );
+            }
         }
         this.i += 6;
         return this;
