@@ -2431,7 +2431,7 @@ const FilterParser = class {
             // https://github.com/gorhill/uBlock/issues/1246
             //   If the filter is valid, use the corrected version of the
             //   source string -- this ensure reverse-lookup will work fine.
-            this.pattern = this.normalizeRegexSource(parser.getPattern());
+            this.pattern = this.normalizeRegexSource(parser.getNetPattern());
             if ( this.pattern === '' ) {
                 this.unsupported = true;
             }
