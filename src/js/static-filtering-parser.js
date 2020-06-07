@@ -758,7 +758,7 @@ const Parser = class {
     strFromSpan(span) {
         if ( span.l === 0 ) { return ''; }
         const beg = span.i;
-        return this.strFromSlices(beg, beg + span.l - 1);
+        return this.strFromSlices(beg, beg + span.l - 3);
     }
 
     isBlank() {
