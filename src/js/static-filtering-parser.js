@@ -350,11 +350,10 @@ const Parser = class {
                     // https://github.com/gorhill/uBlock/issues/952
                     //   AdGuard-specific `$$` filters => unsupported.
                     if ( this.findFirstOdd(0, BITHostname | BITComma | BITAsterisk) === i ) {
+                        this.flavorBits |= BITFlavorError;
                         if ( this.interactive ) {
                             this.markSlices(i, i+3, BITError);
                         }
-                        this.allBits |= BITError;
-                        this.flavorBits |= BITFlavorError;
                     } else {
                         this.splitSlot(i, l - 1);
                         i += 3;
@@ -568,8 +567,7 @@ const Parser = class {
                 void new RegExp(this.getNetPattern());
             }
             catch (ex) {
-                const { i, l } = this.patternSpan;
-                this.markSlices(i, i + l, BITError);
+                this.markSpan(this.patternSpan, BITError);
             }
         } else if ( this.patternIsDubious() ) {
             this.markSpan(this.patternSpan, BITError);
@@ -979,7 +977,7 @@ const Parser = class {
     }
 
     hasError() {
-        return hasBits(this.allBits, BITError);
+        return hasBits(this.flavorBits, BITFlavorError);
     }
 };
 

@@ -104,11 +104,17 @@ CodeMirror.defineMode("ubo-static-filtering", function() {
             parserSlot >= parser.patternSpan.i &&
             parserSlot < parser.patternRightAnchorSpan.i
         ) {
-            if ( (parser.slices[parserSlot] & (parser.BITAsterisk | parser.BITCaret)) !== 0 ) {
+            const isRegex = parser.patternIsRegex();
+            if (
+                (isRegex === false) &&
+                (parser.slices[parserSlot] & (parser.BITAsterisk | parser.BITCaret)) !== 0
+            ) {
                 stream.pos += parser.slices[parserSlot+2];
                 parserSlot += 3;
                 return 'keyword strong';
             }
+            let style = 'variable';
+            if ( isRegex ) { style += ' regex'; }
             const nextSlot = parser.skipUntil(
                 parserSlot,
                 parser.patternRightAnchorSpan.i,
@@ -116,7 +122,7 @@ CodeMirror.defineMode("ubo-static-filtering", function() {
             );
             stream.pos = parser.slices[nextSlot+1];
             parserSlot = nextSlot;
-            return 'variable';
+            return style;
         }
         if (
             parserSlot === parser.optionsAnchorSpan.i &&
