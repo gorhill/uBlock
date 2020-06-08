@@ -324,11 +324,14 @@ const Parser = class {
         let patternStartIsRegex =
                 islice < this.optionsAnchorSpan.i &&
                 hasBits(this.slices[islice], BITSlash);
-
-        let patternIsRegex = patternStartIsRegex && (
-            this.patternSpan.l === 3 && this.slices[this.patternSpan.i+2] > 2 ||
-            hasBits(this.slices[this.optionsAnchorSpan.i-3], BITSlash)
-        );
+        let patternIsRegex = patternStartIsRegex;
+        if ( patternStartIsRegex ) {
+            const { i, l } = this.patternSpan;
+            patternIsRegex = (
+                l === 3 && this.slices[i+2] > 2 ||
+                l > 3 && hasBits(this.slices[i+l-3], BITSlash)
+            );
+        }
 
         // If the pattern is not a regex, there might be options.
         if ( patternIsRegex === false ) {
@@ -364,10 +367,13 @@ const Parser = class {
                 this.optionsSpan.i = i;
                 this.optionsSpan.l = this.commentSpan.i - i;
                 this.optionsBits = optionsBits;
-                patternIsRegex = patternStartIsRegex && (
-                    this.patternSpan.l === 3 && this.slices[this.patternSpan.i+2] > 2 ||
-                    hasBits(this.slices[this.optionsAnchorSpan.i-3], BITSlash)
-                );
+                if ( patternStartIsRegex ) {
+                    const { i, l } = this.patternSpan;
+                    patternIsRegex = (
+                        l === 3 && this.slices[i+2] > 2 ||
+                        l > 3 && hasBits(this.slices[i+l-3], BITSlash)
+                    );
+                }
             }
         }
 
@@ -557,7 +563,7 @@ const Parser = class {
 
     analyzeNetExtra() {
         // Validate regex
-        if ( hasBits(this.flavorBits, BITFlavorNetRegex) ) {
+        if ( this.patternIsRegex() ) {
             try {
                 void new RegExp(this.getNetPattern());
             }
@@ -565,6 +571,8 @@ const Parser = class {
                 const { i, l } = this.patternSpan;
                 this.markSlices(i, i + l, BITError);
             }
+        } else if ( this.patternIsDubious() ) {
+            this.markSpan(this.patternSpan, BITError);
         }
         // Validate options
         for ( const _ of this.options() ) { void _; }
@@ -718,6 +726,11 @@ const Parser = class {
         }
     }
 
+    markSpan(span, bits) {
+        const { i, l } = span;
+        this.markSlices(i, i + l, bits);
+    }
+
     unmarkSlices(beg, end, bits) {
         while ( beg < end ) {
             this.slices[beg] &= ~bits;
@@ -799,9 +812,10 @@ const Parser = class {
     // Examples of dubious filter content:
     //   - Single character other than `*` wildcard
     patternIsDubious() {
-        return this.patternSpan.l === 3 &&
-               this.patternBits !== BITAsterisk &&
-               this.optionsSpan.l === 0;
+        return this.patternBits !== BITAsterisk &&
+               this.optionsSpan.l === 0 &&
+               this.patternSpan.l === 3 &&
+               this.slices[this.patternSpan.i+2] === 1;
     }
 
     patternIsMatchAll() {
@@ -1277,9 +1291,9 @@ const NetOptionsIterator = class {
         this.parser = parser;
         this.exception = false;
         this.interactive = false;
-        this.i = 0;
         this.optSlices = [];
         this.writePtr = 0;
+        this.readPtr = 0;
         this.item = {
             id: OPTTokenInvalid,
             val: undefined,
@@ -1289,27 +1303,26 @@ const NetOptionsIterator = class {
         this.done = true;
     }
     [Symbol.iterator]() {
-        this.writePtr = 0;
-        const optSpan = this.parser.optionsSpan;
-        this.done = optSpan.l === 0;
+        this.readPtr = this.writePtr = 0;
+        this.done = this.parser.optionsSpan.l === 0;
         if ( this.done ) {
             this.value = undefined;
             return this;
         }
         // Prime iterator
         this.value = this.item;
-        this.i = 0;
         this.exception = this.parser.isException();
         this.interactive = this.parser.interactive;
         // Each option is encoded as follow:
         //
         // desc  ~token=value,
-        // 0     12    34    5
+        // 0     1|    3|    5
+        //        2     4
         //
         // At index 0 is the option descriptor.
         // At indices 1-5 is a slice index.
-        const lopts =  optSpan.i;
-        const ropts =  lopts + optSpan.l;
+        const lopts =  this.parser.optionsSpan.i;
+        const ropts =  lopts + this.parser.optionsSpan.l;
         const slices = this.parser.slices;
         const optSlices = this.optSlices;
         let writePtr = 0;
@@ -1394,12 +1407,12 @@ const NetOptionsIterator = class {
         return this;
     }
     next() {
-        if ( this.i === this.writePtr ) {
+        const i = this.readPtr;
+        if ( i === this.writePtr ) {
             this.value = undefined;
             this.done = true;
             return this;
         }
-        const i = this.i;
         const optSlices = this.optSlices;
         const descriptor = optSlices[i+0];
         this.item.id = descriptor & 0xFF;
@@ -1420,7 +1433,7 @@ const NetOptionsIterator = class {
                 );
             }
         }
-        this.i += 6;
+        this.readPtr = i + 6;
         return this;
     }
 };
