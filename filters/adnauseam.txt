@@ -475,7 +475,7 @@ gfp_video_ads/
 ||teads.tv^$important,third-party,domain=mingpao.com
 
 ||amazon-adsystem.com^$subdocument
-
+||www.youtube.com/sw.js$script
 #opensubtitles
 opensubtitles.org###fcninnerbox
 ||dc5k8fg5ioc8s.cloudfront.net^
