@@ -19,16 +19,12 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global punycode */
-
 'use strict';
 
 /*******************************************************************************
 
     The goal is for the static filtering parser to avoid external
-    dependencies[1] to other code in the project.
-
-    [1] Except unavoidable ones, such as punycode.
+    dependencies to other code in the project.
 
     Roughly, this is how things work: each input string (passed to analyze())
     is decomposed into a minimal set of distinct slices. Each slice is a
@@ -76,12 +72,10 @@
 /******************************************************************************/
 
 const Parser = class {
-    constructor(interactive = false) {
-        this.interactive = interactive;
+    constructor(options = {}) {
+        this.interactive = options.interactive === true;
         this.raw = '';
-        this.rawEnd = 0;
         this.slices = [];
-        this.optSlices = [];
         this.leftSpaceSpan = new Span();
         this.exceptionSpan = new Span();
         this.patternLeftAnchorSpan = new Span();
@@ -109,13 +103,13 @@ const Parser = class {
         this.extOptionsIterator = new ExtOptionsIterator(this);
         this.maxTokenLength = Number.MAX_SAFE_INTEGER;
         this.reIsLocalhostRedirect = /(?:0\.0\.0\.0|(?:broadcast|local)host|local|ip6-\w+)\b/;
+        this.reHostname = /^[^\x00-\x24\x26-\x29\x2B\x2C\x2F\x3A-\x5E\x60\x7B-\x7F]+/;
+        this.punycoder = new URL(self.location);
         this.reset();
     }
 
     reset() {
-        this.rawPos = 0;
         this.sliceWritePtr = 0;
-        this.optSliceWritePtr = 0;
         this.category = CATNone;
         this.allBits = 0;       // bits found in any slices
         this.patternBits = 0;   // bits found in any pattern slices
@@ -322,8 +316,8 @@ const Parser = class {
         this.patternSpan.l = this.optionsAnchorSpan.i - islice;
 
         let patternStartIsRegex =
-                islice < this.optionsAnchorSpan.i &&
-                hasBits(this.slices[islice], BITSlash);
+            islice < this.optionsAnchorSpan.i &&
+            hasBits(this.slices[islice], BITSlash);
         let patternIsRegex = patternStartIsRegex;
         if ( patternStartIsRegex ) {
             const { i, l } = this.patternSpan;
@@ -642,8 +636,8 @@ const Parser = class {
     slice(raw) {
         this.reset();
         this.raw = raw;
-        this.rawEnd = raw.length;
-        if ( this.rawEnd === 0 ) { return; }
+        const rawEnd = raw.length;
+        if ( rawEnd === 0 ) { return; }
         // All unicode characters are allowed in hostname
         const unicodeBits = BITUnicode | BITAlpha;
         // Create raw slices
@@ -656,7 +650,7 @@ const Parser = class {
         ptr += 2;
         let allBits = aBits;
         let i = 0, j = 1;
-        while ( j < this.rawEnd ) {
+        while ( j < rawEnd ) {
             c = raw.charCodeAt(j);
             const bBits = c < 0x80 ? charDescBits[c] : unicodeBits;
             if ( bBits !== aBits ) {
@@ -675,7 +669,7 @@ const Parser = class {
         // End-of-line slice
         this.eolSpan.i = ptr;
         slices[ptr+0] = 0;
-        slices[ptr+1] = this.rawEnd;
+        slices[ptr+1] = rawEnd;
         slices[ptr+2] = 0;
         ptr += 3;
         // Trim left
@@ -947,25 +941,25 @@ const Parser = class {
         return this.raw;
     }
 
-    // TODO: if there is a need to punycode, we force a re-analysis post-
-    // punycode conversion. We could avoid the re-analysis by substituting
-    // the original pattern slices with the post-punycode ones, but it's
-    // not trivial work and given how rare this occurs it may not be worth
-    // worrying about this.
     toPunycode() {
-        if ( this.patternHasUnicode() === false ) { return; }
+        if ( this.patternHasUnicode() === false ) { return true; }
         const { i, l } = this.patternSpan;
-        if ( l === 0 ) { return; }
-        const re = /^[^\x00-\x24\x26-\x29\x2B\x2C\x2F\x3A-\x5E\x60\x7B-\x7F]+/;
+        if ( l === 0 ) { return true; }
         let pattern = this.getNetPattern();
-        const match = re.exec(this.pattern);
+        const match = this.reHostname.exec(this.pattern);
         if ( match === null ) { return; }
-        pattern = punycode.toASCII(match[0]) +
-                  this.pattern.slice(match.index + match[0].length);
+        try {
+            this.punycoder.hostname = match[0].replace(/\*/g, '__asterisk__');
+        } catch(ex) {
+            return false;
+        }
+        const punycoded = this.punycoder.hostname.replace(/__asterisk__/g, '*');
+        pattern = punycoded + this.pattern.slice(match.index + match[0].length);
         const beg = this.slices[i+1];
         const end = this.slices[i+l+1];
         const raw = this.raw.slice(0, beg) + pattern + this.raw.slice(end);
         this.analyze(raw);
+        return true;
     }
 
     isException() {
@@ -1599,7 +1593,7 @@ const ExtOptionsIterator = class {
 
 /******************************************************************************/
 
-if ( vAPI instanceof Object ) {
+if ( typeof vAPI === 'object' && vAPI !== null ) {
     vAPI.StaticFilteringParser = Parser;
 } else {
     self.StaticFilteringParser = Parser;

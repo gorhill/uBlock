@@ -722,7 +722,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     // Fetching the raw content may cause the compiled content to be
     // generated somewhere else in uBO, hence we try one last time to
     // fetch the compiled content in case it has become available.
-    let compiledDetails = await this.assets.get(compiledPath);
+    const compiledDetails = await this.assets.get(compiledPath);
     if ( compiledDetails.content === '' ) {
         compiledDetails.content = this.compileFilters(
             rawDetails.content,
@@ -825,8 +825,8 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
         // https://github.com/gorhill/uBlock/issues/2599
         //   convert hostname to punycode if needed
-        if ( parser.patternHasUnicode() ) {
-            parser.toPunycode();
+        if ( parser.patternHasUnicode() && parser.toPunycode() === false ) {
+            continue;
         }
         staticNetFilteringEngine.compile(parser, writer);
     }

@@ -24,7 +24,7 @@
 'use strict';
 
 CodeMirror.defineMode("ubo-static-filtering", function() {
-    const parser = new vAPI.StaticFilteringParser(true);
+    const parser = new vAPI.StaticFilteringParser({ interactive: true });
     const reDirective = /^!#(?:if|endif|include)\b/;
     let parserSlot = 0;
     let netOptionValueMode = false;
