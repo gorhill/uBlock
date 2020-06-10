@@ -603,9 +603,8 @@ const selectFilterLists = async function() {
 
 const buttonApplyHandler = async function() {
     uDom('#buttonApply').removeClass('enabled');
-    await selectFilterLists(( ) => {
-        messaging.send('adnauseam', { what: 'verifyLists' });
-    });
+    await selectFilterLists();
+    messaging.send('adnauseam', { what: 'verifyLists' });
     renderWidgets();
     messaging.send('dashboard', { what: 'reloadAllFilters' });
 };
