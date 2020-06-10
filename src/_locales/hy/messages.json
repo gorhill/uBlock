@@ -104,7 +104,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
-    "message": "Mիացված դոմեյններ",
+    "message": "Միացված դոմեյններ",
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
@@ -200,7 +200,7 @@
     "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
-    "message": "Ավելին",
+    "message": "Ավել",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton_v2": {
@@ -260,7 +260,7 @@
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
-    "message": "{{count}} {{total}}֊ից",
+    "message": "{{count}} հնարավոր {{total}}֊ից",
     "description": "appears in popup"
   },
   "popupVersion": {
@@ -356,7 +356,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Block media elements larger than {{input}} KB",
+    "message": "Արգելափակել {{input}} ԿԲից մեծ մեդիա էլեմենտները",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -456,7 +456,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Import...",
+    "message": "Ներմուծել...",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -492,7 +492,7 @@
     "description": "English: Import and append"
   },
   "1pExport": {
-    "message": "Export",
+    "message": "Արտահանել",
     "description": "English: Export"
   },
   "1pExportFilename": {
@@ -568,7 +568,7 @@
     "description": "English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply": {
-    "message": "Apply changes",
+    "message": "Կիրառել փոփոխությունները",
     "description": "English: Apply changes"
   },
   "logRequestsHeaderType": {
@@ -824,7 +824,7 @@
     "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
-    "message": "Support",
+    "message": "Աջակցում",
     "description": "A link for where to get support"
   },
   "aboutIssues": {
@@ -900,7 +900,7 @@
     "description": "English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo": {
-    "message": "an hour ago",
+    "message": "ժամ առաջ",
     "description": "English: an hour ago"
   },
   "elapsedManyHoursAgo": {
@@ -908,7 +908,7 @@
     "description": "English: {{value}} hours ago"
   },
   "elapsedOneDayAgo": {
-    "message": "a day ago",
+    "message": "օր առաջ",
     "description": "English: a day ago"
   },
   "elapsedManyDaysAgo": {
@@ -1004,7 +1004,7 @@
     "description": ""
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
-    "message": "Temporarily allow large media elements",
+    "message": "Ժամանակավորապես թույլ տալ մեծ մեդիա էլեմենտները",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
