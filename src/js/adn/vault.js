@@ -779,10 +779,11 @@
 
   function computeStats(adsets) {
     const numVisits = numVisited(gAds);
-    $('.since').text(sinceTime(adsets));
-    $('#clicked').text(numVisits);
-    $('#total').text(numTotal());
+    $('.since').text($('.since').text().replace('{{datetime}}', sinceTime(adsets)));
+    $('.clicked').text($('.clicked').text().replace('{{number}}', numVisits));
+    $('.total').text($('.total').text().replace('{{total}}', numTotal()));
     $('#detected').text(numFound(adsets));
+
     if(numTotal() != numFound(adsets))
       $('.showing').show();
     else

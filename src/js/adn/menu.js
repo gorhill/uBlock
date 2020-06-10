@@ -132,8 +132,8 @@
 
     const numVisits = visitedCount(ads) || 0;
     uDom('#vault-count').text(total || 0);
-    uDom('#visited-count').text(numVisits || 0);
-    uDom('#found-count').text(ads ? ads.length : 0);
+    uDom('.visited').text(uDom('.visited').text().replace("{{number}}", numVisits || 0));
+    uDom('.found').text(uDom('.found').text().replace("{{count}}", ads ? ads.length : 0));
     setCost(numVisits);
   }
 

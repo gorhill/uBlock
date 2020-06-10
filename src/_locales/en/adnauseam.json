@@ -236,15 +236,11 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsClicked": {
-    "message": "clicked",
-    "description": "appears in ADN popup menu"
-  },
-  "adnMenuOfThe": {
-    "message": "of the",
-    "description": "appears in ADN popup menu"
+    "message": "clicked {{number}}",
+    "description": "appears in ADN popup menu and vault"
   },
   "adnMenuAdsDetected": {
-    "message": "Ads detected",
+    "message": "{{count}} Ads detected",
     "description": "appears in ADN popup menu"
   },
   "adnMenuViewVault": {
@@ -308,11 +304,7 @@
     "description": "appears in ADN log page"
   },
   "adnVaultSince": {
-    "message": "Since",
-    "description": "appears on vault page"
-  },
-  "adnVaultDefaultDate": {
-    "message": "Jan 1 1970 0:00am",
+    "message": "Since {{datetime}}",
     "description": "appears on vault page"
   },
   "adnVaultExport": {
@@ -328,7 +320,7 @@
     "description": "appears on vault page"
   },
   "adnVaultFound": {
-    "message": "ads collected",
+    "message": "{{total}} ads collected",
     "description": "appears on vault page"
   },
   "adnVaultShowing": {
