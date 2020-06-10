@@ -452,8 +452,8 @@
 		"off": true,
 		"title": "LTU: EasyList Lithuania",
 		"lang": "lt",
-		"contentURL": "https://margevicius.lt/easylistlithuania.txt",
-		"supportURL": "https://margevicius.lt/2014/06/26/easylist_lithuania/"
+		"contentURL": "https://raw.githubusercontent.com/EasyList-Lithuania/easylist_lithuania/master/easylistlithuania.txt",
+		"supportURL": "https://github.com/EasyList-Lithuania/easylist_lithuania"
 	},
 	"LVA-0": {
 		"content": "filters",
