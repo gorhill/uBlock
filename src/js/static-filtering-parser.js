@@ -566,8 +566,7 @@ const Parser = class {
         } else if ( this.patternIsDubious() ) {
             this.markSpan(this.patternSpan, BITError);
         }
-        // Validate options
-        for ( const _ of this.options() ) { void _; }
+        this.netOptionsIterator.init();
     }
 
     analyzeDomainList(from, to, bitSeparator, canEntity) {
@@ -977,6 +976,12 @@ const Parser = class {
 
 /******************************************************************************/
 
+const hasNoBits = (v, bits) => (v & bits) === 0;
+const hasBits = (v, bits) => (v & bits) !== 0;
+const hasNotAllBits = (v, bits) => (v & bits) !== bits;
+
+/******************************************************************************/
+
 const CATNone = 0;
 const CATStaticExtFilter = 1;
 const CATStaticNetFilter = 2;
@@ -1189,11 +1194,10 @@ const OPTAllowOnly               = 1 << 10;
 const OPTMustAssign              = 1 << 11;
 const OPTAllowMayAssign          = 1 << 12;
 const OPTDomainList              = 1 << 13;
-const OPTNotSupported            = 1 << 14;
-
-const hasNoBits = (v, bits) => (v & bits) === 0;
-const hasBits = (v, bits) => (v & bits) !== 0;
-const hasNotAllBits = (v, bits) => (v & bits) !== bits;
+const OPTType                    = 1 << 14;
+const OPTNetworkType             = 1 << 15;
+const OPTRedirectType            = 1 << 16;
+const OPTNotSupported            = 1 << 17;
 
 /******************************************************************************/
 
@@ -1294,7 +1298,7 @@ const NetOptionsIterator = class {
         this.value = undefined;
         this.done = true;
     }
-    [Symbol.iterator]() {
+    init() {
         this.readPtr = this.writePtr = 0;
         this.done = this.parser.optionsSpan.l === 0;
         if ( this.done ) {
@@ -1317,15 +1321,21 @@ const NetOptionsIterator = class {
         const ropts =  lopts + this.parser.optionsSpan.l;
         const slices = this.parser.slices;
         const optSlices = this.optSlices;
+        let typeCount = 0;
+        let networkTypeCount = 0;
+        let redirectIndex = -1;
+        let cspIndex = -1;
         let writePtr = 0;
         let lopt = lopts;
         while ( lopt < ropts ) {
             let good = true;
             let ltok = lopt;
+            // Parse optional negation
             if ( hasBits(slices[lopt], BITTilde) ) {
                 if ( slices[lopt+2] > 1 ) { good = false; }
                 ltok += 3;
             }
+            // Find end of current option
             let lval = 0;
             let i = ltok;
             while ( i < ropts ) {
@@ -1350,6 +1360,7 @@ const NetOptionsIterator = class {
                 const token = this.parser.raw.slice(slices[ltok+1], slices[rtok+1]);
                 descriptor = netOptionTokens.get(token);
             }
+            // Validate option according to context
             if (
                 descriptor === undefined ||
                 ltok !== lopt && hasNoBits(descriptor, OPTCanNegate) ||
@@ -1363,6 +1374,28 @@ const NetOptionsIterator = class {
             ) {
                 descriptor = OPTTokenInvalid;
             }
+            // Keep count of types
+            if ( hasBits(descriptor, OPTType) ) {
+                typeCount += 1;
+                if ( hasBits(descriptor, OPTNetworkType) ) {
+                    networkTypeCount += 1;
+                }
+            }
+            // Only one `redirect` or `csp` can be present
+            if ( hasBits(descriptor, OPTRedirectType) ) {
+                if ( redirectIndex === -1 ) {
+                    redirectIndex = writePtr;
+                } else {
+                    descriptor = OPTTokenInvalid;
+                }
+            } else if ( (descriptor & 0xFF) === OPTTokenCsp ) {
+                if ( cspIndex === -1 ) {
+                    cspIndex = writePtr;
+                } else {
+                    descriptor = OPTTokenInvalid;
+                }
+            }
+            // Mark slices in case of invalid filter option
             if (
                 this.interactive && (
                     descriptor === OPTTokenInvalid ||
@@ -1371,17 +1404,26 @@ const NetOptionsIterator = class {
             ) {
                 this.parser.markSlices(lopt, i, BITError);
             }
+            // Store indices to raw slices -- this will be used during
+            // iteration
             optSlices[writePtr+0] = descriptor;
             optSlices[writePtr+1] = lopt;
             optSlices[writePtr+2] = ltok;
             if ( lval !== 0 ) {
                 optSlices[writePtr+3] = lval;
                 optSlices[writePtr+4] = lval+3;
+                if ( this.interactive && hasBits(descriptor, OPTDomainList) ) {
+                    this.parser.analyzeDomainList(
+                        lval + 3, i, BITPipe,
+                        (descriptor & 0xFF) === OPTTokenDomain
+                    );
+                }
             } else {
                 optSlices[writePtr+3] = i;
                 optSlices[writePtr+4] = i;
             }
             optSlices[writePtr+5] = i;
+            // Advance to next option
             writePtr += 6;
             lopt = i + 3;
         }
@@ -1390,12 +1432,30 @@ const NetOptionsIterator = class {
         if ( this.interactive && hasBits(this.parser.slices[ropts-3], BITComma) ) {
             this.parser.slices[ropts-3] |= BITError;
         }
-        // TODO: Now that all options are parsed, find out erroneous
-        // combinations of options:
-        // - redirect(-rule) requires a single discrete type
-        // - csp can't be mixed with any other types
-        // - any option should appear only once
-        // - etc.
+        // Invalid combinations of options
+        //
+        // `csp` can't be used with any other types
+        if ( cspIndex !== -1 && typeCount !== 0 ) {
+            optSlices[cspIndex] = OPTTokenInvalid;
+            if ( this.interactive ) {
+                this.parser.markSlices(
+                    optSlices[cspIndex+1],
+                    optSlices[cspIndex+5],
+                    BITError
+                );
+            }
+        }
+        // `redirect` requires one single network type
+        if ( redirectIndex !== -1 && typeCount !== 1 && networkTypeCount !== 1 ) {
+            optSlices[redirectIndex] = OPTTokenInvalid;
+            if ( this.interactive ) {
+                this.parser.markSlices(
+                    optSlices[redirectIndex+1],
+                    optSlices[redirectIndex+5],
+                    BITError
+                );
+            }
+        }
         return this;
     }
     next() {
@@ -1416,55 +1476,61 @@ const NetOptionsIterator = class {
                 parser.slices[optSlices[i+4]+1],
                 parser.slices[optSlices[i+5]+1]
             );
-            if ( parser.interactive && hasBits(descriptor, OPTDomainList) ) {
-                parser.analyzeDomainList(
-                    optSlices[i+4],
-                    optSlices[i+5],
-                    BITPipe,
-                    this.item.id === OPTTokenDomain
-                );
-            }
         }
         this.readPtr = i + 6;
         return this;
     }
+    [Symbol.iterator]() {
+        return this.init();
+    }
 };
 
 const netOptionTokens = new Map([
-    [ '1p', OPTToken1p | OPTCanNegate ], [ 'first-party', OPTToken1p | OPTCanNegate ],
-    [ '3p', OPTToken3p | OPTCanNegate ], [ 'third-party', OPTToken3p | OPTCanNegate ],
-    [ 'all', OPTTokenAll ],
+    [ '1p', OPTToken1p | OPTCanNegate ],
+        [ 'first-party', OPTToken1p | OPTCanNegate ],
+    [ '3p', OPTToken3p | OPTCanNegate ],
+        [ 'third-party', OPTToken3p | OPTCanNegate ],
+    [ 'all', OPTTokenAll | OPTType | OPTNetworkType ],
     [ 'badfilter', OPTTokenBadfilter ],
-    [ 'cname', OPTTokenCname | OPTAllowOnly ],
+    [ 'cname', OPTTokenCname | OPTAllowOnly | OPTType ],
     [ 'csp', OPTTokenCsp | OPTMustAssign | OPTAllowMayAssign ],
-    [ 'css', OPTTokenCss | OPTCanNegate ], [ 'stylesheet', OPTTokenCss | OPTCanNegate ],
+    [ 'css', OPTTokenCss | OPTCanNegate | OPTType | OPTNetworkType ],
+        [ 'stylesheet', OPTTokenCss | OPTCanNegate | OPTType | OPTNetworkType ],
     [ 'denyallow', OPTTokenDenyAllow | OPTMustAssign | OPTDomainList ],
-    [ 'doc', OPTTokenDoc ], [ 'document', OPTTokenDoc ],
+    [ 'doc', OPTTokenDoc | OPTType | OPTNetworkType ],
+        [ 'document', OPTTokenDoc | OPTType | OPTNetworkType ],
     [ 'domain', OPTTokenDomain | OPTMustAssign | OPTDomainList ],
-    [ 'ehide', OPTTokenEhide ], [ 'elemhide', OPTTokenEhide ],
-    [ 'empty', OPTTokenEmpty | OPTBlockOnly ],
-    [ 'frame', OPTTokenFrame | OPTCanNegate ], [ 'subdocument', OPTTokenFrame | OPTCanNegate ],
-    [ 'font', OPTTokenFont | OPTCanNegate ],
+    [ 'ehide', OPTTokenEhide | OPTType ],
+        [ 'elemhide', OPTTokenEhide | OPTType ],
+    [ 'empty', OPTTokenEmpty | OPTBlockOnly | OPTType | OPTNetworkType | OPTBlockOnly | OPTRedirectType ],
+    [ 'frame', OPTTokenFrame | OPTCanNegate | OPTType | OPTNetworkType ],
+        [ 'subdocument', OPTTokenFrame | OPTCanNegate | OPTType | OPTNetworkType ],
+    [ 'font', OPTTokenFont | OPTCanNegate | OPTType | OPTNetworkType ],
     [ 'genericblock', OPTTokenGenericblock | OPTNotSupported ],
-    [ 'ghide', OPTTokenGhide ], [ 'generichide', OPTTokenGhide ],
-    [ 'image', OPTTokenImage | OPTCanNegate ],
+    [ 'ghide', OPTTokenGhide | OPTType ],
+        [ 'generichide', OPTTokenGhide | OPTType ],
+    [ 'image', OPTTokenImage | OPTCanNegate | OPTType | OPTNetworkType ],
     [ 'important', OPTTokenImportant | OPTBlockOnly ],
-    [ 'inline-font', OPTTokenInlineFont ],
-    [ 'inline-script', OPTTokenInlineScript ],
-    [ 'media', OPTTokenMedia | OPTCanNegate ],
-    [ 'mp4', OPTTokenMp4 ],
-    [ 'object', OPTTokenObject | OPTCanNegate ], [ 'object-subrequest', OPTTokenObject | OPTCanNegate ],
-    [ 'other', OPTTokenOther | OPTCanNegate ],
-    [ 'ping', OPTTokenPing | OPTCanNegate ], [ 'beacon', OPTTokenPing | OPTCanNegate ],
-    [ 'popunder', OPTTokenPopunder ],
-    [ 'popup', OPTTokenPopup ],
-    [ 'redirect', OPTTokenRedirect | OPTMustAssign | OPTBlockOnly ],
-    [ 'redirect-rule', OPTTokenRedirectRule | OPTMustAssign | OPTBlockOnly ],
-    [ 'script', OPTTokenScript | OPTCanNegate ],
-    [ 'shide', OPTTokenShide ], [ 'specifichide', OPTTokenShide ],
-    [ 'xhr', OPTTokenXhr | OPTCanNegate ], [ 'xmlhttprequest', OPTTokenXhr | OPTCanNegate ],
+    [ 'inline-font', OPTTokenInlineFont | OPTType ],
+    [ 'inline-script', OPTTokenInlineScript | OPTType ],
+    [ 'media', OPTTokenMedia | OPTCanNegate | OPTType | OPTNetworkType ],
+    [ 'mp4', OPTTokenMp4 | OPTType | OPTNetworkType | OPTBlockOnly | OPTRedirectType ],
+    [ 'object', OPTTokenObject | OPTCanNegate | OPTType | OPTNetworkType ],
+        [ 'object-subrequest', OPTTokenObject | OPTCanNegate | OPTType | OPTNetworkType ],
+    [ 'other', OPTTokenOther | OPTCanNegate | OPTType | OPTNetworkType ],
+    [ 'ping', OPTTokenPing | OPTCanNegate | OPTType | OPTNetworkType ],
+        [ 'beacon', OPTTokenPing | OPTCanNegate | OPTType | OPTNetworkType ],
+    [ 'popunder', OPTTokenPopunder | OPTType ],
+    [ 'popup', OPTTokenPopup | OPTType ],
+    [ 'redirect', OPTTokenRedirect | OPTMustAssign | OPTBlockOnly | OPTRedirectType ],
+    [ 'redirect-rule', OPTTokenRedirectRule | OPTMustAssign | OPTBlockOnly | OPTRedirectType ],
+    [ 'script', OPTTokenScript | OPTCanNegate | OPTType | OPTNetworkType ],
+    [ 'shide', OPTTokenShide | OPTType ],
+        [ 'specifichide', OPTTokenShide | OPTType ],
+    [ 'xhr', OPTTokenXhr | OPTCanNegate| OPTType | OPTNetworkType ],
+        [ 'xmlhttprequest', OPTTokenXhr | OPTCanNegate | OPTType | OPTNetworkType ],
     [ 'webrtc', OPTTokenWebrtc | OPTNotSupported ],
-    [ 'websocket', OPTTokenWebsocket | OPTCanNegate ],
+    [ 'websocket', OPTTokenWebsocket | OPTCanNegate | OPTType | OPTNetworkType ],
 ]);
 
 /******************************************************************************/
@@ -1539,7 +1605,7 @@ const ExtOptionsIterator = class {
         this.value = undefined;
         this.done = true;
     }
-    [Symbol.iterator]() {
+    init() {
         const { i, l } = this.parser.optionsSpan;
         this.l = i;
         this.r = i + l;
@@ -1588,6 +1654,9 @@ const ExtOptionsIterator = class {
         }
         this.l = i;
         return this;
+    }
+    [Symbol.iterator]() {
+        return this.init();
     }
 };
 
