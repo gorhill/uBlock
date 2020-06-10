@@ -1045,23 +1045,18 @@
     return (ad.pageDomain === ad.targetDomain);
   };
 
-  const listsForFilter = function (compiledFilter) {
+  const listsForFilter = function (filter) {
     let entry;
     let content;
     let pos;
     let c;
     const lists = {};
-    const allFilters = [compiledFilter];
-    // Note:snfe.fRegister no longer exist in uBlock
-    // const snfe = µb.staticNetFilteringEngine;
-    // if (snfe.fRegister.filters !== undefined) {
-    //   for (let i = 0; i < snfe.fRegister.filters.length; i++) {
-    //     const compiledItem = µb.CompiledLineWriter.fingerprint([ snfe.cbRegister, snfe.thRegister, snfe.fRegister.filters[i].logData().compiled]);
-    //     allFilters.push(compiledItem);
-    //   }
-    // } else if (snfe.fRegister.f1 !== undefined) {
-    //   // console.log(snfe.fRegister)
-    // }
+    const writer = new µb.CompiledLineIO.Writer();
+
+    if ( µb.staticNetFilteringEngine.compile(filter.raw, writer) === false ) {
+        return;
+    }
+    const compiledFilter = writer.last();
 
     for (const path in listEntries) {
 
@@ -1071,31 +1066,29 @@
       }
 
       content = entry.content;
-      for (let i = 0; i < allFilters.length; i++) {
-        if (allFilters[i] == undefined) continue;
-        const compiledFilter = allFilters[i];
-        pos = content.indexOf(compiledFilter);
-        if (pos === -1) {
-          continue;
-        }
-        // We need an exact match.
-        // https://github.com/gorhill/uBlock/issues/1392
-        if (pos !== 0 && reSpecialChars.test(content.charAt(pos - 1)) === false) {
-          continue;
-        }
-
-        // https://github.com/gorhill/uBlock/issues/835
-        c = content.charAt(pos + compiledFilter.length);
-        if (c !== '' && reSpecialChars.test(c) === false) {
-          continue;
-        }
-
-        if (lists[entry.title] == undefined) {
-          lists[entry.title] = compiledFilter;
-        }
-        /*{ title: entry.title
-        supportURL: entry.supportURL }*/
+      if (content === undefined) {
+        continue;
       }
+      pos = content.indexOf(compiledFilter);
+      if (pos === -1) {
+        continue;
+      }
+      // We need an exact match.
+      // https://github.com/gorhill/uBlock/issues/1392
+      if (pos !== 0 && reSpecialChars.test(content.charAt(pos - 1)) === false) {
+        continue;
+      }
+
+      // https://github.com/gorhill/uBlock/issues/835
+      c = content.charAt(pos + compiledFilter.length);
+      if (c !== '' && reSpecialChars.test(c) === false) {
+        continue;
+      }
+
+      if (lists[entry.title] == undefined) {
+        lists[entry.title] = compiledFilter;
+      }
+
     }
     return lists;
   };
@@ -1152,7 +1145,7 @@
       return true;
     }
 
-    const snfe = µb.staticNetFilteringEngine, compiled = snfe.toLogData().compiled, raw = snfe.toLogData().raw, url = snfe.urlRegister;
+    const snfe = µb.staticNetFilteringEngine, snfeData = snfe.toLogData();
     /*
       Check active rule(s) to see if we should block or allow
 
@@ -1162,10 +1155,10 @@
         C) block hit:      block
         D) no valid hits:  allow, but no cookies later
      */
-    const lists = listsForFilter(compiled);
+    const lists = listsForFilter(snfeData);
 
     if (Object.keys(lists).length === 0) {                                // case A
-      logNetBlock('User List', raw + ': ', url); // always block
+      logNetBlock('User List', snfeData.raw); // always block
       return true;
     }
 
@@ -1177,11 +1170,11 @@
 
       if (lists[name].indexOf('@@') === 0) {                       // case B
 
-        logNetAllow(name, lists[name] + ': ', url);
+        logNetAllow(name, lists[name] + ': ' + snfeData.raw, context.url);
         return false;
       }
 
-      logNetBlock(name, lists[name] + ': ', url);                  // case C
+      logNetBlock(name, lists[name] + ': ' + snfeData.raw, context.url);                  // case C
       return true; // blocked, no need to continue
     }
     else {
@@ -1189,7 +1182,7 @@
     }
   }
 
-  return allowRequest(misses.join(','), lists[name] + ': ', url)
+  return allowRequest(misses.join(','), snfeData.raw, context.url)
   };
 
   const adCount = function () {
