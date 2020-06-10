@@ -160,11 +160,16 @@
   /******************************************************************************/
 
   const changeUserSettings = function(name, value) {
-      vAPI.messaging.send('dashboard', {
-          what: 'userSettings',
-          name,
-          value,
-      });
+    Promise.all([
+        vAPI.messaging.send('dashboard', {
+            what: 'userSettings',
+            name,
+            value,
+        }),
+    ]).then(() => {
+        updateGroupState();
+    });
+
   };
 
   /******************************************************************************/
