@@ -1020,8 +1020,12 @@ registerFilterClass(FilterAnchorRight);
 
 const FilterTrailingSeparator = class {
     match() {
-        return $patternMatchRight === $requestURL.length ||
-               isSeparatorChar(bidiTrie.haystack[$patternMatchRight]);
+        if ( $patternMatchRight === $requestURL.length ) { return true; }
+        if ( isSeparatorChar(bidiTrie.haystack[$patternMatchRight]) ) {
+            $patternMatchRight += 1;
+            return true;
+        }
+        return false;
     }
 
     logData(details) {
