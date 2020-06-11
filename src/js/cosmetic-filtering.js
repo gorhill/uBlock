@@ -510,7 +510,7 @@ FilterContainer.prototype.compileGenericUnhideSelector = function(
     //   hostnames). No distinction is made between declarative and
     //   procedural selectors, since they really exist only to cancel
     //   out other cosmetic filters.
-    writer.push([ 8, '', 0b01, compiled ]);
+    writer.push([ 8, '', 0b001, compiled ]);
 };
 
 /******************************************************************************/
