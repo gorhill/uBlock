@@ -132,8 +132,8 @@
 
     const numVisits = visitedCount(ads) || 0;
     uDom('#vault-count').text(total || 0);
-    uDom('.visited').text(uDom('.visited').text().replace("{{number}}", numVisits || 0));
-    uDom('.found').text(uDom('.found').text().replace("{{count}}", ads ? ads.length : 0));
+    uDom('#visited').text(uDom('#visited').text().replace("{{number}}", numVisits || 0));
+    uDom('#found').text(uDom('#found').text().replace("{{count}}", ads ? ads.length : 0));
     setCost(numVisits);
   }
 
@@ -167,8 +167,8 @@
     }
 
     uDom('#vault-count').text(json.data.length);
-    uDom('#visited-count').text(visitedCount(ads));
-    uDom('#found-count').text(ads.length);
+    uDom('#visited').text(uDom('#visited').text().replace("{{number}}", numVisits || 0));
+    uDom('#found').text(uDom('#found').text().replace("{{count}}", ads ? ads.length : 0));
     //console.log("FOUND: " + ads.length);
   };
 
@@ -217,7 +217,7 @@
       if (ad.pageUrl === page) { // global page here
 
         const numVisits = visitedCount(ads);
-        uDom('#visited-count').text(numVisits); // **uses global ads, page
+        uDom('#visited').text(uDom('#visited').text().replace("{{number}}", numVisits || 0));
         setCost(numVisits);
       }
     }
