@@ -372,7 +372,7 @@
       name: 'aol',
       domain: /^.*\.aol\.com(\.([a-z]{2}))?$/i
     }, {
-      selector: '.result--ad > .result__body"]',
+      selector: '.result__body',
       handler: ddgText,
       name: 'ddg',
       domain: /^(.*\.)?duckduckgo\.com/i

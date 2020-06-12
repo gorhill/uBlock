@@ -95,7 +95,7 @@ const loadDashboardPanel = function(pane, first) {
         uDom('.tabButton.selected').toggleClass('selected', false);
         tabButton.toggleClass('selected', true);
         uDom.nodeFromId('iframe').setAttribute('src', pane);
-        vAPI.localStorage.setItem('dashboardLastVisitedPane', pane);
+        // vAPI.localStorage.setItem('dashboardLastVisitedPane', pane);
     };
     if ( first ) {
         return loadPane();
@@ -134,33 +134,32 @@ vAPI.broadcastListener.add(request => {
 
 resizeFrame();
 
-vAPI.localStorage.getItemAsync('dashboardLastVisitedPane').then(value => {
-    loadDashboardPanel(value !== null ? value : 'options.html', true);
-    resizeFrame();
-    window.addEventListener('resize', resizeFrame);
-    uDom('.tabButton').on('click', onTabClickHandler);
-    uDom('#notifications').on('click', resizeFrame); //ADN
 
-    vAPI.messaging.send(
-        'adnauseam', {
-            what: 'verifyAdBlockers'
-        }).then(n => {
-          vAPI.messaging.send(
-              'adnauseam', {
-                  what: 'getNotifications'
-              }).then(notifications => {
-              if (notifications && notifications.length)
-                  renderNotifications(notifications, 'dashboard');
-                  resizeFrame();
-            })
-    });
+loadDashboardPanel('options.html', true);
+resizeFrame();
+window.addEventListener('resize', resizeFrame);
+uDom('.tabButton').on('click', onTabClickHandler);
+uDom('#notifications').on('click', resizeFrame); //ADN
 
-    // https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
-    window.addEventListener('beforeunload', ( ) => {
-        if ( discardUnsavedData(true) ) { return; }
-        event.preventDefault();
-        event.returnValue = '';
-    });
+vAPI.messaging.send(
+    'adnauseam', {
+        what: 'verifyAdBlockers'
+    }).then(n => {
+      vAPI.messaging.send(
+          'adnauseam', {
+              what: 'getNotifications'
+          }).then(notifications => {
+          if (notifications && notifications.length)
+              renderNotifications(notifications, 'dashboard');
+              resizeFrame();
+        })
+});
+
+// https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
+window.addEventListener('beforeunload', ( ) => {
+    if ( discardUnsavedData(true) ) { return; }
+    event.preventDefault();
+    event.returnValue = '';
 });
 
 
