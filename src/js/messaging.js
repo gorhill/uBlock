@@ -582,6 +582,7 @@ const retrieveContentScriptParameters = function(senderDetails, request) {
     request.hostname = µb.URI.hostnameFromURI(request.url);
     request.domain = µb.URI.domainFromHostname(request.hostname);
     request.entity = µb.URI.entityFromDomain(request.domain);
+    response.prefs = µb.adnauseam.contentPrefs(pageStore.tabHostname); // ADN
 
     // https://www.reddit.com/r/uBlockOrigin/comments/d6vxzj/
     //   Add support for `specifichide`.
