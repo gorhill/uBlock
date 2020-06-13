@@ -2308,7 +2308,7 @@ const FilterParser = class {
     }
 
     parseOptions(parser) {
-        for ( let { id, val, not } of parser.options() ) {
+        for ( let { id, val, not } of parser.netOptions() ) {
             switch ( id ) {
             case parser.OPTToken3p:
                 this.parsePartyOption(false, not);

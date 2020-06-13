@@ -778,8 +778,7 @@ const filterToDOMInterface = (( ) => {
             callback(lastResultset);
             return;
         }
-        const selector = filter.slice(2);
-        lastResultset = fromPlainCosmeticFilter(selector);
+        lastResultset = fromPlainCosmeticFilter(filter.slice(2));
         if ( lastResultset ) {
             if ( previewing ) { apply(); }
             callback(lastResultset);
@@ -788,7 +787,7 @@ const filterToDOMInterface = (( ) => {
         // Procedural cosmetic filter
         const response = await vAPI.messaging.send('elementPicker', {
             what: 'compileCosmeticFilterSelector',
-            selector,
+            selector: filter,
         });
         lastResultset = fromCompiledCosmeticFilter(response);
         if ( previewing ) { apply(); }

@@ -29,54 +29,35 @@ CodeMirror.defineMode("ubo-static-filtering", function() {
     let parserSlot = 0;
     let netOptionValueMode = false;
 
-    const colorSpan = function(stream) {
-        if ( parser.category === parser.CATNone || parser.shouldIgnore() ) {
-            stream.skipToEnd();
-            return 'comment';
-        }
-        if ( parser.category === parser.CATComment ) {
-            stream.skipToEnd();
-            return reDirective.test(stream.string)
-                ? 'variable strong'
-                : 'comment';
-        }
-        if ( (parser.slices[parserSlot] & parser.BITIgnore) !== 0 ) {
+    const colorExtSpan = function(stream) {
+        if ( parserSlot < parser.optionsAnchorSpan.i ) {
+            const style = (parser.slices[parserSlot] & parser.BITComma) === 0
+                ? 'string-2'
+                : 'def';
             stream.pos += parser.slices[parserSlot+2];
             parserSlot += 3;
-            return 'comment';
+            return style;
         }
-        if ( (parser.slices[parserSlot] & parser.BITError) !== 0 ) {
+        if (
+            parserSlot >= parser.optionsAnchorSpan.i &&
+            parserSlot < parser.patternSpan.i
+        ) {
+            const style = (parser.flavorBits & parser.BITFlavorException) !== 0
+                ? 'tag'
+                : 'def';
             stream.pos += parser.slices[parserSlot+2];
             parserSlot += 3;
-            return 'error';
+            return `${style} strong`;
         }
-        if ( parser.category === parser.CATStaticExtFilter ) {
-            if ( parserSlot < parser.optionsAnchorSpan.i ) {
-                const style = (parser.slices[parserSlot] & parser.BITComma) === 0
-                    ? 'string-2'
-                    : 'def';
-                stream.pos += parser.slices[parserSlot+2];
-                parserSlot += 3;
-                return style;
-            }
-            if (
-                parserSlot >= parser.optionsAnchorSpan.i &&
-                parserSlot < parser.patternSpan.i
-            ) {
-                const style = (parser.flavorBits & parser.BITFlavorException) !== 0
-                    ? 'tag'
-                    : 'def';
-                stream.pos += parser.slices[parserSlot+2];
-                parserSlot += 3;
-                return `${style} strong`;
-            }
-            if ( parserSlot >= parser.patternSpan.i ) {
-                stream.skipToEnd();
-                return 'variable';
-            }
+        if ( parserSlot >= parser.patternSpan.i ) {
             stream.skipToEnd();
-            return '';
+            return 'variable';
         }
+        stream.skipToEnd();
+        return '';
+    };
+
+    const colorNetSpan = function(stream) {
         if ( parserSlot < parser.exceptionSpan.i ) {
             stream.pos += parser.slices[parserSlot+2];
             parserSlot += 3;
@@ -163,6 +144,37 @@ CodeMirror.defineMode("ubo-static-filtering", function() {
         }
         stream.skipToEnd();
         return '';
+    };
+
+    const colorSpan = function(stream) {
+        if ( parser.category === parser.CATNone || parser.shouldIgnore() ) {
+            stream.skipToEnd();
+            return 'comment';
+        }
+        if ( parser.category === parser.CATComment ) {
+            stream.skipToEnd();
+            return reDirective.test(stream.string)
+                ? 'variable strong'
+                : 'comment';
+        }
+        if ( (parser.slices[parserSlot] & parser.BITIgnore) !== 0 ) {
+            stream.pos += parser.slices[parserSlot+2];
+            parserSlot += 3;
+            return 'comment';
+        }
+        if ( (parser.slices[parserSlot] & parser.BITError) !== 0 ) {
+            stream.pos += parser.slices[parserSlot+2];
+            parserSlot += 3;
+            return 'error';
+        }
+        if ( parser.category === parser.CATStaticExtFilter ) {
+            return colorExtSpan(stream);
+        }
+        if ( parser.category === parser.CATStaticNetFilter ) {
+            return colorNetSpan(stream);
+        }
+        stream.skipToEnd();
+        return null;
     };
 
     return {

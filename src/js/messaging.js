@@ -750,11 +750,14 @@ const onMessage = function(request, sender, callback) {
     let response;
 
     switch ( request.what ) {
-    case 'compileCosmeticFilterSelector':
-        response = µb.staticExtFilteringEngine.compileSelector(
-            request.selector
-        );
+    case 'compileCosmeticFilterSelector': {
+        const parser = new vAPI.StaticFilteringParser();
+        parser.analyze(request.selector);
+        if ( (parser.flavorBits & parser.BITFlavorExtCosmetic) !== 0 ) {
+            response = parser.result.compiled;
+        }
         break;
+    }
 
     // https://github.com/gorhill/uBlock/issues/3497
     //   This needs to be removed once issue is fixed.
@@ -1302,20 +1305,19 @@ const getURLFilteringData = function(details) {
 };
 
 const compileTemporaryException = function(filter) {
-    const match = /#@?#/.exec(filter);
-    if ( match === null ) { return; }
-    let selector = filter.slice(match.index + match[0].length).trim();
+    const parser = new vAPI.StaticFilteringParser();
+    parser.analyze(filter);
+    if ( parser.shouldDiscard() ) { return {}; }
+    let selector = parser.result.compiled;
     let session;
-    if ( selector.startsWith('+js') ) {
+    if ( (parser.flavorBits & parser.BITFlavorExtScriptlet) !== 0 ) {
         session = µb.scriptletFilteringEngine.getSession();
+    } else if ( (parser.flavorBits & parser.BITFlavorExtHTML) !== 0 ) {
+        session = µb.htmlFilteringEngine.getSession();
     } else {
-        if ( selector.startsWith('^') ) {
-            session = µb.htmlFilteringEngine.getSession();
-        } else {
-            session = µb.cosmeticFilteringEngine.getSession();
-        }
+        session = µb.cosmeticFilteringEngine.getSession();
     }
-    return { session, selector: session.compile(selector) };
+    return { session, selector };
 };
 
 const toggleTemporaryException = function(details) {

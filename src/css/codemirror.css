@@ -32,9 +32,12 @@
     text-decoration-style: solid;
     text-decoration-line: underline;
     }
+.cm-s-default .cm-error {
+    color: inherit;
+    }
 .cm-s-default .cm-error,
 .CodeMirror-linebackground.error {
-    background-color: #ff000018;
+    background-color: #ff000016;
     text-decoration: underline red;
     text-underline-position: under;
     }
