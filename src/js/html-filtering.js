@@ -309,9 +309,11 @@
 
         // TODO: Mind negated hostnames, they are currently discarded.
 
-        for ( const { hn } of parser.extOptions() ) {
+        for ( const { hn, not, bad } of parser.extOptions() ) {
+            if ( bad ) { continue; }
             let kind = 0;
             if ( exception ) {
+                if ( not ) { continue; }
                 kind |= 0b01;
             }
             if ( compiled.charCodeAt(0) === 0x7B /* '{' */ ) {

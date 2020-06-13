@@ -483,7 +483,7 @@ const Parser = class {
                     this.skipUntilNot(
                         this.patternSpan.i,
                         lastPatternSlice,
-                        BITHostname
+                        BITHostname | BITAsterisk
                     ) === lastPatternSlice
                 ) {
                     this.patternRightAnchorSpan.i = lastPatternSlice;
@@ -623,15 +623,22 @@ const Parser = class {
     analyzeDomainList(from, to, bitSeparator, optionBits) {
         if ( from >= to ) { return; }
         let beg = from;
+        // Dangling leading separator?
+        if ( hasBits(this.slices[beg], bitSeparator) ) {
+            this.markSlices(beg, beg + 3, BITError);
+            beg += 3;
+        }
         while ( beg < to ) {
             let end = this.skipUntil(beg, to, bitSeparator);
-            if ( end === -1 ) { end = to; }
+            if ( end < to && this.slices[end+2] !== 1 ) {
+                this.markSlices(end, end + 3, BITError);
+            }
             if ( this.analyzeDomain(beg, end, optionBits) === false ) {
                 this.markSlices(beg, end, BITError);
             }
             beg = end + 3;
         }
-        // Dangling separator at the end?
+        // Dangling trailing separator?
         if ( hasBits(this.slices[to-3], bitSeparator) ) {
             this.markSlices(to - 3, to, BITError);
         }
@@ -815,18 +822,18 @@ const Parser = class {
     }
 
     skipUntil(from, to, bits) {
-        let i = from + 3;
-        for (;;) {
-            if ( i === to || (this.slices[i] & bits) !== 0 ) { break; }
+        let i = from;
+        while ( i < to ) {
+            if ( (this.slices[i] & bits) !== 0 ) { break; }
             i += 3;
         }
         return i;
     }
 
     skipUntilNot(from, to, bits) {
-        let i = from + 3;
-        for (;;) {
-            if ( i === to || (this.slices[i] & bits) === 0 ) { break; }
+        let i = from;
+        while ( i < to ) {
+            if ( (this.slices[i] & bits) === 0 ) { break; }
             i += 3;
         }
         return i;
@@ -2300,16 +2307,9 @@ const ExtOptionsIterator = class {
             if ( hasBits(slices[i], BITComma) ) { break; }
             i += 3;
         }
+        if ( i === i0 ) { value.bad = true; }
         value.hn = parser.raw.slice(slices[i0+1], slices[i+1]);
-        if ( i < this.r ) {
-            if ( interactive && (slices[i+2] !== 1 || (i+3) === this.r) ) {
-                parser.markSlices(i, i+3, BITError);
-            }
-            i += 3;
-        }
-        if ( interactive && value.bad ) {
-            parser.markSlices(this.l, i, BITError);
-        }
+        if ( i < this.r ) { i += 3; }
         this.l = i;
         return this;
     }

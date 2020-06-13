@@ -305,7 +305,8 @@
         //   Ignore instances of exception filter with negated hostnames,
         //   because there is no way to create an exception to an exception.
 
-        for ( const { hn, not } of parser.extOptions() ) {
+        for ( const { hn, not, bad } of parser.extOptions() ) {
+            if ( bad ) { continue; }
             let kind = 0;
             if ( exception ) {
                 if ( not ) { continue; }
