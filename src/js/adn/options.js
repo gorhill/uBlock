@@ -144,7 +144,7 @@
       const msg = vAPI.i18n('adnAboutResetDataConfirm'); // ADN
       const proceed = window.confirm(msg); // ADN: changed from vAPI.confirm merge1.14.12
       if ( proceed ) {
-          messager.send('dashboard', { what: 'resetUserData' });
+          vAPI.messaging.send('dashboard', { what: 'resetUserData' });
       }
   };
 
@@ -179,12 +179,11 @@
       const slideVal = selection.nodes[0].value;
 
       selection.val(slideVal);
-
-      messager.send('dashboard', {
-        what: 'userSettings',
-        name: 'clickProbability',
-        value: Number(slideVal)
-      });
+      vAPI.messaging.send('dashboard', {
+          what: 'userSettings',
+          name: 'clickProbability',
+          value: Number(slideVal)
+      })
 
   };
 
