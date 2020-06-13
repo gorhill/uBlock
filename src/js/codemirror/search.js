@@ -172,16 +172,24 @@
         });
     }
 
+    // FIX: use all potential regex flags as is, and if this throws, treat
+    // the query string as plain text.
     function parseQuery(query) {
-        var isRE = query.match(/^\/(.*)\/([a-z]*)$/);
-        if (isRE) {
-            try { query = new RegExp(isRE[1], isRE[2].indexOf("i") === -1 ? "" : "i"); }
-            catch(e) {} // Not a regular expression after all, do a string search
-        } else {
+        let isRE = query.match(/^\/(.*)\/([a-z]*)$/);
+        if ( isRE ) {
+            try {
+                query = new RegExp(isRE[1], isRE[2]);
+            }
+            catch (e) {
+                isRE = false;
+            }
+        }
+        if ( isRE === false ) {
             query = parseString(query);
         }
-        if (typeof query === "string" ? query === "" : query.test(""))
+        if ( typeof query === 'string' ? query === '' : query.test('') ) {
             query = /x^/;
+        }
         return query;
     }
 
