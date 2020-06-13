@@ -1649,10 +1649,10 @@
 
       if (name === 'set-cookie' || name === 'set-cookie2') {
 
-        if (1) { // don't block incoming cookies for 3rd party-requests coming from DNT-pages? [needs checking]
-
           const cval = headers[i].value.trim();
           const domain = cookieAttr(cval, 'domain');
+
+        if (1) { // don't block incoming cookies for 3rd party-requests coming from DNT-pages? [needs checking]
 
           if (domain && us.dntDomains.contains(domain)) {
             log('[DNT] (AllowCookie3p) \'', cval + '\' dnt-domain: '+domain);

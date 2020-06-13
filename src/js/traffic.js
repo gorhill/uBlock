@@ -595,16 +595,68 @@ const onBeforeMaybeSpuriousCSPReport = (function() {
 })();
 
 /******************************************************************************/
+const handleIncomingCookiesForAdVisits = function(details) {
+  let ad, modified; //ADN
+  const dbug = 0; //ADN
+  const µb = µBlock;
+  const tabId = details.tabId;
 
+  if (vAPI.isBehindTheSceneTabId(tabId)) {
+
+    // ADN: handle incoming cookies for our visits
+    if (µb.userSettings.noIncomingCookies) {
+
+        dbug && console.log('onHeadersReceived: ', details.url, details.responseHeaders);
+        // ADN
+        ad = µb.adnauseam.lookupAd(details.url, details.requestId);
+        if (ad) {
+          // this is an ADN request
+          modified = µb.adnauseam.blockIncomingCookies(details.responseHeaders, details.url, ad.targetUrl);
+        }
+        else if (dbug && vAPI.chrome) {
+          console.log('Ignoring non-ADN response', details.url);
+        }
+    }
+    // don't return an empty headers array
+    return modified && modified.length ? modified : null;
+  }
+}
 // To handle:
 // - Media elements larger than n kB
 // - Scriptlet injection (requires ability to modify response body)
 // - HTML filtering (requires ability to modify response body)
 // - CSP injection
+const adnOnHeadersRecieved = function(details) {
 
+  // 1: check ad visit
+  const modifiedHeadersForAdVisits = handleIncomingCookiesForAdVisits(details);
+  if (modifiedHeadersForAdVisits) return { responseHeaders: modifiedHeadersForAdVisits }
+
+  // 2: ublock filtering for the following request types:
+  let headers;
+  const ublock_filtering_types = ['main_frame','sub_frame','image','media','xmlhttprequest'];
+  if (ublock_filtering_types.indexOf(details.type) > -1) {
+    headers = onHeadersReceived(details)
+  }
+
+  if (headers == undefined) {
+    // ublock doesn't modified it
+    headers = details.responseHeaders;
+  }
+
+  // 3: Check for AdNauseam allowed
+  const fctxt = µb.filteringContext.fromWebrequestDetails(details);
+  const pageStore = µb.pageStoreFromTabId(fctxt.tabId);
+  const modifiedHeadersForAdNauseamAllowed = pageStore && µBlock.adnauseam.checkAllowedException
+          (headers, details.url, pageStore.rawURL);
+
+  if (modifiedHeadersForAdNauseamAllowed) {
+    return {responseHeaders: modifiedHeadersForAdNauseamAllowed}
+  }
+}
 const onHeadersReceived = function(details) {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/610
-    //   Process behind-the-scene requests in a special way.
+    // Process behind-the-scene requests in a special way.
     if (
         details.tabId < 0 &&
         normalizeBehindTheSceneResponseHeaders(details) === false
@@ -618,46 +670,7 @@ const onHeadersReceived = function(details) {
     const isRootDoc = requestType === 'main_frame';
     const isDoc = isRootDoc || requestType === 'sub_frame';
 
-    const tabId = details.tabId;
-
-    let ad, result; //ADN
-    const dbug = 0; //ADN
-
-   if (vAPI.isBehindTheSceneTabId(tabId)) {
-
-     // ADN: handle incoming cookies for our visits
-     if (vAPI.chrome && µb.userSettings.noIncomingCookies) {
-
-         dbug && console.log('onHeadersReceived: ', requestType, details.url, details.responseHeaders);
-
-         // ADN
-         ad = µb.adnauseam.lookupAd(details.url, details.requestId);
-         if (ad) {
-
-           // this is an ADN request
-           µb.adnauseam.blockIncomingCookies(details.responseHeaders, details.url, ad.targetUrl);
-         }
-         else if (dbug && vAPI.chrome) {
-
-           console.log('Ignoring non-ADN response', requestType, details.url);
-         }
-     }
-
-     // don't return an empty headers array
-     return details.responseHeaders.length ?
-       { 'responseHeaders': details.responseHeaders } : null;
-   }
-
-
-   if ( isRootDoc ) {
-       µb.tabContextManager.push(tabId, details.url);
-   }
-
     let pageStore = µb.pageStoreFromTabId(fctxt.tabId);
-
-    // ADN: check if this was an allowed exception and, if so, block cookies
-    let  modified = pageStore && µBlock.adnauseam.checkAllowedException
-        (details.responseHeaders, details.url, pageStore.rawURL);
 
     if ( pageStore === null ) {
         if ( isRootDoc === false ) { return; }
@@ -675,7 +688,6 @@ const onHeadersReceived = function(details) {
     }
 
     if ( isDoc === false ) { return; }
-
     // https://github.com/gorhill/uBlock/issues/2813
     //   Disable the blocking of large media elements if the document is itself
     //   a media element: the resource was not prevented from loading so no
@@ -716,16 +728,6 @@ const onHeadersReceived = function(details) {
 
     if ( modifiedHeaders ) {
         return { responseHeaders: responseHeaders };
-    }
-    // ADN
-    if (!result) {
-      // ADN: if this was an allowed exception block cookies
-          modified = pageStore && µBlock.adnauseam.checkAllowedException
-              (details.responseHeaders, details.url, pageStore.rawURL);
-
-      if (modified && details.responseHeaders.length) {
-          result = { 'responseHeaders': details.responseHeaders };
-      }
     }
 };
 
@@ -1267,8 +1269,8 @@ return {
             vAPI.net.setSuspendableListener(onBeforeRequest);
             vAPI.net.addListener(
                 'onHeadersReceived',
-                onHeadersReceived,
-                {   // ADN
+                adnOnHeadersRecieved,
+                {
                     // types: [
                     //     'main_frame',
                     //     'sub_frame',
