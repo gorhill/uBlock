@@ -85,6 +85,7 @@
     "webNavigation",
     "webRequest",
     "webRequestBlocking",
+    "management",
     "<all_urls>"
   ],
   "short_name": "uBlock₀",

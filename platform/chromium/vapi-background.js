@@ -1691,11 +1691,11 @@ vAPI.getAddonInfo = function (callback) { // ADN
 
   var uBlockConflict = false, adBlockConflict = false;
 
-  if (typeof chrome.management.getAll === 'function') {
+  if (typeof browser.management.getAll === 'function') {
 
-    chrome.management.getAll(function (extensions) {
+    browser.management.getAll(function (extensions) {
 
-      if (chrome.runtime.lastError) {
+      if (browser.runtime.lastError) {
 
         // do nothing
 
