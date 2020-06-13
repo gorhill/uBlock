@@ -52,6 +52,12 @@
       }
     };
 
+    const getSrcFromAttribute = function(attribute){
+      let src = attribute.match(/\((.*?)\)/);
+      if (src && src.length > 2) src = src[1].replace(/('|")/g,'');
+      return src;
+    }
+
     const findBgImage = function (elem) {
 
       logP("findBgImage", elem)
@@ -63,11 +69,9 @@
          const targetUrl = getTargetUrl(elem);
          if (attribute && targetUrl) {
 
-           const src = attribute.match(/\((.*?)\)/)[1].replace(/('|")/g,'');
-
            // create Image element for ad size
            const img = document.createElement("img");
-           img.src = src;
+           img.src = getSrcFromAttribute(attribute);
 
            return createImageAd(img, src, targetUrl);
          }
@@ -396,7 +400,7 @@
         }
 
         const attribute = getComputedStyle(img).backgroundImage;
-        src = attribute.match(/\((.*?)\)/)[1].replace(/('|")/g,'');
+        src = getSrcFromAttribute(attribute);
         if(!targetURL) targetURL = getTargetUrl(img);
 
         if (img && src && targetURL){
