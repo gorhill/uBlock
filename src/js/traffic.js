@@ -71,7 +71,7 @@ const onBeforeSendHeaders = function (details) {
     // if so, handle the headers (cookies, ua, referer, dnt)
     ad && beforeAdVisit(details, headers, prefs, ad, respectDNT);
 
-    //if (ad) console.log('ADN=VISIT: '+details.url, 'DNT? '+hasDNT(headers), ad);
+    //if (ad) console.log('ADN=VISIfT: '+details.url, 'DNT? '+hasDNT(headers), ad);
   }
 
   // ADN: if this was an adn-allowed request, do we block cookies, etc.? TODO
@@ -630,7 +630,7 @@ const adnOnHeadersRecieved = function(details) {
 
   // 1: check ad visit
   const modifiedHeadersForAdVisits = handleIncomingCookiesForAdVisits(details);
-  if (modifiedHeadersForAdVisits) return { responseHeaders: modifiedHeadersForAdVisits }
+  if (typeof modifiedHeadersForAdVisits != "boolean") return { responseHeaders: modifiedHeadersForAdVisits }
 
   // 2: ublock filtering for the following request types:
   let headers;
@@ -650,7 +650,7 @@ const adnOnHeadersRecieved = function(details) {
   const modifiedHeadersForAdNauseamAllowed = pageStore && µBlock.adnauseam.checkAllowedException
           (headers, details.url, pageStore.rawURL);
 
-  if (modifiedHeadersForAdNauseamAllowed) {
+  if (typeof modifiedHeadersForAdNauseamAllowed != "boolean") {
     return {responseHeaders: modifiedHeadersForAdNauseamAllowed}
   }
 }
@@ -1280,7 +1280,7 @@ return {
                     // ],
                     urls: [ 'http://*/*', 'https://*/*' ],
                 },
-                [ 'blocking', 'responseHeaders' ]
+                [ 'blocking', 'responseHeaders', 'extraHeaders'] // ADN: https://developer.chrome.com/extensions/webRequest
             );
             vAPI.net.addListener(
               'onBeforeSendHeaders',
@@ -1289,7 +1289,7 @@ return {
                    'urls': [ '<all_urls>' ],
                    'types': undefined // ADN
                },
-               [ 'blocking', 'requestHeaders' ]
+               [ 'blocking', 'requestHeaders', 'extraHeaders']
            );
             if ( vAPI.net.validTypes.has('csp_report') ) {
                 vAPI.net.addListener(
