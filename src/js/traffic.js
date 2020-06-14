@@ -1280,7 +1280,7 @@ return {
                     // ],
                     urls: [ 'http://*/*', 'https://*/*' ],
                 },
-                [ 'blocking', 'responseHeaders', 'extraHeaders'] // ADN: https://developer.chrome.com/extensions/webRequest
+                navigator.userAgent.includes('Firefox/') ? [ 'blocking', 'responseHeaders'] : ['blocking', 'responseHeaders', 'extraHeaders']// ADN: https://developer.chrome.com/extensions/webRequest
             );
             vAPI.net.addListener(
               'onBeforeSendHeaders',
@@ -1289,7 +1289,7 @@ return {
                    'urls': [ '<all_urls>' ],
                    'types': undefined // ADN
                },
-               [ 'blocking', 'requestHeaders', 'extraHeaders']
+               navigator.userAgent.includes('Firefox/') ? [ 'blocking', 'requestHeaders'] : ['blocking', 'requestHeaders', 'extraHeaders'] //ADN
            );
             if ( vAPI.net.validTypes.has('csp_report') ) {
                 vAPI.net.addListener(
