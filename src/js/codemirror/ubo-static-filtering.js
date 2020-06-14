@@ -74,7 +74,7 @@ CodeMirror.defineMode("ubo-static-filtering", function() {
     const colorExtSpan = function(stream) {
         if ( parserSlot < parser.optionsAnchorSpan.i ) {
             const style = (parser.slices[parserSlot] & parser.BITComma) === 0
-                ? 'string-2'
+                ? 'value'
                 : 'def';
             stream.pos += parser.slices[parserSlot+2];
             parserSlot += 3;
@@ -170,7 +170,7 @@ CodeMirror.defineMode("ubo-static-filtering", function() {
             } else if ( (bits & parser.BITPipe) !== 0 ) {
                 style = 'def';
             } else if ( netOptionValueMode ) {
-                style = 'string-2';
+                style = 'value';
             } else if ( (bits & parser.BITEqual) !== 0 ) {
                 netOptionValueMode = true;
             }
@@ -221,6 +221,7 @@ CodeMirror.defineMode("ubo-static-filtering", function() {
     };
 
     return {
+        lineComment: '!',
         token: function(stream) {
             if ( stream.sol() ) {
                 parser.analyze(stream.string);
