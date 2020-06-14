@@ -83,6 +83,10 @@
     "message": "احتمال تعارض بين يوبلوك و ادنوسيام!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
+  "adnNotificationOperaSetting": {
+    "message": "Please allow AdNauseam to access search page results",
+    "description": "English: Notifications -> Please allow AdNauseam to access search page results"
+  },
   "adnNotificationBrowserSetting": {
     "message": "قد يتضارب خيار حجب المحتوى \"Content Blocking\" في متصفحك مع AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
@@ -155,6 +159,30 @@
     "message": "آدنوسيام-خزنة الأعلانات",
     "description": "English: AdNauseam — Ad Vault"
   },
+  "myStatistics": {
+    "message": "My Statistics",
+    "description": "appears in ADN vault, above ad slider"
+  },
+  "topAdnetworks": {
+    "message": "Top Adnetworks",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "topSites": {
+    "message": "Top Sites",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypes": {
+    "message": "Ad Types",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypesImageAds": {
+    "message": "Image Ads",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypesTextAds": {
+    "message": "Text Ads",
+    "description": "appears in ADN vault/My Statistics"
+  },
   "adnShowingRecentAds": {
     "message": "لم يُعثر على إعلانات في هذه الصفحه (اظهار الاعلانات السابقة)",
     "description": "shown in menu when only 'recent' Ads are shown"
@@ -208,15 +236,11 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsClicked": {
-    "message": "تم النقر",
-    "description": "appears in ADN popup menu"
-  },
-  "adnMenuOfThe": {
-    "message": "من",
-    "description": "appears in ADN popup menu"
+    "message": "تم النقر {{number}}",
+    "description": "appears in ADN popup menu and vault"
   },
   "adnMenuAdsDetected": {
-    "message": "تم الكشف عن إعلانات",
+    "message": "{{count}} تم الكشف عن إعلانات",
     "description": "appears in ADN popup menu"
   },
   "adnMenuViewVault": {
@@ -280,11 +304,7 @@
     "description": "appears in ADN log page"
   },
   "adnVaultSince": {
-    "message": "منذ",
-    "description": "appears on vault page"
-  },
-  "adnVaultDefaultDate": {
-    "message": "1 يناير 1970 0:00 ص",
+    "message": "منذ {{datetime}}",
     "description": "appears on vault page"
   },
   "adnVaultExport": {
@@ -300,7 +320,7 @@
     "description": "appears on vault page"
   },
   "adnVaultFound": {
-    "message": "الإعلانات التي تم جمعها",
+    "message": "{{total}} الإعلانات التي تم جمعها",
     "description": "appears on vault page"
   },
   "adnVaultShowing": {

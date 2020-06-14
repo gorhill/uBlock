@@ -83,6 +83,10 @@
     "message": "uBlock og AdNauseam kan oppleve konflikt!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
+  "adnNotificationOperaSetting": {
+    "message": "Please allow AdNauseam to access search page results",
+    "description": "English: Notifications -> Please allow AdNauseam to access search page results"
+  },
   "adnNotificationBrowserSetting": {
     "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
@@ -155,6 +159,30 @@
     "message": "AdNauseam — AdVault",
     "description": "English: AdNauseam — Ad Vault"
   },
+  "myStatistics": {
+    "message": "My Statistics",
+    "description": "appears in ADN vault, above ad slider"
+  },
+  "topAdnetworks": {
+    "message": "Top Adnetworks",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "topSites": {
+    "message": "Top Sites",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypes": {
+    "message": "Ad Types",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypesImageAds": {
+    "message": "Image Ads",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypesTextAds": {
+    "message": "Text Ads",
+    "description": "appears in ADN vault/My Statistics"
+  },
   "adnShowingRecentAds": {
     "message": "Ingen annonser ble samlet på denne siden (viser siste)",
     "description": "shown in menu when only 'recent' Ads are shown"
@@ -208,15 +236,11 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsClicked": {
-    "message": "klikket",
-    "description": "appears in ADN popup menu"
-  },
-  "adnMenuOfThe": {
-    "message": "av de",
-    "description": "appears in ADN popup menu"
+    "message": "klikket på {{number}}",
+    "description": "appears in ADN popup menu and vault"
   },
   "adnMenuAdsDetected": {
-    "message": "annonser oppdaget",
+    "message": "{{count}} annonser oppdaget",
     "description": "appears in ADN popup menu"
   },
   "adnMenuViewVault": {
@@ -280,11 +304,7 @@
     "description": "appears in ADN log page"
   },
   "adnVaultSince": {
-    "message": "Siden",
-    "description": "appears on vault page"
-  },
-  "adnVaultDefaultDate": {
-    "message": "1 Jan 1970 0:00am",
+    "message": "Siden {{datetime}}",
     "description": "appears on vault page"
   },
   "adnVaultExport": {
@@ -300,7 +320,7 @@
     "description": "appears on vault page"
   },
   "adnVaultFound": {
-    "message": "annonser samlet",
+    "message": "{{total}} annonser samlet",
     "description": "appears on vault page"
   },
   "adnVaultShowing": {

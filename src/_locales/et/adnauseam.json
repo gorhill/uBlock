@@ -83,6 +83,10 @@
     "message": "uBlock ja AdNauseam võivad minna vastuollu!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
+  "adnNotificationOperaSetting": {
+    "message": "Please allow AdNauseam to access search page results",
+    "description": "English: Notifications -> Please allow AdNauseam to access search page results"
+  },
   "adnNotificationBrowserSetting": {
     "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
@@ -155,6 +159,30 @@
     "message": "AdNauseam — AdVault hoidla",
     "description": "English: AdNauseam — Ad Vault"
   },
+  "myStatistics": {
+    "message": "My Statistics",
+    "description": "appears in ADN vault, above ad slider"
+  },
+  "topAdnetworks": {
+    "message": "Top Adnetworks",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "topSites": {
+    "message": "Top Sites",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypes": {
+    "message": "Ad Types",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypesImageAds": {
+    "message": "Image Ads",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypesTextAds": {
+    "message": "Text Ads",
+    "description": "appears in ADN vault/My Statistics"
+  },
   "adnShowingRecentAds": {
     "message": "Sellel lehel ei ole reklaame kogutud (näitab hiljutisi)",
     "description": "shown in menu when only 'recent' Ads are shown"
@@ -208,15 +236,11 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsClicked": {
-    "message": "klikitud",
-    "description": "appears in ADN popup menu"
-  },
-  "adnMenuOfThe": {
-    "message": ", kokku",
-    "description": "appears in ADN popup menu"
+    "message": "klikitud {{number}}",
+    "description": "appears in ADN popup menu and vault"
   },
   "adnMenuAdsDetected": {
-    "message": "Reklaame tuvastatud",
+    "message": "{{count}} Reklaame tuvastatud",
     "description": "appears in ADN popup menu"
   },
   "adnMenuViewVault": {
@@ -280,11 +304,7 @@
     "description": "appears in ADN log page"
   },
   "adnVaultSince": {
-    "message": "Alates",
-    "description": "appears on vault page"
-  },
-  "adnVaultDefaultDate": {
-    "message": "Jaan 1 1970 0:00 am",
+    "message": "Alates {{datetime}}",
     "description": "appears on vault page"
   },
   "adnVaultExport": {
@@ -300,7 +320,7 @@
     "description": "appears on vault page"
   },
   "adnVaultFound": {
-    "message": "kogutud reklaame",
+    "message": "{{total}} kogutud reklaame",
     "description": "appears on vault page"
   },
   "adnVaultShowing": {

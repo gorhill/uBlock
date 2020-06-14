@@ -83,12 +83,16 @@
     "message": "uBlock a AdNauseam mohou být v rozporu!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
+  "adnNotificationOperaSetting": {
+    "message": "Prosím povolte AdNauseam přístup k výsledkům stránky vyhledávání",
+    "description": "English: Notifications -> Please allow AdNauseam to access search page results"
+  },
   "adnNotificationBrowserSetting": {
     "message": "\"Blokování obsahu\" nastavení v prohlížeči může kolidovat s AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
   "adnNotificationPrivacyMode": {
-    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "message": "Adnauseam povolil přístup k Vašim online aktivitám během soukromého prohlížení.",
     "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
   },
   "adnNotificationDNTAllowed": {
@@ -155,6 +159,30 @@
     "message": "AdNauseam – AdVault",
     "description": "English: AdNauseam — Ad Vault"
   },
+  "myStatistics": {
+    "message": "Moje statistiky",
+    "description": "appears in ADN vault, above ad slider"
+  },
+  "topAdnetworks": {
+    "message": "Nejlepší Adsítě",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "topSites": {
+    "message": "Top weby",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypes": {
+    "message": "Typy reklam",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypesImageAds": {
+    "message": "Reklamy obrázků",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypesTextAds": {
+    "message": "Textové reklamy",
+    "description": "appears in ADN vault/My Statistics"
+  },
   "adnShowingRecentAds": {
     "message": "Na této stránce nebyly nasbírány žádné reklamy (zobrazeny aktuální)",
     "description": "shown in menu when only 'recent' Ads are shown"
@@ -208,15 +236,11 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsClicked": {
-    "message": "kliknuto",
-    "description": "appears in ADN popup menu"
-  },
-  "adnMenuOfThe": {
-    "message": "ze",
-    "description": "appears in ADN popup menu"
+    "message": "kliknuto {{number}}",
+    "description": "appears in ADN popup menu and vault"
   },
   "adnMenuAdsDetected": {
-    "message": "Zjištěné Reklamy",
+    "message": "{{count}} Zjištěné Reklamy",
     "description": "appears in ADN popup menu"
   },
   "adnMenuViewVault": {
@@ -280,11 +304,7 @@
     "description": "appears in ADN log page"
   },
   "adnVaultSince": {
-    "message": "Od kdy",
-    "description": "appears on vault page"
-  },
-  "adnVaultDefaultDate": {
-    "message": "Led 1 1970 0:00 am",
+    "message": "Od kdy {{datetime}}",
     "description": "appears on vault page"
   },
   "adnVaultExport": {
@@ -300,7 +320,7 @@
     "description": "appears on vault page"
   },
   "adnVaultFound": {
-    "message": "shromážděné reklamy",
+    "message": "{{total}} shromážděné reklamy",
     "description": "appears on vault page"
   },
   "adnVaultShowing": {

@@ -83,12 +83,16 @@
     "message": "uBlock ir AdNauseam gali neveikti kartu!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
+  "adnNotificationOperaSetting": {
+    "message": "Leiskite „AdNauseam“ pasiekti paieškos puslapio rezultatus",
+    "description": "English: Notifications -> Please allow AdNauseam to access search page results"
+  },
   "adnNotificationBrowserSetting": {
     "message": "Jūsų naršyklės „Turinio blokavimo“ nustatymai gali trukdyti „AdNauseam“!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
   "adnNotificationPrivacyMode": {
-    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "message": "Jūs suteikėte „Adnauseam“ prieigą prie internetinės veiklos, kai privačiai naršote.",
     "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
   },
   "adnNotificationDNTAllowed": {
@@ -155,6 +159,30 @@
     "message": "AdNauseam — AdVault",
     "description": "English: AdNauseam — Ad Vault"
   },
+  "myStatistics": {
+    "message": "Mano statistika",
+    "description": "appears in ADN vault, above ad slider"
+  },
+  "topAdnetworks": {
+    "message": "Populiariausi skelbimų tinklai",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "topSites": {
+    "message": "Populiariausios svetainės",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypes": {
+    "message": "Skelbimų tipai",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypesImageAds": {
+    "message": "Vaizdo skelbimai",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypesTextAds": {
+    "message": "Tekstiniai skelbimai",
+    "description": "appears in ADN vault/My Statistics"
+  },
   "adnShowingRecentAds": {
     "message": "Jokių skelbimų nesurinktą šiame puslapyje (rodoma naujausius)",
     "description": "shown in menu when only 'recent' Ads are shown"
@@ -208,15 +236,11 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsClicked": {
-    "message": "paspausta",
-    "description": "appears in ADN popup menu"
-  },
-  "adnMenuOfThe": {
-    "message": "iš",
-    "description": "appears in ADN popup menu"
+    "message": "paspausta {{number}}",
+    "description": "appears in ADN popup menu and vault"
   },
   "adnMenuAdsDetected": {
-    "message": "aptiktų skelbimų",
+    "message": "{{count}} aptiktų skelbimų",
     "description": "appears in ADN popup menu"
   },
   "adnMenuViewVault": {
@@ -280,11 +304,7 @@
     "description": "appears in ADN log page"
   },
   "adnVaultSince": {
-    "message": "Nuo",
-    "description": "appears on vault page"
-  },
-  "adnVaultDefaultDate": {
-    "message": "1 Sau 1970 00:00",
+    "message": "Nuo {{datetime}}",
     "description": "appears on vault page"
   },
   "adnVaultExport": {
@@ -300,7 +320,7 @@
     "description": "appears on vault page"
   },
   "adnVaultFound": {
-    "message": "surinktų skelbimų",
+    "message": "{{total}} surinktų skelbimų",
     "description": "appears on vault page"
   },
   "adnVaultShowing": {

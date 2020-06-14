@@ -83,12 +83,16 @@
     "message": "En konflikt kan komma att inträffa mellan uBlock och AdNauseam!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
+  "adnNotificationOperaSetting": {
+    "message": "Tillåt AdNauseam att komma åt söksidans resultat",
+    "description": "English: Notifications -> Please allow AdNauseam to access search page results"
+  },
   "adnNotificationBrowserSetting": {
     "message": "Inställningarna \"innehållsblockering\" i din webbläsare kan störa AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
   "adnNotificationPrivacyMode": {
-    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "message": "Du har tillåtit adnauseam att ha tillgång till dina online-aktiviteter medan privat surfning.",
     "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
   },
   "adnNotificationDNTAllowed": {
@@ -155,6 +159,30 @@
     "message": "AdNauseam — AdVault",
     "description": "English: AdNauseam — Ad Vault"
   },
+  "myStatistics": {
+    "message": "Min statistik",
+    "description": "appears in ADN vault, above ad slider"
+  },
+  "topAdnetworks": {
+    "message": "Topp Adnetwork",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "topSites": {
+    "message": "Topp sajter",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypes": {
+    "message": "Annonstyper",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypesImageAds": {
+    "message": "Annonser för bild",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypesTextAds": {
+    "message": "Text annonser",
+    "description": "appears in ADN vault/My Statistics"
+  },
   "adnShowingRecentAds": {
     "message": "Inga annonser insamlade på denna sida (visar senaste)",
     "description": "shown in menu when only 'recent' Ads are shown"
@@ -208,15 +236,11 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsClicked": {
-    "message": "klickade",
-    "description": "appears in ADN popup menu"
-  },
-  "adnMenuOfThe": {
-    "message": "av",
-    "description": "appears in ADN popup menu"
+    "message": "klickade {{number}}",
+    "description": "appears in ADN popup menu and vault"
   },
   "adnMenuAdsDetected": {
-    "message": "annonser upptäckta",
+    "message": "{{count}} annonser upptäckta",
     "description": "appears in ADN popup menu"
   },
   "adnMenuViewVault": {
@@ -280,11 +304,7 @@
     "description": "appears in ADN log page"
   },
   "adnVaultSince": {
-    "message": "Sedan",
-    "description": "appears on vault page"
-  },
-  "adnVaultDefaultDate": {
-    "message": "1970-01-01 00:00",
+    "message": "Sedan {{datetime}}",
     "description": "appears on vault page"
   },
   "adnVaultExport": {
@@ -300,7 +320,7 @@
     "description": "appears on vault page"
   },
   "adnVaultFound": {
-    "message": "annonser som samlas in",
+    "message": "{{total}} annonser insamlade",
     "description": "appears on vault page"
   },
   "adnVaultShowing": {

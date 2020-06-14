@@ -44,7 +44,7 @@
     "description": "English: Firstrun.html -> Register visits on Ads found via your filter lists"
   },
   "adnFirstRunBlockingMalwareDescription": {
-    "message": "Block trackers and other malware (<span>customize</span>)",
+    "message": "Követők és más kártevők blokkolása (<span>személyre szabás</span>)",
     "description": "English: Firstrun.html -> Block trackers and other malware (customize)"
   },
   "adnNotificationReactivate": {
@@ -64,7 +64,7 @@
     "description": "English: Notifications -> Activate Ad clicking"
   },
   "adnNotificationActivateBlocking": {
-    "message": "Activate malware blocking",
+    "message": "Kártevők blokkolásának aktiválása",
     "description": "English: Notifications -> Activate malware blocking"
   },
   "adnNotificationActivateEasyList": {
@@ -83,8 +83,12 @@
     "message": "uBlock és AdNauseam összeütközhet egymással!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
+  "adnNotificationOperaSetting": {
+    "message": "Please allow AdNauseam to access search page results",
+    "description": "English: Notifications -> Please allow AdNauseam to access search page results"
+  },
   "adnNotificationBrowserSetting": {
-    "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
+    "message": "A böngésződ \"tartalom blokkolási\" beállítása megakadályozhatja az AdNauseam helyes működését!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
   "adnNotificationPrivacyMode": {
@@ -155,6 +159,30 @@
     "message": "AdNauseam — AdVault",
     "description": "English: AdNauseam — Ad Vault"
   },
+  "myStatistics": {
+    "message": "Statisztikáim",
+    "description": "appears in ADN vault, above ad slider"
+  },
+  "topAdnetworks": {
+    "message": "Top Adnetworks",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "topSites": {
+    "message": "Top Sites",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypes": {
+    "message": "Ad Types",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypesImageAds": {
+    "message": "Képes hírdetések",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypesTextAds": {
+    "message": "Szöveges hirdetések",
+    "description": "appears in ADN vault/My Statistics"
+  },
   "adnShowingRecentAds": {
     "message": "Ezen az oldalon nem gyűjtött hirdetéseket (legfrissebbek mutatása)",
     "description": "shown in menu when only 'recent' Ads are shown"
@@ -208,15 +236,11 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsClicked": {
-    "message": "kattintott",
-    "description": "appears in ADN popup menu"
-  },
-  "adnMenuOfThe": {
-    "message": "ennyiből:",
-    "description": "appears in ADN popup menu"
+    "message": "kattintott {{number}}",
+    "description": "appears in ADN popup menu and vault"
   },
   "adnMenuAdsDetected": {
-    "message": "Hirdetés észlelve",
+    "message": "{{count}} Hirdetés észlelve",
     "description": "appears in ADN popup menu"
   },
   "adnMenuViewVault": {
@@ -232,7 +256,7 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuExportOptions": {
-    "message": "Export Options",
+    "message": "Exportálási beállítások",
     "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuExportAdsOnly": {
@@ -248,7 +272,7 @@
     "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuImportAds": {
-    "message": "Import Ads",
+    "message": "Hirdetések importálása",
     "description": "appears in ADN popup menu"
   },
   "adnMenuDisableAllLogging": {
@@ -280,11 +304,7 @@
     "description": "appears in ADN log page"
   },
   "adnVaultSince": {
-    "message": "Mióta:",
-    "description": "appears on vault page"
-  },
-  "adnVaultDefaultDate": {
-    "message": "Január 1 1970 0:00",
+    "message": "Mióta:{{datetime}}",
     "description": "appears on vault page"
   },
   "adnVaultExport": {
@@ -300,7 +320,7 @@
     "description": "appears on vault page"
   },
   "adnVaultFound": {
-    "message": "összegyűjtött hirdetések",
+    "message": "{{total}} összegyűjtött hirdetések",
     "description": "appears on vault page"
   },
   "adnVaultShowing": {
@@ -312,7 +332,7 @@
     "description": "appears on vault page"
   },
   "adnVaultTotalEstimated": {
-    "message": "total estimated",
+    "message": "teljes becsült",
     "description": "appears on vault page"
   },
   "adnVaultAdsCost": {
@@ -328,7 +348,7 @@
     "description": "English: Click Ads identified by your chosen filter lists"
   },
   "blockingMalwarePrompt": {
-    "message": "Block trackers and other malware",
+    "message": "Követők és más kártevők blokkolása",
     "description": "English: lock trackers and other malware"
   },
   "parseTextAdsPrompt": {
@@ -380,7 +400,7 @@
     "description": "English: Make exceptions for non-tracking Ads"
   },
   "disableHidingForDNTPrompt": {
-    "message": "Don't hide non-tracking Ads",
+    "message": "Nem követő hirdetések megjelenítése",
     "description": "English: Don't hide non-tracking Ads"
   },
   "disableClickingForDNTPrompt": {
@@ -416,11 +436,11 @@
     "description": "English: update"
   },
   "whitelistPageName": {
-    "message": "Whitelists",
+    "message": "Fehérlista",
     "description": "appears as tab name in dashboard"
   },
   "eventLoggingPrompt": {
-    "message": "Activate debugging mode",
+    "message": "Hibakeresési mód aktiválása",
     "description": "prompt for toggle"
   }
 }

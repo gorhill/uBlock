@@ -83,12 +83,16 @@
     "message": "O uBlock e o AdNauseam podem entrar em conflito!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
+  "adnNotificationOperaSetting": {
+    "message": "Por favor, permita que o AdNauseam acesse os resultados das páginas de busca",
+    "description": "English: Notifications -> Please allow AdNauseam to access search page results"
+  },
   "adnNotificationBrowserSetting": {
     "message": "As configurações de 'Bloqueio de conteúdo' no seu navegador podem interferir com AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
   "adnNotificationPrivacyMode": {
-    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "message": "Você permitiu o acesso às suas atividades on-line durante uma navegação privada.",
     "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
   },
   "adnNotificationDNTAllowed": {
@@ -155,6 +159,30 @@
     "message": "AdNauseam — AdVault",
     "description": "English: AdNauseam — Ad Vault"
   },
+  "myStatistics": {
+    "message": "Minhas Estatísticas",
+    "description": "appears in ADN vault, above ad slider"
+  },
+  "topAdnetworks": {
+    "message": "Principais Acompanhamentos",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "topSites": {
+    "message": "Sites populares",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypes": {
+    "message": "Tipos de anúncio",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypesImageAds": {
+    "message": "Anúncios de imagem",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypesTextAds": {
+    "message": "Anúncios de texto",
+    "description": "appears in ADN vault/My Statistics"
+  },
   "adnShowingRecentAds": {
     "message": "Sem anúncios recolhidos nesta página (a mostrar recentes)",
     "description": "shown in menu when only 'recent' Ads are shown"
@@ -208,15 +236,11 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsClicked": {
-    "message": "clicados",
-    "description": "appears in ADN popup menu"
-  },
-  "adnMenuOfThe": {
-    "message": "dos",
-    "description": "appears in ADN popup menu"
+    "message": "{{number}} clicados",
+    "description": "appears in ADN popup menu and vault"
   },
   "adnMenuAdsDetected": {
-    "message": "anúncios detetados",
+    "message": "{{count}} anúncios detetados",
     "description": "appears in ADN popup menu"
   },
   "adnMenuViewVault": {
@@ -280,11 +304,7 @@
     "description": "appears in ADN log page"
   },
   "adnVaultSince": {
-    "message": "Desde",
-    "description": "appears on vault page"
-  },
-  "adnVaultDefaultDate": {
-    "message": "1 Jan 1970 00:00",
+    "message": " Desde {{datetime}}",
     "description": "appears on vault page"
   },
   "adnVaultExport": {
@@ -300,7 +320,7 @@
     "description": "appears on vault page"
   },
   "adnVaultFound": {
-    "message": "anúncios coletados",
+    "message": "{{total}} anúncios recolhidos",
     "description": "appears on vault page"
   },
   "adnVaultShowing": {

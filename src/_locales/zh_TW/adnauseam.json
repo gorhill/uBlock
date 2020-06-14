@@ -83,6 +83,10 @@
     "message": "uBlock 同 AdNauseam 可能會衝突！",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
+  "adnNotificationOperaSetting": {
+    "message": "請允許 AdNauseam 訪問搜索結果",
+    "description": "English: Notifications -> Please allow AdNauseam to access search page results"
+  },
   "adnNotificationBrowserSetting": {
     "message": "瀏覽器中的 \"內容封鎖\" 設置可能會干擾 AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
@@ -155,8 +159,32 @@
     "message": "AdNauseam — 廣告庫",
     "description": "English: AdNauseam — Ad Vault"
   },
+  "myStatistics": {
+    "message": "我的統計數據",
+    "description": "appears in ADN vault, above ad slider"
+  },
+  "topAdnetworks": {
+    "message": "廣告來源-常見廣告網路",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "topSites": {
+    "message": "廣告來源-常見網站",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypes": {
+    "message": "廣告類型",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypesImageAds": {
+    "message": "圖像廣告",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypesTextAds": {
+    "message": "文字廣告",
+    "description": "appears in ADN vault/My Statistics"
+  },
   "adnShowingRecentAds": {
-    "message": "沒有在本頁收集到廣告 (顯示最近的)",
+    "message": "沒有在本頁收集到廣告 (顯示最近)",
     "description": "shown in menu when only 'recent' Ads are shown"
   },
   "adnExportedAdsFilename": {
@@ -208,15 +236,11 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsClicked": {
-    "message": "已點擊",
-    "description": "appears in ADN popup menu"
-  },
-  "adnMenuOfThe": {
-    "message": "總共",
-    "description": "appears in ADN popup menu"
+    "message": "{{number}}个已點擊",
+    "description": "appears in ADN popup menu and vault"
   },
   "adnMenuAdsDetected": {
-    "message": "已偵測廣告",
+    "message": "{{count}}个已偵測廣告",
     "description": "appears in ADN popup menu"
   },
   "adnMenuViewVault": {
@@ -280,11 +304,7 @@
     "description": "appears in ADN log page"
   },
   "adnVaultSince": {
-    "message": "自從",
-    "description": "appears on vault page"
-  },
-  "adnVaultDefaultDate": {
-    "message": "1970 年 1 月 1 日 0:00",
+    "message": "自從{{datetime}}",
     "description": "appears on vault page"
   },
   "adnVaultExport": {
@@ -300,7 +320,7 @@
     "description": "appears on vault page"
   },
   "adnVaultFound": {
-    "message": "已收集的廣告",
+    "message": "已收集{{total}}个廣告",
     "description": "appears on vault page"
   },
   "adnVaultShowing": {

@@ -83,12 +83,16 @@
     "message": "uBlock и AdNauseam могут конфликтовать!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
+  "adnNotificationOperaSetting": {
+    "message": "Пожалуйста, разрешите AdNauseam получить доступ к результатам поиска",
+    "description": "English: Notifications -> Please allow AdNauseam to access search page results"
+  },
   "adnNotificationBrowserSetting": {
     "message": "«Блокирование содержимого» настройки в вашем браузере может помешать с AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
   "adnNotificationPrivacyMode": {
-    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "message": "Вы разрешили adnauseam доступ к отслеживанию ваших действий в режиме инкогнито.",
     "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
   },
   "adnNotificationDNTAllowed": {
@@ -155,6 +159,30 @@
     "message": "AdNauseam — хранилище рекламы",
     "description": "English: AdNauseam — Ad Vault"
   },
+  "myStatistics": {
+    "message": "Моя статистика",
+    "description": "appears in ADN vault, above ad slider"
+  },
+  "topAdnetworks": {
+    "message": "Популярные рекламные сети",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "topSites": {
+    "message": "Популярные сайты",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypes": {
+    "message": "Типы рекламы",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypesImageAds": {
+    "message": "Графические объявления",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypesTextAds": {
+    "message": "Текстовые объявления",
+    "description": "appears in ADN vault/My Statistics"
+  },
   "adnShowingRecentAds": {
     "message": "Не найдено рекламы на этой странице (показана недавняя)",
     "description": "shown in menu when only 'recent' Ads are shown"
@@ -208,15 +236,11 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsClicked": {
-    "message": "кликнуто",
-    "description": "appears in ADN popup menu"
-  },
-  "adnMenuOfThe": {
-    "message": "из",
-    "description": "appears in ADN popup menu"
+    "message": "кликнуто {{number}}",
+    "description": "appears in ADN popup menu and vault"
   },
   "adnMenuAdsDetected": {
-    "message": "Обнаружена реклама",
+    "message": "{{count}} Обнаружена реклама",
     "description": "appears in ADN popup menu"
   },
   "adnMenuViewVault": {
@@ -280,11 +304,7 @@
     "description": "appears in ADN log page"
   },
   "adnVaultSince": {
-    "message": "С",
-    "description": "appears on vault page"
-  },
-  "adnVaultDefaultDate": {
-    "message": "1 января 1970 года 0:00",
+    "message": "С {{datetime}}",
     "description": "appears on vault page"
   },
   "adnVaultExport": {
@@ -300,7 +320,7 @@
     "description": "appears on vault page"
   },
   "adnVaultFound": {
-    "message": "собраны объявления",
+    "message": "{{total}} собраны объявления",
     "description": "appears on vault page"
   },
   "adnVaultShowing": {

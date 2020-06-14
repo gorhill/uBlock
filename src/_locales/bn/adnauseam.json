@@ -83,6 +83,10 @@
     "message": "uBlock ও AdNauseam দ্বন্দ্ব সৃষ্টি করতে পারে!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
+  "adnNotificationOperaSetting": {
+    "message": "Please allow AdNauseam to access search page results",
+    "description": "English: Notifications -> Please allow AdNauseam to access search page results"
+  },
   "adnNotificationBrowserSetting": {
     "message": "আপনার ব্রাউজারের \"কনটেন্ট ব্লকিং\" সেটিংস অ্যাডনোসামে হস্তক্ষেপ করতে পারে!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
@@ -155,6 +159,30 @@
     "message": "AdNauseam-AdVault",
     "description": "English: AdNauseam — Ad Vault"
   },
+  "myStatistics": {
+    "message": "My Statistics",
+    "description": "appears in ADN vault, above ad slider"
+  },
+  "topAdnetworks": {
+    "message": "Top Adnetworks",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "topSites": {
+    "message": "Top Sites",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypes": {
+    "message": "Ad Types",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypesImageAds": {
+    "message": "Image Ads",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypesTextAds": {
+    "message": "Text Ads",
+    "description": "appears in ADN vault/My Statistics"
+  },
   "adnShowingRecentAds": {
     "message": "এই পৃষ্ঠায় কোনও বিজ্ঞাপন সংগ্রহ করা হয়নি (সাম্প্রতিক দেখানো হয়েছে)",
     "description": "shown in menu when only 'recent' Ads are shown"
@@ -208,15 +236,11 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsClicked": {
-    "message": "ক্লিক করা",
-    "description": "appears in ADN popup menu"
-  },
-  "adnMenuOfThe": {
-    "message": "এর",
-    "description": "appears in ADN popup menu"
+    "message": "ক্লিক করা {{number}}",
+    "description": "appears in ADN popup menu and vault"
   },
   "adnMenuAdsDetected": {
-    "message": "বিজ্ঞাপন সনাক্ত করা হয়েছে",
+    "message": "{{count}} বিজ্ঞাপন সনাক্ত করা হয়েছে",
     "description": "appears in ADN popup menu"
   },
   "adnMenuViewVault": {
@@ -280,11 +304,7 @@
     "description": "appears in ADN log page"
   },
   "adnVaultSince": {
-    "message": "থেকে",
-    "description": "appears on vault page"
-  },
-  "adnVaultDefaultDate": {
-    "message": "জানুয়ারী ১ ১৯৭০ রাত 0:00",
+    "message": "থেকে {{datetime}}",
     "description": "appears on vault page"
   },
   "adnVaultExport": {
@@ -300,7 +320,7 @@
     "description": "appears on vault page"
   },
   "adnVaultFound": {
-    "message": "বিজ্ঞাপনগুলোর সংগ্রহ",
+    "message": "{{total}} বিজ্ঞাপনগুলোর সংগ্রহ",
     "description": "appears on vault page"
   },
   "adnVaultShowing": {

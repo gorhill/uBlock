@@ -32,7 +32,7 @@
     "description": "English: Firstrun.html -> Block Malware"
   },
   "adnAboutResetDataConfirm": {
-    "message": "All your settings will be removed, ads in your vault will be deleted, and AdNauseam will restart.\n\nReset AdNauseam to factory settings?",
+    "message": "Tota la configuració actual s'eliminará, els anuncis del bagul s'eliminaran, i AdNauseam es reiniciará.\n\nReiniciar AdNauseam a opcions de fàbrica?",
     "description": "Message asking user to confirm reset"
   },
   "adnFirstRunHideAllAdsDescription": {
@@ -83,12 +83,16 @@
     "message": "L'uBlock i l'AdNauseam poden entrar en conflicte!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
+  "adnNotificationOperaSetting": {
+    "message": "Si us plau, permet AdNauseam accedir als resultats de cerca",
+    "description": "English: Notifications -> Please allow AdNauseam to access search page results"
+  },
   "adnNotificationBrowserSetting": {
-    "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
+    "message": "La configuració actual de 'Bloqueig de contingut' del navegador poden interferir amb AdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
   "adnNotificationPrivacyMode": {
-    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "message": "Has autoritzat AdNauseam a accedir a les teves activtats online en navegació privada.",
     "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
   },
   "adnNotificationDNTAllowed": {
@@ -155,6 +159,30 @@
     "message": "AdNauseam — AdVault",
     "description": "English: AdNauseam — Ad Vault"
   },
+  "myStatistics": {
+    "message": "Estadístiques",
+    "description": "appears in ADN vault, above ad slider"
+  },
+  "topAdnetworks": {
+    "message": "Xarxes d'anuncis més importants",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "topSites": {
+    "message": "Llocs més importants",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypes": {
+    "message": "Tipus d'anuncis",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypesImageAds": {
+    "message": "Anuncis d'imatge",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypesTextAds": {
+    "message": "Anuncis de text",
+    "description": "appears in ADN vault/My Statistics"
+  },
   "adnShowingRecentAds": {
     "message": "No s'ha recol·lectat cap anunci en aquesta pàgina (es mostren els recents)",
     "description": "shown in menu when only 'recent' Ads are shown"
@@ -164,7 +192,7 @@
     "description": "English: AdNauseam file export"
   },
   "adnImportAlertFormat": {
-    "message": "The file doesn't contain any Ads, please choose another file.",
+    "message": "Aquest fitxer no conté anuncis, si us plau escolliu-ne un altre.",
     "description": "appears in ADN vault, after import"
   },
   "adnImportAlert": {
@@ -176,31 +204,31 @@
     "description": "appears in ADN settings"
   },
   "adnAdClickingStatusPending": {
-    "message": "Pending",
+    "message": "Pendent",
     "description": "Menu & AdVault: Pending"
   },
   "adnAdClickingStatusVisited": {
-    "message": "Visited",
+    "message": "Visitat",
     "description": "Menu & AdVault: Visited"
   },
   "adnAdClickingStatusFailed": {
-    "message": "Failed",
+    "message": "Fallit",
     "description": "Menu & AdVault: Failed"
   },
   "adnAdClickingStatusSkippedDNT": {
-    "message": "SKIPPED: DNT Allowed",
+    "message": "IGNORAT: DNT permés",
     "description": "Menu & AdVault: SKIPPED: DNT Allowed"
   },
   "adnAdClickingStatusSkippedUser": {
-    "message": "SKIPPED: Clicked by user",
+    "message": "IGNORAT: Clicat per l'usuari",
     "description": "Menu & AdVault: SKIPPED: Clicked by User"
   },
   "adnAdClickingStatusSkippedFrequency": {
-    "message": "SKIPPED: Click Frequency",
+    "message": "IGNORAT: Freqüència de clics",
     "description": "Menu & AdVault: SKIPPED: Click Frequency"
   },
   "adnAdClickingStatusSkippedDisabled": {
-    "message": "SKIPPED: Clicking Disabled",
+    "message": "IGNORAT: Clicar desactivat",
     "description": "Menu & AdVault: SKIPPED: Clicking disabled"
   },
   "adnMenuViewLog": {
@@ -208,15 +236,11 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsClicked": {
-    "message": "s'ha fet clic a",
-    "description": "appears in ADN popup menu"
-  },
-  "adnMenuOfThe": {
-    "message": "dels",
-    "description": "appears in ADN popup menu"
+    "message": "s'ha fet clic a {{number}}",
+    "description": "appears in ADN popup menu and vault"
   },
   "adnMenuAdsDetected": {
-    "message": "anuncis detectats",
+    "message": "{{count}} anuncis detectats",
     "description": "appears in ADN popup menu"
   },
   "adnMenuViewVault": {
@@ -232,19 +256,19 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuExportOptions": {
-    "message": "Export Options",
+    "message": "Opcions d'exportació",
     "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuExportAdsOnly": {
-    "message": "Ads Only",
+    "message": "Només anuncis",
     "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuExportSettingsOnly": {
-    "message": "Settings Only",
+    "message": "Només configuració",
     "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuExportSettingsAndAds": {
-    "message": "Settings and Ads",
+    "message": "Configuració i anuncis",
     "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuImportAds": {
@@ -280,11 +304,7 @@
     "description": "appears in ADN log page"
   },
   "adnVaultSince": {
-    "message": "Des de",
-    "description": "appears on vault page"
-  },
-  "adnVaultDefaultDate": {
-    "message": "1 de gener de 1970, 0:00 h",
+    "message": "Des de {{datetime}}",
     "description": "appears on vault page"
   },
   "adnVaultExport": {
@@ -300,7 +320,7 @@
     "description": "appears on vault page"
   },
   "adnVaultFound": {
-    "message": "anuncis recol·lectats",
+    "message": "{{total}} anuncis recol·lectats",
     "description": "appears on vault page"
   },
   "adnVaultShowing": {

@@ -83,6 +83,10 @@
     "message": "uBlock ja AdNauseam saattavat olla ristiriidassa!",
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
+  "adnNotificationOperaSetting": {
+    "message": "Anna AdNauseamille pääsy hakutuloksiisi",
+    "description": "English: Notifications -> Please allow AdNauseam to access search page results"
+  },
   "adnNotificationBrowserSetting": {
     "message": "Selaimessasi olevat sisällön estämisen asetukset saattavat häiritä AdNauseamin toimintaa!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
@@ -155,6 +159,30 @@
     "message": "AdNauseam — Mainosvarasto",
     "description": "English: AdNauseam — Ad Vault"
   },
+  "myStatistics": {
+    "message": "Tilastoni",
+    "description": "appears in ADN vault, above ad slider"
+  },
+  "topAdnetworks": {
+    "message": "Yleisimmät mainosverkostot",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "topSites": {
+    "message": "Yleisimmät sivustot",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypes": {
+    "message": "Mainostyypit",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypesImageAds": {
+    "message": "Kuvamainokset",
+    "description": "appears in ADN vault/My Statistics"
+  },
+  "adTypesTextAds": {
+    "message": "Tekstimainokset",
+    "description": "appears in ADN vault/My Statistics"
+  },
   "adnShowingRecentAds": {
     "message": "Mainoksia ei kerätty tällä sivulla (näytetään tämänhetkiset)",
     "description": "shown in menu when only 'recent' Ads are shown"
@@ -208,15 +236,11 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuAdsClicked": {
-    "message": "klikattu",
-    "description": "appears in ADN popup menu"
-  },
-  "adnMenuOfThe": {
-    "message": "joista",
-    "description": "appears in ADN popup menu"
+    "message": "klikattu {{number}}",
+    "description": "appears in ADN popup menu and vault"
   },
   "adnMenuAdsDetected": {
-    "message": "Mainokset havaittu",
+    "message": "{{count}} Mainosta havaittu",
     "description": "appears in ADN popup menu"
   },
   "adnMenuViewVault": {
@@ -224,7 +248,7 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuResume": {
-    "message": "Jatka AdNauseam",
+    "message": "Jatka käyttöä",
     "description": "appears in ADN popup menu"
   },
   "adnMenuSettings": {
@@ -248,7 +272,7 @@
     "description": "appears in Menu - Export Dialog box"
   },
   "adnMenuImportAds": {
-    "message": "Tuo mainokset",
+    "message": "Tuo mainoksia",
     "description": "appears in ADN popup menu"
   },
   "adnMenuDisableAllLogging": {
@@ -256,7 +280,7 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuDisableOutgoingReferrer": {
-    "message": "Poista lähtevien viittaus",
+    "message": "Poista lähdeviittaus käytöstä",
     "description": "appears in ADN popup menu"
   },
   "adnMenuClearAds": {
@@ -268,7 +292,7 @@
     "description": "appears in ADN popup menu"
   },
   "adnMenuClearAdsNow": {
-    "message": "Poista mainokset",
+    "message": "Tyhjennä mainokset",
     "description": "appears in ADN popup menu"
   },
   "adnLogNoLog": {
@@ -280,11 +304,7 @@
     "description": "appears in ADN log page"
   },
   "adnVaultSince": {
-    "message": "Alkaen",
-    "description": "appears on vault page"
-  },
-  "adnVaultDefaultDate": {
-    "message": "Tammikuu 1, 1970 00:00",
+    "message": "{{datetime}} Alkaen",
     "description": "appears on vault page"
   },
   "adnVaultExport": {
@@ -300,7 +320,7 @@
     "description": "appears on vault page"
   },
   "adnVaultFound": {
-    "message": "mainoksia kerätty",
+    "message": "{{total}} mainoksia kerätty",
     "description": "appears on vault page"
   },
   "adnVaultShowing": {
