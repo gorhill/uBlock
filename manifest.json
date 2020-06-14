@@ -84,7 +84,7 @@
   "storage": {
     "managed_schema": "managed_storage.json"
   },
-  "version": "3.9.104",
+  "version": "3.9.105",
   "web_accessible_resources": [
     "/web_accessible_resources/*"
   ],
