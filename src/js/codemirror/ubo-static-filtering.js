@@ -29,6 +29,48 @@ CodeMirror.defineMode("ubo-static-filtering", function() {
     let parserSlot = 0;
     let netOptionValueMode = false;
 
+    const colorExtHTMLPatternSpan = function(stream) {
+        const { i } = parser.patternSpan;
+        if ( stream.pos === parser.slices[i+1] ) {
+            stream.pos += 1;
+            return 'def';
+        }
+        stream.skipToEnd();
+        return 'variable';
+    };
+
+    const colorExtScriptletPatternSpan = function(stream) {
+        const { i, len } = parser.patternSpan;
+        if ( stream.pos === parser.slices[i+1] ) {
+            stream.pos += 4;
+            return 'def';
+        }
+        if ( len > 3 ) {
+            const r = parser.slices[i+len+1] - 1;
+            if ( stream.pos < r ) {
+                stream.pos = r;
+                return 'variable';
+            }
+            if ( stream.pos === r ) {
+                stream.pos += 1;
+                return 'def';
+            }
+        }
+        stream.skipToEnd();
+        return 'variable';
+    };
+
+    const colorExtPatternSpan = function(stream) {
+        if ( (parser.flavorBits & parser.BITFlavorExtScriptlet) !== 0 ) {
+            return colorExtScriptletPatternSpan(stream);
+        }
+        if ( (parser.flavorBits & parser.BITFlavorExtHTML) !== 0 ) {
+            return colorExtHTMLPatternSpan(stream);
+        }
+        stream.skipToEnd();
+        return 'variable';
+    };
+
     const colorExtSpan = function(stream) {
         if ( parserSlot < parser.optionsAnchorSpan.i ) {
             const style = (parser.slices[parserSlot] & parser.BITComma) === 0
@@ -49,23 +91,25 @@ CodeMirror.defineMode("ubo-static-filtering", function() {
             parserSlot += 3;
             return `${style} strong`;
         }
-        if ( parserSlot >= parser.patternSpan.i ) {
-            stream.skipToEnd();
-            return 'variable';
+        if (
+            parserSlot >= parser.patternSpan.i &&
+            parserSlot < parser.rightSpaceSpan.i
+        ) {
+            return colorExtPatternSpan(stream);
         }
         stream.skipToEnd();
-        return '';
+        return null;
     };
 
     const colorNetSpan = function(stream) {
         if ( parserSlot < parser.exceptionSpan.i ) {
             stream.pos += parser.slices[parserSlot+2];
             parserSlot += 3;
-            return '';
+            return null;
         }
         if (
             parserSlot === parser.exceptionSpan.i &&
-            parser.exceptionSpan.l !== 0
+            parser.exceptionSpan.len !== 0
         ) {
             stream.pos += parser.slices[parserSlot+2];
             parserSlot += 3;
@@ -73,9 +117,9 @@ CodeMirror.defineMode("ubo-static-filtering", function() {
         }
         if (
             parserSlot === parser.patternLeftAnchorSpan.i &&
-            parser.patternLeftAnchorSpan.l !== 0 ||
+            parser.patternLeftAnchorSpan.len !== 0 ||
             parserSlot === parser.patternRightAnchorSpan.i &&
-            parser.patternRightAnchorSpan.l !== 0
+            parser.patternRightAnchorSpan.len !== 0
         ) {
             stream.pos += parser.slices[parserSlot+2];
             parserSlot += 3;
@@ -83,31 +127,30 @@ CodeMirror.defineMode("ubo-static-filtering", function() {
         }
         if (
             parserSlot >= parser.patternSpan.i &&
-            parserSlot < parser.patternRightAnchorSpan.i
+            parserSlot < parser.optionsAnchorSpan.i
         ) {
-            const isRegex = parser.patternIsRegex();
-            if (
-                (isRegex === false) &&
-                (parser.slices[parserSlot] & (parser.BITAsterisk | parser.BITCaret)) !== 0
-            ) {
+            if ( parser.patternIsRegex() ) {
+                stream.pos = parser.slices[parser.optionsAnchorSpan.i+1];
+                parserSlot += parser.optionsAnchorSpan.i;
+                return 'variable regex';
+            }
+            if ( (parser.slices[parserSlot] & (parser.BITAsterisk | parser.BITCaret)) !== 0 ) {
                 stream.pos += parser.slices[parserSlot+2];
                 parserSlot += 3;
                 return 'keyword strong';
             }
-            let style = 'variable';
-            if ( isRegex ) { style += ' regex'; }
             const nextSlot = parser.skipUntil(
-                parserSlot,
+                parserSlot + 3,
                 parser.patternRightAnchorSpan.i,
                 parser.BITAsterisk | parser.BITCaret
             );
             stream.pos = parser.slices[nextSlot+1];
             parserSlot = nextSlot;
-            return style;
+            return 'variable';
         }
         if (
             parserSlot === parser.optionsAnchorSpan.i &&
-            parser.optionsAnchorSpan.l !== 0
+            parserSlot < parser.optionsSpan.i !== 0
         ) {
             stream.pos += parser.slices[parserSlot+2];
             parserSlot += 3;
@@ -115,7 +158,7 @@ CodeMirror.defineMode("ubo-static-filtering", function() {
         }
         if (
             parserSlot >= parser.optionsSpan.i &&
-            parser.optionsSpan.l !== 0
+            parserSlot < parser.rightSpaceSpan.i
         ) {
             const bits = parser.slices[parserSlot];
             let style;
@@ -137,13 +180,13 @@ CodeMirror.defineMode("ubo-static-filtering", function() {
         }
         if (
             parserSlot >= parser.commentSpan.i &&
-            parser.commentSpan.l !== 0
+            parser.commentSpan.len !== 0
         ) {
             stream.skipToEnd();
             return 'comment';
         }
         stream.skipToEnd();
-        return '';
+        return null;
     };
 
     const colorSpan = function(stream) {
@@ -185,7 +228,7 @@ CodeMirror.defineMode("ubo-static-filtering", function() {
                 parserSlot = 0;
                 netOptionValueMode = false;
             }
-            let style = colorSpan(stream);
+            let style = colorSpan(stream) || '';
             if ( (parser.flavorBits & parser.BITFlavorError) !== 0 ) {
                 style += ' line-background-error';
             }

@@ -129,7 +129,7 @@ const Parser = class {
 
     analyze(raw) {
         this.slice(raw);
-        let slot = this.leftSpaceSpan.l;
+        let slot = this.leftSpaceSpan.len;
         if ( slot === this.rightSpaceSpan.i ) { return; }
 
         // test for `!`, `#`, or `[`
@@ -158,7 +158,7 @@ const Parser = class {
                     for (;;) {
                         if ( hasBits(this.slices[hashSlot-3], BITSpace) ) {
                             this.commentSpan.i = hashSlot-3;
-                            this.commentSpan.l = this.rightSpaceSpan.i - hashSlot;
+                            this.commentSpan.len = this.rightSpaceSpan.i - hashSlot;
                             break;
                         }
                         hashSlot = this.findFirstMatch(hashSlot + 6, BITHash);
@@ -194,25 +194,25 @@ const Parser = class {
     analyzeExt(from) {
         let end = this.rightSpaceSpan.i;
         // Number of consecutive #s.
-        const l = this.slices[from+2];
+        const len = this.slices[from+2];
         // More than 3 #s is likely to be a comment in a hosts file.
-        if ( l > 3 ) { return; }
-        if ( l !== 1 ) {
+        if ( len > 3 ) { return; }
+        if ( len !== 1 ) {
             // If a space immediately follows 2 #s, assume a comment.
-            if ( l === 2 ) {
+            if ( len === 2 ) {
                 if ( from+3 === end || hasBits(this.slices[from+3], BITSpace) ) {
                     return;
                 }
-            } else /* l === 3 */ {
+            } else /* len === 3 */ {
                 this.splitSlot(from, 2);
                 end = this.rightSpaceSpan.i;
             }
-            this.optionsSpan.i = this.leftSpaceSpan.i + this.leftSpaceSpan.l;
-            this.optionsSpan.l = from - this.optionsSpan.i;
+            this.optionsSpan.i = this.leftSpaceSpan.i + this.leftSpaceSpan.len;
+            this.optionsSpan.len = from - this.optionsSpan.i;
             this.optionsAnchorSpan.i = from;
-            this.optionsAnchorSpan.l = 3;
+            this.optionsAnchorSpan.len = 3;
             this.patternSpan.i = from + 3;
-            this.patternSpan.l = this.rightSpaceSpan.i - this.patternSpan.i;
+            this.patternSpan.len = this.rightSpaceSpan.i - this.patternSpan.i;
             this.category = CATStaticExtFilter;
             this.analyzeExtPattern();
             return;
@@ -257,12 +257,12 @@ const Parser = class {
             this.splitSlot(to, 1);
         }
         to += 3;
-        this.optionsSpan.i = this.leftSpaceSpan.i + this.leftSpaceSpan.l;
-        this.optionsSpan.l = from - this.optionsSpan.i;
+        this.optionsSpan.i = this.leftSpaceSpan.i + this.leftSpaceSpan.len;
+        this.optionsSpan.len = from - this.optionsSpan.i;
         this.optionsAnchorSpan.i = from;
-        this.optionsAnchorSpan.l = to - this.optionsAnchorSpan.i;
+        this.optionsAnchorSpan.len = to - this.optionsAnchorSpan.i;
         this.patternSpan.i = to;
-        this.patternSpan.l = this.rightSpaceSpan.i - to;
+        this.patternSpan.len = this.rightSpaceSpan.i - to;
         this.flavorBits = flavorBits;
         this.category = CATStaticExtFilter;
         this.analyzeExtPattern();
@@ -305,11 +305,11 @@ const Parser = class {
         }
     }
 
-   // Use in syntax highlighting contexts
+    // Use in syntax highlighting contexts
     analyzeExtExtra() {
         if ( this.hasOptions() ) {
-            const { i, l } = this.optionsSpan;
-            this.analyzeDomainList(i, i + l, BITComma, 0b11);
+            const { i, len } = this.optionsSpan;
+            this.analyzeDomainList(i, i + len, BITComma, 0b11);
         }
         if ( hasBits(this.flavorBits, BITFlavorUnsupported) ) {
             this.markSpan(this.patternSpan, BITError);
@@ -341,19 +341,19 @@ const Parser = class {
         let islice = this.leftSpaceSpan.i;
 
         // Assume no exception
-        this.exceptionSpan.i = this.leftSpaceSpan.l;
+        this.exceptionSpan.i = this.leftSpaceSpan.len;
         // Exception?
         if (
             islice < this.commentSpan.i &&
             hasBits(this.slices[islice], BITAt)
         ) {
-            const l = this.slices[islice+2];
+            const len = this.slices[islice+2];
             // @@@*, ...  =>  @@, @*, ...
-            if ( l >= 2 ) {
-                if ( l > 2 ) {
+            if ( len >= 2 ) {
+                if ( len > 2 ) {
                     this.splitSlot(islice, 2);
                 }
-                this.exceptionSpan.l = 3;
+                this.exceptionSpan.len = 3;
                 islice += 3;
                 this.flavorBits |= BITFlavorException;
             }
@@ -364,17 +364,17 @@ const Parser = class {
 
         // Assume all is part of pattern
         this.patternSpan.i = islice;
-        this.patternSpan.l = this.optionsAnchorSpan.i - islice;
+        this.patternSpan.len = this.optionsAnchorSpan.i - islice;
 
         let patternStartIsRegex =
             islice < this.optionsAnchorSpan.i &&
             hasBits(this.slices[islice], BITSlash);
         let patternIsRegex = patternStartIsRegex;
         if ( patternStartIsRegex ) {
-            const { i, l } = this.patternSpan;
+            const { i, len } = this.patternSpan;
             patternIsRegex = (
-                l === 3 && this.slices[i+2] > 2 ||
-                l > 3 && hasBits(this.slices[i+l-3], BITSlash)
+                len === 3 && this.slices[i+2] > 2 ||
+                len > 3 && hasBits(this.slices[i+len-3], BITSlash)
             );
         }
 
@@ -390,8 +390,8 @@ const Parser = class {
                 optionsBits |= bits;
             }
             if ( i >= islice ) {
-                const l = this.slices[i+2];
-                if ( l > 1 ) {
+                const len = this.slices[i+2];
+                if ( len > 1 ) {
                     // https://github.com/gorhill/uBlock/issues/952
                     //   AdGuard-specific `$$` filters => unsupported.
                     if ( this.findFirstOdd(0, BITHostname | BITComma | BITAsterisk) === i ) {
@@ -400,22 +400,22 @@ const Parser = class {
                             this.markSlices(i, i+3, BITError);
                         }
                     } else {
-                        this.splitSlot(i, l - 1);
+                        this.splitSlot(i, len - 1);
                         i += 3;
                     }
                 }
-                this.patternSpan.l = i - this.patternSpan.i;
+                this.patternSpan.len = i - this.patternSpan.i;
                 this.optionsAnchorSpan.i = i;
-                this.optionsAnchorSpan.l = 3;
+                this.optionsAnchorSpan.len = 3;
                 i += 3;
                 this.optionsSpan.i = i;
-                this.optionsSpan.l = this.commentSpan.i - i;
+                this.optionsSpan.len = this.commentSpan.i - i;
                 this.optionsBits = optionsBits;
                 if ( patternStartIsRegex ) {
-                    const { i, l } = this.patternSpan;
+                    const { i, len } = this.patternSpan;
                     patternIsRegex = (
-                        l === 3 && this.slices[i+2] > 2 ||
-                        l > 3 && hasBits(this.slices[i+l-3], BITSlash)
+                        len === 3 && this.slices[i+2] > 2 ||
+                        len > 3 && hasBits(this.slices[i+len-3], BITSlash)
                     );
                 }
             }
@@ -437,19 +437,19 @@ const Parser = class {
             //   `|`: anchor to start of URL
             //   `||`: anchor to left of a hostname label
             if (
-                this.patternSpan.l !== 0 &&
+                this.patternSpan.len !== 0 &&
                 hasBits(this.slices[this.patternSpan.i], BITPipe)
             ) {
-                this.patternLeftAnchorSpan.l = 3;
-                const l = this.slices[this.patternSpan.i+2];
+                this.patternLeftAnchorSpan.len = 3;
+                const len = this.slices[this.patternSpan.i+2];
                 // |||*, ...  =>  ||, |*, ...
-                if ( l > 2 ) {
+                if ( len > 2 ) {
                     this.splitSlot(this.patternSpan.i, 2);
                 } else {
-                    this.patternSpan.l -= 3;
+                    this.patternSpan.len -= 3;
                 }
                 this.patternSpan.i += 3;
-                this.flavorBits |= l === 1
+                this.flavorBits |= len === 1
                     ? BITFlavorNetLeftURLAnchor
                     : BITFlavorNetLeftHnAnchor;
             }
@@ -459,21 +459,21 @@ const Parser = class {
             //        fulfilled:
             //          the pattern is hostname-anchored on the left
             //          the pattern is made only of hostname characters
-            if ( this.patternSpan.l !== 0 ) {
-                const lastPatternSlice = this.patternSpan.l > 3
+            if ( this.patternSpan.len !== 0 ) {
+                const lastPatternSlice = this.patternSpan.len > 3
                     ? this.patternRightAnchorSpan.i - 3
                     : this.patternSpan.i;
                 const bits = this.slices[lastPatternSlice];
                 if ( (bits & BITPipe) !== 0 ) {
                     this.patternRightAnchorSpan.i = lastPatternSlice;
-                    this.patternRightAnchorSpan.l = 3;
-                    const l = this.slices[this.patternRightAnchorSpan.i+2];
+                    this.patternRightAnchorSpan.len = 3;
+                    const len = this.slices[this.patternRightAnchorSpan.i+2];
                     // ..., ||*  =>  ..., |*, |
-                    if ( l > 1 ) {
-                        this.splitSlot(this.patternRightAnchorSpan.i, l - 1);
+                    if ( len > 1 ) {
+                        this.splitSlot(this.patternRightAnchorSpan.i, len - 1);
                         this.patternRightAnchorSpan.i += 3;
                     } else {
-                        this.patternSpan.l -= 3;
+                        this.patternSpan.len -= 3;
                     }
                     this.flavorBits |= BITFlavorNetRightURLAnchor;
                 } else if (
@@ -487,8 +487,8 @@ const Parser = class {
                     ) === lastPatternSlice
                 ) {
                     this.patternRightAnchorSpan.i = lastPatternSlice;
-                    this.patternRightAnchorSpan.l = 3;
-                    this.patternSpan.l -= 3;
+                    this.patternRightAnchorSpan.len = 3;
+                    this.patternSpan.len -= 3;
                     this.flavorBits |= BITFlavorNetRightHnAnchor;
                 }
             }
@@ -502,8 +502,8 @@ const Parser = class {
         //   if a pattern contains space characters, the pattern will be only
         //   the part following the last space occurrence.
         {
-            const { i, l } = this.patternSpan;
-            let j = l;
+            const { i, len } = this.patternSpan;
+            let j = len;
             for (;;) {
                 if ( j === 0 ) { break; }
                 j -= 3;
@@ -513,7 +513,7 @@ const Parser = class {
             }
             if ( j !== 0 ) {
                 this.patternSpan.i += j + 3;
-                this.patternSpan.l -= j + 3;
+                this.patternSpan.len -= j + 3;
                 if ( this.reIsLocalhostRedirect.test(this.getNetPattern()) ) {
                     this.flavorBits |= BITFlavorIgnore;
                 }
@@ -539,41 +539,41 @@ const Parser = class {
         // https://github.com/gorhill/uBlock/issues/3034
         //   We can remove anchoring if we need to match all at the end.
         {
-            let { i, l } = this.patternSpan;
+            let { i, len } = this.patternSpan;
             // Pointless leading wildcard
             if (
-                l > 3 &&
+                len > 3 &&
                 hasBits(this.slices[i], BITAsterisk) &&
                 hasNoBits(this.slices[i+3], BITPatternToken)
             ) {
                 this.slices[i] |= BITIgnore;
-                i += 3; l -= 3;
+                i += 3; len -= 3;
                 this.patternSpan.i = i;
-                this.patternSpan.l = l;
+                this.patternSpan.len = len;
                 // We can ignore left-hand pattern anchor
-                if ( this.patternLeftAnchorSpan.l !== 0 ) {
+                if ( this.patternLeftAnchorSpan.len !== 0 ) {
                     this.slices[this.patternLeftAnchorSpan.i] |= BITIgnore;
                     this.flavorBits &= ~BITFlavorNetLeftAnchor;
                 }
             }
             // Pointless trailing wildcard
             if (
-                l > 3 &&
-                hasBits(this.slices[i+l-3], BITAsterisk) &&
-                hasNoBits(this.slices[i+l-6], BITPatternToken)
+                len > 3 &&
+                hasBits(this.slices[i+len-3], BITAsterisk) &&
+                hasNoBits(this.slices[i+len-6], BITPatternToken)
             ) {
                 // Ignore only if the pattern would not end up looking like
                 // a regex.
                 if (
                     hasNoBits(this.slices[i], BITSlash) ||
-                    hasNoBits(this.slices[i+l-6], BITSlash)
+                    hasNoBits(this.slices[i+len-6], BITSlash)
                 ) {
-                    this.slices[i+l-3] |= BITIgnore;
+                    this.slices[i+len-3] |= BITIgnore;
                 }
-                l -= 3;
-                this.patternSpan.l = l;
+                len -= 3;
+                this.patternSpan.len = len;
                 // We can ignore right-hand pattern anchor
-                if ( this.patternRightAnchorSpan.l !== 0 ) {
+                if ( this.patternRightAnchorSpan.len !== 0 ) {
                     this.slices[this.patternRightAnchorSpan.i] |= BITIgnore;
                     this.flavorBits &= ~BITFlavorNetRightAnchor;
                 }
@@ -581,8 +581,8 @@ const Parser = class {
             // Pointless left-hand pattern anchoring
             if (
                 (
-                    l === 0 ||
-                    l !== 0 && hasBits(this.slices[i], BITAsterisk)
+                    len === 0 ||
+                    len !== 0 && hasBits(this.slices[i], BITAsterisk)
                 ) &&
                 hasBits(this.flavorBits, BITFlavorNetLeftAnchor)
             ) {
@@ -592,8 +592,8 @@ const Parser = class {
             // Pointless right-hand pattern anchoring
             if (
                 (
-                    l === 0 ||
-                    l !== 0 && hasBits(this.slices[i+l-3], BITAsterisk)
+                    len === 0 ||
+                    len !== 0 && hasBits(this.slices[i+len-3], BITAsterisk)
                 ) &&
                 hasBits(this.flavorBits, BITFlavorNetRightAnchor)
             ) {
@@ -747,9 +747,9 @@ const Parser = class {
         ptr += 3;
         // Trim left
         if ( (slices[0] & BITSpace) !== 0 ) {
-            this.leftSpaceSpan.l = 3;
+            this.leftSpaceSpan.len = 3;
         } else {
-            this.leftSpaceSpan.l = 0;
+            this.leftSpaceSpan.len = 0;
         }
         // Trim right
         const lastSlice = this.eolSpan.i - 3;
@@ -758,25 +758,25 @@ const Parser = class {
             (slices[lastSlice] & BITSpace) !== 0
         ) {
             this.rightSpaceSpan.i = lastSlice;
-            this.rightSpaceSpan.l = 3;
+            this.rightSpaceSpan.len = 3;
         } else {
             this.rightSpaceSpan.i = this.eolSpan.i;
-            this.rightSpaceSpan.l = 0;
+            this.rightSpaceSpan.len = 0;
         }
         // Quit cleanly
         this.sliceWritePtr = ptr;
         this.allBits = allBits;
     }
 
-    splitSlot(slot, l) {
+    splitSlot(slot, len) {
         this.sliceWritePtr += 3;
         if ( this.sliceWritePtr > this.slices.length ) {
             this.slices.push(0, 0, 0);
         }
         this.slices.copyWithin(slot + 3, slot, this.sliceWritePtr - 3);
-        this.slices[slot+3+1] = this.slices[slot+1] + l;
-        this.slices[slot+3+2] = this.slices[slot+2] - l;
-        this.slices[slot+2] = l;
+        this.slices[slot+3+1] = this.slices[slot+1] + len;
+        this.slices[slot+3+2] = this.slices[slot+2] - len;
+        this.slices[slot+2] = len;
         for ( const span of this.spans ) {
             if ( span.i > slot ) {
                 span.i += 3;
@@ -792,8 +792,8 @@ const Parser = class {
     }
 
     markSpan(span, bits) {
-        const { i, l } = span;
-        this.markSlices(i, i + l, bits);
+        const { i, len } = span;
+        this.markSlices(i, i + len, bits);
     }
 
     unmarkSlices(beg, end, bits) {
@@ -847,9 +847,9 @@ const Parser = class {
     }
 
     strFromSpan(span) {
-        if ( span.l === 0 ) { return ''; }
+        if ( span.len === 0 ) { return ''; }
         const beg = span.i;
-        return this.strFromSlices(beg, beg + span.l - 3);
+        return this.strFromSlices(beg, beg + span.len - 3);
     }
 
     isBlank() {
@@ -857,25 +857,25 @@ const Parser = class {
     }
 
     hasOptions() {
-        return this.optionsSpan.l !== 0;
+        return this.optionsSpan.len !== 0;
     }
 
     getPattern() {
         if ( this.pattern !== '' ) { return this.pattern; }
-        const { i, l } = this.patternSpan;
-        if ( l === 0 ) { return ''; }
+        const { i, len } = this.patternSpan;
+        if ( len === 0 ) { return ''; }
         let beg = this.slices[i+1];
-        let end = this.slices[i+l+1];
+        let end = this.slices[i+len+1];
         this.pattern = this.raw.slice(beg, end);
         return this.pattern;
     }
 
     getNetPattern() {
         if ( this.pattern !== '' ) { return this.pattern; }
-        const { i, l } = this.patternSpan;
-        if ( l === 0 ) { return ''; }
+        const { i, len } = this.patternSpan;
+        if ( len === 0 ) { return ''; }
         let beg = this.slices[i+1];
-        let end = this.slices[i+l+1];
+        let end = this.slices[i+len+1];
         if ( hasBits(this.flavorBits, BITFlavorNetRegex) ) {
             beg += 1; end -= 1;
         }
@@ -888,15 +888,15 @@ const Parser = class {
     //   - Single character other than `*` wildcard
     patternIsDubious() {
         return this.patternBits !== BITAsterisk &&
-               this.optionsSpan.l === 0 &&
-               this.patternSpan.l === 3 &&
+               this.optionsSpan.len === 0 &&
+               this.patternSpan.len === 3 &&
                this.slices[this.patternSpan.i+2] === 1;
     }
 
     patternIsMatchAll() {
-        const { l } = this.patternSpan;
-        return l === 0 ||
-               l === 3 && hasBits(this.patternBits, BITAsterisk);
+        const { len } = this.patternSpan;
+        return len === 0 ||
+               len === 3 && hasBits(this.patternBits, BITAsterisk);
     }
 
     patternIsPlainHostname() {
@@ -908,9 +908,9 @@ const Parser = class {
         ) {
             return false;
         }
-        const { i, l } = this.patternSpan;
+        const { i, len } = this.patternSpan;
         return hasBits(this.slices[i], BITAlphaNum) &&
-               hasBits(this.slices[i+l-3], BITAlphaNum);
+               hasBits(this.slices[i+len-3], BITAlphaNum);
     }
 
     patternIsLeftHostnameAnchored() {
@@ -954,17 +954,17 @@ const Parser = class {
         if ( hasUpper === false && this.pattern !== '' ) {
             return this.pattern;
         }
-        const { i, l } = this.patternSpan;
-        if ( l === 0 ) { return ''; }
+        const { i, len } = this.patternSpan;
+        if ( len === 0 ) { return ''; }
         const beg = this.slices[i+1];
-        const end = this.slices[i+l+1];
+        const end = this.slices[i+len+1];
         this.pattern = this.pattern || this.raw.slice(beg, end);
         if ( hasUpper === false ) { return this.pattern; }
         this.pattern = this.pattern.toLowerCase();
         this.raw = this.raw.slice(0, beg) +
                    this.pattern +
                    this.raw.slice(end);
-        this.unmarkSlices(i, i+l, BITUppercase);
+        this.unmarkSlices(i, i + len, BITUppercase);
         this.patternBits &= ~BITUppercase;
         return this.pattern;
     }
@@ -977,16 +977,16 @@ const Parser = class {
         if ( hasBits(this.patternBits, BITAsterisk) === false ) {
             return false;
         }
-        const { i, l } = this.patternSpan;
-        return l !== 0 && hasBits(this.slices[i], BITAsterisk);
+        const { i, len } = this.patternSpan;
+        return len !== 0 && hasBits(this.slices[i], BITAsterisk);
     }
 
     patternHasTrailingWildcard() {
         if ( hasBits(this.patternBits, BITAsterisk) === false ) {
             return false;
         }
-        const { i, l } = this.patternSpan;
-        return l !== 0 && hasBits(this.slices[i+l-1], BITAsterisk);
+        const { i, len } = this.patternSpan;
+        return len !== 0 && hasBits(this.slices[i+len-1], BITAsterisk);
     }
 
     optionHasUnicode() {
@@ -1008,8 +1008,8 @@ const Parser = class {
         return [];
     }
 
-    setMaxTokenLength(l) {
-        this.maxTokenLength = l;
+    setMaxTokenLength(len) {
+        this.maxTokenLength = len;
     }
 
     hasUnicode() {
@@ -1025,8 +1025,8 @@ const Parser = class {
 
     toPunycode() {
         if ( this.patternHasUnicode() === false ) { return true; }
-        const { i, l } = this.patternSpan;
-        if ( l === 0 ) { return true; }
+        const { i, len } = this.patternSpan;
+        if ( len === 0 ) { return true; }
         let pattern = this.getNetPattern();
         const match = this.reHostname.exec(this.pattern);
         if ( match === null ) { return; }
@@ -1038,7 +1038,7 @@ const Parser = class {
         const punycoded = this.punycoder.hostname.replace(/__asterisk__/g, '*');
         pattern = punycoded + this.pattern.slice(match.index + match[0].length);
         const beg = this.slices[i+1];
-        const end = this.slices[i+l+1];
+        const end = this.slices[i+len+1];
         const raw = this.raw.slice(0, beg) + pattern + this.raw.slice(end);
         this.analyze(raw);
         return true;
@@ -1936,7 +1936,7 @@ const Span = class {
         this.reset();
     }
     reset() {
-        this.i = this.l = 0;
+        this.i = this.len = 0;
     }
 };
 
@@ -1963,7 +1963,7 @@ const NetOptionsIterator = class {
     }
     init() {
         this.readPtr = this.writePtr = 0;
-        this.done = this.parser.optionsSpan.l === 0;
+        this.done = this.parser.optionsSpan.len === 0;
         if ( this.done ) {
             this.value = undefined;
             return this;
@@ -1981,7 +1981,7 @@ const NetOptionsIterator = class {
         // At index 0 is the option descriptor.
         // At indices 1-5 is a slice index.
         const lopts =  this.parser.optionsSpan.i;
-        const ropts =  lopts + this.parser.optionsSpan.l;
+        const ropts =  lopts + this.parser.optionsSpan.len;
         const slices = this.parser.slices;
         const optSlices = this.optSlices;
         let typeCount = 0;
@@ -2206,12 +2206,12 @@ const PatternTokenIterator = class {
         this.done = true;
     }
     [Symbol.iterator]() {
-        const { i, l } = this.parser.patternSpan;
-        if ( l === 0 ) {
+        const { i, len } = this.parser.patternSpan;
+        if ( len === 0 ) {
             return this.end();
         }
         this.l = i;
-        this.r = i + l;
+        this.r = i + len;
         this.i = i;
         this.done = false;
         this.value = { token: '', pos: 0 };
@@ -2269,14 +2269,14 @@ const ExtOptionsIterator = class {
         this.done = true;
     }
     [Symbol.iterator]() {
-        const { i, l } = this.parser.optionsSpan;
-        if ( l === 0 ) {
+        const { i, len } = this.parser.optionsSpan;
+        if ( len === 0 ) {
             this.l = this.r = 0;
             this.done = true;
             this.value = undefined;
         } else {
             this.l = i;
-            this.r = i + l;
+            this.r = i + len;
             this.done = false;
             this.value = { hn: undefined, not: false, bad: false };
         }

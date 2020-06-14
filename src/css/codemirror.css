@@ -48,6 +48,14 @@
 .cm-staticnetAllow { color: #004f00; }
 .cm-staticOpt { background-color: #ddd; font-weight: bold; }
 
+div.CodeMirror span.CodeMirror-matchingbracket {
+    color: unset;
+    }
+.CodeMirror-matchingbracket {
+    color: inherit !important;
+    font-weight: bold;
+    }
+
 .cm-search-widget {
     align-items: center;
     background-color: var(--bg-code);
