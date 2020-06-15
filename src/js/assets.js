@@ -944,35 +944,38 @@ api.updateStop = function() {
     }
 };
 
-api.forceUpdate = function(which) { // ADN
+api.forceUpdate = async function(which) { // ADN
 
-    var updateDone = function() {
-        var assetKeys = updaterUpdated;
-        updaterFetched.clear();
-        updaterUpdated = [];
-        updaterStatus = undefined;
-        updaterAssetDelay = updaterAssetDelayDefault;
-        fireNotification('after-assets-updated', { assetKeys: assetKeys });
+    var updateDone = function(details) {
+      const assetKeys = updaterUpdated.slice(0);
+      updaterFetched.clear();
+      updaterUpdated.length = 0;
+      updaterStatus = undefined;
+      updaterAssetDelay = updaterAssetDelayDefault;
+      fireNotification('after-assets-updated', { assetKeys: assetKeys });
+      µBlock.applyCompiledFilters(details.assetKey, details.content);
     };
 
-    var updatedOne = function(details) {
+    const updatedOne = function(details) {
         if (details.content !== '') {
             updaterUpdated.push(details.assetKey);
         } else {
             fireNotification('asset-update-failed', { assetKey: details.assetKey });
         }
-        updateDone();
+        updateDone(details);
     };
+
+    let result;
 
     switch (which) {
       case "Adnauseam":
-        getRemote("adnauseam-filters", updatedOne);
+        result = await getRemote("adnauseam-filters");
         break;
       case "Eff":
-        getRemote("eff-dnt-whitelist", updatedOne);
+      result = await getRemote("eff-dnt-whitelist");
       default:
-        return;
     }
+      updatedOne(result);
 }
 
 api.isUpdating = function() {
