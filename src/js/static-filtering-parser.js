@@ -1044,6 +1044,10 @@ const Parser = class {
         return true;
     }
 
+    hasFlavor(bits) {
+        return hasBits(this.flavorBits, bits);
+    }
+
     isException() {
         return hasBits(this.flavorBits, BITFlavorException);
     }
@@ -2108,8 +2112,19 @@ const NetOptionsIterator = class {
                 );
             }
         }
-        // `redirect` requires one single network type
-        if ( redirectIndex !== -1 && typeCount !== 1 && networkTypeCount !== 1 ) {
+        // `redirect` requires one single network type, EXCEPT for when we
+        // redirect to `empty`, in which case it is allowed to not have any
+        // network type specified.
+        if (
+            ( redirectIndex !== -1 ) &&
+            ( typeCount !== 1 || networkTypeCount !== 1 ) &&
+            ( typeCount !== 0 || networkTypeCount !== 0 ||
+                this.parser.raw.slice(
+                    this.parser.slices[optSlices[redirectIndex+4]+1],
+                    this.parser.slices[optSlices[redirectIndex+5]+1]
+                ) !== 'empty'
+            )
+        ) {
             optSlices[redirectIndex] = OPTTokenInvalid;
             if ( this.interactive ) {
                 this.parser.markSlices(
