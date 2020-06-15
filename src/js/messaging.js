@@ -1151,6 +1151,10 @@ const onMessage = function(request, sender, callback) {
         response = µb.canUpdateShortcuts;
         break;
 
+    case 'getResourceDetails':
+        response = µb.redirectEngine.getResourceDetails();
+        break;
+
     case 'getRules':
         response = getRules();
         break;

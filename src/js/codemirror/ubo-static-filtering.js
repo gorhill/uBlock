@@ -23,7 +23,9 @@
 
 'use strict';
 
-CodeMirror.defineMode("ubo-static-filtering", function() {
+/******************************************************************************/
+
+CodeMirror.defineMode('ubo-static-filtering', function() {
     const parser = new vAPI.StaticFilteringParser({ interactive: true });
     const reDirective = /^!#(?:if|endif|include)\b/;
     let parserSlot = 0;
@@ -238,3 +240,62 @@ CodeMirror.defineMode("ubo-static-filtering", function() {
         },
     };
 });
+
+/******************************************************************************/
+
+// Following code is for auto-completion. Reference:
+//   https://codemirror.net/demo/complete.html
+//
+// TODO: implement auto-completion for `redirect=`
+
+(( ) => {
+    if ( typeof vAPI !== 'object' ) { return; }
+
+    let resourceNames = new Map();
+
+    vAPI.messaging.send('dashboard', {
+        what: 'getResourceDetails'
+    }).then(response => {
+        if ( Array.isArray(response) === false ) { return; }
+        resourceNames = new Map(response);
+    });
+
+    const parser = new vAPI.StaticFilteringParser();
+
+    const getHints = function(cm) {
+        const cursor = cm.getCursor();
+        const line = cm.getLine(cursor.line);
+        parser.analyze(line);
+        if ( parser.category !== parser.CATStaticExtFilter ) {
+            return;
+        }
+        if ( parser.hasFlavor(parser.BITFlavorExtScriptlet) === false ) {
+            return;
+        }
+        const beg = cursor.ch;
+        const matchLeft = /#\+\js\(([^,]*)$/.exec(line.slice(0, beg));
+        const matchRight = /^([^,)]*)/.exec(line.slice(beg));
+        if ( matchLeft === null || matchRight === null ) { return; }
+        const seed = (matchLeft[1] + matchRight[1]).trim();
+        const out = [];
+        for ( const [ name, details ] of resourceNames ) {
+            if ( name.startsWith(seed) === false ) { continue; }
+            if ( details.hasData !== true ) { continue; }
+            if ( name.endsWith('.js') === false ) { continue; }
+            const hint = { text: name.slice(0, -3) };
+            if ( details.aliasOf !== '' ) {
+                hint.displayText = `${hint.text} (${details.aliasOf})`;
+            }
+            out.push(hint);
+        }
+        return {
+            from: { line: cursor.line, ch: cursor.ch - matchLeft[1].length },
+            to: { line: cursor.line, ch: cursor.ch + matchRight[1].length },
+            list: out,
+        };
+    };
+
+    CodeMirror.registerHelper('hint', 'ubo-static-filtering', getHints);
+})();
+
+/******************************************************************************/

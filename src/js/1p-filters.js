@@ -33,9 +33,8 @@ const cmEditor = new CodeMirror(document.getElementById('userFilters'), {
     autoCloseBrackets: true,
     autofocus: true,
     extraKeys: {
-        Tab: function(cm) {
-            cm.toggleComment();
-        }
+        'Ctrl-Space': 'autocomplete',
+        'Tab': 'toggleComment',
     },
     lineNumbers: true,
     lineWrapping: true,
