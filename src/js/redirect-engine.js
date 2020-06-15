@@ -784,7 +784,11 @@ RedirectEngine.prototype.loadBuiltinResources = function() {
 RedirectEngine.prototype.getResourceDetails = function() {
     const out = new Map();
     for ( const [ name, entry ] of this.resources ) {
-        out.set(name, { hasData: entry.data !== '', aliasOf: '' });
+        out.set(name, {
+            canInject: typeof entry.data === 'string',
+            canRedirect: entry.warURL !== undefined,
+            aliasOf: '',
+        });
     }
     for ( const [ alias, name ] of this.aliases ) {
         const original = out.get(name);

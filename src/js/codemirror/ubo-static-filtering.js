@@ -26,7 +26,12 @@
 /******************************************************************************/
 
 CodeMirror.defineMode('ubo-static-filtering', function() {
-    const parser = new vAPI.StaticFilteringParser({ interactive: true });
+    const StaticFilteringParser = typeof vAPI === 'object'
+        ? vAPI.StaticFilteringParser
+        : self.StaticFilteringParser;
+    if ( StaticFilteringParser instanceof Object === false ) { return; }
+    const parser = new StaticFilteringParser({ interactive: true });
+
     const reDirective = /^!#(?:if|endif|include)\b/;
     let parserSlot = 0;
     let netOptionValueMode = false;
@@ -245,46 +250,95 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
 
 // Following code is for auto-completion. Reference:
 //   https://codemirror.net/demo/complete.html
-//
-// TODO: implement auto-completion for `redirect=`
 
 (( ) => {
     if ( typeof vAPI !== 'object' ) { return; }
 
-    let resourceNames = new Map();
+    const StaticFilteringParser = typeof vAPI === 'object'
+        ? vAPI.StaticFilteringParser
+        : self.StaticFilteringParser;
+    if ( StaticFilteringParser instanceof Object === false ) { return; }
 
-    vAPI.messaging.send('dashboard', {
-        what: 'getResourceDetails'
-    }).then(response => {
-        if ( Array.isArray(response) === false ) { return; }
-        resourceNames = new Map(response);
-    });
+    const parser = new StaticFilteringParser();
+    const redirectNames = new Map();
+    const scriptletNames = new Map();
 
-    const parser = new vAPI.StaticFilteringParser();
-
-    const getHints = function(cm) {
-        const cursor = cm.getCursor();
-        const line = cm.getLine(cursor.line);
-        parser.analyze(line);
-        if ( parser.category !== parser.CATStaticExtFilter ) {
-            return;
+    const getNetOptionHint = function(cursor, isNegated, seedLeft, seedRight) {
+        const assignPos = seedRight.indexOf('=');
+        if ( assignPos !== -1 ) { seedRight = seedRight.slice(0, assignPos); }
+        const seed = (seedLeft + seedRight).trim();
+        const isException = parser.isException();
+        const out = [];
+        for ( let [ name, bits ] of parser.netOptionTokens ) {
+            if ( name.startsWith(seed) === false ) { continue; }
+            if ( isNegated && (bits & parser.OPTCanNegate) === 0 ) { continue; }
+            if ( isException ) {
+                if ( (bits & parser.OPTBlockOnly) !== 0 ) { continue; }
+            } else {
+                if ( (bits & parser.OPTAllowOnly) !== 0 ) { continue; }
+                if ( (assignPos === -1) && (bits & parser.OPTMustAssign) !== 0 ) {
+                    name += '=';
+                }
+            }
+            out.push(name);
         }
-        if ( parser.hasFlavor(parser.BITFlavorExtScriptlet) === false ) {
-            return;
+        return {
+            from: { line: cursor.line, ch: cursor.ch - seedLeft.length },
+            to: { line: cursor.line, ch: cursor.ch + seedRight.length },
+            list: out,
+        };
+    };
+
+    const getNetRedirectHint = function(cursor, seedLeft, seedRight) {
+        const seed = (seedLeft + seedRight).trim();
+        const out = [];
+        for ( let text of redirectNames.keys() ) {
+            if ( text.startsWith(seed) === false ) { continue; }
+            out.push(text);
         }
+        return {
+            from: { line: cursor.line, ch: cursor.ch - seedLeft.length },
+            to: { line: cursor.line, ch: cursor.ch + seedRight.length },
+            list: out,
+        };
+    };
+
+    const getNetHint = function(cursor, line) {
+        const beg = cursor.ch;
+        if ( beg < parser.optionsSpan ) { return; }
+        const lineBefore = line.slice(0, beg);
+        const lineAfter = line.slice(beg);
+        let matchLeft = /~?([^$,~]*)$/.exec(lineBefore);
+        let matchRight = /^([^,]*)/.exec(lineAfter);
+        if ( matchLeft === null || matchRight === null ) { return; }
+        let pos = matchLeft[1].indexOf('=');
+        if ( pos === -1 ) {
+            return getNetOptionHint(
+                cursor,
+                matchLeft[0].startsWith('~'),
+                matchLeft[1],
+                matchRight[1]
+            );
+        }
+        return getNetRedirectHint(
+            cursor,
+            matchLeft[1].slice(pos + 1),
+            matchRight[1]
+        );
+    };
+
+    const getExtScriptletHint = function(cursor, line) {
         const beg = cursor.ch;
         const matchLeft = /#\+\js\(([^,]*)$/.exec(line.slice(0, beg));
         const matchRight = /^([^,)]*)/.exec(line.slice(beg));
         if ( matchLeft === null || matchRight === null ) { return; }
         const seed = (matchLeft[1] + matchRight[1]).trim();
         const out = [];
-        for ( const [ name, details ] of resourceNames ) {
-            if ( name.startsWith(seed) === false ) { continue; }
-            if ( details.hasData !== true ) { continue; }
-            if ( name.endsWith('.js') === false ) { continue; }
-            const hint = { text: name.slice(0, -3) };
-            if ( details.aliasOf !== '' ) {
-                hint.displayText = `${hint.text} (${details.aliasOf})`;
+        for ( const [ text, displayText ] of scriptletNames ) {
+            if ( text.startsWith(seed) === false ) { continue; }
+            const hint = { text };
+            if ( displayText !== '' ) {
+                hint.displayText = displayText;
             }
             out.push(hint);
         }
@@ -295,7 +349,38 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
         };
     };
 
-    CodeMirror.registerHelper('hint', 'ubo-static-filtering', getHints);
+    const getHints = function(cm) {
+        const cursor = cm.getCursor();
+        const line = cm.getLine(cursor.line);
+        parser.analyze(line);
+        if (
+            parser.category === parser.CATStaticExtFilter &&
+            parser.hasFlavor(parser.BITFlavorExtScriptlet)
+        ) {
+            return getExtScriptletHint(cursor, line);
+        }
+        if ( parser.category === parser.CATStaticNetFilter ) {
+            return getNetHint(cursor, line);
+        }
+    };
+
+    vAPI.messaging.send('dashboard', {
+        what: 'getResourceDetails'
+    }).then(response => {
+        if ( Array.isArray(response) === false ) { return; }
+        for ( const [ name, details ] of response ) {
+            const displayText = details.aliasOf !== ''
+                ? `${name} (${details.aliasOf})`
+                : '';
+            if ( details.canRedirect ) {
+                redirectNames.set(name, displayText);
+            }
+            if ( details.canInject && name.endsWith('.js') ) {
+                scriptletNames.set(name.slice(0, -3), displayText);
+            }
+        }
+        CodeMirror.registerHelper('hint', 'ubo-static-filtering', getHints);
+    });
 })();
 
 /******************************************************************************/
