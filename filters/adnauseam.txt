@@ -1,5 +1,3 @@
-||http://widgets.wp.com/platform.js, domain=filbert.cc
-
 # Generics (any page)
 ##iframe[src*="mellowads"]
 ##*[class*="Advert"]
