@@ -28,7 +28,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "보조 필터",
+    "message": "필터 목록",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {

@@ -844,7 +844,7 @@
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
-    "message": "Traduceri:",
+    "message": "Traduceri",
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
