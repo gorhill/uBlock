@@ -252,10 +252,6 @@ const renderFilterLists = function(soft) {
             }
         }
 
-        if ( groupName !== '' ) {
-            liGroup.querySelector('.geName').textContent = groupName;
-        }
-
         //update Count
         if ( liGroup.querySelector('.geName:empty') === null ) {
             liGroup.querySelector('.geCount').textContent = listEntryCountFromGroup(listKeys);
