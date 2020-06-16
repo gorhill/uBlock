@@ -262,8 +262,13 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
     const parser = new StaticFilteringParser();
     const redirectNames = new Map();
     const scriptletNames = new Map();
+    const proceduralOperatorNames = new Map(
+        Array.from(parser.proceduralOperatorTokens).filter(item => {
+            return (item[1] & 0b01) !== 0;
+        })
+    );
 
-    const getNetOptionHint = function(cursor, isNegated, seedLeft, seedRight) {
+    const getNetOptionHints = function(cursor, isNegated, seedLeft, seedRight) {
         const assignPos = seedRight.indexOf('=');
         if ( assignPos !== -1 ) { seedRight = seedRight.slice(0, assignPos); }
         const seed = (seedLeft + seedRight).trim();
@@ -289,7 +294,7 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
         };
     };
 
-    const getNetRedirectHint = function(cursor, seedLeft, seedRight) {
+    const getNetRedirectHints = function(cursor, seedLeft, seedRight) {
         const seed = (seedLeft + seedRight).trim();
         const out = [];
         for ( let text of redirectNames.keys() ) {
@@ -303,7 +308,7 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
         };
     };
 
-    const getNetHint = function(cursor, line) {
+    const getNetHints = function(cursor, line) {
         const beg = cursor.ch;
         if ( beg < parser.optionsSpan ) { return; }
         const lineBefore = line.slice(0, beg);
@@ -313,21 +318,41 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
         if ( matchLeft === null || matchRight === null ) { return; }
         let pos = matchLeft[1].indexOf('=');
         if ( pos === -1 ) {
-            return getNetOptionHint(
+            return getNetOptionHints(
                 cursor,
                 matchLeft[0].startsWith('~'),
                 matchLeft[1],
                 matchRight[1]
             );
         }
-        return getNetRedirectHint(
+        return getNetRedirectHints(
             cursor,
             matchLeft[1].slice(pos + 1),
             matchRight[1]
         );
     };
 
-    const getExtScriptletHint = function(cursor, line) {
+    const getExtSelectorHints = function(cursor, line) {
+        const beg = cursor.ch;
+        const matchLeft = /#\^?.*:([^:]*)$/.exec(line.slice(0, beg));
+        const matchRight = /^([a-z-]*)\(?/.exec(line.slice(beg));
+        if ( matchLeft === null || matchRight === null ) { return; }
+        const isStaticDOM = matchLeft[0].indexOf('^') !== -1;
+        const seed = (matchLeft[1] + matchRight[1]).trim();
+        const out = [];
+        for ( let [ text, bits ] of proceduralOperatorNames ) {
+            if ( text.startsWith(seed) === false ) { continue; }
+            if ( isStaticDOM && (bits & 0b10) !== 0 ) { continue; }
+            out.push(text);
+        }
+        return {
+            from: { line: cursor.line, ch: cursor.ch - matchLeft[1].length },
+            to: { line: cursor.line, ch: cursor.ch + matchRight[1].length },
+            list: out,
+        };
+    };
+
+    const getExtScriptletHints = function(cursor, line) {
         const beg = cursor.ch;
         const matchLeft = /#\+\js\(([^,]*)$/.exec(line.slice(0, beg));
         const matchRight = /^([^,)]*)/.exec(line.slice(beg));
@@ -353,14 +378,14 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
         const cursor = cm.getCursor();
         const line = cm.getLine(cursor.line);
         parser.analyze(line);
-        if (
-            parser.category === parser.CATStaticExtFilter &&
-            parser.hasFlavor(parser.BITFlavorExtScriptlet)
-        ) {
-            return getExtScriptletHint(cursor, line);
+        if ( parser.category === parser.CATStaticExtFilter ) {
+            if ( parser.hasFlavor(parser.BITFlavorExtScriptlet) ) {
+                return getExtScriptletHints(cursor, line);
+            }
+            return getExtSelectorHints(cursor, line);
         }
         if ( parser.category === parser.CATStaticNetFilter ) {
-            return getNetHint(cursor, line);
+            return getNetHints(cursor, line);
         }
     };
 

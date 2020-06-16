@@ -127,3 +127,7 @@ div.CodeMirror span.CodeMirror-matchingbracket {
 .CodeMirror-merge-gap {
     vertical-align: top;
     }
+
+.CodeMirror-hints {
+    z-index: 10000;
+    }

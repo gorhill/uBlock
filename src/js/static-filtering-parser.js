@@ -1101,27 +1101,7 @@ Parser.prototype.SelectorCompiler = class {
         this.rePseudoClass = /:(?::?after|:?before|:[a-z][a-z-]*[a-z])$/;
         this.reProceduralOperator = new RegExp([
             '^(?:',
-                [
-                '-abp-contains',
-                '-abp-has',
-                'contains',
-                'has',
-                'has-text',
-                'if',
-                'if-not',
-                'matches-css',
-                'matches-css-after',
-                'matches-css-before',
-                'min-text-length',
-                'not',
-                'nth-ancestor',
-                'remove',
-                'style',
-                'upward',
-                'watch-attr',
-                'watch-attrs',
-                'xpath'
-                ].join('|'),
+                Array.from(parser.proceduralOperatorTokens.keys()).join('|'),
             ')\\('
         ].join(''));
         this.reEatBackslashes = /\\([()])/g;
@@ -1626,6 +1606,28 @@ Parser.prototype.SelectorCompiler = class {
         }
     }
 };
+
+Parser.prototype.proceduralOperatorTokens = new Map([
+    [ '-abp-contains', 0b00 ],
+    [ '-abp-has', 0b00, ],
+    [ 'contains', 0b00, ],
+    [ 'has', 0b01 ],
+    [ 'has-text', 0b01 ],
+    [ 'if', 0b00 ],
+    [ 'if-not', 0b00 ],
+    [ 'matches-css', 0b11 ],
+    [ 'matches-css-after', 0b11 ],
+    [ 'matches-css-before', 0b11 ],
+    [ 'min-text-length', 0b01 ],
+    [ 'not', 0b01 ],
+    [ 'nth-ancestor', 0b00 ],
+    [ 'remove', 0b11 ],
+    [ 'style', 0b11 ],
+    [ 'upward', 0b01 ],
+    [ 'watch-attr', 0b11 ],
+    [ 'watch-attrs', 0b00 ],
+    [ 'xpath', 0b01 ],
+]);
 
 /******************************************************************************/
 
