@@ -1433,9 +1433,13 @@
   };
 
   // called each time a single list is updated
-  exports.onListUpdated = function (path, content) {
-
-    listEntries[path].content = content;
+  exports.onListUpdated = function (path, details) {
+    if (listEntries[path] == undefined) {
+      // content, supportUrl Title
+      listEntries[path] = details
+    } else {
+      listEntries[path].content = details.content;
+    }
   }
 
   exports.onListsLoaded = async function (firstRun) {

@@ -1330,28 +1330,6 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
 /******************************************************************************/
 
-/*µBlock.assetUpdatedHandler = function(details) {
-    var path = details.path || '';
-    if ( this.remoteBlacklists.hasOwnProperty(path) === false ) {
-        return;
-    }
-    var entry = this.remoteBlacklists[path];
-    if ( entry.off ) {
-        return;
-    }
-    // Compile the list while we have the raw version in memory
-    var compiledPath =  this.getCompiledFilterListPath(path);
-    var compiled = this.compileFilters(details.content);
-
-    // ADN: Need to tell core that are lists have updated
-    µBlock.adnauseam.onListUpdated(path, compiled);
-
-    this.assets.put(compiledPath, compiled);
-};*/
-
-
-/******************************************************************************/
-
 µBlock.assetObserver = function(topic, details) {
     // Do not update filter list if not in use.
     if ( topic === 'before-asset-updated' ) {
@@ -1388,7 +1366,10 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
                         )
                     );
                     // ADN: Need to tell core that are lists have updated
-                    µBlock.adnauseam.onListUpdated(details.assetKey, compiled);
+                    µBlock.adnauseam.onListUpdated(details.assetKey, {
+                      title:details.assetKey,
+                      content:compiled
+                    });
                 }
             } else {
                 this.removeCompiledFilterList(details.assetKey);
