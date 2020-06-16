@@ -138,7 +138,7 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
         ) {
             if ( parser.patternIsRegex() ) {
                 stream.pos = parser.slices[parser.optionsAnchorSpan.i+1];
-                parserSlot += parser.optionsAnchorSpan.i;
+                parserSlot = parser.optionsAnchorSpan.i;
                 return 'variable regex';
             }
             if ( (parser.slices[parserSlot] & (parser.BITAsterisk | parser.BITCaret)) !== 0 ) {
