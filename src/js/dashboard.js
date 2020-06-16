@@ -87,28 +87,27 @@ const discardUnsavedData = function(synchronous = false) {
 };
 
 const loadDashboardPanel = function(pane, first) {
-
-    const tabButton = uDom(`[href="#${pane}"]`);
-    if ( !tabButton || tabButton.hasClass('selected') ) { return; }
-    const loadPane = ( ) => {
-        self.location.replace(`#${pane}`);
-        uDom('.tabButton.selected').toggleClass('selected', false);
-        tabButton.toggleClass('selected', true);
-        uDom.nodeFromId('iframe').setAttribute('src', pane);
-        // vAPI.localStorage.setItem('dashboardLastVisitedPane', pane);
-    };
-    if ( first ) {
-        return loadPane();
-    }
-    const r = discardUnsavedData();
-    if ( r === false ) { return; }
-    if ( r === true ) {
-        return loadPane();
-    }
-    r.then(status => {
-        if ( status === false ) { return; }
-        loadPane();
-    });
+  const tabButton = uDom(`[href="#${pane}"]`);
+      if ( !tabButton || tabButton.hasClass('selected') ) { return; }
+      const loadPane = ( ) => {
+          self.location.replace(`#${pane}`);
+          uDom('.tabButton.selected').toggleClass('selected', false);
+          tabButton.toggleClass('selected', true);
+          uDom.nodeFromId('iframe').setAttribute('src', pane);
+          vAPI.localStorage.setItem('dashboardLastVisitedPane', pane);
+      };
+      if ( first ) {
+          return loadPane();
+      }
+      const r = discardUnsavedData();
+      if ( r === false ) { return; }
+      if ( r === true ) {
+          return loadPane();
+      }
+      r.then(status => {
+          if ( status === false ) { return; }
+          loadPane();
+      });
 };
 
 const onTabClickHandler = function(ev) {
@@ -134,12 +133,21 @@ vAPI.broadcastListener.add(request => {
 
 resizeFrame();
 
+vAPI.localStorage.getItemAsync('dashboardLastVisitedPane').then(value => {
+    loadDashboardPanel(value !== null ? value : 'options.html', true);
 
-loadDashboardPanel('options.html', true);
-resizeFrame();
-window.addEventListener('resize', resizeFrame);
-uDom('.tabButton').on('click', onTabClickHandler);
-uDom('#notifications').on('click', resizeFrame); //ADN
+    window.addEventListener('resize', resizeFrame);
+    uDom('.tabButton').on('click', onTabClickHandler);
+    uDom('#notifications').on('click', resizeFrame); //ADN
+
+    // https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
+    window.addEventListener('beforeunload', ( ) => {
+        if ( discardUnsavedData(true) ) { return; }
+        event.preventDefault();
+        event.returnValue = '';
+    });
+});
+
 
 vAPI.messaging.send(
     'adnauseam', {
@@ -154,14 +162,6 @@ vAPI.messaging.send(
               resizeFrame();
         })
 });
-
-// https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
-window.addEventListener('beforeunload', ( ) => {
-    if ( discardUnsavedData(true) ) { return; }
-    event.preventDefault();
-    event.returnValue = '';
-});
-
 
 /******************************************************************************/
 

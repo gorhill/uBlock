@@ -1365,7 +1365,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
                             { assetKey: details.assetKey }
                         )
                     );
-                    // ADN: Need to tell core that are lists have updated
+                    // ADN: Need to tell core that lists have updated
                     µBlock.adnauseam.onListUpdated(details.assetKey, {
                       title:details.assetKey,
                       content:compiled
