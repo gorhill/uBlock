@@ -84,10 +84,9 @@
   "storage": {
     "managed_schema": "managed_storage.json"
   },
-  "version": "3.9.106",
+  "version": "3.9.107",
   "web_accessible_resources": [
     "/web_accessible_resources/*"
   ],
   "update_url": "https://rednoise.org/adnauseam/updates.xml"
 }
-
