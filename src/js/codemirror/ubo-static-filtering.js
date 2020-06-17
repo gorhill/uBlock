@@ -165,7 +165,7 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
         }
         if (
             parserSlot >= parser.optionsSpan.i &&
-            parserSlot < parser.rightSpaceSpan.i
+            parserSlot < parser.commentSpan.i
         ) {
             const bits = parser.slices[parserSlot];
             let style;
