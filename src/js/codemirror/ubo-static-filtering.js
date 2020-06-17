@@ -268,24 +268,28 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
         })
     );
 
-    const getNetOptionHints = function(cursor, isNegated, seedLeft, seedRight) {
-        const assignPos = seedRight.indexOf('=');
-        if ( assignPos !== -1 ) { seedRight = seedRight.slice(0, assignPos); }
+    const pickBestHints = function(cursor, seedLeft, seedRight, hints) {
         const seed = (seedLeft + seedRight).trim();
-        const isException = parser.isException();
         const out = [];
-        for ( let [ name, bits ] of parser.netOptionTokens ) {
-            if ( name.startsWith(seed) === false ) { continue; }
-            if ( isNegated && (bits & parser.OPTCanNegate) === 0 ) { continue; }
-            if ( isException ) {
-                if ( (bits & parser.OPTBlockOnly) !== 0 ) { continue; }
-            } else {
-                if ( (bits & parser.OPTAllowOnly) !== 0 ) { continue; }
-                if ( (assignPos === -1) && (bits & parser.OPTMustAssign) !== 0 ) {
-                    name += '=';
-                }
+        // First, compare against whole seed
+        for ( const hint of hints ) {
+            const text = hint instanceof Object
+                ? hint.displayText || hint.text
+                : hint;
+            if ( text.startsWith(seed) === false ) { continue; }
+            out.push(hint);
+        }
+        // If no match, try again with a different heuristic
+        if ( out.length === 0 ) {
+            for ( const hint of hints ) {
+                const text = hint instanceof Object
+                    ? hint.displayText || hint.text
+                    : hint;
+                if ( seedLeft.length === 1 ) {
+                    if ( text.startsWith(seedLeft) === false ) { continue; }
+                } else if ( text.includes(seed) === false ) { continue; }
+                out.push(hint);
             }
-            out.push(name);
         }
         return {
             from: { line: cursor.line, ch: cursor.ch - seedLeft.length },
@@ -294,18 +298,32 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
         };
     };
 
-    const getNetRedirectHints = function(cursor, seedLeft, seedRight) {
-        const seed = (seedLeft + seedRight).trim();
-        const out = [];
-        for ( let text of redirectNames.keys() ) {
-            if ( text.startsWith(seed) === false ) { continue; }
-            out.push(text);
+    const getNetOptionHints = function(cursor, isNegated, seedLeft, seedRight) {
+        const assignPos = seedRight.indexOf('=');
+        if ( assignPos !== -1 ) { seedRight = seedRight.slice(0, assignPos); }
+        const isException = parser.isException();
+        const hints = [];
+        for ( let [ text, bits ] of parser.netOptionTokens ) {
+            if ( isNegated && (bits & parser.OPTCanNegate) === 0 ) { continue; }
+            if ( isException ) {
+                if ( (bits & parser.OPTBlockOnly) !== 0 ) { continue; }
+            } else {
+                if ( (bits & parser.OPTAllowOnly) !== 0 ) { continue; }
+                if ( (assignPos === -1) && (bits & parser.OPTMustAssign) !== 0 ) {
+                    text += '=';
+                }
+            }
+            hints.push(text);
         }
-        return {
-            from: { line: cursor.line, ch: cursor.ch - seedLeft.length },
-            to: { line: cursor.line, ch: cursor.ch + seedRight.length },
-            list: out,
-        };
+        return pickBestHints(cursor, seedLeft, seedRight, hints);
+    };
+
+    const getNetRedirectHints = function(cursor, seedLeft, seedRight) {
+        const hints = [];
+        for ( const text of redirectNames.keys() ) {
+            hints.push(text);
+        }
+        return pickBestHints(cursor, seedLeft, seedRight, hints);
     };
 
     const getNetHints = function(cursor, line) {
@@ -338,18 +356,12 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
         const matchRight = /^([a-z-]*)\(?/.exec(line.slice(beg));
         if ( matchLeft === null || matchRight === null ) { return; }
         const isStaticDOM = matchLeft[0].indexOf('^') !== -1;
-        const seed = (matchLeft[1] + matchRight[1]).trim();
-        const out = [];
+        const hints = [];
         for ( let [ text, bits ] of proceduralOperatorNames ) {
-            if ( text.startsWith(seed) === false ) { continue; }
             if ( isStaticDOM && (bits & 0b10) !== 0 ) { continue; }
-            out.push(text);
+            hints.push(text);
         }
-        return {
-            from: { line: cursor.line, ch: cursor.ch - matchLeft[1].length },
-            to: { line: cursor.line, ch: cursor.ch + matchRight[1].length },
-            list: out,
-        };
+        return pickBestHints(cursor, matchLeft[1], matchRight[1], hints);
     };
 
     const getExtScriptletHints = function(cursor, line) {
@@ -357,21 +369,15 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
         const matchLeft = /#\+\js\(([^,]*)$/.exec(line.slice(0, beg));
         const matchRight = /^([^,)]*)/.exec(line.slice(beg));
         if ( matchLeft === null || matchRight === null ) { return; }
-        const seed = (matchLeft[1] + matchRight[1]).trim();
-        const out = [];
+        const hints = [];
         for ( const [ text, displayText ] of scriptletNames ) {
-            if ( text.startsWith(seed) === false ) { continue; }
             const hint = { text };
             if ( displayText !== '' ) {
                 hint.displayText = displayText;
             }
-            out.push(hint);
+            hints.push(hint);
         }
-        return {
-            from: { line: cursor.line, ch: cursor.ch - matchLeft[1].length },
-            to: { line: cursor.line, ch: cursor.ch + matchRight[1].length },
-            list: out,
-        };
+        return pickBestHints(cursor, matchLeft[1], matchRight[1], hints);
     };
 
     const getHints = function(cm) {
