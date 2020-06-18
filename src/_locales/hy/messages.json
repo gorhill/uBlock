@@ -4,7 +4,7 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Finally, an efficient blocker. Easy on CPU and memory.",
+    "message": "Վերջապես արդյունավետ արգելափակիչ։ Թեթև CPU֊ի ու հիշողության համար։",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
@@ -500,7 +500,7 @@
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges": {
-    "message": "Apply changes",
+    "message": "Կիրառել փոփոխությունները",
     "description": "English: Apply changes"
   },
   "rulesPermanentHeader": {
@@ -532,11 +532,11 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Import from file...",
+    "message": "Ներմուծել ֆայլից...",
     "description": ""
   },
   "rulesExport": {
-    "message": "Export to file",
+    "message": "Արտահանել դեպի ֆայլ",
     "description": ""
   },
   "rulesDefaultFileName": {
@@ -556,11 +556,11 @@
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
-    "message": "Import and append",
+    "message": "Ներմուծել և կցել",
     "description": "English: Import and append"
   },
   "whitelistExport": {
-    "message": "Export",
+    "message": "Արտահանել",
     "description": "English: Export"
   },
   "whitelistExportFilename": {
@@ -576,7 +576,7 @@
     "description": "English: Type"
   },
   "logRequestsHeaderDomain": {
-    "message": "Domain",
+    "message": "Դոմեյն",
     "description": "English: Domain"
   },
   "logRequestsHeaderURL": {
@@ -664,7 +664,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerEntryDetailsHeader": {
-    "message": "Details",
+    "message": "Մանրամասներ",
     "description": "Small header to identify the 'Details' pane for a specific logger entry"
   },
   "loggerEntryDetailsFilter": {
@@ -892,11 +892,11 @@
     "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo": {
-    "message": "a minute ago",
+    "message": "րոպե առաջ",
     "description": "English: a minute ago"
   },
   "elapsedManyMinutesAgo": {
-    "message": "{{value}} minutes ago",
+    "message": "{{value}} րոպե առաջ",
     "description": "English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo": {
@@ -912,7 +912,7 @@
     "description": "English: a day ago"
   },
   "elapsedManyDaysAgo": {
-    "message": "{{value}} days ago",
+    "message": "{{value}} օր առաջ",
     "description": "English: {{value}} days ago"
   },
   "showDashboardButton": {
@@ -920,7 +920,7 @@
     "description": "Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
-    "message": "Show Logger",
+    "message": "Տեսնել լոգգերը",
     "description": "Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
@@ -944,11 +944,11 @@
     "description": "English: List of filter list names follows"
   },
   "docblockedBack": {
-    "message": "Go back",
+    "message": "Հետ գնալ",
     "description": "English: Go back"
   },
   "docblockedClose": {
-    "message": "Close this window",
+    "message": "Փակել այս պատուհանը",
     "description": "English: Close this window"
   },
   "docblockedProceed": {
@@ -964,11 +964,11 @@
     "description": "English: Permanently"
   },
   "cloudPush": {
-    "message": "Export to cloud storage",
+    "message": "Արտահանել ամպի պահուստ",
     "description": "tooltip"
   },
   "cloudPull": {
-    "message": "Import from cloud storage",
+    "message": "Ներմուծել ամպի պահուստից",
     "description": "tooltip"
   },
   "cloudPullAndMerge": {
