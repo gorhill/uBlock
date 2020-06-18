@@ -250,6 +250,10 @@
       uDom('.dntOption').css('display', 'none');
     }
 
+    // ADN
+    const selection = uDom('input[id="slider"]');
+    selection.val(details.clickProbability);
+
     uDom('input[type="range"]').on('change', ClickProbabilityChanged); //ADN
 
     uDom('[data-setting-type="bool"]').forEach(function(uNode) {
