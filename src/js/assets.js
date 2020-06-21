@@ -771,22 +771,6 @@ const getRemote = async function(assetKey) {
             ? await api.fetchFilterList(contentURL)
             : await api.fetchText(contentURL);
 
-        // https://www.reddit.com/r/uBlockOrigin/comments/hbpo86/
-        //   Server sent a truncated list? If the new list is smaller than the
-        //   currently cached one by more than 25%, assume a server error.
-        if (
-            stringIsNotEmpty(result.content) &&
-            typeof assetDetails.size === 'number' &&
-            assetDetails.size !== 0
-        ) {
-            const loss = 1 - result.content.length / assetDetails.size;
-            if ( loss > 0.25 ) {
-                result.statusCode = 206;
-                result.statusText = 'Partial Content';
-                result.content = '';
-            }
-        }
-
         // Failure
         if ( stringIsNotEmpty(result.content) === false ) {
             let error = result.statusText;
@@ -804,10 +788,7 @@ const getRemote = async function(assetKey) {
             content: result.content,
             url: contentURL
         });
-        registerAssetSource(assetKey, {
-            error: undefined,
-            size: result.content.length
-        });
+        registerAssetSource(assetKey, { error: undefined });
         return reportBack(result.content);
     }
 
