@@ -338,7 +338,7 @@ const Parser = class {
     //     optionsAnchorSpan: first slice to options anchor
     //     optionsSpan: first slice to options
     analyzeNet() {
-        let islice = this.leftSpaceSpan.i;
+        let islice = this.leftSpaceSpan.len;
 
         // Assume no exception
         this.exceptionSpan.i = this.leftSpaceSpan.len;
@@ -499,8 +499,10 @@ const Parser = class {
         // https://github.com/gorhill/httpswitchboard/issues/15
         //   When parsing a hosts file, ensure localhost et al. don't end up
         //   in the pattern. To accomplish this we establish the rule that
-        //   if a pattern contains space characters, the pattern will be only
-        //   the part following the last space occurrence.
+        //   if a pattern contains a space character, the pattern will be only
+        //   the part following the space character.
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/1118
+        //   Patterns with more than one space are dubious.
         {
             const { i, len } = this.patternSpan;
             let j = len;
@@ -512,13 +514,25 @@ const Parser = class {
                 this.patternBits |= bits;
             }
             if ( j !== 0 ) {
-                this.patternSpan.i += j + 3;
-                this.patternSpan.len -= j + 3;
-                if ( this.reIsLocalhostRedirect.test(this.getNetPattern()) ) {
-                    this.flavorBits |= BITFlavorIgnore;
+                let dubious = false;
+                for ( let k = this.patternSpan.i; k < j; k += 3 ) {
+                    if ( hasNoBits(this.slices[k], BITSpace) ) { continue; }
+                    this.patternBits |= BITSpace;
+                    if ( this.interactive ) {
+                        this.markSlices(this.patternSpan.i, j, BITError);
+                    }
+                    dubious = true;
+                    break;
                 }
-                if ( this.interactive ) {
-                    this.markSlices(0, this.patternSpan.i, BITIgnore);
+                if ( dubious === false ) {
+                    this.patternSpan.i += j + 3;
+                    this.patternSpan.len -= j + 3;
+                    if ( this.reIsLocalhostRedirect.test(this.getNetPattern()) ) {
+                        this.flavorBits |= BITFlavorIgnore;
+                    }
+                    if ( this.interactive ) {
+                        this.markSlices(0, this.patternSpan.i, BITIgnore);
+                    }
                 }
                 // TODO: test again for regex?
             }
@@ -885,12 +899,15 @@ const Parser = class {
 
     // https://github.com/chrisaljoudi/uBlock/issues/1096
     // Examples of dubious filter content:
+    //   - Spaces characters
     //   - Single character other than `*` wildcard
     patternIsDubious() {
-        return this.patternBits !== BITAsterisk &&
-               this.optionsSpan.len === 0 &&
-               this.patternSpan.len === 3 &&
-               this.slices[this.patternSpan.i+2] === 1;
+        return hasBits(this.patternBits, BITSpace) || (
+            this.patternBits !== BITAsterisk &&
+            this.optionsSpan.len === 0 &&
+            this.patternSpan.len === 3 &&
+            this.slices[this.patternSpan.i+2] === 1
+        );
     }
 
     patternIsMatchAll() {
