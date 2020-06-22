@@ -89,7 +89,7 @@ const handleImportFilePicker = function() {
 
 /******************************************************************************/
 
-const startImportFilePicker = function() {
+const startImportFilePicker = function() { // ADN, stay inside settings.js
     const input = document.getElementById('restoreFilePicker');
     // Reset to empty string, this will ensure an change event is properly
     // triggered if the user pick a file, even if it is the same as the last

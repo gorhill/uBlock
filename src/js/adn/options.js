@@ -82,16 +82,6 @@
       fr.readAsText(file);
   };
 
-  /******************************************************************************/
-
-  const startImportFilePicker = function() {
-      const input = document.getElementById('restoreFilePicker');
-      // Reset to empty string, this will ensure an change event is properly
-      // triggered if the user pick a file, even if it is the same as the last
-      // one picked.
-      input.value = '';
-      input.click();
-  };
 
   /******************************************************************************/
 
