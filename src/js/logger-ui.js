@@ -1281,7 +1281,7 @@ const reloadTab = function(ev) {
             row.classList.toggle('exceptored', status);
             return;
         }
-        
+
         // Create static filter
         if ( target.id === 'createStaticFilter' ) {
             ev.stopPropagation();
@@ -1534,6 +1534,14 @@ const reloadTab = function(ev) {
             const template = document.querySelector(
                 '#filterFinderListEntry > span'
             );
+            // AdNauseam
+            if (lists == "AdNauseam") {
+              const span = document.createElement("span");
+              span.innerText = "AdNauseam(internal)";
+              fragment.appendChild(span);
+              return fragment;
+            }
+
             for ( const list of lists ) {
                 const span = template.cloneNode(true);
                 let a = span.querySelector('a:nth-of-type(1)');
@@ -1575,11 +1583,20 @@ const reloadTab = function(ev) {
             }
             // https://github.com/gorhill/uBlock/issues/2179
             if ( rows[1].children[1].childElementCount === 0 ) {
-                vAPI.i18n.safeTemplateToDOM(
-                    'loggerStaticFilteringFinderSentence2',
-                    { filter: rawFilter },
-                    rows[1].children[1]
-                );
+              if (rawFilter.indexOf("height:0px!important")) {
+               // this is AdNauseam google ads filters
+               bestMatchFilter = rawFilter;
+               rows[1].children[1].appendChild(nodeFromFilter(
+                   bestMatchFilter,"AdNauseam"
+               ));
+             } else {
+               vAPI.i18n.safeTemplateToDOM(
+                   'loggerStaticFilteringFinderSentence2',
+                   { filter: rawFilter },
+                   rows[1].children[1]
+               );
+             }
+
             }
         };
 

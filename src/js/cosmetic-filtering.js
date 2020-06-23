@@ -32,6 +32,7 @@ const cosmeticSurveyingMissCountMax =
     parseInt(vAPI.localStorage.getItem('cosmeticSurveyingMissCountMax'), 10) ||
     15;
 //ADN google adsense collection
+//ublock also added something similar to address google ads at src/web_accessible_resources/googlesyndication_adsbygoogle.js
 const fakeEntries = '.adsbygoogle, ins[id*="aswift"] > iframe, iframe[id^="google_ads_frame"], #google_image_div, #mys-content'.split(", ");
 
 

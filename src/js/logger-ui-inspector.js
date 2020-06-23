@@ -477,7 +477,7 @@ const onClicked = function(ev) {
         return;
     }
 
-    // Not a node or filter 
+    // Not a node or filter
     if ( target.localName !== 'code' ) { return; }
 
     // Toggle cosmetic filter
