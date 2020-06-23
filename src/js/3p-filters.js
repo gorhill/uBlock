@@ -342,8 +342,8 @@ const renderFilterLists = function(soft) {
 
         document.body.classList.toggle('hideUnused', mustHideUnusedLists('*'));
 
-        // ADN: move the lists in these groups to default/Essentials
-        const toOther = ['ads', 'privacy'];
+        // ADN: move the lists in these groups to multipurpose
+        const toOther = ['ads'];
         for (let i = 0; i < toOther.length; i++) {
             Array.prototype.push.apply(groups.get('multipurpose'), groups.get(toOther[i]));
             delete groups[toOther[i]];
