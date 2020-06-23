@@ -25,64 +25,6 @@
 
   'use strict';
 
-
-  /******************************************************************************/
-
-  const handleImportFilePicker = function() {
-      const file = this.files[0];
-      if ( file === undefined || file.name === '' ) { return; }
-      if ( file.type.indexOf('text') !== 0 ) { return; }
-
-      const filename = file.name;
-
-      const fileReaderOnLoadHandler = function() {
-          let userData;
-          try {
-              userData = JSON.parse(this.result);
-              if ( typeof userData !== 'object' ) {
-                  throw 'Invalid';
-              }
-              if ( typeof userData.userSettings !== 'object' ) {
-                  throw 'Invalid';
-              }
-              if (
-                  Array.isArray(userData.whitelist) === false &&
-                  typeof userData.netWhitelist !== 'string'
-              ) {
-                  throw 'Invalid';
-              }
-              if (
-                  typeof userData.filterLists !== 'object' &&
-                  Array.isArray(userData.selectedFilterLists) === false
-              ) {
-                  throw 'Invalid';
-              }
-          }
-          catch (e) {
-              userData = undefined;
-          }
-          if ( userData === undefined ) {
-              window.alert(vAPI.i18n('aboutRestoreDataError').replace(/uBlock₀/g, 'AdNauseam'));
-              return;
-          }
-          const time = new Date(userData.timeStamp);
-          const msg = vAPI.i18n('aboutRestoreDataConfirm')
-                          .replace('{{time}}', time.toLocaleString());
-          const proceed = window.confirm(msg);
-          if ( proceed !== true ) { return; }
-          vAPI.messaging.send('dashboard', {
-              what: 'restoreUserData',
-              userData,
-              file: filename,
-          });
-      };
-
-      const fr = new FileReader();
-      fr.onload = fileReaderOnLoadHandler;
-      fr.readAsText(file);
-  };
-
-
   /******************************************************************************/
 
   const onLocalDataReceived = function(details) {
