@@ -1197,14 +1197,14 @@
 // https://github.com/NanoAdblocker/NanoFilters/issues/149
 /// cookie-remover.js
 (function() {
-    let needle = '{{1}}',
-        reName = /./;
+    const needle = '{{1}}';
+    let reName = /./;
     if ( /^\/.+\/$/.test(needle) ) {
         reName = new RegExp(needle.slice(1,-1));
     } else if ( needle !== '' && needle !== '{{1}}' ) {
         reName = new RegExp(needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
     }
-    let removeCookie = function() {
+    const removeCookie = function() {
         document.cookie.split(';').forEach(cookieStr => {
             let pos = cookieStr.indexOf('=');
             if ( pos === -1 ) { return; }
@@ -1213,8 +1213,16 @@
             let part1 = cookieName + '=';
             let part2a = '; domain=' + document.location.hostname;
             let part2b = '; domain=.' + document.location.hostname;
+            let part2c, part2d;
             let domain = document.domain;
-            let part2c = domain && domain !== document.location.hostname ? '; domain=.' + domain : undefined;
+            if ( domain ) {
+                if ( domain !== document.location.hostname ) {
+                    part2c = '; domain=.' + domain;
+                }
+                if ( domain.startsWith('www.') ) {
+                    part2d = '; domain=' + domain.replace('www', '');
+                }
+            }
             let part3 = '; path=/';
             let part4 = '; Max-Age=-1000; expires=Thu, 01 Jan 1970 00:00:00 GMT';
             document.cookie = part1 + part4;
@@ -1225,6 +1233,9 @@
             document.cookie = part1 + part2b + part3 + part4;
             if ( part2c !== undefined ) {
                 document.cookie = part1 + part2c + part3 + part4;
+            }
+            if ( part2d !== undefined ) {
+                document.cookie = part1 + part2d + part3 + part4;
             }
         });
     };
