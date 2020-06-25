@@ -483,7 +483,7 @@ const Parser = class {
                     this.skipUntilNot(
                         this.patternSpan.i,
                         lastPatternSlice,
-                        BITHostname | BITAsterisk
+                        BITHostname
                     ) === lastPatternSlice
                 ) {
                     this.patternRightAnchorSpan.i = lastPatternSlice;
