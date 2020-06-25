@@ -1744,9 +1744,9 @@ const verifyAdBlockers = exports.verifyAdBlockers = function () {
     const notes = notifications;
     let modified = false;
 
-    vAPI.getAddonInfo(function (UBlockConflict, AdBlockConflict) {
+    vAPI.getAddonInfo(function (conflict) {
 
-      if (UBlockConflict || AdBlockConflict) {
+      if (conflict != false) {
         modified = addNotification(notes, AdBlockerEnabled);
       }
       else {

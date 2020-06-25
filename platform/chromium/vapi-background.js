@@ -1689,7 +1689,7 @@ vAPI.cloud = (( ) => {
 
 vAPI.getAddonInfo = function (callback) { // ADN
 
-  var uBlockConflict = false, adBlockConflict = false;
+  let conflict = false;
 
   if (typeof browser.management.getAll === 'function') {
 
@@ -1704,12 +1704,14 @@ vAPI.getAddonInfo = function (callback) { // ADN
         extensions.forEach(function (extension) {
 
           if ((extension.name.startsWith("Adblock") || extension.name.startsWith("AdBlock")) && extension.enabled)
-            adBlockConflict = true;
+            conflict = "adBlock";
           else if (extension.name.startsWith("uBlock") && extension.enabled)
-            uBlockConflict = true;
+            conflict = "uBlock";
+          else if (extension.name == "Privacy Badger" && extension.enabled)
+            conflict = "privacyBadger"
         });
 
-        callback (uBlockConflict, adBlockConflict);
+        callback (conflict);
       }
     });
   }
