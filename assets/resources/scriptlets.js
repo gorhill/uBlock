@@ -278,27 +278,42 @@
         }
         reLogNeedle = new RegExp(needle);
     }
-    const findOwner = function(root, path) {
+    const findOwner = function(root, path, prune = false) {
         let owner = root;
         let chain = path;
         for (;;) {
-            if ( owner instanceof Object === false ) { return; }
+            if ( owner instanceof Object === false ) { return false; }
             const pos = chain.indexOf('.');
             if ( pos === -1 ) {
-                return owner.hasOwnProperty(chain)
-                    ? [ owner, chain ]
-                    : undefined;
+                const found = owner.hasOwnProperty(chain);
+                if ( found === false ) { return false; }
+                if ( prune ) {
+                    delete owner[chain];
+                }
+                return true;
             }
             const prop = chain.slice(0, pos);
-            if ( owner.hasOwnProperty(prop) === false ) { return; }
+            if (
+                prop === '[]' && Array.isArray(owner) ||
+                prop === '*' && owner instanceof Object
+            ) {
+                const next = chain.slice(pos + 1);
+                let found = false;
+                for ( const item of owner.values() ) {
+                    found = findOwner(item, next, prune) || found;
+                }
+                return found;
+            }
+            if ( owner.hasOwnProperty(prop) === false ) { return false; }
             owner = owner[prop];
             chain = chain.slice(pos + 1);
         }
     };
     const mustProcess = function(root) {
         for ( const needlePath of needlePaths ) {
-            const details = findOwner(root, needlePath);
-            if ( details === undefined ) { return false; }
+            if ( findOwner(root, needlePath) === false ) {
+                return false;
+            }
         }
         return true;
     };
@@ -314,10 +329,7 @@
             }
             if ( mustProcess(r) === false ) { return r; }
             for ( const path of prunePaths ) {
-                const details = findOwner(r, path);
-                if ( details !== undefined ) {
-                    delete details[0][details[1]];
-                }
+                findOwner(r, path, true);
             }
             return r;
         },
