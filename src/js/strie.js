@@ -658,7 +658,7 @@ const roundToPageSize = v => (v + PAGE_SIZE-1) & ~(PAGE_SIZE-1);
                 i += 1;
             }
             haystackLeft += 1;
-            if ( haystackLeft === haystackEnd ) { break; }
+            if ( haystackLeft > haystackEnd ) { break; }
         }
         return -1;
     }

@@ -606,9 +606,9 @@
         i32.const 1
         i32.add
         tee_local $haystackLeft
-        ;; if ( haystackLeft === haystackEnd ) { break; }
+        ;; if ( haystackLeft > haystackEnd ) { break; }
         get_local $haystackEnd
-        i32.eq
+        i32.gt_u
         br_if $fail
         br $mainLoop
     ;; }
