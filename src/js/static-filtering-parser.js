@@ -628,7 +628,12 @@ const Parser = class {
             catch (ex) {
                 this.markSpan(this.patternSpan, BITError);
             }
-        } else if ( this.patternIsDubious() ) {
+        } else if (
+            this.patternIsDubious() || (
+                this.patternHasUnicode() &&
+                this.toPunycode(true) === false
+            )
+        ) {
             this.markSpan(this.patternSpan, BITError);
         }
         this.netOptionsIterator.init();
@@ -1040,19 +1045,24 @@ const Parser = class {
         return this.raw;
     }
 
-    toPunycode() {
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1118#issuecomment-650730158
+    //   Be ready to deal with non-punycode-able Unicode characters.
+    toPunycode(dryrun = false) {
         if ( this.patternHasUnicode() === false ) { return true; }
         const { i, len } = this.patternSpan;
         if ( len === 0 ) { return true; }
         let pattern = this.getNetPattern();
         const match = this.reHostname.exec(this.pattern);
-        if ( match === null ) { return; }
+        if ( match === null ) { return true; }
         try {
             this.punycoder.hostname = match[0].replace(/\*/g, '__asterisk__');
         } catch(ex) {
             return false;
         }
-        const punycoded = this.punycoder.hostname.replace(/__asterisk__/g, '*');
+        const hn = this.punycoder.hostname;
+        if ( hn === '' ) { return false; }
+        if ( dryrun ) { return true; }
+        const punycoded = hn.replace(/__asterisk__/g, '*');
         pattern = punycoded + this.pattern.slice(match.index + match[0].length);
         const beg = this.slices[i+1];
         const end = this.slices[i+len+1];
