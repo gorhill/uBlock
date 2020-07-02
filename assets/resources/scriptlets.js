@@ -705,9 +705,13 @@
     const needleNot = needle.charAt(0) === '!';
     if ( needleNot ) { needle = needle.slice(1); }
     let delay = '{{2}}';
-    const delayNot = delay.charAt(0) === '!';
-    if ( delayNot ) { delay = delay.slice(1); }
-    delay = parseInt(delay, 10);
+    if ( delay === '{{2}}' ) { delay = undefined; }
+    let delayNot = false;
+    if ( delay !== undefined ) {
+        delayNot = delay.charAt(0) === '!';
+        if ( delayNot ) { delay = delay.slice(1); }
+        delay = parseInt(delay, 10);
+    }
     if ( needle === '' || needle === '{{1}}' ) {
         needle = '';
     } else if ( needle.startsWith('/') && needle.endsWith('/') ) {
@@ -715,8 +719,7 @@
     } else {
         needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
-    const log = needleNot === false && needle === '' &&
-                delayNot === false && isNaN(delay)
+    const log = needleNot === false && needle === '' && delay === undefined
         ? console.log
         : undefined;
     const reNeedle = new RegExp(needle);
@@ -724,18 +727,19 @@
         apply: function(target, thisArg, args) {
             const a = String(args[0]);
             const b = args[1];
-            let defuse = false;
             if ( log !== undefined ) {
                 log('uBO: setInterval("%s", %s)', a, b);
-            } else if ( isNaN(delay) ) {
-                defuse = reNeedle.test(a) !== needleNot;
-            } else if ( needle === '' ) {
-                defuse = (b === delay) !== delayNot;
             } else {
-                defuse = reNeedle.test(a) !== needleNot && (b === delay) !== delayNot;
-            }
-            if ( defuse ) {
-                args[0] = function(){};
+                let defuse;
+                if ( needle !== '' ) {
+                    defuse = reNeedle.test(a) !== needleNot;
+                }
+                if ( defuse !== false && delay !== undefined ) {
+                    defuse = (b === delay || isNaN(b) && isNaN(delay) ) !== delayNot;
+                }
+                if ( defuse ) {
+                    args[0] = function(){};
+                }
             }
             return target.apply(thisArg, args);
         }
@@ -776,9 +780,13 @@
     const needleNot = needle.charAt(0) === '!';
     if ( needleNot ) { needle = needle.slice(1); }
     let delay = '{{2}}';
-    const delayNot = delay.charAt(0) === '!';
-    if ( delayNot ) { delay = delay.slice(1); }
-    delay = parseInt(delay, 10);
+    if ( delay === '{{2}}' ) { delay = undefined; }
+    let delayNot = false;
+    if ( delay !== undefined ) {
+        delayNot = delay.charAt(0) === '!';
+        if ( delayNot ) { delay = delay.slice(1); }
+        delay = parseInt(delay, 10);
+    }
     if ( needle === '' || needle === '{{1}}' ) {
         needle = '';
     } else if ( needle.startsWith('/') && needle.endsWith('/') ) {
@@ -786,8 +794,7 @@
     } else {
         needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
-    const log = needleNot === false && needle === '' &&
-                delayNot === false && isNaN(delay)
+    const log = needleNot === false && needle === '' && delay === undefined
         ? console.log
         : undefined;
     const reNeedle = new RegExp(needle);
@@ -795,18 +802,19 @@
         apply: function(target, thisArg, args) {
             const a = String(args[0]);
             const b = args[1];
-            let defuse = false;
             if ( log !== undefined ) {
                 log('uBO: setTimeout("%s", %s)', a, b);
-            } else if ( isNaN(delay) ) {
-                defuse = reNeedle.test(a) !== needleNot;
-            } else if ( needle === '' ) {
-                defuse = (b === delay) !== delayNot;
             } else {
-                defuse = reNeedle.test(a) !== needleNot && (b === delay) !== delayNot;
-            }
-            if ( defuse ) {
-                args[0] = function(){};
+                let defuse;
+                if ( needle !== '' ) {
+                    defuse = reNeedle.test(a) !== needleNot;
+                }
+                if ( defuse !== false && delay !== undefined ) {
+                    defuse = (b === delay || isNaN(b) && isNaN(delay) ) !== delayNot;
+                }
+                if ( defuse ) {
+                    args[0] = function(){};
+                }
             }
             return target.apply(thisArg, args);
         }
