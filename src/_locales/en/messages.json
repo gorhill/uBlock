@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName":{
-    "message":"Whitelist",
+    "message":"Allowlist",
     "description":"appears as tab name in dashboard"
   },
   "shortcutsPageName":{
@@ -552,8 +552,8 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt":{
-    "message":"The whitelist directives dictate on which web pages uBlock Origin should be disabled. One entry per line. Invalid directives will be silently ignored and commented out.",
-    "description":"English: An overview of the content of the dashboard's Whitelist pane."
+    "message":"The allowlist directives dictate on which web pages uBlock Origin should be disabled. One entry per line. Invalid directives will be silently ignored and commented out.",
+    "description":"English: An overview of the content of the dashboard's Allowlist pane."
   },
   "whitelistImport":{
     "message":"Import and append",
