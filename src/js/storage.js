@@ -799,7 +799,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     //    https://adblockplus.org/en/filters
     const staticNetFilteringEngine = this.staticNetFilteringEngine;
     const staticExtFilteringEngine = this.staticExtFilteringEngine;
-    const lineIter = new this.LineIterator(this.processDirectives(rawText));
+    const lineIter = new this.LineIterator(this.processDirectives.prune(rawText));
     const parser = new vAPI.StaticFilteringParser();
 
     parser.setMaxTokenLength(this.urlTokenizer.MAX_TOKEN_LENGTH);
@@ -854,68 +854,80 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
 // https://github.com/AdguardTeam/AdguardBrowserExtension/issues/917
 
-µBlock.processDirectives = function(content) {
-    const reIf = /^!#(if|endif)\b([^\n]*)/gm;
-    const stack = [];
-    const shouldDiscard = ( ) => stack.some(v => v);
-    const parts = [];
-    let  beg = 0, discard = false;
+µBlock.processDirectives = {
+    // This method returns an array of indices, corresponding to position in
+    // the content string which should alternatively be parsed and discarded.
+    split: function(content) {
+        const reIf = /^!#(if|endif)\b([^\n]*)(?:[\n\r]+|$)/gm;
+        const stack = [];
+        const shouldDiscard = ( ) => stack.some(v => v);
+        const parts = [ 0 ];
+        let discard = false;
 
-    while ( beg < content.length ) {
-        const match = reIf.exec(content);
-        if ( match === null ) { break; }
+        for (;;) {
+            const match = reIf.exec(content);
+            if ( match === null ) { break; }
 
-        switch ( match[1] ) {
-        case 'if':
-            let expr = match[2].trim();
-            const target = expr.charCodeAt(0) === 0x21 /* '!' */;
-            if ( target ) { expr = expr.slice(1); }
-            const token = this.processDirectives.tokens.get(expr);
-            const startDiscard =
-                token === 'false' &&
-                    target === false ||
-                token !== undefined &&
-                    vAPI.webextFlavor.soup.has(token) === target;
-            if ( discard === false && startDiscard ) {
-                parts.push(content.slice(beg, match.index));
-                discard = true;
+            switch ( match[1] ) {
+            case 'if':
+                let expr = match[2].trim();
+                const target = expr.charCodeAt(0) === 0x21 /* '!' */;
+                if ( target ) { expr = expr.slice(1); }
+                const token = this.tokens.get(expr);
+                const startDiscard =
+                    token === 'false' &&
+                        target === false ||
+                    token !== undefined &&
+                        vAPI.webextFlavor.soup.has(token) === target;
+                if ( discard === false && startDiscard ) {
+                    parts.push(match.index);
+                    discard = true;
+                }
+                stack.push(startDiscard);
+                break;
+
+            case 'endif':
+                stack.pop();
+                const stopDiscard = shouldDiscard() === false;
+                if ( discard && stopDiscard ) {
+                    parts.push(match.index + match[0].length);
+                    discard = false;
+                }
+                break;
+
+            default:
+                break;
             }
-            stack.push(startDiscard);
-            break;
-
-        case 'endif':
-            stack.pop();
-            const stopDiscard = shouldDiscard() === false;
-            if ( discard && stopDiscard ) {
-                beg = match.index + match[0].length + 1;
-                discard = false;
-            }
-            break;
-
-        default:
-            break;
         }
-    }
 
-    if ( stack.length === 0 && parts.length !== 0 ) {
-        parts.push(content.slice(beg));
-        content = parts.join('\n');
-    }
-    return content.trim();
+        parts.push(content.length);
+        return parts;
+    },
+
+    prune: function(content) {
+        const parts = this.split(content);
+        const out = [];
+        for ( let i = 0, n = parts.length - 1; i < n; i += 2 ) {
+            const beg = parts[i+0];
+            const end = parts[i+1];
+            out.push(content.slice(beg, end));
+        }
+        return out.join('\n');
+    },
+
+    tokens: new Map([
+        [ 'ext_ublock', 'ublock' ],
+        [ 'env_chromium', 'chromium' ],
+        [ 'env_edge', 'edge' ],
+        [ 'env_firefox', 'firefox' ],
+        [ 'env_legacy', 'legacy' ],
+        [ 'env_mobile', 'mobile' ],
+        [ 'env_safari', 'safari' ],
+        [ 'cap_html_filtering', 'html_filtering' ],
+        [ 'cap_user_stylesheet', 'user_stylesheet' ],
+        [ 'false', 'false' ],
+    ]),
 };
-
-µBlock.processDirectives.tokens = new Map([
-    [ 'ext_ublock', 'ublock' ],
-    [ 'env_chromium', 'chromium' ],
-    [ 'env_edge', 'edge' ],
-    [ 'env_firefox', 'firefox' ],
-    [ 'env_legacy', 'legacy' ],
-    [ 'env_mobile', 'mobile' ],
-    [ 'env_safari', 'safari' ],
-    [ 'cap_html_filtering', 'html_filtering' ],
-    [ 'cap_user_stylesheet', 'user_stylesheet' ],
-    [ 'false', 'false' ],
-]);
 
 /******************************************************************************/
 

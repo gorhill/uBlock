@@ -244,6 +244,7 @@ api.fetchFilterList = async function(mainlistURL) {
 
     const sublistURLs = new Set();
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1113
     const processIncludeDirectives = function(results) {
         const out = [];
         const reInclude = /^!#include +(\S+)/gm;
@@ -254,28 +255,36 @@ api.fetchFilterList = async function(mainlistURL) {
             }
             if ( result instanceof Object === false ) { continue; }
             const content = result.content;
-            let lastIndex = 0;
-            for (;;) {
-                if ( rootDirectoryURL === undefined ) { break; }
-                const match = reInclude.exec(content);
-                if ( match === null ) { break; }
-                if ( toParsedURL(match[1]) !== undefined ) { continue; }
-                if ( match[1].indexOf('..') !== -1 ) { continue; }
-                // Compute nested list path relative to parent list path
-                const pos = result.url.lastIndexOf('/');
-                if ( pos === -1 ) { continue; }
-                const subURL = result.url.slice(0, pos + 1) + match[1];
-                if ( sublistURLs.has(subURL) ) { continue; }
-                sublistURLs.add(subURL);
-                out.push(
-                    content.slice(lastIndex, match.index),
-                    `! >>>>>>>> ${subURL}`,
-                    api.fetchText(subURL),
-                    `! <<<<<<<< ${subURL}`
-                );
-                lastIndex = reInclude.lastIndex;
+            const slices = µBlock.processDirectives.split(content);
+            for ( let i = 0, n = slices.length - 1; i < n; i++ ) {
+                const slice = content.slice(slices[i+0], slices[i+1]);
+                if ( (i & 1) !== 0 ) {
+                    out.push(slice);
+                    continue;
+                }
+                let lastIndex = 0;
+                for (;;) {
+                    if ( rootDirectoryURL === undefined ) { break; }
+                    const match = reInclude.exec(slice);
+                    if ( match === null ) { break; }
+                    if ( toParsedURL(match[1]) !== undefined ) { continue; }
+                    if ( match[1].indexOf('..') !== -1 ) { continue; }
+                    // Compute nested list path relative to parent list path
+                    const pos = result.url.lastIndexOf('/');
+                    if ( pos === -1 ) { continue; }
+                    const subURL = result.url.slice(0, pos + 1) + match[1];
+                    if ( sublistURLs.has(subURL) ) { continue; }
+                    sublistURLs.add(subURL);
+                    out.push(
+                        slice.slice(lastIndex, match.index),
+                        `! >>>>>>>> ${subURL}`,
+                        api.fetchText(subURL),
+                        `! <<<<<<<< ${subURL}`
+                    );
+                    lastIndex = reInclude.lastIndex;
+                }
+                out.push(lastIndex === 0 ? slice : slice.slice(lastIndex));
             }
-            out.push(lastIndex === 0 ? content : content.slice(lastIndex));
         }
         return out;
     };
