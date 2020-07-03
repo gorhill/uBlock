@@ -124,7 +124,9 @@ const fromCosmeticFilter = function(details) {
     const hostname = details.hostname;
 
     // The longer the needle, the lower the number of false positives.
-    const needle = selector.match(/\w+/g).reduce(function(a, b) {
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1139
+    //   Mind that there is no guarantee a selector has `\w` characters.
+    const needle = selector.match(/\w+|^.*$/g).reduce(function(a, b) {
         return a.length > b.length ? a : b;
     });
 
