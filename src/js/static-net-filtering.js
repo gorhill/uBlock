@@ -923,7 +923,7 @@ const FilterAnchorHn = class extends FilterAnchorHnLeft {
     logData(details) {
         super.logData(details);
         details.pattern.push('^');
-        details.regex.push(restrSeparator);
+        details.regex.push('\\.?', restrSeparator);
     }
 
     toSelfie() {
@@ -1709,7 +1709,7 @@ const FilterHostnameDict = class {
 
     logData(details) {
         details.pattern.push('||', this.$h, '^');
-        details.regex.push(restrFromPlainPattern(this.$h), restrSeparator);
+        details.regex.push(restrFromPlainPattern(this.$h), '\\.?', restrSeparator);
     }
 
     toSelfie() {

@@ -254,9 +254,13 @@ const toBlockDocResult = function(url, hostname, logData) {
     // https://github.com/chrisaljoudi/uBlock/issues/1212
     //   Verify that the end of the match is anchored to the end of the
     //   hostname.
-    const end = match.index + match[0].length -
-                url.indexOf(hostname) - hostname.length;
-    return end === 0 || end === 1;
+    // https://github.com/uBlockOrigin/uAssets/issues/7619#issuecomment-653010310
+    //   Also match FQDN.
+    const hnpos = url.indexOf(hostname);
+    const hnlen = hostname.length;
+    const end = match.index + match[0].length - hnpos - hnlen;
+    return end === 0 || end === 1 ||
+           end === 2 && url.charCodeAt(hnpos + hnlen) === 0x2E /* '.' */;
 };
 
 /******************************************************************************/
