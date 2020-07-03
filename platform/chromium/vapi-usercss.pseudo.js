@@ -365,11 +365,11 @@ vAPI.DOMFilterer = class {
             let attr = node.getAttribute('style');
             if ( attr === null ) {
                 attr = '';
-            } else if (
-                attr.length !== 0 &&
-                attr.charCodeAt(attr.length - 1) !== 0x3B /* ';' */
-            ) {
-                attr += ';';
+            } else if ( attr.length !== 0 ) {
+                if ( attr.endsWith('display:none!important;') ) { continue; }
+                if ( attr.charCodeAt(attr.length - 1) !== 0x3B /* ';' */ ) {
+                    attr += ';';
+                }
             }
             node.setAttribute('style', attr + 'display:none!important;');
         }
