@@ -130,7 +130,7 @@ a.external-link {
   vertical-align: baseline!important;
 }
 .custom-check ul#clickingFrequency{
-  margin: .5em 0 1em -.5em;
+  margin: .5em 0 0 -.5em;
   padding:.5em 1em .3em .5em;
   border-radius: 8px;
   display: inline-block;

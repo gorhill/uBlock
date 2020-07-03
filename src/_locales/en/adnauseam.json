@@ -442,5 +442,9 @@
   "eventLoggingPrompt": {
     "message": "Activate debugging mode",
     "description": "prompt for toggle"
+  },
+  "removeAdsInPrivate": {
+    "message": "Remove ads collected in private mode",
+    "description": "English:Remove ads collected in private mode - settings page"
   }
 }

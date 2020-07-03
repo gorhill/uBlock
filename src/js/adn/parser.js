@@ -241,7 +241,6 @@
       ad = createAd(document.domain, targetUrl, { src: src, width: iw, height: ih });
 
       if (ad) {
-
         if (vAPI.prefs.logEvents) console.log('[PARSED] IMG-AD', ad);
         notifyAddon(ad);
         return true;
@@ -482,7 +481,13 @@
         return warnP("Ignoring Ad with targetUrl=" + target, arguments);
       }
 
-      return new Ad(network, target, data);
+      let newAd = new Ad(network, target, data);
+      // private flag
+      if (newAd && chrome.extension.inIncognitoContext) {
+        newAd.private = true;
+      }
+
+      return newAd;
     }
 
     const useShadowDOM = function () {

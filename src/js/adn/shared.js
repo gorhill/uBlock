@@ -620,7 +620,7 @@ const targetDomain = function (ad) {
 
   const dom = parseDomain(ad.resolvedTargetUrl || ad.targetUrl, true);
 
-  if (!dom) console.warn("Unable to parse domain: " + url);
+  if (!dom) console.warn("Unable to parse domain: " + ad.targetUrl);
 
   return dom;
 };

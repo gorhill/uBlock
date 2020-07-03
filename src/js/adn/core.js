@@ -865,7 +865,7 @@
 
   const adsForUI = function (pageUrl) {
     return {
-      data: adlist(pageUrl),
+      data: adlist(pageUrl, false, true),
       pageUrl: pageUrl,
       prefs: contentPrefs(),
       current: activeVisit(),
@@ -1653,9 +1653,9 @@
       dbug && console.log(i + ') '+name, headers[i].value);
 
       if (name === 'set-cookie' || name === 'set-cookie2') {
+        const domain = cookieAttr(cval, 'domain');
 
           const cval = headers[i].value.trim();
-          const domain = cookieAttr(cval, 'domain');
 
         if (1) { // don't block incoming cookies for 3rd party-requests coming from DNT-pages? [needs checking]
 
@@ -1715,7 +1715,7 @@
    * Omits text-ads if specified in preferences
    * Called also from tab.js::µb.updateBadgeAsync()
    */
-  const adlist = exports.adlist = function (pageUrl, currentOnly) {
+  const adlist = exports.adlist = function (pageUrl, currentOnly, isUI) {
     admap = admap || µb.userSettings.admap;
     const result = [], pages = pageUrl ?
       [ YaMD5.hashStr(pageUrl) ] : Object.keys(admap);
@@ -1724,9 +1724,19 @@
         const hashes = Object.keys(admap[pages[i]]);
         for (let j = 0; j < hashes.length; j++) {
           const ad = admap[pages[i]][hashes[j]];
+
           // ignore text-ads according to parseTextAds prefe
           if (ad && (µb.userSettings.parseTextAds || ad.contentType !== 'text')) {
-            if (!currentOnly || ad.current) result.push(ad);
+            if (!currentOnly || ad.current) {
+              if (isUI && ad.private) {
+                const clone = Object.assign({}, ad);
+                clone.hash = hashes[j];
+                result.push(clone)
+                console.log("hash", admap)
+              } else {
+                result.push(ad);
+              }
+            }
           }
         }
       }
@@ -1765,7 +1775,6 @@ const verifyAdBlockers = exports.verifyAdBlockers = function () {
     verifyAdBlockers();
     verifyFirefoxSetting();
     verifyOperaSetting(request);
-    //verifyPrivacyMode();
   };
 
   const verifyOperaSetting = exports.verifyOperaSetting = function (request) {
@@ -1805,32 +1814,6 @@ const verifyAdBlockers = exports.verifyAdBlockers = function () {
      }
    }
  }
-
-const verifyPrivacyMode = exports.verifyPrivacyMode = function(){
-    const notes = notifications;
-    let modified = false;
-    const isPrivateMode = function(callback) {
-      // only check this for firefox
-      const tpmFunction = browser.privacy.websites.trackingProtectionMode;
-      if (typeof tpmFunction === 'undefined') return; // if not firefox
-      const trackingProtectionMode = tpmFunction.get({});
-
-      trackingProtectionMode.then((got) => {
-        callback(got.value == "private_browsing");
-      });
-
-    };
-
-    isPrivateMode( function(on) {
-      console.log("Privacy", on)
-      if (on){
-        modified = addNotification(notes, PrivacyMode);
-      } else {
-        modified = removeNotification(notes, PrivacyMode);
-      }
-        modified && sendNotifications(notes);
-    })
-  };
 
   const verifyFirefoxSetting = exports.verifyFirefoxSetting = function () {
       const tpmFunction = browser.privacy.websites.trackingProtectionMode;
@@ -2017,6 +2000,41 @@ const verifyList = exports.verifyList = function (note, lists) {
 
     log('[CLEAR] ' + pre + ' ads cleared', admap);
   };
+
+  browser.windows.onRemoved.addListener(function(windowId){
+    // on browser closed
+    if (!µb.userSettings.removeAdsInPrivate) return;
+    let toBeRemoved = {}
+    const pages = Object.keys(admap);
+    for (let i = 0; admap && i < pages.length; i++) {
+      if (admap[pages[i]]) {
+        const hashes = Object.keys(admap[pages[i]]);
+        for (let j = 0; j < hashes.length; j++) {
+          const ad = admap[pages[i]][hashes[j]];
+          if (ad.private == true) {
+            // clear data & relocate to a new bin?
+            ad.contentData = {}
+            delete ad.title;
+            delete ad.pageTitle;
+            delete ad.pageUrl;
+            delete ad.resolvedTargetUrl;
+            delete ad.requestId;
+            // TODO: store ad-network
+            ad.adNetwork = parseHostname(ad.targetUrl)
+            delete ad.targetUrl;
+
+            const privatePageHash = YaMD5.hashStr("");
+            if (admap[privatePageHash] == undefined) {
+              admap[privatePageHash] = {}
+            }
+
+            admap[privatePageHash][hashes[j]] = ad;
+            delete admap[pages[i]]
+          }
+        }
+      }
+    }
+  });
 
   exports.importAds = function (request) {
     // try to parse imported ads in current format
