@@ -126,7 +126,7 @@ const fromCosmeticFilter = function(details) {
     // The longer the needle, the lower the number of false positives.
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1139
     //   Mind that there is no guarantee a selector has `\w` characters.
-    const needle = selector.match(/\w+|^.*$/g).reduce(function(a, b) {
+    const needle = selector.match(/\w+|\*/g).reduce(function(a, b) {
         return a.length > b.length ? a : b;
     });
 
