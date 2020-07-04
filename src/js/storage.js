@@ -825,7 +825,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
         // https://github.com/gorhill/uBlock/issues/2599
         //   convert hostname to punycode if needed
-        if ( parser.patternHasUnicode() && parser.toPunycode() === false ) {
+        if ( parser.patternHasUnicode() && parser.toASCII() === false ) {
             continue;
         }
         staticNetFilteringEngine.compile(parser, writer);

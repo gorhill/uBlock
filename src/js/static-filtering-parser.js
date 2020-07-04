@@ -104,6 +104,8 @@ const Parser = class {
         this.maxTokenLength = Number.MAX_SAFE_INTEGER;
         this.reIsLocalhostRedirect = /(?:0\.0\.0\.0|(?:broadcast|local)host|local|ip6-\w+)\b/;
         this.reHostname = /^[^\x00-\x24\x26-\x29\x2B\x2C\x2F\x3A-\x5E\x60\x7B-\x7F]+/;
+        this.reUnicodeChar = /[^\x00-\x7F]/;
+        this.reUnicodeChars = /[^\x00-\x7F]/g;
         this.punycoder = new URL(self.location);
         this.selectorCompiler = new this.SelectorCompiler(this);
         // TODO: reuse for network filtering analysis
@@ -631,7 +633,7 @@ const Parser = class {
         } else if (
             this.patternIsDubious() || (
                 this.patternHasUnicode() &&
-                this.toPunycode(true) === false
+                this.toASCII(true) === false
             )
         ) {
             this.markSpan(this.patternSpan, BITError);
@@ -1047,23 +1049,43 @@ const Parser = class {
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1118#issuecomment-650730158
     //   Be ready to deal with non-punycode-able Unicode characters.
-    toPunycode(dryrun = false) {
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/772
+    //   Encode Unicode characters beyond the hostname part.
+    toASCII(dryrun = false) {
         if ( this.patternHasUnicode() === false ) { return true; }
         const { i, len } = this.patternSpan;
         if ( len === 0 ) { return true; }
+        const patternIsRegex = this.patternIsRegex();
         let pattern = this.getNetPattern();
-        const match = this.reHostname.exec(this.pattern);
-        if ( match === null ) { return true; }
-        try {
-            this.punycoder.hostname = match[0].replace(/\*/g, '__asterisk__');
-        } catch(ex) {
-            return false;
+        // Punycode hostname part of the pattern.
+        if ( patternIsRegex === false ) {
+            const match = this.reHostname.exec(pattern);
+            if ( match === null ) { return true; }
+            try {
+                this.punycoder.hostname = match[0].replace(/\*/g, '__asterisk__');
+            } catch(ex) {
+                return false;
+            }
+            const hn = this.punycoder.hostname;
+            if ( hn === '' ) { return false; }
+            const punycoded = hn.replace(/__asterisk__/g, '*');
+            pattern = punycoded + pattern.slice(match.index + match[0].length);
         }
-        const hn = this.punycoder.hostname;
-        if ( hn === '' ) { return false; }
+        // Percent-encode remaining Unicode characters.
+        if ( this.reUnicodeChar.test(pattern) ) {
+            try {
+                pattern = pattern.replace(
+                    this.reUnicodeChars,
+                    s => encodeURIComponent(s)
+                );
+            } catch (ex) {
+                return false;
+            }
+        }
         if ( dryrun ) { return true; }
-        const punycoded = hn.replace(/__asterisk__/g, '*');
-        pattern = punycoded + this.pattern.slice(match.index + match[0].length);
+        if ( patternIsRegex ) {
+            pattern = `/${pattern}/`;
+        }
         const beg = this.slices[i+1];
         const end = this.slices[i+len+1];
         const raw = this.raw.slice(0, beg) + pattern + this.raw.slice(end);
