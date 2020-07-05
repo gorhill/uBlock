@@ -681,16 +681,11 @@ const filterToDOMInterface = (( ) => {
         for ( const elem of elems ) {
             const srcProp = netFilter1stSources[elem.localName];
             const src = elem[srcProp];
-            if ( typeof src === 'string' && reFilter.test(src) ) {
-                out.push({
-                    type: 'network',
-                    elem: elem,
-                    src: srcProp,
-                    opts: filterTypes[elem.localName],
-                });
-            } else if (
+            if (
+                typeof src === 'string' &&
+                    reFilter.test(src) ||
                 typeof elem.currentSrc === 'string' &&
-                reFilter.test(elem.currentSrc)
+                    reFilter.test(elem.currentSrc)
             ) {
                 out.push({
                     type: 'network',
