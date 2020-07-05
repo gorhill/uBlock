@@ -688,8 +688,7 @@ const filterToDOMInterface = (( ) => {
                     src: srcProp,
                     opts: filterTypes[elem.localName],
                 });
-            }
-            if (
+            } else if (
                 typeof elem.currentSrc === 'string' &&
                 reFilter.test(elem.currentSrc)
             ) {
