@@ -23,6 +23,8 @@ $script,redirect=noop.js
 *$redirect=empty
 *$xhr,redirect=empty
 
+*$csp=default-src 'none'
+
 
 
 
@@ -41,5 +43,10 @@ $script,redirect=noop.js
 ! can't mix csp with other types or redirect directives
 *$csp=default-src 'none',empty
 *$csp=default-src 'none',redirect=empty
-*$csp=default-src 'none',redirect=empty
+*$redirect=empty,csp=default-src 'none'
 *$csp=default-src 'none',xhr
+*$csp=default-src 'none',ghide
+*$csp=default-src 'none',csp=script-src 'none'
+
+! bad regex
+/(abc|def/$xhr
