@@ -760,12 +760,15 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     // Extract update frequency information
     const matches = head.match(/(?:^|\n)(?:!|# )[\t ]*Expires[\t ]*:[\t ]*(\d+)[\t ]*(h)?/i);
     if ( matches !== null ) {
-        let v = Math.max(parseInt(matches[1], 10), 1);
-        if ( matches[2] !== undefined ) {
-            v = Math.ceil(v / 24);
-        }
-        if ( v !== listEntry.updateAfter ) {
-            this.assets.registerAssetSource(assetKey, { updateAfter: v });
+        let v = parseInt(matches[1], 10);
+        if ( isNaN(v) === false ) {
+            if ( matches[2] !== undefined ) {
+                v = Math.ceil(v / 24);
+            }
+            v = Math.max(v, 1);
+            if ( v !== listEntry.updateAfter ) {
+                this.assets.registerAssetSource(assetKey, { updateAfter: v });
+            }
         }
     }
 };
