@@ -142,7 +142,7 @@
 	"urlhaus-1": {
 		"content": "filters",
 		"group": "malware",
-		"title": "Malware domains",
+		"title": "Online Malicious URL Blocklist",
 		"contentURL": [
 			"https://gitlab.com/curben/urlhaus-filter/raw/master/urlhaus-filter-online.txt",
 			"assets/thirdparties/urlhaus-filter/urlhaus-filter-online.txt"
