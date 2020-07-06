@@ -148,7 +148,7 @@
 			"assets/thirdparties/urlhaus-filter/urlhaus-filter-online.txt"
 		],
 		"cdnURLs": [
-			"https://cdn.statically.io/gl/curben/urlhaus-filter/raw/master/urlhaus-filter-online.txt",
+			"https://cdn.statically.io/gl/curben/urlhaus-filter/master/urlhaus-filter-online.txt",
 			"https://glcdn.githack.com/curben/urlhaus-filter/raw/master/urlhaus-filter-online.txt",
 			"https://gitcdn.xyz/repo/curbengh/urlhaus-filter/master/urlhaus-filter-online.txt",
 			"https://repo.or.cz/urlhaus-filter.git/blob_plain/refs/heads/master:/urlhaus-filter-online.txt"
