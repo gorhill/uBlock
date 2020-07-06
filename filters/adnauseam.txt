@@ -379,6 +379,10 @@ optoclick.net##.vjs-poster
 dailymotion.com##.gwd-page-content
 dailymotion.com##.gwd-page-container
 
+# dailymail.co.uk
+dailymail.co.uk###billBoard
+||www.dailymail.co.uk/static/mol-adverts/*$1p
+
 # mac-torrent-download.net
 @@||www.googletagmanager.com^$script,domain=mac-torrent-download.net
 mac-torrent-download.net##.ad-box > a > img
