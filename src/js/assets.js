@@ -255,7 +255,7 @@ api.fetchFilterList = async function(mainlistURL) {
             }
             if ( result instanceof Object === false ) { continue; }
             const content = result.content;
-            const slices = µBlock.processDirectives.split(content);
+            const slices = µBlock.preparseDirectives.split(content);
             for ( let i = 0, n = slices.length - 1; i < n; i++ ) {
                 const slice = content.slice(slices[i+0], slices[i+1]);
                 if ( (i & 1) !== 0 ) {

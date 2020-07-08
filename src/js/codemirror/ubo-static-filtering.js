@@ -25,6 +25,17 @@
 
 /******************************************************************************/
 
+{
+// >>>>> start of local scope
+
+/******************************************************************************/
+
+const redirectNames = new Map();
+const scriptletNames = new Map();
+const preparseDirectiveNames = new Set();
+
+/******************************************************************************/
+
 CodeMirror.defineMode('ubo-static-filtering', function() {
     const StaticFilteringParser = typeof vAPI === 'object'
         ? vAPI.StaticFilteringParser
@@ -32,9 +43,34 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
     if ( StaticFilteringParser instanceof Object === false ) { return; }
     const parser = new StaticFilteringParser({ interactive: true });
 
-    const reDirective = /^!#(?:if|endif|include)\b/;
+    const rePreparseDirectives = /^!#(?:if|endif|include)\b/;
+    const rePreparseIfDirective = /^(!#if !?)(.+)$/;
     let parserSlot = 0;
     let netOptionValueMode = false;
+
+    const colorCommentSpan = function(stream) {
+        if ( rePreparseDirectives.test(stream.string) === false ) {
+            stream.skipToEnd();
+            return 'comment';
+        }
+        const match = rePreparseIfDirective.exec(stream.string);
+        if ( match === null ) {
+            stream.skipToEnd();
+            return 'variable strong';
+        }
+        if ( stream.pos < match[1].length ) {
+            stream.pos = match[1].length;
+            return 'variable strong';
+        }
+        stream.skipToEnd();
+        if (
+            preparseDirectiveNames.size === 0 ||
+            preparseDirectiveNames.has(match[2].trim())
+        ) {
+            return 'variable strong';
+        }
+        return 'error strong';
+    };
 
     const colorExtHTMLPatternSpan = function(stream) {
         const { i } = parser.patternSpan;
@@ -202,10 +238,7 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
             return 'comment';
         }
         if ( parser.category === parser.CATComment ) {
-            stream.skipToEnd();
-            return reDirective.test(stream.string)
-                ? 'variable strong'
-                : 'comment';
+            return colorCommentSpan(stream);
         }
         if ( (parser.slices[parserSlot] & parser.BITIgnore) !== 0 ) {
             stream.pos += parser.slices[parserSlot+2];
@@ -243,6 +276,23 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
             style = style.trim();
             return style !== '' ? style : null;
         },
+        setHints: function(details) {
+            for ( const [ name, desc ] of details.redirectResources ) {
+                const displayText = desc.aliasOf !== ''
+                    ? `${name} (${desc.aliasOf})`
+                    : '';
+                if ( desc.canRedirect ) {
+                    redirectNames.set(name, displayText);
+                }
+                if ( desc.canInject && name.endsWith('.js') ) {
+                    scriptletNames.set(name.slice(0, -3), displayText);
+                }
+            }
+            details.preparseDirectives.forEach(a => {
+                preparseDirectiveNames.add(a);
+            });
+            initHints();
+        },
     };
 });
 
@@ -251,17 +301,13 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
 // Following code is for auto-completion. Reference:
 //   https://codemirror.net/demo/complete.html
 
-(( ) => {
-    if ( typeof vAPI !== 'object' ) { return; }
-
+const initHints = function() {
     const StaticFilteringParser = typeof vAPI === 'object'
         ? vAPI.StaticFilteringParser
         : self.StaticFilteringParser;
     if ( StaticFilteringParser instanceof Object === false ) { return; }
 
     const parser = new StaticFilteringParser();
-    const redirectNames = new Map();
-    const scriptletNames = new Map();
     const proceduralOperatorNames = new Map(
         Array.from(parser.proceduralOperatorTokens).filter(item => {
             return (item[1] & 0b01) !== 0;
@@ -380,7 +426,28 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
         return pickBestHints(cursor, matchLeft[1], matchRight[1], hints);
     };
 
-    const getHints = function(cm) {
+    const getCommentHints = function(cursor, line) {
+        const beg = cursor.ch;
+        if ( line.startsWith('!#if ') ) {
+            const matchLeft = /^!#if !?(\w*)$/.exec(line.slice(0, beg));
+            const matchRight = /^\w*/.exec(line.slice(beg));
+            if ( matchLeft === null || matchRight === null ) { return; }
+            const hints = [];
+            for ( const hint of preparseDirectiveNames ) {
+                hints.push(hint);
+            }
+            return pickBestHints(cursor, matchLeft[1], matchRight[0], hints);
+        }
+        if ( line.startsWith('!#') && line !== '!#endif' ) {
+            const matchLeft = /^!#(\w*)$/.exec(line.slice(0, beg));
+            const matchRight = /^\w*/.exec(line.slice(beg));
+            if ( matchLeft === null || matchRight === null ) { return; }
+            const hints = [ 'if ', 'endif\n', 'include ' ];
+            return pickBestHints(cursor, matchLeft[1], matchRight[0], hints);
+        }
+    };
+
+    CodeMirror.registerHelper('hint', 'ubo-static-filtering', function(cm) {
         const cursor = cm.getCursor();
         const line = cm.getLine(cursor.line);
         parser.analyze(line);
@@ -393,25 +460,15 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
         if ( parser.category === parser.CATStaticNetFilter ) {
             return getNetHints(cursor, line);
         }
-    };
-
-    vAPI.messaging.send('dashboard', {
-        what: 'getResourceDetails'
-    }).then(response => {
-        if ( Array.isArray(response) === false ) { return; }
-        for ( const [ name, details ] of response ) {
-            const displayText = details.aliasOf !== ''
-                ? `${name} (${details.aliasOf})`
-                : '';
-            if ( details.canRedirect ) {
-                redirectNames.set(name, displayText);
-            }
-            if ( details.canInject && name.endsWith('.js') ) {
-                scriptletNames.set(name.slice(0, -3), displayText);
-            }
+        if ( parser.category === parser.CATComment ) {
+            return getCommentHints(cursor, line);
         }
-        CodeMirror.registerHelper('hint', 'ubo-static-filtering', getHints);
     });
-})();
+};
+
+/******************************************************************************/
+
+// <<<<< end of local scope
+}
 
 /******************************************************************************/

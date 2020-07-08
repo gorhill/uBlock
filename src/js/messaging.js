@@ -1151,8 +1151,11 @@ const onMessage = function(request, sender, callback) {
         response = µb.canUpdateShortcuts;
         break;
 
-    case 'getResourceDetails':
-        response = µb.redirectEngine.getResourceDetails();
+    case 'getAutoCompleteDetails':
+        response = {
+            redirectResources: µb.redirectEngine.getResourceDetails(),
+            preparseDirectives: Array.from(µb.preparseDirectives.tokens.keys()),
+        };
         break;
 
     case 'getRules':

@@ -42,6 +42,16 @@
 
     uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 
+    const hints = await vAPI.messaging.send('dashboard', {
+        what: 'getAutoCompleteDetails'
+    });
+    if ( hints instanceof Object ) {
+        const mode = cmEditor.getMode();
+        if ( mode.setHints instanceof Function ) {
+            mode.setHints(hints);
+        }
+    }
+
     const details = await vAPI.messaging.send('default', {
         what : 'getAssetContent',
         url: assetKey,

@@ -802,7 +802,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     //    https://adblockplus.org/en/filters
     const staticNetFilteringEngine = this.staticNetFilteringEngine;
     const staticExtFilteringEngine = this.staticExtFilteringEngine;
-    const lineIter = new this.LineIterator(this.processDirectives.prune(rawText));
+    const lineIter = new this.LineIterator(this.preparseDirectives.prune(rawText));
     const parser = new vAPI.StaticFilteringParser();
 
     parser.setMaxTokenLength(this.urlTokenizer.MAX_TOKEN_LENGTH);
@@ -857,7 +857,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
 // https://github.com/AdguardTeam/AdguardBrowserExtension/issues/917
 
-µBlock.processDirectives = {
+µBlock.preparseDirectives = {
     // This method returns an array of indices, corresponding to position in
     // the content string which should alternatively be parsed and discarded.
     split: function(content) {
@@ -929,6 +929,13 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         [ 'cap_html_filtering', 'html_filtering' ],
         [ 'cap_user_stylesheet', 'user_stylesheet' ],
         [ 'false', 'false' ],
+        // Compatibility with other blockers
+        // https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters#adguard-specific
+        [ 'adguard', 'adguard' ],
+        [ 'adguard_ext_chromium', 'chromium' ],
+        [ 'adguard_ext_edge', 'edge' ],
+        [ 'adguard_ext_firefox', 'firefox' ],
+        [ 'adguard_ext_opera', 'chromium' ],
     ]),
 };
 

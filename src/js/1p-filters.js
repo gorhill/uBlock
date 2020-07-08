@@ -45,6 +45,16 @@ const cmEditor = new CodeMirror(document.getElementById('userFilters'), {
 
 uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 
+vAPI.messaging.send('dashboard', {
+    what: 'getAutoCompleteDetails'
+}).then(response => {
+    if ( response instanceof Object === false ) { return; }
+    const mode = cmEditor.getMode();
+    if ( mode.setHints instanceof Function ) {
+        mode.setHints(response);
+    }
+});
+
 let cachedUserFilters = '';
 
 /******************************************************************************/
