@@ -918,6 +918,21 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         return out.join('\n');
     },
 
+    getHints: function() {
+        const out = [];
+        const vals = new Set();
+        for ( const [ key, val ] of this.tokens ) {
+            if ( vals.has(val) ) { continue; }
+            vals.add(val);
+            out.push(key);
+        }
+        return out;
+    },
+
+    getTokens: function() {
+        return Array.from(this.tokens.keys());
+    },
+
     tokens: new Map([
         [ 'ext_ublock', 'ublock' ],
         [ 'env_chromium', 'chromium' ],

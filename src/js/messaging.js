@@ -1154,7 +1154,8 @@ const onMessage = function(request, sender, callback) {
     case 'getAutoCompleteDetails':
         response = {
             redirectResources: µb.redirectEngine.getResourceDetails(),
-            preparseDirectives: Array.from(µb.preparseDirectives.tokens.keys()),
+            preparseDirectiveTokens: µb.preparseDirectives.getTokens(),
+            preparseDirectiveHints: µb.preparseDirectives.getHints(),
         };
         break;
 

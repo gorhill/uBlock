@@ -32,7 +32,8 @@
 
 const redirectNames = new Map();
 const scriptletNames = new Map();
-const preparseDirectiveNames = new Set();
+const preparseDirectiveTokens = new Set();
+const preparseDirectiveHints = [];
 
 /******************************************************************************/
 
@@ -64,8 +65,8 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
         }
         stream.skipToEnd();
         if (
-            preparseDirectiveNames.size === 0 ||
-            preparseDirectiveNames.has(match[2].trim())
+            preparseDirectiveTokens.size === 0 ||
+            preparseDirectiveTokens.has(match[2].trim())
         ) {
             return 'variable strong';
         }
@@ -288,9 +289,10 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
                     scriptletNames.set(name.slice(0, -3), displayText);
                 }
             }
-            details.preparseDirectives.forEach(a => {
-                preparseDirectiveNames.add(a);
+            details.preparseDirectiveTokens.forEach(a => {
+                preparseDirectiveTokens.add(a);
             });
+            preparseDirectiveHints.push(...details.preparseDirectiveHints);
             initHints();
         },
     };
@@ -432,11 +434,12 @@ const initHints = function() {
             const matchLeft = /^!#if !?(\w*)$/.exec(line.slice(0, beg));
             const matchRight = /^\w*/.exec(line.slice(beg));
             if ( matchLeft === null || matchRight === null ) { return; }
-            const hints = [];
-            for ( const hint of preparseDirectiveNames ) {
-                hints.push(hint);
-            }
-            return pickBestHints(cursor, matchLeft[1], matchRight[0], hints);
+            return pickBestHints(
+                cursor,
+                matchLeft[1],
+                matchRight[0],
+                preparseDirectiveHints
+            );
         }
         if ( line.startsWith('!#') && line !== '!#endif' ) {
             const matchLeft = /^!#(\w*)$/.exec(line.slice(0, beg));
