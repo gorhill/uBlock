@@ -36,6 +36,8 @@ const cmEditor = new CodeMirror(document.getElementById('userFilters'), {
         'Ctrl-Space': 'autocomplete',
         'Tab': 'toggleComment',
     },
+    foldGutter: true,
+    gutters: [ 'CodeMirror-linenumbers', 'CodeMirror-foldgutter' ],
     lineNumbers: true,
     lineWrapping: true,
     matchBrackets: true,

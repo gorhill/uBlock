@@ -862,6 +862,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     // the content string which should alternatively be parsed and discarded.
     split: function(content) {
         const reIf = /^!#(if|endif)\b([^\n]*)(?:[\n\r]+|$)/gm;
+        const soup = vAPI.webextFlavor.soup;
         const stack = [];
         const shouldDiscard = ( ) => stack.some(v => v);
         const parts = [ 0 ];
@@ -878,10 +879,8 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
                 if ( target ) { expr = expr.slice(1); }
                 const token = this.tokens.get(expr);
                 const startDiscard =
-                    token === 'false' &&
-                        target === false ||
-                    token !== undefined &&
-                        vAPI.webextFlavor.soup.has(token) === target;
+                    token === 'false' && target === false ||
+                    token !== undefined && soup.has(token) === target;
                 if ( discard === false && startDiscard ) {
                     parts.push(match.index);
                     discard = true;
@@ -930,7 +929,12 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     },
 
     getTokens: function() {
-        return Array.from(this.tokens.keys());
+        const out = new Map();
+        const soup = vAPI.webextFlavor.soup;
+        for ( const [ key, val ] of this.tokens ) {
+            out.set(key, val !== 'false' && soup.has(val));
+        }
+        return Array.from(out);
     },
 
     tokens: new Map([
@@ -947,6 +951,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         // Compatibility with other blockers
         // https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters#adguard-specific
         [ 'adguard', 'adguard' ],
+        [ 'adguard_app_windows', 'false' ],
         [ 'adguard_ext_chromium', 'chromium' ],
         [ 'adguard_ext_edge', 'edge' ],
         [ 'adguard_ext_firefox', 'firefox' ],

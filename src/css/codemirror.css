@@ -52,6 +52,7 @@ div.CodeMirror span.CodeMirror-matchingbracket {
     color: unset;
     }
 .CodeMirror-matchingbracket {
+    background-color: #afa;
     color: inherit !important;
     font-weight: bold;
     }

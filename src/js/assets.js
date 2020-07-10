@@ -276,7 +276,7 @@ api.fetchFilterList = async function(mainlistURL) {
                     if ( sublistURLs.has(subURL) ) { continue; }
                     sublistURLs.add(subURL);
                     out.push(
-                        slice.slice(lastIndex, match.index),
+                        slice.slice(lastIndex, match.index + match[0].length),
                         `! >>>>>>>> ${subURL}`,
                         api.fetchText(subURL),
                         `! <<<<<<<< ${subURL}`

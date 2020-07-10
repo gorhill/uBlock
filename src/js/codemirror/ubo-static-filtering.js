@@ -32,7 +32,7 @@
 
 const redirectNames = new Map();
 const scriptletNames = new Map();
-const preparseDirectiveTokens = new Set();
+const preparseDirectiveTokens = new Map();
 const preparseDirectiveHints = [];
 
 /******************************************************************************/
@@ -44,8 +44,8 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
     if ( StaticFilteringParser instanceof Object === false ) { return; }
     const parser = new StaticFilteringParser({ interactive: true });
 
-    const rePreparseDirectives = /^!#(?:if|endif|include)\b/;
-    const rePreparseIfDirective = /^(!#if !?)(.+)$/;
+    const rePreparseDirectives = /^!#(?:if|endif|include )\b/;
+    const rePreparseIfDirective = /^(!#if ?)(.*)$/;
     let parserSlot = 0;
     let netOptionValueMode = false;
 
@@ -60,17 +60,28 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
             return 'variable strong';
         }
         if ( stream.pos < match[1].length ) {
-            stream.pos = match[1].length;
+            stream.pos += match[1].length;
             return 'variable strong';
         }
         stream.skipToEnd();
-        if (
-            preparseDirectiveTokens.size === 0 ||
-            preparseDirectiveTokens.has(match[2].trim())
-        ) {
-            return 'variable strong';
+        if ( match[1].endsWith(' ') === false ) {
+            return 'error strong';
         }
-        return 'error strong';
+        if ( preparseDirectiveTokens.size === 0 ) {
+            return 'positive strong';
+        }
+        let token = match[2];
+        const not = token.startsWith('!');
+        if ( not ) {
+            token = token.slice(1);
+        }
+        if ( preparseDirectiveTokens.has(token) === false ) {
+            return 'error strong';
+        }
+        if ( not !== preparseDirectiveTokens.get(token) ) {
+            return 'positive strong';
+        }
+        return 'negative strong';
     };
 
     const colorExtHTMLPatternSpan = function(stream) {
@@ -289,8 +300,8 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
                     scriptletNames.set(name.slice(0, -3), displayText);
                 }
             }
-            details.preparseDirectiveTokens.forEach(a => {
-                preparseDirectiveTokens.add(a);
+            details.preparseDirectiveTokens.forEach(([ a, b ]) => {
+                preparseDirectiveTokens.set(a, b);
             });
             preparseDirectiveHints.push(...details.preparseDirectiveHints);
             initHints();
@@ -468,6 +479,63 @@ const initHints = function() {
         }
     });
 };
+
+/******************************************************************************/
+
+CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
+
+    const foldIfEndif = function(startLineNo, startLine, cm) {
+        const lastLineNo = cm.lastLine();
+        let endLineNo = startLineNo;
+        let depth = 1;
+        while ( endLineNo < lastLineNo ) {
+            endLineNo += 1;
+            const line = cm.getLine(endLineNo);
+            if ( line.startsWith('!#endif') ) {
+                depth -= 1;
+                if ( depth === 0 ) {
+                    return {
+                        from: CodeMirror.Pos(startLineNo, startLine.length),
+                        to: CodeMirror.Pos(endLineNo, 0)
+                    };
+                }
+            }
+            if ( line.startsWith('!#if') ) {
+                depth += 1;
+            }
+        }
+    };
+
+    const foldInclude = function(startLineNo, startLine, cm) {
+        const lastLineNo = cm.lastLine();
+        let endLineNo = startLineNo + 1;
+        if ( endLineNo >= lastLineNo ) { return; }
+        if ( cm.getLine(endLineNo).startsWith('! >>>>>>>> ') === false ) {
+            return;
+        }
+        while ( endLineNo < lastLineNo ) {
+            endLineNo += 1;
+            const line = cm.getLine(endLineNo);
+            if ( line.startsWith('! <<<<<<<< ') ) {
+                return {
+                    from: CodeMirror.Pos(startLineNo, startLine.length),
+                    to: CodeMirror.Pos(endLineNo, line.length)
+                };
+            }
+        }
+    };
+
+    return function(cm, start) {
+        const startLineNo = start.line;
+        const startLine = cm.getLine(startLineNo);
+        if ( startLine.startsWith('!#if') ) {
+            return foldIfEndif(startLineNo, startLine, cm);
+        }
+        if ( startLine.startsWith('!#include ') ) {
+            return foldInclude(startLineNo, startLine, cm);
+        }
+    };
+})());
 
 /******************************************************************************/
 
