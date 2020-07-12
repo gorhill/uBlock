@@ -252,6 +252,12 @@
         if ( parser.category !== parser.CATStaticExtFilter ) { return false; }
 
         if ( (parser.flavorBits & parser.BITFlavorUnsupported) !== 0 ) {
+            const who = writer.properties.get('assetKey') || '?';
+            µb.logger.writeOne({
+                realm: 'message',
+                type: 'error',
+                text: `Invalid extended filter in ${who}: ${parser.raw}`
+            });
             return true;
         }
 
