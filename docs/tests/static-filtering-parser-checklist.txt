@@ -25,7 +25,10 @@ $script,redirect=noop.js
 
 *$csp=default-src 'none'
 
-
+*$all,~document
+*$all,~popup
+*$all,~inline-script
+*$all,~inline-font
 
 
 !--------------------
@@ -50,3 +53,9 @@ $script,redirect=noop.js
 
 ! bad regex
 /(abc|def/$xhr
+
+! https://github.com/gorhill/uBlock/issues/2385#issuecomment-494078763
+*$~document
+*$~popup
+*$~inline-script
+*$~inline-font
