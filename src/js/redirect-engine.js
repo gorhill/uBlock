@@ -460,7 +460,7 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
     let type,
         redirect = '',
         srchns = [];
-    for ( const option of matches[3].split(',') ) {
+    for ( const option of matches[3].trim().split(/,/) ) {
         if ( option.startsWith('redirect=') ) {
             redirect = option.slice(9);
             continue;
