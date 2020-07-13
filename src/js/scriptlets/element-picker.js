@@ -267,7 +267,7 @@ const resourceURLsFromElement = function(elem) {
 // https://github.com/uBlockOrigin/uBlock-issues/issues/1071
 const resourceURLsFromSrcset = function(elem, out) {
     let srcset = elem.srcset;
-    if ( typeof srcset !== 'string' && srcset === '' ) { return; }
+    if ( typeof srcset !== 'string' || srcset === '' ) { return; }
     for(;;) {
         // trim whitespace
         srcset = srcset.trim();
