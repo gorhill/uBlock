@@ -341,7 +341,6 @@
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/16.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters"
 	},
-	
 	"GRC-0": {
 		"content": "filters",
 		"group": "regions",
