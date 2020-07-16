@@ -216,7 +216,7 @@
         self.EventTarget.prototype.addEventListener,
         {
             apply: function(target, thisArg, args) {
-                const type = args[0].toString();
+                const type = String(args[0]);
                 const handler = String(args[1]);
                 if (
                     needle1.test(type) === false ||
@@ -238,7 +238,7 @@
         self.EventTarget.prototype.addEventListener,
         {
             apply: function(target, thisArg, args) {
-                const type = args[0].toString();
+                const type = String(args[0]);
                 const handler = String(args[1]);
                 log('uBO: addEventListener("%s", %s)', type, handler);
                 return target.apply(thisArg, args);
