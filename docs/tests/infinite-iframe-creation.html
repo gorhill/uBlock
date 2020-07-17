@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Infinite iframe creation</title>
+</head>
+<body>
+<h1>Infinite iframe creation</h1>
+<div style="display:flex;flex-wrap:wrap;">
+<div class="iframeContainer"></div>
+<div class="iframeContainer"></div>
+<div class="iframeContainer"></div>
+<div class="iframeContainer"></div>
+</div>
+<script>
+let containers = document.querySelectorAll('.iframeContainer');
+let iContainer = 0;
+function randomStr(size) {
+    const part = Math.random().toString().slice(2);
+    return part.repeat((size + part.length - 1) / part.length);
+}
+function createFrame() {
+    iContainer += 1;
+    const i = iContainer % containers.length;
+    const container = containers[i];
+    if ( container.firstElementChild !== null ) {
+        container.firstElementChild.remove();
+    }
+    const iframe = document.createElement('iframe');
+    iframe.src = 'plagiomnium_affine_laminazellen.jpeg?_=' + randomStr(10000);
+    container.appendChild(iframe);
+    setTimeout(( ) => {
+        createFrame();
+    }, 333);
+}
+createFrame();
+</script>
+<div><a href="https://commons.wikimedia.org/wiki/File:Plagiomnium_affine_laminazellen.jpeg">Image from commons.wikimedia.org</a></div>
+</body>
+</html>
