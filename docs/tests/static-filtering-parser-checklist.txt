@@ -17,6 +17,13 @@
 !-----------------------
 ! Parsing should succeed
 !-----------------------
+
+! valid patterns
+a*
+|*
+||*
+
+! valid options
 $script,redirect=noop.js
 *$empty
 *$xhr,empty
@@ -35,6 +42,15 @@ $script,redirect=noop.js
 ! Parsing should fail
 !--------------------
 
+! bad patterns
+a
+|
+||
+$
+
+! bad regex
+/(abc|def/$xhr
+
 ! can't redirect without type (except to `empty`)
 *$redirect=noop.js
 
@@ -50,9 +66,6 @@ $script,redirect=noop.js
 *$csp=default-src 'none',xhr
 *$csp=default-src 'none',ghide
 *$csp=default-src 'none',csp=script-src 'none'
-
-! bad regex
-/(abc|def/$xhr
 
 ! https://github.com/gorhill/uBlock/issues/2385#issuecomment-494078763
 *$~document
