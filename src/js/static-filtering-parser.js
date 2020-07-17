@@ -636,7 +636,11 @@ const Parser = class {
                 this.toASCII(true) === false
             )
         ) {
-            this.markSpan(this.patternSpan, BITError);
+            this.markSlices(
+                this.patternLeftAnchorSpan.i,
+                this.optionsAnchorSpan.i,
+                BITError
+            );
         }
         this.netOptionsIterator.init();
     }
@@ -908,12 +912,17 @@ const Parser = class {
     // Examples of dubious filter content:
     //   - Spaces characters
     //   - Single character other than `*` wildcard
+    //   - Zero-length pattern with anchors
+    //     https://github.com/ryanbr/fanboy-adblock/issues/1384
     patternIsDubious() {
         return hasBits(this.patternBits, BITSpace) || (
             this.patternBits !== BITAsterisk &&
-            this.optionsSpan.len === 0 &&
-            this.patternSpan.len === 3 &&
-            this.slices[this.patternSpan.i+2] === 1
+            this.optionsSpan.len === 0 && (
+                this.patternSpan.len === 0 &&
+                    this.patternLeftAnchorSpan.len !== 0 ||
+                this.patternSpan.len === 3 &&
+                    this.slices[this.patternSpan.i+2] === 1
+            )
         );
     }
 

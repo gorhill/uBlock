@@ -252,15 +252,15 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
         if ( parser.category === parser.CATComment ) {
             return colorCommentSpan(stream);
         }
-        if ( (parser.slices[parserSlot] & parser.BITIgnore) !== 0 ) {
-            stream.pos += parser.slices[parserSlot+2];
-            parserSlot += 3;
-            return 'comment';
-        }
         if ( (parser.slices[parserSlot] & parser.BITError) !== 0 ) {
             stream.pos += parser.slices[parserSlot+2];
             parserSlot += 3;
             return 'error';
+        }
+        if ( (parser.slices[parserSlot] & parser.BITIgnore) !== 0 ) {
+            stream.pos += parser.slices[parserSlot+2];
+            parserSlot += 3;
+            return 'comment';
         }
         if ( parser.category === parser.CATStaticExtFilter ) {
             return colorExtSpan(stream);
