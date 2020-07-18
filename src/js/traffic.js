@@ -243,9 +243,14 @@ const onBeforeRootFrameRequest = function(fctxt) {
 
 // https://github.com/gorhill/uBlock/issues/3208
 //   Mind case insensitivity.
-
+// https://github.com/uBlockOrigin/uBlock-issues/issues/1147
+//   Do not strict-block if the filter pattern does not contain at least one
+//   token character.
 const toBlockDocResult = function(url, hostname, logData) {
     if ( typeof logData.regex !== 'string' ) { return false; }
+    if ( typeof logData.raw === 'string' && /\w/.test(logData.raw) === false ) {
+        return false;
+    }
     const re = new RegExp(logData.regex, 'i');
     const match = re.exec(url.toLowerCase());
     if ( match === null ) { return false; }
