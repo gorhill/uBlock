@@ -552,8 +552,8 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Vitlistans direktiv dikterar på vilka webbplatser uBlock Origin ska inaktiveras. En post per rad. Ogiltiga direktiv kommer tyst att ignoreras och kommenteras ut.",
-    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+    "message": "De pålitliga webbplatsdirektiven dikterar på vilka webbplatser uBlock Origin bör inaktiveras. En post per rad. Ogiltiga direktiv ignoreras och kommenteras ut.",
+    "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
     "message": "Importera och lägg till",
@@ -565,7 +565,7 @@
   },
   "whitelistExportFilename": {
     "message": "min-ublock-vitlista_{{datetime}}.txt",
-    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+    "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
     "message": "Verkställ ändringar",

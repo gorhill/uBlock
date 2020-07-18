@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Whitelist",
+    "message": "Vertrouwde websites",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -552,8 +552,8 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "De whitelist-instructies schrijven voor op welke webpagina’s uBlock Origin dient te worden uitgeschakeld. Eén vermelding per regel. Ongeldige instructies worden zonder mededeling genegeerd en uitgecommentarieerd.",
-    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+    "message": "De vertrouwde-website-instructies schrijven voor op welke webpagina’s uBlock Origin dient te worden uitgeschakeld. Eén vermelding per regel. Ongeldige instructies worden zonder mededeling genegeerd en uitgecommentarieerd.",
+    "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
     "message": "Importeren en toevoegen...",
@@ -564,8 +564,8 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "mijn-ublock-whitelist_{{datetime}}.txt",
-    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+    "message": "mijn-ublock-vertrouwde-websites_{{datetime}}.txt",
+    "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
     "message": "Wijzigingen toepassen",

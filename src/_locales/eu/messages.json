@@ -553,7 +553,7 @@
   },
   "whitelistPrompt": {
     "message": "Zerrenda zuriaren direktibek uBlock zeintzu web orrietan desgaituko den zehazten dute. Sarrera bat lerroko. Baliogabeko ostalari izenak ezikusiko dira.",
-    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+    "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
     "message": "Inportatu eta gehitu",
@@ -565,7 +565,7 @@
   },
   "whitelistExportFilename": {
     "message": "nire-ublock-zerrendazuria_{{datetime}}.txt",
-    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+    "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
     "message": "Aplikatu aldaketak",

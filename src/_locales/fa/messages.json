@@ -553,7 +553,7 @@
   },
   "whitelistPrompt": {
     "message": "دستور العمل‌های لیست سفید حکم می‌کند که uBlock₀ باید بر روی کدام یک از صفحات وب غیر فعال باشد. در هر خط فقط یک مورد. دستور العمل‌های نامعتبر بدون اشاره ای نادیده گرفته شده و بیرون انداخته می‌شوند.",
-    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+    "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
     "message": "وارد کردن و الحاق",
@@ -565,7 +565,7 @@
   },
   "whitelistExportFilename": {
     "message": "my-ublock-whitelist_{{datetime}}.txt",
-    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+    "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
     "message": "اعمال تغییرات",

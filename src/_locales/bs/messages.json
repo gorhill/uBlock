@@ -553,7 +553,7 @@
   },
   "whitelistPrompt": {
     "message": "Direktive bijele liste govore na kojim web stranicama bi uBlock Origin trebao biti isključen. Jedna stavka po redu. Netačne direktive će biti ignorisane i zakomentirane.",
-    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+    "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
     "message": "Uvezi i dodaj",
@@ -565,7 +565,7 @@
   },
   "whitelistExportFilename": {
     "message": "my-ublock-whitelist_{{datetime}}.txt",
-    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+    "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
     "message": "Primijeni promjene",

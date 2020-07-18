@@ -553,7 +553,7 @@
   },
   "whitelistPrompt": {
     "message": "uBlock Origin అచేతనబడించిన హోస్టూల జాబితా, ఇది మీరు కూర్చినది,. ఒక్కో పంక్తికి ఒక్కో నమోదు. చెల్లని నమోదులు మౌనంగా విస్మరించబడుతాయి.",
-    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+    "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
     "message": "దిగుమతిచేసి పోడిగించుము",
@@ -565,7 +565,7 @@
   },
   "whitelistExportFilename": {
     "message": "my-ublock-whitelist_{{datetime}}.txt",
-    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+    "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
     "message": "మార్పులను భద్రపరచు",

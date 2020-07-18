@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Hvidliste",
+    "message": "Whitelist",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -552,8 +552,8 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Hvidlistereglerne afgør, på hvilke sider uBlock Origin skal være slået fra. Kun én post pr. linje. Ugyldige regler ignoreres upåagtet og udkommenteres.",
-    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+    "message": "Brugerdefineret liste over værtsnavne hvor uBlock₀ vil være deaktiveret. Kun et værtsnavn pr. linje. Ugyldige værtsnavne ignoreres.",
+    "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
     "message": "Importér og tilføj",
@@ -565,7 +565,7 @@
   },
   "whitelistExportFilename": {
     "message": "min-ublock-whitelist_{{datetime}}.txt",
-    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+    "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
     "message": "Effektuér ændringer",

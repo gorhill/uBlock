@@ -552,8 +552,8 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "הרשומות ברשימה הלבנה מציינות באילו דפי אינטרנט uBlock Origin לא יהיה פעיל. רשומה אחת בכל שורה. רשומות לא חוקיות תתעלמנה בשקט ויסומנו כהערות.",
-    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+    "message": "רשימת שמות המתחם שלך בהם uBlock₀ לא יהיה פעיל. רשומה אחת בכל שורה. שמות מתחם לא חוקיים לא יפורשו ולא תהיה התראה לכך.",
+    "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
     "message": "ייבא וצרף",
@@ -565,7 +565,7 @@
   },
   "whitelistExportFilename": {
     "message": "my-ublock-whitelist_{{datetime}}.txt",
-    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+    "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
     "message": "החל שינויים",

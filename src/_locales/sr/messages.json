@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Дозвољени домени",
+    "message": "Бела листа",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -553,7 +553,7 @@
   },
   "whitelistPrompt": {
     "message": "Смернице дозвољених домена диктирају на којим веб страницама би uBlock Origin требало бити онемогућен. Један унос по реду. Неисправне смернице ће бити тихо занемарене.",
-    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+    "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
     "message": "Увези и додај",
@@ -565,7 +565,7 @@
   },
   "whitelistExportFilename": {
     "message": "моја-ublock-листа_дозвољених_домена{{datetime}}.txt",
-    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+    "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
     "message": "Примени промене",

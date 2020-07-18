@@ -552,8 +552,8 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "القائمة البيضاء تشيرللصفحات التي سوف يتم تعطيل uBlock₀ فيها. مدخل واحد لكل سطر. الفلاتر الغير صحيحه سوف يتم تجاهلها وإستبعادها.",
-    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+    "message": "القائمة الخاصه التي سوف يتم تجاهلها من قبل uBlock₀. رابط واحد كل سطر.\nالروابط الغير صحيحه سوف يتم تجاهلها.",
+    "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
     "message": "استيراد",
@@ -565,7 +565,7 @@
   },
   "whitelistExportFilename": {
     "message": "my-ublock-whitelist_{{datetime}}.txt",
-    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+    "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
     "message": "حفظ التغيرات",

@@ -553,7 +553,7 @@
   },
   "whitelistPrompt": {
     "message": "Lista osoitteista, joissa haluat kytkeä uBlock₀:n pois päältä. Kirjoita yksi osoite kullekin riville. Virheelliset säännöt ohitetaan.",
-    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+    "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
     "message": "Tuo ja lisää",
@@ -565,7 +565,7 @@
   },
   "whitelistExportFilename": {
     "message": "minun-ublock-valkolista_{{datetime}}.txt",
-    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+    "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
     "message": "Vahvista muutokset",

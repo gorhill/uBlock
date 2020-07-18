@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Lista branca",
+    "message": "Sites confiáveis",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -552,8 +552,8 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Sua lista branca de servidores para qual o uBlock Origin será desativado. Uma regra por linha. Os servidores inválidos serão ignorados silenciosamente.",
-    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+    "message": "As diretivas de sites confiáveis ditam em quais páginas da Web o uBlock Origin deve ser desativado. Uma entrada por linha. As diretivas inválidas serão silenciosamente ignoradas e comentadas.",
+    "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
     "message": "Importar e adicionar",
@@ -564,8 +564,8 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "minha-listabranca-ublock_{{datetime}}.txt",
-    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+    "message": "minha-lista-de-sites-confiáveis_{{datetime}}.txt",
+    "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
     "message": "Aplicar alterações",

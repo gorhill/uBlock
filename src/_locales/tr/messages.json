@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Beyaz liste",
+    "message": "Güvenilen siteler",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -552,8 +552,8 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Beyaz liste yönergeleri, uBlock₀'in devre dışı bırakılması gerektiği web sayfalarını belirler. Her satırda bir girdi. Geçersiz yönergeler sessizce yok sayılacak ve yoruma dönüştürülecektir.",
-    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+    "message": "Güvenilen site yönergeleri, uBlock Origin'in devre dışı bırakılması gerektiği web sayfalarını belirler. Her satırda bir girdi. Geçersiz yönergeler sessizce yok sayılacak ve yoruma dönüştürülecektir.",
+    "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
     "message": "İçe aktar ve ekle",
@@ -564,8 +564,8 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "ublock-beyazlistem_{{datetime}}.txt",
-    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+    "message": "ublock-güvenilen-sitelerim_{{datetime}}.txt",
+    "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
     "message": "Değişiklikleri uygula",
@@ -612,7 +612,7 @@
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
-    "message": "uBlock₀ viki: Günlükçü",
+    "message": "uBlock Origin viki: Günlükçü",
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
@@ -928,7 +928,7 @@
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1": {
-    "message": "uBlock₀ aşağıdaki sayfanın yüklenmesini engelledi:",
+    "message": "uBlock Origin aşağıdaki sayfanın yüklenmesini engelledi:",
     "description": "English: uBlock₀ has prevented the following page from loading:"
   },
   "docblockedPrompt2": {

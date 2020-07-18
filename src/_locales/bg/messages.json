@@ -552,8 +552,8 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Списък на адресите, за които uBlock₀ ще бъде изключен. Един елемент на ред. Невалидните адреси ще бъдат игнорирани.",
-    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+    "message": "Списък на адресите, за които uBlock Origin ще бъде изключен. Един елемент на ред. Недействителните адреси ще бъдат пренебрегнати.",
+    "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
     "message": "Внасяне от файл...",
@@ -565,7 +565,7 @@
   },
   "whitelistExportFilename": {
     "message": "ublock-изключения_{{datetime}}.txt",
-    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+    "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
     "message": "Прилагане на промените",

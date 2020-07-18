@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Lista blanca",
+    "message": "Sitios de confianza",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -552,8 +552,8 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Lista blanca de páginas web para los cuales se deshabilitará uBlock Origin. Una entrada por línea. Se omitirán nombres de páginas web no válidos.",
-    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+    "message": "Sitios de confianza para los cuales se deshabilitará uBlock Origin. Una entrada por línea. Las entradas no válidas serán ignoradas.",
+    "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
     "message": "Importar y anexar",
@@ -564,8 +564,8 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "ublock-mi-lista-blanca_{{datetime}}.txt",
-    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+    "message": "ublock-mis-sitios-de-confianza_{{datetime}}.txt",
+    "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
     "message": "Aplicar cambios",

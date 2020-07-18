@@ -552,8 +552,8 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Lista ta de nume de gazde unde uBlock Origin va fi dezactivat. O înregistrare pe linie. Directivele nevalide vor fi ignorate automat și comentate.",
-    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+    "message": "Lista ta de nume de gazde unde uBlock va fi dezactivat. Fiecare adresă pe o singură linie. Adresele nevalide vor fi ignorate automat.",
+    "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
     "message": "Importă și adaugă",
@@ -565,7 +565,7 @@
   },
   "whitelistExportFilename": {
     "message": "lista-mea-de-excluderi-ublock_{{datetime}}.txt",
-    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+    "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
     "message": "Aplică modificările",
