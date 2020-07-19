@@ -76,8 +76,7 @@ const initializeTabs = async function() {
             //   were loaded before uBO launched.
             toCheck.push(
                 /^https?:\/\//.test(url)
-                    ? vAPI.tabs.executeScript(id, checker)
-                               .then(result => result, ( ) => false) 
+                    ? vAPI.tabs.executeScript(id, checker) 
                     : false
             );
             tabIds.push(id);
