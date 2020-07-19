@@ -52,38 +52,45 @@ vAPI.app.onShutdown = function() {
 // the extension was launched. It can be used to inject content scripts
 // in already opened web pages, to remove whatever nuisance could make it to
 // the web pages before uBlock was ready.
+//
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1652925#c19
+//   Mind discarded tabs.
 
 const initializeTabs = async function() {
     const manifest = browser.runtime.getManifest();
     if ( manifest instanceof Object === false ) { return; }
 
-    const tabs = await vAPI.tabs.query({ url: '<all_urls>' });
     const toCheck = [];
-    const checker = {
-        file: 'js/scriptlets/should-inject-contentscript.js'
-    };
-    for ( const tab of tabs  ) {
-        µb.tabContextManager.commit(tab.id, tab.url);
-        µb.bindTabToPageStats(tab.id);
-        // https://github.com/chrisaljoudi/uBlock/issues/129
-        //   Find out whether content scripts need to be injected
-        //   programmatically. This may be necessary for web pages which
-        //   were loaded before uBO launched.
-        toCheck.push(
-            /^https?:\/\//.test(tab.url)
-                ? vAPI.tabs.executeScript(tab.id, checker)
-                : false
-        );
+    const tabIds = [];
+    {
+        const checker = { file: 'js/scriptlets/should-inject-contentscript.js' };
+        const tabs = await vAPI.tabs.query({ url: '<all_urls>' });
+        for ( const tab of tabs  ) {
+            if ( tab.discarded === true ) { continue; }
+            const { id, url } = tab;
+            µb.tabContextManager.commit(id, url);
+            µb.bindTabToPageStats(id);
+            // https://github.com/chrisaljoudi/uBlock/issues/129
+            //   Find out whether content scripts need to be injected
+            //   programmatically. This may be necessary for web pages which
+            //   were loaded before uBO launched.
+            toCheck.push(
+                /^https?:\/\//.test(url)
+                    ? vAPI.tabs.executeScript(id, checker)
+                               .then(result => result, ( ) => false) 
+                    : false
+            );
+            tabIds.push(id);
+        }
     }
     const results = await Promise.all(toCheck);
     for ( let i = 0; i < results.length; i++ ) {
         const result = results[i];
         if ( result.length === 0 || result[0] !== true ) { continue; }
-        // Inject dclarative content scripts programmatically.
-        const tabId = tabs[i].id;
+        // Inject declarative content scripts programmatically.
         for ( const contentScript of manifest.content_scripts ) {
             for ( const file of contentScript.js ) {
-                vAPI.tabs.executeScript(tabId, {
+                vAPI.tabs.executeScript(tabIds[i], {
                     file: file,
                     allFrames: contentScript.all_frames,
                     runAt: contentScript.run_at
