@@ -251,9 +251,9 @@ const PageStore = class {
         this.internalRedirectionCount = 0;
         this.extraData.clear();
 
+        this.frameAddCount = 0;
         this.frames = new Map();
         this.setFrame(0, tabContext.rawURL);
-        this.frameAddCount = 0;
 
         // The current filtering context is cloned because:
         // - We may be called with or without the current context having been
