@@ -30,16 +30,17 @@
   },
   "content_scripts": [
     {
-      "all_frames": true,
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
       "js": [
         "js/vapi.js",
         "js/vapi-client.js",
         "js/contentscript.js"
       ],
-      "matches": [
-        "http://*/*",
-        "https://*/*"
-      ],
+      "all_frames": true,
+      "match_about_blank": true,
       "run_at": "document_start"
     },
     {

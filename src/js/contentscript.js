@@ -1053,27 +1053,14 @@ vAPI.domCollapser = (function() {
         attributeFilter: [ 'src' ]
     };
 
-    // The injected scriptlets are those which were injected in the current
-    // document, from within `bootstrapPhase1`, and which scriptlets are
-    // selectively looked-up from:
-    // https://github.com/uBlockOrigin/uAssets/blob/master/filters/resources.txt
-    const primeLocalIFrame = function(iframe) {
-        if ( vAPI.injectedScripts ) {
-            vAPI.injectScriptlet(iframe.contentDocument, vAPI.injectedScripts);
-        }
-    };
-
     // https://github.com/gorhill/uBlock/issues/162
-    // Be prepared to deal with possible change of src attribute.
+    //   Be prepared to deal with possible change of src attribute.
     const addIFrame = function(iframe, dontObserve) {
         if ( dontObserve !== true ) {
             iframeSourceObserver.observe(iframe, iframeSourceObserverOptions);
         }
         const src = iframe.src;
-        if ( src === '' || typeof src !== 'string' ) {
-            primeLocalIFrame(iframe);
-            return;
-        }
+        if ( typeof src !== 'string' || src === '' ) { return; }
         if ( src.startsWith('http') === false ) { return; }
         toFilter.push({ type: 'sub_frame', url: iframe.src });
         add(iframe);

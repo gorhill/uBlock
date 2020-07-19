@@ -959,7 +959,8 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
             code: out.injected + '\n{display:none!important;}',
             cssOrigin: 'user',
             frameId: request.frameId,
-            runAt: 'document_start'
+            matchAboutBlank: true,
+            runAt: 'document_start',
         });
     }
 
@@ -1151,7 +1152,8 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
             code: '',
             cssOrigin: 'user',
             frameId: request.frameId,
-            runAt: 'document_start'
+            matchAboutBlank: true,
+            runAt: 'document_start',
         };
         if ( out.injectedHideFilters.length !== 0 ) {
             details.code = out.injectedHideFilters + '\n{display:none!important;}';
