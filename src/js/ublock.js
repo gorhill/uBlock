@@ -634,7 +634,8 @@ const matchBucket = function(url, hostname, bucket, start) {
     vAPI.tabs.executeScript(tabId, {
         file: '/js/scriptlets/cosmetic-logger.js',
         frameId: frameId,
-        runAt: 'document_start'
+        matchAboutBlank: true,
+        runAt: 'document_start',
     });
 };
 
