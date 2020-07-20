@@ -144,9 +144,10 @@
 		],
 		"cdnURLs": [
 			"https://cdn.statically.io/gl/curben/urlhaus-filter/master/urlhaus-filter-online.txt",
-			"https://glcdn.githack.com/curben/urlhaus-filter/raw/master/urlhaus-filter-online.txt",
 			"https://gitcdn.xyz/repo/curbengh/urlhaus-filter/master/urlhaus-filter-online.txt",
-			"https://cdn.jsdelivr.net/gh/curbengh/urlhaus-filter/urlhaus-filter-online.txt"
+			"https://cdn.jsdelivr.net/gh/curbengh/urlhaus-filter/urlhaus-filter-online.txt",
+			"https://raw.githubusercontent.com/curbengh/urlhaus-filter/master/urlhaus-filter-online.txt",
+			"https://gitlab.com/curben/urlhaus-filter/raw/master/urlhaus-filter-online.txt"
 		],
 		"supportURL": "https://gitlab.com/curben/urlhaus-filter#urlhaus-malicious-url-blocklist"
 	},
