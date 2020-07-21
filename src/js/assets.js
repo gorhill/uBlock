@@ -884,7 +884,7 @@ const updateNext = async function() {
     ]);
 
     const now = Date.now();
-    let assetKeyToUpdate;
+    const toUpdate = [];
     for ( const assetKey in assetDict ) {
         const assetEntry = assetDict[assetKey];
         if ( assetEntry.hasRemoteURL !== true ) { continue; }
@@ -902,23 +902,30 @@ const updateNext = async function() {
                 type: assetEntry.content
             }) === true
         ) {
-            assetKeyToUpdate = assetKey;
-            break;
+            toUpdate.push(assetKey);
+            continue;
         }
         // This will remove a cached asset when it's no longer in use.
         if ( cacheEntry && cacheEntry.readTime < assetCacheRegistryStartTime ) {
             assetCacheRemove(assetKey);
         }
     }
-    if ( assetKeyToUpdate === undefined ) {
+    if ( toUpdate.length === 0 ) {
         return updateDone();
     }
-    updaterFetched.add(assetKeyToUpdate);
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1165
+    //   Update most obsolete asset first.
+    toUpdate.sort((a, b) => {
+        const ta = cacheDict[a] !== undefined ? cacheDict[a].writeTime : 0;
+        const tb = cacheDict[b] !== undefined ? cacheDict[b].writeTime : 0;
+        return ta - tb;
+    });
+    updaterFetched.add(toUpdate[0]);
 
     // In auto-update context, be gentle on remote servers.
     remoteServerFriendly = updaterAuto;
 
-    const result = await getRemote(assetKeyToUpdate);
+    const result = await getRemote(toUpdate[0]);
 
     remoteServerFriendly = false;
 
