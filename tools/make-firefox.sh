@@ -16,19 +16,7 @@ cp -R $DES/_locales/nb                 $DES/_locales/no
 
 cp platform/firefox/manifest.json      $DES/
 cp platform/firefox/webext.js          $DES/js/
-cp platform/firefox/vapi-usercss.js    $DES/js/
 cp platform/firefox/vapi-webrequest.js $DES/js/
-
-echo "*** uBlock0.firefox: concatenating content scripts"
-cat $DES/js/vapi-usercss.js > /tmp/contentscript.js
-echo >> /tmp/contentscript.js
-grep -v "^'use strict';$" $DES/js/vapi-usercss.real.js >> /tmp/contentscript.js
-echo >> /tmp/contentscript.js
-grep -v "^'use strict';$" $DES/js/contentscript.js >> /tmp/contentscript.js
-mv /tmp/contentscript.js $DES/js/contentscript.js
-rm $DES/js/vapi-usercss.js
-rm $DES/js/vapi-usercss.real.js
-rm $DES/js/vapi-usercss.pseudo.js
 
 # Firefox/webext-specific
 rm $DES/img/icon_128.png
