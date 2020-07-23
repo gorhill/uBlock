@@ -1325,12 +1325,10 @@ vAPI.contextMenu = webext.menus && {
     _callback: null,
     _entries: [],
     _createEntry: function(entry) {
-        if (typeof browser.contextMenus !== 'object') return; // ADN
         webext.menus.create(JSON.parse(JSON.stringify(entry)));
     },
     onMustUpdate: function() {},
     setEntries: function(entries, callback) {
-        if (typeof browser.contextMenus !== 'object') return; // ADN
         entries = entries || [];
         let n = Math.max(this._entries.length, entries.length);
         for ( let i = 0; i < n; i++ ) {
