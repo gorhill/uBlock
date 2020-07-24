@@ -762,6 +762,9 @@ vAPI.injectScriptlet = function(doc, text) {
             this.mustApplySelectors = false;
             this.selectors = new Map();
             this.hiddenNodes = new Set();
+            if ( vAPI.domWatcher instanceof Object ) {
+                vAPI.domWatcher.addListener(this);
+            }
         }
 
         addProceduralSelectors(aa) {
@@ -873,7 +876,7 @@ vAPI.injectScriptlet = function(doc, text) {
 
         onDOMCreated() {
             this.domIsReady = true;
-            this.domFilterer.commitNow();
+            this.domFilterer.commit();
         }
 
         onDOMChanged(addedNodes, removedNodes) {
@@ -900,12 +903,9 @@ vAPI.injectScriptlet = function(doc, text) {
             this.exceptedCSSRules = [];
             this.reOnlySelectors = /\n\{[^\n]+/g;
             this.exceptions = [];
-            this.proceduralFilterer = new DOMProceduralFilterer(this);
+            this.proceduralFilterer = null;
             this.hideNodeAttr = undefined;
             this.hideNodeStyleSheetInjected = false;
-            if ( vAPI.domWatcher instanceof Object ) {
-                vAPI.domWatcher.addListener(this);
-            }
             // https://github.com/uBlockOrigin/uBlock-issues/issues/167
             //   By the time the DOMContentLoaded is fired, the content script might
             //   have been disconnected from the background page. Unclear why this
@@ -1059,13 +1059,15 @@ vAPI.injectScriptlet = function(doc, text) {
                     entry.injected === false
                 ) {
                     userStylesheet.add(
-                        entry.selectors + '\n{' + entry.declarations + '}'
+                        `${entry.selectors}\n{${entry.declarations}}`
                     );
                 }
             }
             this.addedCSSRules.clear();
             userStylesheet.apply();
-            this.proceduralFilterer.commitNow();
+            if ( this.proceduralFilterer instanceof Object ) {
+                this.proceduralFilterer.commitNow();
+            }
         }
 
         commit(commitNow) {
@@ -1077,19 +1079,27 @@ vAPI.injectScriptlet = function(doc, text) {
             }
         }
 
+        proceduralFiltererInstance() {
+            if ( this.proceduralFilterer instanceof Object === false ) {
+                this.proceduralFilterer = new DOMProceduralFilterer(this);
+            }
+            return this.proceduralFilterer;
+        }
+
         addProceduralSelectors(aa) {
-            this.proceduralFilterer.addProceduralSelectors(aa);
+            if ( aa.length === 0 ) { return; }
+            this.proceduralFiltererInstance().addProceduralSelectors(aa);
         }
 
         createProceduralFilter(o) {
-            return this.proceduralFilterer.createProceduralFilter(o);
+            return this.proceduralFiltererInstance().createProceduralFilter(o);
         }
 
         getAllSelectors() {
             const out = this.getAllSelectors_(false);
-            out.procedural = Array.from(
-                this.proceduralFilterer.selectors.values()
-            );
+            out.procedural = this.proceduralFilterer instanceof Object
+                ? Array.from(this.proceduralFilterer.selectors.values())
+                : [];
             return out;
         }
 
@@ -1103,17 +1113,6 @@ vAPI.injectScriptlet = function(doc, text) {
             const selectors = details.declarative.map(entry => entry[0]);
             if ( selectors.length === 0 ) { return 0; }
             return document.querySelectorAll(selectors.join(',\n')).length;
-        }
-
-        onDOMCreated() {
-            this.proceduralFilterer.onDOMCreated();
-        }
-
-        onDOMChanged() {
-            this.proceduralFilterer.onDOMChanged.apply(
-                this.proceduralFilterer,
-                arguments
-            );
         }
     };
 }
@@ -1304,6 +1303,24 @@ vAPI.injectScriptlet = function(doc, text) {
         }
     };
 
+    const stop = function() {
+        document.removeEventListener('error', onResourceFailed, true);
+        if ( processTimer !== undefined ) {
+            clearTimeout(processTimer);
+        }
+        if ( vAPI.domWatcher instanceof Object ) {
+            vAPI.domWatcher.removeListener(domWatcherInterface);
+        }
+        vAPI.shutdown.remove(stop);
+        vAPI.domCollapser = null;
+    };
+
+    const start = function() {
+        if ( vAPI.domWatcher instanceof Object ) {
+            vAPI.domWatcher.addListener(domWatcherInterface);
+        }
+    };
+
     const domWatcherInterface = {
         onDOMCreated: function() {
             if ( self.vAPI instanceof Object === false ) { return; }
@@ -1334,12 +1351,7 @@ vAPI.injectScriptlet = function(doc, text) {
 
             document.addEventListener('error', onResourceFailed, true);
 
-            vAPI.shutdown.add(function() {
-                document.removeEventListener('error', onResourceFailed, true);
-                if ( processTimer !== undefined ) {
-                    clearTimeout(processTimer);
-                }
-            });
+            vAPI.shutdown.add(stop);
         },
         onDOMChanged: function(addedNodes) {
             if ( addedNodes.length === 0 ) { return; }
@@ -1357,11 +1369,7 @@ vAPI.injectScriptlet = function(doc, text) {
         }
     };
 
-    if ( vAPI.domWatcher instanceof Object ) {
-        vAPI.domWatcher.addListener(domWatcherInterface);
-    }
-
-    vAPI.domCollapser = { add, addMany, addIFrame, addIFrames, process };
+    vAPI.domCollapser = { start };
 }
 
 /******************************************************************************/
@@ -1710,6 +1718,8 @@ vAPI.injectScriptlet = function(doc, text) {
             vAPI.domSurveyor = vAPI.domIsLoaded = null;
             return;
         }
+
+        vAPI.domCollapser.start();
 
         if ( response.noCosmeticFiltering ) {
             vAPI.domFilterer = null;
