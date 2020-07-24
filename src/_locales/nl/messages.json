@@ -112,11 +112,11 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Element&shy;wisser&shy;modus openen",
+    "message": "Element­wisser­modus openen",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Element&shy;kiezer&shy;modus openen",
+    "message": "Element­kiezer­modus openen",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {

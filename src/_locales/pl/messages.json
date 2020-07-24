@@ -552,7 +552,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Wytyczne wyjątków nakazują, na których stronach uBlock Origin powinien zostać wyłączony. Jeden wpis na linię. Nieprawidłowe wytyczne zostaną bez powiadomienia zignorowane i wykomentowane.",
+    "message": "Dyrektywy białej listy wskazują, na których stronach uBlock Origin powinien zostać wyłączony. Jeden wpis na linię. Nieprawidłowe wpisy zostaną bez powiadomienia zignorowane i wykomentowane.",
     "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
@@ -564,7 +564,7 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "my-ublock-whitelist_{{datetime}}.txt",
+    "message": "ublock-biała-lista_{{datetime}}.txt",
     "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
