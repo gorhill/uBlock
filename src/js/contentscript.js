@@ -118,6 +118,26 @@ vAPI.contentScript = true;
 /******************************************************************************/
 /******************************************************************************/
 
+// https://github.com/uBlockOrigin/uBlock-issues/issues/688#issuecomment-663657508
+{
+    let location = self.location;
+    if ( location.protocol === 'about:' ) {
+        try {
+            let context = self;
+            do {
+                context = context.parent;
+                location = context.location;
+            } while ( context !== self.top && location.protocol === 'about:' );
+        } catch(ex) {
+        }
+    }
+    vAPI.pageLocation = location;
+}
+
+/******************************************************************************/
+/******************************************************************************/
+/******************************************************************************/
+
 vAPI.userStylesheet = {
     added: new Set(),
     removed: new Set(),
@@ -1765,8 +1785,8 @@ vAPI.injectScriptlet = function(doc, text) {
     vAPI.bootstrap = function() {
         vAPI.messaging.send('contentscript', {
             what: 'retrieveContentScriptParameters',
-            url: window.location.href,
-            isRootFrame: window === window.top,
+            url: vAPI.pageLocation.href,
+            isRootFrame: self === self.top,
             charset: document.characterSet,
         }).then(response => {
             bootstrapPhase1(response);

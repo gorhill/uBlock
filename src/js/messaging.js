@@ -524,11 +524,15 @@ const µb = µBlock;
 
 const retrieveContentScriptParameters = function(senderDetails, request) {
     if ( µb.readyToFilter !== true ) { return; }
-    const { url, tabId, frameId } = senderDetails;
-    if ( url === undefined || tabId === undefined || frameId === undefined ) {
+    const { url: senderURL, tabId, frameId } = senderDetails;
+    if (
+        tabId === undefined ||
+        frameId === undefined ||
+        senderURL === undefined ||
+        senderURL !== request.url && senderURL.startsWith('about:') === false
+    ) {
         return;
     }
-    if ( request.url !== url ) { return; }
     const pageStore = µb.pageStoreFromTabId(tabId);
     if ( pageStore === null || pageStore.getNetFilteringSwitch() === false ) {
         return;
@@ -714,7 +718,7 @@ const onMessage = function(request, sender, callback) {
         xhr.responseType = 'text';
         xhr.onload = function() {
             this.onload = null;
-            var i18n = {
+            const i18n = {
                 bidi_dir: document.body.getAttribute('dir'),
                 create: vAPI.i18n('pickerCreate'),
                 pick: vAPI.i18n('pickerPick'),
