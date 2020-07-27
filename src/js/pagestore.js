@@ -554,9 +554,10 @@ const PageStore = class {
         }
 
         // Static filtering has lowest precedence.
-        if ( result === 0 || result === 3 ) {
+        if ( result === 0 || result === 3 || result === 4) {
             const snfe = µb.staticNetFilteringEngine;
-            result = snfe.matchString(fctxt);
+            const updatedResult = snfe.matchString(fctxt);
+            result = result === 4 ? 4 : updatedResult;
             if ( result !== 0 ) {
                 if ( µb.logger.enabled ) {
                     fctxt.filter = snfe.toLogData();

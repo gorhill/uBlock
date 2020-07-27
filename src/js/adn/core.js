@@ -1094,6 +1094,11 @@
     return lists;
   };
 
+  const isStrictBlock = function (result, context) {
+    // if 4 -> strict block
+    // console.log("Strict Blocking", result, context);
+    return µb.userSettings.strictBlockingMode || result === 4;
+  }
   const isBlockableDomain = function (context) {
 
     //console.log('isBlockableDomain',context.docDomain, context);
@@ -1119,10 +1124,13 @@
    *  3) whether *any* block on the domain is valid (domain in allowAnyBlockOnDomains)
    *  		if so, return true;
    *
+   *  4)whether the request is strictBlocked
+   *     if so, return true;
+   *
    *  4) if any list that it was found on allows blocks
    *  		if so, return true;
    */
-  const isBlockableRequest = function (context) {
+  const isBlockableRequest = function (result, context) {
 
     if (µb.userSettings.blockingMalware === false) {
       logNetAllow('NoBlock', context.docDomain + ' => ' + context.url);
@@ -1139,9 +1147,13 @@
       return true;
     }
 
+    if (isStrictBlock(result, context)) {
+      logNetBlock('StrictBlock', context.docDomain + ' => ' + context.url);
+      return true;
+    }
+
     // always allow redirect blocks from lists (?)
     if (µb.redirectEngine.toURL(context)) {
-
       logNetBlock('*Redirect*', context.docDomain + ' => ' + context.url, context);
       return true;
     }
@@ -1379,7 +1391,7 @@
   };
 
   exports.mustAllowRequest = function (result, context) {
-    return result !== 0 && !isBlockableRequest(context);
+    return result !== 0 && !isBlockableRequest(result, context);
   };
 
   exports.itemInspected = function (request, pageStore, tabId) {

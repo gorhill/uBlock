@@ -42,7 +42,7 @@ var supportedDynamicTypes = {
 'inline-script': true,
     '1p-script': true,
     '3p-script': true,
-     '3p-frame': true
+     '3p-frame': true,
 };
 
 var typeBitOffsets = {
@@ -52,19 +52,21 @@ var typeBitOffsets = {
     '3p-script':  6,
      '3p-frame':  8,
         'image': 10,
-           '3p': 12
+           '3p': 12,
 };
 
 var actionToNameMap = {
-    '1': 'block',
+    '1': 'block', // ublock & adnauseam block, might not trigger rules in  filter lists
     '2': 'allow',
-    '3': 'noop'
+    '3': 'noop',
+    '4': 'strictBlock', // only block if it is blocked by filter list
 };
 
 var nameToActionMap = {
     'block': 1,
     'allow': 2,
-     'noop': 3
+     'noop': 3,
+'strictBlock': 4,
 };
 
 /******************************************************************************/
@@ -202,7 +204,7 @@ Matrix.prototype.setCell = function(srcHostname, desHostname, type, state) {
     var bitOffset = typeBitOffsets[type];
     var k = srcHostname + ' ' + desHostname;
     var oldBitmap = this.rules.get(k) || 0;
-    var newBitmap = oldBitmap & ~(3 << bitOffset) | (state << bitOffset);
+    var newBitmap = oldBitmap & ~(4 << bitOffset) | (state << bitOffset);
     if ( newBitmap === oldBitmap ) {
         return false;
     }
@@ -237,7 +239,7 @@ Matrix.prototype.evaluateCell = function(srcHostname, desHostname, type) {
     if ( bitmap === undefined ) {
         return 0;
     }
-    return bitmap >> typeBitOffsets[type] & 3;
+    return bitmap >> typeBitOffsets[type] & 4;
 };
 
 /******************************************************************************/
@@ -283,7 +285,7 @@ Matrix.prototype.evaluateCellZ = function(srcHostname, desHostname, type) {
         this.z = shn;
         let v = this.rules.get(shn + ' ' + desHostname);
         if ( v !== undefined ) {
-            v = v >>> bitOffset & 3;
+            v = v >>> bitOffset & 4;
             if ( v !== 0 ) {
                 this.r = v;
                 return v;
@@ -397,7 +399,7 @@ Matrix.prototype.lookupRuleData = function(src, des, type) {
         src: this.z,
         des: this.y,
         type: this.type,
-        action: r === 1 ? 'block' : (r === 2 ? 'allow' : 'noop')
+        action: r === 1 ? 'block' : (r === 2 ? 'allow' : (r === 3 ?  'noop' : 'strictBlock'))
     };
 };
 
@@ -415,7 +417,8 @@ Matrix.prototype.toLogData = function() {
 Matrix.prototype.intToActionMap = new Map([
     [ 1, 'block' ],
     [ 2, 'allow' ],
-    [ 3, 'noop' ]
+    [ 3, 'noop' ],
+    [4, 'strictBlock'] //adn
 ]);
 
 /******************************************************************************/

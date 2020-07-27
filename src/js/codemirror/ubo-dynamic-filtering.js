@@ -55,6 +55,7 @@ CodeMirror.defineMode('ubo-dynamic-filtering', ( ) => {
         'block',
         'allow',
         'noop',
+        'strictBlock',
     ]);
     const reIsNotHostname = /[:/#?*]/;
     const tokens = [];
