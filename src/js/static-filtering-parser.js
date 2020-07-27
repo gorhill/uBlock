@@ -103,7 +103,9 @@ const Parser = class {
         this.extOptionsIterator = new ExtOptionsIterator(this);
         this.maxTokenLength = Number.MAX_SAFE_INTEGER;
         this.reIsLocalhostRedirect = /(?:0\.0\.0\.0|(?:broadcast|local)host|local|ip6-\w+)\b/;
-        this.reHostname = /^[^\x00-\x24\x26-\x29\x2B\x2C\x2F\x3A-\x5E\x60\x7B-\x7F]+/;
+        this.reHostname = /^[^\x00-\x24\x26-\x29\x2B\x2C\x2F\x3A-\x40\x5B-\x5E\x60\x7B-\x7F]+/;
+        this.reHostsSink = /^[\w-.:\[\]]+$/;
+        this.reHostsSource = /^[^\x00-\x24\x26-\x29\x2B\x2C\x2F\x3A-\x40\x5B-\x5E\x60\x7B-\x7F]+$/;
         this.reUnicodeChar = /[^\x00-\x7F]/;
         this.reUnicodeChars = /[^\x00-\x7F]/g;
         this.punycoder = new URL(self.location);
@@ -507,36 +509,35 @@ const Parser = class {
         //   Patterns with more than one space are dubious.
         {
             const { i, len } = this.patternSpan;
+            const noOptionsAnchor = this.optionsAnchorSpan.len === 0;
             let j = len;
             for (;;) {
                 if ( j === 0 ) { break; }
                 j -= 3;
                 const bits = this.slices[i+j];
-                if ( hasBits(bits, BITSpace) ) { break; }
+                if ( noOptionsAnchor && hasBits(bits, BITSpace) ) { break; }
                 this.patternBits |= bits;
             }
             if ( j !== 0 ) {
-                let dubious = false;
-                for ( let k = this.patternSpan.i; k < j; k += 3 ) {
-                    if ( hasNoBits(this.slices[k], BITSpace) ) { continue; }
-                    this.patternBits |= BITSpace;
-                    if ( this.interactive ) {
-                        this.markSlices(this.patternSpan.i, j, BITError);
-                    }
-                    dubious = true;
-                    break;
-                }
-                if ( dubious === false ) {
+                const sink = this.strFromSlices(this.patternSpan.i, j - 3);
+                if ( this.reHostsSink.test(sink) ) {
                     this.patternSpan.i += j + 3;
                     this.patternSpan.len -= j + 3;
-                    if ( this.reIsLocalhostRedirect.test(this.getNetPattern()) ) {
-                        this.flavorBits |= BITFlavorIgnore;
-                    }
                     if ( this.interactive ) {
                         this.markSlices(0, this.patternSpan.i, BITIgnore);
                     }
+                    const source = this.getNetPattern();
+                    if ( this.reIsLocalhostRedirect.test(source) ) {
+                        this.flavorBits |= BITFlavorIgnore;
+                    } else if ( this.reHostsSource.test(source) === false ) {
+                        this.patternBits |= BITError;
+                    }
+                } else {
+                    this.patternBits |= BITError;
                 }
-                // TODO: test again for regex?
+                if ( hasBits(this.patternBits, BITError) ) {
+                    this.markSpan(this.patternSpan, BITError);
+                }
             }
         }
 
@@ -631,10 +632,8 @@ const Parser = class {
                 this.markSpan(this.patternSpan, BITError);
             }
         } else if (
-            this.patternIsDubious() || (
-                this.patternHasUnicode() &&
-                this.toASCII(true) === false
-            )
+            this.patternIsDubious() === false &&
+            this.toASCII(true) === false
         ) {
             this.markSlices(
                 this.patternLeftAnchorSpan.i,
@@ -909,21 +908,43 @@ const Parser = class {
     }
 
     // https://github.com/chrisaljoudi/uBlock/issues/1096
+    // https://github.com/ryanbr/fanboy-adblock/issues/1384
     // Examples of dubious filter content:
     //   - Spaces characters
-    //   - Single character other than `*` wildcard
-    //   - Zero-length pattern with anchors
-    //     https://github.com/ryanbr/fanboy-adblock/issues/1384
+    //   - Single character with no options
+    //   - Wildcard(s) with no options
+    //   - Zero-length pattern with no options
     patternIsDubious() {
-        return hasBits(this.patternBits, BITSpace) || (
-            this.patternBits !== BITAsterisk &&
-            this.optionsSpan.len === 0 && (
-                this.patternSpan.len === 0 &&
-                    this.patternLeftAnchorSpan.len !== 0 ||
-                this.patternSpan.len === 3 &&
-                    this.slices[this.patternSpan.i+2] === 1
-            )
-        );
+        if ( hasBits(this.patternBits, BITError) ) { return true; }
+        if ( hasBits(this.patternBits, BITSpace) ) {
+            if ( this.interactive ) {
+                this.markSpan(this.patternSpan, BITError);
+            }
+            return true;
+        }
+        if ( this.patternSpan.len > 3 || this.optionsSpan.len !== 0 ) {
+            return false;
+        }
+        if (
+            this.patternSpan.len === 3 &&
+            this.slices[this.patternSpan.i+2] !== 1 &&
+            hasNoBits(this.patternBits, BITAsterisk)
+        ) {
+            return false;
+        }
+        if ( this.interactive === false ) { return true; }
+        let l, r;
+        if ( this.patternSpan.len !== 0 ) {
+            l = this.patternSpan.i;
+            r = this.optionsAnchorSpan.i;
+        } else {
+            l = this.patternLeftAnchorSpan.i;
+            r = this.patternLeftAnchorSpan.len !== 0
+                ? this.optionsAnchorSpan.i
+                : this.optionsSpan.i;
+        }
+        this.markSlices(l, r, BITError);
+        return true;
     }
 
     patternIsMatchAll() {
