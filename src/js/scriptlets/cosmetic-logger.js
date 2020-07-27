@@ -30,7 +30,6 @@
 
 if (
     typeof vAPI !== 'object' ||
-    vAPI.domFilterer instanceof Object === false ||
     vAPI.domWatcher instanceof Object === false
 ) {
     return;
@@ -297,6 +296,9 @@ const handlers = {
     },
 
     onDOMCreated: function() {
+        if ( vAPI.domFilterer instanceof Object === false ) {
+            return shutdown();
+        }
         handlers.onFiltersetChanged(vAPI.domFilterer.getAllSelectors());
         vAPI.domFilterer.addListener(handlers);
         attributeObserver.observe(document.body, {
@@ -319,17 +321,35 @@ const handlers = {
 
 /******************************************************************************/
 
+const shutdown = function() {
+    processTimer.clear();
+    attributeObserver.disconnect();
+    if ( typeof vAPI !== 'object' ) { return; }
+    if ( vAPI.domFilterer instanceof Object ) {
+        vAPI.domFilterer.removeListener(handlers);
+    }
+    if ( vAPI.domWatcher instanceof Object ) {
+        vAPI.domWatcher.removeListener(handlers);
+    }
+    if ( vAPI.broadcastListener instanceof Object ) {
+        vAPI.broadcastListener.remove(broadcastListener);
+    }
+};
+
+/******************************************************************************/
+
+const broadcastListener = msg => {
+    if ( msg.what === 'loggerDisabled' ) {
+        shutdown();
+    }
+};
+
+/******************************************************************************/
+
 vAPI.messaging.extend().then(extended => {
-    if ( extended !== true ) { return; }
-    const broadcastListener = msg => {
-        if ( msg.what === 'loggerDisabled' ) {
-            processTimer.clear();
-            attributeObserver.disconnect();
-            vAPI.domFilterer.removeListener(handlers);
-            vAPI.domWatcher.removeListener(handlers);
-            vAPI.broadcastListener.remove(broadcastListener);
-        }
-    };
+    if ( extended !== true ) {
+        return shutdown();
+    }
     vAPI.broadcastListener.add(broadcastListener);
 });
 
