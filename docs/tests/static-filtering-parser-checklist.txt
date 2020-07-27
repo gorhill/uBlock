@@ -20,8 +20,17 @@
 
 ! valid patterns
 a*
-|*
-||*
+*$xhr
+|*$xhr
+|$xhr
+||*$xhr
+||$xhr
+||*|$xhr
+
+! valid hosts file entries
+:: ab
+:: AB
+:: ab # comment
 
 ! valid options
 $script,redirect=noop.js
@@ -47,6 +56,17 @@ a
 |
 ||
 $
+*
+|*
+||*
+||*|
+
+! bad hosts file entries
+:: a
+:: ab/
+:: ab/ # comment
+::/ ab
+:: ab$
 
 ! bad regex
 /(abc|def/$xhr
