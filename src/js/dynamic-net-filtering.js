@@ -47,13 +47,13 @@ var supportedDynamicTypes = {
 
 var typeBitOffsets = {
             '*':  0,
-'inline-script':  2,
-    '1p-script':  4,
-    '3p-script':  6,
-     '3p-frame':  8,
-        'image': 10,
-           '3p': 12,
-};
+'inline-script':  3,
+    '1p-script':  6,
+    '3p-script':  9,
+     '3p-frame': 12,
+        'image': 15,
+           '3p': 18,
+};// ADN -> 3 bits for one more action
 
 var actionToNameMap = {
     '1': 'block', // ublock & adnauseam block, might not trigger rules in  filter lists
@@ -211,6 +211,7 @@ Matrix.prototype.setCell = function(srcHostname, desHostname, type, state) {
     if ( newBitmap === 0 ) {
         this.rules.delete(k);
     } else {
+        // console.log(srcHostname, desHostname, type, state, newBitmap);
         this.rules.set(k, newBitmap);
     }
     this.changed = true;
@@ -239,7 +240,7 @@ Matrix.prototype.evaluateCell = function(srcHostname, desHostname, type) {
     if ( bitmap === undefined ) {
         return 0;
     }
-    return bitmap >> typeBitOffsets[type] & 4;
+    return bitmap >> typeBitOffsets[type] & 7; // 3 bits
 };
 
 /******************************************************************************/
@@ -285,7 +286,7 @@ Matrix.prototype.evaluateCellZ = function(srcHostname, desHostname, type) {
         this.z = shn;
         let v = this.rules.get(shn + ' ' + desHostname);
         if ( v !== undefined ) {
-            v = v >>> bitOffset & 4;
+            v = v >>> bitOffset & 7; // 3 bits
             if ( v !== 0 ) {
                 this.r = v;
                 return v;
@@ -399,7 +400,7 @@ Matrix.prototype.lookupRuleData = function(src, des, type) {
         src: this.z,
         des: this.y,
         type: this.type,
-        action: r === 1 ? 'block' : (r === 2 ? 'allow' : (r === 3 ?  'noop' : 'strictBlock'))
+        action: r === 1 ? 'block' : (r === 2 ? 'allow' : (r === 0 ? 'strictBlock': 'noop' ))
     };
 };
 
@@ -418,7 +419,7 @@ Matrix.prototype.intToActionMap = new Map([
     [ 1, 'block' ],
     [ 2, 'allow' ],
     [ 3, 'noop' ],
-    [4, 'strictBlock'] //adn
+    [ 4, 'strictBlock'] //adn
 ]);
 
 /******************************************************************************/
