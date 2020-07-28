@@ -1,3 +1,4 @@
+
 /* ============================================================
   RESET
 ============================================================ */
@@ -451,6 +452,9 @@ button.dnt:hover:enabled {
 #notificationText{
   display: none;
 }
+#notify-template {
+  display: none;
+}
 .notification.warning,
 .notification.warning button,
 button.warning{
@@ -489,8 +493,12 @@ button.error{
 /* ============================================================
   MORE
 ============================================================ */
+/* https://protocol.mozilla.org/assets/docs/css/protocol.css */
+@charset "UTF-8";
+
+/* Usage of FontAwesome is deprecated and will be removed eventually */
 @font-face {
-    font-family: 'FontAwesome';
+    font-family: FontAwesome;
     font-weight: normal;
     font-style: normal;
     src: url('fonts/fontawesome-webfont.ttf') format('truetype');
@@ -564,9 +572,15 @@ button.error{
 body {
     font: 14px sans-serif;
     }
-code {
-    background-color: #eee;
-    padding: 0 0.25em;
+code, .code {
+    background-color: var(--button-surface);
+    font-family: monospace;
+    padding: 4px;
+    }
+hr {
+    border: 0;
+    border-top: 1px solid var(--hor-separator-color);
+    margin: 1em 0;
     }
 .hiddenFileInput {
     height: 0;
@@ -800,39 +814,39 @@ body[dir=rtl] #lists {
     color: #aaa;
     content: '+  ';
     }
-#lists > .groupEntry > ul {
+#lists > .groupEntry > .listEntries {
     margin: 0.25em 0 0 0;
     }
-#lists > .groupEntry.collapsed > ul {
+#lists > .groupEntry.collapsed > .listEntries {
     display: none;
-    }
-li.listEntry {
+}
+.li.listEntry {
     font-size: 14px;
     margin: 0 auto 0 auto;
     margin-left: 2em;
     margin-right: 0em;
     text-indent: -2em;
     }
-body[dir=rtl] li.listEntry {
+body[dir=rtl] .li.listEntry {
     margin-left: 0em;
     margin-right: 1em;
     }
-li.listEntry > * {
+.li.listEntry > * {
     text-indent: 0;
     unicode-bidi: embed;
     }
-li.listEntry > a:nth-of-type(2) {
+.li.listEntry > a:nth-of-type(2) {
     font-size: 16px;
     opacity: 0.7;
     }
-li.listEntry > a:nth-of-type(2),
-li.listEntry > a:nth-of-type(2):visited {
+.li.listEntry > a:nth-of-type(2),
+.li.listEntry > a:nth-of-type(2):visited {
     /*color: mediumblue;*/
     }
-li.listEntry > a:nth-of-type(2):hover {
+.li.listEntry > a:nth-of-type(2):hover {
     opacity: 1;
     }
-li.listEntry > a:nth-of-type(3) {
+.li.listEntry > a:nth-of-type(3) {
     font-size: 13px;
     opacity: 0.75;
     }
@@ -841,17 +855,15 @@ li.listEntry > a:nth-of-type(3) {
     }
 #buttonApply {
     display: initial;
-    position: fixed;
-    right: 1em;
     z-index: 10;
     }
 body[dir=rtl] #buttonApply {
     right: auto;
     left: 1em;
     }
-#buttonApply.disabled {
+/* #buttonApply.disabled {
     display: none;
-    }
+} */
 span.status {
     border: 1px solid transparent;
     color: #444;
@@ -934,27 +946,139 @@ button.custom.important[disabled] {
     background-color: #ddd;
     color: #666;
     opacity: 0.6;
+}
+button.vflex {
+    height: 100%;
+    min-height: unset;
+    padding-bottom: 0;
+    padding-top: 0;
+    }
+/* button:hover {
+    background-color: var(--button-surface-hover);
+    }
+button.active {
+    background-color: var(--button-active-surface);
+    } */
+button.disabled,
+button[disabled],
+button.important.disabled,
+button.important[disabled] {
+    /* background-color: var(--button-disabled-surface); */
+    /* color: var(--button-disabled-ink);
+    fill: var(--button-disabled-ink); */
+    filter: var(--button-disabled-filter);
     pointer-events: none;
     }
-button.custom.iconifiable > .fa {
-    padding-right: 0.5em;
+button.preferred {
+    background-color: var(--button-preferred-surface);
+    color: var(--button-preferred-ink);
     }
-body[dir="rtl"] button.custom.iconifiable > .fa {
+button.iconifiable > .fa,
+button.iconifiable > .fa-icon {
+    padding-left: 0;
+    padding-right: 0.4em;
+    }
+button.iconifiable > .fa-icon {
+    font-size: 120%;
+    }
+body[dir="rtl"] button.iconifiable > .fa,
+body[dir="rtl"] button.iconifiable > .fa-icon {
     padding-left: 0.5em;
     }
+label {
+    align-items: center;
+    display: inline-flex;
+    position: relative;
+    }
+
+/**
+    Checkbox design borrowed from:
+    - https://material.io/components/selection-controls
+    Motivation:
+    - To comply with design suggestions to make uBO comply with
+      Firefox Preview design guidelines.
+    - To have a single checkbox design across all platforms.
+*/
+.checkbox {
+    --margin-end: calc(var(--font-size) * 0.75);
+    box-sizing: border-box;
+    display: inline-flex;
+    flex-shrink: 0;
+    height: var(--checkbox-size);
+    margin: 0;
+    margin-inline-end: var(--margin-end);
+    -webkit-margin-end: var(--margin-end);
+    position: relative;
+    width: var(--checkbox-size);
+    }
+.checkbox > input[type="checkbox"] {
+    box-sizing: border-box;
+    height: 100%;
+    margin: 0;
+    min-width: var(--checkbox-size);
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    }
+.checkbox > input[type="checkbox"] + svg {
+    background-color: transparent;
+    border: 2px solid var(--checkbox-ink);
+    border-radius: 2px;
+    box-sizing: border-box;
+    fill: none;
+    height: 100%;
+    pointer-events: none;
+    position: absolute;
+    stroke: none;
+    stroke-width: 3.12px;
+    width: 100%;
+    }
+.checkbox > input[type="checkbox"]:checked + svg {
+    background-color: var(--checkbox-checked-ink);
+    border-color: var(--checkbox-checked-ink);
+    stroke: var(--default-surface);
+    }
+
+select {
+    padding: 2px;
+    }
+
 .hidden {
     display: none;
     height: 0;
     visibility: hidden;
     width: 0;
     }
-
+.fieldset {
+    margin: var(--font-size);
+    }
+.fieldset-header {
+    color: #EEE;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    }
+.ul {
+    margin: 1em 0;
+    }
+.li {
+    align-items: center;
+    display: flex;
+    margin: calc(var(--font-size) * 0.75) 0;
+    }
+.liul {
+    margin: 0.5em 0;
+    margin-inline-start: 2em;
+    -webkit-margin-start: 2em;
+    }
 @media (max-width: 640px) {
-    button.custom.iconifiable > .fa {
-        font-size: 130%;
+
+    button.iconifiable > .fa,
+    button.iconifiable > .fa-icon {
+        font-size: 1.2rem;
         padding: 0;
         }
-    button.custom.iconifiable > [data-i18n] {
+    button.iconifiable > [data-i18n] {
         display: none;
         }
     }
@@ -976,13 +1100,18 @@ body[dir="rtl"] button.custom.iconifiable > .fa {
 .disabled > .ubo-icon,
 .ubo-icon[disabled],
 [disabled] > .ubo-icon {
-    color: #000;
-    fill: #000;
-    opacity: 0.25;
-    stroke: #888;
+    color: var(--button-disabled-ink);
+    fill: var(--button-disabled-ink);
+    filter: var(--button-disabled-filter);
+    stroke: var(--button-disabled-ink);
     pointer-events: none;
     }
 .ubo-icon > svg {
     height: 1em;
     width: 1em;
+    }
+
+/* touch-screen devices */
+:root.mobile label {
+    flex-grow: 1
     }

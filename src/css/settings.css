@@ -1,3 +1,249 @@
 /* ============================================================
   SETTINGS SPECIFIC
 ============================================================ */
+
+ul {
+    padding-left: 1em;
+    padding-right: 0;
+    }
+body[dir="rtl"] ul {
+    padding-left: 0;
+    padding-right: 1em;
+    }
+}
+
+ul#userSettings {
+  padding-left: 0;
+  margin: 50px;
+  margin-top: 20px;
+}
+li {
+  margin-top: 0.25em;
+}
+ul#userSettings, ul#userSettings ul {
+  list-style-type: none;
+}
+ul#userSettings .subgroup {
+  margin: 1em 0 2em;
+}
+ul#userSettings .subgroup p {
+  margin: 0 22px 0 50px;
+  line-height: 1.5em;
+  float:left;
+  cursor: default;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+}
+
+ul#userSettings .subgroup p.last {
+  margin-right:15px;
+  padding-right: 0;
+}
+
+ul#userSettings .subgroup .subgroupDescription {
+    clear: both;
+}
+ul#userSettings .subgroup .subgroupDescription p{
+    margin-right: 0.3em;
+}
+div> p:last-child {
+  margin-bottom: 0;
+}
+ul#userSettings .subgroup> span {
+  font-size: larger;
+  font-weight: bold;
+  font-family: 'bebas_neue',sans-serif;
+}
+ul#userSettings .subgroup> ul {
+  padding: 5px 0 15px 44px;
+  clear:both;
+}
+ul#userSettings .subgroup> ul> li label {
+  margin-left: 5px;
+}
+#localData> ul> li {
+  margin-top: 1em;
+}
+#localData> ul> li> ul> li:nth-of-type(2) {
+  font-family: monospace;
+}
+#experimental-enabled {
+  margin-top: 1em;
+}
+#advanced-user-enabled ~ a.fa {
+  display: inline;
+}
+input[type="range"]:focus {
+  outline: none!important;
+}
+input[type="range"]:disabled{
+  overflow: hidden;
+  outline: none!important;
+  border-color: gray;
+}
+input[type="range"]:disabled::-webkit-slider-thumb {
+    box-shadow: -320px 0 0 315px gray;
+    background-color: #BBB;
+}
+input[type=range] {
+  -webkit-appearance: none;
+  -moz-apperance: none;
+   overflow: hidden;
+   border-radius: 5px;
+   background-color: transparent;
+   height: 10px;
+   width: 96%;
+   border-color: #0076FF;
+   padding:0;
+   margin:0;
+}
+input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    -moz-apperance: none;
+    box-shadow: -320px 0 0 315px #0076FF;
+    width: 2em;
+    height: 8px;
+    background-color: #004ca5;
+    border-radius: 5px;
+}
+input[type=range]::-moz-range-thumb {
+  background-color: #004ca5;
+  width: 2em;
+  border-radius: 5px;
+  border-style: none;
+}
+input[type=range]:disabled::-moz-range-thumb {
+  background-color: #BBB;
+}
+p#choiceSlider {
+  display: inline-block;
+  padding-right: 2.2em;
+  text-indent: -47px;
+}
+p#choiceSlider2 {
+  text-indent: -47px;
+}
+p:disabled{
+  color: #777;
+}
+input[type=range]::-moz-range-progress {
+  background-color: #0076FF;
+  height: 10px;
+  border-color: #0076FF;
+  margin-right: 5px;
+  padding:0px;
+  border-radius: 2px;
+}
+input[type=range]::-moz-range-track{
+  background-color: transparent;
+}
+
+input[type=range]:disabled::-moz-range-progress {
+  background-color: gray;
+}
+
+#export-dialog{
+    position: fixed;
+    width: 300px;
+    height: 190px;
+    background: black;
+    top: 150px;
+    margin-left: -150px;
+    left: 50%;
+    border-style: solid;
+    border-color: white;
+    border-width: 1px;
+    padding: 10px 20px;
+}
+#export-dialog ul {
+  margin-bottom: 20px
+}
+#export-dialog .close {
+  float: right;
+    cursor:pointer;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    display: inline-block;
+    line-height: 0px;
+    padding: 11px 5px 11px 0;
+}
+.close:before {
+    content: "×";
+}
+#export-dialog h5{
+  background:#0076FF;
+  margin:-10px -20px 20px -20px;
+  font-size:22px;
+  font-family: 'bebas_neue';
+  padding-top: 7px;
+  height:36px;
+  text-align: center;
+  color:white;
+}
+#export-dialog button {
+  width: 100%;
+}
+#export-dialog.hide{
+  display: none;
+}
+
+/* Customize the label (the container) */
+.radioContainer {
+  position: relative;
+  padding-left: 24px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.radioContainer input {
+  position: absolute;
+  opacity: 0;
+}
+
+/* Create a custom radio button */
+.radiobtn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 16px;
+  width: 16px;
+  background-color: black;
+  border-color:#0076FF;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 50%;
+}
+/* When the radio button is checked, add a blue background */
+.radioContainer input:checked ~ .radiobtn {
+  background-color: #0076FF;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.radiobtn:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.radioContainer input:checked ~ .radiobtn:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.radioContainer .radiobtn:after {
+  top: 3px;
+  left: 3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: black;
+}

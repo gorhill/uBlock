@@ -47,17 +47,17 @@ body {
 #commitButton,
 body.editing #diff #exportButton,
 body.editing #diff #importButton {
-    background-color: var(--button-disabled-surface);
+    /* background-color: var(--button-disabled-surface);
     color: var(--button-disabled-ink);
-    fill: var(--button-disabled-ink);
+    fill: var(--button-disabled-ink); */
     filter: var(--button-disabled-filter);
     pointer-events: none;
     }
 body:not(.editing) #diff.dirty #revertButton,
 body:not(.editing) #diff.dirty #commitButton {
-    background-color: var(--button-surface);
+    /* background-color: var(--button-surface);
     color: var(--button-ink);
-    fill: var(--button-ink);
+    fill: var(--button-ink); */
     filter: none;
     pointer-events: auto;
     }

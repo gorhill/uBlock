@@ -27,7 +27,7 @@ html, body {
     align-items: stretch;
     display: flex;
     margin: 0;
-
+    width: 100%;
     border-bottom: 1px solid #444;
     padding: 4px 10px 0;
     white-space: nowrap;
@@ -57,10 +57,13 @@ html, body {
     cursor: pointer;
     display: inline-block;
     font-size: 110%;
-/*<<<<<<< HEAD
-    margin: 0;
-    padding: 2px 10px;
-=======*/
+    margin: 0 0.2em 0 0;
+    overflow: hidden;
+    padding: 4px;
+    position: relative;
+    text-decoration: none;
+    top: 1px;
+    opacity: 0.75;
     }
 .tabButton:focus {
     outline: 0;

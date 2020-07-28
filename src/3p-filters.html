@@ -18,17 +18,17 @@
 
 <div id="cloudWidget" class="hide" data-cloud-entry="tpFiltersPane"></div>
 <div id="actions">
-    <button id="buttonApply" class="important disabled iconifiable" type="button" data-i18n-title="3pApplyChanges"><span class="fa-icon">check</span><span data-i18n="3pApplyChanges"></span></button>
-    <button id="buttonUpdate" class="important disabled iconifiable" type="button" data-i18n-title="3pUpdateNow"><span class="fa-icon">refresh</span><span data-i18n="3pUpdateNow"></span></button>
-    <button id="buttonPurgeAll" class="disabled iconifiable" type="button" data-i18n-title="3pPurgeAll"><span class="fa-icon">clock-o</span><span data-i18n="3pPurgeAll"></span></button>
+    <button id="buttonApply" class="custom important disabled iconifiable" type="button" data-i18n-title="3pApplyChanges"><span data-i18n="3pApplyChanges"></span></button>
+    <button id="buttonUpdate" class="custom important disabled iconifiable" type="button" data-i18n-title="3pUpdateNow"><span data-i18n="3pUpdateNow"></span></button>
+    <button id="buttonPurgeAll" class="disabled iconifiable" type="button" data-i18n-title="3pPurgeAll"><span data-i18n="3pPurgeAll"></span></button>
 </div>
 
 <div>
-    <div class="li"><label><span class="input checkbox"><input type="checkbox" id="autoUpdate"><svg><use href="img/material-design.svg#checkmark" /></svg></span><span data-i18n="3pAutoUpdatePrompt1"></span></label></div>
-    <div class="li"><label><span class="input checkbox"><input type="checkbox" id="parseCosmeticFilters"><svg><use href="img/material-design.svg#checkmark" /></svg></span><span><span data-i18n="3pParseAllABPHideFiltersPrompt1"></span>&nbsp;<span class="fa-icon info" data-i18n-title="3pParseAllABPHideFiltersInfo">question-circle</span></span></label>
-    </div>
-    <div class="li"><label><span class="input checkbox"><input type="checkbox" id="ignoreGenericCosmeticFilters"><svg><use href="img/material-design.svg#checkmark" /></svg></span><span><span data-i18n="3pIgnoreGenericCosmeticFilters"></span>&nbsp;<span class="fa-icon info" data-i18n-title="3pIgnoreGenericCosmeticFiltersInfo">question-circle</span></span></label>
-    </div>
+    <div class="li"><input type="checkbox" id="autoUpdate"><label data-i18n="3pAutoUpdatePrompt1" for="autoUpdate"></label>&ensp;</div>
+    <div class="li"><input type="checkbox" id="parseCosmeticFilters"><label data-i18n="3pParseAllABPHideFiltersPrompt1" for="parseCosmeticFilters"></label><button class="whatisthis"></button>
+               <div class="whatisthis-expandable para" data-i18n="3pParseAllABPHideFiltersInfo"></div></div>
+    <div class="li"><input type="checkbox" id="ignoreGenericCosmeticFilters"><label data-i18n="3pIgnoreGenericCosmeticFilters" for="ignoreGenericCosmeticFilters"></label><button class="whatisthis"></button>
+               <div class="whatisthis-expandable para" data-i18n="3pIgnoreGenericCosmeticFiltersInfo"></div></div>
 </div>
 
 <div>
@@ -49,8 +49,8 @@
         <div class="listEntries"></div>
     </div>
     <div class="li listEntry">
-        <label><span class="input checkbox"><input type="checkbox"><svg><use href="img/material-design.svg#checkmark" /></svg></span><span><span class="listname forinput"></span> <span class="iconbar"><!--
-     --><a class="fa-icon content" href="#" type="text/plain" target="_blank" data-i18n-title="3pViewContent">eye-open</a><!--
+        <label><input type="checkbox"><span><span class="listname forinput"></span> <span class="iconbar">
+        <a class="fa-icon content" href="#" type="text/plain" target="_blank" data-i18n-title="3pViewContent">eye-open</a><!--
      --><a class="fa-icon support" href="#" target="_blank">home</a><!--
      --><span class="fa-icon remove">trash-o</span><!--
      --><a class="fa-icon mustread" href="#" target="_blank">info-circle</a><!--
