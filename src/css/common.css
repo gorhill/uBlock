@@ -1053,10 +1053,11 @@ select {
     margin: var(--font-size);
     }
 .fieldset-header {
-    color: #EEE;
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
+  color: #ccc;
+font-size: 16px;
+font-weight: 400;
+letter-spacing: 0.5px;
+font-family: bebas_neue,sans-serif;
     }
 .ul {
     margin: 1em 0;

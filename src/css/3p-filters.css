@@ -3,17 +3,17 @@
     100% { transform: rotate(360deg); -webkit-transform: rotate(360deg); }
     }
 /*ADN*/
-#options li:nth-child(3), #options li:nth-child(4){
+#options .li:nth-child(2), #options .li:nth-child(3){
   display: none;
 }
-#options li:nth-child(2) {
+#options .li:nth-child(1) {
   margin-left:1em;
 }
-#options li:nth-child(2) input{
+#options .li:nth-child(1) input{
   /* auto-update filter lists */
     margin-right: 0.6em;
 }
-ul {
+/* ul {
     list-style-type: none;
     padding-left: 1em;
     padding-right: 0;
@@ -24,11 +24,11 @@ body[dir="rtl"] ul {
     }
 ul.root {
     padding: 0;
-    }
-#options li {
+    } */
+#options .li {
     margin-bottom: 0.5em;
     margin-left:0 !important;
-    }
+}
 #listsOfBlockedHostsPrompt {
     cursor: pointer;
     }
@@ -87,7 +87,6 @@ body.hideUnused #listsOfBlockedHostsPrompt:before {
     color: rgba(150,150,150, 0.9);
     display: none;
     fill: rgba(150,150,150, 0.9);
-    font-size: 120%;
     margin: 0 0.2em 0 0;
     opacity:0.5
 }
@@ -132,10 +131,10 @@ body:not(.updating) .listEntry.checked.obsolete .obsolete {
 .dim {
     opacity: 0.6;
     }
-#buttonApply {
+/* #buttonApply {
     display: initial;
     z-index: 10;
-    }
+    } */
 body[dir=rtl] #buttonApply {
     right: auto;
     left: 1em;
