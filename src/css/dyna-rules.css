@@ -40,7 +40,7 @@ body {
     text-align: center;
     }
 #ruleFilter .fa {
-    color: var(--fg-0-60);
+    color: #ddd;
     }
 
 #revertButton,

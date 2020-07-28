@@ -29,16 +29,19 @@
 
 /******************************************************************************/
 
-const cmEditor = new CodeMirror(
-    document.getElementById('userFilters'),
-    {
-        autofocus: true,
-        lineNumbers: true,
-        lineWrapping: true,
-        styleActiveLine: true,
-        theme:'pastel-on-dark'
-    }
-);
+const cmEditor = new CodeMirror(document.getElementById('userFilters'), {
+    autoCloseBrackets: true,
+    autofocus: true,
+    extraKeys: {
+        'Ctrl-Space': 'autocomplete',
+        'Tab': 'toggleComment',
+    },
+    lineNumbers: true,
+    lineWrapping: true,
+    matchBrackets: true,
+    maxScanLines: 1,
+    styleActiveLine: true,
+});
 
 uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 

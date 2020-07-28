@@ -278,27 +278,42 @@
         }
         reLogNeedle = new RegExp(needle);
     }
-    const findOwner = function(root, path) {
+    const findOwner = function(root, path, prune = false) {
         let owner = root;
         let chain = path;
         for (;;) {
-            if ( owner instanceof Object === false ) { return; }
+            if ( owner instanceof Object === false ) { return false; }
             const pos = chain.indexOf('.');
             if ( pos === -1 ) {
-                return owner.hasOwnProperty(chain)
-                    ? [ owner, chain ]
-                    : undefined;
+                const found = owner.hasOwnProperty(chain);
+                if ( found === false ) { return false; }
+                if ( prune ) {
+                    delete owner[chain];
+                }
+                return true;
             }
             const prop = chain.slice(0, pos);
-            if ( owner.hasOwnProperty(prop) === false ) { return; }
+            if (
+                prop === '[]' && Array.isArray(owner) ||
+                prop === '*' && owner instanceof Object
+            ) {
+                const next = chain.slice(pos + 1);
+                let found = false;
+                for ( const item of owner.values() ) {
+                    found = findOwner(item, next, prune) || found;
+                }
+                return found;
+            }
+            if ( owner.hasOwnProperty(prop) === false ) { return false; }
             owner = owner[prop];
             chain = chain.slice(pos + 1);
         }
     };
     const mustProcess = function(root) {
         for ( const needlePath of needlePaths ) {
-            const details = findOwner(root, needlePath);
-            if ( details === undefined ) { return false; }
+            if ( findOwner(root, needlePath) === false ) {
+                return false;
+            }
         }
         return true;
     };
@@ -314,10 +329,7 @@
             }
             if ( mustProcess(r) === false ) { return r; }
             for ( const path of prunePaths ) {
-                const details = findOwner(r, path);
-                if ( details !== undefined ) {
-                    delete details[0][details[1]];
-                }
+                findOwner(r, path, true);
             }
             return r;
         },
@@ -1197,14 +1209,14 @@
 // https://github.com/NanoAdblocker/NanoFilters/issues/149
 /// cookie-remover.js
 (function() {
-    let needle = '{{1}}',
-        reName = /./;
+    const needle = '{{1}}';
+    let reName = /./;
     if ( /^\/.+\/$/.test(needle) ) {
         reName = new RegExp(needle.slice(1,-1));
     } else if ( needle !== '' && needle !== '{{1}}' ) {
         reName = new RegExp(needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
     }
-    let removeCookie = function() {
+    const removeCookie = function() {
         document.cookie.split(';').forEach(cookieStr => {
             let pos = cookieStr.indexOf('=');
             if ( pos === -1 ) { return; }
@@ -1213,8 +1225,16 @@
             let part1 = cookieName + '=';
             let part2a = '; domain=' + document.location.hostname;
             let part2b = '; domain=.' + document.location.hostname;
+            let part2c, part2d;
             let domain = document.domain;
-            let part2c = domain && domain !== document.location.hostname ? '; domain=.' + domain : undefined;
+            if ( domain ) {
+                if ( domain !== document.location.hostname ) {
+                    part2c = '; domain=.' + domain;
+                }
+                if ( domain.startsWith('www.') ) {
+                    part2d = '; domain=' + domain.replace('www', '');
+                }
+            }
             let part3 = '; path=/';
             let part4 = '; Max-Age=-1000; expires=Thu, 01 Jan 1970 00:00:00 GMT';
             document.cookie = part1 + part4;
@@ -1225,6 +1245,9 @@
             document.cookie = part1 + part2b + part3 + part4;
             if ( part2c !== undefined ) {
                 document.cookie = part1 + part2c + part3 + part4;
+            }
+            if ( part2d !== undefined ) {
+                document.cookie = part1 + part2d + part3 + part4;
             }
         });
     };

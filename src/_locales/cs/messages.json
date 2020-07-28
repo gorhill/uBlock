@@ -85,7 +85,7 @@
   },
   "popupBlockedStats": {
     "message": "{{count}} neboli {{percent}} %",
-    "description": "Example: 15 or 13%"
+    "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
     "message": "od instalace",
@@ -180,7 +180,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
-    "message": "Pop-up windows",
+    "message": "Vyskakovací okna",
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
@@ -468,7 +468,7 @@
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pViewContent": {
-    "message": "view content",
+    "message": "Zobrazit obsah",
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
@@ -1028,7 +1028,7 @@
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "storageUsed": {
-    "message": "Storage used: {{value}} {{unit}}",
+    "message": "Využití úložiště: {{value}} {{unit}}",
     "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
   },
   "KB": {

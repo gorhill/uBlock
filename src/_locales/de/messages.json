@@ -85,7 +85,7 @@
   },
   "popupBlockedStats": {
     "message": "{{count}} oder {{percent}} %",
-    "description": "Example: 15 or 13%"
+    "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
     "message": "seit Installation",
@@ -404,7 +404,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Diese Option ermöglicht die Analyse und Anwendung von <a href=\"https://adblockplus.org/de/faq_internal#elemhide\">Adblock-Plus-kompatiblen Filtern zum &ldquo;Verstecken von Elementen&rdquo;</a>. Diese Filter sind grundsätzlich kosmetischer Natur und dienen zum Ausblenden von Elementen auf einer Webseite, die als optische Belästigung wahrgenommen werden und nicht von den vorhandenen Filtern geblockt werden können.</p><p>Das Aktivieren dieser Option erhöht den Speicherbedarf von <i>uBlock₀</i>.</p>",
+    "message": "Diese Option ermöglicht die Analyse und Anwendung von Adblock-Plus-kompatiblen Filtern zum „Verstecken von Elementen“. Diese Filter sind grundsätzlich kosmetischer Natur und dienen zum Ausblenden von Elementen auf einer Webseite, die als optische Belästigung wahrgenommen werden und nicht von den vorhandenen Filtern geblockt werden können.\n\nDas Aktivieren dieser Option erhöht den Speicherbedarf von uBlock Origin.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {

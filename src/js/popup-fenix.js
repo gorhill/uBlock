@@ -30,14 +30,13 @@
 
 /******************************************************************************/
 
-/*
-let popupFontSize;
+
+let popupFontSize = 'unset';
 vAPI.localStorage.getItemAsync('popupFontSize').then(value => {
     if ( typeof value !== 'string' || value === 'unset' ) { return; }
-    document.body.style.setProperty('font-size', value);
+    document.body.style.setProperty('--font-size', value);
     popupFontSize = value;
 });
-*/
 
 // https://github.com/chrisaljoudi/uBlock/issues/996
 //   Experimental: mitigate glitchy popup UI: immediately set the firewall
@@ -153,11 +152,42 @@ const hashFromPopupData = function(reset) {
 const formatNumber = function(count) {
     if ( typeof count !== 'number' ) { return ''; }
     if ( count < 1e6 ) { return count.toLocaleString(); }
-    return count.toLocaleString(undefined, {
-        notation: 'compact',
-        maximumSignificantDigits: 4,
-    });
+
+    if (
+        intlNumberFormat === undefined &&
+        Intl.NumberFormat instanceof Function
+    ) {
+        const intl = new Intl.NumberFormat(undefined, {
+            notation: 'compact',
+            maximumSignificantDigits: 4
+        });
+        if (
+            intl.resolvedOptions instanceof Function &&
+            intl.resolvedOptions().hasOwnProperty('notation')
+        ) {
+            intlNumberFormat = intl;
+        }
+    }
+
+    if ( intlNumberFormat ) {
+        return intlNumberFormat.format(count);
+    }
+
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1027#issuecomment-629696676
+    //   For platforms which do not support proper number formatting, use
+    //   a poor's man compact form, which unfortunately is not i18n-friendly.
+    count /= 1000000;
+    if ( count >= 100 ) {
+      count = Math.floor(count * 10) / 10;
+    } else if ( count > 10 ) {
+      count = Math.floor(count * 100) / 100;
+    } else {
+      count = Math.floor(count * 1000) / 1000;
+    }
+    return (count).toLocaleString(undefined) + '\u2009M';
 };
+
+let intlNumberFormat;
 
 /******************************************************************************/
 
@@ -280,8 +310,8 @@ const updateAllFirewallCells = function() {
 const buildAllFirewallRows = function() {
     // Do this before removing the rows
     if ( dfHotspots === null ) {
-        dfHotspots =
-            uDom('#actionSelector').on('click', 'span', setFirewallRuleHandler);
+        dfHotspots = uDom.nodeFromId('actionSelector');
+        dfHotspots.addEventListener('click', setFirewallRuleHandler);
     }
     dfHotspots.remove();
 
@@ -581,18 +611,16 @@ let renderOnce = function() {
 
     const body = document.body;
 
-/*
     if ( popupData.fontSize !== popupFontSize ) {
         popupFontSize = popupData.fontSize;
         if ( popupFontSize !== 'unset' ) {
-            body.style.setProperty('font-size', popupFontSize);
+            body.style.setProperty('--font-size', popupFontSize);
             vAPI.localStorage.setItem('popupFontSize', popupFontSize);
         } else {
-            body.style.removeProperty('font-size');
+            body.style.removeProperty('--font-size');
             vAPI.localStorage.removeItem('popupFontSize');
         }
     }
-*/
 
     uDom.nodeFromId('version').textContent = popupData.appVersion;
 
@@ -610,6 +638,18 @@ let renderOnce = function() {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/22
     if ( popupData.advancedUserEnabled !== true ) {
         uDom('#firewall [title][data-src]').removeAttr('title');
+    }
+
+    // This must be done the firewall is populated
+    if ( popupData.popupPanelHeightMode === 1 ) {
+        body.classList.add('vMin');
+    }
+
+    // Prevent non-advanced user opting into advanced user mode from harming
+    // themselves by disabling by default features generally suitable to
+    // filter list maintainers and actual advanced users.
+    if ( popupData.godMode ) {
+        body.classList.add('godMode');
     }
 };
 
@@ -806,10 +846,10 @@ uDom('#lessButton').on('click', ( ) => { toggleSections(false); });
 
 /******************************************************************************/
 
-const mouseenterCellHandler = function() {
-    if ( uDom(this).hasClass('ownRule') === false ) {
-        dfHotspots.appendTo(this);
-    }
+const mouseenterCellHandler = function(ev) {
+    const target = ev.target;
+    if ( target.classList.contains('ownRule') ) { return; }
+    target.appendChild(dfHotspots);
 };
 
 const mouseleaveCellHandler = function() {
@@ -861,7 +901,7 @@ const unsetFirewallRuleHandler = function(ev) {
         0,
         ev.ctrlKey || ev.metaKey
     );
-    dfHotspots.appendTo(cell);
+    cell.appendChild(dfHotspots);
 };
 
 /******************************************************************************/
@@ -1070,6 +1110,34 @@ const toggleHostnameSwitch = async function(ev) {
     hashFromPopupData();
 };
 
+/*******************************************************************************
+
+    Double tap ctrl key: toggle god mode
+
+*/
+
+{
+    let eventCount = 0;
+    let eventTime = 0;
+
+    document.addEventListener('keydown', ev => {
+        if ( ev.key !== 'Control' ) {
+            eventCount = 0;
+            return;
+        }
+        const now = Date.now();
+        if ( (now - eventTime) >= 500 ) {
+            eventCount = 0;
+        }
+        eventCount += 1;
+        eventTime = now;
+        if ( eventCount < 2 ) { return; }
+        eventCount = 0;
+        document.body.classList.toggle('godMode');
+    });
+}
+
+
 /******************************************************************************/
 
 // Poll for changes.
@@ -1173,18 +1241,22 @@ const getPopupData = async function(tabId) {
     const checkViewport = async function() {
         const root = document.querySelector(':root');
         if ( root.classList.contains('desktop') ) {
-            const main = document.getElementById('main');
-            const sticky = document.getElementById('sticky');
-            const stickyParent = sticky.parentElement;
-            if ( stickyParent !== main ) {
-                main.prepend(sticky);
-            }
             await nextFrames(4);
+            const main = document.getElementById('main');
             const firewall = document.getElementById('firewall');
             const minWidth = (main.offsetWidth + firewall.offsetWidth) / 1.1;
             if ( window.innerWidth < minWidth ) {
-                stickyParent.prepend(sticky);
-                root.classList.remove('desktop');
+                root.classList.add('portrait');
+            }
+        } else if ( root.classList.contains('mobile') ) {
+            root.classList.add('portrait');
+        }
+        if ( root.classList.contains('portrait') ) {
+            const panes = document.getElementById('panes');
+            const sticky = document.getElementById('sticky');
+            const stickyParent = sticky.parentElement;
+            if ( stickyParent !== panes ) {
+                panes.prepend(sticky);
             }
         }
         await nextFrames(1);

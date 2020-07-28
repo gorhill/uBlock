@@ -84,8 +84,8 @@
     "description": "English: on this page"
   },
   "popupBlockedStats": {
-    "message": "{{count}} eller {{percent}}%",
-    "description": "Example: 15 or 13%"
+    "message": "{{count}} ({{percent}}%)",
+    "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
     "message": "siden installering",
@@ -112,11 +112,11 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Gå til elementfjerningsmodus",
+    "message": "Gå til element&shy;fjernings&shy;modus",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Gå til elementvelgermodus",
+    "message": "Gå til element&shy;velger&shy;modus",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
@@ -184,7 +184,7 @@
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
-    "message": "Store mediaelementer",
+    "message": "Store media&shy;elementer",
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
@@ -468,7 +468,7 @@
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pViewContent": {
-    "message": "vis innhold",
+    "message": "Vis innhold",
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {

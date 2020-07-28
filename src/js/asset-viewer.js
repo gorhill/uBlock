@@ -30,17 +30,15 @@
     const assetKey = params.get('url');
     if ( assetKey === null ) { return; }
 
-    const cmEditor = new CodeMirror(
-        document.getElementById('content'),
-        {
-            autofocus: true,
-            lineNumbers: true,
-            lineWrapping: true,
-            readOnly: true,
-            styleActiveLine: true,
-            theme:'pastel-on-dark'
-        }
-    );
+    const cmEditor = new CodeMirror(document.getElementById('content'), {
+        autofocus: true,
+        lineNumbers: true,
+        lineWrapping: true,
+        matchBrackets: true,
+        maxScanLines: 1,
+        readOnly: true,
+        styleActiveLine: true,
+    });
 
     uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 

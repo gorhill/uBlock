@@ -60,7 +60,7 @@
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
-    "message": "Xüsusi parametrlər",
+    "message": "Əlavə parametrlər",
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
@@ -85,10 +85,10 @@
   },
   "popupBlockedStats": {
     "message": "{{count}} və ya {{percent}}%",
-    "description": "Example: 15 or 13%"
+    "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
-    "message": "yükləmədən bəri",
+    "message": "quraşdırmadan bəri",
     "description": "English: since install"
   },
   "popupOr": {
@@ -104,7 +104,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
-    "message": "Qoşulmuş domen",
+    "message": "Qoşulmuş domenlər",
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
@@ -140,7 +140,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Bu saytda böyük media elementlərini əngəllə",
+    "message": "Bu saytda böyük media elementlərini əngəlləmək üçün düyməyə basın",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
@@ -152,11 +152,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Bu saytda kosmetik filtrləri söndür",
+    "message": "Bu saytda kosmetik filtrləri söndürmək üçün düyməyə basın",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Bu saytda kosmetik filtrləri qoş",
+    "message": "Bu saytda kosmetik filtrləri qoşmaq üçün düyməyə basın",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -240,7 +240,7 @@
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
-    "message": "sətriçi skriptlər",
+    "message": "sətiriçi skriptlər",
     "description": ""
   },
   "popup1pScriptRulePrompt": {
@@ -356,7 +356,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Ölçüsü {{input}} KB-dan artıq olan media elementləri əngəllə",
+    "message": "{{input}} KB-dan artıq olan media elementlərini əngəllə",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -412,7 +412,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "Ümumi kosmetik filtrlərin bütün veb-saytlarda istifadəsi nəzərdə tutulur. Bu seçimin aktivləşdirilməsi nəticəsində veb-səhifələrdə ümumi kosmetik filtrlərin işlənməsi ilə əlaqədar yaddaşdan istifadə və prosessor yükü azalacaq.\n\nDaha az güclü cihazlarda bu seçimin aktivləşdirilməsi tövsiyə olunur.",
+    "message": "Ümumi kosmetik filtrlərin bütün veb-saytlarda istifadəsi nəzərdə tutulur. Bu seçimi etdiyiniz təqdirdə veb-səhifələrdə ümumi kosmetik filtrlərin işlənməsi ilə əlaqədar yaddaşdan istifadə və prosessor yükü azalacaq.\n\nAz güclü cihazlarda bu seçimin aktivləşdirilməsi tövsiyə olunur.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -444,7 +444,7 @@
     "description": "The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose": {
-    "message": "Çoxməqsədlilər",
+    "message": "Çoxməqsədli filtrlər",
     "description": "English: Multipurpose"
   },
   "3pGroupRegions": {
@@ -456,7 +456,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "İmport...",
+    "message": "Əlavə et...",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -528,7 +528,7 @@
     "description": "Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard": {
-    "message": "Ləğv et",
+    "message": "Nəzərə alma",
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
@@ -552,7 +552,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Ağ siyahıdakı təlimatlar uBlock Origin-in hansı veb-səhifələrdə fəaliyyətinin dayandırılmasını təmin edir. Hər sətirdə yalnız bir təlimat. Yanlış təlimatlar xəbərdarlıq edilmədən nəzərə alınmayacaq və şərhə çeviriləcəkdir.",
+    "message": "İstisnalar siyahısındakı təlimatlar uBlock Origin-in hansı veb-səhifələrdə işləyişinin dayandırılmasını təmin edir. Hər sətirdə yalnız bir təlimat ola bilər. Yanlış təlimatlar xəbərdarlıq edilmədən nəzərə alınmayacaq və şərhə çeviriləcəkdir.",
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
@@ -596,7 +596,7 @@
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
-    "message": "Cari tab",
+    "message": "Cari tab vərəqi",
     "description": "Appears in the logger's tab selector"
   },
   "loggerReloadTip": {
@@ -728,7 +728,7 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType": {
-    "message": "növü “{{type}}”",
+    "message": "“{{type}}”",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyType": {
@@ -736,7 +736,7 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin": {
-    "message": "“{{origin}}” ünvanı",
+    "message": "“{{origin}}”",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin": {
@@ -764,11 +764,11 @@
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
-    "message": "Son {{input}} dəqiqə ərzində edilmiş qeydləri saxla",
+    "message": "Son {{input}} dəq. ərzində edilmiş qeydləri saxla",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "Hər tab vərəqi üzrə ən çox {{input}} səhifə yükləməsini saxla",
+    "message": "Hər tab vərəqi üzrə ən çox {{input}} səh. yükləməsini saxla",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
@@ -776,11 +776,11 @@
     "description": "A logger setting"
   },
   "loggerSettingPerEntryLineCount": {
-    "message": "Şaquli genişləndirilmiş rejimdə edilmiş hər qeyd üçün {{input}} sətir istifadə et",
+    "message": "Şaquli genişləndirilmiş rejimdə hər qeyd üçün {{input}} sətir istifadə et",
     "description": "A logger setting"
   },
   "loggerSettingHideColumnsPrompt": {
-    "message": "Sütunları gizlət:",
+    "message": "Sütunları gizlə:",
     "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
   },
   "loggerSettingHideColumnTime": {
@@ -812,7 +812,7 @@
     "description": "Label for radio-button to pick export text format"
   },
   "loggerExportEncodeMarkdown": {
-    "message": "Markdown",
+    "message": "Nişanlı",
     "description": "Label for radio-button to pick export text format"
   },
   "aboutChangelog": {
@@ -864,7 +864,7 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Fayldan götür...",
+    "message": "Fayldan bərpa et...",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
@@ -896,7 +896,7 @@
     "description": "English: a minute ago"
   },
   "elapsedManyMinutesAgo": {
-    "message": "{{value}} dəqiqə əvvəl",
+    "message": "{{value}} dəq. əvvəl",
     "description": "English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo": {
@@ -1004,7 +1004,7 @@
     "description": ""
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
-    "message": "Böyük media elementlərinə müvəqqəti icazə ver",
+    "message": "Böyük media elementlərinin yüklənməsinə müvəqqəti icazə ver",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
@@ -1012,7 +1012,7 @@
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "Kilidli sürüşdürməni qoş/dayandır",
+    "message": "Məhdud sürüşdürməni işə sal/dayandır",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {

@@ -85,7 +85,7 @@
   },
   "popupBlockedStats": {
     "message": "{{count}} o {{percent}} %",
-    "description": "Example: 15 or 13%"
+    "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
     "message": "desde que se instaló",
@@ -924,7 +924,7 @@
     "description": "Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
-    "message": "desactivado",
+    "message": "deshabilitado",
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1": {

@@ -184,7 +184,7 @@ vAPI.browserSettings = (( ) => {
                 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/privacy/network#Browser_compatibility
                 //   Firefox 70+ supports `disable_non_proxied_udp`
                 const value =
-                    vAPI.webextFlavor.soup.has('firefox') &&
+                    vAPI.webextFlavor.soup.has('firefox') === false ||
                     vAPI.webextFlavor.major < 70
                         ? 'default_public_interface_only'
                         : 'disable_non_proxied_udp';

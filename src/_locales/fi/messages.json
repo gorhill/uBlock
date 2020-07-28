@@ -85,7 +85,7 @@
   },
   "popupBlockedStats": {
     "message": "{{count}} tai {{percent}}%",
-    "description": "Example: 15 or 13%"
+    "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
     "message": "asennuksen jälkeen",
@@ -100,7 +100,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "Estetty yhteensä",
+    "message": "Estetty asennuksen jälkeen",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
@@ -180,11 +180,11 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
-    "message": "Pop-up windows",
+    "message": "Ponnahdusikkunat",
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
-    "message": "Suuria media elementtejä",
+    "message": "Suuret mediaelementit",
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
@@ -204,7 +204,7 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton_v2": {
-    "message": "Less",
+    "message": "Vähemmän",
     "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Paina kumotaksesi muutoksesi.",
+    "message": "Klikkaa kumotaksesi muutoksesi.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {
@@ -264,7 +264,7 @@
     "description": "appears in popup"
   },
   "popupVersion": {
-    "message": "Version",
+    "message": "Versio",
     "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
@@ -840,15 +840,15 @@
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Source code",
+    "message": "Lähdekoodi",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
-    "message": "Translations",
+    "message": "Käännökset",
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
-    "message": "Filter lists",
+    "message": "Suodatinlistat",
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
@@ -1028,19 +1028,19 @@
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "storageUsed": {
-    "message": "Storage used: {{value}} {{unit}}",
+    "message": "Tallennustilaa käytössä: {{value}} {{unit}}",
     "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
   },
   "KB": {
-    "message": "KB",
+    "message": "Kt",
     "description": "short for 'kilobytes'"
   },
   "MB": {
-    "message": "MB",
+    "message": "Mt",
     "description": "short for 'megabytes'"
   },
   "GB": {
-    "message": "GB",
+    "message": "Gt",
     "description": "short for 'gigabytes'"
   },
   "dummy": {

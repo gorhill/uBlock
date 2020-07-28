@@ -85,7 +85,7 @@
   },
   "popupBlockedStats": {
     "message": "{{count}} ანუ {{percent}}%",
-    "description": "Example: 15 or 13%"
+    "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
     "message": "დაყენების შემდგომ",
@@ -200,7 +200,7 @@
     "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
-    "message": "სხვა",
+    "message": "ვრცლად",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton_v2": {

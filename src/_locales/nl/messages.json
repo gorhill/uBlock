@@ -85,7 +85,7 @@
   },
   "popupBlockedStats": {
     "message": "{{count}} of {{percent}}%",
-    "description": "Example: 15 or 13%"
+    "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
     "message": "sinds installatie",
@@ -112,11 +112,11 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Elementwissermodus openen",
+    "message": "Element&shy;wisser&shy;modus openen",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Elementkiezermodus openen",
+    "message": "Element&shy;kiezer&shy;modus openen",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {

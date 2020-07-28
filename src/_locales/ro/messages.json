@@ -85,7 +85,7 @@
   },
   "popupBlockedStats": {
     "message": "{{count}} sau {{percent}}%",
-    "description": "Example: 15 or 13%"
+    "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
     "message": "de la instalare",
@@ -844,7 +844,7 @@
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
-    "message": "Traduceri:",
+    "message": "Traduceri",
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {

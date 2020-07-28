@@ -529,7 +529,7 @@ RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
 
 /******************************************************************************/
 
-RedirectEngine.prototype.reFilterParser = /^(?:\|\|([^\/:?#^]+)|\*)([^$]+)?\$([^$]+)$/;
+RedirectEngine.prototype.reFilterParser = /^(?:\|\|([^\/:?#^]+)|\*?)([^$]+)?\$([^$]+)$/;
 
 RedirectEngine.prototype.supportedTypes = new Map([
     [ 'css', 'stylesheet' ],
@@ -778,6 +778,29 @@ RedirectEngine.prototype.loadBuiltinResources = function() {
 
     return Promise.all(fetches);
 }; 
+
+/******************************************************************************/
+
+RedirectEngine.prototype.getResourceDetails = function() {
+    const out = new Map();
+    for ( const [ name, entry ] of this.resources ) {
+        out.set(name, {
+            canInject: typeof entry.data === 'string',
+            canRedirect: entry.warURL !== undefined,
+            aliasOf: '',
+        });
+    }
+    for ( const [ alias, name ] of this.aliases ) {
+        const original = out.get(name);
+        if ( original === undefined ) { continue; }
+        const aliased = Object.assign({}, original);
+        aliased.aliasOf = name;
+        out.set(alias, aliased);
+    }
+    return Array.from(out).sort((a, b) => {
+        return a[0].localeCompare(b[0]);
+    });
+};
 
 /******************************************************************************/
 

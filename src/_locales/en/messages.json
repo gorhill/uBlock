@@ -84,8 +84,8 @@
     "description":"English: on this page"
   },
   "popupBlockedStats":{
-    "message":"{{count}} or {{percent}}%",
-    "description":"Example: 15 or 13%"
+    "message":"{{count}} ({{percent}}%)",
+    "description":"Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt":{
     "message":"since install",

@@ -94,16 +94,9 @@ DOMListFactory.nodeFromSelector = function(selector) {
 
 {
     const root = DOMListFactory.root = document.querySelector(':root');
-    if (
-        window.matchMedia('(pointer: coarse)').matches ||
-        window.matchMedia('(hover: none)').matches
-    ) {
+    if ( vAPI.webextFlavor.soup.has('mobile') ) {
         root.classList.add('mobile');
-    }
-    if (
-        window.matchMedia('(pointer: fine)').matches &&
-        window.matchMedia('(hover: hover)').matches
-    ) {
+    } else {
         root.classList.add('desktop');
     }
     if ( window.matchMedia('(min-resolution: 150dpi)').matches ) {
@@ -112,6 +105,13 @@ DOMListFactory.nodeFromSelector = function(selector) {
     if ( window.matchMedia('(prefers-color-scheme: dark)').matches ) {
         root.classList.add('dark');
     }
+
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1044
+    //   Offer the possibility to bypass uBO's default styling
+    vAPI.messaging.send('uDom', { what: 'uiStyles' }).then(response => {
+        if ( typeof response !== 'string' || response === 'unset' ) { return; }
+        document.body.style.cssText = response;
+    });
 }
 
 /******************************************************************************/

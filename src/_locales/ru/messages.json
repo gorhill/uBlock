@@ -85,7 +85,7 @@
   },
   "popupBlockedStats": {
     "message": "{{count}} или {{percent}}%",
-    "description": "Example: 15 or 13%"
+    "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
     "message": "с момента установки",
@@ -200,7 +200,7 @@
     "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
-    "message": "Еще",
+    "message": "Больше",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton_v2": {

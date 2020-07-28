@@ -12,7 +12,7 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Amaran! Anda mempunya perubahan yang tidak disimpan",
+    "message": "Amaran! Anda mempunyai perubahan yang tidak disimpan",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -68,11 +68,11 @@
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Click to disable uBlock₀ for this site.\n\nCtrl+click to disable uBlock₀ only on this page.",
+    "message": "Kilk untuk nyahdayakan uBlock₀ untuk laman web ini.\n\nCtrl+klik untuk nyahdayakan uBlock₀ hanya di halaman ini.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Click to enable uBlock₀ for this site.",
+    "message": "Klik untuk mendayakan uBlock₀ untuk laman web ini.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -85,7 +85,7 @@
   },
   "popupBlockedStats": {
     "message": "{{count}} atau {{percent}}%",
-    "description": "Example: 15 or 13%"
+    "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
     "message": "sejak dipasang",
@@ -124,15 +124,15 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Togol penghalang untuk segala popup laman ini",
+    "message": "Togol penghalang untuk segala pop timbul laman ini",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Klik untuk menyekat semua popup di laman ini",
+    "message": "Klik untuk menyekat semua pop timbul di laman ini",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Klik untuk berhenti menyekat semua popup di laman ini",
+    "message": "Klik untuk berhenti menyekat semua pop timbul di laman ini",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -164,11 +164,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Klik untuk menyekat semua popup di laman ini",
+    "message": "Klik untuk menyekat fon jauh di laman ini",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Klik untuk berhenti menyekat semua popup di laman ini",
+    "message": "Klik untuk berhenti menyekat fon jauh di laman ini",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
@@ -180,7 +180,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
-    "message": "Tetingkap popup",
+    "message": "Tetingkap pop timbul",
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
@@ -384,7 +384,7 @@
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
-    "message": "terguna dari",
+    "message": "{{used}} digunakan dari {{total}}",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
@@ -392,7 +392,7 @@
     "description": "A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow": {
-    "message": "Update sekarang",
+    "message": "Kemas kini sekarang",
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll": {
@@ -408,11 +408,11 @@
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
-    "message": "Bodoh anjing",
+    "message": "Abaikan penapis kosmetik generik",
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "Generic cosmetic filters are those cosmetic filters which are meant to apply on all web sites. Enabling this option will eliminate the memory and CPU overhead added to web pages as a result of handling generic cosmetic filters.\n\nIt is recommended to enable this option on less powerful devices.",
+    "message": "Penapis kosmetik generik adalah penapis kosmetik itu mengubah kesemua laman web. Mendayakan tetapan ini akan mengurangkan penggunaan memori dan overhed CPU dari laman web sebagai hasil pengendalian penapis kosmetik generik.\n\nIa disyorkan untuk mengaktifkan tetapan ini untuk peranti yang lemah.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -420,11 +420,11 @@
     "description": "English: Lists of blocked hosts"
   },
   "3pApplyChanges": {
-    "message": "Apply changes",
+    "message": "Terapkan perubahan",
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Built-in",
+    "message": "Terbina dalam",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -436,11 +436,11 @@
     "description": "English: Privacy"
   },
   "3pGroupMalware": {
-    "message": "Malware domains",
+    "message": "Domain perisian hasad",
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {
-    "message": "Annoyances",
+    "message": "Kejengkelan",
     "description": "The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose": {
@@ -448,11 +448,11 @@
     "description": "English: Multipurpose"
   },
   "3pGroupRegions": {
-    "message": "Regions, languages",
+    "message": "Wilayah, bahasa",
     "description": "English: Regions, languages"
   },
   "3pGroupCustom": {
-    "message": "Custom",
+    "message": "Kustom",
     "description": "English: Custom"
   },
   "3pImport": {
@@ -460,19 +460,19 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "One URL per line. Invalid URLs will be silently ignored.",
+    "message": "Satu URL per garisan. URL yang tidak sah akan diabaikan secara senyap.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
-    "message": "Out of date.",
+    "message": "Usang.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pViewContent": {
-    "message": "view content",
+    "message": "melihat kandungan",
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "Last update: {{ago}}.\nClick to force an update.",
+    "message": "Kemaskini terakhir: {{ago}}.\nKlik untuk memaksa kemas kini.",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
@@ -480,7 +480,7 @@
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
-    "message": "A network error prevented the resource from being updated.",
+    "message": "Ralat rangkaian menghalang sumber dikemas kini..",
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
@@ -488,11 +488,11 @@
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
-    "message": "Import and append",
+    "message": "Import dan melampirkan",
     "description": "English: Import and append"
   },
   "1pExport": {
-    "message": "Export",
+    "message": "Eksport",
     "description": "English: Export"
   },
   "1pExportFilename": {
@@ -500,7 +500,7 @@
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges": {
-    "message": "Apply changes",
+    "message": "Terapkan perubahan",
     "description": "English: Apply changes"
   },
   "rulesPermanentHeader": {
@@ -512,11 +512,11 @@
     "description": "header"
   },
   "rulesRevert": {
-    "message": "Revert",
+    "message": "Bebalik",
     "description": "This will remove all temporary rules"
   },
   "rulesCommit": {
-    "message": "Commit",
+    "message": "Keterikatan",
     "description": "This will persist temporary rules"
   },
   "rulesEdit": {
@@ -532,11 +532,11 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Import from file...",
+    "message": "Import dari fail...",
     "description": ""
   },
   "rulesExport": {
-    "message": "Export to file",
+    "message": "Eksport ke fail",
     "description": ""
   },
   "rulesDefaultFileName": {
@@ -556,11 +556,11 @@
     "description": "English: An overview of the content of the dashboard's Whitelist pane."
   },
   "whitelistImport": {
-    "message": "Import and append",
+    "message": "Import dan melampirkan",
     "description": "English: Import and append"
   },
   "whitelistExport": {
-    "message": "Export",
+    "message": "Eksport",
     "description": "English: Export"
   },
   "whitelistExportFilename": {
@@ -568,7 +568,7 @@
     "description": "English: my-ublock-whitelist_{{datetime}}.txt"
   },
   "whitelistApply": {
-    "message": "Apply changes",
+    "message": "Terapkan perubahan",
     "description": "English: Apply changes"
   },
   "logRequestsHeaderType": {
@@ -584,7 +584,7 @@
     "description": "English: URL"
   },
   "logRequestsHeaderFilter": {
-    "message": "Filter",
+    "message": "Penapis",
     "description": "English: Filter"
   },
   "logAll": {
@@ -592,23 +592,23 @@
     "description": "Appears in the logger's tab selector"
   },
   "logBehindTheScene": {
-    "message": "Tabless",
+    "message": "Tanpa tab",
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
-    "message": "Current tab",
+    "message": "Tab semasa",
     "description": "Appears in the logger's tab selector"
   },
   "loggerReloadTip": {
-    "message": "Reload the tab content",
+    "message": "Muat semula kandungan tab",
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
-    "message": "Toggle the DOM inspector",
+    "message": "Togol pemeriksa DOM",
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "Toggle the popup panel",
+    "message": "Togol panel pop timbul",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
@@ -640,7 +640,7 @@
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {
-    "message": "Not",
+    "message": "Bukan",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinEventful": {
@@ -648,19 +648,19 @@
     "description": "A keyword in the built-in row filtering expression: all items corresponding to uBO doing something (blocked, allowed, redirected, etc.)"
   },
   "loggerRowFiltererBuiltinBlocked": {
-    "message": "blocked",
+    "message": "disekat",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinAllowed": {
-    "message": "allowed",
+    "message": "dibenarkan",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
-    "message": "1st-party",
+    "message": "pihak pertama",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin3p": {
-    "message": "3rd-party",
+    "message": "pihak ketiga",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerEntryDetailsHeader": {

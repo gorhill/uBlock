@@ -85,7 +85,7 @@
   },
   "popupBlockedStats": {
     "message": "{{count}}টি বা {{percent}}%",
-    "description": "Example: 15 or 13%"
+    "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
     "message": "ইনস্টলের পর থেকে",
