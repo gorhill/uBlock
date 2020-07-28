@@ -84,16 +84,13 @@ let details = {};
     if ( matches === null ) { return; }
     const proceed = uDom('#templates .proceed').clone();
     proceed.descendants('span:nth-of-type(1)').text(matches[1]);
-    proceed.descendants('span:nth-of-type(4)').text(matches[2]);
-
-    if ( details.hn === details.dn ) {
-        proceed.descendants('span:nth-of-type(2)').remove();
-        proceed.descendants('.hn').text(details.hn);
-    } else {
-        proceed.descendants('span:nth-of-type(3)').remove();
+    proceed.descendants('span:nth-of-type(3)').text(matches[2]);
+    if ( details.hn !== details.dn ) {
         proceed.descendants('.hn').text(details.hn).attr('value', details.hn);
-        proceed.descendants('.dn').text(details.dn).attr('value', details.dn);
+    } else {
+        proceed.descendants('.hn').remove();
     }
+    proceed.descendants('.dn').text(details.dn).attr('value', details.dn);
 
     uDom('#proceed').append(proceed);
 })();

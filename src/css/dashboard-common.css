@@ -102,6 +102,34 @@ button.whatisthis:hover {
     padding: 5px;
     background-color: #FEDAE0;
 }
+
+    /* upstream 1.27.0
+  }
+.fa.info,
+.fa-icon.info {
+    color: var(--fg-icon-info-lvl-0-dimmed);
+    fill: var(--fg-icon-info-lvl-0-dimmed);
+    font-size: 115%;
+    }
+.fa.info:hover,
+.fa-icon.info:hover {
+    color: inherit;
+    fill: inherit;
+    }
+.fa.info.important,
+.fa-icon.info.important {
+    color: var(--fg-icon-info-lvl-3-dimmed);
+    }
+.fa.info.important:hover,
+.fa-icon.info.important:hover {
+    color: var(--fg-icon-info-lvl-3);
+    }
+input[type="number"] {
+    width: 5em;
+    }
+input[type="checkbox"][disabled] + * {
+    color: var(--fg-0-50);
+    } */
 @media (max-height: 640px), (max-height: 800px) and (max-width: 480px) {
     .body > p,
     .body > ul {
@@ -116,4 +144,16 @@ button.whatisthis:hover {
         min-height: 400px !important;
         overflow: auto !important;
         }
+}
+/**
+On mobile device, the on-screen keyboard may take up
+so much space that it overlaps the content being edited.
+The rule below makes it possible to scroll the edited
+content within view.
+*/
+:root.mobile {
+overflow: auto;
+}
+:root.mobile body {
+min-height: 600px;
 }

@@ -66,10 +66,13 @@ const µBlock = (( ) => { // jshint ignore:line
         loggerPopupType: 'popup',
         manualUpdateAssetFetchPeriod: 500,
         popupFontSize: 'unset',
+        popupPanelDisabledSections: 0,
+        popupPanelLockedSections: 0,
         requestJournalProcessPeriod: 1000,
         selfieAfter: 3,
         strictBlockingBypassDuration: 120,
         suspendTabsUntilReady: 'unset',
+        uiPopupConfig: 'undocumented',
         uiFlavor: 'unset',
         updateAssetBypassBrowserCache: false,
         userResourcesLocation: 'unset',
@@ -113,6 +116,7 @@ const µBlock = (( ) => { // jshint ignore:line
             ignoreGenericCosmeticFilters: vAPI.webextFlavor.soup.has('mobile'),
             largeMediaSize: 50,
             parseAllABPHideFilters: true,
+            popupPanelSections: 0b111,
             prefetchingDisabled: true,
             requestLogMaxEntries: 1000,
             showIconBadge: true,
@@ -186,6 +190,10 @@ const µBlock = (( ) => { // jshint ignore:line
 
         selectedFilterLists: [],
         availableFilterLists: {},
+
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/974
+        //   This can be used to defer filtering decision-making.
+        readyToFilter: false,
 
         pageStores: new Map(),
         pageStoresToken: 0,

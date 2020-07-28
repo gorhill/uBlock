@@ -179,25 +179,33 @@
     "message": "დააწკაპეთ JavaScript-ზე შეზღუდვის მოსახსნელად ამ საიტზე",
     "description": "Tooltip for the no-scripting per-site switch"
   },
+  "popupNoPopups_v2": {
+    "message": "ამომხტომი ფანჯრები",
+    "description": "Caption for the no-popups per-site switch"
+  },
   "popupNoLargeMedia_v2": {
     "message": "დიდი მედიაფაილები",
-    "description": "Tip for the no-large-media per-site switch"
+    "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
     "message": "ხილული ელემენტების გაფილტვრა",
-    "description": "Tip for the no-cosmetic-filtering per-site switch"
+    "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
     "message": "ვებშრიფტები",
-    "description": "Tip for the no-remote-fonts per-site switch"
+    "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
     "message": "JavaScript",
-    "description": "Tip for the no-scripting per-site switch"
+    "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
     "message": "სხვა",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "მოკლედ",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "გლობალური წესები: ეს სვეტი არის წესებისთვის, რომლებიც მოქმედებს ყველა საიტზე.",
@@ -254,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{total}}-დან {{count}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "ვერსია",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "შექმნა",
@@ -359,10 +371,6 @@
     "message": "CSP მოხსენებების აკრძალვა",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "გამოყენებული მოცულობა: {{value}} ბაიტი",
-    "description": "English: Storage used: {{}} bytes"
-  },
   "settingsLastRestorePrompt": {
     "message": "ბოლო აღდგენა:",
     "description": "English: Last restore:"
@@ -458,6 +466,10 @@
   "3pExternalListObsolete": {
     "message": "მოძველებული",
     "description": "used as a tooltip for the out-of-date icon beside a list"
+  },
+  "3pViewContent": {
+    "message": "შიგთავსის ნახვა",
+    "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
     "message": "ბოლო განახლება: {{ago}}.\nდააწკაპეთ ახლავე გასაახლებლად.",
@@ -827,6 +839,18 @@
     "message": "მოხალისეები",
     "description": "English: Contributors"
   },
+  "aboutSourceCode": {
+    "message": "პირველწყარო კოდი",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "თარგმანები",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "ფილტრების სიები",
+    "description": "Link text to uBO's own filter lists repo"
+  },
   "aboutDependencies": {
     "message": "ცალკეული დაქვემდებარებული პროექტები (GPLv3-თან თავსებადი):",
     "description": "Shown in the About pane"
@@ -1002,6 +1026,22 @@
   "relaxBlockingMode": {
     "message": "მსუბუქი შეზღუდვის რეჟიმი",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
+  "storageUsed": {
+    "message": "გამოყენებული მოცულობა: {{value}} {{unit}}",
+    "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
+  },
+  "KB": {
+    "message": "კბ",
+    "description": "short for 'kilobytes'"
+  },
+  "MB": {
+    "message": "მბ",
+    "description": "short for 'megabytes'"
+  },
+  "GB": {
+    "message": "გბ",
+    "description": "short for 'gigabytes'"
   },
   "dummy": {
     "message": "This entry must be the last one",

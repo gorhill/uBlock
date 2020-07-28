@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=560, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="css/themes/default.css">
 <link rel="stylesheet" type="text/css" href="css/common.css">
 <link rel="stylesheet" href="css/fa-icons.css" type="text/css">
 <link rel="stylesheet" type="text/css" href="css/logger-ui.css">
@@ -61,7 +62,7 @@
                             <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span>
                                 <span style="flex-direction: column;">
                                     <div style="margin-bottom: 1px;"><span data-filtex="\t(?:css|(?:inline-)?font)\t">css/font</span><span data-filtex="\timage\t">image</span><span data-filtex="\tmedia\t">media</span><span data-filtex="\t(?:inline-)?script(?:ing)?\t">script</span></div>
-                                    <div><span data-filtex="\t(?:websocket|xhr)\t">xhr</span><span data-filtex="\tframe\t">frame</span><span data-filtex="\t(?:beacon|csp_report|ping|other)\t">other</span><span data-filtex="\t(?:dom|g(?:eneric)?hide|s(?:pecific)?hide)\t">dom</span></div>
+                                    <div><span data-filtex="\t(?:websocket|xhr)\t">xhr</span><span data-filtex="\tframe\t">frame</span><span data-filtex="\t(?:dom|g(?:eneric)?hide|s(?:pecific)?hide)\t">dom</span><span data-filtex="\t(?:beacon|csp_report|ping|popup|popunder|other)\t">other</span></div>
                                 </span>
                             </div>
                             <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span><span data-filtex="\t(?:0,)?1\t" data-i18n="loggerRowFiltererBuiltin1p"></span><span data-filtex="\t(?:3(?:,\d)?|0,3)\t" data-i18n="loggerRowFiltererBuiltin3p"></span></div>
@@ -141,7 +142,7 @@
             <div class="pane static" data-pane="static">
                 <div></div>
                 <div><textarea class="staticFilter" spellcheck="false" value=""></textarea>
-                   <button id="createStaticFilter" class="custom important" type="button" data-i18n="pickerCreate"></button>
+                   <button id="createStaticFilter" class="important" type="button" data-i18n="pickerCreate"></button>
                </div>
             </div>
         </div>
@@ -153,13 +154,13 @@
     <div id="filterFinderListEntry">
         <span><!--
          --><a href="asset-viewer.html?url=" target="_blank"></a>&nbsp;<!--
-         --><a href="" class="fa-icon" target="_blank">home</a><!--
+         --><a href="#" class="fa-icon" target="_blank">home</a><!--
      --></span>
     </div>
 
     <div id="cosmeticFilteringDialog" class="modalDialog">
         <textarea class="cosmeticFilters" value=""></textarea>
-        <button id="createCosmeticFilters" class="custom important" type="button" data-i18n="pickerCreate"></button>
+        <button id="createCosmeticFilters" class="important" type="button" data-i18n="pickerCreate"></button>
     </div>
 
     <div id="loggerStatsDialog">
@@ -186,20 +187,20 @@
     <div id="loggerSettingsDialog">
         <div><span data-i18n="loggerSettingDiscardPrompt"></span>
             <ul>
-            <li><label data-i18n="loggerSettingPerEntryMaxAge"><input type="number" min="0" max="50000" /></label>
-            <li><label data-i18n="loggerSettingPerTabMaxLoads"><input type="number" min="0" max="1000000" /></label>
-            <li><label data-i18n="loggerSettingPerTabMaxEntries"><input type="number" min="0" max="1000000" /></label>
+            <li><label><span data-i18n="loggerSettingPerEntryMaxAge"><input type="number" min="0" max="50000" step="15" /></span></label>
+            <li><label><span data-i18n="loggerSettingPerTabMaxLoads"><input type="number" min="0" max="1000000" /></span></label>
+            <li><label><span data-i18n="loggerSettingPerTabMaxEntries"><input type="number" min="0" max="1000000" step="100" /></span></label>
             </ul>
         </div>
         <div><span data-i18n="loggerSettingHideColumnsPrompt"></span>
             <ul>
-            <li><label data-i18n="loggerSettingHideColumnTime"><input type="checkbox" data-column="0" /></label>
-            <li><label data-i18n="loggerSettingHideColumnFilter"><input type="checkbox" data-column="1" /></label>
-            <li><label data-i18n="loggerSettingHideColumnContext"><input type="checkbox" data-column="3" /></label>
-            <li><label data-i18n="loggerSettingHideColumnPartyness"><input type="checkbox" data-column="4" /></label>
+            <li><label data-i18n="loggerSettingHideColumnTime"><span class="input checkbox"><input type="checkbox" data-column="0" /><svg><use href="img/material-design.svg#checkmark" /></svg></span></label>
+            <li><label data-i18n="loggerSettingHideColumnFilter"><span class="input checkbox"><input type="checkbox" data-column="1" /><svg><use href="img/material-design.svg#checkmark" /></svg></span></label>
+            <li><label data-i18n="loggerSettingHideColumnContext"><span class="input checkbox"><input type="checkbox" data-column="3" /><svg><use href="img/material-design.svg#checkmark" /></svg></span></label>
+            <li><label data-i18n="loggerSettingHideColumnPartyness"><span class="input checkbox"><input type="checkbox" data-column="4" /><svg><use href="img/material-design.svg#checkmark" /></svg></span></label>
             </ul>
         </div>
-        <div><label data-i18n="loggerSettingPerEntryLineCount"><input type="number" min="2" max="6"></label></div>
+        <div><label><span data-i18n="loggerSettingPerEntryLineCount"><input type="number" min="2" max="6"></span></label></div>
     </div>
 
 </div>

@@ -2645,6 +2645,7 @@ const FilterParser = class {
     isJustOrigin() {
         return this.isRegex === false &&
             this.dataType === undefined &&
+            this.denyallow === '' &&
             this.domainOpt !== '' && (
                 this.f === '*' || (
                     this.anchor === 0b010 &&
@@ -3005,6 +3006,7 @@ FilterContainer.prototype.compile = function(raw, writer) {
     if (
         parsed.isPureHostname &&
         parsed.domainOpt === '' &&
+        parsed.denyallow === '' &&
         parsed.dataType === undefined
     ) {
         parsed.tokenHash = this.dotTokenHash;

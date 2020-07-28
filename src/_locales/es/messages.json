@@ -179,25 +179,33 @@
     "message": "Clic para no deshabilitar más JavaScript en este sitio",
     "description": "Tooltip for the no-scripting per-site switch"
   },
+  "popupNoPopups_v2": {
+    "message": "Ventanas emergentes",
+    "description": "Caption for the no-popups per-site switch"
+  },
   "popupNoLargeMedia_v2": {
     "message": "Elementos multimedia grandes",
-    "description": "Tip for the no-large-media per-site switch"
+    "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
     "message": "Filtrado cosmético",
-    "description": "Tip for the no-cosmetic-filtering per-site switch"
+    "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
     "message": "Fuentes remotas",
-    "description": "Tip for the no-remote-fonts per-site switch"
+    "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
     "message": "JavaScript",
-    "description": "Tip for the no-scripting per-site switch"
+    "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
     "message": "Más",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "Menos",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "Reglas globales: las reglas en esta columna se aplican a todos los sitios.",
@@ -254,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{count}} de {{total}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "Versión",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "Crear",
@@ -359,10 +371,6 @@
     "message": "Bloquear reportes CSP",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "Almacenamiento usado: {{value}} bytes",
-    "description": "English: Storage used: {{}} bytes"
-  },
   "settingsLastRestorePrompt": {
     "message": "Última restauración:",
     "description": "English: Last restore:"
@@ -396,7 +404,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Esta opción permite el análisis y aplicación de <a href=\"https://adblockplus.org/es/faq_internal#elemhide\">filtros de &ldquo;ocultación de elementos&rdquo; compatibles con Adblock Plus\"</a>. Estos filtros son esencialmente cosméticos, sirven para ocultar elementos que se consideran una molestia visual en una página web, no siendo posible su eliminación con el motor de bloqueo basado en peticiones.</p><p>Habilitar esta opción aumenta el consumo de memoria de uBlock₀.</p>",
+    "message": "Los filtros cosméticos sirven para ocultar elementos que se consideran una molestia visual en una página web, y que no pueden ser bloqueados por los motores de filtrado basados ​​en peticiones de red.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -404,7 +412,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Los filtros cosméticos genéricos son aquellos filtros cosméticos que aplican a todas las páginas.<p>Aunque uBlock₀ los gestiona de forma eficiente, estos filtros pueden contribuir a un aumento del uso de la memoria y la CPU en algunas páginas web, especialmente si contienen gran cantidad de contenido.<p>Al habilitar esta opción se disminuirá el uso de la CPU y exceso de uso de la memoria que resulta del procesamiento de los filtros cosméticos genéricos, así como el consumo de memoria de uBlock₀.<p>Se recomienda habilitar esta opción para dispositivos poco potentes.",
+    "message": "Los filtros cosméticos genéricos son aquellos filtros cosméticos que se aplican a todos los sitios web. Al habilitar esta opción se elimina el riesgo de sobrecarga a la CPU y exceso de uso de la memoria que resulta del procesamiento de los filtros cosméticos genéricos.\n\nSe recomienda habilitar esta opción en dispositivos poco potentes.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -459,6 +467,10 @@
     "message": "Desactualizado.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
+  "3pViewContent": {
+    "message": "ver contenido",
+    "description": "used as a tooltip for eye icon beside a list"
+  },
   "3pLastUpdate": {
     "message": "Última actualización: {{ago}}.\nHaz clic para actualizar ahora.",
     "description": "used as a tooltip for the clock icon beside a list"
@@ -472,7 +484,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Un filtro por línea. Los filtros pueden ser un nombre de dominio, o un filtro compatible con Adblock Plus. Las líneas que comiencen con <code>!</code> serán ignoradas.",
+    "message": "Un filtro por línea. El filtro puede ser un nombre de dominio, o un filtro compatible con Adblock Plus. Las líneas que comiencen con <code>!</code> serán ignoradas.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -827,6 +839,18 @@
     "message": "Colaboradores",
     "description": "English: Contributors"
   },
+  "aboutSourceCode": {
+    "message": "Código fuente",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "Traducciones",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "Listas de filtros",
+    "description": "Link text to uBO's own filter lists repo"
+  },
   "aboutDependencies": {
     "message": "Dependencias externas (compatibles con GPLv3):",
     "description": "Shown in the About pane"
@@ -864,7 +888,7 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: ¿Desea añadir la siguiente URL a tus listas de filtros personalizados?\n\nTítulo: \"{{title}}\"\nURL: {{url}}",
+    "message": "uBlock₀: ¿Deseas añadir la siguiente URL a tus listas de filtros personalizados?\n\nTítulo: \"{{title}}\"\nURL: {{url}}",
     "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
   },
   "elapsedOneMinuteAgo": {
@@ -960,7 +984,7 @@
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
-    "message": "¡Atención! Cambie estas configuraciones avanzadas bajo tu propio riesgo.",
+    "message": "¡Atención! Cambia estas configuraciones avanzadas bajo tu propio riesgo.",
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {
@@ -1002,6 +1026,22 @@
   "relaxBlockingMode": {
     "message": "Modo de bloqueo relajado",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
+  "storageUsed": {
+    "message": "Almacenamiento usado: {{value}} {{unit}}",
+    "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
+  },
+  "KB": {
+    "message": "KB",
+    "description": "short for 'kilobytes'"
+  },
+  "MB": {
+    "message": "MB",
+    "description": "short for 'megabytes'"
+  },
+  "GB": {
+    "message": "GB",
+    "description": "short for 'gigabytes'"
   },
   "dummy": {
     "message": "Esta entrada debe ser la última",

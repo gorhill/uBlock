@@ -1,21 +1,16 @@
 body {
-    background-color: white;
-    border: 0;
     display: flex;
     flex-direction: column;
-    margin: 0;
-    opacity: 1;
     overflow: hidden;
-    padding: 0;
     white-space: nowrap;
     width: fit-content;
     width: -moz-fit-content;
     }
 
 h2 {
-    background-color: #eee;
+    background-color: var(--bg-popup-cell-1);
     border: 0;
-    color: #666;
+    color: var(--fg-0-70);
     cursor: pointer;
     font-size: 100%;
     font-weight: normal;
@@ -96,17 +91,20 @@ p {
     margin: 0.8em 0;
     }
 #switch .fa-icon {
-    fill: #0046ff;
+    color: var(--popup-power-ink);
+    fill: var(--popup-power-ink);
     cursor: pointer;
     font-size: 700%;
     margin: 0;
     padding: 0;
     }
 #switch .fa-icon:hover {
-    opacity: 0.9;
+    color: var(--popup-power-ink-hover);
+    fill: var(--popup-power-ink-hover);
     }
 body.off #switch .fa-icon {
-    fill: #ccc;
+    color: var(--fg-0-20);
+    fill: var(--fg-0-20);
     }
 #basicTools {
     margin: 1.2em 0 0.5em 0;
@@ -115,9 +113,9 @@ body.off #switch .fa-icon {
     margin-left: 0;
     }
 .tool {
-    color: #aaa;
+    color: var(--fg-0-40);
     cursor: pointer;
-    fill: #aaa;
+    fill: var(--fg-0-40);
     margin-left: 0.8em;
     min-width: 1em;
     padding: 0 0.2em;
@@ -128,14 +126,14 @@ body.off #switch .fa-icon {
     visibility: visible;
     }
 .tool.enabled:hover {
-    color: #444;
-    fill: #444;
+    color: inherit;
+    fill: inherit;
     }
 #page-blocked {
     font-size: 1.25em;
     }
 .statName {
-    color: #888;
+    color: var(--fg-0-70);
     font-size: 85%;
     margin: 0.8em 0.2em 0.4em 0.2em;
     }
@@ -143,11 +141,9 @@ body.off #switch .fa-icon {
     margin: 0;
     }
 #extraTools {
-    background-color: #eee;
+    background-color: var(--bg-popup-cell-1);
     border: 0;
-    color: #888;
     display: flex;
-    fill: #888;
     justify-content: center;
     margin: 0.8em 0 0 0;
     padding: 0.2em 0;
@@ -156,7 +152,9 @@ body.responsive #extraTools {
     justify-content: space-evenly;
     }
 #extraTools > span {
+    color: var(--fg-0-40);
     cursor: pointer;
+    fill: var(--fg-0-40);
     font-size: 1.2em;
     margin: 0 0.8em 0 0;
     position: relative;
@@ -167,7 +165,7 @@ body.responsive #extraTools {
 #extraTools > span > .nope {
     left: 50%;
     position: absolute;
-    stroke: red;
+    stroke: var(--popup-icon-x-ink);
     stroke-width: 2;
     transform: translateX(-50%);
     visibility: hidden;
@@ -177,17 +175,17 @@ body.responsive #extraTools {
     visibility: visible;
     }
 #extraTools > span:hover {
-    color: #222;
-    fill: #222;
+    color: inherit;
+    fill: inherit;
     }
 
 #refresh {
-    background-color: #ffe;
+    background-color: var(--bg-transient-notice);
     border: 1px solid #ddc;
     border-radius: 4px;
     cursor: pointer;
     display: none;
-    fill: #888;
+    fill: var(--fg-0-50);
     font-size: 3em;
     justify-content: center;
     left: 4px;
@@ -200,16 +198,16 @@ body.dirty #refresh {
     display: flex;
     }
 body.dirty #refresh:hover {
-    fill: #000
+    fill: inherit
     }
 
 #tooltip {
-    background-color: #ffffee;
+    background-color: var(--bg-tooltip);
     border: 1px solid gray;
     border-radius: 3px;
     box-shadow: 1px 1px 3px gray;
     box-sizing: border-box;
-    color: black;
+    color: var(--fg-tooltip);
     cursor: pointer;
     direction: ltr;
     font: 12px sans-serif;
@@ -239,6 +237,7 @@ body[dir="rtl"] #tooltip {
 #firewallContainer {
     border: 0;
     font-size: 85%;
+    line-height: 1.4;
     margin: 0;
     padding: 0;
     text-align: right;
@@ -263,11 +262,9 @@ body[dir="rtl"] #tooltip {
     display: none;
     }
 #firewallContainer > div > span {
-    background-color: #e6e6e6;
+    background-color: var(--bg-popup-cell-1);
     border: none;
     box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    color: #000;
     display: inline-flex;
     flex-shrink: 0;
     padding: 0.33em 0;
@@ -287,7 +284,7 @@ body[dir="rtl"] #tooltip {
     word-break: break-word;
     }
 #firewallContainer > div.isCname > span:first-of-type {
-    color: mediumblue;
+    color: var(--fg-popup-cell-cname);
     }
 #firewallContainer > div > span:first-of-type > sub {
     display: inline-block;
@@ -307,7 +304,7 @@ body[dir="rtl"] #tooltip {
     }
 #firewallContainer > div > span:nth-of-type(3),
 #firewallContainer > div > span:nth-of-type(4) {
-    color: #444;
+    color: var(--fg-0-70);
     display: none;
     font-family: monospace;
     text-align: center;
@@ -316,7 +313,7 @@ body[dir="rtl"] #tooltip {
     font-weight: bold;
     }
 #firewallContainer > div:first-of-type > span:first-of-type::before {
-    color: #aaa;
+    color: var(--fg-0-50);
     content: '+';
     padding-right: 0.25em;
     }
@@ -334,31 +331,41 @@ body[dir="rtl"] #tooltip {
     justify-content: space-between;
     }
 #firewallContainer > div > span[data-acount]::before,
-#firewallContainer > div > span[data-bcount]::after {
+#firewallContainer > div > span[data-bcount]::after,
+#firewallContainer > div > span[data-acount] > #actionSelector > #dynaCounts::before,
+#firewallContainer > div > span[data-acount] > #actionSelector > #dynaCounts::after {
     content: ' ';
     }
-#firewallContainer > div > span[data-acount]::before {
+#firewallContainer > div > span[data-acount]::before,
+#firewallContainer > div > span[data-acount] > #actionSelector > #dynaCounts::before {
     padding-left: 0.1em;
     }
-#firewallContainer > div > span[data-acount="1"]::before {
+#firewallContainer > div > span[data-acount="1"]::before,
+#firewallContainer > div > span[data-acount="1"] > #actionSelector > #dynaCounts::before {
     content: '+';
     }
-#firewallContainer > div > span[data-acount="2"]::before {
+#firewallContainer > div > span[data-acount="2"]::before,
+#firewallContainer > div > span[data-acount="2"] > #actionSelector > #dynaCounts::before {
     content: '++';
     }
-#firewallContainer > div > span[data-acount="3"]::before {
+#firewallContainer > div > span[data-acount="3"]::before,
+#firewallContainer > div > span[data-acount="3"] > #actionSelector > #dynaCounts::before {
     content: '+++';
     }
-#firewallContainer > div > span[data-bcount]::after {
+#firewallContainer > div > span[data-bcount]::after,
+#firewallContainer > div > span[data-bcount] > #actionSelector > #dynaCounts::after {
     padding-right: 0.1em;
     }
-#firewallContainer > div > span[data-bcount="1"]::after {
+#firewallContainer > div > span[data-bcount="1"]::after,
+#firewallContainer > div > span[data-bcount="1"] > #actionSelector > #dynaCounts::after {
     content: '\2212';
     }
-#firewallContainer > div > span[data-bcount="2"]::after {
+#firewallContainer > div > span[data-bcount="2"]::after,
+#firewallContainer > div > span[data-bcount="2"] > #actionSelector > #dynaCounts::after {
     content: '\2212\2212';
     }
-#firewallContainer > div > span[data-bcount="3"]::after {
+#firewallContainer > div > span[data-bcount="3"]::after,
+#firewallContainer > div > span[data-bcount="3"] > #actionSelector > #dynaCounts::after {
     content: '\2212\2212\2212';
     }
 
@@ -388,124 +395,97 @@ body.advancedUser #firewallContainer > div > span:first-of-type ~ span {
     box-sizing: border-box;
     content: '';
     display: inline-block;
+    filter: var(--bg-popup-cell-label-filter);
     height: 100%;
     left: 0;
-    opacity: 0.4;
     position: absolute;
     top: 0;
     width: 7px;
     }
 #firewallContainer > div.isRootContext > span:first-of-type::before {
-    background-color: rgb(127, 127, 127);
+    background-color: var(--fg-0-50);
     width: 14px !important;
     }
-/**
- Source for color-blind color scheme from https://github.com/WyohKnott:
- https://github.com/chrisaljoudi/uBlock/issues/467#issuecomment-95177219
- */
 #firewallContainer > div.allowed > span:first-of-type::before,
 #firewallContainer > div.isDomain.totalAllowed > span:first-of-type::before {
-    background-color: rgb(0, 160, 0);
-    }
-#firewallContainer.colorBlind > div.allowed > span:first-of-type::before,
-#firewallContainer.colorBlind > div.isDomain.totalAllowed > span:first-of-type::before {
-    background-color: rgb(255, 194, 57);
+    background-color: var(--bg-popup-cell-allow-own);
     }
 #firewallContainer > div.blocked > span:first-of-type::before,
 #firewallContainer > div.isDomain.totalBlocked > span:first-of-type::before {
-    background-color: rgb(192, 0, 0);
-    }
-#firewallContainer.colorBlind > div.blocked > span:first-of-type::before,
-#firewallContainer.colorBlind > div.isDomain.totalBlocked > span:first-of-type::before {
-    background-color: rgb(0, 19, 110);
+    background-color: var(--bg-popup-cell-block-own);
     }
 #firewallContainer > div.allowed.blocked > span:first-of-type::before,
 #firewallContainer > div.isDomain.totalAllowed.totalBlocked > span:first-of-type::before {
-    background-color: rgb(192, 160, 0);
+    background-color: var(--bg-popup-cell-label-mixed);
     }
 /* Rule cells */
-body.advancedUser #firewallContainer > div > span.allowRule {
-    background-color: rgba(0, 160, 0, 0.3);
+body.advancedUser #firewallContainer > div > span.allowRule,
+#actionSelector > #dynaAllow {
+    background-color: var(--bg-popup-cell-allow);
     }
-body.advancedUser #firewallContainer.colorBlind > div > span.allowRule {
-    background-color: rgba(255, 194, 57, 0.4);
+body.advancedUser #firewallContainer > div > span.blockRule,
+#actionSelector > #dynaBlock {
+    background-color: var(--bg-popup-cell-block);
     }
-body.advancedUser #firewallContainer > div > span.blockRule {
-    background-color: rgba(192, 0, 0, 0.3);
+body.advancedUser #firewallContainer > div > span.noopRule,
+#actionSelector > #dynaNoop {
+    background-color: var(--bg-popup-cell-noop);
     }
-body.advancedUser #firewallContainer.colorBlind > div > span.blockRule {
-    background-color: rgba(0, 19, 110, 0.4);
+body.advancedUser #firewallContainer > div > span.ownRule,
+#firewallContainer > div > span.ownRule {
+    color: var(--default-surface);
     }
-body.advancedUser #firewallContainer > div > span.noopRule {
-    background-color: rgba(108, 108, 108, 0.3);
+body.advancedUser #firewallContainer > div > span.allowRule.ownRule,
+#actionSelector > #dynaAllow:hover {
+    background-color: var(--bg-popup-cell-allow-own);
     }
-body.advancedUser #firewallContainer.colorBlind > div > span.noopRule {
-    background-color: rgba(96, 96, 96, 0.4);
+body.advancedUser #firewallContainer > div > span.blockRule.ownRule,
+#actionSelector > #dynaBlock:hover {
+    background-color: var(--bg-popup-cell-block-own);
     }
-body.advancedUser #firewallContainer > div > span.ownRule {
-    color: white;
-    }
-body.advancedUser #firewallContainer > div > span.allowRule.ownRule {
-    background-color: rgba(0, 160, 0, 1);
-    }
-body.advancedUser #firewallContainer.colorBlind > div > span.allowRule.ownRule {
-    background-color: rgba(255, 194, 57, 1);
-    }
-body.advancedUser #firewallContainer > div > span.blockRule.ownRule {
-    background-color: rgba(192, 0, 0, 1);
-    }
-body.advancedUser #firewallContainer.colorBlind > div > span.blockRule.ownRule {
-    background-color: rgba(0, 19, 110, 1);
-    }
-body.advancedUser #firewallContainer > div > span.noopRule.ownRule {
-    background-color: rgba(108, 108, 108, 1);
+body.advancedUser #firewallContainer > div > span.noopRule.ownRule,
+#actionSelector > #dynaNoop:hover {
+    background-color: var(--bg-popup-cell-noop-own);
     }
 
 #actionSelector {
-    bottom: 0;
+    box-sizing: border-box;
+    height: 100%;
     left: 0;
     position: absolute;
     top: 0;
-    width: 4em;
+    width: 100%;
     z-index: 1;
     }
 #actionSelector > span {
     display: inline-block;
     height: 100%;
-    opacity: 0.2;
     }
-#actionSelector > span:first-of-type {
+#actionSelector > #dynaAllow {
     width: 33%;
     }
-#actionSelector > span:nth-of-type(2) {
+#actionSelector > #dynaNoop {
     width: 33.5%;
     }
-#actionSelector > span:nth-of-type(3) {
+#actionSelector > #dynaBlock {
     width: 33.5%;
     }
-#actionSelector > span:hover {
-    opacity: 0.75;
-    }
-#actionSelector > span:first-of-type {
-    background-color: rgb(0, 160, 0);
-    }
-#actionSelector.colorBlind > span:first-of-type {
-    background-color: rgb(255, 194, 57);
-    }
-#actionSelector > span:nth-of-type(2) {
-    background-color: rgb(108, 108, 108);
-    }
-#actionSelector > span:nth-of-type(3) {
-    background-color: rgb(192, 0, 0);
-    }
-#actionSelector.colorBlind > span:nth-of-type(3) {
-    background-color: rgb(0, 19, 110);
+#actionSelector > #dynaCounts {
+    align-items: center;
+    background-color: transparent;
+    display: inline-flex;
+    height: 100%;
+    justify-content: space-between;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    width: 100%;
     }
 
 #rulesetTools {
     background-color: transparent;
     border: 0;
-    fill: #888;
     display: none;
     left: 4px;
     padding: 0;
@@ -513,11 +493,12 @@ body.advancedUser #firewallContainer > div > span.noopRule.ownRule {
     top: 4px;
     }
 #rulesetTools > span {
-    background-color: #ffe;
+    background-color: var(--bg-transient-notice);
     border: 1px solid #ddc;
     border-radius: 4px;
     cursor: pointer;
     display: inline-block;
+    fill: var(--fg-0-50);
     font-size: 1.8em;
     line-height: 1.0;
     margin: 0;
@@ -530,9 +511,8 @@ body.advancedUser #firewallContainer > div > span.noopRule.ownRule {
     display: block;
     }
 #firewallContainer.dirty ~ #rulesetTools > span:hover {
-    fill: black;
+    fill: inherit;
     }
-
 
 body.responsive {
     overflow-y: auto;

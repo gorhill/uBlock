@@ -179,25 +179,33 @@
     "message": "לחץ על מנת להפסיק לחסום JavaScript באתר זה",
     "description": "Tooltip for the no-scripting per-site switch"
   },
+  "popupNoPopups_v2": {
+    "message": "חלונות קופצים",
+    "description": "Caption for the no-popups per-site switch"
+  },
   "popupNoLargeMedia_v2": {
     "message": "אלמנטי מדיה גדולים",
-    "description": "Tip for the no-large-media per-site switch"
+    "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
     "message": "מסננים קוסמטיים",
-    "description": "Tip for the no-cosmetic-filtering per-site switch"
+    "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
     "message": "פונטים חיצוניים",
-    "description": "Tip for the no-remote-fonts per-site switch"
+    "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
     "message": "JavaScript",
-    "description": "Tip for the no-scripting per-site switch"
+    "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
     "message": "עוד",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "פחות",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "חוקים גלובליים: עמודה זו היא עבור חוקים אשר תקפים לכל האתרים.",
@@ -254,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{count}} מתוך {{total}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "גרסה",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "צור",
@@ -359,10 +371,6 @@
     "message": "חסום דיווחי CSP",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "אחסון בשימוש: {{value}} בתים",
-    "description": "English: Storage used: {{}} bytes"
-  },
   "settingsLastRestorePrompt": {
     "message": "שחזור אחרון:",
     "description": "English: Last restore:"
@@ -396,7 +404,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>אפשרות זו מאפשרת פירסור ואיפשור של <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">מסנני &ldquo;ההסתרת האלמנטים&rdquo; התואמים ל Adblock Plus</a>. מסננים אלו הם קוסמטיים, הם נועדו להסתיר אלמנטים בדף אשר נחשבים למטרד חזותי, ואשר לא יכולים להיחסם על ידי מנוע חסימת בקשות רשת.</p><p>הפעלת פיצ'ר זה מעלה את צריכת הזיכרון של <i>uBlock₀</i></p>",
+    "message": "מסננים קוסמטיים נועדו להסתיר אלמנטים בדף אינטרנט אשר נחשבים למטרד חזותי, ואשר לא יכולים להיחסם על ידי מנוע חסימת בקשות רשת.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -404,7 +412,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>מסננים קוסמטיים כלליים הם המסננים הקוסמטיים אשר מיועדים להיות מוחלים על כל דפי האינטרנט.<p>למרות ש uBlock₀ מטפל בהם ביעילות, מסננים קוסמטיים כללים יכולים להכביד על הזיכרון וה CPU בדפי אינטרנט מסוימים, בעיקר לדפי אינטרנט גדולים ובעלי חיים ארוכים.<p>אפשור הגדרה זו תמנע את השימוש הרב בזיכרון וב CPU אשר נוספים לדפי אינטרנט כתוצאה משימוש במסננים קוסמטיים כלליים, וגם תוריד את צריכת הזיכרון של uBlock₀ עצמו.<p>מומלץ לאפשר הגדרה זו במכשירים חלשים יותר.",
+    "message": "מסננים קוסמטיים כלליים - אלה הם המסננים הקוסמטיים, אשר מיועדים להיות מוחלים על כל דפי האינטרנט. אפשור הגדרה זו תוריד את צריכת הזיכרון והמעבד אשר מתווספות לדפי אינטרנט כתוצאה משימוש במסננים קוסמטיים כלליים.\n\nמומלץ לאפשר הגדרה זו במכשירים פחות חזקים.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -458,6 +466,10 @@
   "3pExternalListObsolete": {
     "message": "לא עדכני.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
+  },
+  "3pViewContent": {
+    "message": "הצג תוכן",
+    "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
     "message": "עדכון אחרון: {{ago}}.\nלחץ על מנת לאלץ עידכון.",
@@ -744,7 +756,7 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "המסנן הסטאטי <code>{{filter}}</code> לא נמצא בשום אחת מרשימות המסננים המופעלות כרגע",
+    "message": "המסנן הסטאטי לא נמצא בשום אחת מרשימות המסננים המופעלות כרגע",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
@@ -826,6 +838,18 @@
   "aboutContributors": {
     "message": "תורמים",
     "description": "English: Contributors"
+  },
+  "aboutSourceCode": {
+    "message": "קוד מקור",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "תרגומים",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "רשימות מסננים",
+    "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
     "message": "תלויות חיצוניות (תואם-GPLv3):",
@@ -1002,6 +1026,22 @@
   "relaxBlockingMode": {
     "message": "הרפה את מצב החסימה הנוכחי",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
+  "storageUsed": {
+    "message": "אחסון בשימוש: {{value}} {{unit}}",
+    "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
+  },
+  "KB": {
+    "message": "KB",
+    "description": "short for 'kilobytes'"
+  },
+  "MB": {
+    "message": "MB",
+    "description": "short for 'megabytes'"
+  },
+  "GB": {
+    "message": "GB",
+    "description": "short for 'gigabytes'"
   },
   "dummy": {
     "message": "ערך זה חייב להיות האחרון",

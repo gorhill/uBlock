@@ -8,7 +8,9 @@
 <link rel="stylesheet" type="text/css" href="lib/codemirror/lib/pastel-on-dark.css">
 <link rel="stylesheet" type="text/css" href="lib/codemirror/addon/merge/merge.css">
 
+<link rel="stylesheet" type="text/css" href="css/themes/default.css">
 <link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/fa-icons.css">
 <link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
 <link rel="stylesheet" type="text/css" href="css/cloud-ui.css">
 <link rel="stylesheet" type="text/css" href="css/dyna-rules.css">
@@ -23,21 +25,21 @@
     <div id="diff">
         <div class="tools">
             <div class="ruleActions">
-                <h3 data-i18n="rulesPermanentHeader"></h3>
-                <button type="button" class="custom iconifiable" id="exportButton"><span class="fa">&#xf093;</span><span data-i18n="rulesExport"></span></button>
-                <button type="button" class="custom iconifiable" id="revertButton"><span class="fa">&#xf061;</span><span data-i18n="rulesRevert"></span></button>
+                <div class="fieldset-header" data-i18n="rulesPermanentHeader"></div>
+                <button type="button" class="iconifiable" id="exportButton"><span class="fa">&#xf093;</span><span data-i18n="rulesExport"></span></button>
+                <button type="button" class="iconifiable" id="revertButton"><span class="fa">&#xf061;</span><span data-i18n="rulesRevert"></span></button>
             </div>
             <div class="ruleActions">
-                <h3 data-i18n="rulesTemporaryHeader"></h3>
-                <button type="button" class="custom iconifiable" id="commitButton"><span class="fa">&#xf060;</span><span data-i18n="rulesCommit"></span></button>
-                <button type="button" class="custom iconifiable" id="importButton"><span class="fa">&#xf019;</span><span data-i18n="rulesImport"></span></button>
-                <button type="button" class="custom iconifiable important disabled" id="editSaveButton"><span class="fa">&#xf0c7;</span><span data-i18n="rulesEditSave"></span></button>
+                <div class="fieldset-header" data-i18n="rulesTemporaryHeader"></div>
+                <button type="button" class="iconifiable" id="commitButton"><span class="fa">&#xf060;</span><span data-i18n="rulesCommit"></span></button>
+                <button type="button" class="iconifiable" id="importButton"><span class="fa">&#xf019;</span><span data-i18n="rulesImport"></span></button>
+                <button type="button" class="iconifiable important disabled" id="editSaveButton"><span class="fa">&#xf0c7;</span><span data-i18n="rulesEditSave"></span></button>
             </div>
             <div id="ruleFilter"><span class="fa">&#xf0b0;</span>&ensp;<input type="search" size="20"></div>
         </div>
     </div>
 </div>
-<div class="codeMirrorContainer codeMirrorMergeContainer codeMirrorFillVertical"></div>
+<div class="codeMirrorContainer codeMirrorMergeContainer"></div>
 
 <div id="templates" style="display: none;">
     <input class="hidden" id="importFilePicker" type="file" accept="text/plain">
@@ -51,6 +53,7 @@
 
 <script src="js/codemirror/ubo-dynamic-filtering.js"></script>
 
+<script src="js/fa-icons.js"></script>
 <script src="js/vapi.js"></script>
 <script src="js/vapi-common.js"></script>
 <script src="js/vapi-client.js"></script>

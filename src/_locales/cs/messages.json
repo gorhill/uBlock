@@ -179,25 +179,33 @@
     "message": "Kliknutím znovu povolíte JavaScript na této stránce",
     "description": "Tooltip for the no-scripting per-site switch"
   },
+  "popupNoPopups_v2": {
+    "message": "Pop-up windows",
+    "description": "Caption for the no-popups per-site switch"
+  },
   "popupNoLargeMedia_v2": {
     "message": "Velké multimediální prvky",
-    "description": "Tip for the no-large-media per-site switch"
+    "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
     "message": "Kosmetické filtrování",
-    "description": "Tip for the no-cosmetic-filtering per-site switch"
+    "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
     "message": "Vzdálená písma",
-    "description": "Tip for the no-remote-fonts per-site switch"
+    "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
     "message": "JavaScript",
-    "description": "Tip for the no-scripting per-site switch"
+    "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
     "message": "Více",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "Méně",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "Globální pravidla: tento sloupec slouží pro pravidla, která platí pro všechny weby.",
@@ -254,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{count}} z {{total}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "Verze",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "Vytvořit",
@@ -359,10 +371,6 @@
     "message": "Blokovat CSP reporty",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "Prostoru využito: {{value}} bajtů",
-    "description": "English: Storage used: {{}} bytes"
-  },
   "settingsLastRestorePrompt": {
     "message": "Poslední obnova:",
     "description": "English: Last restore:"
@@ -396,7 +404,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Tímto povolíte zpracovávání a používání <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">&ldquo;element hiding&rdquo; filtrů kompatibilních s Adblockem Plus</a>. Tyto filtry jsou převážně kosmetické. Skrývají prvky webových stránek, které jsou vizuálně na obtíž a nemohou být zablokovány síťovým požadavkem.</p><p>Povolení této funkce zvětšuje stopy uBlocku₀ v paměti.</p>",
+    "message": "<p>Tímto povolíte zpracovávání a používání <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">&ldquo;element hiding&rdquo; filtrů kompatibilních s Adblockem Plus</a>. Tyto filtry jsou převážně kosmetické. Skrývají prvky webových stránek, které jsou vizuálně na obtíž a nemohou být zablokovány síťovým požadavkem.</p><p>Povolení této funkce zvětšuje spotřebu paměti uBlocku₀.</p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -458,6 +466,10 @@
   "3pExternalListObsolete": {
     "message": "Zastaralé.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
+  },
+  "3pViewContent": {
+    "message": "view content",
+    "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
     "message": "Poslední aktualizace: {{ago}}.\nKliknutím vynutíte aktualizaci.",
@@ -827,6 +839,18 @@
     "message": "Přispěvatelé",
     "description": "English: Contributors"
   },
+  "aboutSourceCode": {
+    "message": "Zdrojový kód",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "Překlady",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "Seznam filtrů",
+    "description": "Link text to uBO's own filter lists repo"
+  },
   "aboutDependencies": {
     "message": "Externí závislosti (kompatibilní s GPLv3):",
     "description": "Shown in the About pane"
@@ -1002,6 +1026,22 @@
   "relaxBlockingMode": {
     "message": "Uvolnit režim blokování",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
+  "storageUsed": {
+    "message": "Storage used: {{value}} {{unit}}",
+    "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
+  },
+  "KB": {
+    "message": "KB",
+    "description": "short for 'kilobytes'"
+  },
+  "MB": {
+    "message": "MB",
+    "description": "short for 'megabytes'"
+  },
+  "GB": {
+    "message": "GB",
+    "description": "short for 'gigabytes'"
   },
   "dummy": {
     "message": "This entry must be the last one",

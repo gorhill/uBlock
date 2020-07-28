@@ -16,7 +16,7 @@
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "不離開",
+    "message": "留下",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -179,25 +179,33 @@
     "message": "點擊以停止禁用此網站的所有腳本",
     "description": "Tooltip for the no-scripting per-site switch"
   },
+  "popupNoPopups_v2": {
+    "message": "彈出視窗",
+    "description": "Caption for the no-popups per-site switch"
+  },
   "popupNoLargeMedia_v2": {
     "message": "大型媒體元素",
-    "description": "Tip for the no-large-media per-site switch"
+    "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
     "message": "網頁元素過濾",
-    "description": "Tip for the no-cosmetic-filtering per-site switch"
+    "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
     "message": "遠端字體",
-    "description": "Tip for the no-remote-fonts per-site switch"
+    "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
     "message": "JavaScript",
-    "description": "Tip for the no-scripting per-site switch"
+    "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
     "message": "更多",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "更少",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "全域規則：此欄位的規則會套用至所有網站。",
@@ -254,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{count}} / {{total}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "版本",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "建立",
@@ -359,10 +371,6 @@
     "message": "封鎖 CSP 報告",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "儲存空間：已使用 {{value}} 位元組",
-    "description": "English: Storage used: {{}} bytes"
-  },
   "settingsLastRestorePrompt": {
     "message": "上次還原：",
     "description": "English: Last restore:"
@@ -458,6 +466,10 @@
   "3pExternalListObsolete": {
     "message": "过久未更新。",
     "description": "used as a tooltip for the out-of-date icon beside a list"
+  },
+  "3pViewContent": {
+    "message": "查看內容",
+    "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
     "message": "最後更新：{{ago}}。\n點擊此處以要求更新。",
@@ -827,6 +839,18 @@
     "message": "貢獻者",
     "description": "English: Contributors"
   },
+  "aboutSourceCode": {
+    "message": "原始碼",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "翻譯",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "過濾規則清單",
+    "description": "Link text to uBO's own filter lists repo"
+  },
   "aboutDependencies": {
     "message": "外部相依套件（與 GPLv3 相容）：",
     "description": "Shown in the About pane"
@@ -1002,6 +1026,22 @@
   "relaxBlockingMode": {
     "message": "放寬封鎖量模式",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
+  "storageUsed": {
+    "message": "儲存空間用量：{{value}} {{unit}}",
+    "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
+  },
+  "KB": {
+    "message": "KB",
+    "description": "short for 'kilobytes'"
+  },
+  "MB": {
+    "message": "MB",
+    "description": "short for 'megabytes'"
+  },
+  "GB": {
+    "message": "GB",
+    "description": "short for 'gigabytes'"
   },
   "dummy": {
     "message": "此條目須為最後一個",

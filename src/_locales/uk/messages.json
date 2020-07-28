@@ -179,25 +179,33 @@
     "message": "Натисніть, щоб повністю припинити вимкнення javaScript на цьому сайті",
     "description": "Tooltip for the no-scripting per-site switch"
   },
+  "popupNoPopups_v2": {
+    "message": "Спливаючі вікна",
+    "description": "Caption for the no-popups per-site switch"
+  },
   "popupNoLargeMedia_v2": {
     "message": "Великі медіа елементи",
-    "description": "Tip for the no-large-media per-site switch"
+    "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
     "message": "Косметичне фільтрування",
-    "description": "Tip for the no-cosmetic-filtering per-site switch"
+    "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
     "message": "Віддалені шрифти",
-    "description": "Tip for the no-remote-fonts per-site switch"
+    "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
     "message": "JavasScript",
-    "description": "Tip for the no-scripting per-site switch"
+    "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
     "message": "Більше",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "Менше",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "Глобальні правила: цей стовпчик для правил, що застосовуються для всіх сайтів.",
@@ -254,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{count}} з {{total}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "Версія",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "Створити",
@@ -359,10 +371,6 @@
     "message": "Блокувати CSP-звіти",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "Використано: {{value}} байт",
-    "description": "English: Storage used: {{}} bytes"
-  },
   "settingsLastRestorePrompt": {
     "message": "Востаннє відновлено:",
     "description": "English: Last restore:"
@@ -396,7 +404,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Ця опція вмикає аналіз та застосування <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">Adblock Plus-сумісних фільтрів &ldquo;приховання елементв&rdquo; </a>. По суті це косметичні фільтри – приховують елементи сторінки, які візуально дратують і не можуть бути блоковані механізмом фільтрації мережевих запитів.</p><p>Увімкнення цієї функції збільшує споживання пам’яті <i>uBlock₀</i>'ом.</p>",
+    "message": "<p> Ця опція вмикає розбір та задіяння <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">Adblock Plus-сумісних &ldquo;element hiding&rdquo; фільтрів</a>. Ці фільтри є фактично косметичними – дозволяють приховати елементи в інтернеті, які є візуальними незручностями і які підходять для рушія блокування запитів.</p><p>Увімкнення цієї функції збільшує споживання пам’яті <i>µBlock</i>'ом.</p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -458,6 +466,10 @@
   "3pExternalListObsolete": {
     "message": "Застарілий.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
+  },
+  "3pViewContent": {
+    "message": "переглянути вміст",
+    "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
     "message": "Останнє оновлення: {{ago}}\nКлацніть для примусового оновлення.",
@@ -827,6 +839,18 @@
     "message": "Учасники",
     "description": "English: Contributors"
   },
+  "aboutSourceCode": {
+    "message": "Джерельний код",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "Переклади",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "Списки фільтрів",
+    "description": "Link text to uBO's own filter lists repo"
+  },
   "aboutDependencies": {
     "message": "Зовнішні залежності (сумісні з GPLv3):",
     "description": "Shown in the About pane"
@@ -1002,6 +1026,22 @@
   "relaxBlockingMode": {
     "message": "Послаблений режим блокування",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
+  "storageUsed": {
+    "message": "Використано: {{value}} {{unit}}",
+    "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
+  },
+  "KB": {
+    "message": "КБ",
+    "description": "short for 'kilobytes'"
+  },
+  "MB": {
+    "message": "МБ",
+    "description": "short for 'megabytes'"
+  },
+  "GB": {
+    "message": "ГБ",
+    "description": "short for 'gigabytes'"
   },
   "dummy": {
     "message": "Цей запис має бути останнім",

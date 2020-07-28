@@ -5,22 +5,21 @@
     display: inline-flex;
     justify-content: center;
     margin: 0;
-    padding: 0.1em;
+    padding: 0 0.1em;
     position: relative;
     user-select: none;
+    vertical-align: text-bottom;
     -webkit-user-select: none;
     }
 .fa-icon > * {
     pointer-events: none;
     }
 .fa-icon.disabled,
-.disabled > .fa-icon,
-.fa-icon[disabled],
-[disabled] > .fa-icon {
-    color: #000;
-    fill: #000;
-    opacity: 0.25;
-    stroke: #888;
+.fa-icon[disabled] {
+    color: var(--button-disabled-ink);
+    fill: var(--button-disabled-ink);
+    filter: var(--button-disabled-filter);
+    stroke: var(--button-disabled-ink);
     pointer-events: none;
     }
 .fa-icon > .fa-icon-badge,
@@ -41,12 +40,16 @@
 
 .fa-icon > svg {
     height: 1em;
+    overflow: visible;
     width: 1em;
     }
 
 .fa-icon > .fa-icon_bar-chart {
     width: calc(1em * 2048 / 1792);
     }
+.fa-icon > .fa-icon_cloud-download,
+.fa-icon > .fa-icon_cloud-upload,
+.fa-icon > .fa-icon_cogs,
 .fa-icon > .fa-icon_eraser,
 .fa-icon > .fa-icon_film {
     width: calc(1em * 1920 / 1792);
@@ -60,24 +63,32 @@
 .fa-icon > .fa-icon_clipboard,
 .fa-icon > .fa-icon_external-link,
 .fa-icon > .fa-icon_eye-dropper,
+.fa-icon > .fa-icon_eye-open,
 .fa-icon > .fa-icon_eye-slash,
 .fa-icon > .fa-icon_files-o,
 .fa-icon > .fa-icon_list-alt {
     width: calc(1em * 1792 / 1792);
     }
 .fa-icon > .fa-icon_font,
-.fa-icon > .fa-icon_search {
+.fa-icon > .fa-icon_search,
+.fa-icon > .fa-icon_spinner,
+.fa-icon > .fa-icon_unlink {
     width: calc(1em * 1664 / 1792);
     }
 .fa-icon > .fa-icon_home {
     width: calc(1em * 1612 / 1792);
     }
+.fa-icon > .fa-icon_check {
+    width: calc(1em * 1550 / 1792);
+    }
 .fa-icon > .fa-icon_cog,
+.fa-icon > .fa-icon_clock-o,
 .fa-icon > .fa-icon_floppy-o,
 .fa-icon > .fa-icon_info-circle,
 .fa-icon > .fa-icon_pause-circle-o,
 .fa-icon > .fa-icon_play-circle-o,
 .fa-icon > .fa-icon_power-off,
+.fa-icon > .fa-icon_question-circle,
 .fa-icon > .fa-icon_refresh,
 .fa-icon > .fa-icon_sliders {
     width: calc(1em * 1536 / 1792);
@@ -85,12 +96,17 @@
 .fa-icon > .fa-icon_filter {
     width: calc(1em * 1410 / 1792);
     }
+.fa-icon > .fa-icon_plus,
+.fa-icon > .fa-icon_trash-o {
+    width: calc(1em * 1408 / 1792);
+    }
 .fa-icon > .fa-icon_times {
     width: calc(1em * 1188 / 1792);
     }
 .fa-icon > .fa-icon_angle-up,
 .fa-icon > .fa-icon_double-angle-up,
-.fa-icon > .fa-icon_lock {
+.fa-icon > .fa-icon_lock,
+.fa-icon > .fa-icon_unlock-alt {
     width: calc(1em *  1152 / 1792);
     }
 .fa-icon > .fa-icon_double-angle-left {

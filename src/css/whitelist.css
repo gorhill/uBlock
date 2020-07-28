@@ -1,18 +1,22 @@
 html {
     height: 100vh;
     overflow: hidden;
+    width: 100vw;
     }
 body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: stretch;
     overflow: hidden;
-    }
-#whitelist {
-    height: 75vh;
-    text-align: left;
     width: 100%;
     }
-.codeMirrorContainer .cm-builtin {
-    color: #00F;
+.body {
+    flex-shrink: 0;
     }
-.codeMirrorContainer .cm-comment.cm-builtin {
-    color: #88F;
+.codeMirrorContainer {
+    flex-grow: 1;
+    }
+#whitelist {
+    text-align: left;
     }

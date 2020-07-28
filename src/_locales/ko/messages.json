@@ -179,25 +179,33 @@
     "message": "클릭하여 이 사이트에서 JavaScript 활성화",
     "description": "Tooltip for the no-scripting per-site switch"
   },
+  "popupNoPopups_v2": {
+    "message": "팝업 창",
+    "description": "Caption for the no-popups per-site switch"
+  },
   "popupNoLargeMedia_v2": {
     "message": "큰 미디어 요소",
-    "description": "Tip for the no-large-media per-site switch"
+    "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
     "message": "표면 필터링",
-    "description": "Tip for the no-cosmetic-filtering per-site switch"
+    "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
     "message": "원격 폰트",
-    "description": "Tip for the no-remote-fonts per-site switch"
+    "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
     "message": "자바스크립트",
-    "description": "Tip for the no-scripting per-site switch"
+    "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
     "message": "더보기",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "간단히",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "공용 규칙: 이 열은 모든 사이트에 적용되는 규칙 열 입니다.",
@@ -254,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{total}}개 중 {{count}}개",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "버전",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "생성",
@@ -359,10 +371,6 @@
     "message": "CSP 보고서 차단",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "스토리지 사용량: {{value}} 바이트",
-    "description": "English: Storage used: {{}} bytes"
-  },
   "settingsLastRestorePrompt": {
     "message": "최근 복원:",
     "description": "English: Last restore:"
@@ -458,6 +466,10 @@
   "3pExternalListObsolete": {
     "message": "구버전",
     "description": "used as a tooltip for the out-of-date icon beside a list"
+  },
+  "3pViewContent": {
+    "message": "내용 보기",
+    "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
     "message": "마지막 업데이트: {{ago}}\n업데이트하려면 여기를 클릭하세요.",
@@ -827,6 +839,18 @@
     "message": "기여자",
     "description": "English: Contributors"
   },
+  "aboutSourceCode": {
+    "message": "소스 코드",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "번역",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "필터 목록",
+    "description": "Link text to uBO's own filter lists repo"
+  },
   "aboutDependencies": {
     "message": "외부 종속성 (GPLv3 호환):",
     "description": "Shown in the About pane"
@@ -1002,6 +1026,22 @@
   "relaxBlockingMode": {
     "message": "차단 모드 완화",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
+  "storageUsed": {
+    "message": "스토리지 사용량: {{value}} {{unit}}",
+    "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
+  },
+  "KB": {
+    "message": "KB",
+    "description": "short for 'kilobytes'"
+  },
+  "MB": {
+    "message": "MB",
+    "description": "short for 'megabytes'"
+  },
+  "GB": {
+    "message": "GB",
+    "description": "short for 'gigabytes'"
   },
   "dummy": {
     "message": "This entry must be the last one",

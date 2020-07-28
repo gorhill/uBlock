@@ -179,25 +179,33 @@
     "message": "单击以取消禁用此网站的所有脚本",
     "description": "Tooltip for the no-scripting per-site switch"
   },
+  "popupNoPopups_v2": {
+    "message": "弹出窗口",
+    "description": "Caption for the no-popups per-site switch"
+  },
   "popupNoLargeMedia_v2": {
     "message": "大型媒体元素",
-    "description": "Tip for the no-large-media per-site switch"
+    "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
     "message": "页面元素过滤",
-    "description": "Tip for the no-cosmetic-filtering per-site switch"
+    "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
     "message": "远程字体",
-    "description": "Tip for the no-remote-fonts per-site switch"
+    "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
     "message": "网页脚本",
-    "description": "Tip for the no-scripting per-site switch"
+    "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
     "message": "更多",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "更少",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "全局规则：此列的规则作用于所有网站。",
@@ -254,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{count}} / {{total}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "版本",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "创建",
@@ -359,10 +371,6 @@
     "message": "屏蔽 CSP 报告",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "已用空间：{{value}} 字节",
-    "description": "English: Storage used: {{}} bytes"
-  },
   "settingsLastRestorePrompt": {
     "message": "上次恢复：",
     "description": "English: Last restore:"
@@ -458,6 +466,10 @@
   "3pExternalListObsolete": {
     "message": "过久未更新。",
     "description": "used as a tooltip for the out-of-date icon beside a list"
+  },
+  "3pViewContent": {
+    "message": "查看内容",
+    "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
     "message": "上次更新：{{ago}}。\n点击此处要求更新。",
@@ -827,6 +839,18 @@
     "message": "贡献者",
     "description": "English: Contributors"
   },
+  "aboutSourceCode": {
+    "message": "源代码",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "翻译",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "过滤规则列表",
+    "description": "Link text to uBO's own filter lists repo"
+  },
   "aboutDependencies": {
     "message": "外部依赖（兼容 GPLv3 协议）：",
     "description": "Shown in the About pane"
@@ -1002,6 +1026,22 @@
   "relaxBlockingMode": {
     "message": "放宽拦截限制",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
+  "storageUsed": {
+    "message": "已用存储：{{value}} {{unit}}",
+    "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
+  },
+  "KB": {
+    "message": "KB",
+    "description": "short for 'kilobytes'"
+  },
+  "MB": {
+    "message": "MB",
+    "description": "short for 'megabytes'"
+  },
+  "GB": {
+    "message": "GB",
+    "description": "short for 'gigabytes'"
   },
   "dummy": {
     "message": "此条目必须是最后一个",

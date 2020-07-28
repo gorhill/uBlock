@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global CodeMirror, uDom */
+/* global uDom */
 
 'use strict';
 
@@ -169,46 +169,7 @@ self.uBlockDashboard.patchCodeMirrorEditor = (function() {
         grabFocusAsync(cm);
     };
 
-    let resizeTimer,
-        resizeObserver;
-    const resize = function(cm) {
-        resizeTimer = undefined;
-        const child = document.querySelector('.codeMirrorFillVertical');
-        if ( child === null ) { return; }
-        const prect = document.documentElement.getBoundingClientRect();
-        const crect = child.getBoundingClientRect();
-        const cssHeight = Math.floor(Math.max(prect.bottom - crect.top, 80)) + 'px';
-        if ( child.style.height === cssHeight ) { return; }
-        child.style.height = cssHeight;
-        // https://github.com/gorhill/uBlock/issues/3694
-        //   Need to call cm.refresh() when resizing occurs. However the
-        //   cursor position may end up outside the viewport, hence we also
-        //   call cm.scrollIntoView() to address this.
-        //   Reference: https://codemirror.net/doc/manual.html#api_sizing
-        if ( cm instanceof CodeMirror ) {
-            cm.refresh();
-            cm.scrollIntoView(null);
-        }
-    };
-    const resizeAsync = function(cm, delay) {
-        if ( resizeTimer !== undefined ) { return; }
-        resizeTimer = vAPI.setTimeout(
-            resize.bind(null, cm),
-            typeof delay === 'number' ? delay : 66
-        );
-    };
-
     return function(cm) {
-        if ( document.querySelector('.codeMirrorFillVertical') !== null ) {
-            const boundResizeAsync = resizeAsync.bind(null, cm);
-            window.addEventListener('resize', boundResizeAsync);
-            resizeObserver = new MutationObserver(boundResizeAsync);
-            resizeObserver.observe(document.querySelector('.body'), {
-                childList: true,
-                subtree: true
-            });
-            resizeAsync(cm, 1);
-        }
         if ( cm.options.inputStyle === 'contenteditable' ) {
             cm.on('beforeSelectionChange', patchSelectAll);
         }
@@ -239,10 +200,3 @@ self.uBlockDashboard.openOrSelectPage = function(url, options = {}) {
 // Open links in the proper window
 uDom('a').attr('target', '_blank');
 uDom('a[href*="dashboard.html"]').attr('target', '_parent');
-uDom('.whatisthis').on('click', function() {
-    uDom(this)
-        .parent()
-        .descendants('.whatisthis-expandable')
-        .first()
-        .toggleClass('whatisthis-expanded');
-});

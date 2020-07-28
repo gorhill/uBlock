@@ -179,25 +179,33 @@
     "message": "Klõpsa, et lõpetada sellel saidil JavaScripti keelamine",
     "description": "Tooltip for the no-scripting per-site switch"
   },
+  "popupNoPopups_v2": {
+    "message": "Hüpikaknad",
+    "description": "Caption for the no-popups per-site switch"
+  },
   "popupNoLargeMedia_v2": {
     "message": "Suured meediaelemendid",
-    "description": "Tip for the no-large-media per-site switch"
+    "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
     "message": "Ilufiltrid",
-    "description": "Tip for the no-cosmetic-filtering per-site switch"
+    "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
     "message": "Välised fondid",
-    "description": "Tip for the no-remote-fonts per-site switch"
+    "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
     "message": "JavaScript",
-    "description": "Tip for the no-scripting per-site switch"
+    "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
     "message": "Rohkem",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "Vähem",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "Üldised reeglid: selle veeru reeglid kehtivad kõikidele saitidele.",
@@ -254,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{count}}/{{total}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "Versioon",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "Loo",
@@ -359,10 +371,6 @@
     "message": "Keela lehe turvareeglite (CSP-de) aruanded",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "Mahtu kasutatud: {{value}} baiti",
-    "description": "English: Storage used: {{}} bytes"
-  },
   "settingsLastRestorePrompt": {
     "message": "Viimane taastus:",
     "description": "English: Last restore:"
@@ -396,7 +404,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>See valik lubab <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">Adblock Plusiga ühilduvate &ldquo;elemente peitvate&rdquo; filtrite</a> lubamist. Need filtrid parandavad lehtede välimust, peites elemente, mida ei blokeerita võrgupäringutel põhinevate filtritega.</p><p>Selle valiku lubamine suurendab <i>uBlock₀</i>'i mälu kasutavust.</p>",
+    "message": "Ilufiltrid peidavad veebilehe elemente, mis häirivad visuaalselt ning mida ei saa blokeerida võrgutaotlustel põhinevate filtreerimismootoritega.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -404,7 +412,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Üldised ilufiltrid on need ilufiltrid, mis töötavad kõikidel veebisaitidel.<p>Kuigi uBlock₀ käsitleb neid tõhusalt, võivad üldised ilufiltrid siiski tarbida küllaltki palju mälu ja protsessori ressursse teatud veebisaitidel, eriti suurte ja kaua eksisteerivate puhul.<p>Selle valiku lubamine vähendab üldiste ilufiltrite kasutamisest tulenevat mälu ja protsessori koormust ning vähendab ka uBlock₀i mälu tarbimist.<p>Selle valiku lubamine on soovitatav vähem võimekates seadmetes.",
+    "message": "Üldised ilufiltrid on need ilufiltrid, mis töötavad kõikidel veebisaitidel. Selle valiku lubamine vähendab veebisaitidel üldiste ilufiltrite kasutamisest tulenevat mälu ja protsessori koormust.\n\nSelle valiku lubamine on soovitatav vähem võimekates seadmetes.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -458,6 +466,10 @@
   "3pExternalListObsolete": {
     "message": "vananenud",
     "description": "used as a tooltip for the out-of-date icon beside a list"
+  },
+  "3pViewContent": {
+    "message": "vaata sisu",
+    "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
     "message": "Viimane uuendus: {{ago}}.\nUuendamiseks vajutage.",
@@ -744,7 +756,7 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Staatilist filtrit <code>{{filter}}</code> ei leitud ühegi hetkel lubatud filtrite loendist",
+    "message": "Staatilist filtrit ei leitud ühegi hetkel lubatud filtrite loendist",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
@@ -826,6 +838,18 @@
   "aboutContributors": {
     "message": "Toetajad",
     "description": "English: Contributors"
+  },
+  "aboutSourceCode": {
+    "message": "Lähtekood",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "Tõlked",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "Filtriloendid",
+    "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
     "message": "Välised sõltuvused (ühilduvad GPLv3-ga):",
@@ -1002,6 +1026,22 @@
   "relaxBlockingMode": {
     "message": "Rahulik blokeerimisrežiim",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
+  "storageUsed": {
+    "message": "Mahtu kasutatud: {{value}} {{unit}}",
+    "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
+  },
+  "KB": {
+    "message": "KB",
+    "description": "short for 'kilobytes'"
+  },
+  "MB": {
+    "message": "MB",
+    "description": "short for 'megabytes'"
+  },
+  "GB": {
+    "message": "GB",
+    "description": "short for 'gigabytes'"
   },
   "dummy": {
     "message": "See sisestus peab olema viimane",

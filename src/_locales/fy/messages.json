@@ -179,25 +179,33 @@
     "message": "Klik om JavaScript op dizze website net mear út te skeakeljen",
     "description": "Tooltip for the no-scripting per-site switch"
   },
+  "popupNoPopups_v2": {
+    "message": "Pop-upfinsters",
+    "description": "Caption for the no-popups per-site switch"
+  },
   "popupNoLargeMedia_v2": {
     "message": "Grutte media-eleminten",
-    "description": "Tip for the no-large-media per-site switch"
+    "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
     "message": "Kosmetyske filters",
-    "description": "Tip for the no-cosmetic-filtering per-site switch"
+    "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
     "message": "Eksterne lettertypen",
-    "description": "Tip for the no-remote-fonts per-site switch"
+    "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
     "message": "JavaScript",
-    "description": "Tip for the no-scripting per-site switch"
+    "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
     "message": "Mear",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "Minder",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "Globale rigels: dizze kolom is foar rigels dy't op alle websites fan tapassing binne.",
@@ -254,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{count}} fan de {{total}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "Ferzje",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "Meitsje",
@@ -359,10 +371,6 @@
     "message": "CSP-rapporten blokkearje",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "Brûkte ûnthâldromte: {{value}} bytes",
-    "description": "English: Storage used: {{}} bytes"
-  },
   "settingsLastRestorePrompt": {
     "message": "Lêste werstel:",
     "description": "English: Last restore:"
@@ -396,7 +404,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Dizze opsje skeakelt it ynlêzen en tapassen fan <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">Adblock Plus-kompatibele &ldquo;element hiding&rdquo;-filters</a> yn. Dizze filters binne suver kosmetysk: se ferstopje eleminten yn de webside dy't fisueel steurend wêze kinne en kinne dus net blokkearre wurde troch de op netfersiken basearre filtermasine.</p><p>It ynskeakeljen fan dizze funksje ferheget it ûnthâldgebrûk fan uBlock₀.</p>",
+    "message": "Kosmetyske filters binne foar it ferstopjen fan eleminten yn in webside dy't fisueel steurend wêze kinne en net troch de op netwurkoanfragen basearre filter-masinen blokkearre wurde kinne.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -404,7 +412,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Algemiene kosmetyske filters binne dy kosmetyske filters dy't bedoeld binne om op alle websites tapast te wurden.<p>Hoewol't se effisjint troch uBlock₀ ferwurke wurde, kinne algemiene kosmetyske filters op guon websiden dochs bydrage oan mjitbere ûnthâld- en cpu-oerhead, mei nammen op grutte siden en dy't mei in lange libbensdoer.<p>It ynskeakeljen fan dizze opsje eliminearret de oan websiden tafoege ûnthâld- en cpu-oerhead as gefolch fan it ferwurkjen fan algemiene kosmetyske filters, en ferleget ek it ûnthâldgebrûk fan uBlock₀ sels.<p>It wurdt oanrekommandearre dizze opsje op minder krêftige apparaten yn te skeakeljen.",
+    "message": "Algemiene kosmetyske filters binne dy kosmetyske filters dy't bedoeld binne om op alle websites tapast te wurden. It ynskeakeljen fan dizze opsje eliminearret de oan websiden tafoege ûnthâld- en cpu-oerhead as gefolch fan it ferwurkjen fan algemiene kosmetyske filters.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -458,6 +466,10 @@
   "3pExternalListObsolete": {
     "message": "Ferâldere.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
+  },
+  "3pViewContent": {
+    "message": "ynhâld werjaan",
+    "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
     "message": "Lêste fernijing: {{ago}}.",
@@ -744,7 +756,7 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Statysk filter <code>{{filter}}</code> koe net yn ien fan de op dit stuit ynskeakele filterlisten fûn wurde",
+    "message": "Statysk filter koe net yn ien fan de op dit stuit ynskeakele filterlisten fûn wurde",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
@@ -826,6 +838,18 @@
   "aboutContributors": {
     "message": "Meiwurkers",
     "description": "English: Contributors"
+  },
+  "aboutSourceCode": {
+    "message": "Boarnekoade",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "Oersettingen",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "Filterlisten",
+    "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
     "message": "Eksterne ôfhinklikheden (GPLv3-kompatibel):",
@@ -1002,6 +1026,22 @@
   "relaxBlockingMode": {
     "message": "Blokkearringsmodus beheine",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
+  "storageUsed": {
+    "message": "Brûkte ûnthâldromte {{value}} {{unit}}",
+    "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
+  },
+  "KB": {
+    "message": "KB",
+    "description": "short for 'kilobytes'"
+  },
+  "MB": {
+    "message": "MB",
+    "description": "short for 'megabytes'"
+  },
+  "GB": {
+    "message": "GB",
+    "description": "short for 'gigabytes'"
   },
   "dummy": {
     "message": "This entry must be the last one",

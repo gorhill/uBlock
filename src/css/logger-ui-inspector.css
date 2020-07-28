@@ -28,7 +28,6 @@
     background-color: #fee;
     }
 #domInspector li > * {
-    font-size: 0.8rem;
     display: inline-block;
     line-height: 1.2;
     margin-right: 1em;

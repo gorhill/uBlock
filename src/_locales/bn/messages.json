@@ -8,7 +8,7 @@
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
-    "message": "uBlock₀ — ড্যাশবোর্ড",
+    "message": "ইউব্লক₀ — ড্যাশবোর্ড",
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
@@ -16,7 +16,7 @@
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "অবস্থান করুন।",
+    "message": "অবস্থান করে পরিবর্তন বা সংরক্ষণ করুন।",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -64,7 +64,7 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "ক্লিক: এই সাইটের জন্য uBlock₀ নিষ্ক্রিয়/সক্রিয় করবে।\n\nCtrl+ক্লিক: শুধু এই পাতার জন্য uBlock₀ নিষ্ক্রিয় করবে।",
+    "message": "ক্লিক: এই সাইটের জন্য ইউব্লক₀ নিষ্ক্রিয়/সক্রিয় করবে।\n\nCtrl+ক্লিক: শুধু এই পাতার জন্য ইউব্লক₀ নিষ্ক্রিয় করবে।",
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
@@ -108,7 +108,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
-    "message": "ড্যাশবোর্ড খোলার জন্য ক্লিক করুন",
+    "message": "ড্যাশবোর্ড খুলুন",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
@@ -124,7 +124,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "এই সাইটের জন্য সব পপআপ প্রতিরোধ অদলবদল করুন",
+    "message": "এই সাইটের জন্য সব পপআপ প্রতিরোধ চালু/বন্ধ করুন",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
@@ -136,7 +136,7 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "এই সাইটের জন্য বড় মিডিয়া উপাদান অবরোধ অদলবদল করুন",
+    "message": "এই সাইটের জন্য বড় মিডিয়া উপাদান অবরোধ চালু/বন্ধ করুন",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
@@ -148,19 +148,19 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "এই সাইটের জন্য বাহ্যিক ছাকন অদলবদল করুন",
+    "message": "এই সাইটের জন্য কসমেটিক ছাঁকন চালু/বন্ধ করুন",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "এই সাইটে প্রসাধনী ছাকন নিষ্ক্রিয় করতে ক্লিক করুন",
+    "message": "এই সাইটে কসমেটিক ফিল্টার নিষ্ক্রিয় করতে ক্লিক করুন",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "এই সাইটে প্রসাধনী ছাকন সক্রিয় করতে ক্লিক করুন",
+    "message": "এই সাইটে কসমেটিক ফিল্টার সক্রিয় করতে ক্লিক করুন",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "এই সাইটের রিমোট ফন্টের অবরোধ অদলবদল করুন",
+    "message": "এই সাইটের রিমোট ফন্টের অবরোধ চালু/বন্ধ করুন",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
@@ -172,32 +172,40 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "এই সাইটের জাভা স্ক্রিপ্ট বন্ধ করতে ক্লিক করুণ",
+    "message": "এই সাইটের জাভাস্ক্রিপ্ট বন্ধ করতে ক্লিক করুণ",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "এই সাইটের জাভা স্ক্রিপ্ট চালু করতে ক্লিক করুণ",
+    "message": "এই সাইটের জাভাস্ক্রিপ্ট চালু করতে ক্লিক করুণ",
     "description": "Tooltip for the no-scripting per-site switch"
+  },
+  "popupNoPopups_v2": {
+    "message": "পপ-আপ উইন্ডো",
+    "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
     "message": "বড় আয়তনের উপাদান",
-    "description": "Tip for the no-large-media per-site switch"
+    "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
     "message": "সৌন্দর্য্যবর্ধক ছাকন",
-    "description": "Tip for the no-cosmetic-filtering per-site switch"
+    "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
     "message": "দুরস্থিত ফন্ট",
-    "description": "Tip for the no-remote-fonts per-site switch"
+    "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
     "message": "জাভাস্ক্রিপ্ট",
-    "description": "Tip for the no-scripting per-site switch"
+    "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
     "message": "আরো",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "কম",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "সার্বজনীন নিয়ম: এই স্তম্ভ সেইসব নিয়মের জন্য যা সকল সাইটের উপর প্রযোজ্য।",
@@ -248,12 +256,16 @@
     "description": ""
   },
   "popupHitDomainCountPrompt": {
-    "message": "সংযুক্ত ডোমেইন",
+    "message": "যুক্ত ডোমেন ",
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
     "message": "{{total}}টির মধ্যে {{count}}টি",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "সংস্করণ",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "তৈরি করুন",
@@ -320,7 +332,7 @@
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "অগ্রিম নিয়ে আসা নিষ্ক্রিয় করুন (অবরুদ্ধ নেটওয়ার্ক অনুরোধের জন্য যে কোনো সংযোগ প্রতিরোধ করতে)",
+    "message": "প্রি-ফেচিং বন্ধ করুন (অবরুদ্ধ নেটওয়ার্ক থেকে যে কোনো সংযোগ প্রতিরোধ করতে)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
@@ -358,10 +370,6 @@
   "settingsNoCSPReportsPrompt": {
     "message": "CSP প্রতিবেদন অবরুদ্ধ করুন",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
-  },
-  "settingsStorageUsed": {
-    "message": "সংগ্রহস্থল ব্যবহার: {{value}} বাইট",
-    "description": "English: Storage used: {{}} bytes"
   },
   "settingsLastRestorePrompt": {
     "message": "সর্বশেষ পুনঃস্থাপন:",
@@ -459,6 +467,10 @@
     "message": "পুরোনো",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
+  "3pViewContent": {
+    "message": "কন্টেন্ট দেখুন",
+    "description": "used as a tooltip for eye icon beside a list"
+  },
   "3pLastUpdate": {
     "message": "সর্বশেষ হালনাগাদ: {{ago}}",
     "description": "used as a tooltip for the clock icon beside a list"
@@ -468,15 +480,15 @@
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
-    "message": "একটি নেটওয়ার্ক ত্রুটি রিসোর্স হালনাগাদ হওয়া থেকে রোধ করেছে।",
+    "message": "একটি নেটওয়ার্ক ত্রুটি রিসোর্স বা তথ্য হালনাগাদ হওয়া রোধ করেছে।",
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "লাইন প্রতি একটি ফিল্টার। একটি ফিল্টার স্পষ্ট হোস্টনেম বা অ্যাডব্লক প্লাস-সামঞ্জস্যপূর্ণ ফিল্টার হতে পারে। &lsquo;!&rsquo; সহ উপসর্গ লাইন উপেক্ষা করা হবে।",
+    "message": "লাইন প্রতি একটি ফিল্টার। একটি ফিল্টার শুধু হোস্টনেম বা অ্যাডব্লক প্লাস-এর সাথে সামঞ্জস্যপূর্ণ ফিল্টার হতে পারে। <code>!</code> দিয়ে শুরু হওয়া লাইন উপেক্ষা করা হবে।",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
-    "message": "আমদানি ও পরিশেষে যোগ করুন",
+    "message": "আমদানি করে পরিশেষে যোগ করুন",
     "description": "English: Import and append"
   },
   "1pExport": {
@@ -676,11 +688,11 @@
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
-    "message": "দল",
+    "message": "দলমত",
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
-    "message": "টাইপ করা",
+    "message": "ধরন",
     "description": "Label to identify the type of an entry"
   },
   "loggerEntryDetailsURL": {
@@ -827,6 +839,18 @@
     "message": "অবদানকারী",
     "description": "English: Contributors"
   },
+  "aboutSourceCode": {
+    "message": "সোর্স কোড",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "অনুবাদ সমূহ",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "ফিল্টার লিস্ট",
+    "description": "Link text to uBO's own filter lists repo"
+  },
   "aboutDependencies": {
     "message": "বাহ্যিকভাবে নির্ভশীলসমূহ (জিপিএল ভা.৩-সঙ্গতিপূর্ণ)",
     "description": "Shown in the About pane"
@@ -856,7 +880,7 @@
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
-    "message": "আপনার সব সেটিংস বাতিল করা হবে, এবং uBlock₀ পুনরায় চালু হবে।\n\nuBlock₀ সেটিংস পুনঃস্থাপন করবেন?",
+    "message": "আপনার সব সেটিংস বাতিল করা হবে, এবং uBlock₀ পুনরায় চালু হবে।\n\nইউব্লক₀ সেটিংস পুনঃস্থাপন করবেন?",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
@@ -1002,6 +1026,22 @@
   "relaxBlockingMode": {
     "message": "রোধক মোড শিথিল করুন",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
+  "storageUsed": {
+    "message": "ব্যবহৃত স্টোরেজ: {{value}}{{unit}}",
+    "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
+  },
+  "KB": {
+    "message": "কিলোবাইট",
+    "description": "short for 'kilobytes'"
+  },
+  "MB": {
+    "message": "মেগাবাইট",
+    "description": "short for 'megabytes'"
+  },
+  "GB": {
+    "message": "গিগাবাইট",
+    "description": "short for 'gigabytes'"
   },
   "dummy": {
     "message": "This entry must be the last one",

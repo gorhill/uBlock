@@ -32,7 +32,7 @@
 // the code here does *only* what I need, and nothing more, and with a lot
 // of assumption on passed parameters, etc. I grow it on a per-need-basis only.
 
-const uDom = (function() {
+const uDom = (( ) => {
 
 /******************************************************************************/
 
@@ -89,6 +89,30 @@ DOMListFactory.nodeFromId = function(id) {
 DOMListFactory.nodeFromSelector = function(selector) {
     return document.querySelector(selector);
 };
+
+/******************************************************************************/
+
+{
+    const root = DOMListFactory.root = document.querySelector(':root');
+    if (
+        window.matchMedia('(pointer: coarse)').matches ||
+        window.matchMedia('(hover: none)').matches
+    ) {
+        root.classList.add('mobile');
+    }
+    if (
+        window.matchMedia('(pointer: fine)').matches &&
+        window.matchMedia('(hover: hover)').matches
+    ) {
+        root.classList.add('desktop');
+    }
+    if ( window.matchMedia('(min-resolution: 150dpi)').matches ) {
+        root.classList.add('hidpi');
+    }
+    if ( window.matchMedia('(prefers-color-scheme: dark)').matches ) {
+        root.classList.add('dark');
+    }
+}
 
 /******************************************************************************/
 

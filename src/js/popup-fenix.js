@@ -30,22 +30,21 @@
 
 /******************************************************************************/
 
+/*
 let popupFontSize;
 vAPI.localStorage.getItemAsync('popupFontSize').then(value => {
     if ( typeof value !== 'string' || value === 'unset' ) { return; }
     document.body.style.setProperty('font-size', value);
     popupFontSize = value;
 });
+*/
 
 // https://github.com/chrisaljoudi/uBlock/issues/996
 //   Experimental: mitigate glitchy popup UI: immediately set the firewall
 //   pane visibility to its last known state. By default the pane is hidden.
-let dfPaneVisibleStored;
-vAPI.localStorage.getItemAsync('popupFirewallPane').then(value => {
-    dfPaneVisibleStored = value === true || value === 'true';
-    if ( dfPaneVisibleStored ) {
-        document.getElementById('main').classList.add('dfEnabled');
-    }
+vAPI.localStorage.getItemAsync('popupPanelSections').then(bits => {
+    if ( typeof bits !== 'number' ) { return; }
+    sectionBitsToAttribute(bits);
 });
 
 /******************************************************************************/
@@ -152,7 +151,23 @@ const hashFromPopupData = function(reset) {
 /******************************************************************************/
 
 const formatNumber = function(count) {
-    return typeof count === 'number' ? count.toLocaleString() : '';
+    if ( typeof count !== 'number' ) { return ''; }
+    if ( count < 1e6 ) { return count.toLocaleString(); }
+    return count.toLocaleString(undefined, {
+        notation: 'compact',
+        maximumSignificantDigits: 4,
+    });
+};
+
+/******************************************************************************/
+
+const safePunycodeToUnicode = function(hn) {
+    const pretty = punycode.toUnicode(hn);
+    return pretty === hn ||
+           reCyrillicAmbiguous.test(pretty) === false ||
+           reCyrillicNonAmbiguous.test(pretty)
+        ? pretty
+        : hn;
 };
 
 /******************************************************************************/
@@ -178,7 +193,7 @@ const rulekeyCompare = function(a, b) {
 
 const updateFirewallCell = function(scope, des, type, rule) {
     const row = document.querySelector(
-        `#firewallContainer div[data-des="${des}"][data-type="${type}"]`
+        `#firewall div[data-des="${des}"][data-type="${type}"]`
     );
     if ( row === null ) { return; }
 
@@ -265,14 +280,13 @@ const updateAllFirewallCells = function() {
 const buildAllFirewallRows = function() {
     // Do this before removing the rows
     if ( dfHotspots === null ) {
-        dfHotspots = uDom('#actionSelector')
-            .toggleClass('colorBlind', popupData.colorBlindFriendly)
-            .on('click', 'span', setFirewallRuleHandler);
+        dfHotspots =
+            uDom('#actionSelector').on('click', 'span', setFirewallRuleHandler);
     }
-    dfHotspots.detach();
+    dfHotspots.remove();
 
     // Update incrementally: reuse existing rows if possible.
-    const rowContainer = document.getElementById('firewallContainer');
+    const rowContainer = document.getElementById('firewall');
     const toAppend = document.createDocumentFragment();
     const rowTemplate = document.querySelector('#templates > div:nth-of-type(1)');
     let row = rowContainer.querySelector('div:nth-of-type(7) + div');
@@ -333,7 +347,7 @@ const buildAllFirewallRows = function() {
     }
 
     if ( dfPaneBuilt !== true && popupData.advancedUserEnabled ) {
-        uDom('#firewallContainer')
+        uDom('#firewall')
             .on('click', 'span[data-src]', unsetFirewallRuleHandler)
             .on('mouseenter', '[data-src]', mouseenterCellHandler)
             .on('mouseleave', '[data-src]', mouseleaveCellHandler);
@@ -383,6 +397,9 @@ const renderPrivacyExposure = function() {
 /******************************************************************************/
 
 const updateHnSwitches = function() {
+    uDom.nodeFromId('no-popups').classList.toggle(
+        'on', popupData.noPopups === true
+    );
     uDom.nodeFromId('no-large-media').classList.toggle(
         'on', popupData.noLargeMedia === true
     );
@@ -409,24 +426,34 @@ const renderPopup = function() {
         document.title = popupData.appName + ' - ' + popupData.tabTitle;
     }
 
-    let elem = document.body;
-    elem.classList.toggle(
-        'advancedUser',
-        popupData.advancedUserEnabled === true
-    );
-    elem.classList.toggle(
-        'off',
-        popupData.pageURL === '' || popupData.netFilteringSwitch !== true
-    );
+    const isFiltering = popupData.netFilteringSwitch;
 
-    const canElementPicker = popupData.canElementPicker === true &&
-                           popupData.netFilteringSwitch === true;
+    const body = document.body;
+    body.classList.toggle('advancedUser', popupData.advancedUserEnabled === true);
+    body.classList.toggle('off', popupData.pageURL === '' || isFiltering !== true);
+    body.classList.toggle('needSave', popupData.matrixIsDirty === true);
+
+    // The hostname information below the power switch
+    {
+        const [ elemHn, elemDn ] = uDom.nodeFromId('hostname').children;
+        const { pageDomain, pageHostname } = popupData;
+        if ( pageDomain !== '' ) {
+            elemDn.textContent = safePunycodeToUnicode(pageDomain);
+            elemHn.textContent = pageHostname !== pageDomain
+                ? safePunycodeToUnicode(pageHostname.slice(0, -pageDomain.length - 1)) + '.'
+                : '';
+        } else {
+            elemHn.textContent = elemDn.textContent = '';
+        }
+    }
+
+    const canElementPicker = popupData.canElementPicker === true && isFiltering;
     uDom.nodeFromId('gotoPick').classList.toggle('enabled', canElementPicker);
     uDom.nodeFromId('gotoZap').classList.toggle('enabled', canElementPicker);
 
-    let blocked = popupData.pageBlockedRequestCount,
-        total = popupData.pageAllowedRequestCount + blocked,
-        text;
+    let blocked = popupData.pageBlockedRequestCount;
+    let total = popupData.pageAllowedRequestCount + blocked;
+    let text;
     if ( total === 0 ) {
         text = formatNumber(0);
     } else {
@@ -451,6 +478,11 @@ const renderPopup = function() {
     // Extra tools
     updateHnSwitches();
 
+    // Report popup count on badge
+    total = popupData.popupBlockedCount;
+    uDom.nodeFromSelector('#no-popups .fa-icon-badge')
+        .textContent = total ? Math.min(total, 99).toLocaleString() : '';
+
     // Report large media count on badge
     total = popupData.largeMediaCount;
     uDom.nodeFromSelector('#no-large-media .fa-icon-badge')
@@ -461,25 +493,7 @@ const renderPopup = function() {
     uDom.nodeFromSelector('#no-remote-fonts .fa-icon-badge')
         .textContent = total ? Math.min(total, 99).toLocaleString() : '';
 
-    // https://github.com/chrisaljoudi/uBlock/issues/470
-    // This must be done here, to be sure the popup is resized properly
-    const dfPaneVisible = popupData.dfEnabled;
-
-    // https://github.com/chrisaljoudi/uBlock/issues/1068
-    // Remember the last state of the firewall pane. This allows to
-    // configure the popup size early next time it is opened, which means a
-    // less glitchy popup at open time.
-    if ( dfPaneVisible !== dfPaneVisibleStored ) {
-        dfPaneVisibleStored = dfPaneVisible;
-        vAPI.localStorage.setItem('popupFirewallPane', dfPaneVisibleStored);
-    }
-
-    uDom.nodeFromId('main').classList.toggle(
-        'dfEnabled',
-        dfPaneVisible === true
-    );
-
-    uDom.nodeFromId('firewallContainer').classList.toggle(
+    document.documentElement.classList.toggle(
         'colorBlind',
         popupData.colorBlindFriendly === true
     );
@@ -487,7 +501,7 @@ const renderPopup = function() {
     setGlobalExpand(popupData.firewallPaneMinimized === false, true);
 
     // Build dynamic filtering pane only if in use
-    if ( dfPaneVisible ) {
+    if ( (computedSections() & sectionFirewallBit) !== 0 ) {
         buildAllFirewallRows();
     }
 
@@ -500,24 +514,16 @@ const renderPopup = function() {
 //   Use tooltip for ARIA purpose.
 
 const renderTooltips = function(selector) {
-    for ( const entry of tooltipTargetSelectors ) {
-        if ( selector !== undefined && entry[0] !== selector ) { continue; }
+    for ( const [ key, details ] of tooltipTargetSelectors ) {
+        if ( selector !== undefined && key !== selector ) { continue; }
+        const elem = uDom.nodeFromSelector(key);
+        if ( elem.hasAttribute('title') === false ) { continue; }
         const text = vAPI.i18n(
-            entry[1].i18n +
-            (uDom.nodeFromSelector(entry[1].state) === null ? '1' : '2')
+            details.i18n +
+            (uDom.nodeFromSelector(details.state) === null ? '1' : '2')
         );
-        const elem = uDom.nodeFromSelector(entry[0]);
         elem.setAttribute('aria-label', text);
-        const tip = elem.querySelector('.tip');
-        if ( tip !== null ) {
-            tip.textContent = text;
-        } else {
-            elem.setAttribute('data-tip', text);
-        }
-        if ( tip === null && selector !== undefined ) {
-            uDom.nodeFromId('tooltip').textContent =
-                elem.getAttribute('data-tip');
-        }
+        elem.setAttribute('title', text);
     }
 };
 
@@ -527,6 +533,13 @@ const tooltipTargetSelectors = new Map([
         {
             state: 'body.off',
             i18n: 'popupPowerSwitchInfo',
+        }
+    ],
+    [
+        '#no-popups',
+        {
+            state: '#no-popups.on',
+            i18n: 'popupTipNoPopups'
         }
     ],
     [
@@ -566,20 +579,37 @@ const tooltipTargetSelectors = new Map([
 let renderOnce = function() {
     renderOnce = function(){};
 
+    const body = document.body;
+
+/*
     if ( popupData.fontSize !== popupFontSize ) {
         popupFontSize = popupData.fontSize;
         if ( popupFontSize !== 'unset' ) {
-            document.body.style.setProperty('font-size', popupFontSize);
+            body.style.setProperty('font-size', popupFontSize);
             vAPI.localStorage.setItem('popupFontSize', popupFontSize);
         } else {
-            document.body.style.removeProperty('font-size');
+            body.style.removeProperty('font-size');
             vAPI.localStorage.removeItem('popupFontSize');
         }
+    }
+*/
+
+    uDom.nodeFromId('version').textContent = popupData.appVersion;
+
+    sectionBitsToAttribute(computedSections());
+
+    if ( popupData.uiPopupConfig !== undefined ) {
+        document.body.setAttribute('data-ui', popupData.uiPopupConfig);
+    }
+
+    body.classList.toggle('no-tooltips', popupData.tooltipsDisabled === true);
+    if ( popupData.tooltipsDisabled === true ) {
+        uDom('[title]').removeAttr('title');
     }
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/22
     if ( popupData.advancedUserEnabled !== true ) {
-        uDom('#firewallContainer [data-i18n-tip][data-src]').removeAttr('data-tip');
+        uDom('#firewall [title][data-src]').removeAttr('title');
     }
 };
 
@@ -702,28 +732,77 @@ const gotoURL = function(ev) {
 
 /******************************************************************************/
 
-const toggleFirewallPane = function() {
-    popupData.dfEnabled = !popupData.dfEnabled;
+// The popup panel is made of sections. Visiblity of sections can
+// be toggle on/off.
 
+const maxNumberOfSections = 6;
+const sectionFirewallBit = 0b10000;
+
+const computedSections = ( ) =>
+    popupData.popupPanelSections &
+   ~popupData.popupPanelDisabledSections |
+    popupData.popupPanelLockedSections;
+
+const sectionBitsFromAttribute = function() {
+    const attr = document.body.dataset.more;
+    if ( attr === '' ) { return 0; }
+    let bits = 0;
+    for ( const c of attr.split(' ') ) {
+        bits |= 1 << (c.charCodeAt(0) - 97);
+    }
+    return bits;
+};
+
+const sectionBitsToAttribute = function(bits) {
+    const attr = [];
+    for ( let i = 0; i < maxNumberOfSections; i++ ) {
+        const bit = 1 << i;
+        if ( (bits & bit) === 0 ) { continue; }
+        attr.push(String.fromCharCode(97 + i));
+    }
+    document.body.dataset.more = attr.join(' ');
+};
+
+const toggleSections = function(more) {
+    const offbits = ~popupData.popupPanelDisabledSections;
+    const onbits = popupData.popupPanelLockedSections;
+    let currentBits = sectionBitsFromAttribute();
+    let newBits = currentBits;
+    for ( let i = 0; i < maxNumberOfSections; i++ ) {
+        const bit = 1 << (more ? i : maxNumberOfSections - i - 1);
+        if ( more ) {
+            newBits |= bit;
+        } else {
+            newBits &= ~bit;
+        }
+        newBits = newBits & offbits | onbits;
+        if ( newBits !== currentBits ) { break; }
+    }
+    if ( newBits === currentBits ) { return; }
+
+    sectionBitsToAttribute(newBits);
+
+    popupData.popupPanelSections = newBits;
     messaging.send('popupPanel', {
         what: 'userSettings',
-        name: 'dynamicFilteringEnabled',
-        value: popupData.dfEnabled,
+        name: 'popupPanelSections',
+        value: newBits,
     });
 
     // https://github.com/chrisaljoudi/uBlock/issues/996
-    // Remember the last state of the firewall pane. This allows to
-    // configure the popup size early next time it is opened, which means a
-    // less glitchy popup at open time.
-    dfPaneVisibleStored = popupData.dfEnabled;
-    vAPI.localStorage.setItem('popupFirewallPane', dfPaneVisibleStored);
+    //   Remember the last state of the firewall pane. This allows to
+    //   configure the popup size early next time it is opened, which means a
+    //   less glitchy popup at open time.
+    vAPI.localStorage.setItem('popupPanelSections', newBits);
 
     // Dynamic filtering pane may not have been built yet
-    uDom.nodeFromId('main').classList.toggle('dfEnabled', popupData.dfEnabled);
-    if ( popupData.dfEnabled && dfPaneBuilt === false ) {
+    if ( (newBits & sectionFirewallBit) !== 0 && dfPaneBuilt === false ) {
         buildAllFirewallRows();
     }
 };
+
+uDom('#moreButton').on('click', ( ) => { toggleSections(true); });
+uDom('#lessButton').on('click', ( ) => { toggleSections(false); });
 
 /******************************************************************************/
 
@@ -734,7 +813,7 @@ const mouseenterCellHandler = function() {
 };
 
 const mouseleaveCellHandler = function() {
-    dfHotspots.detach();
+    dfHotspots.remove();
 };
 
 /******************************************************************************/
@@ -758,6 +837,12 @@ const setFirewallRule = async function(src, des, type, action, persist) {
         action: action,
         persist: persist,
     });
+
+    // Remove action widget if an own rule has been set, this allows to click
+    // again immediately to remove the rule.
+    if ( action !== 0 ) {
+        dfHotspots.remove();
+    }
 
     cachePopupData(response);
     updateAllFirewallCells();
@@ -801,7 +886,7 @@ const setFirewallRuleHandler = function(ev) {
         action,
         ev.ctrlKey || ev.metaKey
     );
-    dfHotspots.detach();
+    dfHotspots.remove();
 };
 
 /******************************************************************************/
@@ -863,9 +948,9 @@ const saveExpandExceptions = function() {
 const setGlobalExpand = function(state, internal = false) {
     uDom('.expandException').removeClass('expandException');
     if ( state ) {
-        uDom('#firewallContainer').addClass('expanded');
+        uDom('#firewall').addClass('expanded');
     } else {
-        uDom('#firewallContainer').removeClass('expanded');
+        uDom('#firewall').removeClass('expanded');
     }
     if ( internal ) { return; }
     popupData.firewallPaneMinimized = !state;
@@ -912,11 +997,11 @@ uDom('[data-i18n="popupAnyRulePrompt"]').on('click', ev => {
     }
 
     setGlobalExpand(
-        uDom('#firewallContainer').hasClass('expanded') === false
+        uDom('#firewall').hasClass('expanded') === false
     );
 });
 
-uDom('#firewallContainer').on(
+uDom('#firewall').on(
     'click', '.isDomain[data-type="*"] > span:first-of-type',
     ev => {
         const div = ev.target.closest('[data-des]');
@@ -969,7 +1054,7 @@ const toggleHostnameSwitch = async function(ev) {
         return;
     }
     target.classList.toggle('on');
-    renderTooltips('#' + switchName);
+    renderTooltips(`#${switchName}`);
 
     const response = await messaging.send('popupPanel', {
         what: 'toggleHostnameSwitch',
@@ -1052,45 +1137,6 @@ const getPopupData = async function(tabId) {
 
 /******************************************************************************/
 
-const onShowTooltip = function(ev) {
-    if ( popupData.tooltipsDisabled ) { return; }
-
-    const target = ev.target;
-
-    // Tooltip container
-    const ttc = uDom(target).ancestors('.tooltipContainer').nodeAt(0) ||
-                document.body;
-    const ttcRect = ttc.getBoundingClientRect();
-
-    // Tooltip itself
-    const tip = uDom.nodeFromId('tooltip');
-    tip.textContent = target.getAttribute('data-tip');
-    tip.style.removeProperty('top');
-    tip.style.removeProperty('bottom');
-    ttc.appendChild(tip);
-
-    // Target rect
-    const targetRect = target.getBoundingClientRect();
-
-    // Default is "over"
-    let pos;
-    if ( target.getAttribute('data-tip-position') !== 'under' ) {
-        pos = ttcRect.height - targetRect.top + ttcRect.top;
-        tip.style.setProperty('bottom', pos + 'px');
-    } else {
-        pos = targetRect.bottom - ttcRect.top;
-        tip.style.setProperty('top', pos + 'px');
-    }
-
-    tip.classList.add('show');
-};
-
-const onHideTooltip = function() {
-    uDom.nodeFromId('tooltip').classList.remove('show');
-};
-
-/******************************************************************************/
-
 // Popup DOM is assumed to be loaded at this point -- because this script
 // is loaded after everything else..
 
@@ -1100,24 +1146,66 @@ const onHideTooltip = function() {
     let tabId = null;
 
     // Extract the tab id of the page this popup is for
-    const matches = window.location.search.match(/[\?&]tabId=([^&]+)/);
+    const matches = self.location.search.match(/[\?&]tabId=([^&]+)/);
     if ( matches && matches.length === 2 ) {
         tabId = parseInt(matches[1], 10) || 0;
     }
-    getPopupData(tabId);
+
+    const nextFrames = async n => {
+        for ( let i = 0; i < n; i++ ) {
+            await new Promise(resolve => {
+                self.requestAnimationFrame(( ) => { resolve(); });
+            });
+        }
+    };
+
+    // The purpose of the following code is to reset to a vertical layout
+    // should the viewport not be enough wide to accomodate the horizontal
+    // layout.
+    // To avoid querying a spurious viewport width -- it happens sometimes,
+    // somehow -- we delay layout-changing operations to the next paint
+    // frames.
+    // Force a layout recalculation by querying the body width. To be
+    // honest, I have no clue if this makes a difference in the end.
+    //   https://gist.github.com/paulirish/5d52fb081b3570c81e3a
+    // Use a tolerance proportional to the sum of the width of the panes
+    // when testing against viewport width.
+    const checkViewport = async function() {
+        const root = document.querySelector(':root');
+        if ( root.classList.contains('desktop') ) {
+            const main = document.getElementById('main');
+            const sticky = document.getElementById('sticky');
+            const stickyParent = sticky.parentElement;
+            if ( stickyParent !== main ) {
+                main.prepend(sticky);
+            }
+            await nextFrames(4);
+            const firewall = document.getElementById('firewall');
+            const minWidth = (main.offsetWidth + firewall.offsetWidth) / 1.1;
+            if ( window.innerWidth < minWidth ) {
+                stickyParent.prepend(sticky);
+                root.classList.remove('desktop');
+            }
+        }
+        await nextFrames(1);
+        document.body.classList.remove('loading');
+    };
+
+    getPopupData(tabId).then(( ) => {
+        if ( document.readyState !== 'complete' ) {
+            self.addEventListener('load', ( ) => { checkViewport(); }, { once: true });
+        } else {
+            checkViewport();
+        }
+    });
 }
 
 uDom('#switch').on('click', toggleNetFilteringSwitch);
 uDom('#gotoZap').on('click', gotoZap);
 uDom('#gotoPick').on('click', gotoPick);
-uDom('#moreButton').on('click', toggleFirewallPane);
 uDom('.hnSwitch').on('click', ev => { toggleHostnameSwitch(ev); });
 uDom('#saveRules').on('click', saveFirewallRules);
 uDom('#revertRules').on('click', ( ) => { revertFirewallRules(); });
-
-uDom('body').on('mouseenter', '[data-tip]', onShowTooltip)
-            .on('mouseleave', '[data-tip]', onHideTooltip);
-
 uDom('a[href]').on('click', gotoURL);
 
 /******************************************************************************/

@@ -179,25 +179,33 @@
     "message": "Cliquez pour cesser de désactiver JavaScript sur ce site",
     "description": "Tooltip for the no-scripting per-site switch"
   },
+  "popupNoPopups_v2": {
+    "message": "Fenêtres pop-ups",
+    "description": "Caption for the no-popups per-site switch"
+  },
   "popupNoLargeMedia_v2": {
     "message": "Médias de grande taille",
-    "description": "Tip for the no-large-media per-site switch"
+    "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
     "message": "Filtrage esthétique",
-    "description": "Tip for the no-cosmetic-filtering per-site switch"
+    "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
     "message": "Polices d'écriture distantes",
-    "description": "Tip for the no-remote-fonts per-site switch"
+    "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
     "message": "JavaScript",
-    "description": "Tip for the no-scripting per-site switch"
+    "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
     "message": "Plus",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "Voir moins",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "Règles globales : Cette colonne concerne des règles qui s'appliquent partout.",
@@ -254,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{count}} sur un total de {{total}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "Version",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "Créer",
@@ -359,10 +371,6 @@
     "message": "Bloquer les rapports CSP",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "Espace de stockage utilisé : {{value}} octet(s)",
-    "description": "English: Storage used: {{}} bytes"
-  },
   "settingsLastRestorePrompt": {
     "message": "Date de la dernière restauration :",
     "description": "English: Last restore:"
@@ -396,7 +404,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Cette option permet de prendre en charge les filtres Adblock Plus de type <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">&ldquo;element hiding&rdquo;</a>. Ces filtres ont principalement un impact visuel, servant à dissimuler des éléments nuisibles d'une page Web et qui ne sont pas blocables par le filtrage standard.</p><p>L'activation de cette fonctionnalité augmente l'empreinte mémoire de uBlock₀.</p>",
+    "message": "Les filtres esthétiques servent à cacher des éléments d'une page Web considérés comme une nuisance visuelle, et qui ne peuvent pas être bloqués par le filtrage réseau basé sur les requêtes.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -404,7 +412,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Les filtres esthétiques génériques sont des filtres esthétiques conçus pour être appliqués sur tous les sites Web.<p>Bien qu'ils soient pris en charge efficacement par uBlock₀, les filtres esthétiques génériques restent susceptibles de consommer des ressources supplémentaires en mémoire vive & en processeur central sur certaines pages Web, tout particulièrement ceux de grandes taille & longévité.<p>Ignorer ce type de filtrage esthétique réduira l'utilisation supplémentaire en RAM & en CPU sur les pages Web, diminuant également l'empreinte mémoire d'uBlock₀.<p>Il est recommandé d'activer ce paramètre sur des appareils modestes.",
+    "message": "Les filtres esthétiques génériques sont des filtres esthétiques conçus pour être appliqués sur tous les sites Web. Activer cette option réduira l'utilisation en mémoire et en processeur sur les pages Web.\n\nIl est recommandé d'activer ce paramètre sur des appareils à la puissance modeste.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -458,6 +466,10 @@
   "3pExternalListObsolete": {
     "message": "Obsolète",
     "description": "used as a tooltip for the out-of-date icon beside a list"
+  },
+  "3pViewContent": {
+    "message": "Voir le contenu",
+    "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
     "message": "Dernière mise à jour effectuée : {{ago}}\nCliquez pour forcer la mise à jour",
@@ -827,6 +839,18 @@
     "message": "Contributeurs",
     "description": "English: Contributors"
   },
+  "aboutSourceCode": {
+    "message": "Code source",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "Traductions",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "Listes de filtres",
+    "description": "Link text to uBO's own filter lists repo"
+  },
   "aboutDependencies": {
     "message": "Dépendances externes (compatibles GPLv3) :",
     "description": "Shown in the About pane"
@@ -1002,6 +1026,22 @@
   "relaxBlockingMode": {
     "message": "Détendre le mode de blocage",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
+  "storageUsed": {
+    "message": "Espace de stockage utilisé : {{value}} {{unit}}",
+    "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
+  },
+  "KB": {
+    "message": "Ko",
+    "description": "short for 'kilobytes'"
+  },
+  "MB": {
+    "message": "Mo",
+    "description": "short for 'megabytes'"
+  },
+  "GB": {
+    "message": "Go",
+    "description": "short for 'gigabytes'"
   },
   "dummy": {
     "message": "This entry must be the last one",

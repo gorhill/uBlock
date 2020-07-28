@@ -121,7 +121,10 @@ CodeMirror.defineMode("ubo-static-filtering", function() {
                 if ( line.endsWith(' \\') ) {
                     do {
                         line = stream.lookAhead(lines.length);
-                        if ( line.startsWith('    ') === false ) { break; }
+                        if (
+                            line === undefined ||
+                            line.startsWith('    ') === false
+                        ) { break; }
                         lines.push(line);
                     } while ( line.endsWith(' \\') );
                 }

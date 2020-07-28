@@ -1,25 +1,23 @@
  /* External CSS values override */
-body {
-    color: #20123a;
-    fill: #20123a;
-    }
-.fa-icon {
-    padding: 0 0.1em;
-    }
 .fa-icon.fa-icon-badged > .fa-icon-badge {
     bottom: auto;
     top: -20%;
     }
 
 /* Internal CSS values */
-body {
-    background-color: white;
-    border: 0;
-    margin: 0;
-    padding: 0;
-    white-space: nowrap;
+:root body,
+:root.mobile body {
+    --font-size: 14px;
+    --popup-gap: var(--font-size);
+    --popup-gap-thin: calc(0.5 * var(--popup-gap));
+    --popup-gap-extra-thin: calc(0.25 * var(--font-size));
+    font-size: var(--font-size);
+    line-height: 20px;
+    width: 100%;
     }
-
+:root body.loading {
+    opacity: 0;
+    }
 a {
     color: inherit;
     text-decoration: none;
@@ -28,7 +26,7 @@ a {
     outline: 0;
     }
 
-#main {
+#panes {
     align-items: stretch;
     display: flex;
     flex-direction: column;
@@ -47,34 +45,36 @@ hr {
     }
 
 #sticky {
-    background-color: white;
+    background-color: var(--default-surface);
     position: sticky;
     top: 0;
     z-index: 100;
     }
-#sticky > div {
+#stickyTools {
     align-items: stretch;
     display: flex;
     justify-content: space-between;
+    margin: var(--popup-gap-thin)
+            var(--popup-gap-thin)
+            var(--popup-gap)
+            var(--popup-gap-thin);
     }
 #switch {
-    display: flex;
-    flex-grow: 2;
-    justify-content: center;
-    margin: 0.5em 0;
-    }
-#switch .fa-icon {
-    fill: #0060df;
+    color: var(--popup-power-ink);
     cursor: pointer;
-    font-size: 700%;
-    margin: 0;
+    display: flex;
+    fill: var(--popup-power-ink);
+    flex-grow: 1;
+    font-size: 96px;
+    justify-content: center;
+    margin: 0 var(--popup-gap-thin);
     padding: 0;
+    stroke: none;
+    stroke-width: 64;
     }
-#switch .fa-icon:hover {
-    opacity: 0.9;
-    }
-body.off #switch .fa-icon {
-    fill: #ccc;
+body.off #switch {
+    fill: var(--default-surface);
+    stroke: var(--checkbox-ink);
     }
 .rulesetTools {
     background-color: transparent;
@@ -82,16 +82,15 @@ body.off #switch .fa-icon {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
+    flex-grow: 2;
     justify-content: space-evenly;
-    padding: 0.5em;
     }
 .rulesetTools [id] {
-    background-color: #ffe;
+    background-color: var(--bg-transient-notice);
     border: 1px solid #ddc;
     border-radius: 4px;
     cursor: pointer;
-    fill: #888;
+    fill: var(--default-ink-a50);
     flex-grow: 1;
     font-size: 2.2em;
     padding: 0;
@@ -105,124 +104,118 @@ body.needSave #saveRules,
 body.needSave #revertRules {
     visibility: visible;
     }
+#hostname {
+    margin: var(--popup-gap) var(--popup-gap-extra-thin);
+    text-align: center;
+    }
+#hostname > span + span {
+    font-weight: 600;
+    }
 
 .itemRibbon {
+    column-gap: var(--popup-gap);
     display: grid;
     grid-template: auto / auto auto;
-    padding: 1em 1em;
+    margin: var(--popup-gap) var(--popup-gap) 0 var(--popup-gap);
+    }
+.itemRibbon > span {
+    margin-bottom: var(--popup-gap);
+    }
+.itemRibbon > [data-i18n] {
+    min-width: 10em;
     }
 .itemRibbon > [data-i18n] + span {
     justify-self: end;
-    }
-.itemRibbon > .h-gutter {
-    display: inline-block;
-    height: 1em;
-    }
-
-#basicStats {
+    text-align: end;
+    white-space: nowrap;
     }
 
 .toolRibbon {
     align-items: start;
     display: grid;
-    grid-template: auto / 25% 25% 25% 25%;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+    grid-template: auto / repeat(4, 1fr);
     justify-items: center;
-    margin: 1em 0;
+    margin: 0;
     white-space: normal;
     }
 .toolRibbon .tool {
+    cursor: pointer;
     display: flex;
     flex-direction: column;
     font-size: 1.4em;
-    min-width: 4em;
-    }
-.toolRibbon [data-i18n] {
-    font-size: x-small;
-    margin-top: 0.8em;
-    text-align: center;
-    }
-
-.tool {
-    cursor: pointer;
-    padding: 0 0.5em;
+    min-width: 32px;
+    padding: var(--popup-gap)
+             var(--popup-gap-thin);
     unicode-bidi: embed;
     visibility: hidden;
     }
-.tool.enabled {
+.toolRibbon .tool.enabled {
     visibility: visible;
     }
-
-.statValue {
-    margin: 0;
+.toolRibbon .tool .caption {
+    font: 10px/12px sans-serif;
+    margin-top: 6px;
+    text-align: center;
     }
+body.mobile.no-tooltips .toolRibbon .tool {
+    font-size: 1.6em;
+    }
+
 #extraTools .fa-icon {
     align-self: center;
     position: relative;
     }
 #extraTools .fa-icon > .nope {
+    height: 1.1em;
     left: 50%;
     position: absolute;
-    stroke: red;
+    stroke: var(--popup-icon-x-ink);
     stroke-width: 2;
     transform: translateX(-50%);
     visibility: hidden;
-    width: 1em;
+    width: 1.1em;
     }
 #extraTools > span.on .fa-icon >.nope {
     visibility: visible;
     }
 
-#main:not(.dfEnabled) #moreButton .fa-icon {
+.moreOrLess {
+    margin: 0;
+    }
+.moreOrLess > span {
+    cursor: pointer;
+    margin: 0;
+    padding: var(--popup-gap);
+    user-select: none;
+    }
+#moreButton .fa-icon {
     transform: rotate(180deg);
     }
-
-#tooltip {
-    background-color: #ffffee;
-    border: 1px solid gray;
-    border-radius: 3px;
-    box-shadow: 1px 1px 3px gray;
-    box-sizing: border-box;
-    color: black;
-    cursor: pointer;
-    direction: ltr;
-    font: 12px sans-serif;
-    left: 5%;
-    line-height: 130%;
-    margin: 0.5em 0;
-    opacity: 0;
-    padding: 4px 6px;
+#lessButton {
+    text-align: right;
+    }
+body[data-more="a b c d e f"] #moreButton {
     pointer-events: none;
-    position: absolute;
-    text-align: center;
     visibility: hidden;
-    white-space: pre-line;
-    width: 90%;
-    z-index: 100;
     }
-body[dir="rtl"] #tooltip {
-    direction: rtl;
-    }
-#tooltip.show {
-    transition: opacity 0.15s 0.5s;
-    -webkit-transition: opacity 0.15s 0.5s;
-    visibility: visible;
-    opacity: 1;
+body[data-more=""] #lessButton {
+    pointer-events: none;
+    visibility: hidden;
     }
 
-#firewallContainer {
+#firewall {
     border: 0;
     flex-shrink: 0;
-    font-family: "Noto Sans", sans-serif;
     font-size: 90%;
     margin: 0;
     padding: 0;
     overflow: hidden;
     text-align: right;
+    --rule-cell-width: 5em;
     }
-#main:not(.dfEnabled) #firewallContainer {
-    display: none;
-    }
-#firewallContainer > div {
+#firewall > div {
     border: 0;
     direction: ltr;
     display: flex;
@@ -231,218 +224,211 @@ body[dir="rtl"] #tooltip {
     margin-top: 1px;
     padding: 0;
     }
-#firewallContainer > div:first-child {
+#firewall > div:first-child {
     margin-top: 0;
     }
-#firewallContainer > div:first-child ~ div[data-des="*"] {
+#firewall > div:first-child ~ div[data-des="*"] {
     display: none;
     }
-#firewallContainer:not(.expanded) > div.isSubDomain:not(.expandException):not(.isRootContext),
-#firewallContainer.expanded > div.isSubDomain.expandException:not(.isRootContext) {
+#firewall:not(.expanded) > div.isSubDomain:not(.expandException):not(.isRootContext),
+#firewall.expanded > div.isSubDomain.expandException:not(.isRootContext) {
     display: none;
     }
-#firewallContainer > div > span {
-    background-color: #e0e0e6;
+#firewall > div > span,
+#actionSelector > #dynaCounts {
+    background-color: var(--bg-popup-cell-2);
     border: none;
     box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    color: #000;
     display: inline-flex;
     padding: 0.4em 0;
     position: relative;
     }
-#firewallContainer > div:first-of-type > span:first-of-type {
+#firewall > div:first-of-type > span:first-of-type {
     cursor: pointer;
     flex-direction: unset;
     }
-#firewallContainer > div > span:first-of-type {
+#firewall > div > span:first-of-type {
     align-items: flex-end;
     flex-direction: column;
     flex-grow: 1;
     justify-content: flex-end;
     padding-right: 2px;
     white-space: normal;
-    width: calc(100% - 5em);
+    width: calc(100% - var(--rule-cell-width));
     word-break: break-word;
     }
-#firewallContainer > div.isCname > span:first-of-type {
-    color: mediumblue;
+#firewall > div.isCname > span:first-of-type {
+    color: var(--fg-popup-cell-cname);
     }
-#firewallContainer > div > span:first-of-type > sub {
+#firewall > div > span:first-of-type > sub {
     display: inline-block;
     font-size: 85%;
     font-weight: normal;
     padding: 0.25em 0 0 0;
     }
-#firewallContainer > div > span:first-of-type > sub:empty {
+#firewall > div > span:first-of-type > sub:empty {
     display: none;
     }
-#firewallContainer > div > span:first-of-type ~ span {
+#firewall > div > span:first-of-type ~ span {
     flex-shrink: 0;
     margin-left: 1px;
-    width: 5em;
+    width: var(--rule-cell-width);
     }
-#firewallContainer > div > span:nth-of-type(2) {
+#firewall > div > span:nth-of-type(2) {
     display: none;
     }
-#firewallContainer > div > span:nth-of-type(3),
-#firewallContainer > div > span:nth-of-type(4) {
-    color: #444;
+#firewall > div > span:nth-of-type(3),
+#firewall > div > span:nth-of-type(4) {
+    color: var(--fg-0-70);
     display: none;
     font-family: monospace;
     text-align: center;
     }
-#firewallContainer > div.isDomain > span:first-of-type {
-    font-weight: bold;
+#firewall > div.isDomain > span:first-of-type {
+    font-weight: 600;
     }
-#firewallContainer > div:first-of-type > span:first-of-type::before {
-    color: #aaa;
+#firewall > div:first-of-type > span:first-of-type::before {
+    color: var(--fg-0-50);
     content: '+';
     padding-right: 0.25em;
     }
-#firewallContainer.expanded > div:first-of-type > span:first-of-type::before {
+#firewall.expanded > div:first-of-type > span:first-of-type::before {
     content: '\2012';
     }
-#firewallContainer > div[data-des="*"] > span:nth-of-type(3),
-#firewallContainer > div.isSubDomain > span:nth-of-type(3),
-#firewallContainer > div.isSubDomain.isRootContext > span:nth-of-type(3),
-#firewallContainer.expanded > div:not(.expandException) > span:nth-of-type(3),
-#firewallContainer:not(.expanded) > div.expandException > span:nth-of-type(3),
-#firewallContainer:not(.expanded) > div.isDomain:not(.expandException) > span:nth-of-type(4),
-#firewallContainer.expanded > div.isDomain.expandException > span:nth-of-type(4) {
+#firewall > div[data-des="*"] > span:nth-of-type(3),
+#firewall > div.isSubDomain > span:nth-of-type(3),
+#firewall > div.isSubDomain.isRootContext > span:nth-of-type(3),
+#firewall.expanded > div:not(.expandException) > span:nth-of-type(3),
+#firewall:not(.expanded) > div.expandException > span:nth-of-type(3),
+#firewall:not(.expanded) > div.isDomain:not(.expandException) > span:nth-of-type(4),
+#firewall.expanded > div.isDomain.expandException > span:nth-of-type(4),
+#actionSelector > #dynaCounts {
     display: inline-flex;
     justify-content: space-between;
     }
-#firewallContainer > div > span[data-acount]::before,
-#firewallContainer > div > span[data-bcount]::after {
-    align-items: center;
+#firewall > div > span[data-acount]::before,
+#firewall > div > span[data-bcount]::after,
+#firewall > div > span[data-acount] > #actionSelector > #dynaCounts::before,
+#firewall > div > span[data-acount] > #actionSelector > #dynaCounts::after {
     content: ' ';
-    display: inline-flex;
     }
-#firewallContainer > div > span[data-acount]::before {
+#firewall > div > span[data-acount]::before,
+#firewall > div > span[data-acount] > #actionSelector > #dynaCounts::before {
     padding-left: 0.1em;
     }
-#firewallContainer > div > span[data-acount="1"]::before {
+#firewall > div > span[data-acount="1"]::before,
+#firewall > div > span[data-acount="1"] > #actionSelector > #dynaCounts::before {
     content: '+';
     }
-#firewallContainer > div > span[data-acount="2"]::before {
+#firewall > div > span[data-acount="2"]::before,
+#firewall > div > span[data-acount="2"] > #actionSelector > #dynaCounts::before {
     content: '++';
     }
-#firewallContainer > div > span[data-acount="3"]::before {
+#firewall > div > span[data-acount="3"]::before,
+#firewall > div > span[data-acount="3"] > #actionSelector > #dynaCounts::before {
     content: '+++';
     }
-#firewallContainer > div > span[data-bcount]::after {
+#firewall > div > span[data-bcount]::after,
+#firewall > div > span[data-bcount] > #actionSelector > #dynaCounts::after {
     padding-right: 0.1em;
     }
-#firewallContainer > div > span[data-bcount="1"]::after {
+#firewall > div > span[data-bcount="1"]::after,
+#firewall > div > span[data-bcount="1"] > #actionSelector > #dynaCounts::after {
     content: '\2212';
     }
-#firewallContainer > div > span[data-bcount="2"]::after {
+#firewall > div > span[data-bcount="2"]::after,
+#firewall > div > span[data-bcount="2"] > #actionSelector > #dynaCounts::after {
     content: '\2212\2212';
     }
-#firewallContainer > div > span[data-bcount="3"]::after {
+#firewall > div > span[data-bcount="3"]::after,
+#firewall > div > span[data-bcount="3"] > #actionSelector > #dynaCounts::after {
     content: '\2212\2212\2212';
     }
 
-body.advancedUser #firewallContainer > div > span:first-of-type {
-    width: calc(100% - 10em);
+body.advancedUser #firewall > div > span:first-of-type {
+    width: calc(100% - 2 * var(--rule-cell-width));
     }
-body.advancedUser #firewallContainer > div > span:nth-of-type(2) {
+body.advancedUser #firewall > div > span:nth-of-type(2) {
     display: inline-flex;
     }
-body.advancedUser #firewallContainer > div:first-child ~ div[data-des="*"] {
+body.advancedUser #firewall > div:first-child ~ div[data-des="*"] {
     display: flex;
     }
-body.advancedUser #firewallContainer > div > span:first-of-type ~ span {
+body.advancedUser #firewall > div > span:first-of-type ~ span {
     cursor: pointer;
     }
 
 /**
  Small coloured label at the left of a row
  */
-#firewallContainer > div.isRootContext > span:first-of-type::before,
-#firewallContainer > div.allowed > span:first-of-type::before,
-#firewallContainer > div.blocked > span:first-of-type::before,
-#firewallContainer:not(.expanded) > div.isDomain.totalAllowed:not(.expandException) > span:first-of-type::before,
-#firewallContainer:not(.expanded) > div.isDomain.totalBlocked:not(.expandException) > span:first-of-type::before,
-#firewallContainer.expanded > div.isDomain.totalAllowed.expandException > span:first-of-type::before,
-#firewallContainer.expanded > div.isDomain.totalBlocked.expandException > span:first-of-type::before {
+#firewall > div.isRootContext > span:first-of-type::before,
+#firewall > div.allowed > span:first-of-type::before,
+#firewall > div.blocked > span:first-of-type::before,
+#firewall:not(.expanded) > div.isDomain.totalAllowed:not(.expandException) > span:first-of-type::before,
+#firewall:not(.expanded) > div.isDomain.totalBlocked:not(.expandException) > span:first-of-type::before,
+#firewall.expanded > div.isDomain.totalAllowed.expandException > span:first-of-type::before,
+#firewall.expanded > div.isDomain.totalBlocked.expandException > span:first-of-type::before {
     box-sizing: border-box;
     content: '';
     display: inline-block;
+    filter: var(--bg-popup-cell-label-filter);
     height: 100%;
     left: 0;
-    opacity: 0.4;
     position: absolute;
     top: 0;
     width: 7px;
     }
-#firewallContainer > div.isRootContext > span:first-of-type::before {
-    background-color: rgb(127, 127, 127);
+#firewall > div.isRootContext > span:first-of-type::before {
+    background-color: var(--fg-0-50);
     width: 14px !important;
     }
-/**
- Source for color-blind color scheme from https://github.com/WyohKnott:
- https://github.com/chrisaljoudi/uBlock/issues/467#issuecomment-95177219
- */
-#firewallContainer > div.allowed > span:first-of-type::before,
-#firewallContainer > div.isDomain.totalAllowed > span:first-of-type::before {
-    background-color: rgb(0, 160, 0);
+#firewall > div.allowed > span:first-of-type::before,
+#firewall > div.isDomain.totalAllowed > span:first-of-type::before {
+    background-color: var(--bg-popup-cell-allow-own);
     }
-#firewallContainer.colorBlind > div.allowed > span:first-of-type::before,
-#firewallContainer.colorBlind > div.isDomain.totalAllowed > span:first-of-type::before {
-    background-color: rgb(255, 194, 57);
+#firewall > div.blocked > span:first-of-type::before,
+#firewall > div.isDomain.totalBlocked > span:first-of-type::before {
+    background-color: var(--bg-popup-cell-block-own);
     }
-#firewallContainer > div.blocked > span:first-of-type::before,
-#firewallContainer > div.isDomain.totalBlocked > span:first-of-type::before {
-    background-color: rgb(192, 0, 0);
-    }
-#firewallContainer.colorBlind > div.blocked > span:first-of-type::before,
-#firewallContainer.colorBlind > div.isDomain.totalBlocked > span:first-of-type::before {
-    background-color: rgb(0, 19, 110);
-    }
-#firewallContainer > div.allowed.blocked > span:first-of-type::before,
-#firewallContainer > div.isDomain.totalAllowed.totalBlocked > span:first-of-type::before {
-    background-color: rgb(192, 160, 0);
+#firewall > div.allowed.blocked > span:first-of-type::before,
+#firewall > div.isDomain.totalAllowed.totalBlocked > span:first-of-type::before {
+    background-color: var(--bg-popup-cell-label-mixed);
     }
 /* Rule cells */
-body.advancedUser #firewallContainer > div > span.allowRule {
-    background-color: rgba(0, 160, 0, 0.3);
+body.advancedUser #firewall > div > span.allowRule,
+#actionSelector > #dynaAllow {
+    background-color: var(--bg-popup-cell-allow);
     }
-body.advancedUser #firewallContainer.colorBlind > div > span.allowRule {
-    background-color: rgba(255, 194, 57, 0.4);
+body.advancedUser #firewall > div > span.blockRule,
+#actionSelector > #dynaBlock {
+    background-color: var(--bg-popup-cell-block);
     }
-body.advancedUser #firewallContainer > div > span.blockRule {
-    background-color: rgba(192, 0, 0, 0.3);
+body.advancedUser #firewall > div > span.noopRule,
+#actionSelector > #dynaNoop {
+    background-color: var(--bg-popup-cell-noop);
     }
-body.advancedUser #firewallContainer.colorBlind > div > span.blockRule {
-    background-color: rgba(0, 19, 110, 0.4);
+body.advancedUser #firewall > div > span.ownRule,
+#firewall > div > span.ownRule {
+    color: var(--default-surface);
     }
-body.advancedUser #firewallContainer > div > span.noopRule {
-    background-color: rgba(96, 96, 96, 0.4);
+body.advancedUser #firewall > div > span.allowRule.ownRule,
+:root:not(.mobile) #actionSelector > #dynaAllow:hover {
+    background-color: var(--bg-popup-cell-allow-own);
     }
-body.advancedUser #firewallContainer > div > span.ownRule {
-    color: white;
+body.advancedUser #firewall > div > span.blockRule.ownRule,
+:root:not(.mobile) #actionSelector > #dynaBlock:hover {
+    background-color: var(--bg-popup-cell-block-own);
     }
-body.advancedUser #firewallContainer > div > span.allowRule.ownRule {
-    background-color: rgba(0, 160, 0, 1);
-    }
-body.advancedUser #firewallContainer.colorBlind > div > span.allowRule.ownRule {
-    background-color: rgba(255, 194, 57, 1);
-    }
-body.advancedUser #firewallContainer > div > span.blockRule.ownRule {
-    background-color: rgba(192, 0, 0, 1);
-    }
-body.advancedUser #firewallContainer.colorBlind > div > span.blockRule.ownRule {
-    background-color: rgba(0, 19, 110, 1);
-    }
-body.advancedUser #firewallContainer > div > span.noopRule.ownRule {
-    background-color: rgba(96, 96, 96, 1);
+body.advancedUser #firewall > div > span.noopRule.ownRule,
+:root:not(.mobile) #actionSelector > #dynaNoop:hover {
+    background-color: var(--bg-popup-cell-noop-own);
     }
 
 #actionSelector {
-    bottom: 0;
+    box-sizing: border-box;
+    height: 100%;
     left: 0;
+    overflow: hidden;
     position: absolute;
     top: 0;
     width: 100%;
@@ -451,32 +437,103 @@ body.advancedUser #firewallContainer > div > span.noopRule.ownRule {
 #actionSelector > span {
     display: inline-block;
     height: 100%;
-    opacity: 0.2;
     }
-#actionSelector > span:first-of-type {
+#actionSelector > #dynaAllow {
     width: 33%;
     }
-#actionSelector > span:nth-of-type(2) {
+#actionSelector > #dynaNoop {
     width: 33.5%;
     }
-#actionSelector > span:nth-of-type(3) {
+#actionSelector > #dynaBlock {
     width: 33.5%;
     }
-#actionSelector > span:hover {
-    opacity: 0.75;
+#actionSelector > #dynaCounts {
+    background-color: transparent;
+    height: 100%;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    width: 100%;
     }
-#actionSelector > span:first-of-type {
-    background-color: rgb(0, 160, 0);
+
+/* configurable UI elements */
+:root:not(.mobile) .toolRibbon .caption,
+:root.mobile body.no-tooltips .toolRibbon .caption,
+:root.mobile body[data-ui~="-captions"] .toolRibbon .caption {
+    display: none;
     }
-#actionSelector.colorBlind > span:first-of-type {
-    background-color: rgb(255, 194, 57);
+:root.mobile .toolRibbon .caption,
+:root:not(.mobile) body[data-ui~="+captions"] .toolRibbon .caption {
+    display: inherit;
     }
-#actionSelector > span:nth-of-type(2) {
-    background-color: rgb(108, 108, 108);
+:root:not(.mobile) .toolRibbon .tool,
+:root.mobile body.no-tooltips .toolRibbon .tool,
+:root.mobile body[data-ui~="-captions"] .toolRibbon .tool {
+    padding: calc(var(--popup-gap) + var(--popup-gap-thin))
+             var(--popup-gap-thin);
     }
-#actionSelector > span:nth-of-type(3) {
-    background-color: rgb(192, 0, 0);
+:root.mobile #no-popups,
+:root body[data-ui~="-no-popups"] #no-popups {
+    display: none;
     }
-#actionSelector.colorBlind > span:nth-of-type(3) {
-    background-color: rgb(0, 19, 110);
+:root:not(.mobile) #no-popups,
+:root body[data-ui~="+no-popups"] #no-popups {
+    display: flex;
+    }
+body:not([data-more~="a"]) [data-more="a"],
+body:not([data-more~="b"]) [data-more="b"],
+body:not([data-more~="c"]) [data-more="c"],
+body:not([data-more~="d"]) [data-more="d"],
+body:not([data-more~="f"]) [data-more="f"] {
+    height: 0;
+    margin-bottom: 0;
+    margin-top: 0;
+    overflow-y: hidden;
+    visibility: hidden;
+    }
+body:not([data-more~="e"]) [data-more="e"] {
+    display: none;
+    }
+
+/* mouse-driven devices */
+:root.desktop {
+    display: flex;
+    justify-content: flex-end;
+    overflow: hidden;
+    }
+:root:not(.mobile) body {
+    --popup-gap: 12px;
+    max-width: 800px;
+    }
+:root.desktop #panes {
+    flex-direction: row-reverse;
+    width: unset;
+    }
+:root.desktop #main {
+    max-width: 300px;
+    width: max-content;
+    }
+:root:not(.mobile) #switch:hover {
+    background-color: var(--default-surface-hover);
+    }
+:root:not(.mobile) .rulesetTools [id]:hover {
+    fill: var(--default-ink);
+    }
+:root:not(.mobile) #firewall {
+    direction: rtl;
+    flex-grow: 1;
+    line-height: 1.4;
+    }
+:root.desktop #firewall {
+    max-height: max(100vh, 600px);
+    min-width: 360px;
+    overflow-y: auto;
+    width: min-content;
+    }
+:root:not(.mobile) .tool:hover {
+    background-color: var(--default-surface-hover);
+    }
+:root:not(.mobile) .moreOrLess > span:hover {
+    background-color: var(--default-surface-hover);
     }

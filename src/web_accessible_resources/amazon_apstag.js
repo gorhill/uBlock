@@ -19,19 +19,24 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global CodeMirror */
+// https://www.reddit.com/r/uBlockOrigin/comments/ghjqph/
+// https://github.com/NanoMeow/QuickReports/issues/3717
 
-'use strict';
-
-CodeMirror.defineMode("raw-settings", function() {
-    return {
-        token: function(stream) {
-            if ( stream.sol() ) {
-                stream.match(/\s*\S+/);
-                return 'keyword';
+(function() {
+    'use strict';
+    const w = window;
+    const noopfn = function() {
+        ; // jshint ignore:line
+    }.bind();
+    const apstag = {
+        fetchBids: function(a, b) {
+            if ( b instanceof Function ) {
+                b([]);
             }
-            stream.skipToEnd();
-            return null;
-        }
+        },
+        init: noopfn,
+        setDisplayBids: noopfn,
+        targetingKeys: noopfn,
     };
-});
+    w.apstag = apstag;
+})();

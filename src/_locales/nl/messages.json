@@ -179,25 +179,33 @@
     "message": "Klik om JavaScript op deze website niet meer uit te schakelen",
     "description": "Tooltip for the no-scripting per-site switch"
   },
+  "popupNoPopups_v2": {
+    "message": "Pop-upvensters",
+    "description": "Caption for the no-popups per-site switch"
+  },
   "popupNoLargeMedia_v2": {
     "message": "Grote media-elementen",
-    "description": "Tip for the no-large-media per-site switch"
+    "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
     "message": "Cosmetische filters",
-    "description": "Tip for the no-cosmetic-filtering per-site switch"
+    "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
     "message": "Externe lettertypen",
-    "description": "Tip for the no-remote-fonts per-site switch"
+    "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
     "message": "JavaScript",
-    "description": "Tip for the no-scripting per-site switch"
+    "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
     "message": "Meer",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "Minder",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "Algemene regels: deze kolom is voor regels die op alle websites van toepassing zijn.",
@@ -254,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{count}} van {{total}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "Versie",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "Aanmaken",
@@ -359,10 +371,6 @@
     "message": "CSP-rapporten blokkeren",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "Gebruikte opslagruimte: {{value}} bytes",
-    "description": "English: Storage used: {{}} bytes"
-  },
   "settingsLastRestorePrompt": {
     "message": "Laatste terugzetactie:",
     "description": "English: Last restore:"
@@ -396,7 +404,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Deze optie schakelt het inlezen en toepassen van <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">Adblock Plus-compatibele &lsquo;elementverbergende&rsquo; filters</a> in. Deze filters zijn puur cosmetisch; ze verbergen elementen in de webpagina die visueel storend kunnen zijn en niet door de op netwerkaanvragen gebaseerde filter-engine kunnen worden geblokkeerd.</p><p>Het inschakelen van deze functie verhoogt het geheugengebruik van uBlock₀.</p>",
+    "message": "Cosmetische filters dienen voor het verbergen van elementen in een webpagina die visueel storend kunnen zijn en niet door de op netwerkaanvragen gebaseerde filter-engines kunnen worden geblokkeerd.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -404,7 +412,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Algemene cosmetische filters zijn die cosmetische filters die zijn bedoeld om op alle websites te worden toegepast.<p>Hoewel ze efficiënt door uBlock₀ worden verwerkt, kunnen algemene cosmetische filters op sommige webpagina’s toch bijdragen aan meetbare geheugen- en cpu-overhead, met name op grote pagina’s en die met een lange levensduur.<p>Het inschakelen van deze optie elimineert de aan webpagina’s toegevoegde geheugen- en cpu-overhead als gevolg van het verwerken van algemene cosmetische filters, en verlaagt tevens het geheugengebruik van uBlock₀ zelf.<p>Het wordt aanbevolen deze optie op minder krachtige apparaten in te schakelen.",
+    "message": "Algemene cosmetische filters zijn die cosmetische filters die zijn bedoeld om op alle websites te worden toegepast. Het inschakelen van deze optie elimineert de aan webpagina’s toegevoegde geheugen- en cpu-overhead als gevolg van het verwerken van algemene cosmetische filters.\n\nHet wordt aanbevolen deze optie op minder krachtige apparaten in te schakelen.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -458,6 +466,10 @@
   "3pExternalListObsolete": {
     "message": "Verouderd.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
+  },
+  "3pViewContent": {
+    "message": "inhoud weergeven",
+    "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
     "message": "Laatst bijgewerkt: {{ago}}.\nKlik om een update af te dwingen.",
@@ -827,6 +839,18 @@
     "message": "Medewerkers",
     "description": "English: Contributors"
   },
+  "aboutSourceCode": {
+    "message": "Broncode",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "Vertalingen",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "Filterlijsten",
+    "description": "Link text to uBO's own filter lists repo"
+  },
   "aboutDependencies": {
     "message": "Externe afhankelijkheden (GPLv3-compatibel):",
     "description": "Shown in the About pane"
@@ -1002,6 +1026,22 @@
   "relaxBlockingMode": {
     "message": "Blokkeringsmodus beperken",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
+  "storageUsed": {
+    "message": "Gebruikte opslagruimte: {{value}} {{unit}}",
+    "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
+  },
+  "KB": {
+    "message": "KB",
+    "description": "short for 'kilobytes'"
+  },
+  "MB": {
+    "message": "MB",
+    "description": "short for 'megabytes'"
+  },
+  "GB": {
+    "message": "GB",
+    "description": "short for 'gigabytes'"
   },
   "dummy": {
     "message": "This entry must be the last one",

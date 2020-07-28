@@ -2,63 +2,61 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>uBlock — Settings</title>
+<link rel="stylesheet" type="text/css" href="css/themes/default.css">
 <link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/fa-icons.css">
 <link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
 <link rel="stylesheet" type="text/css" href="css/settings.css">
 </head>
 
 <body>
-<div class="body">
-    <ul id="userSettings">
-        <li><input id="collapse-blocked" type="checkbox" data-setting-name="collapseBlocked" data-setting-type="bool"><label data-i18n="settingsCollapseBlockedPrompt" for="collapse-blocked"></label>
-        <li><input id="icon-badge" type="checkbox" data-setting-name="showIconBadge" data-setting-type="bool"><label data-i18n="settingsIconBadgePrompt" for="icon-badge"></label>
-        <li><input id="context-menu-enabled" type="checkbox" data-setting-name="contextMenuEnabled" data-setting-type="bool"><label data-i18n="settingsContextMenuPrompt" for="context-menu-enabled"></label>
-        <li><input id="tooltips-disabled" type="checkbox" data-setting-name="tooltipsDisabled" data-setting-type="bool"><label data-i18n="settingsTooltipsPrompt" for="tooltips-disabled"></label>
-        <li><input id="color-blind-friendly" type="checkbox" data-setting-name="colorBlindFriendly" data-setting-type="bool"><label data-i18n="settingsColorBlindPrompt" for="color-blind-friendly"></label>
-        <li><input id="cloud-storage-enabled" type="checkbox" data-setting-name="cloudStorageEnabled" data-setting-type="bool"><label data-i18n="settingsCloudStorageEnabledPrompt" for="cloud-storage-enabled"></label> <a class="fa info" href="https://github.com/gorhill/uBlock/wiki/Cloud-storage" target="_blank">&#xf05a;</a>
-        <li><input id="advanced-user-enabled" type="checkbox" data-setting-name="advancedUserEnabled" data-setting-type="bool"><label data-i18n="settingsAdvancedUserPrompt" for="advanced-user-enabled"></label> <a class="fa info" href="advanced-settings.html" data-i18n-title="settingsAdvancedUserSettings">&#xf085;</a>
-        <li class="subgroup"><span data-i18n="3pGroupPrivacy"></span><ul>
-            <li><input id="prefetching-disabled" type="checkbox" data-setting-name="prefetchingDisabled" data-setting-type="bool"><label data-i18n="settingsPrefetchingDisabledPrompt" for="prefetching-disabled"></label> <a class="fa info" href="https://github.com/gorhill/uBlock/wiki/Dashboard:-Settings#disable-pre-fetching" target="_blank">&#xf05a;</a>
-            <li><input id="hyperlink-auditing-disabled" type="checkbox" data-setting-name="hyperlinkAuditingDisabled" data-setting-type="bool"><label data-i18n="settingsHyperlinkAuditingDisabledPrompt" for="hyperlink-auditing-disabled"></label> <a class="fa info important" href="https://github.com/gorhill/uBlock/wiki/Dashboard:-Settings#disable-hyperlink-auditing" target="_blank">&#xf05a;</a>
-            <li><input id="webrtc-ipaddress-hidden" type="checkbox" data-setting-name="webrtcIPAddressHidden" data-setting-type="bool"><label data-i18n="settingsWebRTCIPAddressHiddenPrompt" for="webrtc-ipaddress-hidden"></label> <a class="fa info important" href="https://github.com/gorhill/uBlock/wiki/Prevent-WebRTC-from-leaking-local-IP-address" target="_blank">&#xf05a;</a>
-            <li><input id="no-csp-reports" type="checkbox" data-setting-name="noCSPReports" data-setting-type="bool"><label data-i18n="settingsNoCSPReportsPrompt" for="no-csp-reports"></label> <a class="fa info" href="https://github.com/gorhill/uBlock/wiki/Dashboard:-Settings#block-csp-reports" target="_blank">&#xf05a;</a>
-            </ul>
-        <li class="subgroup"><span data-i18n="settingPerSiteSwitchGroup"></span><ul>
-            <li><label class="synopsis"><span data-i18n="settingPerSiteSwitchGroupSynopsis"></span> <a class="fa info" href="https://github.com/gorhill/uBlock/wiki/Per-site-switches" target="_blank">&#xf05a;</a></label>
-            <li><input id="no-cosmetic-filtering" type="checkbox" data-setting-name="noCosmeticFiltering" data-setting-type="bool"><label data-i18n="settingsNoCosmeticFilteringPrompt" for="no-cosmetic-filtering"></label> <a class="fa info" href="https://github.com/gorhill/uBlock/wiki/Per-site-switches#no-cosmetic-filtering" target="_blank">&#xf05a;</a>
-            <li><input id="no-large-media" type="checkbox" data-setting-name="noLargeMedia" data-setting-type="bool"><label data-i18n="settingsNoLargeMediaPrompt" for="no-large-media"><input type="number" min="0"></label> <a class="fa info" href="https://github.com/gorhill/uBlock/wiki/Per-site-switches#no-large-media-elements" target="_blank">&#xf05a;</a>
-            <li><input id="no-remote-fonts" type="checkbox" data-setting-name="noRemoteFonts" data-setting-type="bool"><label data-i18n="settingsNoRemoteFontsPrompt" for="no-remote-fonts"></label> <a class="fa info" href="https://github.com/gorhill/uBlock/wiki/Per-site-switches#no-remote-fonts" target="_blank">&#xf05a;</a>
-            <li><input id="no-scripting" type="checkbox" data-setting-name="noScripting" data-setting-type="bool"><label data-i18n="settingsNoScriptingPrompt" for="no-scripting"></label> <a class="fa info" href="https://github.com/gorhill/uBlock/wiki/Per-site-switches#no-scripting" target="_blank">&#xf05a;</a>
-            </ul>
-        </ul>
-
-    <div id="localData" style="margin: 0 1em;">
-        <div style="margin: 2.5em 0; border-top: 1px solid #ccc;"></div>
-        <ul>
-            <li>
-            <li style="display: none;"><span data-i18n="settingsLastBackupPrompt"></span><ul>
-                <li>
-                </ul>
-            <li style="display: none;"><span data-i18n="settingsLastRestorePrompt"></span><ul>
-                <li>
-                <li>
-                </ul>
-            </ul>
-        </div>
-
-    <div style="margin: 2.5em 1em;">
-        <p><button class="custom" type="button" id="export" data-i18n="aboutBackupDataButton"></button>&ensp;
-           <button class="custom" type="button" id="import" data-i18n="aboutRestoreDataButton"></button>
-        <p><button class="custom" type="button" id="reset" data-i18n="aboutResetDataButton"></button>
-        </div>
+<div class="fieldset">
+    <div class="li"><label><span class="input checkbox"><input type="checkbox" data-setting-name="collapseBlocked" data-setting-type="bool"><svg><use href="img/material-design.svg#checkmark" /></svg></span><span data-i18n="settingsCollapseBlockedPrompt"></span></label></div>
+    <div class="li"><label><span class="input checkbox"><input type="checkbox" data-setting-name="showIconBadge" data-setting-type="bool"><svg><use href="img/material-design.svg#checkmark" /></svg></span><span data-i18n="settingsIconBadgePrompt"></span></label></div>
+    <div class="li"><label><span class="input checkbox"><input type="checkbox" data-setting-name="contextMenuEnabled" data-setting-type="bool"><svg><use href="img/material-design.svg#checkmark" /></svg></span><span data-i18n="settingsContextMenuPrompt"></span></label></div>
+    <div class="li"><label><span class="input checkbox"><input type="checkbox" data-setting-name="tooltipsDisabled" data-setting-type="bool"><svg><use href="img/material-design.svg#checkmark" /></svg></span><span data-i18n="settingsTooltipsPrompt"></span></label></div>
+    <div class="li"><label><span class="input checkbox"><input type="checkbox" data-setting-name="colorBlindFriendly" data-setting-type="bool"><svg><use href="img/material-design.svg#checkmark" /></svg></span><span data-i18n="settingsColorBlindPrompt"></span></label></div>
+    <div class="li"><label><span class="input checkbox"><input type="checkbox" data-setting-name="cloudStorageEnabled" data-setting-type="bool"><svg><use href="img/material-design.svg#checkmark" /></svg></span><span><span data-i18n="settingsCloudStorageEnabledPrompt"></span>&nbsp;<a class="fa-icon info" href="https://github.com/gorhill/uBlock/wiki/Cloud-storage" target="_blank">info-circle</a></span></label></div>
+    <div class="li"><label><span class="input checkbox"><input type="checkbox" data-setting-name="advancedUserEnabled" data-setting-type="bool"><svg><use href="img/material-design.svg#checkmark" /></svg></span><span><span data-i18n="settingsAdvancedUserPrompt"></span>&nbsp;<a class="fa-icon info" href="advanced-settings.html" data-i18n-title="settingsAdvancedUserSettings">cogs</a></span></label></div>
+</div>
+<hr>
+<div class="fieldset">
+    <div class="fieldset-header" data-i18n="3pGroupPrivacy"></div>
+    <div class="li"><label><span class="input checkbox"><input type="checkbox" data-setting-name="prefetchingDisabled" data-setting-type="bool"><svg><use href="img/material-design.svg#checkmark" /></svg></span><span><span data-i18n="settingsPrefetchingDisabledPrompt"></span>&nbsp;<a class="fa-icon info" href="https://github.com/gorhill/uBlock/wiki/Dashboard:-Settings#disable-pre-fetching" target="_blank">info-circle</a></span></label></div>
+    <div class="li"><label><span class="input checkbox"><input type="checkbox" data-setting-name="hyperlinkAuditingDisabled" data-setting-type="bool"><svg><use href="img/material-design.svg#checkmark" /></svg></span><span><span data-i18n="settingsHyperlinkAuditingDisabledPrompt"></span>&nbsp;<a class="fa-icon info important" href="https://github.com/gorhill/uBlock/wiki/Dashboard:-Settings#disable-hyperlink-auditing" target="_blank">info-circle</a></span></label></div>
+    <div class="li"><label><span class="input checkbox"><input type="checkbox" data-setting-name="webrtcIPAddressHidden" data-setting-type="bool"><svg><use href="img/material-design.svg#checkmark" /></svg></span><span><span data-i18n="settingsWebRTCIPAddressHiddenPrompt"></span>&nbsp;<a class="fa-icon info important" href="https://github.com/gorhill/uBlock/wiki/Prevent-WebRTC-from-leaking-local-IP-address" target="_blank">info-circle</a></span></label></div>
+    <div class="li"><label><span class="input checkbox"><input type="checkbox" data-setting-name="noCSPReports" data-setting-type="bool"><svg><use href="img/material-design.svg#checkmark" /></svg></span><span><span data-i18n="settingsNoCSPReportsPrompt"></span>&nbsp;<a class="fa-icon info" href="https://github.com/gorhill/uBlock/wiki/Dashboard:-Settings#block-csp-reports" target="_blank">info-circle</a></span></label></div>
+</div>
+<hr>
+<div class="fieldset">
+    <div class="fieldset-header" data-i18n="settingPerSiteSwitchGroup"></div>
+    <div class="li synopsis"><legend><span data-i18n="settingPerSiteSwitchGroupSynopsis"></span>&nbsp;<a class="fa-icon info" href="https://github.com/gorhill/uBlock/wiki/Per-site-switches" target="_blank">info-circle</a></legend></div>
+    <div class="li"><label><span class="input checkbox"><input type="checkbox" data-setting-name="noCosmeticFiltering" data-setting-type="bool"><svg><use href="img/material-design.svg#checkmark" /></svg></span><span><span data-i18n="settingsNoCosmeticFilteringPrompt"></span>&nbsp;<a class="fa-icon info" href="https://github.com/gorhill/uBlock/wiki/Per-site-switches#no-cosmetic-filtering" target="_blank">info-circle</a></span></label></div>
+    <div class="li"><label><span class="input checkbox"><input type="checkbox" data-setting-name="noLargeMedia" data-setting-type="bool"><svg><use href="img/material-design.svg#checkmark" /></svg></span><span><span data-i18n="settingsNoLargeMediaPrompt"><input type="number" min="0"></span>&nbsp;<a class="fa-icon info" href="https://github.com/gorhill/uBlock/wiki/Per-site-switches#no-large-media-elements" target="_blank">info-circle</a></span></label></div>
+    <div class="li"><label><span class="input checkbox"><input type="checkbox" data-setting-name="noRemoteFonts" data-setting-type="bool"><svg><use href="img/material-design.svg#checkmark" /></svg></span><span><span data-i18n="settingsNoRemoteFontsPrompt"></span>&nbsp;<a class="fa-icon info" href="https://github.com/gorhill/uBlock/wiki/Per-site-switches#no-remote-fonts" target="_blank">info-circle</a></span></label></div>
+    <div class="li"><label><span class="input checkbox"><input type="checkbox" data-setting-name="noScripting" data-setting-type="bool"><svg><use href="img/material-design.svg#checkmark" /></svg></span><span><span data-i18n="settingsNoScriptingPrompt"></span>&nbsp;<a class="fa-icon info" href="https://github.com/gorhill/uBlock/wiki/Per-site-switches#no-scripting" target="_blank">info-circle</a></span></label></div>
+</div>
+<hr>
+<div id="localData" class="fieldset">
+    <div>
+        <div id="storageUsed"></div>
+        <div class="li" id="settingsLastBackupPrompt" style="display:none;"></div>
+        <div class="li" id="settingsLastRestorePrompt" style="display:none;"></div>
+    </div>
+    <div>
+        <button type="button" id="export" data-i18n="aboutBackupDataButton"></button>
+        <button type="button" id="import" data-i18n="aboutRestoreDataButton"></button>
+        <button type="button" id="reset" data-i18n="aboutResetDataButton"></button>
+    </div>
 </div>
 
 <div class="hidden">
     <input id="restoreFilePicker" type="file" accept="text/plain">
 </div>
 
+<script src="js/fa-icons.js"></script>
 <script src="js/vapi.js"></script>
 <script src="js/vapi-common.js"></script>
 <script src="js/vapi-client.js"></script>

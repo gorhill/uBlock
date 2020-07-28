@@ -179,25 +179,33 @@
     "message": "Klicka för att aktivera JavaScript på den här webbplatsen",
     "description": "Tooltip for the no-scripting per-site switch"
   },
+  "popupNoPopups_v2": {
+    "message": "Popup-fönster",
+    "description": "Caption for the no-popups per-site switch"
+  },
   "popupNoLargeMedia_v2": {
     "message": "Stora mediaelement",
-    "description": "Tip for the no-large-media per-site switch"
+    "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
     "message": "Kosmetisk filtrering",
-    "description": "Tip for the no-cosmetic-filtering per-site switch"
+    "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
     "message": "Fjärrtypsnitt",
-    "description": "Tip for the no-remote-fonts per-site switch"
+    "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
     "message": "JavaScript",
-    "description": "Tip for the no-scripting per-site switch"
+    "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
     "message": "Mer",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "Mindre",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "Globala regler: den här kolumnen avser regler som gäller för alla webbplatser.",
@@ -254,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{count}} av {{total}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "Version",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "Skapa",
@@ -359,10 +371,6 @@
     "message": "Blockera CSP-rapporter",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "Använt utrymme: {{value}} bytes",
-    "description": "English: Storage used: {{}} bytes"
-  },
   "settingsLastRestorePrompt": {
     "message": "Senast återställd:",
     "description": "English: Last restore:"
@@ -396,7 +404,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Det här alternativet aktiverar tolkning och applicering av <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">Adblock Plus-kompatibla &ldquo;elementdöljningsfilter&rdquo;</a>. Dessa filter är i huvudsak kosmetiska. De tjänar till att dölja element som anses vara till visuella besvär och som inte kan bli blockerade av den nätförfrågningsbaserade filtreringsmotorn.</p><p>Genom att aktivera denna funktion ökar uBlock₀s minnesanvändning.</p>",
+    "message": "Kosmetiska filter tjänar till att dölja element på en webbsida som bedöms vara en visuell olägenhet och som inte kan blockeras av nätverksbegärningsbaserade filtermotorer.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -404,7 +412,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Allmänna kosmetiska filter är de kosmetiska filter som är menade att användas på alla webbplatser.<p>Även om de hanteras effektivt av uBlock₀ så kan generiska kosmetiska filter bidra till en högre minnes- och processoranvändning på vissa webbplatser, särskilt stora och långlivade.<p>Aktiverar du den här inställning så eliminerar du den extra minnes- och processoranvändningen som allmänna kosmetiska filter medför och minskar också minnesanvändningen för själva uBlock₀.<p>Det rekommenderas att du aktiverar den här inställningen på mindre kraftfulla enheter.",
+    "message": "Allmänna kosmetiska filter är de kosmetiska filter som är avsedda att tillämpas på alla webbplatser. Att aktivera detta alternativ kommer att eliminera minnes- och processoranvändningen som läggs till på webbsidor som ett resultat av hantering av allmänna kosmetiska filter.\n\nDet rekommenderas att aktivera detta alternativ på mindre kraftfulla enheter.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -458,6 +466,10 @@
   "3pExternalListObsolete": {
     "message": "Föråldrad.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
+  },
+  "3pViewContent": {
+    "message": "visa innehåll",
+    "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
     "message": "Senast uppdaterad: {{ago}}\nKlicka för att påtvinga en uppdatering.",
@@ -744,7 +756,7 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Det statiska filtret <code>{{filter}}</code> kunde inte hittas i någon av de filterlistor som för närvarande är aktiverade",
+    "message": "Statiskt filter kunde inte hittas i någon av de aktuella aktiverade filterlistorna",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
@@ -826,6 +838,18 @@
   "aboutContributors": {
     "message": "Bidragsgivare",
     "description": "English: Contributors"
+  },
+  "aboutSourceCode": {
+    "message": "Källkod",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "Översättningar",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "Filterlistor",
+    "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
     "message": "Externa beroenden (GPLv3-kompatibla):",
@@ -1002,6 +1026,22 @@
   "relaxBlockingMode": {
     "message": "Lätta på blockeringsläge",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
+  "storageUsed": {
+    "message": "Använt utrymme: {{value}} {{unit}}",
+    "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
+  },
+  "KB": {
+    "message": "KB",
+    "description": "short for 'kilobytes'"
+  },
+  "MB": {
+    "message": "MB",
+    "description": "short for 'megabytes'"
+  },
+  "GB": {
+    "message": "GB",
+    "description": "short for 'gigabytes'"
   },
   "dummy": {
     "message": "This entry must be the last one",

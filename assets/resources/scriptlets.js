@@ -240,7 +240,7 @@
             apply: function(target, thisArg, args) {
                 const type = args[0].toString();
                 const handler = String(args[1]);
-                log('addEventListener("%s", %s)', type, handler);
+                log('uBO: addEventListener("%s", %s)', type, handler);
                 return target.apply(thisArg, args);
             }
         }
@@ -249,16 +249,35 @@
 
 
 /// json-prune.js
+//
+//  When no "prune paths" argument is provided, the scriptlet is
+//  used for logging purpose and the "needle paths" argument is
+//  used to filter logging output.
 (function() {
-    const log = console.log.bind(console);
     const rawPrunePaths = '{{1}}';
     const rawNeedlePaths = '{{2}}';
     const prunePaths = rawPrunePaths !== '{{1}}' && rawPrunePaths !== ''
         ? rawPrunePaths.split(/ +/)
         : [];
-    const needlePaths = rawNeedlePaths !== '{{2}}' && rawNeedlePaths !== ''
-        ? rawNeedlePaths.split(/ +/)
-        : [];
+    let needlePaths;
+    let log, reLogNeedle;
+    if ( prunePaths.length !== 0 ) {
+        needlePaths = prunePaths.length !== 0 &&
+                      rawNeedlePaths !== '{{2}}' && rawNeedlePaths !== ''
+            ? rawNeedlePaths.split(/ +/)
+            : [];
+    } else {
+        log = console.log.bind(console);
+        let needle;
+        if ( rawNeedlePaths === '' || rawNeedlePaths === '{{2}}' ) {
+            needle = '.?';
+        } else if ( rawNeedlePaths.charAt(0) === '/' && rawNeedlePaths.slice(-1) === '/' ) {
+            needle = rawNeedlePaths.slice(1, -1);
+        } else {
+            needle = rawNeedlePaths.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+        reLogNeedle = new RegExp(needle);
+    }
     const findOwner = function(root, path) {
         let owner = root;
         let chain = path;
@@ -286,8 +305,11 @@
     JSON.parse = new Proxy(JSON.parse, {
         apply: function() {
             const r = Reflect.apply(...arguments);
-            if ( prunePaths.length === 0 ) {
-                log(location.hostname, r);
+            if ( log !== undefined ) {
+                const json = JSON.stringify(r, null, 2);
+                if ( reLogNeedle.test(json) ) {
+                    log('uBO:', location.hostname, json);
+                }
                 return r;
             }
             if ( mustProcess(r) === false ) { return r; }
@@ -491,6 +513,7 @@
 
 /// requestAnimationFrame-if.js
 /// alias raf-if.js
+// Deprecated, use "no-requestAnimationFrame-if.js"
 (function() {
     let needle = '{{1}}';
     const not = needle.charAt(0) === '!';
@@ -510,6 +533,38 @@
             if ( log !== undefined ) {
                 log('uBO: requestAnimationFrame("%s")', a);
             } else if ( needle.test(a) === not ) {
+                args[0] = function(){};
+            }
+            return target.apply(thisArg, args);
+        }
+    });
+})();
+
+
+/// no-requestAnimationFrame-if.js
+/// alias norafif.js
+(function() {
+    let needle = '{{1}}';
+    if ( needle === '{{1}}' ) { needle = ''; }
+    const needleNot = needle.charAt(0) === '!';
+    if ( needleNot ) { needle = needle.slice(1); }
+    if ( needle.startsWith('/') && needle.endsWith('/') ) {
+        needle = needle.slice(1, -1);
+    } else if ( needle !== '' ) {
+        needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+    const log = needleNot === false && needle === '' ? console.log : undefined;
+    const reNeedle = new RegExp(needle);
+    window.requestAnimationFrame = new Proxy(window.requestAnimationFrame, {
+        apply: function(target, thisArg, args) {
+            const a = String(args[0]);
+            let defuse = false;
+            if ( log !== undefined ) {
+                log('uBO: requestAnimationFrame("%s")', a);
+            } else {
+                defuse = reNeedle.test(a) !== needleNot;
+            }
+            if ( defuse ) {
                 args[0] = function(){};
             }
             return target.apply(thisArg, args);
@@ -796,7 +851,7 @@
         new Proxy(peerConnectionProto.createDataChannel, {
             apply: function(target, thisArg, args) {
                 if ( isGoodConfig(target, args[1]) === false ) {
-                    log(args[1]);
+                    log('uBO:', args[1]);
                     return Reflect.apply(target, thisArg, args.slice(0, 1));
                 }
                 return Reflect.apply(target, thisArg, args);
@@ -806,7 +861,7 @@
         new Proxy(peerConnectionCtor, {
             construct: function(target, args) {
                 if ( isGoodConfig(target, args[0]) === false ) {
-                    log(args[0]);
+                    log('uBO:', args[0]);
                     return Reflect.construct(target);
                 }
                 return Reflect.construct(target, args);
@@ -1123,11 +1178,17 @@
 // https://github.com/uBlockOrigin/uAssets/issues/2912
 /// fingerprint2.js
 (function() {
-    let fp2 = function(){};
+    let browserId = '';
+    for ( let i = 0; i < 8; i++ ) {
+        browserId += (Math.random() * 0x10000 + 0x1000 | 0).toString(16).slice(-4);
+    }
+    const fp2 = function(){};
+    fp2.get = function(opts, cb) {
+        if ( !cb  ) { cb = opts; }
+        setTimeout(( ) => { cb(browserId, []); }, 1);
+    };
     fp2.prototype = {
-        get: function(cb) {
-            setTimeout(function() { cb('', []); }, 1);
-        }
+        get: fp2.get
     };
     window.Fingerprint2 = fp2;
 })();

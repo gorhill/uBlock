@@ -179,25 +179,33 @@
     "message": "Кликните да JavaScript не буде више онемогућен на овом сајту",
     "description": "Tooltip for the no-scripting per-site switch"
   },
+  "popupNoPopups_v2": {
+    "message": "Искачући прозори",
+    "description": "Caption for the no-popups per-site switch"
+  },
   "popupNoLargeMedia_v2": {
     "message": "Велики мултимедијски елементи",
-    "description": "Tip for the no-large-media per-site switch"
+    "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
     "message": "Естетско филтрирање",
-    "description": "Tip for the no-cosmetic-filtering per-site switch"
+    "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
     "message": "Удаљени фонтови",
-    "description": "Tip for the no-remote-fonts per-site switch"
+    "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
     "message": "JavaScript",
-    "description": "Tip for the no-scripting per-site switch"
+    "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
     "message": "Више",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "Мање",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "Општа правила: ова колона је за правила која се примењују на свим сајтовима.",
@@ -254,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{count}} од {{total}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "Верзија",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "Креирај",
@@ -359,10 +371,6 @@
     "message": "Блокирај CSP извештаје",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "Искоришћеност складишта: {{value}} бајтова",
-    "description": "English: Storage used: {{}} bytes"
-  },
   "settingsLastRestorePrompt": {
     "message": "Последње враћање:",
     "description": "English: Last restore:"
@@ -396,7 +404,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Ова опција омогућава рашчлањавање и спровођење <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">Adblock Plus компатибилних филтера &ldquo;за сакривање елемената&rdquo; </a>. Ови филтери су углавном естетски, они служе за сакривање елемената на веб страници који се сматрају визуелном сметњом и који не могу бити блокирани од стране мрежних захтева базираних на филтрирању.</p><p>Омогућавањем ове функције повећава се количина меморије коју uBlock₀ користи.</p>",
+    "message": "Естетски филтери служе за сакривање елемената на веб страници који се сматрају визуелном сметњом и који не могу бити блокирани од стране мрежних захтева базираних на филтрирању.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -404,7 +412,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Општи естетски филтери су они естетски филтери који су намењени за примену на свим сајтовима.<p>Иако uBlock₀ ефикасно рукује њима, општи естетски филтери могу довести до повећане потрошње меморије и оптерећења процесора на неким страницама, нарочито на оним великим. <p>Омогућавањем ове опције, елиминисаће се повећана потрошња меморије и оптерећење процесора на страницама као резултат руковања општим естетским филтерима, а такође и смањити меморијски отисак самог uBlock₀-а.<p>Препоручује се да се ова опција омогући на мање моћним уређајима.",
+    "message": "Општи естетски филтери су они естетски филтери који су намењени за примену на свим сајтовима. Омогућавањем ове опције, елиминисаће се повећана потрошња меморије и оптерећење процесора на страницама као резултат руковања општим естетским филтерима.\n\nПрепоручује се да се ова опција омогући на мање моћним уређајима.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -458,6 +466,10 @@
   "3pExternalListObsolete": {
     "message": "Застарело.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
+  },
+  "3pViewContent": {
+    "message": "приказ садржаја",
+    "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
     "message": "Последње ажурирање: {{ago}}.\nКликните да бисте ажурирали.",
@@ -744,7 +756,7 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Статички филтер <code>{{filter}}</code> није пронађен нити у једној тренутно омогућеној листи филтера",
+    "message": "Статички филтер није могуће пронаћи нити у једној тренутно омогућеној листи филтера",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
@@ -826,6 +838,18 @@
   "aboutContributors": {
     "message": "Сарадници",
     "description": "English: Contributors"
+  },
+  "aboutSourceCode": {
+    "message": "Изворни код",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "Преводи",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "Листе филтера",
+    "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
     "message": "Спољне зависности (компатибилно са GPLv3):",
@@ -1002,6 +1026,22 @@
   "relaxBlockingMode": {
     "message": "Опуштени режим блокирања",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
+  "storageUsed": {
+    "message": "Искоришћеност складишта: {{value}} {{unit}}",
+    "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
+  },
+  "KB": {
+    "message": "kB",
+    "description": "short for 'kilobytes'"
+  },
+  "MB": {
+    "message": "MB",
+    "description": "short for 'megabytes'"
+  },
+  "GB": {
+    "message": "GB",
+    "description": "short for 'gigabytes'"
   },
   "dummy": {
     "message": "This entry must be the last one",

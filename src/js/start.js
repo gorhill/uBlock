@@ -96,17 +96,6 @@ const initializeTabs = async function() {
 
 /******************************************************************************/
 
-const onCommandShortcutsReady = function(commandShortcuts) {
-    if ( Array.isArray(commandShortcuts) === false ) { return; }
-    µb.commandShortcuts = new Map(commandShortcuts);
-    if ( µb.canUpdateShortcuts === false ) { return; }
-    for ( const entry of commandShortcuts ) {
-        vAPI.commands.update({ name: entry[0], shortcut: entry[1] });
-    }
-};
-
-/******************************************************************************/
-
 // To bring older versions up to date
 
 const onVersionReady = function(lastVersion) {
@@ -124,6 +113,24 @@ const onVersionReady = function(lastVersion) {
         µb.sessionSwitches.toggle('no-scripting', 'behind-the-scene', 0);
         µb.permanentSwitches.toggle('no-scripting', 'behind-the-scene', 0);
         µb.saveHostnameSwitches();
+    }
+
+    // Configure new popup panel according to classic popup panel
+    // configuration.
+    if ( lastVersionInt !== 0 ) {
+        if ( lastVersionInt <= 1026003014 ) {
+            µb.userSettings.popupPanelSections =
+                µb.userSettings.dynamicFilteringEnabled === true ? 0b11111 : 0b01111;
+            µb.userSettings.dynamicFilteringEnabled = undefined;
+            µb.saveUserSettings();
+        } else if (
+            lastVersionInt <= 1026003016 &&
+            (µb.userSettings.popupPanelSections & 1) !== 0
+        ) {
+            µb.userSettings.popupPanelSections =
+                (µb.userSettings.popupPanelSections << 1 | 1) & 0b111111;
+            µb.saveUserSettings();
+        }
     }
 
     vAPI.storage.set({ version: vAPI.app.version });
@@ -216,7 +223,6 @@ const onFirstFetchReady = function(fetched) {
     fromFetch(µb.restoreBackupSettings, fetched);
     onNetWhitelistReady(fetched.netWhitelist);
     onVersionReady(fetched.version);
-    onCommandShortcutsReady(fetched.commandShortcuts);
 };
 
 /******************************************************************************/
@@ -238,7 +244,6 @@ const fromFetch = function(to, fetched) {
 
 const createDefaultProps = function() {
     const fetchableProps = {
-        'commandShortcuts': [],
         'dynamicFilteringString': [
             'behind-the-scene * * noop',
             'behind-the-scene * image noop',
@@ -275,15 +280,11 @@ try {
     await µb.loadHiddenSettings();
     log.info(`Hidden settings ready ${Date.now()-vAPI.T0} ms after launch`);
 
-    // By default network requests are always suspended, so we must
-    // unsuspend immediately if commanded by platform + advanced settings.
-    if (
-        vAPI.net.canSuspend() &&
-            µb.hiddenSettings.suspendTabsUntilReady === 'no' ||
-        vAPI.net.canSuspend() !== true &&
-            µb.hiddenSettings.suspendTabsUntilReady !== 'yes'
-    ) {
+    // Maybe override current network listener suspend state
+    if ( µb.hiddenSettings.suspendTabsUntilReady === 'no' ) {
         vAPI.net.unsuspend(true);
+    } else if ( µb.hiddenSettings.suspendTabsUntilReady === 'yes' ) {
+        vAPI.net.suspend();
     }
 
     if ( µb.hiddenSettings.disableWebAssembly !== true ) {
@@ -345,6 +346,10 @@ if ( selfieIsValid !== true ) {
 
 // Final initialization steps after all needed assets are in memory.
 
+// https://github.com/uBlockOrigin/uBlock-issues/issues/974
+//   This can be used to defer filtering decision-making.
+µb.readyToFilter = true;
+
 // Start network observers.
 µb.webRequest.start();
 
@@ -379,14 +384,16 @@ if (
     browser.browserAction instanceof Object &&
     browser.browserAction.setPopup instanceof Function
 ) {
-    let uiFlavor = µb.hiddenSettings.uiFlavor;
-    if ( uiFlavor === 'unset' && vAPI.webextFlavor.soup.has('mobile') ) {
-        uiFlavor = 'fenix';
-    }
-    if ( uiFlavor !== 'unset' && /\w+/.test(uiFlavor) ) {
-        browser.browserAction.setPopup({
-            popup: vAPI.getURL(`popup-${uiFlavor}.html`)
-        });
+    const env = vAPI.webextFlavor;
+    if (
+        µb.hiddenSettings.uiFlavor === 'classic' || (
+            µb.hiddenSettings.uiFlavor === 'unset' && (
+                env.soup.has('chromium') && env.major < 66 ||
+                env.soup.has('firefox') && env.major < 68
+            )
+        )
+    ) {
+        browser.browserAction.setPopup({ popup: vAPI.getURL('popup.html') });
     }
 }
 

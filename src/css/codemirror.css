@@ -1,5 +1,6 @@
 .codeMirrorContainer {
     font-size: 12px;
+    line-height: 1.25;
     overflow: hidden;
     position: relative;
     }
@@ -30,17 +31,14 @@
 
 .cm-search-widget {
     align-items: center;
-    background-color: #eee;
+    background-color: var(--bg-code);
     cursor: default;
     direction: ltr;
     display: flex;
     flex-shrink: 0;
     font-size: 110%;
     justify-content: center;
-    padding: 4px 8px;
-    /* position: absolute; */
-    right: 2em;
-    top: 0;
+    padding: 0.5em;
     user-select: none;
       -moz-user-select: none;
       -webkit-user-select: none;
@@ -57,11 +55,13 @@
     border: 1px solid gray;
     border-radius: 3px;
     display: inline-flex;
-    min-width: 16em;
+    max-width: 50vw;
+    width: 16em;
     }
 .cm-search-widget-input > input {
     border: 0;
     flex-grow: 1;
+    width: 100%;
     }
 .cm-search-widget-input > .cm-search-widget-count {
     align-items: center;
@@ -95,4 +95,8 @@
 .CodeMirror-merge-l-inserted {
     background-image: none;
     font-weight: bold;
+    }
+/* This probably needs to be added to CodeMirror repo */
+.CodeMirror-merge-gap {
+    vertical-align: top;
     }

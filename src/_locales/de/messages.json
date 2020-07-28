@@ -96,11 +96,11 @@
     "description": "English: or"
   },
   "popupBlockedOnThisPage_v2": {
-    "message": "Auf dieser Seite gesperrt",
+    "message": "Auf dieser Seite blockiert",
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "Seit der Installation gesperrt",
+    "message": "Seit der Installation blockiert",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
@@ -179,25 +179,33 @@
     "message": "Klicken, um JavaScript auf dieser Seite wieder zuzulassen",
     "description": "Tooltip for the no-scripting per-site switch"
   },
+  "popupNoPopups_v2": {
+    "message": "Pop-Up Fenster",
+    "description": "Caption for the no-popups per-site switch"
+  },
   "popupNoLargeMedia_v2": {
     "message": "Große Medienelemente",
-    "description": "Tip for the no-large-media per-site switch"
+    "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
     "message": "Kosmetische Filterung",
-    "description": "Tip for the no-cosmetic-filtering per-site switch"
+    "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
     "message": "Externe Schriften",
-    "description": "Tip for the no-remote-fonts per-site switch"
+    "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
     "message": "JavaScript",
-    "description": "Tip for the no-scripting per-site switch"
+    "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
     "message": "Mehr",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "Weniger",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "Globale Regeln: Diese Spalte ist für Regeln, die bei allen Seiten angewendet werden.",
@@ -254,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{count}} von insgesamt {{total}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "Version",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "Erzeugen",
@@ -359,10 +371,6 @@
     "message": "CSP-Berichte blockieren",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "Verwendeter Speicherplatz: {{value}} Bytes",
-    "description": "English: Storage used: {{}} bytes"
-  },
   "settingsLastRestorePrompt": {
     "message": "Letzte Wiederherstellung:",
     "description": "English: Last restore:"
@@ -396,7 +404,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Diese Option ermöglicht die Analyse und Anwendung von <a href=\"https://adblockplus.org/de/faq_internal#elemhide\">Adblock-Plus-kompatiblen Filtern zum &ldquo;Verstecken von Elementen&rdquo;</a>. Diese Filter sind grundsätzlich kosmetischer Natur und dienen zum Verstecken von Elementen auf einer Webseite, die als optische Belästigung wahrgenommen werden und nicht von den vorhandenen Filtern geblockt werden können.</p><p>Das Aktivieren dieser Option erhöht den Speicherbedarf von <i>uBlock₀</i>.</p>",
+    "message": "<p>Diese Option ermöglicht die Analyse und Anwendung von <a href=\"https://adblockplus.org/de/faq_internal#elemhide\">Adblock-Plus-kompatiblen Filtern zum &ldquo;Verstecken von Elementen&rdquo;</a>. Diese Filter sind grundsätzlich kosmetischer Natur und dienen zum Ausblenden von Elementen auf einer Webseite, die als optische Belästigung wahrgenommen werden und nicht von den vorhandenen Filtern geblockt werden können.</p><p>Das Aktivieren dieser Option erhöht den Speicherbedarf von <i>uBlock₀</i>.</p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -458,6 +466,10 @@
   "3pExternalListObsolete": {
     "message": "veraltet",
     "description": "used as a tooltip for the out-of-date icon beside a list"
+  },
+  "3pViewContent": {
+    "message": "Inhalt anzeigen",
+    "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
     "message": "Letzte Aktualisierung: {{ago}}.\nAktualisierung durch Anklicken erzwingen.",
@@ -827,6 +839,18 @@
     "message": "Mitwirkende",
     "description": "English: Contributors"
   },
+  "aboutSourceCode": {
+    "message": "Quelltext",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "Übersetzungen",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "Filterlisten",
+    "description": "Link text to uBO's own filter lists repo"
+  },
   "aboutDependencies": {
     "message": "Externe Abhängigkeiten (GPLv3-kompatibel):",
     "description": "Shown in the About pane"
@@ -1002,6 +1026,22 @@
   "relaxBlockingMode": {
     "message": "Lockere Blockiermodus",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
+  "storageUsed": {
+    "message": "Genutzter Speicherplatz: {{value}} {{unit}}",
+    "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
+  },
+  "KB": {
+    "message": "KB",
+    "description": "short for 'kilobytes'"
+  },
+  "MB": {
+    "message": "MB",
+    "description": "short for 'megabytes'"
+  },
+  "GB": {
+    "message": "GB",
+    "description": "short for 'gigabytes'"
   },
   "dummy": {
     "message": "Dieser Eintrag muss der letzte sein",

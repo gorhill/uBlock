@@ -19,7 +19,7 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* global uDom */
+/* global uDom, faIconsInit */
 
 'use strict';
 
@@ -167,6 +167,8 @@ const onInitialize = function(options) {
                 document.adoptNode(fromParent.firstElementChild)
             );
         }
+
+        faIconsInit(widget);
 
         vAPI.i18n.render(widget);
         widget.classList.remove('hide');

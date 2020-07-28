@@ -1,26 +1,27 @@
 html {
     height: 100vh;
     overflow: hidden;
+    width: 100vw;
     }
 body {
     display: flex;
     flex-direction: column;
+    height: 100%;
+    justify-content: stretch;
     overflow: hidden;
+    width: 100%;
+    }
+.body {
+    flex-shrink: 0;
     }
 #diff {
     border: 0;
     border-top: 1px solid #eee;
-    flex-grow: 1;
-    margin: 0;
-    padding: 0;
     white-space: nowrap;
 }
 #diff .tools > * {
     margin-bottom: 0.5em;
     }
-#diff .tools .fa {
-    font-size: large;
-}
 #diff .ruleActions {
     border: 0;
     box-sizing: border-box;
@@ -31,8 +32,7 @@ body {
     width: 50%;
     white-space: nowrap;
     }
-#diff .ruleActions h3 {
-    font-weight: normal;
+#diff .ruleActions .fieldset-header {
     margin: 0.5em 0;
     }
 #ruleFilter {
@@ -40,41 +40,55 @@ body {
     text-align: center;
     }
 #ruleFilter .fa {
-    color: #888;
+    color: var(--fg-0-60);
     }
-     
+
 #revertButton,
 #commitButton,
-#diff.editing #exportButton,
-#diff.editing #importButton {
-    opacity: 0.25;
+body.editing #diff #exportButton,
+body.editing #diff #importButton {
+    background-color: var(--button-disabled-surface);
+    color: var(--button-disabled-ink);
+    fill: var(--button-disabled-ink);
+    filter: var(--button-disabled-filter);
     pointer-events: none;
     }
-#diff.dirty:not(.editing) #revertButton,
-#diff.dirty:not(.editing) #commitButton,
-#diff.editing {
-    opacity: 1;
+body:not(.editing) #diff.dirty #revertButton,
+body:not(.editing) #diff.dirty #commitButton {
+    background-color: var(--button-surface);
+    color: var(--button-ink);
+    fill: var(--button-ink);
+    filter: none;
     pointer-events: auto;
+    }
+body:not(.editing) #diff.dirty #revertButton:hover,
+body:not(.editing) #diff.dirty #commitButton:hover {
+    background-color: var(--button-surface-hover);
     }
 
 .codeMirrorContainer {
-    height: 60vh;
+    flex-grow: 1;
     }
 .CodeMirror-merge, .CodeMirror-merge-pane, .CodeMirror-merge .CodeMirror {
     box-sizing: border-box;
     height: 100%;
     }
-#diff.editing .CodeMirror-merge-copy,
-#diff.editing .CodeMirror-merge-copy-reverse {
+body.editing .CodeMirror-merge-copy,
+body.editing .CodeMirror-merge-copy-reverse {
     display: none;
     }
-#diff.editing .CodeMirror-merge-left .CodeMirror {
-    color: #888;
+body.editing .CodeMirror-merge-left .CodeMirror {
+    color: var(--fg-0-60);
     }
-#diff.editing .CodeMirror-merge-editor .CodeMirror {
-    background-color: #ffe;
+body.editing .CodeMirror-merge-editor .CodeMirror {
+    background-color: var(--bg-transient-notice);
     }
 body[dir="rtl"] .CodeMirror-merge-pane-rightmost {
     right: unset;
     left: 0;
 }
+
+/* mobile devices */
+:root.mobile #diff .tools {
+    overflow: auto;
+    }

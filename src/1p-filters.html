@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="lib/codemirror/lib/codemirror.css">
 <link rel="stylesheet" href="lib/codemirror/addon/search/matchesonscrollbar.css">
 
+<link rel="stylesheet" type="text/css" href="css/themes/default.css">
 <link rel="stylesheet" href="css/common.css">
 <link rel="stylesheet" href="css/fa-icons.css">
 <link rel="stylesheet" href="css/dashboard-common.css">
@@ -24,14 +25,14 @@
 
     <p class="vverbose"><span data-i18n="1pFormatHint"></span> <a class="fa info" href="https://github.com/gorhill/uBlock/wiki/Static-filter-syntax" target="_blank">&#xf05a;</a></p>
     <p>
-        <button id="userFiltersApply" class="custom important iconifiable" type="button" disabled><span class="fa">&#xf00c;</span><span data-i18n="1pApplyChanges"></span></button>
-        <button id="userFiltersRevert" class="custom iconifiable" type="button" disabled><span class="fa">&#xf0e2;</span><span data-i18n="genericRevert"></span></button>
-        &emsp;&emsp;
-        <button id="importUserFiltersFromFile" class="custom iconifiable" type="button"><span class="fa">&#xf019;</span><span data-i18n="1pImport"></span></button>
-        <button id="exportUserFiltersToFile" class="custom iconifiable" type="button"><span class="fa">&#xf093;</span><span data-i18n="1pExport"></span></button>
+        <button id="userFiltersApply" class="important iconifiable" type="button" disabled><span class="fa">&#xf00c;</span><span data-i18n="1pApplyChanges"></span></button>
+        <button id="userFiltersRevert" class="iconifiable" type="button" disabled><span class="fa">&#xf0e2;</span><span data-i18n="genericRevert"></span></button>
+        &ensp;
+        <button id="importUserFiltersFromFile" class="iconifiable" type="button"><span class="fa">&#xf019;</span><span data-i18n="1pImport"></span></button>
+        <button id="exportUserFiltersToFile" class="iconifiable" type="button"><span class="fa">&#xf093;</span><span data-i18n="1pExport"></span></button>
     </p>
 </div>
-<div id="userFilters" class="codeMirrorContainer codeMirrorFillVertical codeMirrorBreakAll" spellcheck="false"></div>
+<div id="userFilters" class="codeMirrorContainer codeMirrorBreakAll" spellcheck="false"></div>
 <div class="hidden">
     <input id="importFilePicker" type="file" accept="text/plain">
 </div>

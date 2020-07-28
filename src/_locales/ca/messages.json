@@ -179,25 +179,33 @@
     "message": "Feu clic per no inhabilitar el JavaScript en aquest lloc",
     "description": "Tooltip for the no-scripting per-site switch"
   },
+  "popupNoPopups_v2": {
+    "message": "Finestres emergents",
+    "description": "Caption for the no-popups per-site switch"
+  },
   "popupNoLargeMedia_v2": {
     "message": "Elements multimèdia grans",
-    "description": "Tip for the no-large-media per-site switch"
+    "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
     "message": "Filtres cosmètics",
-    "description": "Tip for the no-cosmetic-filtering per-site switch"
+    "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
     "message": "Fonts remotes",
-    "description": "Tip for the no-remote-fonts per-site switch"
+    "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
     "message": "JavaScript",
-    "description": "Tip for the no-scripting per-site switch"
+    "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
     "message": "Més",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "Menys",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "Regles globals: les regles d'aquesta columna s'apliquen a tots els llocs.",
@@ -254,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{count}} de {{total}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "Versió",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "Crear",
@@ -359,10 +371,6 @@
     "message": "Bloca els informes CSP",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "Emmagatzematge utilitzat: {{value}} bytes",
-    "description": "English: Storage used: {{}} bytes"
-  },
   "settingsLastRestorePrompt": {
     "message": "Darrera restauració:",
     "description": "English: Last restore:"
@@ -396,7 +404,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Aquesta opció permet l'anàlisi i l'aplicació dels <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">filtres compatibles amb l'Adblock Plus &ldquo;element hiding&rdquo;</a>. Aquests filtres són principalment cosmètics, que serveixen per amagar elements d'una pàgina web molestos que per defecte no es poden amagar.</p><p>Habilitant aquesta opció augmentarà el consum de memòria de l'uBlock₀.</p>",
+    "message": "<p>Aquesta opció permet l'anàlisi i l'aplicació dels <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">filtres compatibles amb l'Adblock Plus &ldquo;element hiding&rdquo;</a>. Aquests filtres són principalment cosmètics, que serveixen per amagar elements d'una pàgina web molestos que per defecte no es poden amagar.</p><p>Habilitant aquesta opció augmentarà el consum de memòria de l'<i>µBlock</i>.</p>",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -458,6 +466,10 @@
   "3pExternalListObsolete": {
     "message": "Obsolet",
     "description": "used as a tooltip for the out-of-date icon beside a list"
+  },
+  "3pViewContent": {
+    "message": "mostra el contingut",
+    "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
     "message": "Darrera actualització: {{ago}}",
@@ -827,6 +839,18 @@
     "message": "Col·laboradors",
     "description": "English: Contributors"
   },
+  "aboutSourceCode": {
+    "message": "Codi font",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "Traduccions",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "Llistat de filtres",
+    "description": "Link text to uBO's own filter lists repo"
+  },
   "aboutDependencies": {
     "message": "Dependències externes (compatibles amb GPLv3):",
     "description": "Shown in the About pane"
@@ -1002,6 +1026,22 @@
   "relaxBlockingMode": {
     "message": "Mode de bloqueig relaxat",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
+  "storageUsed": {
+    "message": "Emmagatzematge utilitzat: {{value}} {{unit}}",
+    "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
+  },
+  "KB": {
+    "message": "KB",
+    "description": "short for 'kilobytes'"
+  },
+  "MB": {
+    "message": "MB",
+    "description": "short for 'megabytes'"
+  },
+  "GB": {
+    "message": "GB",
+    "description": "short for 'gigabytes'"
   },
   "dummy": {
     "message": "Aquesta entrada ha de ser l'última",

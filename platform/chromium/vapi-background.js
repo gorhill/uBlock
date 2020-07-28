@@ -949,6 +949,7 @@ vAPI.messaging = {
     onFrameworkMessage: function(request, port, callback) {
         const sender = port && port.sender;
         if ( !sender ) { return; }
+        const fromDetails = this.ports.get(port.name) || {};
         const tabId = sender.tab && sender.tab.id || undefined;
         const msg = request.msg;
         switch ( msg.what ) {
@@ -993,6 +994,14 @@ vAPI.messaging = {
                 callback();
             });
             break;
+        case 'localStorage': {
+            if ( fromDetails.privileged !== true ) { break; }
+            const args = msg.args || [];
+            vAPI.localStorage[msg.fn](...args).then(result => {
+                callback(result);
+            });
+            break;
+        }
         case 'userCSS':
             if ( tabId === undefined ) { break; }
             const details = {
@@ -1478,6 +1487,78 @@ vAPI.adminStorage = (( ) => {
         }
     };
 })();
+
+/******************************************************************************/
+/******************************************************************************/
+
+// A localStorage-like object which should be accessible from the
+// background page or auxiliary pages.
+//
+// https://github.com/uBlockOrigin/uBlock-issues/issues/899
+//   Convert into asynchronous access API.
+//
+// Note: vAPI.localStorage should already be defined with the client-side
+//       implementation at this point, but we override with the
+//       background-side implementation.
+vAPI.localStorage = {
+    start: async function() {
+        if ( this.cache instanceof Promise ) { return this.cache; }
+        if ( this.cache instanceof Object ) { return this.cache; }
+        this.cache = webext.storage.local.get('localStorage').then(bin => {
+            this.cache = undefined;
+            try {
+                if (
+                    bin instanceof Object === false ||
+                    bin.localStorage instanceof Object === false
+                ) {
+                    this.cache = {};
+                    const ls = self.localStorage;
+                    for ( let i = 0; i < ls.length; i++ ) {
+                        const key = ls.key(i);
+                        this.cache[key] = ls.getItem(key);
+                    }
+                    webext.storage.local.set({ localStorage: this.cache });
+                } else {
+                    this.cache = bin.localStorage;
+                }
+            } catch(ex) {
+            }
+            if ( this.cache instanceof Object === false ) {
+                this.cache = {};
+            }
+        });
+        return this.cache;
+    },
+    clear: function() {
+        this.cache = {};
+        return webext.storage.local.set({ localStorage: this.cache });
+    },
+    getItem: function(key) {
+        if ( this.cache instanceof Object === false ) {
+            console.info(`localStorage.getItem('${key}') not ready`);
+            return null;
+        }
+        const value = this.cache[key];
+        return value !== undefined ? value : null;
+    },
+    getItemAsync: async function(key) {
+        await this.start();
+        const value = this.cache[key];
+        return value !== undefined ? value : null;
+    },
+    removeItem: async function(key) {
+        this.setItem(key);
+    },
+    setItem: async function(key, value = undefined) {
+        await this.start();
+        if ( value === this.cache[key] ) { return; }
+        this.cache[key] = value;
+        return webext.storage.local.set({ localStorage: this.cache });
+    },
+    cache: undefined,
+};
+
+vAPI.localStorage.start();
 
 /******************************************************************************/
 /******************************************************************************/
