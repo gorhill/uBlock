@@ -513,6 +513,10 @@ housekeep itself.
         }
     };
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1184
+    //   Do not consider a tab opened from `about:newtab` to be a popup
+    //   candidate.
+
     const onTabCreated = async function(createDetails) {
         const { sourceTabId, sourceFrameId, tabId } = createDetails;
         const popup = popupCandidates.get(tabId);
@@ -531,6 +535,13 @@ housekeep itself.
                 ]);
             }
             catch (reason) {
+                return;
+            }
+            if (
+                Array.isArray(openerDetails) === false ||
+                openerDetails.length !== 2 ||
+                openerDetails[1].url === 'about:newtab'
+            ) {
                 return;
             }
             popupCandidates.set(
