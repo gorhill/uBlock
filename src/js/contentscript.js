@@ -120,18 +120,17 @@ vAPI.contentScript = true;
 
 // https://github.com/uBlockOrigin/uBlock-issues/issues/688#issuecomment-663657508
 {
-    let location = self.location;
-    if ( location.protocol === 'about:' ) {
-        try {
-            let context = self;
-            do {
-                context = context.parent;
-                location = context.location;
-            } while ( context !== self.top && location.protocol === 'about:' );
-        } catch(ex) {
+    let context = self;
+    try {
+        while (
+            context !== self.top &&
+            context.location.protocol === 'about:'
+        ) {
+            context = context.parent;
         }
+    } catch(ex) {
     }
-    vAPI.pageLocation = location;
+    vAPI.effectiveSelf = context;
 }
 
 /******************************************************************************/
@@ -329,11 +328,11 @@ vAPI.SafeAnimationFrame = class {
     const ignoreTags = new Set([ 'br', 'head', 'link', 'meta', 'script', 'style' ]);
     const listeners = [];
 
-    let domIsReady = false,
-        domLayoutObserver,
-        listenerIterator = [], listenerIteratorDirty = false,
-        removedNodes = false,
-        safeObserverHandlerTimer;
+    let domLayoutObserver;
+    let listenerIterator = [];
+    let listenerIteratorDirty = false;
+    let removedNodes = false;
+    let safeObserverHandlerTimer;
 
     const safeObserverHandler = function() {
         let i = addedNodeLists.length;
@@ -393,7 +392,7 @@ vAPI.SafeAnimationFrame = class {
     };
 
     const startMutationObserver = function() {
-        if ( domLayoutObserver !== undefined || !domIsReady ) { return; }
+        if ( domLayoutObserver !== undefined ) { return; }
         domLayoutObserver = new MutationObserver(observerHandler);
         domLayoutObserver.observe(document.documentElement, {
             //attributeFilter: [ 'class', 'id' ],
@@ -423,7 +422,7 @@ vAPI.SafeAnimationFrame = class {
         if ( listeners.indexOf(listener) !== -1 ) { return; }
         listeners.push(listener);
         listenerIteratorDirty = true;
-        if ( domIsReady !== true ) { return; }
+        if ( domLayoutObserver === undefined ) { return; }
         try { listener.onDOMCreated(); }
         catch (ex) { }
         startMutationObserver();
@@ -451,7 +450,6 @@ vAPI.SafeAnimationFrame = class {
     };
 
     const start = function() {
-        domIsReady = true;
         for ( const listener of getListenerIterator() ) {
             try { listener.onDOMCreated(); }
             catch (ex) { }
@@ -1795,7 +1793,7 @@ vAPI.injectScriptlet = function(doc, text) {
     vAPI.bootstrap = function() {
         vAPI.messaging.send('contentscript', {
             what: 'retrieveContentScriptParameters',
-            url: vAPI.pageLocation.href,
+            url: vAPI.effectiveSelf.location.href,
             isRootFrame: self === self.top,
             charset: document.characterSet,
         }).then(response => {

@@ -210,7 +210,7 @@ const processTimer = new vAPI.SafeAnimationFrame(( ) => {
 
     if ( toLog.length === 0 ) { return; }
 
-    const location = vAPI.pageLocation || self.location;
+    const location = vAPI.effectiveSelf.location;
 
     vAPI.messaging.send('scriptlets', {
         what: 'logCosmeticFilteringData',
