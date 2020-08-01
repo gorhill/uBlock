@@ -314,7 +314,7 @@ body.colorBlind #vwRenderer .logEntry > div.redirect {
     background-color: rgba(0, 19, 110, 0.25);
     }
 #vwRenderer .logEntry > div[data-aliasid] {
-    color: mediumblue;
+    color: lightblue;
     }
 #vwRenderer .logEntry > div[data-type="tabLoad"] {
     background-color: #666;
