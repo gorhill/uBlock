@@ -457,7 +457,6 @@ if (
         return new Promise(resolve => {
             pendingResponses.set(id, resolve);
         });
-
     };
 
     // This tells the worker that filter lists may have changed.

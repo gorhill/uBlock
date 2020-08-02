@@ -83,8 +83,8 @@ div.CodeMirror span.CodeMirror-matchingbracket {
     border: 1px solid gray;
     border-radius: 3px;
     display: inline-flex;
-    max-width: 50vw;
-    width: 16em;
+    min-width: 14em;
+    width: 30vw;
     }
 .cm-search-widget-input > input {
     border: 0;
@@ -93,12 +93,10 @@ div.CodeMirror span.CodeMirror-matchingbracket {
     }
 .cm-search-widget-input > .cm-search-widget-count {
     align-items: center;
-    color: #888;
     display: none;
     flex-grow: 0;
     font-size: 80%;
     padding: 0 0.4em;
-    pointer-events: none;
     }
 .cm-search-widget[data-query] .cm-search-widget-count {
     display: inline-flex;
