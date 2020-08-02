@@ -157,6 +157,10 @@ if (
         }, { once: true });
     };
 
+    const needHaystack = function() {
+        return worker instanceof Object === false;
+    };
+
     const setHaystack = function(content) {
         init();
         worker.postMessage({ what: 'setHaystack', content });
@@ -183,7 +187,7 @@ if (
         });
     };
 
-    self.searchThread = { setHaystack, search, shutdown };
+    self.searchThread = { needHaystack, setHaystack, search, shutdown };
 }
 
 /******************************************************************************/

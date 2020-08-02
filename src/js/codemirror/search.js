@@ -286,7 +286,7 @@
         }
         state.overlay = searchOverlay(state.query, queryCaseInsensitive(state.query));
         cm.addOverlay(state.overlay);
-        if ( state.dirty ) {
+        if ( state.dirty || self.searchThread.needHaystack() ) {
             self.searchThread.setHaystack(cm.getValue());
             state.dirty = false;
         }
