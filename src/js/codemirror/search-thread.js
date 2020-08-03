@@ -152,9 +152,6 @@ if (
             clearTimeout(workerTTLTimer);
         }
         workerTTLTimer = vAPI.setTimeout(shutdown, workerTTL);
-        self.addEventListener('beforeunload', ( ) => {
-            destroy();
-        }, { once: true });
     };
 
     const needHaystack = function() {
@@ -186,6 +183,12 @@ if (
             pendingResponses.set(id, resolve);
         });
     };
+
+    self.addEventListener(
+        'beforeunload',
+        ( ) => { destroy(); },
+        { once: true }
+    );
 
     self.searchThread = { needHaystack, setHaystack, search, shutdown };
 }

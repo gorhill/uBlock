@@ -135,7 +135,7 @@
             }
         });
         cm.on('cursorActivity', cm => {
-            updateRank(cm);
+            updateCount(cm);
         });
     };
 
@@ -240,16 +240,6 @@
 
     const updateCount = function(cm) {
         const state = getSearchState(cm);
-        const count = state.lines.length;
-        const span = state.widget.querySelector(
-            '.cm-search-widget-count > span:nth-of-type(2)'
-        );
-        span.textContent = formatNumber(count);
-        span.title = count.toLocaleString();
-    };
-
-    const updateRank = function(cm) {
-        const state = getSearchState(cm);
         const lines = state.lines;
         const current = cm.getCursor().line;
         let l = 0;
@@ -273,10 +263,11 @@
             }
             text = text + '\xA0/\xA0';
         }
-        const span = state.widget.querySelector(
-            '.cm-search-widget-count > span:nth-of-type(1)'
-        );
+        const count = lines.length;
+        text += formatNumber(count);
+        const span = state.widget.querySelector('.cm-search-widget-count');
         span.textContent = text;
+        span.title = count.toLocaleString();
     };
 
     const startSearch = function(cm, state) {
@@ -294,7 +285,6 @@
             if ( Array.isArray(lines) === false ) { return; }
             state.lines = lines;
             const count = lines.length;
-            updateRank(cm);
             updateCount(cm);
             if ( state.annotate !== undefined ) {
                 state.annotate.clear();
@@ -330,7 +320,7 @@
         });
         state.widget.setAttribute('data-query', state.queryText);
         // Ensure the caret is visible
-        let input = state.widget.querySelector('.cm-search-widget-input > input');
+        const input = state.widget.querySelector('.cm-search-widget-input input');
         input.selectionStart = input.selectionStart;
     };
 
@@ -432,15 +422,13 @@
         const searchWidgetTemplate =
             '<div class="cm-search-widget-template" style="display:none;">' +
               '<div class="cm-search-widget">' +
-                '<span class="fa-icon fa-icon-ro">search</span>&ensp;' +
                 '<span class="cm-search-widget-input">' +
-                  '<input type="search" spellcheck="false">' +
-                  '<span class="cm-search-widget-count">' +
-                    '<span></span><span>0</span>' +
-                  '</span>' +
-                '</span>&ensp;' +
-                '<span class="cm-search-widget-up cm-search-widget-button fa-icon">angle-up</span>&nbsp;' +
-                '<span class="cm-search-widget-down cm-search-widget-button fa-icon fa-icon-vflipped">angle-up</span>' +
+                  '<span class="fa-icon fa-icon-ro">search</span>&ensp;' +
+                  '<input type="search" spellcheck="false">&emsp;' +
+                  '<span class="cm-search-widget-up cm-search-widget-button fa-icon">angle-up</span>&nbsp;' +
+                  '<span class="cm-search-widget-down cm-search-widget-button fa-icon fa-icon-vflipped">angle-up</span>&emsp;' +
+                  '<span class="cm-search-widget-count"></span>' +
+                '</span>' +
                 '<a class="fa-icon sourceURL" href>external-link</a>' +
               '</div>' +
             '</div>';
