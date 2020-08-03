@@ -83,6 +83,7 @@ div.CodeMirror span.CodeMirror-matchingbracket {
     fill: #000;
     }
 .cm-search-widget-input input {
+    border: 1px solid gray;
     display: inline-flex;
     flex-grow: 1;
     max-width: 16em;
