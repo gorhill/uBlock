@@ -574,6 +574,10 @@ vAPI.injectScriptlet = function(doc, text) {
         constructor(task) {
             this.spath = task[1];
             this.nth = /^(?:\s*[+~]|:)/.test(this.spath);
+            if ( this.nth ) { return; }
+            if ( /^\s*>/.test(this.spath) ) {
+                this.spath = `:scope ${this.spath.trim()}`;
+            }
         }
         qsa(node) {
             if ( this.nth === false ) {
