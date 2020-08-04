@@ -364,7 +364,7 @@
     "description": ""
   },
   "settingsNoScriptingPrompt": {
-    "message": "Disable JavaScript",
+    "message": "Desactivar JavaScript",
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
@@ -456,7 +456,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Import...",
+    "message": "Importar...",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -468,7 +468,7 @@
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pViewContent": {
-    "message": "view content",
+    "message": "veire contengut",
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
@@ -492,7 +492,7 @@
     "description": "English: Import and append"
   },
   "1pExport": {
-    "message": "Export",
+    "message": "Exportar",
     "description": "English: Export"
   },
   "1pExportFilename": {
@@ -520,7 +520,7 @@
     "description": "This will persist temporary rules"
   },
   "rulesEdit": {
-    "message": "Edit",
+    "message": "Modificar",
     "description": "Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave": {
@@ -948,7 +948,7 @@
     "description": "English: Go back"
   },
   "docblockedClose": {
-    "message": "Close this window",
+    "message": "Tampar aquesta fenèstra",
     "description": "English: Close this window"
   },
   "docblockedProceed": {

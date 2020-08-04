@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Vitlista",
+    "message": "Pålitliga webbplatser",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -564,7 +564,7 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "min-ublock-vitlista_{{datetime}}.txt",
+    "message": "mina-ublock-pålitliga-webbplatser_{{datetime}}.txt",
     "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {

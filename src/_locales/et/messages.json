@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Valge loend",
+    "message": "Usaldatud saidid",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -552,7 +552,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Valge nimekirja direktiivid määravad, millistel veebilehtedel peaks uBlock Origin keelatud olema. Üks domeen rea kohta. Sobimatuid direktiive vaikselt ignoreeritakse ja kommenteeritakse välja.",
+    "message": "Usaldatud saitide direktiivid määravad, millistel veebilehtedel peaks uBlock Origin keelatud olema. Üks kirje rea kohta. Sobimatuid direktiive vaikselt ignoreeritakse ja kommenteeritakse välja.",
     "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
@@ -564,7 +564,7 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "minu-ublocki-valge-loend_{{datetime}}.txt",
+    "message": "minu-ublocki-usaldatud-saidid_{{datetime}}.txt",
     "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {

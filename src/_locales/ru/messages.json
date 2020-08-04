@@ -64,7 +64,7 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "ЛКМ: отключить/включить uBlock₀ для этого сайта.\n\nCtrl+ЛКМ: отключить uBlock₀ только на этой странице.",
+    "message": "Клик: отключить/включить uBlock₀ для этого сайта.\n\nCtrl+клик: отключить uBlock₀ только на этой странице.",
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
@@ -84,7 +84,7 @@
     "description": "English: on this page"
   },
   "popupBlockedStats": {
-    "message": "{{count}} или {{percent}}%",
+    "message": "{{count}} ({{percent}}%)",
     "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
@@ -100,7 +100,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "Заблокировано за все время",
+    "message": "Заблокировано с момента установки",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
@@ -128,11 +128,11 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Кликните для блокировки всех всплывающих окон на этом сайте",
+    "message": "Нажмите, чтобы блокировать все всплывающие окна на этом сайте",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Кликните для отключения блокировки всех всплывающих окон на этом сайте",
+    "message": "Нажмите, чтобы отключить блокировку всех всплывающих окон на этом сайте",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
@@ -140,23 +140,23 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Кликните для включения блокировки больших элементов мультимедиа на этом сайте",
+    "message": "Нажмите для включения блокировки больших медиа-элементов на этом сайте",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Кликните для отключения блокировки больших элементов мультимедиа на этом сайте",
+    "message": "Нажмите для отключения блокировки больших медиа-элементов на этом сайте",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Вкл/Выкл косметические фильтры на этом сайте",
+    "message": "Вкл/Выкл косметическую фильтрацию на этом сайте",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Кликните для отключения косметических фильтров на этом сайте",
+    "message": "Нажмите, чтобы отключить косметическую фильтрацию на этом сайте",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Кликните для включения косметических фильтров на этом сайте",
+    "message": "Нажмите, чтобы включить косметическую фильтрацию на этом сайте",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -164,7 +164,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Кликните для включения блокировки удаленных шрифтов на этом сайте",
+    "message": "Нажмите для блокировки сторонних шрифтов на этом сайте",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {

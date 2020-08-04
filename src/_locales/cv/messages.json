@@ -12,7 +12,7 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Warning! You have unsaved changes",
+    "message": "Асӑрха! Санӑн упраман улшӑнусем пур",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -200,7 +200,7 @@
     "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
-    "message": "More",
+    "message": "Тата",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton_v2": {
@@ -492,7 +492,7 @@
     "description": "English: Import and append"
   },
   "1pExport": {
-    "message": "Export",
+    "message": "Куҫар",
     "description": "English: Export"
   },
   "1pExportFilename": {
@@ -696,7 +696,7 @@
     "description": "Label to identify the type of an entry"
   },
   "loggerEntryDetailsURL": {
-    "message": "URL",
+    "message": "Тӗл",
     "description": "Label to identify the URL of an entry"
   },
   "loggerURLFilteringHeader": {

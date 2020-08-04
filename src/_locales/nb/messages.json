@@ -112,11 +112,11 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Gå til element&shy;fjernings&shy;modus",
+    "message": "Gå til element­fjernings­modus",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Gå til element&shy;velger&shy;modus",
+    "message": "Gå til element­velger­modus",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
@@ -184,7 +184,7 @@
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
-    "message": "Store media&shy;elementer",
+    "message": "Store media­elementer",
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {

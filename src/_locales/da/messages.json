@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Whitelist",
+    "message": "Betroede websteder",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -552,7 +552,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Brugerdefineret liste over værtsnavne hvor uBlock₀ vil være deaktiveret. Kun et værtsnavn pr. linje. Ugyldige værtsnavne ignoreres.",
+    "message": "De betroede webstedsdirektiver dikterer, på hvilke websider uBlock Origin skal deaktiveres. Én post pr. linje. Ugyldige direktiver ignoreres og kommenteres ud.",
     "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
@@ -564,7 +564,7 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "min-ublock-whitelist_{{datetime}}.txt",
+    "message": "mine-ublock-betroede-websteder_{{datetime}}.txt",
     "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
