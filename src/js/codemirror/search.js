@@ -345,7 +345,11 @@
                 if (!cursor.find(previous)) return;
             }
             cm.setSelection(cursor.from(), cursor.to());
-            cm.scrollIntoView({from: cursor.from(), to: cursor.to()}, 20);
+            const { clientHeight } = cm.getScrollInfo();
+            cm.scrollIntoView(
+                { from: cursor.from(), to: cursor.to() },
+                clientHeight >>> 1
+            );
             if (callback) callback(cursor.from(), cursor.to());
         });
     };
