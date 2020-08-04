@@ -1177,7 +1177,7 @@ Parser.prototype.SelectorCompiler = class {
         ]);
         this.reSimpleSelector = /^[#.][A-Za-z_][\w-]*$/;
         this.div = document.createElement('div');
-        this.rePseudoClass = /:(?::?after|:?before|:[a-z][a-z-]*[a-z])$/;
+        this.rePseudoClass = /:(?::?after|:?before|:-?[a-z][a-z-]*[a-z])$/;
         this.reProceduralOperator = new RegExp([
             '^(?:',
                 Array.from(parser.proceduralOperatorTokens.keys()).join('|'),
