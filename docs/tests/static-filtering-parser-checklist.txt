@@ -32,6 +32,13 @@ a*
 :: AB
 :: ab # comment
 
+! valid hosts file entries
+0.0.0.0 0.0.0.0.example.com
+0.0.0.0 local-host.example.com
+0.0.0.0 local.com
+0.0.0.0 localhost.com
+0.0.0.0 localhost.example.com
+
 ! valid options
 $script,redirect=noop.js
 *$empty
@@ -67,6 +74,13 @@ $
 :: ab/ # comment
 ::/ ab
 :: ab$
+
+! ignored hosts file entries
+0.0.0.0 0.0.0.0
+0.0.0.0 local-host
+0.0.0.0 local
+0.0.0.0 localhost
+0.0.0.0 localhost
 
 ! bad regex
 /(abc|def/$xhr
