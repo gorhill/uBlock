@@ -113,9 +113,9 @@ body.off #switch .fa-icon {
     margin-left: 0;
     }
 .tool {
-    color: var(--fg-0-40);
+    color: #999;
     cursor: pointer;
-    fill: var(--fg-0-40);
+    fill: #999;
     margin-left: 0.8em;
     min-width: 1em;
     padding: 0 0.2em;
@@ -133,7 +133,7 @@ body.off #switch .fa-icon {
     font-size: 1.25em;
     }
 .statName {
-    color: var(--fg-0-70);
+    color: #999;
     font-size: 85%;
     margin: 0.8em 0.2em 0.4em 0.2em;
     }

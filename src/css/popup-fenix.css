@@ -54,7 +54,7 @@ hr {
     }
 
 #sticky {
-    background-color: var(--default-surface);
+    /* background-color: var(--default-surface); */
     position: sticky;
     top: 0;
     z-index: 100;
@@ -201,7 +201,9 @@ body.needSave #revertRules {
 body.mobile.no-tooltips .toolRibbon .tool {
     font-size: 1.6em;
     }
-
+#basicTools .fa-icon, .fa-icon-badged {
+  filter:invert(0.8);
+}
 #extraTools .fa-icon {
     align-self: center;
     position: relative;
