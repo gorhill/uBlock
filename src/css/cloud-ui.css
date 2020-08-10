@@ -9,20 +9,19 @@
 #cloudWidget.hide {
     display: none;
     }
-#cloudWidget > button {
+#cloudToolbar > button {
     font-size: 180%;
     padding: 0 0.25em;
     position: relative;
     }
-#cloudWidget {
-    align-items: center;
+#cloudToolbar {
     display: flex;
     flex-wrap: nowrap;
     }
-#cloudWidget button[disabled] {
+#cloudToolbar button[disabled] {
     visibility: hidden;
     }
-#cloudWidget button.error {
+#cloudToolbar button.error {
     color: var(--fg-icon-info-lvl-4);
     }
 #cloudPullAndMerge {
@@ -47,21 +46,26 @@
     color: var(--fg-icon-info-lvl-4);
     flex-grow: 1;
     flex-shrink: 2;
-    font-size: x-small;
-    margin: 0 1em;
+    font-size: small;
+    margin: 0.5em 0.5em 0 0;
     }
-#cloudWidget #cloudCog {
+#cloudError:empty {
+    display: none;
+    }
+#cloudToolbar #cloudCog {
     color: var(--fg-0-50);
     cursor: pointer;
     fill: var(--fg-0-50);
+    flex-grow: 1;
     font-size: 110%;
+    justify-content: flex-end;
     padding: 0.4em;
     }
-#cloudWidget #cloudCog:hover {
+#cloudToolbar #cloudCog:hover {
     color: inherit;
     fill: inherit;
     }
-#cloudWidget #cloudOptions {
+#cloudToolbar #cloudOptions {
     background-color: var(--default-surface);
     border: 1px solid var(--bg-1-border);
     bottom: 0;
@@ -74,6 +78,6 @@
     top: 0;
     z-index: 10;
     }
-#cloudWidget #cloudOptions.show {
+#cloudToolbar #cloudOptions.show {
     display: block;
     }

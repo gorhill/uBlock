@@ -52,7 +52,7 @@ const fetchCloudData = async function() {
         what: 'cloudPull',
         datakey: self.cloud.datakey,
     });
-    if ( entry instanceof Object === false ) { return; }
+    if ( entry instanceof Object === false ) { return entry; }
 
     self.cloud.data = entry.data;
 
@@ -92,20 +92,23 @@ const pushData = async function() {
             .toggle('error', failed);
     document.querySelector('#cloudError')
             .textContent = failed ? error : '';
+    if ( failed ) { return; }
     fetchCloudData();
 };
 
 /******************************************************************************/
 
-var pullData = function() {
+const pullData = function() {
     if ( typeof self.cloud.onPull === 'function' ) {
         self.cloud.onPull(self.cloud.data, false);
     }
+    document.getElementById('cloudPush').classList.remove('error');
+    document.querySelector('#cloudError').textContent = '';
 };
 
 /******************************************************************************/
 
-var pullAndMergeData = function() {
+const pullAndMergeData = function() {
     if ( typeof self.cloud.onPull === 'function' ) {
         self.cloud.onPull(self.cloud.data, true);
     }
@@ -113,8 +116,8 @@ var pullAndMergeData = function() {
 
 /******************************************************************************/
 
-var openOptions = function() {
-    var input = uDom.nodeFromId('cloudDeviceName');
+const openOptions = function() {
+    const input = uDom.nodeFromId('cloudDeviceName');
     input.value = self.cloud.options.deviceName;
     input.setAttribute('placeholder', self.cloud.options.defaultDeviceName);
     uDom.nodeFromId('cloudOptions').classList.add('show');
@@ -122,11 +125,9 @@ var openOptions = function() {
 
 /******************************************************************************/
 
-var closeOptions = function(ev) {
-    var root = uDom.nodeFromId('cloudOptions');
-    if ( ev.target !== root ) {
-        return;
-    }
+const closeOptions = function(ev) {
+    const root = uDom.nodeFromId('cloudOptions');
+    if ( ev.target !== root ) { return; }
     root.classList.remove('show');
 };
 
@@ -180,9 +181,11 @@ const onInitialize = function(options) {
         uDom('#cloudOptions').on('click', closeOptions);
         uDom('#cloudOptionsSubmit').on('click', ( ) => { submitOptions(); });
         
-        // Patch 2018-01-05: Must not assume this XHR will always be faster
-        // than messaging
-        fetchCloudData();
+        fetchCloudData().then(result => {
+            if ( typeof result !== 'string' ) { return; }
+            document.getElementById('cloudPush').classList.add('error');
+            document.querySelector('#cloudError').textContent = result;
+        });
     };
     xhr.send();
 };
