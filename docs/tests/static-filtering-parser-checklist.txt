@@ -80,7 +80,6 @@ $
 0.0.0.0 local-host
 0.0.0.0 local
 0.0.0.0 localhost
-0.0.0.0 localhost
 
 ! bad regex
 /(abc|def/$xhr
