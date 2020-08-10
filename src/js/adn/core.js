@@ -1053,8 +1053,11 @@
     let c;
     const lists = {};
     const writer = new µb.CompiledLineIO.Writer();
+    const parser = new vAPI.StaticFilteringParser();
+    parser.setMaxTokenLength(µb.urlTokenizer.MAX_TOKEN_LENGTH);
+    parser.analyze(filter.raw);
 
-    if ( µb.staticNetFilteringEngine.compile(filter.raw, writer) === false ) {
+    if ( µb.staticNetFilteringEngine.compile(parser, writer) === false ) {
         return;
     }
     const compiledFilter = writer.last();
@@ -1653,9 +1656,8 @@
       dbug && console.log(i + ') '+name, headers[i].value);
 
       if (name === 'set-cookie' || name === 'set-cookie2') {
+        const cval = headers[i].value.trim();
         const domain = cookieAttr(cval, 'domain');
-
-          const cval = headers[i].value.trim();
 
         if (1) { // don't block incoming cookies for 3rd party-requests coming from DNT-pages? [needs checking]
 
