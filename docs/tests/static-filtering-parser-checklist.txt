@@ -1,0 +1,94 @@
+! Title: Static Filtering Parser Checklist
+! Homepage: https://github.com/gorhill/uBlock
+! Licence: https://github.com/gorhill/uBlock/blob/master/LICENSE.txt
+!
+! Description:
+! To verify that the static filtering parser is properly parsing valid and
+! invalid cases, by typically adding the list to uBO, disabling the list,
+! and viewing it in uBO's asset viewer.
+!
+! Feel free to add more entries to more throughly validate the static
+! filtering parser, submit the changes in your fork of uBO by opening an
+! issue at https://github.com/uBlockOrigin/uBlock-issues/issues
+
+
+
+
+!-----------------------
+! Parsing should succeed
+!-----------------------
+
+! valid patterns
+a*
+*$xhr
+|*$xhr
+|$xhr
+||*$xhr
+||$xhr
+||*|$xhr
+
+! valid hosts file entries
+:: ab
+:: AB
+:: ab # comment
+
+! valid options
+$script,redirect=noop.js
+*$empty
+*$xhr,empty
+*$redirect=empty
+*$xhr,redirect=empty
+
+*$csp=default-src 'none'
+
+*$all,~document
+*$all,~popup
+*$all,~inline-script
+*$all,~inline-font
+
+
+!--------------------
+! Parsing should fail
+!--------------------
+
+! bad patterns
+a
+|
+||
+$
+*
+|*
+||*
+||*|
+
+! bad hosts file entries
+:: a
+:: ab/
+:: ab/ # comment
+::/ ab
+:: ab$
+
+! bad regex
+/(abc|def/$xhr
+
+! can't redirect without type (except to `empty`)
+*$redirect=noop.js
+
+! can't redirect beacon, ping, websocket
+*$beacon,redirect-rule=empty
+*$ping,redirect-rule=empty
+*$websocket,redirect-rule=empty
+
+! can't mix csp with other types or redirect directives
+*$csp=default-src 'none',empty
+*$csp=default-src 'none',redirect=empty
+*$redirect=empty,csp=default-src 'none'
+*$csp=default-src 'none',xhr
+*$csp=default-src 'none',ghide
+*$csp=default-src 'none',csp=script-src 'none'
+
+! https://github.com/gorhill/uBlock/issues/2385#issuecomment-494078763
+*$~document
+*$~popup
+*$~inline-script
+*$~inline-font

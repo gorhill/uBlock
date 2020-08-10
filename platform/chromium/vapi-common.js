@@ -75,8 +75,7 @@ vAPI.webextFlavor = {
             dispatch();
         });
         if ( browser.runtime.getURL('').startsWith('moz-extension://') ) {
-            soup.add('mozilla')
-                .add('firefox')
+            soup.add('firefox')
                 .add('user_stylesheet')
                 .add('html_filtering');
             flavor.major = 60;
@@ -85,29 +84,14 @@ vAPI.webextFlavor = {
     }
 
     // Synchronous -- order of tests is important
-    let match;
-    if ( (match = /\bEdge\/(\d+)/.exec(ua)) !== null ) {
-        flavor.major = parseInt(match[1], 10) || 0;
-        soup.add('microsoft').add('edge');
-    } else if ( (match = /\bOPR\/(\d+)/.exec(ua)) !== null ) {
-        const reEx = /\bChrom(?:e|ium)\/([\d.]+)/;
-        if ( reEx.test(ua) ) { match = reEx.exec(ua); }
-        flavor.major = parseInt(match[1], 10) || 0;
-        soup.add('opera').add('chromium');
-    } else if ( (match = /\bChromium\/(\d+)/.exec(ua)) !== null ) {
-        flavor.major = parseInt(match[1], 10) || 0;
+    const match = /\bChrom(?:e|ium)\/([\d.]+)/.exec(ua);
+    if ( match !== null ) {
         soup.add('chromium');
-    } else if ( (match = /\bChrome\/(\d+)/.exec(ua)) !== null ) {
         flavor.major = parseInt(match[1], 10) || 0;
-        soup.add('google').add('chromium');
-    } else if ( (match = /\bSafari\/(\d+)/.exec(ua)) !== null ) {
-        flavor.major = parseInt(match[1], 10) || 0;
-        soup.add('apple').add('safari');
-    }
-
-    // https://github.com/gorhill/uBlock/issues/3588
-    if ( soup.has('chromium') && flavor.major >= 66 ) {
-        soup.add('user_stylesheet');
+        // https://github.com/gorhill/uBlock/issues/3588
+        if ( flavor.major >= 66 ) {
+            soup.add('user_stylesheet');
+        }
     }
 
     // Don't starve potential listeners

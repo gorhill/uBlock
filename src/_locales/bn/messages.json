@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "সাদাতালিকা",
+    "message": "পরিচ্ছন্ন তালিকা",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -553,7 +553,7 @@
   },
   "whitelistPrompt": {
     "message": "আপনার হোস্টের তালিকা যাদের জন্য uBlock₀ নিষ্ক্রিয় করা হবে। লাইন প্রতি একটি ভুক্তি। অবৈধ হোস্ট নাম নিশব্দে উপেক্ষা করা হবে।",
-    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+    "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
     "message": "আমদানি ও পরিশেষে যোগ করুন",
@@ -565,7 +565,7 @@
   },
   "whitelistExportFilename": {
     "message": "amar-ublock-whitelist_{{datetime}}.txt",
-    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+    "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
     "message": "পরিবর্তনগুলি প্রয়োগ",

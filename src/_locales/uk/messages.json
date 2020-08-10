@@ -553,7 +553,7 @@
   },
   "whitelistPrompt": {
     "message": "Ваш список адрес сайтів, для яких µBlock буде неактивним. Додайте по одному запису на рядок. Невірні адреси будуть проігноровані без попереджень та закоментовані.",
-    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+    "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
     "message": "Імпортувати та додати",
@@ -564,8 +564,8 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "ublock-whitelist_{{datetime}}.txt",
-    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+    "message": "my-ublock-whitelist_{{datetime}}.txt",
+    "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
     "message": "Застосувати зміни",

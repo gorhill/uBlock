@@ -3,10 +3,10 @@
   "uBlock0@raymondhill.net": {
    "updates": [
     {
-     "version": "1.27.11.109",
+     "version": "1.28.5.101",
      "browser_specific_settings": { "gecko": { "strict_min_version": "55" } },
-     "update_info_url": "https://github.com/gorhill/uBlock/releases/tag/1.27.11rc9",
-     "update_link": "https://github.com/gorhill/uBlock/releases/download/1.27.11rc9/uBlock0_1.27.11rc9.firefox.signed.xpi"
+     "update_info_url": "https://github.com/gorhill/uBlock/releases/tag/1.28.5rc1",
+     "update_link": "https://github.com/gorhill/uBlock/releases/download/1.28.5rc1/uBlock0_1.28.5rc1.firefox.signed.xpi"
     }
    ]
   }

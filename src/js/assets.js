@@ -248,6 +248,7 @@ api.fetchFilterList = async function(mainlistURL) {
 
     const sublistURLs = new Set();
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1113
     const processIncludeDirectives = function(results) {
         const out = [];
         const reInclude = /^!#include +(\S+)/gm;
@@ -258,28 +259,36 @@ api.fetchFilterList = async function(mainlistURL) {
             }
             if ( result instanceof Object === false ) { continue; }
             const content = result.content;
-            let lastIndex = 0;
-            for (;;) {
-                if ( rootDirectoryURL === undefined ) { break; }
-                const match = reInclude.exec(content);
-                if ( match === null ) { break; }
-                if ( toParsedURL(match[1]) !== undefined ) { continue; }
-                if ( match[1].indexOf('..') !== -1 ) { continue; }
-                // Compute nested list path relative to parent list path
-                const pos = result.url.lastIndexOf('/');
-                if ( pos === -1 ) { continue; }
-                const subURL = result.url.slice(0, pos + 1) + match[1];
-                if ( sublistURLs.has(subURL) ) { continue; }
-                sublistURLs.add(subURL);
-                out.push(
-                    content.slice(lastIndex, match.index),
-                    `! >>>>>>>> ${subURL}`,
-                    api.fetchText(subURL),
-                    `! <<<<<<<< ${subURL}`
-                );
-                lastIndex = reInclude.lastIndex;
+            const slices = µBlock.preparseDirectives.split(content);
+            for ( let i = 0, n = slices.length - 1; i < n; i++ ) {
+                const slice = content.slice(slices[i+0], slices[i+1]);
+                if ( (i & 1) !== 0 ) {
+                    out.push(slice);
+                    continue;
+                }
+                let lastIndex = 0;
+                for (;;) {
+                    if ( rootDirectoryURL === undefined ) { break; }
+                    const match = reInclude.exec(slice);
+                    if ( match === null ) { break; }
+                    if ( toParsedURL(match[1]) !== undefined ) { continue; }
+                    if ( match[1].indexOf('..') !== -1 ) { continue; }
+                    // Compute nested list path relative to parent list path
+                    const pos = result.url.lastIndexOf('/');
+                    if ( pos === -1 ) { continue; }
+                    const subURL = result.url.slice(0, pos + 1) + match[1];
+                    if ( sublistURLs.has(subURL) ) { continue; }
+                    sublistURLs.add(subURL);
+                    out.push(
+                        slice.slice(lastIndex, match.index + match[0].length),
+                        `! >>>>>>>> ${subURL}`,
+                        api.fetchText(subURL),
+                        `! <<<<<<<< ${subURL}`
+                    );
+                    lastIndex = reInclude.lastIndex;
+                }
+                out.push(lastIndex === 0 ? slice : slice.slice(lastIndex));
             }
-            out.push(lastIndex === 0 ? content : content.slice(lastIndex));
         }
         return out;
     };
@@ -883,7 +892,7 @@ const updateNext = async function() {
     ]);
 
     const now = Date.now();
-    let assetKeyToUpdate;
+    const toUpdate = [];
     for ( const assetKey in assetDict ) {
         const assetEntry = assetDict[assetKey];
         if ( assetEntry.hasRemoteURL !== true ) { continue; }
@@ -901,23 +910,30 @@ const updateNext = async function() {
                 type: assetEntry.content
             }) === true
         ) {
-            assetKeyToUpdate = assetKey;
-            break;
+            toUpdate.push(assetKey);
+            continue;
         }
         // This will remove a cached asset when it's no longer in use.
         if ( cacheEntry && cacheEntry.readTime < assetCacheRegistryStartTime ) {
             assetCacheRemove(assetKey);
         }
     }
-    if ( assetKeyToUpdate === undefined ) {
+    if ( toUpdate.length === 0 ) {
         return updateDone();
     }
-    updaterFetched.add(assetKeyToUpdate);
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1165
+    //   Update most obsolete asset first.
+    toUpdate.sort((a, b) => {
+        const ta = cacheDict[a] !== undefined ? cacheDict[a].writeTime : 0;
+        const tb = cacheDict[b] !== undefined ? cacheDict[b].writeTime : 0;
+        return ta - tb;
+    });
+    updaterFetched.add(toUpdate[0]);
 
     // In auto-update context, be gentle on remote servers.
     remoteServerFriendly = updaterAuto;
 
-    const result = await getRemote(assetKeyToUpdate);
+    const result = await getRemote(toUpdate[0]);
 
     remoteServerFriendly = false;
 

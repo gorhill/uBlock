@@ -163,6 +163,7 @@ const FrameStore = class {
     }
 
     init(frameURL) {
+        this.t0 = Date.now();
         this.exceptCname = undefined;
         this.rawURL = frameURL;
         if ( frameURL !== undefined ) {
@@ -250,6 +251,7 @@ const PageStore = class {
         this.internalRedirectionCount = 0;
         this.extraData.clear();
 
+        this.frameAddCount = 0;
         this.frames = new Map();
         this.setFrame(0, tabContext.rawURL);
 
@@ -359,8 +361,39 @@ const PageStore = class {
         const frameStore = this.frames.get(frameId);
         if ( frameStore !== undefined ) {
             frameStore.init(frameURL);
-        } else {
-            this.frames.set(frameId, FrameStore.factory(frameURL));
+            return;
+        }
+        this.frames.set(frameId, FrameStore.factory(frameURL));
+        this.frameAddCount += 1;
+        if ( (this.frameAddCount & 0b111111) !== 0 ) { return; }
+        this.pruneFrames();
+    }
+
+    // There is no event to tell us a specific subframe has been removed from
+    // the main document. The code below will remove subframes which are no
+    // longer present in the root document. Removing obsolete subframes is
+    // not a critical task, so this is executed just once on a while, to avoid
+    // bloated dictionary of subframes.
+    // A TTL is used to avoid race conditions when new iframes are added
+    // through the webRequest API but still not yet visible through the
+    // webNavigation API.
+    async pruneFrames() {
+        let entries;
+        try {
+            entries = await webext.webNavigation.getAllFrames({
+                tabId: this.tabId
+            });
+        } catch(ex) {
+        }
+        if ( Array.isArray(entries) === false ) { return; }
+        const toKeep = new Set();
+        for ( const { frameId } of entries ) {
+            toKeep.add(frameId);
+        }
+        const obsolete = Date.now() - 60000;
+        for ( const [ frameId, { t0 } ] of this.frames ) {
+            if ( toKeep.has(frameId) || t0 >= obsolete ) { continue; }
+            this.frames.delete(frameId);
         }
     }
 

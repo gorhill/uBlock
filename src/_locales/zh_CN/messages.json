@@ -552,8 +552,8 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "白名单中的规则适用的页面不会被 uBlock₀ 过滤或阻挡。每行一条规则。无效的规则将被忽略。",
-    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+    "message": "您的列表中针对 µBlock 的主机名将被禁用。每行一条规则。无效的主机名将直接被忽略。",
+    "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
     "message": "导入并添加",
@@ -564,8 +564,8 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "my-ublock-whitelist_{{datetime}}.txt",
-    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+    "message": "my-ublock-trusted-sites_{{datetime}}.txt",
+    "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
     "message": "应用更改",

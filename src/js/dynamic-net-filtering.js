@@ -549,10 +549,10 @@ Matrix.prototype.fromSelfie = function(selfie) {
 Matrix.prototype.benchmark = async function() {
     const requests = await µBlock.loadBenchmarkDataset();
     if ( Array.isArray(requests) === false || requests.length === 0 ) {
-        console.info('No requests found to benchmark');
+        log.print('No requests found to benchmark');
         return;
     }
-    console.info(`Benchmarking sessionFirewall.evaluateCellZY()...`);
+    log.print(`Benchmarking sessionFirewall.evaluateCellZY()...`);
     const fctxt = µBlock.filteringContext.duplicate();
     const t0 = self.performance.now();
     for ( const request of requests ) {
@@ -567,8 +567,8 @@ Matrix.prototype.benchmark = async function() {
     }
     const t1 = self.performance.now();
     const dur = t1 - t0;
-    console.info(`Evaluated ${requests.length} requests in ${dur.toFixed(0)} ms`);
-    console.info(`\tAverage: ${(dur / requests.length).toFixed(3)} ms per request`);
+    log.print(`Evaluated ${requests.length} requests in ${dur.toFixed(0)} ms`);
+    log.print(`\tAverage: ${(dur / requests.length).toFixed(3)} ms per request`);
 };
 
 /******************************************************************************/

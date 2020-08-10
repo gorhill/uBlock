@@ -34,7 +34,7 @@ Without the preset lists of filters, this extension is nothing. So if ever you r
 
 ***
 
-Free.
+Ազատ։
 Open source with public license (GPLv3)
 For users by users.
 

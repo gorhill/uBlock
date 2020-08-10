@@ -216,7 +216,7 @@
         self.EventTarget.prototype.addEventListener,
         {
             apply: function(target, thisArg, args) {
-                const type = args[0].toString();
+                const type = String(args[0]);
                 const handler = String(args[1]);
                 if (
                     needle1.test(type) === false ||
@@ -238,7 +238,7 @@
         self.EventTarget.prototype.addEventListener,
         {
             apply: function(target, thisArg, args) {
-                const type = args[0].toString();
+                const type = String(args[0]);
                 const handler = String(args[1]);
                 log('uBO: addEventListener("%s", %s)', type, handler);
                 return target.apply(thisArg, args);
@@ -588,8 +588,9 @@
 /// set-constant.js
 /// alias set.js
 (function() {
-    const thisScript = document.currentScript;
+    const chain = '{{1}}';
     let cValue = '{{2}}';
+    const thisScript = document.currentScript;
     if ( cValue === 'undefined' ) {
         cValue = undefined;
     } else if ( cValue === 'false' ) {
@@ -622,53 +623,83 @@
             (typeof v !== typeof cValue);
         return aborted;
     };
-    const makeProxy = function(owner, chain) {
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/156
+    //   Support multiple trappers for the same property.
+    const trapProp = function(owner, prop, handler) {
+        if ( handler.init(owner[prop]) === false ) { return; }
+        const odesc = Object.getOwnPropertyDescriptor(owner, prop);
+        let prevGetter, prevSetter;
+        if ( odesc instanceof Object ) {
+            if ( odesc.get instanceof Function ) {
+                prevGetter = odesc.get;
+            }
+            if ( odesc.set instanceof Function ) {
+                prevSetter = odesc.set;
+            }
+        }
+        Object.defineProperty(owner, prop, {
+            configurable: true,
+            get() {
+                if ( prevGetter !== undefined ) {
+                    prevGetter();
+                }
+                return handler.getter();
+            },
+            set(a) {
+                if ( prevSetter !== undefined ) {
+                    prevSetter(a);
+                }
+                handler.setter(a);
+            }
+        });
+    };
+    const trapChain = function(owner, chain) {
         const pos = chain.indexOf('.');
         if ( pos === -1 ) {
-            const original = owner[chain];
-            if ( mustAbort(original) ) { return; }
-            const desc = Object.getOwnPropertyDescriptor(owner, chain);
-            if ( desc === undefined || desc.get === undefined ) {
-                Object.defineProperty(owner, chain, {
-                    get: function() {
-                        return document.currentScript === thisScript
-                            ? original
-                            : cValue;
-                    },
-                    set: function(a) {
-                        if ( mustAbort(a) ) {
-                            cValue = a;
-                        }
-                    }
-                });
-            }
+            trapProp(owner, chain, {
+                v: undefined,
+                init: function(v) {
+                    if ( mustAbort(v) ) { return false; }
+                    this.v = v;
+                    return true;
+                },
+                getter: function() {
+                    return document.currentScript === thisScript
+                        ? this.v
+                        : cValue;
+                },
+                setter: function(a) {
+                    if ( mustAbort(a) === false ) { return; }
+                    cValue = a;
+                }
+            });
             return;
         }
         const prop = chain.slice(0, pos);
-        let v = owner[prop];
+        const v = owner[prop];
         chain = chain.slice(pos + 1);
-        if (
-            (v instanceof Object) ||
-            (typeof v === 'object' && v !== null)
-        ) {
-            makeProxy(v, chain);
+        if ( v instanceof Object || typeof v === 'object' && v !== null ) {
+            trapChain(v, chain);
             return;
         }
-        const desc = Object.getOwnPropertyDescriptor(owner, prop);
-        if ( desc && desc.set !== undefined ) { return; }
-        Object.defineProperty(owner, prop, {
-            get: function() {
-                return v;
+        trapProp(owner, prop, {
+            v: undefined,
+            init: function(v) {
+                this.v = v;
+                return true;
             },
-            set: function(a) {
-                v = a;
+            getter: function() {
+                return this.v;
+            },
+            setter: function(a) {
+                this.v = a;
                 if ( a instanceof Object ) {
-                    makeProxy(a, chain);
+                    trapChain(a, chain);
                 }
             }
         });
     };
-    makeProxy(window, '{{1}}');
+    trapChain(window, chain);
 })();
 
 
@@ -705,9 +736,13 @@
     const needleNot = needle.charAt(0) === '!';
     if ( needleNot ) { needle = needle.slice(1); }
     let delay = '{{2}}';
-    const delayNot = delay.charAt(0) === '!';
-    if ( delayNot ) { delay = delay.slice(1); }
-    delay = parseInt(delay, 10);
+    if ( delay === '{{2}}' ) { delay = undefined; }
+    let delayNot = false;
+    if ( delay !== undefined ) {
+        delayNot = delay.charAt(0) === '!';
+        if ( delayNot ) { delay = delay.slice(1); }
+        delay = parseInt(delay, 10);
+    }
     if ( needle === '' || needle === '{{1}}' ) {
         needle = '';
     } else if ( needle.startsWith('/') && needle.endsWith('/') ) {
@@ -715,8 +750,7 @@
     } else {
         needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
-    const log = needleNot === false && needle === '' &&
-                delayNot === false && isNaN(delay)
+    const log = needleNot === false && needle === '' && delay === undefined
         ? console.log
         : undefined;
     const reNeedle = new RegExp(needle);
@@ -724,18 +758,19 @@
         apply: function(target, thisArg, args) {
             const a = String(args[0]);
             const b = args[1];
-            let defuse = false;
             if ( log !== undefined ) {
                 log('uBO: setInterval("%s", %s)', a, b);
-            } else if ( isNaN(delay) ) {
-                defuse = reNeedle.test(a) !== needleNot;
-            } else if ( needle === '' ) {
-                defuse = (b === delay) !== delayNot;
             } else {
-                defuse = reNeedle.test(a) !== needleNot && (b === delay) !== delayNot;
-            }
-            if ( defuse ) {
-                args[0] = function(){};
+                let defuse;
+                if ( needle !== '' ) {
+                    defuse = reNeedle.test(a) !== needleNot;
+                }
+                if ( defuse !== false && delay !== undefined ) {
+                    defuse = (b === delay || isNaN(b) && isNaN(delay) ) !== delayNot;
+                }
+                if ( defuse ) {
+                    args[0] = function(){};
+                }
             }
             return target.apply(thisArg, args);
         }
@@ -776,9 +811,13 @@
     const needleNot = needle.charAt(0) === '!';
     if ( needleNot ) { needle = needle.slice(1); }
     let delay = '{{2}}';
-    const delayNot = delay.charAt(0) === '!';
-    if ( delayNot ) { delay = delay.slice(1); }
-    delay = parseInt(delay, 10);
+    if ( delay === '{{2}}' ) { delay = undefined; }
+    let delayNot = false;
+    if ( delay !== undefined ) {
+        delayNot = delay.charAt(0) === '!';
+        if ( delayNot ) { delay = delay.slice(1); }
+        delay = parseInt(delay, 10);
+    }
     if ( needle === '' || needle === '{{1}}' ) {
         needle = '';
     } else if ( needle.startsWith('/') && needle.endsWith('/') ) {
@@ -786,8 +825,7 @@
     } else {
         needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
-    const log = needleNot === false && needle === '' &&
-                delayNot === false && isNaN(delay)
+    const log = needleNot === false && needle === '' && delay === undefined
         ? console.log
         : undefined;
     const reNeedle = new RegExp(needle);
@@ -795,18 +833,19 @@
         apply: function(target, thisArg, args) {
             const a = String(args[0]);
             const b = args[1];
-            let defuse = false;
             if ( log !== undefined ) {
                 log('uBO: setTimeout("%s", %s)', a, b);
-            } else if ( isNaN(delay) ) {
-                defuse = reNeedle.test(a) !== needleNot;
-            } else if ( needle === '' ) {
-                defuse = (b === delay) !== delayNot;
             } else {
-                defuse = reNeedle.test(a) !== needleNot && (b === delay) !== delayNot;
-            }
-            if ( defuse ) {
-                args[0] = function(){};
+                let defuse;
+                if ( needle !== '' ) {
+                    defuse = reNeedle.test(a) !== needleNot;
+                }
+                if ( defuse !== false && delay !== undefined ) {
+                    defuse = (b === delay || isNaN(b) && isNaN(delay) ) !== delayNot;
+                }
+                if ( defuse ) {
+                    args[0] = function(){};
+                }
             }
             return target.apply(thisArg, args);
         }
