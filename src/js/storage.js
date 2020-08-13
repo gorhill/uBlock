@@ -952,7 +952,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         [ 'cap_user_stylesheet', 'user_stylesheet' ],
         [ 'false', 'false' ],
         // Hoping ABP-only list maintainers can at least make use of it to
-        // help non-ABP content blockers better deal with filter benefiting
+        // help non-ABP content blockers better deal with filters benefiting
         // only ABP.
         [ 'ext_abp', 'false' ],
         // Compatibility with other blockers
