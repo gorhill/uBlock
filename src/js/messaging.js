@@ -828,6 +828,11 @@ const onMessage = function(request, sender, callback) {
             callback(result);
         });
 
+    case 'cloudUsed':
+        return vAPI.cloud.used(request.datakey).then(result => {
+            callback(result);
+        });
+
     default:
         break;
     }

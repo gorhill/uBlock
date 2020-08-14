@@ -1,22 +1,29 @@
 #cloudWidget {
     background: url("../img/cloud.png") hsl(216, 100%, 93%);
-    border-radius: 3px;
     margin: 0.5em 0;
     overflow: auto;
-    padding: 0.5em;
     position: relative;
     }
 #cloudWidget.hide {
     display: none;
     }
-#cloudToolbar > button {
-    font-size: 180%;
+#cloudWidget div {
+    display: flex;
+    }
+#cloudToolbar {
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    }
+#cloudToolbar > div:first-of-type {
+    margin: 0.5em;
+    }
+#cloudToolbar button {
     padding: 0 0.25em;
     position: relative;
     }
-#cloudToolbar {
-    display: flex;
-    flex-wrap: nowrap;
+#cloudToolbar button .fa-icon {
+    font-size: 180%;
     }
 #cloudToolbar button[disabled] {
     visibility: hidden;
@@ -28,13 +35,12 @@
     margin-left: 0.25em;
     }
 #cloudPullAndMerge > span:nth-of-type(2) {
-    font-size: 50%;
+    font-size: 90%;
     position: absolute;
     right: 0;
     top: 0;
     }
 #cloudInfo {
-    color: var(--fg-0-60);
     flex-shrink: 0;
     font-size: 90%;
     margin: 0 1em;
@@ -42,42 +48,52 @@
     padding: 0;
     white-space: pre-line;
     }
+#cloudCapacity {
+    background-color: var(--light-gray-30);
+    height: 4px;
+    }
+#cloudCapacity > div {
+    background-color: var(--light-gray-60);
+    }
+#cloudCapacity > div > div {
+    background-color: var(--violet-60);
+    }
 #cloudError {
     color: var(--fg-icon-info-lvl-4);
     flex-grow: 1;
     flex-shrink: 2;
     font-size: small;
-    margin: 0.5em 0.5em 0 0;
+    margin: 0 0.5em 0.5em 0.5em;
     }
 #cloudError:empty {
     display: none;
     }
-#cloudToolbar #cloudCog {
+#cloudCog {
     color: var(--fg-0-50);
     cursor: pointer;
     fill: var(--fg-0-50);
-    flex-grow: 1;
     font-size: 110%;
     justify-content: flex-end;
     padding: 0.4em;
     }
-#cloudToolbar #cloudCog:hover {
+#cloudCog:hover {
     color: inherit;
     fill: inherit;
     }
-#cloudToolbar #cloudOptions {
+#cloudWidget #cloudOptions {
     background-color: var(--default-surface);
     border: 1px solid var(--bg-1-border);
-    bottom: 0;
     display: none;
-    margin: 0.4em;
-    padding: 0.4em;
+    padding: 0.5em;
     position: absolute;
     right: 0;
     text-align: center;
-    top: 0;
     z-index: 10;
     }
-#cloudToolbar #cloudOptions.show {
+#cloudWidget #cloudOptions.show {
     display: block;
+    white-space: nowrap;
+    }
+#cloudOptions button {
+    min-height: var(--default-gap-xlarge);
     }

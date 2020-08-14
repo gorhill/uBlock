@@ -34,7 +34,7 @@ self.cloud = {
     datakey: '',
     data: undefined,
     onPush: null,
-    onPull: null
+    onPull: null,
 };
 
 /******************************************************************************/
@@ -44,6 +44,25 @@ if ( widget === null ) { return; }
 
 self.cloud.datakey = widget.getAttribute('data-cloud-entry') || '';
 if ( self.cloud.datakey === '' ) { return; }
+
+/******************************************************************************/
+
+const fetchStorageUsed = async function() {
+    const elem = widget.querySelector('#cloudCapacity');
+    if ( elem.classList.contains('hide') ) { return; }
+    const result = await vAPI.messaging.send('cloudWidget', {
+        what: 'cloudUsed',
+        datakey: self.cloud.datakey,
+    });
+    if ( result instanceof Object === false ) {
+        elem.classList.add('hide');
+        return;
+    }
+    const total = (result.total / result.max * 100).toFixed(1);
+    elem.firstElementChild.style.width = `${total}%`;
+    const used = (result.used / result.total * 100).toFixed(1);
+    elem.firstElementChild.firstElementChild.style.width = `${used}%`;
+};
 
 /******************************************************************************/
 
@@ -94,6 +113,7 @@ const pushData = async function() {
             .textContent = failed ? error : '';
     if ( failed ) { return; }
     fetchCloudData();
+    fetchStorageUsed();
 };
 
 /******************************************************************************/
@@ -151,7 +171,7 @@ const submitOptions = async function() {
 
 const onInitialize = function(options) {
     if ( options instanceof Object === false ) { return; }
-    if ( !options.enabled ) { return; }
+    if ( options.enabled !== true ) { return; }
     self.cloud.options = options;
 
     const xhr = new XMLHttpRequest();
@@ -180,12 +200,13 @@ const onInitialize = function(options) {
         uDom('#cloudCog').on('click', openOptions);
         uDom('#cloudOptions').on('click', closeOptions);
         uDom('#cloudOptionsSubmit').on('click', ( ) => { submitOptions(); });
-        
+
         fetchCloudData().then(result => {
             if ( typeof result !== 'string' ) { return; }
             document.getElementById('cloudPush').classList.add('error');
             document.querySelector('#cloudError').textContent = result;
         });
+        fetchStorageUsed();
     };
     xhr.send();
 };

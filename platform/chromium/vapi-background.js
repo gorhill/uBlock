@@ -1649,6 +1649,28 @@ vAPI.cloud = (( ) => {
         return entry;
     };
 
+    const used = async function(dataKey) {
+        if ( webext.storage.sync.getBytesInUse instanceof Function === false ) {
+            return;
+        }
+        const coarseCount = await getCoarseChunkCount(dataKey);
+        if ( typeof coarseCount !== 'number' ) { return; }
+        const keys = [];
+        for ( let i = 0; i < coarseCount; i++ ) {
+            keys.push(`${dataKey}${i}`);
+        }
+        let results;
+        try {
+            results = await Promise.all([
+                webext.storage.sync.getBytesInUse(keys),
+                webext.storage.sync.getBytesInUse(null),
+            ]);
+        } catch(ex) {
+        }
+        if ( Array.isArray(results) === false ) { return; }
+        return { used: results[0], total: results[1], max: QUOTA_BYTES };
+    };
+
     const getOptions = function(callback) {
         if ( typeof callback !== 'function' ) { return; }
         callback(options);
@@ -1665,7 +1687,7 @@ vAPI.cloud = (( ) => {
         getOptions(callback);
     };
 
-    return { push, pull, getOptions, setOptions };
+    return { push, pull, used, getOptions, setOptions };
 })();
 
 /******************************************************************************/
