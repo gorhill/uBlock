@@ -40,7 +40,7 @@
             targetResult = false;
             pattern = pattern.slice(1);
         }
-        autoRemoveAfter = parseInt(arg2);
+        autoRemoveAfter = parseInt(arg2, 10);
         if ( isNaN(autoRemoveAfter) ) {
             autoRemoveAfter = -1;
         } 
@@ -66,17 +66,18 @@
                 return target.apply(thisArg, args);
             }
             if ( autoRemoveAfter < 0 ) { return null; }
-            const iframe = document.createElement('iframe');
-            iframe.src = url;
-            iframe.style.setProperty('display','none', 'important');
-            iframe.style.setProperty('height','1px', 'important');
-            iframe.style.setProperty('width','1px', 'important');
-            document.body.appendChild(iframe);
-            setTimeout(( ) => iframe.remove(), autoRemoveAfter * 1000);
-            if ( arg3 === '' ) { return iframe.contentWindow; }
-            return new Proxy(iframe.contentWindow, {
+            const decoy = document.createElement('object');
+            decoy.data = url;
+            decoy.style.setProperty('height','1px', 'important');
+            decoy.style.setProperty('position','fixed', 'important');
+            decoy.style.setProperty('top','-1px', 'important');
+            decoy.style.setProperty('width','1px', 'important');
+            document.body.appendChild(decoy);
+            setTimeout(( ) => decoy.remove(), autoRemoveAfter * 1000);
+            return new Proxy(decoy.contentWindow || decoy , {
                 get: function(target, prop) {
                     log('window.open / get', prop, '===', target[prop]);
+                    if ( prop === 'closed' ) { return false; }
                     return target[prop];
                 },
                 set: function(target, prop, value) {
