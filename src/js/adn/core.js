@@ -1047,11 +1047,12 @@
   };
 
   const listsForFilter = function (filter) {
+    const lists = {};
+    if (filter == null) return lists;
     let entry;
     let content;
     let pos;
     let c;
-    const lists = {};
     const writer = new µb.CompiledLineIO.Writer();
     const parser = new vAPI.StaticFilteringParser();
     parser.setMaxTokenLength(µb.urlTokenizer.MAX_TOKEN_LENGTH);

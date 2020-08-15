@@ -28,8 +28,31 @@
   /******************************************************************************/
 
   const onLocalDataReceived = function(details) {
+    let v, unit;
+    if ( typeof details.storageUsed === 'number' ) {
+        v = details.storageUsed;
+        if ( v < 1e3 ) {
+            unit = 'genericBytes';
+        } else if ( v < 1e6 ) {
+            v /= 1e3;
+            unit = 'KB';
+        } else if ( v < 1e9 ) {
+            v /= 1e6;
+            unit = 'MB';
+        } else {
+            v /= 1e9;
+            unit = 'GB';
+        }
+    } else {
+        v = '?';
+        unit = '';
+    }
+
       uDom('#localData > ul > li:nth-of-type(1)').text(
-          vAPI.i18n('settingsStorageUsed').replace('{{value}}', details.storageUsed.toLocaleString()).replace(/uBlock₀/g, 'AdNauseam')
+        vAPI.i18n('storageUsed')
+            .replace('{{value}}', v.toLocaleString(undefined, { maximumSignificantDigits: 3 }))
+            .replace('{{unit}}', unit && vAPI.i18n(unit) || '')
+            .replace(/uBlock₀/g, 'AdNauseam')
       );
 
       const timeOptions = {
