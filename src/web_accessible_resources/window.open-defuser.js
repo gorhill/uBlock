@@ -74,15 +74,20 @@
             decoy.style.setProperty('width','1px', 'important');
             document.body.appendChild(decoy);
             setTimeout(( ) => decoy.remove(), autoRemoveAfter * 1000);
+            const noopFn = function(){};
             return new Proxy(decoy.contentWindow || decoy , {
                 get: function(target, prop) {
                     log('window.open / get', prop, '===', target[prop]);
                     if ( prop === 'closed' ) { return false; }
-                    return target[prop];
+                    const r = Reflect.get(...arguments);
+                    if ( typeof r === 'function' ) {
+                        return noopFn.bind(null);
+                    }
+                    return r;
                 },
                 set: function(target, prop, value) {
                     log('window.open / set', prop, '=', value);
-                    target[prop] = value;
+                    return Reflect.set(...arguments);
                 },
             });
         }
