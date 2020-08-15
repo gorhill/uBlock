@@ -1703,8 +1703,8 @@ vAPI.getAddonInfo = function (callback) { // ADN
 
           if ((extension.name.startsWith("Adblock") || extension.name.startsWith("AdBlock")) && extension.enabled)
             conflict = "adBlock";
-          else if (extension.name.startsWith("uBlock") && extension.enabled)
-            conflict = "uBlock";
+          else if (extension.name.startsWith("uBlock") && extension.enabled && extension.name != "uBlock Origin Extra")
+            conflict = "uBlock"; // uBlock origin & uBlock
           else if (extension.name == "Privacy Badger" && extension.enabled)
             conflict = "privacyBadger"
         });
