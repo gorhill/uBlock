@@ -553,7 +553,7 @@
 
   uDom('#about-button').on('click', function () {
 
-    window.open("./popup.html", '_self');
+    window.open("./popup-fenix.html", '_self');
     //window.open(AboutURL);
   });
 

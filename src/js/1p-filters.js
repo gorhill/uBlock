@@ -29,16 +29,19 @@
 
 /******************************************************************************/
 
-const cmEditor = new CodeMirror(
-    document.getElementById('userFilters'),
-    {
-        autofocus: true,
-        lineNumbers: true,
-        lineWrapping: true,
-        styleActiveLine: true,
-        theme:'pastel-on-dark'
-    }
-);
+const cmEditor = new CodeMirror(document.getElementById('userFilters'), {
+    autoCloseBrackets: true,
+    autofocus: true,
+    extraKeys: {
+        'Ctrl-Space': 'autocomplete',
+        'Tab': 'toggleComment',
+    },
+    lineNumbers: true,
+    lineWrapping: true,
+    matchBrackets: true,
+    maxScanLines: 1,
+    styleActiveLine: true,
+});
 
 uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 
@@ -203,21 +206,29 @@ uDom('#userFiltersRevert').on('click', revertChanges);
 // https://github.com/gorhill/uBlock/issues/3706
 //   Save/restore cursor position
 //
-// CoreMirror reference: https://codemirror.net/doc/manual.html#api_selection
-renderUserFilters().then(( ) => {
-    cmEditor.clearHistory();
-    return vAPI.localStorage.getItemAsync('myFiltersCursorPosition');
-}).then(line => {
-    if ( typeof line === 'number' ) {
-        cmEditor.setCursor(line, 0);
-    }
-    cmEditor.on('cursorActivity', ( ) => {
-        const line = cmEditor.getCursor().line;
-        if ( vAPI.localStorage.getItem('myFiltersCursorPosition') !== line ) {
-            vAPI.localStorage.setItem('myFiltersCursorPosition', line);
+// CodeMirror reference: https://codemirror.net/doc/manual.html#api_selection
+{
+    let curline = 0;
+    let timer;
+
+    renderUserFilters().then(( ) => {
+        cmEditor.clearHistory();
+        return vAPI.localStorage.getItemAsync('myFiltersCursorPosition');
+    }).then(line => {
+        if ( typeof line === 'number' ) {
+            cmEditor.setCursor(line, 0);
         }
+        cmEditor.on('cursorActivity', ( ) => {
+            if ( timer !== undefined ) { return; }
+            if ( cmEditor.getCursor().line === curline ) { return; }
+            timer = vAPI.setTimeout(( ) => {
+                timer = undefined;
+                curline = cmEditor.getCursor().line;
+                vAPI.localStorage.setItem('myFiltersCursorPosition', curline);
+            }, 701);
+        });
     });
-});
+}
 
 cmEditor.on('changes', userFiltersChanged);
 CodeMirror.commands.save = applyChanges;

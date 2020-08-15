@@ -407,29 +407,67 @@ const HNTrieContainer = class {
         return true;
     }
 
+    // The following *Hostname() methods can be used to store hostname strings
+    // outside the trie. This is useful to store/match hostnames which are
+    // not part of a collection, and yet still benefit from storing the strings
+    // into a trie container's character buffer.
+    // TODO: WASM version of matchesHostname()
+
+    storeHostname(hn) {
+        let n = hn.length;
+        if ( n > 255 ) {
+            hn = hn.slice(-255);
+            n = 255;
+        }
+        if ( (this.buf.length - this.buf32[CHAR1_SLOT]) < n ) {
+            this.growBuf(0, n);
+        }
+        const offset = this.buf32[CHAR1_SLOT];
+        this.buf32[CHAR1_SLOT] = offset + n;
+        const buf8 = this.buf;
+        for ( let i = 0; i < n; i++ ) {
+            buf8[offset+i] = hn.charCodeAt(i);
+        }
+        return offset - this.buf32[CHAR0_SLOT];
+    }
+
+    extractHostname(i, n) {
+        const textDecoder = new TextDecoder();
+        const offset = this.buf32[CHAR0_SLOT] + i;
+        return textDecoder.decode(this.buf.subarray(offset, offset + n));
+    }
+
+    matchesHostname(hn, i, n) {
+        this.setNeedle(hn);
+        const buf8 = this.buf;
+        const hr = buf8[255];
+        if ( n > hr ) { return false; }
+        const hl = hr - n;
+        const nl = this.buf32[CHAR0_SLOT] + i;
+        for ( let j = 0; j < n; j++ ) {
+            if ( buf8[nl+j] !== buf8[hl+j] ) { return false; }
+        }
+        return n === hr || hn.charCodeAt(hl-1) === 0x2E /* '.' */;
+    }
+
     async enableWASM() {
         if ( typeof WebAssembly !== 'object' ) { return false; }
         if ( this.wasmMemory instanceof WebAssembly.Memory ) { return true; }
         const module = await getWasmModule();
-        if ( module instanceof WebAssembly.Module === false ) {
-            return false;
-        }
+        if ( module instanceof WebAssembly.Module === false ) { return false; }
         const memory = new WebAssembly.Memory({ initial: 2 });
-        const instance = await WebAssembly.instantiate(
-            module,
-            {
-                imports: {
-                    memory,
-                    growBuf: this.growBuf.bind(this, 24, 256)
-                }
+        const instance = await WebAssembly.instantiate(module, {
+            imports: {
+                memory,
+                growBuf: this.growBuf.bind(this, 24, 256)
             }
-        );
+        });
         if ( instance instanceof WebAssembly.Instance === false ) {
             return false;
         }
         this.wasmMemory = memory;
         const curPageCount = memory.buffer.byteLength >>> 16;
-        const newPageCount = this.buf.byteLength + PAGE_SIZE-1 >>> 16;
+        const newPageCount = roundToPageSize(this.buf.byteLength) >>> 16;
         if ( newPageCount > curPageCount ) {
             memory.grow(newPageCount - curPageCount);
         }

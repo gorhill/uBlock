@@ -32,7 +32,7 @@
 // the code here does *only* what I need, and nothing more, and with a lot
 // of assumption on passed parameters, etc. I grow it on a per-need-basis only.
 
-const uDom = (function() {
+const uDom = (( ) => {
 
 /******************************************************************************/
 
@@ -89,6 +89,30 @@ DOMListFactory.nodeFromId = function(id) {
 DOMListFactory.nodeFromSelector = function(selector) {
     return document.querySelector(selector);
 };
+
+/******************************************************************************/
+
+{
+    const root = DOMListFactory.root = document.querySelector(':root');
+    if ( vAPI.webextFlavor.soup.has('mobile') ) {
+        root.classList.add('mobile');
+    } else {
+        root.classList.add('desktop');
+    }
+    if ( window.matchMedia('(min-resolution: 150dpi)').matches ) {
+        root.classList.add('hidpi');
+    }
+    if ( window.matchMedia('(prefers-color-scheme: dark)').matches ) {
+        root.classList.add('dark');
+    }
+
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1044
+    //   Offer the possibility to bypass uBO's default styling
+    vAPI.messaging.send('uDom', { what: 'uiStyles' }).then(response => {
+        if ( typeof response !== 'string' || response === 'unset' ) { return; }
+        document.body.style.cssText = response;
+    });
+}
 
 /******************************************************************************/
 

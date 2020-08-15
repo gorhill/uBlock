@@ -139,7 +139,11 @@ const fromNetFilter = async function(rawFilter) {
 
     const µb = µBlock;
     const writer = new µb.CompiledLineIO.Writer();
-    if ( µb.staticNetFilteringEngine.compile(rawFilter, writer) === false ) {
+    const parser = new vAPI.StaticFilteringParser();
+    parser.setMaxTokenLength(µb.urlTokenizer.MAX_TOKEN_LENGTH);
+    parser.analyze(rawFilter);
+
+    if ( µb.staticNetFilteringEngine.compile(parser, writer) === false ) {
         return;
     }
 

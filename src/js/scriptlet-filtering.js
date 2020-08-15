@@ -30,13 +30,7 @@
     const reEscapeScriptArg = /[\\'"]/g;
 
     const scriptletDB = new µb.staticExtFilteringEngine.HostnameBasedDB(1);
-    const sessionScriptletDB = new (
-        class extends µb.staticExtFilteringEngine.SessionDB {
-            compile(s) {
-                return s.slice(4, -1).trim();
-            }
-        }
-    )();
+    const sessionScriptletDB = new µb.staticExtFilteringEngine.SessionDB();
 
     let acceptedCount = 0;
     let discardedCount = 0;
@@ -177,6 +171,7 @@
         };
     })();
 
+    // TODO: Probably should move this into StaticFilteringParser
     const normalizeRawFilter = function(rawFilter) {
         let rawToken = rawFilter.slice(4, -1);
         let rawEnd = rawToken.length;
@@ -288,20 +283,19 @@
         scriptletDB.collectGarbage();
     };
 
-    api.compile = function(parsed, writer) {
+    api.compile = function(parser, writer) {
         // 1001 = scriptlet injection
         writer.select(1001);
 
         // Only exception filters are allowed to be global.
-        const normalized = normalizeRawFilter(parsed.suffix);
+        const { raw, exception } = parser.result;
+        const normalized = normalizeRawFilter(raw);
 
         // Tokenless is meaningful only for exception filters.
-        if ( normalized === '+js()' && parsed.exception === false ) {
-            return;
-        }
+        if ( normalized === '+js()' && exception === false ) { return; }
 
-        if ( parsed.hostnames.length === 0 ) {
-            if ( parsed.exception ) {
+        if ( parser.hasOptions() === false ) {
+            if ( exception ) {
                 writer.push([ 32, '', 1, normalized ]);
             }
             return;
@@ -311,16 +305,13 @@
         //   Ignore instances of exception filter with negated hostnames,
         //   because there is no way to create an exception to an exception.
 
-        for ( let hn of parsed.hostnames ) {
-            const negated = hn.charCodeAt(0) === 0x7E /* '~' */;
-            if ( negated ) {
-                hn = hn.slice(1);
-            }
+        for ( const { hn, not, bad } of parser.extOptions() ) {
+            if ( bad ) { continue; }
             let kind = 0;
-            if ( parsed.exception ) {
-                if ( negated ) { continue; }
+            if ( exception ) {
+                if ( not ) { continue; }
                 kind |= 1;
-            } else if ( negated ) {
+            } else if ( not ) {
                 kind |= 1;
             }
             writer.push([ 32, hn, kind, normalized ]);

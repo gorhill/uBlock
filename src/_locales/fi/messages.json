@@ -85,7 +85,7 @@
   },
   "popupBlockedStats": {
     "message": "{{count}} tai {{percent}}%",
-    "description": "Example: 15 or 13%"
+    "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
     "message": "asennuksen jälkeen",
@@ -100,7 +100,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "Estetty yhteensä",
+    "message": "Estetty asennuksen jälkeen",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
@@ -179,25 +179,33 @@
     "message": "Klikkaa palauttaaksesi JavaScriptin käyttö tällä sivulla",
     "description": "Tooltip for the no-scripting per-site switch"
   },
+  "popupNoPopups_v2": {
+    "message": "Ponnahdusikkunat",
+    "description": "Caption for the no-popups per-site switch"
+  },
   "popupNoLargeMedia_v2": {
-    "message": "Suuria media elementtejä",
-    "description": "Tip for the no-large-media per-site switch"
+    "message": "Suuret mediaelementit",
+    "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
     "message": "Kosmeettinen suodatus",
-    "description": "Tip for the no-cosmetic-filtering per-site switch"
+    "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
     "message": "Ladattavat fontit",
-    "description": "Tip for the no-remote-fonts per-site switch"
+    "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
     "message": "JavaScript",
-    "description": "Tip for the no-scripting per-site switch"
+    "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
     "message": "Lisää",
-    "description": "Label to be used to toggle overview panel"
+    "description": "Label to be used to show popup panel sections"
+  },
+  "popupLessButton_v2": {
+    "message": "Vähemmän",
+    "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
     "message": "Yleiset säännöt: tämä sarake on säännöille, joita käytetään kaikille sivustoille.",
@@ -212,7 +220,7 @@
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Paina kumotaksesi muutoksesi.",
+    "message": "Klikkaa kumotaksesi muutoksesi.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {
@@ -254,6 +262,10 @@
   "popupHitDomainCount": {
     "message": "{{count}}/{{total}}",
     "description": "appears in popup"
+  },
+  "popupVersion": {
+    "message": "Versio",
+    "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
     "message": "Luo",
@@ -359,10 +371,6 @@
     "message": "Estä CSP-raportit",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
-  "settingsStorageUsed": {
-    "message": "Tilaa käytetty: {{value}} tavua",
-    "description": "English: Storage used: {{}} bytes"
-  },
   "settingsLastRestorePrompt": {
     "message": "Viimeisin palautus:",
     "description": "English: Last restore:"
@@ -458,6 +466,10 @@
   "3pExternalListObsolete": {
     "message": "Vanhentunut.",
     "description": "used as a tooltip for the out-of-date icon beside a list"
+  },
+  "3pViewContent": {
+    "message": "näytä sisältö",
+    "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
     "message": "Viimeisin päivitys: {{ago}}.\nKlikkaa päivittääksesi manuaalisesti.",
@@ -827,6 +839,18 @@
     "message": "Kehittäjät",
     "description": "English: Contributors"
   },
+  "aboutSourceCode": {
+    "message": "Lähdekoodi",
+    "description": "Link text to source code repo"
+  },
+  "aboutTranslations": {
+    "message": "Käännökset",
+    "description": "Link text to translations repo"
+  },
+  "aboutFilterLists": {
+    "message": "Suodatinlistat",
+    "description": "Link text to uBO's own filter lists repo"
+  },
   "aboutDependencies": {
     "message": "Ulkopuoliset riippuvuudet (GPLv3-yhteensopiva):",
     "description": "Shown in the About pane"
@@ -1002,6 +1026,22 @@
   "relaxBlockingMode": {
     "message": "Kevennä estotilaa",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
+  },
+  "storageUsed": {
+    "message": "Tallennustilaa käytössä: {{value}} {{unit}}",
+    "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
+  },
+  "KB": {
+    "message": "Kt",
+    "description": "short for 'kilobytes'"
+  },
+  "MB": {
+    "message": "Mt",
+    "description": "short for 'megabytes'"
+  },
+  "GB": {
+    "message": "Gt",
+    "description": "short for 'gigabytes'"
   },
   "dummy": {
     "message": "This entry must be the last one",

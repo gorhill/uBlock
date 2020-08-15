@@ -29,13 +29,20 @@ const faIconsInit = function(root) {
         if ( icon.firstChild === null || icon.firstChild.nodeType !== 3 ) {
             continue;
         }
-        const name = icon.firstChild.nodeValue;
+        const name = icon.firstChild.nodeValue.trim();
+        if ( name === '' ) { continue; }
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.classList.add('fa-icon_' + name);
         const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-        const href = '/img/fontawesome/fontawesome-defs.svg#' + name;
-        use.setAttribute('href', href);
-        use.setAttribute('xlink:href', href);
+        let file;
+        if ( name.startsWith('ph-') ) {
+            file = 'photon';
+        } else if ( name.startsWith('md-') ) {
+            file = 'material-design';
+        } else {
+            file = 'fontawesome/fontawesome-defs';
+        }
+        svg.classList.add('fa-icon_' + name);
+        use.setAttribute('href', `/img/${file}.svg#${name}`);
         svg.appendChild(use);
         icon.replaceChild(svg, icon.firstChild);
         if ( icon.classList.contains('fa-icon-badged') ) {

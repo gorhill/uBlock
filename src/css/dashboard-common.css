@@ -3,11 +3,10 @@ body {
     /*padding: 0 0.5em 0.5em 0.5em;*/
     box-sizing: border-box;
     margin: 0;
-    padding: 0;
     }
 
 body > div.body {
-    padding: 0 0.5em 0.5em 0.5em;
+    padding: 0 0.5em 0.5em 1.5em;
 }
 
 @media screen and (max-device-width: 960px) {
@@ -17,9 +16,8 @@ body > div.body {
 }
 
 h2, h3 {
-    /*margin: 1em 0;
-    font-family: sans-serif;*/
-}
+    margin: 1em 0;
+    }
 h2 {
     font-size: 18px;
     /*font-weight: 700;*/
@@ -116,4 +114,16 @@ button.whatisthis:hover {
         min-height: 400px !important;
         overflow: auto !important;
         }
+}
+/**
+On mobile device, the on-screen keyboard may take up
+so much space that it overlaps the content being edited.
+The rule below makes it possible to scroll the edited
+content within view.
+*/
+:root.mobile {
+overflow: auto;
+}
+:root.mobile body {
+min-height: 600px;
 }

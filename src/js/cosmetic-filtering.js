@@ -225,13 +225,7 @@ const FilterContainer = function() {
     this.specificFilters = new µb.staticExtFilteringEngine.HostnameBasedDB(2);
 
     // temporary filters
-    this.sessionFilterDB = new (
-        class extends µb.staticExtFilteringEngine.SessionDB {
-            compile(s) {
-                return µb.staticExtFilteringEngine.compileSelector(s);
-            }
-        }
-    )();
+    this.sessionFilterDB = new µb.staticExtFilteringEngine.SessionDB();
 
     // low generic cosmetic filters, organized by id/class then simple/complex.
     this.lowlyGeneric = Object.create(null);
@@ -371,14 +365,12 @@ FilterContainer.prototype.keyFromSelector = function(selector) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.compile = function(parsed, writer) {
+FilterContainer.prototype.compile = function(parser, writer) {
     // 1000 = cosmetic filtering
     writer.select(1000);
 
-    const hostnames = parsed.hostnames;
-    let i = hostnames.length;
-    if ( i === 0 ) {
-        this.compileGenericSelector(parsed, writer);
+    if ( parser.hasOptions() === false ) {
+        this.compileGenericSelector(parser, writer);
         return true;
     }
 
@@ -386,15 +378,15 @@ FilterContainer.prototype.compile = function(parsed, writer) {
     // Negated hostname means the filter applies to all non-negated hostnames
     // of same filter OR globally if there is no non-negated hostnames.
     let applyGlobally = true;
-    while ( i-- ) {
-        const hostname = hostnames[i];
-        if ( hostname.startsWith('~') === false ) {
+    for ( const { hn, not, bad } of parser.extOptions() ) {
+        if ( bad ) { continue; }
+        if ( not === false ) {
             applyGlobally = false;
         }
-        this.compileSpecificSelector(hostname, parsed, writer);
+        this.compileSpecificSelector(parser, hn, not, writer);
     }
     if ( applyGlobally ) {
-        this.compileGenericSelector(parsed, writer);
+        this.compileGenericSelector(parser, writer);
     }
 
     return true;
@@ -402,22 +394,31 @@ FilterContainer.prototype.compile = function(parsed, writer) {
 
 /******************************************************************************/
 
-FilterContainer.prototype.compileGenericSelector = function(parsed, writer) {
-    if ( parsed.exception === false ) {
-        this.compileGenericHideSelector(parsed, writer);
+FilterContainer.prototype.compileGenericSelector = function(parser, writer) {
+    if ( parser.isException() ) {
+        this.compileGenericUnhideSelector(parser, writer);
     } else {
-        this.compileGenericUnhideSelector(parsed, writer);
+        this.compileGenericHideSelector(parser, writer);
     }
 };
 
 /******************************************************************************/
 
 FilterContainer.prototype.compileGenericHideSelector = function(
-    parsed,
+    parser,
     writer
 ) {
-    const selector = parsed.suffix;
-    const type = selector.charCodeAt(0);
+    const { raw, compiled, pseudoclass } = parser.result;
+    if ( compiled === undefined ) {
+        const who = writer.properties.get('assetKey') || '?';
+        µb.logger.writeOne({
+            realm: 'message',
+            type: 'error',
+            text: `Invalid generic cosmetic filter in ${who}: ${raw}`
+        });
+    }
+
+    const type = compiled.charCodeAt(0);
     let key;
 
     // Simple selector-based CSS rule: no need to test for whether the
@@ -426,20 +427,18 @@ FilterContainer.prototype.compileGenericHideSelector = function(
     // - ###ad-bigbox
     // - ##.ads-bigbox
     if ( type === 0x23 /* '#' */ ) {
-        key = this.keyFromSelector(selector);
-        if ( key === selector ) {
+        key = this.keyFromSelector(compiled);
+        if ( key === compiled ) {
             writer.push([ 0, key.slice(1) ]);
             return;
         }
     } else if ( type === 0x2E /* '.' */ ) {
-        key = this.keyFromSelector(selector);
-        if ( key === selector ) {
+        key = this.keyFromSelector(compiled);
+        if ( key === compiled ) {
             writer.push([ 2, key.slice(1) ]);
             return;
         }
     }
-
-    const compiled = µb.staticExtFilteringEngine.compileSelector(selector);
 
     // Invalid cosmetic filter, possible reasons:
     // - Bad syntax
@@ -451,19 +450,15 @@ FilterContainer.prototype.compileGenericHideSelector = function(
     // https://github.com/uBlockOrigin/uBlock-issues/issues/131
     //   Support generic procedural filters as per advanced settings.
     //   TODO: prevent double compilation.
-    if (
-        compiled === undefined ||
-        compiled !== selector &&
-        µb.staticExtFilteringEngine.compileSelector.pseudoclass === -1
-    ) {
+    if ( compiled !== raw && pseudoclass === false ) {
         if ( µb.hiddenSettings.allowGenericProceduralFilters === true ) {
-            return this.compileSpecificSelector('', parsed, writer);
+            return this.compileSpecificSelector(parser, '', false, writer);
         }
         const who = writer.properties.get('assetKey') || '?';
         µb.logger.writeOne({
             realm: 'message',
             type: 'error',
-            text: `Invalid generic cosmetic filter in ${who}: ##${selector}`
+            text: `Invalid generic cosmetic filter in ${who}: ##${raw}`
         });
         return;
     }
@@ -475,7 +470,7 @@ FilterContainer.prototype.compileGenericHideSelector = function(
         writer.push([
             type === 0x23 /* '#' */ ? 1 : 3,
             key.slice(1),
-            selector
+            compiled
         ]);
         return;
     }
@@ -483,13 +478,13 @@ FilterContainer.prototype.compileGenericHideSelector = function(
     // https://github.com/gorhill/uBlock/issues/909
     //   Anything which contains a plain id/class selector can be classified
     //   as a low generic cosmetic filter.
-    const matches = this.rePlainSelectorEx.exec(selector);
+    const matches = this.rePlainSelectorEx.exec(compiled);
     if ( matches !== null ) {
         const key = matches[1] || matches[2];
         writer.push([
             key.charCodeAt(0) === 0x23 /* '#' */ ? 1 : 3,
             key.slice(1),
-            selector
+            compiled
         ]);
         return;
     }
@@ -499,27 +494,27 @@ FilterContainer.prototype.compileGenericHideSelector = function(
     // For efficiency purpose, we will distinguish between simple and complex
     // selectors.
 
-    if ( this.reSimpleHighGeneric.test(selector) ) {
-        writer.push([ 4 /* simple */, selector ]);
+    if ( this.reSimpleHighGeneric.test(compiled) ) {
+        writer.push([ 4 /* simple */, compiled ]);
     } else {
-        writer.push([ 5 /* complex */, selector ]);
+        writer.push([ 5 /* complex */, compiled ]);
     }
 };
 
 /******************************************************************************/
 
 FilterContainer.prototype.compileGenericUnhideSelector = function(
-    parsed,
+    parser,
     writer
 ) {
     // Procedural cosmetic filters are acceptable as generic exception filters.
-    const compiled = µb.staticExtFilteringEngine.compileSelector(parsed.suffix);
+    const { raw, compiled } = parser.result;
     if ( compiled === undefined ) {
         const who = writer.properties.get('assetKey') || '?';
         µb.logger.writeOne({
             realm: 'message',
             type: 'error',
-            text: `Invalid cosmetic filter in ${who}: #@#${parsed.suffix}`
+            text: `Invalid cosmetic filter in ${who}: #@#${raw}`
         });
         return;
     }
@@ -530,34 +525,31 @@ FilterContainer.prototype.compileGenericUnhideSelector = function(
     //   hostnames). No distinction is made between declarative and
     //   procedural selectors, since they really exist only to cancel
     //   out other cosmetic filters.
-    writer.push([ 8, '', 0b01, compiled ]);
+    writer.push([ 8, '', 0b001, compiled ]);
 };
 
 /******************************************************************************/
 
 FilterContainer.prototype.compileSpecificSelector = function(
+    parser,
     hostname,
-    parsed,
+    not,
     writer
 ) {
-    // https://github.com/chrisaljoudi/uBlock/issues/145
-    let unhide = parsed.exception ? 1 : 0;
-    if ( hostname.startsWith('~') ) {
-        hostname = hostname.slice(1);
-        unhide ^= 1;
-    }
-
-    const compiled = µb.staticExtFilteringEngine.compileSelector(parsed.suffix);
+    const { raw, compiled, exception } = parser.result;
     if ( compiled === undefined ) {
         const who = writer.properties.get('assetKey') || '?';
         µb.logger.writeOne({
             realm: 'message',
             type: 'error',
-            text: `Invalid cosmetic filter in ${who}: ##${parsed.suffix}`
+            text: `Invalid cosmetic filter in ${who}: ##${raw}`
         });
         return;
     }
 
+    // https://github.com/chrisaljoudi/uBlock/issues/145
+    let unhide = exception ? 1 : 0;
+    if ( not ) { unhide ^= 1; }
 
     let kind = 0;
     if ( unhide === 1 ) {

@@ -2,61 +2,72 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>uBlock — Filter lists</title>
+<link rel="stylesheet" type="text/css" href="css/themes/default.css">
 <link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/fa-icons.css">
 <link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
 <link rel="stylesheet" type="text/css" href="css/cloud-ui.css">
 <link rel="stylesheet" type="text/css" href="css/3p-filters.css">
 </head>
 
 <body>
-    <div class="body">
-    <div id="cloudWidget" class="hide" data-cloud-entry="tpFiltersPane"></div>
-    <div>
-        <ul id="options">
-            <li><button id="buttonUpdate" class="custom important disabled" data-i18n="3pUpdateNow"></button>
-                <button id="buttonPurgeAll" class="custom disabled" data-i18n="3pPurgeAll"></button>
-                <button id="buttonApply" class="custom important disabled" data-i18n="3pApplyChanges"></button>
-            <li><input type="checkbox" id="autoUpdate"><label data-i18n="3pAutoUpdatePrompt1" for="autoUpdate"></label>&ensp;
-            <li><input type="checkbox" id="parseCosmeticFilters"><label data-i18n="3pParseAllABPHideFiltersPrompt1" for="parseCosmeticFilters"></label><button class="whatisthis"></button>
-                <div class="whatisthis-expandable para" data-i18n="3pParseAllABPHideFiltersInfo"></div>
-            <li><input type="checkbox" id="ignoreGenericCosmeticFilters"><label data-i18n="3pIgnoreGenericCosmeticFilters" for="ignoreGenericCosmeticFilters"></label><button class="whatisthis"></button>
-                <div class="whatisthis-expandable para" data-i18n="3pIgnoreGenericCosmeticFiltersInfo"></div>
-        </ul>
-        <p><span id="listsOfBlockedHostsPrompt"></span></p>
-        <ul id="lists">
-          <!-- AdNauseam txt -->
-          <button id="buttonUpdateAdNauseam" class="custom" data-i18n="3pPageUpdate"></button>
-        </ul>
+
+<div class="body">
+
+<div id="cloudWidget" class="hide" data-cloud-entry="tpFiltersPane"></div>
+<div id="actions">
+    <button id="buttonApply" class="custom important disabled iconifiable" type="button" data-i18n-title="3pApplyChanges"><span data-i18n="3pApplyChanges"></span></button>
+    <button id="buttonUpdate" class="custom important disabled iconifiable" type="button" data-i18n-title="3pUpdateNow"><span data-i18n="3pUpdateNow"></span></button>
+    <button id="buttonPurgeAll" class="disabled iconifiable" type="button" data-i18n-title="3pPurgeAll"><span data-i18n="3pPurgeAll"></span></button>
+</div>
+
+<div id="options">
+    <div class="li"><input type="checkbox" id="autoUpdate"><label data-i18n="3pAutoUpdatePrompt1" for="autoUpdate"></label>&ensp;</div>
+    <div class="li"><input type="checkbox" id="parseCosmeticFilters"><label data-i18n="3pParseAllABPHideFiltersPrompt1" for="parseCosmeticFilters"></label><button class="whatisthis"></button>
+               <div class="whatisthis-expandable para" data-i18n="3pParseAllABPHideFiltersInfo"></div></div>
+    <div class="li"><input type="checkbox" id="ignoreGenericCosmeticFilters"><label data-i18n="3pIgnoreGenericCosmeticFilters" for="ignoreGenericCosmeticFilters"></label><button class="whatisthis"></button>
+               <div class="whatisthis-expandable para" data-i18n="3pIgnoreGenericCosmeticFiltersInfo"></div></div>
+</div>
+
+<div>
+    <div><span id="listsOfBlockedHostsPrompt"></span>
+        <div id="lists"></div>
     </div>
+    <ul id="lists">
+      <!-- AdNauseam txt -->
+      <button id="buttonUpdateAdNauseam" class="custom" data-i18n="3pPageUpdate"></button>
+    </ul>
+</div>
 
 </div>
 </div>
 <div id="templates" style="display: none;">
-    <ul>
-        <li class="groupEntry"><span class="geDetails"><span class="geName"></span> <span class="geCount dim"></span></span>
-            <ul class="listEntries"></ul>
-            </li>
-        <li class="listEntry">
-            <input type="checkbox"><label></label><!--
-         --><a class="content" type="text/plain" target="_blank" href=""></a>&#8203;<!--
-         --><a class="fa support" href="" target="_blank">&#xf015;</a>&#8203;<!--
-         --><a class="fa remove" href="">&#xf014;</a>&#8203;<!--
-         --><a class="fa mustread" href="" target="_blank">&#xf05a;</a>&#8203;<!--
-         --><span class="fa status unsecure" title="http">&#xf13e;</span>&#8203;<!--
-         --><span class="counts dim"></span>&#8203;<!--
-         --><span class="fa status obsolete" data-i18n-title="3pExternalListObsolete">&#xf071;</span>&#8203;<!--
-         --><span class="fa status cache">&#xf017;</span>&#8203;<!--
-         --><span class="fa status updating" data-i18n-title="3pUpdating">&#xf110;</span>&#8203;<!--
-         --><span class="fa status failed" data-i18n-title="3pNetworkError">&#xf127;</span>
-            </li>
-        <li class="listEntry toImport"><input type="checkbox" id="importLists"><label for="importLists" data-i18n="3pImport"></label><!--
-            --><a class="fa info towiki" href="https://github.com/gorhill/uBlock/wiki/Filter-lists-from-around-the-web" target="_blank">&#xf05a;</a><!--
-            --><textarea id="externalLists" dir="ltr" spellcheck="false" placeholder="3pExternalListsHint"></textarea></li>
-        </ul>
+    <div class="groupEntry">
+        <div class="geDetails"><span class="geName"></span> <span class="geCount"></span></div>
+        <div class="listEntries"></div>
     </div>
+    <div class="li listEntry">
+        <label><input type="checkbox"><span><span class="listname forinput"></span> <span class="iconbar">
+        <a class="fa-icon content" href="#" type="text/plain" target="_blank" data-i18n-title="3pViewContent">eye-open</a><!--
+     --><a class="fa-icon support" href="#" target="_blank">home</a><!--
+     --><span class="fa-icon remove">trash-o</span><!--
+     --><a class="fa-icon mustread" href="#" target="_blank">info-circle</a><!--
+     --><span class="fa-icon status unsecure" title="http">unlock-alt</span><!--
+     --><span class="fa-icon status obsolete" data-i18n-title="3pExternalListObsolete">exclamation-triangle</span><!--
+     --><span class="fa-icon status cache">clock-o</span><!--
+     --><span class="fa-icon status updating" data-i18n-title="3pUpdating">spinner</span><!--
+     --><span class="fa-icon status failed" data-i18n-title="3pNetworkError">unlink</span><!--
+     --><span class="counts"></span></span></span></label>
+    </div>
+    <div class="listEntry toImport"><label><span class="input checkbox"><input type="checkbox" id="importLists"><svg><use href="img/material-design.svg#checkmark" /></svg></span><span><span class="forinput" data-i18n="3pImport"></span> <a class="fa-icon info towiki" href="https://github.com/gorhill/uBlock/wiki/Filter-lists-from-around-the-web" target="_blank">info-circle</a></span></label><!--
+        --><!--
+        --><textarea id="externalLists" dir="ltr" spellcheck="false" placeholder="3pExternalListsHint"></textarea>
+    </div>
+</div>
 
+<script src="js/fa-icons.js"></script>
 <script src="js/vapi.js"></script>
 <script src="js/vapi-common.js"></script>
 <script src="js/vapi-client.js"></script>

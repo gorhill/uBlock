@@ -186,38 +186,32 @@ const fromCosmeticFilter = function(details) {
             switch ( filterType ) {
             // Lowly generic cosmetic filters
             case 0: // simple id-based
-                if (
-                    exception === false &&
-                    fargs[1] === selector.slice(1) &&
-                    selector.charAt(0) === '#'
-                ) {
-                    found = prefix + selector;
-                }
+                if ( exception ) { break; }
+                if ( fargs[1] !== selector.slice(1) ) { break; }
+                if ( selector.charAt(0) !== '#' ) { break; }
+                found = prefix + selector;
                 break;
             case 2: // simple class-based
-                if (
-                    exception === false &&
-                    fargs[1] === selector.slice(1) &&
-                    selector.charAt(0) === '.'
-                ) {
-                    found = prefix + selector;
-                }
+                if ( exception ) { break; }
+                if ( fargs[1] !== selector.slice(1) ) { break; }
+                if ( selector.charAt(0) !== '.' ) { break; }
+                found = prefix + selector;
                 break;
             case 1: // complex id-based
             case 3: // complex class-based
-                if ( exception === false && fargs[2] === selector ) {
-                    found = prefix + selector;
-                }
+                if ( exception ) { break; }
+                if ( fargs[2] !== selector ) { break; }
+                found = prefix + selector;
                 break;
             // Highly generic cosmetic filters
             case 4: // simple highly generic
             case 5: // complex highly generic
-            case 7: // generic exception
-                if ( fargs[1] === selector ) {
-                    found = prefix + selector;
-                }
+                if ( exception ) { break; }
+                if ( fargs[1] !== selector ) { break; }
+                found = prefix + selector;
                 break;
             // Specific cosmetic filtering
+            // Generic exception
             case 8:
             // HTML filtering
             case 64:

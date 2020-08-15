@@ -1,0 +1,207 @@
+/**
+
+    References:
+      https://protocol.mozilla.org/
+      https://material.io/
+
+*/
+
+/**
+    Color names from:
+      https://protocol.mozilla.org/fundamentals/color.html
+*/
+:root {
+    --blue-10: #80ebff;
+    --blue-50: #0060df;
+    --blue-60: #0250bb;
+    --dark-gray-30: #42414d;
+    --dark-gray-50: #32313c;
+    --dark-gray-80: #1c1b22;
+    --dark-gray-90: #15141a;
+    --ink-20: #312a65;
+    --ink-50: #291d4f;
+    --ink-80: #20123a;
+    --ink-80-a4: #20123a0a;
+    --ink-80-a50: #20123a88;
+    --ink-90: #1d1133;
+    --light-gray-10: #f9f9fb;
+    --light-gray-10-a4: #f9f9fb0a;
+    --light-gray-10-a12: #f9f9fb1f;
+    --light-gray-10-a16: #f9f9fb29;
+    --light-gray-20: #f0f0f4;
+    --light-gray-30: #e0e0e6;
+    --light-gray-30-a50: #e0e0e680;
+    --light-gray-40: #cfcfd8;
+    --light-gray-50: #bfbfc9;
+    --light-gray-60: #afafba;
+    --light-gray-70: #9f9fad;
+    --light-gray-90: #80808f;
+    --red-60: #e22850;
+    --violet-40: #ab71ff;
+    --violet-70: #592acb;
+    --violet-80: #45278d;
+    --yellow-30: #ffd567;
+    --yellow-40: #ffbd4f;
+    --yellow-50: #ffa436;
+    --yellow-60: #e27f2e;
+    --black: #000;
+    --white: #fff;
+}
+
+/**
+    Font size
+*/
+:root {
+    --font-size: 14px;
+}
+
+:root.mobile {
+    --font-size: 16px;
+}
+
+/**
+    Components
+*/
+:root {
+    --font-size: 14px;
+
+    --default-ink: var(--ink-80);
+    --default-ink-a4: var(--ink-80-a4);
+    --default-ink-a50: var(--ink-80-a50);
+    --default-surface: var(--light-gray-10);
+    --default-surface-hover: var(--light-gray-30-a50);
+
+    --bg-1: hsla(240, 20%, 98%, 1);
+    --bg-1-border: hsla(240, 20%, 90%, 1);
+
+    --bg-overlay-50: #0008;
+
+    --bg-code: hsla(240, 20%, 93%, 1);
+
+    /* these fg colors are meant to render over bg colors */
+    --fg-0-80: hsla(261, 53%, 15%, 0.8);
+    --fg-0-70: hsla(261, 53%, 15%, 0.7);
+    --fg-0-60: hsla(261, 53%, 15%, 0.6);
+    --fg-0-50: hsla(261, 53%, 15%, 0.5);
+    --fg-0-40: hsla(261, 53%, 15%, 0.4);
+    --fg-0-30: hsla(261, 53%, 15%, 0.3);
+    --fg-0-20: hsla(261, 53%, 15%, 0.2);
+
+    --link-ink: var(--violet-70);
+
+    --fieldset-header-surface: transparent;
+    --fieldset-header-ink: var(--ink-20);
+
+    --hor-separator-color: var(--light-gray-30);
+
+    --button-surface: var(--light-gray-30);
+    --button-ink: var(--ink-20);
+    --button-surface-hover: var(--light-gray-40);
+    --button-active-surface: var(--blue-10);
+    --button-important-surface: var(--yellow-30);
+    --button-important-surface-hover: var(--yellow-40);
+    /* https://material.io/design/interaction/states.html#disabled */
+    --button-disabled-filter: opacity(38%);
+    --button-disabled-surface: var(--light-gray-30);
+    --button-disabled-ink: var(--ink-20);
+    --button-preferred-surface: var(--ink-20);
+    --button-preferred-ink: white;
+
+    --checkbox-size: calc(var(--font-size) + 2px);
+    --checkbox-ink: var(--light-gray-90);
+    --checkbox-checked-ink: var(--ink-20);
+
+    --select-surface: white;
+
+    --bg-transient-notice: hsla(60, 100%, 95%, 1);
+
+    --dashboard-bar-shadow:
+        0px 0px 0px 1px var(--default-ink-a4),
+        0px 1px 2px 0px #2200330a,
+        0px 2px 1px -1px #0730721f,
+        0px 1px 6px 0px #0e0d1a1f;
+    --dashboard-tab-ink: var(--default-ink);
+    --dashboard-tab-active-ink: var(--violet-70);
+    --dashboard-tab-surface-hover: var(--default-surface-hover);
+
+    --fg-icon-info-lvl-0-dimmed: #888;
+    --fg-icon-info-lvl-0: inherit;
+    --fg-icon-info-lvl-1-dimmed: hsla(240, 100%, 40%, 0.5);
+    --fg-icon-info-lvl-1: hsla(240, 100%, 40%, 1);
+    --info-lvl-2-ink: var(--yellow-50);
+    --info-lvl-2-ink-hover: var(--yellow-60);
+    --fg-icon-info-lvl-3-dimmed: hsla(16, 100%, 50%, 0.5);
+    --fg-icon-info-lvl-3: hsla(16, 100%, 50%, 1);
+    --fg-icon-info-lvl-4-dimmed: hsla(0, 100%, 35%, 0.5);
+    --fg-icon-info-lvl-4: hsla(0, 100%, 35%, 1);
+
+    --large-icon-info-lvl-2: hsla(41, 100%, 47%, 1);
+
+    --bg-tooltip: hsla(60, 100%, 97%, 1);
+    --fg-tooltip: var(--ink-80);
+
+    /* popup panel */
+    /* classic */
+    --bg-popup-cell-1: hsla(261, 0%, 93%, 1);
+    /* fenix */
+    --popup-power-ink: var(--blue-50);
+    --popup-power-disabled-ink: var(--light-gray-70);
+    --popup-power-ink-hover: var(--blue-60);
+    --bg-popup-cell-2: var(--light-gray-30);
+    --bg-popup-cell-label-filter: opacity(40%);
+    --fg-popup-cell-cname: hsla(240, 100%, 40%, 1);
+    --bg-popup-cell-allow: hsla(120, 40%, 75%, 1);
+    --bg-popup-cell-allow-own: hsla(120, 100%, 30%, 1);
+    --bg-popup-cell-noop: hsla(0, 0%, 75%, 1);
+    --bg-popup-cell-noop-own: hsla(0, 0%, 45%, 1);
+    --bg-popup-cell-block: hsla(0, 50%, 80%, 1);
+    --bg-popup-cell-block-own: hsla(0, 100%, 40%, 1);
+    --bg-popup-cell-label-mixed: hsla(45, 100%, 38%, 1);
+    --popup-icon-x-ink: var(--red-60);
+}
+
+/**
+    Use slightly darker inks on lower pixel-density devices to improve
+    contrast.
+*/
+:root:not(.hidpi) {
+    --default-ink: var(--ink-90);
+    --button-ink: var(--ink-90);
+    --fieldset-header-ink: var(--ink-50);
+    --link-ink: var(--violet-80);
+}
+
+/**
+    Source for color-blind color scheme from https://github.com/WyohKnott:
+      https://github.com/chrisaljoudi/uBlock/issues/467#issuecomment-95177219
+ */
+:root.colorBlind {
+    --bg-popup-cell-allow: hsla(42, 100%, 80%, 1);
+    --bg-popup-cell-allow-own: hsla(42, 100%, 50%, 1);
+    --bg-popup-cell-noop: hsla(0, 0%, 75%, 1);
+    --bg-popup-cell-noop-own: hsla(0, 0%, 45%, 1);
+    --bg-popup-cell-block: hsla(230, 25%, 75%, 1);
+    --bg-popup-cell-block-own: hsla(230, 100%, 25%, 1);
+    --bg-popup-cell-label-mixed: hsla(25, 100%, 50%, 1);
+}
+
+/**
+    Default dark theme starts here
+
+    Assign a default background color if dark mode is enabled -- hopefully
+    this will avoid flashes of white background until the document's own CSS
+    overrides the default color value below.
+    https://github.com/uBlockOrigin/uBlock-issues/issues/1027#issuecomment-629641072
+*/
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: var(--dark-gray-90);
+    }
+}
+
+:root.dark {
+}
+
+:root.dark.colorBlind {
+}

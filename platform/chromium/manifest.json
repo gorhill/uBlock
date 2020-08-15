@@ -9,7 +9,7 @@
       "32": "img/icon_32.png"
     },
     "default_title": "uBlock Origin",
-    "default_popup": "popup.html"
+    "default_popup": "popup-fenix.html"
   },
   "commands": {
     "launch-element-zapper": {
@@ -20,6 +20,9 @@
     },
     "launch-logger": {
       "description": "__MSG_popupTipLog__"
+    },
+    "open-dashboard": {
+      "description": "__MSG_popupTipDashboard__"
     },
     "relax-blocking-mode": {
       "description": "__MSG_relaxBlockingMode__"
@@ -83,7 +86,7 @@
   "storage": {
     "managed_schema": "managed_storage.json"
   },
-  "version": "1.26.0",
+  "version": "1.28.4",
   "web_accessible_resources": [
     "/web_accessible_resources/*"
   ]

@@ -1,5 +1,6 @@
 .codeMirrorContainer {
     font-size: 12px;
+    line-height: 1.25;
     overflow: hidden;
     position: relative;
     }
@@ -21,26 +22,50 @@
     word-break: break-all;
     }
 
+/* CodeMirror theme overrides */
+.cm-s-default .cm-value { color: #930; }
 .cm-s-default .cm-comment { color: #777; }
+.cm-s-default .cm-keyword { color: #90b; }
+.cm-s-default .cm-regex {
+    text-underline-position: under;
+    text-decoration-color: darkgray;
+    text-decoration-style: solid;
+    text-decoration-line: underline;
+    }
+.cm-s-default .cm-error {
+    color: inherit;
+    }
+.cm-s-default .cm-error,
+.CodeMirror-linebackground.error {
+    background-color: #ff000016;
+    text-decoration: underline red;
+    text-underline-position: under;
+    }
+
 .cm-directive { color: #333; font-weight: bold; }
 .cm-staticext { color: #008; }
 .cm-staticnetBlock { color: #800; }
 .cm-staticnetAllow { color: #004f00; }
 .cm-staticOpt { background-color: #777; font-weight: bold; }
 
+div.CodeMirror span.CodeMirror-matchingbracket {
+    color: unset;
+    }
+.CodeMirror-matchingbracket {
+    color: inherit !important;
+    font-weight: bold;
+    }
+
 .cm-search-widget {
     align-items: center;
-    background-color: #eee;
+    background-color: var(--bg-code);
     cursor: default;
     direction: ltr;
     display: flex;
     flex-shrink: 0;
     font-size: 110%;
     justify-content: center;
-    padding: 4px 8px;
-    /* position: absolute; */
-    right: 2em;
-    top: 0;
+    padding: 0.5em;
     user-select: none;
       -moz-user-select: none;
       -webkit-user-select: none;
@@ -57,11 +82,13 @@
     border: 1px solid gray;
     border-radius: 3px;
     display: inline-flex;
-    min-width: 16em;
+    max-width: 50vw;
+    width: 16em;
     }
 .cm-search-widget-input > input {
     border: 0;
     flex-grow: 1;
+    width: 100%;
     }
 .cm-search-widget-input > .cm-search-widget-count {
     align-items: center;
@@ -95,4 +122,12 @@
 .CodeMirror-merge-l-inserted {
     background-image: none;
     font-weight: bold;
+    }
+/* This probably needs to be added to CodeMirror repo */
+.CodeMirror-merge-gap {
+    vertical-align: top;
+    }
+
+.CodeMirror-hints {
+    z-index: 10000;
     }

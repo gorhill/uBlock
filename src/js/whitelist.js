@@ -52,13 +52,13 @@ CodeMirror.defineMode("ubo-whitelist-directives", function() {
             }
             if ( reComment.test(line) ) {
                 return whitelistDefaultSet.has(directiveFromLine(line))
-                    ? 'builtin comment'
+                    ? 'keyword comment'
                     : 'comment';
             }
             if ( line.indexOf('/') === -1 ) {
                 if ( reBadHostname.test(line) ) { return 'error'; }
                 if ( whitelistDefaultSet.has(line.trim()) ) {
-                    return 'builtin';
+                    return 'keyword';
                 }
                 return null;
             }

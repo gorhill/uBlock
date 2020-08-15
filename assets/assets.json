@@ -57,6 +57,11 @@
 			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt",
 			"assets/ublock/filters.txt"
 		],
+		"cdnURLs": [
+			"https://gitcdn.xyz/repo/uBlockOrigin/uAssets/master/filters/filters.txt",
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssets@master/filters/filters.txt",
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssets/master/filters/filters.txt"
+		],
 		"supportURL": "https://github.com/uBlockOrigin/uAssets/issues"
 	},
 	"ublock-badware": {
@@ -95,6 +100,11 @@
 		"contentURL": [
 			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/unbreak.txt",
 			"assets/ublock/unbreak.txt"
+		],
+		"cdnURLs": [
+			"https://gitcdn.xyz/repo/uBlockOrigin/uAssets/master/filters/unbreak.txt",
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssets@master/filters/unbreak.txt",
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssets/master/filters/unbreak.txt"
 		]
 	},
 	"adguard-generic": {
@@ -157,30 +167,21 @@
 		"contentURL": "https://www.fanboy.co.nz/enhancedstats.txt",
 		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
 	},
-	"malware-0": {
+	"urlhaus-1": {
 		"content": "filters",
 		"group": "malware",
-		"title": "Malware Domain List",
+		"title": "Online Malicious URL Blocklist",
 		"contentURL": [
-			"https://gitcdn.xyz/repo/NanoMeow/MDLMirror/master/hosts.txt",
-			"https://raw.githubusercontent.com/NanoMeow/MDLMirror/master/hosts.txt",
-			"https://www.malwaredomainlist.com/hostslist/hosts.txt",
-			"https://gitcdn.xyz/repo/NanoMeow/MDLMirror/master/filter.txt",
-			"https://raw.githubusercontent.com/NanoMeow/MDLMirror/master/filter.txt",
-			"assets/thirdparties/www.malwaredomainlist.com/hostslist/hosts.txt"
-		]
-	},
-	"malware-1": {
-		"content": "filters",
-		"group": "malware",
-		"title": "Malware domains",
-		"contentURL": [
-			"https://mirror.cedia.org.ec/malwaredomains/justdomains",
-			"https://mirror1.malwaredomains.com/files/justdomains",
-
-			"assets/thirdparties/mirror1.malwaredomains.com/files/justdomains"
+			"https://gitlab.com/curben/urlhaus-filter/raw/master/urlhaus-filter-online.txt",
+			"assets/thirdparties/urlhaus-filter/urlhaus-filter-online.txt"
 		],
-		"supportURL": "https://www.malwaredomains.com/"
+		"cdnURLs": [
+			"https://cdn.statically.io/gl/curben/urlhaus-filter/master/urlhaus-filter-online.txt",
+			"https://glcdn.githack.com/curben/urlhaus-filter/raw/master/urlhaus-filter-online.txt",
+			"https://gitcdn.xyz/repo/curbengh/urlhaus-filter/master/urlhaus-filter-online.txt",
+            "https://cdn.jsdelivr.net/gh/curbengh/urlhaus-filter/urlhaus-filter-online.txt"
+		],
+		"supportURL": "https://gitlab.com/curben/urlhaus-filter#urlhaus-malicious-url-blocklist"
 	},
 	"spam404-0": {
 		"content": "filters",
@@ -259,7 +260,12 @@
 		"group": "social",
 		"title": "uBlock filters – Annoyances",
 		"off": true,
-		"contentURL": "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/annoyances.txt"
+		"contentURL": "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/annoyances.txt",
+		"cdnURLs": [
+			"https://gitcdn.xyz/repo/uBlockOrigin/uAssets/master/filters/annoyances.txt",
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssets@master/filters/annoyances.txt",
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssets/master/filters/annoyances.txt"
+		]
 	},
 	"dpollock-0": {
 		"content": "filters",
@@ -476,8 +482,8 @@
 		"off": true,
 		"title": "LTU: EasyList Lithuania",
 		"lang": "lt",
-		"contentURL": "https://margevicius.lt/easylistlithuania.txt",
-		"supportURL": "https://margevicius.lt/2014/06/26/easylist_lithuania/"
+		"contentURL": "https://raw.githubusercontent.com/EasyList-Lithuania/easylist_lithuania/master/easylistlithuania.txt",
+		"supportURL": "https://github.com/EasyList-Lithuania/easylist_lithuania"
 	},
 	"LVA-0": {
 		"content": "filters",

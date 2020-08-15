@@ -1263,7 +1263,7 @@ const strictBlockBypasser = {
 return {
     start: (( ) => {
         vAPI.net = new vAPI.Net();
-        vAPI.net.suspend(true);
+        vAPI.net.suspend();
 
         return function() {
             vAPI.net.setSuspendableListener(onBeforeRequest);

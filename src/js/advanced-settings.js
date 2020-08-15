@@ -25,21 +25,51 @@
 
 /******************************************************************************/
 
-(( ) => {
+{
 // >>>> Start of private namespace
 
 /******************************************************************************/
 
-const noopFunc = function(){};
-
+let defaultSettings = new Map();
 let beforeHash = '';
+
+/******************************************************************************/
+
+CodeMirror.defineMode('raw-settings', function() {
+    let lastSetting = '';
+
+    return {
+        token: function(stream) {
+            if ( stream.sol() ) {
+                stream.eatSpace();
+                const match = stream.match(/\S+/);
+                if ( match !== null && defaultSettings.has(match[0]) ) {
+                    lastSetting = match[0];
+                    return 'keyword';
+                }
+                stream.skipToEnd();
+                return 'line-cm-error';
+            }
+            stream.eatSpace();
+            const match = stream.match(/.*$/);
+            if (
+                match !== null &&
+                match[0].trim() !== defaultSettings.get(lastSetting)
+            ) {
+                return 'line-cm-strong';
+            }
+            stream.skipToEnd();
+            return null;
+        }
+    };
+});
 
 const cmEditor = new CodeMirror(
     document.getElementById('advancedSettings'),
     {
         autofocus: true,
         lineNumbers: true,
-        lineWrapping: true,
+        lineWrapping: false,
         styleActiveLine: true
     }
 );
@@ -49,7 +79,41 @@ uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 /******************************************************************************/
 
 const hashFromAdvancedSettings = function(raw) {
-    return raw.trim().replace(/\s*[\n\r]+\s*/g, '\n').replace(/[ \t]+/g, ' ');
+    const aa = typeof raw === 'string'
+        ? arrayFromString(raw)
+        : arrayFromObject(raw);
+    aa.sort((a, b) => a[0].localeCompare(b[0]));
+    return JSON.stringify(aa);
+};
+
+/******************************************************************************/
+
+const arrayFromObject = function(o) {
+    const out = [];
+    for ( const k in o ) {
+        if ( o.hasOwnProperty(k) === false ) { continue; }
+        out.push([ k, `${o[k]}` ]);
+    }
+    return out;
+};
+
+const arrayFromString = function(s) {
+    const out = [];
+    for ( let line of s.split(/[\n\r]+/) ) {
+        line = line.trim();
+        if ( line === '' ) { continue; }
+        const pos = line.indexOf(' ');
+        let k, v;
+        if ( pos !== -1 ) {
+            k = line.slice(0, pos);
+            v = line.slice(pos + 1);
+        } else {
+            k = line;
+            v = '';
+        }
+        out.push([ k.trim(), v.trim() ]);
+    }
+    return out;
 };
 
 /******************************************************************************/
@@ -64,7 +128,7 @@ const advancedSettingsChanged = (( ) => {
         const changed =
             hashFromAdvancedSettings(cmEditor.getValue()) !== beforeHash;
         uDom.nodeFromId('advancedSettingsApply').disabled = !changed;
-        CodeMirror.commands.save = changed ? applyChanges : noopFunc;
+        CodeMirror.commands.save = changed ? applyChanges : function(){};
     };
 
     return function() {
@@ -78,21 +142,19 @@ cmEditor.on('changes', advancedSettingsChanged);
 /******************************************************************************/
 
 const renderAdvancedSettings = async function(first) {
-    const raw = await vAPI.messaging.send('dashboard', {
+    const details = await vAPI.messaging.send('dashboard', {
         what: 'readHiddenSettings',
     });
-
-    beforeHash = hashFromAdvancedSettings(raw);
+    defaultSettings = new Map(arrayFromObject(details.default));
+    beforeHash = hashFromAdvancedSettings(details.current);
     const pretty = [];
-    const lines = raw.split('\n');
+    const entries = arrayFromObject(details.current);
     let max = 0;
-    for ( const line of lines ) {
-        const pos = line.indexOf(' ');
-        if ( pos > max ) { max = pos; }
+    for ( const [ k ] of entries ) {
+        if ( k.length > max ) { max = k.length; }
     }
-    for ( const line of lines ) {
-        const pos = line.indexOf(' ');
-        pretty.push(' '.repeat(max - pos) + line);
+    for ( const [ k, v ] of entries ) {
+        pretty.push(' '.repeat(max - k.length) + `${k} ${v}`);
     }
     pretty.push('');
     cmEditor.setValue(pretty.join('\n'));
@@ -128,4 +190,4 @@ renderAdvancedSettings(true);
 /******************************************************************************/
 
 // <<<< End of private namespace
-})();
+}

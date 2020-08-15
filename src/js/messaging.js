@@ -184,6 +184,10 @@ const onMessage = function(request, sender, callback) {
         µb.toggleHostnameSwitch(request);
         break;
 
+    case 'uiStyles':
+        response = µb.hiddenSettings.uiStyles;
+        break;
+
     case 'userSettings':
         response = µb.changeUserSettings(request.name, request.value);
         if (typeof response === 'undefined') { // return notifications either way
@@ -292,17 +296,19 @@ const getFirewallRules = function(srcHostname, desHostnames) {
 const popupDataFromTabId = function(tabId, tabTitle) {
     const tabContext = µb.tabContextManager.mustLookup(tabId);
     const rootHostname = tabContext.rootHostname;
+    const µbus = µb.userSettings;
+    const µbhs = µb.hiddenSettings;
     const r = {
-        advancedUserEnabled: µb.userSettings.advancedUserEnabled,
+        advancedUserEnabled: µbus.advancedUserEnabled,
         appName: vAPI.app.name,
         appVersion: vAPI.app.version,
-        colorBlindFriendly: µb.userSettings.colorBlindFriendly,
+        colorBlindFriendly: µbus.colorBlindFriendly,
         cosmeticFilteringSwitch: false,
-        dfEnabled: µb.userSettings.dynamicFilteringEnabled,
-        firewallPaneMinimized: µb.userSettings.firewallPaneMinimized,
+        firewallPaneMinimized: µbus.firewallPaneMinimized,
         globalAllowedRequestCount: µb.localSettings.allowedRequestCount,
         globalBlockedRequestCount: µb.localSettings.blockedRequestCount,
-        fontSize: µb.hiddenSettings.popupFontSize,
+        fontSize: µbhs.popupFontSize,
+        godMode: µbhs.filterAuthorMode,
         netFilteringSwitch: false,
         rawURL: tabContext.rawURL,
         pageURL: tabContext.normalURL,
@@ -311,10 +317,18 @@ const popupDataFromTabId = function(tabId, tabTitle) {
         pageAllowedRequestCount: 0,
         pageBlockedRequestCount: 0,
         popupBlockedCount: 0,
+        popupPanelSections: µbus.popupPanelSections,
+        popupPanelDisabledSections: µbhs.popupPanelDisabledSections,
+        popupPanelLockedSections: µbhs.popupPanelLockedSections,
+        popupPanelHeightMode: µbhs.popupPanelHeightMode,
         tabId: tabId,
         tabTitle: tabTitle,
-        tooltipsDisabled: µb.userSettings.tooltipsDisabled
+        tooltipsDisabled: µbus.tooltipsDisabled
     };
+
+    if ( µbhs.uiPopupConfig !== 'undocumented' ) {
+        r.uiPopupConfig = µbhs.uiPopupConfig;
+    }
 
     const pageStore = µb.pageStoreFromTabId(tabId);
     if ( pageStore ) {
@@ -537,6 +551,7 @@ vAPI.messaging.listen({
 const µb = µBlock;
 
 const retrieveContentScriptParameters = function(senderDetails, request) {
+    if ( µb.readyToFilter !== true ) { return; }
     const { url, tabId, frameId } = senderDetails;
     if ( url === undefined || tabId === undefined || frameId === undefined ) {
         return;
@@ -766,11 +781,14 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
-    case 'compileCosmeticFilterSelector':
-        response = µb.staticExtFilteringEngine.compileSelector(
-            request.selector
-        );
+    case 'compileCosmeticFilterSelector': {
+        const parser = new vAPI.StaticFilteringParser();
+        parser.analyze(request.selector);
+        if ( (parser.flavorBits & parser.BITFlavorExtCosmetic) !== 0 ) {
+            response = parser.result.compiled;
+        }
         break;
+    }
 
     // https://github.com/gorhill/uBlock/issues/3497
     //   This needs to be removed once issue is fixed.
@@ -1180,6 +1198,10 @@ const onMessage = function(request, sender, callback) {
         response = µb.canUpdateShortcuts;
         break;
 
+    case 'getResourceDetails':
+        response = µb.redirectEngine.getResourceDetails();
+        break;
+
     case 'getRules':
         response = getRules();
         break;
@@ -1205,7 +1227,10 @@ const onMessage = function(request, sender, callback) {
         break;
 
     case 'readHiddenSettings':
-        response = µb.stringFromHiddenSettings();
+        response = {
+            current: µb.hiddenSettings,
+            default: µb.hiddenSettingsDefault,
+        };
         break;
 
     case 'restoreUserData':
@@ -1329,20 +1354,19 @@ const getURLFilteringData = function(details) {
 };
 
 const compileTemporaryException = function(filter) {
-    const match = /#@?#/.exec(filter);
-    if ( match === null ) { return; }
-    let selector = filter.slice(match.index + match[0].length).trim();
+    const parser = new vAPI.StaticFilteringParser();
+    parser.analyze(filter);
+    if ( parser.shouldDiscard() ) { return {}; }
+    let selector = parser.result.compiled;
     let session;
-    if ( selector.startsWith('+js') ) {
+    if ( (parser.flavorBits & parser.BITFlavorExtScriptlet) !== 0 ) {
         session = µb.scriptletFilteringEngine.getSession();
+    } else if ( (parser.flavorBits & parser.BITFlavorExtHTML) !== 0 ) {
+        session = µb.htmlFilteringEngine.getSession();
     } else {
-        if ( selector.startsWith('^') ) {
-            session = µb.htmlFilteringEngine.getSession();
-        } else {
-            session = µb.cosmeticFilteringEngine.getSession();
-        }
+        session = µb.cosmeticFilteringEngine.getSession();
     }
-    return { session, selector: session.compile(selector) };
+    return { session, selector };
 };
 
 const toggleTemporaryException = function(details) {
