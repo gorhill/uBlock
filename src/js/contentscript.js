@@ -14,7 +14,7 @@
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with this program.  If not, see {http://www.gnu.org/licenses/}.
+    along with this program.  If not, see { This starts bootstrap process.http://www.gnu.org/licenses/}.
 
     Home: https://github.com/gorhill/uBlock
 */
@@ -118,6 +118,57 @@ vAPI.contentScript = true;
 
 /******************************************************************************/
 /******************************************************************************/
+/******************************************************************************/
+
+// https://github.com/uBlockOrigin/uBlock-issues/issues/688#issuecomment-663657508
+{
+    let context = self;
+    try {
+        while (
+            context !== self.top &&
+            context.location.protocol === 'about:'
+        ) {
+            context = context.parent;
+        }
+    } catch(ex) {
+    }
+    vAPI.effectiveSelf = context;
+}
+
+/******************************************************************************/
+/******************************************************************************/
+/******************************************************************************/
+
+vAPI.userStylesheet = {
+    added: new Set(),
+    removed: new Set(),
+    apply: function(callback) {
+        if ( this.added.size === 0 && this.removed.size === 0 ) { return; }
+        vAPI.messaging.send('vapi', {
+            what: 'userCSS',
+            add: Array.from(this.added),
+            remove: Array.from(this.removed),
+        }).then(( ) => {
+            if ( callback instanceof Function === false ) { return; }
+            callback();
+        });
+        this.added.clear();
+        this.removed.clear();
+    },
+    add: function(cssText, now) {
+        if ( cssText === '' ) { return; }
+        this.added.add(cssText);
+        if ( now ) { this.apply(); }
+    },
+    remove: function(cssText, now) {
+        if ( cssText === '' ) { return; }
+        this.removed.add(cssText);
+        if ( now ) { this.apply(); }
+    }
+};
+
+/******************************************************************************/
+/******************************************************************************/
 /*******************************************************************************
 
   The purpose of SafeAnimationFrame is to take advantage of the behavior of
@@ -145,13 +196,12 @@ vAPI.useShadowDOM = false; // ADN
 
 // https://github.com/gorhill/uBlock/issues/2147
 
-vAPI.SafeAnimationFrame = function(callback) {
-    this.fid = this.tid = undefined;
-    this.callback = callback;
-};
-
-vAPI.SafeAnimationFrame.prototype = {
-    start: function(delay) {
+vAPI.SafeAnimationFrame = class {
+    constructor(callback) {
+        this.fid = this.tid = undefined;
+        this.callback = callback;
+    }
+    start(delay) {
         if ( self.vAPI instanceof Object === false ) { return; }
         if ( delay === undefined ) {
             if ( this.fid === undefined ) {
@@ -165,8 +215,8 @@ vAPI.SafeAnimationFrame.prototype = {
         if ( this.fid === undefined && this.tid === undefined ) {
             this.tid = vAPI.setTimeout(( ) => { this.macroToMicro(); }, delay);
         }
-    },
-    clear: function() {
+    }
+    clear() {
         if ( this.fid !== undefined ) {
             cancelAnimationFrame(this.fid);
             this.fid = undefined;
@@ -175,27 +225,27 @@ vAPI.SafeAnimationFrame.prototype = {
             clearTimeout(this.tid);
             this.tid = undefined;
         }
-    },
-    macroToMicro: function() {
+    }
+    macroToMicro() {
         this.tid = undefined;
         this.start();
-    },
-    onRAF: function() {
+    }
+    onRAF() {
         if ( this.tid !== undefined ) {
             clearTimeout(this.tid);
             this.tid = undefined;
         }
         this.fid = undefined;
         this.callback();
-    },
-    onSTO: function() {
+    }
+    onSTO() {
         if ( this.fid !== undefined ) {
             cancelAnimationFrame(this.fid);
             this.fid = undefined;
         }
         this.tid = undefined;
         this.callback();
-    },
+    }
 };
 
 /******************************************************************************/
@@ -271,7 +321,9 @@ vAPI.SafeAnimationFrame.prototype = {
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.domWatcher = (( ) => {
+// vAPI.domWatcher
+
+{
     vAPI.domMutationTime = Date.now();
 
     const addedNodeLists = [];
@@ -280,11 +332,11 @@ vAPI.domWatcher = (( ) => {
     const ignoreTags = new Set([ 'br', 'head', 'link', 'meta', 'script', 'style' ]);
     const listeners = [];
 
-    let domIsReady = false,
-        domLayoutObserver,
-        listenerIterator = [], listenerIteratorDirty = false,
-        removedNodes = false,
-        safeObserverHandlerTimer;
+    let domLayoutObserver;
+    let listenerIterator = [];
+    let listenerIteratorDirty = false;
+    let removedNodes = false;
+    let safeObserverHandlerTimer;
 
     const safeObserverHandler = function() {
         let i = addedNodeLists.length;
@@ -344,7 +396,7 @@ vAPI.domWatcher = (( ) => {
     };
 
     const startMutationObserver = function() {
-        if ( domLayoutObserver !== undefined || !domIsReady ) { return; }
+        if ( domLayoutObserver !== undefined ) { return; }
         domLayoutObserver = new MutationObserver(observerHandler);
         domLayoutObserver.observe(document.documentElement, {
             //attributeFilter: [ 'class', 'id' ],
@@ -374,7 +426,7 @@ vAPI.domWatcher = (( ) => {
         if ( listeners.indexOf(listener) !== -1 ) { return; }
         listeners.push(listener);
         listenerIteratorDirty = true;
-        if ( domIsReady !== true ) { return; }
+        if ( domLayoutObserver === undefined ) { return; }
         try { listener.onDOMCreated(); }
         catch (ex) { }
         startMutationObserver();
@@ -402,7 +454,6 @@ vAPI.domWatcher = (( ) => {
     };
 
     const start = function() {
-        domIsReady = true;
         for ( const listener of getListenerIterator() ) {
             try { listener.onDOMCreated(); }
             catch (ex) { }
@@ -410,8 +461,8 @@ vAPI.domWatcher = (( ) => {
         startMutationObserver();
     };
 
-    return { start, addListener, removeListener };
-})();
+    vAPI.domWatcher = { start, addListener, removeListener };
+}
 
 /******************************************************************************/
 /******************************************************************************/
@@ -440,15 +491,11 @@ vAPI.injectScriptlet = function(doc, text) {
 
   The DOM filterer is the heart of uBO's cosmetic filtering.
 
-  DOMBaseFilterer: platform-specific
-  |
-  |
-  +---- DOMFilterer: adds procedural cosmetic filtering
+  DOMFilterer: adds procedural cosmetic filtering
 
 */
 
-vAPI.DOMFilterer = (function() {
-
+{
     // 'P' stands for 'Procedural'
 
     const PSelectorHasTextTask = class {
@@ -530,8 +577,16 @@ vAPI.DOMFilterer = (function() {
     const PSelectorSpathTask = class {
         constructor(task) {
             this.spath = task[1];
+            this.nth = /^(?:\s*[+~]|:)/.test(this.spath);
+            if ( this.nth ) { return; }
+            if ( /^\s*>/.test(this.spath) ) {
+                this.spath = `:scope ${this.spath.trim()}`;
+            }
         }
-        transpose(node, output) {
+        qsa(node) {
+            if ( this.nth === false ) {
+                return node.querySelectorAll(this.spath);
+            }
             const parent = node.parentElement;
             if ( parent === null ) { return; }
             let pos = 1;
@@ -540,9 +595,13 @@ vAPI.DOMFilterer = (function() {
                 if ( node === null ) { break; }
                 pos += 1;
             }
-            const nodes = parent.querySelectorAll(
+            return parent.querySelectorAll(
                 `:scope > :nth-child(${pos})${this.spath}`
             );
+        }
+        transpose(node, output) {
+            const nodes = this.qsa(node);
+            if ( nodes === undefined ) { return; }
             for ( const node of nodes ) {
                 output.push(node);
             }
@@ -717,6 +776,9 @@ vAPI.DOMFilterer = (function() {
             this.mustApplySelectors = false;
             this.selectors = new Map();
             this.hiddenNodes = new Set();
+            if ( vAPI.domWatcher instanceof Object ) {
+                vAPI.domWatcher.addListener(this);
+            }
         }
 
         addProceduralSelectors(aa) {
@@ -828,7 +890,7 @@ vAPI.DOMFilterer = (function() {
 
         onDOMCreated() {
             this.domIsReady = true;
-            this.domFilterer.commitNow();
+            this.domFilterer.commit();
         }
 
         onDOMChanged(addedNodes, removedNodes) {
@@ -841,34 +903,217 @@ vAPI.DOMFilterer = (function() {
         }
     };
 
-    const DOMFilterer = class extends vAPI.DOMFilterer {
+    vAPI.DOMFilterer = class {
         constructor() {
-            super();
+            this.commitTimer = new vAPI.SafeAnimationFrame(
+                ( ) => { this.commitNow(); }
+            );
+            this.domIsReady = document.readyState !== 'loading';
+            this.disabled = false;
+            this.listeners = [];
+            this.filterset = new Set();
+            this.excludedNodeSet = new WeakSet();
+            this.addedCSSRules = new Set();
+            this.exceptedCSSRules = [];
+            this.reOnlySelectors = /\n\{[^\n]+/g;
             this.exceptions = [];
-            this.proceduralFilterer = new DOMProceduralFilterer(this);
+            this.proceduralFilterer = null;
             this.hideNodeAttr = undefined;
             this.hideNodeStyleSheetInjected = false;
-            if ( vAPI.domWatcher instanceof Object ) {
-                vAPI.domWatcher.addListener(this);
+            // https://github.com/uBlockOrigin/uBlock-issues/issues/167
+            //   By the time the DOMContentLoaded is fired, the content script might
+            //   have been disconnected from the background page. Unclear why this
+            //   would happen, so far seems to be a Chromium-specific behavior at
+            //   launch time.
+            if ( this.domIsReady !== true ) {
+                document.addEventListener('DOMContentLoaded', ( ) => {
+                    if ( vAPI instanceof Object === false ) { return; }
+                    this.domIsReady = true;
+                    this.commit();
+                });
             }
         }
 
+        addCSSRule(selectors, declarations, details = {}) {
+            if ( selectors === undefined ) { return; }
+            const selectorsStr = Array.isArray(selectors)
+                    ? selectors.join(',\n')
+                    : selectors;
+            if ( selectorsStr.length === 0 ) { return; }
+            const entry = {
+                selectors: selectorsStr,
+                declarations,
+                lazy: details.lazy === true,
+                injected: details.injected === true
+            };
+            this.addedCSSRules.add(entry);
+            this.filterset.add(entry);
+            if (
+                this.disabled === false &&
+                entry.lazy !== true &&
+                entry.injected !== true
+            ) {
+                vAPI.userStylesheet.add(`${selectorsStr}\n{${declarations}}`);
+            }
+            this.commit();
+            if ( details.silent !== true && this.hasListeners() ) {
+                this.triggerListeners({
+                    declarative: [ [ selectorsStr, declarations ] ]
+                });
+            }
+        }
+
+        exceptCSSRules(exceptions) {
+            if ( exceptions.length === 0 ) { return; }
+            this.exceptedCSSRules.push(...exceptions);
+            if ( this.hasListeners() ) {
+                this.triggerListeners({ exceptions });
+            }
+        }
+
+        addListener(listener) {
+            if ( this.listeners.indexOf(listener) !== -1 ) { return; }
+            this.listeners.push(listener);
+        }
+
+        removeListener(listener) {
+            const pos = this.listeners.indexOf(listener);
+            if ( pos === -1 ) { return; }
+            this.listeners.splice(pos, 1);
+        }
+
+        hasListeners() {
+            return this.listeners.length !== 0;
+        }
+
+        triggerListeners(changes) {
+            for ( const listener of this.listeners ) {
+                listener.onFiltersetChanged(changes);
+            }
+        }
+
+        excludeNode(node) {
+            this.excludedNodeSet.add(node);
+            this.unhideNode(node);
+        }
+
+        unexcludeNode(node) {
+            this.excludedNodeSet.delete(node);
+        }
+
+        hideNode(node) {
+            if ( this.excludedNodeSet.has(node) ) { return; }
+            if ( this.hideNodeAttr === undefined ) { return; }
+            node.setAttribute(this.hideNodeAttr, '');
+            if ( this.hideNodeStyleSheetInjected ) { return; }
+            this.hideNodeStyleSheetInjected = true;
+            this.addCSSRule(
+                `[${this.hideNodeAttr}]`,
+                'display:none!important;',
+                { silent: true }
+            );
+        }
+
+        unhideNode(node) {
+            if ( this.hideNodeAttr === undefined ) { return; }
+            node.removeAttribute(this.hideNodeAttr);
+        }
+
+        toggle(state, callback) {
+            if ( state === undefined ) { state = this.disabled; }
+            if ( state !== this.disabled ) { return; }
+            this.disabled = !state;
+            const userStylesheet = vAPI.userStylesheet;
+            for ( const entry of this.filterset ) {
+                const rule = `${entry.selectors}\n{${entry.declarations}}`;
+                if ( this.disabled ) {
+                    userStylesheet.remove(rule);
+                } else {
+                    userStylesheet.add(rule);
+                }
+            }
+            userStylesheet.apply(callback);
+        }
+
+        getAllSelectors_(all) {
+            const out = {
+                declarative: [],
+                exceptions: this.exceptedCSSRules,
+            };
+            for ( const entry of this.filterset ) {
+                let selectors = entry.selectors;
+                if ( all !== true && this.hideNodeAttr !== undefined ) {
+                    selectors = selectors
+                                    .replace(`[${this.hideNodeAttr}]`, '')
+                                    .replace(/^,\n|,\n$/gm, '');
+                    if ( selectors === '' ) { continue; }
+                }
+                out.declarative.push([ selectors, entry.declarations ]);
+            }
+            return out;
+        }
+
+        // Here we will deal with:
+        // - Injecting low priority user styles;
+        // - Notifying listeners about changed filterset.
+        // https://www.reddit.com/r/uBlockOrigin/comments/9jj0y1/no_longer_blocking_ads/
+        //   Ensure vAPI is still valid -- it can go away by the time we are
+        //   called, since the port could be force-disconnected from the main
+        //   process. Another approach would be to have vAPI.SafeAnimationFrame
+        //   register a shutdown job: to evaluate. For now I will keep the fix
+        //   trivial.
         commitNow() {
-            super.commitNow();
-            this.proceduralFilterer.commitNow();
+            this.commitTimer.clear();
+            if ( vAPI instanceof Object === false ) { return; }
+            const userStylesheet = vAPI.userStylesheet;
+            for ( const entry of this.addedCSSRules ) {
+                if (
+                    this.disabled === false &&
+                    entry.lazy &&
+                    entry.injected === false
+                ) {
+                    userStylesheet.add(
+                        `${entry.selectors}\n{${entry.declarations}}`
+                    );
+                }
+            }
+            this.addedCSSRules.clear();
+            userStylesheet.apply();
+            if ( this.proceduralFilterer instanceof Object ) {
+                this.proceduralFilterer.commitNow();
+            }
+        }
+
+        commit(commitNow) {
+            if ( commitNow ) {
+                this.commitTimer.clear();
+                this.commitNow();
+            } else {
+                this.commitTimer.start();
+            }
+        }
+
+        proceduralFiltererInstance() {
+            if ( this.proceduralFilterer instanceof Object === false ) {
+                this.proceduralFilterer = new DOMProceduralFilterer(this);
+            }
+            return this.proceduralFilterer;
         }
 
         addProceduralSelectors(aa) {
-            this.proceduralFilterer.addProceduralSelectors(aa);
+            if ( aa.length === 0 ) { return; }
+            this.proceduralFiltererInstance().addProceduralSelectors(aa);
         }
 
         createProceduralFilter(o) {
-            return this.proceduralFilterer.createProceduralFilter(o);
+            return this.proceduralFiltererInstance().createProceduralFilter(o);
         }
 
         getAllSelectors() {
-            const out = super.getAllSelectors();
-            out.procedural = Array.from(this.proceduralFilterer.selectors.values());
+            const out = this.getAllSelectors_(false);
+            out.procedural = this.proceduralFilterer instanceof Object
+                ? Array.from(this.proceduralFilterer.selectors.values())
+                : [];
             return out;
         }
 
@@ -876,34 +1121,23 @@ vAPI.DOMFilterer = (function() {
             return this.exceptions.join(',\n');
         }
 
-        onDOMCreated() {
-            if ( super.onDOMCreated instanceof Function ) {
-                super.onDOMCreated();
-            }
-            this.proceduralFilterer.onDOMCreated();
-        }
-
-        onDOMChanged() {
-            if ( super.onDOMChanged instanceof Function ) {
-                super.onDOMChanged.apply(this, arguments);
-            }
-            this.proceduralFilterer.onDOMChanged.apply(
-                this.proceduralFilterer,
-                arguments
-            );
+        getFilteredElementCount() {
+            const details = this.getAllSelectors_(true);
+            if ( Array.isArray(details.declarative) === false ) { return 0; }
+            const selectors = details.declarative.map(entry => entry[0]);
+            if ( selectors.length === 0 ) { return 0; }
+            return document.querySelectorAll(selectors.join(',\n')).length;
         }
     };
-
-    return DOMFilterer;
-})();
-
-vAPI.domFilterer = new vAPI.DOMFilterer();
+}
 
 /******************************************************************************/
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.domCollapser = (function() {
+// vAPI.domCollapser
+
+{
     const messaging = vAPI.messaging;
     const toCollapse = new Map();
     const src1stProps = {
@@ -1057,65 +1291,14 @@ vAPI.domCollapser = (function() {
         attributeFilter: [ 'src' ]
     };
 
-    // The injected scriptlets are those which were injected in the current
-    // document, from within `bootstrapPhase1`, and which scriptlets are
-    // selectively looked-up from:
-    // https://github.com/uBlockOrigin/uAssets/blob/master/filters/resources.txt
-    const primeLocalIFrame = function(iframe) {
-        if ( vAPI.injectedScripts ) {
-            vAPI.injectScriptlet(iframe.contentDocument, vAPI.injectedScripts);
-        }
-
-        // ADN: inject content-scripts into dynamically-created iframes (see #1197)
-        if (!navigator.userAgent.includes('Firefox/')) {
-
-            var sendInjectScripts = function (f) {
-
-                f = f || this;
-
-                if (f.contentWindow) {  // may not be allowed in cross-domain frames
-
-                    //console.log('injecting: ', iframe,  f.contentDocument.readyState);
-                    if (typeof f.contentWindow.chrome.runtime.connect === 'function') {
-                        f.contentWindow.chrome.runtime.connect().postMessage({
-                            channelName: "adnauseam",
-                            msg: {
-                                what: "injectContentScripts",
-                                parentUrl: location.href
-                            }
-                          });
-                    }
-                }
-                else {
-                    console.log('[CS] Ignored cross-domain (dynamic) iFrame', f);
-                }
-            }
-            try {
-              sendInjectScripts(iframe);
-              // iframe.onload = sendInjectScripts; // ADN: may still need this but I can't find a case
-            }
-            catch (e) {
-              console.warn('sendInjectScripts failed', e);
-            }
-          }
-
-    };
-
     // https://github.com/gorhill/uBlock/issues/162
-    // Be prepared to deal with possible change of src attribute.
+    //   Be prepared to deal with possible change of src attribute.
     const addIFrame = function(iframe, dontObserve) {
         if ( dontObserve !== true ) {
             iframeSourceObserver.observe(iframe, iframeSourceObserverOptions);
         }
         const src = iframe.src;
-        if ( src === '' || typeof src !== 'string' ) {
-            primeLocalIFrame(iframe);
-            return;
-        }
-        if ( src.startsWith('http') === false ) {
-            primeLocalIFrame(iframe);  // ADN: handle cases where src is 'about:blank'
-            return;
-        }
+        if ( typeof src !== 'string' || src === '' ) { return; }
         if ( src.startsWith('http') === false ) { return; }
         toFilter.push({ type: 'sub_frame', url: iframe.src });
         add(iframe);
@@ -1131,6 +1314,24 @@ vAPI.domCollapser = (function() {
         if ( tagToTypeMap[ev.target.localName] !== undefined ) {
             add(ev.target);
             process();
+        }
+    };
+
+    const stop = function() {
+        document.removeEventListener('error', onResourceFailed, true);
+        if ( processTimer !== undefined ) {
+            clearTimeout(processTimer);
+        }
+        if ( vAPI.domWatcher instanceof Object ) {
+            vAPI.domWatcher.removeListener(domWatcherInterface);
+        }
+        vAPI.shutdown.remove(stop);
+        vAPI.domCollapser = null;
+    };
+
+    const start = function() {
+        if ( vAPI.domWatcher instanceof Object ) {
+            vAPI.domWatcher.addListener(domWatcherInterface);
         }
     };
 
@@ -1164,12 +1365,7 @@ vAPI.domCollapser = (function() {
 
             document.addEventListener('error', onResourceFailed, true);
 
-            vAPI.shutdown.add(function() {
-                document.removeEventListener('error', onResourceFailed, true);
-                if ( processTimer !== undefined ) {
-                    clearTimeout(processTimer);
-                }
-            });
+            vAPI.shutdown.add(stop);
         },
         onDOMChanged: function(addedNodes) {
             if ( addedNodes.length === 0 ) { return; }
@@ -1187,18 +1383,16 @@ vAPI.domCollapser = (function() {
         }
     };
 
-    if ( vAPI.domWatcher instanceof Object ) {
-        vAPI.domWatcher.addListener(domWatcherInterface);
-    }
-
-    return { add, addMany, addIFrame, addIFrames, process };
-})();
+    vAPI.domCollapser = { start };
+}
 
 /******************************************************************************/
 /******************************************************************************/
 /******************************************************************************/
 
-vAPI.domSurveyor = (function() {
+// vAPI.domSurveyor
+
+{
     const messaging = vAPI.messaging;
     const queriedIds = new Set();
     const queriedClasses = new Set();
@@ -1466,19 +1660,18 @@ vAPI.domSurveyor = (function() {
         vAPI.domWatcher.addListener(domWatcherInterface);
     };
 
-    return { start };
-})();
+    vAPI.domSurveyor = { start };
+}
 
 /******************************************************************************/
 /******************************************************************************/
 /******************************************************************************/
 
-// Bootstrapping allows all components of the content script to be launched
-// if/when needed.
+// vAPI.bootstrap:
+//   Bootstrapping allows all components of the content script
+//   to be launched if/when needed.
 
-vAPI.bootstrap = (function() {
-
-    const bootstrapPhase2 = function(ev) {
+    const bootstrapPhase2 = function() {
         // ADN
         if (vAPI.domFilterer) {
           vAPI.domFilterer.filterset.forEach(function(c){
@@ -1560,11 +1753,13 @@ vAPI.bootstrap = (function() {
             return;
         }
 
+        vAPI.domCollapser.start();
+
         if ( response.noCosmeticFiltering ) {
             vAPI.domFilterer = null;
             vAPI.domSurveyor = null;
         } else {
-            const domFilterer = vAPI.domFilterer;
+            const domFilterer = vAPI.domFilterer = new vAPI.DOMFilterer();
             if ( response.noGenericCosmeticFiltering || cfeDetails.noDOMSurveying ) {
                 vAPI.domSurveyor = null;
             }
@@ -1630,17 +1825,17 @@ vAPI.bootstrap = (function() {
         }
     };
 
-    return function() {
+    vAPI.bootstrap = function() {
         vAPI.messaging.send('contentscript', {
             what: 'retrieveContentScriptParameters',
-            url: window.location.href,
-            isRootFrame: window === window.top,
+            url: vAPI.effectiveSelf.location.href,
+            isRootFrame: self === self.top,
             charset: document.characterSet,
         }).then(response => {
             bootstrapPhase1(response);
         });
     };
-})();
+// })()
 
 // This starts bootstrap process.
 vAPI.bootstrap();

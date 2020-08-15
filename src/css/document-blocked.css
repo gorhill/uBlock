@@ -63,6 +63,7 @@ a {
     color: var(--fg-0-60);
     cursor: pointer;
     fill: var(--fg-0-60);
+    font-size: 1rem;
     padding: var(--default-gap-xxsmall);
     position: absolute;
     transform: translate(0, -50%);

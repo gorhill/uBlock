@@ -552,8 +552,8 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Pokyny whitelistu určují, pro které webové stránky bude uBlock Origin zakázán. Jedna položka na řádek. Neplatné pokyny budou tiše ignorovány a zakomentovány.",
-    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+    "message": "Pravidla v seznamu povolených domén určují, pro které webové stránky bude uBlock Origin vypnutý. Jedna položka na řádek. Neplatná pravidla budou tiše ignorována a zakomentována.",
+    "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
     "message": "Importovat a připojit",
@@ -565,7 +565,7 @@
   },
   "whitelistExportFilename": {
     "message": "ublock-muj-whitelist_{{datetime}}.txt",
-    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+    "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
     "message": "Použít změny",

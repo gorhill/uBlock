@@ -18,7 +18,6 @@ bash ./tools/copy-common-files.sh  $DES
 
 cp platform/firefox/manifest.json      $DES/
 cp platform/firefox/webext.js          $DES/js/
-cp platform/firefox/vapi-usercss.js    $DES/js/
 cp platform/firefox/vapi-webrequest.js $DES/js/
 
 echo "*** AdNauseam.firefox: concatenating content scripts"

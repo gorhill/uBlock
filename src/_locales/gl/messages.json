@@ -553,7 +553,7 @@
   },
   "whitelistPrompt": {
     "message": "A lista branca é a túa lista de nomes de servidor nos que o uBlock₀ estará desactivado. Ten unha entrada por cada liña, e os nomes de servidor non válidos serán ignorados.",
-    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+    "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
     "message": "Importar e anexar",
@@ -565,7 +565,7 @@
   },
   "whitelistExportFilename": {
     "message": "o-meu-ublock-lista-branca_{{datetime}}.txt",
-    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+    "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
     "message": "Aplicar os cambios",

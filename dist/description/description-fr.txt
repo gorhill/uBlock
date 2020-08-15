@@ -1,6 +1,6 @@
 uBlock₀ est un bloqueur efficace de publicités et de pisteurs. Utilisant peu de mémoire vive et de ressources du processeur, il est pourtant capable d'appliquer des milliers de filtres de plus que d'autres bloqueurs populaires.
 
-Consultez cette page en Anglais pour avoir une vue d'ensemble illustrée de son efficacité : https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+Consultez cette page en anglais pour avoir une vue d'ensemble illustrée de son efficacité : https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
 Utilisation : Le gros bouton "Power" dans la fenêtre pop-up permet de désactiver/activer en permanence uBlock₀ pour le site Web en cours de consultation. Cela s'applique uniquement au site Web actuel, ce n'est pas un bouton "Power" global.
 
@@ -38,10 +38,10 @@ Gratuit.
 Source libre sous licence publique GPLv3
 Conçu par des utilisateurs pour des utilisateurs.
 
-Contributeurs sur Github : https://github.com/gorhill/uBlock/graphs/contributors
+Contributeurs sur GitHub : https://github.com/gorhill/uBlock/graphs/contributors
 Contributeurs sur Crowdin : https://crowdin.net/project/ublock
 
 ***
 
-Consultez ici en Anglais le Journal des changements concernant le projet :
+Journal des changements du projet (en anglais) :
 https://github.com/gorhill/uBlock/releases

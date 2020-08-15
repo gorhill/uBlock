@@ -172,15 +172,19 @@
     })();
 
     // TODO: Probably should move this into StaticFilteringParser
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1031
+    //   Normalize scriptlet name to its canonical, unaliased name.
     const normalizeRawFilter = function(rawFilter) {
-        let rawToken = rawFilter.slice(4, -1);
-        let rawEnd = rawToken.length;
+        const rawToken = rawFilter.slice(4, -1);
+        const rawEnd = rawToken.length;
         let end = rawToken.indexOf(',');
-        if ( end === -1 ) {
-            end = rawEnd;
-        }
-        let token = rawToken.slice(0, end).trim();
-        let normalized = token.endsWith('.js') ? token.slice(0, -3) : token;
+        if ( end === -1 ) { end = rawEnd; }
+        const token = rawToken.slice(0, end).trim();
+        const alias = token.endsWith('.js') ? token.slice(0, -3) : token;
+        let normalized = µb.redirectEngine.aliases.get(`${alias}.js`);
+        normalized = normalized === undefined
+            ? alias
+            : normalized.slice(0, -3);
         let beg = end + 1;
         while ( beg < rawEnd ) {
             end = rawToken.indexOf(',', beg);
@@ -471,10 +475,10 @@
     api.benchmark = async function() {
         const requests = await µb.loadBenchmarkDataset();
         if ( Array.isArray(requests) === false || requests.length === 0 ) {
-            console.info('No requests found to benchmark');
+            log.print('No requests found to benchmark');
             return;
         }
-        console.info('Benchmarking scriptletFilteringEngine.retrieve()...');
+        log.print('Benchmarking scriptletFilteringEngine.retrieve()...');
         const details = {
             domain: '',
             entity: '',
@@ -496,8 +500,8 @@
         }
         const t1 = self.performance.now();
         const dur = t1 - t0;
-        console.info(`Evaluated ${count} requests in ${dur.toFixed(0)} ms`);
-        console.info(`\tAverage: ${(dur / count).toFixed(3)} ms per request`);
+        log.print(`Evaluated ${count} requests in ${dur.toFixed(0)} ms`);
+        log.print(`\tAverage: ${(dur / count).toFixed(3)} ms per request`);
     };
 
     return api;

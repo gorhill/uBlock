@@ -149,24 +149,37 @@ self.uBlockDashboard.patchCodeMirrorEditor = (function() {
     let lastGutterClick = 0;
     let lastGutterLine = 0;
 
-    const onGutterClicked = function(cm, line) {
+    const onGutterClicked = function(cm, line, gutter) {
+        if ( gutter !== 'CodeMirror-linenumbers' ) { return; }
+        grabFocusAsync(cm);
         const delta = Date.now() - lastGutterClick;
+        // Single click
         if ( delta >= 500 || line !== lastGutterLine ) {
             cm.setSelection(
-                { line: line, ch: 0 },
+                { line, ch: 0 },
                 { line: line + 1, ch: 0 }
             );
             lastGutterClick = Date.now();
             lastGutterLine = line;
-        } else {
-            cm.setSelection(
-                { line: 0, ch: 0 },
-                { line: cm.lineCount(), ch: 0 },
-                { scroll: false }
-            );
-            lastGutterClick = 0;
+            return;
         }
-        grabFocusAsync(cm);
+        // Double click: select fold-able block or all
+        let lineFrom = 0;
+        let lineTo = cm.lineCount();
+        const foldFn = cm.getHelper({ line, ch: 0 }, 'fold');
+        if ( foldFn instanceof Function ) {
+            const range = foldFn(cm, { line, ch: 0 });
+            if ( range !== undefined ) {
+                lineFrom = range.from.line;
+                lineTo = range.to.line + 1;
+            }
+        }
+        cm.setSelection(
+            { line: lineFrom, ch: 0 },
+            { line: lineTo, ch: 0 },
+            { scroll: false }
+        );
+        lastGutterClick = 0;
     };
 
     return function(cm) {
