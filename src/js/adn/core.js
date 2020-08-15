@@ -1175,7 +1175,7 @@
     const lists = listsForFilter(snfeData);
 
     if (Object.keys(lists).length === 0) {                                // case A
-      logNetBlock('User List', snfeData.raw); // always block
+      snfeData && logNetBlock('User List', snfeData.raw); // always block
       return true;
     }
 

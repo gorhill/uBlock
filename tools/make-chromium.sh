@@ -18,19 +18,6 @@ mkdir -p $DES
 echo "*** AdNauseam.chromium: copying common files"
 bash ./tools/copy-common-files.sh  $DES
 
-echo "*** AdNauseam.chromium: concatenating content scripts"
-cat $DES/js/vapi-usercss.js > /tmp/contentscript.js
-echo >> /tmp/contentscript.js
-grep -v "^'use strict';$" $DES/js/vapi-usercss.real.js >> /tmp/contentscript.js
-echo >> /tmp/contentscript.js
-grep -v "^'use strict';$" $DES/js/vapi-usercss.pseudo.js >> /tmp/contentscript.js
-echo >> /tmp/contentscript.js
-grep -v "^'use strict';$" $DES/js/contentscript.js >> /tmp/contentscript.js
-mv /tmp/contentscript.js $DES/js/contentscript.js
-rm $DES/js/vapi-usercss.js
-rm $DES/js/vapi-usercss.real.js
-rm $DES/js/vapi-usercss.pseudo.js
-
 # Chrome store-specific
 [[ -e $DES/_locales/nb ]] && cp -R $DES/_locales/nb $DES/_locales/no
 
