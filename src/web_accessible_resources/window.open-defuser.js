@@ -59,7 +59,7 @@
     }
     const rePattern = new RegExp(pattern);
     const createDecoy = function(tag, urlProp, url) {
-        const decoy = document.createElement('iframe');
+        const decoy = document.createElement(tag);
         decoy[urlProp] = url;
         decoy.style.setProperty('height','1px', 'important');
         decoy.style.setProperty('position','fixed', 'important');
