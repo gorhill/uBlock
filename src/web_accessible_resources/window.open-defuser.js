@@ -58,6 +58,17 @@
         pattern = pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
     const rePattern = new RegExp(pattern);
+    const createDecoy = function(tag, urlProp, url) {
+        const decoy = document.createElement('iframe');
+        decoy[urlProp] = url;
+        decoy.style.setProperty('height','1px', 'important');
+        decoy.style.setProperty('position','fixed', 'important');
+        decoy.style.setProperty('top','-1px', 'important');
+        decoy.style.setProperty('width','1px', 'important');
+        document.body.appendChild(decoy);
+        setTimeout(( ) => decoy.remove(), autoRemoveAfter * 1000);
+        return decoy;
+    };
     window.open = new Proxy(window.open, {
         apply: function(target, thisArg, args) {
             log('window.open:', ...args);
@@ -66,15 +77,11 @@
                 return target.apply(thisArg, args);
             }
             if ( autoRemoveAfter < 0 ) { return null; }
-            const iframe = document.createElement('iframe');
-            iframe.src = url;
-            iframe.style.setProperty('display','none', 'important');
-            iframe.style.setProperty('height','1px', 'important');
-            iframe.style.setProperty('width','1px', 'important');
-            document.body.appendChild(iframe);
-            setTimeout(( ) => iframe.remove(), autoRemoveAfter * 1000);
-            if ( arg3 === '' ) { return iframe.contentWindow; }
-            return new Proxy(iframe.contentWindow, {
+            const decoy1 = createDecoy('iframe', 'src', url);
+            const decoy2 = createDecoy('object', 'data', url);
+            const popup = decoy1.contentWindow || decoy2.contentWindow;
+            if ( arg3 === '' ) { return popup; }
+            return new Proxy(popup, {
                 get: function(target, prop) {
                     log('window.open / get', prop, '===', target[prop]);
                     return target[prop];
