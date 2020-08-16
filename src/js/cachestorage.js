@@ -195,22 +195,48 @@
             return dbPromise;
         };
 
+        const fromBlob = function(data) {
+            if ( data instanceof Blob === false ) {
+                return Promise.resolve(data);
+            }
+            return new Promise(resolve => {
+                const blobReader = new FileReader();
+                blobReader.onloadend = ev => {
+                    resolve(new Uint8Array(ev.target.result));
+                };
+                blobReader.readAsArrayBuffer(data);
+            });
+        };
+
+        const toBlob = function(data) {
+            const value = data instanceof Uint8Array
+                ? new Blob([ data ])
+                : data;
+            return Promise.resolve(value);
+        };
+
+        const compress = function(store, key, data) {
+            return µBlock.lz4Codec.encode(data, toBlob).then(value => {
+                store.push({ key, value });
+            });
+        };
+
+        const decompress = function(store, key, data) {
+            return µBlock.lz4Codec.decode(data, fromBlob).then(data => {
+                store[key] = data;
+            });
+        };
+
         const getFromDb = async function(keys, keyvalStore, callback) {
             if ( typeof callback !== 'function' ) { return; }
             if ( keys.length === 0 ) { return callback(keyvalStore); }
             const promises = [];
             const gotOne = function() {
                 if ( typeof this.result !== 'object' ) { return; }
-                keyvalStore[this.result.key] = this.result.value;
-                if ( this.result.value instanceof Blob === false ) { return; }
-                promises.push(
-                    µBlock.lz4Codec.decode(
-                        this.result.key,
-                        this.result.value
-                    ).then(result => {
-                        keyvalStore[result.key] = result.data;
-                    })
-                );
+                const { key, value } = this.result;
+                keyvalStore[key] = value;
+                if ( value instanceof Blob === false ) { return; }
+                promises.push(decompress(keyvalStore, key, value));
             };
             try {
                 const db = await getDb();
@@ -265,16 +291,10 @@
                     });
                     return;
                 }
-                keyvalStore[entry.key] = entry.value;
+                const { key, value } = entry;
+                keyvalStore[key] = value;
                 if ( entry.value instanceof Blob === false ) { return; }
-                promises.push(
-                    µBlock.lz4Codec.decode(
-                        entry.key,
-                        entry.value
-                    ).then(result => {
-                        keyvalStore[result.key] = result.value;
-                    })
-                );
+                promises.push(decompress(keyvalStore, key, value));
             }).catch(reason => {
                 console.info(`cacheStorage.getAllFromDb() failed: ${reason}`);
                 callback();
@@ -297,19 +317,14 @@
             const entries = [];
             const dontCompress =
                 µBlock.hiddenSettings.cacheStorageCompression !== true;
-            const handleEncodingResult = result => {
-                entries.push({ key: result.key, value: result.data });
-            };
             for ( const key of keys ) {
-                const data = keyvalStore[key];
-                const isString = typeof data === 'string';
+                const value = keyvalStore[key];
+                const isString = typeof value === 'string';
                 if ( isString === false || dontCompress ) {
-                    entries.push({ key, value: data });
+                    entries.push({ key, value });
                     continue;
                 }
-                promises.push(
-                    µBlock.lz4Codec.encode(key, data).then(handleEncodingResult)
-                );
+                promises.push(compress(entries, key, value));
             }
             const finish = ( ) => {
                 if ( callback === undefined ) { return; }

@@ -48,7 +48,7 @@ if ( self.cloud.datakey === '' ) { return; }
 /******************************************************************************/
 
 const fetchStorageUsed = async function() {
-    const elem = widget.querySelector('#cloudCapacity');
+    let elem = widget.querySelector('#cloudCapacity');
     if ( elem.classList.contains('hide') ) { return; }
     const result = await vAPI.messaging.send('cloudWidget', {
         what: 'cloudUsed',
@@ -58,10 +58,16 @@ const fetchStorageUsed = async function() {
         elem.classList.add('hide');
         return;
     }
+    const units = ' ' + vAPI.i18n('genericBytes');
+    elem.title = result.max.toLocaleString() + units;
     const total = (result.total / result.max * 100).toFixed(1);
-    elem.firstElementChild.style.width = `${total}%`;
+    elem = elem.firstElementChild;
+    elem.style.width = `${total}%`;
+    elem.title = result.total.toLocaleString() + units;
     const used = (result.used / result.total * 100).toFixed(1);
-    elem.firstElementChild.firstElementChild.style.width = `${used}%`;
+    elem = elem.firstElementChild;
+    elem.style.width = `${used}%`;
+    elem.title = result.used.toLocaleString() + units;
 };
 
 /******************************************************************************/

@@ -1540,10 +1540,10 @@ vAPI.cloud = (( ) => {
     // good thing given chrome.storage.sync.MAX_WRITE_OPERATIONS_PER_MINUTE
     // and chrome.storage.sync.MAX_WRITE_OPERATIONS_PER_HOUR.
 
-    const getCoarseChunkCount = async function(dataKey) {
+    const getCoarseChunkCount = async function(datakey) {
         const keys = {};
         for ( let i = 0; i < maxChunkCountPerItem; i += 16 ) {
-            keys[dataKey + i.toString()] = '';
+            keys[datakey + i.toString()] = '';
         }
         let bin;
         try {
@@ -1553,13 +1553,13 @@ vAPI.cloud = (( ) => {
         }
         let chunkCount = 0;
         for ( let i = 0; i < maxChunkCountPerItem; i += 16 ) {
-            if ( bin[dataKey + i.toString()] === '' ) { break; }
+            if ( bin[datakey + i.toString()] === '' ) { break; }
             chunkCount = i + 16;
         }
         return chunkCount;
     };
 
-    const deleteChunks = function(dataKey, start) {
+    const deleteChunks = function(datakey, start) {
         const keys = [];
 
         // No point in deleting more than:
@@ -1570,34 +1570,37 @@ vAPI.cloud = (( ) => {
             Math.ceil(maxStorageSize / maxChunkSize)
         );
         for ( let i = start; i < n; i++ ) {
-            keys.push(dataKey + i.toString());
+            keys.push(datakey + i.toString());
         }
         if ( keys.length !== 0 ) {
             webext.storage.sync.remove(keys);
         }
     };
 
-    const push = async function(dataKey, data) {
-        let bin = {
-            'source': options.deviceName || options.defaultDeviceName,
-            'tstamp': Date.now(),
-            'data': data,
-            'size': 0
+    const push = async function(details) {
+        const { datakey, data, encode } = details;
+        const item = {
+            source: options.deviceName || options.defaultDeviceName,
+            tstamp: Date.now(),
+            data,
         };
-        bin.size = JSON.stringify(bin).length;
-        const item = JSON.stringify(bin);
+        const json = JSON.stringify(item);
+        const encoded = encode instanceof Function
+            ? await encode(json)
+            : json;
 
         // Chunkify taking into account QUOTA_BYTES_PER_ITEM:
         //   https://developer.chrome.com/extensions/storage#property-sync
         //   "The maximum size (in bytes) of each individual item in sync
         //   "storage, as measured by the JSON stringification of its value
         //   "plus its key length."
-        bin = {};
-        let chunkCount = Math.ceil(item.length / maxChunkSize);
+        const bin = {};
+        const chunkCount = Math.ceil(encoded.length / maxChunkSize);
         for ( let i = 0; i < chunkCount; i++ ) {
-            bin[dataKey + i.toString()] = item.substr(i * maxChunkSize, maxChunkSize);
+            bin[datakey + i.toString()]
+                = encoded.substr(i * maxChunkSize, maxChunkSize);
         }
-        bin[dataKey + chunkCount.toString()] = ''; // Sentinel
+        bin[datakey + chunkCount.toString()] = ''; // Sentinel
 
         try {
             await webext.storage.sync.set(bin);
@@ -1606,18 +1609,19 @@ vAPI.cloud = (( ) => {
         }
 
         // Remove potentially unused trailing chunks
-        deleteChunks(dataKey, chunkCount);
+        deleteChunks(datakey, chunkCount);
     };
 
-    const pull = async function(dataKey) {
+    const pull = async function(details) {
+        const { datakey, decode } = details;
 
-        const result = await getCoarseChunkCount(dataKey);
+        const result = await getCoarseChunkCount(datakey);
         if ( typeof result !== 'number' ) {
             return result;
         }
         const chunkKeys = {};
         for ( let i = 0; i < result; i++ ) {
-            chunkKeys[dataKey + i.toString()] = '';
+            chunkKeys[datakey + i.toString()] = '';
         }
 
         let bin;
@@ -1633,31 +1637,35 @@ vAPI.cloud = (( ) => {
         //   happen when the number of chunks is a multiple of
         //   chunkCountPerFetch. Hence why we must also test against
         //   undefined.
-        let json = [], jsonSlice;
+        let encoded = [];
         let i = 0;
         for (;;) {
-            jsonSlice = bin[dataKey + i.toString()];
-            if ( jsonSlice === '' || jsonSlice === undefined ) { break; }
-            json.push(jsonSlice);
+            const slice = bin[datakey + i.toString()];
+            if ( slice === '' || slice === undefined ) { break; }
+            encoded.push(slice);
             i += 1;
         }
+        encoded = encoded.join('');
+        const json = decode instanceof Function
+            ? await decode(encoded)
+            : encoded;
         let entry = null;
         try {
-            entry = JSON.parse(json.join(''));
+            entry = JSON.parse(json);
         } catch(ex) {
         }
         return entry;
     };
 
-    const used = async function(dataKey) {
+    const used = async function(datakey) {
         if ( webext.storage.sync.getBytesInUse instanceof Function === false ) {
             return;
         }
-        const coarseCount = await getCoarseChunkCount(dataKey);
+        const coarseCount = await getCoarseChunkCount(datakey);
         if ( typeof coarseCount !== 'number' ) { return; }
         const keys = [];
         for ( let i = 0; i < coarseCount; i++ ) {
-            keys.push(`${dataKey}${i}`);
+            keys.push(`${datakey}${i}`);
         }
         let results;
         try {

@@ -47,6 +47,7 @@ const µBlock = (( ) => { // jshint ignore:line
         cacheStorageAPI: 'unset',
         cacheStorageCompression: true,
         cacheControlForFirefox1376932: 'no-cache, no-store, must-revalidate',
+        cloudStorageCompression: false,
         cnameIgnoreList: 'unset',
         cnameIgnore1stParty: true,
         cnameIgnoreExceptions: true,
