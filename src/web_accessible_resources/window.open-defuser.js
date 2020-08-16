@@ -80,6 +80,7 @@
             const decoy1 = createDecoy('iframe', 'src', url);
             const decoy2 = createDecoy('object', 'data', url);
             const popup = decoy1.contentWindow || decoy2.contentWindow;
+            Object.defineProperty(popup, 'closed', { value: false });
             if ( arg3 === '' ) { return popup; }
             return new Proxy(popup, {
                 get: function(target, prop) {
