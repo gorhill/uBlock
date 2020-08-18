@@ -387,10 +387,13 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         this.hiddenSettings.autoCommentFilterTemplate.indexOf('{{') !== -1
     ) {
         const d = new Date();
+        // Date in YYYY-MM-DD format - https://stackoverflow.com/a/50130338
+        const ISO8061Date = new Date(d.getTime() +
+            (d.getTimezoneOffset()*60000)).toISOString().split('T')[0];
         comment =
             '! ' +
             this.hiddenSettings.autoCommentFilterTemplate
-                .replace('{{date}}', d.toLocaleDateString())
+                .replace('{{date}}', ISO8061Date)
                 .replace('{{time}}', d.toLocaleTimeString())
                 .replace('{{origin}}', options.origin);
     }
@@ -767,12 +770,15 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     // Extract update frequency information
     const matches = head.match(/(?:^|\n)(?:!|# )[\t ]*Expires[\t ]*:[\t ]*(\d+)[\t ]*(h)?/i);
     if ( matches !== null ) {
-        let v = Math.max(parseInt(matches[1], 10), 1);
-        if ( matches[2] !== undefined ) {
-            v = Math.ceil(v / 24);
-        }
-        if ( v !== listEntry.updateAfter ) {
-            this.assets.registerAssetSource(assetKey, { updateAfter: v });
+        let v = parseInt(matches[1], 10);
+        if ( isNaN(v) === false ) {
+            if ( matches[2] !== undefined ) {
+                v = Math.ceil(v / 24);
+            }
+            v = Math.max(v, 1);
+            if ( v !== listEntry.updateAfter ) {
+                this.assets.registerAssetSource(assetKey, { updateAfter: v });
+            }
         }
     }
 };
@@ -806,7 +812,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     //    https://adblockplus.org/en/filters
     const staticNetFilteringEngine = this.staticNetFilteringEngine;
     const staticExtFilteringEngine = this.staticExtFilteringEngine;
-    const lineIter = new this.LineIterator(this.processDirectives(rawText));
+    const lineIter = new this.LineIterator(this.preparseDirectives.prune(rawText));
     const parser = new vAPI.StaticFilteringParser();
 
     parser.setMaxTokenLength(this.urlTokenizer.MAX_TOKEN_LENGTH);
@@ -832,7 +838,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
         // https://github.com/gorhill/uBlock/issues/2599
         //   convert hostname to punycode if needed
-        if ( parser.patternHasUnicode() && parser.toPunycode() === false ) {
+        if ( parser.patternHasUnicode() && parser.toASCII() === false ) {
             continue;
         }
         staticNetFilteringEngine.compile(parser, writer);
@@ -903,68 +909,107 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
 // https://github.com/AdguardTeam/AdguardBrowserExtension/issues/917
 
-µBlock.processDirectives = function(content) {
-    const reIf = /^!#(if|endif)\b([^\n]*)/gm;
-    const stack = [];
-    const shouldDiscard = ( ) => stack.some(v => v);
-    const parts = [];
-    let  beg = 0, discard = false;
+µBlock.preparseDirectives = {
+    // This method returns an array of indices, corresponding to position in
+    // the content string which should alternatively be parsed and discarded.
+    split: function(content) {
+        const reIf = /^!#(if|endif)\b([^\n]*)(?:[\n\r]+|$)/gm;
+        const soup = vAPI.webextFlavor.soup;
+        const stack = [];
+        const shouldDiscard = ( ) => stack.some(v => v);
+        const parts = [ 0 ];
+        let discard = false;
 
-    while ( beg < content.length ) {
-        const match = reIf.exec(content);
-        if ( match === null ) { break; }
+        for (;;) {
+            const match = reIf.exec(content);
+            if ( match === null ) { break; }
 
-        switch ( match[1] ) {
-        case 'if':
-            let expr = match[2].trim();
-            const target = expr.charCodeAt(0) === 0x21 /* '!' */;
-            if ( target ) { expr = expr.slice(1); }
-            const token = this.processDirectives.tokens.get(expr);
-            const startDiscard =
-                token === 'false' &&
-                    target === false ||
-                token !== undefined &&
-                    vAPI.webextFlavor.soup.has(token) === target;
-            if ( discard === false && startDiscard ) {
-                parts.push(content.slice(beg, match.index));
-                discard = true;
+            switch ( match[1] ) {
+            case 'if':
+                let expr = match[2].trim();
+                const target = expr.charCodeAt(0) === 0x21 /* '!' */;
+                if ( target ) { expr = expr.slice(1); }
+                const token = this.tokens.get(expr);
+                const startDiscard =
+                    token === 'false' && target === false ||
+                    token !== undefined && soup.has(token) === target;
+                if ( discard === false && startDiscard ) {
+                    parts.push(match.index);
+                    discard = true;
+                }
+                stack.push(startDiscard);
+                break;
+
+            case 'endif':
+                stack.pop();
+                const stopDiscard = shouldDiscard() === false;
+                if ( discard && stopDiscard ) {
+                    parts.push(match.index + match[0].length);
+                    discard = false;
+                }
+                break;
+
+            default:
+                break;
             }
-            stack.push(startDiscard);
-            break;
-
-        case 'endif':
-            stack.pop();
-            const stopDiscard = shouldDiscard() === false;
-            if ( discard && stopDiscard ) {
-                beg = match.index + match[0].length + 1;
-                discard = false;
-            }
-            break;
-
-        default:
-            break;
         }
-    }
 
-    if ( stack.length === 0 && parts.length !== 0 ) {
-        parts.push(content.slice(beg));
-        content = parts.join('\n');
-    }
-    return content.trim();
+        parts.push(content.length);
+        return parts;
+    },
+
+    prune: function(content) {
+        const parts = this.split(content);
+        const out = [];
+        for ( let i = 0, n = parts.length - 1; i < n; i += 2 ) {
+            const beg = parts[i+0];
+            const end = parts[i+1];
+            out.push(content.slice(beg, end));
+        }
+        return out.join('\n');
+    },
+
+    getHints: function() {
+        const out = [];
+        const vals = new Set();
+        for ( const [ key, val ] of this.tokens ) {
+            if ( vals.has(val) ) { continue; }
+            vals.add(val);
+            out.push(key);
+        }
+        return out;
+    },
+
+    getTokens: function() {
+        const out = new Map();
+        const soup = vAPI.webextFlavor.soup;
+        for ( const [ key, val ] of this.tokens ) {
+            out.set(key, val !== 'false' && soup.has(val));
+        }
+        return Array.from(out);
+    },
+
+    tokens: new Map([
+        [ 'ext_ublock', 'ublock' ],
+        [ 'env_chromium', 'chromium' ],
+        [ 'env_edge', 'edge' ],
+        [ 'env_firefox', 'firefox' ],
+        [ 'env_legacy', 'legacy' ],
+        [ 'env_mobile', 'mobile' ],
+        [ 'env_safari', 'safari' ],
+        [ 'cap_html_filtering', 'html_filtering' ],
+        [ 'cap_user_stylesheet', 'user_stylesheet' ],
+        [ 'false', 'false' ],
+        // Compatibility with other blockers
+        // https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters#adguard-specific
+        [ 'adguard', 'adguard' ],
+        [ 'adguard_app_windows', 'false' ],
+        [ 'adguard_ext_chromium', 'chromium' ],
+        [ 'adguard_ext_edge', 'edge' ],
+        [ 'adguard_ext_firefox', 'firefox' ],
+        [ 'adguard_ext_opera', 'chromium' ],
+    ]),
 };
-
-µBlock.processDirectives.tokens = new Map([
-    [ 'ext_ublock', 'ublock' ],
-    [ 'env_chromium', 'chromium' ],
-    [ 'env_edge', 'edge' ],
-    [ 'env_firefox', 'firefox' ],
-    [ 'env_legacy', 'legacy' ],
-    [ 'env_mobile', 'mobile' ],
-    [ 'env_safari', 'safari' ],
-    [ 'cap_html_filtering', 'html_filtering' ],
-    [ 'cap_user_stylesheet', 'user_stylesheet' ],
-    [ 'false', 'false' ],
-]);
 
 /******************************************************************************/
 

@@ -553,7 +553,7 @@
   },
   "whitelistPrompt": {
     "message": "Lista dei siti dove uBlock è disattivato. Un sito per ogni riga. Le voci non valide verranno silenziosamente ignorate.",
-    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+    "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
     "message": "Importa e aggiungi",
@@ -564,8 +564,8 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "ublock-whitelist_{{datetime}}.txt",
-    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+    "message": "ublock-lista-bianca_{{datetime}}.txt",
+    "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
     "message": "Salva i cambiamenti",

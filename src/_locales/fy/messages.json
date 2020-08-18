@@ -553,7 +553,7 @@
   },
   "whitelistPrompt": {
     "message": "De whitelist-ynstruksjes skriuwe foar op hokker websiden uBlock Origin útskeakele wurde moat. Ien fermelding per rigel. Unjildige ynstruksjes wurde sûnder meidieling negearre en útskeakele.",
-    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+    "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
     "message": "Ymportearje en tafoegje",
@@ -565,7 +565,7 @@
   },
   "whitelistExportFilename": {
     "message": "myn-ublock-whitelist_{{datetime}}.txt",
-    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+    "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
     "message": "Wizigingen tapasse",

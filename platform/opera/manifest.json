@@ -41,6 +41,7 @@
     "matches": ["http://*/*", "https://*/*"],
     "js": ["js/vapi.js","js/vapi-client.js", "js/adn/textads.js", "js/adn/parser.js", "js/contentscript.js"],
     "run_at": "document_start",
+    "match_about_blank": true,
     "all_frames": true
   }, {
     "matches": ["http://*/*", "https://*/*"],

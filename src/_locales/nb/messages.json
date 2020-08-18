@@ -112,11 +112,11 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Gå til element&shy;fjernings&shy;modus",
+    "message": "Gå til element­fjernings­modus",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Gå til element&shy;velger&shy;modus",
+    "message": "Gå til element­velger­modus",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
@@ -184,7 +184,7 @@
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
-    "message": "Store media&shy;elementer",
+    "message": "Store media­elementer",
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
@@ -553,7 +553,7 @@
   },
   "whitelistPrompt": {
     "message": "Hvitelistedirektivene bestemmer hvilke nettsider uBlock Origin ikke skal være aktiv på. Én oppføring per linje. Ugyldige direktiver blir stille ignorert og kommentert ut.",
-    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+    "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
     "message": "Importer og legg til",
@@ -565,7 +565,7 @@
   },
   "whitelistExportFilename": {
     "message": "min-ublock-hviteliste_{{datetime}}.txt",
-    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+    "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
     "message": "Bruk endringer",

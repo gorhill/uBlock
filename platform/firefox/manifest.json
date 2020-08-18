@@ -51,8 +51,9 @@
         "js/adn/textads.js",
         "js/adn/parser.js"
       ],
-      "run_at": "document_start",
-      "all_frames": true
+      "all_frames": true,
+      "match_about_blank": true,
+      "run_at": "document_start"
     },
     {
       "matches": [

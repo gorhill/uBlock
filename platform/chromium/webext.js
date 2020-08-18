@@ -101,6 +101,7 @@ const webext = {
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/webNavigation
     webNavigation: {
         getFrame: promisify(chrome.webNavigation, 'getFrame'),
+        getAllFrames: promisify(chrome.webNavigation, 'getAllFrames'),
     },
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/windows
     windows: {

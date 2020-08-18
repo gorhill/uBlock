@@ -923,7 +923,7 @@ const FilterAnchorHn = class extends FilterAnchorHnLeft {
     logData(details) {
         super.logData(details);
         details.pattern.push('^');
-        details.regex.push(restrSeparator);
+        details.regex.push('\\.?', restrSeparator);
     }
 
     toSelfie() {
@@ -1709,7 +1709,7 @@ const FilterHostnameDict = class {
 
     logData(details) {
         details.pattern.push('||', this.$h, '^');
-        details.regex.push(restrFromPlainPattern(this.$h), restrSeparator);
+        details.regex.push(restrFromPlainPattern(this.$h), '\\.?', restrSeparator);
     }
 
     toSelfie() {
@@ -2521,16 +2521,27 @@ const FilterParser = class {
     // https://github.com/gorhill/uBlock/issues/2781
     //   For efficiency purpose, try to extract a token from
     //   a regex-based filter.
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1145#issuecomment-657036902
+    //   Mind `\b` directives: `/\bads\b/` should result in token being `ads`,
+    //   not `bads`.
     extractTokenFromRegex() {
         this.reRegexToken.lastIndex = 0;
         const s = this.pattern;
         let matches;
         while ( (matches = this.reRegexToken.exec(s)) !== null ) {
-            const prefix = s.slice(0, matches.index);
+            let token = matches[0];
+            let prefix = s.slice(0, matches.index);
             if ( this.reRegexTokenAbort.test(prefix) ) { return; }
+            if ( token.startsWith('b') ) {
+                const match = /\\+$/.exec(prefix);
+                if ( match !== null && (match[0].length & 1) !== 0 ) {
+                    prefix += 'b';
+                    token = token.slice(1);
+                }
+            }
             if (
                 this.reRegexBadPrefix.test(prefix) || (
-                    matches[0].length < this.maxTokenLen &&
+                    token.length < this.maxTokenLen &&
                     this.reRegexBadSuffix.test(
                         s.slice(this.reRegexToken.lastIndex)
                     )
@@ -2538,7 +2549,7 @@ const FilterParser = class {
             ) {
                 continue;
             }
-            this.token = matches[0].toLowerCase();
+            this.token = token.toLowerCase();
             this.tokenHash = urlTokenizer.tokenHashFromString(this.token);
             this.tokenBeg = matches.index;
             if ( this.badTokens.has(this.token) === false ) { break; }

@@ -67,12 +67,6 @@ const redirectableResources = new Map([
     [ 'chartbeat.js', {
         alias: 'static.chartbeat.com/chartbeat.js',
     } ],
-    [ 'disqus_embed.js', {
-        alias: 'disqus.com/embed.js',
-    } ],
-    [ 'disqus_forums_embed.js', {
-        alias: 'disqus.com/forums/*/embed.js',
-    } ],
     [ 'doubleclick_instream_ad_status.js', {
         alias: 'doubleclick.net/instream/ad_status.js',
     } ],

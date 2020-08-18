@@ -987,7 +987,8 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
             code: out.injected + '\n{display:none!important;}',
             cssOrigin: 'user',
             frameId: request.frameId,
-            runAt: 'document_start'
+            matchAboutBlank: true,
+            runAt: 'document_start',
         });
         out.fake = out.fake.join(',\n');
         vAPI.tabs.insertCSS(request.tabId, {
@@ -1192,7 +1193,8 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
             code: '',
             cssOrigin: 'user',
             frameId: request.frameId,
-            runAt: 'document_start'
+            matchAboutBlank: true,
+            runAt: 'document_start',
         };
 
         if ( out.injectedHideFilters.length !== 0 ) {

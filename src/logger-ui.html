@@ -62,7 +62,7 @@
                             <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span>
                                 <span style="flex-direction: column;">
                                     <div style="margin-bottom: 1px;"><span data-filtex="\t(?:css|(?:inline-)?font)\t">css/font</span><span data-filtex="\timage\t">image</span><span data-filtex="\tmedia\t">media</span><span data-filtex="\t(?:inline-)?script(?:ing)?\t">script</span></div>
-                                    <div><span data-filtex="\t(?:websocket|xhr)\t">xhr</span><span data-filtex="\tframe\t">frame</span><span data-filtex="\t(?:dom|g(?:eneric)?hide|s(?:pecific)?hide)\t">dom</span><span data-filtex="\t(?:beacon|csp_report|ping|popup|popunder|other)\t">other</span></div>
+                                    <div><span data-filtex="\t(?:websocket|xhr)\t">xhr</span><span data-filtex="\tframe\t">frame</span><span data-filtex="\t(?:dom|g(?:eneric)?hide|s(?:pecific)?hide)\t">dom</span><span data-filtex="\t(?:beacon|csp|csp_report|doc|ping|popup|popunder|other)\t">other</span></div>
                                 </span>
                             </div>
                             <div><span data-filtex="!" data-i18n="loggerRowFiltererBuiltinNot"></span><span data-filtex="\t(?:0,)?1\t" data-i18n="loggerRowFiltererBuiltin1p"></span><span data-filtex="\t(?:3(?:,\d)?|0,3)\t" data-i18n="loggerRowFiltererBuiltin3p"></span></div>
@@ -194,10 +194,10 @@
         </div>
         <div><span data-i18n="loggerSettingHideColumnsPrompt"></span>
             <ul>
-            <li><label data-i18n="loggerSettingHideColumnTime"><span class="input checkbox"><input type="checkbox" data-column="0" /><svg><use href="img/material-design.svg#checkmark" /></svg></span></label>
-            <li><label data-i18n="loggerSettingHideColumnFilter"><span class="input checkbox"><input type="checkbox" data-column="1" /><svg><use href="img/material-design.svg#checkmark" /></svg></span></label>
-            <li><label data-i18n="loggerSettingHideColumnContext"><span class="input checkbox"><input type="checkbox" data-column="3" /><svg><use href="img/material-design.svg#checkmark" /></svg></span></label>
-            <li><label data-i18n="loggerSettingHideColumnPartyness"><span class="input checkbox"><input type="checkbox" data-column="4" /><svg><use href="img/material-design.svg#checkmark" /></svg></span></label>
+            <li><label data-i18n="loggerSettingHideColumnTime"><span class="input checkbox"><input type="checkbox" data-column="0" /><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span></label>
+            <li><label data-i18n="loggerSettingHideColumnFilter"><span class="input checkbox"><input type="checkbox" data-column="1" /><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span></label>
+            <li><label data-i18n="loggerSettingHideColumnContext"><span class="input checkbox"><input type="checkbox" data-column="3" /><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span></label>
+            <li><label data-i18n="loggerSettingHideColumnPartyness"><span class="input checkbox"><input type="checkbox" data-column="4" /><svg viewBox="0 0 24 24"><path d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg></span></label>
             </ul>
         </div>
         <div><label><span data-i18n="loggerSettingPerEntryLineCount"><input type="number" min="2" max="6"></span></label></div>

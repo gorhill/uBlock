@@ -553,7 +553,7 @@
   },
   "whitelistPrompt": {
     "message": "Llistat dels noms de servidor amb que s'inhabilitarà l'µBlock. Una entrada per línia. S'ignoraran els noms de servidor no vàlids.",
-    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+    "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
     "message": "Imporar i annexar",
@@ -564,8 +564,8 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "ublock-whitelist_{{datetime}}.txt",
-    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+    "message": "Llista-blanca-de-l'ublock_{{datetime}}.txt",
+    "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
     "message": "Aplicar canvis",

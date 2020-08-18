@@ -13,7 +13,7 @@ Po zainstalowaniu są  wczytywane i stosowane następujące listy filtrów:
 – EasyList
 – Peter Lowe’s Ad server list
 – EasyPrivacy
-– Malware domains.
+– Online Malicious URL Blocklist
 
 Można wybrać więcej list filtrów:
 

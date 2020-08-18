@@ -259,18 +259,39 @@ const resourceURLsFromElement = function(elem) {
             urls.push(trimFragmentFromURL(s.slice(0, 1024)));
         }
     }
-    if ( typeof elem.srcset === 'string' && elem.srcset !== '' ) {
-        for ( let s of elem.srcset.split(',') ) {
-            s = s.trim();
-            const pos = s.indexOf(' ');
-            if ( pos !== -1 ) { s = s.slice(0, pos); }
-            const parsedURL = new URL(s, document.baseURI);
-            if ( parsedURL.pathname.length > 1 ) {
-                urls.push(trimFragmentFromURL(parsedURL.href));
-            }
-        }
-    }
+    resourceURLsFromSrcset(elem, urls);
     return urls;
+};
+
+// https://html.spec.whatwg.org/multipage/images.html#parsing-a-srcset-attribute
+// https://github.com/uBlockOrigin/uBlock-issues/issues/1071
+const resourceURLsFromSrcset = function(elem, out) {
+    let srcset = elem.srcset;
+    if ( typeof srcset !== 'string' || srcset === '' ) { return; }
+    for(;;) {
+        // trim whitespace
+        srcset = srcset.trim();
+        if ( srcset.length === 0 ) { break; }
+        // abort in case of leading comma
+        if ( /^,/.test(srcset) ) { break; }
+        // collect and consume all non-whitespace characters
+        let match = /^\S+/.exec(srcset);
+        if ( match === null ) { break; }
+        srcset = srcset.slice(match.index + match[0].length);
+        let url = match[0];
+        // consume descriptor, if any
+        if ( /,$/.test(url) ) {
+            url = url.replace(/,$/, '');
+            if ( /,$/.test(url) ) { break; }
+        } else {
+            match = /^[^,]*(?:\(.+?\))?[^,]*(?:,|$)/.exec(srcset);
+            if ( match === null ) { break; }
+            srcset = srcset.slice(match.index + match[0].length);
+        }
+        const parsedURL = new URL(url, document.baseURI);
+        if ( parsedURL.pathname.length === 0 ) { continue; }
+        out.push(trimFragmentFromURL(parsedURL.href));
+    }
 };
 
 /******************************************************************************/
@@ -658,18 +679,14 @@ const filterToDOMInterface = (( ) => {
             Object.keys(netFilter1stSources).join()
         );
         for ( const elem of elems ) {
-            let srcProp = netFilter1stSources[elem.localName];
-            let src = elem[srcProp];
-            if ( typeof src !== 'string' || src.length === 0 ) {
-                if (
-                    typeof elem.srcset === 'string' &&
-                    elem.srcset !== '' &&
-                    typeof elem.currentSrc === 'string'
-                ) {
-                    src = elem.currentSrc;
-                }
-            }
-            if ( src && reFilter.test(src) ) {
+            const srcProp = netFilter1stSources[elem.localName];
+            const src = elem[srcProp];
+            if (
+                typeof src === 'string' &&
+                    reFilter.test(src) ||
+                typeof elem.currentSrc === 'string' &&
+                    reFilter.test(elem.currentSrc)
+            ) {
                 out.push({
                     type: 'network',
                     elem: elem,

@@ -25,6 +25,18 @@
 
 /******************************************************************************/
 
+{
+// >>>>> start of local scope
+
+/******************************************************************************/
+
+const redirectNames = new Map();
+const scriptletNames = new Map();
+const preparseDirectiveTokens = new Map();
+const preparseDirectiveHints = [];
+
+/******************************************************************************/
+
 CodeMirror.defineMode('ubo-static-filtering', function() {
     const StaticFilteringParser = typeof vAPI === 'object'
         ? vAPI.StaticFilteringParser
@@ -32,9 +44,45 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
     if ( StaticFilteringParser instanceof Object === false ) { return; }
     const parser = new StaticFilteringParser({ interactive: true });
 
-    const reDirective = /^!#(?:if|endif|include)\b/;
+    const rePreparseDirectives = /^!#(?:if|endif|include )\b/;
+    const rePreparseIfDirective = /^(!#if ?)(.*)$/;
     let parserSlot = 0;
     let netOptionValueMode = false;
+
+    const colorCommentSpan = function(stream) {
+        if ( rePreparseDirectives.test(stream.string) === false ) {
+            stream.skipToEnd();
+            return 'comment';
+        }
+        const match = rePreparseIfDirective.exec(stream.string);
+        if ( match === null ) {
+            stream.skipToEnd();
+            return 'variable strong';
+        }
+        if ( stream.pos < match[1].length ) {
+            stream.pos += match[1].length;
+            return 'variable strong';
+        }
+        stream.skipToEnd();
+        if ( match[1].endsWith(' ') === false ) {
+            return 'error strong';
+        }
+        if ( preparseDirectiveTokens.size === 0 ) {
+            return 'positive strong';
+        }
+        let token = match[2];
+        const not = token.startsWith('!');
+        if ( not ) {
+            token = token.slice(1);
+        }
+        if ( preparseDirectiveTokens.has(token) === false ) {
+            return 'error strong';
+        }
+        if ( not !== preparseDirectiveTokens.get(token) ) {
+            return 'positive strong';
+        }
+        return 'negative strong';
+    };
 
     const colorExtHTMLPatternSpan = function(stream) {
         const { i } = parser.patternSpan;
@@ -202,20 +250,17 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
             return 'comment';
         }
         if ( parser.category === parser.CATComment ) {
-            stream.skipToEnd();
-            return reDirective.test(stream.string)
-                ? 'variable strong'
-                : 'comment';
-        }
-        if ( (parser.slices[parserSlot] & parser.BITIgnore) !== 0 ) {
-            stream.pos += parser.slices[parserSlot+2];
-            parserSlot += 3;
-            return 'comment';
+            return colorCommentSpan(stream);
         }
         if ( (parser.slices[parserSlot] & parser.BITError) !== 0 ) {
             stream.pos += parser.slices[parserSlot+2];
             parserSlot += 3;
             return 'error';
+        }
+        if ( (parser.slices[parserSlot] & parser.BITIgnore) !== 0 ) {
+            stream.pos += parser.slices[parserSlot+2];
+            parserSlot += 3;
+            return 'comment';
         }
         if ( parser.category === parser.CATStaticExtFilter ) {
             return colorExtSpan(stream);
@@ -243,6 +288,24 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
             style = style.trim();
             return style !== '' ? style : null;
         },
+        setHints: function(details) {
+            for ( const [ name, desc ] of details.redirectResources ) {
+                const displayText = desc.aliasOf !== ''
+                    ? `${name} (${desc.aliasOf})`
+                    : '';
+                if ( desc.canRedirect ) {
+                    redirectNames.set(name, displayText);
+                }
+                if ( desc.canInject && name.endsWith('.js') ) {
+                    scriptletNames.set(name.slice(0, -3), displayText);
+                }
+            }
+            details.preparseDirectiveTokens.forEach(([ a, b ]) => {
+                preparseDirectiveTokens.set(a, b);
+            });
+            preparseDirectiveHints.push(...details.preparseDirectiveHints);
+            initHints();
+        },
     };
 });
 
@@ -251,17 +314,13 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
 // Following code is for auto-completion. Reference:
 //   https://codemirror.net/demo/complete.html
 
-(( ) => {
-    if ( typeof vAPI !== 'object' ) { return; }
-
+const initHints = function() {
     const StaticFilteringParser = typeof vAPI === 'object'
         ? vAPI.StaticFilteringParser
         : self.StaticFilteringParser;
     if ( StaticFilteringParser instanceof Object === false ) { return; }
 
     const parser = new StaticFilteringParser();
-    const redirectNames = new Map();
-    const scriptletNames = new Map();
     const proceduralOperatorNames = new Map(
         Array.from(parser.proceduralOperatorTokens).filter(item => {
             return (item[1] & 0b01) !== 0;
@@ -380,7 +439,29 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
         return pickBestHints(cursor, matchLeft[1], matchRight[1], hints);
     };
 
-    const getHints = function(cm) {
+    const getCommentHints = function(cursor, line) {
+        const beg = cursor.ch;
+        if ( line.startsWith('!#if ') ) {
+            const matchLeft = /^!#if !?(\w*)$/.exec(line.slice(0, beg));
+            const matchRight = /^\w*/.exec(line.slice(beg));
+            if ( matchLeft === null || matchRight === null ) { return; }
+            return pickBestHints(
+                cursor,
+                matchLeft[1],
+                matchRight[0],
+                preparseDirectiveHints
+            );
+        }
+        if ( line.startsWith('!#') && line !== '!#endif' ) {
+            const matchLeft = /^!#(\w*)$/.exec(line.slice(0, beg));
+            const matchRight = /^\w*/.exec(line.slice(beg));
+            if ( matchLeft === null || matchRight === null ) { return; }
+            const hints = [ 'if ', 'endif\n', 'include ' ];
+            return pickBestHints(cursor, matchLeft[1], matchRight[0], hints);
+        }
+    };
+
+    CodeMirror.registerHelper('hint', 'ubo-static-filtering', function(cm) {
         const cursor = cm.getCursor();
         const line = cm.getLine(cursor.line);
         parser.analyze(line);
@@ -393,25 +474,72 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
         if ( parser.category === parser.CATStaticNetFilter ) {
             return getNetHints(cursor, line);
         }
-    };
+        if ( parser.category === parser.CATComment ) {
+            return getCommentHints(cursor, line);
+        }
+    });
+};
 
-    vAPI.messaging.send('dashboard', {
-        what: 'getResourceDetails'
-    }).then(response => {
-        if ( Array.isArray(response) === false ) { return; }
-        for ( const [ name, details ] of response ) {
-            const displayText = details.aliasOf !== ''
-                ? `${name} (${details.aliasOf})`
-                : '';
-            if ( details.canRedirect ) {
-                redirectNames.set(name, displayText);
+/******************************************************************************/
+
+CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
+
+    const foldIfEndif = function(startLineNo, startLine, cm) {
+        const lastLineNo = cm.lastLine();
+        let endLineNo = startLineNo;
+        let depth = 1;
+        while ( endLineNo < lastLineNo ) {
+            endLineNo += 1;
+            const line = cm.getLine(endLineNo);
+            if ( line.startsWith('!#endif') ) {
+                depth -= 1;
+                if ( depth === 0 ) {
+                    return {
+                        from: CodeMirror.Pos(startLineNo, startLine.length),
+                        to: CodeMirror.Pos(endLineNo, 0)
+                    };
+                }
             }
-            if ( details.canInject && name.endsWith('.js') ) {
-                scriptletNames.set(name.slice(0, -3), displayText);
+            if ( line.startsWith('!#if') ) {
+                depth += 1;
             }
         }
-        CodeMirror.registerHelper('hint', 'ubo-static-filtering', getHints);
-    });
-})();
+    };
+
+    const foldInclude = function(startLineNo, startLine, cm) {
+        const lastLineNo = cm.lastLine();
+        let endLineNo = startLineNo + 1;
+        if ( endLineNo >= lastLineNo ) { return; }
+        if ( cm.getLine(endLineNo).startsWith('! >>>>>>>> ') === false ) {
+            return;
+        }
+        while ( endLineNo < lastLineNo ) {
+            endLineNo += 1;
+            const line = cm.getLine(endLineNo);
+            if ( line.startsWith('! <<<<<<<< ') ) {
+                return {
+                    from: CodeMirror.Pos(startLineNo, startLine.length),
+                    to: CodeMirror.Pos(endLineNo, line.length)
+                };
+            }
+        }
+    };
+
+    return function(cm, start) {
+        const startLineNo = start.line;
+        const startLine = cm.getLine(startLineNo);
+        if ( startLine.startsWith('!#if') ) {
+            return foldIfEndif(startLineNo, startLine, cm);
+        }
+        if ( startLine.startsWith('!#include ') ) {
+            return foldInclude(startLineNo, startLine, cm);
+        }
+    };
+})());
+
+/******************************************************************************/
+
+// <<<<< end of local scope
+}
 
 /******************************************************************************/

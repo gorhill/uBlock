@@ -553,7 +553,7 @@
   },
   "whitelistPrompt": {
     "message": "İstisnalar siyahısındakı təlimatlar uBlock Origin-in hansı veb-səhifələrdə işləyişinin dayandırılmasını təmin edir. Hər sətirdə yalnız bir təlimat ola bilər. Yanlış təlimatlar xəbərdarlıq edilmədən nəzərə alınmayacaq və şərhə çeviriləcəkdir.",
-    "description": "English: An overview of the content of the dashboard's Whitelist pane."
+    "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
     "message": "İdxal və əlavə et",
@@ -565,7 +565,7 @@
   },
   "whitelistExportFilename": {
     "message": "my-ublock-whitelist_{{datetime}}.txt",
-    "description": "English: my-ublock-whitelist_{{datetime}}.txt"
+    "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
     "message": "Dəyişiklikləri tətbiq et",
