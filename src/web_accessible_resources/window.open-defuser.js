@@ -80,7 +80,7 @@
             const decoy = /\bobj\b/.test(arg3)
                 ? createDecoy('object', 'data', url)
                 : createDecoy('iframe', 'src', url);
-            let popup = decoy.contentWindow;
+            let popup = decoy.contentWindow || decoy;
             Object.defineProperty(popup, 'closed', { value: false });
             if ( /\blog\b/.test(arg3) ) {
                 popup = new Proxy(popup, {
