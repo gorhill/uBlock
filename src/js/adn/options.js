@@ -260,6 +260,7 @@
       vAPI.messaging.send('dashboard', { what: 'userSettings' }),
       vAPI.messaging.send('dashboard', { what: 'getLocalData' }),
   ]).then(results => {
+      // no need to return ad data 
       onUserSettingsReceived(results[0]);
       onLocalDataReceived(results[1]);
   });
