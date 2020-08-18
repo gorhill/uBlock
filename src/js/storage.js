@@ -880,12 +880,13 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     vAPI.storage.set({ 'availableFilterLists': filterLists });
 };
 
-µBlock.reactivateList = function(list, callback) {
+µBlock.reactivateList = function(list) {
 
   var lists = this.selectedFilterLists;
   lists.push(list);
   µBlock.selectFilterLists([{location:list, off:false}]); // change availableFilterLists
-  vAPI.storage.set({ 'selectedFilterLists': lists }, callback);
+  vAPI.storage.set({ 'selectedFilterLists': lists });
+
   µBlock.loadFilterLists();
 }
 
