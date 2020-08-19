@@ -136,7 +136,9 @@ vAPI.broadcastListener.add(request => {
 resizeFrame();
 
 vAPI.localStorage.getItemAsync('dashboardLastVisitedPane').then(value => {
-    loadDashboardPanel(value !== null ? value : 'options.html', true);
+    // first check current url, then local storage, then default
+    const location = window.location.hash ? window.location.hash.replace("#", "") : (value !== null ? value : 'options.html');
+    loadDashboardPanel(location, true);
 
     uDom('.tabButton').on('click', onTabClickHandler);
     uDom('#notifications').on('click', resizeFrame); //ADN
