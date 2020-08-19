@@ -302,7 +302,6 @@ const matchBucket = function(url, hostname, bucket, start) {
         us.noRemoteFonts = this.sessionSwitches.evaluate('no-remote-fonts', '*') === 1;
         us.noScripting = this.sessionSwitches.evaluate('no-scripting', '*') === 1;
         us.noCSPReports = this.sessionSwitches.evaluate('no-csp-reports', '*') === 1;
-        us.admap = null; // ADN -> no need to return ad map for user settings
         us.appName = vAPI.app.name; // ADN
         us.appVersion = vAPI.app.version; // ADN
         return us;

@@ -20,6 +20,9 @@
   let lastActivity = 0;
   let lastUserActivity = 0;
   let listsLoaded = false;
+  let lastStorageUpdate = 0;
+  let adsetSize = 0;
+  const updateStorageInterval = 1000 * 60 * 30; // 30min
   const notifications = [];
   const allowedExceptions = [];
   const maxAttemptsPerAd = 3;
@@ -62,7 +65,7 @@
   /**************************** functions ******************************/
 
   /* called when the addon is first loaded */
-  const initialize = function (settings) {
+  const initialize = function (ads) {
 
     // modify XMLHttpRequest to store original request/ad
     const XMLHttpRequest_open = XMLHttpRequest.prototype.open;
@@ -74,14 +77,15 @@
       return XMLHttpRequest_open.apply(this, arguments);
     };
 
-    initializeState(settings);
+    initializeState(ads);
 
     setTimeout(pollQueue, pollQueueInterval * 2);
   };
 
-  const initializeState = function (settings) {
+  const initializeState = function (ads) {
 
-    admap = (settings && settings.admap) || {};
+    admap = (ads.admap ? ads.admap : ads) || {};
+    adsetSize = adlist().length;
 
     validateAdStorage();
 
@@ -220,7 +224,6 @@
           delete admap[k]
         });
 
-        storeUserData();
       };
 
       if (unhashed.length || orphans.length) repairHashes();
@@ -440,7 +443,7 @@
       log('[VISIT] ' + adinfo(ad), ad.title);
     }
 
-    storeUserData();
+    storeAdData();
   };
 
   // returns the current active visit attempt or null
@@ -606,11 +609,18 @@
     }
   }
 
-  const storeUserData = function (immediate) {
+  const storeAdData = function (immediate) {
+    // always update store as long as adsetSize is less than 1000
+    if(adsetSize < 1000) immediate = true;
 
-    // TODO: defer if we've recently written and !immediate
-    µb.userSettings.admap = admap;
-    vAPI.storage.set(µb.userSettings);
+    const now = millis();
+    // defer if we've recently written and !immediate
+    if(immediate || (!immediate &&  now - lastStorageUpdate > updateStorageInterval)) {
+      vAPI.storage.set({admap:admap});
+      lastStorageUpdate = millis();
+      log("--Storage Ad Data--")
+    }
+
   }
 
   const validateTarget = function (ad) {
@@ -843,7 +853,8 @@
       return warn('Unable to delete: ', ad);
     }
 
-    storeUserData();
+    adSetSize --;
+    storeAdData();
   }
 
   const log = function () {
@@ -1029,7 +1040,7 @@
     if (µb.userSettings.showIconBadge)
       µb.updateToolbarIcon(tabId);
 
-    storeUserData();
+    storeAdData();
   };
 
   const activeBlockList = function (test) {
@@ -1364,20 +1375,22 @@
 
     // this for backwards compatibility only ---------------------
     const mapSz = Object.keys(settings.admap).length;
-    if (!mapSz && µb.adnSettings && µb.adnSettings.admap) {
+    if (!mapSz && µb.adnSettings && µb.adnSettings.admap) {// Sally: do we still need this?
 
       settings.admap = µb.adnSettings.admap;
 
       log("[IMPORT] Using legacy admap...");
 
       setTimeout(function () {
-        storeUserData(true);
+        storeAdData(true);
       }, 2000);
     }
-    initialize(settings);
+    const ads = await vAPI.storage.get("admap");
+    initialize(ads ? ads : settings);
+
   }
 
-  initUserSettings();
+  initUserSettings();//
 
   /********************************** API *************************************/
 
@@ -1591,6 +1604,7 @@
     // this will overwrite an older ad with the same key
     // admap[pageStore.rawURL][adhash] = ad;
     admap[pageHash][adhash] = ad;
+    adsetSize ++;
 
     postRegister(ad, tabId);
   };
@@ -1731,7 +1745,7 @@
    * Called also from tab.js::µb.updateBadgeAsync()
    */
   const adlist = exports.adlist = function (pageUrl, currentOnly, isUI) {
-    admap = admap || µb.userSettings.admap;
+    admap = admap;
     const result = [], pages = pageUrl ?
       [ YaMD5.hashStr(pageUrl) ] : Object.keys(admap);
     for (let i = 0; admap && i < pages.length; i++) {
@@ -2008,7 +2022,7 @@ const verifyList = exports.verifyList = function (note, lists) {
     clearAdmap();
     reloadExtPage('vault.html');
     updateBadges();
-    storeUserData();
+    storeAdData(true);
     computeNextId();
 
     visitedURLs.clear(); // user visits #1214
@@ -2016,10 +2030,11 @@ const verifyList = exports.verifyList = function (note, lists) {
     log('[CLEAR] ' + pre + ' ads cleared', admap);
   };
 
-  browser.windows.onRemoved.addListener(function(windowId){
+//TODO: browser.windows not supported for firefox android
+browser.windows.onRemoved.addListener(function(windowId){
     // on browser closed
-    if (!µb.userSettings.removeAdsInPrivate) return;
-    let toBeRemoved = {}
+    if (!µb.userSettings.removeAdsInPrivate) {return;}
+    let removed = 0;
     const pages = Object.keys(admap);
     for (let i = 0; admap && i < pages.length; i++) {
       if (admap[pages[i]]) {
@@ -2042,13 +2057,18 @@ const verifyList = exports.verifyList = function (note, lists) {
             if (admap[privatePageHash] == undefined) {
               admap[privatePageHash] = {}
             }
-
             admap[privatePageHash][hashes[j]] = ad;
-            delete admap[pages[i]]
+            delete admap[pages[i]];
+            removed ++;
           }
         }
       }
     }
+    if (removed > 0) {
+      adSetSize -= removed;
+      storeAdData(true);
+    }
+
   });
 
   exports.importAds = function (request) {
@@ -2103,13 +2123,14 @@ const verifyList = exports.verifyList = function (note, lists) {
     admap = map;
     computeNextId();
     if (clearVisitData) clearAdVisits();
-    storeUserData();
+
 
     importedCount = adCount() - count;
     log('[IMPORT] ' + importedCount + ' ads from ' + request.file);
     reloadExtPage('vault.html'); // reload Vault page if open
 
     validateHashes();
+    storeAdData(true);
 
     return {
       what: 'importConfirm',
