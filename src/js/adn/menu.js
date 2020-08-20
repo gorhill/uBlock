@@ -83,21 +83,13 @@
 
     ads = json && json.data;
 
-    setCounts(ads, json && json.data && json.total);
+    setCounts(ads, json && json.data && json.total, json.recent);
 
     const $items = uDom('#ad-list-items');
 
     $items.removeClass().empty();
 
-    if (ads) {
-
-
-      for (let i = 0, j = ads.length; i < j; i++) {
-        appendAd($items, ads[i]);
-      }
-
-      setAttempting(json.current);
-    }
+    layoutAds(json);
 
     vAPI.messaging.send(
       'adnauseam', {
@@ -128,13 +120,13 @@
     }
   }
 
-  const setCounts = function (ads, total) {
+  const setCounts = function (ads, total, recent) {
 
     const numVisits = visitedCount(ads) || 0;
     uDom('#vault-count').text(total || 0);
 
     uDom('#visited').text(vAPI.i18n("adnMenuAdsClicked").replace("{{number}}", numVisits || 0));
-    uDom('#found').text(vAPI.i18n("adnMenuAdsDetected").replace("{{count}}", ads ? ads.length : 0));
+    uDom('#found').text(vAPI.i18n("adnMenuAdsDetected").replace("{{count}}", (ads && !recent) ? ads.length : 0));
     setCost(numVisits);
   }
 
@@ -178,10 +170,10 @@
     const $items = uDom('#ad-list-items');
     $items.removeClass().empty();
 
+    let ads = json.data;
     if (ads) {
 
-      // if we have no page ads, use the most recent -> moved to core
-      if (json.recent) ads = doRecent();
+      if (json.recent) doRecent();
 
       for (let i = 0, j = ads.length; i < j; i++)
         appendAd($items, ads[i]);
@@ -218,7 +210,6 @@
       if (ad.pageUrl === page) { // global page here
 
         const numVisits = visitedCount(ads);
-        console.log(numVisits);
         uDom('#visited').text(vAPI.i18n("adnMenuAdsClicked").replace("{{number}}", numVisits || 0));
         setCost(numVisits);
       }
@@ -244,13 +235,12 @@
   }
 
   const doRecent = function () {
-
     uDom("#alert").removeClass('hide');
     uDom('#ad-list-items').addClass('recent-ads');
-
   }
 
   const appendAd = function ($items, ad) {
+    if(ad.private) return; // skip private ads
 
     if (ad.contentType === 'img') {
 
@@ -346,7 +336,7 @@
       .appendTo($a);
 
     uDom(document.createElement('cite'))
-      .text(targetDomain(ad))
+      .text(domain)
       .appendTo($a);
 
     $a.appendTo($li);

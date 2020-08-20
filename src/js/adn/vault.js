@@ -421,10 +421,14 @@
   }
 
   function layoutAd($div, adset) {
-
     // append the display
     if (adset.child(0).private) {
-      // don't render if it is marked as private
+      if ($('.privateAds').length == 0) {
+        appendPrivatePlaceHolder($div, adset);
+      } else {
+        // TODO: private ads count
+        //$('.privateAds #index-counter').text(parseInt($('.privateAds .counter').text()) + 1);
+      }
       return;
     }
     (adset.child(0).contentType === 'text' ?
@@ -671,6 +675,56 @@
       $div.attr('data-width', $this.width());
       $div.attr('data-height', $this.height());
     });
+  }
+
+  function appendPrivatePlaceHolder($pdiv, adset) {
+
+    const total = adset.count(), ad = adset.child(0);
+
+    $pdiv.addClass('item-text');
+
+    const $div = $('<div/>', {
+
+      class: 'item-text-div privateAds',
+      width: rand(TEXT_MINW, TEXT_MAXW)
+
+    }).appendTo($pdiv);
+
+    $('<span/>', {
+
+      class: 'counter',
+      text: total
+
+    }).appendTo($div);
+
+    $('<span/>', {
+
+      id: 'index-counter',
+      class: 'counter counter-index',
+      text: indexCounterText(adset)
+
+    }).appendTo($div).hide();
+
+    const $h3 = $('<h3/>', {}).appendTo($div);
+
+    $('<div/>', { // title
+
+      class: 'title',
+      text: 'Private Ads',
+      target: '_blank'
+
+    }).appendTo($h3);
+
+    $('<div/>', { // text
+
+      class: 'ads-creative',
+      text: "Ads collected in private/incognito mode."
+
+    }).appendTo($div);
+
+    // cache the dimensions of the text-item
+    $pdiv.attr('data-width', $div.width());
+    $pdiv.attr('data-height', $div.height());
   }
 
   function appendTextDisplayTo($pdiv, adset) {

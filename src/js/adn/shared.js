@@ -542,7 +542,7 @@ const getExportFileName = function () {
     .replace(/[:/,]+/g, '.').replace(/ +/g, '');
 };
 
-const computeHash = function (ad) {
+const computeHash = function (ad, privateAd) {
   // DO NOT MODIFY
 
   if (!ad) return;
@@ -559,12 +559,12 @@ const computeHash = function (ad) {
   keys = Object.keys(ad.contentData).sort();
 
   for (let i = 0; i < keys.length; i++) {
-
     // fix to #445  (10/7/16)
     if (keys[i] != 'width' && keys[i] != 'height')
       hash += '::' + ad.contentData[keys[i]];
   }
 
+  if (privateAd) hash += "private";
   return YaMD5.hashStr(hash);
 };
 

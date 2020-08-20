@@ -85,7 +85,7 @@
   const initializeState = function (ads) {
 
     admap = (ads.admap ? ads.admap : ads) || {};
-    adsetSize = adlist().length;
+    adsetSize = adCount();
 
     validateAdStorage();
 
@@ -155,6 +155,7 @@
     }
 
     validateHashes();
+    removePrivateAds();
     computeNextId(ads = adlist());
 
     log('[INIT] Initialized with ' + ads.length + ' ads');
@@ -1369,6 +1370,49 @@
     return JSON.stringify(map, null, 2);
   };
 
+  const removePrivateAds = function() {
+    if (!µb.userSettings.removeAdsInPrivate) {return;}
+    let removed = [];
+    const pages = Object.keys(admap);
+    for (let i = 0; admap && i < pages.length; i++) {
+      const page = pages[i];
+      // skip private ads hash
+      if (page == YaMD5.hashStr("")) continue;
+      if (admap[page]) {
+        const hashes = Object.keys(admap[page]);
+        for (let j = 0; j < hashes.length; j++) {
+          const ad = admap[page][hashes[j]];
+          if (ad.private == true) {
+            // clear data & relocate to a new bin?
+            removed.push(ad);
+            const newAdHash = computeHash(ad, true);
+            ad.contentData = {}
+            ad.title = "";
+            ad.pageTitle = "";
+            ad.pageUrl = "";
+            ad.resolvedTargetUrl = "";
+            ad.requestId = "";
+            ad.adNetwork = ad.targetUrl && parseHostname(ad.targetUrl);
+            ad.targetUrl = "";
+
+            const privatePageHash = YaMD5.hashStr("");
+            if (admap[privatePageHash] == undefined) {
+              admap[privatePageHash] = {}
+            }
+            admap[privatePageHash][newAdHash] = ad;
+            delete admap[pages[i]][hashes[j]];
+          }
+        }
+      }
+    }
+    if (removed.length > 0) {
+      console.log("remove privateAds", removed);
+      adsetSize -= removed;
+      storeAdData(true);
+    }
+    return removed;
+  }
+
   const initUserSettings = async function () {
     const settings = await vAPI.storage.get(µb.userSettings);
     // start by grabbing user-settings, then calling initialize()
@@ -1391,6 +1435,11 @@
   }
 
   initUserSettings();//
+
+  //browser.windows not supported for firefox android
+  browser.windows && browser.windows.onRemoved.addListener(function(windowId){
+    removePrivateAds();
+  });
 
   /********************************** API *************************************/
 
@@ -1761,7 +1810,6 @@
                 const clone = Object.assign({}, ad);
                 clone.hash = hashes[j];
                 result.push(clone)
-                console.log("hash", admap)
               } else {
                 result.push(ad);
               }
@@ -2029,47 +2077,6 @@ const verifyList = exports.verifyList = function (note, lists) {
 
     log('[CLEAR] ' + pre + ' ads cleared', admap);
   };
-
-//TODO: browser.windows not supported for firefox android
-browser.windows.onRemoved.addListener(function(windowId){
-    // on browser closed
-    if (!µb.userSettings.removeAdsInPrivate) {return;}
-    let removed = 0;
-    const pages = Object.keys(admap);
-    for (let i = 0; admap && i < pages.length; i++) {
-      if (admap[pages[i]]) {
-        const hashes = Object.keys(admap[pages[i]]);
-        for (let j = 0; j < hashes.length; j++) {
-          const ad = admap[pages[i]][hashes[j]];
-          if (ad.private == true) {
-            // clear data & relocate to a new bin?
-            ad.contentData = {}
-            delete ad.title;
-            delete ad.pageTitle;
-            delete ad.pageUrl;
-            delete ad.resolvedTargetUrl;
-            delete ad.requestId;
-            // TODO: store ad-network
-            ad.adNetwork = parseHostname(ad.targetUrl)
-            delete ad.targetUrl;
-
-            const privatePageHash = YaMD5.hashStr("");
-            if (admap[privatePageHash] == undefined) {
-              admap[privatePageHash] = {}
-            }
-            admap[privatePageHash][hashes[j]] = ad;
-            delete admap[pages[i]];
-            removed ++;
-          }
-        }
-      }
-    }
-    if (removed > 0) {
-      adSetSize -= removed;
-      storeAdData(true);
-    }
-
-  });
 
   exports.importAds = function (request) {
     // try to parse imported ads in current format
