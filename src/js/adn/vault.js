@@ -223,55 +223,63 @@
     repack();
   }
 
+  function parseAd(ad, data) {
+    if (ad.contentType == "img") data.totalImg ++;
+    else if (ad.contentType == "text") data.totalText ++;
+    try {
+      let network = ad.adNetwork ? ad.adNetwork : parseHostname(ad.targetUrl);
+      // merge common ad system
+      if (network.indexOf("adssettings.google") > -1 ) {
+        //ignore adsettings
+        return data;
+      } else if(network.indexOf("doubleclick") > -1 || network.indexOf("google") > -1 || ad.pageUrl.indexOf("google.com/search") > -1){
+        // Merge double click, google ads, google search
+        network = "google ads";
+      } else if(network.indexOf("amazon") > -1){
+        network = "amazon ad system";
+      } else if(network.indexOf("facebook") > -1){
+        network = "facebook";
+      }
+        addToDict(network, data.adNetworks);
+    }
+    catch{
+      // can't parse
+    }
+    try {
+      const domain = parseDomain(ad.pageUrl);
+      addToDict(domain, data.sites);
+    }
+    catch {
+      // can't parse
+    }
+    return data;
+  }
+
   function analyze(adsets) {
 
     let data = {
       totalImg: 0,
       totalText: 0,
       sites:{},
-      adNetworks:{}
+      adNetworks:{},
     };
 
     for (let i = 0, j = adsets && adsets.length; i < j; i++) {
-      for (const key in adsets[i].children) {
-        const ad = adsets[i].children[key];
-        if (ad.contentType == "img") data.totalImg ++;
-        else if (ad.contentType == "text") data.totalText ++;
-        try {
-          let network = ad.adNetwork ? ad.adNetwork : parseHostname(ad.targetUrl);
-          // merge common ad system
-          if (network.indexOf("adssettings.google") > -1 ) {
-            //ignore adsettings
-            continue;
-          } else if(network.indexOf("doubleclick") > -1 || network.indexOf("google") > -1 || ad.pageUrl.indexOf("google.com/search") > -1){
-            // Merge double click, google ads, google search
-            network = "google ads";
-          } else if(network.indexOf("amazon") > -1){
-            network = "amazon ad system";
-          } else if(network.indexOf("facebook") > -1){
-            network = "facebook";
-          }
-
-            addToDict(network, data.adNetworks);
-
-        }
-        catch{
-          // can't parse
-
-        }
-        try {
-          const domain = parseDomain(ad.pageUrl);
-          addToDict(domain, data.sites);
-        }
-        catch {
-          // can't parse
+      //gAds
+      if (!adsets[i].children) {
+        const ad = adsets[i];
+        data = parseAd(ad, data);
+      } else {
+        //adsets
+        for (const key in adsets[i].children) {
+          const ad = adsets[i].children[key];
+          data = parseAd(ad, data);
         }
       }
-
     }
-
     data.sites = sortDict(data.sites);
     data.adNetworks = sortDict(data.adNetworks);
+    data.total = data.totalImg + data.totalText;
     //console.log(data);
     displayStatistics(data);
   }
@@ -279,6 +287,12 @@
   function displayStatistics(data) {
     // clear old data
     $('#myStatistics ul').html("");
+    $('#myStatistics #desc').text("");
+
+    if (data.total < gAds.length) {
+      // partial stats
+      $('#myStatistics #desc').text("Statistics for " + data.total + "/" + gAds.length + " total ads");
+    }
 
     // Top Ad Network
 
@@ -342,10 +356,9 @@
       text: data.totalText
     }).appendTo($textAd);
 
-    //Toggle
-    $('.myStatistics-panel').toggle(300);
-    $('#myStatistics').toggleClass("show");
-    $('#myStatistics').toggleClass("min");
+    $('.myStatistics-panel').show(300);
+    $('#myStatistics').addClass("show");
+    $('#myStatistics').removeClass("min");
 
   }
 
@@ -1852,7 +1865,8 @@
         doLayout(runFilter(ext), true)
         break;
       default:
-        doLayout(runFilter(bExtent))
+        doLayout(runFilter(bExtent));
+        analyze(gAds);
     }
     // ---------------------------- functions ------------------------------
 

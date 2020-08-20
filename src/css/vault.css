@@ -28,13 +28,17 @@ body {
   bottom: 0px;
 	left:-12px;
 }
+#desc {
+	display:block;
+	margin-bottom: 5px;
+}
 .myStatistics-panel{
 	display:none;
   width:100%;
 	height:320px;
 	border:solid 1px #0076FF;
 	background-color:#0E1217;
-	padding:25px 15px;
+	padding:15px 15px 25px;
 }
 .myStatistics-label{
 	font-weight:700;

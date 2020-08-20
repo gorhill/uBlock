@@ -122,7 +122,7 @@
 
   const setCounts = function (ads, total, recent) {
 
-    const numVisits = visitedCount(ads) || 0;
+    const numVisits = recent ? 0 : (visitedCount(ads) || 0);
     uDom('#vault-count').text(total || 0);
 
     uDom('#visited').text(vAPI.i18n("adnMenuAdsClicked").replace("{{number}}", numVisits || 0));
@@ -336,7 +336,7 @@
       .appendTo($a);
 
     uDom(document.createElement('cite'))
-      .text(domain)
+      .text(targetDomain(ad))
       .appendTo($a);
 
     $a.appendTo($li);
