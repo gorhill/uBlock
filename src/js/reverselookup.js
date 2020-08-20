@@ -364,6 +364,7 @@ if (
                     content: details.content
                 }
             });
+
         };
 
         const µb = µBlock;
@@ -392,7 +393,9 @@ if (
                 })
             );
         }
-        return Promise.all(promises);
+        return Promise.all(promises).then(data => {
+          return entries;
+        });
     };
 
     const fromNetFilter = async function(rawFilter) {
