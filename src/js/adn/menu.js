@@ -132,8 +132,9 @@
 
     const numVisits = visitedCount(ads) || 0;
     uDom('#vault-count').text(total || 0);
-    uDom('#visited').text(uDom('#visited').text().replace("{{number}}", numVisits || 0));
-    uDom('#found').text(uDom('#found').text().replace("{{count}}", ads ? ads.length : 0));
+
+    uDom('#visited').text(vAPI.i18n("adnMenuAdsClicked").replace("{{number}}", numVisits || 0));
+    uDom('#found').text(vAPI.i18n("adnMenuAdsDetected").replace("{{count}}", ads ? ads.length : 0));
     setCost(numVisits);
   }
 
@@ -167,8 +168,8 @@
     }
 
     uDom('#vault-count').text(json.data.length);
-    uDom('#visited').text(uDom('#visited').text().replace("{{number}}", numVisits || 0));
-    uDom('#found').text(uDom('#found').text().replace("{{count}}", ads ? ads.length : 0));
+    uDom('#visited').text(vAPI.i18n("adnMenuAdsClicked").replace("{{number}}", numVisits || 0));
+    uDom('#found').text(vAPI.i18n("adnMenuAdsDetected").replace("{{count}}", ads ? ads.length : 0));
     //console.log("FOUND: " + ads.length);
   };
 
@@ -217,7 +218,8 @@
       if (ad.pageUrl === page) { // global page here
 
         const numVisits = visitedCount(ads);
-        uDom('#visited').text(uDom('#visited').text().replace("{{number}}", numVisits || 0));
+        console.log(numVisits);
+        uDom('#visited').text(vAPI.i18n("adnMenuAdsClicked").replace("{{number}}", numVisits || 0));
         setCost(numVisits);
       }
     }
