@@ -1,7 +1,7 @@
 #cloudWidget {
     background: url("../img/cloud.png") hsl(216, 100%, 93%);
     margin: 0.5em 0;
-    overflow: auto;
+    min-width: max-content;
     position: relative;
     }
 #cloudWidget.hide {
@@ -81,19 +81,25 @@
     fill: inherit;
     }
 #cloudWidget #cloudOptions {
+    align-items: center;
     background-color: var(--default-surface);
     border: 1px solid var(--bg-1-border);
+    bottom: 2px;
     display: none;
+    font-size: small;
     padding: 0.5em;
     position: absolute;
-    right: 0;
+    right: 2px;
     text-align: center;
+    top: 2px;
     z-index: 10;
     }
-#cloudWidget #cloudOptions.show {
-    display: block;
-    white-space: nowrap;
+#cloudWidget #cloudOptions label {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
     }
-#cloudOptions button {
-    min-height: var(--default-gap-xlarge);
+#cloudWidget #cloudOptions.show {
+    display: flex;
+    white-space: nowrap;
     }
