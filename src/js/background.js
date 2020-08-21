@@ -171,6 +171,7 @@ const µBlock = (( ) => { // jshint ignore:line
 
         selectedFilterLists: [],
         availableFilterLists: {},
+        badLists: new Set(),
 
         // https://github.com/uBlockOrigin/uBlock-issues/issues/974
         //   This can be used to defer filtering decision-making.
