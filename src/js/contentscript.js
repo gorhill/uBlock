@@ -1593,6 +1593,15 @@ vAPI.injectScriptlet = function(doc, text) {
             if ( Array.isArray(selectors) && selectors.length !== 0 ) {
                 domFilterer.exceptCSSRules(selectors);
             }
+            // ADN: ad check on new elements found
+            let allSelectors = "";
+            for(const key in result) {
+              if(result[key] != "") allSelectors += (allSelectors == "" ? "" : ",") + result[key];
+            }
+            let nodes = document.querySelectorAll(allSelectors);
+            for ( const node of nodes ) {
+                vAPI.adCheck && vAPI.adCheck(node);
+            }
         }
 
         if ( pendingNodes.stopped === false ) {
