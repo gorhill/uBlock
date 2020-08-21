@@ -73,11 +73,20 @@ const fetchStorageUsed = async function() {
 /******************************************************************************/
 
 const fetchCloudData = async function() {
+    const info = widget.querySelector('#cloudInfo');
+
     const entry = await vAPI.messaging.send('cloudWidget', {
         what: 'cloudPull',
         datakey: self.cloud.datakey,
     });
-    if ( entry instanceof Object === false ) { return entry; }
+
+    const hasData = entry instanceof Object;
+    if ( hasData === false ) {
+        uDom.nodeFromId('cloudPull').setAttribute('disabled', '');
+        uDom.nodeFromId('cloudPullAndMerge').setAttribute('disabled', '');
+        info.textContent = '...\n...';
+        return entry;
+    }
 
     self.cloud.data = entry.data;
 
@@ -96,7 +105,7 @@ const fetchCloudData = async function() {
     };
 
     const time = new Date(entry.tstamp);
-    widget.querySelector('#cloudInfo').textContent =
+    info.textContent =
         entry.source + '\n' +
         time.toLocaleString('fullwide', timeOptions);
 };

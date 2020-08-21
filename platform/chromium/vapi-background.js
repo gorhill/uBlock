@@ -1559,7 +1559,7 @@ vAPI.cloud = (( ) => {
         return chunkCount;
     };
 
-    const deleteChunks = function(datakey, start) {
+    const deleteChunks = async function(datakey, start) {
         const keys = [];
 
         // No point in deleting more than:
@@ -1579,6 +1579,12 @@ vAPI.cloud = (( ) => {
 
     const push = async function(details) {
         const { datakey, data, encode } = details;
+        if (
+            data === undefined ||
+            typeof data === 'string' && data === ''
+        ) {
+            return deleteChunks(datakey, 0);
+        }
         const item = {
             source: options.deviceName || options.defaultDeviceName,
             tstamp: Date.now(),
@@ -1602,14 +1608,20 @@ vAPI.cloud = (( ) => {
         }
         bin[datakey + chunkCount.toString()] = ''; // Sentinel
 
+        // Remove potentially unused trailing chunks before storing the data,
+        // this will free storage space which could otherwise cause the push
+        // operation to fail.
+        try {
+            await deleteChunks(datakey, chunkCount);
+        } catch (reason) {
+        }
+
+        // Push the data to browser-provided cloud storage.
         try {
             await webext.storage.sync.set(bin);
         } catch (reason) {
             return String(reason);
         }
-
-        // Remove potentially unused trailing chunks
-        deleteChunks(datakey, chunkCount);
     };
 
     const pull = async function(details) {
