@@ -448,8 +448,9 @@ body.colorBlind #netFilteringDialog > .panes > .details > div[data-status="2"] b
     background: white;
     border: 1px solid gray;
     bottom: 0;
-    box-sizing: border-box;
     display: none;
+    max-height: 70vh;
+    min-width: 360px;
     overflow: hidden;
     position: fixed;
     right: 0;

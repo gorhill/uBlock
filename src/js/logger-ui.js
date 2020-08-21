@@ -2323,7 +2323,7 @@ const popupManager = (( ) => {
 
     const setTabId = function(tabId) {
         if ( popup === null ) { return; }
-        popup.setAttribute('src', 'popup.html?tabId=' + tabId);
+        popup.setAttribute('src', 'popup-fenix.html?portrait=1&tabId=' + tabId);
     };
 
     const onTabIdChanged = function() {
