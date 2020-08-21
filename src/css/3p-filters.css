@@ -60,10 +60,13 @@ body.hideUnused #listsOfBlockedHostsPrompt:before {
     font-size: 90%;
     pointer-events: none;
     }
+
 .groupEntry .listEntries {
     margin: 0.25em 0 0 0;
-    padding-left: 1em;
-    }
+    margin-inline-start: 0.6em;
+    -webkit-margin-start: 0.6em;
+}
+
 .listEntry {
     margin: 0 auto 0 auto;
     padding: 0.2em 0;
@@ -201,6 +204,16 @@ body.updating .listEntry.checked.obsolete .updating {
     box-shadow: none;
 }
 
-.listEntry.toImport > textarea#externalLists {
-    visibility: visible;
-    }
+#actions button:hover .fa-icon svg {
+  fill:black !important;
+}
+#actions .disabled .fa-icon svg{
+  fill:black;
+}
+#actions .fa-icon svg{
+  fill:#0076FF;
+}
+/* touch-screen devices */
+:root.mobile .listEntry.checked .counts{
+  display: none;
+}

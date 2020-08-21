@@ -36,7 +36,6 @@ html, body {
 #dashboard-nav-widgets span {
     align-items: center;
     display: inline-flex;
-
     padding: 0 0.5em;
     font-size: 20px;
     font-family: bebas_neue,sans-serif;
@@ -65,6 +64,10 @@ html, body {
     top: 1px;
     opacity: 0.75;
     }
+.tabButton:hover{
+  background-color: #333;
+  color:#eee;
+}
 .tabButton:focus {
     outline: 0;
     }
@@ -111,21 +114,31 @@ body:not(.canUpdateShortcuts) .tabButton[data-pane="shortcuts.html"] {
     }
 
 @media (max-width: 640px) {
-    #dashboard-nav {
-        position: relative;
-        }
     #dashboard-nav-widgets {
         padding: 1px 0 0 0;
-        }
+        display: flex;
+        border-bottom:none;
+        white-space: nowrap;
+        width:auto;
+    }
     .hverbose {
         display: none !important;
         }
     .tabButton {
         font-size: 90%;
-        }
+        border:none;
+        margin:0px;
+        border-top-left-radius:0px;
+        border-top-right-radius:0px;
+        background-color: black;
+        padding: 0.5em 1.4em calc(0.5em - 3px);
+        border-bottom: 3px solid black;
+    }
     .tabButton.selected {
-        border-bottom: 1px solid #ccc;
-        }
+        border-bottom: 3px solid #BD10E0;
+        background-color: #222;
+    }
+
 }
 
 
@@ -134,3 +147,17 @@ body:not(.canUpdateShortcuts) .tabButton[data-pane="shortcuts.html"] {
         display: none;
     }
 }
+
+/* touch-screen devices */
+:root.mobile #dashboard-nav {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    }
+:root.mobile #dashboard-nav::-webkit-scrollbar {
+  display: none;
+    }
+:root.mobile #dashboard-nav .logo {
+    display: none;
+    }

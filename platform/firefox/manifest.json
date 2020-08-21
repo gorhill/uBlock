@@ -76,7 +76,7 @@
   "manifest_version": 2,
   "name": "AdNauseam",
   "options_ui": {
-    "page": "options.html",
+    "page": "dashboard.html",
     "open_in_tab": true
   },
   "permissions": [

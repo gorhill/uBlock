@@ -95,7 +95,7 @@
     --hor-separator-color: var(--light-gray-30);
 
     --button-surface: var(--light-gray-30);
-    --button-ink: var(--ink-20);
+    --button-ink: #0076FF;  /* AdNauseam */
     --button-surface-hover: var(--light-gray-40);
     --button-active-surface: var(--blue-10);
     --button-important-surface: var(--yellow-30);
@@ -166,7 +166,7 @@
 */
 :root:not(.hidpi) {
     --default-ink: var(--ink-90);
-    --button-ink: var(--ink-90);
+    --button-ink: #0076FF;  /* AdNauseam */
     --fieldset-header-ink: var(--ink-50);
     --link-ink: var(--violet-80);
 }

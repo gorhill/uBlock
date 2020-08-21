@@ -64,12 +64,18 @@ ul#userSettings .subgroup> ul {
 ul#userSettings .subgroup> ul> li label {
   margin-left: 5px;
 }
-#localData> ul> li {
-  margin-top: 1em;
-}
-#localData> ul> li> ul> li:nth-of-type(2) {
-  font-family: monospace;
-}
+#localData > div {
+    margin-bottom: var(--default-gap-small);
+    }
+#localData > div:last-of-type {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    }
+#localData > div:last-of-type > button {
+    margin-bottom: var(--default-gap-small);
+    min-width: 280px;
+    }
 #experimental-enabled {
   margin-top: 1em;
 }
@@ -246,4 +252,21 @@ input[type=range]:disabled::-moz-range-progress {
   height: 6px;
   border-radius: 50%;
   background: black;
+}
+
+/* Mobile devices */
+:root.mobile #localData {
+    max-width: 100vw;
+    }
+:root.mobile #localData > div:last-of-type {
+    align-items: stretch;
+    }
+:root.mobile #localData > div:last-of-type > button {
+    min-width: unset;
+    }
+:root.mobile button {
+  width:100%;
+}
+:root.mobile ul#userSettings .subgroup> ul {
+    padding-left: 20px;
 }
