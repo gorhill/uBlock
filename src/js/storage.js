@@ -481,15 +481,6 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     let oldAvailableLists = {},
         newAvailableLists = {};
 
-    if ( this.badLists.size === 0 ) {
-        const details = await this.assets.get('ublock-badlists');
-        this.badLists = new Set(
-            details.content.split(/\s*[\n\r]+\s*/).filter(a => {
-               return a !== '' && a.startsWith('#') === false;
-            })
-        );
-    }
-
     // User filter list.
     newAvailableLists[this.userFiltersPath] = {
         group: 'user',
@@ -538,12 +529,24 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         this.saveSelectedFilterLists([ listURL ], true);
     };
 
-    // Load previously saved available lists -- these contains data
-    // computed at run-time, we will reuse this data if possible.
-    const [ bin, entries ] = await Promise.all([
+    const promises = [
         vAPI.storage.get('availableFilterLists'),
         this.assets.metadata(),
-    ]);
+        this.badLists.size === 0 ? this.assets.get('ublock-badlists') : false,
+    ];
+
+    // Load previously saved available lists -- these contains data
+    // computed at run-time, we will reuse this data if possible.
+    const [ bin, entries, badlists ] = await Promise.all(promises);
+
+    if ( badlists instanceof Object ) {
+        for ( const line of badlists.content.split(/\s*[\n\r]+\s*/) ) {
+            if ( line === '' || line.startsWith('#') ) { continue; }
+            const fields = line.split(/\s+/);
+            const remove = fields.length === 2 && fields[1] === 'nofetch';
+            this.badLists.set(fields[0], remove);
+        }
+    }
 
     oldAvailableLists = bin && bin.availableFilterLists || {};
 
@@ -723,6 +726,11 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
             compiledDetails.assetKey = assetKey;
             return compiledDetails;
         }
+    }
+
+    // Skip downloading really bad lists.
+    if ( this.badLists.get(assetKey) ) {
+        return { assetKey, content: '' };
     }
 
     const rawDetails = await this.assets.get(assetKey);
@@ -1331,11 +1339,14 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
 µBlock.assetObserver = function(topic, details) {
     // Do not update filter list if not in use.
+    // Also, ignore really bad lists, i.e. those which should not even be
+    // fetched from a remote server.
     if ( topic === 'before-asset-updated' ) {
         if ( details.type === 'filters' ) {
             if (
                 this.availableFilterLists.hasOwnProperty(details.assetKey) === false ||
-                this.selectedFilterLists.indexOf(details.assetKey) === -1
+                this.selectedFilterLists.indexOf(details.assetKey) === -1 ||
+                this.badLists.get(details.assetKey)
             ) {
                 return;
             }
@@ -1374,7 +1385,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
                 this.compilePublicSuffixList(details.content);
             }
         } else if ( details.assetKey === 'ublock-badlists' ) {
-            this.badLists = new Set();
+            this.badLists = new Map();
         }
         vAPI.messaging.broadcast({
             what: 'assetUpdated',
