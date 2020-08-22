@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Hviteliste",
+    "message": "Betrodde sider",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -552,7 +552,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "whitelistPrompt": {
-    "message": "Hvitelistedirektivene bestemmer hvilke nettsider uBlock Origin ikke skal være aktiv på. Én oppføring per linje. Ugyldige direktiver blir stille ignorert og kommentert ut.",
+    "message": "Direktivene for betrodde sider bestemmer hvilke nettsider uBlock Origin ikke skal være aktiv på. Én oppføring per linje. Ugyldige direktiver blir stille ignorert og kommentert ut.",
     "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
@@ -564,7 +564,7 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "min-ublock-hviteliste_{{datetime}}.txt",
+    "message": "mine-ublock-betrodde-sider_{{datetime}}.txt",
     "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {

@@ -20,7 +20,7 @@
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Ignore",
+    "message": "അവഗണിക്കുക",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {

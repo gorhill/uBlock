@@ -24,7 +24,7 @@
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
-    "message": "Parametrlər",
+    "message": "Tənzimləmələr",
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
@@ -48,7 +48,7 @@
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
-    "message": "uBlock₀ — Logger",
+    "message": "uBlock₀ — Qeydiyyatçı",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
@@ -76,7 +76,7 @@
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
-    "message": "əngəllənmiş sorğu",
+    "message": "tələb(request) bloklandı",
     "description": "English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt": {
@@ -944,7 +944,7 @@
     "description": "English: List of filter list names follows"
   },
   "docblockedBack": {
-    "message": "Geri qayıt",
+    "message": "Geriyə qayıt",
     "description": "English: Go back"
   },
   "docblockedClose": {
