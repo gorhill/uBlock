@@ -1522,8 +1522,6 @@ vAPI.cloud = (( ) => {
         maxChunkSize = evalMaxChunkSize();
     }, { once: true });
 
-    const maxStorageSize = QUOTA_BYTES;
-
     const options = {
         defaultDeviceName: window.navigator.platform,
         deviceName: undefined,
@@ -1562,13 +1560,7 @@ vAPI.cloud = (( ) => {
     const deleteChunks = async function(datakey, start) {
         const keys = [];
 
-        // No point in deleting more than:
-        // - The max number of chunks per item
-        // - The max number of chunks per storage limit
-        const n = Math.min(
-            maxChunkCountPerItem,
-            Math.ceil(maxStorageSize / maxChunkSize)
-        );
+        const n = await getCoarseChunkCount(datakey);
         for ( let i = start; i < n; i++ ) {
             keys.push(datakey + i.toString());
         }
@@ -1612,7 +1604,7 @@ vAPI.cloud = (( ) => {
         // this will free storage space which could otherwise cause the push
         // operation to fail.
         try {
-            await deleteChunks(datakey, chunkCount);
+            await deleteChunks(datakey, chunkCount + 1);
         } catch (reason) {
         }
 
