@@ -260,7 +260,8 @@ const renderRules = (( ) => {
 
     return function(clearHistory = false) {
         const select = document.querySelector('#ruleFilter select');
-        sortType = parseInt(select.value, 10) || 1;
+        sortType = parseInt(select.value, 10);
+        if ( isNaN(sortType) ) { sortType = 1; }
         unfilteredRules.orig.doc.getMode().sortType = sortType;
         unfilteredRules.edit.doc.getMode().sortType = sortType;
         sort(unfilteredRules.orig.rules);
