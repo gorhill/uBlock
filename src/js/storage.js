@@ -543,8 +543,8 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         for ( const line of badlists.content.split(/\s*[\n\r]+\s*/) ) {
             if ( line === '' || line.startsWith('#') ) { continue; }
             const fields = line.split(/\s+/);
-            const remove = fields.length === 2 && fields[1] === 'nofetch';
-            this.badLists.set(fields[0], remove);
+            const nofetch = fields.length === 2 && fields[1] === 'nofetch';
+            this.badLists.set(fields[0], nofetch);
         }
     }
 
