@@ -101,7 +101,7 @@ let differ;
 // https://github.com/codemirror/CodeMirror/blob/3e1bb5fff682f8f6cbfaef0e56c61d62403d4798/addon/search/search.js#L22
 // ... and modified as needed.
 
-const updateOverlay = (function() {
+const updateOverlay = (( ) => {
     let reFilter;
     const mode = {
         token: function(stream) {
@@ -135,11 +135,16 @@ const updateOverlay = (function() {
 // - Minimum amount of text updated
 
 const rulesToDoc = function(clearHistory) {
+    const orig = unfilteredRules.orig.doc;
+    const edit = unfilteredRules.edit.doc;
+    orig.startOperation();
+    edit.startOperation();
     for ( const key in unfilteredRules ) {
         if ( unfilteredRules.hasOwnProperty(key) === false ) { continue; }
         const doc = unfilteredRules[key].doc;
         const rules = filterRules(key);
         if (
+            clearHistory ||
             doc.lineCount() === 1 && doc.getValue() === '' ||
             rules.length === 0
         ) {
@@ -157,27 +162,27 @@ const rulesToDoc = function(clearHistory) {
         let afterText = rules.join('\n').trim();
         if ( afterText !== '' ) { afterText += '\n'; }
         const diffs = differ.diff_main(beforeText, afterText);
-        doc.startOperation();
-        let i = diffs.length,
-            iedit = beforeText.length;
+        let i = diffs.length;
+        let iedit = beforeText.length;
         while ( i-- ) {
-            let diff = diffs[i];
+            const diff = diffs[i];
             if ( diff[0] === 0 ) {
                 iedit -= diff[1].length;
                 continue;
             }
-            let end = doc.posFromIndex(iedit);
+            const end = doc.posFromIndex(iedit);
             if ( diff[0] === 1 ) {
                 doc.replaceRange(diff[1], end, end);
                 continue;
             }
             /* diff[0] === -1 */
             iedit -= diff[1].length;
-            let beg = doc.posFromIndex(iedit);
+            const beg = doc.posFromIndex(iedit);
             doc.replaceRange('', beg, end);
         }
-        doc.endOperation();
     }
+    orig.endOperation();
+    edit.endOperation();
     cleanEditText = mergeView.editor().getValue().trim();
     cleanEditToken = mergeView.editor().changeGeneration();
     if ( clearHistory ) {
@@ -205,27 +210,75 @@ const filterRules = function(key) {
 /******************************************************************************/
 
 const renderRules = (( ) => {
-    const reIsSwitchRule = /^[a-z-]+: /;
     let firstVisit = true;
+    let sortType = 1;
 
-    // Switches always listed at the top.
-    const customSort = (a, b) => {
-        const aIsSwitch = reIsSwitchRule.test(a);
-        if ( reIsSwitchRule.test(b) === aIsSwitch ) {
-            return a.localeCompare(b);
-        }
-        return aIsSwitch ? -1 : 1;
+    const reSwRule = /^([^/]+): ([^/ ]+) ([^ ]+)/;
+    const reRule   = /^([^ ]+) ([^/ ]+) ([^ ]+ [^ ]+)/;
+    const reUrlRule   = /^([^ ]+) ([^ ]+) ([^ ]+ [^ ]+)/;
+
+    const reverseHn = function(hn) {
+        return hn.split('.').reverse().join('.');
     };
 
-    return function(details) {
-        details.permanentRules.sort(customSort);
-        details.sessionRules.sort(customSort);
-        unfilteredRules.orig.rules = details.permanentRules;
-        unfilteredRules.edit.rules = details.sessionRules;
-        rulesToDoc(firstVisit);
-        if ( firstVisit ) {
+    const slotFromRule = function(rule) {
+        let type, srcHn, desHn, extra = '';
+        let match = reSwRule.exec(rule);
+        if ( match !== null ) {
+            type = ' ' + match[1];
+            srcHn = reverseHn(match[2]);
+            desHn = srcHn;
+        } else if ( (match = reRule.exec(rule)) !== null ) {
+            type = '\x10FFFE';
+            srcHn = reverseHn(match[1]);
+            desHn = reverseHn(match[2]);
+        } else if ( (match = reUrlRule.exec(rule)) !== null ) {
+            type = '\x10FFFF';
+            srcHn = reverseHn(match[1]);
+            desHn = reverseHn(vAPI.hostnameFromURI(match[2]));
+            extra = rule;
+        }
+        if ( sortType === 0 ) {
+            return { rule, token: `${type} ${srcHn} ${desHn} ${extra}` };
+        }
+        if ( sortType === 1 ) {
+            return { rule, token: `${srcHn} ${type} ${desHn} ${extra}` };
+        }
+        return { rule, token: `${desHn} ${type} ${srcHn} ${extra}` };
+    };
+
+    const sort = rules => {
+        const slots = [];
+        for ( let i = 0; i < rules.length; i++ ) {
+            slots.push(slotFromRule(rules[i], 1));
+        }
+        slots.sort((a, b) => a.token.localeCompare(b.token));
+        for ( let i = 0; i < rules.length; i++ ) {
+            rules[i] = slots[i].rule;
+        }
+    };
+
+    return function(clearHistory = false) {
+        const select = document.querySelector('#ruleFilter select');
+        sortType = parseInt(select.value, 10) || 1;
+        unfilteredRules.orig.doc.getMode().sortType = sortType;
+        unfilteredRules.edit.doc.getMode().sortType = sortType;
+        sort(unfilteredRules.orig.rules);
+        sort(unfilteredRules.edit.rules);
+        rulesToDoc(firstVisit || clearHistory);
+        if ( firstVisit || clearHistory ) {
             firstVisit = false;
-            mergeView.editor().execCommand('goNextDiff');
+            const chunks = mergeView.leftChunks();
+            if ( chunks.length !== 0 ) {
+                const ldoc = unfilteredRules.orig.doc;
+                const { clientHeight } = ldoc.getScrollInfo();
+                const line = Math.min(chunks[0].editFrom, chunks[0].origFrom);
+                ldoc.setCursor(line, 0);
+                ldoc.scrollIntoView(
+                    { line, ch: 0 },
+                    (clientHeight - ldoc.defaultTextHeight()) / 2
+                );
+            }
         }
         onTextChanged(true);
     };
@@ -240,7 +293,9 @@ const applyDiff = async function(permanent, toAdd, toRemove) {
         toAdd: toAdd,
         toRemove: toRemove,
     });
-    renderRules(details);
+    unfilteredRules.orig.rules = details.permanentRules;
+    unfilteredRules.edit.rules = details.sessionRules;
+    renderRules();
 };
 
 /******************************************************************************/
@@ -326,10 +381,10 @@ function exportUserRulesToFile() {
 
 /******************************************************************************/
 
-const onFilterChanged = (function() {
-    let timer,
-        overlay = null,
-        last = '';
+const onFilterChanged = (( ) => {
+    let timer;
+    let overlay = null;
+    let last = '';
 
     const process = function() {
         timer = undefined;
@@ -351,22 +406,28 @@ const onFilterChanged = (function() {
     };
 
     return function() {
-        if ( timer !== undefined ) { clearTimeout(timer); }
-        timer = vAPI.setTimeout(process, 773);
+        if ( timer !== undefined ) { self.cancelIdleCallback(timer); }
+        timer = self.requestIdleCallback(process, { timeout: 773 });
     };
 })();
+
+/******************************************************************************/
+
+const onSortChanged = function() {
+    renderRules(true);
+};
 
 /******************************************************************************/
 
 const onTextChanged = (( ) => {
     let timer;
 
-    const process = now => {
+    const process = details => {
         timer = undefined;
         const diff = document.getElementById('diff');
         let isClean = mergeView.editor().isClean(cleanEditToken);
         if (
-            now &&
+            details === undefined &&
             isClean === false &&
             mergeView.editor().getValue().trim() === cleanEditText
         ) {
@@ -388,8 +449,8 @@ const onTextChanged = (( ) => {
     };
 
     return function(now) {
-        if ( timer !== undefined ) { clearTimeout(timer); }
-        timer = now ? process(now) : vAPI.setTimeout(process, 57);
+        if ( timer !== undefined ) { self.cancelIdleCallback(timer); }
+        timer = now ? process() : self.requestIdleCallback(process, { timeout: 57 });
     };
 })();
 
@@ -483,7 +544,9 @@ self.hasUnsavedData = function() {
 vAPI.messaging.send('dashboard', {
     what: 'getRules',
 }).then(details => {
-    renderRules(details);
+    unfilteredRules.orig.rules = details.permanentRules;
+    unfilteredRules.edit.rules = details.sessionRules;
+    renderRules();
 });
 
 // Handle user interaction
@@ -494,9 +557,10 @@ uDom('#revertButton').on('click', revertAllHandler);
 uDom('#commitButton').on('click', commitAllHandler);
 uDom('#editSaveButton').on('click', editSaveHandler);
 uDom('#ruleFilter input').on('input', onFilterChanged);
+uDom('#ruleFilter select').on('input', onSortChanged);
 
 // https://groups.google.com/forum/#!topic/codemirror/UQkTrt078Vs
-mergeView.editor().on('updateDiff', function() { onTextChanged(); });
+mergeView.editor().on('updateDiff', ( ) => { onTextChanged(); });
 
 /******************************************************************************/
 

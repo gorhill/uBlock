@@ -57,7 +57,10 @@ CodeMirror.defineMode('ubo-dynamic-filtering', ( ) => {
         'noop',
     ]);
     const reIsNotHostname = /[:/#?*]/;
+    const slices = [];
+    let sliceIndex = 0;
     const tokens = [];
+    let tokenIndex = 0;
 
     const isSwitchRule = ( ) => {
         const token = tokens[0];
@@ -73,35 +76,54 @@ CodeMirror.defineMode('ubo-dynamic-filtering', ( ) => {
         return style;
     };
 
-    const token = stream => {
-        if ( stream.sol() ) { tokens.length = 0; }
-        stream.eatSpace();
-        const match = stream.match(/\S+/);
-        if ( Array.isArray(match) === false ) {
-            return skipToEnd(stream);
+    const token = function(stream) {
+        if ( stream.sol() ) {
+            slices.length = 0;
+            tokens.length = 0;
+            const reTokens = /\S+/g;
+            for (;;) {
+                const lastIndex = reTokens.lastIndex;
+                const match = reTokens.exec(stream.string);
+                if ( match === null ) { break; }
+                const l = match.index;
+                const r = reTokens.lastIndex;
+                if ( l !== lastIndex ) {
+                    slices.push({ t: false, l: lastIndex, r: l });
+                }
+                slices.push({ t: true, l, r });
+                tokens.push(stream.string.slice(l, r));
+            }
+            sliceIndex = tokenIndex = 0;
         }
-        if ( tokens.length === 4 ) {
-            return skipToEnd(stream, 'error');
+        if ( sliceIndex >= slices.length ) {
+            return stream.skipToEnd(stream);
         }
-        const token = match[0];
-        tokens.push(token);
+        const slice = slices[sliceIndex++];
+        stream.pos = slice.r;
+        if ( slice.t !== true ) { return null; }
+        const token = tokens[tokenIndex++];
         // Field 1: per-site switch or hostname
-        if ( tokens.length === 1 ) {
+        if ( tokenIndex === 1 ) {
             if ( isSwitchRule(token) ) {
                 if ( validSwitches.has(token) === false ) {
                     return skipToEnd(stream, 'error');
                 }
-            } else if ( reIsNotHostname.test(token) && token !== '*' ) {
+                if ( this.sortType === 0 ) { return 'sortkey'; }
+                return null;
+            }
+            if ( reIsNotHostname.test(token) && token !== '*' ) {
                 return skipToEnd(stream, 'error');
             }
+            if ( this.sortType === 1 ) { return 'sortkey'; }
             return null;
         }
         // Field 2: hostname or url
-        if ( tokens.length === 2 ) {
+        if ( tokenIndex === 2 ) {
             if ( isSwitchRule(tokens[0]) ) {
                 if ( reIsNotHostname.test(token) && token !== '*' ) {
                     return skipToEnd(stream, 'error');
                 }
+                if ( this.sortType === 1 ) { return 'sortkey'; }
             }
             if (
                 reIsNotHostname.test(token) &&
@@ -110,15 +132,18 @@ CodeMirror.defineMode('ubo-dynamic-filtering', ( ) => {
             ) {
                 return skipToEnd(stream, 'error');
             }
+            if ( this.sortType === 2 ) { return 'sortkey'; }
             return null;
         }
         // Field 3
-        if ( tokens.length === 3 ) {
+        if ( tokenIndex === 3 ) {
             // Switch rule
             if ( isSwitchRule(tokens[0]) ) {
                 if ( validSwitcheStates.has(token) === false ) {
                     return skipToEnd(stream, 'error');
                 }
+                if ( token === 'true' ) { return 'blockrule'; }
+                if ( token === 'false' ) { return 'allowrule'; }
                 return null;
             }
             // Hostname rule
@@ -141,61 +166,19 @@ CodeMirror.defineMode('ubo-dynamic-filtering', ( ) => {
             return null;
         }
         // Field 4
-        if ( tokens.length === 4 ) {
+        if ( tokenIndex === 4 ) {
             if (
                 isSwitchRule(tokens[0]) ||
                 validActions.has(token) === false
             ) {
                 return skipToEnd(stream, 'error');
             }
-            return null;
+            if ( token === 'allow' ) { return 'allowrule'; }
+            if ( token === 'block' ) { return 'blockrule'; }
+            return 'nooprule';
         }
         return skipToEnd(stream);
     };
 
-    return { token };
+    return { token, sortType: 1 };
 });
-
-/*
-Code below is to address
-https://github.com/uBlockOrigin/uMatrix-issues/issues/128
-
-But this needs fixing because glitchiness in some cases.
-I may end up having to create a custom merge view rather
-than using the existing CodeMirror one.
-
-CodeMirror.registerHelper('fold', 'ubo-dynamic-filtering', (cm, start) => {
-    function isHeader(lineNo) {
-        const tokentype = cm.getTokenTypeAt(CodeMirror.Pos(lineNo, 0));
-        return tokentype && /\bheader\b/.test(tokentype);
-    }
-
-    function headerLevel(lineNo, line, nextLine) {
-        let match = line && line.match(/^#+/);
-        if (match && isHeader(lineNo)) return match[0].length;
-        match = nextLine && nextLine.match(/^[=\-]+\s*$/);
-        if (match && isHeader(lineNo + 1)) return nextLine[0] === '=' ? 1 : 2;
-        return 100;
-    }
-
-    const firstLine = cm.getLine(start.line);
-    let nextLine = cm.getLine(start.line + 1);
-    const level = headerLevel(start.line, firstLine, nextLine);
-    if ( level === 100 ) { return; }
-
-    const lastLineNo = cm.lastLine();
-    let end = start.line,
-        nextNextLine = cm.getLine(end + 2);
-    while ( end < lastLineNo ) {
-        if ( headerLevel(end + 1, nextLine, nextNextLine) <= level ) { break; }
-        ++end;
-        nextLine = nextNextLine;
-        nextNextLine = cm.getLine(end + 2);
-    }
-
-    return {
-        from: CodeMirror.Pos(start.line, firstLine.length),
-        to: CodeMirror.Pos(end, cm.getLine(end).length),
-    };
-});
-*/

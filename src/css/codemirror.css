@@ -48,6 +48,23 @@
 .cm-staticnetAllow { color: #004f00; }
 .cm-staticOpt { background-color: #ddd; font-weight: bold; }
 
+/* Rules */
+.cm-s-default .cm-allowrule {
+    color: green;
+    font-weight: bold;
+    }
+.cm-s-default .cm-blockrule {
+    color: red;
+    font-weight: bold;
+    }
+.cm-s-default .cm-nooprule {
+    color: darkslategray;
+    font-weight: bold;
+    }
+.cm-s-default .cm-sortkey {
+    color: #708;
+    }
+
 div.CodeMirror span.CodeMirror-matchingbracket {
     color: unset;
     }
@@ -111,11 +128,9 @@ div.CodeMirror span.CodeMirror-matchingbracket {
 
 .CodeMirror-merge-l-deleted {
     background-image: none;
-    font-weight: bold;
     }
 .CodeMirror-merge-l-inserted {
     background-image: none;
-    font-weight: bold;
     }
 /* This probably needs to be added to CodeMirror repo */
 .CodeMirror-merge-gap {
