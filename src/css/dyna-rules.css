@@ -59,6 +59,7 @@ body:not(.editing) #diff.dirty #commitButton:hover {
     }
 
 #ruleFilter {
+    align-items: center;
     direction: ltr;
     display: flex;
     justify-content: center;
