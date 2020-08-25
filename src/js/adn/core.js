@@ -854,7 +854,7 @@
       return warn('Unable to delete: ', ad);
     }
 
-    adSetSize --;
+    adsetSize --;
     storeAdData();
   }
 

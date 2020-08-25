@@ -854,9 +854,12 @@
 
   function computeStats(adsets) {
     const numVisits = numVisited(gAds);
-    $('.since').text($('.since').text().replace('{{datetime}}', sinceTime(adsets)));
-    $('.clicked').text($('.clicked').text().replace('{{number}}', numVisits));
-    $('.total').text($('.total').text().replace('{{total}}', numTotal()));
+
+    $('.since').text(vAPI.i18n("adnVaultSince").replace('{{datetime}}', sinceTime(adsets)));
+
+    $('.clicked').text(vAPI.i18n("adnMenuAdsClicked").replace('{{number}}', numVisits));
+
+    $('.total').text(vAPI.i18n("adnVaultFound").replace('{{total}}', numTotal()));
     $('#detected').text(numFound(adsets));
 
     if(numTotal() != numFound(adsets))
@@ -1853,6 +1856,7 @@
     switch (mode) {
       case "delete":
         computeStats(gAdSets);
+        analyze(gAdSets);
         vaultLoading = false;
         break;
       case "resize":
