@@ -211,7 +211,7 @@ const rulesToDoc = function(clearHistory) {
             const mark = edit.markText(
                 { line: iline, ch: 0 },
                 { line: iline + 1, ch: 0 },
-                { readOnly: true }
+                { atomic: true, readOnly: true }
             );
             mark.uboEllipsis = true;
         }
