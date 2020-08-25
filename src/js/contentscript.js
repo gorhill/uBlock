@@ -1598,10 +1598,14 @@ vAPI.injectScriptlet = function(doc, text) {
             for(const key in result) {
               if(result[key] != "") allSelectors += (allSelectors == "" ? "" : ",") + result[key];
             }
-            let nodes = document.querySelectorAll(allSelectors);
-            for ( const node of nodes ) {
-                vAPI.adCheck && vAPI.adCheck(node);
+            let nodes;
+            if (allSelectors != "") {
+              nodes = document.querySelectorAll(allSelectors);
+              for ( const node of nodes ) {
+                  vAPI.adCheck && vAPI.adCheck(node);
+              }
             }
+
         }
 
         if ( pendingNodes.stopped === false ) {
@@ -1764,7 +1768,7 @@ vAPI.injectScriptlet = function(doc, text) {
 
         vAPI.domCollapser.start();
 
-        if ( response.noCosmeticFiltering ) {
+        if ( response.noCosmeticFiltering || response.prefs.hidingDisabled) { // ADN
             vAPI.domFilterer = null;
             vAPI.domSurveyor = null;
         } else {

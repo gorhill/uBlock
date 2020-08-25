@@ -1696,7 +1696,7 @@
 
   const blockIncomingCookies = exports.blockIncomingCookies = function (headers, requestUrl, originalUrl) {
     let modified = false;
-    const dbug = 1;
+    const dbug = 0;
     let hostname;
     const us = µb.userSettings;
 
