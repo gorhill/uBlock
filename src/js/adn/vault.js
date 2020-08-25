@@ -435,7 +435,7 @@
 
   function layoutAd($div, adset) {
     // append the display
-    if (adset.child(0).private) {
+    if (adset.child(0).private && adset.child(0).adNetwork) {
       if ($('.privateAds').length == 0) {
         appendPrivatePlaceHolder($div, adset);
       } else {

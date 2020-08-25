@@ -240,7 +240,7 @@
   }
 
   const appendAd = function ($items, ad) {
-    if(ad.private) return; // skip private ads
+    if(ad.private && ad.adNetwork != null) return; // skip private ads after removal of content
 
     if (ad.contentType === 'img') {
 
