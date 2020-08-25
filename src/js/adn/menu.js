@@ -279,7 +279,7 @@
     const cls = ad.visitedTs > 0 ? 'just-visited' : 'just-failed';
     // Update the status
     const txt = cls === 'just-visited' ? 'visited' : 'failed';
-    $ad.descendants('.adStatus').text(vAPI.i18n("adnAdClickingStatus" + text));
+    $ad.descendants('.adStatus').text(vAPI.i18n("adnAdClickingStatus" + txt));
 
     $ad.removeClass('failed visited attempting').addClass(cls);
 
