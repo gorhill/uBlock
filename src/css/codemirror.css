@@ -136,6 +136,9 @@ div.CodeMirror span.CodeMirror-matchingbracket {
 .CodeMirror-merge-gap {
     vertical-align: top;
     }
+.CodeMirror-merge-spacer {
+    background-color: var(--bg-code);
+    }
 
 .CodeMirror-hints {
     z-index: 10000;
