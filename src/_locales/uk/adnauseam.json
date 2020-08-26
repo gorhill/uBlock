@@ -84,7 +84,7 @@
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
   "adnNotificationOperaSetting": {
-    "message": "Please allow AdNauseam to access search page results",
+    "message": "Будь ласка, дозвольте AdNauseam доступ до результатів пошуку",
     "description": "English: Notifications -> Please allow AdNauseam to access search page results"
   },
   "adnNotificationBrowserSetting": {
@@ -92,7 +92,7 @@
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
   "adnNotificationPrivacyMode": {
-    "message": "You have allowed adnauseam to have access to your online activities while private browsing.",
+    "message": "Ви дозволили adnauseam отримати доступ до ваших онлайн-заходів при приватному перегляді.",
     "description": "English: Notifications -> You have allowed adnauseam to have access to your online activities while private browsing."
   },
   "adnNotificationDNTAllowed": {
@@ -160,11 +160,11 @@
     "description": "English: AdNauseam — Ad Vault"
   },
   "myStatistics": {
-    "message": "My Statistics",
+    "message": "Моя статистика",
     "description": "appears in ADN vault, above ad slider"
   },
   "topAdnetworks": {
-    "message": "Top Adnetworks",
+    "message": "Топ Рекламних мереж",
     "description": "appears in ADN vault/My Statistics"
   },
   "topSites": {
@@ -172,15 +172,15 @@
     "description": "appears in ADN vault/My Statistics"
   },
   "adTypes": {
-    "message": "Ad Types",
+    "message": "Тип реклами",
     "description": "appears in ADN vault/My Statistics"
   },
   "adTypesImageAds": {
-    "message": "Image Ads",
+    "message": "Реклама при зображенні",
     "description": "appears in ADN vault/My Statistics"
   },
   "adTypesTextAds": {
-    "message": "Text Ads",
+    "message": "Текстова реклама",
     "description": "appears in ADN vault/My Statistics"
   },
   "adnShowingRecentAds": {
@@ -442,5 +442,13 @@
   "eventLoggingPrompt": {
     "message": "Активувати режим відлагодження",
     "description": "prompt for toggle"
+  },
+  "removeAdsInPrivate": {
+    "message": "Вилучити оголошення, зібрану в приватному режимі",
+    "description": "English:Remove ads collected in private mode - settings page"
+  },
+  "settingsStrictBlockingMode": {
+    "message": "Активувати суворе блокування",
+    "description": "English: Activate Strict Blocking Mode"
   }
 }

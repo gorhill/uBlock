@@ -84,11 +84,11 @@
     "description": "English: Notifications -> uBlock and AdNauseam may conflict!"
   },
   "adnNotificationOperaSetting": {
-    "message": "Please allow AdNauseam to access search page results",
+    "message": "נא אשרו לAdNauseam לגשת לתוצאות החיפוש",
     "description": "English: Notifications -> Please allow AdNauseam to access search page results"
   },
   "adnNotificationBrowserSetting": {
-    "message": "The 'Content Blocking' settings in your browser may interfere with AdNauseam!",
+    "message": "הגדרות ה\"חסימת תוכן\" בדפדפן שלך עלולים להפריע לAdNauseam!",
     "description": "English: Notifications -> The 'Content Blocking' settings in your browser may interfere with AdNauseam!"
   },
   "adnNotificationPrivacyMode": {
@@ -160,27 +160,27 @@
     "description": "English: AdNauseam — Ad Vault"
   },
   "myStatistics": {
-    "message": "My Statistics",
+    "message": "הסטטיסטיקה שלי",
     "description": "appears in ADN vault, above ad slider"
   },
   "topAdnetworks": {
-    "message": "Top Adnetworks",
+    "message": "רשתות פירסום מובילות",
     "description": "appears in ADN vault/My Statistics"
   },
   "topSites": {
-    "message": "Top Sites",
+    "message": "אתרים מובילים",
     "description": "appears in ADN vault/My Statistics"
   },
   "adTypes": {
-    "message": "Ad Types",
+    "message": "סוגי פרסומות",
     "description": "appears in ADN vault/My Statistics"
   },
   "adTypesImageAds": {
-    "message": "Image Ads",
+    "message": "מודעות תמונה",
     "description": "appears in ADN vault/My Statistics"
   },
   "adTypesTextAds": {
-    "message": "Text Ads",
+    "message": "מודעות טקסט",
     "description": "appears in ADN vault/My Statistics"
   },
   "adnShowingRecentAds": {
@@ -442,5 +442,13 @@
   "eventLoggingPrompt": {
     "message": "הפעל מצב איתור באגים",
     "description": "prompt for toggle"
+  },
+  "removeAdsInPrivate": {
+    "message": "Remove ads collected in private mode",
+    "description": "English:Remove ads collected in private mode - settings page"
+  },
+  "settingsStrictBlockingMode": {
+    "message": "Activate Strict Blocking Mode",
+    "description": "English: Activate Strict Blocking Mode"
   }
 }

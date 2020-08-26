@@ -442,5 +442,13 @@
   "eventLoggingPrompt": {
     "message": "Attiva debug",
     "description": "prompt for toggle"
+  },
+  "removeAdsInPrivate": {
+    "message": "Rimuovi gli annunci raccolti in modalità privata",
+    "description": "English:Remove ads collected in private mode - settings page"
+  },
+  "settingsStrictBlockingMode": {
+    "message": "Attiva La Modalità Di Blocco Strict",
+    "description": "English: Activate Strict Blocking Mode"
   }
 }

@@ -442,5 +442,13 @@
   "eventLoggingPrompt": {
     "message": "激活調試模式",
     "description": "prompt for toggle"
+  },
+  "removeAdsInPrivate": {
+    "message": "移除在無痕模式下收集的廣告",
+    "description": "English:Remove ads collected in private mode - settings page"
+  },
+  "settingsStrictBlockingMode": {
+    "message": "啟用嚴格遮蔽模式",
+    "description": "English: Activate Strict Blocking Mode"
   }
 }

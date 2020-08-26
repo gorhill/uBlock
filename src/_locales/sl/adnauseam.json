@@ -172,7 +172,7 @@
     "description": "appears in ADN vault/My Statistics"
   },
   "adTypes": {
-    "message": "Ad Types",
+    "message": "Tip oglasa",
     "description": "appears in ADN vault/My Statistics"
   },
   "adTypesImageAds": {
@@ -180,7 +180,7 @@
     "description": "appears in ADN vault/My Statistics"
   },
   "adTypesTextAds": {
-    "message": "Text Ads",
+    "message": "Tekstovni oglas",
     "description": "appears in ADN vault/My Statistics"
   },
   "adnShowingRecentAds": {
@@ -442,5 +442,13 @@
   "eventLoggingPrompt": {
     "message": "Aktiviraj način za odpravljanje napak",
     "description": "prompt for toggle"
+  },
+  "removeAdsInPrivate": {
+    "message": "Remove ads collected in private mode",
+    "description": "English:Remove ads collected in private mode - settings page"
+  },
+  "settingsStrictBlockingMode": {
+    "message": "Activate Strict Blocking Mode",
+    "description": "English: Activate Strict Blocking Mode"
   }
 }

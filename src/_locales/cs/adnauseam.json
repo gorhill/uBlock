@@ -442,5 +442,13 @@
   "eventLoggingPrompt": {
     "message": "Aktivovat režim ladění",
     "description": "prompt for toggle"
+  },
+  "removeAdsInPrivate": {
+    "message": "Odstranit reklamy shromážděné v soukromém režimu",
+    "description": "English:Remove ads collected in private mode - settings page"
+  },
+  "settingsStrictBlockingMode": {
+    "message": "Aktivovat Striktní blokovací režim",
+    "description": "English: Activate Strict Blocking Mode"
   }
 }

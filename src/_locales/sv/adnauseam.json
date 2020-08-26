@@ -442,5 +442,13 @@
   "eventLoggingPrompt": {
     "message": "Aktivera felsökningsläge",
     "description": "prompt for toggle"
+  },
+  "removeAdsInPrivate": {
+    "message": "Ta bort annonser som samlats in i privat läge",
+    "description": "English:Remove ads collected in private mode - settings page"
+  },
+  "settingsStrictBlockingMode": {
+    "message": "Aktivera Strikt blockeringsläge",
+    "description": "English: Activate Strict Blocking Mode"
   }
 }

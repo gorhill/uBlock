@@ -442,5 +442,13 @@
   "eventLoggingPrompt": {
     "message": "Ota virheenkorjaus käyttöön",
     "description": "prompt for toggle"
+  },
+  "removeAdsInPrivate": {
+    "message": "Poista yksityisessä tilassa kerätyt mainokset",
+    "description": "English:Remove ads collected in private mode - settings page"
+  },
+  "settingsStrictBlockingMode": {
+    "message": "Ota käyttöön tiukka estotila",
+    "description": "English: Activate Strict Blocking Mode"
   }
 }

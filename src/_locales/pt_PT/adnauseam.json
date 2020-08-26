@@ -442,5 +442,13 @@
   "eventLoggingPrompt": {
     "message": "Ativar modo de depuração",
     "description": "prompt for toggle"
+  },
+  "removeAdsInPrivate": {
+    "message": "Remover anúncios coletados no modo privado",
+    "description": "English:Remove ads collected in private mode - settings page"
+  },
+  "settingsStrictBlockingMode": {
+    "message": "Ativar modo de bloqueio restrito",
+    "description": "English: Activate Strict Blocking Mode"
   }
 }

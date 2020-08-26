@@ -442,5 +442,13 @@
   "eventLoggingPrompt": {
     "message": "ডিবাগিং মোড সক্রিয় করুন",
     "description": "prompt for toggle"
+  },
+  "removeAdsInPrivate": {
+    "message": "Remove ads collected in private mode",
+    "description": "English:Remove ads collected in private mode - settings page"
+  },
+  "settingsStrictBlockingMode": {
+    "message": "Activate Strict Blocking Mode",
+    "description": "English: Activate Strict Blocking Mode"
   }
 }

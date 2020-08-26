@@ -160,7 +160,7 @@
     "description": "English: AdNauseam — Ad Vault"
   },
   "myStatistics": {
-    "message": "My Statistics",
+    "message": "Moja Statistika",
     "description": "appears in ADN vault, above ad slider"
   },
   "topAdnetworks": {
@@ -172,7 +172,7 @@
     "description": "appears in ADN vault/My Statistics"
   },
   "adTypes": {
-    "message": "Ad Types",
+    "message": "Тип Огласа",
     "description": "appears in ADN vault/My Statistics"
   },
   "adTypesImageAds": {
@@ -180,7 +180,7 @@
     "description": "appears in ADN vault/My Statistics"
   },
   "adTypesTextAds": {
-    "message": "Text Ads",
+    "message": "Tекстуалне рекламе",
     "description": "appears in ADN vault/My Statistics"
   },
   "adnShowingRecentAds": {
@@ -442,5 +442,13 @@
   "eventLoggingPrompt": {
     "message": "Активирајте режим да отклањање грешака",
     "description": "prompt for toggle"
+  },
+  "removeAdsInPrivate": {
+    "message": "Remove ads collected in private mode",
+    "description": "English:Remove ads collected in private mode - settings page"
+  },
+  "settingsStrictBlockingMode": {
+    "message": "Activate Strict Blocking Mode",
+    "description": "English: Activate Strict Blocking Mode"
   }
 }
