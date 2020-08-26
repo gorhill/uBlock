@@ -245,7 +245,9 @@ header{
   width:75%;
   float:right;
 }
-
+#stats .wrapper {
+  max-width: 325px;
+}
 #stats .dnt-allowed{
   color: #96B96B;
 }

@@ -128,6 +128,12 @@
     uDom('#visited').text(vAPI.i18n("adnMenuAdsClicked").replace("{{number}}", numVisits || 0));
     uDom('#found').text(vAPI.i18n("adnMenuAdsDetected").replace("{{count}}", (ads && !recent) ? ads.length : 0));
     setCost(numVisits);
+
+    // adjust css if too wide
+    if (uDom('.wrapper').height > 20) {
+      uDom('.wrapper').css("float", "right");
+      uDom('.wrapper').css("margin-left", "-25px");
+    }
   }
 
   const updateInterface = function (json) {
