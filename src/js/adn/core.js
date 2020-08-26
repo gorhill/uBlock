@@ -2204,7 +2204,7 @@ const verifyList = exports.verifyList = function (note, lists) {
     json.total = allAds.length;
 
     // #1657: if data length is too long, get the first 6
-    if (json.data.length > 6) json.data = json.data.slice(0, 6);
+    // if (json.data.length > 6) json.data = json.data.slice(0, 6);
 
     // if we have no page ads, use the most recent(6), avoid sending too many ad data in messaging
     if (!json.data.length) {

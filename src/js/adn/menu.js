@@ -130,7 +130,7 @@
     setCost(numVisits);
 
     // adjust css if too wide
-    if (uDom('.wrapper').height > 20) {
+    if (uDom('.wrapper').nodes[0].clientHeight > 20) {
       uDom('.wrapper').css("float", "right");
       uDom('.wrapper').css("margin-left", "-25px");
     }
