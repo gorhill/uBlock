@@ -529,7 +529,7 @@
 
       }).appendTo($li);
 
-      appendTargetTo($target, ad, adset); // tmp, remove adset
+      if(!ad.adNetwork) appendTargetTo($target, ad, adset); // tmp, remove adset
 
       const $detected = $('<div/>', {
         class: 'detected-on'

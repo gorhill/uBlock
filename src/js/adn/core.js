@@ -829,15 +829,21 @@
     const pageHash = YaMD5.hashStr(ad.pageUrl);
     if (admap[pageHash]) {
 
-      const hash = computeHash(ad);
-
-      if (admap[pageHash][hash]) {
-
-        delete admap[pageHash][hash];
-
+      if (pageHash == YaMD5.hashStr("")) {
+        // private ads, remove all private ads because it's impossible to select each private ad
+        delete admap[pageHash];
       } else {
+        const hash = computeHash(ad);
 
-        return warn('Delete failed, no ad: ', ad, admap);
+        if (admap[pageHash][hash]) {
+
+          delete admap[pageHash][hash];
+
+        } else {
+
+          return warn('Delete failed, no ad: ', ad, admap);
+        }
+
       }
     }
     else {
