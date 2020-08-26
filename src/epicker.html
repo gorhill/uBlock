@@ -111,33 +111,37 @@ html#ublock0-epicker,
     text-align: left !important;
     overflow: hidden !important;
 }
-#ublock0-epicker aside > ul {
+#ublock0-epicker #candidateFilters {
     max-height: 16em !important;
     overflow-y: auto !important;
 }
-#ublock0-epicker aside > ul > li:first-of-type {
+#ublock0-epicker #candidateFilters > li:first-of-type {
     margin-bottom: 0.5em !important;
 }
-#ublock0-epicker ul > li > span:nth-of-type(1) {
+#ublock0-epicker .changeFilter > li > span:nth-of-type(1) {
     font-weight: bold !important;
 }
-#ublock0-epicker ul > li > span:nth-of-type(2) {
+#ublock0-epicker .changeFilter > li > span:nth-of-type(2) {
     font-size: smaller !important;
     color: gray !important;
 }
-#ublock0-epicker ul > li > ul {
+#ublock0-epicker #candidateFilters .changeFilter {
     list-style-type: none !important;
     margin: 0 0 0 1em !important;
     overflow: hidden !important;
     text-align: left !important;
 }
-#ublock0-epicker ul > li > ul > li {
-    font: 11px monospace !important;
-    white-space: nowrap !important;
+#ublock0-epicker #candidateFilters .changeFilter li {
+    border: 1px solid transparent;
     cursor: pointer !important;
     direction: ltr !important;
+    font: 11px monospace !important;
+    white-space: nowrap !important;
 }
-#ublock0-epicker ul > li > ul > li:hover {
+#ublock0-epicker #candidateFilters .changeFilter li.active {
+    border: 1px dotted gray;
+    }
+#ublock0-epicker #candidateFilters .changeFilter li:hover {
     background-color: white !important;
 }
 #ublock0-epicker svg {
@@ -233,7 +237,7 @@ html#ublock0-epicker,
         </div>
     </div>
 </section>
-<ul>
+<ul id="candidateFilters">
     <li id="netFilters">
         <span>{{netFilters}}</span><ul lang="en" class="changeFilter"></ul>
     </li>

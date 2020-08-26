@@ -1009,16 +1009,27 @@ const onCandidateChanged = (function() {
 /******************************************************************************/
 
 const candidateFromFilterChoice = function(filterChoice) {
-    let slot = filterChoice.slot;
-    let filters = filterChoice.filters;
+    let { slot, filters } = filterChoice;
     let filter = filters[slot];
+
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/47
+    for ( const elem of dialog.querySelectorAll('#candidateFilters li') ) {
+        elem.classList.remove('active');
+    }
 
     if ( filter === undefined ) { return ''; }
 
     // For net filters there no such thing as a path
-    if ( filter.startsWith('##') === false ) { return filter; }
+    if ( filter.startsWith('##') === false ) {
+        dialog.querySelector(`#netFilters li:nth-of-type(${slot+1})`)
+              .classList.add('active');
+        return filter;
+    }
 
     // At this point, we have a cosmetic filter
+
+    dialog.querySelector(`#cosmeticFilters li:nth-of-type(${slot+1})`)
+          .classList.add('active');
 
     // Modifier means "target broadly". Hence:
     // - Do not compute exact path.
@@ -1079,8 +1090,8 @@ const filterChoiceFromEvent = function(ev) {
         slot: 0,
         modifier: ev.ctrlKey || ev.metaKey
     };
-    while ( li.previousSibling !== null ) {
-        li = li.previousSibling;
+    while ( li.previousElementSibling !== null ) {
+        li = li.previousElementSibling;
         r.slot += 1;
     }
     return r;
@@ -1138,7 +1149,7 @@ const onDialogClicked = function(ev) {
         highlightElements(targetElements, true);
     }
 
-    else if ( ev.target.parentNode.classList.contains('changeFilter') ) {
+    else if ( ev.target.closest('.changeFilter') !== null ) {
         taCandidate.value = candidateFromFilterChoice(filterChoiceFromEvent(ev));
         onCandidateChanged();
     }
