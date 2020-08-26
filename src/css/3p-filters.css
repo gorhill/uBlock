@@ -184,7 +184,10 @@ body.updating .listEntry.checked.obsolete .updating {
     animation: spin 1s steps(8) infinite;
     display: inline-flex;
     }
-.listEntry.toImport > textarea#externalLists {
+.listEntry.toImport.checked textarea {
+    visibility: visible;
+}
+.listEntry.toImport textarea {
     border: 1px solid #ccc;
     box-sizing: border-box;
     display: block;
