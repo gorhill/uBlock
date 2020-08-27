@@ -180,7 +180,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
-    "message": "Pop-Up Fenster",
+    "message": "Pop-Up-Fenster",
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
@@ -296,7 +296,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Element blockieren",
+    "message": "Element blockieren...",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -356,7 +356,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Blockiere Medienelemente größer als {{input}} KB",
+    "message": "Medienelemente größer als {{input}} KB blockieren",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -1024,7 +1024,7 @@
     "description": "Label for keyboard shortcut used to toggle blocking profile"
   },
   "relaxBlockingMode": {
-    "message": "Lockere Blockiermodus",
+    "message": "Blockiermodus lockern",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "storageUsed": {
