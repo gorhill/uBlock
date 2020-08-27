@@ -68,6 +68,7 @@
     "page": "options.html",
     "open_in_tab": true
   },
+  "incognito": "spanning",
   "permissions": [
     "contextMenus",
     "privacy",

@@ -18,19 +18,6 @@ UBLOCK=`jq .version platform/chromium/manifest.json | tr -d '"'` # ublock-versio
 echo "*** AdNauseam.opera: copying common files"
 bash ./tools/copy-common-files.sh  $DES
 
-echo "*** AdNauseam.opera: concatenating content scripts"
-cat $DES/js/vapi-usercss.js > /tmp/contentscript.js
-echo >> /tmp/contentscript.js
-grep -v "^'use strict';$" $DES/js/vapi-usercss.real.js >> /tmp/contentscript.js
-echo >> /tmp/contentscript.js
-grep -v "^'use strict';$" $DES/js/vapi-usercss.pseudo.js >> /tmp/contentscript.js
-echo >> /tmp/contentscript.js
-grep -v "^'use strict';$" $DES/js/contentscript.js >> /tmp/contentscript.js
-mv /tmp/contentscript.js $DES/js/contentscript.js
-rm $DES/js/vapi-usercss.js
-rm $DES/js/vapi-usercss.real.js
-rm $DES/js/vapi-usercss.pseudo.js
-
 # Opera-specific
 cp platform/opera/manifest.json $DES/  # adn: overwrites chromium manifest
 

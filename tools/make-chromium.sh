@@ -3,7 +3,6 @@
 # This script assumes an OS X environment
 
 echo "*** AdNauseam.chromium: Creating chrome package"
-echo "*** AdNauseam.chromium: Copying files"
 
 if [ "$1" = experimental ]; then
     DES=dist/build/experimental/adnauseam.chromium

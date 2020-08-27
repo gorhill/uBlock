@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
 #
 # This script assumes a linux environment
-# https://github.com/uBlockOrigin/uBlock-issues/issues/217
-set -e
 echo "*** AdNauseam.firefox: Creating web store package"
-echo "*** AdNauseam.firefox: Copying files"
 
 BLDIR=dist/build
 DES="$BLDIR"/adnauseam.firefox
