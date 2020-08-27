@@ -385,28 +385,30 @@ const onPresentationChanged = (( ) => {
 
     const reSwRule = /^([^/]+): ([^/ ]+) ([^ ]+)/;
     const reRule   = /^([^ ]+) ([^/ ]+) ([^ ]+ [^ ]+)/;
-    const reUrlRule   = /^([^ ]+) ([^ ]+) ([^ ]+ [^ ]+)/;
+    const reUrlRule = /^([^ ]+) ([^ ]+) ([^ ]+ [^ ]+)/;
 
     const reverseHn = function(hn) {
         return hn.split('.').reverse().join('.');
     };
 
     const slotFromRule = rule => {
-        let type, srcHn, desHn, extra = '';
+        let type, srcHn, desHn, extra;
         let match = reSwRule.exec(rule);
         if ( match !== null ) {
             type = ' ' + match[1];
             srcHn = reverseHn(match[2]);
             desHn = srcHn;
+            extra = match[3];
         } else if ( (match = reRule.exec(rule)) !== null ) {
             type = '\x10FFFE';
             srcHn = reverseHn(match[1]);
             desHn = reverseHn(match[2]);
+            extra = match[3];
         } else if ( (match = reUrlRule.exec(rule)) !== null ) {
             type = '\x10FFFF';
             srcHn = reverseHn(match[1]);
             desHn = reverseHn(vAPI.hostnameFromURI(match[2]));
-            extra = rule;
+            extra = match[3];
         }
         if ( sortType === 0 ) {
             return { rule, token: `${type} ${srcHn} ${desHn} ${extra}` };
