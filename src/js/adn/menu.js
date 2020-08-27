@@ -129,6 +129,11 @@
     uDom('#found').text(vAPI.i18n("adnMenuAdsDetected").replace("{{count}}", (ads && !recent) ? ads.length : 0));
     setCost(numVisits);
 
+    adjustStatCSS();
+
+  }
+
+  const adjustStatCSS = function() {
     // adjust css if too wide
     if (uDom('.wrapper').nodes[0].clientHeight > 20) {
       uDom('.wrapper').css("float", "right");
@@ -218,6 +223,7 @@
         const numVisits = visitedCount(ads);
         uDom('#visited').text(vAPI.i18n("adnMenuAdsClicked").replace("{{number}}", numVisits || 0));
         setCost(numVisits);
+        adjustStatCSS();
       }
     }
   }
