@@ -484,7 +484,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Един филтър на ред. Може да е обикновено име на хост или съвместим с Adblock Plus филтър. Редовете с представка <code>!</code> ще бъдат игнорирани.",
+    "message": "Един филтър на ред. Това може да бъде обикновен адрес или съвместим с Adblock Plus филтър. Редовете с представка &lsquo;!&rsquo; ще бъдат игнорирани.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -550,6 +550,22 @@
   "rulesFormatHint": {
     "message": "Синтаксис на правилото: <code>източник цел тип действие</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>пълна документация</a>).",
     "description": "English: dynamic rule syntax and full documentation."
+  },
+  "rulesSort": {
+    "message": "Сортиране:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Тип правило",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Източник",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Дестинация",
+    "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
     "message": "Списък на адресите, за които uBlock Origin ще бъде изключен. Един елемент на ред. Недействителните адреси ще бъдат пренебрегнати.",

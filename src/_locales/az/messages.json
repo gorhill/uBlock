@@ -551,6 +551,22 @@
     "message": "Qaydalar sintaksisi: <code>mənbə təyinat növ əməliyyat</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>bütün sənədlər</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
+  "rulesSort": {
+    "message": "Çeşidlə:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Qayda növü",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Mənbə",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Hedef",
+    "description": "English: a sort option for list of rules."
+  },
   "whitelistPrompt": {
     "message": "İstisnalar siyahısındakı təlimatlar uBlock Origin-in hansı veb-səhifələrdə işləyişinin dayandırılmasını təmin edir. Hər sətirdə yalnız bir təlimat ola bilər. Yanlış təlimatlar xəbərdarlıq edilmədən nəzərə alınmayacaq və şərhə çeviriləcəkdir.",
     "description": "The name of the trusted sites pane."

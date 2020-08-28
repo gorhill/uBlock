@@ -551,6 +551,22 @@
     "message": "Quy tắc cú pháp: <code>nguồn đích loại hành động</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>tài liệu đầy đủ</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
+  "rulesSort": {
+    "message": "Sắp xếp:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Loại quy tắc",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Nguồn",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Đích",
+    "description": "English: a sort option for list of rules."
+  },
   "whitelistPrompt": {
     "message": "Danh sách tên các máy chủ mà uBlock Origin sẽ bị chặn. Một mục nhập trên mỗi dòng. Tên máy chủ không hợp lệ sẽ được tự động bỏ qua.",
     "description": "The name of the trusted sites pane."

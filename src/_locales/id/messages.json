@@ -64,7 +64,7 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Klik: nonfungsi/fungsikan uBlock₀ untuk situs ini.\n\nCtrl+klik: nonfungsikan uBlock₀ hanya di halaman ini.",
+    "message": "Klik: nonaktif/aktifkan uBlock₀ untuk situs ini.\n\nCtrl+klik: nonaktifkan uBlock₀ hanya di laman ini.",
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
@@ -332,11 +332,11 @@
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Nonfungsikan pra-ambil (untuk mencegah sambungan apapun untuk permintaan jaringan yang diblokir)",
+    "message": "Nonaktifkan pra-ambil (untuk mencegah sambungan apapun untuk permintaan jaringan yang diblokir)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
-    "message": "Nonfungsikan pengauditan pranala",
+    "message": "Nonaktifkan pengauditan pranala",
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
@@ -484,7 +484,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Satu filter per baris. Filter dapat berupa nama host, atau filter yang kompatibel dengan Adblock Plus. Baris yang diawali dengan <code>!</code> akan diabaikan.",
+    "message": "Satu filter per baris. Filter dapat berupa nama hos, atau filter yang kompatibel dengan EasyList. Baris yang diawali dengan <code>!</code> akan diabaikan.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -550,6 +550,22 @@
   "rulesFormatHint": {
     "message": "Aturan sintaksis: <code>sumber tujuan jenis tindakan</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>dokumentasi lengkap</a>).",
     "description": "English: dynamic rule syntax and full documentation."
+  },
+  "rulesSort": {
+    "message": "Urutan:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Tipe aturan",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Sumber",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Tujuan",
+    "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
     "message": "Berisi domain atau halaman situs terpercaya, uBlock Origin akan dinonaktifkan. Satu entri per baris. Entri yang tidak valid akan diabaikan dan dijadikan komentar.",
@@ -952,7 +968,7 @@
     "description": "English: Close this window"
   },
   "docblockedProceed": {
-    "message": "Nonfungsikan pemblokiran ketat untuk {{hostname}}",
+    "message": "Nonaktifkan pemblokiran ketat untuk {{hostname}}",
     "description": "English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary": {

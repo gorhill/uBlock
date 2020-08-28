@@ -551,6 +551,22 @@
     "message": "Reegli süntaks: <code>allikas sihtkoht tüüp tegevus</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>kogu dokumentatsioon</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
+  "rulesSort": {
+    "message": "Sorteeri:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Reegli tüüp",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Allikas",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Sihtkoht",
+    "description": "English: a sort option for list of rules."
+  },
   "whitelistPrompt": {
     "message": "Usaldatud saitide direktiivid määravad, millistel veebilehtedel peaks uBlock Origin keelatud olema. Üks kirje rea kohta. Sobimatuid direktiive vaikselt ignoreeritakse ja kommenteeritakse välja.",
     "description": "The name of the trusted sites pane."

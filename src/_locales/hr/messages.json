@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Popis dopuštenih",
+    "message": "Pouzdane stranice",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -484,7 +484,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Jedan filter po retku. Filter može biti običan hostname ili filter kompatibilan sa Adblock Plus-om. Linije sa prefiksom <code>!</code> zanemarit će se.",
+    "message": "Jedan filter po retku. Filter može biti običan hostname ili filter kompatibilan sa EasyList-om. Linije sa prefiksom <code>!</code> zanemarit će se.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -551,8 +551,24 @@
     "message": "Pravila sintakse: <code>akcija tipa izvornog odredišta</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>sva dokumentacija</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
+  "rulesSort": {
+    "message": "Sortiraj:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Vrsta pravila",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Izvor",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Destinacija",
+    "description": "English: a sort option for list of rules."
+  },
   "whitelistPrompt": {
-    "message": "Popis host naziva za koje će uBlock Origin biti onemogućen. Jedan zapis po retku. Nevaljani host nazivi biti će tiho ignorirani.",
+    "message": "Direktiva pouzdanih stranica govori za koje bi web stranice uBlock Origin trebao biti onemogućen. Jedan zapis po retku. Nevaljane direktive biti će tiho ignorirane i komentirane.",
     "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
@@ -564,7 +580,7 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "moja-ublock-lista_dopustenog_{{datetime}}.txt",
+    "message": "moje-ublock-pouzdane-stranice_{{datetime}}.txt",
     "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {

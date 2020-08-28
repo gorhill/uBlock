@@ -551,6 +551,22 @@
     "message": "Syntax pravidla: <code>zdroj cieľ typ akcia</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>úplná dokumentácia</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
+  "rulesSort": {
+    "message": "Zoradenie:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Typ pravidla",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Zdroj",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Doména",
+    "description": "English: a sort option for list of rules."
+  },
   "whitelistPrompt": {
     "message": "Zoznam hostiteľov, pre ktoré webové stránky bude uBlock Origin zakázaný. Jedna položka na riadok. Neplatní hostitelia budú ignorovaní a zakomentovaní.",
     "description": "The name of the trusted sites pane."

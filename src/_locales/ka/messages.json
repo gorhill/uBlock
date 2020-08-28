@@ -551,6 +551,22 @@
     "message": "წესის აგებულება: <code>წყარო დანიშნულება მოთხოვნის სახე მოქმედება</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>მასალები სრულად</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
+  "rulesSort": {
+    "message": "დალაგება:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "წესის სახეობა",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "წყარო",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "დანიშნულება",
+    "description": "English: a sort option for list of rules."
+  },
   "whitelistPrompt": {
     "message": "მითითებული გამონაკლისები განსაზღვრავს, თუ რომელ ვებგვერდზე უნდა გამოირთოს uBlock Origin. თითოეული ჩანაწერი ცალკეულ ხაზზე უნდა იყოს. არასწორი მითითებები უგულებელყოფილი იქნება გაფრთხილების გარეშე და აღინიშნება კომენტარად.",
     "description": "The name of the trusted sites pane."

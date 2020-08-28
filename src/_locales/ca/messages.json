@@ -551,6 +551,22 @@
     "message": "Sintaxi de les regles: <code>origen destinació tipus acció</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>documentació</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
+  "rulesSort": {
+    "message": "Ordena:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Tipus de regla",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Origen",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Destinació",
+    "description": "English: a sort option for list of rules."
+  },
   "whitelistPrompt": {
     "message": "Llistat dels noms de servidor amb que s'inhabilitarà l'µBlock. Una entrada per línia. S'ignoraran els noms de servidor no vàlids.",
     "description": "The name of the trusted sites pane."
