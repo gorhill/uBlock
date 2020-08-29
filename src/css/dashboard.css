@@ -36,7 +36,6 @@ html, body {
     border-top: 3px solid transparent;
     color: var(--dashboard-tab-ink);
     fill: var(--dashboard-tab-ink);
-    letter-spacing: 0.5px;
     padding: 0.5em 1.4em calc(0.5em - 3px);
     text-decoration: none;
     user-select: none;
@@ -87,6 +86,7 @@ body:not(.canUpdateShortcuts) .tabButton[data-pane="shortcuts.html"] {
 :root.hidpi .tabButton {
     font-family: Metropolis, sans-serif;
     font-weight: 600;
+    letter-spacing: 0.5px;
     }
 
 /* hover-able devices */

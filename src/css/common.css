@@ -98,7 +98,6 @@ button {
     fill: var(--button-ink);
     font-size: 14px;
     justify-content: center;
-    letter-spacing: 0.5px;
     min-height: 36px;
     padding: 0 var(--font-size);
     vertical-align: middle;
@@ -276,6 +275,7 @@ select {
 :root.hidpi button {
     font-family: Metropolis, sans-serif;
     font-weight: 600;
+    letter-spacing: 0.5px;
     }
 :root.hidpi .fieldset-header {
     font-family: Metropolis, sans-serif;
