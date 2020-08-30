@@ -1,4 +1,4 @@
-Isang episyenteng blocker: magaan sa memorya at CPU footprint, pero naka-loload at nag-eenforce ng libo-libong mga filters kaysa sa mga ibang sikat na blockers.
+Isang episyenteng blocker: magaan sa memorya at CPU footprint, ngunit nakakapag-loload at nakakapag-enforce ng libo-libong mga filters kumpara sa mga ibang sikat na blockers.
 
 Isinalarawan pangkalahatang-ideya ng kahusayan ng uBlock:
 https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
