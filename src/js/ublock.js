@@ -428,7 +428,7 @@ const matchBucket = function(url, hostname, bucket, start) {
     });
 
     await vAPI.tabs.executeScript(tabId, {
-        file: '/js/scriptlets/element-picker.js',
+        file: '/js/scriptlets/epicker.js',
         runAt: 'document_end',
     });
 

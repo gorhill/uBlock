@@ -713,34 +713,19 @@ const onMessage = function(request, sender, callback) {
     switch ( request.what ) {
     case 'elementPickerArguments':
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'epicker.html', true);
+        xhr.open('GET', 'css/epicker.css', true);
         xhr.overrideMimeType('text/html;charset=utf-8');
         xhr.responseType = 'text';
         xhr.onload = function() {
             this.onload = null;
-            const i18n = {
-                bidi_dir: document.body.getAttribute('dir'),
-                create: vAPI.i18n('pickerCreate'),
-                pick: vAPI.i18n('pickerPick'),
-                quit: vAPI.i18n('pickerQuit'),
-                preview: vAPI.i18n('pickerPreview'),
-                netFilters: vAPI.i18n('pickerNetFilters'),
-                cosmeticFilters: vAPI.i18n('pickerCosmeticFilters'),
-                cosmeticFiltersHint: vAPI.i18n('pickerCosmeticFiltersHint')
-            };
-            const reStrings = /\{\{(\w+)\}\}/g;
-            const replacer = function(a0, string) {
-                return i18n[string];
-            };
-
             callback({
-                frameContent: this.responseText.replace(reStrings, replacer),
+                frameCSS: this.responseText,
                 target: µb.epickerArgs.target,
                 mouse: µb.epickerArgs.mouse,
                 zap: µb.epickerArgs.zap,
                 eprom: µb.epickerArgs.eprom,
+                dialogURL: vAPI.getURL(`/web_accessible_resources/epicker-dialog.html${vAPI.warSecret()}`),
             });
-
             µb.epickerArgs.target = '';
         };
         xhr.send();
@@ -754,21 +739,6 @@ const onMessage = function(request, sender, callback) {
     let response;
 
     switch ( request.what ) {
-    case 'compileCosmeticFilterSelector': {
-        const parser = new vAPI.StaticFilteringParser();
-        parser.analyze(request.selector);
-        if ( (parser.flavorBits & parser.BITFlavorExtCosmetic) !== 0 ) {
-            response = parser.result.compiled;
-        }
-        break;
-    }
-
-    // https://github.com/gorhill/uBlock/issues/3497
-    //   This needs to be removed once issue is fixed.
-    case 'createUserFilter':
-        µb.createUserFilters(request);
-        break;
-
     case 'elementPickerEprom':
         µb.epickerArgs.eprom = request;
         break;
