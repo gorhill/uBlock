@@ -151,8 +151,9 @@ vAPI.MessagingConnection = class {
 
     static addListener(listener) {
         listeners.add(listener);
+        vAPI.messaging.getPort(); // Ensure a port instance exists
     }
-    static async connectTo(from, to, handler) {
+    static connectTo(from, to, handler) {
         const port = vAPI.messaging.getPort();
         if ( port === null ) { return; }
         const connection = new vAPI.MessagingConnection(handler, {
