@@ -642,10 +642,6 @@ const onPickerMessage = function(msg) {
             }
             break;
         }
-        case 'svgListening': {
-            svgListening(msg.on);
-            break;
-        }
         case 'svgPaths': {
             let { ocean, islands } = msg;
             ocean += islands;
