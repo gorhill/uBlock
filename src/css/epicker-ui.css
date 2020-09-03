@@ -12,6 +12,22 @@ html#ublock0-epicker,
 #ublock0-epicker :focus {
     outline: none;
 }
+#ublock0-epicker aside {
+    background-color: #eee;
+    border: 1px solid #aaa;
+    bottom: 4px;
+    box-sizing: border-box;
+    cursor: default;
+    display: none;
+    min-width: 24em;
+    padding: 4px;
+    position: fixed;
+    right: 4px;
+    width: calc(40% - 4px);
+}
+#ublock0-epicker.paused:not(.zap) aside {
+    display: block;
+}
 #ublock0-epicker ul,
 #ublock0-epicker li,
 #ublock0-epicker div {
@@ -53,7 +69,7 @@ html#ublock0-epicker,
 #ublock0-epicker #preview {
     float: left;
 }
-#ublock0-epicker body.preview #preview {
+#ublock0-epicker.preview #preview {
     background-color: hsl(204, 100%, 83%);
     border-color: hsl(204, 50%, 60%);
 }
@@ -141,18 +157,7 @@ html#ublock0-epicker,
 #ublock0-epicker #candidateFilters .changeFilter li:hover {
     background-color: white;
 }
-#ublock0-epicker aside {
-    background-color: #eee;
-    border: 1px solid #aaa;
-    bottom: 4px;
-    box-sizing: border-box;
-    cursor: default;
-    min-width: 24em;
-    padding: 4px;
-    position: fixed;
-    right: 4px;
-    width: calc(40% - 4px);
-}
+
 /**
     https://github.com/gorhill/uBlock/issues/3449
     https://github.com/uBlockOrigin/uBlock-issues/issues/55
@@ -162,23 +167,55 @@ html#ublock0-epicker,
   60% { opacity: 1.0; }
   100% { opacity: 0.1; }
 }
-#ublock0-epicker body.paused > aside {
+#ublock0-epicker.paused aside {
     opacity: 0.1;
     visibility: visible;
     z-index: 100;
 }
-#ublock0-epicker body.paused > aside:not(:hover):not(.show) {
+#ublock0-epicker.paused:not(.show):not(.hide) aside:not(:hover) {
     animation-duration: 1.6s;
     animation-name: startDialog;
     animation-timing-function: linear;
 }
-#ublock0-epicker body.paused > aside:hover {
+#ublock0-epicker.paused aside:hover {
     opacity: 1;
 }
-#ublock0-epicker body.paused > aside.show {
+#ublock0-epicker.paused.show aside {
     opacity: 1;
 }
-#ublock0-epicker body.paused > aside.hide {
+#ublock0-epicker.paused.hide aside {
     opacity: 0.1;
 }
 
+#ublock0-epicker svg {
+    cursor: crosshair;
+    box-sizing: border-box;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+#ublock0-epicker.paused svg {
+    cursor: not-allowed;
+}
+#ublock0-epicker svg > path:first-child {
+    fill: rgba(0,0,0,0.5);
+    fill-rule: evenodd;
+}
+#ublock0-epicker svg > path + path {
+    stroke: #F00;
+    stroke-width: 0.5px;
+    fill: rgba(255,63,63,0.20);
+}
+#ublock0-epicker.zap svg > path + path {
+    stroke: #FF0;
+    stroke-width: 0.5px;
+    fill: rgba(255,255,63,0.20);
+}
+#ublock0-epicker.preview svg > path {
+    fill: rgba(0,0,0,0.10);
+}
+#ublock0-epicker.preview svg > path + path {
+    stroke: none;
+}

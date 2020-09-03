@@ -711,26 +711,6 @@ const onMessage = function(request, sender, callback) {
 
     // Async
     switch ( request.what ) {
-    case 'elementPickerArguments':
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'css/epicker.css', true);
-        xhr.overrideMimeType('text/html;charset=utf-8');
-        xhr.responseType = 'text';
-        xhr.onload = function() {
-            this.onload = null;
-            callback({
-                frameCSS: this.responseText,
-                target: µb.epickerArgs.target,
-                mouse: µb.epickerArgs.mouse,
-                zap: µb.epickerArgs.zap,
-                eprom: µb.epickerArgs.eprom,
-                dialogURL: vAPI.getURL(`/web_accessible_resources/epicker-dialog.html${vAPI.warSecret()}`),
-            });
-            µb.epickerArgs.target = '';
-        };
-        xhr.send();
-        return;
-
     default:
         break;
     }
@@ -739,6 +719,16 @@ const onMessage = function(request, sender, callback) {
     let response;
 
     switch ( request.what ) {
+    case 'elementPickerArguments':
+        response = {
+            target: µb.epickerArgs.target,
+            mouse: µb.epickerArgs.mouse,
+            zap: µb.epickerArgs.zap,
+            eprom: µb.epickerArgs.eprom,
+            pickerURL: vAPI.getURL(`/web_accessible_resources/epicker-ui.html${vAPI.warSecret()}`),
+        };
+        µb.epickerArgs.target = '';
+        break;
     case 'elementPickerEprom':
         µb.epickerArgs.eprom = request;
         break;

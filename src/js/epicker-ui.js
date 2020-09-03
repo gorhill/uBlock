@@ -30,8 +30,25 @@
 
 if ( typeof vAPI !== 'object' ) { return; }
 
+const $id = id => document.getElementById(id);
+const $stor = selector => document.querySelector(selector);
+const $storAll = selector => document.querySelectorAll(selector);
+
+const pickerRoot = document.documentElement;
+const dialog = $stor('aside');
+const taCandidate = $stor('textarea');
+let staticFilteringParser;
+
+const svgRoot = $stor('svg');
+const svgOcean = svgRoot.children[0];
+const svgIslands = svgRoot.children[1];
+const NoPaths = 'M0 0';
+
 const epickerId = (( ) => {
     const url = new URL(self.location.href);
+    if ( url.searchParams.has('zap') ) {
+        pickerRoot.classList.add('zap');
+    }
     return url.searchParams.get('epid');
 })();
 if ( epickerId === null ) { return; }
@@ -40,12 +57,6 @@ let epickerConnectionId;
 let filterHostname = '';
 let filterOrigin = '';
 let filterResultset = [];
-
-/******************************************************************************/
-
-const $id = id => document.getElementById(id);
-const $stor = selector => document.querySelector(selector);
-const $storAll = selector => document.querySelectorAll(selector);
 
 /******************************************************************************/
 
@@ -121,7 +132,7 @@ const candidateFromFilterChoice = function(filterChoice) {
     // - Discard narrowing directives.
     // - Remove the id if one or more classes exist
     //   TODO: should remove tag name too? ¯\_(ツ)_/¯
-    if ( filterChoice.modifier ) {
+    if ( filterChoice.broad ) {
         filter = filter.replace(/:nth-of-type\(\d+\)/, '');
         // https://github.com/uBlockOrigin/uBlock-issues/issues/162
         //   Mind escaped periods: they do not denote a class identifier.
@@ -167,6 +178,127 @@ const candidateFromFilterChoice = function(filterChoice) {
 
 /******************************************************************************/
 
+const onSvgClicked = function(ev) {
+    // If zap mode, highlight element under mouse, this makes the zapper usable
+    // on touch screens.
+    if ( pickerRoot.classList.contains('zap') ) {
+        vAPI.MessagingConnection.sendTo(epickerConnectionId, {
+            what: 'zapElementAtPoint',
+            mx: ev.clientX,
+            my: ev.clientY,
+            options: {
+                stay: ev.shiftKey || ev.type === 'touch',
+                highlight: ev.target !== svgIslands,
+            },
+        });
+        return;
+    }
+    // https://github.com/chrisaljoudi/uBlock/issues/810#issuecomment-74600694
+    // Unpause picker if:
+    // - click outside dialog AND
+    // - not in preview mode
+    if ( pickerRoot.classList.contains('paused') ) {
+        if ( pickerRoot.classList.contains('preview') === false ) {
+            unpausePicker();
+        }
+        return;
+    }
+    // Force dialog to always be visible when using a touch-driven device.
+    if ( ev.type === 'touch' ) {
+        pickerRoot.classList.add('show');
+    }
+    vAPI.MessagingConnection.sendTo(epickerConnectionId, {
+        what: 'filterElementAtPoint',
+        mx: ev.clientX,
+        my: ev.clientY,
+        broad: ev.ctrlKey,
+    });
+};
+
+/*******************************************************************************
+
+    Swipe right:
+        If picker not paused: quit picker
+        If picker paused and dialog visible: hide dialog
+        If picker paused and dialog not visible: quit picker
+
+    Swipe left:
+        If picker paused and dialog not visible: show dialog
+
+*/
+
+const onSvgTouch = (( ) => {
+    let startX = 0, startY = 0;
+    let t0 = 0;
+    return ev => {
+        if ( ev.type === 'touchstart' ) {
+            startX = ev.touches[0].screenX;
+            startY = ev.touches[0].screenY;
+            t0 = ev.timeStamp;
+            return;
+        }
+        if ( startX === undefined ) { return; }
+        if ( ev.cancelable === false ) { return; }
+        const stopX = ev.changedTouches[0].screenX;
+        const stopY = ev.changedTouches[0].screenY;
+        const angle = Math.abs(Math.atan2(stopY - startY, stopX - startX));
+        const distance = Math.sqrt(
+            Math.pow(stopX - startX, 2),
+            Math.pow(stopY - startY, 2)
+        );
+        // Interpret touch events as a tap if:
+        // - Swipe is not valid; and
+        // - The time between start and stop was less than 200ms.
+        const duration = ev.timeStamp - t0;
+        if ( distance < 32 && duration < 200 ) {
+            onSvgClicked({
+                type: 'touch',
+                target: ev.target,
+                clientX: ev.changedTouches[0].pageX,
+                clientY: ev.changedTouches[0].pageY,
+            });
+            ev.preventDefault();
+            return;
+        }
+        if ( distance < 64 ) { return; }
+        const angleUpperBound = Math.PI * 0.25 * 0.5;
+        const swipeRight = angle < angleUpperBound;
+        if ( swipeRight === false && angle < Math.PI - angleUpperBound ) {
+            return;
+        }
+        ev.preventDefault();
+        // Swipe left.
+        if ( swipeRight === false ) {
+            if ( pickerRoot.classList.contains('paused') ) {
+                pickerRoot.classList.remove('hide');
+                pickerRoot.classList.add('show');
+            }
+            return;
+        }
+        // Swipe right.
+        if (
+            pickerRoot.classList.contains('zap') &&
+            svgIslands.getAttribute('d') !== NoPaths
+        ) {
+            vAPI.MessagingConnection.sendTo(epickerConnectionId, {
+                what: 'unhighlight'
+            });
+            return;
+        }
+        else if (
+            pickerRoot.classList.contains('paused') &&
+            pickerRoot.classList.contains('show')
+        ) {
+            pickerRoot.classList.remove('show');
+            pickerRoot.classList.add('hide');
+            return;
+        }
+        quitPicker();
+    };
+})();
+
+/******************************************************************************/
+
 const onCandidateChanged = function() {
     const filter = filterFromTextarea();
     const bad = filter === '!';
@@ -188,9 +320,9 @@ const onCandidateChanged = function() {
 /******************************************************************************/
 
 const onPreviewClicked = function() {
-    const state = pickerBody.classList.toggle('preview');
+    const state = pickerRoot.classList.toggle('preview');
     vAPI.MessagingConnection.sendTo(epickerConnectionId, {
-        what: 'dialogPreview',
+        what: 'togglePreview',
         state,
     });
 };
@@ -221,38 +353,27 @@ const onCreateClicked = function() {
 
 /******************************************************************************/
 
-const onPickClicked = function(ev) {
-    if (
-        (ev instanceof MouseEvent) &&
-        (ev.type === 'mousedown') &&
-        (ev.which !== 1 || ev.target !== document.body)
-    ) {
-        return;
-    }
-    pickerBody.classList.remove('paused');
-    vAPI.MessagingConnection.sendTo(epickerConnectionId, {
-        what: 'dialogPick'
-    });
+const onPickClicked = function() {
+    unpausePicker();
 };
 
 /******************************************************************************/
 
 const onQuitClicked = function() {
-    vAPI.MessagingConnection.sendTo(epickerConnectionId, {
-        what: 'dialogQuit'
-    });
+    quitPicker();
 };
 
 /******************************************************************************/
 
 const onCandidateClicked = function(ev) {
     let li = ev.target.closest('li');
+    if ( li === null ) { return; }
     const ul = li.closest('.changeFilter');
     if ( ul === null ) { return; }
     const choice = {
         filters: Array.from(ul.querySelectorAll('li')).map(a => a.textContent),
         slot: 0,
-        modifier: ev.ctrlKey || ev.metaKey
+        broad: ev.ctrlKey || ev.metaKey
     };
     while ( li.previousElementSibling !== null ) {
         li = li.previousElementSibling;
@@ -275,6 +396,7 @@ const onKeyPressed = function(ev) {
 /******************************************************************************/
 
 const onStartMoving = (( ) => {
+    let isTouch = false;
     let mx0 = 0, my0 = 0;
     let mx1 = 0, my1 = 0;
     let r0 = 0, b0 = 0;
@@ -290,39 +412,96 @@ const onStartMoving = (( ) => {
     };
 
     const moveAsync = ev => {
-        if ( ev.isTrusted === false ) { return; }
-        eatEvent(ev);
         if ( timer !== undefined ) { return; }
-        mx1 = ev.pageX;
-        my1 = ev.pageY;
+        if ( isTouch ) {
+            const touch = ev.touches[0];
+            mx1 = touch.pageX;
+            my1 = touch.pageY;
+        } else {
+            mx1 = ev.pageX;
+            my1 = ev.pageY;
+        }
         timer = self.requestAnimationFrame(move);
     };
 
     const stop = ev => {
-        if ( ev.isTrusted === false ) { return; }
         if ( dialog.classList.contains('moving') === false ) { return; }
         dialog.classList.remove('moving');
-        self.removeEventListener('mousemove', moveAsync, { capture: true });
-        self.removeEventListener('mouseup', stop, { capture: true, once: true });
+        if ( isTouch ) {
+            self.removeEventListener('touchmove', moveAsync, { capture: true });
+        } else {
+            self.removeEventListener('mousemove', moveAsync, { capture: true });
+        }
         eatEvent(ev);
     };
 
     return function(ev) {
-        if ( ev.isTrusted === false ) { return; }
         const target = dialog.querySelector('#toolbar');
         if ( ev.target !== target ) { return; }
         if ( dialog.classList.contains('moving') ) { return; }
-        mx0 = ev.pageX; my0 = ev.pageY;
+        isTouch = ev.type.startsWith('touch');
+        if ( isTouch ) {
+            const touch = ev.touches[0];
+            mx0 = touch.pageX;
+            my0 = touch.pageY;
+        } else {
+            mx0 = ev.pageX;
+            my0 = ev.pageY;
+        }
         const style = self.getComputedStyle(dialog);
         r0 = parseInt(style.right, 10);
         b0 = parseInt(style.bottom, 10);
         const rect = dialog.getBoundingClientRect();
-        rMax = pickerBody.clientWidth - 4 - rect.width ;
-        bMax = pickerBody.clientHeight - 4 - rect.height;
+        rMax = pickerRoot.clientWidth - 4 - rect.width ;
+        bMax = pickerRoot.clientHeight - 4 - rect.height;
         dialog.classList.add('moving');
-        self.addEventListener('mousemove', moveAsync, { capture: true });
-        self.addEventListener('mouseup', stop, { capture: true, once: true });
+        if ( isTouch ) {
+            self.addEventListener('touchmove', moveAsync, { capture: true });
+            self.addEventListener('touchend', stop, { capture: true, once: true });
+        } else {
+            self.addEventListener('mousemove', moveAsync, { capture: true });
+            self.addEventListener('mouseup', stop, { capture: true, once: true });
+        }
         eatEvent(ev);
+    };
+})();
+
+/******************************************************************************/
+
+const svgListening = (( ) => {
+    let on = false;
+    let timer;
+    let mx = 0, my = 0;
+
+    const onTimer = ( ) => {
+        timer = undefined;
+        vAPI.MessagingConnection.sendTo(epickerConnectionId, {
+            what: 'highlightElementAtPoint',
+            mx,
+            my,
+        });
+    };
+
+    const onHover = ev => {
+        mx = ev.clientX;
+        my = ev.clientY;
+        if ( timer === undefined ) {
+            timer = self.requestAnimationFrame(onTimer);
+        }
+    };
+
+    return state => {
+        if ( state === on ) { return; }
+        on = state;
+        if ( on ) {
+            document.addEventListener('mousemove', onHover, { passive: true });
+            return;
+        }
+        document.removeEventListener('mousemove', onHover, { passive: true });
+        if ( timer !== undefined ) {
+            self.cancelAnimationFrame(timer);
+            timer = undefined;
+        }
     };
 })();
 
@@ -336,9 +515,9 @@ const eatEvent = function(ev) {
 /******************************************************************************/
 
 const showDialog = function(details) {
-    pickerBody.classList.add('paused');
+    pausePicker();
 
-    const { netFilters, cosmeticFilters, filter, options } = details;
+    const { netFilters, cosmeticFilters, filter, options = {} } = details;
 
     // https://github.com/gorhill/uBlock/issues/738
     //   Trim dots.
@@ -390,7 +569,7 @@ const showDialog = function(details) {
     const filterChoice = {
         filters: filter.filters,
         slot: filter.slot,
-        modifier: options.modifier || false
+        broad: options.broad || false
     };
 
     taCandidate.value = candidateFromFilterChoice(filterChoice);
@@ -399,52 +578,83 @@ const showDialog = function(details) {
 
 /******************************************************************************/
 
-// Let's have the element picker code flushed from memory when no longer
-// in use: to ensure this, release all local references.
-
-const stopPicker = function() {
-    vAPI.shutdown.remove(stopPicker);
+const pausePicker = function() {
+    pickerRoot.classList.add('paused');
+    svgListening(false);
 };
 
 /******************************************************************************/
 
-const pickerBody = document.body;
-const dialog = $stor('aside');
-const taCandidate = $stor('textarea');
-let staticFilteringParser;
+const unpausePicker = function() {
+    pickerRoot.classList.remove('paused', 'preview');
+    vAPI.MessagingConnection.sendTo(epickerConnectionId, {
+        what: 'togglePreview',
+        state: false,
+    });
+    svgListening(true);
+};
 
 /******************************************************************************/
 
-const startDialog = function() {
-    dialog.addEventListener('click', eatEvent);
+const startPicker = function() {
+    self.addEventListener('keydown', onKeyPressed, true);
+    const svg = $stor('svg');
+    svg.addEventListener('click', onSvgClicked);
+    svg.addEventListener('touchstart', onSvgTouch);
+    svg.addEventListener('touchend', onSvgTouch);
+
+    unpausePicker();
+
+    if ( pickerRoot.classList.contains('zap') ) { return; }
+
     taCandidate.addEventListener('input', onCandidateChanged);
-    $stor('body').addEventListener('mousedown', onPickClicked);
     $id('preview').addEventListener('click', onPreviewClicked);
     $id('create').addEventListener('click', onCreateClicked);
     $id('pick').addEventListener('click', onPickClicked);
     $id('quit').addEventListener('click', onQuitClicked);
     $id('candidateFilters').addEventListener('click', onCandidateClicked);
     $id('toolbar').addEventListener('mousedown', onStartMoving);
-    self.addEventListener('keydown', onKeyPressed, true);
+    $id('toolbar').addEventListener('touchstart', onStartMoving);
     staticFilteringParser = new vAPI.StaticFilteringParser({ interactive: true });
+};
+
+/******************************************************************************/
+
+const quitPicker = function() {
+    vAPI.MessagingConnection.sendTo(epickerConnectionId, { what: 'quitPicker' });
+    vAPI.MessagingConnection.disconnectFrom(epickerConnectionId);
 };
 
 /******************************************************************************/
 
 const onPickerMessage = function(msg) {
     switch ( msg.what ) {
-    case 'showDialog':
-        showDialog(msg);
-        break;
-    case 'filterResultset':
-        filterResultset = msg.resultset;
-        $id('resultsetCount').textContent = filterResultset.length;
-        if ( filterResultset.length !== 0 ) {
-            $id('create').removeAttribute('disabled');
-        } else {
-            $id('create').setAttribute('disabled', '');
+        case 'showDialog':
+            showDialog(msg);
+            break;
+        case 'filterResultset': {
+            filterResultset = msg.resultset;
+            $id('resultsetCount').textContent = filterResultset.length;
+            if ( filterResultset.length !== 0 ) {
+                $id('create').removeAttribute('disabled');
+            } else {
+                $id('create').setAttribute('disabled', '');
+            }
+            break;
         }
-        break;
+        case 'svgListening': {
+            svgListening(msg.on);
+            break;
+        }
+        case 'svgPaths': {
+            let { ocean, islands } = msg;
+            ocean += islands;
+            svgOcean.setAttribute('d', ocean);
+            svgIslands.setAttribute('d', islands || NoPaths);
+            break;
+        }
+        default:
+            break;
     }
 };
 
@@ -452,19 +662,18 @@ const onPickerMessage = function(msg) {
 
 const onConnectionMessage = function(msg) {
     switch ( msg.what ) {
-    case 'connectionBroken':
-        stopPicker();
-        break;
-    case 'connectionMessage':
-        onPickerMessage(msg.payload);
-        break;
-    case 'connectionAccepted':
-        epickerConnectionId = msg.id;
-        startDialog();
-        vAPI.MessagingConnection.sendTo(epickerConnectionId, {
-            what: 'dialogInit',
-        });
-        break;
+        case 'connectionBroken':
+            break;
+        case 'connectionMessage':
+            onPickerMessage(msg.payload);
+            break;
+        case 'connectionAccepted':
+            epickerConnectionId = msg.id;
+            startPicker();
+            vAPI.MessagingConnection.sendTo(epickerConnectionId, {
+                what: 'start',
+            });
+            break;
     }
 };
 

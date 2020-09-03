@@ -153,6 +153,9 @@ vAPI.MessagingConnection = class {
         listeners.add(listener);
         vAPI.messaging.getPort(); // Ensure a port instance exists
     }
+    static removeListener(listener) {
+        listeners.delete(listener);
+    }
     static connectTo(from, to, handler) {
         const port = vAPI.messaging.getPort();
         if ( port === null ) { return; }

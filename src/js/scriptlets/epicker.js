@@ -30,24 +30,13 @@
 
 /******************************************************************************/
 
-if ( window.top !== window || typeof vAPI !== 'object' ) { return; }
-
-/******************************************************************************/
-
 const epickerId = vAPI.randomToken();
 let epickerConnectionId;
-
-/******************************************************************************/
 
 let pickerRoot = document.querySelector(`[${vAPI.sessionId}]`);
 if ( pickerRoot !== null ) { return; }
 
 let pickerBootArgs;
-let pickerBody = null;
-let svgOcean = null;
-let svgIslands = null;
-let svgRoot = null;
-let dialog = null;
 
 const netFilterCandidates = [];
 const cosmeticFilterCandidates = [];
@@ -103,8 +92,8 @@ const getElementBoundingClientRect = function(elem) {
 
     return {
         height: bottom - top,
-        left: left,
-        top: top,
+        left,
+        top,
         width: right - left
     };
 };
@@ -113,45 +102,40 @@ const getElementBoundingClientRect = function(elem) {
 
 const highlightElements = function(elems, force) {
     // To make mouse move handler more efficient
-    if ( !force && elems.length === targetElements.length ) {
-        if ( elems.length === 0 || elems[0] === targetElements[0] ) {
-            return;
-        }
+    if (
+        (force !== true) &&
+        (elems.length === targetElements.length) &&
+        (elems.length === 0 || elems[0] === targetElements[0])
+    ) {
+        return;
     }
-    targetElements = elems;
+    targetElements = [];
 
-    const ow = pickerRoot.contentWindow.innerWidth;
-    const oh = pickerRoot.contentWindow.innerHeight;
-    const ocean = [
-        'M0 0',
-        'h', ow,
-        'v', oh,
-        'h-', ow,
-        'z'
-    ];
+    const ow = self.innerWidth;
+    const oh = self.innerHeight;
     const islands = [];
 
-    for ( let i = 0; i < elems.length; i++ ) {
-        const elem = elems[i];
+    for ( const elem of elems ) {
         if ( elem === pickerRoot ) { continue; }
+        targetElements.push(elem);
         const rect = getElementBoundingClientRect(elem);
-
-        // Ignore if it's not on the screen
-        if ( rect.left > ow || rect.top > oh ||
-             rect.left + rect.width < 0 || rect.top + rect.height < 0 ) {
+        // Ignore offscreen areas
+        if (
+            rect.left > ow || rect.top > oh ||
+            rect.left + rect.width < 0 || rect.top + rect.height < 0
+        ) {
             continue;
         }
-
-        const poly = 'M' + rect.left + ' ' + rect.top +
-               'h' + rect.width +
-               'v' + rect.height +
-               'h-' + rect.width +
-               'z';
-        ocean.push(poly);
-        islands.push(poly);
+        islands.push(
+            `M${rect.left} ${rect.top}h${rect.width}v${rect.height}h-${rect.width}z`
+        );
     }
-    svgOcean.setAttribute('d', ocean.join(''));
-    svgIslands.setAttribute('d', islands.join('') || 'M0 0');
+
+    vAPI.MessagingConnection.sendTo(epickerConnectionId, {
+        what: 'svgPaths',
+        ocean: `M0 0h${ow}v${oh}h-${ow}z`,
+        islands: islands.join(''),
+    });
 };
 
 /******************************************************************************/
@@ -170,8 +154,6 @@ const mergeStrings = function(urls) {
         // The differ works at line granularity: we insert a linefeed after
         // each character to trick the differ to work at character granularity.
         const diffs = differ.diff_main(
-            //urls[i].replace(/.(?=.)/g, '$&\n'),
-            //merged.replace(/.(?=.)/g, '$&\n')
             urls[i].split('').join('\n'),
             merged.split('').join('\n')
         );
@@ -552,24 +534,20 @@ const filtersFrom = function(x, y) {
     }
 
     // https://github.com/gorhill/uBlock/issues/1545
-    // Network filter candidates from all other elements found at point (x, y).
+    //   Network filter candidates from all other elements found at
+    //   point (x, y).
     if ( typeof x === 'number' ) {
-        let attrName = vAPI.sessionId + '-clickblind';
-        let previous;
+        const attrName = vAPI.sessionId + '-clickblind';
         elem = first;
         while ( elem !== null ) {
-            previous = elem;
+            const previous = elem;
             elem.setAttribute(attrName, '');
             elem = elementFromPoint(x, y);
-            if ( elem === null || elem === previous ) {
-                break;
-            }
+            if ( elem === null || elem === previous ) { break; }
             netFilterFromElement(elem);
         }
-        let elems = document.querySelectorAll(`[${attrName}]`);
-        i = elems.length;
-        while ( i-- ) {
-            elems[i].removeAttribute(attrName);
+        for ( const elem of document.querySelectorAll(`[${attrName}]`) ) {
+            elem.removeAttribute(attrName);
         }
 
         netFilterFromElement(document.body);
@@ -761,7 +739,7 @@ const filterToDOMInterface = (( ) => {
         if ( filter === '' || filter === '!' ) {
             lastFilter = '';
             lastResultset = [];
-            return;
+            return lastResultset;
         }
         lastFilter = filter;
         lastAction = undefined;
@@ -868,7 +846,6 @@ const filterToDOMInterface = (( ) => {
     //   immediately rather than wait for the next page load.
     const preview = function(state, permanent = false) {
         previewing = state !== false;
-        pickerBody.classList.toggle('preview', previewing);
         if ( previewing === false ) {
             return unapply();
         }
@@ -909,15 +886,6 @@ const filterToDOMInterface = (( ) => {
 /******************************************************************************/
 
 const showDialog = function(options) {
-    pausePicker();
-
-    options = options || {};
-
-    // Typically the dialog will be forced to be visible when using a
-    // touch-aware device.
-    dialog.classList.toggle('show', options.show === true);
-    dialog.classList.remove('hide');
-
     vAPI.MessagingConnection.sendTo(epickerConnectionId, {
         what: 'showDialog',
         hostname: self.location.hostname,
@@ -931,18 +899,73 @@ const showDialog = function(options) {
 
 /******************************************************************************/
 
+const elementFromPoint = (( ) => {
+    let lastX, lastY;
+
+    return (x, y) => {
+        if ( x !== undefined ) {
+            lastX = x; lastY = y;
+        } else if ( lastX !== undefined ) {
+            x = lastX; y = lastY;
+        } else {
+            return null;
+        }
+        if ( !pickerRoot ) { return null; }
+        const magicAttr = `${vAPI.sessionId}-clickblind`;
+        pickerRoot.setAttribute(magicAttr, '');
+        let elem = document.elementFromPoint(x, y);
+        if ( elem === document.body || elem === document.documentElement ) {
+            elem = null;
+        }
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/380
+        pickerRoot.removeAttribute(magicAttr);
+        return elem;
+    };
+})();
+
+/******************************************************************************/
+
+const highlightElementAtPoint = function(mx, my) {
+    const elem = elementFromPoint(mx, my);
+    highlightElements(elem ? [ elem ] : []);
+};
+
+/******************************************************************************/
+
+const filterElementAtPoint = function(mx, my, broad) {
+    if ( filtersFrom(mx, my) === 0 ) { return; }
+    showDialog({ broad });
+};
+
+/******************************************************************************/
+
 // https://www.reddit.com/r/uBlockOrigin/comments/bktxtb/scrolling_doesnt_work/emn901o
 //   Override 'fixed' position property on body element if present.
 
-const zap = function() {
-    if ( targetElements.length === 0 ) { return; }
+// With touch-driven devices, first highlight the element and remove only
+// when tapping again the highlighted area.
+
+const zapElementAtPoint = function(mx, my, options) {
+    if ( options.highlight ) {
+        const elem = elementFromPoint(mx, my);
+        if ( elem ) {
+            highlightElements([ elem ]);
+        }
+        return;
+    }
+
+    let elem = targetElements.length !== 0 && targetElements[0] || null;
+    if ( elem === null && mx !== undefined ) {
+        elem = elementFromPoint(mx, my);
+    }
+
+    if ( elem instanceof HTMLElement === false ) { return; }
 
     const getStyleValue = function(elem, prop) {
         const style = window.getComputedStyle(elem);
         return style ? style[prop] : '';
     };
 
-    let elem = targetElements[0];
     // Heuristic to detect scroll-locking: remove such lock when detected.
     if (
         parseInt(getStyleValue(elem, 'zIndex'), 10) >= 1000 ||
@@ -960,173 +983,8 @@ const zap = function() {
         }
     }
 
-    elem.parentNode.removeChild(elem);
-    elem = elementFromPoint();
-    highlightElements(elem ? [ elem ] : []);
-};
-
-/******************************************************************************/
-
-const elementFromPoint = (( ) => {
-    let lastX, lastY;
-
-    return (x, y) => {
-        if ( x !== undefined ) {
-            lastX = x; lastY = y;
-        } else if ( lastX !== undefined ) {
-            x = lastX; y = lastY;
-        } else {
-            return null;
-        }
-        if ( !pickerRoot ) { return null; }
-        pickerRoot.style.setProperty('pointer-events', 'none', 'important');
-        let elem = document.elementFromPoint(x, y);
-        if ( elem === document.body || elem === document.documentElement ) {
-            elem = null;
-        }
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/380
-        pickerRoot.style.setProperty('pointer-events', 'auto', 'important');
-        return elem;
-    };
-})();
-
-/******************************************************************************/
-
-const onSvgHovered = (( ) => {
-    let timer;
-    let mx = 0, my = 0;
-
-    const onTimer = function() {
-        timer = undefined;
-        const elem = elementFromPoint(mx, my);
-        highlightElements(elem ? [elem] : []);
-    };
-
-    return function onMove(ev) {
-        mx = ev.clientX;
-        my = ev.clientY;
-        if ( timer === undefined ) {
-            timer = vAPI.setTimeout(onTimer, 40);
-        }
-    };
-})();
-
-/*******************************************************************************
-
-    Swipe right:
-        If picker not paused: quit picker
-        If picker paused and dialog visible: hide dialog
-        If picker paused and dialog not visible: quit picker
-
-    Swipe left:
-        If picker paused and dialog not visible: show dialog
-
-*/
-
-const onSvgTouchStartStop = (( ) => {
-    var startX,
-        startY;
-    return function onTouch(ev) {
-        if ( ev.type === 'touchstart' ) {
-            startX = ev.touches[0].screenX;
-            startY = ev.touches[0].screenY;
-            return;
-        }
-        if ( startX === undefined ) { return; }
-        if ( ev.cancelable === false ) { return; }
-        var stopX = ev.changedTouches[0].screenX,
-            stopY = ev.changedTouches[0].screenY,
-            angle = Math.abs(Math.atan2(stopY - startY, stopX - startX)),
-            distance = Math.sqrt(
-                Math.pow(stopX - startX, 2),
-                Math.pow(stopY - startY, 2)
-            );
-        // Interpret touch events as a click events if swipe is not valid.
-        if ( distance < 32 ) {
-            onSvgClicked({
-                type: 'touch',
-                target: ev.target,
-                clientX: ev.changedTouches[0].pageX,
-                clientY: ev.changedTouches[0].pageY,
-                isTrusted: ev.isTrusted
-            });
-            ev.preventDefault();
-            return;
-        }
-        if ( distance < 64 ) { return; }
-        var angleUpperBound = Math.PI * 0.25 * 0.5,
-            swipeRight = angle < angleUpperBound;
-        if ( swipeRight === false && angle < Math.PI - angleUpperBound ) {
-            return;
-        }
-        ev.preventDefault();
-        // Swipe left.
-        if ( swipeRight === false ) {
-            if ( pickerBody.classList.contains('paused') ) {
-                dialog.classList.remove('hide');
-                dialog.classList.add('show');
-            }
-            return;
-        }
-        // Swipe right.
-        if (
-            pickerBody.classList.contains('paused') &&
-            dialog.classList.contains('show')
-        ) {
-            dialog.classList.remove('show');
-            dialog.classList.add('hide');
-            return;
-        }
-        stopPicker();
-    };
-})();
-
-/******************************************************************************/
-
-const onSvgClicked = function(ev) {
-    if ( ev.isTrusted === false ) { return; }
-
-    // If zap mode, highlight element under mouse, this makes the zapper usable
-    // on touch screens.
-    if ( pickerBootArgs.zap ) {
-        let elem = targetElements.lenght !== 0 && targetElements[0];
-        if ( !elem || ev.target !== svgIslands ) {
-            elem = elementFromPoint(ev.clientX, ev.clientY);
-            if ( elem !== null ) {
-                highlightElements([elem]);
-                return;
-            }
-        }
-        zap();
-        if ( !ev.shiftKey ) {
-            stopPicker();
-        }
-        return;
-    }
-    // https://github.com/chrisaljoudi/uBlock/issues/810#issuecomment-74600694
-    // Unpause picker if:
-    // - click outside dialog AND
-    // - not in preview mode
-    if ( pickerBody.classList.contains('paused') ) {
-        if ( filterToDOMInterface.previewing === false ) {
-            unpausePicker();
-        }
-        return;
-    }
-    if ( filtersFrom(ev.clientX, ev.clientY) === 0 ) {
-        return;
-    }
-    showDialog({
-        show: ev.type === 'touch',
-        modifier: ev.ctrlKey
-    });
-};
-
-/******************************************************************************/
-
-const svgListening = function(on) {
-    const action = (on ? 'add' : 'remove') + 'EventListener';
-    svgRoot[action]('mousemove', onSvgHovered, { passive: true });
+    elem.remove();
+    highlightElementAtPoint(mx, my);
 };
 
 /******************************************************************************/
@@ -1139,7 +997,7 @@ const onKeyPressed = function(ev) {
     ) {
         ev.stopPropagation();
         ev.preventDefault();
-        zap();
+        zapElementAtPoint();
         return;
     }
     // Esc
@@ -1147,7 +1005,7 @@ const onKeyPressed = function(ev) {
         ev.stopPropagation();
         ev.preventDefault();
         filterToDOMInterface.preview(false);
-        stopPicker();
+        quitPicker();
         return;
     }
 };
@@ -1158,52 +1016,8 @@ const onKeyPressed = function(ev) {
 //   May need to dynamically adjust the height of the overlay + new position
 //   of highlighted elements.
 
-const onScrolled = function() {
+const onViewportChanged = function() {
     highlightElements(targetElements, true);
-};
-
-/******************************************************************************/
-
-const pausePicker = function() {
-    pickerBody.classList.add('paused');
-    svgListening(false);
-};
-
-/******************************************************************************/
-
-const unpausePicker = function() {
-    filterToDOMInterface.preview(false);
-    pickerBody.classList.remove('paused');
-    svgListening(true);
-};
-
-/******************************************************************************/
-
-// Let's have the element picker code flushed from memory when no longer
-// in use: to ensure this, release all local references.
-
-const stopPicker = function() {
-    vAPI.shutdown.remove(stopPicker);
-
-    targetElements = [];
-    candidateElements = [];
-    bestCandidateFilter = null;
-
-    if ( pickerRoot === null ) { return; }
-
-    // https://github.com/gorhill/uBlock/issues/2060
-    if ( vAPI.domFilterer instanceof Object ) {
-        vAPI.userStylesheet.remove(pickerCSS);
-        vAPI.userStylesheet.apply();
-        vAPI.domFilterer.unexcludeNode(pickerRoot);
-    }
-
-    window.removeEventListener('scroll', onScrolled, true);
-    svgListening(false);
-    pickerRoot.remove();
-    pickerRoot = pickerBody = svgRoot = svgOcean = svgIslands = dialog = null;
-
-    window.focus();
 };
 
 /******************************************************************************/
@@ -1211,14 +1025,9 @@ const stopPicker = function() {
 // Auto-select a specific target, if any, and if possible
 
 const startPicker = function() {
-    svgRoot.addEventListener('click', onSvgClicked);
-    svgRoot.addEventListener('touchstart', onSvgTouchStartStop);
-    svgRoot.addEventListener('touchend', onSvgTouchStartStop);
-    svgListening(true);
-
-    self.addEventListener('scroll', onScrolled, true);
-    pickerRoot.contentWindow.addEventListener('keydown', onKeyPressed, true);
-    pickerRoot.contentWindow.focus();
+    self.addEventListener('scroll', onViewportChanged, { passive: true });
+    self.addEventListener('resize', onViewportChanged, { passive: true });
+    self.addEventListener('keydown', onKeyPressed, true);
 
     // Try using mouse position
     if (
@@ -1227,8 +1036,7 @@ const startPicker = function() {
         vAPI.mouseClick.x > 0
     ) {
         if ( filtersFrom(vAPI.mouseClick.x, vAPI.mouseClick.y) !== 0 ) {
-            showDialog();
-            return;
+            return showDialog();
         }
     }
 
@@ -1259,89 +1067,170 @@ const startPicker = function() {
         }
         elem.scrollIntoView({ behavior: 'smooth', block: 'start' });
         filtersFrom(elem);
-        showDialog({ modifier: true });
-        return;
+        return showDialog({ broad: true });
     }
 
     // A target was specified, but it wasn't found: abort.
-    stopPicker();
+    quitPicker();
+};
+
+/******************************************************************************/
+
+// Let's have the element picker code flushed from memory when no longer
+// in use: to ensure this, release all local references.
+
+const quitPicker = function() {
+    self.removeEventListener('scroll', onViewportChanged, { passive: true });
+    self.removeEventListener('resize', onViewportChanged, { passive: true });
+    self.removeEventListener('keydown', onKeyPressed, true);
+    vAPI.shutdown.remove(quitPicker);
+    vAPI.MessagingConnection.disconnectFrom(epickerConnectionId);
+    vAPI.MessagingConnection.removeListener(onConnectionMessage);
+    vAPI.userStylesheet.remove(pickerCSS);
+    vAPI.userStylesheet.apply();
+
+    if ( pickerRoot === null ) { return; }
+
+    // https://github.com/gorhill/uBlock/issues/2060
+    if ( vAPI.domFilterer instanceof Object ) {
+        vAPI.domFilterer.unexcludeNode(pickerRoot);
+    }
+
+    pickerRoot.remove();
+    pickerRoot = null;
+
+    self.focus();
 };
 
 /******************************************************************************/
 
 const onDialogMessage = function(msg) {
     switch ( msg.what ) {
-    case 'dialogInit':
-        startPicker();
-        break;
-    case 'dialogPreview':
-        filterToDOMInterface.preview(msg.state);
-        break;
-    case 'dialogCreate':
-        filterToDOMInterface.queryAll(msg);
-        filterToDOMInterface.preview(true, true);
-        stopPicker();
-        break;
-    case 'dialogPick':
-        unpausePicker();
-        break;
-    case 'dialogQuit':
-        filterToDOMInterface.preview(false);
-        stopPicker();
-        break;
-    case 'dialogSetFilter': {
-        const resultset = filterToDOMInterface.queryAll(msg);
-        highlightElements(resultset.map(a => a.elem), true);
-        if ( msg.filter === '!' ) { break; }
-        vAPI.MessagingConnection.sendTo(epickerConnectionId, {
-            what: 'filterResultset',
-            resultset: resultset.map(a => {
-                const o = Object.assign({}, a);
-                o.elem = undefined;
-                return o;
-            }),
-        });
-        break;
-    }
-    default:
-        break;
+        case 'start':
+            startPicker();
+            if ( targetElements.length === 0 ) {
+                highlightElements([], true);
+            }
+            break;
+        case 'dialogCreate':
+            filterToDOMInterface.queryAll(msg);
+            filterToDOMInterface.preview(true, true);
+            quitPicker();
+            break;
+        case 'dialogSetFilter': {
+            const resultset = filterToDOMInterface.queryAll(msg);
+            highlightElements(resultset.map(a => a.elem), true);
+            if ( msg.filter === '!' ) { break; }
+            vAPI.MessagingConnection.sendTo(epickerConnectionId, {
+                what: 'filterResultset',
+                resultset: resultset.map(a => {
+                    const o = Object.assign({}, a);
+                    o.elem = undefined;
+                    return o;
+                }),
+            });
+            break;
+        }
+        case 'quitPicker':
+            filterToDOMInterface.preview(false);
+            quitPicker();
+            break;
+        case 'highlightElementAtPoint':
+            highlightElementAtPoint(msg.mx, msg.my);
+            break;
+        case 'unhighlight':
+            highlightElements([]);
+            break;
+        case 'filterElementAtPoint':
+            filterElementAtPoint(msg.mx, msg.my, msg.broad);
+            break;
+        case 'zapElementAtPoint':
+            zapElementAtPoint(msg.mx, msg.my, msg.options);
+            if ( msg.options.highlight !== true && msg.options.stay !== true ) {
+                quitPicker();
+            }
+            break;
+        case 'togglePreview':
+            filterToDOMInterface.preview(msg.state);
+            break;
+        default:
+            break;
     }
 };
 
 /******************************************************************************/
 
 const onConnectionMessage = function(msg) {
-    if (
-        msg.from !== `epickerDialog-${epickerId}` ||
-        msg.to !== `epicker-${epickerId}`
-    ) {
-        return;
-    }
+    if ( msg.from !== `epickerDialog-${epickerId}` ) { return; }
     switch ( msg.what ) {
-    case 'connectionRequested':
-        epickerConnectionId = msg.id;
-        return true;
-    case 'connectionBroken':
-        stopPicker();
-        break;
-    case 'connectionMessage':
-        onDialogMessage(msg.payload);
-        break;
+        case 'connectionRequested':
+            epickerConnectionId = msg.id;
+            return true;
+        case 'connectionBroken':
+            quitPicker();
+            break;
+        case 'connectionMessage':
+            onDialogMessage(msg.payload);
+            break;
     }
 };
 
 /******************************************************************************/
 
-pickerRoot = document.createElement('iframe');
-pickerRoot.setAttribute(vAPI.sessionId, '');
+// epicker-ui.html will be injected in the page through an iframe, and
+// is a sandboxed so as to prevent the page from interfering with its
+// content and behavior.
+//
+// The purpose of epicker.js is to:
+// - Install the element picker UI, and wait for the component to establish
+//   a direct communication channel.
+// - Lookup candidate filters from elements at a specific position.
+// - Highlight element(s) at a specific position or according to whether
+//   they match candidate filters;
+// - Preview the result of applying a candidate filter;
+//
+// When the element picker is installed on a page, the only change the page
+// sees is an iframe with a random attribute. The page can't see the content
+// of the iframe, and cannot interfere with its style properties. However the
+// page can remove the iframe.
 
+// We need extra messaging capabilities + fetch/process picker arguments.
+{
+    const results = await Promise.all([
+        vAPI.messaging.extend(),
+        vAPI.messaging.send('elementPicker', { what: 'elementPickerArguments' }),
+    ]);
+    if ( results[0] !== true ) { return; }
+    pickerBootArgs = results[1];
+    if ( typeof pickerBootArgs !== 'object' || pickerBootArgs === null ) {
+        return;
+    }
+    // Restore net filter union data if origin is the same.
+    const eprom = pickerBootArgs.eprom || null;
+    if ( eprom !== null && eprom.lastNetFilterSession === lastNetFilterSession ) {
+        lastNetFilterHostname = eprom.lastNetFilterHostname || '';
+        lastNetFilterUnion = eprom.lastNetFilterUnion || '';
+    }
+}
+
+// The DOM filterer will not be present when cosmetic filtering is disabled.
+if (
+    pickerBootArgs.zap !== true &&
+    vAPI.domFilterer instanceof Object === false
+) {
+    return;
+}
+
+// https://github.com/gorhill/uBlock/issues/1529
+//   In addition to inline styles, harden the element picker styles by using
+//   dedicated CSS rules.
 const pickerCSSStyle = [
     'background: transparent',
     'border: 0',
     'border-radius: 0',
     'box-shadow: none',
     'display: block',
-    'height: 100%',
+    'height: 100vh',
     'left: 0',
     'margin: 0',
     'max-height: none',
@@ -1351,6 +1240,7 @@ const pickerCSSStyle = [
     'opacity: 1',
     'outline: 0',
     'padding: 0',
+    'pointer-events: auto',
     'position: fixed',
     'top: 0',
     'visibility: visible',
@@ -1358,107 +1248,40 @@ const pickerCSSStyle = [
     'z-index: 2147483647',
     ''
 ].join(' !important;');
-pickerRoot.style.cssText = pickerCSSStyle;
-
-// https://github.com/uBlockOrigin/uBlock-issues/issues/393
-//   This needs to be injected as an inline style, *never* as a user style,
-//   hence why it's not added above as part of the pickerCSSStyle
-//   properties.
-pickerRoot.style.setProperty('pointer-events', 'auto', 'important');
 
 const pickerCSS = `
-[${vAPI.sessionId}] {
+:root [${vAPI.sessionId}] {
     ${pickerCSSStyle}
 }
-[${vAPI.sessionId}-clickblind] {
+:root [${vAPI.sessionId}-clickblind] {
     pointer-events: none !important;
 }
 `;
 
-{
-    const pickerRootLoaded = new Promise(resolve => {
-        pickerRoot.addEventListener('load', ( ) => { resolve(); }, { once: true });
-    });
-    document.documentElement.append(pickerRoot);
-
-    const results = await Promise.all([
-        vAPI.messaging.send('elementPicker', { what: 'elementPickerArguments' }),
-        pickerRootLoaded,
-    ]);
-
-    pickerBootArgs = results[0];
-
-    // The DOM filterer will not be present when cosmetic filtering is
-    // disabled.
-    if (
-        pickerBootArgs.zap !== true &&
-        vAPI.domFilterer instanceof Object === false
-    ) {
-        pickerRoot.remove();
-        return;
-    }
-
-    // Restore net filter union data if origin is the same.
-    const eprom = pickerBootArgs.eprom || null;
-    if ( eprom !== null && eprom.lastNetFilterSession === lastNetFilterSession ) {
-        lastNetFilterHostname = eprom.lastNetFilterHostname || '';
-        lastNetFilterUnion = eprom.lastNetFilterUnion || '';
-    }
-
-    const frameDoc = pickerRoot.contentDocument;
-
-    // Provide an id users can use as anchor to personalize uBO's element
-    // picker style properties.
-    frameDoc.documentElement.id = 'ublock0-epicker';
-
-    // https://github.com/gorhill/uBlock/issues/2240
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/170
-    //   Remove the already declared inline style tag: we will create a new
-    //   one based on the removed one, and replace the old one.
-    const style = frameDoc.createElement('style');
-    style.textContent = pickerBootArgs.frameCSS;
-    frameDoc.head.appendChild(style);
-
-    pickerBody = frameDoc.body;
-    pickerBody.setAttribute('lang', navigator.language);
-    pickerBody.classList.toggle('zap', pickerBootArgs.zap === true);
-
-    svgRoot = frameDoc.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svgOcean = frameDoc.createElementNS('http://www.w3.org/2000/svg', 'path');
-    svgRoot.append(svgOcean);
-    svgIslands = frameDoc.createElementNS('http://www.w3.org/2000/svg', 'path');
-    svgRoot.append(svgIslands);
-    pickerBody.append(svgRoot);
-
-    dialog = frameDoc.createElement('iframe');
-    pickerBody.append(dialog);
-}
-
-highlightElements([], true);
-
-// https://github.com/gorhill/uBlock/issues/1529
-//   In addition to inline styles, harden the element picker styles by using
-//   dedicated CSS rules.
 vAPI.userStylesheet.add(pickerCSS);
 vAPI.userStylesheet.apply();
 
-vAPI.shutdown.add(stopPicker);
-
-// https://github.com/gorhill/uBlock/issues/3497
-// https://github.com/uBlockOrigin/uBlock-issues/issues/1215
-//   Instantiate isolated element picker dialog.
-if ( pickerBootArgs.zap === true ) {
-    startPicker();
-    return;
-}
+pickerRoot = document.createElement('iframe');
+pickerRoot.setAttribute(vAPI.sessionId, '');
+document.documentElement.append(pickerRoot);
 
 // https://github.com/gorhill/uBlock/issues/2060
-vAPI.domFilterer.excludeNode(pickerRoot);
+if ( vAPI.domFilterer instanceof Object ) {
+    vAPI.domFilterer.excludeNode(pickerRoot);
+}
 
-if ( await vAPI.messaging.extend() !== true ) { return; }
+vAPI.shutdown.add(quitPicker);
+
 vAPI.MessagingConnection.addListener(onConnectionMessage);
 
-dialog.contentWindow.location = `${pickerBootArgs.dialogURL}&epid=${epickerId}`;
+{
+    const url = new URL(pickerBootArgs.pickerURL);
+    url.searchParams.set('epid', epickerId);
+    if ( pickerBootArgs.zap ) {
+        url.searchParams.set('zap', '1');
+    }
+    pickerRoot.contentWindow.location = url.href;
+}
 
 /******************************************************************************/
 
