@@ -56,6 +56,16 @@ window.addEventListener('webextFlavor', function() {
 
 /******************************************************************************/
 
+vAPI.randomToken = function() {
+    const n = Math.random();
+    return String.fromCharCode(n * 26 + 97) +
+        Math.floor(
+            (0.25 + n * 0.75) * Number.MAX_SAFE_INTEGER
+        ).toString(36).slice(-8);
+};
+
+/******************************************************************************/
+
 vAPI.app = {
     name: manifest.name.replace(/ dev\w+ build/, ''),
     version: (( ) => {
@@ -339,7 +349,10 @@ vAPI.Tabs = class {
         return tabs.length !== 0 ? tabs[0] : null;
     }
 
-    async insertCSS() {
+    async insertCSS(tabId, details) {
+        if ( vAPI.supportsUserStylesheets ) {
+            details.cssOrigin = 'user';
+        }
         try {
             await webext.tabs.insertCSS(...arguments);
         }
@@ -357,7 +370,10 @@ vAPI.Tabs = class {
         return Array.isArray(tabs) ? tabs : [];
     }
 
-    async removeCSS() {
+    async removeCSS(tabId, details) {
+        if ( vAPI.supportsUserStylesheets ) {
+            details.cssOrigin = 'user';
+        }
         try {
             await webext.tabs.removeCSS(...arguments);
         }
@@ -1003,9 +1019,6 @@ vAPI.messaging = {
                 frameId: sender.frameId,
                 matchAboutBlank: true
             };
-            if ( vAPI.supportsUserStylesheets ) {
-                details.cssOrigin = 'user';
-            }
             if ( msg.add ) {
                 details.runAt = 'document_start';
             }

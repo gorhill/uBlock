@@ -49,6 +49,8 @@ const lastNetFilterSession = window.location.host + window.location.pathname;
 let lastNetFilterHostname = '';
 let lastNetFilterUnion = '';
 
+const hideBackgroundStyle = 'background-image:none!important;';
+
 /******************************************************************************/
 
 const safeQuerySelectorAll = function(node, selector) {
@@ -645,10 +647,10 @@ const filterToDOMInterface = (( ) => {
                     reFilter.test(elem.currentSrc)
             ) {
                 out.push({
-                    type: 'network',
-                    elem: elem,
+                    elem,
                     src: srcProp,
-                    opts: filterTypes[elem.localName],
+                    opt: filterTypes[elem.localName],
+                    style: vAPI.hideStyle,
                 });
             }
         }
@@ -657,10 +659,10 @@ const filterToDOMInterface = (( ) => {
         for ( const elem of candidateElements ) {
             if ( reFilter.test(backgroundImageURLFromElement(elem)) ) {
                 out.push({
-                    type: 'network',
-                    elem: elem,
-                    style: 'background-image',
-                    opts: 'image',
+                    elem,
+                    bg: true,
+                    opt: 'image',
+                    style: hideBackgroundStyle,
                 });
             }
         }
@@ -690,7 +692,7 @@ const filterToDOMInterface = (( ) => {
         const out = [];
         for ( const elem of elems ) {
             if ( elem === pickerRoot ) { continue; }
-            out.push({ type: 'cosmetic', elem, raw });
+            out.push({ elem, raw, style: vAPI.hideStyle });
         }
         return out;
     };
@@ -702,33 +704,28 @@ const filterToDOMInterface = (( ) => {
     //   Remove trailing pseudo-element when querying.
     const fromCompiledCosmeticFilter = function(raw) {
         if ( typeof raw !== 'string' ) { return; }
-        let elems;
+        let elems, style;
         try {
             const o = JSON.parse(raw);
-            if ( o.action === 'style' ) {
-                elems = document.querySelectorAll(
-                    o.selector.replace(rePseudoElements, '')
-                );
-                lastAction = o.selector + ' {' + o.tasks[0][1] + '}';
-            } else if ( o.tasks ) {
-                elems = vAPI.domFilterer.createProceduralFilter(o).exec();
-            }
+            elems = vAPI.domFilterer.createProceduralFilter(o).exec();
+            style = o.action === undefined || o.action[0] !== ':style'
+                ? vAPI.hideStyle
+                : o.action[1];
         } catch(ex) {
             return;
         }
         if ( !elems ) { return; }
         const out = [];
         for ( const elem of elems ) {
-            out.push({ type: 'cosmetic', elem, raw });
+            out.push({ elem, raw, style });
         }
         return out;
     };
 
+    vAPI.epickerStyleProxies = vAPI.epickerStyleProxies || new Map();
+
     let lastFilter;
     let lastResultset;
-    let lastAction;
-    let appliedStyleTag;
-    let applied = false;
     let previewing = false;
 
     const queryAll = function(details) {
@@ -738,11 +735,10 @@ const filterToDOMInterface = (( ) => {
         unapply();
         if ( filter === '' || filter === '!' ) {
             lastFilter = '';
-            lastResultset = [];
-            return lastResultset;
+            lastResultset = undefined;
+            return;
         }
         lastFilter = filter;
-        lastAction = undefined;
         if ( filter.startsWith('##') === false ) {
             lastResultset = fromNetworkFilter(filter);
             if ( previewing ) { apply(); }
@@ -759,86 +755,29 @@ const filterToDOMInterface = (( ) => {
         return lastResultset;
     };
 
-    // https://github.com/gorhill/uBlock/issues/1629
-    //   Avoid hiding the element picker's related elements.
-    const applyHide = function() {
-        const htmlElem = document.documentElement;
-        for ( const item of lastResultset ) {
-            const elem = item.elem;
-            if ( elem === pickerRoot ) { continue; }
-            if (
-                (elem !== htmlElem) &&
-                (item.type === 'cosmetic' || item.type === 'network' && item.src !== undefined)
-            ) {
-                vAPI.domFilterer.hideNode(elem);
-                item.hidden = true;
-            }
-            if ( item.type === 'network' && item.style === 'background-image' ) {
-                const style = elem.style;
-                item.backgroundImage = style.getPropertyValue('background-image');
-                item.backgroundImagePriority = style.getPropertyPriority('background-image');
-                style.setProperty('background-image', 'none', 'important');
-            }
-        }
-    };
-
-    const unapplyHide = function() {
-        if ( lastResultset === undefined ) { return; }
-        for ( const item of lastResultset ) {
-            if ( item.hidden === true ) {
-                vAPI.domFilterer.unhideNode(item.elem);
-                item.hidden = false;
-            }
-            if ( item.hasOwnProperty('backgroundImage') ) {
-                item.elem.style.setProperty(
-                    'background-image',
-                    item.backgroundImage,
-                    item.backgroundImagePriority
-                );
-                delete item.backgroundImage;
-            }
-        }
-    };
-
-    const unapplyStyle = function() {
-        if ( !appliedStyleTag || appliedStyleTag.parentNode === null ) {
-            return;
-        }
-        appliedStyleTag.parentNode.removeChild(appliedStyleTag);
-    };
-
-    const applyStyle = function() {
-        if ( !appliedStyleTag ) {
-            appliedStyleTag = document.createElement('style');
-            appliedStyleTag.setAttribute('type', 'text/css');
-        }
-        appliedStyleTag.textContent = lastAction;
-        if ( appliedStyleTag.parentNode === null ) {
-            document.head.appendChild(appliedStyleTag);
-        }
-    };
-
     const apply = function() {
-        if ( applied ) {
-            unapply();
+        unapply();
+        if ( Array.isArray(lastResultset) === false ) { return; }
+        const rootElem = document.documentElement;
+        for ( const { elem, style } of lastResultset ) {
+            if ( elem === pickerRoot ) { continue; }
+            if ( elem === rootElem && style === vAPI.hideStyle ) { continue; }
+            let styleToken = vAPI.epickerStyleProxies.get(style);
+            if ( styleToken === undefined ) {
+                styleToken = vAPI.randomToken();
+                vAPI.epickerStyleProxies.set(style, styleToken);
+                vAPI.userStylesheet.add(`[${styleToken}]\n{${style}}`, true);
+            }
+            elem.setAttribute(styleToken, '');
         }
-        if ( lastResultset === undefined ) { return; }
-        if ( typeof lastAction === 'string' ) {
-            applyStyle();
-        } else {
-            applyHide();
-        }
-        applied = true;
     };
 
     const unapply = function() {
-        if ( !applied ) { return; }
-        if ( typeof lastAction === 'string' ) {
-            unapplyStyle();
-        } else {
-            unapplyHide();
+        for ( const styleToken of vAPI.epickerStyleProxies.values() ) {
+            for ( const elem of document.querySelectorAll(`[${styleToken}]`) ) {
+                elem.removeAttribute(styleToken);
+            }
         }
-        applied = false;
     };
 
     // https://www.reddit.com/r/uBlockOrigin/comments/c62irc/
@@ -849,24 +788,24 @@ const filterToDOMInterface = (( ) => {
         if ( previewing === false ) {
             return unapply();
         }
-        if ( lastResultset === undefined ) { return; }
-        apply();
-        if ( permanent === false ) { return; }
+        if ( Array.isArray(lastResultset) === false ) { return; }
+        if ( permanent === false || lastFilter.startsWith('##') === false ) {
+            return apply();
+        }
         if ( vAPI.domFilterer instanceof Object === false ) { return; }
         const cssSelectors = new Set();
         const proceduralSelectors = new Set();
-        for ( const item of lastResultset ) {
-            if ( item.type !== 'cosmetic' ) { continue; }
-            if ( item.raw.startsWith('{') ) {
-                proceduralSelectors.add(item.raw);
+        for ( const { raw } of lastResultset ) {
+            if ( raw.startsWith('{') ) {
+                proceduralSelectors.add(raw);
             } else {
-                cssSelectors.add(item.raw);
+                cssSelectors.add(raw);
             }
         }
         if ( cssSelectors.size !== 0 ) {
             vAPI.domFilterer.addCSSRule(
                 Array.from(cssSelectors),
-                'display:none!important;'
+                vAPI.hideStyle
             );
         }
         if ( proceduralSelectors.size !== 0 ) {
@@ -876,11 +815,7 @@ const filterToDOMInterface = (( ) => {
         }
     };
 
-    return {
-        get previewing() { return previewing; },
-        preview,
-        queryAll,
-    };
+    return { preview, queryAll };
 })();
 
 /******************************************************************************/
@@ -1091,11 +1026,6 @@ const quitPicker = function() {
 
     if ( pickerRoot === null ) { return; }
 
-    // https://github.com/gorhill/uBlock/issues/2060
-    if ( vAPI.domFilterer instanceof Object ) {
-        vAPI.domFilterer.unexcludeNode(pickerRoot);
-    }
-
     pickerRoot.remove();
     pickerRoot = null;
 
@@ -1118,16 +1048,13 @@ const onDialogMessage = function(msg) {
             quitPicker();
             break;
         case 'dialogSetFilter': {
-            const resultset = filterToDOMInterface.queryAll(msg);
+            const resultset = filterToDOMInterface.queryAll(msg) || [];
             highlightElements(resultset.map(a => a.elem), true);
             if ( msg.filter === '!' ) { break; }
             vAPI.MessagingConnection.sendTo(epickerConnectionId, {
-                what: 'filterResultset',
-                resultset: resultset.map(a => {
-                    const o = Object.assign({}, a);
-                    o.elem = undefined;
-                    return o;
-                }),
+                what: 'resultsetDetails',
+                count: resultset.length,
+                opt: resultset.length !== 0 ? resultset[0].opt : undefined,
             });
             break;
         }
@@ -1250,7 +1177,7 @@ const pickerCSSStyle = [
 ].join(' !important;');
 
 const pickerCSS = `
-:root [${vAPI.sessionId}] {
+:root > [${vAPI.sessionId}] {
     ${pickerCSSStyle}
 }
 :root [${vAPI.sessionId}-clickblind] {
@@ -1264,11 +1191,6 @@ vAPI.userStylesheet.apply();
 pickerRoot = document.createElement('iframe');
 pickerRoot.setAttribute(vAPI.sessionId, '');
 document.documentElement.append(pickerRoot);
-
-// https://github.com/gorhill/uBlock/issues/2060
-if ( vAPI.domFilterer instanceof Object ) {
-    vAPI.domFilterer.excludeNode(pickerRoot);
-}
 
 vAPI.shutdown.add(quitPicker);
 

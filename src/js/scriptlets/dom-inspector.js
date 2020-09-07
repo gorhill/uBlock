@@ -501,16 +501,15 @@ const cosmeticFilterMapper = (function() {
     }
 
     const nodesFromStyleTag = function(rootNode) {
-        var filterMap = roRedNodes,
-            entry, selector, canonical, nodes, node;
-
-        var details = vAPI.domFilterer.getAllSelectors();
+        const filterMap = roRedNodes;
+        const details = vAPI.domFilterer.getAllSelectors();
 
         // Declarative selectors.
-        for ( entry of (details.declarative || []) ) {
-            for ( selector of entry[0].split(',\n') ) {
-                canonical = selector;
-                if ( entry[1] !== 'display:none!important;' ) {
+        for ( const entry of (details.declarative || []) ) {
+            for ( const selector of entry[0].split(',\n') ) {
+                let canonical = selector;
+                let nodes;
+                if ( entry[1] !== vAPI.hideStyle ) {
                     canonical += ':style(' + entry[1] + ')';
                 }
                 if ( reHasCSSCombinators.test(selector) ) {
@@ -524,7 +523,7 @@ const cosmeticFilterMapper = (function() {
                     }
                     nodes = rootNode.querySelectorAll(selector);
                 }
-                for ( node of nodes ) {
+                for ( const node of nodes ) {
                     if ( filterMap.has(node) === false ) {
                         filterMap.set(node, canonical);
                     }
@@ -533,9 +532,9 @@ const cosmeticFilterMapper = (function() {
         }
 
         // Procedural selectors.
-        for ( entry of (details.procedural || []) ) {
-            nodes = entry.exec();
-            for ( node of nodes ) {
+        for ( const entry of (details.procedural || []) ) {
+            const nodes = entry.exec();
+            for ( const node of nodes ) {
                 // Upgrade declarative selector to procedural one
                 filterMap.set(node, entry.raw);
             }

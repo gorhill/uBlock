@@ -51,7 +51,7 @@
     if ( isNaN(surveyResults.hiddenElementCount) ) {
         surveyResults.hiddenElementCount = (( ) => {
             if ( vAPI.domFilterer instanceof Object === false ) { return 0; }
-            const details = vAPI.domFilterer.getAllSelectors_(true);
+            const details = vAPI.domFilterer.getAllSelectors(0b11);
             if (
                 Array.isArray(details.declarative) === false ||
                 details.declarative.length === 0
@@ -59,7 +59,7 @@
                 return 0;
             }
             return document.querySelectorAll(
-                    details.declarative.map(entry => entry[0]).join(',')
+                details.declarative.map(entry => entry[0]).join(',')
             ).length;
         })();
     }

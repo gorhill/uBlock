@@ -39,9 +39,11 @@ if (
 /******************************************************************************/
 
 vAPI.randomToken = function() {
-    const now = Date.now();
-    return String.fromCharCode(now % 26 + 97) +
-           Math.floor((1 + Math.random()) * now).toString(36);
+    const n = Math.random();
+    return String.fromCharCode(n * 26 + 97) +
+        Math.floor(
+            (0.25 + n * 0.75) * Number.MAX_SAFE_INTEGER
+        ).toString(36).slice(-8);
 };
 
 vAPI.sessionId = vAPI.randomToken();

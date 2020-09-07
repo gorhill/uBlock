@@ -56,7 +56,7 @@ if ( epickerId === null ) { return; }
 let epickerConnectionId;
 let filterHostname = '';
 let filterOrigin = '';
-let filterResultset = [];
+let resultsetOpt;
 
 /******************************************************************************/
 
@@ -88,11 +88,8 @@ const userFilterFromCandidate = function(filter) {
         opts.push(`domain=${filterHostname}`);
     }
 
-    if ( filterResultset.length !== 0 ) {
-        const item = filterResultset[0];
-        if ( item.opts ) {
-            opts.push(item.opts);
-        }
+    if ( resultsetOpt !== undefined ) {
+        opts.push(resultsetOpt);
     }
 
     if ( opts.length ) {
@@ -632,10 +629,10 @@ const onPickerMessage = function(msg) {
         case 'showDialog':
             showDialog(msg);
             break;
-        case 'filterResultset': {
-            filterResultset = msg.resultset;
-            $id('resultsetCount').textContent = filterResultset.length;
-            if ( filterResultset.length !== 0 ) {
+        case 'resultsetDetails': {
+            resultsetOpt = msg.opt;
+            $id('resultsetCount').textContent = msg.count;
+            if ( msg.count !== 0 ) {
                 $id('create').removeAttribute('disabled');
             } else {
                 $id('create').setAttribute('disabled', '');

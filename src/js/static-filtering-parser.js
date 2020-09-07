@@ -1177,7 +1177,7 @@ Parser.prototype.SelectorCompiler = class {
         ]);
         this.reSimpleSelector = /^[#.][A-Za-z_][\w-]*$/;
         this.div = document.createElement('div');
-        this.rePseudoClass = /:(?::?after|:?before|:-?[a-z][a-z-]*[a-z])$/;
+        this.rePseudoElement = /:(?::?after|:?before|:-?[a-z][a-z-]*[a-z])$/;
         this.reProceduralOperator = new RegExp([
             '^(?:',
                 Array.from(parser.proceduralOperatorTokens.keys()).join('|'),
@@ -1296,7 +1296,7 @@ Parser.prototype.SelectorCompiler = class {
     //   is fixed.
     cssSelectorType(s) {
         if ( this.reSimpleSelector.test(s) ) { return 1; }
-        const pos = this.cssPseudoSelector(s);
+        const pos = this.cssPseudoElement(s);
         if ( pos !== -1 ) {
             return this.cssSelectorType(s.slice(0, pos)) === 1 ? 3 : 0;
         }
@@ -1308,9 +1308,9 @@ Parser.prototype.SelectorCompiler = class {
         return 1;
     }
 
-    cssPseudoSelector(s) {
+    cssPseudoElement(s) {
         if ( s.lastIndexOf(':') === -1 ) { return -1; }
-        const match = this.rePseudoClass.exec(s);
+        const match = this.rePseudoElement.exec(s);
         return match !== null ? match.index : -1;
     }
 
@@ -1450,13 +1450,10 @@ Parser.prototype.SelectorCompiler = class {
     //   The normalized string version is what is reported in the logger,
     //   by design.
     decompileProcedural(compiled) {
-        const tasks = compiled.tasks;
-        if ( Array.isArray(tasks) === false ) {
-            return compiled.selector;
-        }
+        const tasks = compiled.tasks || [];
         const raw = [ compiled.selector ];
-        let value;
         for ( const task of tasks ) {
+            let value;
             switch ( task[0] ) {
             case ':has':
             case ':if':
@@ -1494,14 +1491,16 @@ Parser.prototype.SelectorCompiler = class {
                 raw.push(task[1]);
                 break;
             case ':min-text-length':
-            case ':remove':
-            case ':style':
             case ':upward':
             case ':watch-attr':
             case ':xpath':
                 raw.push(`${task[0]}(${task[1]})`);
                 break;
             }
+        }
+        if ( Array.isArray(compiled.action) ) {
+            const [ op, arg ] = compiled.action;
+            raw.push(`${op}(${arg})`);
         }
         return raw.join('');
     }
@@ -1578,10 +1577,12 @@ Parser.prototype.SelectorCompiler = class {
                 tasks.push([ ':spath', spath ]);
             }
             if ( action !== undefined ) { return; }
-            tasks.push([ operator, args ]);
+            const task = [ operator, args ];
             if ( this.actionOperators.has(operator) ) {
                 if ( root === false ) { return; }
-                action = operator.slice(1);
+                action = task;
+            } else {
+                tasks.push(task);
             }
             opPrefixBeg = i;
             if ( i === n ) { break; }
@@ -1589,7 +1590,7 @@ Parser.prototype.SelectorCompiler = class {
 
         // No task found: then we have a CSS selector.
         // At least one task found: nothing should be left to parse.
-        if ( tasks.length === 0 ) {
+        if ( tasks.length === 0 && action === undefined ) {
             prefix = raw;
         } else if ( opPrefixBeg < n ) {
             if ( action !== undefined ) { return; }
@@ -1626,21 +1627,17 @@ Parser.prototype.SelectorCompiler = class {
         }
 
         // Expose action to take in root descriptor.
-        //
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/961
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/382
-        //   For the time being, `style` action can't be used in a
-        //   procedural selector.
         if ( action !== undefined ) {
-            if ( tasks.length > 1 && action === 'style' ) { return; }
             out.action = action;
         }
 
-        // Pseudo-selectors are valid only when used in a root task list.
+        // Pseudo elements are valid only when used in a root task list AND
+        // only when there are no procedural operators: pseudo elements can't
+        // be querySelectorAll-ed.
         if ( prefix !== '' ) {
-            const pos = this.cssPseudoSelector(prefix);
+            const pos = this.cssPseudoElement(prefix);
             if ( pos !== -1 ) {
-                if ( root === false ) { return; }
+                if ( root === false || tasks.length !== 0 ) { return; }
                 out.pseudo = pos;
             }
         }
