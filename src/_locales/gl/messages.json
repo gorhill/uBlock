@@ -945,11 +945,11 @@
   },
   "docblockedPrompt1": {
     "message": "O uBlock₀ impediu cargar a seguinte páxina:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "Por mor deste filtro:",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "sen parámetros",

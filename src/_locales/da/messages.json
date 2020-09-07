@@ -945,11 +945,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBlock Origins har blokeret flg. side fra at hente:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "Grundet flg. filter",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "uden parametre",

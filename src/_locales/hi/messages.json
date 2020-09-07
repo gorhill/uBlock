@@ -945,11 +945,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBlock Origin ने इस पेज को लोड होने से रोक दिया हैं:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "इस फिल्टर की वजह से ",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "पैरामीटर के बिना",

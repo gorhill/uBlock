@@ -945,11 +945,11 @@
   },
   "docblockedPrompt1": {
     "message": "uব্লক অরিজিন নিচের পৃষ্ঠা লোড করাকে প্রতিহত করেছে:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "নিম্নলিখিত ফিল্টারের কারণে",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "প্যারামিটার বিহীন",

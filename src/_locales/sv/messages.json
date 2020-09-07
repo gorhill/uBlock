@@ -945,11 +945,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBlock Origin har förhindrat följande sida från att läsas in:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "På grund av följande filter",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "utan parametrar",

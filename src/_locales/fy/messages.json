@@ -945,11 +945,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBlock Origin hat it laden fan de folgjende side opkeard:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "Fanwege it folgjende filter",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "sûnder parameters",

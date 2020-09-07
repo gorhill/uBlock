@@ -945,11 +945,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBlock Origin ป้องกันไม่ให้โหลดหน้าต่อไปนี้:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "เนื่องจากตัวกรองดังต่อไปนี้",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "without parameters",

@@ -945,11 +945,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBlock Origin பின்வரும் பக்கத்தை ஏற்றுவதில் இருந்து தடுத்தது:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "ஏனெனில் பின்வரும் வடிகட்டி",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "உரலியில் அளவுருக்கள் இல்லாமல்",

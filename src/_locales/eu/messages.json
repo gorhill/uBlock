@@ -945,11 +945,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBlock₀ek orri hau kargatzea galarazi du:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "Iragazki hau dela eta",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "parametrorik gabe",

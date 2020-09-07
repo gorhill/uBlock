@@ -84,7 +84,7 @@
     "description": "English: on this page"
   },
   "popupBlockedStats": {
-    "message": "{{count}} of {{percent}}%",
+    "message": "{{count}} ({{percent}}%)",
     "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
@@ -945,11 +945,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBlock₀ heeft het laden van de volgende pagina voorkomen:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
-    "message": "vanwege het volgende filter",
-    "description": "English: Because of the following filter"
+    "message": "vanwege het volgende filter:",
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "zonder parameters",

@@ -945,11 +945,11 @@
   },
   "docblockedPrompt1": {
     "message": "Το uBlock₀ έχει αποτρέψει τη φόρτωση της παρακάτω σελίδας:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "Εξαιτίας του ακόλουθου φίλτρου",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "χωρίς παραμέτρους",

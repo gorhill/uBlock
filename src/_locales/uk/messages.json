@@ -552,19 +552,19 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
-    "message": "Sort:",
+    "message": "Сортування:",
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
-    "message": "Rule type",
+    "message": "Тип правила",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortBySource": {
-    "message": "Source",
+    "message": "Джерело",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortByDestination": {
-    "message": "Destination",
+    "message": "Призначення ",
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
@@ -945,11 +945,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBlock запобіг завантаженню наступної сторінки:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "Через наступний фільтр",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "без параметрів",

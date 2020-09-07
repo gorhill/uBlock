@@ -945,11 +945,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBloc Origin đã chặn tải trang sau:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "Vì bộ lọc sau",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "không có thông số",

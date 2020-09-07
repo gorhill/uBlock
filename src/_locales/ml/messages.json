@@ -945,11 +945,11 @@
   },
   "docblockedPrompt1": {
     "message": "താഴെ പറയുന്ന പേജ് ലോഡ് ചെയ്യുന്നത് യുബ്ലോക്ക് ഒറിജിന്‍ തടഞ്ഞിരിക്കുന്നു:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "ഈ ഫില്‍റ്റര്‍ കാരണം",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "പാരാമീറ്ററുകള്‍ ഇല്ലാതെ",

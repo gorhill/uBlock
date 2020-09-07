@@ -945,11 +945,11 @@
   },
   "docblockedPrompt1": {
     "message": "L'uBlock Origin ha impedit que es carregui la pàgina:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "Detectat per aquest filtre",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "sense paràmetres",
