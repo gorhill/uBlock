@@ -4,6 +4,7 @@
 <head>
 <meta charset="utf-8">
 <title>uBlock Origin Element Picker</title>
+<link rel="stylesheet" href="../css/themes/default.css">
 <link rel="stylesheet" href="../css/epicker-ui.css">
 </head>
 
@@ -12,7 +13,20 @@
 <section>
     <div>
         <textarea lang="en" dir="ltr" spellcheck="false"></textarea>
-        <div id="resultsetCount"></div>
+        <div>
+            <span id="resultsetModifiers">
+                <span id="resultsetSpecificity" data-specificity="6">
+                    <span data-specificity="0"></span>
+                    <span data-specificity="1"></span>
+                    <span data-specificity="2"></span>
+                    <span data-specificity="3"></span>
+                    <span data-specificity="4"></span>
+                    <span data-specificity="5"></span>
+                    <span data-specificity="6"></span>
+                    <span data-specificity="7"></span>
+                    <input type="range" min="0" max="7" value="6"></span>
+                </span>
+            <span id="resultsetCount"></span></div>
     </div>
     <div id="toolbar">
         <div>
@@ -27,10 +41,11 @@
 </section>
 <ul id="candidateFilters">
     <li id="netFilters">
-        <span data-i18n="pickerNetFilters"></span><ul lang="en" class="changeFilter"></ul>
+        <span data-i18n="pickerNetFilters"></span>
+        <ul lang="en" class="changeFilter"></ul>
     </li>
-    <li id="cosmeticFilters">
-        <span data-i18n="pickerCosmeticFilters"></span> <span data-i18n="pickerCosmeticFiltersHint"></span>
+    <li id="cosmeticFilters" data-specificity="3">
+        <span data-i18n="pickerCosmeticFilters"></span>
         <ul lang="en" class="changeFilter"></ul>
     </li>
 </ul>

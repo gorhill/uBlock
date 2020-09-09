@@ -58,6 +58,11 @@ let filterHostname = '';
 let filterOrigin = '';
 let resultsetOpt;
 
+let netFilterCandidates = [];
+let cosmeticFilterCandidates = [];
+let computedCandidateSlot = 0;
+let computedCandidate = '';
+
 /******************************************************************************/
 
 const filterFromTextarea = function() {
@@ -110,6 +115,9 @@ const candidateFromFilterChoice = function(filterChoice) {
         elem.classList.remove('active');
     }
 
+    computedCandidateSlot = slot;
+    computedCandidate = '';
+
     if ( filter === undefined ) { return ''; }
 
     // For net filters there no such thing as a path
@@ -142,35 +150,82 @@ const candidateFromFilterChoice = function(filterChoice) {
         return filter;
     }
 
+    // TODO: Maybe add another step to remove attribute values?
+    const specificity = [
+        0b0000,  // remove hierarchy; remove id, nth-of-type, attribute values
+        0b0010,  // remove hierarchy; remove id, nth-of-type
+        0b0011,  // remove hierarchy
+        0b1000,  // trim hierarchy; remove id, nth-of-type, attribute values
+        0b1010,  // trim hierarchy; remove id, nth-of-type
+        0b1100,  // remove id, nth-of-type, attribute values
+        0b1110,  // remove id, nth-of-type
+        0b1111,  // keep all = most specific
+    ][
+        parseInt(
+            $id('resultsetSpecificity').getAttribute('data-specificity'),
+            10
+        )
+    ];
+
     // Return path: the target element, then all siblings prepended
-    let selector = '', joiner = '';
-    for ( ; slot < filters.length; slot++ ) {
-        filter = filters[slot];
+    const paths = [];
+    for ( let i = slot; i < filters.length; i++ ) {
+        filter = filters[i].slice(2);
+        // Remove id, nth-of-type
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/162
+        //   Mind escaped periods: they do not denote a class identifier.
+        if ( (specificity & 0b0001) === 0 ) {
+            filter = filter.replace(/:nth-of-type\(\d+\)/, '');
+            if (
+                filter.charAt(0) === '#' && (
+                    (specificity & 0b1000) === 0 || i === slot
+                )
+            ) {
+                const pos = filter.search(/[^\\]\./);
+                if ( pos !== -1 ) {
+                    filter = filter.slice(pos + 1);
+                }
+            }
+        }
+        // Remove attribute values.
+        if ( (specificity & 0b0010) === 0 ) {
+            const match = /^\[([^^=]+)\^?=.+\]$/.exec(filter);
+            if ( match !== null ) {
+                filter = `[${match[1]}]`;
+            }
+        }
         // Remove all classes when an id exists.
         // https://github.com/uBlockOrigin/uBlock-issues/issues/162
         //   Mind escaped periods: they do not denote a class identifier.
-        if ( filter.charAt(2) === '#' ) {
+        if ( filter.charAt(0) === '#' ) {
             filter = filter.replace(/([^\\])\..+$/, '$1');
         }
-        selector = filter.slice(2) + joiner + selector;
+        if ( paths.length !== 0 ) {
+            filter += ' > ';
+        }
+        paths.unshift(filter);
         // Stop at any element with an id: these are unique in a web page
-        if ( filter.startsWith('###') ) { break; }
-        // Stop if current selector matches only one element on the page
-        if ( document.querySelectorAll(selector).length === 1 ) { break; }
-        joiner = ' > ';
+        if ( (specificity & 0b1000) === 0 || filter.startsWith('#') ) { break; }
     }
 
-    // https://github.com/gorhill/uBlock/issues/2519
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/17
-    if (
-        slot === filters.length &&
-        selector.startsWith('body > ') === false &&
-        document.querySelectorAll(selector).length > 1
-    ) {
-        selector = 'body > ' + selector;
+    // Trim hierarchy: remove generic elements from path
+    if ( (specificity & 0b1100) === 0b1000 ) {
+        let i = 0;
+        while ( i < paths.length - 1 ) {
+            if ( /^[a-z0-9]+ > $/.test(paths[i+1]) ) {
+                if ( paths[i].endsWith(' > ') ) {
+                    paths[i] = paths[i].slice(0, -2);
+                }
+                paths.splice(i + 1, 1);
+            } else {
+                i += 1;
+            }
+        }
     }
 
-    return '##' + selector;
+    computedCandidate = `##${paths.join('')}`;
+
+    return computedCandidate;
 };
 
 /******************************************************************************/
@@ -305,6 +360,10 @@ const onCandidateChanged = function() {
         $id('resultsetCount').textContent = 'E';
         $id('create').setAttribute('disabled', '');
     }
+    $id('resultsetSpecificity').classList.toggle(
+        'hide',
+        taCandidate.value === '' || taCandidate.value !== computedCandidate
+    );
     vAPI.MessagingConnection.sendTo(epickerConnectionId, {
         what: 'dialogSetFilter',
         filter,
@@ -362,6 +421,20 @@ const onQuitClicked = function() {
 
 /******************************************************************************/
 
+const onSpecificityChanged = function(ev) {
+    const { target } = ev;
+    $id('resultsetSpecificity').setAttribute('data-specificity', target.value);
+    if ( taCandidate.value === computedCandidate ) {
+        taCandidate.value = candidateFromFilterChoice({
+            filters: cosmeticFilterCandidates,
+            slot: computedCandidateSlot,
+        });
+        onCandidateChanged();
+    }
+};
+
+/******************************************************************************/
+
 const onCandidateClicked = function(ev) {
     let li = ev.target.closest('li');
     if ( li === null ) { return; }
@@ -370,7 +443,6 @@ const onCandidateClicked = function(ev) {
     const choice = {
         filters: Array.from(ul.querySelectorAll('li')).map(a => a.textContent),
         slot: 0,
-        broad: ev.ctrlKey || ev.metaKey
     };
     while ( li.previousElementSibling !== null ) {
         li = li.previousElementSibling;
@@ -511,10 +583,37 @@ const eatEvent = function(ev) {
 
 /******************************************************************************/
 
+// Create lists of candidate filters. This takes into account whether the
+// current mode is narrow or broad.
+
+const populateCandidates = function(candidates, selector) {
+    
+    const root = dialog.querySelector(selector);
+    const ul = root.querySelector('ul');
+    while ( ul.firstChild !== null ) {
+        ul.firstChild.remove();
+    }
+    for ( let i = 0; i < candidates.length; i++ ) {
+        const li = document.createElement('li');
+        li.textContent = candidates[i];
+        ul.appendChild(li);
+    }
+    if ( candidates.length !== 0 ) {
+        root.style.removeProperty('display');
+    } else {
+        root.style.setProperty('display', 'none', 'important');
+    }
+};
+
+/******************************************************************************/
+
 const showDialog = function(details) {
     pausePicker();
 
-    const { netFilters, cosmeticFilters, filter, options = {} } = details;
+    const { netFilters, cosmeticFilters, filter } = details;
+
+    netFilterCandidates = netFilters;
+    cosmeticFilterCandidates = cosmeticFilters;
 
     // https://github.com/gorhill/uBlock/issues/738
     //   Trim dots.
@@ -524,27 +623,8 @@ const showDialog = function(details) {
     }
     filterOrigin = details.origin;
 
-    // Create lists of candidate filters
-    const populate = function(src, des) {
-        const root = dialog.querySelector(des);
-        const ul = root.querySelector('ul');
-        while ( ul.firstChild !== null ) {
-            ul.firstChild.remove();
-        }
-        for ( let i = 0; i < src.length; i++ ) {
-            const li = document.createElement('li');
-            li.textContent = src[i];
-            ul.appendChild(li);
-        }
-        if ( src.length !== 0 ) {
-            root.style.removeProperty('display');
-        } else {
-            root.style.setProperty('display', 'none', 'important');
-        }
-    };
-
-    populate(netFilters, '#netFilters');
-    populate(cosmeticFilters, '#cosmeticFilters');
+    populateCandidates(netFilters, '#netFilters');
+    populateCandidates(cosmeticFilters, '#cosmeticFilters');
 
     dialog.querySelector('ul').style.display =
         netFilters.length || cosmeticFilters.length ? '' : 'none';
@@ -566,7 +646,6 @@ const showDialog = function(details) {
     const filterChoice = {
         filters: filter.filters,
         slot: filter.slot,
-        broad: options.broad || false
     };
 
     taCandidate.value = candidateFromFilterChoice(filterChoice);
@@ -609,9 +688,10 @@ const startPicker = function() {
     $id('create').addEventListener('click', onCreateClicked);
     $id('pick').addEventListener('click', onPickClicked);
     $id('quit').addEventListener('click', onQuitClicked);
-    $id('candidateFilters').addEventListener('click', onCandidateClicked);
     $id('toolbar').addEventListener('mousedown', onStartMoving);
     $id('toolbar').addEventListener('touchstart', onStartMoving);
+    $id('candidateFilters').addEventListener('click', onCandidateClicked);
+    $stor('#resultsetSpecificity input').addEventListener('input', onSpecificityChanged);
     staticFilteringParser = new vAPI.StaticFilteringParser({ interactive: true });
 };
 

@@ -517,6 +517,9 @@ const filtersFrom = function(x, y) {
     }
 
     // Cosmetic filter candidates from ancestors.
+    // https://github.com/gorhill/uBlock/issues/2519
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/17
+    //   Prepend `body` if full selector is ambiguous.
     let elem = first;
     while ( elem && elem !== document.body ) {
         cosmeticFilterFromElement(elem);
@@ -526,10 +529,11 @@ const filtersFrom = function(x, y) {
     // uses `nth-of-type`.
     let i = cosmeticFilterCandidates.length;
     if ( i !== 0 ) {
-        let selector = cosmeticFilterCandidates[i-1];
+        const selector = cosmeticFilterCandidates[i-1];
         if (
             selector.indexOf(':nth-of-type(') !== -1 &&
-            safeQuerySelectorAll(document.body, selector).length > 1
+                safeQuerySelectorAll(document.body, selector).length > 1 ||
+            safeQuerySelectorAll(document, cosmeticFilterCandidates.join(' > ')).length > 1
         ) {
             cosmeticFilterCandidates.push('##body');
         }
@@ -1079,6 +1083,9 @@ const onDialogMessage = function(msg) {
             break;
         case 'togglePreview':
             filterToDOMInterface.preview(msg.state);
+            if ( msg.state === false ) {
+                highlightElements(targetElements, true);
+            }
             break;
         default:
             break;
