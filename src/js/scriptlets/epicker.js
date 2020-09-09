@@ -898,7 +898,7 @@ const zapElementAtPoint = function(mx, my, options) {
         elem = elementFromPoint(mx, my);
     }
 
-    if ( elem instanceof HTMLElement === false ) { return; }
+    if ( elem instanceof Element === false ) { return; }
 
     const getStyleValue = function(elem, prop) {
         const style = window.getComputedStyle(elem);

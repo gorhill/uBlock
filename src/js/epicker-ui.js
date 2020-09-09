@@ -150,7 +150,6 @@ const candidateFromFilterChoice = function(filterChoice) {
         return filter;
     }
 
-    // TODO: Maybe add another step to remove attribute values?
     const specificity = [
         0b0000,  // remove hierarchy; remove id, nth-of-type, attribute values
         0b0010,  // remove hierarchy; remove id, nth-of-type
