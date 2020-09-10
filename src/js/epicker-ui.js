@@ -654,7 +654,6 @@ const showDialog = function(details) {
     const depthInput = $stor('#resultsetDepth input');
     depthInput.max = cosmeticFilters.length - 1;
     depthInput.value = depthInput.max;
-    onDepthChanged();
 
     dialog.querySelector('ul').style.display =
         netFilters.length || cosmeticFilters.length ? '' : 'none';
@@ -712,8 +711,6 @@ const startPicker = function() {
     unpausePicker();
 
     if ( pickerRoot.classList.contains('zap') ) { return; }
-
-    onSpecificityChanged();
 
     taCandidate.addEventListener('input', onCandidateChanged);
     $id('preview').addEventListener('click', onPreviewClicked);
