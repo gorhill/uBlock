@@ -529,12 +529,8 @@ const filtersFrom = function(x, y) {
     // uses `nth-of-type`.
     let i = cosmeticFilterCandidates.length;
     if ( i !== 0 ) {
-        const selector = cosmeticFilterCandidates[i-1];
-        if (
-            selector.indexOf(':nth-of-type(') !== -1 &&
-                safeQuerySelectorAll(document.body, selector).length > 1 ||
-            safeQuerySelectorAll(document, cosmeticFilterCandidates.join(' > ')).length > 1
-        ) {
+        const selector = cosmeticFilterCandidates[i-1].slice(2);
+        if ( safeQuerySelectorAll(document.body, selector).length > 1 ) {
             cosmeticFilterCandidates.push('##body');
         }
     }

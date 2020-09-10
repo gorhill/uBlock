@@ -62,6 +62,7 @@ let netFilterCandidates = [];
 let cosmeticFilterCandidates = [];
 let computedCandidateSlot = 0;
 let computedCandidate = '';
+let needBody = false;
 
 /******************************************************************************/
 
@@ -73,6 +74,26 @@ const filterFromTextarea = function() {
     staticFilteringParser.analyze(filter);
     staticFilteringParser.analyzeExtra();
     return staticFilteringParser.shouldDiscard() ? '!' : filter;
+};
+
+/******************************************************************************/
+
+const renderRange = function(id, value, invert = false) {
+    const cells = $storAll(`#${id} span`);
+    const input = $stor(`#${id} input`);
+    const max = parseInt(input.max, 10);
+    if ( typeof value !== 'number'  ) {
+        value = parseInt(input.value, 10);
+    }
+    if ( invert ) {
+        value = max - value;
+    }
+    input.value = value;
+    for ( let i = 0, n = cells.length; i < n; i++ ) {
+        cells[i].classList.toggle(
+            'active', Math.round(i * max / (n - 1)) <= value
+        );
+    }
 };
 
 /******************************************************************************/
@@ -131,24 +152,8 @@ const candidateFromFilterChoice = function(filterChoice) {
 
     $stor(`#cosmeticFilters li:nth-of-type(${slot+1})`)
         .classList.add('active');
-
-    // Modifier means "target broadly". Hence:
-    // - Do not compute exact path.
-    // - Discard narrowing directives.
-    // - Remove the id if one or more classes exist
-    //   TODO: should remove tag name too? ¯\_(ツ)_/¯
-    if ( filterChoice.broad ) {
-        filter = filter.replace(/:nth-of-type\(\d+\)/, '');
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/162
-        //   Mind escaped periods: they do not denote a class identifier.
-        if ( filter.charAt(2) === '#' ) {
-            const pos = filter.search(/[^\\]\./);
-            if ( pos !== -1 ) {
-                filter = '##' + filter.slice(pos + 1);
-            }
-        }
-        return filter;
-    }
+    renderRange('resultsetDepth', slot, true);
+    renderRange('resultsetSpecificity');
 
     const specificity = [
         0b0000,  // remove hierarchy; remove id, nth-of-type, attribute values
@@ -159,12 +164,7 @@ const candidateFromFilterChoice = function(filterChoice) {
         0b1100,  // remove id, nth-of-type, attribute values
         0b1110,  // remove id, nth-of-type
         0b1111,  // keep all = most specific
-    ][
-        parseInt(
-            $id('resultsetSpecificity').getAttribute('data-specificity'),
-            10
-        )
-    ];
+    ][ parseInt($stor('#resultsetSpecificity input').value, 10) ];
 
     // Return path: the target element, then all siblings prepended
     const paths = [];
@@ -220,6 +220,15 @@ const candidateFromFilterChoice = function(filterChoice) {
                 i += 1;
             }
         }
+    }
+
+    if (
+        needBody &&
+        paths.length !== 0 &&
+        paths[0].startsWith('#') === false &&
+        (specificity & 0b1100) !== 0
+    ) {
+        paths.unshift('body > ');
     }
 
     computedCandidate = `##${paths.join('')}`;
@@ -359,7 +368,7 @@ const onCandidateChanged = function() {
         $id('resultsetCount').textContent = 'E';
         $id('create').setAttribute('disabled', '');
     }
-    $id('resultsetSpecificity').classList.toggle(
+    $id('resultsetModifiers').classList.toggle(
         'hide',
         taCandidate.value === '' || taCandidate.value !== computedCandidate
     );
@@ -420,16 +429,26 @@ const onQuitClicked = function() {
 
 /******************************************************************************/
 
-const onSpecificityChanged = function(ev) {
-    const { target } = ev;
-    $id('resultsetSpecificity').setAttribute('data-specificity', target.value);
-    if ( taCandidate.value === computedCandidate ) {
-        taCandidate.value = candidateFromFilterChoice({
-            filters: cosmeticFilterCandidates,
-            slot: computedCandidateSlot,
-        });
-        onCandidateChanged();
-    }
+const onDepthChanged = function() {
+    const input = $stor('#resultsetDepth input');
+    const max = parseInt(input.max, 10);
+    const value = parseInt(input.value, 10);
+    taCandidate.value = candidateFromFilterChoice({
+        filters: cosmeticFilterCandidates,
+        slot: max - value,
+    });
+    onCandidateChanged();
+};
+
+/******************************************************************************/
+
+const onSpecificityChanged = function() {
+    if ( taCandidate.value !== computedCandidate ) { return; }
+    taCandidate.value = candidateFromFilterChoice({
+        filters: cosmeticFilterCandidates,
+        slot: computedCandidateSlot,
+    });
+    onCandidateChanged();
 };
 
 /******************************************************************************/
@@ -473,8 +492,8 @@ const onStartMoving = (( ) => {
 
     const move = ( ) => {
         timer = undefined;
-        let r1 = Math.min(Math.max(r0 - mx1 + mx0, 4), rMax);
-        let b1 = Math.min(Math.max(b0 - my1 + my0, 4), bMax);
+        const r1 = Math.min(Math.max(r0 - mx1 + mx0, 4), rMax);
+        const b1 = Math.min(Math.max(b0 - my1 + my0, 4), bMax);
         dialog.style.setProperty('right', `${r1}px`, 'important');
         dialog.style.setProperty('bottom', `${b1}px`, 'important');
     };
@@ -612,6 +631,13 @@ const showDialog = function(details) {
     const { netFilters, cosmeticFilters, filter } = details;
 
     netFilterCandidates = netFilters;
+
+    needBody  =
+        cosmeticFilters.length !== 0 &&
+        cosmeticFilters[cosmeticFilters.length - 1] === '##body';
+    if ( needBody ) {
+        cosmeticFilters.pop();
+    }
     cosmeticFilterCandidates = cosmeticFilters;
 
     // https://github.com/gorhill/uBlock/issues/738
@@ -624,6 +650,11 @@ const showDialog = function(details) {
 
     populateCandidates(netFilters, '#netFilters');
     populateCandidates(cosmeticFilters, '#cosmeticFilters');
+
+    const depthInput = $stor('#resultsetDepth input');
+    depthInput.max = cosmeticFilters.length - 1;
+    depthInput.value = depthInput.max;
+    onDepthChanged();
 
     dialog.querySelector('ul').style.display =
         netFilters.length || cosmeticFilters.length ? '' : 'none';
@@ -682,6 +713,8 @@ const startPicker = function() {
 
     if ( pickerRoot.classList.contains('zap') ) { return; }
 
+    onSpecificityChanged();
+
     taCandidate.addEventListener('input', onCandidateChanged);
     $id('preview').addEventListener('click', onPreviewClicked);
     $id('create').addEventListener('click', onCreateClicked);
@@ -690,6 +723,7 @@ const startPicker = function() {
     $id('toolbar').addEventListener('mousedown', onStartMoving);
     $id('toolbar').addEventListener('touchstart', onStartMoving);
     $id('candidateFilters').addEventListener('click', onCandidateClicked);
+    $stor('#resultsetDepth input').addEventListener('input', onDepthChanged);
     $stor('#resultsetSpecificity input').addEventListener('input', onSpecificityChanged);
     staticFilteringParser = new vAPI.StaticFilteringParser({ interactive: true });
 };
