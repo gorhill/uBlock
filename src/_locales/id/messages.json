@@ -320,7 +320,7 @@
     "description": "English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt": {
-    "message": "Fungsikan dukungan penyimpanan awan",
+    "message": "Aktifkan dukungan penyimpanan awan",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
@@ -552,7 +552,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
-    "message": "Urutan:",
+    "message": "Urutkan:",
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
