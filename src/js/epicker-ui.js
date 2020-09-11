@@ -473,6 +473,17 @@ const onCandidateClicked = function(ev) {
 /******************************************************************************/
 
 const onKeyPressed = function(ev) {
+    // Delete
+    if (
+        (ev.key === 'Delete' || ev.key === 'Backspace') &&
+        pickerRoot.classList.contains('zap')
+    ) {
+        vAPI.MessagingConnection.sendTo(epickerConnectionId, {
+            what: 'zapElementAtPoint',
+            options: { stay: true },
+        });
+        return;
+    }
     // Esc
     if ( ev.key === 'Escape' || ev.which === 27 ) {
         onQuitClicked();

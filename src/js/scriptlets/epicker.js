@@ -960,6 +960,8 @@ const onViewportChanged = function() {
 // Auto-select a specific target, if any, and if possible
 
 const startPicker = function() {
+    pickerRoot.focus();
+
     self.addEventListener('scroll', onViewportChanged, { passive: true });
     self.addEventListener('resize', onViewportChanged, { passive: true });
     self.addEventListener('keydown', onKeyPressed, true);
