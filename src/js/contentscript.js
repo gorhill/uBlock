@@ -881,7 +881,6 @@ vAPI.injectScriptlet = function(doc, text) {
                 return;
             }
             for ( const node of nodes ) {
-                if ( node.parentElement === null ) { continue; }
                 node.setAttribute(this.masterToken, '');
                 node.setAttribute(styleToken, '');
             }
