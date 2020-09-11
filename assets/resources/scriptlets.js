@@ -282,7 +282,9 @@
         let owner = root;
         let chain = path;
         for (;;) {
-            if ( owner instanceof Object === false ) { return false; }
+            if ( typeof owner !== 'object' || owner === null  ) {
+                return false;
+            }
             const pos = chain.indexOf('.');
             if ( pos === -1 ) {
                 const found = owner.hasOwnProperty(chain);
@@ -299,8 +301,8 @@
             ) {
                 const next = chain.slice(pos + 1);
                 let found = false;
-                for ( const item of owner.values() ) {
-                    found = findOwner(item, next, prune) || found;
+                for ( const key of Object.keys(owner) ) {
+                    found = findOwner(owner[key], next, prune) || found;
                 }
                 return found;
             }
