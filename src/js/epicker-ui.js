@@ -79,7 +79,6 @@ const filterFromTextarea = function() {
 /******************************************************************************/
 
 const renderRange = function(id, value, invert = false) {
-    const cells = $storAll(`#${id} span`);
     const input = $stor(`#${id} input`);
     const max = parseInt(input.max, 10);
     if ( typeof value !== 'number'  ) {
@@ -89,11 +88,15 @@ const renderRange = function(id, value, invert = false) {
         value = max - value;
     }
     input.value = value;
-    for ( let i = 0, n = cells.length; i < n; i++ ) {
-        cells[i].classList.toggle(
-            'active', Math.round(i * max / (n - 1)) <= value
-        );
-    }
+    const slider = $stor(`#${id} > span`);
+    const lside = slider.children[0];
+    const thumb = slider.children[1];
+    const rside = slider.children[2];
+    const thumbWidth = thumb.offsetWidth;
+    const sliderWidth = slider.offsetWidth - thumbWidth;
+    const x = value * sliderWidth / max;
+    lside.style.width = `${x}px`;
+    rside.style.width = `${sliderWidth - x}px`;
 };
 
 /******************************************************************************/
@@ -152,8 +155,6 @@ const candidateFromFilterChoice = function(filterChoice) {
 
     $stor(`#cosmeticFilters li:nth-of-type(${slot+1})`)
         .classList.add('active');
-    renderRange('resultsetDepth', slot, true);
-    renderRange('resultsetSpecificity');
 
     const specificity = [
         0b0000,  // remove hierarchy; remove id, nth-of-type, attribute values
@@ -232,6 +233,10 @@ const candidateFromFilterChoice = function(filterChoice) {
     }
 
     computedCandidate = `##${paths.join('')}`;
+
+    $id('resultsetModifiers').classList.remove('hide');
+    renderRange('resultsetDepth', slot, true);
+    renderRange('resultsetSpecificity');
 
     return computedCandidate;
 };

@@ -68,7 +68,8 @@ html#ublock0-epicker,
     background-color: var(--button-important-surface-hover);
 }
 #ublock0-epicker.preview #preview {
-    background-color: var(--button-active-surface);
+    background-color: var(--button-preferred-surface);
+    color: var(--button-preferred-ink);
 }
 #ublock0-epicker section {
     border: 0;
@@ -94,7 +95,7 @@ html#ublock0-epicker,
     margin: 0;
     overflow: hidden;
     overflow-y: auto;
-    padding: 2px 2px 1em 2px;
+    padding: 2px 2px 1.2em 2px;
     resize: none;
     width: 100%;
     word-break: break-all;
@@ -118,30 +119,41 @@ html#ublock0-epicker,
     display: none;
     }
 .resultsetModifier {
-    border: 1px solid white;
-    border-bottom: 0;
-    display: inline-flex;
-    height: 100%;
+    border: 0;
     pointer-events: auto;
     position: relative;
     width: 32%;
     }
-.resultsetModifier span {
-    background-color: var(--button-surface);
-    border: 0;
-    border-left: 1px solid white;
-    display: inline-block;
+.resultsetModifier > span {
+    align-items: center;
+    display: inline-flex;
     height: 100%;
-    width: 12.5%;
+    pointer-events: none;
+    width: 100%;
     }
-.resultsetModifier span:first-of-type {
-    border-left: 0;
+.resultsetModifier  > span > span:nth-of-type(1) {
+    background-color: var(--checkbox-checked-ink);
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    display: inline-block;
+    height: 6px;
     }
-.resultsetModifier span.active {
-    background-color: var(--button-active-surface);
+.resultsetModifier  > span > span:nth-of-type(2) {
+    background-color: var(--checkbox-checked-ink);
+    border-radius: 7px;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    }
+.resultsetModifier  > span > span:nth-of-type(3) {
+    background-color: var(--checkbox-ink);
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    display: inline-block;
+    height: 4px;
     }
 .resultsetModifier input {
-    box-sizing: border-box;
+    border: 0;
     height: 100%;
     left: 0;
     margin: 0;
@@ -152,10 +164,12 @@ html#ublock0-epicker,
     width: 100%;
     }
 #resultsetCount {
+    align-items: center;
     background-color: #aaa;
     color: white;
+    display: inline-flex;
+    justify-content: center;
     min-width: 2.2em;
-    text-align: center;
     }
 #ublock0-epicker section.invalidFilter #resultsetCount {
     background-color: red;
