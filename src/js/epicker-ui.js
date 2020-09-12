@@ -509,8 +509,8 @@ const onStartMoving = (( ) => {
         timer = undefined;
         const r1 = Math.min(Math.max(r0 - mx1 + mx0, 4), rMax);
         const b1 = Math.min(Math.max(b0 - my1 + my0, 4), bMax);
-        dialog.style.setProperty('right', `${r1}px`, 'important');
-        dialog.style.setProperty('bottom', `${b1}px`, 'important');
+        dialog.style.setProperty('right', `${r1}px`);
+        dialog.style.setProperty('bottom', `${b1}px`);
     };
 
     const moveAsync = ev => {
@@ -634,7 +634,7 @@ const populateCandidates = function(candidates, selector) {
     if ( candidates.length !== 0 ) {
         root.style.removeProperty('display');
     } else {
-        root.style.setProperty('display', 'none', 'important');
+        root.style.setProperty('display', 'none');
     }
 };
 
