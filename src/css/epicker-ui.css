@@ -122,7 +122,7 @@ html#ublock0-epicker,
     border: 0;
     pointer-events: auto;
     position: relative;
-    width: 32%;
+    width: 40%;
     }
 .resultsetModifier > span {
     align-items: center;
@@ -136,12 +136,14 @@ html#ublock0-epicker,
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
     display: inline-block;
+    flex-shrink: 0;
     height: 6px;
     }
 .resultsetModifier  > span > span:nth-of-type(2) {
     background-color: var(--checkbox-checked-ink);
     border-radius: 7px;
     display: inline-block;
+    flex-shrink: 0;
     height: 16px;
     width: 16px;
     }
@@ -150,6 +152,7 @@ html#ublock0-epicker,
     border-top-right-radius: 2px;
     border-bottom-right-radius: 2px;
     display: inline-block;
+    flex-grow: 1;
     height: 4px;
     }
 .resultsetModifier input {

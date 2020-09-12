@@ -91,12 +91,10 @@ const renderRange = function(id, value, invert = false) {
     const slider = $stor(`#${id} > span`);
     const lside = slider.children[0];
     const thumb = slider.children[1];
-    const rside = slider.children[2];
-    const thumbWidth = thumb.offsetWidth;
-    const sliderWidth = slider.offsetWidth - thumbWidth;
-    const x = value * sliderWidth / max;
-    lside.style.width = `${x}px`;
-    rside.style.width = `${sliderWidth - x}px`;
+    const sliderWidth = slider.offsetWidth;
+    const maxPercent = (sliderWidth - thumb.offsetWidth) / sliderWidth * 100;
+    const widthPercent = value / max * maxPercent;
+    lside.style.width = `${widthPercent}%`;
 };
 
 /******************************************************************************/
