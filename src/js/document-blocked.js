@@ -82,17 +82,20 @@ let details = {};
 (( ) => {
     const matches = /^(.*)\{\{hostname\}\}(.*)$/.exec(vAPI.i18n('docblockedProceed'));
     if ( matches === null ) { return; }
-    const proceed = uDom('#templates .proceed').clone();
-    proceed.descendants('span:nth-of-type(1)').text(matches[1]);
-    proceed.descendants('span:nth-of-type(3)').text(matches[2]);
+    const proceed = document.querySelector('#templates .proceed').cloneNode(true);
+    proceed.children[0].textContent = matches[1];
+    proceed.children[2].textContent = matches[2];
+    const hnOption = proceed.querySelector('.hn');
     if ( details.hn !== details.dn ) {
-        proceed.descendants('.hn').text(details.hn).attr('value', details.hn);
+        hnOption.textContent = details.hn;
+        hnOption.setAttribute('value', details.hn);
     } else {
-        proceed.descendants('.hn').remove();
+        hnOption.remove();
     }
-    proceed.descendants('.dn').text(details.dn).attr('value', details.dn);
-
-    uDom('#proceed').append(proceed);
+    const dnOption = proceed.querySelector('.dn');
+    dnOption.textContent = details.dn;
+    dnOption.setAttribute('value', details.dn);
+    document.getElementById('proceed').append(proceed);
 })();
 
 /******************************************************************************/
