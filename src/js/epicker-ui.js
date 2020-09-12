@@ -301,7 +301,6 @@ const onSvgTouch = (( ) => {
             return;
         }
         if ( startX === undefined ) { return; }
-        if ( ev.cancelable === false ) { return; }
         const stopX = ev.changedTouches[0].screenX;
         const stopY = ev.changedTouches[0].screenY;
         const angle = Math.abs(Math.atan2(stopY - startY, stopX - startX));
@@ -329,7 +328,9 @@ const onSvgTouch = (( ) => {
         if ( swipeRight === false && angle < Math.PI - angleUpperBound ) {
             return;
         }
-        ev.preventDefault();
+        if ( ev.cancelable ) {
+            ev.preventDefault();
+        }
         // Swipe left.
         if ( swipeRight === false ) {
             if ( pickerRoot.classList.contains('paused') ) {
