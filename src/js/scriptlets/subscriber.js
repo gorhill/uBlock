@@ -57,7 +57,9 @@ const onMaybeSubscriptionLinkClicked = function(ev) {
 
     const subscribeURL = new URL('about:blank');
     try {
-        subscribeURL.href = target.href;
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/763#issuecomment-691696716
+        //   Remove replacement patch if/when filterlists.com fixes encoded '&'.
+        subscribeURL.href = target.href.replace('&amp;', '&');
         if (
             /^(abp|ubo):$/.test(subscribeURL.protocol) === false &&
             subscribeURL.hostname !== 'subscribe.adblockplus.org'
