@@ -484,7 +484,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Üks filter rea kohta. Filtriks võib olla tavaline hostinimi või Adblock Plusiga ühilduv filter. Märgiga <code>!</code> algavaid ridu eiratakse.",
+    "message": "Üks filter rea kohta. Filtriks võib olla tavaline hostinimi või EasyListiga ühilduv filter. Eesliitega <code>!</code> algavaid ridu eiratakse.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -904,11 +904,11 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: Lisan järgneva URLi sinu kohandatud filtrite nimekirja?\n\nPealkiri: \"{{title}}\"\nURL: {{url}}",
+    "message": "Kas lisada järgnev URL sinu kohandatud filtrite nimekirja?\n\nPealkiri: \"{{title}}\"\nURL: {{url}}",
     "description": "No longer used"
   },
   "subscribeButton": {
-    "message": "Subscribe",
+    "message": "Telli",
     "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {

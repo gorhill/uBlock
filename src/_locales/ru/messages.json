@@ -904,11 +904,11 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "µBlock: Добавить этот адрес в список ваших фильтров?\n\nНазвание: \"{{title}}\"\nURL: {{url}}",
+    "message": "Добавить следующий адрес к пользовательским спискам фильтров?\n\nЗаголовок: \"{{title}}\"\nURL: {{url}}",
     "description": "No longer used"
   },
   "subscribeButton": {
-    "message": "Subscribe",
+    "message": "Подписаться",
     "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {

@@ -452,7 +452,7 @@
     "description": "English: Regions, languages"
   },
   "3pGroupCustom": {
-    "message": "Egna filter",
+    "message": "Anpassad",
     "description": "English: Custom"
   },
   "3pImport": {
@@ -904,11 +904,11 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: Lägg till följande webbadress till din skräddarsydda filterlista?\n\nTitel: \"{{title}}\"\nWebbadress: {{url}}",
+    "message": "Lägg till följande webbadress till din anpassade filterlista?\n\nTitel: \"{{title}}\"\nWebbadress: {{url}}",
     "description": "No longer used"
   },
   "subscribeButton": {
-    "message": "Subscribe",
+    "message": "Prenumerera",
     "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {

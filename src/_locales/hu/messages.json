@@ -564,7 +564,7 @@
     "description": "English: a sort option for list of rules."
   },
   "rulesSortByDestination": {
-    "message": "Destination",
+    "message": "Cél",
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
@@ -908,7 +908,7 @@
     "description": "No longer used"
   },
   "subscribeButton": {
-    "message": "Subscribe",
+    "message": "Feliratkozás",
     "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
