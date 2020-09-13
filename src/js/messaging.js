@@ -1590,10 +1590,6 @@ const onMessage = function(request, sender, callback) {
     let response;
 
     switch ( request.what ) {
-    case 'applyFilterListSelection':
-        response = µb.applyFilterListSelection(request);
-        break;
-
     case 'inlinescriptFound':
         if ( µb.logger.enabled && pageStore !== null ) {
             const fctxt = µb.filteringContext.duplicate();
@@ -1624,7 +1620,7 @@ const onMessage = function(request, sender, callback) {
     case 'subscribeTo':
         const url = encodeURIComponent(request.location);
         const title = encodeURIComponent(request.title);
-        const hash = µb.availableFilterLists[request.location] !== undefined
+        const hash = µb.selectedFilterLists.indexOf(request.location) !== -1
             ? '#subscribed'
             : '';
         vAPI.tabs.open({

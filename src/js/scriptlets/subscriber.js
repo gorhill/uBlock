@@ -55,18 +55,27 @@ const onMaybeSubscriptionLinkClicked = function(ev) {
         return;
     }
 
-    const href = target.href || '';
-    const matches = /^(?:abp|ubo):\/*subscribe\/*\?location=([^&]+).*title=([^&]+)/.exec(href);
-    if ( matches === null ) { return; }
-
-    vAPI.messaging.send('scriptlets', {
-        what: 'subscribeTo',
-        location: decodeURIComponent(matches[1]),
-        title: decodeURIComponent(matches[2]),
-    });
-
-    ev.stopPropagation();
-    ev.preventDefault();
+    const subscribeURL = new URL('about:blank');
+    try {
+        subscribeURL.href = target.href;
+        if (
+            /^(abp|ubo):$/.test(subscribeURL.protocol) === false &&
+            subscribeURL.hostname !== 'subscribe.adblockplus.org'
+        ) {
+            return;
+        }
+        const location = subscribeURL.searchParams.get('location') || '';
+        const title = subscribeURL.searchParams.get('title') || '';
+        if ( location === '' || title === '' ) { return; }
+        vAPI.messaging.send('scriptlets', {
+            what: 'subscribeTo',
+            location: decodeURIComponent(location),
+            title: decodeURIComponent(title),
+        });
+        ev.stopPropagation();
+        ev.preventDefault();
+    } catch (_) {
+    }
 };
 
 document.addEventListener('click', onMaybeSubscriptionLinkClicked);

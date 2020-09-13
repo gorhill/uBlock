@@ -326,7 +326,10 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         const importedSet = new Set(this.listKeysFromCustomFilterLists(externalLists));
         const toImportSet = new Set(this.listKeysFromCustomFilterLists(details.toImport));
         for ( const urlKey of toImportSet ) {
-            if ( importedSet.has(urlKey) ) { continue; }
+            if ( importedSet.has(urlKey) ) {
+                selectedListKeySet.add(urlKey);
+                continue;
+            }
             const assetKey = assetKeyFromURL(urlKey);
             if ( assetKey === urlKey ) {
                 importedSet.add(urlKey);
