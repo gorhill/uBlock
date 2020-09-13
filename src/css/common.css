@@ -243,6 +243,16 @@ select {
         }
     }
 
+.logo {
+    align-items: center;
+    display: inline-flex;
+    padding: 0 0.5em;
+    width: 1.25em;
+    }
+.logo > img {
+    width: 100%;
+    }
+
 .ubo-icon {
     align-items: center;
     background-color: transparent;

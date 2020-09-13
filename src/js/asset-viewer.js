@@ -26,9 +26,23 @@
 /******************************************************************************/
 
 (async ( ) => {
-    const params = new URL(document.location).searchParams;
-    const assetKey = params.get('url');
+    const subscribeURL = new URL(document.location);
+    const subscribeParams = subscribeURL.searchParams;
+    const assetKey = subscribeParams.get('url');
     if ( assetKey === null ) { return; }
+
+    const subscribeElem = subscribeParams.get('subscribe') !== null
+        ? document.getElementById('subscribe')
+        : null;
+    if ( subscribeElem !== null && subscribeURL.hash !== '#subscribed' ) {
+        const title = subscribeParams.get('title');
+        const promptElem = document.getElementById('subscribePrompt');
+        promptElem.children[0].textContent = title;
+        const a = promptElem.children[1];
+        a.textContent = assetKey;
+        a.setAttribute('href', assetKey);
+        subscribeElem.classList.remove('hide');
+    }
 
     const cmEditor = new CodeMirror(document.getElementById('content'), {
         autofocus: true,
@@ -59,9 +73,30 @@
         url: assetKey,
     });
     cmEditor.setValue(details && details.content || '');
+
+    if ( subscribeElem !== null ) {
+        document.getElementById('subscribeButton').addEventListener(
+            'click',
+            ( ) => {
+                subscribeElem.classList.add('hide');
+                vAPI.messaging.send('scriptlets', {
+                    what: 'applyFilterListSelection',
+                    toImport: assetKey,
+                }).then(( ) => {
+                    vAPI.messaging.send('scriptlets', {
+                        what: 'reloadAllFilters'
+                    });
+                });
+            },
+            { once: true }
+        );
+    }
+
     if ( details.sourceURL ) {
         const a = document.querySelector('.cm-search-widget .sourceURL');
         a.setAttribute('href', details.sourceURL);
         a.setAttribute('title', details.sourceURL);
     }
+
+    document.body.classList.remove('loading');
 })();

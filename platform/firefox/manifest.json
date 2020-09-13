@@ -55,8 +55,9 @@
     },
     {
       "matches": [
-        "http://*/*",
-        "https://*/*"
+        "https://filterlists.com/*",
+        "https://github.com/*",
+        "https://*.github.io/*"
       ],
       "js": [
         "/js/scriptlets/subscriber.js"

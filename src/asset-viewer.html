@@ -11,21 +11,17 @@
 <link rel="stylesheet" href="css/common.css">
 <link rel="stylesheet" href="css/fa-icons.css">
 <link rel="stylesheet" href="css/codemirror.css">
+<link rel="stylesheet" href="css/asset-viewer.css">
 <link rel="shortcut icon" type="image/png" href="img/icon_32.png"/>
-<style>
-body {
-    border: 0;
-    margin: 0;
-    overflow: hidden;
-    padding: 0;
-    }
-#content {
-    height: 100vh;
-    width: 100vw;
-    }
-</style>
 </head>
-<body>
+<body class="loading">
+
+<div id="subscribe" class="hide">
+    <span class="logo"><img data-i18n-title="extName" src="img/ublock.svg"></span>
+    <span id="subscribePrompt"><span></span><a></a></span>
+    <span class="fa-icon">spinner</span>
+    <button id="subscribeButton" type="button" data-i18n="subscribeButton"></button>
+</div>
 
 <div id="content" class="codeMirrorContainer codeMirrorBreakAll"></div>
 

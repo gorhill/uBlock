@@ -716,6 +716,9 @@ api.get = async function(assetKey, options = {}) {
         contentURLs = [ assetDetails.contentURL ];
     } else if ( Array.isArray(assetDetails.contentURL) ) {
         contentURLs = assetDetails.contentURL.slice(0);
+    } else if ( reIsExternalPath.test(assetKey) ) {
+        assetDetails.content = 'filters';
+        contentURLs = [ assetKey ];
     }
 
     for ( const contentURL of contentURLs ) {

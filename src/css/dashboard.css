@@ -21,15 +21,6 @@ html, body {
     width: 100%;
     z-index: 10;
     }
-#dashboard-nav .logo {
-    align-items: center;
-    display: inline-flex;
-    padding: 0 0.5em;
-    width: 1.25em;
-    }
-#dashboard-nav .logo > img {
-    width: 100%;
-    }
 .tabButton {
     border: 0;
     border-bottom: 3px solid var(--bg-1);
