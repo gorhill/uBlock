@@ -904,8 +904,12 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: de volgende URL aan uw lijsten met aangepaste filters toevoegen?\n\nTitel: ‘{{title}}’\nURL: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "message": "uBlock₀: de volgende URL aan je lijsten met aangepaste filters toevoegen?\n\nTitel: ‘{{title}}’\nURL: {{url}}",
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Subscribe",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "een minuut geleden",

@@ -484,7 +484,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "מסנן אחד לכל שורה. המסנן יכול להיות דומיין פשוט, או מסנן המותאם ל- Adblock Plus. שורות עם קידומת <code>!</code> לא יפורשו.",
+    "message": "מסנן אחד לשורה. המסנן יכול להיות שם מארח פשוט, או מסנן תואם EasyList. שורות עם קידומת <code>!</code> ייתקלו בהתעלמות.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -552,23 +552,23 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
-    "message": "Sort:",
+    "message": "מיון:",
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
-    "message": "Rule type",
+    "message": "סוג כלל",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortBySource": {
-    "message": "Source",
+    "message": "מקור",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortByDestination": {
-    "message": "Destination",
+    "message": "יעד",
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "רשימת שמות המתחם שלך בהם uBlock₀ לא יהיה פעיל. רשומה אחת בכל שורה. שמות מתחם לא חוקיים לא יפורשו ולא תהיה התראה לכך.",
+    "message": "הכוונות האתר המהימן מכתיבות באילו דפי רשת uBlock Origin צריך להיות מושבת. כניסה אחת לשורה. הכוונות בלתי תקפות ייתקלו בהתעלמות בשקט ויקבלו הערה.",
     "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
@@ -720,7 +720,7 @@
     "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
-    "message": "קונטקטס:",
+    "message": "הקשר:",
     "description": "Label for the context selector"
   },
   "loggerURLFilteringTypeLabel": {
@@ -905,7 +905,11 @@
   },
   "subscriberConfirm": {
     "message": "uBlock₀: הוסף את הכתובת הבאה לרשימת הפילטרים המותאמים אישית שלך?\n\nכותרת: \"{{title}}\"\nכתובת URL: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Subscribe",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "לפני דקה",

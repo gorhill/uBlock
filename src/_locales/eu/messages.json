@@ -905,7 +905,11 @@
   },
   "subscriberConfirm": {
     "message": "uBlock₀: Gehitu honako URL hauek zure iragazki pertsonalizatuen zerrendara?\n\nIzenburua: \"{{title}}\"\nURLa: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Subscribe",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "duela minutu bat",

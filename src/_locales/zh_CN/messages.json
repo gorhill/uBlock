@@ -905,7 +905,11 @@
   },
   "subscriberConfirm": {
     "message": "uBlock₀：添加下列 URL 到您的自定义规则列表吗？\n\n标题： “{{title}}”\nURL： {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Subscribe",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "1 分钟前",

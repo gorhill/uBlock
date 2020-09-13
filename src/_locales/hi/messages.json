@@ -905,7 +905,11 @@
   },
   "subscriberConfirm": {
     "message": "uBlock₀: इस यूआरएल को अपने कस्टम लिस्ट में डालें?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Subscribe",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "एक मिनट पहले",

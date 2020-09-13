@@ -905,7 +905,11 @@
   },
   "subscriberConfirm": {
     "message": "uBlock₀: Pievienot sekojošo URL Jūsu lietotāja filtru sarakstiem?\n\nNosaukums: \"{{title}}\"\nURL: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Subscribe",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "pirms minūtes",

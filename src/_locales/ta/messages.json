@@ -905,7 +905,11 @@
   },
   "subscriberConfirm": {
     "message": "uBlock₀: பின்வரும் உரலியை உங்களுடைய தனிபயன் வடிகட்டியில் சேர்க்கலாமா?\n\nதலைப்பு: \"{{title}}\"\nஉரலி: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Subscribe",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "ஒரு நிமிடம் முன்பு",

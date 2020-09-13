@@ -905,7 +905,11 @@
   },
   "subscriberConfirm": {
     "message": "uBlock₀：確定要新增下列網址至自訂過濾規則清單？\n\n標題：「{{title}}」\n網址：{{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "訂閱",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "1 分鐘前",

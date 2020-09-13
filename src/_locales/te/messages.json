@@ -904,8 +904,12 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: ఈ URLని మీ నిర్దేశిత వడపోత పట్టికకు జతపరచాలా?\n\nశీర్షిక: \"{{title}}\"\nURL: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "message": "uBlock₀: ఈ URLని మీ నిర్దేశిత ఫిల్టర్ పట్టికకు జతపరచాలా?\n\nశీర్షిక: \"{{title}}\"\nURL: {{url}}",
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Subscribe",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "ఒక నిమిషం క్రితం",

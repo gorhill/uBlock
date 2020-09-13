@@ -905,7 +905,11 @@
   },
   "subscriberConfirm": {
     "message": "യുബ്ലോക്ക്ഒ: താഴെ പറയുന്ന യുആര്‍എല്‍ താങ്കളുടെ കസ്റ്റം ഫില്‍റ്ററില്‍ ചേര്‍ക്കട്ടേയോ?\n\nടൈറ്റില്‍: \"{{title}}\"\nയുആര്‍എല്‍: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Subscribe",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "ഒരു മിനിറ്റ് മുന്‍പ്",

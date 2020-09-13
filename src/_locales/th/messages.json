@@ -120,7 +120,7 @@
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "เปิดตัวประวัติ",
+    "message": "เปิดบันทึกการทำงาน",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
@@ -905,7 +905,11 @@
   },
   "subscriberConfirm": {
     "message": "uBlock₀: เพิ่ม URL ต่อไปนี้ในรายการตัวกรองแบบกำหนดเองของคุณหรือไม่ ?\n\nชื่อ: \"{{title}}\"\nURL: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Subscribe",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "เมื่อนาทีที่แล้ว",
