@@ -1215,6 +1215,7 @@ Parser.prototype.SelectorCompiler = class {
         if ( hasBits(this.parser.flavorBits, BITFlavorExtStyle) ) {
             raw = this.translateAdguardCSSInjectionFilter(raw);
             if ( raw === '' ) { return false; }
+            this.parser.flavorBits &= ~BITFlavorExtStyle;
             out.raw = raw;
         }
 
@@ -1264,7 +1265,7 @@ Parser.prototype.SelectorCompiler = class {
     }
 
     translateAdguardCSSInjectionFilter(suffix) {
-        const matches = /^([^{]+)\{([^}]+)\}\s*$/.exec(suffix);
+        const matches = /^(.*)\s*\{([^}]+)\}\s*$/.exec(suffix);
         if ( matches === null ) { return ''; }
         const selector = matches[1].trim();
         const style = matches[2].trim();

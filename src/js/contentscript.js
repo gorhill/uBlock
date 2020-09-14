@@ -777,11 +777,6 @@ vAPI.injectScriptlet = function(doc, text) {
             for ( const raw of selectors ) {
                 if ( this.selectors.has(raw) ) { continue; }
                 const o = JSON.parse(raw);
-                if ( o.pseudo !== undefined ) {
-                    this.domFilterer.addCSSRule(o.selector, vAPI.hideStyle);
-                    mustCommit = true;
-                    continue;
-                }
                 // CSS selector-based styles.
                 if (
                     o.action !== undefined &&
@@ -789,6 +784,11 @@ vAPI.injectScriptlet = function(doc, text) {
                     o.tasks === undefined
                 ) {
                     this.domFilterer.addCSSRule(o.selector, o.action[1]);
+                    mustCommit = true;
+                    continue;
+                }
+                if ( o.pseudo !== undefined ) {
+                    this.domFilterer.addCSSRule(o.selector, vAPI.hideStyle);
                     mustCommit = true;
                     continue;
                 }
