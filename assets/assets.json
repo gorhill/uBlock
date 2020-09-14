@@ -269,7 +269,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "ara: Liste AR",
+		"title": "ara: Liste AR (العربية)",
 		"lang": "ar",
 		"contentURL": "https://easylist-downloads.adblockplus.org/Liste_AR.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=98"
@@ -278,7 +278,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "BGR: Bulgarian Adblock list",
+		"title": "BGR: Bulgarian Adblock list (български, македонски)",
 		"lang": "bg mk",
 		"contentURL": "https://stanev.org/abp/adblock_bg.txt",
 		"supportURL": "https://stanev.org/abp/"
@@ -296,7 +296,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "CHN: CJX's EasyList Lite",
+		"title": "CHN: CJX's EasyList Lite (中文)",
 		"lang": "zh",
 		"contentURL": "https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt",
 		"supportURL": "https://github.com/cjx82630/cjxlist",
@@ -306,7 +306,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "CZE, SVK: EasyList Czech and Slovak",
+		"title": "CZE, SVK: EasyList Czech and Slovak (čeština, slovenčina)",
 		"lang": "cs sk",
 		"contentURL": "https://raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt",
 		"supportURL": "https://github.com/tomasko126/easylistczechandslovak"
@@ -315,7 +315,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "DEU: EasyList Germany",
+		"title": "DEU: EasyList Germany (Deutsch)",
 		"lang": "de",
 		"contentURL": [
 			"https://easylist.to/easylistgermany/easylistgermany.txt",
@@ -327,7 +327,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "EST: Eesti saitidele kohandatud filter",
+		"title": "EST: Eesti saitidele kohandatud filter (eesti)",
 		"lang": "et",
 		"contentURL": "https://adblock.ee/list.php",
 		"supportURL": "https://adblock.ee/"
@@ -336,7 +336,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "FIN: Adblock List for Finland",
+		"title": "FIN: Adblock List for Finland (suomi)",
 		"lang": "fi",
 		"contentURL": "https://raw.githubusercontent.com/finnish-easylist-addition/finnish-easylist-addition/master/Finland_adb.txt",
 		"supportURL": "https://github.com/finnish-easylist-addition/finnish-easylist-addition"
@@ -345,7 +345,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "FRA: AdGuard Français",
+		"title": "FRA: AdGuard Français (العربية, brezhoneg, français, occitan)",
 		"lang": "ar br fr oc",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/16.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters"
@@ -354,7 +354,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "GRC: Greek AdBlock Filter",
+		"title": "GRC: Greek AdBlock Filter (Ελληνικά)",
 		"lang": "el",
 		"contentURL": "https://www.void.gr/kargig/void-gr-filters.txt",
 		"supportURL": "https://github.com/kargig/greek-adblockplus-filter"
@@ -363,7 +363,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "HUN: hufilter",
+		"title": "HUN: hufilter (magyar)",
 		"lang": "hu",
 		"contentURL": "https://raw.githubusercontent.com/hufilter/hufilter/master/hufilter.txt",
 		"supportURL": "https://github.com/hufilter/hufilter"
@@ -372,7 +372,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "IDN, MYS: ABPindo",
+		"title": "IDN, MYS: ABPindo (Bahasa Indonesia, Bahasa Melayu)",
 		"lang": "id ms",
 		"contentURL": "https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/subscriptions/abpindo.txt",
 		"supportURL": "https://github.com/ABPindo/indonesianadblockrules"
@@ -381,7 +381,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "IRN: Adblock-Iran",
+		"title": "IRN: Adblock-Iran (فارسی)",
 		"lang": "fa",
 		"contentURL": "https://gitcdn.xyz/repo/farrokhi/adblock-iran/master/filter.txt",
 		"supportURL": "https://github.com/farrokhi/adblock-iran"
@@ -390,7 +390,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "ISL: Icelandic ABP List",
+		"title": "ISL: Icelandic ABP List (íslenska)",
 		"lang": "is",
 		"contentURL": "https://adblock.gardar.net/is.abp.txt",
 		"supportURL": "https://adblock.gardar.net/"
@@ -399,7 +399,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "ISR: EasyList Hebrew",
+		"title": "ISR: EasyList Hebrew (עברית)",
 		"lang": "he",
 		"contentURL": "https://raw.githubusercontent.com/easylist/EasyListHebrew/master/EasyListHebrew.txt",
 		"supportURL": "https://github.com/easylist/EasyListHebrew"
@@ -408,7 +408,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "ITA: EasyList Italy",
+		"title": "ITA: EasyList Italy (italiano, Ligure)",
 		"lang": "it lij",
 		"contentURL": "https://easylist-downloads.adblockplus.org/easylistitaly.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=96"
@@ -425,7 +425,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "JPN: AdGuard Japanese",
+		"title": "JPN: AdGuard Japanese (日本語)",
 		"lang": "ja",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/7.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
@@ -435,7 +435,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "KOR: YousList",
+		"title": "KOR: YousList (한국어)",
 		"lang": "ko",
 		"contentURL": "https://raw.githubusercontent.com/yous/YousList/master/youslist.txt",
 		"supportURL": "https://github.com/yous/YousList"
@@ -444,7 +444,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "LTU: EasyList Lithuania",
+		"title": "LTU: EasyList Lithuania (lietuvių)",
 		"lang": "lt",
 		"contentURL": "https://raw.githubusercontent.com/EasyList-Lithuania/easylist_lithuania/master/easylistlithuania.txt",
 		"supportURL": "https://github.com/EasyList-Lithuania/easylist_lithuania"
@@ -453,7 +453,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "LVA: Latvian List",
+		"title": "LVA: Latvian List (latviešu)",
 		"lang": "lv",
 		"contentURL": "https://notabug.org/latvian-list/adblock-latvian/raw/master/lists/latvian-list.txt",
 		"supportURL": "https://notabug.org/latvian-list/adblock-latvian"
@@ -462,7 +462,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "NLD: EasyList Dutch",
+		"title": "NLD: EasyList Dutch (Afrikaans, Frysk, Nederlands)",
 		"lang": "af fy nl",
 		"contentURL": "https://easylist-downloads.adblockplus.org/easylistdutch.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=100"
@@ -471,7 +471,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "NOR, DNK, ISL: Dandelion Sprouts nordiske filtre",
+		"title": "NOR, DNK, ISL: Dandelion Sprouts nordiske filtre (norsk bokmål, norsk nynorsk, norsk, dansk, íslenska)",
 		"lang": "nb nn no da is",
 		"contentURL": [
 			"https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianList.txt",
@@ -483,7 +483,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "POL: Oficjalne Polskie Filtry do AdBlocka, uBlocka Origin i AdGuarda",
+		"title": "POL: Oficjalne Polskie Filtry do AdBlocka, uBlocka Origin i AdGuarda (polski)",
 		"lang": "pl",
 		"contentURL": "https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt",
 		"supportURL": "https://github.com/MajkiIT/polish-ads-filter/issues",
@@ -493,7 +493,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "POL: Oficjalne polskie filtry przeciwko alertom o Adblocku",
+		"title": "POL: Oficjalne polskie filtry przeciwko alertom o Adblocku (polski)",
 		"lang": "pl",
 		"contentURL": "https://raw.githubusercontent.com/olegwukr/polish-privacy-filters/master/anti-adblock.txt",
 		"supportURL": "https://github.com/olegwukr/polish-privacy-filters/issues"
@@ -502,7 +502,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "ROU: Romanian Ad (ROad) Block List Light",
+		"title": "ROU: Romanian Ad (ROad) Block List Light (română)",
 		"lang": "ro",
 		"contentURL": [
 			"https://road.adblock.ro/lista.txt",
@@ -514,7 +514,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "RUS: RU AdList",
+		"title": "RUS: RU AdList (беларуская, қазақша, русский, українська, oʻzbekcha/ўзбекча)",
 		"lang": "be kk ru uk uz",
 		"contentURL": "https://easylist-downloads.adblockplus.org/advblock+cssfixes.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=102",
@@ -524,7 +524,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "spa: EasyList Spanish",
+		"title": "spa: EasyList Spanish (aragonés, asturianu, català, español, euskara, galego)",
 		"lang": "an ast ca es eu gl",
 		"contentURL": "https://easylist-downloads.adblockplus.org/easylistspanish.txt",
 		"supportURL": "https://forums.lanik.us/viewforum.php?f=103"
@@ -533,7 +533,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "spa, por: AdGuard Spanish/Portuguese",
+		"title": "spa, por: AdGuard Spanish/Portuguese (aragonés, asturianu, català, español, euskara, galego, português)",
 		"lang": "an ast ca es eu gl pt",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/9.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
@@ -543,7 +543,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "SVN: Slovenian List",
+		"title": "SVN: Slovenian List (slovenščina)",
 		"lang": "sl",
 		"contentURL": "https://raw.githubusercontent.com/betterwebleon/slovenian-list/master/filters.txt",
 		"supportURL": "https://github.com/betterwebleon/slovenian-list"
@@ -552,7 +552,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "SWE: Frellwit's Swedish Filter",
+		"title": "SWE: Frellwit's Swedish Filter (svenska)",
 		"lang": "sv",
 		"contentURL": "https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Frellwits-Swedish-Filter.txt",
 		"supportURL": "https://github.com/lassekongo83/Frellwits-filter-lists"
@@ -561,7 +561,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "THA: EasyList Thailand",
+		"title": "THA: EasyList Thailand (ไทย)",
 		"lang": "th",
 		"contentURL": "https://raw.githubusercontent.com/easylist-thailand/easylist-thailand/master/subscription/easylist-thailand.txt",
 		"supportURL": "https://github.com/easylist-thailand/easylist-thailand"
@@ -570,7 +570,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "TUR: AdGuard Turkish",
+		"title": "TUR: AdGuard Turkish (Türkçe)",
 		"lang": "tr",
 		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/13.txt",
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
@@ -580,7 +580,7 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "VIE: ABPVN List",
+		"title": "VIE: ABPVN List (Tiếng Việt)",
 		"lang": "vi",
 		"contentURL": "https://raw.githubusercontent.com/abpvn/abpvn/master/filter/abpvn.txt",
 		"supportURL": "https://abpvn.com/"
