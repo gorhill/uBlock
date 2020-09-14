@@ -36,6 +36,7 @@
     },
     {
       "matches": [
+        "https://easylist.to/*",
         "https://filterlists.com/*",
         "https://github.com/*",
         "https://*.github.io/*"
