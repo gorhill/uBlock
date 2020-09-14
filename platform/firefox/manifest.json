@@ -56,6 +56,7 @@
     {
       "matches": [
         "https://easylist.to/*",
+        "https://*.fanboy.co.nz/*",
         "https://filterlists.com/*",
         "https://forums.lanik.us/*",
         "https://github.com/*",
