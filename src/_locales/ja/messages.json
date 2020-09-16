@@ -204,7 +204,7 @@
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton_v2": {
-    "message": "詳細を非表示",
+    "message": "表示量を減らす",
     "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
