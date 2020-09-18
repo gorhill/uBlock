@@ -54,6 +54,14 @@ $script,redirect=noop.js
 *$all,~inline-script
 *$all,~inline-font
 
+! valid domain option values
+*$domain=toto.com|toto.*|~toto.com|~toto.*|tôtó.ça|tôtó.*|~tôtó.ça|[ff00::0]|1.1.1.1
+
+! valid denyallow option values
+*$denyallow=toto.com|tôtó.ça|[ff00::0]|1.1.1.1
+
+
+
 
 !--------------------
 ! Parsing should fail
@@ -105,3 +113,9 @@ $
 *$~popup
 *$~inline-script
 *$~inline-font
+
+! invalid domain= option values
+*$domain=.toto.com|toto.com.|[ff00::00000]|1.1.1.1111
+
+! invalid denyallow= option values
+*$denyallow=.toto.com|toto.com.|toto.*|~toto.com|~toto.*|[ff00::00000]|1.1.1.1111
