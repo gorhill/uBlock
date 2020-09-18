@@ -108,6 +108,10 @@ const Parser = class {
         this.reHostsSource = /^[^\x00-\x24\x26-\x29\x2B\x2C\x2F\x3A-\x40\x5B-\x5E\x60\x7B-\x7F]+$/;
         this.reUnicodeChar = /[^\x00-\x7F]/;
         this.reUnicodeChars = /[^\x00-\x7F]/g;
+        this.reHostnameLabel = /[^.]+/g;
+        this.rePlainHostname = /^(?:[\w-]+\.)*[a-z]+$/;
+        this.rePlainEntity = /^(?:[\w-]+\.)+\*$/;
+        this.reEntity = /^[^*]+\.\*$/;
         this.punycoder = new URL(self.location);
         this.selectorCompiler = new this.SelectorCompiler(this);
         // TODO: reuse for network filtering analysis
@@ -313,7 +317,7 @@ const Parser = class {
     analyzeExtExtra() {
         if ( this.hasOptions() ) {
             const { i, len } = this.optionsSpan;
-            this.analyzeDomainList(i, i + len, BITComma, 0b11);
+            this.analyzeDomainList(i, i + len, BITComma, 0b1110);
         }
         if ( hasBits(this.flavorBits, BITFlavorUnsupported) ) {
             this.markSpan(this.patternSpan, BITError);
@@ -668,66 +672,62 @@ const Parser = class {
         }
     }
 
-    // bits:
-    // 0: can use entity-based hostnames
-    // 1: can use single wildcard
-    analyzeDomain(from, to, optionBits) {
-        const { slices } = this;
-        let len = to - from;
-        if ( len === 0 ) { return false; }
-        const not = hasBits(slices[from], BITTilde);
-        if ( not ) {
-            if ( (optionBits & 0b01) === 0 || slices[from+2] > 1 ) { return false; }
-            from += 3;
-            len -= 3;
+    analyzeDomain(from, to, modeBits) {
+        if ( to === from ) { return false; }
+        return this.normalizeHostnameValue(
+            this.strFromSlices(from, to - 3),
+            modeBits
+        ) !== undefined;
+    }
+
+    // Ultimately, let the browser API do the hostname normalization, after
+    // making some other trivial checks.
+    //
+    // modeBits:
+    //   0: can use wildcard at any position
+    //   1: can use entity-based hostnames
+    //   2: can use single wildcard
+    //   3: can be negated
+    normalizeHostnameValue(s, modeBits = 0b0000) {
+        const not = s.charCodeAt(0) === 0x7E /* '~' */;
+        if ( not && (modeBits & 0b1000) === 0 ) { return; }
+        let hn = not === false ? s : s.slice(1);
+        if ( this.rePlainHostname.test(hn) ) { return s; }
+        const hasWildcard = hn.lastIndexOf('*') !== -1;
+        if ( hasWildcard ) {
+            if ( modeBits === 0 ) { return; }
+            if ( hn.length === 1 ) {
+                if ( not || (modeBits & 0b0100) === 0 ) { return; }
+                return s;
+            }
+            if ( (modeBits & 0b0010) !== 0 ) {
+                if ( this.rePlainEntity.test(hn) ) { return s; }
+                if ( this.reEntity.test(hn) === false ) { return; }
+            } else if ( (modeBits & 0b0001) === 0 ) {
+                return;
+            }
+            hn = hn.replace(/\*/g, '__asterisk__');
         }
-        if ( len === 0 ) { return false; }
-        // One slice only, check for single asterisk
+        this.punycoder.hostname = '_';
+        try {
+            this.punycoder.hostname = hn;
+            hn = this.punycoder.hostname;
+        } catch (_) {
+            return;
+        }
+        if ( hn === '_' || hn === '' ) { return; }
+        if ( hasWildcard ) {
+            hn = this.punycoder.hostname.replace(/__asterisk__/g, '*');
+        }
         if (
-            len === 3 &&
-            not === false &&
-            (optionBits & 0b10) !== 0 &&
-            hasBits(slices[from], BITAsterisk)
+            (modeBits & 0b0001) === 0 && (
+                hn.charCodeAt(0) === 0x2E /* '.' */ ||
+                hn.charCodeAt(hn.length - 1) === 0x2E /* '.' */
+            )
         ) {
-            return slices[from+2] === 1;
+            return;
         }
-        // First slice must be regex-equivalent of `\w`
-        if ( hasNoBits(slices[from], BITRegexWord | BITUnicode) ) { return false; }
-        // Last slice
-        if ( len > 3 ) {
-            const last = to - 3;
-            if ( hasBits(slices[last], BITAsterisk) ) {
-                if (
-                    (optionBits & 0b01) === 0 ||
-                    len < 9 ||
-                    slices[last+2] > 1 ||
-                    hasNoBits(slices[last-3], BITPeriod)
-                ) {
-                    return false;
-                }
-            } else if ( hasNoBits(slices[to-3], BITAlphaNum | BITUnicode) ) {
-                return false;
-            }
-        }
-        // Middle slices
-        if ( len > 6 ) {
-            for ( let i = from + 3; i < to - 3; i += 3 ) {
-                const bits = slices[i];
-                if ( hasNoBits(bits, BITHostname) ) { return false; }
-                if ( hasBits(bits, BITPeriod) && slices[i+2] > 1 ) {
-                    return false;
-                }
-                if (
-                    hasBits(bits, BITDash) && (
-                        hasNoBits(slices[i-3], BITRegexWord | BITUnicode) ||
-                        hasNoBits(slices[i+3], BITRegexWord | BITUnicode)
-                    )
-                ) {
-                    return false;
-                }
-            }
-        }
-        return true;
+        return not ? '~' + hn : hn;
     }
 
     slice(raw) {
@@ -1081,6 +1081,8 @@ const Parser = class {
     //   Be ready to deal with non-punycode-able Unicode characters.
     // https://github.com/uBlockOrigin/uBlock-issues/issues/772
     //   Encode Unicode characters beyond the hostname part.
+    // Prepend with '*' character to prevent the browser API from refusing to
+    // punycode -- this occurs when the extracted label starts with a dash.
     toASCII(dryrun = false) {
         if ( this.patternHasUnicode() === false ) { return true; }
         const { i, len } = this.patternSpan;
@@ -1090,16 +1092,14 @@ const Parser = class {
         // Punycode hostname part of the pattern.
         if ( patternIsRegex === false ) {
             const match = this.reHostname.exec(pattern);
-            if ( match === null ) { return true; }
-            try {
-                this.punycoder.hostname = match[0].replace(/\*/g, '__asterisk__');
-            } catch(ex) {
-                return false;
+            if ( match !== null ) {
+                const hn = match[0].replace(this.reHostnameLabel, s => {
+                    if ( this.reUnicodeChar.test(s) === false ) { return s; }
+                    if ( s.charCodeAt(0) === 0x2D /* '-' */ ) { s = '*' + s; }
+                    return this.normalizeHostnameValue(s, 0b0001) || s;
+                });
+                pattern = hn + pattern.slice(match.index + match[0].length);
             }
-            const hn = this.punycoder.hostname;
-            if ( hn === '' ) { return false; }
-            const punycoded = hn.replace(/__asterisk__/g, '*');
-            pattern = punycoded + pattern.slice(match.index + match[0].length);
         }
         // Percent-encode remaining Unicode characters.
         if ( this.reUnicodeChar.test(pattern) ) {
@@ -1755,7 +1755,6 @@ const BITError          = 1 << 31;
 
 const BITAll            = 0xFFFFFFFF;
 const BITAlphaNum       = BITNum | BITAlpha;
-const BITRegexWord      = BITAlphaNum | BITUnderscore;
 const BITHostname       = BITNum | BITAlpha | BITUppercase | BITDash | BITPeriod | BITUnderscore | BITUnicode;
 const BITPatternToken   = BITNum | BITAlpha | BITPercent;
 const BITLineComment    = BITExclamation | BITHash | BITSquareBracket;
@@ -2226,7 +2225,7 @@ const NetOptionsIterator = class {
                 if ( this.interactive && hasBits(descriptor, OPTDomainList) ) {
                     this.parser.analyzeDomainList(
                         lval + 3, i, BITPipe,
-                        (descriptor & 0xFF) === OPTTokenDomain ? 0b01 : 0b00
+                        (descriptor & 0xFF) === OPTTokenDomain ? 0b1010 : 0b0000
                     );
                 }
             } else {

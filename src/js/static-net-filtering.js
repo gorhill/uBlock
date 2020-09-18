@@ -20,7 +20,6 @@
 */
 
 /* jshint bitwise: false */
-/* global punycode */
 
 'use strict';
 
@@ -1120,12 +1119,12 @@ const filterOrigin = (( ) => {
             this.trieContainer = new µb.HNTrieContainer();
         }
 
-        compile(domainOpt, prepend, units) {
+        compile(domainOptList, prepend, units) {
             const hostnameHits = [];
             const hostnameMisses = [];
             const entityHits = [];
             const entityMisses = [];
-            for ( const s of FilterParser.domainOptIterator(domainOpt) ) {
+            for ( const s of domainOptList ) {
                 const len = s.length;
                 const beg = len > 1 && s.charCodeAt(0) === 0x7E ? 1 : 0;
                 const end = len > 2 &&
@@ -1770,7 +1769,7 @@ const FilterDenyAllow = class {
     }
 
     static compile(details) {
-        return [ FilterDenyAllow.fid, details.denyallow ];
+        return [ FilterDenyAllow.fid, details.denyallowOpt ];
     }
 
     static fromCompiled(args) {
@@ -2074,17 +2073,15 @@ const FILTER_SEQUENCES_MIN = filterSequenceWritePtr;
 const FilterParser = class {
     constructor(parser) {
         this.cantWebsocket = vAPI.cantWebsocket;
-        this.domainOpt = '';
         this.noTokenHash = urlTokenizer.noTokenHash;
-        this.reBadDomainOptChars = /[+?^${}()[\]\\]/;
         this.reIsolateHostname = /^(\*?\.)?([^\x00-\x24\x26-\x2C\x2F\x3A-\x5E\x60\x7B-\x7F]+)(.*)/;
-        this.reHasUnicode = /[^\x00-\x7F]/;
         this.reBadCSP = /(?:=|;)\s*report-(?:to|uri)\b/;
         this.reRegexToken = /[%0-9A-Za-z]{2,}/g;
         this.reRegexTokenAbort = /[([]/;
         this.reRegexBadPrefix = /(^|[^\\]\.|[*?{}\\])$/;
         this.reRegexBadSuffix = /^([^\\]\.|\\[dw]|[([{}?*.]|$)/;
         this.reGoodToken = /[%0-9a-z]{1,}/g;
+        this.domainOptList = [];
         this.tokenIdToNormalizedType = new Map([
             [ parser.OPTTokenCname, bitFromType('cname') ],
             [ parser.OPTTokenCss, bitFromType('stylesheet') ],
@@ -2237,7 +2234,7 @@ const FilterParser = class {
         this.thirdParty = false;
         this.party = AnyParty;
         this.domainOpt = '';
-        this.denyallow = '';
+        this.denyallowOpt = '';
         this.isPureHostname = false;
         this.isRegex = false;
         this.redirect = 0;
@@ -2291,20 +2288,24 @@ const FilterParser = class {
         }
     }
 
-    parseHostnameList(parser, s) {
-        if ( parser.optionHasUnicode() ) {
-            const hostnames = s.split('|');
-            let i = hostnames.length;
-            while ( i-- ) {
-                if ( this.reHasUnicode.test(hostnames[i]) ) {
-                    hostnames[i] = punycode.toASCII(hostnames[i]);
-                }
+    parseHostnameList(parser, s, modeBits, out = []) {
+        let beg = 0;
+        let slen = s.length;
+        let i = 0;
+        while ( beg < slen ) {
+            let end = s.indexOf('|', beg);
+            if ( end === -1 ) { end = slen; }
+            const hn = parser.normalizeHostnameValue(
+                s.slice(beg, end),
+                modeBits
+            );
+            if ( hn !== undefined ) {
+                out[i] = hn; i += 1;
             }
-            s = hostnames.join('|');
+            beg = end + 1;
         }
-        // TODO: revisit
-        if ( this.reBadDomainOptChars.test(s) ) { return ''; }
-        return s;
+        out.length = i;
+        return i === 1 ? out[0] : out.join('|');
     }
 
     parseOptions(parser) {
@@ -2337,12 +2338,17 @@ const FilterParser = class {
             //   Detect and discard filter if domain option contains nonsensical
             //   characters.
             case parser.OPTTokenDomain:
-                this.domainOpt = this.parseHostnameList(parser, val);
+                this.domainOpt = this.parseHostnameList(
+                    parser,
+                    val,
+                    0b1010,
+                    this.domainOptList
+                );
                 if ( this.domainOpt === '' ) { return false; }
                 break;
             case parser.OPTTokenDenyAllow:
-                this.denyallow = this.parseHostnameList(parser, val);
-                if ( this.denyallow === '' ) { return false; }
+                this.denyallowOpt = this.parseHostnameList(parser, val, 0b0000);
+                if ( this.denyallowOpt === '' ) { return false; }
                 break;
             // https://www.reddit.com/r/uBlockOrigin/comments/d6vxzj/
             //   Add support for `elemhide`. Rarely used but it happens.
@@ -2559,7 +2565,7 @@ const FilterParser = class {
     isJustOrigin() {
         return this.isRegex === false &&
             this.dataType === undefined &&
-            this.denyallow === '' &&
+            this.denyallowOpt === '' &&
             this.domainOpt !== '' && (
                 this.pattern === '*' || (
                     this.anchor === 0b010 &&
@@ -2961,7 +2967,7 @@ FilterContainer.prototype.compile = function(parser, writer) {
     if (
         parsed.isPureHostname &&
         parsed.domainOpt === '' &&
-        parsed.denyallow === '' &&
+        parsed.denyallowOpt === '' &&
         parsed.dataType === undefined
     ) {
         parsed.tokenHash = this.dotTokenHash;
@@ -2990,7 +2996,7 @@ FilterContainer.prototype.compile = function(parser, writer) {
             parsed.tokenHash = this.anyHTTPTokenHash;
         }
         const entities = [];
-        for ( const hn of FilterParser.domainOptIterator(parsed.domainOpt) ) {
+        for ( const hn of parsed.domainOptList ) {
             if ( parsed.domainIsEntity(hn) === false ) {
                 this.compileToAtomicFilter(parsed, hn, writer);
             } else {
@@ -3004,7 +3010,7 @@ FilterContainer.prototype.compile = function(parser, writer) {
             const units = [];
             filterPattern.compile(parsed, units);
             if ( leftAnchored ) { units.push(FilterAnchorLeft.compile()); }
-            filterOrigin.compile(entity, true, units);
+            filterOrigin.compile([ entity ], true, units);
             this.compileToAtomicFilter(
                 parsed, FilterCompositeAll.compile(units), writer
             );
@@ -3034,14 +3040,14 @@ FilterContainer.prototype.compile = function(parser, writer) {
     // Origin
     if ( parsed.domainOpt !== '' ) {
         filterOrigin.compile(
-            parsed.domainOpt,
+            parsed.domainOptList,
             units.length !== 0 && filterClasses[units[0][0]].isSlow === true,
             units
         );
     }
 
     // Deny-allow
-    if ( parsed.denyallow !== '' ) {
+    if ( parsed.denyallowOpt !== '' ) {
         units.push(FilterDenyAllow.compile(parsed));
     }
 
