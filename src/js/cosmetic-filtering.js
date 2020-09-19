@@ -902,11 +902,11 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
 
     const injected = [];
     if ( simpleSelectors.size !== 0 ) {
-        injected.push(Array.from(simpleSelectors).join(',\n'));
+        injected.push(...simpleSelectors);
         simpleSelectors.clear();
     }
     if ( complexSelectors.size !== 0 ) {
-        injected.push(Array.from(complexSelectors).join(',\n'));
+        injected.push(...complexSelectors);
         complexSelectors.clear();
     }
 
@@ -917,7 +917,6 @@ FilterContainer.prototype.retrieveGenericSelectors = function(request) {
         this.addToSelectorCache({
             cost: request.surveyCost || 0,
             hostname: request.hostname,
-            injectedHideFilters: '',
             selectors: injected,
             type: 'cosmetic',
         });
@@ -1018,7 +1017,6 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
                 ) {
                     out.exceptedFilters.push(exception);
                 }
-                
             }
         }
 
