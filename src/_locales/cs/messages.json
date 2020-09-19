@@ -908,7 +908,7 @@
     "description": "No longer used"
   },
   "subscribeButton": {
-    "message": "Subscribe",
+    "message": "Odebírat",
     "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
