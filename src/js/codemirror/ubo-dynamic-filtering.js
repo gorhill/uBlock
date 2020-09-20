@@ -56,11 +56,24 @@ CodeMirror.defineMode('ubo-dynamic-filtering', ( ) => {
         'allow',
         'noop',
     ]);
-    const reIsNotHostname = /[:/#?*]/;
+    const hnValidator = new URL(self.location.href);
+    const reBadHn = /[%]|^\.|\.$/;
     const slices = [];
     let sliceIndex = 0;
     const tokens = [];
     let tokenIndex = 0;
+
+    const isValidHostname = hnin => {
+        if ( hnin === '*' ) { return true; }
+        hnValidator.hostname = '_';
+        try {
+            hnValidator.hostname = hnin;
+        } catch(_) {
+            return false;
+        }
+        const hnout = hnValidator.hostname;
+        return hnout !== '_' && hnout !== '' && reBadHn.test(hnout) === false;
+    };
 
     const isSwitchRule = ( ) => {
         const token = tokens[0];
@@ -111,7 +124,7 @@ CodeMirror.defineMode('ubo-dynamic-filtering', ( ) => {
                 if ( this.sortType === 0 ) { return 'sortkey'; }
                 return null;
             }
-            if ( reIsNotHostname.test(token) && token !== '*' ) {
+            if ( isValidHostname(token) === false ) {
                 return skipToEnd(stream, 'error');
             }
             if ( this.sortType === 1 ) { return 'sortkey'; }
@@ -120,14 +133,13 @@ CodeMirror.defineMode('ubo-dynamic-filtering', ( ) => {
         // Field 2: hostname or url
         if ( tokenIndex === 2 ) {
             if ( isSwitchRule(tokens[0]) ) {
-                if ( reIsNotHostname.test(token) && token !== '*' ) {
+                if ( isValidHostname(token) === false  ) {
                     return skipToEnd(stream, 'error');
                 }
                 if ( this.sortType === 1 ) { return 'sortkey'; }
             }
             if (
-                reIsNotHostname.test(token) &&
-                token !== '*' &&
+                isValidHostname(token) === false &&
                 isURLRule(token) === false
             ) {
                 return skipToEnd(stream, 'error');
