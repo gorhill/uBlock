@@ -1747,7 +1747,6 @@ vAPI.injectScriptlet = function(doc, text) {
         vAPI.messaging.send('contentscript', {
             what: 'retrieveContentScriptParameters',
             url: vAPI.effectiveSelf.location.href,
-            isRootFrame: self === self.top,
             charset: document.characterSet,
         }).then(response => {
             bootstrapPhase1(response);
