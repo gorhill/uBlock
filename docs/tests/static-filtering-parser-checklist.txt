@@ -114,6 +114,7 @@ $
 *$~inline-script
 *$~inline-font
 
+! invalidity of IP addresses is browser-dependent
 ! invalid domain= option values
 *$domain=.toto.com|toto.com.|[ff00::00000]|1.1.1.1111
 
