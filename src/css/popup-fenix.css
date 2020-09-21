@@ -13,7 +13,10 @@
     --font-size: 14px;
     --popup-gap: var(--font-size);
     --popup-gap-thin: calc(0.5 * var(--popup-gap));
-    --popup-gap-extra-thin: calc(0.25 * var(--font-size));
+    --popup-gap-extra-thin: calc(0.25 * var(--popup-gap));
+    --popup-main-min-width: 18em;
+    --popup-firewall-min-width: 30em;
+    --popup-rule-cell-width: 5em;
     font-size: var(--font-size);
     line-height: 20px;
     }
@@ -38,7 +41,7 @@ a {
 #main {
     align-self: flex-start;
     max-width: 340px;
-    min-width: 18em;
+    min-width: var(--popup-main-min-width);
     }
 :root.portrait #main {
     align-self: inherit;
@@ -258,11 +261,10 @@ body[data-more=""] #lessButton {
     margin: 0;
     max-height: 600px;
     max-width: 460px;
-    min-width: 30em;
+    min-width: var(--popup-firewall-min-width);
     padding: 0;
     overflow-y: auto;
     text-align: right;
-    --rule-cell-width: 5em;
     }
 :root.desktop body.vMin #firewall {
     max-height: 100vh;
@@ -306,7 +308,7 @@ body[data-more=""] #lessButton {
     justify-content: flex-end;
     padding-right: 2px;
     white-space: normal;
-    width: calc(100% - var(--rule-cell-width));
+    width: calc(100% - var(--popup-rule-cell-width));
     word-break: break-word;
     }
 #firewall > div.isCname > span:first-of-type {
@@ -324,7 +326,7 @@ body[data-more=""] #lessButton {
 #firewall > div > span:first-of-type ~ span {
     flex-shrink: 0;
     margin-left: 1px;
-    width: var(--rule-cell-width);
+    width: var(--popup-rule-cell-width);
     }
 #firewall > div > span:nth-of-type(2) {
     display: none;
@@ -398,7 +400,7 @@ body[data-more=""] #lessButton {
     }
 
 body.advancedUser #firewall > div > span:first-of-type {
-    width: calc(100% - 2 * var(--rule-cell-width));
+    width: calc(100% - 2 * var(--popup-rule-cell-width));
     }
 body.advancedUser #firewall > div > span:nth-of-type(2) {
     display: inline-flex;
