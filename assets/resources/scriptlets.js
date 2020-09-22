@@ -221,7 +221,7 @@
         }
         const reDocURL = new RegExp(docURL.replace(reRegexEscape, '\\$&'), 'g');
         const stack = err.stack
-            .replace(/^.*?\b[gs]et\b[^\n\r]+?[\n\r]*/m, '')
+            .replace(/^.*?\b[gs]et\b[^\n\r]+?(?:[\n\r]+|$)/m, '')
             .replace(reDocURL, '<inline-script>');
         const r = reNeedle.test(stack);
         if (
