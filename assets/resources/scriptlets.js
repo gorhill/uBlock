@@ -191,6 +191,101 @@
 })();
 
 
+/// abort-on-stack-trace.js
+/// alias aost.js
+// Status is currently experimental
+(function() {
+    let chain = '{{1}}';
+    let needle = '{{2}}';
+    let logLevel = '{{3}}';
+    const reRegexEscape = /[.*+?^${}()|[\]\\]/g;
+    if ( needle === '' || needle === '{{2}}' ) {
+        needle = '^';
+    } else if ( /^\/.+\/$/.test(needle) ) {
+        needle = needle.slice(1,-1);
+    } else {
+        needle = needle.replace(reRegexEscape, '\\$&');
+    }
+    const reNeedle = new RegExp(needle, 'im');
+    const magic = String.fromCharCode(Math.random() * 26 + 97) +
+        Math.floor(
+            (0.25 + Math.random() * 0.75) * Number.MAX_SAFE_INTEGER
+        ).toString(36).slice(-8);
+    const log = console.log.bind(console);
+    const ErrorCtor = self.Error;
+    const mustAbort = function(err) {
+        let docURL = self.location.href;
+        const pos = docURL.indexOf('#');
+        if ( pos !== -1 ) {
+            docURL = docURL.slice(0, pos);
+        }
+        const reDocURL = new RegExp(docURL.replace(reRegexEscape, '\\$&'), 'g');
+        const stack = err.stack
+            .replace(/^.*?\b[gs]et\b[^\n\r]+?[\n\r]*/m, '')
+            .replace(reDocURL, '<inline-script>');
+        const r = reNeedle.test(stack);
+        if (
+            logLevel === '1' ||
+            logLevel === '2' && r ||
+            logLevel === '3' && !r
+        ) {
+            log(stack);
+        }
+        return r;
+    };
+    const makeProxy = function(owner, chain) {
+        const pos = chain.indexOf('.');
+        if ( pos === -1 ) {
+            let v = owner[chain];
+            Object.defineProperty(owner, chain, {
+                get: function() {
+                    if ( mustAbort(new ErrorCtor(magic)) ) {
+                        throw new ReferenceError(magic);
+                    }
+                    return v;
+                },
+                set: function(a) {
+                    if ( mustAbort(new ErrorCtor(magic)) ) {
+                        throw new ReferenceError(magic);
+                    }
+                    v = a;
+                },
+            });
+            return;
+        }
+        const prop = chain.slice(0, pos);
+        let v = owner[prop];
+        chain = chain.slice(pos + 1);
+        if ( v ) {
+            makeProxy(v, chain);
+            return;
+        }
+        const desc = Object.getOwnPropertyDescriptor(owner, prop);
+        if ( desc && desc.set !== undefined ) { return; }
+        Object.defineProperty(owner, prop, {
+            get: function() { return v; },
+            set: function(a) {
+                v = a;
+                if ( a instanceof Object ) {
+                    makeProxy(a, chain);
+                }
+            }
+        });
+    };
+    const owner = window;
+    makeProxy(owner, chain);
+    const oe = window.onerror;
+    window.onerror = function(msg, src, line, col, error) {
+        if ( typeof msg === 'string' && msg.indexOf(magic) !== -1 ) {
+            return true;
+        }
+        if ( oe instanceof Function ) {
+            return oe(msg, src, line, col, error);
+        }
+    }.bind();
+})();
+
+
 /// addEventListener-defuser.js
 /// alias aeld.js
 (function() {
