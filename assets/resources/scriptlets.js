@@ -206,7 +206,7 @@
     } else {
         needle = needle.replace(reRegexEscape, '\\$&');
     }
-    const reNeedle = new RegExp(needle, 'im');
+    const reNeedle = new RegExp(needle);
     const magic = String.fromCharCode(Math.random() * 26 + 97) +
         Math.floor(
             (0.25 + Math.random() * 0.75) * Number.MAX_SAFE_INTEGER
@@ -219,17 +219,36 @@
         if ( pos !== -1 ) {
             docURL = docURL.slice(0, pos);
         }
-        const reDocURL = new RegExp(docURL.replace(reRegexEscape, '\\$&'), 'g');
-        const stack = err.stack
-            .replace(/^.*?\b[gs]et\b[^\n\r]+?(?:[\n\r]+|$)/m, '')
-            .replace(reDocURL, '<inline-script>');
+        // Normalize stack trace
+        const lines = [];
+        for ( let line of err.stack.split(/[\n\r]+/) ) {
+            if ( line.includes(magic) ) { continue; }
+            line = line.trim();
+            let match = /(.*?@)?(\S+)(:\d+):\d+\)?$/.exec(line);
+            if ( match === null ) { continue; }
+            let url = match[2];
+            if ( url.startsWith('(') ) { url = url.slice(1); }
+            if ( url === docURL ) {
+                url += '#inlineScript';
+            } else if ( url.startsWith('<anonymous>') ) {
+                url = 'injectedScript';
+            }
+            let fn = match[1] !== undefined
+                ? match[1].slice(0, -1)
+                : line.slice(0, match.index).trim();
+            if ( fn.startsWith('at') ) { fn = fn.slice(2).trim(); }
+            let rowcol = match[3];
+            lines.push(' ' + `${fn} ${url}${rowcol}:1`.trim());
+        }
+        lines[0] = `stackDepth:${lines.length-1}`;
+        const stack = lines.join('\t');
         const r = reNeedle.test(stack);
         if (
             logLevel === '1' ||
             logLevel === '2' && r ||
             logLevel === '3' && !r
         ) {
-            log(stack);
+            log(stack.replace(/\t/g, '\n'));
         }
         return r;
     };
