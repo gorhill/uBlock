@@ -229,7 +229,7 @@
             let url = match[2];
             if ( url.startsWith('(') ) { url = url.slice(1); }
             if ( url === docURL ) {
-                url += '#inlineScript';
+                url = 'inlineScript';
             } else if ( url.startsWith('<anonymous>') ) {
                 url = 'injectedScript';
             }
