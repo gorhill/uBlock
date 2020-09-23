@@ -91,6 +91,9 @@ CodeMirror.defineMode('ubo-dynamic-filtering', ( ) => {
 
     const token = function(stream) {
         if ( stream.sol() ) {
+            if ( stream.string === '...' ) {
+                return stream.skipToEnd(stream);
+            }
             slices.length = 0;
             tokens.length = 0;
             const reTokens = /\S+/g;
