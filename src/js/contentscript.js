@@ -774,35 +774,19 @@ vAPI.injectScriptlet = function(doc, text) {
         addProceduralSelectors(selectors) {
             const addedSelectors = [];
             let mustCommit = this.domIsWatched;
-            for ( const raw of selectors ) {
-                if ( this.selectors.has(raw) ) { continue; }
-                const o = JSON.parse(raw);
-                // CSS selector-based styles.
-                if (
-                    o.action !== undefined &&
-                    o.action[0] === ':style' &&
-                    o.tasks === undefined
-                ) {
-                    this.domFilterer.addCSSRule(o.selector, o.action[1]);
-                    mustCommit = true;
-                    continue;
-                }
-                if ( o.pseudo !== undefined ) {
-                    this.domFilterer.addCSSRule(o.selector, vAPI.hideStyle);
-                    mustCommit = true;
-                    continue;
-                }
+            for ( const selector of selectors ) {
+                if ( this.selectors.has(selector.raw) ) { continue; }
                 let style, styleToken;
-                if ( o.action === undefined ) {
+                if ( selector.action === undefined ) {
                     style = vAPI.hideStyle;
-                } else if ( o.action[0] === ':style' ) {
-                    style = o.action[1];
+                } else if ( selector.action[0] === ':style' ) {
+                    style = selector.action[1];
                 }
                 if ( style !== undefined ) {
                     styleToken = this.styleTokenFromStyle(style);
                 }
-                const pselector = new PSelectorRoot(o, styleToken);
-                this.selectors.set(raw, pselector);
+                const pselector = new PSelectorRoot(selector, styleToken);
+                this.selectors.set(selector.raw, pselector);
                 addedSelectors.push(pselector);
                 mustCommit = true;
             }
@@ -1063,9 +1047,31 @@ vAPI.injectScriptlet = function(doc, text) {
             return this.proceduralFilterer;
         }
 
-        addProceduralSelectors(aa) {
-            if ( Array.isArray(aa) === false || aa.length === 0 ) { return; }
-            this.proceduralFiltererInstance().addProceduralSelectors(aa);
+        addProceduralSelectors(selectors) {
+            if ( Array.isArray(selectors) === false || selectors.length === 0 ) {
+                return;
+            }
+            const procedurals = [];
+            for ( const raw of selectors ) {
+                const o = JSON.parse(raw);
+                if (
+                    o.action !== undefined &&
+                    o.action[0] === ':style' &&
+                    o.tasks === undefined
+                ) {
+                    this.addCSSRule(o.selector, o.action[1]);
+                    continue;
+                }
+                if ( o.pseudo !== undefined ) {
+                    this.addCSSRule(o.selector, vAPI.hideStyle);
+                    continue;
+                }
+                procedurals.push(o);
+            }
+            if ( procedurals.length !== 0 ) {
+                this.proceduralFiltererInstance()
+                    .addProceduralSelectors(procedurals);
+            }
         }
 
         createProceduralFilter(o) {
