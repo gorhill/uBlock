@@ -148,6 +148,7 @@
 		"title": "Online Malicious URL Blocklist",
 		"contentURL": [
 			"https://gitlab.com/curben/urlhaus-filter/raw/master/urlhaus-filter-online.txt",
+			"https://raw.githubusercontent.com/curbengh/urlhaus-filter/master/urlhaus-filter-online.txt",
 			"assets/thirdparties/urlhaus-filter/urlhaus-filter-online.txt"
 		],
 		"cdnURLs": [
