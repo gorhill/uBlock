@@ -24,7 +24,7 @@
 
 /* CodeMirror theme overrides */
 .cm-s-default .cm-value { color: #930; }
-.cm-s-default .cm-comment { color: #777; }
+.cm-s-default .cm-comment { color: var(--sf-comment-ink); }
 .cm-s-default .cm-keyword { color: #90b; }
 .cm-s-default .cm-regex {
     text-underline-position: under;
@@ -40,6 +40,16 @@
     background-color: #ff000016;
     text-decoration: underline red;
     text-underline-position: under;
+    }
+.cm-s-default .cm-warning {
+    text-decoration: underline var(--sf-warning-ink);
+    text-underline-position: under;
+    }
+.cm-s-default .cm-link {
+    text-decoration: none;
+    }
+.cm-s-default .cm-link:hover {
+    color: var(--link-ink);
     }
 
 .cm-directive { color: #333; font-weight: bold; }
