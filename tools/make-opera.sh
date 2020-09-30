@@ -20,7 +20,6 @@ rm -r $DES/_locales/hy
 rm -r $DES/_locales/ka
 rm -r $DES/_locales/kk
 rm -r $DES/_locales/mr
-rm -r $DES/_locales/ta
 rm -r $DES/_locales/th
 
 # Removing WASM modules until I receive an answer from Opera people: Opera's

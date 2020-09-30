@@ -12,11 +12,11 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Warning! You have unsaved changes",
+    "message": "മുന്നറിയിപ്പ്! നിങ്ങൾക്ക് സംരക്ഷിക്കാത്ത മാറ്റങ്ങളുണ്ട്",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Stay",
+    "message": "താമസിക്കുക",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -44,7 +44,7 @@
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "Shortcuts",
+    "message": "കുറുക്കുവഴികൾ",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -56,11 +56,11 @@
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
-    "message": "uBlock₀ — Asset viewer",
+    "message": "uBlock₀ - അസറ്റ് വ്യൂവർ",
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
-    "message": "Advanced settings",
+    "message": "വിപുലമായ ക്രമീകരണങ്ങൾ",
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
@@ -68,11 +68,11 @@
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Click to disable uBlock₀ for this site.\n\nCtrl+click to disable uBlock₀ only on this page.",
+    "message": "ഈ സൈറ്റിനായി uBlock₀ പ്രവർത്തനരഹിതമാക്കാൻ ക്ലിക്കുചെയ്യുക.\n\nഈ പേജിൽ മാത്രം uBlock₀ പ്രവർത്തനരഹിതമാക്കാൻ Ctrl + ക്ലിക്കുചെയ്യുക.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Click to enable uBlock₀ for this site.",
+    "message": "ഈ സൈറ്റിനായി uBlock₀ പ്രവർത്തനക്ഷമമാക്കാൻ ക്ലിക്കുചെയ്യുക.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -96,15 +96,15 @@
     "description": "English: or"
   },
   "popupBlockedOnThisPage_v2": {
-    "message": "Blocked on this page",
+    "message": "ഈ പേജിൽ തടഞ്ഞു",
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "Blocked since install",
+    "message": "ഇൻസ്റ്റാളുചെയ്‌തതിനുശേഷം തടഞ്ഞു",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
-    "message": "Domains connected",
+    "message": "ഡൊമെയ്‌നുകൾ കണക്റ്റുചെയ്‌തു",
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
@@ -112,7 +112,7 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Enter element zapper mode",
+    "message": "ഘടക സപ്പർ മോഡ് നൽകുക",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
@@ -128,23 +128,23 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Click to block all popups on this site",
+    "message": "ഈ സൈറ്റിലെ എല്ലാ പോപ്പ്അപ്പുകളും തടയാൻ ക്ലിക്കുചെയ്യുക",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Click to no longer block all popups on this site",
+    "message": "ഈ സൈറ്റിലെ എല്ലാ പോപ്പ്അപ്പുകളും മേലിൽ തടയാൻ ക്ലിക്കുചെയ്യുക",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Toggle the blocking of large media elements for this site",
+    "message": "ഈ സൈറ്റിനായി വലിയ മീഡിയ ഘടകങ്ങളുടെ തടയൽ ടോഗിൾ ചെയ്യുക",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Click to block large media elements on this site",
+    "message": "ഈ സൈറ്റിലെ വലിയ മീഡിയ ഘടകങ്ങൾ തടയാൻ ക്ലിക്കുചെയ്യുക",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Click to no longer block large media elements on this site",
+    "message": "ഈ സൈറ്റിലെ വലിയ മീഡിയ ഘടകങ്ങളെ മേലിൽ തടയാൻ ക്ലിക്കുചെയ്യുക",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -152,11 +152,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Click to disable cosmetic filtering on this site",
+    "message": "ഈ സൈറ്റിൽ കോസ്മെറ്റിക് ഫിൽ‌ട്ടറിംഗ് അപ്രാപ്‌തമാക്കാൻ ക്ലിക്കുചെയ്യുക",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Click to enable cosmetic filtering on this site",
+    "message": "ഈ സൈറ്റിൽ കോസ്മെറ്റിക് ഫിൽ‌ട്ടറിംഗ് പ്രാപ്തമാക്കുന്നതിന് ക്ലിക്കുചെയ്യുക",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -164,47 +164,47 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Click to block remote fonts on this site",
+    "message": "ഈ സൈറ്റിലെ വിദൂര ഫോണ്ടുകൾ തടയാൻ ക്ലിക്കുചെയ്യുക",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Click to no longer block remote fonts on this site",
+    "message": "ഈ സൈറ്റിൽ വിദൂര ഫോണ്ടുകൾ മേലിൽ തടയാൻ ക്ലിക്കുചെയ്യുക",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Click to disable JavaScript on this site",
+    "message": "ഈ സൈറ്റിൽ JavaScript അപ്രാപ്തമാക്കാൻ ക്ലിക്കുചെയ്യുക",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Click to no longer disable JavaScript on this site",
+    "message": "ഈ സൈറ്റിൽ‌ ഇനിമുതൽ‌ JavaScript അപ്രാപ്‌തമാക്കുന്നതിന് ക്ലിക്കുചെയ്യുക",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
-    "message": "Pop-up windows",
+    "message": "പോപ്പ്-അപ്പ് വിൻഡോകൾ",
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
-    "message": "Large media elements",
+    "message": "വലിയ മീഡിയ ഘടകങ്ങൾ",
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
-    "message": "Cosmetic filtering",
+    "message": "കോസ്മെറ്റിക് ഫിൽട്ടറിംഗ്",
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
-    "message": "Remote fonts",
+    "message": "വിദൂര ഫോണ്ടുകൾ",
     "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
-    "message": "JavaScript",
+    "message": "ജാവാസ്ക്രിപ്റ്റ്",
     "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
-    "message": "More",
+    "message": "കൂടുതൽ",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton_v2": {
-    "message": "Less",
+    "message": "കുറവ്",
     "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
@@ -264,7 +264,7 @@
     "description": "appears in popup"
   },
   "popupVersion": {
-    "message": "Version",
+    "message": "പതിപ്പ്",
     "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
@@ -280,7 +280,7 @@
     "description": "English: Quit"
   },
   "pickerPreview": {
-    "message": "Preview",
+    "message": "പ്രിവ്യൂ",
     "description": "Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters": {
@@ -328,7 +328,7 @@
     "description": ""
   },
   "settingsAdvancedUserSettings": {
-    "message": "advanced settings",
+    "message": "വിപുലമായ ക്രമീകരണങ്ങൾ",
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt": {
@@ -348,7 +348,7 @@
     "description": ""
   },
   "settingPerSiteSwitchGroupSynopsis": {
-    "message": "These default behaviors can be overridden on a per-site basis",
+    "message": "ഓരോ സ്ഥിരസ്ഥിതി അടിസ്ഥാനത്തിലും ഈ സ്ഥിരസ്ഥിതി പെരുമാറ്റങ്ങൾ അസാധുവാക്കാനാകും",
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
@@ -356,7 +356,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Block media elements larger than {{input}} KB",
+    "message": "മീഡിയ ഘടകങ്ങളെക്കാൾ വലുത് തടയുക {{input}} KB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -364,11 +364,11 @@
     "description": ""
   },
   "settingsNoScriptingPrompt": {
-    "message": "Disable JavaScript",
+    "message": "ജാവാസ്ക്രിപ്റ്റ് അപ്രാപ്തമാക്കുക",
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
-    "message": "Block CSP reports",
+    "message": "സി‌എസ്‌പി റിപ്പോർട്ടുകൾ തടയുക",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsLastRestorePrompt": {
@@ -404,15 +404,15 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "Cosmetic filters serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the network request-based filtering engines.",
+    "message": "ഒരു വിഷ്വൽ ശല്യമെന്ന് കരുതപ്പെടുന്നതും നെറ്റ്‌വർക്ക് അഭ്യർത്ഥന അടിസ്ഥാനമാക്കിയുള്ള ഫിൽട്ടറിംഗ് എഞ്ചിനുകൾക്ക് തടയാൻ കഴിയാത്തതുമായ ഒരു വെബ് പേജിലെ ഘടകങ്ങൾ മറയ്ക്കാൻ കോസ്മെറ്റിക് ഫിൽട്ടറുകൾ സഹായിക്കുന്നു.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
-    "message": "Ignore generic cosmetic filters",
+    "message": "ജനറിക് കോസ്മെറ്റിക് ഫിൽട്ടറുകൾ അവഗണിക്കുക",
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "Generic cosmetic filters are those cosmetic filters which are meant to apply on all web sites. Enabling this option will eliminate the memory and CPU overhead added to web pages as a result of handling generic cosmetic filters.\n\nIt is recommended to enable this option on less powerful devices.",
+    "message": "എല്ലാ വെബ് സൈറ്റുകളിലും പ്രയോഗിക്കാൻ ഉദ്ദേശിക്കുന്ന കോസ്മെറ്റിക് ഫിൽട്ടറുകളാണ് ജനറിക് കോസ്മെറ്റിക് ഫിൽട്ടറുകൾ. ഈ ഓപ്ഷൻ പ്രവർത്തനക്ഷമമാക്കുന്നത് ജനറിക് കോസ്മെറ്റിക് ഫിൽട്ടറുകൾ കൈകാര്യം ചെയ്യുന്നതിന്റെ ഫലമായി വെബ് പേജുകളിൽ ചേർത്ത മെമ്മറിയും സിപിയു ഓവർഹെഡും ഇല്ലാതാക്കും.\n\nശക്തി കുറഞ്ഞ ഉപകരണങ്ങളിൽ ഈ ഓപ്‌ഷൻ പ്രവർത്തനക്ഷമമാക്കാൻ ശുപാർശ ചെയ്യുന്നു.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -424,7 +424,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Built-in",
+    "message": "അന്തർനിർമ്മിതം",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
@@ -440,7 +440,7 @@
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {
-    "message": "Annoyances",
+    "message": "ശല്യപ്പെടുത്തലുകൾ",
     "description": "The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose": {
@@ -456,7 +456,7 @@
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Import...",
+    "message": "ഇറക്കുമതി ചെയ്യുക ...",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -468,7 +468,7 @@
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pViewContent": {
-    "message": "view content",
+    "message": "ഉള്ളടക്കം കാണുക",
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
@@ -476,11 +476,11 @@
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Updating...",
+    "message": "അപ്‌ഡേറ്റുചെയ്യുന്നു ...",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
-    "message": "A network error prevented the resource from being updated.",
+    "message": "ഒരു നെറ്റ്‌വർക്ക് പിശക് ഉറവിടം അപ്‌ഡേറ്റുചെയ്യുന്നതിൽ നിന്ന് തടഞ്ഞു.",
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
@@ -552,19 +552,19 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
-    "message": "Sort:",
+    "message": "അടുക്കുക:",
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
-    "message": "Rule type",
+    "message": "റൂൾ തരം",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortBySource": {
-    "message": "Source",
+    "message": "ഉറവിടം",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortByDestination": {
-    "message": "Destination",
+    "message": "ലക്ഷ്യസ്ഥാനം",
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
@@ -612,39 +612,39 @@
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
-    "message": "Current tab",
+    "message": "നിലവിലെ ടാബ്",
     "description": "Appears in the logger's tab selector"
   },
   "loggerReloadTip": {
-    "message": "Reload the tab content",
+    "message": "ടാബ് ഉള്ളടക്കം വീണ്ടും ലോഡുചെയ്യുക",
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
-    "message": "Toggle the DOM inspector",
+    "message": "DOM ഇൻസ്പെക്ടർ ടോഗിൾ ചെയ്യുക",
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "Toggle the popup panel",
+    "message": "പോപ്പ്അപ്പ് പാനൽ ടോഗിൾ ചെയ്യുക",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
-    "message": "uBlock Origin wiki: The logger",
+    "message": "uBlock ഉറവിട വിക്കി: ലോഗർ",
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
-    "message": "Clear logger",
+    "message": "ലോഗർ മായ്‌ക്കുക",
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
-    "message": "Pause logger (discard all incoming data)",
+    "message": "ലോഗർ താൽക്കാലികമായി നിർത്തുക (ഇൻകമിംഗ് ഡാറ്റയെല്ലാം ഉപേക്ഷിക്കുക)",
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {
-    "message": "Unpause logger",
+    "message": "ലോഗർ അൺപോസ് ചെയ്യുക",
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "Toggle logger filtering",
+    "message": "ലോഗർ ഫിൽട്ടറിംഗ് ടോഗിൾ ചെയ്യുക",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
@@ -652,11 +652,11 @@
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
-    "message": "Logger filtering options",
+    "message": "ലോഗർ ഫിൽട്ടറിംഗ് ഓപ്ഷനുകൾ",
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {
-    "message": "Not",
+    "message": "അല്ല",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinEventful": {
@@ -664,55 +664,55 @@
     "description": "A keyword in the built-in row filtering expression: all items corresponding to uBO doing something (blocked, allowed, redirected, etc.)"
   },
   "loggerRowFiltererBuiltinBlocked": {
-    "message": "blocked",
+    "message": "തടഞ്ഞു",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinAllowed": {
-    "message": "allowed",
+    "message": "അനുവദനീയമാണ്",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
-    "message": "1st-party",
+    "message": "ഒന്നാം കക്ഷി",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin3p": {
-    "message": "3rd-party",
+    "message": "തേര്‍ഡ് പാര്‍ട്ടി",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerEntryDetailsHeader": {
-    "message": "Details",
+    "message": "വിശദാംശങ്ങൾ",
     "description": "Small header to identify the 'Details' pane for a specific logger entry"
   },
   "loggerEntryDetailsFilter": {
-    "message": "Filter",
+    "message": "ഫിൽട്ടർ ചെയ്യുക",
     "description": "Label to identify a filter field"
   },
   "loggerEntryDetailsFilterList": {
-    "message": "Filter list",
+    "message": "ലിസ്റ്റ് ഫിൽട്ടർ ചെയ്യുക",
     "description": "Label to identify a filter list field"
   },
   "loggerEntryDetailsRule": {
-    "message": "Rule",
+    "message": "ഭരണം",
     "description": "Label to identify a rule field"
   },
   "loggerEntryDetailsContext": {
-    "message": "Context",
+    "message": "സന്ദർഭം",
     "description": "Label to identify a context field (typically a hostname)"
   },
   "loggerEntryDetailsRootContext": {
-    "message": "Root context",
+    "message": "റൂട്ട് സന്ദർഭം",
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
-    "message": "Partyness",
+    "message": "പാർട്ടിത്വം",
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
-    "message": "Type",
+    "message": "തരം",
     "description": "Label to identify the type of an entry"
   },
   "loggerEntryDetailsURL": {
-    "message": "URL",
+    "message": "URL\n",
     "description": "Label to identify the URL of an entry"
   },
   "loggerURLFilteringHeader": {
@@ -732,7 +732,7 @@
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "{{action}} network requests of {{type}} {{br}}which URL address matches {{url}} {{br}}and which originates {{origin}},{{br}}{{importance}} there is a matching exception filter.",
+    "message": "URL {{action}} നെറ്റ്വർക്ക് അഭ്യർത്ഥനകൾ {{type}} {{br}} ഏത് URL വിലാസം പൊരുത്തപ്പെടുന്നു {{url}} {{br}}, ഒപ്പം {{origin}}, {{br}} {{importance}} an പൊരുത്തപ്പെടുന്ന ഒഴിവാക്കൽ ഫിൽട്ടർ ഉണ്ട്.",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
@@ -772,63 +772,63 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Static filter could not be found in any of the currently enabled filter lists",
+    "message": "നിലവിൽ പ്രവർത്തനക്ഷമമാക്കിയ ഏതെങ്കിലും ഫിൽട്ടർ ലിസ്റ്റുകളിൽ സ്റ്റാറ്റിക് ഫിൽട്ടർ കണ്ടെത്താൻ കഴിഞ്ഞില്ല",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
-    "message": "Logger entries which do not fulfill all three conditions below will be automatically discarded:",
+    "message": "ചുവടെയുള്ള മൂന്ന് നിബന്ധനകളും പാലിക്കാത്ത ലോഗർ എൻ‌ട്രികൾ സ്വപ്രേരിതമായി നിരസിക്കപ്പെടും:",
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
-    "message": "Preserve entries from the last {{input}} minutes",
+    "message": "അവസാന {{input}} മിനിറ്റുകളിൽ നിന്ന് എൻട്രികൾ സംരക്ഷിക്കുക",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "Preserve at most {{input}} page loads per tab",
+    "message": "ഒരു ടാബിന് പരമാവധി {{input}} പേജ് ലോഡുകൾ സംരക്ഷിക്കുക",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
-    "message": "Preserve at most {{input}} entries per tab",
+    "message": "ഒരു ടാബിന് പരമാവധി {{input}} എൻ‌ട്രികൾ സംരക്ഷിക്കുക",
     "description": "A logger setting"
   },
   "loggerSettingPerEntryLineCount": {
-    "message": "Use {{input}} lines per entry in vertically expanded mode",
+    "message": "ലംബമായി വികസിപ്പിച്ച മോഡിൽ ഓരോ എൻട്രിക്കും {{input}} വരികൾ ഉപയോഗിക്കുക",
     "description": "A logger setting"
   },
   "loggerSettingHideColumnsPrompt": {
-    "message": "Hide columns:",
+    "message": "നിരകൾ മറയ്‌ക്കുക:",
     "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
   },
   "loggerSettingHideColumnTime": {
-    "message": "{{input}} Time",
+    "message": "{{input}} സമയം",
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
-    "message": "{{input}} Filter/rule",
+    "message": "{{input}} ഫിൽട്ടർ / റൂൾ",
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
-    "message": "{{input}} Context",
+    "message": "{{input}}സന്ദർഭം",
     "description": "A label for the context column"
   },
   "loggerSettingHideColumnPartyness": {
-    "message": "{{input}} Partyness",
+    "message": "{{input}} പാർട്ടിത്വം",
     "description": "A label for the partyness column"
   },
   "loggerExportFormatList": {
-    "message": "List",
+    "message": "പട്ടിക",
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportFormatTable": {
-    "message": "Table",
+    "message": "മേശ",
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportEncodePlain": {
-    "message": "Plain",
+    "message": "പ്ലെയിൻ",
     "description": "Label for radio-button to pick export text format"
   },
   "loggerExportEncodeMarkdown": {
-    "message": "Markdown",
+    "message": "മാർക്ക്ഡ .ൺ",
     "description": "Label for radio-button to pick export text format"
   },
   "aboutChangelog": {
@@ -840,11 +840,11 @@
     "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
-    "message": "Support",
+    "message": "പിന്തുണ",
     "description": "A link for where to get support"
   },
   "aboutIssues": {
-    "message": "Issue tracker",
+    "message": "ഇഷ്യു ട്രാക്കർ",
     "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
@@ -856,19 +856,19 @@
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Source code",
+    "message": "സോഴ്സ് കോഡ്",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
-    "message": "Translations",
+    "message": "വിവർത്തനങ്ങൾ",
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
-    "message": "Filter lists",
+    "message": "ലിസ്റ്റുകൾ ഫിൽട്ടർ ചെയ്യുക",
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "External dependencies (GPLv3-compatible):",
+    "message": "ബാഹ്യ ഡിപൻഡൻസികൾ (GPLv3- അനുയോജ്യമാണ്):",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
@@ -908,7 +908,7 @@
     "description": "No longer used"
   },
   "subscribeButton": {
-    "message": "Subscribe",
+    "message": "സബ്‌സ്‌ക്രൈബുചെയ്യുക",
     "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
@@ -1004,7 +1004,7 @@
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
-    "message": "Warning! Change these advanced settings at your own risk.",
+    "message": "മുന്നറിയിപ്പ്! നിങ്ങളുടെ സ്വന്തം ഉത്തരവാദിത്തത്തിൽ ഈ നൂതന ക്രമീകരണങ്ങൾ മാറ്റുക.",
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {
@@ -1012,7 +1012,7 @@
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Apply changes",
+    "message": "മാറ്റങ്ങൾ വരുത്തു",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
@@ -1028,39 +1028,39 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Type a shortcut",
+    "message": "ഒരു കുറുക്കുവഴി ടൈപ്പുചെയ്യുക",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "Toggle locked scrolling",
+    "message": "ലോക്കുചെയ്‌ത സ്ക്രോളിംഗ് ടോഗിൾ ചെയ്യുക",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
-    "message": "Copy to clipboard",
+    "message": "ക്ലിപ്പ്ബോർഡിലേയ്ക്ക് പകർത്തുക",
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "toggleBlockingProfile": {
-    "message": "Toggle blocking profile",
+    "message": "തടയൽ പ്രൊഫൈൽ ടോഗിൾ ചെയ്യുക",
     "description": "Label for keyboard shortcut used to toggle blocking profile"
   },
   "relaxBlockingMode": {
-    "message": "Relax blocking mode",
+    "message": "തടയൽ മോഡ് വിശ്രമിക്കുക",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "storageUsed": {
-    "message": "Storage used: {{value}} {{unit}}",
+    "message": "ഉപയോഗിച്ച സംഭരണം: {{value}} {{unit}}",
     "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
   },
   "KB": {
-    "message": "KB",
+    "message": "കെ.ബി.",
     "description": "short for 'kilobytes'"
   },
   "MB": {
-    "message": "MB",
+    "message": "എം.ബി.",
     "description": "short for 'megabytes'"
   },
   "GB": {
-    "message": "GB",
+    "message": "ജി.ബി.",
     "description": "short for 'gigabytes'"
   },
   "dummy": {

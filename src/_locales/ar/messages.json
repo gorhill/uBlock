@@ -96,11 +96,11 @@
     "description": "English: or"
   },
   "popupBlockedOnThisPage_v2": {
-    "message": "تم الحظر على هاته الصفحة",
+    "message": "محجوب من هذه الصفحة",
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "محظورة منذ التنصيب",
+    "message": "حُجِب منذ التنصيب",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
@@ -180,19 +180,19 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
-    "message": "نافذة منبثقة",
+    "message": "الإطارات المنبثقة",
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
-    "message": "وسائط ميديا كبيرة",
+    "message": "المرئيات الضخمة",
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
-    "message": "الفلترة التجميلية",
+    "message": "إعادة التنسيق",
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
-    "message": "الخطوط البعيدة",
+    "message": "الخطوط الخارجية",
     "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
@@ -552,19 +552,19 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
-    "message": "Sort:",
+    "message": "الفرز",
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
-    "message": "Rule type",
+    "message": "الإشتراطات",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortBySource": {
-    "message": "Source",
+    "message": "المصدر",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortByDestination": {
-    "message": "Destination",
+    "message": "الوجهة",
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
@@ -908,7 +908,7 @@
     "description": "No longer used"
   },
   "subscribeButton": {
-    "message": "Subscribe",
+    "message": "اشترك",
     "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
