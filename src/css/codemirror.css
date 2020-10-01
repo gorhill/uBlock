@@ -5,7 +5,9 @@
     position: relative;
     }
 .CodeMirror {
+    background-color: var(--default-surface);
     box-sizing: border-box;
+    color: var(--default-ink);
     flex-grow: 1;
     height: 100%;
     width: 100%;
@@ -23,6 +25,7 @@
     }
 
 /* CodeMirror theme overrides */
+.cm-s-default .cm-variable { color: var(--sf-variable-ink); }
 .cm-s-default .cm-value { color: #930; }
 .cm-s-default .cm-comment { color: var(--sf-comment-ink); }
 .cm-s-default .cm-keyword { color: #90b; }

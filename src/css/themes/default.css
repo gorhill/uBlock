@@ -161,8 +161,11 @@
     --popup-icon-x-ink: var(--red-60);
 
     /* syntax highlight: static filtering */
+    --sf-variable-ink: var(--default-ink);
     --sf-comment-ink: var(--light-gray-90);
     --sf-warning-ink: var(--yellow-50);
+
+    /* syntax highlight: dynamic filtering */
 }
 
 /**
@@ -259,7 +262,6 @@
     --bg-tooltip: var(--dark-gray-50);
     --fg-tooltip: var(--light-gray-30);
     --bg-popup-cell-1: var(--dark-gray-50);
-    --popup-power-ink: var(--violet-70);
     --popup-power-disabled-ink: var(--light-gray-60);
     --popup-power-ink-hover: var(--dark-gray-30);
     --bg-popup-cell-2: var(--dark-gray-50);

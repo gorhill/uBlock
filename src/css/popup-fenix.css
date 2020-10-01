@@ -24,7 +24,8 @@
     opacity: 0;
     }
 a {
-    color: inherit;
+    color: var(--default-ink);
+    fill: var(--default-ink);
     text-decoration: none;
     }
 :focus {
