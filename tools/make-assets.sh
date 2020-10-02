@@ -25,6 +25,5 @@ mkdir $DES/ublock
 cp -R ../uAssets/filters/*                                       $DES/ublock/
 # Optional filter lists: do not include in package
 rm    $DES/ublock/annoyances.txt
-rm    $DES/ublock/resources.txt
 
 echo "done."
