@@ -1326,7 +1326,7 @@
 })();
 
 
-// https://github.com/uBlockOrigin/uAssets/pull/3517
+// https://github.com/uBlockOrigin/uAssets/issues/5184
 /// twitch-videoad.js
 (function() {
     if ( /(^|\.)twitch\.tv$/.test(document.location.hostname) === false ) { return; }
@@ -1334,7 +1334,7 @@
     window.fetch = function(input) {
         if ( arguments.length >= 2 && typeof input === 'string' && input.includes('/access_token') ) {
             var url = new URL(arguments[0]);
-            url.searchParams.set('platform', '_');
+            url.searchParams.delete('platform');
             arguments[0] = url.href;
         }
         return realFetch.apply(this, arguments);
