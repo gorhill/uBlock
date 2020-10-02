@@ -1027,11 +1027,9 @@ vAPI.messaging = {
                 details.code = cssText;
                 promises.push(vAPI.tabs.insertCSS(tabId, details));
             }
-            if ( typeof webext.tabs.removeCSS === 'function' ) {
-                for ( const cssText of msg.remove ) {
-                    details.code = cssText;
-                    promises.push(vAPI.tabs.removeCSS(tabId, details));
-                }
+            for ( const cssText of msg.remove ) {
+                details.code = cssText;
+                promises.push(vAPI.tabs.removeCSS(tabId, details));
             }
             Promise.all(promises).then(( ) => {
                 callback();
