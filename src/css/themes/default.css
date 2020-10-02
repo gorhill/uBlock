@@ -12,9 +12,12 @@
 */
 :root {
     --blue-10: #80ebff;
+    --blue-40: #0090ed;
     --blue-50: #0060df;
     --blue-60: #0250bb;
+    --dark-gray-10: #52525e;
     --dark-gray-30: #42414d;
+    --dark-gray-40: #3a3944;
     --dark-gray-50: #32313c;
     --dark-gray-80: #1c1b22;
     --dark-gray-90: #15141a;
@@ -29,13 +32,17 @@
     --light-gray-10-a12: #f9f9fb1f;
     --light-gray-10-a16: #f9f9fb29;
     --light-gray-20: #f0f0f4;
+    --light-gray-25: #e8e8ed;
     --light-gray-30: #e0e0e6;
     --light-gray-30-a50: #e0e0e680;
     --light-gray-40: #cfcfd8;
     --light-gray-50: #bfbfc9;
     --light-gray-60: #afafba;
     --light-gray-70: #9f9fad;
+    --light-gray-80: #8f8f9e;
     --light-gray-90: #80808f;
+    --orange-80: #9e280b;
+    --purple-60: #952bb9;
     --red-60: #e22850;
     --violet-40: #ab71ff;
     --violet-60: #7542e5;
@@ -160,12 +167,29 @@
     --bg-popup-cell-label-mixed: hsla(45, 100%, 38%, 1);
     --popup-icon-x-ink: var(--red-60);
 
+    /* codemirror */
+    --cm-gutter-border: var(--light-gray-40);
+    --cm-gutter-ink: var(--light-gray-90);
+    --cm-gutter-surface: var(--light-gray-25);
+
     /* syntax highlight: static filtering */
-    --sf-variable-ink: var(--default-ink);
     --sf-comment-ink: var(--light-gray-90);
+    --sf-def-ink: #0000ff;
+    --sf-directive-ink: var(--dark-gray-40);
+    --sf-error-ink: #ff0000;
+    --sf-error-surface: #ff000016;
+    --sf-keyword-ink: var(--purple-60);
+    --sf-regex-ink: var(--light-gray-60);
+    --sf-tag-ink: #117700;
+    --sf-value-ink: var(--orange-80);
+    --sf-variable-ink: var(--default-ink);
     --sf-warning-ink: var(--yellow-50);
 
     /* syntax highlight: dynamic filtering */
+    --df-allow-ink: #117700;
+    --df-block-ink: #ff0000;
+    --df-noop-ink: var(--dark-gray-10);
+    --df-key-ink: var(--violet-70);
 }
 
 /**
