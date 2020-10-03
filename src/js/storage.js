@@ -119,17 +119,21 @@
 // This way the new default values in the future will properly apply for those
 // which were not modified by the user.
 
-µBlock.saveHiddenSettings = function() {
-    const bin = { hiddenSettings: {} };
+µBlock.getModifiedHiddenSettings = function() {
+    const out = {};
     for ( const prop in this.hiddenSettings ) {
         if (
             this.hiddenSettings.hasOwnProperty(prop) &&
             this.hiddenSettings[prop] !== this.hiddenSettingsDefault[prop]
         ) {
-            bin.hiddenSettings[prop] = this.hiddenSettings[prop];
+            out[prop] = this.hiddenSettings[prop];
         }
     }
-    vAPI.storage.set(bin);
+    return out;
+};
+
+µBlock.saveHiddenSettings = function() {
+    vAPI.storage.set({ hiddenSettings: this.getModifiedHiddenSettings() });
 };
 
 self.addEventListener('hiddenSettingsChanged', ( ) => {

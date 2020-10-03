@@ -886,7 +886,7 @@ const backupUserData = async function() {
         version: vAPI.app.version,
         userSettings: µb.userSettings,
         selectedFilterLists: µb.selectedFilterLists,
-        hiddenSettings: µb.hiddenSettings,
+        hiddenSettings: µb.getModifiedHiddenSettings(),
         whitelist: µb.arrayFromWhitelist(µb.netWhitelist),
         // String representation eventually to be deprecated
         netWhitelist: µb.stringFromWhitelist(µb.netWhitelist),
@@ -927,12 +927,24 @@ const restoreUserData = async function(request) {
 
     // Restore user data
     vAPI.storage.set(userData.userSettings);
+
+    // Restore advanced settings.
     let hiddenSettings = userData.hiddenSettings;
     if ( hiddenSettings instanceof Object === false ) {
         hiddenSettings = µBlock.hiddenSettingsFromString(
             userData.hiddenSettingsString || ''
         );
     }
+    // Discard unknown setting or setting with default value.
+    for ( const key in hiddenSettings ) {
+        if (
+            this.hiddenSettingsDefault.hasOwnProperty(key) === false ||
+            hiddenSettings[key] === this.hiddenSettingsDefault[key]
+        ) {
+            delete hiddenSettings[key];
+        }
+    }
+
     // Whitelist directives can be represented as an array or as a
     // (eventually to be deprecated) string.
     let whitelist = userData.whitelist;
@@ -944,7 +956,7 @@ const restoreUserData = async function(request) {
         whitelist = userData.netWhitelist.split('\n');
     }
     vAPI.storage.set({
-        hiddenSettings: hiddenSettings,
+        hiddenSettings,
         netWhitelist: whitelist || [],
         dynamicFilteringString: userData.dynamicFilteringString || '',
         urlFilteringString: userData.urlFilteringString || '',
