@@ -79,7 +79,7 @@ code, .code {
     }
 hr {
     border: 0;
-    border-top: 1px solid var(--hor-separator-color);
+    border-top: 1px solid var(--hr-ink);
     margin: 1em 0;
     }
 textarea {

@@ -19,6 +19,7 @@
     --dark-gray-30: #42414d;
     --dark-gray-40: #3a3944;
     --dark-gray-50: #32313c;
+    --dark-gray-70: #23222b;
     --dark-gray-80: #1c1b22;
     --dark-gray-90: #15141a;
     --ink-20: #312a65;
@@ -100,8 +101,6 @@
     --fieldset-header-surface: transparent;
     --fieldset-header-ink: var(--ink-20);
 
-    --hor-separator-color: var(--light-gray-30);
-
     --button-surface: var(--light-gray-30);
     --button-ink: var(--ink-20);
     --button-surface-hover: var(--light-gray-40);
@@ -166,6 +165,12 @@
     --bg-popup-cell-block-own: hsla(0, 100%, 40%, 1);
     --bg-popup-cell-label-mixed: hsla(45, 100%, 38%, 1);
     --popup-icon-x-ink: var(--red-60);
+
+    /* horizontal line separator */
+    --hr-ink: var(--light-gray-30);
+
+    /* cloud widget */
+    --cloud-widget-surface: var(--light-gray-20);
 
     /* codemirror */
     --cm-gutter-border: var(--light-gray-40);
@@ -252,7 +257,7 @@
     --link-ink: #bb86fc;
     --fieldset-header-surface: transparent;
     --fieldset-header-ink: var(--light-gray-30);
-    --hor-separator-color: var(--dark-gray-50);
+    --hr-ink: var(--dark-gray-50);
     --button-surface: var(--light-gray-10-a12);
     --button-ink: var(--default-ink);
     --button-surface-hover: var(--light-gray-10-a12);

@@ -1,5 +1,5 @@
 #cloudWidget {
-    background: url("../img/cloud.png") hsl(216, 100%, 93%);
+    background-color: var(--cloud-widget-surface);
     margin: 0.5em 0;
     min-width: max-content;
     position: relative;

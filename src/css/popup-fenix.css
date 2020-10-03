@@ -49,7 +49,7 @@ a {
     }
 hr {
     border: 0;
-    border-top: 1px solid #e3e2e3;
+    border-top: 1px solid var(--hr-ink);
     margin: 0;
     padding: 0;
     }

@@ -1,7 +1,7 @@
 html#ublock0-epicker,
 #ublock0-epicker body {
     background: transparent;
-    color: black;
+    color: var(--default-ink);
     cursor: not-allowed;
     font: 12px sans-serif;
     height: 100vh;
@@ -86,10 +86,10 @@ html#ublock0-epicker,
     border-color: red;
 }
 #ublock0-epicker section textarea {
-    background-color: #fff;
+    background-color: var(--default-surface);
     border: none;
     box-sizing: border-box;
-    color: #000;
+    color: var(--default-ink);
     font: 11px monospace;
     height: 8em;
     margin: 0;
@@ -225,7 +225,7 @@ html#ublock0-epicker,
     border: 1px dotted var(--blue-50);
     }
 #ublock0-epicker #candidateFilters .changeFilter li:hover {
-    background-color: white;
+    background-color: var(--default-surface-hover);
 }
 
 /**
