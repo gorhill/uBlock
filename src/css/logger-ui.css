@@ -12,7 +12,7 @@ textarea {
     width: 100%;
     }
 .permatoolbar {
-    background-color: white;
+    background-color: var(--default-surface);
     border: 0;
     box-sizing: border-box;
     display: flex;
@@ -34,7 +34,7 @@ textarea {
     fill: #5F9EA0;
     }
 .permatoolbar .button:hover {
-    background-color: #eee;
+    background-color: var(--default-surface-hover);
     }
 #pageSelector {
     min-width: 10em;
@@ -135,7 +135,7 @@ body[dir="rtl"] #pageSelector {
     transform: scaleY(1);
     }
 #netInspector #filterExprPicker {
-    background-color: white;
+    background-color: var(--default-surface);
     border: 1px solid gray;
     display: none;
     position: absolute;
@@ -445,7 +445,7 @@ body.colorBlind #netFilteringDialog > .panes > .details > div[data-status="2"] b
     }
 
 #popupContainer {
-    background: white;
+    background-color: var(--default-surface);
     border: 1px solid gray;
     bottom: 0;
     display: none;
@@ -481,7 +481,7 @@ body.colorBlind #netFilteringDialog > .panes > .details > div[data-status="2"] b
     position: relative;
     }
 #modalOverlay > div > div:nth-of-type(1) {
-    background-color: white;
+    background-color: var(--default-surface);
     border: 0;
     box-sizing: border-box;
     padding: 1em;
@@ -490,13 +490,13 @@ body.colorBlind #netFilteringDialog > .panes > .details > div[data-status="2"] b
     width: 90vw;
     }
 #modalOverlay > div > div:nth-of-type(2) {
-    stroke: #000;
+    stroke: var(--default-ink);
     stroke-width: 3px;
     position: absolute;
     width: 1.6em;
     height: 1.6em;
     bottom: calc(100% + 2px);
-    background-color: white;
+    background-color: var(--default-surface);
     }
 body[dir="ltr"] #modalOverlay > div > div:nth-of-type(2) {
     right: 0;
@@ -505,7 +505,7 @@ body[dir="rtl"] #modalOverlay > div > div:nth-of-type(2) {
     left: 0;
     }
 #modalOverlay > div > div:nth-of-type(2):hover {
-    background-color: #eee;
+    background-color: var(--default-surface-hover);
     }
 #modalOverlay > div > div:nth-of-type(2) > * {
     pointer-events: none;

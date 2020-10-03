@@ -93,6 +93,22 @@ DOMListFactory.nodeFromSelector = function(selector) {
 /******************************************************************************/
 
 {
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1044
+    //   Offer the possibility to bypass uBO's default styling
+    vAPI.messaging.send('uDom', { what: 'uiStyles' }).then(response => {
+        if ( typeof response !== 'object' || response === null ) { return; }
+        if ( response.uiTheme !== 'unset' ) {
+            if ( response.uiTheme === 'light' ) {
+                root.classList.remove('dark');
+            } else if ( response.uiTheme === 'dark' ) {
+                root.classList.add('dark');
+            }
+        }
+        if ( response.uiStyles !== 'unset' ) {
+            document.body.style.cssText = response;
+        }
+    });
+
     const root = DOMListFactory.root = document.querySelector(':root');
     if ( vAPI.webextFlavor.soup.has('mobile') ) {
         root.classList.add('mobile');
@@ -105,13 +121,6 @@ DOMListFactory.nodeFromSelector = function(selector) {
     if ( window.matchMedia('(prefers-color-scheme: dark)').matches ) {
         root.classList.add('dark');
     }
-
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/1044
-    //   Offer the possibility to bypass uBO's default styling
-    vAPI.messaging.send('uDom', { what: 'uiStyles' }).then(response => {
-        if ( typeof response !== 'string' || response === 'unset' ) { return; }
-        document.body.style.cssText = response;
-    });
 }
 
 /******************************************************************************/
