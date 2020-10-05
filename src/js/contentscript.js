@@ -1166,7 +1166,7 @@ vAPI.injectScriptlet = function(doc, text) {
         if ( collapseToken === undefined ) {
             collapseToken = vAPI.randomToken();
             vAPI.userStylesheet.add(
-                `[${collapseToken}]\ndisplay:none!important;}`,
+                `[${collapseToken}]\n{display:none!important;}`,
                 true
             );
         }
