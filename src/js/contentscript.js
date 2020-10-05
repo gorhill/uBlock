@@ -1124,21 +1124,26 @@ vAPI.injectScriptlet = function(doc, text) {
     const messaging = vAPI.messaging;
     const toCollapse = new Map();
     const src1stProps = {
+        audio: 'currentSrc',
         embed: 'src',
         iframe: 'src',
-        img: 'src',
-        object: 'data'
+        img: 'currentSrc',
+        object: 'data',
+        video: 'currentSrc',
     };
     const src2ndProps = {
-        img: 'srcset'
+        audio: 'src',
+        img: 'src',
+        video: 'src',
     };
     const tagToTypeMap = {
+        audio: 'media',
         embed: 'object',
         iframe: 'sub_frame',
         img: 'image',
-        object: 'object'
+        object: 'object',
+        video: 'media',
     };
-
     let resquestIdGenerator = 1,
         processTimer,
         cachedBlockedSet,
@@ -1154,6 +1159,21 @@ vAPI.injectScriptlet = function(doc, text) {
         cachedBlockedSetTimer = undefined;
     };
 
+    // https://github.com/chrisaljoudi/uBlock/issues/399
+    // https://github.com/gorhill/uBlock/issues/2848
+    //   Use a user stylesheet to collapse placeholders.
+    const getCollapseToken = ( ) => {
+        if ( collapseToken === undefined ) {
+            collapseToken = vAPI.randomToken();
+            vAPI.userStylesheet.add(
+                `[${collapseToken}]\ndisplay:none!important;}`,
+                true
+            );
+        }
+        return collapseToken;
+    };
+    let collapseToken;
+
     // https://github.com/chrisaljoudi/uBlock/issues/174
     //   Do not remove fragment from src URL
     const onProcessed = function(response) {
@@ -1165,6 +1185,7 @@ vAPI.injectScriptlet = function(doc, text) {
 
         const targets = toCollapse.get(response.id);
         if ( targets === undefined ) { return; }
+
         toCollapse.delete(response.id);
         if ( cachedBlockedSetHash !== response.hash ) {
             cachedBlockedSet = new Set(response.blockedResources);
@@ -1177,8 +1198,8 @@ vAPI.injectScriptlet = function(doc, text) {
         if ( cachedBlockedSet === undefined || cachedBlockedSet.size === 0 ) {
             return;
         }
+
         const selectors = [];
-        const iframeLoadEventPatch = vAPI.iframeLoadEventPatch;
         let netSelectorCacheCountMax = response.netSelectorCacheCountMax;
 
         for ( const target of targets ) {
@@ -1195,32 +1216,24 @@ vAPI.injectScriptlet = function(doc, text) {
             if ( cachedBlockedSet.has(tagToTypeMap[tag] + ' ' + src) === false ) {
                 continue;
             }
-            // https://github.com/chrisaljoudi/uBlock/issues/399
-            // Never remove elements from the DOM, just hide them
-            target.style.setProperty('display', 'none', 'important');
-            target.hidden = true;
+            target.setAttribute(getCollapseToken(), '');
             // https://github.com/chrisaljoudi/uBlock/issues/1048
-            // Use attribute to construct CSS rule
-            if ( netSelectorCacheCount <= netSelectorCacheCountMax ) {
-                const value = target.getAttribute(prop);
-                if ( value ) {
-                    selectors.push(`${tag}[${prop}="${CSS.escape(value)}"]`);
-                    netSelectorCacheCount += 1;
-                }
-            }
-            if ( iframeLoadEventPatch !== undefined ) {
-                iframeLoadEventPatch(target);
+            //   Use attribute to construct CSS rule
+            if ( netSelectorCacheCount > netSelectorCacheCountMax ) { continue; }
+            const value = target.getAttribute(prop);
+            if ( value ) {
+                selectors.push(`${tag}[${prop}="${CSS.escape(value)}"]`);
+                netSelectorCacheCount += 1;
             }
         }
 
-        if ( selectors.length !== 0 ) {
-            messaging.send('contentscript', {
-                what: 'cosmeticFiltersInjected',
-                type: 'net',
-                hostname: window.location.hostname,
-                selectors,
-            });
-        }
+        if ( selectors.length === 0 ) { return; }
+        messaging.send('contentscript', {
+            what: 'cosmeticFiltersInjected',
+            type: 'net',
+            hostname: window.location.hostname,
+            selectors,
+        });
     };
 
     const send = function() {
