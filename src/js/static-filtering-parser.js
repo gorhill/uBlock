@@ -1372,9 +1372,9 @@ Parser.prototype.SelectorCompiler = class {
         return { name: name, value: regexDetails };
     }
 
+    // https://github.com/AdguardTeam/ExtendedCss/issues/31#issuecomment-302391277
+    //   Prepend `:scope ` if needed.
     compileConditionalSelector(s) {
-        // https://github.com/AdguardTeam/ExtendedCss/issues/31#issuecomment-302391277
-        //   Prepend `:scope ` if needed.
         if ( this.reNeedScope.test(s) ) {
             s = `:scope ${s}`;
         }
@@ -1388,11 +1388,11 @@ Parser.prototype.SelectorCompiler = class {
         return n;
     }
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/341#issuecomment-447603588
+    //   Reject instances of :not() filters for which the argument is
+    //   a valid CSS selector, otherwise we would be adversely
+    //   changing the behavior of CSS4's :not().
     compileNotSelector(s) {
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/341#issuecomment-447603588
-        //   Reject instances of :not() filters for which the argument is
-        //   a valid CSS selector, otherwise we would be adversely
-        //   changing the behavior of CSS4's :not().
         if ( this.cssSelectorType(s) === 0 ) {
             return this.compileConditionalSelector(s);
         }
@@ -1408,8 +1408,10 @@ Parser.prototype.SelectorCompiler = class {
         if ( s === '' ) { return s; }
     }
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/382#issuecomment-703725346
+    //   Prepend `*` only when it can be deemed implicit.
     compileSpathExpression(s) {
-        if ( this.cssSelectorType('*' + s) === 1 ) {
+        if ( this.cssSelectorType(/^\s*[+:>~]/.test(s) ? '*' + s : s) === 1 ) {
             return s;
         }
     }
