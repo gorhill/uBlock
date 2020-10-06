@@ -230,13 +230,24 @@ const candidateFromFilterChoice = function(filterChoice) {
         paths.unshift('body > ');
     }
 
-    computedCandidate = `##${paths.join('')}`;
+    if ( paths.length === 0 ) { return ''; }
 
-    $id('resultsetModifiers').classList.remove('hide');
     renderRange('resultsetDepth', slot, true);
     renderRange('resultsetSpecificity');
 
-    return computedCandidate;
+    vAPI.MessagingConnection.sendTo(epickerConnectionId, {
+        what: 'optimizeCandidate',
+        paths,
+    });
+};
+
+/******************************************************************************/
+
+const onCandidateOptimized = function(details) {
+    $id('resultsetModifiers').classList.remove('hide');
+    computedCandidate = details.filter;
+    taCandidate.value = computedCandidate;
+    onCandidateChanged();
 };
 
 /******************************************************************************/
@@ -437,10 +448,12 @@ const onDepthChanged = function() {
     const input = $stor('#resultsetDepth input');
     const max = parseInt(input.max, 10);
     const value = parseInt(input.value, 10);
-    taCandidate.value = candidateFromFilterChoice({
+    const text = candidateFromFilterChoice({
         filters: cosmeticFilterCandidates,
         slot: max - value,
     });
+    if ( text === undefined ) { return; }
+    taCandidate.value = text;
     onCandidateChanged();
 };
 
@@ -448,10 +461,12 @@ const onDepthChanged = function() {
 
 const onSpecificityChanged = function() {
     if ( taCandidate.value !== computedCandidate ) { return; }
-    taCandidate.value = candidateFromFilterChoice({
+    const text = candidateFromFilterChoice({
         filters: cosmeticFilterCandidates,
         slot: computedCandidateSlot,
     });
+    if ( text === undefined ) { return; }
+    taCandidate.value = text;
     onCandidateChanged();
 };
 
@@ -470,7 +485,9 @@ const onCandidateClicked = function(ev) {
         li = li.previousElementSibling;
         choice.slot += 1;
     }
-    taCandidate.value = candidateFromFilterChoice(choice);
+    const text = candidateFromFilterChoice(choice);
+    if ( text === undefined ) { return; }
+    taCandidate.value = text;
     onCandidateChanged();
 };
 
@@ -692,7 +709,9 @@ const showDialog = function(details) {
         slot: filter.slot,
     };
 
-    taCandidate.value = candidateFromFilterChoice(filterChoice);
+    const text = candidateFromFilterChoice(filterChoice);
+    if ( text === undefined ) { return; }
+    taCandidate.value = text;
     onCandidateChanged();
 };
 
@@ -751,6 +770,9 @@ const quitPicker = function() {
 
 const onPickerMessage = function(msg) {
     switch ( msg.what ) {
+        case 'candidateOptimized':
+            onCandidateOptimized(msg);
+            break;
         case 'showDialog':
             showDialog(msg);
             break;

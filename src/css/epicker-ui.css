@@ -116,7 +116,7 @@ html#ublock0-epicker,
     justify-content: space-evenly;
     }
 #resultsetModifiers.hide > * {
-    display: none;
+    visibility: hidden;
     }
 .resultsetModifier {
     border: 0;
