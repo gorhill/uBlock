@@ -78,6 +78,7 @@
     --default-ink-a4: var(--ink-80-a4);
     --default-ink-a50: var(--ink-80-a50);
     --default-surface: var(--light-gray-10);
+    --default-surface-border: var(--light-gray-70);
     --default-surface-hover: var(--light-gray-30-a50);
 
     --bg-1: hsla(240, 20%, 98%, 1);

@@ -14,12 +14,13 @@ html#ublock0-epicker,
 }
 #ublock0-epicker aside {
     background-color: var(--default-surface);
-    border: 1px solid #aaa;
+    border: 1px solid var(--default-surface-border);
     bottom: 4px;
     box-sizing: border-box;
     cursor: default;
     display: none;
-    min-width: 24em;
+    max-width: 36rem;
+    min-width: 24rem;
     padding: 4px;
     position: fixed;
     right: 4px;
