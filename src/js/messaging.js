@@ -938,8 +938,8 @@ const restoreUserData = async function(request) {
     // Discard unknown setting or setting with default value.
     for ( const key in hiddenSettings ) {
         if (
-            this.hiddenSettingsDefault.hasOwnProperty(key) === false ||
-            hiddenSettings[key] === this.hiddenSettingsDefault[key]
+            µb.hiddenSettingsDefault.hasOwnProperty(key) === false ||
+            hiddenSettings[key] === µb.hiddenSettingsDefault[key]
         ) {
             delete hiddenSettings[key];
         }
