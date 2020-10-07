@@ -416,8 +416,13 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     // The comment, if any, will be applied if and only if it is different
     // from the last comment found in the user filter list.
     if ( comment !== '' ) {
-        const pos = details.content.lastIndexOf(comment);
-        if ( pos === -1 || details.content.indexOf('\n!', pos + 1) !== -1 ) {
+        const beg = details.content.lastIndexOf(comment);
+        const end = beg === -1 ? -1 : beg + comment.length;
+        if (
+            end === -1 ||
+            details.content.startsWith('\n', end) === false ||
+            details.content.includes('\n!', end)
+        ) {
             filters = '\n' + comment + '\n' + filters;
         }
     }
@@ -428,10 +433,9 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     //   duplicates at this point may lead to more issues.
     await this.saveUserFilters(details.content.trim() + '\n' + filters);
 
-    const compiledFilters = this.compileFilters(
-        filters,
-        { assetKey: this.userFiltersPath }
-    );
+    const compiledFilters = this.compileFilters(filters, {
+        assetKey: this.userFiltersPath
+    });
     const snfe = this.staticNetFilteringEngine;
     const cfe = this.cosmeticFilteringEngine;
     const acceptedCount = snfe.acceptedCount + cfe.acceptedCount;
