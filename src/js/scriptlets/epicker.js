@@ -843,8 +843,7 @@ const onOptmizeCandidate = function(details) {
 const showDialog = function(options) {
     vAPI.MessagingConnection.sendTo(epickerConnectionId, {
         what: 'showDialog',
-        hostname: self.location.hostname,
-        origin: self.location.origin,
+        url: self.location.href,
         netFilters: netFilterCandidates,
         cosmeticFilters: cosmeticFilterCandidates,
         filter: bestCandidateFilter,

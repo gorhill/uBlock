@@ -399,12 +399,15 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         // Date in YYYY-MM-DD format - https://stackoverflow.com/a/50130338
         const ISO8061Date = new Date(d.getTime() +
             (d.getTimezoneOffset()*60000)).toISOString().split('T')[0];
+        const url = new URL(options.docURL);
         comment =
             '! ' +
             this.hiddenSettings.autoCommentFilterTemplate
                 .replace('{{date}}', ISO8061Date)
                 .replace('{{time}}', d.toLocaleTimeString())
-                .replace('{{origin}}', options.origin);
+                .replace('{{hostname}}', url.hostname)
+                .replace('{{origin}}', url.origin)
+                .replace('{{url}}', url.href);
     }
 
     const details = await this.loadUserFilters();
@@ -414,10 +417,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     // from the last comment found in the user filter list.
     if ( comment !== '' ) {
         const pos = details.content.lastIndexOf(comment);
-        if (
-            pos === -1 ||
-            details.content.indexOf('\n!', pos + 1) !== -1
-        ) {
+        if ( pos === -1 || details.content.indexOf('\n!', pos + 1) !== -1 ) {
             filters = '\n' + comment + '\n' + filters;
         }
     }
@@ -462,7 +462,10 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 µBlock.createUserFilters = function(details) {
     this.appendUserFilters(details.filters, details);
     // https://github.com/gorhill/uBlock/issues/1786
-    this.cosmeticFilteringEngine.removeFromSelectorCache(details.pageDomain);
+    if ( details.docURL === undefined ) { return; }
+    this.cosmeticFilteringEngine.removeFromSelectorCache(
+        vAPI.hostnameFromURI(details.docURL)
+    );
 };
 
 /******************************************************************************/

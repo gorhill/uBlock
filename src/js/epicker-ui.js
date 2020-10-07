@@ -53,9 +53,9 @@ const epickerId = (( ) => {
 })();
 if ( epickerId === null ) { return; }
 
+const docURL = new URL(vAPI.getURL(''));
+
 let epickerConnectionId;
-let filterHostname = '';
-let filterOrigin = '';
 let resultsetOpt;
 
 let netFilterCandidates = [];
@@ -102,9 +102,11 @@ const renderRange = function(id, value, invert = false) {
 const userFilterFromCandidate = function(filter) {
     if ( filter === '' || filter === '!' ) { return; }
 
+    const hn = vAPI.hostnameFromURI(docURL.href);
+
     // Cosmetic filter?
     if ( filter.startsWith('##') ) {
-        return filterHostname + filter;
+        return hn + filter;
     }
 
     // Assume net filter
@@ -112,7 +114,7 @@ const userFilterFromCandidate = function(filter) {
 
     // If no domain included in filter, we need domain option
     if ( filter.startsWith('||') === false ) {
-        opts.push(`domain=${filterHostname}`);
+        opts.push(`domain=${hn}`);
     }
 
     if ( resultsetOpt !== undefined ) {
@@ -416,8 +418,7 @@ const onCreateClicked = function() {
             what: 'createUserFilter',
             autoComment: true,
             filters: filter,
-            origin: filterOrigin,
-            pageDomain: filterHostname,
+            docURL: docURL.href,
             killCache: /^#[$?]?#/.test(candidate) === false,
         });
     }
@@ -672,13 +673,7 @@ const showDialog = function(details) {
     }
     cosmeticFilterCandidates = cosmeticFilters;
 
-    // https://github.com/gorhill/uBlock/issues/738
-    //   Trim dots.
-    filterHostname = details.hostname;
-    if ( filterHostname.slice(-1) === '.' ) {
-        filterHostname = filterHostname.slice(0, -1);
-    }
-    filterOrigin = details.origin;
+    docURL.href = details.url;
 
     populateCandidates(netFilters, '#netFilters');
     populateCandidates(cosmeticFilters, '#cosmeticFilters');
