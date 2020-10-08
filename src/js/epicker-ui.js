@@ -71,9 +71,17 @@ const filterFromTextarea = function() {
     if ( s === '' ) { return ''; }
     const pos = s.indexOf('\n');
     const filter = pos === -1 ? s.trim() : s.slice(0, pos).trim();
-    staticFilteringParser.analyze(filter);
-    staticFilteringParser.analyzeExtra();
-    return staticFilteringParser.shouldDiscard() ? '!' : filter;
+    const sfp = staticFilteringParser;
+    sfp.analyze(filter);
+    sfp.analyzeExtra();
+    if (
+        sfp.category !== sfp.CATStaticExtFilter &&
+        sfp.category !== sfp.CATStaticNetFilter ||
+        sfp.shouldDiscard()
+    ) {
+        return '!';
+    }
+    return filter;
 };
 
 /******************************************************************************/
