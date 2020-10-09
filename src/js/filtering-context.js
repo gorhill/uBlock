@@ -35,7 +35,8 @@
     this.aliasURL = undefined;
     this.hostname = undefined;
     this.domain = undefined;
-    this.docId = undefined;
+    this.docId = -1;
+    this.frameId = -1;
     this.docOrigin = undefined;
     this.docHostname = undefined;
     this.docDomain = undefined;
@@ -69,9 +70,13 @@
         this.type = details.type;
         this.setURL(details.url);
         this.aliasURL = details.aliasURL || undefined;
-        this.docId = details.type !== 'sub_frame'
-            ? details.frameId
-            : details.parentFrameId;
+        if ( details.type !== 'sub_frame' ) {
+            this.docId = details.frameId;
+            this.frameId = -1;
+        } else {
+            this.docId = details.parentFrameId;
+            this.frameId = details.frameId;
+        }
         if ( this.tabId > 0 ) {
             if ( this.docId === 0 ) {
                 this.docOrigin = this.tabOrigin;
@@ -81,7 +86,7 @@
                 this.setDocOriginFromURL(details.documentUrl);
             } else {
                 const pageStore = µBlock.pageStoreFromTabId(this.tabId);
-                const docStore = pageStore && pageStore.getFrame(this.docId);
+                const docStore = pageStore && pageStore.getFrameStore(this.docId);
                 if ( docStore ) {
                     this.setDocOriginFromURL(docStore.rawURL);
                 } else {
@@ -109,6 +114,7 @@
         this.hostname = other.hostname;
         this.domain = other.domain;
         this.docId = other.docId;
+        this.frameId = other.frameId;
         this.docOrigin = other.docOrigin;
         this.docHostname = other.docHostname;
         this.docDomain = other.docDomain;

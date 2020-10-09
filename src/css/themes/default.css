@@ -74,6 +74,8 @@
 :root {
     --font-size: 14px;
 
+    --ubo-red: #800000;
+
     --default-ink: var(--ink-80);
     --default-ink-a4: var(--ink-80-a4);
     --default-ink-a50: var(--ink-80-a50);

@@ -84,6 +84,12 @@ const NetFilteringResultCache = class {
         this.hash = now;
     }
 
+    forgetResult(fctxt) {
+        const key = `${fctxt.getDocHostname()} ${fctxt.type} ${fctxt.url}`;
+        this.results.delete(key);
+        this.blocked.delete(key);
+    }
+
     empty() {
         this.blocked.clear();
         this.results.clear();
@@ -165,6 +171,7 @@ const FrameStore = class {
     init(frameURL) {
         this.t0 = Date.now();
         this.exceptCname = undefined;
+        this.clickToLoad = 0;
         this.rawURL = frameURL;
         if ( frameURL !== undefined ) {
             this.hostname = vAPI.hostnameFromURI(frameURL);
@@ -253,7 +260,7 @@ const PageStore = class {
 
         this.frameAddCount = 0;
         this.frames = new Map();
-        this.setFrame(0, tabContext.rawURL);
+        this.setFrameURL(0, tabContext.rawURL);
 
         // The current filtering context is cloned because:
         // - We may be called with or without the current context having been
@@ -308,7 +315,7 @@ const PageStore = class {
             // As part of https://github.com/chrisaljoudi/uBlock/issues/405
             // URL changed, force a re-evaluation of filtering switch
             this.rawURL = tabContext.rawURL;
-            this.setFrame(0, this.rawURL);
+            this.setFrameURL(0, this.rawURL);
             return this;
         }
 
@@ -353,20 +360,23 @@ const PageStore = class {
         this.frames.clear();
     }
 
-    getFrame(frameId) {
+    getFrameStore(frameId) {
         return this.frames.get(frameId) || null;
     }
 
-    setFrame(frameId, frameURL) {
-        const frameStore = this.frames.get(frameId);
+    setFrameURL(frameId, frameURL) {
+        let frameStore = this.frames.get(frameId);
         if ( frameStore !== undefined ) {
             frameStore.init(frameURL);
-            return;
+        } else {
+            frameStore = FrameStore.factory(frameURL);
+            this.frames.set(frameId, frameStore);
+            this.frameAddCount += 1;
+            if ( (this.frameAddCount & 0b111111) === 0 ) {
+                this.pruneFrames();
+            }
         }
-        this.frames.set(frameId, FrameStore.factory(frameURL));
-        this.frameAddCount += 1;
-        if ( (this.frameAddCount & 0b111111) !== 0 ) { return; }
-        this.pruneFrames();
+        return frameStore;
     }
 
     // There is no event to tell us a specific subframe has been removed from
@@ -597,6 +607,22 @@ const PageStore = class {
             }
         }
 
+        // Click-to-load:
+        // When frameId is not -1, the resource is always sub_frame.
+        if ( result === 1 && fctxt.frameId !== -1 ) {
+            const docStore = this.getFrameStore(fctxt.frameId);
+            if ( docStore !== null && docStore.clickToLoad !== 0 ) {
+                result = 2;
+                if ( µb.logger.enabled ) {
+                    fctxt.setFilter({
+                        result,
+                        source: 'network',
+                        raw: 'click-to-load',
+                    });
+                }
+            }
+        }
+
         if ( cacheableResult ) {
             this.netFilteringCache.rememberResult(fctxt, result);
         } else if (
@@ -696,11 +722,19 @@ const PageStore = class {
         return 1;
     }
 
+    clickToLoad(frameId, frameURL) {
+        let frameStore = this.getFrameStore(frameId);
+        if ( frameStore === null ) {
+            frameStore = this.setFrameURL(frameId, frameURL);
+        }
+        frameStore.clickToLoad = Date.now();
+    }
+
     shouldExceptCname(fctxt) {
         let exceptCname;
         let frameStore;
         if ( fctxt.docId !== undefined ) {
-            frameStore = this.getFrame(fctxt.docId);
+            frameStore = this.getFrameStore(fctxt.docId);
             if ( frameStore instanceof Object ) {
                 exceptCname = frameStore.exceptCname;
             }
@@ -742,16 +776,23 @@ const PageStore = class {
         // content script-side (i.e. `iframes` -- unlike `img`).
         if ( Array.isArray(resources) && resources.length !== 0 ) {
             for ( const resource of resources ) {
-                this.filterRequest(
-                    fctxt.setType(resource.type)
-                         .setURL(resource.url)
+                const result = this.filterRequest(
+                    fctxt.setType(resource.type).setURL(resource.url)
                 );
+                if ( result === 1 && µb.redirectEngine.toURL(fctxt) ) {
+                    this.forgetBlockedResource(fctxt);
+                }
             }
         }
         if ( this.netFilteringCache.hash === response.hash ) { return; }
         response.hash = this.netFilteringCache.hash;
         response.blockedResources =
             this.netFilteringCache.lookupAllBlocked(fctxt.getDocHostname());
+    }
+
+    forgetBlockedResource(fctxt) {
+        if ( this.collapsibleResources.has(fctxt.type) === false ) { return; }
+        this.netFilteringCache.forgetResult(fctxt);
     }
 };
 
