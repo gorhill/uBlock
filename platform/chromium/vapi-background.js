@@ -1435,27 +1435,10 @@ vAPI.localStorage = {
         if ( this.cache instanceof Promise ) { return this.cache; }
         if ( this.cache instanceof Object ) { return this.cache; }
         this.cache = webext.storage.local.get('localStorage').then(bin => {
-            this.cache = undefined;
-            try {
-                if (
-                    bin instanceof Object === false ||
-                    bin.localStorage instanceof Object === false
-                ) {
-                    this.cache = {};
-                    const ls = self.localStorage;
-                    for ( let i = 0; i < ls.length; i++ ) {
-                        const key = ls.key(i);
-                        this.cache[key] = ls.getItem(key);
-                    }
-                    webext.storage.local.set({ localStorage: this.cache });
-                } else {
-                    this.cache = bin.localStorage;
-                }
-            } catch(ex) {
-            }
-            if ( this.cache instanceof Object === false ) {
-                this.cache = {};
-            }
+            this.cache = bin instanceof Object &&
+                bin.localStorage instanceof Object
+                    ? bin.localStorage
+                    : {};
         });
         return this.cache;
     },
