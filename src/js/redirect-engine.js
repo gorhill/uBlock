@@ -67,8 +67,7 @@ const redirectableResources = new Map([
     [ 'chartbeat.js', {
         alias: 'static.chartbeat.com/chartbeat.js',
     } ],
-    [ 'click-to-load.html', {
-        alias: 'clicktoload',
+    [ 'click2load.html', {
         params: [ 'url' ],
     } ],
     [ 'doubleclick_instream_ad_status.js', {

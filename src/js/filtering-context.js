@@ -44,6 +44,7 @@
     this.tabOrigin = undefined;
     this.tabHostname = undefined;
     this.tabDomain = undefined;
+    this.redirectURL = undefined;
     this.filter = undefined;
 };
 
@@ -104,6 +105,7 @@
         } else {
             this.setDocOrigin(this.tabOrigin);
         }
+        this.redirectURL = undefined;
         this.filter = undefined;
         return this;
     },
@@ -122,6 +124,7 @@
         this.tabOrigin = other.tabOrigin;
         this.tabHostname = other.tabHostname;
         this.tabDomain = other.tabDomain;
+        this.redirectURL = other.redirectURL;
         this.filter = undefined;
         return this;
     },

@@ -111,25 +111,16 @@ const onBeforeRequest = function(details) {
 
     // Blocked
 
-    // https://github.com/gorhill/uBlock/issues/949
-    //   Redirect blocked request?
-    // https://github.com/gorhill/uBlock/issues/3619
-    //   Don't collapse redirected resources
-    if ( µb.hiddenSettings.ignoreRedirectFilters !== true ) {
-        const url = µb.redirectEngine.toURL(fctxt);
-        if ( url !== undefined ) {
-            pageStore.internalRedirectionCount += 1;
-            pageStore.forgetBlockedResource(fctxt);
-            if ( µb.logger.enabled ) {
-                fctxt.setRealm('redirect')
-                     .setFilter({ source: 'redirect', raw: µb.redirectEngine.resourceNameRegister })
-                     .toLogger();
-            }
-            return { redirectUrl: url };
-        }
+    if ( fctxt.redirectURL === undefined ) {
+        return { cancel: true };
     }
 
-    return { cancel: true };
+    if ( µb.logger.enabled ) {
+        fctxt.setRealm('redirect')
+             .setFilter({ source: 'redirect', raw: µb.redirectEngine.resourceNameRegister })
+             .toLogger();
+    }
+    return { redirectUrl: fctxt.redirectURL };
 };
 
 /******************************************************************************/

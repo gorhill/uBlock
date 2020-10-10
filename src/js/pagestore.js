@@ -54,18 +54,21 @@ const NetFilteringResultCache = class {
         return this;
     }
 
+    // https://github.com/gorhill/uBlock/issues/3619
+    //   Don't collapse redirected resources
     rememberResult(fctxt, result) {
         if ( fctxt.tabId <= 0 ) { return; }
         if ( this.results.size === 0 ) {
             this.pruneAsync();
         }
-        const key = fctxt.getDocHostname() + ' ' + fctxt.type + ' ' + fctxt.url;
+        const key = `${fctxt.getDocHostname()} ${fctxt.type} ${fctxt.url}`;
         this.results.set(key, {
-            result: result,
+            result,
+            redirectURL: fctxt.redirectURL,
             logData: fctxt.filter,
             tstamp: Date.now()
         });
-        if ( result !== 1 ) { return; }
+        if ( result !== 1 || fctxt.redirectURL !== undefined ) { return; }
         const now = Date.now();
         this.blocked.set(key, now);
         this.hash = now;
@@ -76,16 +79,17 @@ const NetFilteringResultCache = class {
         if ( this.blocked.size === 0 ) {
             this.pruneAsync();
         }
+        if ( fctxt.redirectURL !== undefined ) { return; }
         const now = Date.now();
         this.blocked.set(
-            fctxt.getDocHostname() + ' ' + fctxt.type + ' ' + fctxt.url,
+            `${fctxt.getDocHostname()} ${fctxt.type} ${fctxt.url}`,
             now
         );
         this.hash = now;
     }
 
-    forgetResult(fctxt) {
-        const key = `${fctxt.getDocHostname()} ${fctxt.type} ${fctxt.url}`;
+    forgetResult(docHostname, type, url) {
+        const key = `${docHostname} ${type} ${url}`;
         this.results.delete(key);
         this.blocked.delete(key);
     }
@@ -171,7 +175,7 @@ const FrameStore = class {
     init(frameURL) {
         this.t0 = Date.now();
         this.exceptCname = undefined;
-        this.clickToLoad = 0;
+        this.clickToLoad = false;
         this.rawURL = frameURL;
         if ( frameURL !== undefined ) {
             this.hostname = vAPI.hostnameFromURI(frameURL);
@@ -559,6 +563,7 @@ const PageStore = class {
         if ( cacheableResult ) {
             const entry = this.netFilteringCache.lookupResult(fctxt);
             if ( entry !== undefined ) {
+                fctxt.redirectURL = entry.redirectURL;
                 fctxt.filter = entry.logData;
                 return entry.result;
             }
@@ -607,11 +612,11 @@ const PageStore = class {
             }
         }
 
-        // Click-to-load:
+        // Click-to-load?
         // When frameId is not -1, the resource is always sub_frame.
         if ( result === 1 && fctxt.frameId !== -1 ) {
-            const docStore = this.getFrameStore(fctxt.frameId);
-            if ( docStore !== null && docStore.clickToLoad !== 0 ) {
+            const frameStore = this.getFrameStore(fctxt.frameId);
+            if ( frameStore !== null && frameStore.clickToLoad ) {
                 result = 2;
                 if ( µb.logger.enabled ) {
                     fctxt.setFilter({
@@ -623,13 +628,20 @@ const PageStore = class {
             }
         }
 
+        // https://github.com/gorhill/uBlock/issues/949
+        //   Redirect blocked request?
+        if ( result === 1 && µb.hiddenSettings.ignoreRedirectFilters !== true ) {
+            const redirectURL = µb.redirectEngine.toURL(fctxt);
+            if ( redirectURL !== undefined ) {
+                fctxt.redirectURL = redirectURL;
+                this.internalRedirectionCount += 1;
+            }
+        }
+
         if ( cacheableResult ) {
             this.netFilteringCache.rememberResult(fctxt, result);
-        } else if (
-            result === 1 &&
-            this.collapsibleResources.has(requestType)
-        ) {
-            this.netFilteringCache.rememberBlock(fctxt, true);
+        } else if ( result === 1 && this.collapsibleResources.has(requestType) ) {
+            this.netFilteringCache.rememberBlock(fctxt);
         }
 
         return result;
@@ -727,7 +739,12 @@ const PageStore = class {
         if ( frameStore === null ) {
             frameStore = this.setFrameURL(frameId, frameURL);
         }
-        frameStore.clickToLoad = Date.now();
+        this.netFilteringCache.forgetResult(
+            this.tabHostname,
+            'sub_frame',
+            frameURL
+        );
+        frameStore.clickToLoad = true;
     }
 
     shouldExceptCname(fctxt) {
@@ -776,23 +793,15 @@ const PageStore = class {
         // content script-side (i.e. `iframes` -- unlike `img`).
         if ( Array.isArray(resources) && resources.length !== 0 ) {
             for ( const resource of resources ) {
-                const result = this.filterRequest(
+                this.filterRequest(
                     fctxt.setType(resource.type).setURL(resource.url)
                 );
-                if ( result === 1 && µb.redirectEngine.toURL(fctxt) ) {
-                    this.forgetBlockedResource(fctxt);
-                }
             }
         }
         if ( this.netFilteringCache.hash === response.hash ) { return; }
         response.hash = this.netFilteringCache.hash;
         response.blockedResources =
             this.netFilteringCache.lookupAllBlocked(fctxt.getDocHostname());
-    }
-
-    forgetBlockedResource(fctxt) {
-        if ( this.collapsibleResources.has(fctxt.type) === false ) { return; }
-        this.netFilteringCache.forgetResult(fctxt);
     }
 };
 
