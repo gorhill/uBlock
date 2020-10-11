@@ -578,16 +578,24 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
                 return Pass;
             }
         }
-        const s = cm.getLine(line);
 
-        // Select URL
-        let lmatch = /\bhttps?:\/\/\S+$/.exec(s.slice(0, ch));
-        let rmatch = /^\S+/.exec(s.slice(ch));
+        const s = cm.getLine(line);
+        const token = cm.getTokenTypeAt(pos);
+        let lmatch, rmatch;
+        let select = false;
+
+        // Select URL in comments
+        if ( token === 'comment link' ) {
+            lmatch = /\S+$/.exec(s.slice(0, ch));
+            rmatch = /^\S+/.exec(s.slice(ch));
+            select = lmatch !== null && rmatch !== null &&
+                     /^https?:\/\//.test(s.slice(lmatch.index));
+        }
 
         // TODO: add more convenient word-matching cases here
-        // if ( lmatch === null || rmatch === null ) { ... }
+        // if ( select === false ) { ... }
 
-        if ( lmatch === null || rmatch === null ) { return Pass; }
+        if ( select === false ) { return Pass; }
         cm.setSelection(
             { line, ch: lmatch.index },
             { line, ch: ch + rmatch.index + rmatch[0].length }
