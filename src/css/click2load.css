@@ -25,7 +25,6 @@ body {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
     position: relative;
     }
 
@@ -45,4 +44,5 @@ body {
 
 #clickToLoad {
     cursor: default;
+    margin-bottom: 1em;
     }
