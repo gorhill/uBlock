@@ -94,64 +94,6 @@
                     }
                 };
                 injectScriptlets(document);
-                const processIFrame = function(iframe) {
-                    const src = iframe.src;
-                    if ( /^https?:\/\//.test(src) === false ) {
-                        injectScriptlets(iframe.contentDocument);
-                    }
-                };
-                let observerTimer,
-                    observerLists = [];
-                const observerAsync = function() {
-                    for ( const nodelist of observerLists ) {
-                        for ( const node of nodelist ) {
-                            if ( node.nodeType !== 1 ) { continue; }
-                            if ( node.parentElement === null ) { continue; }
-                            if ( node.localName === 'iframe' ) {
-                                processIFrame(node);
-                            }
-                            if ( node.childElementCount === 0 ) { continue; }
-                            let iframes = node.querySelectorAll('iframe');
-                            for ( const iframe of iframes ) {
-                                processIFrame(iframe);
-                            }
-                        }
-                    }
-                    observerLists = [];
-                    observerTimer = undefined;
-                };
-                const ready = function(ev) {
-                    if ( ev !== undefined ) {
-                        window.removeEventListener(ev.type, ready);
-                    }
-                    const iframes = document.getElementsByTagName('iframe');
-                    if ( iframes.length !== 0 ) {
-                        observerLists.push(iframes);
-                        observerTimer = setTimeout(observerAsync, 1);
-                    }
-                    const observer = new MutationObserver(function(mutations) {
-                        for ( const mutation of mutations ) {
-                            if ( mutation.addedNodes.length !== 0 ) {
-                                observerLists.push(mutation.addedNodes);
-                            }
-                        }
-                        if (
-                            observerLists.length !== 0 &&
-                            observerTimer === undefined
-                        ) {
-                            observerTimer = setTimeout(observerAsync, 1);
-                        }
-                    });
-                    observer.observe(
-                        document.documentElement,
-                        { childList: true, subtree: true }
-                    );
-                };
-                if ( document.readyState === 'loading' ) {
-                    window.addEventListener('DOMContentLoaded', ready);
-                } else {
-                    ready();
-                }
             }.toString(),
             ')(',
                 '"', 'hostname-slot', '", ',
@@ -457,10 +399,10 @@
             code = 'debugger;\n' + code;
         }
         vAPI.tabs.executeScript(details.tabId, {
-            code: code,
+            code,
             frameId: details.frameId,
-            matchAboutBlank: false,
-            runAt: 'document_start'
+            matchAboutBlank: true,
+            runAt: 'document_start',
         });
     };
 
