@@ -741,7 +741,7 @@
     };
     // https://github.com/uBlockOrigin/uBlock-issues/issues/156
     //   Support multiple trappers for the same property.
-    const trapProp = function(owner, prop, handler) {
+    const trapProp = function(owner, prop, configurable, handler) {
         if ( handler.init(owner[prop]) === false ) { return; }
         const odesc = Object.getOwnPropertyDescriptor(owner, prop);
         let prevGetter, prevSetter;
@@ -754,7 +754,7 @@
             }
         }
         Object.defineProperty(owner, prop, {
-            configurable: false,
+            configurable,
             get() {
                 if ( prevGetter !== undefined ) {
                     prevGetter();
@@ -772,7 +772,7 @@
     const trapChain = function(owner, chain) {
         const pos = chain.indexOf('.');
         if ( pos === -1 ) {
-            trapProp(owner, chain, {
+            trapProp(owner, chain, false, {
                 v: undefined,
                 init: function(v) {
                     if ( mustAbort(v) ) { return false; }
@@ -798,7 +798,7 @@
             trapChain(v, chain);
             return;
         }
-        trapProp(owner, prop, {
+        trapProp(owner, prop, true, {
             v: undefined,
             init: function(v) {
                 this.v = v;
