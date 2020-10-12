@@ -12,7 +12,7 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Achtung! Du hast deine Änderungen nicht gespeichert",
+    "message": "Warnung! Nicht gespeicherte Änderungen",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -108,7 +108,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
-    "message": "Klicken, um das Dashboard zu öffnen",
+    "message": "Klicken, um die Übersicht zu öffnen",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
@@ -116,7 +116,7 @@
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Öffne den Element-Picker-Modus",
+    "message": "Element-Auswahl öffnen",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
@@ -124,27 +124,27 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Blockieren von Popups für diese Seite an-/ausschalten",
+    "message": "Pop-ups auf dieser Seite blockieren/zulassen",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Hier klicken, um alle Popups auf dieser Seite zu blockieren",
+    "message": "Hier klicken, um alle Popups auf dieser Website zu blockieren",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Hier klicken, um Popups auf dieser Seite nicht mehr zu blockieren",
+    "message": "Hier klicken, um Popups auf dieser Website nicht mehr zu blockieren",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Das Blockieren großer Medienelemente auf dieser Seite an-/ausschalten",
+    "message": "Große Medienelemente dieser Seite anzeigen/sperren",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Hier klicken, um große Medienelemente auf dieser Seite zu blockieren",
+    "message": "Hier klicken, um große Medienelemente auf dieser Website zu blockieren",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Hier klicken, um große Medienelemente auf dieser Seite nicht mehr zu blockieren",
+    "message": "Hier klicken, um große Medienelemente auf dieser Website nicht mehr zu blockieren",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -152,11 +152,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Hier klicken, um Kosmetische Filter auf dieser Seite zu deaktivieren",
+    "message": "Hier klicken, um kosmetische Filter auf dieser Seite zu deaktivieren",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Hier klicken, um Kosmetische Filter auf dieser Seite zu aktivieren",
+    "message": "Hier klicken, um kosmetische Filter auf dieser Seite zu aktivieren",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -300,7 +300,7 @@
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
-    "message": "Verstecke die Platzhalter für blockierte Elemente",
+    "message": "Platzhalter für blockierte Elemente ausblenden",
     "description": "English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt": {
@@ -396,7 +396,7 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll": {
-    "message": "Leere alle Cache-Speicher",
+    "message": "Alle Cache-Speicher leeren",
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
@@ -496,7 +496,7 @@
     "description": "English: Export"
   },
   "1pExportFilename": {
-    "message": "my-ublock-custom-filters_{{datetime}}.txt",
+    "message": "ublock-statische-filter_{{datetime}}.txt",
     "description": "English: my-ublock-static-filters_{{datetime}}.txt"
   },
   "1pApplyChanges": {
@@ -736,11 +736,11 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
-    "message": "Blockiere",
+    "message": "Blockieren",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAllow": {
-    "message": "Erlaube",
+    "message": "Erlauben",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType": {
@@ -876,7 +876,7 @@
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
-    "message": "my-ublock-backup_{{datetime}}.txt",
+    "message": "ublock-sicherung_{{datetime}}.txt",
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
@@ -888,7 +888,7 @@
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
-    "message": "Alle Einstellungen werden überschrieben und auf den Stand von {{time}} gebracht. Anschließend wird uBlock neu gestartet.\n\nSollen die aktuellen Einstellungen durch das Backup ersetzt werden?",
+    "message": "Alle Einstellungen werden überschrieben und auf den Stand von {{time}} gebracht. Anschließend wird uBlock neu gestartet.\n\nSollen die aktuellen Einstellungen durch die Sicherung ersetzt werden?",
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {
@@ -968,7 +968,7 @@
     "description": "English: Go back"
   },
   "docblockedClose": {
-    "message": "Schließe dieses Fenster",
+    "message": "Dieses Fenster schließen",
     "description": "English: Close this window"
   },
   "docblockedProceed": {

@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "רשימה לבנה",
+    "message": "אתרים מהימנים",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -484,7 +484,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "מסנן אחד לשורה. המסנן יכול להיות שם מארח פשוט, או מסנן תואם EasyList. שורות עם קידומת <code>!</code> ייתקלו בהתעלמות.",
+    "message": "מסנן אחד לכל שורה. המסנן יכול להיות דומיין פשוט, או מסנן התואם ל- EasyList. שורות עם קידומת <code>!</code> לא יפורשו.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -552,11 +552,11 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
-    "message": "מיון:",
+    "message": "מיין לפי:",
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
-    "message": "סוג כלל",
+    "message": "סוג הרשומה",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortBySource": {
@@ -568,7 +568,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "הכוונות האתר המהימן מכתיבות באילו דפי רשת uBlock Origin צריך להיות מושבת. כניסה אחת לשורה. הכוונות בלתי תקפות ייתקלו בהתעלמות בשקט ויקבלו הערה.",
+    "message": "הרשומות באתרים המהימנים מציינות באילו דפי אינטרנט uBlock Origin לא יהיה פעיל. רשומה אחת בכל שורה. רשומות לא חוקיות תתעלמנה בשקט ויסומנו כהערות.",
     "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
@@ -580,7 +580,7 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "my-ublock-whitelist_{{datetime}}.txt",
+    "message": "my-ublock-trusted-sites_{{datetime}}.txt",
     "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
@@ -904,7 +904,7 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: הוסף את הכתובת הבאה לרשימת הפילטרים המותאמים אישית שלך?\n\nכותרת: \"{{title}}\"\nכתובת URL: {{url}}",
+    "message": "הוסף את הכתובת הבאה לרשימת הפילטרים המותאמים אישית שלך?\n\nכותרת: \"{{title}}\"\nכתובת URL: {{url}}",
     "description": "No longer used"
   },
   "subscribeButton": {

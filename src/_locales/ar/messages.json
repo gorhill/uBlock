@@ -648,7 +648,7 @@
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
-    "message": "فلتر سجل الإدخالات",
+    "message": "رشّح محتوى السجل",
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
