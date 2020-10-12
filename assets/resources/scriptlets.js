@@ -754,7 +754,7 @@
             }
         }
         Object.defineProperty(owner, prop, {
-            configurable: true,
+            configurable: false,
             get() {
                 if ( prevGetter !== undefined ) {
                     prevGetter();
