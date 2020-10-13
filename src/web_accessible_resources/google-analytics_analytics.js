@@ -57,7 +57,7 @@
         }
         if ( fn instanceof Function === false ) { return; }
         try {
-            setTimeout(fn, 1);
+            fn();
         } catch (ex) {
         }
     };
