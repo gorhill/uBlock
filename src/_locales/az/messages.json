@@ -12,7 +12,7 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Diqqət! Yadda saxlamadığınız dəyişikliklər var",
+    "message": "Xəbərdarlıq! Saxlamadığınız dəyişikliklər var",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -20,7 +20,7 @@
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Nəzərə alma",
+    "message": "Əhəmiyyət vermə",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "İstisnalar",
+    "message": "Etibarlı saytlar",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -48,7 +48,7 @@
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
-    "message": "uBlock₀ — Qeydiyyatçı",
+    "message": "uBlock₀ — Jurnal",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
@@ -60,19 +60,19 @@
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
-    "message": "Əlavə parametrlər",
+    "message": "Qabaqcıl tənzimləmələr",
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Klik: Bu saytda uBlock₀-u işə sal/dayandır.\n\nCtrl+klik: Yalnız bu səhifədə uBlock₀-u dayandır.",
+    "message": "Klikləmə: Bu sayt üçün uBlock₀-u fəallaşdır/sıradan çıxart.\n\nCtrl+klikləmə: Yalnız bu səhifə üçün uBlock₀-u sıradan çıxart.",
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Bu saytda uBlock₀-u dayandırmaq üçün düyməyə basın.\n\nYalnız bu səhifədə uBlock₀-u dayandırmaq üçün Ctrl və düyməyə basın.",
+    "message": "Bu sayt üçün uBlock₀-u sıradan çıxartmaq üçün klikləyin.\n\nYalnız bu səhifə üçün uBlock₀-u sıradan çıxartmaq üçün Ctrl+klikləyin.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Bu saytda uBlock₀-u işə salmaq üçün düyməyə basın.",
+    "message": "Bu saytda uBlock₀-u fəallaşdırmaq üçün klikləyin.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -92,7 +92,7 @@
     "description": "English: since install"
   },
   "popupOr": {
-    "message": "yaxud",
+    "message": "və ya",
     "description": "English: or"
   },
   "popupBlockedOnThisPage_v2": {
@@ -104,7 +104,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
-    "message": "Qoşulmuş domenlər",
+    "message": "Bağlantı qurulmuş domenlər",
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
@@ -120,23 +120,23 @@
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "Loggeri aç",
+    "message": "Jurnalı aç",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Bu saytda peyda olan bütün pəncərələrin əngəllənməsini işə sal/dayandır",
+    "message": "Bu sayt üçün bütün açılan pəncələri aç/bağla",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Bu saytda peyda olan bütün pəncərələri əngəlləmək üçün düyməyə basın",
+    "message": "Bu saytda bütün açılan pəncərələri əngəlləmək üçün kliklə",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Bu saytda peyda olan bütün pəncərələri daha əngəlləməmək üçün düyməyə basın",
+    "message": "Bu saytdakı bütün açılan pəncələri artıq əngəlləməmək üçün kliklə",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Bu saytda böyük media elemetlərinin əngəllənməsini işə sal/dayandır",
+    "message": "Bu saytda böyük media elemetlərini əngəlləməyi aç/bağla",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
@@ -172,7 +172,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Bu saytda JavaScript-i əngəlləmək üçün düyməyə basın",
+    "message": "Bu saytda JavaScript-i sıradan çıxartmaq üçün kliklə",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
@@ -216,7 +216,7 @@
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
-    "message": "Dəyişiklikləri daimi etmək üçün düyməyə basın.",
+    "message": "Dəyişiklikləri daimi etmək üçün klikləyin.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
@@ -908,7 +908,7 @@
     "description": "No longer used"
   },
   "subscribeButton": {
-    "message": "Subscribe",
+    "message": "Abunə ol",
     "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
@@ -1036,19 +1036,19 @@
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
-    "message": "Mübadilə buferinə kopyala",
+    "message": "Lövhəyə kopyala",
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "toggleBlockingProfile": {
-    "message": "Əngəlləmə profilini işə sal/söndür",
+    "message": "Əngəlləmə profilini aç/bağla",
     "description": "Label for keyboard shortcut used to toggle blocking profile"
   },
   "relaxBlockingMode": {
-    "message": "Zəif əngəlləmə rejimi",
+    "message": "Əngəlləmə rejimini yüngülləşdir",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "storageUsed": {
-    "message": "İstifadə olunan yer: {{value}} {{unit}}",
+    "message": "İstifadə olunan anbar: {{value}} {{unit}}",
     "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
   },
   "KB": {
@@ -1062,6 +1062,10 @@
   "GB": {
     "message": "GB",
     "description": "short for 'gigabytes'"
+  },
+  "clickToLoad": {
+    "message": "Yükləmək üçün kliklə",
+    "description": "Message used in frame placeholders"
   },
   "dummy": {
     "message": "This entry must be the last one",

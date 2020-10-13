@@ -1063,6 +1063,10 @@
     "message": "GB",
     "description": "short for 'gigabytes'"
   },
+  "clickToLoad": {
+    "message": "ஏற்ற கிளிக் செய்க",
+    "description": "Message used in frame placeholders"
+  },
   "dummy": {
     "message": "This entry must be the last one",
     "description": "so we dont need to deal with comma for last entry"

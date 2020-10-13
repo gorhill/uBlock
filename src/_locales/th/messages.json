@@ -852,7 +852,7 @@
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Contributors",
+    "message": "ผู้มีส่วนร่วม",
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
@@ -860,7 +860,7 @@
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
-    "message": "Translations",
+    "message": "การแปลภาษา",
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
@@ -1062,6 +1062,10 @@
   "GB": {
     "message": "GB",
     "description": "short for 'gigabytes'"
+  },
+  "clickToLoad": {
+    "message": "คลิกเพื่อโหลด",
+    "description": "Message used in frame placeholders"
   },
   "dummy": {
     "message": "This entry must be the last one",

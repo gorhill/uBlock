@@ -1063,6 +1063,10 @@
     "message": "GB",
     "description": "short for 'gigabytes'"
   },
+  "clickToLoad": {
+    "message": "點擊以載入",
+    "description": "Message used in frame placeholders"
+  },
   "dummy": {
     "message": "此條目須為最後一個",
     "description": "so we dont need to deal with comma for last entry"

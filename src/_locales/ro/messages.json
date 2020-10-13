@@ -1063,6 +1063,10 @@
     "message": "GB",
     "description": "short for 'gigabytes'"
   },
+  "clickToLoad": {
+    "message": "Apasă pentru a încărca",
+    "description": "Message used in frame placeholders"
+  },
   "dummy": {
     "message": "Aceasta intrare trebuie sa fie ultima",
     "description": "so we dont need to deal with comma for last entry"

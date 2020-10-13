@@ -1063,6 +1063,10 @@
     "message": "Go",
     "description": "short for 'gigabytes'"
   },
+  "clickToLoad": {
+    "message": "Cliquez pour charger",
+    "description": "Message used in frame placeholders"
+  },
   "dummy": {
     "message": "This entry must be the last one",
     "description": "so we dont need to deal with comma for last entry"

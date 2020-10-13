@@ -1065,7 +1065,7 @@
   },
   "clickToLoad": {
     "message": "Click to load",
-    "description": "Message use in frame placeholders"
+    "description": "Message used in frame placeholders"
   },
   "dummy": {
     "message": "This entry must be the last one",

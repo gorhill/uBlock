@@ -1063,6 +1063,10 @@
     "message": "GB",
     "description": "short for 'gigabytes'"
   },
+  "clickToLoad": {
+    "message": "Kliknite za pokretanje",
+    "description": "Message used in frame placeholders"
+  },
   "dummy": {
     "message": "Ova stavka mora biti posljednja",
     "description": "so we dont need to deal with comma for last entry"

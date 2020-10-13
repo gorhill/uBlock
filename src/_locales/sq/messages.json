@@ -304,7 +304,7 @@
     "description": "English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt": {
-    "message": "Tregoj te ikona numrin e kërkesave të refuzuara",
+    "message": "Shfaq te ikona numrin e kërkesave të refuzuara",
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
@@ -484,7 +484,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Një filtër për rresht. Filtri mund të jetë thjesht emri i një hosti ose i ngjashëm me ata që përdor Adblock Plus. Nuk do të merren parasysh rreshtat që fillojnë me <code>!</code>.",
+    "message": "Një filtër për rresht. Filtri mund të jetë thjesht emri i një hosti ose i ngjashëm me ata që përdor EasyList. Nuk do të merren parasysh rreshtat që fillojnë me <code>!</code>.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -556,7 +556,7 @@
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
-    "message": "Tipi i rregullit",
+    "message": "Lloji i rregullit",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortBySource": {
@@ -904,11 +904,11 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: Të shtohet adresa në listën e filtrave tuaj?\n\nTitulli: \"{{title}}\"\nURL: {{url}}",
+    "message": "Të shtohet adresa në listën e personalizuar të filtrave?\n\nTitulli: \"{{title}}\"\nURL: {{url}}",
     "description": "No longer used"
   },
   "subscribeButton": {
-    "message": "Subscribe",
+    "message": "Abonohem",
     "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
@@ -1062,6 +1062,10 @@
   "GB": {
     "message": "GB",
     "description": "short for 'gigabytes'"
+  },
+  "clickToLoad": {
+    "message": "Klikoni për ta hapur",
+    "description": "Message used in frame placeholders"
   },
   "dummy": {
     "message": "This entry must be the last one",
