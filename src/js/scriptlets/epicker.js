@@ -805,7 +805,8 @@ const filterToDOMInterface = (( ) => {
         if ( cssSelectors.size !== 0 ) {
             vAPI.domFilterer.addCSSRule(
                 Array.from(cssSelectors),
-                vAPI.hideStyle
+                vAPI.hideStyle,
+                { mustInject: true }
             );
         }
         if ( proceduralSelectors.size !== 0 ) {

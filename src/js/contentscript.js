@@ -851,7 +851,7 @@ vAPI.injectScriptlet = function(doc, text) {
             this.domFilterer.addCSSRule(
                 `[${this.masterToken}][${styleToken}]`,
                 style,
-                { silent: true }
+                { silent: true, mustInject: true }
             );
             return styleToken;
         }
@@ -908,7 +908,6 @@ vAPI.injectScriptlet = function(doc, text) {
             this.disabled = false;
             this.listeners = [];
             this.filterset = new Set();
-            this.addedCSSRules = new Set();
             this.exceptedCSSRules = [];
             this.exceptions = [];
             this.proceduralFilterer = null;
@@ -929,22 +928,11 @@ vAPI.injectScriptlet = function(doc, text) {
         addCSSRule(selectors, declarations, details = {}) {
             if ( selectors === undefined ) { return; }
             const selectorsStr = Array.isArray(selectors)
-                    ? selectors.join(',\n')
-                    : selectors;
+                ? selectors.join(',\n')
+                : selectors;
             if ( selectorsStr.length === 0 ) { return; }
-            const entry = {
-                selectors: selectorsStr,
-                declarations,
-                lazy: details.lazy === true,
-                injected: details.injected === true
-            };
-            this.addedCSSRules.add(entry);
-            this.filterset.add(entry);
-            if (
-                this.disabled === false &&
-                entry.lazy !== true &&
-                entry.injected !== true
-            ) {
+            this.filterset.add({ selectors: selectorsStr, declarations });
+            if ( details.mustInject && this.disabled === false ) {
                 vAPI.userStylesheet.add(`${selectorsStr}\n{${declarations}}`);
             }
             this.commit();
@@ -1012,20 +1000,7 @@ vAPI.injectScriptlet = function(doc, text) {
         commitNow() {
             this.commitTimer.clear();
             if ( vAPI instanceof Object === false ) { return; }
-            const userStylesheet = vAPI.userStylesheet;
-            for ( const entry of this.addedCSSRules ) {
-                if (
-                    this.disabled === false &&
-                    entry.lazy &&
-                    entry.injected === false
-                ) {
-                    userStylesheet.add(
-                        `${entry.selectors}\n{${entry.declarations}}`
-                    );
-                }
-            }
-            this.addedCSSRules.clear();
-            userStylesheet.apply();
+            vAPI.userStylesheet.apply();
             if ( this.proceduralFilterer instanceof Object ) {
                 this.proceduralFilterer.commitNow();
             }
@@ -1059,11 +1034,11 @@ vAPI.injectScriptlet = function(doc, text) {
                     o.action[0] === ':style' &&
                     o.tasks === undefined
                 ) {
-                    this.addCSSRule(o.selector, o.action[1]);
+                    this.addCSSRule(o.selector, o.action[1], { mustInject: true });
                     continue;
                 }
                 if ( o.pseudo !== undefined ) {
-                    this.addCSSRule(o.selector, vAPI.hideStyle);
+                    this.addCSSRule(o.selector, vAPI.hideStyle, { mustInject: true });
                     continue;
                 }
                 procedurals.push(o);
@@ -1550,11 +1525,7 @@ vAPI.injectScriptlet = function(doc, text) {
         if ( result ) {
             let selectors = result.injected;
             if ( typeof selectors === 'string' && selectors.length !== 0 ) {
-                domFilterer.addCSSRule(
-                    selectors,
-                    vAPI.hideStyle,
-                    { injected: true }
-                );
+                domFilterer.addCSSRule(selectors, vAPI.hideStyle);
                 mustCommit = true;
             }
             selectors = result.excepted;
@@ -1722,11 +1693,7 @@ vAPI.injectScriptlet = function(doc, text) {
                 vAPI.domSurveyor = null;
             }
             domFilterer.exceptions = cfeDetails.exceptionFilters;
-            domFilterer.addCSSRule(
-                cfeDetails.injectedHideFilters,
-                vAPI.hideStyle,
-                { injected: true }
-            );
+            domFilterer.addCSSRule(cfeDetails.injectedHideFilters, vAPI.hideStyle);
             domFilterer.addProceduralSelectors(cfeDetails.proceduralFilters);
             domFilterer.exceptCSSRules(cfeDetails.exceptedFilters);
         }
