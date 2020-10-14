@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* global CodeMirror */
+
 'use strict';
 
 /******************************************************************************/
@@ -36,7 +38,6 @@ const $storAll = selector => document.querySelectorAll(selector);
 
 const pickerRoot = document.documentElement;
 const dialog = $stor('aside');
-const taCandidate = $stor('textarea');
 let staticFilteringParser;
 
 const svgRoot = $stor('svg');
@@ -66,11 +67,40 @@ let needBody = false;
 
 /******************************************************************************/
 
+const cmEditor = new CodeMirror(document.querySelector('.codeMirrorContainer'), {
+    autoCloseBrackets: true,
+    autofocus: true,
+    extraKeys: {
+        'Ctrl-Space': 'autocomplete',
+    },
+    lineWrapping: true,
+    matchBrackets: true,
+    maxScanLines: 1,
+});
+
+vAPI.messaging.send('dashboard', {
+    what: 'getAutoCompleteDetails'
+}).then(response => {
+    if ( response instanceof Object === false ) { return; }
+    const mode = cmEditor.getMode();
+    if ( mode.setHints instanceof Function ) {
+        mode.setHints(response);
+    }
+});
+
+/******************************************************************************/
+
+const rawFilterFromTextarea = function() {
+    const text = cmEditor.getValue();
+    const pos = text.indexOf('\n');
+    return pos === -1 ? text : text.slice(0, pos);
+};
+
+/******************************************************************************/
+
 const filterFromTextarea = function() {
-    const s = taCandidate.value.trim();
-    if ( s === '' ) { return ''; }
-    const pos = s.indexOf('\n');
-    const filter = pos === -1 ? s.trim() : s.slice(0, pos).trim();
+    const filter = rawFilterFromTextarea();
+    if ( filter === '' ) { return ''; }
     const sfp = staticFilteringParser;
     sfp.analyze(filter);
     sfp.analyzeExtra();
@@ -256,7 +286,8 @@ const candidateFromFilterChoice = function(filterChoice) {
 const onCandidateOptimized = function(details) {
     $id('resultsetModifiers').classList.remove('hide');
     computedCandidate = details.filter;
-    taCandidate.value = computedCandidate;
+    cmEditor.setValue(computedCandidate);
+    cmEditor.clearHistory();
     onCandidateChanged();
 };
 
@@ -393,9 +424,9 @@ const onCandidateChanged = function() {
         $id('resultsetCount').textContent = 'E';
         $id('create').setAttribute('disabled', '');
     }
+    const text = rawFilterFromTextarea();
     $id('resultsetModifiers').classList.toggle(
-        'hide',
-        taCandidate.value === '' || taCandidate.value !== computedCandidate
+        'hide', text === '' || text !== computedCandidate
     );
     vAPI.MessagingConnection.sendTo(epickerConnectionId, {
         what: 'dialogSetFilter',
@@ -462,20 +493,22 @@ const onDepthChanged = function() {
         slot: max - value,
     });
     if ( text === undefined ) { return; }
-    taCandidate.value = text;
+    cmEditor.setValue(text);
+    cmEditor.clearHistory();
     onCandidateChanged();
 };
 
 /******************************************************************************/
 
 const onSpecificityChanged = function() {
-    if ( taCandidate.value !== computedCandidate ) { return; }
+    if ( rawFilterFromTextarea() !== computedCandidate ) { return; }
     const text = candidateFromFilterChoice({
         filters: cosmeticFilterCandidates,
         slot: computedCandidateSlot,
     });
     if ( text === undefined ) { return; }
-    taCandidate.value = text;
+    cmEditor.setValue(text);
+    cmEditor.clearHistory();
     onCandidateChanged();
 };
 
@@ -496,7 +529,8 @@ const onCandidateClicked = function(ev) {
     }
     const text = candidateFromFilterChoice(choice);
     if ( text === undefined ) { return; }
-    taCandidate.value = text;
+    cmEditor.setValue(text);
+    cmEditor.clearHistory();
     onCandidateChanged();
 };
 
@@ -703,7 +737,7 @@ const showDialog = function(details) {
     //   This is an issue which surfaced when the element picker code was
     //   revisited to isolate the picker dialog DOM from the page DOM.
     if ( typeof filter !== 'object' || filter === null ) {
-        taCandidate.value = '';
+        cmEditor.setValue('');
         return;
     }
 
@@ -714,7 +748,7 @@ const showDialog = function(details) {
 
     const text = candidateFromFilterChoice(filterChoice);
     if ( text === undefined ) { return; }
-    taCandidate.value = text;
+    cmEditor.setValue(text);
     onCandidateChanged();
 };
 
@@ -749,7 +783,8 @@ const startPicker = function() {
 
     if ( pickerRoot.classList.contains('zap') ) { return; }
 
-    taCandidate.addEventListener('input', onCandidateChanged);
+    cmEditor.on('changes', onCandidateChanged);
+
     $id('preview').addEventListener('click', onPreviewClicked);
     $id('create').addEventListener('click', onCreateClicked);
     $id('pick').addEventListener('click', onPickClicked);

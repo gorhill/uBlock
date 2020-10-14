@@ -29,11 +29,6 @@ html#ublock0-epicker,
 #ublock0-epicker.paused:not(.zap) aside {
     display: block;
 }
-#ublock0-epicker ul,
-#ublock0-epicker li,
-#ublock0-epicker div {
-    display: block;
-}
 #ublock0-epicker #toolbar {
     cursor: grab;
     display: flex;
@@ -79,36 +74,31 @@ html#ublock0-epicker,
     width: 100%;
 }
 #ublock0-epicker section > div:first-child {
-    border: 1px solid #aaa;
+    border: 1px solid var(--default-surface-border);
     margin: 0;
     position: relative;
 }
 #ublock0-epicker section.invalidFilter > div:first-child {
     border-color: red;
 }
-#ublock0-epicker section textarea {
-    background-color: var(--default-surface);
+#ublock0-epicker section .codeMirrorContainer {
     border: none;
     box-sizing: border-box;
-    color: var(--default-ink);
     font: 11px monospace;
     height: 8em;
-    margin: 0;
-    overflow: hidden;
-    overflow-y: auto;
-    padding: 2px 2px 1.2em 2px;
-    resize: none;
+    padding: 2px;
     width: 100%;
-    word-break: break-all;
-}
-#ublock0-epicker section textarea + div {
-    background-color: transparent;
-    bottom: 0;
+    }
+.CodeMirror-lines,
+.CodeMirror pre {
+    padding: 0;
+    }
+.CodeMirror-vscrollbar {
+    z-index: 0;
+    }
+
+#ublock0-epicker section .resultsetWidgets {
     display: flex;
-    left: 0;
-    pointer-events: none;
-    position: absolute;
-    right: 0;
 }
 #resultsetModifiers {
     align-items: flex-end;
@@ -196,7 +186,7 @@ html#ublock0-epicker,
     overflow: hidden;
 }
 #ublock0-epicker #candidateFilters {
-    max-height: 16em;
+    max-height: 14em;
     overflow-y: auto;
 }
 #ublock0-epicker #candidateFilters > li:first-of-type {

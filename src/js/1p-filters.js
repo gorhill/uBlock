@@ -42,7 +42,9 @@ const cmEditor = new CodeMirror(document.getElementById('userFilters'), {
     lineWrapping: true,
     matchBrackets: true,
     maxScanLines: 1,
-    styleActiveLine: true,
+    styleActiveLine: {
+        nonEmpty: true,
+    },
 });
 
 uBlockDashboard.patchCodeMirrorEditor(cmEditor);

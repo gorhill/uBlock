@@ -318,10 +318,12 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
             return 'comment';
         }
         if ( parser.category === parser.CATStaticExtFilter ) {
-            return colorExtSpan(stream);
+            const style = colorExtSpan(stream);
+            return style ? `ext ${style}` : 'ext';
         }
         if ( parser.category === parser.CATStaticNetFilter ) {
-            return colorNetSpan(stream);
+            const style = colorNetSpan(stream);
+            return style ? `net ${style}` : 'net';
         }
         stream.skipToEnd();
         return null;
@@ -330,13 +332,14 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
     return {
         lineComment: '!',
         token: function(stream) {
+            let style = '';
             if ( stream.sol() ) {
                 parser.analyze(stream.string);
                 parser.analyzeExtra();
                 parserSlot = 0;
                 netOptionValueMode = false;
             }
-            let style = colorSpan(stream) || '';
+            style += colorSpan(stream) || '';
             if ( (parser.flavorBits & parser.BITFlavorError) !== 0 ) {
                 style += ' line-background-error';
             }
@@ -615,24 +618,49 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
 
         const s = cm.getLine(line);
         const token = cm.getTokenTypeAt(pos);
-        let lmatch, rmatch;
-        let select = false;
+        let beg, end;
 
         // Select URL in comments
-        if ( token === 'comment link' ) {
-            lmatch = /\S+$/.exec(s.slice(0, ch));
-            rmatch = /^\S+/.exec(s.slice(ch));
-            select = lmatch !== null && rmatch !== null &&
-                     /^https?:\/\//.test(s.slice(lmatch.index));
+        if ( /\bcomment\b/.test(token) && /\blink\b/.test(token) ) {
+            const l = /\S+$/.exec(s.slice(0, ch));
+            if ( l && /^https?:\/\//.test(s.slice(l.index)) ) {
+                const r = /^\S+/.exec(s.slice(ch));
+                if ( r ) {
+                    beg = l.index;
+                    end = ch + r[0].length;
+                }
+            }
+        }
+
+        // Better word selection for cosmetic filters
+        if ( /\bext\b/.test(token) ) {
+            if ( /\bvalue\b/.test(token) ) {
+                const l = /[^,.]*$/i.exec(s.slice(0, ch));
+                const r = /^[^#,]*/i.exec(s.slice(ch));
+                if ( l && r ) {
+                    beg = l.index;
+                    end = ch + r[0].length;
+                }
+            }
+            if ( /\bvariable\b/.test(token) ) {
+                const l = /[#.]?[a-z0-9_-]+$/i.exec(s.slice(0, ch));
+                const r = /^[a-z0-9_-]+/i.exec(s.slice(ch));
+                if ( l && r ) {
+                    beg = l.index;
+                    end = ch + r[0].length;
+                    if ( /\bdef\b/.test(cm.getTokenTypeAt({ line, ch: beg + 1 })) ) {
+                        beg += 1;
+                    }
+                }
+            }
         }
 
         // TODO: add more convenient word-matching cases here
-        // if ( select === false ) { ... }
 
-        if ( select === false ) { return Pass; }
+        if ( beg === undefined ) { return Pass; }
         cm.setSelection(
-            { line, ch: lmatch.index },
-            { line, ch: ch + rmatch.index + rmatch[0].length }
+            { line, ch: beg },
+            { line, ch: end }
         );
     };
 

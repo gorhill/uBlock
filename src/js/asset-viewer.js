@@ -53,7 +53,9 @@
         matchBrackets: true,
         maxScanLines: 1,
         readOnly: true,
-        styleActiveLine: true,
+        styleActiveLine: {
+            nonEmpty: true,
+        },
     });
 
     uBlockDashboard.patchCodeMirrorEditor(cmEditor);
