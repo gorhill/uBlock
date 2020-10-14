@@ -1064,7 +1064,7 @@
     "description": "short for 'gigabytes'"
   },
   "clickToLoad": {
-    "message": "Click to load",
+    "message": "اضغط للتحميل",
     "description": "Message used in frame placeholders"
   },
   "dummy": {
