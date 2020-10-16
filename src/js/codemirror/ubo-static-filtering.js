@@ -657,8 +657,8 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
         // Better word selection for network filters
         else if ( /\bnet\b/.test(token) ) {
             if ( /\bvalue\b/.test(token) ) {
-                const l = /[^,.=|]*$/i.exec(s.slice(0, ch));
-                const r = /^[^#,|]*/i.exec(s.slice(ch));
+                const l = /[^ ,.=|]*$/i.exec(s.slice(0, ch));
+                const r = /^[^ #,|]*/i.exec(s.slice(ch));
                 if ( l && r ) {
                     beg = l.index;
                     end = ch + r[0].length;
