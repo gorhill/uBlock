@@ -633,7 +633,7 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
         }
 
         // Better word selection for cosmetic filters
-        if ( /\bext\b/.test(token) ) {
+        else if ( /\bext\b/.test(token) ) {
             if ( /\bvalue\b/.test(token) ) {
                 const l = /[^,.]*$/i.exec(s.slice(0, ch));
                 const r = /^[^#,]*/i.exec(s.slice(ch));
@@ -641,8 +641,7 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
                     beg = l.index;
                     end = ch + r[0].length;
                 }
-            }
-            if ( /\bvariable\b/.test(token) ) {
+            } else if ( /\bvariable\b/.test(token) ) {
                 const l = /[#.]?[a-z0-9_-]+$/i.exec(s.slice(0, ch));
                 const r = /^[a-z0-9_-]+/i.exec(s.slice(ch));
                 if ( l && r ) {
@@ -655,7 +654,24 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
             }
         }
 
-        // TODO: add more convenient word-matching cases here
+        // Better word selection for network filters
+        else if ( /\bnet\b/.test(token) ) {
+            if ( /\bvalue\b/.test(token) ) {
+                const l = /[^,.=|]*$/i.exec(s.slice(0, ch));
+                const r = /^[^#,|]*/i.exec(s.slice(ch));
+                if ( l && r ) {
+                    beg = l.index;
+                    end = ch + r[0].length;
+                }
+            } else if ( /\bdef\b/.test(token) ) {
+                const l = /[a-z0-9-]+$/i.exec(s.slice(0, ch));
+                const r = /^[^,]*=[^,]+/i.exec(s.slice(ch));
+                if ( l && r ) {
+                    beg = l.index;
+                    end = ch + r[0].length;
+                }
+            }
+        }
 
         if ( beg === undefined ) { return Pass; }
         cm.setSelection(
