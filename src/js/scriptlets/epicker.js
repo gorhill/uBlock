@@ -821,21 +821,41 @@ const filterToDOMInterface = (( ) => {
 
 /******************************************************************************/
 
-const onOptmizeCandidate = function(details) {
-    const { paths } = details;
-    let count = Number.MAX_SAFE_INTEGER;
-    let selector = '';
-    for ( let i = 0, n = paths.length; i < n; i++ ) {
-        const s = paths.slice(n - i - 1).join('');
-        const elems = document.querySelectorAll(s);
-        if ( elems.length < count ) {
-            selector = s;
-            count = elems.length;
+const onOptmizeCandidates = function(details) {
+    const { candidates } = details;
+    const results = [];
+    for ( const paths of candidates ) {
+        let count = Number.MAX_SAFE_INTEGER;
+        let selector = '';
+        for ( let i = 0, n = paths.length; i < n; i++ ) {
+            const s = paths.slice(n - i - 1).join('');
+            const elems = document.querySelectorAll(s);
+            if ( elems.length < count ) {
+                selector = s;
+                count = elems.length;
+            }
         }
+        results.push({ selector: `##${selector}`, count });
+    }
+    // Sort by most match count and shortest selector to least match count and
+    // longest selector.
+    results.sort((a, b) => {
+        const r = b.count - a.count;
+        if ( r !== 0 ) { return r; }
+        return a.selector.length - b.selector.length;
+    });
+    // Discard selectors with same match count as shorter ones.
+    for ( let i = 0; i < results.length - 1; i++ ) {
+        const a = results[i+0];
+        const b = results[i+1];
+        if ( b.count !== a.count ) { continue; }
+        if ( b.selector.length === a.selector.length ) { continue; }
+        b.selector = a.selector;
+        b.count = a.count;
     }
     vAPI.MessagingConnection.sendTo(epickerConnectionId, {
-        what: 'candidateOptimized',
-        filter: `##${selector}`,
+        what: 'candidatesOptimized',
+        candidates: results.map(a => a.selector),
     });
 };
 
@@ -1064,8 +1084,8 @@ const onDialogMessage = function(msg) {
                 highlightElements([], true);
             }
             break;
-        case 'optimizeCandidate':
-            onOptmizeCandidate(msg);
+        case 'optimizeCandidates':
+            onOptmizeCandidates(msg);
             break;
         case 'dialogCreate':
             filterToDOMInterface.queryAll(msg);

@@ -63,6 +63,7 @@ let netFilterCandidates = [];
 let cosmeticFilterCandidates = [];
 let computedCandidateSlot = 0;
 let computedCandidate = '';
+let computedSpecificityCandidates = [];
 let needBody = false;
 
 /******************************************************************************/
@@ -194,7 +195,13 @@ const candidateFromFilterChoice = function(filterChoice) {
     $stor(`#cosmeticFilters li:nth-of-type(${slot+1})`)
         .classList.add('active');
 
-    const specificity = [
+    return cosmeticCandidatesFromFilterChoice(filterChoice);
+};
+
+/******************************************************************************/
+
+const cosmeticCandidatesFromFilterChoice = function(filterChoice) {
+    const specificities = [
         0b0000,  // remove hierarchy; remove id, nth-of-type, attribute values
         0b0010,  // remove hierarchy; remove id, nth-of-type
         0b0011,  // remove hierarchy
@@ -203,89 +210,100 @@ const candidateFromFilterChoice = function(filterChoice) {
         0b1100,  // remove id, nth-of-type, attribute values
         0b1110,  // remove id, nth-of-type
         0b1111,  // keep all = most specific
-    ][ parseInt($stor('#resultsetSpecificity input').value, 10) ];
+    ];
 
-    // Return path: the target element, then all siblings prepended
-    const paths = [];
-    for ( let i = slot; i < filters.length; i++ ) {
-        filter = filters[i].slice(2);
-        // Remove id, nth-of-type
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/162
-        //   Mind escaped periods: they do not denote a class identifier.
-        if ( (specificity & 0b0001) === 0 ) {
-            filter = filter.replace(/:nth-of-type\(\d+\)/, '');
-            if (
-                filter.charAt(0) === '#' && (
-                    (specificity & 0b1000) === 0 || i === slot
-                )
-            ) {
-                const pos = filter.search(/[^\\]\./);
-                if ( pos !== -1 ) {
-                    filter = filter.slice(pos + 1);
+    const candidates = [];
+
+    let { slot, filters } = filterChoice;
+    let filter = filters[slot];
+
+    for ( const specificity of specificities ) {
+        // Return path: the target element, then all siblings prepended
+        const paths = [];
+        for ( let i = slot; i < filters.length; i++ ) {
+            filter = filters[i].slice(2);
+            // Remove id, nth-of-type
+            // https://github.com/uBlockOrigin/uBlock-issues/issues/162
+            //   Mind escaped periods: they do not denote a class identifier.
+            if ( (specificity & 0b0001) === 0 ) {
+                filter = filter.replace(/:nth-of-type\(\d+\)/, '');
+                if (
+                    filter.charAt(0) === '#' && (
+                        (specificity & 0b1000) === 0 || i === slot
+                    )
+                ) {
+                    const pos = filter.search(/[^\\]\./);
+                    if ( pos !== -1 ) {
+                        filter = filter.slice(pos + 1);
+                    }
+                }
+            }
+            // Remove attribute values.
+            if ( (specificity & 0b0010) === 0 ) {
+                const match = /^\[([^^=]+)\^?=.+\]$/.exec(filter);
+                if ( match !== null ) {
+                    filter = `[${match[1]}]`;
+                }
+            }
+            // Remove all classes when an id exists.
+            // https://github.com/uBlockOrigin/uBlock-issues/issues/162
+            //   Mind escaped periods: they do not denote a class identifier.
+            if ( filter.charAt(0) === '#' ) {
+                filter = filter.replace(/([^\\])\..+$/, '$1');
+            }
+            if ( paths.length !== 0 ) {
+                filter += ' > ';
+            }
+            paths.unshift(filter);
+            // Stop at any element with an id: these are unique in a web page
+            if ( (specificity & 0b1000) === 0 || filter.startsWith('#') ) {
+                break;
+            }
+        }
+
+        // Trim hierarchy: remove generic elements from path
+        if ( (specificity & 0b1100) === 0b1000 ) {
+            let i = 0;
+            while ( i < paths.length - 1 ) {
+                if ( /^[a-z0-9]+ > $/.test(paths[i+1]) ) {
+                    if ( paths[i].endsWith(' > ') ) {
+                        paths[i] = paths[i].slice(0, -2);
+                    }
+                    paths.splice(i + 1, 1);
+                } else {
+                    i += 1;
                 }
             }
         }
-        // Remove attribute values.
-        if ( (specificity & 0b0010) === 0 ) {
-            const match = /^\[([^^=]+)\^?=.+\]$/.exec(filter);
-            if ( match !== null ) {
-                filter = `[${match[1]}]`;
-            }
-        }
-        // Remove all classes when an id exists.
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/162
-        //   Mind escaped periods: they do not denote a class identifier.
-        if ( filter.charAt(0) === '#' ) {
-            filter = filter.replace(/([^\\])\..+$/, '$1');
-        }
-        if ( paths.length !== 0 ) {
-            filter += ' > ';
-        }
-        paths.unshift(filter);
-        // Stop at any element with an id: these are unique in a web page
-        if ( (specificity & 0b1000) === 0 || filter.startsWith('#') ) { break; }
-    }
 
-    // Trim hierarchy: remove generic elements from path
-    if ( (specificity & 0b1100) === 0b1000 ) {
-        let i = 0;
-        while ( i < paths.length - 1 ) {
-            if ( /^[a-z0-9]+ > $/.test(paths[i+1]) ) {
-                if ( paths[i].endsWith(' > ') ) {
-                    paths[i] = paths[i].slice(0, -2);
-                }
-                paths.splice(i + 1, 1);
-            } else {
-                i += 1;
-            }
+        if (
+            needBody &&
+            paths.length !== 0 &&
+            paths[0].startsWith('#') === false &&
+            (specificity & 0b1100) !== 0
+        ) {
+            paths.unshift('body > ');
         }
-    }
 
-    if (
-        needBody &&
-        paths.length !== 0 &&
-        paths[0].startsWith('#') === false &&
-        (specificity & 0b1100) !== 0
-    ) {
-        paths.unshift('body > ');
+        candidates.push(paths);
     }
-
-    if ( paths.length === 0 ) { return ''; }
 
     renderRange('resultsetDepth', slot, true);
     renderRange('resultsetSpecificity');
 
     vAPI.MessagingConnection.sendTo(epickerConnectionId, {
-        what: 'optimizeCandidate',
-        paths,
+        what: 'optimizeCandidates',
+        candidates,
     });
 };
 
 /******************************************************************************/
 
-const onCandidateOptimized = function(details) {
+const onCandidatesOptimized = function(details) {
     $id('resultsetModifiers').classList.remove('hide');
-    computedCandidate = details.filter;
+    const i = parseInt($stor('#resultsetSpecificity input').value, 10);
+    computedSpecificityCandidates = details.candidates;
+    computedCandidate = computedSpecificityCandidates[i];
     cmEditor.setValue(computedCandidate);
     cmEditor.clearHistory();
     onCandidateChanged();
@@ -501,13 +519,11 @@ const onDepthChanged = function() {
 /******************************************************************************/
 
 const onSpecificityChanged = function() {
+    renderRange('resultsetSpecificity');
     if ( rawFilterFromTextarea() !== computedCandidate ) { return; }
-    const text = candidateFromFilterChoice({
-        filters: cosmeticFilterCandidates,
-        slot: computedCandidateSlot,
-    });
-    if ( text === undefined ) { return; }
-    cmEditor.setValue(text);
+    const i = parseInt($stor('#resultsetSpecificity input').value, 10);
+    computedCandidate = computedSpecificityCandidates[i];
+    cmEditor.setValue(computedCandidate);
     cmEditor.clearHistory();
     onCandidateChanged();
 };
@@ -808,8 +824,8 @@ const quitPicker = function() {
 
 const onPickerMessage = function(msg) {
     switch ( msg.what ) {
-        case 'candidateOptimized':
-            onCandidateOptimized(msg);
+        case 'candidatesOptimized':
+            onCandidatesOptimized(msg);
             break;
         case 'showDialog':
             showDialog(msg);
