@@ -105,7 +105,7 @@ DOMListFactory.nodeFromSelector = function(selector) {
             }
         }
         if ( response.uiStyles !== 'unset' ) {
-            document.body.style.cssText = response;
+            document.body.style.cssText = response.uiStyles;
         }
     });
 
