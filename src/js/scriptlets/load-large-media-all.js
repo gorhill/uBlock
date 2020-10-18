@@ -19,48 +19,36 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+'use strict';
+
 /******************************************************************************/
 
-(function() {
-
-'use strict';
+(( ) => {
 
 /******************************************************************************/
 
 // For all media resources which have failed to load, trigger a reload.
 
-var elems, i, elem, src;
-
 // <audio> and <video> elements.
 // https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement
 
-elems = document.querySelectorAll('audio,video');
-i = elems.length;
-while ( i-- ) {
-    elem = elems[i];
-    if ( elem.error !== null ) {
-        elem.load();
-    }
+for ( const elem of document.querySelectorAll('audio,video') ) {
+    if ( elem.error === null ) { continue; }
+    elem.load();
 }
 
 // <img> elements.
 // https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement
 
-elems = document.querySelectorAll('img');
-i = elems.length;
-while ( i-- ) {
-    elem = elems[i];
-    if ( elem.naturalWidth !== 0 && elem.naturalHeight !== 0 ) {
-        continue;
-    }
+for ( const elem of document.querySelectorAll('img') ) {
+    if ( elem.naturalWidth !== 0 && elem.naturalHeight !== 0 ) { continue; }
     if ( window.getComputedStyle(elem).getPropertyValue('display') === 'none' ) {
         continue;
     }
-    src = elem.getAttribute('src');
-    if ( src ) {
-        elem.removeAttribute('src');
-        elem.setAttribute('src', src);
-    }
+    const src = elem.getAttribute('src') || '';
+    if ( src === '' ) { continue; }
+    elem.removeAttribute('src');
+    elem.setAttribute('src', src);
 }
 
 /******************************************************************************/

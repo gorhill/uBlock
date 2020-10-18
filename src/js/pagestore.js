@@ -244,7 +244,7 @@ const PageStore = class {
             typeof this.allowLargeMediaElementsUntil !== 'number' ||
             tabContext.rootHostname !== this.tabHostname
         ) {
-            this.allowLargeMediaElementsUntil = 0;
+            this.allowLargeMediaElementsUntil = Date.now();
         }
 
         this.tabHostname = tabContext.rootHostname;
@@ -260,6 +260,7 @@ const PageStore = class {
         this.largeMediaCount = 0;
         this.largeMediaTimer = null;
         this.internalRedirectionCount = 0;
+        this.allowLargeMediaElementsRegex = undefined;
         this.extraData.clear();
 
         this.frameAddCount = 0;
@@ -339,7 +340,8 @@ const PageStore = class {
         this.rawURL = '';
         this.hostnameToCountMap = null;
         this.netFilteringCache.empty();
-        this.allowLargeMediaElementsUntil = 0;
+        this.allowLargeMediaElementsUntil = Date.now();
+        this.allowLargeMediaElementsRegex = undefined;
         if ( this.largeMediaTimer !== null ) {
             clearTimeout(this.largeMediaTimer);
             this.largeMediaTimer = null;
@@ -438,7 +440,12 @@ const PageStore = class {
     temporarilyAllowLargeMediaElements(state) {
         this.largeMediaCount = 0;
         µb.contextMenu.update(this.tabId);
-        this.allowLargeMediaElementsUntil = state ? Date.now() + 86400000 : 0;
+        if ( state ) {
+            this.allowLargeMediaElementsUntil = 0;
+            this.allowLargeMediaElementsRegex = undefined;
+        } else {
+            this.allowLargeMediaElementsUntil = Date.now();
+        }
         µb.scriptlets.injectDeep(this.tabId, 'load-large-media-all');
     }
 
@@ -704,7 +711,23 @@ const PageStore = class {
     filterLargeMediaElement(fctxt, size) {
         fctxt.filter = undefined;
 
+        if ( this.allowLargeMediaElementsUntil === 0 ) {
+            return 0;
+        }
+        // Disregard large media elements previously allowed: for example, to
+        // seek inside a previously allowed audio/video.
+        if (
+            this.allowLargeMediaElementsRegex instanceof RegExp &&
+            this.allowLargeMediaElementsRegex.test(fctxt.url)
+        ) {
+            return 0;
+        }
         if ( Date.now() < this.allowLargeMediaElementsUntil ) {
+            const sources = this.allowLargeMediaElementsRegex instanceof RegExp
+                ? [ this.allowLargeMediaElementsRegex.source ]
+                : [];
+            sources.push('^' + µb.escapeRegex(fctxt.url));
+            this.allowLargeMediaElementsRegex = new RegExp(sources.join('|'));
             return 0;
         }
         if (
@@ -713,6 +736,7 @@ const PageStore = class {
                 fctxt.getTabHostname()
             ) !== true
         ) {
+            this.allowLargeMediaElementsUntil = 0;
             return 0;
         }
         if ( (size >>> 10) < µb.userSettings.largeMediaSize ) {

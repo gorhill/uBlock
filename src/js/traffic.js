@@ -469,7 +469,7 @@ const onHeadersReceived = function(details) {
     if ( isRootDoc ) {
         const contentType = headerValueFromName('content-type', responseHeaders);
         if ( reMediaContentTypes.test(contentType) ) {
-            pageStore.allowLargeMediaElementsUntil = Date.now() + 86400000;
+            pageStore.allowLargeMediaElementsUntil = 0;
             return;
         }
     }

@@ -36,9 +36,10 @@ if ( typeof vAPI !== 'object' || vAPI.loadLargeMediaInteractive === true ) {
 
 const largeMediaElementAttribute = 'data-' + vAPI.sessionId;
 const largeMediaElementSelector =
-    ':root audio[' + largeMediaElementAttribute + '],\n' +
-    ':root   img[' + largeMediaElementAttribute + '],\n' +
-    ':root video[' + largeMediaElementAttribute + ']';
+    ':root   audio[' + largeMediaElementAttribute + '],\n' +
+    ':root     img[' + largeMediaElementAttribute + '],\n' +
+    ':root picture[' + largeMediaElementAttribute + '],\n' +
+    ':root   video[' + largeMediaElementAttribute + ']';
 
 /******************************************************************************/
 
@@ -51,9 +52,7 @@ const mediaNotLoaded = function(elem) {
     case 'video':
         return elem.error !== null;
     case 'img':
-        if ( elem.naturalWidth !== 0 || elem.naturalHeight !== 0 ) {
-            break;
-        }
+        if ( elem.naturalWidth !== 0 || elem.naturalHeight !== 0 ) { break; }
         const style = window.getComputedStyle(elem);
         // For some reason, style can be null with Pale Moon.
         return style !== null ?
@@ -74,50 +73,57 @@ const mediaNotLoaded = function(elem) {
 // https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement
 
 const surveyMissingMediaElements = function() {
-    var largeMediaElementCount = 0;
-    var elems = document.querySelectorAll('audio,img,video');
-    var i = elems.length, elem;
-    while ( i-- ) {
-        elem = elems[i];
-        if ( mediaNotLoaded(elem) ) {
-            elem.setAttribute(largeMediaElementAttribute, '');
-            largeMediaElementCount += 1;
+    let largeMediaElementCount = 0;
+    for ( const elem of document.querySelectorAll('audio,img,video') ) {
+        if ( mediaNotLoaded(elem) === false ) { continue; }
+        elem.setAttribute(largeMediaElementAttribute, '');
+        largeMediaElementCount += 1;
+        switch ( elem.localName ) {
+        case 'img': {
+            const picture = elem.closest('picture');
+            if ( picture !== null ) {
+                picture.setAttribute(largeMediaElementAttribute, '');
+            }
+        } break;
+        default:
+            break;
         }
     }
     return largeMediaElementCount;
 };
 
-if ( surveyMissingMediaElements() === 0 ) {
-    return;
-}
+if ( surveyMissingMediaElements() === 0 ) { return; }
 
 vAPI.loadLargeMediaInteractive = true;
 
-// Insert custom style tag.
-let styleTag = document.createElement('style');
-styleTag.setAttribute('type', 'text/css');
-styleTag.textContent = [
-    largeMediaElementSelector + ' {',
-        'border: 1px dotted red !important;',
-        'box-sizing: border-box !important;',
-        'cursor: zoom-in !important;',
-        'display: inline-block;',
-        'font-size: 1em !important;',
-        'min-height: 1em !important;',
-        'min-width: 1em !important;',
-        'opacity: 1 !important;',
-        'outline: none !important;',
-    '}'
-].join('\n');
-document.head.appendChild(styleTag);
+// Insert CSS to highlight blocked media elements.
+if ( vAPI.largeMediaElementStyleSheet === undefined ) {
+    vAPI.largeMediaElementStyleSheet = [
+        largeMediaElementSelector + ' {',
+            'border: 2px dotted red !important;',
+            'box-sizing: border-box !important;',
+            'cursor: zoom-in !important;',
+            'display: inline-block;',
+            'font-size: 1rem !important;',
+            'min-height: 1em !important;',
+            'min-width: 1em !important;',
+            'opacity: 1 !important;',
+            'outline: none !important;',
+            'visibility: visible !important;',
+            'z-index: 2147483647',
+        '}',
+    ].join('\n');
+    vAPI.userStylesheet.add(vAPI.largeMediaElementStyleSheet);
+    vAPI.userStylesheet.apply();
+}
 
 /******************************************************************************/
 
 const stayOrLeave = (( ) => {
-    let timer = null;
+    let timer;
 
     const timeoutHandler = function(leaveNow) {
-        timer = null;
+        timer = undefined;
         if ( leaveNow !== true ) {
             if ( 
                 document.querySelector(largeMediaElementSelector) !== null ||
@@ -127,9 +133,8 @@ const stayOrLeave = (( ) => {
             }
         }
         // Leave
-        if ( styleTag !== null ) {
-            styleTag.parentNode.removeChild(styleTag);
-            styleTag = null;
+        for ( const elem of document.querySelectorAll(largeMediaElementSelector) ) {
+            elem.removeAttribute(largeMediaElementAttribute);
         }
         vAPI.loadLargeMediaInteractive = false;
         document.removeEventListener('error', onLoadError, true);
@@ -137,7 +142,7 @@ const stayOrLeave = (( ) => {
     };
 
     return function(leaveNow) {
-        if ( timer !== null ) {
+        if ( timer !== undefined ) {
             clearTimeout(timer);
         }
         if ( leaveNow ) {
@@ -160,24 +165,44 @@ const loadImage = async function(elem) {
 
     elem.setAttribute('src', src);
     elem.removeAttribute(largeMediaElementAttribute);
+
+    switch ( elem.localName ) {
+    case 'img': {
+        const picture = elem.closest('picture');
+        if ( picture !== null ) {
+            picture.removeAttribute(largeMediaElementAttribute);
+        }
+    } break;
+    default:
+        break;
+    }
+
     stayOrLeave();
 };
 
 /******************************************************************************/
 
 const onMouseClick = function(ev) {
-    if ( ev.button !== 0 ) { return; }
+    if ( ev.button !== 0 || ev.isTrusted === false ) { return; }
 
-    const elem = ev.target;
-    if ( elem.matches(largeMediaElementSelector) === false ) { return; }
+    const toLoad = [];
+    const elems = document.elementsFromPoint instanceof Function
+        ? document.elementsFromPoint(ev.clientX, ev.clientY)
+        : [ ev.target ];
+    for ( const elem of elems ) {
+        if ( elem.matches(largeMediaElementSelector) && mediaNotLoaded(elem) ) {
+            toLoad.push(elem);
+        }
+    }
 
-    if ( mediaNotLoaded(elem) === false ) {
-        elem.removeAttribute(largeMediaElementAttribute);
+    if ( toLoad.length === 0 ) {
         stayOrLeave();
         return;
     }
 
-    loadImage(elem);
+    for ( const elem of toLoad ) {
+        loadImage(elem);
+    }
 
     ev.preventDefault();
     ev.stopPropagation();
@@ -210,7 +235,7 @@ document.addEventListener('error', onLoadError, true);
 
 /******************************************************************************/
 
-vAPI.shutdown.add(function() {
+vAPI.shutdown.add(( ) => {
     stayOrLeave(true);
 });
 
