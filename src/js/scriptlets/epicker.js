@@ -844,15 +844,6 @@ const onOptmizeCandidates = function(details) {
         if ( r !== 0 ) { return r; }
         return a.selector.length - b.selector.length;
     });
-    // Discard selectors with same match count as shorter ones.
-    for ( let i = 0; i < results.length - 1; i++ ) {
-        const a = results[i+0];
-        const b = results[i+1];
-        if ( b.count !== a.count ) { continue; }
-        if ( b.selector.length === a.selector.length ) { continue; }
-        b.selector = a.selector;
-        b.count = a.count;
-    }
     vAPI.MessagingConnection.sendTo(epickerConnectionId, {
         what: 'candidatesOptimized',
         candidates: results.map(a => a.selector),
