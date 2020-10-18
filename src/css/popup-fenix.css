@@ -553,6 +553,14 @@ body:not([data-more~="e"]) [data-more="e"] {
     display: none;
     }
 
+/* popup-in-tab mode, useful for screenshots */
+:root.desktop.intab body {
+    overflow: auto;
+    }
+:root.desktop.intab #firewall {
+    max-height: none;
+    }
+
 /* horizontally-constrained viewport */
 :root.portrait body {
     overflow-y: auto;

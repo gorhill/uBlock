@@ -1027,7 +1027,7 @@ uDom('[data-i18n="popupAnyRulePrompt"]').on('click', ev => {
         messaging.send('popupPanel', {
             what: 'gotoURL',
             details: {
-                url: `popup-fenix.html?tabId=${popupData.tabId}`,
+                url: `popup-fenix.html?tabId=${popupData.tabId}&intab=1`,
                 select: true,
                 index: -1,
             },
@@ -1259,6 +1259,9 @@ const getPopupData = async function(tabId) {
             if ( stickyParent !== panes ) {
                 panes.prepend(sticky);
             }
+        }
+        if ( selfURL.searchParams.get('intab') !== null ) {
+            root.classList.add('intab');
         }
         await nextFrames(1);
         document.body.classList.remove('loading');
