@@ -1064,7 +1064,7 @@
     "description": "short for 'gigabytes'"
   },
   "clickToLoad": {
-    "message": "Click to load",
+    "message": "불러오려면 클릭하기",
     "description": "Message used in frame placeholders"
   },
   "dummy": {
