@@ -808,6 +808,7 @@
                 return this.v;
             },
             setter: function(a) {
+                if ( a === this.v ) { return; }
                 this.v = a;
                 if ( a instanceof Object ) {
                     trapChain(a, chain);
