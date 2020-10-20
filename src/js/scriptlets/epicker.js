@@ -847,6 +847,7 @@ const onOptmizeCandidates = function(details) {
     vAPI.MessagingConnection.sendTo(epickerConnectionId, {
         what: 'candidatesOptimized',
         candidates: results.map(a => a.selector),
+        slot: details.slot,
     });
 };
 

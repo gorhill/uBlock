@@ -32,10 +32,6 @@ html#ublock0-epicker,
 #ublock0-epicker #toolbar {
     cursor: grab;
     display: flex;
-    justify-content: space-between;
-}
-#ublock0-epicker aside.moving #toolbar {
-    cursor: grabbing;
 }
 #ublock0-epicker ul {
     margin: 0.25em 0 0 0;
@@ -66,6 +62,13 @@ html#ublock0-epicker,
 #ublock0-epicker.preview #preview {
     background-color: var(--button-preferred-surface);
     color: var(--button-preferred-ink);
+}
+#ublock0-epicker #move {
+    cursor: grab;
+    flex-grow: 1;
+    }
+#ublock0-epicker aside.moving #move {
+    cursor: grabbing;
 }
 #ublock0-epicker section {
     border: 0;
@@ -117,11 +120,13 @@ html#ublock0-epicker,
     }
 .resultsetModifier > span {
     align-items: flex-end;
-    border-bottom: 2px solid white;
     display: flex;
     height: 100%;
     pointer-events: none;
     width: 100%;
+    }
+.resultsetModifier > span > span {
+    margin: 2px 0;
     }
 .resultsetModifier  > span > span:nth-of-type(1) {
     background-color: var(--checkbox-checked-ink);

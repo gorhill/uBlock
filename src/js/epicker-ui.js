@@ -63,7 +63,7 @@ let netFilterCandidates = [];
 let cosmeticFilterCandidates = [];
 let computedCandidateSlot = 0;
 let computedCandidate = '';
-let computedSpecificityCandidates = [];
+const computedSpecificityCandidates = new Map();
 let needBody = false;
 
 /******************************************************************************/
@@ -201,6 +201,16 @@ const candidateFromFilterChoice = function(filterChoice) {
 /******************************************************************************/
 
 const cosmeticCandidatesFromFilterChoice = function(filterChoice) {
+    let { slot, filters } = filterChoice;
+
+    renderRange('resultsetDepth', slot, true);
+    renderRange('resultsetSpecificity');
+
+    if ( computedSpecificityCandidates.has(slot) ) {
+        onCandidatesOptimized({ slot });
+        return;
+    }
+
     const specificities = [
         0b0000,  // remove hierarchy; remove id, nth-of-type, attribute values
         0b0010,  // remove hierarchy; remove id, nth-of-type
@@ -214,7 +224,6 @@ const cosmeticCandidatesFromFilterChoice = function(filterChoice) {
 
     const candidates = [];
 
-    let { slot, filters } = filterChoice;
     let filter = filters[slot];
 
     for ( const specificity of specificities ) {
@@ -288,12 +297,10 @@ const cosmeticCandidatesFromFilterChoice = function(filterChoice) {
         candidates.push(paths);
     }
 
-    renderRange('resultsetDepth', slot, true);
-    renderRange('resultsetSpecificity');
-
     vAPI.MessagingConnection.sendTo(epickerConnectionId, {
         what: 'optimizeCandidates',
         candidates,
+        slot,
     });
 };
 
@@ -302,8 +309,11 @@ const cosmeticCandidatesFromFilterChoice = function(filterChoice) {
 const onCandidatesOptimized = function(details) {
     $id('resultsetModifiers').classList.remove('hide');
     const i = parseInt($stor('#resultsetSpecificity input').value, 10);
-    computedSpecificityCandidates = details.candidates;
-    computedCandidate = computedSpecificityCandidates[i];
+    if ( Array.isArray(details.candidates) ) {
+        computedSpecificityCandidates.set(details.slot, details.candidates);
+    }
+    const candidates = computedSpecificityCandidates.get(details.slot);
+    computedCandidate = candidates[i];
     cmEditor.setValue(computedCandidate);
     cmEditor.clearHistory();
     onCandidateChanged();
@@ -521,8 +531,11 @@ const onDepthChanged = function() {
 const onSpecificityChanged = function() {
     renderRange('resultsetSpecificity');
     if ( rawFilterFromTextarea() !== computedCandidate ) { return; }
+    const depthInput = $stor('#resultsetDepth input');
+    const slot = parseInt(depthInput.max, 10) - parseInt(depthInput.value, 10);
     const i = parseInt($stor('#resultsetSpecificity input').value, 10);
-    computedCandidate = computedSpecificityCandidates[i];
+    const candidates = computedSpecificityCandidates.get(slot);
+    computedCandidate = candidates[i];
     cmEditor.setValue(computedCandidate);
     cmEditor.clearHistory();
     onCandidateChanged();
@@ -614,7 +627,7 @@ const onStartMoving = (( ) => {
     };
 
     return function(ev) {
-        const target = dialog.querySelector('#toolbar');
+        const target = dialog.querySelector('#move');
         if ( ev.target !== target ) { return; }
         if ( dialog.classList.contains('moving') ) { return; }
         isTouch = ev.type.startsWith('touch');
@@ -735,6 +748,7 @@ const showDialog = function(details) {
 
     populateCandidates(netFilters, '#netFilters');
     populateCandidates(cosmeticFilters, '#cosmeticFilters');
+    computedSpecificityCandidates.clear();
 
     const depthInput = $stor('#resultsetDepth input');
     depthInput.max = cosmeticFilters.length - 1;
@@ -805,8 +819,8 @@ const startPicker = function() {
     $id('create').addEventListener('click', onCreateClicked);
     $id('pick').addEventListener('click', onPickClicked);
     $id('quit').addEventListener('click', onQuitClicked);
-    $id('toolbar').addEventListener('mousedown', onStartMoving);
-    $id('toolbar').addEventListener('touchstart', onStartMoving);
+    $id('move').addEventListener('mousedown', onStartMoving);
+    $id('move').addEventListener('touchstart', onStartMoving);
     $id('candidateFilters').addEventListener('click', onCandidateClicked);
     $stor('#resultsetDepth input').addEventListener('input', onDepthChanged);
     $stor('#resultsetSpecificity input').addEventListener('input', onSpecificityChanged);
