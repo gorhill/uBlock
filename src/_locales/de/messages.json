@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Positivliste",
+    "message": "Ausnahmeregeln",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -64,7 +64,7 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Klick: uBlock₀ für alle Seiten dieser Domain aktivieren/deaktivieren.\n\nStrg+Klick: uBlock₀ nur für die aktuelle Webseite deaktivieren.",
+    "message": "Klick: uBlock₀ für diese Website aktivieren/deaktivieren.\n\nStrg+Klick: uBlock₀ nur für die aktuelle Seite deaktivieren.",
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
@@ -116,7 +116,7 @@
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Element-Auswahl öffnen",
+    "message": "Element-Auswahlmodus starten",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
@@ -180,7 +180,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
-    "message": "Pop-Up-Fenster",
+    "message": "Pop-up-Fenster",
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
@@ -404,7 +404,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "Diese Option ermöglicht die Analyse und Anwendung von Adblock-Plus-kompatiblen Filtern zum „Verstecken von Elementen“. Diese Filter sind grundsätzlich kosmetischer Natur und dienen zum Ausblenden von Elementen auf einer Webseite, die als optische Belästigung wahrgenommen werden und nicht von den vorhandenen Filtern geblockt werden können.\n\nDas Aktivieren dieser Option erhöht den Speicherbedarf von uBlock Origin.",
+    "message": "Kosmetische Filter dienen dazu, Elemente auf einer Webseite auszublenden, die als visuell störend empfunden werden und nicht von den auf Netzwerkanforderungen basierenden Filter-Engines blockiert werden können.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -412,7 +412,7 @@
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Generische kosmetische Filter sind diejenigen kosmetischen Filter, die für die Anwendung auf allen Webseiten bestimmt sind.<p>Obwohl sie von uBlock₀ effizient verarbeitet werden, können sie dennoch auf einigen Webseiten - insbesondere auf den großen und langlebigen - eine messbare Belastung für Arbeitsspeicher und Prozessor bewirken.<p>Die Aktivierung dieser Option wird diese Mehrbelastung für Speicher und Prozessor auf bestimmten Webseiten durch die Verarbeitung generischer kosmetischer Filter verhindern und auch den von uBlock₀ in Anspruch genommenen Arbeitsspeicher verringern.<p>Es wird empfohlen, diese Option auf weniger leistungsstarken Geräten zu aktivieren.",
+    "message": "Generische kosmetische Filter sind diejenigen kosmetischen Filter, die für die Anwendung auf allen Webseiten bestimmt sind. Die Aktivierung dieser Option wird die Mehrbelastung für Speicher und Prozessor auf Webseiten durch die Verarbeitung generischer kosmetischer Filter verhindern.\n\nEs wird empfohlen, diese Option auf weniger leistungsstarken Geräten zu aktivieren.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -568,7 +568,7 @@
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "Ausnahmeregeln bestimmen, auf welchen Webseiten uBlock₀ nicht aktiv sein soll. Ein Eintrag pro Zeile. Ungültige Regeln werden stillschweigend ignoriert und auskommentiert.",
+    "message": "Ausnahmeregeln bestimmen, auf welchen Webseiten uBlock Origin nicht aktiv sein soll. Ein Eintrag pro Zeile. Ungültige Regeln werden ignoriert und auskommentiert.",
     "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
@@ -624,7 +624,7 @@
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "Popup-Tafel umschalten",
+    "message": "Popup-Bereich umschalten",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
@@ -640,7 +640,7 @@
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {
-    "message": "Angehaltene Protokollierung fortsetzen",
+    "message": "Protokollierung fortsetzen",
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
@@ -668,7 +668,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinAllowed": {
-    "message": "Erlaubt",
+    "message": "erlaubt",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
@@ -700,7 +700,7 @@
     "description": "Label to identify a context field (typically a hostname)"
   },
   "loggerEntryDetailsRootContext": {
-    "message": "Wurzelkontext",
+    "message": "Grundkontext",
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
@@ -824,11 +824,11 @@
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportEncodePlain": {
-    "message": "Text (unformatiert)",
+    "message": "Rohtext",
     "description": "Label for radio-button to pick export text format"
   },
   "loggerExportEncodeMarkdown": {
-    "message": "Text (Markdown)",
+    "message": "Markdown",
     "description": "Label for radio-button to pick export text format"
   },
   "aboutChangelog": {
