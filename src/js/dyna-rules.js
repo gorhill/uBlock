@@ -39,7 +39,7 @@ const mergeView = new CodeMirror.MergeView(
         lineWrapping: false,
         origLeft: '',
         revertButtons: true,
-        value: ''
+        value: '',
     }
 );
 mergeView.editor().setOption('styleActiveLine', true);

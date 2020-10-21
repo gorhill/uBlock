@@ -2,6 +2,9 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
     }
+body {
+    margin-bottom: 6rem;
+    }
 #actions {
     background-color: var(--default-surface);
     padding: var(--default-gap-small) 0 var(--default-gap-xsmall) 0;
