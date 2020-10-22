@@ -215,6 +215,7 @@ document.addEventListener('error', onLoadError, true);
 /******************************************************************************/
 
 vAPI.loadAllLargeMedia = function() {
+    document.removeEventListener('click', onMouseClick, true);
     document.removeEventListener('load', onLoad, true);
     document.removeEventListener('error', onLoadError, true);
 
