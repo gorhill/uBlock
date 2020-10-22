@@ -27,29 +27,15 @@
 
 /******************************************************************************/
 
-// For all media resources which have failed to load, trigger a reload.
-
-// <audio> and <video> elements.
-// https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement
-
-for ( const elem of document.querySelectorAll('audio,video') ) {
-    if ( elem.error === null ) { continue; }
-    elem.load();
+if (
+    typeof vAPI !== 'object' ||
+    vAPI.loadAllLargeMedia instanceof Function === false
+) {
+    return;
 }
 
-// <img> elements.
-// https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement
-
-for ( const elem of document.querySelectorAll('img') ) {
-    if ( elem.naturalWidth !== 0 && elem.naturalHeight !== 0 ) { continue; }
-    if ( window.getComputedStyle(elem).getPropertyValue('display') === 'none' ) {
-        continue;
-    }
-    const src = elem.getAttribute('src') || '';
-    if ( src === '' ) { continue; }
-    elem.removeAttribute('src');
-    elem.setAttribute('src', src);
-}
+vAPI.loadAllLargeMedia();
+vAPI.loadAllLargeMedia = undefined;
 
 /******************************************************************************/
 

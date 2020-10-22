@@ -28,7 +28,7 @@
 /******************************************************************************/
 
 // This can happen
-if ( typeof vAPI !== 'object' || vAPI.loadLargeMediaInteractive === true ) {
+if ( typeof vAPI !== 'object' || vAPI.loadAllLargeMedia instanceof Function ) {
     return;
 }
 
@@ -45,12 +45,11 @@ const largeMediaElementSelector =
 
 const mediaNotLoaded = function(elem) {
     const src = elem.getAttribute('src') || '';
-    if ( src === '' ) { return false; }
 
     switch ( elem.localName ) {
     case 'audio':
     case 'video':
-        return elem.error !== null;
+        return src === '' || elem.error !== null;
     case 'img':
         if ( elem.naturalWidth !== 0 || elem.naturalHeight !== 0 ) { break; }
         const style = window.getComputedStyle(elem);
@@ -69,7 +68,6 @@ const mediaNotLoaded = function(elem) {
 // For all media resources which have failed to load, trigger a reload.
 
 // <audio> and <video> elements.
-// https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement
 // https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement
 
 const surveyMissingMediaElements = function() {
@@ -94,8 +92,6 @@ const surveyMissingMediaElements = function() {
 
 if ( surveyMissingMediaElements() === 0 ) { return; }
 
-vAPI.loadLargeMediaInteractive = true;
-
 // Insert CSS to highlight blocked media elements.
 if ( vAPI.largeMediaElementStyleSheet === undefined ) {
     vAPI.largeMediaElementStyleSheet = [
@@ -119,65 +115,53 @@ if ( vAPI.largeMediaElementStyleSheet === undefined ) {
 
 /******************************************************************************/
 
-const stayOrLeave = (( ) => {
-    let timer;
-
-    const timeoutHandler = function(leaveNow) {
-        timer = undefined;
-        if ( leaveNow !== true ) {
-            if ( 
-                document.querySelector(largeMediaElementSelector) !== null ||
-                surveyMissingMediaElements() !== 0
-            ) {
-                return;
-            }
-        }
-        // Leave
-        for ( const elem of document.querySelectorAll(largeMediaElementSelector) ) {
-            elem.removeAttribute(largeMediaElementAttribute);
-        }
-        vAPI.loadLargeMediaInteractive = false;
-        document.removeEventListener('error', onLoadError, true);
-        document.removeEventListener('click', onMouseClick, true);
-    };
-
-    return function(leaveNow) {
-        if ( timer !== undefined ) {
-            clearTimeout(timer);
-        }
-        if ( leaveNow ) {
-            timeoutHandler(true);
-        } else {
-            timer = vAPI.setTimeout(timeoutHandler, 5000);
-        }
-    };
-})();
-
-/******************************************************************************/
-
-const loadImage = async function(elem) {
-    const src = elem.getAttribute('src');
+const loadMedia = async function(elem) {
+    const src = elem.getAttribute('src') || '';
     elem.removeAttribute('src');
 
     await vAPI.messaging.send('scriptlets', {
         what: 'temporarilyAllowLargeMediaElement',
     });
 
-    elem.setAttribute('src', src);
-    elem.removeAttribute(largeMediaElementAttribute);
-
-    switch ( elem.localName ) {
-    case 'img': {
-        const picture = elem.closest('picture');
-        if ( picture !== null ) {
-            picture.removeAttribute(largeMediaElementAttribute);
-        }
-    } break;
-    default:
-        break;
+    if ( src !== '' ) {
+        elem.setAttribute('src', src);
+    } else {
+        elem.replaceWith(elem.cloneNode(true));
     }
+};
 
-    stayOrLeave();
+/******************************************************************************/
+
+const loadImage = async function(elem) {
+    const src = elem.getAttribute('src') || '';
+    elem.removeAttribute('src');
+
+    await vAPI.messaging.send('scriptlets', {
+        what: 'temporarilyAllowLargeMediaElement',
+    });
+
+    if ( src !== '' ) {
+        elem.setAttribute('src', src);
+    }
+};
+
+/******************************************************************************/
+
+const loadMany = function(elems) {
+    for ( const elem of elems ) {
+        elem.removeAttribute(largeMediaElementAttribute);
+        switch ( elem.localName ) {
+        case 'audio':
+        case 'video':
+            loadMedia(elem);
+            break;
+        case 'img':
+            loadImage(elem);
+            break;
+        default:
+            break;
+        }
+    }
 };
 
 /******************************************************************************/
@@ -190,19 +174,15 @@ const onMouseClick = function(ev) {
         ? document.elementsFromPoint(ev.clientX, ev.clientY)
         : [ ev.target ];
     for ( const elem of elems ) {
-        if ( elem.matches(largeMediaElementSelector) && mediaNotLoaded(elem) ) {
+        if ( elem.matches(largeMediaElementSelector) === false ) { continue; }
+        if ( mediaNotLoaded(elem) ) {
             toLoad.push(elem);
         }
     }
 
-    if ( toLoad.length === 0 ) {
-        stayOrLeave();
-        return;
-    }
+    if ( toLoad.length === 0 ) { return; }
 
-    for ( const elem of toLoad ) {
-        loadImage(elem);
-    }
+    loadMany(toLoad);
 
     ev.preventDefault();
     ev.stopPropagation();
@@ -216,7 +196,6 @@ const onLoad = function(ev) {
     const elem = ev.target;
     if ( elem.hasAttribute(largeMediaElementAttribute) ) {
         elem.removeAttribute(largeMediaElementAttribute);
-        stayOrLeave();
     }
 };
 
@@ -235,9 +214,18 @@ document.addEventListener('error', onLoadError, true);
 
 /******************************************************************************/
 
-vAPI.shutdown.add(( ) => {
-    stayOrLeave(true);
-});
+vAPI.loadAllLargeMedia = function() {
+    document.removeEventListener('load', onLoad, true);
+    document.removeEventListener('error', onLoadError, true);
+
+    const toLoad = [];
+    for ( const elem of document.querySelectorAll(largeMediaElementSelector) ) {
+        if ( mediaNotLoaded(elem) ) {
+            toLoad.push(elem);
+        }
+    }
+    loadMany(toLoad);
+};
 
 /******************************************************************************/
 
