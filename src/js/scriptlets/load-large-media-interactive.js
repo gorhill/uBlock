@@ -44,19 +44,26 @@ const largeMediaElementSelector =
 /******************************************************************************/
 
 const mediaNotLoaded = function(elem) {
-    const src = elem.getAttribute('src') || '';
-
     switch ( elem.localName ) {
     case 'audio':
-    case 'video':
-        return src === '' || elem.error !== null;
-    case 'img':
-        if ( elem.naturalWidth !== 0 || elem.naturalHeight !== 0 ) { break; }
+    case 'video': {
+        const src = elem.src || '';
+        if ( src.startsWith('blob:') ) {
+            elem.autoplay = false;
+            elem.pause();
+        }
+        return elem.readyState === 0 || elem.error !== null;
+    }
+    case 'img': {
+        if ( elem.naturalWidth !== 0 || elem.naturalHeight !== 0 ) {
+            break;
+        }
         const style = window.getComputedStyle(elem);
         // For some reason, style can be null with Pale Moon.
         return style !== null ?
             style.getPropertyValue('display') !== 'none' :
             elem.offsetHeight !== 0 && elem.offsetWidth !== 0;
+    }
     default:
         break;
     }
@@ -100,11 +107,13 @@ if ( vAPI.largeMediaElementStyleSheet === undefined ) {
             'box-sizing: border-box !important;',
             'cursor: zoom-in !important;',
             'display: inline-block;',
+            'filter: none !important;',
             'font-size: 1rem !important;',
             'min-height: 1em !important;',
             'min-width: 1em !important;',
             'opacity: 1 !important;',
             'outline: none !important;',
+            'transform: none !important;',
             'visibility: visible !important;',
             'z-index: 2147483647',
         '}',
@@ -125,9 +134,8 @@ const loadMedia = async function(elem) {
 
     if ( src !== '' ) {
         elem.setAttribute('src', src);
-    } else {
-        elem.replaceWith(elem.cloneNode(true));
     }
+    elem.load();
 };
 
 /******************************************************************************/
@@ -192,11 +200,25 @@ document.addEventListener('click', onMouseClick, true);
 
 /******************************************************************************/
 
-const onLoad = function(ev) {
-    const elem = ev.target;
-    if ( elem.hasAttribute(largeMediaElementAttribute) ) {
-        elem.removeAttribute(largeMediaElementAttribute);
+const onLoadedData = function(ev) {
+    const media = ev.target;
+    if ( media.localName !== 'audio' && media.localName !== 'video' ) {
+        return;
     }
+    const src = media.src;
+    if ( typeof src === 'string' && src.startsWith('blob:') === false ) {
+        return;
+    }
+    media.autoplay = false;
+    media.pause();
+};
+
+document.addEventListener('loadeddata', onLoadedData);
+
+/******************************************************************************/
+
+const onLoad = function(ev) {
+    ev.target.removeAttribute(largeMediaElementAttribute);
 };
 
 document.addEventListener('load', onLoad, true);
@@ -216,6 +238,7 @@ document.addEventListener('error', onLoadError, true);
 
 vAPI.loadAllLargeMedia = function() {
     document.removeEventListener('click', onMouseClick, true);
+    document.removeEventListener('loadeddata', onLoadedData, true);
     document.removeEventListener('load', onLoad, true);
     document.removeEventListener('error', onLoadError, true);
 
