@@ -30,7 +30,7 @@
 /******************************************************************************/
 
 const lastUpdateTemplateString = vAPI.i18n('3pLastUpdate');
-const reValidExternalList = /[a-z-]+:\/\/\S*\/\S+/;
+const reValidExternalList = /^[a-z-]+:\/\/(?:\S+\/\S*|\/\S+)/m;
 
 let listDetails = {};
 let filteringSettingsHash = '';
