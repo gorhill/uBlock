@@ -96,11 +96,11 @@
     "description": "English: or"
   },
   "popupBlockedOnThisPage_v2": {
-    "message": "Blocked on this page",
+    "message": "Nabawal sa ditong pahina",
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "Blocked since install",
+    "message": "Nabawal mula noong pag-install",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
@@ -184,7 +184,7 @@
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
-    "message": "Large media elements",
+    "message": "Malaking media na elements",
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
@@ -244,15 +244,15 @@
     "description": ""
   },
   "popup1pScriptRulePrompt": {
-    "message": "1st-party scripts",
+    "message": "1st-party na mga script",
     "description": ""
   },
   "popup3pScriptRulePrompt": {
-    "message": "3rd-party scripts",
+    "message": "3rd-party na mga script",
     "description": ""
   },
   "popup3pFrameRulePrompt": {
-    "message": "3rd-party frames",
+    "message": "3rd-party na mga frame",
     "description": ""
   },
   "popupHitDomainCountPrompt": {
@@ -292,7 +292,7 @@
     "description": "English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint": {
-    "message": "Click, Ctrl-click",
+    "message": "Pindutin, Ctrl-pindot",
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
@@ -308,7 +308,7 @@
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "Disable tooltips",
+    "message": "Wag i-pagana ang tooltips",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
@@ -344,7 +344,7 @@
     "description": "English: "
   },
   "settingPerSiteSwitchGroup": {
-    "message": "Default behavior",
+    "message": "Orihinal na pag-uugali",
     "description": ""
   },
   "settingPerSiteSwitchGroupSynopsis": {
@@ -356,11 +356,11 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Block media elements larger than {{input}} KB",
+    "message": "Bawalan ang mga media element na mas malaki sa {{input}} KB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
-    "message": "Block remote fonts",
+    "message": "Bawalan ang remote fonts",
     "description": ""
   },
   "settingsNoScriptingPrompt": {
@@ -424,7 +424,7 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Built-in",
+    "message": "nagawa-sa",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
