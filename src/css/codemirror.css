@@ -157,6 +157,7 @@ div.CodeMirror span.CodeMirror-matchingbracket {
     display: none;
     }
 .cm-searching {
+    background-color: var(--cm-searching-surface) !important;
     border: 1px dotted black;
     }
 

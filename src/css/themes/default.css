@@ -49,6 +49,7 @@
     --violet-60: #7542e5;
     --violet-70: #592acb;
     --violet-80: #45278d;
+    --yellow-10: #ffff98;
     --yellow-30: #ffd567;
     --yellow-40: #ffbd4f;
     --yellow-50: #ffa436;
@@ -179,6 +180,7 @@
     --cm-gutter-border: var(--light-gray-40);
     --cm-gutter-ink: var(--light-gray-90);
     --cm-gutter-surface: var(--light-gray-25);
+    --cm-searching-surface: var(--yellow-10);
 
     /* syntax highlight: static filtering */
     --sf-comment-ink: var(--light-gray-90);
