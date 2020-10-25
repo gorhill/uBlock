@@ -157,7 +157,6 @@ const loadImage = async function(elem) {
 
 const loadMany = function(elems) {
     for ( const elem of elems ) {
-        elem.removeAttribute(largeMediaElementAttribute);
         switch ( elem.localName ) {
         case 'audio':
         case 'video':
@@ -183,6 +182,7 @@ const onMouseClick = function(ev) {
         : [ ev.target ];
     for ( const elem of elems ) {
         if ( elem.matches(largeMediaElementSelector) === false ) { continue; }
+        elem.removeAttribute(largeMediaElementAttribute);
         if ( mediaNotLoaded(elem) ) {
             toLoad.push(elem);
         }
@@ -244,6 +244,7 @@ vAPI.loadAllLargeMedia = function() {
 
     const toLoad = [];
     for ( const elem of document.querySelectorAll(largeMediaElementSelector) ) {
+        elem.removeAttribute(largeMediaElementAttribute);
         if ( mediaNotLoaded(elem) ) {
             toLoad.push(elem);
         }
