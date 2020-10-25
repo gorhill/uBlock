@@ -2076,10 +2076,10 @@ const FilterParser = class {
         this.noTokenHash = urlTokenizer.noTokenHash;
         this.reIsolateHostname = /^(\*?\.)?([^\x00-\x24\x26-\x2C\x2F\x3A-\x5E\x60\x7B-\x7F]+)(.*)/;
         this.reBadCSP = /(?:=|;)\s*report-(?:to|uri)\b/;
-        this.reRegexToken = /[%0-9A-Za-z]{2,}/g;
-        this.reRegexTokenAbort = /[([]/;
-        this.reRegexBadPrefix = /(^|[^\\]\.|[*?{}\\])$/;
-        this.reRegexBadSuffix = /^([^\\]\.|\\[dw]|[([{}?*.]|$)/;
+        this.reRegexToken = /[%0-9A-Za-z]+/g;
+        this.reRegexTokenAbort = /[\(\)\[\]]/;
+        this.reRegexBadPrefix = /(^|[^\\]\.|\\[%SDWsdw]|[()*+?[\\\]{}])$/;
+        this.reRegexBadSuffix = /^([^\\]\.|\\[%SDWsdw]|[()*+?[\]{}]|$)/;
         this.reGoodToken = /[%0-9a-z]{1,}/g;
         this.domainOptList = [];
         this.tokenIdToNormalizedType = new Map([
@@ -2525,19 +2525,27 @@ const FilterParser = class {
     }
 
     // https://github.com/gorhill/uBlock/issues/2781
-    //   For efficiency purpose, try to extract a token from
-    //   a regex-based filter.
+    //   For efficiency purpose, try to extract a token from a regex-based
+    //   filter.
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1145#issuecomment-657036902
     //   Mind `\b` directives: `/\bads\b/` should result in token being `ads`,
     //   not `bads`.
     extractTokenFromRegex() {
         this.reRegexToken.lastIndex = 0;
         const s = this.pattern;
-        let matches;
-        while ( (matches = this.reRegexToken.exec(s)) !== null ) {
+        let bestBadness = 0;
+        for (;;) {
+            const matches = this.reRegexToken.exec(s);
+            if ( matches === null ) { break; }
             let token = matches[0];
             let prefix = s.slice(0, matches.index);
-            if ( this.reRegexTokenAbort.test(prefix) ) { return; }
+            let suffix = s.slice(this.reRegexToken.lastIndex);
+            if (
+                this.reRegexTokenAbort.test(prefix) &&
+                this.reRegexTokenAbort.test(suffix)
+            ) {
+                continue;
+            }
             if ( token.startsWith('b') ) {
                 const match = /\\+$/.exec(prefix);
                 if ( match !== null && (match[0].length & 1) !== 0 ) {
@@ -2548,17 +2556,21 @@ const FilterParser = class {
             if (
                 this.reRegexBadPrefix.test(prefix) || (
                     token.length < this.maxTokenLen &&
-                    this.reRegexBadSuffix.test(
-                        s.slice(this.reRegexToken.lastIndex)
-                    )
+                    this.reRegexBadSuffix.test(suffix)
                 )
             ) {
                 continue;
             }
-            this.token = token.toLowerCase();
-            this.tokenHash = urlTokenizer.tokenHashFromString(this.token);
-            this.tokenBeg = matches.index;
-            if ( this.badTokens.has(this.token) === false ) { break; }
+            const badness = token.length > 1
+                ? this.badTokens.get(token) || 0
+                : 1;
+            if ( bestBadness === 0 || badness < bestBadness ) {
+                this.token = token.toLowerCase();
+                this.tokenHash = urlTokenizer.tokenHashFromString(this.token);
+                this.tokenBeg = matches.index;
+                if ( badness === 0 ) { break; }
+                bestBadness = badness;
+            }
         }
     }
 
@@ -2690,7 +2702,7 @@ FilterContainer.prototype.reset = function() {
     filterSequenceWritePtr = FILTER_SEQUENCES_MIN;
 
     // Runtime registers
-    this.$catbits = 0;
+    this.$catBits = 0;
     this.$tokenHash = 0;
     this.$filterUnit = 0;
 };
@@ -2817,8 +2829,8 @@ FilterContainer.prototype.freeze = function() {
 FilterContainer.prototype.toSelfie = function(path) {
     const categoriesToSelfie = ( ) => {
         const selfie = [];
-        for ( const [ catbits, bucket ] of this.categories ) {
-            selfie.push([ catbits, Array.from(bucket) ]);
+        for ( const [ catBits, bucket ] of this.categories ) {
+            selfie.push([ catBits, Array.from(bucket) ]);
         }
         return selfie;
     };
@@ -2915,8 +2927,8 @@ FilterContainer.prototype.fromSelfie = function(path) {
             filterUnits = selfie.filterUnits.map(f =>
                 f !== null ? filterFromSelfie(f) : null
             );
-            for ( const [ catbits, bucket ] of selfie.categories ) {
-                this.categories.set(catbits, new Map(bucket));
+            for ( const [ catBits, bucket ] of selfie.categories ) {
+                this.categories.set(catBits, new Map(bucket));
             }
             return true;
         }),
@@ -3076,18 +3088,18 @@ FilterContainer.prototype.compileToAtomicFilter = function(
     // 1 = network filters: bad filters
     writer.select(parsed.badFilter ? 1 : 0);
 
-    const descBits = parsed.action | parsed.important | parsed.party;
+    const catBits = parsed.action | parsed.important | parsed.party;
     let typeBits = parsed.typeBits;
 
     // Typeless
     if ( typeBits === 0 ) {
-        writer.push([ descBits, parsed.tokenHash, fdata ]);
+        writer.push([ catBits, parsed.tokenHash, fdata ]);
         return;
     }
 
     // If all network types are set, create a typeless filter
     if ( (typeBits & allNetworkTypesBits) === allNetworkTypesBits ) {
-        writer.push([ descBits, parsed.tokenHash, fdata ]);
+        writer.push([ catBits, parsed.tokenHash, fdata ]);
         typeBits &= ~allNetworkTypesBits;
     }
 
@@ -3095,8 +3107,8 @@ FilterContainer.prototype.compileToAtomicFilter = function(
     let bitOffset = 1;
     do {
         if ( typeBits & 1 ) {
-            writer.push(
-                [ descBits | (bitOffset << 4),
+            writer.push([
+                catBits | (bitOffset << 4),
                 parsed.tokenHash,
                 fdata
             ]);
@@ -3353,7 +3365,7 @@ FilterContainer.prototype.realmMatchString = function(
         }
     }
 
-    this.$catbits = catBits;
+    this.$catBits = catBits;
     this.$tokenHash = tokenHash;
     this.$filterUnit = iunit;
     return true;
@@ -3451,7 +3463,7 @@ FilterContainer.prototype.matchString = function(fctxt, modifiers = 0) {
 FilterContainer.prototype.toLogData = function() {
     if ( this.$filterUnit === 0 ) { return; }
     const logData = toLogDataInternal(
-        this.$catbits,
+        this.$catBits,
         this.$tokenHash,
         this.$filterUnit
     );
@@ -3459,14 +3471,14 @@ FilterContainer.prototype.toLogData = function() {
     logData.tokenHash = this.$tokenHash;
     logData.result = this.$filterUnit === 0
         ? 0
-        : ((this.$catbits & 1) !== 0 ? 2 : 1);
+        : ((this.$catBits & 1) !== 0 ? 2 : 1);
     return logData;
 };
 
 /******************************************************************************/
 
 FilterContainer.prototype.isBlockImportant = function() {
-    return (this.$catbits & BlockImportant) === BlockImportant;
+    return (this.$catBits & BlockImportant) === BlockImportant;
 };
 
 /******************************************************************************/
