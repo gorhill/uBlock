@@ -43,13 +43,14 @@
 
     document.getElementById('dev').classList.add('enabled');
 
-    const sfneBenchmark = async ( ) => {
-        const result = await vAPI.messaging.send('dashboard', {
+    document.getElementById('sfneBenchmark').addEventListener('click', ev => {
+        const button = ev.target;
+        button.setAttribute('disabled', '');
+        vAPI.messaging.send('dashboard', {
             what: 'sfneBenchmark',
+        }).then(result => {
+            document.getElementById('sfneBenchmarkResult').textContent = result;
+            button.removeAttribute('disabled');
         });
-        document.getElementById('sfneBenchmarkResult').textContent = result;
-    };
-    document.getElementById('sfneBenchmark').addEventListener('click', ( ) => {
-        sfneBenchmark();
     });
 })();
