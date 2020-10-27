@@ -432,7 +432,7 @@
         const t0 = self.performance.now();
         for ( let i = 0; i < requests.length; i++ ) {
             const request = requests[i];
-            if ( request.cpt !== 'document' ) { continue; }
+            if ( request.cpt !== 'main_frame' ) { continue; }
             count += 1;
             details.url = request.url;
             details.hostname = µb.URI.hostnameFromURI(request.url);

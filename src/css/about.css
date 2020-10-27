@@ -9,3 +9,16 @@ body {
 .entry {
     margin: 0.5em 0;
     }
+#dev {
+    align-items: flex-start;
+    display: none;
+    }
+#dev.enabled {
+    display: flex;
+    }
+#dev > * {
+    margin-inline-end: 1em;
+    }
+#dev > div {
+    white-space: pre;
+    }

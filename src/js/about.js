@@ -36,5 +36,20 @@
     const appData = await vAPI.messaging.send('dashboard', {
         what: 'getAppData',
     });
+
     uDom('#aboutNameVer').text(appData.name + ' v' + appData.version);
+
+    if ( appData.canBenchmark !== true ) { return; }
+
+    document.getElementById('dev').classList.add('enabled');
+
+    const sfneBenchmark = async ( ) => {
+        const result = await vAPI.messaging.send('dashboard', {
+            what: 'sfneBenchmark',
+        });
+        document.getElementById('sfneBenchmarkResult').textContent = result;
+    };
+    document.getElementById('sfneBenchmark').addEventListener('click', ( ) => {
+        sfneBenchmark();
+    });
 })();
