@@ -3532,12 +3532,14 @@ FilterContainer.prototype.benchmark = async function(action, target) {
     }
 
     const t0 = self.performance.now();
+    let matchCount = 0;
     for ( let i = 0; i < requests.length; i++ ) {
         const request = requests[i];
         fctxt.setURL(request.url);
         fctxt.setDocOriginFromURL(request.frameUrl);
         fctxt.setType(request.cpt);
         const r = this.matchString(fctxt);
+        matchCount += 1;
         if ( recorded !== undefined ) { recorded.push(r); }
         if ( expected !== undefined && r !== expected[i] ) {
             print(`Mismatch with reference results at ${i}:`);
@@ -3546,22 +3548,35 @@ FilterContainer.prototype.benchmark = async function(action, target) {
             print(`\turl=${fctxt.url}`);
             print(`\tdocOrigin=${fctxt.getDocOrigin()}`);
         }
+        if ( fctxt.type === 'main_frame' || fctxt.type === 'sub_frame' ) {
+            this.matchAndFetchData(fctxt, 'csp');
+            matchCount += 1;
+        }
     }
     const t1 = self.performance.now();
     const dur = t1 - t0;
 
-    print(`Evaluated ${requests.length} requests in ${dur.toFixed(0)} ms`);
-    print(`\tAverage: ${(dur / requests.length).toFixed(3)} ms per request`);
-    if ( expected !== undefined ) {
-        print(`\tBlocked: ${expected.reduce((n,r)=>{return r===1?n+1:n;},0)}`);
-        print(`\tExcepted: ${expected.reduce((n,r)=>{return r===2?n+1:n;},0)}`);
-    }
     if ( recorded !== undefined ) {
         vAPI.localStorage.setItem(
             'FilterContainer.benchmark.results',
             JSON.stringify(recorded)
         );
     }
+
+    const output = [
+        'Benchmarked static network filtering engine:',
+        `\tEvaluated ${matchCount} match calls in ${dur.toFixed(0)} ms`,
+        `\tAverage: ${(dur / matchCount).toFixed(3)} ms per request`,
+    ];
+    if ( expected !== undefined ) {
+        output.push(
+            `\tBlocked: ${expected.reduce((n,r)=>{return r===1?n+1:n;},0)}`,
+            `\tExcepted: ${expected.reduce((n,r)=>{return r===2?n+1:n;},0)}`,
+        );
+    }
+    const s = output.join('\n');
+    print(s);
+    return s;
 };
 
 /******************************************************************************/
