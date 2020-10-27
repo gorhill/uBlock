@@ -188,11 +188,11 @@
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
-    "message": "Cosmetic filtering",
+    "message": "Pagsala ng kosmetiko",
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
-    "message": "Remote fonts",
+    "message": "fonts ng remote",
     "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Click to revert your changes.",
+    "message": "Pindutan upang ibalik ang iyong pag-bago.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {
@@ -352,7 +352,7 @@
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "Disable cosmetic filtering",
+    "message": "Di-pinagana ang cosmetic filtering",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
@@ -364,11 +364,11 @@
     "description": ""
   },
   "settingsNoScriptingPrompt": {
-    "message": "Disable JavaScript",
+    "message": "Di-pinagana ang JavaScript",
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
-    "message": "Block CSP reports",
+    "message": "Pagbawalin ang balita ng CSP",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsLastRestorePrompt": {
@@ -388,7 +388,7 @@
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
-    "message": "Auto-update filter lists",
+    "message": "I-awtomatik-update ang listahan ng filter",
     "description": "A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow": {
@@ -396,7 +396,7 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll": {
-    "message": "Purge all caches",
+    "message": "Purgahin ang lahat ng caches",
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
@@ -408,7 +408,7 @@
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
-    "message": "Ignore generic cosmetic filters",
+    "message": "Huwag pansinin ang generic cosmetic filters",
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
@@ -452,11 +452,11 @@
     "description": "English: Regions, languages"
   },
   "3pGroupCustom": {
-    "message": "Custom",
+    "message": "Pasadya",
     "description": "English: Custom"
   },
   "3pImport": {
-    "message": "Import...",
+    "message": "Mag-import...",
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
@@ -468,7 +468,7 @@
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pViewContent": {
-    "message": "view content",
+    "message": "Tignan ang kaloob",
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
@@ -476,7 +476,7 @@
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Updating...",
+    "message": "Ina-update...",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
@@ -504,7 +504,7 @@
     "description": "English: Apply changes"
   },
   "rulesPermanentHeader": {
-    "message": "Permanent rules",
+    "message": "Permanenteng batas",
     "description": "header"
   },
   "rulesTemporaryHeader": {
@@ -532,11 +532,11 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Import from file...",
+    "message": "Mag-import mula sa file...",
     "description": ""
   },
   "rulesExport": {
-    "message": "Export to file",
+    "message": "I-export sa file",
     "description": ""
   },
   "rulesDefaultFileName": {
@@ -552,11 +552,11 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
-    "message": "Sort:",
+    "message": "Ayusin",
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
-    "message": "Rule type",
+    "message": "Batas na uri",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortBySource": {
@@ -564,7 +564,7 @@
     "description": "English: a sort option for list of rules."
   },
   "rulesSortByDestination": {
-    "message": "Destination",
+    "message": "Destinasyon",
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
@@ -576,7 +576,7 @@
     "description": "English: Import and append"
   },
   "whitelistExport": {
-    "message": "Export",
+    "message": "I-Export",
     "description": "English: Export"
   },
   "whitelistExportFilename": {
@@ -588,7 +588,7 @@
     "description": "English: Apply changes"
   },
   "logRequestsHeaderType": {
-    "message": "Type",
+    "message": "Uri",
     "description": "English: Type"
   },
   "logRequestsHeaderDomain": {
@@ -600,7 +600,7 @@
     "description": "English: URL"
   },
   "logRequestsHeaderFilter": {
-    "message": "Filter",
+    "message": "Salain",
     "description": "English: Filter"
   },
   "logAll": {
@@ -608,15 +608,15 @@
     "description": "Appears in the logger's tab selector"
   },
   "logBehindTheScene": {
-    "message": "Tabless",
+    "message": "Walang tab",
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
-    "message": "Current tab",
+    "message": "Pangkasalukuyang tab",
     "description": "Appears in the logger's tab selector"
   },
   "loggerReloadTip": {
-    "message": "Reload the tab content",
+    "message": "I-reload ang kaloob ng tab",
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
@@ -668,31 +668,31 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinAllowed": {
-    "message": "allowed",
+    "message": "Pinayagan",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
-    "message": "1st-party",
+    "message": "1st-partido",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin3p": {
-    "message": "3rd-party",
+    "message": "ikatlong-partido",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerEntryDetailsHeader": {
-    "message": "Details",
+    "message": "Detalye",
     "description": "Small header to identify the 'Details' pane for a specific logger entry"
   },
   "loggerEntryDetailsFilter": {
-    "message": "Filter",
+    "message": "Salain",
     "description": "Label to identify a filter field"
   },
   "loggerEntryDetailsFilterList": {
-    "message": "Filter list",
+    "message": "Salain ang listahan",
     "description": "Label to identify a filter list field"
   },
   "loggerEntryDetailsRule": {
-    "message": "Rule",
+    "message": "Batas",
     "description": "Label to identify a rule field"
   },
   "loggerEntryDetailsContext": {
@@ -708,7 +708,7 @@
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
-    "message": "Type",
+    "message": "Uri",
     "description": "Label to identify the type of an entry"
   },
   "loggerEntryDetailsURL": {
@@ -724,11 +724,11 @@
     "description": "Label for the context selector"
   },
   "loggerURLFilteringTypeLabel": {
-    "message": "Type:",
+    "message": "Uri:",
     "description": "Label for the type selector"
   },
   "loggerStaticFilteringHeader": {
-    "message": "Static filter",
+    "message": "Static na pag-salain",
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
@@ -744,15 +744,15 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType": {
-    "message": "type “{{type}}”",
+    "message": "uri \"{{type}}\"",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyType": {
-    "message": "any type",
+    "message": "kahit anong uri",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin": {
-    "message": "from “{{origin}}”",
+    "message": "mula sa \"{{origin}}\"",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin": {
@@ -764,7 +764,7 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartImportant": {
-    "message": "even if",
+    "message": "kahit",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
@@ -800,11 +800,11 @@
     "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
   },
   "loggerSettingHideColumnTime": {
-    "message": "{{input}} Time",
+    "message": "{{input}} Oras",
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
-    "message": "{{input}} Filter/rule",
+    "message": "{{input}} Salain/batas",
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
@@ -816,7 +816,7 @@
     "description": "A label for the partyness column"
   },
   "loggerExportFormatList": {
-    "message": "List",
+    "message": "Listahan",
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportFormatTable": {
@@ -908,7 +908,7 @@
     "description": "No longer used"
   },
   "subscribeButton": {
-    "message": "Subscribe",
+    "message": "Mag-subscribe",
     "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
@@ -916,7 +916,7 @@
     "description": "English: a minute ago"
   },
   "elapsedManyMinutesAgo": {
-    "message": "{{value}} minutes ago",
+    "message": "{{value}} mga minuto ang nakalipas",
     "description": "English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo": {
@@ -940,11 +940,11 @@
     "description": "Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
-    "message": "Show Logger",
+    "message": "Ipakita ang Logger",
     "description": "Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
-    "message": "off",
+    "message": "OFF",
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1": {
@@ -960,7 +960,7 @@
     "description": "label to be used for the parameter-less URL: https://cloud.githubusercontent.com/assets/585534/9832014/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {
-    "message": "Found in:",
+    "message": "Nahanap sa:",
     "description": "English: List of filter list names follows"
   },
   "docblockedBack": {
@@ -968,7 +968,7 @@
     "description": "English: Go back"
   },
   "docblockedClose": {
-    "message": "Close this window",
+    "message": "Sarado ang itong window",
     "description": "English: Close this window"
   },
   "docblockedProceed": {
@@ -1000,11 +1000,11 @@
     "description": ""
   },
   "cloudDeviceNamePrompt": {
-    "message": "This device name:",
+    "message": "Itong pangalan ng device:",
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
-    "message": "Warning! Change these advanced settings at your own risk.",
+    "message": "Babala! Baguhin mo ang mga masulong setting sa iyong sariling peligro.",
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {
@@ -1028,7 +1028,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Type a shortcut",
+    "message": "Mag-sulat ng shortcut",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
@@ -1036,7 +1036,7 @@
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
-    "message": "Copy to clipboard",
+    "message": "Kopyahin sa clipboard",
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "toggleBlockingProfile": {
@@ -1064,7 +1064,7 @@
     "description": "short for 'gigabytes'"
   },
   "clickToLoad": {
-    "message": "Click to load",
+    "message": "Pindutin upang mag-load",
     "description": "Message used in frame placeholders"
   },
   "dummy": {
