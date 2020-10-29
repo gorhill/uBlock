@@ -3550,7 +3550,6 @@ FilterContainer.prototype.benchmark = async function(action, target) {
         }
         if ( fctxt.type === 'main_frame' || fctxt.type === 'sub_frame' ) {
             this.matchAndFetchData(fctxt, 'csp');
-            matchCount += 1;
         }
     }
     const t1 = self.performance.now();
