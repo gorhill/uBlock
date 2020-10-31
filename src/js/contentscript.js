@@ -433,7 +433,7 @@ vAPI.SafeAnimationFrame = class {
     const cleanup = function() {
         if ( domLayoutObserver !== undefined ) {
             domLayoutObserver.disconnect();
-            domLayoutObserver = null;
+            domLayoutObserver = undefined;
         }
         if ( safeObserverHandlerTimer !== undefined ) {
             safeObserverHandlerTimer.clear();
