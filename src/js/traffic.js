@@ -64,7 +64,7 @@ const onBeforeRequest = function(details) {
     // https://github.com/chrisaljoudi/uBlock/issues/1001
     // This must be executed regardless of whether the request is
     // behind-the-scene
-    if ( details.type === 'main_frame' ) {
+    if ( fctxt.itype === fctxt.MAIN_FRAME ) {
         return onBeforeRootFrameRequest(fctxt);
     }
 
@@ -94,33 +94,31 @@ const onBeforeRequest = function(details) {
         fctxt.setRealm('network').toLogger();
     }
 
-    // Not blocked
-    if ( result !== 1 ) {
-        if (
-            details.parentFrameId !== -1 &&
-            details.type === 'sub_frame' &&
-            details.aliasURL === undefined
-        ) {
-            pageStore.setFrameURL(details.frameId, details.url);
-        }
-        if ( result === 2 ) {
-            return { cancel: false };
-        }
-        return;
+    // Redirected
+
+    if ( fctxt.redirectURL !== undefined ) {
+        return { redirectUrl: fctxt.redirectURL };
     }
 
-    // Blocked
+    // Not redirected
 
-    if ( fctxt.redirectURL === undefined ) {
+    // Blocked
+    if ( result === 1 ) {
         return { cancel: true };
     }
 
-    if ( µb.logger.enabled ) {
-        fctxt.setRealm('redirect')
-             .setFilter({ source: 'redirect', raw: µb.redirectEngine.resourceNameRegister })
-             .toLogger();
+    // Not blocked
+    if (
+        fctxt.itype === fctxt.SUB_FRAME &&
+        details.parentFrameId !== -1 &&
+        details.aliasURL === undefined
+    ) {
+        pageStore.setFrameURL(details.frameId, details.url);
     }
-    return { redirectUrl: fctxt.redirectURL };
+
+    if ( result === 2 ) {
+        return { cancel: false };
+    }
 };
 
 /******************************************************************************/
@@ -134,14 +132,14 @@ const onBeforeRootFrameRequest = function(fctxt) {
     //   This must be executed regardless of whether the request is
     //   behind-the-scene
     const requestHostname = fctxt.getHostname();
-    const logEnabled = µb.logger.enabled;
-    let result = 0,
-        logData;
+    const loggerEnabled = µb.logger.enabled;
+    let result = 0;
+    let logData;
 
     // If the site is whitelisted, disregard strict blocking
     if ( µb.getNetFilteringSwitch(requestURL) === false ) {
         result = 2;
-        if ( logEnabled ) {
+        if ( loggerEnabled ) {
             logData = { engine: 'u', result: 2, raw: 'whitelisted' };
         }
     }
@@ -152,16 +150,24 @@ const onBeforeRootFrameRequest = function(fctxt) {
         µb.sessionSwitches.evaluateZ('no-strict-blocking', requestHostname)
     ) {
         result = 2;
-        if ( logEnabled ) {
-            logData = { engine: 'u', result: 2, raw: 'no-strict-blocking: ' + µb.sessionSwitches.z + ' true' };
+        if ( loggerEnabled ) {
+            logData = {
+                engine: 'u',
+                result: 2,
+                raw: `no-strict-blocking: ${µb.sessionSwitches.z} true`
+            };
         }
     }
 
     // Temporarily whitelisted?
     if ( result === 0 && strictBlockBypasser.isBypassed(requestHostname) ) {
         result = 2;
-        if ( logEnabled ) {
-            logData = { engine: 'u', result: 2, raw: 'no-strict-blocking: true (temporary)' };
+        if ( loggerEnabled ) {
+            logData = {
+                engine: 'u',
+                result: 2,
+                raw: 'no-strict-blocking: true (temporary)'
+            };
         }
     }
 
@@ -170,9 +176,8 @@ const onBeforeRootFrameRequest = function(fctxt) {
 
     // Check for specific block
     if ( result === 0 ) {
-        fctxt.type = 'main_frame';
         result = snfe.matchString(fctxt, 0b0001);
-        if ( result !== 0 || logEnabled ) {
+        if ( result !== 0 || loggerEnabled ) {
             logData = snfe.toLogData();
         }
     }
@@ -181,14 +186,14 @@ const onBeforeRootFrameRequest = function(fctxt) {
     if ( result === 0 ) {
         fctxt.type = 'no_type';
         result = snfe.matchString(fctxt, 0b0001);
-        if ( result !== 0 || logEnabled ) {
+        if ( result !== 0 || loggerEnabled ) {
             logData = snfe.toLogData();
         }
         // https://github.com/chrisaljoudi/uBlock/issues/1128
-        // Do not block if the match begins after the hostname, except when
-        // the filter is specifically of type `other`.
+        //   Do not block if the match begins after the hostname, except when
+        //   the filter is specifically of type `other`.
         // https://github.com/gorhill/uBlock/issues/490
-        // Removing this for the time being, will need a new, dedicated type.
+        //   Removing this for the time being, will need a new, dedicated type.
         if (
             result === 1 &&
             toBlockDocResult(requestURL, requestHostname, logData) === false
@@ -196,21 +201,43 @@ const onBeforeRootFrameRequest = function(fctxt) {
             result = 0;
             logData = undefined;
         }
+        fctxt.type = 'main_frame';
     }
 
-    // Log
-    fctxt.type = 'main_frame';
     const pageStore = µb.bindTabToPageStats(fctxt.tabId, 'beforeRequest');
     if ( pageStore ) {
         pageStore.journalAddRootFrame('uncommitted', requestURL);
         pageStore.journalAddRequest(requestHostname, result);
     }
 
-    if ( logEnabled ) {
-        fctxt.setRealm('network').setFilter(logData).toLogger();
+    // Log
+    if ( loggerEnabled ) {
+        fctxt.setRealm('network').setFilter(logData);
+    }
+
+    // Modifier(s)?
+    // A modifier is an action which transform the original network request.
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/760
+    //   Redirect non-blocked request?
+    if ( result === 0 && snfe.hasQuery(fctxt) ) {
+        const directives = snfe.filterQuery(fctxt);
+        if ( directives !== undefined && loggerEnabled ) {
+            fctxt.pushFilters(directives.map(a => a.logData()));
+        }
+    }
+
+    if ( loggerEnabled ) {
+        fctxt.setRealm('network').toLogger();
+    }
+
+    // Redirected
+
+    if ( fctxt.redirectURL !== undefined ) {
+        return { redirectUrl: fctxt.redirectURL };
     }
 
     // Not blocked
+
     if ( result !== 1 ) { return; }
 
     // No log data means no strict blocking (because we need to report why
@@ -218,6 +245,7 @@ const onBeforeRootFrameRequest = function(fctxt) {
     if ( logData === undefined  ) { return; }
 
     // Blocked
+
     const query = encodeURIComponent(JSON.stringify({
         url: requestURL,
         hn: requestHostname,
@@ -307,7 +335,7 @@ const onBeforeBehindTheSceneRequest = function(fctxt) {
         fctxt.tabOrigin.endsWith('-scheme') === false &&
         µb.URI.isNetworkURI(fctxt.tabOrigin) ||
         µb.userSettings.advancedUserEnabled ||
-        fctxt.type === 'csp_report'
+        fctxt.itype === fctxt.CSP_REPORT
     ) {
         result = pageStore.filterRequest(fctxt);
 
@@ -440,9 +468,7 @@ const onHeadersReceived = function(details) {
 
     const µb = µBlock;
     const fctxt = µb.filteringContext.fromWebrequestDetails(details);
-    const requestType = fctxt.type;
-    const isRootDoc = requestType === 'main_frame';
-    const isDoc = isRootDoc || requestType === 'sub_frame';
+    const isRootDoc = fctxt.itype === fctxt.MAIN_FRAME;
 
     let pageStore = µb.pageStoreFromTabId(fctxt.tabId);
     if ( pageStore === null ) {
@@ -451,11 +477,11 @@ const onHeadersReceived = function(details) {
     }
     if ( pageStore.getNetFilteringSwitch(fctxt) === false ) { return; }
 
-    if ( requestType === 'image' || requestType === 'media' ) {
+    if ( fctxt.itype === fctxt.IMAGE || fctxt.itype === fctxt.MEDIA ) {
         return foilLargeMediaElement(details, fctxt, pageStore);
     }
 
-    if ( isDoc === false ) { return; }
+    if ( isRootDoc === false && fctxt.itype !== fctxt.SUB_FRAME ) { return; }
 
     // Keep in mind response headers will be modified in-place if needed, so
     // `details.responseHeaders` will always point to the modified response
@@ -801,6 +827,7 @@ const injectCSP = function(fctxt, pageStore, responseHeaders) {
     const µb = µBlock;
     const loggerEnabled = µb.logger.enabled;
     const cspSubsets = [];
+    const requestType = fctxt.type;
 
     // Start collecting policies >>>>>>>>
 
@@ -849,11 +876,14 @@ const injectCSP = function(fctxt, pageStore, responseHeaders) {
 
     // Static filtering.
 
+    fctxt.type = requestType;
     const staticDirectives =
-        µb.staticNetFilteringEngine.matchAndFetchData(fctxt, 'csp');
-    for ( const directive of staticDirectives ) {
-        if ( directive.result !== 1 ) { continue; }
-        cspSubsets.push(directive.getData('csp'));
+        µb.staticNetFilteringEngine.matchAndFetchModifiers(fctxt, 'csp');
+    if ( staticDirectives !== undefined ) {
+        for ( const directive of staticDirectives ) {
+            if ( directive.result !== 1 ) { continue; }
+            cspSubsets.push(directive.modifier.value);
+        }
     }
 
     // URL filtering `allow` rules override static filtering.
@@ -897,11 +927,10 @@ const injectCSP = function(fctxt, pageStore, responseHeaders) {
 
     // Static CSP policies will be applied.
 
-    if ( loggerEnabled && staticDirectives.length !== 0 ) {
-        fctxt.setRealm('network').setType('csp');
-        for ( const directive of staticDirectives ) {
-            fctxt.setFilter(directive.logData()).toLogger();
-        }
+    if ( loggerEnabled && staticDirectives !== undefined ) {
+        fctxt.setRealm('network')
+             .pushFilters(staticDirectives.map(a => a.logData()))
+             .toLogger();
     }
 
     if ( cspSubsets.length === 0 ) { return; }

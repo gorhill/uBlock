@@ -61,6 +61,7 @@
         this._urlIn = '';
         this._urlOut = '';
         this._tokenized = false;
+        this._hasQuery = 0;
         // https://www.reddit.com/r/uBlockOrigin/comments/dzw57l/
         //   Remember: 1 token needs two slots
         this._tokens = new Uint32Array(2064);
@@ -74,6 +75,7 @@
         if ( url !== this._urlIn ) {
             this._urlIn = url;
             this._urlOut = url.toLowerCase();
+            this._hasQuery = 0;
             this._tokenized = false;
         }
         return this._urlOut;
@@ -113,6 +115,14 @@
         this._tokens[i+2] = 0;
         this._tokenized = true;
         return this._tokens;
+    }
+
+    hasQuery() {
+        if ( this._hasQuery === 0 ) {
+            const i = this._urlOut.indexOf('?');
+            this._hasQuery = i !== -1 ? i + 1 : -1;
+        }
+        return this._hasQuery > 0;
     }
 
     tokenHashFromString(s) {
@@ -155,33 +165,47 @@
             l = 2048;
         }
         encodeInto.haystackLen = l;
-        const knownTokens = this.knownTokens;
-        const vtc = this._validTokenChars;
-        const charCodes = encodeInto.haystack;
-        let i = 0, j = 0, n, ti, th;
-        for (;;) {
+        let j = 0;
+        let hasq = -1;
+        mainLoop: {
+            const knownTokens = this.knownTokens;
+            const vtc = this._validTokenChars;
+            const charCodes = encodeInto.haystack;
+            let i = 0, n = 0, ti = 0, th = 0;
             for (;;) {
-                if ( i === l ) { return j; }
-                th = vtc[(charCodes[i] = url.charCodeAt(i))];
-                i += 1;
-                if ( th !== 0 ) { break; }
-            }
-            ti = i - 1; n = 1;
-            for (;;) {
-                if ( i === l ) { break; }
-                const v = vtc[(charCodes[i] = url.charCodeAt(i))];
-                i += 1;
-                if ( v === 0 ) { break; }
-                if ( n === 7 ) { continue; }
-                th = th << 4 ^ v;
-                n += 1;
-            }
-            if ( knownTokens[th & 0xFFFF ^ th >>> 16] !== 0 ) {
-                tokens[j+0] = th;
-                tokens[j+1] = ti;
-                j += 2;
+                for (;;) {
+                    if ( i === l ) { break mainLoop; }
+                    const cc = url.charCodeAt(i);
+                    charCodes[i] = cc;
+                    i += 1;
+                    th = vtc[cc];
+                    if ( th !== 0 ) { break; }
+                    if ( cc === 0x3F /* '?' */ ) { hasq = i; }
+                }
+                ti = i - 1; n = 1;
+                for (;;) {
+                    if ( i === l ) { break; }
+                    const cc = url.charCodeAt(i);
+                    charCodes[i] = cc;
+                    i += 1;
+                    const v = vtc[cc];
+                    if ( v === 0 ) {
+                        if ( cc === 0x3F /* '?' */ ) { hasq = i; }
+                        break;
+                    }
+                    if ( n === 7 ) { continue; }
+                    th = th << 4 ^ v;
+                    n += 1;
+                }
+                if ( knownTokens[th & 0xFFFF ^ th >>> 16] !== 0 ) {
+                    tokens[j+0] = th;
+                    tokens[j+1] = ti;
+                    j += 2;
+                }
             }
         }
+        this._hasQuery = hasq;
+        return j;
     }
 })();
 

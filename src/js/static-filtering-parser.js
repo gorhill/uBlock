@@ -1922,11 +1922,12 @@ const OPTTokenPopunder           = 26;
 const OPTTokenPopup              = 27;
 const OPTTokenRedirect           = 28;
 const OPTTokenRedirectRule       = 29;
-const OPTTokenScript             = 30;
-const OPTTokenShide              = 31;
-const OPTTokenXhr                = 32;
-const OPTTokenWebrtc             = 33;
-const OPTTokenWebsocket          = 34;
+const OPTTokenQueryprune         = 30;
+const OPTTokenScript             = 31;
+const OPTTokenShide              = 32;
+const OPTTokenXhr                = 33;
+const OPTTokenWebrtc             = 34;
+const OPTTokenWebsocket          = 35;
 
 const OPTCanNegate               = 1 <<  8;
 const OPTBlockOnly               = 1 <<  9;
@@ -1937,8 +1938,9 @@ const OPTDomainList              = 1 << 13;
 const OPTType                    = 1 << 14;
 const OPTNetworkType             = 1 << 15;
 const OPTRedirectType            = 1 << 16;
-const OPTRedirectableType        = 1 << 17;
-const OPTNotSupported            = 1 << 18;
+const OPTModifiableType          = 1 << 17;
+const OPTModifierType            = 1 << 18;
+const OPTNotSupported            = 1 << 19;
 
 /******************************************************************************/
 
@@ -2003,6 +2005,7 @@ Parser.prototype.OPTTokenOther = OPTTokenOther;
 Parser.prototype.OPTTokenPing = OPTTokenPing;
 Parser.prototype.OPTTokenPopunder = OPTTokenPopunder;
 Parser.prototype.OPTTokenPopup = OPTTokenPopup;
+Parser.prototype.OPTTokenQueryprune = OPTTokenQueryprune;
 Parser.prototype.OPTTokenRedirect = OPTTokenRedirect;
 Parser.prototype.OPTTokenRedirectRule = OPTTokenRedirectRule;
 Parser.prototype.OPTTokenScript = OPTTokenScript;
@@ -2023,12 +2026,12 @@ Parser.prototype.OPTDomainList = OPTDomainList;
 Parser.prototype.OPTType = OPTType;
 Parser.prototype.OPTNetworkType = OPTNetworkType;
 Parser.prototype.OPTRedirectType = OPTRedirectType;
-Parser.prototype.OPTRedirectableType = OPTRedirectableType;
+Parser.prototype.OPTModifiableType = OPTModifiableType;
 Parser.prototype.OPTNotSupported = OPTNotSupported;
 
 /******************************************************************************/
 
-const netOptionTokens = new Map([
+const netOptionTokenDescriptors = new Map([
     [ '1p', OPTToken1p | OPTCanNegate ],
         [ 'first-party', OPTToken1p | OPTCanNegate ],
     [ '3p', OPTToken3p | OPTCanNegate ],
@@ -2036,47 +2039,136 @@ const netOptionTokens = new Map([
     [ 'all', OPTTokenAll | OPTType | OPTNetworkType ],
     [ 'badfilter', OPTTokenBadfilter ],
     [ 'cname', OPTTokenCname | OPTAllowOnly | OPTType ],
-    [ 'csp', OPTTokenCsp | OPTMustAssign | OPTAllowMayAssign ],
-    [ 'css', OPTTokenCss | OPTCanNegate | OPTType | OPTNetworkType | OPTRedirectableType ],
-        [ 'stylesheet', OPTTokenCss | OPTCanNegate | OPTType | OPTNetworkType | OPTRedirectableType ],
+    [ 'csp', OPTTokenCsp | OPTMustAssign | OPTAllowMayAssign | OPTModifierType ],
+    [ 'css', OPTTokenCss | OPTCanNegate | OPTType | OPTNetworkType | OPTModifiableType ],
+        [ 'stylesheet', OPTTokenCss | OPTCanNegate | OPTType | OPTNetworkType | OPTModifiableType ],
     [ 'denyallow', OPTTokenDenyAllow | OPTMustAssign | OPTDomainList ],
-    [ 'doc', OPTTokenDoc | OPTType | OPTNetworkType | OPTCanNegate ],
-        [ 'document', OPTTokenDoc | OPTType | OPTNetworkType | OPTCanNegate ],
+    [ 'doc', OPTTokenDoc | OPTType | OPTNetworkType | OPTCanNegate | OPTModifiableType ],
+        [ 'document', OPTTokenDoc | OPTType | OPTNetworkType | OPTCanNegate | OPTModifiableType ],
     [ 'domain', OPTTokenDomain | OPTMustAssign | OPTDomainList ],
     [ 'ehide', OPTTokenEhide | OPTType ],
         [ 'elemhide', OPTTokenEhide | OPTType ],
-    [ 'empty', OPTTokenEmpty | OPTBlockOnly | OPTRedirectType ],
-    [ 'frame', OPTTokenFrame | OPTCanNegate | OPTType | OPTNetworkType | OPTRedirectableType ],
-        [ 'subdocument', OPTTokenFrame | OPTCanNegate | OPTType | OPTNetworkType | OPTRedirectableType ],
-    [ 'font', OPTTokenFont | OPTCanNegate | OPTType | OPTNetworkType | OPTRedirectableType ],
+    [ 'empty', OPTTokenEmpty | OPTBlockOnly | OPTRedirectType | OPTModifierType ],
+    [ 'frame', OPTTokenFrame | OPTCanNegate | OPTType | OPTNetworkType | OPTModifiableType ],
+        [ 'subdocument', OPTTokenFrame | OPTCanNegate | OPTType | OPTNetworkType | OPTModifiableType ],
+    [ 'font', OPTTokenFont | OPTCanNegate | OPTType | OPTNetworkType | OPTModifiableType ],
     [ 'genericblock', OPTTokenGenericblock | OPTNotSupported ],
     [ 'ghide', OPTTokenGhide | OPTType ],
         [ 'generichide', OPTTokenGhide | OPTType ],
-    [ 'image', OPTTokenImage | OPTCanNegate | OPTType | OPTNetworkType | OPTRedirectableType ],
+    [ 'image', OPTTokenImage | OPTCanNegate | OPTType | OPTNetworkType | OPTModifiableType ],
     [ 'important', OPTTokenImportant | OPTBlockOnly ],
     [ 'inline-font', OPTTokenInlineFont | OPTType | OPTCanNegate ],
     [ 'inline-script', OPTTokenInlineScript | OPTType | OPTCanNegate ],
-    [ 'media', OPTTokenMedia | OPTCanNegate | OPTType | OPTNetworkType | OPTRedirectableType ],
-    [ 'mp4', OPTTokenMp4 | OPTType | OPTNetworkType | OPTBlockOnly | OPTRedirectType | OPTRedirectableType ],
-    [ 'object', OPTTokenObject | OPTCanNegate | OPTType | OPTNetworkType | OPTRedirectableType ],
-        [ 'object-subrequest', OPTTokenObject | OPTCanNegate | OPTType | OPTNetworkType ],
-    [ 'other', OPTTokenOther | OPTCanNegate | OPTType | OPTNetworkType | OPTRedirectableType ],
-    [ 'ping', OPTTokenPing | OPTCanNegate | OPTType | OPTNetworkType ],
-        [ 'beacon', OPTTokenPing | OPTCanNegate | OPTType | OPTNetworkType ],
+    [ 'media', OPTTokenMedia | OPTCanNegate | OPTType | OPTNetworkType | OPTModifiableType ],
+    [ 'mp4', OPTTokenMp4 | OPTType | OPTNetworkType | OPTBlockOnly | OPTRedirectType |  OPTModifierType ],
+    [ 'object', OPTTokenObject | OPTCanNegate | OPTType | OPTNetworkType | OPTModifiableType ],
+        [ 'object-subrequest', OPTTokenObject | OPTCanNegate | OPTType | OPTNetworkType | OPTModifiableType ],
+    [ 'other', OPTTokenOther | OPTCanNegate | OPTType | OPTNetworkType | OPTModifiableType ],
+    [ 'ping', OPTTokenPing | OPTCanNegate | OPTType | OPTNetworkType | OPTModifiableType ],
+        [ 'beacon', OPTTokenPing | OPTCanNegate | OPTType | OPTNetworkType | OPTModifiableType ],
     [ 'popunder', OPTTokenPopunder | OPTType ],
     [ 'popup', OPTTokenPopup | OPTType | OPTCanNegate ],
-    [ 'redirect', OPTTokenRedirect | OPTMustAssign | OPTBlockOnly | OPTRedirectType ],
-    [ 'redirect-rule', OPTTokenRedirectRule | OPTMustAssign | OPTBlockOnly | OPTRedirectType ],
-    [ 'script', OPTTokenScript | OPTCanNegate | OPTType | OPTNetworkType | OPTRedirectableType ],
+    [ 'queryprune', OPTTokenQueryprune | OPTMustAssign | OPTAllowMayAssign | OPTModifierType ],
+    [ 'redirect', OPTTokenRedirect | OPTMustAssign | OPTBlockOnly | OPTRedirectType | OPTModifierType ],
+    [ 'redirect-rule', OPTTokenRedirectRule | OPTMustAssign | OPTBlockOnly | OPTRedirectType | OPTModifierType ],
+    [ 'script', OPTTokenScript | OPTCanNegate | OPTType | OPTNetworkType | OPTModifiableType ],
     [ 'shide', OPTTokenShide | OPTType ],
         [ 'specifichide', OPTTokenShide | OPTType ],
-    [ 'xhr', OPTTokenXhr | OPTCanNegate| OPTType | OPTNetworkType | OPTRedirectableType ],
-        [ 'xmlhttprequest', OPTTokenXhr | OPTCanNegate | OPTType | OPTNetworkType | OPTRedirectableType ],
+    [ 'xhr', OPTTokenXhr | OPTCanNegate| OPTType | OPTNetworkType | OPTModifiableType ],
+        [ 'xmlhttprequest', OPTTokenXhr | OPTCanNegate | OPTType | OPTNetworkType | OPTModifiableType ],
     [ 'webrtc', OPTTokenWebrtc | OPTNotSupported ],
-    [ 'websocket', OPTTokenWebsocket | OPTCanNegate | OPTType | OPTNetworkType ],
+    [ 'websocket', OPTTokenWebsocket | OPTCanNegate | OPTType | OPTNetworkType | OPTModifiableType ],
 ]);
 
-Parser.prototype.netOptionTokens = netOptionTokens;
+Parser.prototype.netOptionTokenDescriptors =
+    Parser.netOptionTokenDescriptors = netOptionTokenDescriptors;
+
+Parser.netOptionTokenIds = new Map([
+    [ '1p', OPTToken1p ],
+        [ 'first-party', OPTToken1p ],
+    [ '3p', OPTToken3p ],
+        [ 'third-party', OPTToken3p ],
+    [ 'all', OPTTokenAll ],
+    [ 'badfilter', OPTTokenBadfilter ],
+    [ 'cname', OPTTokenCname ],
+    [ 'csp', OPTTokenCsp ],
+    [ 'css', OPTTokenCss ],
+        [ 'stylesheet', OPTTokenCss ],
+    [ 'denyallow', OPTTokenDenyAllow ],
+    [ 'doc', OPTTokenDoc ],
+        [ 'document', OPTTokenDoc ],
+    [ 'domain', OPTTokenDomain ],
+    [ 'ehide', OPTTokenEhide ],
+        [ 'elemhide', OPTTokenEhide ],
+    [ 'empty', OPTTokenEmpty ],
+    [ 'frame', OPTTokenFrame ],
+        [ 'subdocument', OPTTokenFrame ],
+    [ 'font', OPTTokenFont ],
+    [ 'genericblock', OPTTokenGenericblock ],
+    [ 'ghide', OPTTokenGhide ],
+        [ 'generichide', OPTTokenGhide ],
+    [ 'image', OPTTokenImage ],
+    [ 'important', OPTTokenImportant ],
+    [ 'inline-font', OPTTokenInlineFont ],
+    [ 'inline-script', OPTTokenInlineScript ],
+    [ 'media', OPTTokenMedia ],
+    [ 'mp4', OPTTokenMp4 ],
+    [ 'object', OPTTokenObject ],
+        [ 'object-subrequest', OPTTokenObject ],
+    [ 'other', OPTTokenOther ],
+    [ 'ping', OPTTokenPing ],
+        [ 'beacon', OPTTokenPing ],
+    [ 'popunder', OPTTokenPopunder ],
+    [ 'popup', OPTTokenPopup ],
+    [ 'queryprune', OPTTokenQueryprune ],
+    [ 'redirect', OPTTokenRedirect ],
+    [ 'redirect-rule', OPTTokenRedirectRule ],
+    [ 'script', OPTTokenScript ],
+    [ 'shide', OPTTokenShide ],
+        [ 'specifichide', OPTTokenShide ],
+    [ 'xhr', OPTTokenXhr ],
+        [ 'xmlhttprequest', OPTTokenXhr ],
+    [ 'webrtc', OPTTokenWebrtc ],
+    [ 'websocket', OPTTokenWebsocket ],
+]);
+
+Parser.netOptionTokenNames = new Map([
+    [ OPTToken1p, '1p' ],
+    [ OPTToken3p, '3p' ],
+    [ OPTTokenAll, 'all' ],
+    [ OPTTokenBadfilter, 'badfilter' ],
+    [ OPTTokenCname, 'cname' ],
+    [ OPTTokenCsp, 'csp' ],
+    [ OPTTokenCss, 'stylesheet' ],
+    [ OPTTokenDenyAllow, 'denyallow' ],
+    [ OPTTokenDoc, 'document' ],
+    [ OPTTokenDomain, 'domain' ],
+    [ OPTTokenEhide, 'elemhide' ],
+    [ OPTTokenEmpty, 'empty' ],
+    [ OPTTokenFrame, 'subdocument' ],
+    [ OPTTokenFont, 'font' ],
+    [ OPTTokenGenericblock, 'genericblock' ],
+    [ OPTTokenGhide, 'generichide' ],
+    [ OPTTokenImage, 'image' ],
+    [ OPTTokenImportant, 'important' ],
+    [ OPTTokenInlineFont, 'inline-font' ],
+    [ OPTTokenInlineScript, 'inline-script' ],
+    [ OPTTokenMedia, 'media' ],
+    [ OPTTokenMp4, 'mp4' ],
+    [ OPTTokenObject, 'object' ],
+    [ OPTTokenOther, 'other' ],
+    [ OPTTokenPing, 'ping' ],
+    [ OPTTokenPopunder, 'popunder' ],
+    [ OPTTokenPopup, 'popup' ],
+    [ OPTTokenQueryprune, 'queryprune' ],
+    [ OPTTokenRedirect, 'redirect' ],
+    [ OPTTokenRedirectRule, 'redirect-rule' ],
+    [ OPTTokenScript, 'script' ],
+    [ OPTTokenShide, 'specifichide' ],
+    [ OPTTokenXhr, 'xmlhttprequest' ],
+    [ OPTTokenWebrtc, 'webrtc' ],
+    [ OPTTokenWebsocket, 'websocket' ],
+]);
 
 /******************************************************************************/
 
@@ -2134,9 +2226,8 @@ const NetOptionsIterator = class {
         const slices = this.parser.slices;
         const optSlices = this.optSlices;
         let typeCount = 0;
-        let redirectableTypeCount = 0;
-        let redirectIndex = -1;
-        let cspIndex = -1;
+        let modifiableTypeCount = 0;
+        let modifierIndex = -1;
         let writePtr = 0;
         let lopt = lopts;
         while ( lopt < ropts ) {
@@ -2170,7 +2261,7 @@ const NetOptionsIterator = class {
             if ( good ) {
                 const rtok = lval === 0 ? i : lval;
                 const token = this.parser.raw.slice(slices[ltok+1], slices[rtok+1]);
-                descriptor = netOptionTokens.get(token);
+                descriptor = netOptionTokenDescriptors.get(token);
             }
             // Validate option according to context
             if (
@@ -2189,20 +2280,17 @@ const NetOptionsIterator = class {
             // Keep count of types
             if ( hasBits(descriptor, OPTType) ) {
                 typeCount += 1;
-                if ( hasBits(descriptor, OPTRedirectableType) ) {
-                    redirectableTypeCount += 1;
-                }
-            }
-            // Only one `redirect` or `csp` can be present
-            if ( hasBits(descriptor, OPTRedirectType) ) {
-                if ( redirectIndex === -1 ) {
-                    redirectIndex = writePtr;
-                } else {
+                const modifiable = hasBits(descriptor, OPTModifiableType);
+                if ( modifiable ) {
+                    modifiableTypeCount += 1;
+                } else if ( modifierIndex !== -1 ) {
                     descriptor = OPTTokenInvalid;
                 }
-            } else if ( (descriptor & 0xFF) === OPTTokenCsp ) {
-                if ( cspIndex === -1 ) {
-                    cspIndex = writePtr;
+            }
+            // Only one modifier can be present
+            if ( hasBits(descriptor, OPTModifierType) ) {
+                if ( modifierIndex === -1 ) {
+                    modifierIndex = writePtr;
                 } else {
                     descriptor = OPTTokenInvalid;
                 }
@@ -2244,38 +2332,26 @@ const NetOptionsIterator = class {
         if ( this.interactive && hasBits(this.parser.slices[ropts-3], BITComma) ) {
             this.parser.slices[ropts-3] |= BITError;
         }
-        // Invalid combinations of options
-        //
-        // `csp` can't be used with any other types or redirection
-        if ( cspIndex !== -1 && ( typeCount !== 0 || redirectIndex !== -1 ) ) {
-            optSlices[cspIndex] = OPTTokenInvalid;
-            if ( this.interactive ) {
-                this.parser.markSlices(
-                    optSlices[cspIndex+1],
-                    optSlices[cspIndex+5],
-                    BITError
-                );
-            }
-        }
         // `redirect` requires one single redirectable type, EXCEPT for when we
         // redirect to `empty`, in which case it is allowed to not have any
         // network type specified.
         if (
-            redirectIndex !== -1 &&
-            redirectableTypeCount !== 1 && (
-                redirectableTypeCount !== 0 ||
+            modifierIndex !== -1 &&
+            hasBits(optSlices[modifierIndex+0], OPTRedirectType) &&
+            modifiableTypeCount !== 1 && (
+                modifiableTypeCount !== 0 ||
                 typeCount !== 0 ||
                 this.parser.raw.slice(
-                    this.parser.slices[optSlices[redirectIndex+0]+1],
-                    this.parser.slices[optSlices[redirectIndex+5]+1]
+                    this.parser.slices[optSlices[modifierIndex+0]+1],
+                    this.parser.slices[optSlices[modifierIndex+5]+1]
                 ).endsWith('empty') === false
             )
         ) {
-            optSlices[redirectIndex] = OPTTokenInvalid;
+            optSlices[modifierIndex] = OPTTokenInvalid;
             if ( this.interactive ) {
                 this.parser.markSlices(
-                    optSlices[redirectIndex+1],
-                    optSlices[redirectIndex+5],
+                    optSlices[modifierIndex+1],
+                    optSlices[modifierIndex+5],
                     BITError
                 );
             }

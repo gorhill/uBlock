@@ -1145,7 +1145,7 @@ vAPI.warSecret = (( ) => {
             url.lastIndexOf(`?secret=${secret}`) !== -1
         );
         if ( pos === -1 ) {
-            return { redirectUrl: root };
+            return { cancel: true };
         }
         secrets.splice(pos, 1);
     };

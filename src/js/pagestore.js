@@ -545,27 +545,28 @@ const PageStore = class {
             return 0;
         }
 
-        const requestType = fctxt.type;
-
         if (
-            requestType === 'csp_report' &&
+            fctxt.itype === fctxt.CSP_REPORT &&
             this.filterCSPReport(fctxt) === 1
         ) {
             return 1;
         }
 
-        if ( requestType.endsWith('font') && this.filterFont(fctxt) === 1 ) {
+        if (
+            (fctxt.itype & fctxt.FONT_ANY) !== 0 &&
+            this.filterFont(fctxt) === 1 )
+        {
             return 1;
         }
 
         if (
-            requestType === 'script' &&
+            fctxt.itype === fctxt.SCRIPT &&
             this.filterScripting(fctxt, true) === 1
         ) {
             return 1;
         }
 
-        const cacheableResult = this.cacheableResults.has(requestType);
+        const cacheableResult = this.cacheableResults.has(fctxt.itype);
 
         if ( cacheableResult ) {
             const entry = this.netFilteringCache.lookupResult(fctxt);
@@ -576,13 +577,16 @@ const PageStore = class {
             }
         }
 
+        const requestType = fctxt.type;
+        const loggerEnabled = µb.logger.enabled;
+
         // Dynamic URL filtering.
         let result = µb.sessionURLFiltering.evaluateZ(
             fctxt.getTabHostname(),
             fctxt.url,
             requestType
         );
-        if ( result !== 0 && µb.logger.enabled ) {
+        if ( result !== 0 && loggerEnabled ) {
             fctxt.filter = µb.sessionURLFiltering.toLogData();
         }
 
@@ -593,17 +597,17 @@ const PageStore = class {
                 fctxt.getHostname(),
                 requestType
             );
-            if ( result !== 0 && result !== 3 && µb.logger.enabled ) {
+            if ( result !== 0 && result !== 3 && loggerEnabled ) {
                 fctxt.filter = µb.sessionFirewall.toLogData();
             }
         }
 
         // Static filtering has lowest precedence.
+        const snfe = µb.staticNetFilteringEngine;
         if ( result === 0 || result === 3 ) {
-            const snfe = µb.staticNetFilteringEngine;
             result = snfe.matchString(fctxt);
             if ( result !== 0 ) {
-                if ( µb.logger.enabled ) {
+                if ( loggerEnabled ) {
                     fctxt.filter = snfe.toLogData();
                 }
                 // https://github.com/uBlockOrigin/uBlock-issues/issues/943
@@ -625,8 +629,8 @@ const PageStore = class {
             const frameStore = this.getFrameStore(fctxt.frameId);
             if ( frameStore !== null && frameStore.clickToLoad ) {
                 result = 2;
-                if ( µb.logger.enabled ) {
-                    fctxt.setFilter({
+                if ( loggerEnabled ) {
+                    fctxt.pushFilter({
                         result,
                         source: 'network',
                         raw: 'click-to-load',
@@ -635,19 +639,36 @@ const PageStore = class {
             }
         }
 
+        // Modifier(s)?
+        // A modifier is an action which transform the original network request.
         // https://github.com/gorhill/uBlock/issues/949
         //   Redirect blocked request?
-        if ( result === 1 && µb.hiddenSettings.ignoreRedirectFilters !== true ) {
-            const redirectURL = µb.redirectEngine.toURL(fctxt);
-            if ( redirectURL !== undefined ) {
-                fctxt.redirectURL = redirectURL;
-                this.internalRedirectionCount += 1;
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/760
+        //   Redirect non-blocked request?
+        if ( (fctxt.itype & fctxt.INLINE_ANY) === 0 ) {
+            if ( result === 1 ) {
+                if ( µb.hiddenSettings.ignoreRedirectFilters !== true ) {
+                    const redirectURL = µb.redirectEngine.toURL(fctxt);
+                    if ( redirectURL !== undefined ) {
+                        fctxt.redirectURL = redirectURL;
+                        this.internalRedirectionCount += 1;
+                        fctxt.pushFilter({
+                            source: 'redirect',
+                            raw: µb.redirectEngine.resourceNameRegister
+                        });
+                    }
+                }
+            } else if ( snfe.hasQuery(fctxt) ) {
+                const directives = snfe.filterQuery(fctxt);
+                if ( directives !== undefined && loggerEnabled ) {
+                    fctxt.pushFilters(directives.map(a => a.logData()));
+                }
             }
         }
 
         if ( cacheableResult ) {
             this.netFilteringCache.rememberResult(fctxt, result);
-        } else if ( result === 1 && this.collapsibleResources.has(requestType) ) {
+        } else if ( result === 1 && this.collapsibleResources.has(fctxt.itype) ) {
             this.netFilteringCache.rememberBlock(fctxt);
         }
 
@@ -670,7 +691,7 @@ const PageStore = class {
     }
 
     filterFont(fctxt) {
-        if ( fctxt.type === 'font' ) {
+        if ( fctxt.itype === fctxt.FONT ) {
             this.remoteFontCount += 1;
         }
         if (
@@ -800,7 +821,7 @@ const PageStore = class {
         }
         if ( exceptCname === false ) { return false; }
         if ( exceptCname instanceof Object ) {
-            fctxt.setFilter(exceptCname);
+            fctxt.pushFilter(exceptCname);
         }
         return true;
     }
@@ -830,14 +851,14 @@ const PageStore = class {
 };
 
 PageStore.prototype.cacheableResults = new Set([
-    'sub_frame',
+    µb.FilteringContext.SUB_FRAME,
 ]);
 
 PageStore.prototype.collapsibleResources = new Set([
-    'image',
-    'media',
-    'object',
-    'sub_frame',
+    µb.FilteringContext.IMAGE,
+    µb.FilteringContext.MEDIA,
+    µb.FilteringContext.OBJECT,
+    µb.FilteringContext.SUB_FRAME,
 ]);
 
 µb.PageStore = PageStore;

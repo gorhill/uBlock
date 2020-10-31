@@ -420,7 +420,7 @@ const initHints = function() {
         if ( assignPos !== -1 ) { seedRight = seedRight.slice(0, assignPos); }
         const isException = parser.isException();
         const hints = [];
-        for ( let [ text, bits ] of parser.netOptionTokens ) {
+        for ( let [ text, bits ] of parser.netOptionTokenDescriptors ) {
             if ( isNegated && (bits & parser.OPTCanNegate) === 0 ) { continue; }
             if ( isException ) {
                 if ( (bits & parser.OPTBlockOnly) !== 0 ) { continue; }

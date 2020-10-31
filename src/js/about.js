@@ -49,7 +49,9 @@
         vAPI.messaging.send('dashboard', {
             what: 'sfneBenchmark',
         }).then(result => {
-            document.getElementById('sfneBenchmarkResult').textContent = result;
+            document.getElementById('sfneBenchmarkResult').prepend(
+                document.createTextNode(result.trim() + '\n')
+            );
             button.removeAttribute('disabled');
         });
     });
