@@ -228,12 +228,12 @@ const toLogDataInternal = function(categoryBits, tokenHash, iunit) {
         isRegex: false,
     };
     filterUnits[iunit].logData(logData);
-    if ( categoryBits & 0x002 ) {
+    if ( (categoryBits & Important) !== 0 ) {
         logData.options.unshift('important');
     }
-    if ( categoryBits & 0x008 ) {
+    if ( (categoryBits & ThirdParty) !== 0 ) {
         logData.options.unshift('3p');
-    } else if ( categoryBits & 0x004 ) {
+    } else if ( (categoryBits & FirstParty) !== 0 ) {
         logData.options.unshift('1p');
     }
     const type = categoryBits & TypeBitsMask;
@@ -248,7 +248,7 @@ const toLogDataInternal = function(categoryBits, tokenHash, iunit) {
     ) {
         raw += '*';
     }
-    if ( categoryBits & 0x001 ) {
+    if ( (categoryBits & AllowAction) !== 0 ) {
         raw = '@@' + raw;
     }
     if ( denyallow.length !== 0 ) {
