@@ -147,11 +147,11 @@ const FilteringContext = class {
     //   assume the origin of the context is the same as the request itself.
     fromWebrequestDetails(details) {
         const tabId = details.tabId;
-        this.fromTabId(tabId);
         this.type = details.type;
         if ( this.itype === MAIN_FRAME && tabId > 0 ) {
             µBlock.tabContextManager.push(tabId, details.url);
         }
+        this.fromTabId(tabId); // Must be called AFTER tab context management
         this.realm = '';
         this.id = details.requestId;
         this.setURL(details.url);
