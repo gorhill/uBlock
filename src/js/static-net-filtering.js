@@ -3557,9 +3557,11 @@ FilterContainer.prototype.matchString = function(fctxt, modifiers = 0) {
 FilterContainer.prototype.filterQuery = function(fctxt) {
     const directives = this.matchAndFetchModifiers(fctxt, 'queryprune');
     if ( directives === undefined ) { return; }
-    const params = [];
+    const url = fctxt.url;
+    let qpos = url.indexOf('?');
+    if ( qpos === -1 ) { return; }
+    const params = new self.URLSearchParams(url.slice(qpos + 1));
     const out = [];
-    const url = new URL(fctxt.url);
     for ( const directive of directives ) {
         const modifier = directive.modifier;
         if ( modifier.cache === undefined ) {
@@ -3570,20 +3572,21 @@ FilterContainer.prototype.filterQuery = function(fctxt) {
         }
         const re = modifier.cache;
         let filtered = false;
-        for ( const [ key, value ] of url.searchParams ) {
-            if ( re.test(`${key}=${value}`) ) {
-                filtered = true;
-            } else {
-                params.push(`${key}=${encodeURIComponent(value)}`);
-            }
+        for ( const [ key, value ] of params ) {
+            if ( re.test(`${key}=${value}`) === false ) { continue; }
+            params.delete(key);
+            filtered = true;
         }
         if ( filtered ) {
             out.push(directive);
         }
     }
     if ( out.length === 0 ) { return; }
-    url.search = params.length !== 0 ? `?${params.join('&')}` : '';
-    fctxt.redirectURL = url.href;
+    fctxt.redirectURL = url.slice(0, qpos);
+    const query = params.toString();
+    if ( query !== '' ) {
+        fctxt.redirectURL += '?' + query;
+    }
     return out;
 };
 
