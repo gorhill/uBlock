@@ -3560,7 +3560,7 @@ FilterContainer.prototype.filterQuery = function(fctxt) {
     const url = fctxt.url;
     const qpos = url.indexOf('?');
     if ( qpos === -1 ) { return; }
-    const params = new self.URLSearchParams(url.slice(qpos + 1));
+    const params = new Map(new self.URLSearchParams(url.slice(qpos + 1)));
     const out = [];
     for ( const directive of directives ) {
         const modifier = directive.modifier;
@@ -3583,9 +3583,10 @@ FilterContainer.prototype.filterQuery = function(fctxt) {
     }
     if ( out.length === 0 ) { return; }
     fctxt.redirectURL = url.slice(0, qpos);
-    const query = params.toString();
-    if ( query !== '' ) {
-        fctxt.redirectURL += '?' + query;
+    if ( params.size !== 0 ) {
+        fctxt.redirectURL += '?' + Array.from(params).map(a =>
+            `${a[0]}=${encodeURIComponent(a[1])}`
+        ).join('&');
     }
     return out;
 };
