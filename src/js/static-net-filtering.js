@@ -3558,7 +3558,7 @@ FilterContainer.prototype.filterQuery = function(fctxt) {
     const directives = this.matchAndFetchModifiers(fctxt, 'queryprune');
     if ( directives === undefined ) { return; }
     const url = fctxt.url;
-    let qpos = url.indexOf('?');
+    const qpos = url.indexOf('?');
     if ( qpos === -1 ) { return; }
     const params = new self.URLSearchParams(url.slice(qpos + 1));
     const out = [];
