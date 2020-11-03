@@ -205,25 +205,19 @@ const onBeforeRootFrameRequest = function(fctxt) {
     }
 
     const pageStore = µb.bindTabToPageStats(fctxt.tabId, 'beforeRequest');
-    if ( pageStore ) {
+    if ( pageStore !== null ) {
         pageStore.journalAddRootFrame('uncommitted', requestURL);
         pageStore.journalAddRequest(requestHostname, result);
     }
 
-    // Log
     if ( loggerEnabled ) {
-        fctxt.setRealm('network').setFilter(logData);
+        fctxt.setFilter(logData);
     }
 
-    // Modifier(s)?
-    // A modifier is an action which transform the original network request.
     // https://github.com/uBlockOrigin/uBlock-issues/issues/760
     //   Redirect non-blocked request?
-    if ( result === 0 && snfe.hasQuery(fctxt) ) {
-        const directives = snfe.filterQuery(fctxt);
-        if ( directives !== undefined && loggerEnabled ) {
-            fctxt.pushFilters(directives.map(a => a.logData()));
-        }
+    if ( result === 0 && pageStore !== null && snfe.hasQuery(fctxt) ) {
+        pageStore.redirectNonBlockedRequest(fctxt);
     }
 
     if ( loggerEnabled ) {

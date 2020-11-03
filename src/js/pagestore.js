@@ -647,22 +647,9 @@ const PageStore = class {
         //   Redirect non-blocked request?
         if ( (fctxt.itype & fctxt.INLINE_ANY) === 0 ) {
             if ( result === 1 ) {
-                if ( µb.hiddenSettings.ignoreRedirectFilters !== true ) {
-                    const redirectURL = µb.redirectEngine.toURL(fctxt);
-                    if ( redirectURL !== undefined ) {
-                        fctxt.redirectURL = redirectURL;
-                        this.internalRedirectionCount += 1;
-                        fctxt.pushFilter({
-                            source: 'redirect',
-                            raw: µb.redirectEngine.resourceNameRegister
-                        });
-                    }
-                }
+                this.redirectBlockedRequest(fctxt);
             } else if ( snfe.hasQuery(fctxt) ) {
-                const directives = snfe.filterQuery(fctxt);
-                if ( directives !== undefined && loggerEnabled ) {
-                    fctxt.pushFilters(directives.map(a => a.logData()));
-                }
+                this.redirectNonBlockedRequest(fctxt);
             }
         }
 
@@ -673,6 +660,32 @@ const PageStore = class {
         }
 
         return result;
+    }
+
+    redirectBlockedRequest(fctxt) {
+        if ( µb.hiddenSettings.ignoreRedirectFilters === true ) { return; }
+        const directive = µb.staticNetFilteringEngine.redirectRequest(fctxt);
+        if ( directive === undefined ) { return; }
+        this.internalRedirectionCount += 1;
+        if ( µb.logger.enabled !== true ) { return; }
+        fctxt.pushFilter(directive.logData());
+        if ( fctxt.redirectURL === undefined ) { return; }
+        fctxt.pushFilter({
+            source: 'redirect',
+            raw: µb.redirectEngine.resourceNameRegister
+        });
+    }
+
+    redirectNonBlockedRequest(fctxt) {
+        const directives = µb.staticNetFilteringEngine.filterQuery(fctxt);
+        if ( directives === undefined ) { return; }
+        if ( µb.logger.enabled !== true ) { return; }
+        fctxt.pushFilters(directives.map(a => a.logData()));
+        if ( fctxt.redirectURL === undefined ) { return; }
+        fctxt.pushFilter({
+            source: 'redirect',
+            raw: fctxt.redirectURL
+        });
     }
 
     filterCSPReport(fctxt) {

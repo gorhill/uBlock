@@ -2267,7 +2267,6 @@ const FilterParser = class {
         this.denyallowOpt = '';
         this.isPureHostname = false;
         this.isRegex = false;
-        this.redirect = 0;
         this.token = '*';
         this.tokenHash = this.noTokenHash;
         this.tokenBeg = 0;
@@ -2355,6 +2354,7 @@ const FilterParser = class {
                 this.badFilter = true;
                 break;
             case parser.OPTTokenCsp:
+                if ( this.modifyType !== undefined ) { return false; }
                 this.modifyType = parser.OPTTokenCsp;
                 if ( val !== undefined ) {
                     if ( this.reBadCSP.test(val) ) { return false; }
@@ -2391,14 +2391,20 @@ const FilterParser = class {
             // Used by Adguard:
             // https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters#empty-modifier
             case parser.OPTTokenEmpty:
+                if ( this.modifyType !== undefined ) { return false; }
+                this.modifyType = parser.OPTTokenRedirect;
+                this.modifyValue = 'empty';
+                break;
             case parser.OPTTokenMp4:
-            case parser.OPTTokenRedirect:
-            case parser.OPTTokenRedirectRule:
-                if ( this.redirect !== 0 ) { return false; }
-                this.redirect = id === parser.OPTTokenRedirectRule ? 2 : 1;
+                if ( this.modifyType !== undefined ) { return false; }
+                this.modifyType = parser.OPTTokenRedirect;
+                this.modifyValue = 'noopmp4-1s';
                 break;
             case parser.OPTTokenQueryprune:
-                this.modifyType = parser.OPTTokenQueryprune;
+            case parser.OPTTokenRedirect:
+            case parser.OPTTokenRedirectRule:
+                if ( this.modifyType !== undefined ) { return false; }
+                this.modifyType = id;
                 if ( val !== undefined ) {
                     this.modifyValue = val;
                 } else if ( this.action === AllowAction ) {
@@ -2748,7 +2754,6 @@ FilterContainer.prototype.reset = function() {
 
 FilterContainer.prototype.freeze = function() {
     const filterBucketId = FilterBucket.fid;
-    const redirectTypeValue = typeNameToTypeValue.redirect;
     const unserialize = µb.CompiledLineIO.unserialize;
     const units = filterUnits;
 
@@ -2762,13 +2767,6 @@ FilterContainer.prototype.freeze = function() {
 
         const args = unserialize(line);
         const bits = args[0];
-
-        // Special cases: delegate to more specialized engines.
-        // Redirect engine.
-        if ( (bits & TypeBitsMask) === redirectTypeValue ) {
-            µb.redirectEngine.fromCompiledRule(args[1]);
-            continue;
-        }
 
         // Plain static filters.
         const tokenHash = args[1];
@@ -2994,21 +2992,6 @@ FilterContainer.prototype.compile = function(parser, writer) {
         return false;
     }
 
-    // Redirect rule
-    if ( parsed.redirect !== 0 ) {
-        const result = this.compileRedirectRule(parser.raw, parsed.badFilter, writer);
-        if ( result === false ) {
-            const who = writer.properties.get('assetKey') || '?';
-            µb.logger.writeOne({
-                realm: 'message',
-                type: 'error',
-                text: `Invalid redirect rule in ${who}: ${parser.raw}`
-            });
-            return false;
-        }
-        if ( parsed.redirect === 2 ) { return true; }
-    }
-
     // Pure hostnames, use more efficient dictionary lookup
     // https://github.com/chrisaljoudi/uBlock/issues/665
     // Create a dict keyed on request type etc.
@@ -3099,8 +3082,20 @@ FilterContainer.prototype.compile = function(parser, writer) {
         units.push(FilterDenyAllow.compile(parsed));
     }
 
-    // Data
+    // Modifier
     if ( parsed.modifyType !== undefined ) {
+        // A block filter is implicit with `redirect=` modifier
+        if (
+            parsed.modifyType === parser.OPTTokenRedirect &&
+            (parsed.action & ActionBitsMask) !== AllowAction
+        ) {
+            this.compileToAtomicFilter(
+                parsed,
+                FilterCompositeAll.compile(units),
+                writer
+            );
+            parsed.modifyType = parser.OPTTokenRedirectRule;
+        }
         units.push(FilterModifier.compile(parsed));
         parsed.action = ModifyAction;
         parsed.important = 0;
@@ -3109,7 +3104,6 @@ FilterContainer.prototype.compile = function(parser, writer) {
     const fdata = units.length === 1
         ? units[0]
         : FilterCompositeAll.compile(units);
-
     this.compileToAtomicFilter(parsed, fdata, writer);
 
     return true;
@@ -3158,19 +3152,6 @@ FilterContainer.prototype.compileToAtomicFilter = function(
 
 /******************************************************************************/
 
-FilterContainer.prototype.compileRedirectRule = function(raw, badFilter, writer) {
-    const redirects = µb.redirectEngine.compileRuleFromStaticFilter(raw);
-    if ( Array.isArray(redirects) === false ) { return false; }
-    writer.select(badFilter ? 1 : 0);
-    const type = typeNameToTypeValue.redirect;
-    for ( const redirect of redirects ) {
-        writer.push([ type, redirect ]);
-    }
-    return true;
-};
-
-/******************************************************************************/
-
 FilterContainer.prototype.fromCompiledContent = function(reader) {
     // 0 = network filters
     reader.select(0);
@@ -3191,18 +3172,6 @@ FilterContainer.prototype.fromCompiledContent = function(reader) {
 };
 
 /******************************************************************************/
-
-// TODO:
-//   Evaluate converting redirect directives in redirect engine into
-//   modifiers in static network filtering engine.
-//
-//   Advantages: no more syntax quirks, gain all performance benefits, ability
-//               to reverse-lookup list of redirect directive in logger.
-//
-//   Challenges: need to figure a way to calculate specificity so that the
-//               most specific redirect directive out of many can be
-//               identified (possibly based on total number of hostname labels
-//               seen at compile time).
 
 FilterContainer.prototype.matchAndFetchModifiers = function(
     fctxt,
@@ -3554,6 +3523,54 @@ FilterContainer.prototype.matchString = function(fctxt, modifiers = 0) {
 
 /******************************************************************************/
 
+FilterContainer.prototype.redirectRequest = function(fctxt) {
+    const directives = this.matchAndFetchModifiers(fctxt, 'redirect-rule');
+    if ( directives === undefined ) { return; }
+    let winningDirective;
+    let winningPriority = 0;
+    for ( const directive of directives ) {
+        const modifier = directive.modifier;
+        const isException = (directive.bits & ActionBitsMask) === AllowAction;
+        if ( isException && modifier.value === '' ) {
+            winningDirective = directive;
+            break;
+        }
+        if ( modifier.cache === undefined ) {
+            const rawToken = modifier.value;
+            let token = rawToken;
+            let priority = 0;
+            const match = /:(\d+)$/.exec(rawToken);
+            if ( match !== null ) {
+                token = rawToken.slice(0, match.index);
+                priority = parseInt(match[1], 10);
+            }
+            modifier.cache = { token, priority };
+        }
+        if (
+            winningDirective === undefined ||
+            modifier.cache.priority > winningPriority
+        ) {
+            winningDirective = directive;
+            winningPriority = modifier.cache.priority;
+        }
+    }
+    if ( winningDirective === undefined ) { return; }
+    if ( (winningDirective.bits & ActionBitsMask) !== AllowAction ) {
+        fctxt.redirectURL = µb.redirectEngine.tokenToURL(
+            fctxt,
+            winningDirective.modifier.cache.token
+        );
+    }
+    return winningDirective;
+};
+
+FilterContainer.prototype.hasQuery = function(fctxt) {
+    urlTokenizer.setURL(fctxt.url);
+    return urlTokenizer.hasQuery();
+};
+
+/******************************************************************************/
+
 FilterContainer.prototype.filterQuery = function(fctxt) {
     const directives = this.matchAndFetchModifiers(fctxt, 'queryprune');
     if ( directives === undefined ) { return; }
@@ -3564,6 +3581,11 @@ FilterContainer.prototype.filterQuery = function(fctxt) {
     const out = [];
     for ( const directive of directives ) {
         const modifier = directive.modifier;
+        const isException = (directive.bits & ActionBitsMask) === AllowAction;
+        if ( isException && modifier.value === '' ) {
+            out.push(directive);
+            break;
+        }
         if ( modifier.cache === undefined ) {
             let retext = modifier.value;
             if ( retext.startsWith('|') ) { retext = `^${retext.slice(1)}`; }
@@ -3574,7 +3596,9 @@ FilterContainer.prototype.filterQuery = function(fctxt) {
         let filtered = false;
         for ( const [ key, value ] of params ) {
             if ( re.test(`${key}=${value}`) === false ) { continue; }
-            params.delete(key);
+            if ( isException === false ) {
+                params.delete(key);
+            }
             filtered = true;
         }
         if ( filtered ) {
@@ -3699,11 +3723,15 @@ FilterContainer.prototype.benchmark = async function(action, target) {
             print(`\turl=${fctxt.url}`);
             print(`\tdocOrigin=${fctxt.getDocOrigin()}`);
         }
-        if ( r !== 1 && this.hasQuery(fctxt) ) {
-            this.filterQuery(fctxt, 'queryprune');
-        }
-        if ( r !== 1 && fctxt.type === 'main_frame' || fctxt.type === 'sub_frame' ) {
-            this.matchAndFetchModifiers(fctxt, 'csp');
+        if ( r !== 1 ) {
+            if ( this.hasQuery(fctxt) ) {
+                this.filterQuery(fctxt, 'queryprune');
+            }
+            if ( fctxt.type === 'main_frame' || fctxt.type === 'sub_frame' ) {
+                this.matchAndFetchModifiers(fctxt, 'csp');
+            }
+        } else {
+            this.redirectRequest(fctxt);
         }
     }
     const t1 = self.performance.now();

@@ -302,7 +302,13 @@ const processLoggerEntries = function(response) {
             if ( autoDeleteVoidedRows ) { continue; }
             parsed.voided = true;
         }
-        if ( parsed.type === 'main_frame' && parsed.aliased === false ) {
+        if (
+            parsed.type === 'main_frame' &&
+            parsed.aliased === false && (
+                parsed.filter === undefined ||
+                parsed.filter.source !== 'redirect'
+            )
+        ) {
             const separator = createLogSeparator(parsed, unboxed.url);
             loggerEntries.unshift(separator);
             if ( rowFilterer.filterOne(separator) ) {
