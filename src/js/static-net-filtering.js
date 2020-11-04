@@ -1666,23 +1666,26 @@ const FilterCompositeAll = class extends FilterCollection {
         return true;
     }
 
+    // IMPORTANT: the modifier filter unit is assumed to be ALWAYS the
+    // first unit in the sequence. This requirement ensures that we do
+    // not have to traverse the sequence to find the modifier filter
+    // unit.
     matchAndFetchModifiers(env) {
-        if ( this.match() !== true ) { return false; }
-        this.forEach(iunit => {
-            const f = filterUnits[iunit];
-            if ( f.matchAndFetchModifiers instanceof Function ) {
-                f.matchAndFetchModifiers(env);
-            }
-        });
+        const f = filterUnits[filterSequences[this.i]];
+        if (
+            f.matchAndFetchModifiers instanceof Function &&
+            f.type === env.modifier &&
+            this.match()
+        ) {
+            f.matchAndFetchModifiers(env);
+        }
     }
 
     get modifier() {
-        return this.forEach(iunit => {
-            const f = filterUnits[iunit];
-            if ( f.matchAndFetchModifiers instanceof Function ) {
-                return f.modifier;
-            }
-        });
+        const f = filterUnits[filterSequences[this.i]];
+        if ( f.matchAndFetchModifiers instanceof Function ) {
+            return f.modifier;
+        }
     }
 
     // FilterPatternPlain is assumed to be first filter in sequence. This can
@@ -1985,11 +1988,14 @@ const FilterBucket = class extends FilterCollection {
     }
 
     matchAndFetchModifiers(env) {
+        const sequences = filterSequences;
         const units = filterUnits;
-        this.forEach(iunit => {
-            env.iunit = iunit;
-            units[iunit].matchAndFetchModifiers(env);
-        });
+        let i = this.i;
+        while ( i !== 0 ) {
+            env.iunit = sequences[i+0];
+            units[env.iunit].matchAndFetchModifiers(env);
+            i = sequences[i+1];
+        }
     }
 
     logData(details) {
@@ -2401,6 +2407,7 @@ const FilterParser = class {
                 this.modifyValue = 'noopmp4-1s';
                 break;
             case parser.OPTTokenQueryprune:
+                // TODO: validate value
             case parser.OPTTokenRedirect:
             case parser.OPTTokenRedirectRule:
                 if ( this.modifyType !== undefined ) { return false; }
@@ -3083,8 +3090,11 @@ FilterContainer.prototype.compile = function(parser, writer) {
     }
 
     // Modifier
+    //
+    // IMPORTANT: the modifier unit MUST always appear first in a sequence.
+    //
+    // Reminder: A block filter is implicit with `redirect=` modifier.
     if ( parsed.modifyType !== undefined ) {
-        // A block filter is implicit with `redirect=` modifier
         if (
             parsed.modifyType === parser.OPTTokenRedirect &&
             (parsed.action & ActionBitsMask) !== AllowAction
@@ -3096,7 +3106,7 @@ FilterContainer.prototype.compile = function(parser, writer) {
             );
             parsed.modifyType = parser.OPTTokenRedirectRule;
         }
-        units.push(FilterModifier.compile(parsed));
+        units.unshift(FilterModifier.compile(parsed));
         parsed.action = ModifyAction;
         parsed.important = 0;
     }
@@ -3202,13 +3212,13 @@ FilterContainer.prototype.matchAndFetchModifiers = function(
         ? this.categories.get(catBits11)
         : undefined;
 
-    const modifierResults = [];
+    const results = [];
     const env = {
         modifier: vAPI.StaticFilteringParser.netOptionTokenIds.get(modifierType) || 0,
         bits: 0,
         th: 0,
         iunit: 0,
-        results: modifierResults,
+        results,
     };
 
     const units = filterUnits;
@@ -3250,36 +3260,60 @@ FilterContainer.prototype.matchAndFetchModifiers = function(
         i += 2;
     }
 
-    if ( modifierResults.length === 0 ) { return; }
+    if ( results.length === 0 ) { return; }
+
+    // One single result is expected to be a common occurrence, and in such
+    // case there is no need to process exception vs. block, block important
+    // occurrences.
+    if ( results.length === 1 ) {
+        const result = results[0];
+        if ( (result.bits & ActionBitsMask) === AllowAction ) { return; }
+        return [ result ];
+    }
 
     const toAddImportant = new Map();
     const toAdd = new Map();
     const toRemove = new Map();
 
-    for ( const modifierResult of modifierResults ) {
-        const actionBits = modifierResult.bits & ActionBitsMask;
-        const modifyValue = modifierResult.modifier.value;
+    for ( const result of results ) {
+        const actionBits = result.bits & ActionBitsMask;
+        const modifyValue = result.modifier.value;
         if ( actionBits === BlockImportant ) {
-            toAddImportant.set(modifyValue, modifierResult);
+            toAddImportant.set(modifyValue, result);
         } else if ( actionBits === BlockAction ) {
-            toAdd.set(modifyValue, modifierResult);
+            toAdd.set(modifyValue, result);
         } else {
-            toRemove.set(modifyValue, modifierResult);
+            toRemove.set(modifyValue, result);
         }
     }
     if ( toAddImportant.size === 0 && toAdd.size === 0 ) { return; }
 
     // Remove entries overriden by important block filters.
-    for ( const key of toAddImportant.keys() ) {
-        toAdd.delete(key);
-        toRemove.delete(key);
+    if ( toAddImportant.size !== 0 ) {
+        for ( const key of toAddImportant.keys() ) {
+            toAdd.delete(key);
+            toRemove.delete(key);
+        }
     }
 
+    // Exception filters
+    //
+    // Remove excepted block filters and unused exception filters.
+    //
     // Special case, except-all:
     // - Except-all applies only if there is at least one normal block filters.
     // - Except-all does not apply to important block filters.
-    if ( toRemove.has('') ) {
-        if ( toAdd.size !== 0 ) {
+    if ( toRemove.size !== 0 ) {
+        if ( toRemove.has('') === false ) {
+            for ( const key of toRemove.keys() ) {
+                if ( toAdd.has(key) ) {
+                    toAdd.delete(key);
+                } else {
+                    toRemove.delete(key);
+                }
+            }
+        }
+        else if ( toAdd.size !== 0 ) {
             toAdd.clear();
             if ( toRemove.size !== 1 ) {
                 const entry = toRemove.get('');
@@ -3288,16 +3322,6 @@ FilterContainer.prototype.matchAndFetchModifiers = function(
             }
         } else {
             toRemove.clear();
-        }
-    }
-    // Remove excepted block filters and unused exception filters.
-    else {
-        for ( const key of toRemove.keys() ) {
-            if ( toAdd.has(key) ) {
-                toAdd.delete(key);
-            } else {
-                toRemove.delete(key);
-            }
         }
     }
 
@@ -3525,7 +3549,25 @@ FilterContainer.prototype.matchString = function(fctxt, modifiers = 0) {
 
 FilterContainer.prototype.redirectRequest = function(fctxt) {
     const directives = this.matchAndFetchModifiers(fctxt, 'redirect-rule');
+    // No directive is the most common occurrence.
     if ( directives === undefined ) { return; }
+    // A single directive should be the next most common occurrence.
+    if ( directives.length === 1 ) {
+        const directive = directives[0];
+        if ( (directive.bits & ActionBitsMask) === AllowAction ) {
+            return directive;
+        }
+        const modifier = directive.modifier;
+        if ( modifier.cache === undefined ) {
+            modifier.cache = this.parseRedirectRequestValue(modifier.value);
+        }
+        fctxt.redirectURL = µb.redirectEngine.tokenToURL(
+            fctxt,
+            modifier.cache.token
+        );
+        return directive;
+    }
+    // Multiple directives mean more work to do.
     let winningDirective;
     let winningPriority = 0;
     for ( const directive of directives ) {
@@ -3536,15 +3578,7 @@ FilterContainer.prototype.redirectRequest = function(fctxt) {
             break;
         }
         if ( modifier.cache === undefined ) {
-            const rawToken = modifier.value;
-            let token = rawToken;
-            let priority = 0;
-            const match = /:(\d+)$/.exec(rawToken);
-            if ( match !== null ) {
-                token = rawToken.slice(0, match.index);
-                priority = parseInt(match[1], 10);
-            }
-            modifier.cache = { token, priority };
+            modifier.cache = this.parseRedirectRequestValue(modifier.value);
         }
         if (
             winningDirective === undefined ||
@@ -3564,9 +3598,15 @@ FilterContainer.prototype.redirectRequest = function(fctxt) {
     return winningDirective;
 };
 
-FilterContainer.prototype.hasQuery = function(fctxt) {
-    urlTokenizer.setURL(fctxt.url);
-    return urlTokenizer.hasQuery();
+FilterContainer.prototype.parseRedirectRequestValue = function(rawValue) {
+    let token = rawValue;
+    let priority = 0;
+    const match = /:(\d+)$/.exec(rawValue);
+    if ( match !== null ) {
+        token = rawValue.slice(0, match.index);
+        priority = parseInt(match[1], 10);
+    }
+    return { token, priority };
 };
 
 /******************************************************************************/
@@ -3587,10 +3627,7 @@ FilterContainer.prototype.filterQuery = function(fctxt) {
             break;
         }
         if ( modifier.cache === undefined ) {
-            let retext = modifier.value;
-            if ( retext.startsWith('|') ) { retext = `^${retext.slice(1)}`; }
-            if ( retext.endsWith('|') ) { retext = `${retext.slice(0,-1)}$`; }
-            modifier.cache = new RegExp(retext);
+            modifier.cache = this.parseFilterPruneValue(modifier.value);
         }
         const re = modifier.cache;
         let filtered = false;
@@ -3614,6 +3651,19 @@ FilterContainer.prototype.filterQuery = function(fctxt) {
     }
     return out;
 };
+
+FilterContainer.prototype.parseFilterPruneValue = function(rawValue) {
+    let retext = rawValue;
+    if ( retext.startsWith('|') ) { retext = `^${retext.slice(1)}`; }
+    if ( retext.endsWith('|') ) { retext = `${retext.slice(0,-1)}$`; }
+    try {
+        return new RegExp(retext);
+    } catch(ex) {
+    }
+    return /.^/;
+};
+
+/******************************************************************************/
 
 FilterContainer.prototype.hasQuery = function(fctxt) {
     urlTokenizer.setURL(fctxt.url);
