@@ -35,6 +35,17 @@
     }
 
 /* CodeMirror theme overrides */
+.CodeMirror-focused .CodeMirror-selected {
+    background: var(--cm-selection-surface);
+    color: var(--cm-selection-ink);
+    }
+.CodeMirror-line::selection,
+.CodeMirror-line > span::selection,
+.CodeMirror-line > span > span::selection {
+    background: var(--cm-selection-surface);
+    color: var(--cm-selection-ink);
+    }
+
 .cm-s-default .cm-comment {
     color: var(--sf-comment-ink);
     }

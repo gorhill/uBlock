@@ -180,7 +180,9 @@
     --cm-gutter-border: var(--light-gray-40);
     --cm-gutter-ink: var(--light-gray-90);
     --cm-gutter-surface: var(--light-gray-25);
-    --cm-searching-surface: var(--yellow-10);
+    --cm-selection-surface: #d7d4f0;
+    --cm-selection-ink: var(--default-ink);
+    --cm-searching-surface: #ffff0066;
 
     /* syntax highlight: static filtering */
     --sf-comment-ink: var(--light-gray-90);
