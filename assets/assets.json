@@ -191,7 +191,7 @@
 		"group": "social",
 		"off": true,
 		"title": "Anti-Facebook",
-		"contentURL": "https://fanboy.co.nz/fanboy-antifacebook.txt",
+		"contentURL": "https://secure.fanboy.co.nz/fanboy-antifacebook.txt",
 		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
 	},
 	"fanboy-annoyance": {
@@ -199,7 +199,7 @@
 		"group": "social",
 		"off": true,
 		"title": "Fanboy’s Annoyance",
-		"contentURL": "https://fanboy.co.nz/fanboy-annoyance.txt",
+		"contentURL": "https://secure.fanboy.co.nz/fanboy-annoyance.txt",
 		"supportURL": "https://forums.lanik.us/"
 	},
 	"fanboy-cookiemonster": {
@@ -217,7 +217,7 @@
 		"title": "Fanboy’s Social",
 		"contentURL": [
 			"https://easylist.to/easylist/fanboy-social.txt",
-			"https://fanboy.co.nz/fanboy-social.txt"
+			"https://secure.fanboy.co.nz/fanboy-social.txt"
 		],
 		"supportURL": "https://forums.lanik.us/"
 	},
