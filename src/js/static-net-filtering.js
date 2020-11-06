@@ -345,6 +345,7 @@ let   filterClassIdGenerator = 0;
 const registerFilterClass = function(ctor) {
     const fid = filterClassIdGenerator++;
     ctor.fid = ctor.prototype.fid = fid;
+    ctor.fidstr = `${fid}`;
     filterClasses[fid] = ctor;
 };
 
@@ -370,7 +371,7 @@ const filterUnitFromCompiled = function(args) {
     if ( keygen === undefined ) {
         return filterUnits.push(ctor.fromCompiled(args)) - 1;
     }
-    let key = `${ctor.fid}`;
+    let key = ctor.fidstr;
     const keyargs = keygen(args);
     if ( keyargs !== undefined ) {
         key += `\t${keyargs}`;
@@ -383,9 +384,7 @@ const filterUnitFromCompiled = function(args) {
     return iunit;
 };
 
-const filterFromSelfie = function(args) {
-    return filterClasses[args[0]].fromSelfie(args);
-};
+const filterFromSelfie = args => filterClasses[args[0]].fromSelfie(args);
 
 /******************************************************************************/
 
@@ -1618,20 +1617,17 @@ const FilterCollection = class {
         return [ ctor.fid, fdata ];
     }
 
-    static fromCompiled(ctor, args) {
-        let iprev = 0, i0 = 0;
-        const n = args[1].length;
-        for ( let i = 0; i < n; i++ ) {
-            const iunit = filterUnitFromCompiled(args[1][i]);
-            const inext = filterSequenceAdd(iunit, 0);
-            if ( iprev !== 0 ) {
-                filterSequences[iprev+1] = inext;
-            } else {
-                i0 = inext;
-            }
-            iprev = inext;
+    static fromCompiled(args, bucket) {
+        const units = args[1];
+        const n = units.length;
+        let iunit, inext = 0;
+        let i = n;
+        while ( i-- ) {
+            iunit = filterUnitFromCompiled(units[i]);
+            inext = filterSequenceAdd(iunit, inext);
         }
-        return new ctor(i0, args[1].length);
+        bucket.i = inext;
+        return bucket;
     }
 
     static fromSelfie(args, bucket) {
@@ -1655,11 +1651,11 @@ const FilterCompositeAny = class extends FilterCollection {
     }
 
     static compile(fdata) {
-        return FilterCollection.compile(FilterCompositeAny, fdata);
+        return super.compile(FilterCompositeAny, fdata);
     }
 
     static fromCompiled(args) {
-        return FilterCollection.fromCompiled(FilterCompositeAny, args);
+        return super.fromCompiled(args, new FilterCompositeAny());
     }
 
     static fromSelfie(args, bucket) {
@@ -1738,11 +1734,11 @@ const FilterCompositeAll = class extends FilterCollection {
     }
 
     static compile(fdata) {
-        return FilterCollection.compile(FilterCompositeAll, fdata);
+        return super.compile(FilterCompositeAll, fdata);
     }
 
     static fromCompiled(args) {
-        return FilterCollection.fromCompiled(FilterCompositeAll, args);
+        return super.fromCompiled(args, new FilterCompositeAll());
     }
 
     static fromSelfie(args, bucket) {
@@ -2097,15 +2093,15 @@ const FilterBucket = class extends FilterCollection {
         return super.fromSelfie(args[2], bucket);
     }
 
-    optimize() {
-        if ( this.n >= 3 ) {
+    optimize(optimizeBits = 0b11) {
+        if ( this.n >= 3 && (optimizeBits & 0b01) !== 0 ) {
             const f = this.optimizePatternTests();
             if ( f !== undefined ) {
                 if ( this.i === 0 ) { return f; }
                 this.unshift(filterUnitFromFilter(f));
             }
         }
-        if ( this.n >= 10 ) {
+        if ( this.n >= 10 && (optimizeBits & 0b10) !== 0 ) {
             const f = this.optimizeOriginHitTests();
             if ( f !== undefined ) {
                 if ( this.i === 0 ) { return f; }
@@ -2973,11 +2969,13 @@ FilterContainer.prototype.freeze = function() {
 
     // Skip modify realm, since bidi-trie does not (yet) support matchAll().
     for ( const [ catBits, bucket ] of this.categories ) {
-        if ( (catBits & ActionBitsMask) === ModifyAction ) { continue; }
+        const optimizeBits = (catBits & ActionBitsMask) === ModifyAction
+            ? 0b10
+            : 0b11;
         for ( const iunit of bucket.values() ) {
             const f = units[iunit];
             if ( f instanceof FilterBucket === false ) { continue; }
-            const g = f.optimize();
+            const g = f.optimize(optimizeBits);
             if ( g !== undefined ) {
                 units[iunit] = g;
             }
