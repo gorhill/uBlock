@@ -358,6 +358,12 @@ const filterFromCtor = function(ctor, ...args) {
     return iunit;
 };
 
+const filterUnitFromFilter = function(f) {
+    const iunit = filterUnits.length;
+    filterUnits.push(f);
+    return iunit;
+};
+
 const filterUnitFromCompiled = function(args) {
     const ctor = filterClasses[args[0]];
     const keygen = ctor.keyFromArgs;
@@ -1237,6 +1243,10 @@ const FilterOriginHit = class {
         this.n = n;
     }
 
+    get domainOpt() {
+        return filterOrigin.trieContainer.extractHostname(this.i, this.n);
+    }
+
     match() {
         return filterOrigin.trieContainer.matchesHostname(
             $docHostname,
@@ -1250,11 +1260,7 @@ const FilterOriginHit = class {
     }
 
     logData(details) {
-        details.domains.push(this.getHostname());
-    }
-
-    getHostname() {
-        return filterOrigin.trieContainer.extractHostname(this.i, this.n);
+        details.domains.push(this.domainOpt);
     }
 
     static compile(hostname) {
@@ -1273,6 +1279,8 @@ const FilterOriginHit = class {
     }
 };
 
+FilterOriginHit.prototype.hasOriginHit = true;
+
 registerFilterClass(FilterOriginHit);
 
 /******************************************************************************/
@@ -1283,7 +1291,7 @@ const FilterOriginMiss = class extends FilterOriginHit {
     }
 
     logData(details) {
-        details.domains.push(`~${this.getHostname()}`);
+        details.domains.push(`~${this.domainOpt}`);
     }
 
     static compile(hostname) {
@@ -1301,6 +1309,8 @@ const FilterOriginMiss = class extends FilterOriginHit {
         return new FilterOriginMiss(args[1], args[2]);
     }
 };
+
+FilterOriginMiss.prototype.hasOriginHit = false;
 
 registerFilterClass(FilterOriginMiss);
 
@@ -1354,6 +1364,8 @@ const FilterOriginHitSet = class {
     }
 };
 
+FilterOriginHitSet.prototype.hasOriginHit = true;
+
 registerFilterClass(FilterOriginHitSet);
 
 /******************************************************************************/
@@ -1385,6 +1397,8 @@ const FilterOriginMissSet = class extends FilterOriginHitSet {
         return args[1];
     }
 };
+
+FilterOriginMissSet.prototype.hasOriginHit = false;
 
 registerFilterClass(FilterOriginMissSet);
 
@@ -1556,7 +1570,7 @@ const FilterModifierResult = class {
 
 const FilterCollection = class {
     constructor(i = 0) {
-        this.i = i | 0;
+        this.i = i;
     }
 
     get size() {
@@ -1570,9 +1584,11 @@ const FilterCollection = class {
         this.i = filterSequenceAdd(iunit, j);
     }
 
-    shift() {
+    shift(drop = false) {
         const sequences = filterSequences;
-        filterUnits[sequences[this.i+0]] = null;
+        if ( drop ) {
+            filterUnits[sequences[this.i+0]] = null;
+        }
         this.i = sequences[this.i+1];
     }
 
@@ -1618,8 +1634,9 @@ const FilterCollection = class {
         return new ctor(i0, args[1].length);
     }
 
-    static fromSelfie(ctor, args) {
-        return new ctor(args[1]);
+    static fromSelfie(args, bucket) {
+        bucket.i = args[1];
+        return bucket;
     }
 };
 
@@ -1645,8 +1662,11 @@ const FilterCompositeAny = class extends FilterCollection {
         return FilterCollection.fromCompiled(FilterCompositeAny, args);
     }
 
-    static fromSelfie(args) {
-        return FilterCollection.fromSelfie(FilterCompositeAny, args);
+    static fromSelfie(args, bucket) {
+        if ( bucket === undefined ) {
+            bucket = new FilterCompositeAny();
+        }
+        return super.fromSelfie(args, bucket);
     }
 };
 
@@ -1694,9 +1714,26 @@ const FilterCompositeAll = class extends FilterCollection {
         return filterUnits[filterSequences[this.i]].isBidiTrieable === true;
     }
 
+    get hasOriginHit() {
+        return this.forEach(iunit => {
+            if ( filterUnits[iunit].hasOriginHit === true ) {
+                return true;
+            }
+        });
+    }
+
+    get domainOpt() {
+        return this.forEach(iunit => {
+            const f = filterUnits[iunit];
+            if ( f.hasOriginHit === true ) {
+                return f.domainOpt;
+            }
+        });
+    }
+
     toBidiTrie() {
         const details = filterUnits[filterSequences[this.i]].toBidiTrie();
-        this.shift();
+        this.shift(true);
         return details;
     }
 
@@ -1708,8 +1745,11 @@ const FilterCompositeAll = class extends FilterCollection {
         return FilterCollection.fromCompiled(FilterCompositeAll, args);
     }
 
-    static fromSelfie(args) {
-        return FilterCollection.fromSelfie(FilterCompositeAll, args);
+    static fromSelfie(args, bucket) {
+        if ( bucket === undefined ) {
+            bucket = new FilterCompositeAll();
+        }
+        return super.fromSelfie(args, bucket);
     }
 };
 
@@ -1925,7 +1965,10 @@ registerFilterClass(FilterHTTPJustOrigin);
 
 const FilterPlainTrie = class {
     constructor(trie) {
-        this.plainTrie = trie;
+        this.plainTrie = trie !== undefined
+            ? trie
+            : bidiTrie.createOne();
+        this.$matchedUnit = 0;
     }
 
     match() {
@@ -1949,6 +1992,37 @@ const FilterPlainTrie = class {
         }
     }
 
+    addUnitToTrie(iunit) {
+        const f = filterUnits[iunit];
+        const trieDetails = f.toBidiTrie();
+        const id = this.plainTrie.add(
+            trieDetails.i,
+            trieDetails.n,
+            trieDetails.itok
+        );
+        // No point storing a pattern with conditions if the bidi-trie already
+        // contain a pattern with no conditions.
+        const ix = this.plainTrie.getExtra(id);
+        if ( ix === 1 ) {
+            filterUnits[iunit] = null;
+            return;
+        }
+        // If the newly stored pattern has no condition, short-circuit existing
+        // ones since they will always be short-circuited by the condition-less
+        // pattern.
+        if ( f instanceof FilterPatternPlain ) {
+            this.plainTrie.setExtra(id, 1);
+            filterUnits[iunit] = null;
+            return;
+        }
+        // FilterCompositeAll is assumed here, i.e. with conditions.
+        if ( f.n === 1 ) {
+            filterUnits[iunit] = null;
+            iunit = filterSequences[f.i];
+        }
+        this.plainTrie.setExtra(id, filterSequenceAdd(iunit, ix));
+    }
+
     toSelfie() {
         return [ this.fid, bidiTrie.compileOne(this.plainTrie) ];
     }
@@ -1958,27 +2032,27 @@ const FilterPlainTrie = class {
     }
 };
 
-FilterPlainTrie.prototype.$matchedUnit = 0;
-
 registerFilterClass(FilterPlainTrie);
 
 /******************************************************************************/
 
 const FilterBucket = class extends FilterCollection {
+    constructor(n = 0) {
+        super();
+        this.n = n;
+        this.$matchedUnit = 0;
+    }
+
+    get size() {
+        return this.n;
+    }
+
     match() {
-        if ( this.plainTrie !== null ) {
-            if ( this.plainTrie.matches($tokenBeg, this) !== 0 ) {
-                this.$matchedTrie = true;
-                this.$matchedUnit = this.plainTrie.$iu;
-                return true;
-            }
-        }
         const sequences = filterSequences;
         const units = filterUnits;
         let i = this.i;
         while ( i !== 0 ) {
             if ( units[sequences[i+0]].match() ) {
-                this.$matchedTrie = false;
                 this.$matchedUnit = sequences[i+0];
                 return true;
             }
@@ -1998,105 +2072,151 @@ const FilterBucket = class extends FilterCollection {
         }
     }
 
+    unshift(iunit) {
+        super.unshift(iunit);
+        this.n += 1;
+    }
+
+    shift() {
+        super.shift();
+        this.n -= 1;
+    }
+
     logData(details) {
-        if ( this.$matchedTrie ) {
-            const s = $requestURL.slice(this.plainTrie.$l, this.plainTrie.$r);
-            details.pattern.push(s);
-            details.regex.push(restrFromPlainPattern(s));
-        }
-        if ( this.$matchedUnit !== -1 ) {
-            filterUnits[this.$matchedUnit].logData(details);
-        }
+        filterUnits[this.$matchedUnit].logData(details);
     }
 
     toSelfie() {
-        const selfie = super.toSelfie();
-        if ( this.plainTrie !== null ) {
-            selfie.push(bidiTrie.compileOne(this.plainTrie));
+        return [ this.fid, this.n, super.toSelfie() ];
+    }
+
+    static fromSelfie(args, bucket) {
+        if ( bucket === undefined ) {
+            bucket = new FilterBucket(args[1]);
         }
-        return selfie;
+        return super.fromSelfie(args[2], bucket);
     }
 
     optimize() {
+        if ( this.n >= 3 ) {
+            const f = this.optimizePatternTests();
+            if ( f !== undefined ) {
+                if ( this.i === 0 ) { return f; }
+                this.unshift(filterUnitFromFilter(f));
+            }
+        }
+        if ( this.n >= 10 ) {
+            const f = this.optimizeOriginHitTests();
+            if ( f !== undefined ) {
+                if ( this.i === 0 ) { return f; }
+                this.unshift(filterUnitFromFilter(f));
+            }
+        }
+    }
+
+    optimizePatternTests() {
         const units = filterUnits;
+        const sequences = filterSequences;
         let n = 0;
         let i = this.i;
         do {
-            if ( units[filterSequences[i+0]].isBidiTrieable ) { n += 1; }
-            i = filterSequences[i+1];
+            if ( units[sequences[i+0]].isBidiTrieable ) { n += 1; }
+            i = sequences[i+1];
         } while ( i !== 0 && n < 3 );
         if ( n < 3 ) { return; }
-        if ( this.plainTrie === null ) {
-            this.plainTrie = bidiTrie.createOne();
-        }
+        const ftrie = new FilterPlainTrie();
         i = this.i;
         let iprev = 0;
         for (;;) {
-            const iunit = filterSequences[i+0];
-            const inext = filterSequences[i+1];
+            const iunit = sequences[i+0];
+            const inext = sequences[i+1];
             if ( units[iunit].isBidiTrieable ) {
-                this._addToTrie(iunit);
+                ftrie.addUnitToTrie(iunit);
                 if ( iprev !== 0 ) {
-                    filterSequences[iprev+1] = inext;
+                    sequences[iprev+1] = inext;
                 } else {
                     this.i = inext;
                 }
+                this.n -= 1;
             } else {
                 iprev = i;
             }
             if ( inext === 0 ) { break; }
             i = inext;
         }
-        if ( this.i === 0 ) {
-            return new FilterPlainTrie(this.plainTrie);
-        }
+        return ftrie;
     }
 
-    _addToTrie(iunit) {
-        const f = filterUnits[iunit];
-        const trieDetails = f.toBidiTrie();
-        const id = this.plainTrie.add(
-            trieDetails.i,
-            trieDetails.n,
-            trieDetails.itok
-        );
-        // No point storing a pattern with conditions if the bidi-trie already
-        // contain a pattern with no conditions.
-        let ix = this.plainTrie.getExtra(id);
-        if ( ix === 1 ) {
-            filterUnits[iunit] = null;
-            return;
+    optimizeOriginHitTests() {
+        const units = filterUnits;
+        let candidateCount = -10;
+        const shouldPreTest = this.forEach(iunit => {
+            if ( units[iunit].hasOriginHit !== true ) { return; }
+            candidateCount += 1;
+            if ( candidateCount === 0 ) { return true; }
+        });
+        if ( shouldPreTest !== true ) { return; }
+        const sequences = filterSequences;
+        const bucket = new FilterBucketOfOriginHits();
+        const domainOpts = [];
+        let i = this.i;
+        let iprev = 0;
+        for (;;) {
+            const iunit = sequences[i+0];
+            const inext = sequences[i+1];
+            const f = units[iunit];
+            if ( f.hasOriginHit ) {
+                domainOpts.push(f.domainOpt);
+                bucket.unshift(iunit);
+                if ( iprev !== 0 ) {
+                    sequences[iprev+1] = inext;
+                } else {
+                    this.i = inext;
+                }
+                this.n -= 1;
+            } else {
+                iprev = i;
+            }
+            if ( inext === 0 ) { break; }
+            i = inext;
         }
-        // If the newly stored pattern has no condition, shortcut existing
-        // ones since they will always be short-circuited by the
-        // condition-less pattern.
-        if ( f instanceof FilterPatternPlain ) {
-            this.plainTrie.setExtra(id, 1);
-            filterUnits[iunit] = null;
-            return;
-        }
-        // FilterCompositeAll is assumed here, i.e. with conditions.
-        if ( f.n === 1 ) {
-            filterUnits[iunit] = null;
-            iunit = filterSequences[f.i];
-        }
-        this.plainTrie.setExtra(id, filterSequenceAdd(iunit, ix));
-    }
-
-    static fromSelfie(args) {
-        const bucket = FilterCollection.fromSelfie(FilterBucket, args);
-        if ( args.length > 2 && Array.isArray(args[2]) ) {
-            bucket.plainTrie = bidiTrie.createOne(args[2]);
-        }
+        bucket.originTestUnit =
+            filterFromCtor(FilterOriginHitSet, domainOpts.join('|'));
         return bucket;
     }
 };
 
-FilterBucket.prototype.plainTrie = null;
-FilterBucket.prototype.$matchedUnit = 0;
-FilterBucket.prototype.$matchedTrie = false;
-
 registerFilterClass(FilterBucket);
+
+/******************************************************************************/
+
+const FilterBucketOfOriginHits = class extends FilterBucket {
+    constructor(i = 0) {
+        super();
+        this.originTestUnit = i;
+    }
+
+    match() {
+        return filterUnits[this.originTestUnit].match() && super.match();
+    }
+
+    matchAndFetchModifiers(env) {
+        if ( filterUnits[this.originTestUnit].match() ) {
+            super.matchAndFetchModifiers(env);
+        }
+    }
+
+    toSelfie() {
+        return [ this.fid, this.originTestUnit, super.toSelfie() ];
+    }
+
+    static fromSelfie(args) {
+        const bucket = new FilterBucketOfOriginHits(args[1]);
+        return super.fromSelfie(args[2], bucket);
+    }
+};
+
+registerFilterClass(FilterBucketOfOriginHits);
 
 /******************************************************************************/
 
@@ -2438,7 +2558,13 @@ const FilterParser = class {
             this.typeBits &= ~this.notTypes;
             if ( this.typeBits === 0 ) { return false; }
         }
-
+        // CSP directives implicitly apply only to document/subdocument.
+        if ( this.modifyType === parser.OPTTokenCsp ) {
+            if ( this.typeBits === 0 ) {
+                this.parseTypeOption(parser.OPTTokenDoc, false);
+                this.parseTypeOption(parser.OPTTokenFrame, false);
+            }
+        }
         // https://github.com/gorhill/uBlock/issues/2283
         //   Abort if type is only for unsupported types, otherwise
         //   toggle off `unsupported` bit.
@@ -2596,7 +2722,7 @@ const FilterParser = class {
             ) {
                 continue;
             }
-            if ( token.startsWith('b') ) {
+            if ( token.charCodeAt(0) === 0x62 /* 'b' */ ) {
                 const match = /\\+$/.exec(prefix);
                 if ( match !== null && (match[0].length & 1) !== 0 ) {
                     prefix += 'b';
@@ -3212,6 +3338,13 @@ FilterContainer.prototype.matchAndFetchModifiers = function(
         ? this.categories.get(catBits11)
         : undefined;
 
+    if (
+        bucket00 === undefined && bucket01 === undefined &&
+        bucket10 === undefined && bucket11 === undefined
+    ) {
+        return;
+    }
+
     const results = [];
     const env = {
         modifier: vAPI.StaticFilteringParser.netOptionTokenIds.get(modifierType) || 0,
@@ -3763,6 +3896,7 @@ FilterContainer.prototype.benchmark = async function(action, target) {
         fctxt.setURL(request.url);
         fctxt.setDocOriginFromURL(request.frameUrl);
         fctxt.setType(request.cpt);
+        this.redirectURL = undefined;
         const r = this.matchString(fctxt);
         matchCount += 1;
         if ( recorded !== undefined ) { recorded.push(r); }
