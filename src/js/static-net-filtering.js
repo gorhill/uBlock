@@ -47,9 +47,9 @@ const ActionBitsMask = 0b0000000011;
 const TypeBitsMask   = 0b1111100000;
 const TypeBitsOffset = 5;
 
-const BlockAction    = 0 << 0;
-const AllowAction    = 1 << 0;
-const ModifyAction   = 2 << 0;
+const BlockAction    = 0b00 << 0;
+const AllowAction    = 0b01 << 0;
+const ModifyAction   = 0b10 << 0;
 // Note:
 //   It's possible to increase granularity of ModifyAction realm with
 //   sub-realms if it helps performance, but so far I found it's not
@@ -59,9 +59,10 @@ const Important      = 1 << 2;
 
 const BlockImportant = BlockAction | Important;
 
-const AnyParty       = 0 << 3;
-const FirstParty     = 1 << 3;
-const ThirdParty     = 2 << 3;
+const AnyParty       = 0b00 << 3;
+const FirstParty     = 0b01 << 3;
+const ThirdParty     = 0b10 << 3;
+const AllParties     = 0b11 << 3;
 
 
 const typeNameToTypeValue = {
@@ -88,8 +89,8 @@ const typeNameToTypeValue = {
        'inline-font': 17 << TypeBitsOffset,
      'inline-script': 18 << TypeBitsOffset,
              'cname': 19 << TypeBitsOffset,
-            'unused': 20 << TypeBitsOffset,
-          'redirect': 21 << TypeBitsOffset,
+//          'unused': 20 << TypeBitsOffset,
+//          'unused': 21 << TypeBitsOffset,
             'webrtc': 22 << TypeBitsOffset,
        'unsupported': 23 << TypeBitsOffset,
 };
@@ -137,8 +138,6 @@ const typeValueToTypeName = [
     'inline-font',
     'inline-script',
     'cname',
-    'unused',
-    'redirect',
     'webrtc',
     'unsupported',
 ];
@@ -296,6 +295,10 @@ const filterSequenceAdd = function(a, b) {
     filterSequences[i+1] = b;
     return i;
 };
+
+// TODO:
+//   Evaluate whether it's worth to add ability to keep track of freed
+//   sequence slots for reuse purpose.
 
 const filterSequenceBufferResize = function(newSize) {
     if ( newSize <= filterSequences.length ) { return; }
@@ -2382,8 +2385,6 @@ const FilterParser = class {
         this.modifyValue = undefined;
         this.invalid = false;
         this.pattern = '';
-        this.firstParty = false;
-        this.thirdParty = false;
         this.party = AnyParty;
         this.domainOpt = '';
         this.denyallowOpt = '';
@@ -2427,16 +2428,10 @@ const FilterParser = class {
     }
 
     parsePartyOption(firstParty, not) {
-        if ( firstParty ) {
-            not = !not;
-        }
         if ( not ) {
-            this.firstParty = true;
-            this.party = this.thirdParty ? AnyParty : FirstParty;
-        } else {
-            this.thirdParty = true;
-            this.party = this.firstParty ? AnyParty : ThirdParty;
+            firstParty = !firstParty;
         }
+        this.party |= firstParty ? FirstParty : ThirdParty;
     }
 
     parseHostnameList(parser, s, modeBits, out = []) {
@@ -2462,11 +2457,11 @@ const FilterParser = class {
     parseOptions(parser) {
         for ( let { id, val, not } of parser.netOptions() ) {
             switch ( id ) {
-            case parser.OPTToken3p:
-                this.parsePartyOption(false, not);
-                break;
             case parser.OPTToken1p:
                 this.parsePartyOption(true, not);
+                break;
+            case parser.OPTToken3p:
+                this.parsePartyOption(false, not);
                 break;
             case parser.OPTTokenAll:
                 this.parseTypeOption(-1);
@@ -2545,6 +2540,9 @@ const FilterParser = class {
             }
         }
 
+        if ( this.party === AllParties ) {
+            this.party = AnyParty;
+        }
         // Negated network types? Toggle on all network type bits.
         // Negated non-network types can only toggle themselves.
         if ( (this.notTypes & allNetworkTypesBits) !== 0 ) {
@@ -2838,6 +2836,7 @@ const FilterContainer = function() {
     this.anyTokenHash = urlTokenizer.anyTokenHash;
     this.anyHTTPSTokenHash = urlTokenizer.anyHTTPSTokenHash;
     this.anyHTTPTokenHash = urlTokenizer.anyHTTPTokenHash;
+    this.optimizeTimerId = undefined;
     this.reset();
 };
 
@@ -2872,6 +2871,12 @@ FilterContainer.prototype.reset = function() {
 
     filterUnits = filterUnits.slice(0, FILTER_UNITS_MIN);
     filterSequenceWritePtr = FILTER_SEQUENCES_MIN;
+
+    // Cancel potentially pending optimization run.
+    if ( this.optimizeTimerId !== undefined ) {
+        self.cancelIdleCallback(this.optimizeTimerId);
+        this.optimizeTimerId = undefined;
+    }
 
     // Runtime registers
     this.$catBits = 0;
@@ -2966,25 +2971,31 @@ FilterContainer.prototype.freeze = function() {
 
     this.badFilters.clear();
     this.goodFilters.clear();
+    filterArgsToUnit.clear();
 
-    // Skip modify realm, since bidi-trie does not (yet) support matchAll().
-    for ( const [ catBits, bucket ] of this.categories ) {
-        const optimizeBits = (catBits & ActionBitsMask) === ModifyAction
-            ? 0b10
-            : 0b11;
-        for ( const iunit of bucket.values() ) {
-            const f = units[iunit];
-            if ( f instanceof FilterBucket === false ) { continue; }
-            const g = f.optimize(optimizeBits);
-            if ( g !== undefined ) {
-                units[iunit] = g;
+    // Optimizing is not critical for the static network filtering engine to
+    // work properly, so defer this until later to allow for reduced delay to
+    // readiness when no valid selfie is available.
+    this.optimizeTimerId = self.requestIdleCallback(( ) => {
+        this.optimizeTimerId = undefined;
+        for ( const [ catBits, bucket ] of this.categories ) {
+            for ( const [ th, iunit ] of bucket ) {
+                const f = units[iunit];
+                if ( f instanceof FilterBucket === false ) { continue; }
+                const optimizeBits =
+                    (th === this.noTokenHash) ||
+                    (catBits & ActionBitsMask) === ModifyAction
+                        ? 0b10
+                        : 0b01;
+                const g = f.optimize(optimizeBits);
+                if ( g !== undefined ) {
+                    units[iunit] = g;
+                }
             }
         }
-    }
-
-    FilterHostnameDict.optimize();
-    bidiTrieOptimize();
-    filterArgsToUnit.clear();
+        FilterHostnameDict.optimize();
+        bidiTrieOptimize();
+    }, { timeout: 15000 });
 
     log.info(`staticNetFilteringEngine.freeze() took ${Date.now()-t0} ms`);
 };
