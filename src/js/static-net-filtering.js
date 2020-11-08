@@ -284,7 +284,7 @@ const isSeparatorChar = c => (charClassMap[c] & CHAR_CLASS_SEPARATOR) !== 0;
 const filterUnits = [ null ];
 
 // Initial size should be enough for default set of filter lists.
-let filterSequences = new Uint32Array(163840);
+const filterSequences = JSON.parse(`[${'0,'.repeat(163839)}0]`);
 let filterSequenceWritePtr = 3;
 
 const filterSequenceAdd = function(a, b) {
@@ -305,21 +305,20 @@ const filterSequenceAdd = function(a, b) {
 const filterSequenceBufferResize = function(newSize) {
     if ( newSize <= filterSequences.length ) { return; }
     const size = (newSize + 0x3FFF) & ~0x3FFF;
-    const buffer = new Uint32Array(size);
-    buffer.set(filterSequences);
-    filterSequences = buffer;
+    for ( let i = filterSequences.length; i < size; i++ ) {
+        filterSequences[i] = 0;
+    }
 };
 
 /******************************************************************************/
 
 const bidiTrieMatchExtra = function(l, r, ix) {
-    const sequences = filterSequences;
     for (;;) {
         $patternMatchLeft = l;
         $patternMatchRight = r;
-        const iu = sequences[ix+0];
+        const iu = filterSequences[ix+0];
         if ( filterUnits[iu].match() ) { return iu; }
-        ix = sequences[ix+1];
+        ix = filterSequences[ix+1];
         if ( ix === 0 ) { break; }
     }
     return 0;
@@ -1590,22 +1589,20 @@ const FilterCollection = class {
     }
 
     shift(drop = false) {
-        const sequences = filterSequences;
         if ( drop ) {
-            filterUnits[sequences[this.i+0]] = null;
+            filterUnits[filterSequences[this.i+0]] = null;
         }
-        this.i = sequences[this.i+1];
+        this.i = filterSequences[this.i+1];
     }
 
     forEach(fn) {
         let i = this.i;
         if ( i === 0 ) { return; }
-        const sequences = filterSequences;
         do {
-            const iunit = sequences[i+0];
+            const iunit = filterSequences[i+0];
             const r = fn(iunit);
             if ( r !== undefined ) { return r; }
-            i = sequences[i+1];
+            i = filterSequences[i+1];
         } while ( i !== 0 );
     }
 
@@ -1646,11 +1643,10 @@ const FilterCollection = class {
 
 const FilterCompositeAny = class extends FilterCollection {
     match() {
-        const sequences = filterSequences;
         let i = this.i;
         while ( i !== 0 ) {
-            if ( filterUnits[sequences[i+0]].match() ) { return true; }
-            i = sequences[i+1];
+            if ( filterUnits[filterSequences[i+0]].match() ) { return true; }
+            i = filterSequences[i+1];
         }
         return false;
     }
@@ -1677,13 +1673,12 @@ registerFilterClass(FilterCompositeAny);
 
 const FilterCompositeAll = class extends FilterCollection {
     match() {
-        const sequences = filterSequences;
         let i = this.i;
         while ( i !== 0 ) {
-            if ( filterUnits[sequences[i+0]].match() !== true ) {
+            if ( filterUnits[filterSequences[i+0]].match() !== true ) {
                 return false;
             }
-            i = sequences[i+1];
+            i = filterSequences[i+1];
         }
         return true;
     }
@@ -2050,25 +2045,23 @@ const FilterBucket = class extends FilterCollection {
     }
 
     match() {
-        const sequences = filterSequences;
         let i = this.i;
         while ( i !== 0 ) {
-            if ( filterUnits[sequences[i+0]].match() ) {
-                this.$matchedUnit = sequences[i+0];
+            if ( filterUnits[filterSequences[i+0]].match() ) {
+                this.$matchedUnit = filterSequences[i+0];
                 return true;
             }
-            i = sequences[i+1];
+            i = filterSequences[i+1];
         }
         return false;
     }
 
     matchAndFetchModifiers(env) {
-        const sequences = filterSequences;
         let i = this.i;
         while ( i !== 0 ) {
-            env.iunit = sequences[i+0];
+            env.iunit = filterSequences[i+0];
             filterUnits[env.iunit].matchAndFetchModifiers(env);
-            i = sequences[i+1];
+            i = filterSequences[i+1];
         }
     }
 
@@ -2115,8 +2108,6 @@ const FilterBucket = class extends FilterCollection {
     }
 
     optimizePatternTests() {
-        // Important: do not locally cache filterSequences, its value can
-        // change when addUnitToTrie() is called.
         let n = 0;
         let i = this.i;
         do {
@@ -2155,8 +2146,6 @@ const FilterBucket = class extends FilterCollection {
             if ( candidateCount === 0 ) { return true; }
         });
         if ( shouldPreTest !== true ) { return; }
-        // Important: do not locally cache filterSequences, its value can
-        // change when unshift() is called.
         const bucket = new FilterBucketOfOriginHits();
         const domainOpts = [];
         let i = this.i;
@@ -3044,7 +3033,7 @@ FilterContainer.prototype.toSelfie = function(path) {
         µb.assets.put(
             `${path}/filterSequences`,
             µb.base64.encode(
-                filterSequences.buffer,
+                Uint32Array.from(filterSequences).buffer,
                 filterSequenceWritePtr << 2
             )
         ),
@@ -3093,10 +3082,10 @@ FilterContainer.prototype.fromSelfie = function(path) {
             const size = µb.base64.decodeSize(details.content) >> 2;
             if ( size === 0 ) { return false; }
             filterSequenceBufferResize(size);
-            filterSequences = µb.base64.decode(
-                details.content,
-                filterSequences.buffer
-            );
+            const buf32 = µb.base64.decode(details.content);
+            for ( let i = 0; i < size; i++ ) {
+                filterSequences[i] = buf32[i];
+            }
             filterSequenceWritePtr = size;
             return true;
         }),
