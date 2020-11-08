@@ -433,21 +433,28 @@
         }
         return true;
     };
+    const pruner = function(o) {
+        if ( log !== undefined ) {
+            const json = JSON.stringify(o, null, 2);
+            if ( reLogNeedle.test(json) ) {
+                log('uBO:', location.hostname, json);
+            }
+            return o;
+        }
+        if ( mustProcess(o) === false ) { return o; }
+        for ( const path of prunePaths ) {
+            findOwner(o, path, true);
+        }
+        return o;
+    };
     JSON.parse = new Proxy(JSON.parse, {
         apply: function() {
-            const r = Reflect.apply(...arguments);
-            if ( log !== undefined ) {
-                const json = JSON.stringify(r, null, 2);
-                if ( reLogNeedle.test(json) ) {
-                    log('uBO:', location.hostname, json);
-                }
-                return r;
-            }
-            if ( mustProcess(r) === false ) { return r; }
-            for ( const path of prunePaths ) {
-                findOwner(r, path, true);
-            }
-            return r;
+            return pruner(Reflect.apply(...arguments));
+        },
+    });
+    Response.prototype.json = new Proxy(Response.prototype.json, {
+        apply: function() {
+            return Reflect.apply(...arguments).then(o => pruner(o));
         },
     });
 })();
