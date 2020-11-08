@@ -280,9 +280,10 @@ const isSeparatorChar = c => (charClassMap[c] & CHAR_CLASS_SEPARATOR) !== 0;
 
 /******************************************************************************/
 
-let filterUnits = [ null ];
+const filterUnits = [ null ];
 
-let filterSequences = new Uint32Array(131072);
+// Initial size should be enough for default set of filter lists.
+let filterSequences = new Uint32Array(163840);
 let filterSequenceWritePtr = 3;
 
 const filterSequenceAdd = function(a, b) {
@@ -1644,10 +1645,9 @@ const FilterCollection = class {
 const FilterCompositeAny = class extends FilterCollection {
     match() {
         const sequences = filterSequences;
-        const units = filterUnits;
         let i = this.i;
         while ( i !== 0 ) {
-            if ( units[sequences[i+0]].match() ) { return true; }
+            if ( filterUnits[sequences[i+0]].match() ) { return true; }
             i = sequences[i+1];
         }
         return false;
@@ -1676,10 +1676,11 @@ registerFilterClass(FilterCompositeAny);
 const FilterCompositeAll = class extends FilterCollection {
     match() {
         const sequences = filterSequences;
-        const units = filterUnits;
         let i = this.i;
         while ( i !== 0 ) {
-            if ( units[sequences[i+0]].match() !== true ) { return false; }
+            if ( filterUnits[sequences[i+0]].match() !== true ) {
+                return false;
+            }
             i = sequences[i+1];
         }
         return true;
@@ -2048,10 +2049,9 @@ const FilterBucket = class extends FilterCollection {
 
     match() {
         const sequences = filterSequences;
-        const units = filterUnits;
         let i = this.i;
         while ( i !== 0 ) {
-            if ( units[sequences[i+0]].match() ) {
+            if ( filterUnits[sequences[i+0]].match() ) {
                 this.$matchedUnit = sequences[i+0];
                 return true;
             }
@@ -2062,11 +2062,10 @@ const FilterBucket = class extends FilterCollection {
 
     matchAndFetchModifiers(env) {
         const sequences = filterSequences;
-        const units = filterUnits;
         let i = this.i;
         while ( i !== 0 ) {
             env.iunit = sequences[i+0];
-            units[env.iunit].matchAndFetchModifiers(env);
+            filterUnits[env.iunit].matchAndFetchModifiers(env);
             i = sequences[i+1];
         }
     }
@@ -2114,12 +2113,11 @@ const FilterBucket = class extends FilterCollection {
     }
 
     optimizePatternTests() {
-        const units = filterUnits;
         const sequences = filterSequences;
         let n = 0;
         let i = this.i;
         do {
-            if ( units[sequences[i+0]].isBidiTrieable ) { n += 1; }
+            if ( filterUnits[sequences[i+0]].isBidiTrieable ) { n += 1; }
             i = sequences[i+1];
         } while ( i !== 0 && n < 3 );
         if ( n < 3 ) { return; }
@@ -2129,7 +2127,7 @@ const FilterBucket = class extends FilterCollection {
         for (;;) {
             const iunit = sequences[i+0];
             const inext = sequences[i+1];
-            if ( units[iunit].isBidiTrieable ) {
+            if ( filterUnits[iunit].isBidiTrieable ) {
                 ftrie.addUnitToTrie(iunit);
                 if ( iprev !== 0 ) {
                     sequences[iprev+1] = inext;
@@ -2147,10 +2145,9 @@ const FilterBucket = class extends FilterCollection {
     }
 
     optimizeOriginHitTests() {
-        const units = filterUnits;
         let candidateCount = -10;
         const shouldPreTest = this.forEach(iunit => {
-            if ( units[iunit].hasOriginHit !== true ) { return; }
+            if ( filterUnits[iunit].hasOriginHit !== true ) { return; }
             candidateCount += 1;
             if ( candidateCount === 0 ) { return true; }
         });
@@ -2163,7 +2160,7 @@ const FilterBucket = class extends FilterCollection {
         for (;;) {
             const iunit = sequences[i+0];
             const inext = sequences[i+1];
-            const f = units[iunit];
+            const f = filterUnits[iunit];
             if ( f.hasOriginHit ) {
                 domainOpts.push(f.domainOpt);
                 bucket.unshift(iunit);
@@ -2869,7 +2866,7 @@ FilterContainer.prototype.reset = function() {
     bidiTrie.reset();
     filterArgsToUnit.clear();
 
-    filterUnits = filterUnits.slice(0, FILTER_UNITS_MIN);
+    filterUnits.length = FILTER_UNITS_MIN;
     filterSequenceWritePtr = FILTER_SEQUENCES_MIN;
 
     // Cancel potentially pending optimization run.
@@ -2889,7 +2886,6 @@ FilterContainer.prototype.reset = function() {
 FilterContainer.prototype.freeze = function() {
     const filterBucketId = FilterBucket.fid;
     const unserialize = µb.CompiledLineIO.unserialize;
-    const units = filterUnits;
 
     const t0 = Date.now();
 
@@ -2918,7 +2914,7 @@ FilterContainer.prototype.freeze = function() {
                 iunit = filterFromCtor(FilterHostnameDict);
                 bucket.set(this.dotTokenHash, iunit);
             }
-            units[iunit].add(fdata);
+            filterUnits[iunit].add(fdata);
             continue;
         }
 
@@ -2927,7 +2923,7 @@ FilterContainer.prototype.freeze = function() {
                 iunit = filterFromCtor(FilterJustOrigin);
                 bucket.set(this.anyTokenHash, iunit);
             }
-            units[iunit].add(fdata);
+            filterUnits[iunit].add(fdata);
             continue;
         }
 
@@ -2936,7 +2932,7 @@ FilterContainer.prototype.freeze = function() {
                 iunit = filterFromCtor(FilterHTTPSJustOrigin);
                 bucket.set(this.anyHTTPSTokenHash, iunit);
             }
-            units[iunit].add(fdata);
+            filterUnits[iunit].add(fdata);
             continue;
         }
 
@@ -2945,7 +2941,7 @@ FilterContainer.prototype.freeze = function() {
                 iunit = filterFromCtor(FilterHTTPJustOrigin);
                 bucket.set(this.anyHTTPTokenHash, iunit);
             }
-            units[iunit].add(fdata);
+            filterUnits[iunit].add(fdata);
             continue;
         }
 
@@ -2957,13 +2953,13 @@ FilterContainer.prototype.freeze = function() {
             bucket.set(tokenHash, inewunit);
             continue;
         }
-        let f = units[iunit];
+        let f = filterUnits[iunit];
         if ( f.fid === filterBucketId ) {
             f.unshift(inewunit);
             continue;
         }
         const ibucketunit = filterFromCtor(FilterBucket);
-        f = units[ibucketunit];
+        f = filterUnits[ibucketunit];
         f.unshift(iunit);
         f.unshift(inewunit);
         bucket.set(tokenHash, ibucketunit);
@@ -2980,7 +2976,7 @@ FilterContainer.prototype.freeze = function() {
         this.optimizeTimerId = undefined;
         for ( const [ catBits, bucket ] of this.categories ) {
             for ( const [ th, iunit ] of bucket ) {
-                const f = units[iunit];
+                const f = filterUnits[iunit];
                 if ( f instanceof FilterBucket === false ) { continue; }
                 const optimizeBits =
                     (th === this.noTokenHash) ||
@@ -2989,7 +2985,7 @@ FilterContainer.prototype.freeze = function() {
                         : 0b01;
                 const g = f.optimize(optimizeBits);
                 if ( g !== undefined ) {
-                    units[iunit] = g;
+                    filterUnits[iunit] = g;
                 }
             }
         }
@@ -3100,9 +3096,13 @@ FilterContainer.prototype.fromSelfie = function(path) {
             this.blockFilterCount = selfie.blockFilterCount;
             this.discardedCount = selfie.discardedCount;
             urlTokenizer.fromSelfie(selfie.urlTokenizer);
-            filterUnits = selfie.filterUnits.map(f =>
-                f !== null ? filterFromSelfie(f) : null
-            );
+            {
+                const fselfies = selfie.filterUnits;
+                for ( let i = 0, n = fselfies.length; i < n; i++ ) {
+                    const f = fselfies[i];
+                    filterUnits[i] = f !== null ? filterFromSelfie(f) : null;
+                }
+            }
             for ( const [ catBits, bucket ] of selfie.categories ) {
                 this.categories.set(catBits, new Map(bucket));
             }
@@ -3363,7 +3363,6 @@ FilterContainer.prototype.matchAndFetchModifiers = function(
         results,
     };
 
-    const units = filterUnits;
     const tokenHashes = urlTokenizer.getTokens(bidiTrie);
     let i = 0;
     for (;;) {
@@ -3375,28 +3374,28 @@ FilterContainer.prototype.matchAndFetchModifiers = function(
             const iunit = bucket00.get(th);
             if ( iunit !== undefined ) {
                 env.bits = catBits00; env.iunit = iunit;
-                units[iunit].matchAndFetchModifiers(env);
+                filterUnits[iunit].matchAndFetchModifiers(env);
             }
         }
         if ( bucket01 !== undefined ) {
             const iunit = bucket01.get(th);
             if ( iunit !== undefined ) {
                 env.bits = catBits01; env.iunit = iunit;
-                units[iunit].matchAndFetchModifiers(env);
+                filterUnits[iunit].matchAndFetchModifiers(env);
             }
         }
         if ( bucket10 !== undefined ) {
             const iunit = bucket10.get(th);
             if ( iunit !== undefined ) {
                 env.bits = catBits10; env.iunit = iunit;
-                units[iunit].matchAndFetchModifiers(env);
+                filterUnits[iunit].matchAndFetchModifiers(env);
             }
         }
         if ( bucket11 !== undefined ) {
             const iunit = bucket11.get(th);
             if ( iunit !== undefined ) {
                 env.bits = catBits11; env.iunit = iunit;
-                units[iunit].matchAndFetchModifiers(env);
+                filterUnits[iunit].matchAndFetchModifiers(env);
             }
         }
         i += 2;
@@ -3520,7 +3519,6 @@ FilterContainer.prototype.realmMatchString = function(
         return false;
     }
 
-    const units = filterUnits;
     let catBits = 0, iunit = 0;
 
     // Pure hostname-based filters
@@ -3528,25 +3526,25 @@ FilterContainer.prototype.realmMatchString = function(
     if (
         (bucket00 !== undefined) &&
         (iunit = bucket00.get(tokenHash) || 0) !== 0 &&
-        (units[iunit].match() === true)
+        (filterUnits[iunit].match() === true)
     ) {
         catBits = catBits00;
     } else if (
         (bucket01 !== undefined) &&
         (iunit = bucket01.get(tokenHash) || 0) !== 0 &&
-        (units[iunit].match() === true)
+        (filterUnits[iunit].match() === true)
     ) {
         catBits = catBits01;
     } else if (
         (bucket10 !== undefined) &&
         (iunit = bucket10.get(tokenHash) || 0) !== 0 &&
-        (units[iunit].match() === true)
+        (filterUnits[iunit].match() === true)
     ) {
         catBits = catBits10;
     } else if (
         (bucket11 !== undefined) &&
         (iunit = bucket11.get(tokenHash) || 0) !== 0 &&
-        (units[iunit].match() === true)
+        (filterUnits[iunit].match() === true)
     ) {
         catBits = catBits11;
     }
@@ -3561,7 +3559,7 @@ FilterContainer.prototype.realmMatchString = function(
             if (
                 (bucket00 !== undefined) &&
                 (iunit = bucket00.get(tokenHash) || 0) !== 0 &&
-                (units[iunit].match() === true)
+                (filterUnits[iunit].match() === true)
             ) {
                 catBits = catBits00;
                 break;
@@ -3569,7 +3567,7 @@ FilterContainer.prototype.realmMatchString = function(
             if (
                 (bucket01 !== undefined) &&
                 (iunit = bucket01.get(tokenHash) || 0) !== 0 &&
-                (units[iunit].match() === true)
+                (filterUnits[iunit].match() === true)
             ) {
                 catBits = catBits01;
                 break;
@@ -3577,7 +3575,7 @@ FilterContainer.prototype.realmMatchString = function(
             if (
                 (bucket10 !== undefined) &&
                 (iunit = bucket10.get(tokenHash) || 0) !== 0 &&
-                (units[iunit].match() === true)
+                (filterUnits[iunit].match() === true)
             ) {
                 catBits = catBits10;
                 break;
@@ -3585,7 +3583,7 @@ FilterContainer.prototype.realmMatchString = function(
             if (
                 (bucket11 !== undefined) &&
                 (iunit = bucket11.get(tokenHash) || 0) !== 0 &&
-                (units[iunit].match() === true)
+                (filterUnits[iunit].match() === true)
             ) {
                 catBits = catBits11;
                 break;
@@ -4003,12 +4001,11 @@ FilterContainer.prototype.test = function(docURL, type, url) {
 */
 
 FilterContainer.prototype.bucketHistogram = function() {
-    const units = filterUnits;
     const results = [];
     for ( const [ bits, category ] of this.categories ) {
         for ( const [ th, iunit ] of category ) {
             const token = urlTokenizer.stringFromTokenHash(th);
-            const f = units[iunit];
+            const f = filterUnits[iunit];
             if ( f instanceof FilterBucket ) {
                 results.push({ bits: bits.toString(16), token, size: f.size, f });
                 continue;
