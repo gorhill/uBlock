@@ -42,6 +42,7 @@ const urlTokenizer = µb.urlTokenizer;
 //      |    | +------- bit  3- 4: party [0-3]
 //      |    +--------- bit  5- 9: type [0-31]
 //      +-------------- bit 10-15: unused
+const CategoryCount = 1 << 0xa; // shift left to first unused bit
 
 const ActionBitsMask = 0b0000000011;
 const TypeBitsMask   = 0b1111100000;
@@ -312,12 +313,13 @@ const filterSequenceBufferResize = function(newSize) {
 /******************************************************************************/
 
 const bidiTrieMatchExtra = function(l, r, ix) {
+    const sequences = filterSequences;
     for (;;) {
         $patternMatchLeft = l;
         $patternMatchRight = r;
-        const iu = filterSequences[ix+0];
+        const iu = sequences[ix+0];
         if ( filterUnits[iu].match() ) { return iu; }
-        ix = filterSequences[ix+1];
+        ix = sequences[ix+1];
         if ( ix === 0 ) { break; }
     }
     return 0;
@@ -2113,24 +2115,25 @@ const FilterBucket = class extends FilterCollection {
     }
 
     optimizePatternTests() {
-        const sequences = filterSequences;
+        // Important: do not locally cache filterSequences, its value can
+        // change when addUnitToTrie() is called.
         let n = 0;
         let i = this.i;
         do {
-            if ( filterUnits[sequences[i+0]].isBidiTrieable ) { n += 1; }
-            i = sequences[i+1];
+            if ( filterUnits[filterSequences[i+0]].isBidiTrieable ) { n += 1; }
+            i = filterSequences[i+1];
         } while ( i !== 0 && n < 3 );
         if ( n < 3 ) { return; }
         const ftrie = new FilterPlainTrie();
         i = this.i;
         let iprev = 0;
         for (;;) {
-            const iunit = sequences[i+0];
-            const inext = sequences[i+1];
+            const iunit = filterSequences[i+0];
+            const inext = filterSequences[i+1];
             if ( filterUnits[iunit].isBidiTrieable ) {
                 ftrie.addUnitToTrie(iunit);
                 if ( iprev !== 0 ) {
-                    sequences[iprev+1] = inext;
+                    filterSequences[iprev+1] = inext;
                 } else {
                     this.i = inext;
                 }
@@ -2152,20 +2155,21 @@ const FilterBucket = class extends FilterCollection {
             if ( candidateCount === 0 ) { return true; }
         });
         if ( shouldPreTest !== true ) { return; }
-        const sequences = filterSequences;
+        // Important: do not locally cache filterSequences, its value can
+        // change when unshift() is called.
         const bucket = new FilterBucketOfOriginHits();
         const domainOpts = [];
         let i = this.i;
         let iprev = 0;
         for (;;) {
-            const iunit = sequences[i+0];
-            const inext = sequences[i+1];
+            const iunit = filterSequences[i+0];
+            const inext = filterSequences[i+1];
             const f = filterUnits[iunit];
             if ( f.hasOriginHit ) {
                 domainOpts.push(f.domainOpt);
                 bucket.unshift(iunit);
                 if ( iprev !== 0 ) {
-                    sequences[iprev+1] = inext;
+                    filterSequences[iprev+1] = inext;
                 } else {
                     this.i = inext;
                 }
@@ -2834,6 +2838,16 @@ const FilterContainer = function() {
     this.anyHTTPSTokenHash = urlTokenizer.anyHTTPSTokenHash;
     this.anyHTTPTokenHash = urlTokenizer.anyHTTPTokenHash;
     this.optimizeTimerId = undefined;
+
+    // As long as CategoryCount is reasonably low, we will use an array to
+    // store buckets using category bits as index. If ever CategoryCount
+    // becomes too large, we can just go back to using a Map.
+    this.categories = (( ) => {
+        const out = [];
+        for ( let i = 0; i < CategoryCount; i++ ) { out[i] = undefined; }
+        return out;
+    })();
+
     this.reset();
 };
 
@@ -2856,7 +2870,7 @@ FilterContainer.prototype.reset = function() {
     this.discardedCount = 0;
     this.goodFilters = new Set();
     this.badFilters = new Set();
-    this.categories = new Map();
+    this.categories.fill(undefined);
 
     urlTokenizer.resetKnownTokens();
 
@@ -2902,10 +2916,10 @@ FilterContainer.prototype.freeze = function() {
         const tokenHash = args[1];
         const fdata = args[2];
 
-        let bucket = this.categories.get(bits);
+        let bucket = this.categories[bits];
         if ( bucket === undefined ) {
             bucket = new Map();
-            this.categories.set(bits, bucket);
+            this.categories[bits] = bucket;
         }
         let iunit = bucket.get(tokenHash);
 
@@ -2974,13 +2988,15 @@ FilterContainer.prototype.freeze = function() {
     // readiness when no valid selfie is available.
     this.optimizeTimerId = self.requestIdleCallback(( ) => {
         this.optimizeTimerId = undefined;
-        for ( const [ catBits, bucket ] of this.categories ) {
+        for ( let bits = 0, n = this.categories.length; bits < n; bits++ ) {
+            const bucket = this.categories[bits];
+            if ( bucket === undefined ) { continue; }
             for ( const [ th, iunit ] of bucket ) {
                 const f = filterUnits[iunit];
                 if ( f instanceof FilterBucket === false ) { continue; }
                 const optimizeBits =
                     (th === this.noTokenHash) ||
-                    (catBits & ActionBitsMask) === ModifyAction
+                    (bits & ActionBitsMask) === ModifyAction
                         ? 0b10
                         : 0b01;
                 const g = f.optimize(optimizeBits);
@@ -3001,8 +3017,10 @@ FilterContainer.prototype.freeze = function() {
 FilterContainer.prototype.toSelfie = function(path) {
     const categoriesToSelfie = ( ) => {
         const selfie = [];
-        for ( const [ catBits, bucket ] of this.categories ) {
-            selfie.push([ catBits, Array.from(bucket) ]);
+        for ( let bits = 0, n = this.categories.length; bits < n; bits++ ) {
+            const bucket = this.categories[bits];
+            if ( bucket === undefined ) { continue; }
+            selfie.push([ bits, Array.from(bucket) ]);
         }
         return selfie;
     };
@@ -3104,7 +3122,7 @@ FilterContainer.prototype.fromSelfie = function(path) {
                 }
             }
             for ( const [ catBits, bucket ] of selfie.categories ) {
-                this.categories.set(catBits, new Map(bucket));
+                this.categories[catBits] = new Map(bucket);
             }
             return true;
         }),
@@ -3336,15 +3354,15 @@ FilterContainer.prototype.matchAndFetchModifiers = function(
     const catBits10 = ModifyAction | partyBits;
     const catBits11 = ModifyAction | typeBits | partyBits;
 
-    const bucket00 = this.categories.get(catBits00);
+    const bucket00 = this.categories[catBits00];
     const bucket01 = typeBits !== 0
-        ? this.categories.get(catBits01)
+        ? this.categories[catBits01]
         : undefined;
     const bucket10 = partyBits !== 0
-        ? this.categories.get(catBits10)
+        ? this.categories[catBits10]
         : undefined;
     const bucket11 = typeBits !== 0 && partyBits !== 0
-        ? this.categories.get(catBits11)
+        ? this.categories[catBits11]
         : undefined;
 
     if (
@@ -3500,16 +3518,16 @@ FilterContainer.prototype.realmMatchString = function(
     const catBits11 = realmBits | typeBits | partyBits;
 
     const bucket00 = exactType === 0
-        ? this.categories.get(catBits00)
+        ? this.categories[catBits00]
         : undefined;
     const bucket01 = exactType !== 0 || typeBits !== 0
-        ? this.categories.get(catBits01)
+        ? this.categories[catBits01]
         : undefined;
     const bucket10 = exactType === 0 && partyBits !== 0
-        ? this.categories.get(catBits10)
+        ? this.categories[catBits10]
         : undefined;
     const bucket11 = (exactType !== 0 || typeBits !== 0) && partyBits !== 0
-        ? this.categories.get(catBits11)
+        ? this.categories[catBits11]
         : undefined;
 
     if (
@@ -4002,7 +4020,9 @@ FilterContainer.prototype.test = function(docURL, type, url) {
 
 FilterContainer.prototype.bucketHistogram = function() {
     const results = [];
-    for ( const [ bits, category ] of this.categories ) {
+    for ( let bits = 0, n = this.categories.length; bits < n; bits++ ) {
+        const category = this.categories[bits];
+        if ( category === undefined ) { continue; }
         for ( const [ th, iunit ] of category ) {
             const token = urlTokenizer.stringFromTokenHash(th);
             const f = filterUnits[iunit];
