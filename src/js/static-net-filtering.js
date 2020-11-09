@@ -30,7 +30,6 @@
 /******************************************************************************/
 
 const µb = µBlock;
-const urlTokenizer = µb.urlTokenizer;
 
 // fedcba9876543210
 //      |    | || |
@@ -281,11 +280,33 @@ const isSeparatorChar = c => (charClassMap[c] & CHAR_CLASS_SEPARATOR) !== 0;
 
 /******************************************************************************/
 
-const filterUnits = [ null ];
+// Initial size should be enough for default set of filter lists.
+const filterUnits = JSON.parse(`[${'null,'.repeat(65535)}null]`);
+let filterUnitWritePtr = 1;
+const FILTER_UNITS_MIN = filterUnitWritePtr;
+
+const filterUnitAdd = function(f) {
+    const i = filterUnitWritePtr;
+    filterUnitWritePtr += 1;
+    if ( filterUnitWritePtr > filterUnits.length ) {
+        filterUnitBufferResize(filterUnitWritePtr);
+    }
+    filterUnits[i] = f;
+    return i;
+};
+
+const filterUnitBufferResize = function(newSize) {
+    if ( newSize <= filterUnits.length ) { return; }
+    const size = (newSize + 0x0FFF) & ~0x0FFF;
+    for ( let i = filterUnits.length; i < size; i++ ) {
+        filterUnits[i] = null;
+    }
+};
 
 // Initial size should be enough for default set of filter lists.
 const filterSequences = JSON.parse(`[${'0,'.repeat(163839)}0]`);
 let filterSequenceWritePtr = 3;
+const FILTER_SEQUENCES_MIN = filterSequenceWritePtr;
 
 const filterSequenceAdd = function(a, b) {
     const i = filterSequenceWritePtr;
@@ -354,27 +375,15 @@ const registerFilterClass = function(ctor) {
     filterClasses[fid] = ctor;
 };
 
-const filterFromCtor = function(ctor, ...args) {
-    if ( ctor.filterUnit !== undefined ) {
-        return ctor.filterUnit;
-    }
-    const f = new ctor(...args);
-    const iunit = filterUnits.length;
-    filterUnits.push(f);
-    return iunit;
-};
+const filterUnitFromCtor = (ctor, ...args) => filterUnitAdd(new ctor(...args));
 
-const filterUnitFromFilter = function(f) {
-    const iunit = filterUnits.length;
-    filterUnits.push(f);
-    return iunit;
-};
+const filterUnitFromFilter = f => filterUnitAdd(f);
 
 const filterUnitFromCompiled = function(args) {
     const ctor = filterClasses[args[0]];
     const keygen = ctor.keyFromArgs;
     if ( keygen === undefined ) {
-        return filterUnits.push(ctor.fromCompiled(args)) - 1;
+        return filterUnitAdd(ctor.fromCompiled(args));
     }
     let key = ctor.fidstr;
     const keyargs = keygen(args);
@@ -382,10 +391,9 @@ const filterUnitFromCompiled = function(args) {
         key += `\t${keyargs}`;
     }
     let iunit = filterArgsToUnit.get(key);
-    if ( iunit === undefined ) {
-        iunit = filterUnits.push(ctor.fromCompiled(args)) - 1;
-        filterArgsToUnit.set(key, iunit);
-    }
+    if ( iunit !== undefined ) { return iunit; }
+    iunit = filterUnitAdd(ctor.fromCompiled(args));
+    filterArgsToUnit.set(key, iunit);
     return iunit;
 };
 
@@ -2170,7 +2178,7 @@ const FilterBucket = class extends FilterCollection {
             i = inext;
         }
         bucket.originTestUnit =
-            filterFromCtor(FilterOriginHitSet, domainOpts.join('|'));
+            filterUnitFromCtor(FilterOriginHitSet, domainOpts.join('|'));
         return bucket;
     }
 };
@@ -2208,9 +2216,186 @@ const FilterBucketOfOriginHits = class extends FilterBucket {
 registerFilterClass(FilterBucketOfOriginHits);
 
 /******************************************************************************/
+/******************************************************************************/
 
-const FILTER_UNITS_MIN = filterUnits.length;
-const FILTER_SEQUENCES_MIN = filterSequenceWritePtr;
+// https://github.com/gorhill/uBlock/issues/2630
+// Slice input URL into a list of safe-integer token values, instead of a list
+// of substrings. The assumption is that with dealing only with numeric
+// values, less underlying memory allocations, and also as a consequence
+// less work for the garbage collector down the road.
+// Another assumption is that using a numeric-based key value for Map() is
+// more efficient than string-based key value (but that is something I would
+// have to benchmark).
+// Benchmark for string-based tokens vs. safe-integer token values:
+//   https://gorhill.github.io/obj-vs-set-vs-map/tokenize-to-str-vs-to-int.html
+
+const urlTokenizer = new (class {
+    constructor() {
+        this._chars = '0123456789%abcdefghijklmnopqrstuvwxyz';
+        this._validTokenChars = new Uint8Array(128);
+        for ( let i = 0, n = this._chars.length; i < n; i++ ) {
+            this._validTokenChars[this._chars.charCodeAt(i)] = i + 1;
+        }
+        // Four upper bits of token hash are reserved for built-in predefined
+        // token hashes, which should never end up being used when tokenizing
+        // any arbitrary string.
+             this.dotTokenHash = 0x10000000;
+             this.anyTokenHash = 0x20000000;
+        this.anyHTTPSTokenHash = 0x30000000;
+         this.anyHTTPTokenHash = 0x40000000;
+              this.noTokenHash = 0x50000000;
+           this.emptyTokenHash = 0xF0000000;
+
+        this._urlIn = '';
+        this._urlOut = '';
+        this._tokenized = false;
+        this._hasQuery = 0;
+        // https://www.reddit.com/r/uBlockOrigin/comments/dzw57l/
+        //   Remember: 1 token needs two slots
+        this._tokens = new Uint32Array(2064);
+
+        this.knownTokens = new Uint8Array(65536);
+        this.resetKnownTokens();
+        this.MAX_TOKEN_LENGTH = 7;
+    }
+
+    setURL(url) {
+        if ( url !== this._urlIn ) {
+            this._urlIn = url;
+            this._urlOut = url.toLowerCase();
+            this._hasQuery = 0;
+            this._tokenized = false;
+        }
+        return this._urlOut;
+    }
+
+    resetKnownTokens() {
+        this.knownTokens.fill(0);
+        this.addKnownToken(this.dotTokenHash);
+        this.addKnownToken(this.anyTokenHash);
+        this.addKnownToken(this.anyHTTPSTokenHash);
+        this.addKnownToken(this.anyHTTPTokenHash);
+        this.addKnownToken(this.noTokenHash);
+    }
+
+    addKnownToken(th) {
+        this.knownTokens[th & 0xFFFF ^ th >>> 16] = 1;
+    }
+
+    // Tokenize on demand.
+    getTokens(encodeInto) {
+        if ( this._tokenized ) { return this._tokens; }
+        let i = this._tokenize(encodeInto);
+        this._tokens[i+0] = this.anyTokenHash;
+        this._tokens[i+1] = 0;
+        i += 2;
+        if ( this._urlOut.startsWith('https://') ) {
+            this._tokens[i+0] = this.anyHTTPSTokenHash;
+            this._tokens[i+1] = 0;
+            i += 2;
+        } else if ( this._urlOut.startsWith('http://') ) {
+            this._tokens[i+0] = this.anyHTTPTokenHash;
+            this._tokens[i+1] = 0;
+            i += 2;
+        }
+        this._tokens[i+0] = this.noTokenHash;
+        this._tokens[i+1] = 0;
+        this._tokens[i+2] = 0;
+        this._tokenized = true;
+        return this._tokens;
+    }
+
+    hasQuery() {
+        if ( this._hasQuery === 0 ) {
+            const i = this._urlOut.indexOf('?');
+            this._hasQuery = i !== -1 ? i + 1 : -1;
+        }
+        return this._hasQuery > 0;
+    }
+
+    tokenHashFromString(s) {
+        const l = s.length;
+        if ( l === 0 ) { return this.emptyTokenHash; }
+        const vtc = this._validTokenChars;
+        let th = vtc[s.charCodeAt(0)];
+        for ( let i = 1; i !== 7 && i !== l; i++ ) {
+            th = th << 4 ^ vtc[s.charCodeAt(i)];
+        }
+        return th;
+    }
+
+    stringFromTokenHash(th) {
+        if ( th === 0 ) { return ''; }
+        return th.toString(16);
+    }
+
+    toSelfie() {
+        return µBlock.base64.encode(
+            this.knownTokens.buffer,
+            this.knownTokens.byteLength
+        );
+    }
+
+    fromSelfie(selfie) {
+        return µBlock.base64.decode(selfie, this.knownTokens.buffer);
+    }
+
+    // https://github.com/chrisaljoudi/uBlock/issues/1118
+    // We limit to a maximum number of tokens.
+
+    _tokenize(encodeInto) {
+        const tokens = this._tokens;
+        let url = this._urlOut;
+        let l = url.length;
+        if ( l === 0 ) { return 0; }
+        if ( l > 2048 ) {
+            url = url.slice(0, 2048);
+            l = 2048;
+        }
+        encodeInto.haystackLen = l;
+        let j = 0;
+        let hasq = -1;
+        mainLoop: {
+            const knownTokens = this.knownTokens;
+            const vtc = this._validTokenChars;
+            const charCodes = encodeInto.haystack;
+            let i = 0, n = 0, ti = 0, th = 0;
+            for (;;) {
+                for (;;) {
+                    if ( i === l ) { break mainLoop; }
+                    const cc = url.charCodeAt(i);
+                    charCodes[i] = cc;
+                    i += 1;
+                    th = vtc[cc];
+                    if ( th !== 0 ) { break; }
+                    if ( cc === 0x3F /* '?' */ ) { hasq = i; }
+                }
+                ti = i - 1; n = 1;
+                for (;;) {
+                    if ( i === l ) { break; }
+                    const cc = url.charCodeAt(i);
+                    charCodes[i] = cc;
+                    i += 1;
+                    const v = vtc[cc];
+                    if ( v === 0 ) {
+                        if ( cc === 0x3F /* '?' */ ) { hasq = i; }
+                        break;
+                    }
+                    if ( n === 7 ) { continue; }
+                    th = th << 4 ^ v;
+                    n += 1;
+                }
+                if ( knownTokens[th & 0xFFFF ^ th >>> 16] !== 0 ) {
+                    tokens[j+0] = th;
+                    tokens[j+1] = ti;
+                    j += 2;
+                }
+            }
+        }
+        this._hasQuery = hasq;
+        return j;
+    }
+})();
 
 /******************************************************************************/
 /******************************************************************************/
@@ -2821,6 +3006,7 @@ FilterParser.parse = (( ) => {
 /******************************************************************************/
 
 const FilterContainer = function() {
+    this.MAX_TOKEN_LENGTH = urlTokenizer.MAX_TOKEN_LENGTH;
     this.noTokenHash = urlTokenizer.noTokenHash;
     this.dotTokenHash = urlTokenizer.dotTokenHash;
     this.anyTokenHash = urlTokenizer.anyTokenHash;
@@ -2869,7 +3055,7 @@ FilterContainer.prototype.reset = function() {
     bidiTrie.reset();
     filterArgsToUnit.clear();
 
-    filterUnits.length = FILTER_UNITS_MIN;
+    filterUnitWritePtr = FILTER_UNITS_MIN;
     filterSequenceWritePtr = FILTER_SEQUENCES_MIN;
 
     // Cancel potentially pending optimization run.
@@ -2914,7 +3100,7 @@ FilterContainer.prototype.freeze = function() {
 
         if ( tokenHash === this.dotTokenHash ) {
             if ( iunit === undefined ) {
-                iunit = filterFromCtor(FilterHostnameDict);
+                iunit = filterUnitFromCtor(FilterHostnameDict);
                 bucket.set(this.dotTokenHash, iunit);
             }
             filterUnits[iunit].add(fdata);
@@ -2923,7 +3109,7 @@ FilterContainer.prototype.freeze = function() {
 
         if ( tokenHash === this.anyTokenHash ) {
             if ( iunit === undefined ) {
-                iunit = filterFromCtor(FilterJustOrigin);
+                iunit = filterUnitFromCtor(FilterJustOrigin);
                 bucket.set(this.anyTokenHash, iunit);
             }
             filterUnits[iunit].add(fdata);
@@ -2932,7 +3118,7 @@ FilterContainer.prototype.freeze = function() {
 
         if ( tokenHash === this.anyHTTPSTokenHash ) {
             if ( iunit === undefined ) {
-                iunit = filterFromCtor(FilterHTTPSJustOrigin);
+                iunit = filterUnitFromCtor(FilterHTTPSJustOrigin);
                 bucket.set(this.anyHTTPSTokenHash, iunit);
             }
             filterUnits[iunit].add(fdata);
@@ -2941,7 +3127,7 @@ FilterContainer.prototype.freeze = function() {
 
         if ( tokenHash === this.anyHTTPTokenHash ) {
             if ( iunit === undefined ) {
-                iunit = filterFromCtor(FilterHTTPJustOrigin);
+                iunit = filterUnitFromCtor(FilterHTTPJustOrigin);
                 bucket.set(this.anyHTTPTokenHash, iunit);
             }
             filterUnits[iunit].add(fdata);
@@ -2961,7 +3147,7 @@ FilterContainer.prototype.freeze = function() {
             f.unshift(inewunit);
             continue;
         }
-        const ibucketunit = filterFromCtor(FilterBucket);
+        const ibucketunit = filterUnitFromCtor(FilterBucket);
         f = filterUnits[ibucketunit];
         f.unshift(iunit);
         f.unshift(inewunit);
@@ -2996,6 +3182,10 @@ FilterContainer.prototype.freeze = function() {
         }
         FilterHostnameDict.optimize();
         bidiTrieOptimize();
+        // Be sure unused filters can be garbage collected.
+        for ( let i = filterUnitWritePtr, n = filterUnits.length; i < n; i++ ) {
+            filterUnits[i] = null;
+        }
     }, { timeout: 15000 });
 
     log.info(`staticNetFilteringEngine.freeze() took ${Date.now()-t0} ms`);
@@ -3048,7 +3238,7 @@ FilterContainer.prototype.toSelfie = function(path) {
                 discardedCount: this.discardedCount,
                 categories: categoriesToSelfie(),
                 urlTokenizer: urlTokenizer.toSelfie(),
-                filterUnits: filterUnits.map(f =>
+                filterUnits: filterUnits.slice(0, filterUnitWritePtr).map(f =>
                     f !== null ? f.toSelfie() : null
                 ),
             })
@@ -3082,11 +3272,11 @@ FilterContainer.prototype.fromSelfie = function(path) {
             const size = µb.base64.decodeSize(details.content) >> 2;
             if ( size === 0 ) { return false; }
             filterSequenceBufferResize(size);
+            filterSequenceWritePtr = size;
             const buf32 = µb.base64.decode(details.content);
             for ( let i = 0; i < size; i++ ) {
                 filterSequences[i] = buf32[i];
             }
-            filterSequenceWritePtr = size;
             return true;
         }),
         µb.assets.get(`${path}/main`).then(details => {
@@ -3105,6 +3295,8 @@ FilterContainer.prototype.fromSelfie = function(path) {
             urlTokenizer.fromSelfie(selfie.urlTokenizer);
             {
                 const fselfies = selfie.filterUnits;
+                filterUnitWritePtr = fselfies.length;
+                filterUnitBufferResize(filterUnitWritePtr);
                 for ( let i = 0, n = fselfies.length; i < n; i++ ) {
                     const f = fselfies[i];
                     filterUnits[i] = f !== null ? filterFromSelfie(f) : null;

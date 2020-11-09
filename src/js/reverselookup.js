@@ -401,7 +401,7 @@ if (
         const µb = µBlock;
         const writer = new µb.CompiledLineIO.Writer();
         const parser = new vAPI.StaticFilteringParser();
-        parser.setMaxTokenLength(µb.urlTokenizer.MAX_TOKEN_LENGTH);
+        parser.setMaxTokenLength(µb.staticNetFilteringEngine.MAX_TOKEN_LENGTH);
         parser.analyze(rawFilter);
 
         if ( µb.staticNetFilteringEngine.compile(parser, writer) === false ) {

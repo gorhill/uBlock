@@ -849,7 +849,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     const lineIter = new this.LineIterator(this.preparseDirectives.prune(rawText));
     const parser = new vAPI.StaticFilteringParser();
 
-    parser.setMaxTokenLength(this.urlTokenizer.MAX_TOKEN_LENGTH);
+    parser.setMaxTokenLength(staticNetFilteringEngine.MAX_TOKEN_LENGTH);
 
     while ( lineIter.eot() === false ) {
         let line = lineIter.next();
