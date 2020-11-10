@@ -1142,6 +1142,46 @@ registerFilterClass(FilterRegex);
 
 /******************************************************************************/
 
+// A helper class to parse `domain=` option.
+
+const DomainOptIterator = class {
+    constructor(domainOpt) {
+        this.reset(domainOpt);
+    }
+    reset(domainOpt) {
+        this.domainOpt = domainOpt;
+        this.i = 0;
+        this.value = undefined;
+        this.done = false;
+        return this;
+    }
+    next() {
+        if ( this.i === -1 ) {
+            this.domainOpt = '';
+            this.value = undefined;
+            this.done = true;
+            return this;
+        }
+        const pos = this.domainOpt.indexOf('|', this.i);
+        if ( pos !== -1 ) {
+            this.value = this.domainOpt.slice(this.i, pos);
+            this.i = pos + 1;
+        } else {
+            this.value = this.domainOpt.slice(this.i);
+            this.i = -1;
+        }
+        return this;
+    }
+    [Symbol.iterator]() {
+        return this;
+    }
+};
+
+// A helper instance to reuse throughout
+const domainOptIterator = new DomainOptIterator('');
+
+/******************************************************************************/
+
 // The optimal "class" is picked according to the content of the
 // `domain=` filter option.
 
@@ -1339,7 +1379,7 @@ const FilterOriginHitSet = class {
     match() {
         if ( this.oneOf === null ) {
             this.oneOf = filterOrigin.trieContainer.fromIterable(
-                FilterParser.domainOptIterator(this.domainOpt)
+                domainOptIterator.reset(this.domainOpt)
             );
         }
         return this.oneOf.matches($docHostname) !== -1;
@@ -1853,7 +1893,7 @@ const FilterDenyAllow = class {
 
     static fromCompiled(args) {
         const f = new FilterDenyAllow(args[1]);
-        for ( const hn of FilterParser.domainOptIterator(args[1]) ) {
+        for ( const hn of domainOptIterator.reset(args[1]) ) {
             if ( hn === '' ) { continue; }
             f.hndict.add(hn);
         }
@@ -2147,11 +2187,11 @@ const FilterBucket = class extends FilterCollection {
     }
 
     optimizeOriginHitTests() {
-        let candidateCount = -10;
+        let candidateCount = 0;
         const shouldPreTest = this.forEach(iunit => {
             if ( filterUnits[iunit].hasOriginHit !== true ) { return; }
             candidateCount += 1;
-            if ( candidateCount === 0 ) { return true; }
+            if ( candidateCount >= 10 ) { return true; }
         });
         if ( shouldPreTest !== true ) { return; }
         const bucket = new FilterBucketOfOriginHits();
@@ -2162,7 +2202,7 @@ const FilterBucket = class extends FilterCollection {
             const iunit = filterSequences[i+0];
             const inext = filterSequences[i+1];
             const f = filterUnits[iunit];
-            if ( f.hasOriginHit ) {
+            if ( f.hasOriginHit === true ) {
                 domainOpts.push(f.domainOpt);
                 bucket.unshift(iunit);
                 if ( iprev !== 0 ) {
@@ -2408,7 +2448,7 @@ const FilterParser = class {
         this.reBadCSP = /(?:=|;)\s*report-(?:to|uri)\b/;
         this.reRegexToken = /[%0-9A-Za-z]+/g;
         this.reRegexTokenAbort = /[\(\)\[\]]/;
-        this.reRegexBadPrefix = /(^|[^\\]\.|\\[%SDWsdw]|[()*+?[\\\]{}])$/;
+        this.reRegexBadPrefix = /(^|[^\\]\.|\\[%SDWsdw]|[^\\][()*+?[\\\]{}])$/;
         this.reRegexBadSuffix = /^([^\\]\.|\\[%SDWsdw]|[()*+?[\]{}]|$)/;
         this.reGoodToken = /[%0-9a-z]{1,}/g;
         this.domainOptList = [];
@@ -2937,40 +2977,6 @@ const FilterParser = class {
         return l > 2 &&
                s.charCodeAt(l-1) === 0x2A /* '*' */ &&
                s.charCodeAt(l-2) === 0x2E /* '.' */;
-    }
-
-    static domainOptIterator(domainOpt) {
-        return new FilterParser.DomainOptIterator(domainOpt);
-    }
-};
-
-/******************************************************************************/
-
-FilterParser.DomainOptIterator = class {
-    constructor(domainOpt) {
-        this.domainOpt = domainOpt;
-        this.i = 0;
-        this.value = undefined;
-        this.done = false;
-    }
-    next() {
-        if ( this.i === -1 ) {
-            this.value = undefined;
-            this.done = true;
-            return this;
-        }
-        let pos = this.domainOpt.indexOf('|', this.i);
-        if ( pos !== -1 ) {
-            this.value = this.domainOpt.slice(this.i, pos);
-            this.i = pos + 1;
-        } else {
-            this.value = this.domainOpt.slice(this.i);
-            this.i = -1;
-        }
-        return this;
-    }
-    [Symbol.iterator]() {
-        return this;
     }
 };
 
