@@ -350,7 +350,14 @@ const onBeforeBehindTheSceneRequest = function(fctxt) {
         fctxt.setRealm('network').toLogger();
     }
 
+    // Redirected
+
+    if ( fctxt.redirectURL !== undefined ) {
+        return { redirectUrl: fctxt.redirectURL };
+    }
+
     // Blocked?
+
     if ( result === 1 ) {
         return { cancel: true };
     }
