@@ -748,7 +748,7 @@ const onMessage = function(request, sender, callback) {
             mouse: µb.epickerArgs.mouse,
             zap: µb.epickerArgs.zap,
             eprom: µb.epickerArgs.eprom,
-            pickerURL: vAPI.getURL(`/web_accessible_resources/epicker-ui.html${vAPI.warSecret()}`),
+            pickerURL: vAPI.getURL(`/web_accessible_resources/epicker-ui.html?secret=${vAPI.warSecret()}`),
         };
         µb.epickerArgs.target = '';
         break;

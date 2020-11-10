@@ -134,11 +134,23 @@ const NetFilteringResultCache = class {
     }
 
     lookupResult(fctxt) {
-        return this.results.get(
+        const entry = this.results.get(
             fctxt.getDocHostname() + ' ' +
             fctxt.type + ' ' +
             fctxt.url
         );
+        if ( entry === undefined ) { return; }
+        // We need to use a new WAR secret if one is present since WAR secrets
+        // can only be used once.
+        if (
+            entry.redirectURL !== undefined &&
+            entry.redirectURL.startsWith(this.extensionOriginURL)
+        ) {
+            const redirectURL = new URL(entry.redirectURL);
+            redirectURL.searchParams.set('secret', vAPI.warSecret());
+            entry.redirectURL = redirectURL.href;
+        }
+        return entry;
     }
 
     lookupAllBlocked(hostname) {
@@ -158,6 +170,7 @@ const NetFilteringResultCache = class {
 };
 
 NetFilteringResultCache.prototype.shelfLife = 15000;
+NetFilteringResultCache.prototype.extensionOriginURL = vAPI.getURL('/');
 
 /******************************************************************************/
 
@@ -267,18 +280,6 @@ const PageStore = class {
         this.frames = new Map();
         this.setFrameURL(0, tabContext.rawURL);
 
-        // The current filtering context is cloned because:
-        // - We may be called with or without the current context having been
-        //   initialized.
-        // - If it has been initialized, we do not want to change the state
-        //   of the current context.
-        const fctxt = µb.logger.enabled
-            ? µb.filteringContext
-                .duplicate()
-                .fromTabId(tabId)
-                .setURL(tabContext.rawURL)
-            : undefined;
-
         // https://github.com/uBlockOrigin/uBlock-issues/issues/314
         const masterSwitch = tabContext.getNetFilteringSwitch();
 
@@ -292,10 +293,14 @@ const PageStore = class {
             µb.logger.enabled &&
             context === 'tabCommitted'
         ) {
-            fctxt.setRealm('cosmetic')
-                 .setType('dom')
-                 .setFilter(µb.sessionSwitches.toLogData())
-                 .toLogger();
+            µb.filteringContext
+                .duplicate()
+                .fromTabId(tabId)
+                .setURL(tabContext.rawURL)
+                .setRealm('cosmetic')
+                .setType('dom')
+                .setFilter(µb.sessionSwitches.toLogData())
+                .toLogger();
         }
 
         return this;
@@ -540,6 +545,7 @@ const PageStore = class {
 
     filterRequest(fctxt) {
         fctxt.filter = undefined;
+        fctxt.redirectURL = undefined;
 
         if ( this.getNetFilteringSwitch(fctxt) === false ) {
             return 0;

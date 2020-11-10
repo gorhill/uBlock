@@ -1169,7 +1169,7 @@ vAPI.warSecret = (( ) => {
         lastSecretTime = Date.now();
         const secret = generateSecret();
         secrets.push(secret);
-        return `?secret=${secret}`;
+        return secret;
     };
 })();
 

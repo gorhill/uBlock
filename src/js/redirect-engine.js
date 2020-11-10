@@ -212,7 +212,7 @@ const RedirectEntry = class {
             fctxt instanceof Object &&
             fctxt.type !== 'xmlhttprequest'
         ) {
-            let url = `${this.warURL}${vAPI.warSecret()}`;
+            let url = `${this.warURL}?secret=${vAPI.warSecret()}`;
             if ( this.params !== undefined ) {
                 for ( const name of this.params ) {
                     const value = fctxt[name];
@@ -489,7 +489,7 @@ RedirectEngine.prototype.loadBuiltinResources = function() {
         }
         fetches.push(
             µBlock.assets.fetch(
-                `/web_accessible_resources/${name}${vAPI.warSecret()}`,
+                `/web_accessible_resources/${name}?secret=${vAPI.warSecret()}`,
                 { responseType: details.data }
             ).then(
                 result => process(result)
