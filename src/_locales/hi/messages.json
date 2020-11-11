@@ -671,6 +671,10 @@
     "message": "स्वीकार किया हुआ ",
     "description": "A keyword in the built-in row filtering expression"
   },
+  "loggerRowFiltererBuiltinModified": {
+    "message": "modified",
+    "description": "A keyword in the built-in row filtering expression"
+  },
   "loggerRowFiltererBuiltin1p": {
     "message": "१ली-पार्टी ",
     "description": "A keyword in the built-in row filtering expression"

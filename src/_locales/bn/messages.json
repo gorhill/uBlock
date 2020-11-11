@@ -671,6 +671,10 @@
     "message": "অনুমোদিত",
     "description": "A keyword in the built-in row filtering expression"
   },
+  "loggerRowFiltererBuiltinModified": {
+    "message": "modified",
+    "description": "A keyword in the built-in row filtering expression"
+  },
   "loggerRowFiltererBuiltin1p": {
     "message": "১ম-পক্ষ",
     "description": "A keyword in the built-in row filtering expression"

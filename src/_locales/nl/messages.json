@@ -671,6 +671,10 @@
     "message": "toegestaan",
     "description": "A keyword in the built-in row filtering expression"
   },
+  "loggerRowFiltererBuiltinModified": {
+    "message": "modified",
+    "description": "A keyword in the built-in row filtering expression"
+  },
   "loggerRowFiltererBuiltin1p": {
     "message": "huidige domein",
     "description": "A keyword in the built-in row filtering expression"

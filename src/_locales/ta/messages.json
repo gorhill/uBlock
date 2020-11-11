@@ -671,6 +671,10 @@
     "message": "அனுமதிக்கப்படுகிறது",
     "description": "A keyword in the built-in row filtering expression"
   },
+  "loggerRowFiltererBuiltinModified": {
+    "message": "modified",
+    "description": "A keyword in the built-in row filtering expression"
+  },
   "loggerRowFiltererBuiltin1p": {
     "message": "முதல் கட்சி",
     "description": "A keyword in the built-in row filtering expression"

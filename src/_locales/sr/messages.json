@@ -671,6 +671,10 @@
     "message": "дозвољено",
     "description": "A keyword in the built-in row filtering expression"
   },
+  "loggerRowFiltererBuiltinModified": {
+    "message": "modified",
+    "description": "A keyword in the built-in row filtering expression"
+  },
   "loggerRowFiltererBuiltin1p": {
     "message": "прве стране",
     "description": "A keyword in the built-in row filtering expression"

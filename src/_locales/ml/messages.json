@@ -671,6 +671,10 @@
     "message": "അനുവദനീയമാണ്",
     "description": "A keyword in the built-in row filtering expression"
   },
+  "loggerRowFiltererBuiltinModified": {
+    "message": "modified",
+    "description": "A keyword in the built-in row filtering expression"
+  },
   "loggerRowFiltererBuiltin1p": {
     "message": "ഒന്നാം കക്ഷി",
     "description": "A keyword in the built-in row filtering expression"

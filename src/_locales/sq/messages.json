@@ -671,6 +671,10 @@
     "message": "të autorizuara",
     "description": "A keyword in the built-in row filtering expression"
   },
+  "loggerRowFiltererBuiltinModified": {
+    "message": "modified",
+    "description": "A keyword in the built-in row filtering expression"
+  },
   "loggerRowFiltererBuiltin1p": {
     "message": "palët kryesore",
     "description": "A keyword in the built-in row filtering expression"
