@@ -289,6 +289,7 @@ const cosmeticCandidatesFromFilterChoice = function(filterChoice) {
             needBody &&
             paths.length !== 0 &&
             paths[0].startsWith('#') === false &&
+            paths[0].startsWith('body ') === false &&
             (specificity & 0b1100) !== 0
         ) {
             paths.unshift('body > ');
