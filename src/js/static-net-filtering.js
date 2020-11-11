@@ -36,34 +36,27 @@ const µb = µBlock;
 //      |    | || |
 //      |    | || |
 //      |    | || |
-//      |    | || +---- bit  0- 1: block=0, allow=1, modify=2
-//      |    | |+------ bit     2: important
+//      |    | || +---- bit  0- 1: block=0, allow=1, block important=2
+//      |    | |+------ bit     2: modifier
 //      |    | +------- bit  3- 4: party [0-3]
 //      |    +--------- bit  5- 9: type [0-31]
 //      +-------------- bit 10-15: unused
 const CategoryCount = 1 << 0xa; // shift left to first unused bit
 
+const RealmBitsMask  = 0b0000000111;
 const ActionBitsMask = 0b0000000011;
 const TypeBitsMask   = 0b1111100000;
 const TypeBitsOffset = 5;
 
-const BlockAction    = 0b00 << 0;
-const AllowAction    = 0b01 << 0;
-const ModifyAction   = 0b10 << 0;
-// Note:
-//   It's possible to increase granularity of ModifyAction realm with
-//   sub-realms if it helps performance, but so far I found it's not
-//   needed, there is no meaningful gains to be had.
-
-const Important      = 1 << 2;
-
+const BlockAction    = 0b0000000000;
+const AllowAction    = 0b0000000001;
+const Important      = 0b0000000010;
 const BlockImportant = BlockAction | Important;
-
-const AnyParty       = 0b00 << 3;
-const FirstParty     = 0b01 << 3;
-const ThirdParty     = 0b10 << 3;
-const AllParties     = 0b11 << 3;
-
+const ModifyAction   = 0b0000000100;
+const AnyParty       = 0b0000000000;
+const FirstParty     = 0b0000001000;
+const ThirdParty     = 0b0000010000;
+const AllParties     = 0b0000011000;
 
 const typeNameToTypeValue = {
            'no_type':  0 << TypeBitsOffset,
@@ -1562,7 +1555,7 @@ const FilterModifier = class {
     static compile(details) {
         return [
             FilterModifier.fid,
-            details.action | details.important,
+            details.action,
             details.modifyType,
             details.modifyValue
         ];
@@ -1590,7 +1583,7 @@ const FilterModifierResult = class {
     constructor(bits, th, iunit) {
         this.iunit = iunit;
         this.th = th;
-        this.bits = (bits & ~ActionBitsMask) | this.modifier.actionBits;
+        this.bits = (bits & ~RealmBitsMask) | this.modifier.actionBits;
     }
 
     get filter() {
@@ -1632,8 +1625,7 @@ const FilterCollection = class {
     }
 
     unshift(iunit) {
-        const j = this.i;
-        this.i = filterSequenceAdd(iunit, j);
+        this.i = filterSequenceAdd(iunit, this.i);
     }
 
     shift(drop = false) {
@@ -2610,7 +2602,6 @@ const FilterParser = class {
         this.tokenBeg = 0;
         this.typeBits = 0;
         this.notTypes = 0;
-        this.important = 0;
         this.firstWildcardPos = -1;
         this.secondWildcardPos = -1;
         this.firstCaretPos = -1;
@@ -2718,7 +2709,8 @@ const FilterParser = class {
                 this.parseTypeOption(parser.OPTTokenGhide, not);
                 break;
             case parser.OPTTokenImportant:
-                this.important = Important;
+                if ( this.action === AllowAction ) { return false; }
+                this.action = BlockImportant;
                 break;
             // Used by Adguard:
             // https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters#empty-modifier
@@ -3169,32 +3161,37 @@ FilterContainer.prototype.freeze = function() {
     // readiness when no valid selfie is available.
     this.optimizeTimerId = self.requestIdleCallback(( ) => {
         this.optimizeTimerId = undefined;
-        for ( let bits = 0, n = this.categories.length; bits < n; bits++ ) {
-            const bucket = this.categories[bits];
-            if ( bucket === undefined ) { continue; }
-            for ( const [ th, iunit ] of bucket ) {
-                const f = filterUnits[iunit];
-                if ( f instanceof FilterBucket === false ) { continue; }
-                const optimizeBits =
-                    (th === this.noTokenHash) ||
-                    (bits & ActionBitsMask) === ModifyAction
-                        ? 0b10
-                        : 0b01;
-                const g = f.optimize(optimizeBits);
-                if ( g !== undefined ) {
-                    filterUnits[iunit] = g;
-                }
-            }
-        }
-        FilterHostnameDict.optimize();
-        bidiTrieOptimize();
-        // Be sure unused filters can be garbage collected.
-        for ( let i = filterUnitWritePtr, n = filterUnits.length; i < n; i++ ) {
-            filterUnits[i] = null;
-        }
+        this.optimize();
     }, { timeout: 15000 });
 
     log.info(`staticNetFilteringEngine.freeze() took ${Date.now()-t0} ms`);
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.optimize = function() {
+    for ( let bits = 0, n = this.categories.length; bits < n; bits++ ) {
+        const bucket = this.categories[bits];
+        if ( bucket === undefined ) { continue; }
+        for ( const [ th, iunit ] of bucket ) {
+            const f = filterUnits[iunit];
+            if ( f instanceof FilterBucket === false ) { continue; }
+            const optimizeBits =
+                (th === this.noTokenHash) || (bits & ModifyAction) !== 0
+                    ? 0b10
+                    : 0b01;
+            const g = f.optimize(optimizeBits);
+            if ( g !== undefined ) {
+                filterUnits[iunit] = g;
+            }
+        }
+    }
+    FilterHostnameDict.optimize();
+    bidiTrieOptimize();
+    // Be sure unused filters can be garbage collected.
+    for ( let i = filterUnitWritePtr, n = filterUnits.length; i < n; i++ ) {
+        filterUnits[i] = null;
+    }
 };
 
 /******************************************************************************/
@@ -3437,18 +3434,16 @@ FilterContainer.prototype.compile = function(parser, writer) {
     if ( parsed.modifyType !== undefined ) {
         if (
             parsed.modifyType === parser.OPTTokenRedirect &&
-            (parsed.action & ActionBitsMask) !== AllowAction
+            parsed.action !== AllowAction
         ) {
-            this.compileToAtomicFilter(
-                parsed,
-                FilterCompositeAll.compile(units),
-                writer
-            );
+            const fdata = units.length === 1
+                ? units[0]
+                : FilterCompositeAll.compile(units);
+            this.compileToAtomicFilter(parsed, fdata, writer);
             parsed.modifyType = parser.OPTTokenRedirectRule;
         }
         units.unshift(FilterModifier.compile(parsed));
         parsed.action = ModifyAction;
-        parsed.important = 0;
     }
 
     const fdata = units.length === 1
@@ -3470,7 +3465,7 @@ FilterContainer.prototype.compileToAtomicFilter = function(
     // 1 = network filters: bad filters
     writer.select(parsed.badFilter ? 1 : 0);
 
-    const catBits = parsed.action | parsed.important | parsed.party;
+    const catBits = parsed.action | parsed.party;
     let typeBits = parsed.typeBits;
 
     // Typeless
@@ -3613,7 +3608,7 @@ FilterContainer.prototype.matchAndFetchModifiers = function(
     // occurrences.
     if ( results.length === 1 ) {
         const result = results[0];
-        if ( (result.bits & ActionBitsMask) === AllowAction ) { return; }
+        if ( (result.bits & AllowAction) !== 0 ) { return; }
         return [ result ];
     }
 
@@ -3899,9 +3894,7 @@ FilterContainer.prototype.redirectRequest = function(fctxt) {
     // A single directive should be the next most common occurrence.
     if ( directives.length === 1 ) {
         const directive = directives[0];
-        if ( (directive.bits & ActionBitsMask) === AllowAction ) {
-            return directive;
-        }
+        if ( (directive.bits & AllowAction) !== 0 ) { return directive; }
         const modifier = directive.modifier;
         if ( modifier.cache === undefined ) {
             modifier.cache = this.parseRedirectRequestValue(modifier.value);
@@ -3917,7 +3910,7 @@ FilterContainer.prototype.redirectRequest = function(fctxt) {
     let winningPriority = 0;
     for ( const directive of directives ) {
         const modifier = directive.modifier;
-        const isException = (directive.bits & ActionBitsMask) === AllowAction;
+        const isException = (directive.bits & AllowAction) !== 0;
         if ( isException && modifier.value === '' ) {
             winningDirective = directive;
             break;
@@ -3934,7 +3927,7 @@ FilterContainer.prototype.redirectRequest = function(fctxt) {
         }
     }
     if ( winningDirective === undefined ) { return; }
-    if ( (winningDirective.bits & ActionBitsMask) !== AllowAction ) {
+    if ( (winningDirective.bits & AllowAction) === 0 ) {
         fctxt.redirectURL = µb.redirectEngine.tokenToURL(
             fctxt,
             winningDirective.modifier.cache.token
@@ -3966,7 +3959,7 @@ FilterContainer.prototype.filterQuery = function(fctxt) {
     const out = [];
     for ( const directive of directives ) {
         const modifier = directive.modifier;
-        const isException = (directive.bits & ActionBitsMask) === AllowAction;
+        const isException = (directive.bits & AllowAction) !== 0;
         if ( isException && modifier.value === '' ) {
             out.push(directive);
             break;
@@ -4028,14 +4021,14 @@ FilterContainer.prototype.toLogData = function() {
     logData.tokenHash = this.$tokenHash;
     logData.result = this.$filterUnit === 0
         ? 0
-        : ((this.$catBits & AllowAction) !== 0 ? 2 : 1);
+        : ((this.$catBits & AllowAction) === 0 ? 1 : 2);
     return logData;
 };
 
 /******************************************************************************/
 
 FilterContainer.prototype.isBlockImportant = function() {
-    return (this.$catBits & BlockImportant) === BlockImportant;
+    return (this.$catBits & ActionBitsMask) === BlockImportant;
 };
 
 /******************************************************************************/
