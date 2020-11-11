@@ -8,7 +8,7 @@
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
-    "message": "uBlock₀ — פאנל הקונפיגורציות",
+    "message": "uBlock₀ — לוח מחוונים",
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
@@ -108,7 +108,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
-    "message": "פתח את פאנל הקונפיגורציות",
+    "message": "פתח את לוח המחוונים",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
@@ -936,7 +936,7 @@
     "description": "English: {{value}} days ago"
   },
   "showDashboardButton": {
-    "message": "הצג את פאנל הקונפיגורציות",
+    "message": "הצג את לוח המחוונים",
     "description": "Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
@@ -1064,7 +1064,7 @@
     "description": "short for 'gigabytes'"
   },
   "clickToLoad": {
-    "message": "Click to load",
+    "message": "לחץ על מנת לטעון",
     "description": "Message used in frame placeholders"
   },
   "dummy": {

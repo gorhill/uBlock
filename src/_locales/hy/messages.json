@@ -1012,7 +1012,7 @@
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Apply changes",
+    "message": "Կիրառել",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {

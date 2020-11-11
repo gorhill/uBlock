@@ -856,7 +856,7 @@
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Джерельний код",
+    "message": "Вихідний код",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
@@ -1064,7 +1064,7 @@
     "description": "short for 'gigabytes'"
   },
   "clickToLoad": {
-    "message": "Click to load",
+    "message": "Натисніть, щоб завантажити",
     "description": "Message used in frame placeholders"
   },
   "dummy": {
