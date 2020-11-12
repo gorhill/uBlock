@@ -683,18 +683,3 @@
         window.dispatchEvent(new CustomEvent(name));
     }
 };
-
-/******************************************************************************/
-
-µBlock.getMessageSenderDetails = function(sender) {
-    const r = {};
-    if ( sender instanceof Object ) {
-        r.url = sender.url;
-        r.frameId = sender.frameId;
-        const tab = sender.tab;
-        if ( tab instanceof Object ) {
-            r.tabId = tab.id;
-        }
-    }
-    return r;
-};

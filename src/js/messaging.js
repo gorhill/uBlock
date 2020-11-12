@@ -42,7 +42,7 @@
 const µb = µBlock;
 
 const clickToLoad = function(request, sender) {
-    const { tabId, frameId } = µb.getMessageSenderDetails(sender);
+    const { tabId, frameId } = sender;
     if ( tabId === undefined || frameId === undefined ) { return false; }
     const pageStore = µb.pageStoreFromTabId(tabId);
     if ( pageStore === null ) { return false; }
@@ -545,9 +545,9 @@ vAPI.messaging.listen({
 
 const µb = µBlock;
 
-const retrieveContentScriptParameters = function(senderDetails, request) {
+const retrieveContentScriptParameters = function(sender, request) {
     if ( µb.readyToFilter !== true ) { return; }
-    const { url: senderURL, tabId, frameId } = senderDetails;
+    const { url: senderURL, tabId, frameId } = sender;
     if (
         tabId === undefined ||
         frameId === undefined ||
@@ -649,8 +649,7 @@ const onMessage = function(request, sender, callback) {
         break;
     }
 
-    const senderDetails = µb.getMessageSenderDetails(sender);
-    const pageStore = µb.pageStoreFromTabId(senderDetails.tabId);
+    const pageStore = µb.pageStoreFromTabId(sender.tabId);
 
     // Sync
     let response;
@@ -676,29 +675,29 @@ const onMessage = function(request, sender, callback) {
         break;
 
     case 'maybeGoodPopup':
-        µb.maybeGoodPopup.tabId = senderDetails.tabId;
+        µb.maybeGoodPopup.tabId = sender.tabId;
         µb.maybeGoodPopup.url = request.url;
         break;
 
     case 'shouldRenderNoscriptTags':
         if ( pageStore === null ) { break; }
-        const fctxt = µb.filteringContext.fromTabId(senderDetails.tabId);
+        const fctxt = µb.filteringContext.fromTabId(sender.tabId);
         if ( pageStore.filterScripting(fctxt, undefined) ) {
-            vAPI.tabs.executeScript(senderDetails.tabId, {
+            vAPI.tabs.executeScript(sender.tabId, {
                 file: '/js/scriptlets/noscript-spoof.js',
-                frameId: senderDetails.frameId,
+                frameId: sender.frameId,
                 runAt: 'document_end',
             });
         }
         break;
 
     case 'retrieveContentScriptParameters':
-        response = retrieveContentScriptParameters(senderDetails, request);
+        response = retrieveContentScriptParameters(sender, request);
         break;
 
     case 'retrieveGenericCosmeticSelectors':
-        request.tabId = senderDetails.tabId;
-        request.frameId = senderDetails.frameId;
+        request.tabId = sender.tabId;
+        request.frameId = sender.frameId;
         response = {
             result: µb.cosmeticFilteringEngine.retrieveGenericSelectors(request),
         };
@@ -1462,7 +1461,7 @@ vAPI.messaging.listen({
 // >>>>> start of local scope
 
 const onMessage = function(request, sender, callback) {
-    const tabId = sender && sender.tab ? sender.tab.id : 0;
+    const tabId = sender.tabId || 0;
 
     // Async
     switch ( request.what ) {
@@ -1614,7 +1613,7 @@ logCSPViolations.policyDirectiveToTypeMap = new Map([
 ]);
 
 const onMessage = function(request, sender, callback) {
-    const tabId = sender && sender.tab ? sender.tab.id : 0;
+    const tabId = sender.tabId || 0;
     const pageStore = µb.pageStoreFromTabId(tabId);
 
     // Async
