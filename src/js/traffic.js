@@ -137,7 +137,8 @@ const onBeforeRootFrameRequest = function(fctxt) {
     let logData;
 
     // If the site is whitelisted, disregard strict blocking
-    if ( µb.getNetFilteringSwitch(requestURL) === false ) {
+    const trusted = µb.getNetFilteringSwitch(requestURL) === false;
+    if ( trusted ) {
         result = 2;
         if ( loggerEnabled ) {
             logData = { engine: 'u', result: 2, raw: 'whitelisted' };
@@ -216,7 +217,12 @@ const onBeforeRootFrameRequest = function(fctxt) {
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/760
     //   Redirect non-blocked request?
-    if ( result === 0 && pageStore !== null && snfe.hasQuery(fctxt) ) {
+    if (
+        result !== 1 &&
+        trusted === false &&
+        pageStore !== null &&
+        snfe.hasQuery(fctxt)
+    ) {
         pageStore.redirectNonBlockedRequest(fctxt);
     }
 
