@@ -176,7 +176,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Κάντε κλικ για να μην εχετε το JavaScript απενεργοποιημένο για αυτήν την ιστοσελίδα",
+    "message": "Κάντε κλικ για να μην απενεργοποιείται πλέον το JavaScript σε αυτή την ιστοσελίδα",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
@@ -296,7 +296,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Αποκλεισμός στοιχείου",
+    "message": "Φραγή στοιχείου...",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -308,7 +308,7 @@
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "Απενεργοποιήστε τις αιωρούμενες επεξηγήσεις",
+    "message": "Απενεργοποίηση υποδείξεων",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
@@ -720,7 +720,7 @@
     "description": "Label to identify the URL of an entry"
   },
   "loggerURLFilteringHeader": {
-    "message": "Φιλτράρισμα δυναμικών συνδέσμων",
+    "message": "Κανόνας URL",
     "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
@@ -808,7 +808,7 @@
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
-    "message": "{{input}} Φίτρο/Κανόνας",
+    "message": "{{input}} Φίλτρο/κανόνας",
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
@@ -904,7 +904,7 @@
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
-    "message": "Αδυναμία σύνδεσης με {{url}}",
+    "message": "Σφάλμα δικτύου: {{msg}}",
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
@@ -976,7 +976,7 @@
     "description": "English: Close this window"
   },
   "docblockedProceed": {
-    "message": "Απενεργοποιήστε αυστηρό μπλοκάρισμα για {{hostname}}",
+    "message": "Απενεργοποίηση αυστηρής φραγής για το {{hostname}}",
     "description": "English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary": {
