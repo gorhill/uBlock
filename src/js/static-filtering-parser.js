@@ -102,6 +102,7 @@ const Parser = class {
         this.netOptionsIterator = new NetOptionsIterator(this);
         this.extOptionsIterator = new ExtOptionsIterator(this);
         this.maxTokenLength = Number.MAX_SAFE_INTEGER;
+        this.expertMode = options.expertMode !== false;
         this.reIsLocalhostRedirect = /(?:0\.0\.0\.0|(?:broadcast|local)host|local|ip6-\w+)(?:[^\w.-]|$)/;
         this.reHostname = /^[^\x00-\x24\x26-\x29\x2B\x2C\x2F\x3A-\x40\x5B-\x5E\x60\x7B-\x7F]+/;
         this.reHostsSink = /^[\w-.:\[\]]+$/;
@@ -2281,14 +2282,19 @@ const NetOptionsIterator = class {
             if (
                 descriptor === undefined ||
                 hasBits(descriptor, OPTNotSupported) ||
-                ltok !== lopt && hasNoBits(descriptor, OPTCanNegate) ||
-                this.exception && hasBits(descriptor, OPTBlockOnly) ||
-                this.exception === false && hasBits(descriptor, OPTAllowOnly) ||
-                assigned && hasNoBits(descriptor, OPTMustAssign) ||
-                assigned === false && hasBits(descriptor, OPTMustAssign) && (
-                    this.exception === false ||
-                    hasNoBits(descriptor, OPTAllowMayAssign)
-                )
+                ltok !== lopt &&
+                    hasNoBits(descriptor, OPTCanNegate) ||
+                this.exception &&
+                    hasBits(descriptor, OPTBlockOnly) ||
+                this.exception === false &&
+                    hasBits(descriptor, OPTAllowOnly) ||
+                assigned &&
+                    hasNoBits(descriptor, OPTMustAssign) ||
+                assigned === false &&
+                    hasBits(descriptor, OPTMustAssign) && (
+                        this.exception === false ||
+                        hasNoBits(descriptor, OPTAllowMayAssign)
+                    )
             ) {
                 descriptor = OPTTokenInvalid;
             }
@@ -2398,7 +2404,10 @@ const NetOptionsIterator = class {
         {
             const i = this.tokenPos[OPTTokenQueryprune];
             if ( i !== -1 ) {
-                if ( hasBits(allBits, OPTNonNetworkType) ) {
+                if (
+                    this.parser.expertMode === false ||
+                    hasBits(allBits, OPTNonNetworkType)
+                ) {
                     optSlices[i] = OPTTokenInvalid;
                     if ( this.interactive ) {
                         this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);

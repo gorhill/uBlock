@@ -2660,6 +2660,17 @@ const FilterParser = class {
         return i === 1 ? out[0] : out.join('|');
     }
 
+    parseModifierOption(modifier, value) {
+        if ( this.modifyType !== undefined ) { return false; }
+        this.modifyType = modifier;
+        if ( value !== undefined ) {
+            this.modifyValue = value;
+        } else if ( this.action === AllowAction ) {
+            this.modifyValue = '';
+        }
+        return true;
+    }
+
     parseOptions(parser) {
         for ( let { id, val, not } of parser.netOptions() ) {
             switch ( id ) {
@@ -2677,13 +2688,11 @@ const FilterParser = class {
                 this.badFilter = true;
                 break;
             case parser.OPTTokenCsp:
-                if ( this.modifyType !== undefined ) { return false; }
-                this.modifyType = parser.OPTTokenCsp;
-                if ( val !== undefined ) {
-                    if ( this.reBadCSP.test(val) ) { return false; }
-                    this.modifyValue = val;
-                } else if ( this.action === AllowAction ) {
-                    this.modifyValue = '';
+                if ( this.parseModifierOption(id, val) === false ) {
+                    return false;
+                }
+                if ( val !== undefined && this.reBadCSP.test(val) ) {
+                    return false;
                 }
                 break;
             // https://github.com/gorhill/uBlock/issues/2294
@@ -2725,15 +2734,10 @@ const FilterParser = class {
                 this.modifyValue = 'noopmp4-1s';
                 break;
             case parser.OPTTokenQueryprune:
-                // TODO: validate value
             case parser.OPTTokenRedirect:
             case parser.OPTTokenRedirectRule:
-                if ( this.modifyType !== undefined ) { return false; }
-                this.modifyType = id;
-                if ( val !== undefined ) {
-                    this.modifyValue = val;
-                } else if ( this.action === AllowAction ) {
-                    this.modifyValue = '';
+                if ( this.parseModifierOption(id, val) === false ) {
+                    return false;
                 }
                 break;
             case parser.OPTTokenInvalid:
@@ -2877,7 +2881,7 @@ const FilterParser = class {
         if ( this.isRegex ) {
             return this.extractTokenFromRegex();
         }
-        const match = this.findGoodToken(parser);
+        const match = this.extractTokenFromPattern(parser);
         if ( match === null ) { return; }
         this.token = match.token;
         this.tokenHash = urlTokenizer.tokenHashFromString(this.token);
@@ -2885,15 +2889,15 @@ const FilterParser = class {
     }
 
     // Note: a one-char token is better than a documented bad token.
-    findGoodToken(parser) {
+    extractTokenFromPattern(parser) {
         let bestMatch = null;
-        let bestBadness = 0;
+        let bestBadness = 0x7FFFFFFF;
         for ( const match of parser.patternTokens() ) {
             const badness = match.token.length > 1
                 ? this.badTokens.get(match.token) || 0
                 : 1;
             if ( badness === 0 ) { return match; }
-            if ( bestBadness === 0 || badness < bestBadness ) {
+            if ( badness < bestBadness ) {
                 bestMatch = match;
                 bestBadness = badness;
             }
@@ -2910,7 +2914,7 @@ const FilterParser = class {
     extractTokenFromRegex() {
         this.reRegexToken.lastIndex = 0;
         const s = this.pattern;
-        let bestBadness = 0;
+        let bestBadness = 0x7FFFFFFF;
         for (;;) {
             const matches = this.reRegexToken.exec(s);
             if ( matches === null ) { break; }
@@ -2941,7 +2945,7 @@ const FilterParser = class {
             const badness = token.length > 1
                 ? this.badTokens.get(token) || 0
                 : 1;
-            if ( bestBadness === 0 || badness < bestBadness ) {
+            if ( badness < bestBadness ) {
                 this.token = token.toLowerCase();
                 this.tokenHash = urlTokenizer.tokenHashFromString(this.token);
                 this.tokenBeg = matches.index;
@@ -3170,6 +3174,8 @@ FilterContainer.prototype.freeze = function() {
 /******************************************************************************/
 
 FilterContainer.prototype.optimize = function() {
+    const t0 = Date.now();
+
     for ( let bits = 0, n = this.categories.length; bits < n; bits++ ) {
         const bucket = this.categories[bits];
         if ( bucket === undefined ) { continue; }
@@ -3192,6 +3198,8 @@ FilterContainer.prototype.optimize = function() {
     for ( let i = filterUnitWritePtr, n = filterUnits.length; i < n; i++ ) {
         filterUnits[i] = null;
     }
+
+    log.info(`staticNetFilteringEngine.optimize() took ${Date.now()-t0} ms`);
 };
 
 /******************************************************************************/

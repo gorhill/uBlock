@@ -768,10 +768,9 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     // fetch the compiled content in case it has become available.
     const compiledDetails = await this.assets.get(compiledPath);
     if ( compiledDetails.content === '' ) {
-        compiledDetails.content = this.compileFilters(
-            rawDetails.content,
-            { assetKey: assetKey }
-        );
+        compiledDetails.content = this.compileFilters(rawDetails.content, {
+            assetKey
+        });
         this.assets.put(compiledPath, compiledDetails.content);
     }
 
@@ -830,24 +829,24 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
 /******************************************************************************/
 
-µBlock.compileFilters = function(rawText, details) {
+µBlock.compileFilters = function(rawText, details = {}) {
     const writer = new this.CompiledLineIO.Writer();
 
     // Populate the writer with information potentially useful to the
     // client compilers.
-    if ( details ) {
-        if ( details.assetKey ) {
-            writer.properties.set('assetKey', details.assetKey);
-        }
+    if ( details.assetKey ) {
+        writer.properties.set('assetKey', details.assetKey);
     }
-
+    const expertMode =
+        details.assetKey !== this.userFiltersPath ||
+        this.hiddenSettings.filterAuthorMode !== false;
     // Useful references:
     //    https://adblockplus.org/en/filter-cheatsheet
     //    https://adblockplus.org/en/filters
     const staticNetFilteringEngine = this.staticNetFilteringEngine;
     const staticExtFilteringEngine = this.staticExtFilteringEngine;
     const lineIter = new this.LineIterator(this.preparseDirectives.prune(rawText));
-    const parser = new vAPI.StaticFilteringParser();
+    const parser = new vAPI.StaticFilteringParser({ expertMode });
 
     parser.setMaxTokenLength(staticNetFilteringEngine.MAX_TOKEN_LENGTH);
 
@@ -1386,10 +1385,9 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
                     if ( this.badLists.has(details.assetKey) === false ) {
                         this.assets.put(
                             'compiled/' + details.assetKey,
-                            this.compileFilters(
-                                details.content,
-                                { assetKey: details.assetKey }
-                            )
+                            this.compileFilters(details.content, {
+                                assetKey: details.assetKey
+                            })
                         );
                     }
                 }

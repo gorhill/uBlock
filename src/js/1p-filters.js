@@ -57,6 +57,7 @@ vAPI.messaging.send('dashboard', {
     if ( mode.setHints instanceof Function ) {
         mode.setHints(response);
     }
+    mode.parser.expertMode = response.expertMode !== false;
 });
 
 let cachedUserFilters = '';

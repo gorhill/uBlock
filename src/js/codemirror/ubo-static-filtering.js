@@ -364,6 +364,9 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
             preparseDirectiveHints.push(...details.preparseDirectiveHints);
             initHints();
         },
+        get parser() {
+            return parser;
+        },
     };
 });
 

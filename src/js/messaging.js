@@ -1184,6 +1184,7 @@ const onMessage = function(request, sender, callback) {
             redirectResources: µb.redirectEngine.getResourceDetails(),
             preparseDirectiveTokens: µb.preparseDirectives.getTokens(),
             preparseDirectiveHints: µb.preparseDirectives.getHints(),
+            expertMode: µb.hiddenSettings.filterAuthorMode,
         };
         break;
 
