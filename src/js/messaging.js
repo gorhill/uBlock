@@ -547,15 +547,9 @@ const µb = µBlock;
 
 const retrieveContentScriptParameters = function(sender, request) {
     if ( µb.readyToFilter !== true ) { return; }
-    const { url: senderURL, tabId, frameId } = sender;
-    if (
-        tabId === undefined ||
-        frameId === undefined ||
-        senderURL === undefined ||
-        senderURL !== request.url && senderURL.startsWith('about:') === false
-    ) {
-        return;
-    }
+    const { tabId, frameId } = sender;
+    if ( tabId === undefined || frameId === undefined ) { return; }
+
     const pageStore = µb.pageStoreFromTabId(tabId);
     if ( pageStore === null || pageStore.getNetFilteringSwitch() === false ) {
         return;

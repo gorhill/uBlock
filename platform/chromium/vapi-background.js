@@ -900,23 +900,24 @@ vAPI.messaging = {
         this.ports.delete(port.name);
     },
 
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/Port
+    //   port.sender is always present for onConnect() listeners.
     onPortConnect: function(port) {
-        port.onDisconnect.addListener(
-            port => this.onPortDisconnect(port)
+        port.onDisconnect.addListener(port =>
+            this.onPortDisconnect(port)
         );
-        port.onMessage.addListener(
-            (request, port) => this.onPortMessage(request, port)
+        port.onMessage.addListener((request, port) =>
+            this.onPortMessage(request, port)
         );
         const portDetails = { port };
         const sender = port.sender;
-        if ( sender ) {
-            portDetails.frameId = sender.frameId;
-            const { tab, url } = sender;
-            if ( tab ) {
-                portDetails.tabId = tab.id;
-            }
-            portDetails.url = url;
-            portDetails.privileged = url.startsWith(this.PRIVILEGED_URL);
+        const { tab, url } = sender;
+        portDetails.frameId = sender.frameId;
+        portDetails.frameURL = url;
+        portDetails.privileged = url.startsWith(this.PRIVILEGED_URL);
+        if ( tab ) {
+            portDetails.tabId = tab.id;
+            portDetails.tabURL = tab.url;
         }
         this.ports.set(port.name, portDetails);
         // https://bugzilla.mozilla.org/show_bug.cgi?id=1652925#c24
@@ -944,12 +945,9 @@ vAPI.messaging = {
             vAPI.webextFlavor.major < 61
         ) {
             browser.tabs.onRemoved.addListener(tabId => {
-                for ( const { port } of this.ports.values() ) {
-                    const tab = port.sender && port.sender.tab;
-                    if ( !tab ) { continue; }
-                    if ( tab.id === tabId ) {
-                        this.onPortDisconnect(port);
-                    }
+                for ( const { port, tabId: portTabId } of this.ports.values() ) {
+                    if ( portTabId !== tabId ) { continue; }
+                    this.onPortDisconnect(port);
                 }
             });
         }
