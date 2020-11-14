@@ -34,7 +34,8 @@ const url = new URL(self.location.href);
 const frameURL = url.searchParams.get('url');
 const frameURLElem = document.getElementById('frameURL');
 
-frameURLElem.textContent = frameURL;
+frameURLElem.children[0].textContent = frameURL;
+frameURLElem.children[1].href = frameURL;
 
 const onWindowResize = function() {
     document.body.style.width = `${self.innerWidth}px`;
@@ -47,7 +48,7 @@ self.addEventListener('resize', onWindowResize);
 
 document.body.addEventListener('click', ev => {
     if ( ev.isTrusted === false ) { return; }
-    //if ( ev.target === frameURLElem ) { return; }
+    if ( ev.target.closest('#frameURL') !== null ) { return; }
     vAPI.messaging.send('default', {
         what: 'clickToLoad',
         frameURL,
