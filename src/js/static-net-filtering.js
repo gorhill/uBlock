@@ -1223,7 +1223,7 @@ const filterOrigin = (( ) => {
                 compiledHit.push(FilterOriginHitSet.compile(hostnameHits.join('|')));
             }
             if ( compiledHit.length > 1 ) {
-                compiledHit[0] = FilterCompositeAny.compile(compiledHit.slice());
+                compiledHit[0] = FilterOriginHitAny.compile(compiledHit.slice());
                 compiledHit.length = 1;
             }
             const compiledMiss = [];
@@ -1454,6 +1454,10 @@ const FilterOriginEntityHit = class {
         this.entity = entity;
     }
 
+    get domainOpt() {
+        return `${this.entity}.*`;
+    }
+
     match() {
         const entity = $docEntity.compute();
         if ( entity === '' ) { return false; }
@@ -1471,7 +1475,7 @@ const FilterOriginEntityHit = class {
     }
 
     logData(details) {
-        details.domains.push(`${this.entity}.*`);
+        details.domains.push(this.domainOpt);
     }
 
     static compile(entity) {
@@ -1486,6 +1490,8 @@ const FilterOriginEntityHit = class {
         return new FilterOriginEntityHit(args[1]);
     }
 };
+
+FilterOriginEntityHit.prototype.hasOriginHit = true;
 
 registerFilterClass(FilterOriginEntityHit);
 
@@ -1513,7 +1519,49 @@ const FilterOriginEntityMiss = class extends FilterOriginEntityHit {
     }
 };
 
+FilterOriginEntityMiss.prototype.hasOriginHit = false;
+
 registerFilterClass(FilterOriginEntityMiss);
+
+/******************************************************************************/
+
+const FilterOriginHitSetTest = class extends FilterOriginHitSet {
+    constructor(domainOpt, hasEntity = undefined, oneOf = null) {
+        super(domainOpt, oneOf);
+        this.hasEntity = hasEntity === undefined
+            ? domainOpt.indexOf('.*') !== -1
+            : hasEntity;
+    }
+
+    match() {
+        if ( this.oneOf === null ) {
+            this.oneOf = filterOrigin.trieContainer.fromIterable(
+                domainOptIterator.reset(this.domainOpt)
+            );
+            this.domainOpt = '';
+        }
+        return this.oneOf.matches($docHostname) !== -1 ||
+               this.hasEntity !== false &&
+               this.oneOf.matches(`${$docEntity.compute()}.*`) !== -1;
+    }
+
+    toSelfie() {
+        return [
+            this.fid,
+            this.domainOpt,
+            this.hasEntity,
+            this.oneOf !== null
+                ? filterOrigin.trieContainer.compileOne(this.oneOf)
+                : null
+        ];
+    }
+
+    static fromSelfie(args) {
+        return new FilterOriginHitSetTest(args[1], args[2], args[3]);
+    }
+};
+
+registerFilterClass(FilterOriginHitSetTest);
 
 /******************************************************************************/
 
@@ -1681,7 +1729,17 @@ const FilterCollection = class {
 
 /******************************************************************************/
 
-const FilterCompositeAny = class extends FilterCollection {
+const FilterOriginHitAny = class extends FilterCollection {
+    get domainOpt() {
+        const domainOpts = [];
+        this.forEach(iunit => {
+            const f = filterUnits[iunit];
+            if ( f.hasOriginHit !== true ) { return; }
+            domainOpts.push(f.domainOpt);
+        });
+        return domainOpts.join('|');
+    }
+
     match() {
         let i = this.i;
         while ( i !== 0 ) {
@@ -1692,22 +1750,24 @@ const FilterCompositeAny = class extends FilterCollection {
     }
 
     static compile(fdata) {
-        return super.compile(FilterCompositeAny, fdata);
+        return super.compile(FilterOriginHitAny, fdata);
     }
 
     static fromCompiled(args) {
-        return super.fromCompiled(args, new FilterCompositeAny());
+        return super.fromCompiled(args, new FilterOriginHitAny());
     }
 
     static fromSelfie(args, bucket) {
         if ( bucket === undefined ) {
-            bucket = new FilterCompositeAny();
+            bucket = new FilterOriginHitAny();
         }
         return super.fromSelfie(args, bucket);
     }
 };
 
-registerFilterClass(FilterCompositeAny);
+FilterOriginHitAny.prototype.hasOriginHit = true;
+
+registerFilterClass(FilterOriginHitAny);
 
 /******************************************************************************/
 
@@ -2210,7 +2270,7 @@ const FilterBucket = class extends FilterCollection {
             i = inext;
         }
         bucket.originTestUnit =
-            filterUnitFromCtor(FilterOriginHitSet, domainOpts.join('|'));
+            filterUnitFromCtor(FilterOriginHitSetTest, domainOpts.join('|'));
         return bucket;
     }
 };
