@@ -2256,7 +2256,10 @@ const FilterBucket = class extends FilterCollection {
             const f = filterUnits[iunit];
             if ( f.hasOriginHit === true ) {
                 domainOpts.push(f.domainOpt);
-                bucket.unshift(iunit);
+                // move the sequence slot to new bucket
+                filterSequences[i+1] = bucket.i;
+                bucket.i = i;
+                bucket.n += 1;
                 if ( iprev !== 0 ) {
                     filterSequences[iprev+1] = inext;
                 } else {
@@ -3226,7 +3229,7 @@ FilterContainer.prototype.freeze = function() {
     this.optimizeTimerId = self.requestIdleCallback(( ) => {
         this.optimizeTimerId = undefined;
         this.optimize();
-    }, { timeout: 15000 });
+    }, { timeout: 10000 });
 
     log.info(`staticNetFilteringEngine.freeze() took ${Date.now()-t0} ms`);
 };
