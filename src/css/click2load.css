@@ -39,7 +39,7 @@ body {
 #frameURL {
     font-family: monospace;
     font-size: 90%;
-    overflow: hidden;
+    overflow-y: auto;
     word-break: break-all;
     }
 #frameURL > a {
