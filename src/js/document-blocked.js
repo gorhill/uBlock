@@ -60,19 +60,17 @@ let details = {};
 
     const parent = uDom.nodeFromSelector('#whyex > span:nth-of-type(2)');
     for ( const list of lists ) {
-        const elem = document.querySelector('#templates .filterList')
-                             .cloneNode(true);
-        const source = elem.querySelector('.filterListSource');
-        source.href += encodeURIComponent(list.assetKey);
-        source.textContent = list.title;
-        if (
-            typeof list.supportURL === 'string' &&
-            list.supportURL !== ''
-        ) {
-            elem.querySelector('.filterListSupport')
-                .setAttribute('href', list.supportURL);
+        const listElem = document.querySelector('#templates .filterList')
+                                 .cloneNode(true);
+        const sourceElem = listElem.querySelector('.filterListSource');
+        sourceElem.href += encodeURIComponent(list.assetKey);
+        sourceElem.textContent = list.title;
+        if ( typeof list.supportURL === 'string' && list.supportURL !== '' ) {
+            const supportElem = listElem.querySelector('.filterListSupport');
+            supportElem.setAttribute('href', list.supportURL);
+            supportElem.classList.remove('hidden');
         }
-        parent.appendChild(elem);
+        parent.appendChild(listElem);
     }
     uDom.nodeFromId('whyex').style.removeProperty('display');
 })();
