@@ -3548,8 +3548,12 @@ FilterContainer.prototype.benchmark = async function(action, target) {
             print(`\turl=${fctxt.url}`);
             print(`\tdocOrigin=${fctxt.getDocOrigin()}`);
         }
-        if ( fctxt.type === 'main_frame' || fctxt.type === 'sub_frame' ) {
-            this.matchAndFetchData(fctxt, 'csp');
+        if ( r !== 1 ) {
+            if ( fctxt.type === 'main_frame' || fctxt.type === 'sub_frame' ) {
+                this.matchAndFetchData(fctxt, 'csp');
+            }
+        } else {
+            fctxt.redirectURL = µb.redirectEngine.toURL(fctxt);
         }
     }
     const t1 = self.performance.now();
