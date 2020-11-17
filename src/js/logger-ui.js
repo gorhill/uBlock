@@ -214,7 +214,7 @@ const LogEntry = function(details) {
             this[prop] = details[prop];
         }
     }
-    this.type = details.stype;
+    this.type = details.stype || details.type;
     if ( details.aliasURL !== undefined ) {
         this.aliased = true;
     }
