@@ -538,10 +538,12 @@ const assetCacheRead = async function(assetKey, updateReadTime = false) {
 
 const assetCacheWrite = async function(assetKey, details) {
     let content = '';
+    let options = {};
     if ( typeof details === 'string' ) {
         content = details;
     } else if ( details instanceof Object ) {
         content = details.content || '';
+        options = details;
     }
 
     if ( content === '' ) {
@@ -555,8 +557,8 @@ const assetCacheWrite = async function(assetKey, details) {
         entry = cacheDict[assetKey] = {};
     }
     entry.writeTime = entry.readTime = Date.now();
-    if ( details instanceof Object && typeof details.url === 'string' ) {
-        entry.remoteURL = details.url;
+    if ( options.url === 'string' ) {
+        entry.remoteURL = options.url;
     }
     µBlock.cacheStorage.set({
         assetCacheRegistry,
@@ -565,7 +567,9 @@ const assetCacheWrite = async function(assetKey, details) {
 
     const result = { assetKey, content };
     // https://github.com/uBlockOrigin/uBlock-issues/issues/248
-    fireNotification('after-asset-updated', result);
+    if ( options.silent !== true ) {
+        fireNotification('after-asset-updated', result);
+    }
     return result;
 };
 
@@ -733,6 +737,7 @@ api.get = async function(assetKey, options = {}) {
             assetCacheWrite(assetKey, {
                 content: details.content,
                 url: contentURL,
+                silent: options.silent === true,
             });
         }
         return reportBack(details.content, contentURL);
