@@ -801,7 +801,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
             listEntry.title = this.orphanizeString(title);
             this.assets.registerAssetSource(assetKey, { title });
         }
-        matches = head.match(/(?:^|\n)(?:!|# )[\t ]*Homepage[\t ]*:[\t ]*(https?:\/\/\S+)/i);
+        matches = head.match(/(?:^|\n)(?:!|# )[\t ]*Homepage[\t ]*:[\t ]*(https?:\/\/\S+)\s/i);
         const supportURL = matches && matches[1] || '';
         if ( supportURL !== '' && supportURL !== listEntry.supportURL ) {
             listEntry.supportURL = this.orphanizeString(supportURL);
