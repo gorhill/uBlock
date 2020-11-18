@@ -1053,7 +1053,8 @@ const getRules = function() {
             µb.sessionFirewall.toArray().concat(
                 µb.sessionSwitches.toArray(),
                 µb.sessionURLFiltering.toArray()
-            )
+            ),
+        pslSelfie: self.publicSuffixList.toSelfie(),
     };
 };
 

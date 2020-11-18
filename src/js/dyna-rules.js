@@ -29,6 +29,9 @@
 
 /******************************************************************************/
 
+const psl = self.publicSuffixList;
+const hostnameToDomainMap = new Map();
+
 const mergeView = new CodeMirror.MergeView(
     document.querySelector('.codeMirrorMergeContainer'),
     {
@@ -387,8 +390,22 @@ const onPresentationChanged = (( ) => {
     const reRule   = /^([^ ]+) ([^/ ]+) ([^ ]+ [^ ]+)/;
     const reUrlRule = /^([^ ]+) ([^ ]+) ([^ ]+ [^ ]+)/;
 
-    const reverseHn = function(hn) {
-        return hn.split('.').reverse().join('.');
+    const sortNormalizeHn = function(hn) {
+        let domain = hostnameToDomainMap.get(hn);
+        if ( domain === undefined ) {
+            domain = psl.getDomain(hn);
+            hostnameToDomainMap.set(hn, domain);
+        }
+        let normalized = domain || hn;
+        if ( hn.length !== domain.length ) {
+            const subdomains = hn.slice(0, hn.length - domain.length - 1);
+            normalized += '.' + (
+                subdomains.includes('.')
+                    ? subdomains.split('.').reverse().join('.')
+                    : subdomains
+            );
+        }
+        return normalized;
     };
 
     const slotFromRule = rule => {
@@ -396,18 +413,18 @@ const onPresentationChanged = (( ) => {
         let match = reSwRule.exec(rule);
         if ( match !== null ) {
             type = ' ' + match[1];
-            srcHn = reverseHn(match[2]);
+            srcHn = sortNormalizeHn(match[2]);
             desHn = srcHn;
             extra = match[3];
         } else if ( (match = reRule.exec(rule)) !== null ) {
             type = '\x10FFFE';
-            srcHn = reverseHn(match[1]);
-            desHn = reverseHn(match[2]);
+            srcHn = sortNormalizeHn(match[1]);
+            desHn = sortNormalizeHn(match[2]);
             extra = match[3];
         } else if ( (match = reUrlRule.exec(rule)) !== null ) {
             type = '\x10FFFF';
-            srcHn = reverseHn(match[1]);
-            desHn = reverseHn(vAPI.hostnameFromURI(match[2]));
+            srcHn = sortNormalizeHn(match[1]);
+            desHn = sortNormalizeHn(vAPI.hostnameFromURI(match[2]));
             extra = match[3];
         }
         if ( sortType === 0 ) {
@@ -614,6 +631,7 @@ vAPI.messaging.send('dashboard', {
 }).then(details => {
     thePanes.orig.original = details.permanentRules;
     thePanes.edit.original = details.sessionRules;
+    psl.fromSelfie(details.pslSelfie);
     onPresentationChanged(true);
 });
 
