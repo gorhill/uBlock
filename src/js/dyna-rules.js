@@ -393,7 +393,7 @@ const onPresentationChanged = (( ) => {
     const sortNormalizeHn = function(hn) {
         let domain = hostnameToDomainMap.get(hn);
         if ( domain === undefined ) {
-            domain = psl.getDomain(hn);
+            domain = /(\d|\])$/.test(hn) ? hn : psl.getDomain(hn);
             hostnameToDomainMap.set(hn, domain);
         }
         let normalized = domain || hn;
@@ -488,15 +488,27 @@ const onPresentationChanged = (( ) => {
     };
 
     return function(clearHistory) {
-        thePanes.orig.modified = thePanes.orig.original.slice();
-        thePanes.edit.modified = thePanes.edit.original.slice();
+        const origPane = thePanes.orig;
+        const editPane = thePanes.edit;
+        origPane.modified = origPane.original.slice();
+        editPane.modified = editPane.original.slice();
         const select = document.querySelector('#ruleFilter select');
         sortType = parseInt(select.value, 10);
         if ( isNaN(sortType) ) { sortType = 1; }
-        thePanes.orig.doc.getMode().sortType = sortType;
-        thePanes.edit.doc.getMode().sortType = sortType;
-        sort(thePanes.orig.modified);
-        sort(thePanes.edit.modified);
+        {
+            const mode = origPane.doc.getMode();
+            mode.sortType = sortType;
+            mode.setHostnameToDomainMap(hostnameToDomainMap);
+            mode.setPSL(psl);
+        }
+        {
+            const mode = editPane.doc.getMode();
+            mode.sortType = sortType;
+            mode.setHostnameToDomainMap(hostnameToDomainMap);
+            mode.setPSL(psl);
+        }
+        sort(origPane.modified);
+        sort(editPane.modified);
         collapse();
         rulesToDoc(clearHistory);
         onTextChanged(clearHistory);
