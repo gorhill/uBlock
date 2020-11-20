@@ -176,7 +176,7 @@ CodeMirror.defineMode('ubo-dynamic-filtering', ( ) => {
         // rule type or switch state
         if ( isSwitchRule ) {
             string = validSwitcheStates.has(match[0])
-                ? addMatchSlice(match)
+                ? addMatchSlice(match, match[0] === 'true' ? 'blockrule' : 'allowrule')
                 : addMatchSlice(match, 'error');
         } else if ( isURLRule ) {
             string = invalidURLRuleTypes.has(match[0])
