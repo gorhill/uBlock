@@ -96,9 +96,6 @@ html#ublock0-epicker,
 .CodeMirror pre {
     padding: 0;
     }
-.CodeMirror-vscrollbar {
-    z-index: 0;
-    }
 
 #ublock0-epicker section .resultsetWidgets {
     display: flex;
