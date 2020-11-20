@@ -233,7 +233,11 @@ body[dir="rtl"] #netInspector #filterExprPicker {
     }
 #vwRenderer .logEntry > div[data-status="1"],
 #netFilteringDialog > .panes > .details > div[data-status="1"] {
-    background-color: rgba(192, 0, 0, 0.1);
+    background-color: var(--logger-blocked-surface);
+    }
+#vwRenderer .logEntry > div[data-status="1"][data-modifier],
+#netFilteringDialog > .panes > .details > div[data-status="1"][data-modifier] {
+    background-color: var(--logger-modified-surface);
     }
 body.colorBlind #vwRenderer .logEntry > div[data-status="1"],
 body.colorBlind #netFilteringDialog > .panes > .details > div[data-status="1"] {
@@ -247,7 +251,7 @@ body.colorBlind #vwRenderer .logEntry > div[data-status="3"] {
     }
 #vwRenderer .logEntry > div[data-status="2"],
 #netFilteringDialog > .panes > .details > div[data-status="2"] {
-    background-color: rgba(0, 160, 0, 0.1);
+    background-color: var(--logger-allowed-surface);
     }
 body.colorBlind #vwRenderer .logEntry > div[data-status="2"],
 body.colorBlind #netFilteringDialog > .panes > .details > div[data-status="2"] {
@@ -380,7 +384,11 @@ body[dir="rtl"] #vwRenderer .logEntry > div > span:first-child {
     }
 #vwRenderer .logEntry > div[data-status="1"] > span:nth-of-type(7) b,
 #netFilteringDialog > .panes > .details > div[data-status="1"] b {
-    background-color: rgba(192, 0, 0, 0.2);
+    background-color: var(--logger-blocked-em-surface);
+    }
+#vwRenderer .logEntry > div[data-status="1"][data-modifier] > span:nth-of-type(7) b,
+#netFilteringDialog > .panes > .details > div[data-status="1"][data-modifier] b {
+    background-color: var(--logger-modified-em-surface);
     }
 body.colorBlind #vwRenderer .logEntry > div[data-status="1"] > span:nth-of-type(7) b,
 body.colorBlind #netFilteringDialog > .panes > .details > div[data-status="1"] b {
@@ -394,7 +402,7 @@ body.colorBlind #vwRenderer .logEntry > div[data-status="3"] > span:nth-of-type(
     }
 #vwRenderer .logEntry > div[data-status="2"] > span:nth-of-type(7) b,
 #netFilteringDialog > .panes > .details > div[data-status="2"] b {
-    background-color: rgba(0, 160, 0, 0.2);
+    background-color: var(--logger-allowed-em-surface);
     }
 body.colorBlind #vwRenderer .logEntry > div[data-status="2"] > span:nth-of-type(7) b,
 body.colorBlind #netFilteringDialog > .panes > .details > div[data-status="2"] b {

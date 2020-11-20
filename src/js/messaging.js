@@ -1584,6 +1584,9 @@ const logCSPViolations = function(pageStore, request) {
             if ( type === 'script' ) { type = 'inline-script'; }
             else if ( type === 'font' ) { type = 'inline-font'; }
         }
+        // The resource was blocked as a result of applying a CSP directive
+        // elsewhere rather than to the resource itself.
+        logData.modifier = undefined;
         fctxt.setURL(violation.url)
              .setType(type)
              .setFilter(logData)
