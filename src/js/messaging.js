@@ -1000,7 +1000,7 @@ const resetUserData = async function() {
     vAPI.app.restart();
 };
 
-// 3rd-party filters
+// Filter lists
 const prepListEntries = function(entries) {
     const µburi = µb.URI;
     for ( const k in entries ) {
@@ -1039,6 +1039,26 @@ const getLists = async function(callback) {
     r.cache = metadata;
     prepListEntries(r.cache);
     callback(r);
+};
+
+// My filters
+
+// TODO: also return origin of embedded frames?
+const getOriginHints = function() {
+    const punycode = self.punycode;
+    const out = [];
+    for ( const tabId of µb.pageStores.keys() ) {
+        if ( tabId === -1 ) { continue; }
+        const tabContext = µb.tabContextManager.lookup(tabId);
+        if ( tabContext === null ) { continue; }
+        let { rootDomain, rootHostname } = tabContext;
+        if ( rootDomain.endsWith('-scheme') ) { continue; }
+        const isPunycode = rootHostname.includes('xn--');
+        out.push(isPunycode ? punycode.toUnicode(rootDomain) : rootDomain);
+        if ( rootHostname === rootDomain ) { continue; }
+        out.push(isPunycode ? punycode.toUnicode(rootHostname) : rootHostname);
+    }
+    return out;
 };
 
 // My rules
@@ -1185,6 +1205,7 @@ const onMessage = function(request, sender, callback) {
             redirectResources: µb.redirectEngine.getResourceDetails(),
             preparseDirectiveTokens: µb.preparseDirectives.getTokens(),
             preparseDirectiveHints: µb.preparseDirectives.getHints(),
+            originHints: getOriginHints(),
             expertMode: µb.hiddenSettings.filterAuthorMode,
         };
         break;

@@ -54,6 +54,7 @@ vAPI.messaging.send('dashboard', {
 }).then(response => {
     if ( response instanceof Object === false ) { return; }
     const mode = cmEditor.getMode();
+    // TODO: listen to changes in currently opened set of tabs?
     if ( mode.setHints instanceof Function ) {
         mode.setHints(response);
     }
