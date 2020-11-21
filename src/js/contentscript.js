@@ -116,7 +116,7 @@ vAPI.contentScript = true;
     try {
         while (
             context !== self.top &&
-            context.location.protocol === 'about:'
+            context.location.href.startsWith('about:blank')
         ) {
             context = context.parent;
         }
