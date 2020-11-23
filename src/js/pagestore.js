@@ -272,7 +272,6 @@ const PageStore = class {
         this.popupBlockedCount = 0;
         this.largeMediaCount = 0;
         this.largeMediaTimer = null;
-        this.internalRedirectionCount = 0;
         this.allowLargeMediaElementsRegex = undefined;
         this.extraData.clear();
 
@@ -668,11 +667,57 @@ const PageStore = class {
         return result;
     }
 
+    filterOnHeaders(fctxt, headers) {
+        fctxt.filter = undefined;
+
+        if ( this.getNetFilteringSwitch(fctxt) === false ) { return 0; }
+
+        let result = µb.staticNetFilteringEngine.matchHeaders(fctxt, headers);
+        if ( result === 0 ) { return 0; }
+
+        const loggerEnabled = µb.logger.enabled;
+        if ( loggerEnabled ) {
+            fctxt.filter = µb.staticNetFilteringEngine.toLogData();
+        }
+
+        // Dynamic filtering allow rules
+        // URL filtering
+        if (
+            result === 1 &&
+            µb.sessionURLFiltering.evaluateZ(
+                fctxt.getTabHostname(),
+                fctxt.url,
+                fctxt.type
+            ) === 2
+        ) {
+            result = 2;
+            if ( loggerEnabled ) {
+                fctxt.filter = µb.sessionURLFiltering.toLogData();
+            }
+        }
+        // Hostname filtering
+        if (
+            result === 1 &&
+            µb.userSettings.advancedUserEnabled &&
+            µb.sessionFirewall.evaluateCellZY(
+                fctxt.getTabHostname(),
+                fctxt.getHostname(),
+                fctxt.type
+            ) === 2
+        ) {
+            result = 2;
+            if ( loggerEnabled ) {
+                fctxt.filter = µb.sessionFirewall.toLogData();
+            }
+        }
+
+        return result;
+    }
+
     redirectBlockedRequest(fctxt) {
         if ( µb.hiddenSettings.ignoreRedirectFilters === true ) { return; }
         const directive = µb.staticNetFilteringEngine.redirectRequest(fctxt);
         if ( directive === undefined ) { return; }
-        this.internalRedirectionCount += 1;
         if ( µb.logger.enabled !== true ) { return; }
         fctxt.pushFilter(directive.logData());
         if ( fctxt.redirectURL === undefined ) { return; }

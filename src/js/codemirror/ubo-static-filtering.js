@@ -212,20 +212,42 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
 
     const colorNetOptionSpan = function(stream) {
         const bits = parser.slices[parserSlot];
-        let style;
         if ( (bits & parser.BITComma) !== 0  ) {
-            style = 'def strong';
             netOptionValueMode = false;
-        } else if ( netOptionValueMode ) {
-            return colorNetOptionValueSpan(stream, bits);
-        } else if ( (bits & parser.BITTilde) !== 0 ) {
-            style = 'keyword strong';
-        } else if ( (bits & parser.BITEqual) !== 0 ) {
-            netOptionValueMode = true;
+            stream.pos += parser.slices[parserSlot+2];
+            parserSlot += 3;
+            return 'def strong';
         }
-        stream.pos += parser.slices[parserSlot+2];
-        parserSlot += 3;
-        return style || 'def';
+        if ( netOptionValueMode ) {
+            return colorNetOptionValueSpan(stream, bits);
+        }
+        if ( (bits & parser.BITTilde) !== 0 ) {
+            stream.pos += parser.slices[parserSlot+2];
+            parserSlot += 3;
+            return 'keyword strong';
+        }
+        if ( (bits & parser.BITEqual) !== 0 ) {
+            netOptionValueMode = true;
+            stream.pos += parser.slices[parserSlot+2];
+            parserSlot += 3;
+            return 'def';
+        }
+        const to = parser.skipUntil(
+            parserSlot,
+            parser.commentSpan.i,
+            parser.BITComma | parser.BITEqual
+        );
+        if (
+            to > parserSlot &&
+            /^[13]P/.test(parser.strFromSlices(parserSlot, to - 3))
+        ) {
+            parserSlot = to;
+            stream.pos = parser.slices[to+1];
+            return 'def notice';
+        }
+        parserSlot = to;
+        stream.pos = parser.slices[to+1];
+        return 'def';
     };
 
     const colorNetSpan = function(stream) {
@@ -259,7 +281,7 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
             if ( parser.patternIsRegex() ) {
                 stream.pos = parser.slices[parser.optionsAnchorSpan.i+1];
                 parserSlot = parser.optionsAnchorSpan.i;
-                return 'variable regex';
+                return 'variable notice';
             }
             if ( (parser.slices[parserSlot] & (parser.BITAsterisk | parser.BITCaret)) !== 0 ) {
                 stream.pos += parser.slices[parserSlot+2];

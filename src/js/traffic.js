@@ -371,92 +371,6 @@ const onBeforeBehindTheSceneRequest = function(fctxt) {
 
 /******************************************************************************/
 
-// https://github.com/gorhill/uBlock/issues/3140
-
-const onBeforeMaybeSpuriousCSPReport = (function() {
-    let textDecoder;
-
-    return function(details) {
-        const fctxt = µBlock.filteringContext.fromWebrequestDetails(details);
-
-        // Ignore behind-the-scene requests.
-        if ( fctxt.tabId < 0 ) { return; }
-
-        // Lookup the page store associated with this tab id.
-        const pageStore = µBlock.pageStoreFromTabId(fctxt.tabId);
-        if ( pageStore === null ) { return; }
-
-        // If uBO is disabled for the page, it can't possibly causes CSP
-        // reports to be triggered.
-        if ( pageStore.getNetFilteringSwitch() === false ) { return; }
-
-        // A resource was redirected to a neutered one?
-        // TODO: mind injected scripts/styles as well.
-        if ( pageStore.internalRedirectionCount === 0 ) { return; }
-
-        if (
-            textDecoder === undefined &&
-            typeof self.TextDecoder === 'function'
-        ) {
-            textDecoder = new TextDecoder();
-        }
-
-        // Find out whether the CSP report is a potentially spurious CSP report.
-        // If from this point on we are unable to parse the CSP report data,
-        // the safest assumption to protect users is to assume the CSP report
-        // is spurious.
-        if (
-            textDecoder !== undefined &&
-            details.method === 'POST'
-        ) {
-            const raw = details.requestBody && details.requestBody.raw;
-            if (
-                Array.isArray(raw) &&
-                raw.length !== 0 &&
-                raw[0] instanceof Object &&
-                raw[0].bytes instanceof ArrayBuffer
-            ) {
-                let data;
-                try {
-                    data = JSON.parse(textDecoder.decode(raw[0].bytes));
-                } catch (ex) {
-                }
-                if ( data instanceof Object ) {
-                    const report = data['csp-report'];
-                    if ( report instanceof Object ) {
-                        const blocked =
-                            report['blocked-uri'] || report['blockedURI'];
-                        const validBlocked = typeof blocked === 'string';
-                        const source =
-                            report['source-file'] || report['sourceFile'];
-                        const validSource = typeof source === 'string';
-                        if (
-                            (validBlocked || validSource) &&
-                            (!validBlocked || !blocked.startsWith('data')) &&
-                            (!validSource || !source.startsWith('data'))
-                        ) {
-                            return;
-                        }
-                    }
-                }
-            }
-        }
-
-        // At this point, we have a potentially spurious CSP report.
-
-        if ( µBlock.logger.enabled ) {
-            fctxt.setRealm('network')
-                 .setType('csp_report')
-                 .setFilter({ result: 1, source: 'global', raw: 'no-spurious-csp-report' })
-                 .toLogger();
-        }
-
-        return { cancel: true };
-    };
-})();
-
-/******************************************************************************/
-
 // To handle:
 // - Media elements larger than n kB
 // - Scriptlet injection (requires ability to modify response body)
@@ -485,15 +399,29 @@ const onHeadersReceived = function(details) {
     if ( pageStore.getNetFilteringSwitch(fctxt) === false ) { return; }
 
     if ( fctxt.itype === fctxt.IMAGE || fctxt.itype === fctxt.MEDIA ) {
-        return foilLargeMediaElement(details, fctxt, pageStore);
+        const result = foilLargeMediaElement(details, fctxt, pageStore);
+        if ( result !== undefined ) { return result; }
     }
-
-    if ( isRootDoc === false && fctxt.itype !== fctxt.SUB_FRAME ) { return; }
 
     // Keep in mind response headers will be modified in-place if needed, so
     // `details.responseHeaders` will always point to the modified response
     // headers.
     const responseHeaders = details.responseHeaders;
+
+    if ( isRootDoc === false && µb.hiddenSettings.filterOnHeaders === true ) {
+        const result = pageStore.filterOnHeaders(fctxt, responseHeaders);
+        if ( result !== 0 ) {
+            if ( µb.logger.enabled ) {
+                fctxt.setRealm('network').toLogger();
+            }
+            if ( result === 1 ) {
+                pageStore.journalAddRequest(fctxt.getHostname(), 1);
+                return { cancel: true };
+            }
+        }
+    }
+
+    if ( isRootDoc === false && fctxt.itype !== fctxt.SUB_FRAME ) { return; }
 
     // https://github.com/gorhill/uBlock/issues/2813
     //   Disable the blocking of large media elements if the document is itself
@@ -1083,41 +1011,21 @@ return {
         vAPI.net = new vAPI.Net();
         vAPI.net.suspend();
 
-        return function() {
+        return ( ) => {
             vAPI.net.setSuspendableListener(onBeforeRequest);
             vAPI.net.addListener(
                 'onHeadersReceived',
                 onHeadersReceived,
-                {
-                    types: [
-                        'main_frame',
-                        'sub_frame',
-                        'image',
-                        'media',
-                        'xmlhttprequest',
-                    ],
-                    urls: [ 'http://*/*', 'https://*/*' ],
-                },
+                { urls: [ 'http://*/*', 'https://*/*' ] },
                 [ 'blocking', 'responseHeaders' ]
             );
-            if ( vAPI.net.validTypes.has('csp_report') ) {
-                vAPI.net.addListener(
-                    'onBeforeRequest',
-                    onBeforeMaybeSpuriousCSPReport,
-                    {
-                        types: [ 'csp_report' ],
-                        urls: [ 'http://*/*', 'https://*/*' ]
-                    },
-                    [ 'blocking', 'requestBody' ]
-                );
-            }
             vAPI.net.unsuspend(true);
         };
     })(),
 
-    strictBlockBypass: function(hostname) {
+    strictBlockBypass: hostname => {
         strictBlockBypasser.bypass(hostname);
-    }
+    },
 };
 
 /******************************************************************************/

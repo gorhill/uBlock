@@ -346,6 +346,7 @@ const Parser = class {
     //     patternRightAnchorSpan: first slice to right-hand pattern anchor
     //     optionsAnchorSpan: first slice to options anchor
     //     optionsSpan: first slice to options
+    //     commentSpan: first slice to trailing comment
     analyzeNet() {
         let islice = this.leftSpaceSpan.len;
 
@@ -369,7 +370,7 @@ const Parser = class {
         }
 
         // Assume no options
-        this.optionsAnchorSpan.i = this.optionsSpan.i =  this.commentSpan.i;
+        this.optionsAnchorSpan.i = this.optionsSpan.i = this.commentSpan.i;
 
         // Assume all is part of pattern
         this.patternSpan.i = islice;
@@ -1900,41 +1901,44 @@ const BITFlavorNetAnchor         = BITFlavorNetLeftAnchor | BITFlavorNetRightAnc
 const OPTTokenMask               = 0x000000ff;
 const OPTTokenInvalid            =  0;
 const OPTToken1p                 =  1;
-const OPTToken3p                 =  2;
-const OPTTokenAll                =  3;
-const OPTTokenBadfilter          =  4;
-const OPTTokenCname              =  5;
-const OPTTokenCsp                =  6;
-const OPTTokenCss                =  7;
-const OPTTokenDenyAllow          =  8;
-const OPTTokenDoc                =  9;
-const OPTTokenDomain             = 10;
-const OPTTokenEhide              = 11;
-const OPTTokenEmpty              = 12;
-const OPTTokenFont               = 13;
-const OPTTokenFrame              = 14;
-const OPTTokenGenericblock       = 15;
-const OPTTokenGhide              = 16;
-const OPTTokenImage              = 17;
-const OPTTokenImportant          = 18;
-const OPTTokenInlineFont         = 19;
-const OPTTokenInlineScript       = 20;
-const OPTTokenMedia              = 21;
-const OPTTokenMp4                = 22;
-const OPTTokenObject             = 23;
-const OPTTokenOther              = 24;
-const OPTTokenPing               = 25;
-const OPTTokenPopunder           = 26;
-const OPTTokenPopup              = 27;
-const OPTTokenRedirect           = 28;
-const OPTTokenRedirectRule       = 29;
-const OPTTokenQueryprune         = 30;
-const OPTTokenScript             = 31;
-const OPTTokenShide              = 32;
-const OPTTokenXhr                = 33;
-const OPTTokenWebrtc             = 34;
-const OPTTokenWebsocket          = 35;
-const OPTTokenCount              = 36;
+const OPTToken1pStrict           =  2;
+const OPTToken3p                 =  3;
+const OPTToken3pStrict           =  4;
+const OPTTokenAll                =  5;
+const OPTTokenBadfilter          =  6;
+const OPTTokenCname              =  7;
+const OPTTokenCsp                =  8;
+const OPTTokenCss                =  9;
+const OPTTokenDenyAllow          = 10;
+const OPTTokenDoc                = 11;
+const OPTTokenDomain             = 12;
+const OPTTokenEhide              = 13;
+const OPTTokenEmpty              = 14;
+const OPTTokenFont               = 15;
+const OPTTokenFrame              = 16;
+const OPTTokenGenericblock       = 17;
+const OPTTokenGhide              = 18;
+const OPTTokenHeader             = 19;
+const OPTTokenImage              = 20;
+const OPTTokenImportant          = 21;
+const OPTTokenInlineFont         = 22;
+const OPTTokenInlineScript       = 23;
+const OPTTokenMedia              = 24;
+const OPTTokenMp4                = 25;
+const OPTTokenObject             = 26;
+const OPTTokenOther              = 27;
+const OPTTokenPing               = 28;
+const OPTTokenPopunder           = 29;
+const OPTTokenPopup              = 30;
+const OPTTokenRedirect           = 31;
+const OPTTokenRedirectRule       = 32;
+const OPTTokenQueryprune         = 33;
+const OPTTokenScript             = 34;
+const OPTTokenShide              = 35;
+const OPTTokenXhr                = 36;
+const OPTTokenWebrtc             = 37;
+const OPTTokenWebsocket          = 38;
+const OPTTokenCount              = 39;
 
 //const OPTPerOptionMask           = 0x0000ff00;
 const OPTCanNegate               = 1 <<  8;
@@ -1974,9 +1978,11 @@ Parser.prototype.BITHostname = BITHostname;
 Parser.prototype.BITPeriod = BITPeriod;
 Parser.prototype.BITDash = BITDash;
 Parser.prototype.BITHash = BITHash;
+Parser.prototype.BITNum = BITNum;
 Parser.prototype.BITEqual = BITEqual;
 Parser.prototype.BITQuestion = BITQuestion;
 Parser.prototype.BITPercent = BITPercent;
+Parser.prototype.BITAlpha = BITAlpha;
 Parser.prototype.BITTilde = BITTilde;
 Parser.prototype.BITUnicode = BITUnicode;
 Parser.prototype.BITIgnore = BITIgnore;
@@ -1993,7 +1999,10 @@ Parser.prototype.BITFlavorIgnore = BITFlavorIgnore;
 Parser.prototype.BITFlavorUnsupported = BITFlavorUnsupported;
 Parser.prototype.BITFlavorError = BITFlavorError;
 
-Parser.prototype.OPTTokenInvalid = OPTTokenInvalid;
+Parser.prototype.OPTToken1p = OPTToken1p;
+Parser.prototype.OPTToken1pStrict = OPTToken1pStrict;
+Parser.prototype.OPTToken3p = OPTToken3p;
+Parser.prototype.OPTToken3pStrict = OPTToken3pStrict;
 Parser.prototype.OPTTokenAll = OPTTokenAll;
 Parser.prototype.OPTTokenBadfilter = OPTTokenBadfilter;
 Parser.prototype.OPTTokenCname = OPTTokenCname;
@@ -2003,14 +2012,15 @@ Parser.prototype.OPTTokenDoc = OPTTokenDoc;
 Parser.prototype.OPTTokenDomain = OPTTokenDomain;
 Parser.prototype.OPTTokenEhide = OPTTokenEhide;
 Parser.prototype.OPTTokenEmpty = OPTTokenEmpty;
-Parser.prototype.OPTToken1p = OPTToken1p;
 Parser.prototype.OPTTokenFont = OPTTokenFont;
 Parser.prototype.OPTTokenGenericblock = OPTTokenGenericblock;
 Parser.prototype.OPTTokenGhide = OPTTokenGhide;
+Parser.prototype.OPTTokenHeader = OPTTokenHeader;
 Parser.prototype.OPTTokenImage = OPTTokenImage;
 Parser.prototype.OPTTokenImportant = OPTTokenImportant;
 Parser.prototype.OPTTokenInlineFont = OPTTokenInlineFont;
 Parser.prototype.OPTTokenInlineScript = OPTTokenInlineScript;
+Parser.prototype.OPTTokenInvalid = OPTTokenInvalid;
 Parser.prototype.OPTTokenMedia = OPTTokenMedia;
 Parser.prototype.OPTTokenMp4 = OPTTokenMp4;
 Parser.prototype.OPTTokenObject = OPTTokenObject;
@@ -2025,7 +2035,6 @@ Parser.prototype.OPTTokenScript = OPTTokenScript;
 Parser.prototype.OPTTokenShide = OPTTokenShide;
 Parser.prototype.OPTTokenCss = OPTTokenCss;
 Parser.prototype.OPTTokenFrame = OPTTokenFrame;
-Parser.prototype.OPTToken3p = OPTToken3p;
 Parser.prototype.OPTTokenXhr = OPTTokenXhr;
 Parser.prototype.OPTTokenWebrtc = OPTTokenWebrtc;
 Parser.prototype.OPTTokenWebsocket = OPTTokenWebsocket;
@@ -2045,8 +2054,10 @@ Parser.prototype.OPTNotSupported = OPTNotSupported;
 const netOptionTokenDescriptors = new Map([
     [ '1p', OPTToken1p | OPTCanNegate ],
         [ 'first-party', OPTToken1p | OPTCanNegate ],
+    [ '1P', OPTToken1pStrict ],
     [ '3p', OPTToken3p | OPTCanNegate ],
         [ 'third-party', OPTToken3p | OPTCanNegate ],
+    [ '3P', OPTToken3pStrict ],
     [ 'all', OPTTokenAll | OPTNetworkType | OPTNonCspableType ],
     [ 'badfilter', OPTTokenBadfilter ],
     [ 'cname', OPTTokenCname | OPTAllowOnly | OPTModifierType ],
@@ -2066,6 +2077,7 @@ const netOptionTokenDescriptors = new Map([
     [ 'genericblock', OPTTokenGenericblock | OPTNotSupported ],
     [ 'ghide', OPTTokenGhide | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
         [ 'generichide', OPTTokenGhide | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
+    [ 'header', OPTTokenHeader | OPTMustAssign | OPTAllowMayAssign | OPTNonCspableType | OPTNonRedirectableType ],
     [ 'image', OPTTokenImage | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
     [ 'important', OPTTokenImportant | OPTBlockOnly ],
     [ 'inline-font', OPTTokenInlineFont | OPTNonNetworkType | OPTCanNegate | OPTNonCspableType | OPTNonRedirectableType ],
@@ -2097,8 +2109,10 @@ Parser.prototype.netOptionTokenDescriptors =
 Parser.netOptionTokenIds = new Map([
     [ '1p', OPTToken1p ],
         [ 'first-party', OPTToken1p ],
+    [ '1P', OPTToken1pStrict ],
     [ '3p', OPTToken3p ],
         [ 'third-party', OPTToken3p ],
+    [ '3P', OPTToken3pStrict ],
     [ 'all', OPTTokenAll ],
     [ 'badfilter', OPTTokenBadfilter ],
     [ 'cname', OPTTokenCname ],
@@ -2118,6 +2132,7 @@ Parser.netOptionTokenIds = new Map([
     [ 'genericblock', OPTTokenGenericblock ],
     [ 'ghide', OPTTokenGhide ],
         [ 'generichide', OPTTokenGhide ],
+    [ 'header', OPTTokenHeader ],
     [ 'image', OPTTokenImage ],
     [ 'important', OPTTokenImportant ],
     [ 'inline-font', OPTTokenInlineFont ],
@@ -2145,7 +2160,9 @@ Parser.netOptionTokenIds = new Map([
 
 Parser.netOptionTokenNames = new Map([
     [ OPTToken1p, '1p' ],
+    [ OPTToken1pStrict, '1P' ],
     [ OPTToken3p, '3p' ],
+    [ OPTToken3pStrict, '3P' ],
     [ OPTTokenAll, 'all' ],
     [ OPTTokenBadfilter, 'badfilter' ],
     [ OPTTokenCname, 'cname' ],
@@ -2160,6 +2177,7 @@ Parser.netOptionTokenNames = new Map([
     [ OPTTokenFont, 'font' ],
     [ OPTTokenGenericblock, 'genericblock' ],
     [ OPTTokenGhide, 'generichide' ],
+    [ OPTTokenHeader, 'header' ],
     [ OPTTokenImage, 'image' ],
     [ OPTTokenImportant, 'important' ],
     [ OPTTokenInlineFont, 'inline-font' ],
@@ -2300,6 +2318,8 @@ const NetOptionsIterator = class {
             }
             // Keep track of which options are present: any given option can
             // appear only once.
+            // TODO: might need to make an exception for `header=` option so as
+            //       to allow filters which need to match more than one header.
             const tokenId = descriptor & OPTTokenMask;
             if ( tokenId !== OPTTokenInvalid ) {
                 if ( this.tokenPos[tokenId] !== -1 ) {

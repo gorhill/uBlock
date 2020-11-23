@@ -191,7 +191,7 @@
     --sf-error-ink: #ff0000;
     --sf-error-surface: #ff000016;
     --sf-keyword-ink: var(--purple-60);
-    --sf-regex-ink: var(--light-gray-60);
+    --sf-notice-ink: var(--light-gray-60);
     --sf-tag-ink: #117700;
     --sf-value-ink: var(--orange-80);
     --sf-variable-ink: var(--default-ink);
