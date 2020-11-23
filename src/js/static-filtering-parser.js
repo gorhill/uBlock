@@ -2484,6 +2484,10 @@ const NetOptionsIterator = class {
             this.optSlices[i+4],
             this.optSlices[i+5] - 3
         );
+        if ( val === '*' ) { return true; }
+        if ( val.charCodeAt(0) === 0x21 /* '!' */ ) {
+            val = val.slice(1);
+        }
         if ( val.startsWith('|') ) { val = `^${val.slice(1)}`; }
         if ( val.endsWith('|') ) { val = `${val.slice(0,-1)}$`; }
         try {
