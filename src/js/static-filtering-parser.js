@@ -2455,6 +2455,16 @@ const NetOptionsIterator = class {
                 }
             }
         }
+        // `header`: can't be used with any modifier type
+        {
+            const i = this.tokenPos[OPTTokenHeader];
+            if ( i !== -1 && hasBits(allBits, OPTModifierType) ) {
+                optSlices[i] = OPTTokenInvalid;
+                if ( this.interactive ) {
+                    this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
+                }
+            }
+        }
         return this;
     }
     next() {

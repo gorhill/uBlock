@@ -2620,7 +2620,10 @@ const urlTokenizer = new (class {
 /******************************************************************************/
 
 const FilterParser = class {
-    constructor(parser) {
+    constructor(parser, other = undefined) {
+        if ( other !== undefined ) {
+            return Object.assign(this, other);
+        }
         this.cantWebsocket = vAPI.cantWebsocket;
         this.noTokenHash = urlTokenizer.noTokenHash;
         this.reIsolateHostname = /^(\*?\.)?([^\x00-\x24\x26-\x2C\x2F\x3A-\x5E\x60\x7B-\x7F]+)(.*)/;
@@ -2761,10 +2764,11 @@ const FilterParser = class {
             [ 'new',1412],
         ]);
         this.maxTokenLen = urlTokenizer.MAX_TOKEN_LENGTH;
-        this.reset();
+        this.reset(parser);
     }
 
-    reset() {
+    reset(parser) {
+        this.parser = parser;
         this.action = BlockAction;
         // anchor: bit vector
         //   0000 (0x0): no anchoring
@@ -2780,7 +2784,7 @@ const FilterParser = class {
         this.invalid = false;
         this.pattern = '';
         this.party = AnyParty;
-        this.hasOptionUnits = false;
+        this.optionUnitBits = 0;
         this.domainOpt = '';
         this.denyallowOpt = '';
         this.headerOpt = undefined;
@@ -2798,6 +2802,10 @@ const FilterParser = class {
         this.secondCaretPos = -1;
         this.unsupported = false;
         return this;
+    }
+
+    clone() {
+        return new FilterParser(this.parser, this);
     }
 
     normalizeRegexSource(s) {
@@ -2830,14 +2838,14 @@ const FilterParser = class {
         this.party |= firstParty ? FirstParty : ThirdParty;
     }
 
-    parseHostnameList(parser, s, modeBits, out = []) {
+    parseHostnameList(s, modeBits, out = []) {
         let beg = 0;
         let slen = s.length;
         let i = 0;
         while ( beg < slen ) {
             let end = s.indexOf('|', beg);
             if ( end === -1 ) { end = slen; }
-            const hn = parser.normalizeHostnameValue(
+            const hn = this.parser.normalizeHostnameValue(
                 s.slice(beg, end),
                 modeBits
             );
@@ -2858,96 +2866,115 @@ const FilterParser = class {
         } else if ( this.action === AllowAction ) {
             this.modifyValue = '';
         }
-        this.hasOptionUnits = true;
         return true;
     }
 
-    parseOptions(parser) {
-        for ( let { id, val, not } of parser.netOptions() ) {
+    parseOptions() {
+        for ( let { id, val, not } of this.parser.netOptions() ) {
             switch ( id ) {
-            case parser.OPTToken1p:
+            case this.parser.OPTToken1p:
                 this.parsePartyOption(true, not);
                 break;
-            case parser.OPTToken1pStrict:
+            case this.parser.OPTToken1pStrict:
                 this.strictParty = this.strictParty === -1 ? 0 : 1;
-                this.hasOptionUnits = true;
+                this.optionUnitBits |= this.STRICT_PARTY_BIT;
                 break;
-            case parser.OPTToken3p:
+            case this.parser.OPTToken3p:
                 this.parsePartyOption(false, not);
                 break;
-            case parser.OPTToken3pStrict:
+            case this.parser.OPTToken3pStrict:
                 this.strictParty = this.strictParty === 1 ? 0 : -1;
-                this.hasOptionUnits = true;
+                this.optionUnitBits |= this.STRICT_PARTY_BIT;
                 break;
-            case parser.OPTTokenAll:
+            case this.parser.OPTTokenAll:
                 this.parseTypeOption(-1);
                 break;
             // https://github.com/uBlockOrigin/uAssets/issues/192
-            case parser.OPTTokenBadfilter:
+            case this.parser.OPTTokenBadfilter:
                 this.badFilter = true;
                 break;
-            case parser.OPTTokenCsp:
+            case this.parser.OPTTokenCsp:
                 if ( this.parseModifierOption(id, val) === false ) {
                     return false;
                 }
                 if ( val !== undefined && this.reBadCSP.test(val) ) {
                     return false;
                 }
+                this.optionUnitBits |= this.CSP_BIT;
                 break;
             // https://github.com/gorhill/uBlock/issues/2294
             //   Detect and discard filter if domain option contains
             //   nonsensical characters.
-            case parser.OPTTokenDomain:
+            case this.parser.OPTTokenDomain:
                 this.domainOpt = this.parseHostnameList(
-                    parser,
                     val,
                     0b1010,
                     this.domainOptList
                 );
                 if ( this.domainOpt === '' ) { return false; }
-                this.hasOptionUnits = true;
+                this.optionUnitBits |= this.DOMAIN_BIT;
                 break;
-            case parser.OPTTokenDenyAllow:
-                this.denyallowOpt = this.parseHostnameList(parser, val, 0b0000);
+            case this.parser.OPTTokenDenyAllow:
+                this.denyallowOpt = this.parseHostnameList(val, 0b0000);
                 if ( this.denyallowOpt === '' ) { return false; }
-                this.hasOptionUnits = true;
+                this.optionUnitBits |= this.DENYALLOW_BIT;
                 break;
             // https://www.reddit.com/r/uBlockOrigin/comments/d6vxzj/
             //   Add support for `elemhide`. Rarely used but it happens.
-            case parser.OPTTokenEhide:
-                this.parseTypeOption(parser.OPTTokenShide, not);
-                this.parseTypeOption(parser.OPTTokenGhide, not);
+            case this.parser.OPTTokenEhide:
+                this.parseTypeOption(this.parser.OPTTokenShide, not);
+                this.parseTypeOption(this.parser.OPTTokenGhide, not);
                 break;
-            case parser.OPTTokenHeader:
+            case this.parser.OPTTokenHeader:
                 this.headerOpt = val !== undefined ? val : '';
-                this.hasOptionUnits = true;
+                this.optionUnitBits |= this.HEADER_BIT;
                 break;
-            case parser.OPTTokenImportant:
+            case this.parser.OPTTokenImportant:
                 if ( this.action === AllowAction ) { return false; }
                 this.action = BlockImportant;
                 break;
             // Used by Adguard:
             // https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters#empty-modifier
-            case parser.OPTTokenEmpty:
-                if ( this.modifyType !== undefined ) { return false; }
-                this.modifyType = parser.OPTTokenRedirect;
-                this.modifyValue = 'empty';
-                this.hasOptionUnits = true;
+            case this.parser.OPTTokenEmpty:
+                id = this.action === AllowAction
+                    ? this.parser.OPTTokenRedirectRule
+                    : this.parser.OPTTokenRedirect;
+                if ( this.parseModifierOption(id, 'empty') === false ) {
+                    return false;
+                }
+                this.optionUnitBits |= this.REDIRECT_BIT;
                 break;
-            case parser.OPTTokenMp4:
-                if ( this.modifyType !== undefined ) { return false; }
-                this.modifyType = parser.OPTTokenRedirect;
-                this.modifyValue = 'noopmp4-1s';
-                this.hasOptionUnits = true;
+            case this.parser.OPTTokenMp4:
+                id = this.action === AllowAction
+                    ? this.parser.OPTTokenRedirectRule
+                    : this.parser.OPTTokenRedirect;
+                if ( this.parseModifierOption(id, 'noopmp4-1s') === false ) {
+                    return false;
+                }
+                this.optionUnitBits |= this.REDIRECT_BIT;
                 break;
-            case parser.OPTTokenQueryprune:
-            case parser.OPTTokenRedirect:
-            case parser.OPTTokenRedirectRule:
+            case this.parser.OPTTokenQueryprune:
                 if ( this.parseModifierOption(id, val) === false ) {
                     return false;
                 }
+                this.optionUnitBits |= this.QUERYPRUNE_BIT;
                 break;
-            case parser.OPTTokenInvalid:
+            case this.parser.OPTTokenRedirect:
+                if ( this.action === AllowAction ) {
+                    id = this.parser.OPTTokenRedirectRule;
+                }
+                if ( this.parseModifierOption(id, val) === false ) {
+                    return false;
+                }
+                this.optionUnitBits |= this.REDIRECT_BIT;
+                break;
+            case this.parser.OPTTokenRedirectRule:
+                if ( this.parseModifierOption(id, val) === false ) {
+                    return false;
+                }
+                this.optionUnitBits |= this.REDIRECT_BIT;
+                break;
+            case this.parser.OPTTokenInvalid:
                 return false;
             default:
                 if ( this.tokenIdToNormalizedType.has(id) === false ) {
@@ -2971,10 +2998,10 @@ const FilterParser = class {
             if ( this.typeBits === 0 ) { return false; }
         }
         // CSP directives implicitly apply only to document/subdocument.
-        if ( this.modifyType === parser.OPTTokenCsp ) {
+        if ( this.modifyType === this.parser.OPTTokenCsp ) {
             if ( this.typeBits === 0 ) {
-                this.parseTypeOption(parser.OPTTokenDoc, false);
-                this.parseTypeOption(parser.OPTTokenFrame, false);
+                this.parseTypeOption(this.parser.OPTTokenDoc, false);
+                this.parseTypeOption(this.parser.OPTTokenFrame, false);
             }
         }
         // https://github.com/gorhill/uBlock/issues/2283
@@ -2989,7 +3016,7 @@ const FilterParser = class {
 
     parse(parser) {
         // important!
-        this.reset();
+        this.reset(parser);
 
         if ( parser.hasError() ) {
             this.invalid = true;
@@ -3019,7 +3046,7 @@ const FilterParser = class {
         }
 
         // options
-        if ( parser.hasOptions() && this.parseOptions(parser) === false ) {
+        if ( parser.hasOptions() && this.parseOptions() === false ) {
             this.unsupported = true;
             return this;
         }
@@ -3084,11 +3111,12 @@ const FilterParser = class {
     // are not good. Avoid if possible. This has a significant positive
     // impact on performance.
 
-    makeToken(parser) {
+    makeToken() {
+        if ( this.pattern === '*' ) { return; }
         if ( this.isRegex ) {
             return this.extractTokenFromRegex();
         }
-        const match = this.extractTokenFromPattern(parser);
+        const match = this.extractTokenFromPattern();
         if ( match === null ) { return; }
         this.token = match.token;
         this.tokenHash = urlTokenizer.tokenHashFromString(this.token);
@@ -3096,10 +3124,10 @@ const FilterParser = class {
     }
 
     // Note: a one-char token is better than a documented bad token.
-    extractTokenFromPattern(parser) {
+    extractTokenFromPattern() {
         let bestMatch = null;
         let bestBadness = 0x7FFFFFFF;
-        for ( const match of parser.patternTokens() ) {
+        for ( const match of this.parser.patternTokens() ) {
             const badness = match.token.length > 1
                 ? this.badTokens.get(match.token) || 0
                 : 1;
@@ -3162,18 +3190,13 @@ const FilterParser = class {
         }
     }
 
-    isJustPattern() {
-        return this.hasOptionUnits === false;
+    hasNoOptionUnits() {
+        return this.optionUnitBits === 0;
     }
 
     isJustOrigin() {
-        return this.hasOptionUnits &&
-            this.isRegex === false &&
-            this.modifyType === undefined &&
-            this.strictParty === 0 &&
-            this.headerOpt === undefined &&
-            this.denyallowOpt === '' &&
-            this.domainOpt !== '' && (
+        return this.optionUnitBits === this.DOMAIN_BIT &&
+            this.isRegex === false && (
                 this.pattern === '*' || (
                     this.anchor === 0b010 &&
                     /^(?:http[s*]?:(?:\/\/)?)$/.test(this.pattern)
@@ -3189,6 +3212,15 @@ const FilterParser = class {
                s.charCodeAt(l-2) === 0x2E /* '.' */;
     }
 };
+
+FilterParser.prototype.DOMAIN_BIT             = 0b00000001;
+FilterParser.prototype.DENYALLOW_BIT          = 0b00000010;
+FilterParser.prototype.HEADER_BIT             = 0b00000100;
+FilterParser.prototype.STRICT_PARTY_BIT       = 0b00001000;
+
+FilterParser.prototype.CSP_BIT                = 0b00010000;
+FilterParser.prototype.QUERYPRUNE_BIT         = 0b00100000;
+FilterParser.prototype.REDIRECT_BIT           = 0b01000000;
 
 /******************************************************************************/
 
@@ -3558,18 +3590,37 @@ FilterContainer.prototype.compile = function(parser, writer) {
         return false;
     }
 
-    // Pure hostnames, use more efficient dictionary lookup
-    // https://github.com/chrisaljoudi/uBlock/issues/665
-    // Create a dict keyed on request type etc.
-    if ( parsed.isPureHostname && parsed.isJustPattern() ) {
-        parsed.tokenHash = this.dotTokenHash;
-        this.compileToAtomicFilter(parsed, parsed.pattern, writer);
-        return true;
+    // 0 = network filters
+    // 1 = network filters: bad filters
+    writer.select(parsed.badFilter ? 1 : 0);
+
+    // Reminder:
+    //   `redirect=` is a combination of a `redirect-rule` filter and a
+    //   block filter.
+    if ( parsed.modifyType === parser.OPTTokenRedirect ) {
+        parsed.modifyType = parser.OPTTokenRedirectRule;
+        const parsedBlock = parsed.clone();
+        parsedBlock.modifyType = undefined;
+        parsedBlock.optionUnitBits &= ~parsed.REDIRECT_BIT;
+        this.compileParsed(parsedBlock, writer);
     }
 
-    if ( parser.patternIsMatchAll() === false ) {
-        parsed.makeToken(parser);
+    this.compileParsed(parsed, writer);
+
+    return true;
+};
+
+/******************************************************************************/
+
+FilterContainer.prototype.compileParsed = function(parsed, writer) {
+    // Pure hostnames, use more efficient dictionary lookup
+    if ( parsed.isPureHostname && parsed.hasNoOptionUnits() ) {
+        parsed.tokenHash = this.dotTokenHash;
+        this.compileToAtomicFilter(parsed, parsed.pattern, writer);
+        return;
     }
+
+    parsed.makeToken();
 
     // Special pattern/option cases:
     // - `*$domain=...`
@@ -3595,7 +3646,7 @@ FilterContainer.prototype.compile = function(parser, writer) {
                 entities.push(hn);
             }
         }
-        if ( entities.length === 0 ) { return true; }
+        if ( entities.length === 0 ) { return; }
         parsed.tokenHash = tokenHash;
         const leftAnchored = (parsed.anchor & 0b010) !== 0;
         for ( const entity of entities ) {
@@ -3607,7 +3658,7 @@ FilterContainer.prototype.compile = function(parser, writer) {
                 parsed, FilterCompositeAll.compile(units), writer
             );
         }
-        return true;
+        return;
     }
 
     const units = [];
@@ -3656,30 +3707,16 @@ FilterContainer.prototype.compile = function(parser, writer) {
 
     // Modifier
     //
-    // IMPORTANT: the modifier unit MUST always appear first in a sequence.
-    //
-    // Reminder: A block filter is implicit with `redirect=` modifier.
+    // IMPORTANT: the modifier unit MUST always appear first in a sequence
     if ( parsed.modifyType !== undefined ) {
-        if (
-            parsed.modifyType === parser.OPTTokenRedirect &&
-            parsed.action !== AllowAction
-        ) {
-            const fdata = units.length === 1
-                ? units[0]
-                : FilterCompositeAll.compile(units);
-            this.compileToAtomicFilter(parsed, fdata, writer);
-            parsed.modifyType = parser.OPTTokenRedirectRule;
-        }
         units.unshift(FilterModifier.compile(parsed));
-        parsed.action = ModifyAction;
+        parsed.action = (parsed.action & ~ActionBitsMask) | ModifyAction;
     }
 
     const fdata = units.length === 1
         ? units[0]
         : FilterCompositeAll.compile(units);
     this.compileToAtomicFilter(parsed, fdata, writer);
-
-    return true;
 };
 
 /******************************************************************************/
@@ -3689,10 +3726,6 @@ FilterContainer.prototype.compileToAtomicFilter = function(
     fdata,
     writer
 ) {
-    // 0 = network filters
-    // 1 = network filters: bad filters
-    writer.select(parsed.badFilter ? 1 : 0);
-
     const catBits = parsed.action | parsed.party;
     let typeBits = parsed.typeBits;
 
