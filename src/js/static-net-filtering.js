@@ -2628,7 +2628,7 @@ const FilterParser = class {
         this.noTokenHash = urlTokenizer.noTokenHash;
         this.reIsolateHostname = /^(\*?\.)?([^\x00-\x24\x26-\x2C\x2F\x3A-\x5E\x60\x7B-\x7F]+)(.*)/;
         this.reBadCSP = /(?:=|;)\s*report-(?:to|uri)\b/;
-        this.reRegexToken = /[%0-9A-Za-z]+/g;
+        this.reToken = /[%0-9A-Za-z]+/g;
         this.reRegexTokenAbort = /[\(\)\[\]]/;
         this.reRegexBadPrefix = /(^|[^\\]\.|\\[%SDWsdw]|[^\\][()*+?[\\\]{}])$/;
         this.reRegexBadSuffix = /^([^\\]\.|\\[%SDWsdw]|[()*+?[\]{}]|$)/;
@@ -3110,34 +3110,48 @@ const FilterParser = class {
     // i.e. very common with a high probability of ending up as a miss,
     // are not good. Avoid if possible. This has a significant positive
     // impact on performance.
+    //
+    // For pattern-less queryprune filters, try to derive a pattern from
+    // the queryprune value.
 
     makeToken() {
-        if ( this.pattern === '*' ) { return; }
+        if ( this.pattern === '*' ) {
+            if (
+                this.modifyType !== this.parser.OPTTokenQueryprune ||
+                this.makePatternFromQuerypruneValue() === false
+            ) {
+                return;
+            }
+        }
         if ( this.isRegex ) {
             return this.extractTokenFromRegex();
         }
-        const match = this.extractTokenFromPattern();
-        if ( match === null ) { return; }
-        this.token = match.token;
-        this.tokenHash = urlTokenizer.tokenHashFromString(this.token);
-        this.tokenBeg = match.pos;
+        this.extractTokenFromPattern();
     }
 
     // Note: a one-char token is better than a documented bad token.
     extractTokenFromPattern() {
+        this.reToken.lastIndex = 0;
+        const pattern = this.pattern;
         let bestMatch = null;
         let bestBadness = 0x7FFFFFFF;
-        for ( const match of this.parser.patternTokens() ) {
-            const badness = match.token.length > 1
-                ? this.badTokens.get(match.token) || 0
+        for (;;) {
+            const match = this.reToken.exec(pattern);
+            if ( match === null ) { break; }
+            const badness = match[0].length > 1
+                ? this.badTokens.get(match[0]) || 0
                 : 1;
-            if ( badness === 0 ) { return match; }
             if ( badness < bestBadness ) {
                 bestMatch = match;
+                if ( badness === 0 ) { break; }
                 bestBadness = badness;
             }
         }
-        return bestMatch;
+        if ( bestMatch !== null ) {
+            this.token = bestMatch[0];
+            this.tokenHash = urlTokenizer.tokenHashFromString(this.token);
+            this.tokenBeg = bestMatch.index;
+        }
     }
 
     // https://github.com/gorhill/uBlock/issues/2781
@@ -3147,15 +3161,16 @@ const FilterParser = class {
     //   Mind `\b` directives: `/\bads\b/` should result in token being `ads`,
     //   not `bads`.
     extractTokenFromRegex() {
-        this.reRegexToken.lastIndex = 0;
-        const s = this.pattern;
+        this.reToken.lastIndex = 0;
+        const pattern = this.pattern;
+        let bestToken;
         let bestBadness = 0x7FFFFFFF;
         for (;;) {
-            const matches = this.reRegexToken.exec(s);
+            const matches = this.reToken.exec(pattern);
             if ( matches === null ) { break; }
             let token = matches[0];
-            let prefix = s.slice(0, matches.index);
-            let suffix = s.slice(this.reRegexToken.lastIndex);
+            let prefix = pattern.slice(0, matches.index);
+            let suffix = pattern.slice(this.reToken.lastIndex);
             if (
                 this.reRegexTokenAbort.test(prefix) &&
                 this.reRegexTokenAbort.test(suffix)
@@ -3181,13 +3196,47 @@ const FilterParser = class {
                 ? this.badTokens.get(token) || 0
                 : 1;
             if ( badness < bestBadness ) {
-                this.token = token.toLowerCase();
-                this.tokenHash = urlTokenizer.tokenHashFromString(this.token);
-                this.tokenBeg = matches.index;
+                bestToken = token;
                 if ( badness === 0 ) { break; }
                 bestBadness = badness;
             }
         }
+        if ( bestToken !== undefined ) {
+            this.token = bestToken.toLowerCase();
+            this.tokenHash = urlTokenizer.tokenHashFromString(this.token);
+        }
+    }
+
+    makePatternFromQuerypruneValue() {
+        let pattern = this.modifyValue;
+        if ( pattern === '*' || pattern.charCodeAt(0) === 0x21 /* '!' */ ) {
+            return false;
+        }
+        if ( /^\w+$/.test(pattern) ) {
+            this.pattern = `${pattern}=`;
+            return true;
+        }
+        const reRegex = /^\/(.+)\/i?$/;
+        if ( reRegex.test(pattern) ) {
+            pattern = reRegex.exec(pattern)[1];
+        } else {
+            let prefix = '', suffix = '';
+            if ( pattern.startsWith('|') ) {
+                pattern = pattern.slice(1);
+                prefix = '\\b';
+            }
+            if ( pattern.endsWith('|') ) {
+                pattern = pattern.slice(0, -1);
+                suffix = '\\b';
+            }
+            if ( pattern.indexOf('|') !== -1 ) {
+                pattern = `(?:${pattern})`;
+            }
+            pattern = prefix + pattern + suffix;
+        }
+        this.pattern = pattern;
+        this.isRegex = true;
+        return true;
     }
 
     hasNoOptionUnits() {
@@ -4288,6 +4337,7 @@ FilterContainer.prototype.filterQuery = function(fctxt) {
 
 FilterContainer.prototype.parseFilterPruneValue = function(modifier) {
     const cache = {};
+    const reRegex = /^\/(.+)\/i?$/;
     let retext = modifier.value;
     if ( retext === '*' ) {
         cache.all = true;
@@ -4296,6 +4346,8 @@ FilterContainer.prototype.parseFilterPruneValue = function(modifier) {
         if ( cache.not ) { retext = retext.slice(1); }
         if ( /^\w+$/.test(retext) ) {
             retext = `^${retext}=`;
+        } else if ( reRegex.test(retext) ) {
+            retext = reRegex.exec(retext)[1];
         } else {
             if ( retext.startsWith('|') ) { retext = `^${retext.slice(1)}`; }
             if ( retext.endsWith('|') ) { retext = `${retext.slice(0,-1)}$`; }
