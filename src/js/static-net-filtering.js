@@ -2348,7 +2348,7 @@ const FilterStrictParty = class {
     }
 
     logData(details) {
-        details.options.push(this.not ? '3P' : '1P');
+        details.options.push(this.not ? 'strict3p' : 'strict1p');
     }
 
     toSelfie() {
