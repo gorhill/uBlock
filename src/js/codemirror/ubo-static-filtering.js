@@ -232,21 +232,12 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
             parserSlot += 3;
             return 'def';
         }
-        const to = parser.skipUntil(
+        parserSlot = parser.skipUntil(
             parserSlot,
             parser.commentSpan.i,
             parser.BITComma | parser.BITEqual
         );
-        if (
-            to > parserSlot &&
-            /^[13]P/.test(parser.strFromSlices(parserSlot, to - 3))
-        ) {
-            parserSlot = to;
-            stream.pos = parser.slices[to+1];
-            return 'def notice';
-        }
-        parserSlot = to;
-        stream.pos = parser.slices[to+1];
+        stream.pos = parser.slices[parserSlot+1];
         return 'def';
     };
 

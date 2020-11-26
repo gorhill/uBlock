@@ -2054,10 +2054,10 @@ Parser.prototype.OPTNotSupported = OPTNotSupported;
 const netOptionTokenDescriptors = new Map([
     [ '1p', OPTToken1p | OPTCanNegate ],
         [ 'first-party', OPTToken1p | OPTCanNegate ],
-    [ '1P', OPTToken1pStrict ],
+    [ 'strict1p', OPTToken1pStrict ],
     [ '3p', OPTToken3p | OPTCanNegate ],
         [ 'third-party', OPTToken3p | OPTCanNegate ],
-    [ '3P', OPTToken3pStrict ],
+    [ 'strict3p', OPTToken3pStrict ],
     [ 'all', OPTTokenAll | OPTNetworkType | OPTNonCspableType ],
     [ 'badfilter', OPTTokenBadfilter ],
     [ 'cname', OPTTokenCname | OPTAllowOnly | OPTModifierType ],
@@ -2109,10 +2109,10 @@ Parser.prototype.netOptionTokenDescriptors =
 Parser.netOptionTokenIds = new Map([
     [ '1p', OPTToken1p ],
         [ 'first-party', OPTToken1p ],
-    [ '1P', OPTToken1pStrict ],
+    [ 'strict1p', OPTToken1pStrict ],
     [ '3p', OPTToken3p ],
         [ 'third-party', OPTToken3p ],
-    [ '3P', OPTToken3pStrict ],
+    [ 'strict3p', OPTToken3pStrict ],
     [ 'all', OPTTokenAll ],
     [ 'badfilter', OPTTokenBadfilter ],
     [ 'cname', OPTTokenCname ],
@@ -2160,9 +2160,9 @@ Parser.netOptionTokenIds = new Map([
 
 Parser.netOptionTokenNames = new Map([
     [ OPTToken1p, '1p' ],
-    [ OPTToken1pStrict, '1P' ],
+    [ OPTToken1pStrict, 'strict1p' ],
     [ OPTToken3p, '3p' ],
-    [ OPTToken3pStrict, '3P' ],
+    [ OPTToken3pStrict, 'strict3p' ],
     [ OPTTokenAll, 'all' ],
     [ OPTTokenBadfilter, 'badfilter' ],
     [ OPTTokenCname, 'cname' ],
