@@ -40,8 +40,8 @@ const µb = µBlock;
 //     ||    | |+------ bit     2: modifier
 //     ||    | +------- bit  3- 4: party [0-3]
 //     ||    +--------- bit  5- 9: type [0-31]
-//     |+-------------- bit 10-15: unused
-//     +--------------- bit    16: headers-based filters
+//     |+-------------- bit    10: headers-based filters
+//     +--------------- bit 11-15: unused
 
 const CategoryCount = 1 << 0xb; // shift left to first unused bit
 
