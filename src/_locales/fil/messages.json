@@ -32,7 +32,7 @@
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
-    "message": "Ang iyong (mga) filters",
+    "message": "Mga filter ko",
     "description": "appears as tab name in dashboard"
   },
   "rulesPageName": {
@@ -508,7 +508,7 @@
     "description": "header"
   },
   "rulesTemporaryHeader": {
-    "message": "Temporary rules",
+    "message": "Pansamantalang mga batas",
     "description": "header"
   },
   "rulesRevert": {
@@ -672,7 +672,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinModified": {
-    "message": "modified",
+    "message": "binago",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
@@ -700,7 +700,7 @@
     "description": "Label to identify a rule field"
   },
   "loggerEntryDetailsContext": {
-    "message": "Context",
+    "message": "Konteksto",
     "description": "Label to identify a context field (typically a hostname)"
   },
   "loggerEntryDetailsRootContext": {
@@ -760,11 +760,11 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin": {
-    "message": "from anywhere",
+    "message": "mula kahit saan",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant": {
-    "message": "except when",
+    "message": "maliban kung",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartImportant": {
@@ -860,11 +860,11 @@
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Source code",
+    "message": "Pinagmulang kodigo",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
-    "message": "Translations",
+    "message": "Mga Pagsasalin",
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
@@ -876,7 +876,7 @@
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "Back up to file",
+    "message": "I-backup sa talaksan",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
@@ -884,7 +884,7 @@
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Restore from file...",
+    "message": "Ibalik mula sa talaksan...",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
@@ -980,11 +980,11 @@
     "description": "English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary": {
-    "message": "Temporarily",
+    "message": "Pansamantalang",
     "description": "English: Temporarily"
   },
   "docblockedDisablePermanent": {
-    "message": "Permanently",
+    "message": "Permanenteng",
     "description": "English: Permanently"
   },
   "cloudPush": {
@@ -1012,7 +1012,7 @@
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {
-    "message": "Submit",
+    "message": "Ipasa",
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
