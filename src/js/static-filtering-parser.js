@@ -1923,22 +1923,23 @@ const OPTTokenImage              = 20;
 const OPTTokenImportant          = 21;
 const OPTTokenInlineFont         = 22;
 const OPTTokenInlineScript       = 23;
-const OPTTokenMedia              = 24;
-const OPTTokenMp4                = 25;
-const OPTTokenObject             = 26;
-const OPTTokenOther              = 27;
-const OPTTokenPing               = 28;
-const OPTTokenPopunder           = 29;
-const OPTTokenPopup              = 30;
-const OPTTokenRedirect           = 31;
-const OPTTokenRedirectRule       = 32;
-const OPTTokenQueryprune         = 33;
-const OPTTokenScript             = 34;
-const OPTTokenShide              = 35;
-const OPTTokenXhr                = 36;
-const OPTTokenWebrtc             = 37;
-const OPTTokenWebsocket          = 38;
-const OPTTokenCount              = 39;
+const OPTTokenMatchCase          = 24;
+const OPTTokenMedia              = 25;
+const OPTTokenMp4                = 26;
+const OPTTokenObject             = 27;
+const OPTTokenOther              = 28;
+const OPTTokenPing               = 29;
+const OPTTokenPopunder           = 30;
+const OPTTokenPopup              = 31;
+const OPTTokenRedirect           = 32;
+const OPTTokenRedirectRule       = 33;
+const OPTTokenQueryprune         = 34;
+const OPTTokenScript             = 35;
+const OPTTokenShide              = 36;
+const OPTTokenXhr                = 37;
+const OPTTokenWebrtc             = 38;
+const OPTTokenWebsocket          = 39;
+const OPTTokenCount              = 40;
 
 //const OPTPerOptionMask           = 0x0000ff00;
 const OPTCanNegate               = 1 <<  8;
@@ -2021,6 +2022,7 @@ Parser.prototype.OPTTokenImportant = OPTTokenImportant;
 Parser.prototype.OPTTokenInlineFont = OPTTokenInlineFont;
 Parser.prototype.OPTTokenInlineScript = OPTTokenInlineScript;
 Parser.prototype.OPTTokenInvalid = OPTTokenInvalid;
+Parser.prototype.OPTTokenMatchCase = OPTTokenMatchCase;
 Parser.prototype.OPTTokenMedia = OPTTokenMedia;
 Parser.prototype.OPTTokenMp4 = OPTTokenMp4;
 Parser.prototype.OPTTokenObject = OPTTokenObject;
@@ -2082,6 +2084,7 @@ const netOptionTokenDescriptors = new Map([
     [ 'important', OPTTokenImportant | OPTBlockOnly ],
     [ 'inline-font', OPTTokenInlineFont | OPTNonNetworkType | OPTCanNegate | OPTNonCspableType | OPTNonRedirectableType ],
     [ 'inline-script', OPTTokenInlineScript | OPTNonNetworkType | OPTCanNegate | OPTNonCspableType | OPTNonRedirectableType ],
+    [ 'match-case', OPTTokenMatchCase ],
     [ 'media', OPTTokenMedia | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
     [ 'mp4', OPTTokenMp4 | OPTNetworkType | OPTBlockOnly |  OPTModifierType ],
     [ 'object', OPTTokenObject | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
@@ -2138,6 +2141,7 @@ Parser.netOptionTokenIds = new Map([
     [ 'important', OPTTokenImportant ],
     [ 'inline-font', OPTTokenInlineFont ],
     [ 'inline-script', OPTTokenInlineScript ],
+    [ 'match-case', OPTTokenMatchCase ],
     [ 'media', OPTTokenMedia ],
     [ 'mp4', OPTTokenMp4 ],
     [ 'object', OPTTokenObject ],
@@ -2184,6 +2188,7 @@ Parser.netOptionTokenNames = new Map([
     [ OPTTokenImportant, 'important' ],
     [ OPTTokenInlineFont, 'inline-font' ],
     [ OPTTokenInlineScript, 'inline-script' ],
+    [ OPTTokenMatchCase, 'match-case' ],
     [ OPTTokenMedia, 'media' ],
     [ OPTTokenMp4, 'mp4' ],
     [ OPTTokenObject, 'object' ],
@@ -2456,6 +2461,16 @@ const NetOptionsIterator = class {
         {
             const i = this.tokenPos[OPTTokenHeader];
             if ( i !== -1 && hasBits(allBits, OPTModifierType) ) {
+                optSlices[i] = OPTTokenInvalid;
+                if ( this.interactive ) {
+                    this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
+                }
+            }
+        }
+        // `match-case`: valid only for regex-based filters
+        {
+            const i = this.tokenPos[OPTTokenMatchCase];
+            if ( i !== -1 && this.parser.patternIsRegex() === false ) {
                 optSlices[i] = OPTTokenInvalid;
                 if ( this.interactive ) {
                     this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);

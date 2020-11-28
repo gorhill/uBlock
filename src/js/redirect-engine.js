@@ -304,6 +304,16 @@ RedirectEngine.prototype.tokenToURL = function(fctxt, token) {
 
 /******************************************************************************/
 
+RedirectEngine.prototype.hasToken = function(token) {
+    const asDataURI = token.charCodeAt(0) === 0x25 /* '%' */;
+    if ( asDataURI ) {
+        token = token.slice(1);
+    }
+    return this.resources.get(this.aliases.get(token) || token) !== undefined;
+};
+
+/******************************************************************************/
+
 RedirectEngine.prototype.toSelfie = async function() {
 };
 

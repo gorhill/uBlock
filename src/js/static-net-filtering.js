@@ -146,6 +146,7 @@ const typeValueToTypeName = [
 // valid until the next evaluation.
 
 let $requestURL = '';
+let $requestURLRaw = '';
 let $requestHostname = '';
 let $docHostname = '';
 let $docDomain = '';
@@ -867,9 +868,13 @@ const FilterPatternGeneric = class {
     }
 
     static compile(details) {
-        const anchor = details.anchor;
+        const out = [
+            FilterPatternGeneric.fid,
+            details.pattern,
+            details.anchor,
+        ];
         details.anchor = 0;
-        return [ FilterPatternGeneric.fid, details.pattern, anchor ];
+        return out;
     }
 
     static fromCompiled(args) {
@@ -1107,20 +1112,22 @@ registerFilterClass(FilterTrailingSeparator);
 /******************************************************************************/
 
 const FilterRegex = class {
-    constructor(s) {
+    constructor(s, matchCase = false) {
         this.s = s;
+        if ( matchCase ) {
+            this.matchCase = true;
+        }
     }
 
     match() {
         if ( this.re === null ) {
-            this.re = FilterRegex.dict.get(this.s);
-            if ( this.re === undefined ) {
-                this.re = new RegExp(this.s, 'i');
-                FilterRegex.dict.set(this.s, this.re);
-            }
+            this.re = new RegExp(
+                this.s,
+                this.matchCase ? '' : 'i'
+            );
         }
-        if ( this.re.test($requestURL) === false ) { return false; }
-        $patternMatchLeft = $requestURL.search(this.re);
+        if ( this.re.test($requestURLRaw) === false ) { return false; }
+        $patternMatchLeft = $requestURLRaw.search(this.re);
         return true;
     }
 
@@ -1128,33 +1135,36 @@ const FilterRegex = class {
         details.pattern.push('/', this.s, '/');
         details.regex.push(this.s);
         details.isRegex = true;
+        if ( this.matchCase ) {
+            details.options.push('match-case');
+        }
     }
 
     toSelfie() {
-        return [ this.fid, this.s ];
+        return [ this.fid, this.s, this.matchCase ];
     }
 
     static compile(details) {
-        return [ FilterRegex.fid, details.pattern ];
+        return [ FilterRegex.fid, details.pattern, details.patternMatchCase ];
     }
 
     static fromCompiled(args) {
-        return new FilterRegex(args[1]);
+        return new FilterRegex(args[1], args[2]);
     }
 
     static fromSelfie(args) {
-        return new FilterRegex(args[1]);
+        return new FilterRegex(args[1], args[2]);
     }
 
     static keyFromArgs(args) {
-        return args[1];
+        return `${args[1]}\t${args[2]}`;
     }
 };
 
 FilterRegex.prototype.re = null;
+FilterRegex.prototype.matchCase = false;
 
 FilterRegex.isSlow = true;
-FilterRegex.dict = new Map();
 
 registerFilterClass(FilterRegex);
 
@@ -2783,6 +2793,7 @@ const FilterParser = class {
         this.modifyValue = undefined;
         this.invalid = false;
         this.pattern = '';
+        this.patternMatchCase = false;
         this.party = AnyParty;
         this.optionUnitBits = 0;
         this.domainOpt = '';
@@ -2943,6 +2954,9 @@ const FilterParser = class {
                     return false;
                 }
                 this.optionUnitBits |= this.REDIRECT_BIT;
+                break;
+            case this.parser.OPTTokenMatchCase:
+                this.patternMatchCase = true;
                 break;
             case this.parser.OPTTokenMp4:
                 id = this.action === AllowAction
@@ -3833,6 +3847,7 @@ FilterContainer.prototype.matchAndFetchModifiers = function(
     modifierType
 ) {
     $requestURL = urlTokenizer.setURL(fctxt.url);
+    $requestURLRaw = fctxt.url;
     $docHostname = fctxt.getDocHostname();
     $docDomain = fctxt.getDocDomain();
     $docEntity.reset();
@@ -4126,6 +4141,7 @@ FilterContainer.prototype.matchStringReverse = function(type, url) {
 
     // Prime tokenizer: we get a normalized URL in return.
     $requestURL = urlTokenizer.setURL(url);
+    $requestURLRaw = url;
     this.$filterUnit = 0;
 
     // These registers will be used by various filters
@@ -4172,6 +4188,7 @@ FilterContainer.prototype.matchString = function(fctxt, modifiers = 0) {
 
     // Prime tokenizer: we get a normalized URL in return.
     $requestURL = urlTokenizer.setURL(fctxt.url);
+    $requestURLRaw = fctxt.url;
     this.$filterUnit = 0;
 
     // These registers will be used by various filters
@@ -4203,6 +4220,7 @@ FilterContainer.prototype.matchHeaders = function(fctxt, headers) {
 
     // Prime tokenizer: we get a normalized URL in return.
     $requestURL = urlTokenizer.setURL(fctxt.url);
+    $requestURLRaw = fctxt.url;
     this.$filterUnit = 0;
 
     // These registers will be used by various filters
@@ -4239,13 +4257,9 @@ FilterContainer.prototype.redirectRequest = function(fctxt) {
         const directive = directives[0];
         if ( (directive.bits & AllowAction) !== 0 ) { return directive; }
         const modifier = directive.modifier;
-        if ( modifier.cache === undefined ) {
-            modifier.cache = this.parseRedirectRequestValue(modifier.value);
-        }
-        fctxt.redirectURL = µb.redirectEngine.tokenToURL(
-            fctxt,
-            modifier.cache.token
-        );
+        const { token } = this.parseRedirectRequestValue(modifier);
+        fctxt.redirectURL = µb.redirectEngine.tokenToURL(fctxt, token);
+        if ( fctxt.redirectURL === undefined ) { return; }
         return directive;
     }
     // Multiple directives mean more work to do.
@@ -4258,15 +4272,11 @@ FilterContainer.prototype.redirectRequest = function(fctxt) {
             winningDirective = directive;
             break;
         }
-        if ( modifier.cache === undefined ) {
-            modifier.cache = this.parseRedirectRequestValue(modifier.value);
-        }
-        if (
-            winningDirective === undefined ||
-            modifier.cache.priority > winningPriority
-        ) {
+        const { token, priority } = this.parseRedirectRequestValue(modifier);
+        if ( µb.redirectEngine.hasToken(token) === false ) { continue; }
+        if ( winningDirective === undefined || priority > winningPriority ) {
             winningDirective = directive;
-            winningPriority = modifier.cache.priority;
+            winningPriority = priority;
         }
     }
     if ( winningDirective === undefined ) { return; }
@@ -4279,15 +4289,18 @@ FilterContainer.prototype.redirectRequest = function(fctxt) {
     return winningDirective;
 };
 
-FilterContainer.prototype.parseRedirectRequestValue = function(rawValue) {
-    let token = rawValue;
-    let priority = 0;
-    const match = /:(\d+)$/.exec(rawValue);
-    if ( match !== null ) {
-        token = rawValue.slice(0, match.index);
-        priority = parseInt(match[1], 10);
+FilterContainer.prototype.parseRedirectRequestValue = function(modifier) {
+    if ( modifier.cache === undefined ) {
+        let token = modifier.value;
+        let priority = 1;
+        const match = /:(\d+)$/.exec(token);
+        if ( match !== null ) {
+            token = token.slice(0, match.index);
+            priority = parseInt(match[1], 10);
+        }
+        modifier.cache = { token, priority };
     }
-    return { token, priority };
+    return modifier.cache;
 };
 
 /******************************************************************************/
