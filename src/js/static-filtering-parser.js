@@ -2383,18 +2383,13 @@ const NetOptionsIterator = class {
                 }
             }
         }
-        // `redirect=`: requires at least one single redirectable type
+        // `redirect=`: can't redirect non-redirectable types
         {
             let i = this.tokenPos[OPTTokenRedirect];
             if ( i === -1 ) {
                 i = this.tokenPos[OPTTokenRedirectRule];
             }
-            if (
-                i !== -1 && (
-                    hasNoBits(allBits, OPTRedirectableType) ||
-                    hasBits(allBits, OPTNonRedirectableType)
-                )
-            ) {
+            if ( i !== -1 && hasBits(allBits, OPTNonRedirectableType) ) {
                 optSlices[i] = OPTTokenInvalid;
                 if ( this.interactive ) {
                     this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);

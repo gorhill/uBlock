@@ -42,6 +42,7 @@ a*
 
 ! valid options
 $script,redirect=noop.js
+*$redirect=noop.js
 *$empty
 *$xhr,empty
 *$xhr,redirect=empty
@@ -90,9 +91,6 @@ $
 
 ! bad regex
 /(abc|def/$xhr
-
-! can't redirect without type (except to `empty`)
-*$redirect=noop.js
 
 ! non-redirectable types
 *$beacon,redirect-rule=empty
