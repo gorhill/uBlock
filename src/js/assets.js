@@ -477,7 +477,21 @@ const getAssetCacheRegistry = function() {
                 bin instanceof Object &&
                 bin.assetCacheRegistry instanceof Object
             ) {
-                assetCacheRegistry = bin.assetCacheRegistry;
+                if ( Object.keys(assetCacheRegistry).length === 0 ) {
+                    assetCacheRegistry = bin.assetCacheRegistry;
+                } else {
+                    console.error(
+                        'getAssetCacheRegistry(): assetCacheRegistry reassigned!'
+                    );
+                    if (
+                        Object.keys(bin.assetCacheRegistry).sort().join() !==
+                        Object.keys(assetCacheRegistry).sort().join()
+                    ) {
+                        console.error(
+                            'getAssetCacheRegistry(): assetCacheRegistry changes overwritten!'
+                        );
+                    }
+                }
             }
             return assetCacheRegistry;
         });
