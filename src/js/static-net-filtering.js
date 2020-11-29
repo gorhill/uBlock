@@ -2967,6 +2967,8 @@ const FilterParser = class {
                 }
                 this.optionUnitBits |= this.REDIRECT_BIT;
                 break;
+            case this.parser.OPTTokenNoop:
+                break;
             case this.parser.OPTTokenQueryprune:
                 if ( this.parseModifierOption(id, val) === false ) {
                     return false;
@@ -3232,33 +3234,20 @@ const FilterParser = class {
 
     makePatternFromQuerypruneValue() {
         let pattern = this.modifyValue;
-        if ( pattern === '*' || pattern.charCodeAt(0) === 0x21 /* '!' */ ) {
+        if ( pattern === '*' || pattern.charCodeAt(0) === 0x7E /* '~' */ ) {
             return false;
         }
-        if ( /^\w+$/.test(pattern) ) {
-            this.pattern = `${pattern}=`;
-            return true;
-        }
-        const reRegex = /^\/(.+)\/i?$/;
-        if ( reRegex.test(pattern) ) {
-            pattern = reRegex.exec(pattern)[1];
+        const match = /^\/(.+)\/i?$/.exec(pattern);
+        if ( match !== null ) {
+            pattern = match[1];
+            this.isRegex = true;
+        } else if ( pattern.startsWith('|') ) {
+            pattern = '\\b' + pattern.slice(1);
+            this.isRegex = true;
         } else {
-            let prefix = '', suffix = '';
-            if ( pattern.startsWith('|') ) {
-                pattern = pattern.slice(1);
-                prefix = '\\b';
-            }
-            if ( pattern.endsWith('|') ) {
-                pattern = pattern.slice(0, -1);
-                suffix = '\\b';
-            }
-            if ( pattern.indexOf('|') !== -1 ) {
-                pattern = `(?:${pattern})`;
-            }
-            pattern = prefix + pattern + suffix;
+            pattern = encodeURIComponent(pattern).toLowerCase() + '=';
         }
         this.pattern = pattern;
-        this.isRegex = true;
         return true;
     }
 
@@ -4323,24 +4312,42 @@ FilterContainer.prototype.filterQuery = function(fctxt) {
     const params = new Map(new self.URLSearchParams(url.slice(qpos + 1)));
     const out = [];
     for ( const directive of directives ) {
+        if ( params.size === 0 ) { break; }
         const modifier = directive.modifier;
         const isException = (directive.bits & AllowAction) !== 0;
         if ( isException && modifier.value === '' ) {
             out.push(directive);
             break;
         }
-        if ( modifier.cache === undefined ) {
-            this.parseFilterPruneValue(modifier);
+        const { all, bad, name, not, re } = this.parseFilterPruneValue(modifier);
+        if ( bad ) { continue; }
+        if ( all ) {
+            if ( isException === false ) { params.clear(); }
+            out.push(directive);
+            break;
         }
-        const { all, not, re } = modifier.cache;
-        let filtered = false;
-        for ( const [ key, value ] of params ) {
-            if ( all !== true && re.test(`${key}=${value}`) === not ) {
+        if ( name !== undefined ) {
+            const value = params.get(name);
+            if ( not === false ) {
+                if ( value !== undefined ) {
+                    if ( isException === false ) { params.delete(name); }
+                    out.push(directive);
+                }
                 continue;
             }
-            if ( isException === false ) {
-                params.delete(key);
+            if ( value !== undefined ) { params.delete(name); }
+            if ( params.size !== 0 ) {
+                if ( isException === false ) { params.clear(); }
+                out.push(directive);
             }
+            if ( value !== undefined ) { params.set(name, value); }
+            continue;
+        }
+        if ( re === undefined ) { continue; }
+        let filtered = false;
+        for ( const [ key, value ] of params ) {
+            if ( re.test(`${key}=${value}`) === not ) { continue; }
+            if ( isException === false ) { params.delete(key); }
             filtered = true;
         }
         if ( filtered ) {
@@ -4358,29 +4365,11 @@ FilterContainer.prototype.filterQuery = function(fctxt) {
 };
 
 FilterContainer.prototype.parseFilterPruneValue = function(modifier) {
-    const cache = {};
-    const reRegex = /^\/(.+)\/i?$/;
-    let retext = modifier.value;
-    if ( retext === '*' ) {
-        cache.all = true;
-    } else {
-        cache.not = retext.charCodeAt(0) === 0x21 /* '!' */;
-        if ( cache.not ) { retext = retext.slice(1); }
-        if ( /^\w+$/.test(retext) ) {
-            retext = `^${retext}=`;
-        } else if ( reRegex.test(retext) ) {
-            retext = reRegex.exec(retext)[1];
-        } else {
-            if ( retext.startsWith('|') ) { retext = `^${retext.slice(1)}`; }
-            if ( retext.endsWith('|') ) { retext = `${retext.slice(0,-1)}$`; }
-        }
-        try {
-            cache.re = new RegExp(retext, 'i');
-        } catch(ex) {
-            cache.re = /.^/;
-        }
+    if ( modifier.cache === undefined ) {
+        modifier.cache =
+            vAPI.StaticFilteringParser.parseQueryPruneValue(modifier.value);
     }
-    modifier.cache = cache;
+    return modifier.cache;
 };
 
 /******************************************************************************/

@@ -389,14 +389,24 @@ const Parser = class {
         }
 
         // If the pattern is not a regex, there might be options.
+        //
+        // The character `$` is deemed to be an option anchor if and only if
+        // all the following conditions are fulfilled:
+        // - `$` is not the last character in the filter
+        // - The character following `$` is either comma, alphanumeric, or `~`.
         if ( patternIsRegex === false ) {
             let optionsBits = 0;
-            let i = this.optionsAnchorSpan.i;
+            let i = this.optionsAnchorSpan.i - 3;
             for (;;) {
                 i -= 3;
                 if ( i < islice ) { break; }
                 const bits = this.slices[i];
-                if ( hasBits(bits, BITDollar) ) { break; }
+                if (
+                    hasBits(bits, BITDollar) &&
+                    hasBits(this.slices[i+3], BITAlphaNum | BITComma | BITTilde)
+                ) {
+                    break;
+                }
                 optionsBits |= bits;
             }
             if ( i >= islice ) {
@@ -1150,6 +1160,41 @@ const Parser = class {
             this.flavorBits,
             BITFlavorError | BITFlavorUnsupported | BITFlavorIgnore
         );
+    }
+    static parseQueryPruneValue(arg) {
+        let s = arg;
+        if ( s === '*' ) { return { all: true }; }
+        const out = { };
+        out.not = s.charCodeAt(0) === 0x7E /* '~' */;
+        if ( out.not ) {
+            s = s.slice(1);
+        }
+        const match = /^\/(.+)\/(i)?$/.exec(s);
+        if ( match !== null ) {
+            try {
+                out.re = new RegExp(match[1], match[2] || '');
+            }
+            catch(ex) {
+                out.bad = true;
+            }
+            return out;
+        }
+        // TODO: remove once no longer used in filter lists
+        if ( s.startsWith('|') ) {
+            try {
+                out.re = new RegExp('^' + s.slice(1), 'i');
+            } catch(ex) {
+                out.bad = true;
+            }
+            return out;
+        }
+        // Multiple values not supported (because very inefficient)
+        if ( s.includes('|') ) {
+            out.bad = true;
+            return out;
+        }
+        out.name = s;
+        return out;
     }
 };
 
@@ -1926,20 +1971,21 @@ const OPTTokenInlineScript       = 23;
 const OPTTokenMatchCase          = 24;
 const OPTTokenMedia              = 25;
 const OPTTokenMp4                = 26;
-const OPTTokenObject             = 27;
-const OPTTokenOther              = 28;
-const OPTTokenPing               = 29;
-const OPTTokenPopunder           = 30;
-const OPTTokenPopup              = 31;
-const OPTTokenRedirect           = 32;
-const OPTTokenRedirectRule       = 33;
-const OPTTokenQueryprune         = 34;
-const OPTTokenScript             = 35;
-const OPTTokenShide              = 36;
-const OPTTokenXhr                = 37;
-const OPTTokenWebrtc             = 38;
-const OPTTokenWebsocket          = 39;
-const OPTTokenCount              = 40;
+const OPTTokenNoop               = 27;
+const OPTTokenObject             = 28;
+const OPTTokenOther              = 29;
+const OPTTokenPing               = 30;
+const OPTTokenPopunder           = 31;
+const OPTTokenPopup              = 32;
+const OPTTokenRedirect           = 33;
+const OPTTokenRedirectRule       = 34;
+const OPTTokenQueryprune         = 35;
+const OPTTokenScript             = 36;
+const OPTTokenShide              = 37;
+const OPTTokenXhr                = 38;
+const OPTTokenWebrtc             = 39;
+const OPTTokenWebsocket          = 40;
+const OPTTokenCount              = 41;
 
 //const OPTPerOptionMask           = 0x0000ff00;
 const OPTCanNegate               = 1 <<  8;
@@ -2025,6 +2071,7 @@ Parser.prototype.OPTTokenInvalid = OPTTokenInvalid;
 Parser.prototype.OPTTokenMatchCase = OPTTokenMatchCase;
 Parser.prototype.OPTTokenMedia = OPTTokenMedia;
 Parser.prototype.OPTTokenMp4 = OPTTokenMp4;
+Parser.prototype.OPTTokenNoop = OPTTokenNoop;
 Parser.prototype.OPTTokenObject = OPTTokenObject;
 Parser.prototype.OPTTokenOther = OPTTokenOther;
 Parser.prototype.OPTTokenPing = OPTTokenPing;
@@ -2087,6 +2134,7 @@ const netOptionTokenDescriptors = new Map([
     [ 'match-case', OPTTokenMatchCase ],
     [ 'media', OPTTokenMedia | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
     [ 'mp4', OPTTokenMp4 | OPTNetworkType | OPTBlockOnly |  OPTModifierType ],
+    [ '_', OPTTokenNoop ],
     [ 'object', OPTTokenObject | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
         [ 'object-subrequest', OPTTokenObject | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
     [ 'other', OPTTokenOther | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
@@ -2144,6 +2192,7 @@ Parser.netOptionTokenIds = new Map([
     [ 'match-case', OPTTokenMatchCase ],
     [ 'media', OPTTokenMedia ],
     [ 'mp4', OPTTokenMp4 ],
+    [ '_', OPTTokenNoop ],
     [ 'object', OPTTokenObject ],
         [ 'object-subrequest', OPTTokenObject ],
     [ 'other', OPTTokenOther ],
@@ -2191,6 +2240,7 @@ Parser.netOptionTokenNames = new Map([
     [ OPTTokenMatchCase, 'match-case' ],
     [ OPTTokenMedia, 'media' ],
     [ OPTTokenMp4, 'mp4' ],
+    [ OPTTokenNoop, '_' ],
     [ OPTTokenObject, 'object' ],
     [ OPTTokenOther, 'other' ],
     [ OPTTokenPing, 'ping' ],
@@ -2434,10 +2484,20 @@ const NetOptionsIterator = class {
                     if ( this.interactive ) {
                         this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
                     }
-                } else if ( this.validateQueryPruneArg(i) === false ) {
-                    optSlices[i] = OPTTokenInvalid;
-                    if ( this.interactive ) {
-                        this.parser.errorSlices(optSlices[i+4], optSlices[i+5]);
+                } else {
+                    const val = this.parser.strFromSlices(
+                        optSlices[i+4],
+                        optSlices[i+5] - 3
+                    );
+                    const r = Parser.parseQueryPruneValue(val);
+                    if ( r.bad ) {
+                        optSlices[i] = OPTTokenInvalid;
+                        if ( this.interactive ) {
+                            this.parser.errorSlices(
+                                optSlices[i+4],
+                                optSlices[i+5]
+                            );
+                        }
                     }
                 }
             }
@@ -2500,24 +2560,6 @@ const NetOptionsIterator = class {
         }
         this.readPtr = i + 6;
         return this;
-    }
-    validateQueryPruneArg(i) {
-        let val = this.parser.strFromSlices(
-            this.optSlices[i+4],
-            this.optSlices[i+5] - 3
-        );
-        if ( val === '*' ) { return true; }
-        if ( val.charCodeAt(0) === 0x21 /* '!' */ ) {
-            val = val.slice(1);
-        }
-        if ( val.startsWith('|') ) { val = `^${val.slice(1)}`; }
-        if ( val.endsWith('|') ) { val = `${val.slice(0,-1)}$`; }
-        try {
-            void new RegExp(val);
-        } catch(ex) {
-            return false;
-        }
-        return true;
     }
 };
 
