@@ -3152,14 +3152,23 @@ const FilterParser = class {
         for (;;) {
             const match = this.reToken.exec(pattern);
             if ( match === null ) { break; }
-            const badness = match[0].length > 1
-                ? this.badTokens.get(match[0]) || 0
-                : 1;
-            if ( badness < bestBadness ) {
-                bestMatch = match;
-                if ( badness === 0 ) { break; }
-                bestBadness = badness;
+            const token = match[0];
+            const badness = token.length > 1 ? this.badTokens.get(token) || 0 : 1;
+            if ( badness >= bestBadness ) { continue; }
+            if ( match.index > 0 ) {
+                const c = pattern.charCodeAt(match.index - 1);
+                if ( c === 0x2A /* '*' */ ) { continue; }
             }
+            if ( token.length < this.maxTokenLen ) {
+                const lastIndex = this.reToken.lastIndex;
+                if ( lastIndex < pattern.length ) {
+                    const c = pattern.charCodeAt(lastIndex);
+                    if ( c === 0x2A /* '*' */ ) { continue; }
+                }
+            }
+            bestMatch = match;
+            if ( badness === 0 ) { break; }
+            bestBadness = badness;
         }
         if ( bestMatch !== null ) {
             this.token = bestMatch[0];
