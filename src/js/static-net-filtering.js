@@ -4319,7 +4319,7 @@ FilterContainer.prototype.filterQuery = function(fctxt) {
             out.push(directive);
             break;
         }
-        const { all, bad, name, not, re } = this.parseFilterPruneValue(modifier);
+        const { all, bad, name, not, re } = this.parseQueryPruneValue(modifier);
         if ( bad ) { continue; }
         if ( all ) {
             if ( isException === false ) { params.clear(); }
@@ -4364,7 +4364,7 @@ FilterContainer.prototype.filterQuery = function(fctxt) {
     return out;
 };
 
-FilterContainer.prototype.parseFilterPruneValue = function(modifier) {
+FilterContainer.prototype.parseQueryPruneValue = function(modifier) {
     if ( modifier.cache === undefined ) {
         modifier.cache =
             vAPI.StaticFilteringParser.parseQueryPruneValue(modifier.value);
