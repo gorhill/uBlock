@@ -38,6 +38,8 @@ if ( pickerRoot !== null ) { return; }
 
 let pickerBootArgs;
 
+const reCosmeticAnchor = /^#[$?]?#/;
+
 const netFilterCandidates = [];
 const cosmeticFilterCandidates = [];
 
@@ -739,7 +741,7 @@ const filterToDOMInterface = (( ) => {
             return;
         }
         lastFilter = filter;
-        if ( filter.startsWith('##') === false ) {
+        if ( reCosmeticAnchor.test(filter) === false ) {
             lastResultset = fromNetworkFilter(filter);
             if ( previewing ) { apply(); }
             return lastResultset;
@@ -789,7 +791,7 @@ const filterToDOMInterface = (( ) => {
             return unapply();
         }
         if ( Array.isArray(lastResultset) === false ) { return; }
-        if ( permanent === false || lastFilter.startsWith('##') === false ) {
+        if ( permanent === false || reCosmeticAnchor.test(lastFilter) === false ) {
             return apply();
         }
         if ( vAPI.domFilterer instanceof Object === false ) { return; }

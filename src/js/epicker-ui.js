@@ -45,6 +45,8 @@ const svgOcean = svgRoot.children[0];
 const svgIslands = svgRoot.children[1];
 const NoPaths = 'M0 0';
 
+const reCosmeticAnchor = /^#[$?]?#/;
+
 const epickerId = (( ) => {
     const url = new URL(self.location.href);
     if ( url.searchParams.has('zap') ) {
@@ -144,7 +146,7 @@ const userFilterFromCandidate = function(filter) {
     const hn = vAPI.hostnameFromURI(docURL.href);
 
     // Cosmetic filter?
-    if ( filter.startsWith('##') ) {
+    if ( reCosmeticAnchor.test(filter) ) {
         return hn + filter;
     }
 
@@ -460,7 +462,7 @@ const onCandidateChanged = function() {
     vAPI.MessagingConnection.sendTo(epickerConnectionId, {
         what: 'dialogSetFilter',
         filter,
-        compiled: filter.startsWith('##')
+        compiled: reCosmeticAnchor.test(filter)
             ? staticFilteringParser.result.compiled
             : undefined,
     });
@@ -487,13 +489,13 @@ const onCreateClicked = function() {
             autoComment: true,
             filters: filter,
             docURL: docURL.href,
-            killCache: /^#[$?]?#/.test(candidate) === false,
+            killCache: reCosmeticAnchor.test(candidate) === false,
         });
     }
     vAPI.MessagingConnection.sendTo(epickerConnectionId, {
         what: 'dialogCreate',
         filter: candidate,
-        compiled: candidate.startsWith('##')
+        compiled: reCosmeticAnchor.test(candidate)
             ? staticFilteringParser.result.compiled
             : undefined,
     });
