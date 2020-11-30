@@ -1161,8 +1161,9 @@ const Parser = class {
             BITFlavorError | BITFlavorUnsupported | BITFlavorIgnore
         );
     }
+
     static parseQueryPruneValue(arg) {
-        let s = arg;
+        let s = arg.trim();
         if ( s === '*' ) { return { all: true }; }
         const out = { };
         out.not = s.charCodeAt(0) === 0x7E /* '~' */;
@@ -1194,6 +1195,29 @@ const Parser = class {
             return out;
         }
         out.name = s;
+        return out;
+    }
+
+    static parseHeaderValue(arg) {
+        let s = arg.trim();
+        const out = { };
+        let pos = s.indexOf(':');
+        if ( pos === -1 ) { pos = s.length; }
+        out.name = s.slice(0, pos);
+        out.bad = out.name === '';
+        s = s.slice(pos + 1);
+        out.not = s.charCodeAt(0) === 0x7E /* '~' */;
+        if ( out.not ) { s = s.slice(1); }
+        out.value = s;
+        const match = /^\/(.+)\/(i)?$/.exec(s);
+        if ( match !== null ) {
+            try {
+                out.re = new RegExp(match[1], match[2] || '');
+            }
+            catch(ex) {
+                out.bad = true;
+            }
+        }
         return out;
     }
 };
@@ -2520,10 +2544,27 @@ const NetOptionsIterator = class {
         // `header`: can't be used with any modifier type
         {
             const i = this.tokenPos[OPTTokenHeader];
-            if ( i !== -1 && hasBits(allBits, OPTModifierType) ) {
-                optSlices[i] = OPTTokenInvalid;
-                if ( this.interactive ) {
-                    this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
+            if ( i !== -1 ) {
+                if ( hasBits(allBits, OPTModifierType) ) {
+                    optSlices[i] = OPTTokenInvalid;
+                    if ( this.interactive ) {
+                        this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
+                    }
+                } else {
+                    const val = this.parser.strFromSlices(
+                        optSlices[i+4],
+                        optSlices[i+5] - 3
+                    );
+                    const r = Parser.parseHeaderValue(val);
+                    if ( r.bad ) {
+                        optSlices[i] = OPTTokenInvalid;
+                        if ( this.interactive ) {
+                            this.parser.errorSlices(
+                                optSlices[i+4],
+                                optSlices[i+5]
+                            );
+                        }
+                    }
                 }
             }
         }

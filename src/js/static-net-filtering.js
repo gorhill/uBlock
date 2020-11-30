@@ -19,8 +19,6 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/* jshint bitwise: false */
-
 'use strict';
 
 /******************************************************************************/
@@ -2389,32 +2387,22 @@ registerFilterClass(FilterStrictParty);
 const FilterOnHeaders = class {
     constructor(headerOpt) {
         this.headerOpt = headerOpt;
-        if ( headerOpt !== '' ) {
-            let pos = headerOpt.indexOf(':');
-            if ( pos === -1 ) { pos = headerOpt.length; }
-            this.name = headerOpt.slice(0, pos);
-            this.value = headerOpt.slice(pos + 1);
-            this.not = this.value.charCodeAt(0) === 0x21 /* '!' */;
-            if ( this.not ) { this.value.slice(1); }
-        } else {
-            this.name = this.value = '';
-            this.not = false;
-        }
-        this.reValue = null;
+        this.parsed = undefined;
     }
 
     match() {
-        if ( this.name === '' ) { return true; }
-        const value = $httpHeaders.lookup(this.name);
-        if ( value === undefined ) { return false; }
-        if ( this.value === '' ) { return true; }
-        if ( this.reValue === null ) {
-            let reText = this.value;
-            if ( reText.startsWith('|') ) { reText = '^' + reText.slice(1); }
-            if ( reText.endsWith('|') ) { reText = reText.slice(0, -1) + '$'; }
-            this.reValue = new RegExp(reText, 'i');
+        if ( this.parsed === undefined ) {
+            this.parsed =
+                vAPI.StaticFilteringParser.parseHeaderValue(this.headerOpt);
         }
-        return this.reValue.test(value) !== this.not;
+        const { bad, name, not, re, value } = this.parsed;
+        if ( bad ) { return false; }
+        const headerValue = $httpHeaders.lookup(name);
+        if ( headerValue === undefined ) { return false; }
+        if ( value === '' ) { return true; }
+        return re === undefined
+            ? (headerValue === value) !== not
+            : re.test(headerValue) !== not;
     }
 
     logData(details) {
@@ -4231,12 +4219,10 @@ FilterContainer.prototype.matchHeaders = function(fctxt, headers) {
     let r = 0;
     if ( this.realmMatchString(Headers | BlockImportant, typeValue, partyBits) ) {
         r = 1;
-    }
-    if ( r !== 1 && this.realmMatchString(Headers | BlockAction, typeValue, partyBits) ) {
-        r = 1;
-        if ( r === 1 && this.realmMatchString(Headers | AllowAction, typeValue, partyBits) ) {
-            r = 2;
-        }
+    } else if ( this.realmMatchString(Headers | BlockAction, typeValue, partyBits) ) {
+        r = this.realmMatchString(Headers | AllowAction, typeValue, partyBits)
+            ? 2
+            : 1;
     }
 
     $httpHeaders.reset();
