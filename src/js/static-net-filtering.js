@@ -1638,7 +1638,7 @@ const FilterModifier = class {
             FilterModifier.fid,
             details.action,
             details.modifyType,
-            details.modifyValue
+            details.modifyValue || '',
         ];
     }
 

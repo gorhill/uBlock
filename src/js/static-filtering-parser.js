@@ -1164,7 +1164,7 @@ const Parser = class {
 
     static parseQueryPruneValue(arg) {
         let s = arg.trim();
-        if ( s === '*' ) { return { all: true }; }
+        if ( s === '' ) { return { all: true }; }
         const out = { };
         out.not = s.charCodeAt(0) === 0x7E /* '~' */;
         if ( out.not ) {
@@ -2017,7 +2017,8 @@ const OPTBlockOnly               = 1 <<  9;
 const OPTAllowOnly               = 1 << 10;
 const OPTMustAssign              = 1 << 11;
 const OPTAllowMayAssign          = 1 << 12;
-const OPTDomainList              = 1 << 13;
+const OPTMayAssign               = 1 << 13;
+const OPTDomainList              = 1 << 14;
 
 //const OPTGlobalMask              = 0x0fff0000;
 const OPTNetworkType             = 1 << 16;
@@ -2166,8 +2167,8 @@ const netOptionTokenDescriptors = new Map([
         [ 'beacon', OPTTokenPing | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTNonCspableType | OPTNonRedirectableType ],
     [ 'popunder', OPTTokenPopunder | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
     [ 'popup', OPTTokenPopup | OPTNonNetworkType | OPTCanNegate | OPTNonCspableType | OPTNonRedirectableType ],
-    [ 'queryprune', OPTTokenQueryprune | OPTMustAssign | OPTAllowMayAssign | OPTModifierType | OPTNonCspableType | OPTNonRedirectableType ],
-        [ 'removeparam', OPTTokenQueryprune | OPTMustAssign | OPTAllowMayAssign | OPTModifierType | OPTNonCspableType | OPTNonRedirectableType ],
+    [ 'queryprune', OPTTokenQueryprune | OPTMayAssign | OPTModifierType | OPTNonCspableType | OPTNonRedirectableType ],
+        [ 'removeparam', OPTTokenQueryprune | OPTMayAssign | OPTModifierType | OPTNonCspableType | OPTNonRedirectableType ],
     [ 'redirect', OPTTokenRedirect | OPTMustAssign | OPTAllowMayAssign | OPTModifierType ],
     [ 'redirect-rule', OPTTokenRedirectRule | OPTMustAssign | OPTAllowMayAssign | OPTModifierType | OPTNonCspableType ],
     [ 'script', OPTTokenScript | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
@@ -2387,7 +2388,7 @@ const NetOptionsIterator = class {
                 this.exception === false &&
                     hasBits(descriptor, OPTAllowOnly) ||
                 assigned &&
-                    hasNoBits(descriptor, OPTMustAssign) ||
+                    hasNoBits(descriptor, OPTMayAssign | OPTMustAssign) ||
                 assigned === false &&
                     hasBits(descriptor, OPTMustAssign) && (
                         this.exception === false ||
