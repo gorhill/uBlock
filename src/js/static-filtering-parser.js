@@ -2380,7 +2380,6 @@ const NetOptionsIterator = class {
             // Validate option according to context
             if (
                 descriptor === undefined ||
-                hasBits(descriptor, OPTNotSupported) ||
                 ltok !== lopt &&
                     hasNoBits(descriptor, OPTCanNegate) ||
                 this.exception &&
@@ -2419,7 +2418,12 @@ const NetOptionsIterator = class {
             // Accumulate description bits
             allBits |= descriptor;
             // Mark slices in case of invalid filter option
-            if ( this.interactive && descriptor === OPTTokenInvalid ) {
+            if (
+                this.interactive && (
+                    descriptor === OPTTokenInvalid ||
+                    hasBits(descriptor, OPTNotSupported)
+                )
+            ) {
                 this.parser.errorSlices(lopt, i);
             }
             // Store indices to raw slices, this will be used during iteration
