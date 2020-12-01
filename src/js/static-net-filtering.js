@@ -4236,55 +4236,39 @@ FilterContainer.prototype.redirectRequest = function(fctxt) {
     const directives = this.matchAndFetchModifiers(fctxt, 'redirect-rule');
     // No directive is the most common occurrence.
     if ( directives === undefined ) { return; }
-    // A single directive should be the next most common occurrence.
-    if ( directives.length === 1 ) {
-        const directive = directives[0];
-        if ( (directive.bits & AllowAction) !== 0 ) { return directive; }
-        const modifier = directive.modifier;
-        const { token } = this.parseRedirectRequestValue(modifier);
+    // More than a single directive means more work.
+    if ( directives.length !== 1 ) {
+        directives.sort(FilterContainer.compareRedirectRequests);
+    }
+    // Redirect to highest-ranked directive
+    const directive = directives[directives.length - 1];
+    if ( (directive.bits & AllowAction) === 0 ) {
+        const { token } =
+            FilterContainer.parseRedirectRequestValue(directive.modifier);
         fctxt.redirectURL = µb.redirectEngine.tokenToURL(fctxt, token);
         if ( fctxt.redirectURL === undefined ) { return; }
-        return directive;
     }
-    // Multiple directives mean more work to do.
-    let winningDirective;
-    let winningPriority = 0;
-    for ( const directive of directives ) {
-        const modifier = directive.modifier;
-        const isException = (directive.bits & AllowAction) !== 0;
-        if ( isException && modifier.value === '' ) {
-            winningDirective = directive;
-            break;
-        }
-        const { token, priority } = this.parseRedirectRequestValue(modifier);
-        if ( µb.redirectEngine.hasToken(token) === false ) { continue; }
-        if ( winningDirective === undefined || priority > winningPriority ) {
-            winningDirective = directive;
-            winningPriority = priority;
-        }
-    }
-    if ( winningDirective === undefined ) { return; }
-    if ( (winningDirective.bits & AllowAction) === 0 ) {
-        fctxt.redirectURL = µb.redirectEngine.tokenToURL(
-            fctxt,
-            winningDirective.modifier.cache.token
-        );
-    }
-    return winningDirective;
+    return directives;
 };
 
-FilterContainer.prototype.parseRedirectRequestValue = function(modifier) {
+FilterContainer.parseRedirectRequestValue = function(modifier) {
     if ( modifier.cache === undefined ) {
-        let token = modifier.value;
-        let priority = 1;
-        const match = /:(\d+)$/.exec(token);
-        if ( match !== null ) {
-            token = token.slice(0, match.index);
-            priority = parseInt(match[1], 10);
-        }
-        modifier.cache = { token, priority };
+        modifier.cache =
+            vAPI.StaticFilteringParser.parseRedirectValue(modifier.value);
     }
     return modifier.cache;
+};
+
+FilterContainer.compareRedirectRequests = function(a, b) {
+    if ( (a.bits & AllowAction) !== 0 ) { return -1; }
+    if ( (b.bits & AllowAction) !== 0 ) { return 1; }
+    const { token: atok, priority: aint } =
+        FilterContainer.parseRedirectRequestValue(a.modifier);
+    if ( µb.redirectEngine.hasToken(atok) === false ) { return -1; }
+    const { token: btok, priority: bint } =
+        FilterContainer.parseRedirectRequestValue(b.modifier);
+    if ( µb.redirectEngine.hasToken(btok) === false ) { return 1; }
+    return aint - bint;
 };
 
 /******************************************************************************/

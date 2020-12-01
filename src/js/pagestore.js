@@ -716,10 +716,10 @@ const PageStore = class {
 
     redirectBlockedRequest(fctxt) {
         if ( µb.hiddenSettings.ignoreRedirectFilters === true ) { return; }
-        const directive = µb.staticNetFilteringEngine.redirectRequest(fctxt);
-        if ( directive === undefined ) { return; }
+        const directives = µb.staticNetFilteringEngine.redirectRequest(fctxt);
+        if ( directives === undefined ) { return; }
         if ( µb.logger.enabled !== true ) { return; }
-        fctxt.pushFilter(directive.logData());
+        fctxt.pushFilters(directives.map(a => a.logData()));
         if ( fctxt.redirectURL === undefined ) { return; }
         fctxt.pushFilter({
             source: 'redirect',

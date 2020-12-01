@@ -1162,6 +1162,17 @@ const Parser = class {
         );
     }
 
+    static parseRedirectValue(arg) {
+        let token = arg.trim();
+        let priority = 10;
+        const match = /:\d+$/.exec(token);
+        if ( match !== null ) {
+            token = token.slice(0, match.index);
+            priority = parseInt(token.slice(match.index + 1), 10);
+        }
+        return { token, priority };
+    }
+
     static parseQueryPruneValue(arg) {
         let s = arg.trim();
         if ( s === '' ) { return { all: true }; }

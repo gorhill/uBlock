@@ -192,11 +192,12 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
                 parser.commentSpan.i,
                 parser.BITComma
             );
-            const token = parser.strFromSlices(parserSlot, end - 3);
+            const raw = parser.strFromSlices(parserSlot, end - 3);
+            const { token } = StaticFilteringParser.parseRedirectValue(raw);
             if ( redirectNames.has(token) === false ) {
                 style += ' warning';
             }
-            stream.pos += token.length;
+            stream.pos += raw.length;
             parserSlot = end;
             return style;
         }
