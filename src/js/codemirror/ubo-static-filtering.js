@@ -361,26 +361,37 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
             style = style.trim();
             return style !== '' ? style : null;
         },
-        setHints: function(details) {
-            for ( const [ name, desc ] of details.redirectResources ) {
-                const displayText = desc.aliasOf !== ''
-                    ? `${name} (${desc.aliasOf})`
-                    : '';
-                if ( desc.canRedirect ) {
-                    redirectNames.set(name, displayText);
-                }
-                if ( desc.canInject && name.endsWith('.js') ) {
-                    scriptletNames.set(name.slice(0, -3), displayText);
+        setHints: function(details, firstVisit = false) {
+            if ( Array.isArray(details.redirectResources) ) {
+                for ( const [ name, desc ] of details.redirectResources ) {
+                    const displayText = desc.aliasOf !== ''
+                        ? `${name} (${desc.aliasOf})`
+                        : '';
+                    if ( desc.canRedirect ) {
+                        redirectNames.set(name, displayText);
+                    }
+                    if ( desc.canInject && name.endsWith('.js') ) {
+                        scriptletNames.set(name.slice(0, -3), displayText);
+                    }
                 }
             }
-            details.preparseDirectiveTokens.forEach(([ a, b ]) => {
-                preparseDirectiveTokens.set(a, b);
-            });
-            preparseDirectiveHints.push(...details.preparseDirectiveHints);
-            for ( const hint of details.originHints ) {
-                originHints.push(hint);
+            if ( Array.isArray(details.preparseDirectiveTokens)) {
+                details.preparseDirectiveTokens.forEach(([ a, b ]) => {
+                    preparseDirectiveTokens.set(a, b);
+                });
             }
-            initHints();
+            if ( Array.isArray(details.preparseDirectiveHints)) {
+                preparseDirectiveHints.push(...details.preparseDirectiveHints);
+            }
+            if ( Array.isArray(details.originHints) ) {
+                originHints.length = 0;
+                for ( const hint of details.originHints ) {
+                    originHints.push(hint);
+                }
+            }
+            if ( firstVisit ) {
+                initHints();
+            }
         },
         get parser() {
             return parser;

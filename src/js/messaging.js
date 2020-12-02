@@ -1201,13 +1201,17 @@ const onMessage = function(request, sender, callback) {
         break;
 
     case 'getAutoCompleteDetails':
-        response = {
-            redirectResources: µb.redirectEngine.getResourceDetails(),
-            preparseDirectiveTokens: µb.preparseDirectives.getTokens(),
-            preparseDirectiveHints: µb.preparseDirectives.getHints(),
-            originHints: getOriginHints(),
-            expertMode: µb.hiddenSettings.filterAuthorMode,
-        };
+        response = {};
+        if ( request.hintUpdateToken === 0 ) {
+            response.redirectResources = µb.redirectEngine.getResourceDetails();
+            response.preparseDirectiveTokens = µb.preparseDirectives.getTokens();
+            response.preparseDirectiveHints = µb.preparseDirectives.getHints();
+            response.expertMode = µb.hiddenSettings.filterAuthorMode;
+        }
+        if ( request.hintUpdateToken !== µb.pageStoresToken ) {
+            response.originHints = getOriginHints();
+            response.hintUpdateToken = µb.pageStoresToken;
+        }
         break;
 
     case 'getRules':
