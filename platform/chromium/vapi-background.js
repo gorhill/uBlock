@@ -959,7 +959,7 @@ vAPI.messaging = {
             try {
                 port.postMessage(messageWrapper);
             } catch(ex) {
-                this.ports.delete(port.name);
+                this.onPortDisconnect(port);
             }
         }
     },
@@ -985,7 +985,11 @@ vAPI.messaging = {
             msg.tabId = tabId;
             for ( const { port: toPort } of this.ports.values() ) {
                 if ( toPort === port ) { continue; }
-                toPort.postMessage(request);
+                try {
+                    toPort.postMessage(request);
+                } catch (ex) {
+                    this.onPortDisconnect(toPort);
+                }
             }
             break;
         case 'connectionBroken':
