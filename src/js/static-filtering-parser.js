@@ -1164,13 +1164,15 @@ const Parser = class {
 
     static parseRedirectValue(arg) {
         let token = arg.trim();
-        let priority = 10;
-        const match = /:\d+$/.exec(token);
+        let priority = 0;
+        const asDataURI = token.charCodeAt(0) === 0x25 /* '%' */;
+        if ( asDataURI ) { token = token.slice(1); }
+        const match = /:-?\d+$/.exec(token);
         if ( match !== null ) {
             token = token.slice(0, match.index);
             priority = parseInt(token.slice(match.index + 1), 10);
         }
-        return { token, priority };
+        return { token, priority, asDataURI };
     }
 
     static parseQueryPruneValue(arg) {

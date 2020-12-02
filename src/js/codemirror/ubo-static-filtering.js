@@ -187,7 +187,7 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
             /[$,]redirect(-rule)?=$/.test(string.slice(0, pos))
         ) {
             style = 'value';
-            let end = parser.skipUntil(
+            const end = parser.skipUntil(
                 parserSlot,
                 parser.commentSpan.i,
                 parser.BITComma

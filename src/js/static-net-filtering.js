@@ -4236,12 +4236,13 @@ FilterContainer.prototype.redirectRequest = function(fctxt) {
     const directives = this.matchAndFetchModifiers(fctxt, 'redirect-rule');
     // No directive is the most common occurrence.
     if ( directives === undefined ) { return; }
+    const highest = directives.length - 1;
     // More than a single directive means more work.
-    if ( directives.length !== 1 ) {
+    if ( highest !== 0 ) {
         directives.sort(FilterContainer.compareRedirectRequests);
     }
     // Redirect to highest-ranked directive
-    const directive = directives[directives.length - 1];
+    const directive = directives[highest];
     if ( (directive.bits & AllowAction) === 0 ) {
         const { token } =
             FilterContainer.parseRedirectRequestValue(directive.modifier);

@@ -291,11 +291,11 @@ RedirectEngine.prototype.freeze = function() {
 
 /******************************************************************************/
 
-RedirectEngine.prototype.tokenToURL = function(fctxt, token) {
-    const asDataURI = token.charCodeAt(0) === 0x25 /* '%' */;
-    if ( asDataURI ) {
-        token = token.slice(1);
-    }
+RedirectEngine.prototype.tokenToURL = function(
+    fctxt,
+    token,
+    asDataURI = false
+) {
     const entry = this.resources.get(this.aliases.get(token) || token);
     if ( entry === undefined ) { return; }
     this.resourceNameRegister = token;
