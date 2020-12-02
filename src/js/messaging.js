@@ -1202,7 +1202,7 @@ const onMessage = function(request, sender, callback) {
 
     case 'getAutoCompleteDetails':
         response = {};
-        if ( request.hintUpdateToken === 0 ) {
+        if ( (request.hintUpdateToken || 0) === 0 ) {
             response.redirectResources = µb.redirectEngine.getResourceDetails();
             response.preparseDirectiveTokens = µb.preparseDirectives.getTokens();
             response.preparseDirectiveHints = µb.preparseDirectives.getHints();
