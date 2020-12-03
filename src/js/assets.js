@@ -571,7 +571,7 @@ const assetCacheWrite = async function(assetKey, details) {
         entry = cacheDict[assetKey] = {};
     }
     entry.writeTime = entry.readTime = Date.now();
-    if ( options.url === 'string' ) {
+    if ( typeof options.url === 'string' ) {
         entry.remoteURL = options.url;
     }
     µBlock.cacheStorage.set({
