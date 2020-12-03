@@ -61,12 +61,11 @@ let cachedUserFilters = '';
     const responseHandler = function(response) {
         if ( response instanceof Object === false ) { return; }
         if ( response.hintUpdateToken !== undefined ) {
-            const firstVisit = hintUpdateToken === 0;
             const mode = cmEditor.getMode();
             if ( mode.setHints instanceof Function ) {
-                mode.setHints(response, firstVisit);
+                mode.setHints(response);
             }
-            if ( firstVisit ) {
+            if ( hintUpdateToken === 0 ) {
                 mode.parser.expertMode = response.expertMode !== false;
             }
             hintUpdateToken = response.hintUpdateToken;

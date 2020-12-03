@@ -66,7 +66,7 @@
     if ( hints instanceof Object ) {
         const mode = cmEditor.getMode();
         if ( mode.setHints instanceof Function ) {
-            mode.setHints(hints, true);
+            mode.setHints(hints);
         }
     }
 

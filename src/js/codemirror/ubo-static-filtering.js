@@ -35,6 +35,7 @@ const scriptletNames = new Map();
 const preparseDirectiveTokens = new Map();
 const preparseDirectiveHints = [];
 const originHints = [];
+let hintHelperRegistered = false;
 
 /******************************************************************************/
 
@@ -361,7 +362,7 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
             style = style.trim();
             return style !== '' ? style : null;
         },
-        setHints: function(details, firstVisit = false) {
+        setHints: function(details) {
             if ( Array.isArray(details.redirectResources) ) {
                 for ( const [ name, desc ] of details.redirectResources ) {
                     const displayText = desc.aliasOf !== ''
@@ -389,7 +390,8 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
                     originHints.push(hint);
                 }
             }
-            if ( firstVisit ) {
+            if ( hintHelperRegistered === false ) {
+                hintHelperRegistered = true;
                 initHints();
             }
         },
