@@ -185,10 +185,12 @@ const onUserSettingsReady = function(fetched) {
 
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1588916
 //   Save magic format numbers into the cache storage itself.
+// https://github.com/uBlockOrigin/uBlock-issues/issues/1365
+//   Wait for removal of invalid cached data to be completed.
 
-const onCacheSettingsReady = function(fetched) {
+const onCacheSettingsReady = async function(fetched) {
     if ( fetched.compiledMagic !== µb.systemSettings.compiledMagic ) {
-        µb.assets.remove(/^compiled\//);
+        await µb.assets.remove(/^compiled\//);
         µb.compiledFormatChanged = true;
         µb.selfieIsInvalid = true;
     }
@@ -292,15 +294,18 @@ try {
     );
     log.info(`Backend storage for cache will be ${cacheBackend}`);
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1365
+    //   Wait for onCacheSettingsReady() to be fully ready.
     await Promise.all([
         µb.loadSelectedFilterLists().then(( ) => {
             log.info(`List selection ready ${Date.now()-vAPI.T0} ms after launch`);
         }),
         µb.cacheStorage.get(
             { compiledMagic: 0, selfieMagic: 0 }
-        ).then(fetched => {
-            log.info(`Cache magic numbers ready ${Date.now()-vAPI.T0} ms after launch`);
-            onCacheSettingsReady(fetched);
+        ).then(fetched =>
+            onCacheSettingsReady(fetched)
+        ).then(( ) => {
+            log.info(`Integrity of cached data processed ${Date.now()-vAPI.T0} ms after launch`);
         }),
         vAPI.storage.get(createDefaultProps()).then(fetched => {
             log.info(`First fetch ready ${Date.now()-vAPI.T0} ms after launch`);

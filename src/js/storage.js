@@ -737,7 +737,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         this.compiledFormatChanged === false &&
         this.badLists.has(assetKey) === false
     ) {
-        let compiledDetails = await this.assets.get(compiledPath);
+        const compiledDetails = await this.assets.get(compiledPath);
         if ( compiledDetails.content !== '' ) {
             compiledDetails.assetKey = assetKey;
             return compiledDetails;
@@ -763,19 +763,11 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         return { assetKey, content: '' };
     }
 
-    // Fetching the raw content may cause the compiled content to be
-    // generated somewhere else in uBO, hence we try one last time to
-    // fetch the compiled content in case it has become available.
-    const compiledDetails = await this.assets.get(compiledPath);
-    if ( compiledDetails.content === '' ) {
-        compiledDetails.content = this.compileFilters(rawDetails.content, {
-            assetKey
-        });
-        this.assets.put(compiledPath, compiledDetails.content);
-    }
+    const compiledContent =
+        this.compileFilters(rawDetails.content, { assetKey });
+    this.assets.put(compiledPath, compiledContent);
 
-    compiledDetails.assetKey = assetKey;
-    return compiledDetails;
+    return { assetKey, content: compiledContent };
 };
 
 /******************************************************************************/

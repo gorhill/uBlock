@@ -603,14 +603,15 @@ const assetCacheRemove = async function(pattern) {
         delete cacheDict[assetKey];
     }
     if ( removedContent.length !== 0 ) {
-        µBlock.cacheStorage.remove(removedContent);
-        µBlock.cacheStorage.set({ assetCacheRegistry });
+        await Promise.all([
+            µBlock.cacheStorage.remove(removedContent),
+            µBlock.cacheStorage.set({ assetCacheRegistry }),
+        ]);
     }
     for ( let i = 0; i < removedEntries.length; i++ ) {
-        fireNotification(
-            'after-asset-updated',
-            { assetKey: removedEntries[i] }
-        );
+        fireNotification('after-asset-updated', {
+            assetKey: removedEntries[i]
+        });
     }
 };
 
