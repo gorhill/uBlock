@@ -599,8 +599,8 @@ const onStartMoving = (( ) => {
 
     const move = ( ) => {
         timer = undefined;
-        const r1 = Math.min(Math.max(r0 - mx1 + mx0, 4), rMax);
-        const b1 = Math.min(Math.max(b0 - my1 + my0, 4), bMax);
+        const r1 = Math.min(Math.max(r0 - mx1 + mx0, 2), rMax);
+        const b1 = Math.min(Math.max(b0 - my1 + my0, 2), bMax);
         dialog.style.setProperty('right', `${r1}px`);
         dialog.style.setProperty('bottom', `${b1}px`);
     };
@@ -646,8 +646,8 @@ const onStartMoving = (( ) => {
         r0 = parseInt(style.right, 10);
         b0 = parseInt(style.bottom, 10);
         const rect = dialog.getBoundingClientRect();
-        rMax = pickerRoot.clientWidth - 4 - rect.width ;
-        bMax = pickerRoot.clientHeight - 4 - rect.height;
+        rMax = pickerRoot.clientWidth - 2 - rect.width ;
+        bMax = pickerRoot.clientHeight - 2 - rect.height;
         dialog.classList.add('moving');
         if ( isTouch ) {
             self.addEventListener('touchmove', moveAsync, { capture: true });

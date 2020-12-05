@@ -414,7 +414,12 @@ const matchBucket = function(url, hostname, bucket, start) {
 
 /******************************************************************************/
 
-µBlock.elementPickerExec = async function(tabId, targetElement, zap = false) {
+µBlock.elementPickerExec = async function(
+    tabId,
+    frameId,
+    targetElement,
+    zap = false,
+) {
     if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
 
     this.epickerArgs.target = targetElement || '';
@@ -422,13 +427,16 @@ const matchBucket = function(url, hostname, bucket, start) {
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/40
     //   The element picker needs this library
-    vAPI.tabs.executeScript(tabId, {
-        file: '/lib/diff/swatinem_diff.js',
-        runAt: 'document_end',
-    });
+    if ( zap !== true ) {
+        vAPI.tabs.executeScript(tabId, {
+            file: '/lib/diff/swatinem_diff.js',
+            runAt: 'document_end',
+        });
+    }
 
     await vAPI.tabs.executeScript(tabId, {
         file: '/js/scriptlets/epicker.js',
+        frameId,
         runAt: 'document_end',
     });
 

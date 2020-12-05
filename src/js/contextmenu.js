@@ -58,7 +58,16 @@ const onBlockElement = function(details, tab) {
     }
 
     µBlock.epickerArgs.mouse = true;
-    µBlock.elementPickerExec(tab.id, tagName + '\t' + src);
+    µBlock.elementPickerExec(tab.id, 0, `${tagName}\t${src}`);
+};
+
+/******************************************************************************/
+
+const onBlockElementInFrame = function(details, tab) {
+    if ( tab === undefined ) { return; }
+    if ( /^https?:\/\//.test(details.frameUrl) === false ) { return; }
+    µBlock.epickerArgs.mouse = false;
+    µBlock.elementPickerExec(tab.id, details.frameId);
 };
 
 /******************************************************************************/
@@ -76,6 +85,9 @@ const onEntryClicked = function(details, tab) {
     if ( details.menuItemId === 'uBlock0-blockElement' ) {
         return onBlockElement(details, tab);
     }
+    if ( details.menuItemId === 'uBlock0-blockElementInFrame' ) {
+        return onBlockElementInFrame(details, tab);
+    }
     if ( details.menuItemId === 'uBlock0-temporarilyAllowLargeMediaElements' ) {
         return onTemporarilyAllowLargeMediaElements(details, tab);
     }
@@ -83,18 +95,23 @@ const onEntryClicked = function(details, tab) {
 
 /******************************************************************************/
 
-const menuEntries = [
-    {
+const menuEntries = {
+    blockElement: {
         id: 'uBlock0-blockElement',
         title: vAPI.i18n('pickerContextMenuEntry'),
         contexts: ['all'],
     },
-    {
+    blockElementInFrame: {
+        id: 'uBlock0-blockElementInFrame',
+        title: vAPI.i18n('contextMenuBlockElementInFrame'),
+        contexts: ['frame'],
+    },
+    temporarilyAllowLargeMediaElements: {
         id: 'uBlock0-temporarilyAllowLargeMediaElements',
         title: vAPI.i18n('contextMenuTemporarilyAllowLargeMediaElements'),
         contexts: ['all'],
     }
-];
+};
 
 /******************************************************************************/
 
@@ -115,10 +132,11 @@ const update = function(tabId = undefined) {
     currentBits = newBits;
     let usedEntries = [];
     if ( newBits & 0x01 ) {
-        usedEntries.push(menuEntries[0]);
+        usedEntries.push(menuEntries.blockElement);
+        usedEntries.push(menuEntries.blockElementInFrame);
     }
     if ( newBits & 0x02 ) {
-        usedEntries.push(menuEntries[1]);
+        usedEntries.push(menuEntries.temporarilyAllowLargeMediaElements);
     }
     vAPI.contextMenu.setEntries(usedEntries, onEntryClicked);
 };

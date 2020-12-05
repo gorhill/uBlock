@@ -1010,6 +1010,7 @@ vAPI.messaging = {
         case 'extendClient':
             vAPI.tabs.executeScript(tabId, {
                 file: '/js/vapi-client-extra.js',
+                frameId: portDetails.frameId,
             }).then(( ) => {
                 callback();
             });

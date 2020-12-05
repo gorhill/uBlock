@@ -154,7 +154,7 @@ const onMessage = function(request, sender, callback) {
     case 'launchElementPicker':
         // Launched from some auxiliary pages, clear context menu coords.
         µb.epickerArgs.mouse = false;
-        µb.elementPickerExec(request.tabId, request.targetURL, request.zap);
+        µb.elementPickerExec(request.tabId, 0, request.targetURL, request.zap);
         break;
 
     case 'gotoURL':

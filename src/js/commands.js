@@ -165,6 +165,7 @@ vAPI.commands.onCommand.addListener(async command => {
         µb.epickerArgs.mouse = false;
         µb.elementPickerExec(
             tab.id,
+            0,
             undefined,
             command === 'launch-element-zapper'
         );

@@ -15,16 +15,18 @@ html#ublock0-epicker,
 #ublock0-epicker aside {
     background-color: var(--default-surface);
     border: 1px solid var(--default-surface-border);
-    bottom: 4px;
+    bottom: 2px;
     box-sizing: border-box;
     cursor: default;
     display: none;
+    max-height: calc(100vh - 4px);
     max-width: 36rem;
     min-width: 24rem;
+    overflow-y: auto;
     padding: 4px;
     position: fixed;
-    right: 4px;
-    width: calc(40% - 4px);
+    right: 2px;
+    width: calc(40% - 2px);
 }
 #ublock0-epicker.paused:not(.zap) aside {
     display: block;
@@ -89,6 +91,8 @@ html#ublock0-epicker,
     box-sizing: border-box;
     font: 11px monospace;
     height: 8em;
+    max-height: 50vh;
+    min-height: 1em;
     padding: 2px;
     width: 100%;
     }
