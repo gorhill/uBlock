@@ -1027,6 +1027,10 @@
     "message": "բայտ",
     "description": ""
   },
+  "contextMenuBlockElementInFrame": {
+    "message": "Block element in frame...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Ժամանակավորապես թույլ տալ մեծ մեդիա էլեմենտները",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"

@@ -1027,6 +1027,10 @@
     "message": "位元組",
     "description": ""
   },
+  "contextMenuBlockElementInFrame": {
+    "message": "Block element in frame...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "暫時允許大型媒體元素",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"

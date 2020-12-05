@@ -1027,6 +1027,10 @@
     "message": "bayt",
     "description": ""
   },
+  "contextMenuBlockElementInFrame": {
+    "message": "Block element in frame...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Böyük media elementlərinin yüklənməsinə müvəqqəti icazə ver",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
