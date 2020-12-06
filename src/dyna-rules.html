@@ -4,35 +4,35 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>uBlock — Dynamic filtering rules</title>
-<link rel="stylesheet" type="text/css" href="lib/codemirror/lib/codemirror.css">
-<link rel="stylesheet" type="text/css" href="lib/codemirror/addon/merge/merge.css">
+<link rel="stylesheet" href="lib/codemirror/lib/codemirror.css">
+<link rel="stylesheet" href="lib/codemirror/addon/merge/merge.css">
 
-<link rel="stylesheet" type="text/css" href="css/themes/default.css">
-<link rel="stylesheet" type="text/css" href="css/common.css">
-<link rel="stylesheet" type="text/css" href="css/fa-icons.css">
-<link rel="stylesheet" type="text/css" href="css/dashboard-common.css">
-<link rel="stylesheet" type="text/css" href="css/cloud-ui.css">
-<link rel="stylesheet" type="text/css" href="css/dyna-rules.css">
-<link rel="stylesheet" type="text/css" href="css/codemirror.css">
+<link rel="stylesheet" href="css/themes/default.css">
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/fa-icons.css">
+<link rel="stylesheet" href="css/dashboard-common.css">
+<link rel="stylesheet" href="css/cloud-ui.css">
+<link rel="stylesheet" href="css/dyna-rules.css">
+<link rel="stylesheet" href="css/codemirror.css">
 </head>
 
 <body>
 
 <div class="body">
     <div id="cloudWidget" class="hide" data-cloud-entry="myRulesPane"></div>
-    <p class="vverbose"><span data-i18n="rulesHint"></span> <a class="fa info" href="https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax" target="_blank">&#xf05a;</a></p>
+    <p class="vverbose"><span data-i18n="rulesHint"></span> <a class="fa-icon info" href="https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax" target="_blank">info-circle</a></p>
     <div id="diff">
         <div class="tools">
             <div class="ruleActions">
                 <div class="fieldset-header" data-i18n="rulesPermanentHeader"></div>
-                <button type="button" class="iconifiable" id="exportButton"><span class="fa">&#xf093;</span><span data-i18n="rulesExport"></span></button>
-                <button type="button" class="iconifiable" id="revertButton"><span class="fa">&#xf061;</span><span data-i18n="rulesRevert"></span></button>
+                <button type="button" class="iconifiable" id="exportButton"><span class="fa-icon">upload-alt</span><span data-i18n="rulesExport"></span></button>
+                <button type="button" class="iconifiable" id="revertButton"><span class="fa-icon">arrow-right</span><span data-i18n="rulesRevert"></span></button>
             </div>
             <div class="ruleActions">
                 <div class="fieldset-header" data-i18n="rulesTemporaryHeader"></div>
-                <button type="button" class="iconifiable" id="commitButton"><span class="fa">&#xf060;</span><span data-i18n="rulesCommit"></span></button>
-                <button type="button" class="iconifiable" id="importButton"><span class="fa">&#xf019;</span><span data-i18n="rulesImport"></span></button>
-                <button type="button" class="iconifiable important disabled" id="editSaveButton"><span class="fa">&#xf0c7;</span><span data-i18n="rulesEditSave"></span></button>
+                <button type="button" class="iconifiable" id="commitButton"><span class="fa-icon fa-icon-hflipped">arrow-right</span><span data-i18n="rulesCommit"></span></button>
+                <button type="button" class="iconifiable" id="importButton"><span class="fa-icon">download-alt</span><span data-i18n="rulesImport"></span></button>
+                <button type="button" class="iconifiable important disabled" id="editSaveButton"><span class="fa-icon">save</span><span data-i18n="rulesEditSave"></span></button>
             </div>
             <div id="ruleFilter">
                 <span><span class="fa-icon">filter</span>&nbsp;<input type="search" size="16"></span>&emsp;<span data-i18n="rulesSort"></span>&nbsp;<select><option value="0" selected data-i18n="rulesSortByType"><option value="1" data-i18n="rulesSortBySource"><option value="2" data-i18n="rulesSortByDestination"></select>&emsp;<span id="diffCollapse" class="fa-icon">double-angle-up</span>

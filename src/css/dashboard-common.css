@@ -18,24 +18,22 @@ h3 {
 a {
     text-decoration: none;
     }
-.fa.info,
 .fa-icon.info {
     color: var(--fg-icon-info-lvl-0-dimmed);
     fill: var(--fg-icon-info-lvl-0-dimmed);
     font-size: 115%;
     }
-.fa.info:hover,
 .fa-icon.info:hover {
     color: inherit;
     fill: inherit;
     }
-.fa.info.important,
 .fa-icon.info.important {
     color: var(--fg-icon-info-lvl-3-dimmed);
+    fill: var(--fg-icon-info-lvl-3-dimmed);
     }
-.fa.info.important:hover,
 .fa-icon.info.important:hover {
     color: var(--fg-icon-info-lvl-3);
+    fill: var(--fg-icon-info-lvl-3);
     }
 input[type="number"] {
     width: 5em;

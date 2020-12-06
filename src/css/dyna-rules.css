@@ -64,9 +64,6 @@ body:not(.editing) #diff.dirty #commitButton:hover {
     display: flex;
     justify-content: center;
     }
-#ruleFilter .fa {
-    color: var(--fg-0-60);
-    }
 #ruleFilter #diffCollapse {
     padding: 0 0.5em;
     font-size: 150%;

@@ -25,14 +25,6 @@
     src: url('fonts/Metropolis/Metropolis-SemiBold.woff2') format('woff2');
 }
 
-/* Usage of FontAwesome is deprecated and will be removed eventually */
-@font-face {
-    font-family: FontAwesome;
-    font-weight: normal;
-    font-style: normal;
-    src: url('fonts/fontawesome-webfont.ttf') format('truetype');
-    }
-
 /**
     Common uBO spacing.
     Ref: https://github.com/uBlockOrigin/uBlock-issues/issues/1005
@@ -58,16 +50,6 @@ body {
     line-height: 1.5;
     margin: 0;
     padding: 0;
-    }
-.fa {
-    display: inline-block;
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    line-height: 1;
-    user-select: none;
-      -moz-user-select: none;
-      -webkit-user-select: none;
     }
 a {
     color: var(--link-ink);
@@ -134,7 +116,6 @@ button.preferred {
     background-color: var(--button-preferred-surface);
     color: var(--button-preferred-ink);
     }
-button.iconifiable > .fa,
 button.iconifiable > .fa-icon {
     padding-left: 0;
     padding-right: 0.4em;
@@ -142,7 +123,6 @@ button.iconifiable > .fa-icon {
 button.iconifiable > .fa-icon {
     font-size: 120%;
     }
-body[dir="rtl"] button.iconifiable > .fa,
 body[dir="rtl"] button.iconifiable > .fa-icon {
     padding-left: 0.5em;
     }
@@ -233,7 +213,6 @@ select {
     -webkit-margin-start: 2em;
     }
 @media (max-width: 640px) {
-    button.iconifiable > .fa,
     button.iconifiable > .fa-icon {
         font-size: 1.2rem;
         padding: 0;

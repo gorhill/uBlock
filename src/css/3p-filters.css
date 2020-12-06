@@ -74,7 +74,6 @@ body.hideUnused #listsOfBlockedHostsPrompt::before,
 .listEntry.toRemove .listname {
     text-decoration: line-through;
     }
-.listEntry .fa,
 .listEntry .fa-icon,
 .listEntry .counts {
     color: var(--fg-0-50);
@@ -83,7 +82,6 @@ body.hideUnused #listsOfBlockedHostsPrompt::before,
     font-size: 120%;
     margin: 0 0.2em 0 0;
     }
-.listEntry .fa:hover,
 .listEntry .fa-icon:hover {
     color: inherit;
     fill: inherit;

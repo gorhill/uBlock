@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="lib/codemirror/addon/hint/show-hint.css">
 <link rel="stylesheet" href="lib/codemirror/addon/search/matchesonscrollbar.css">
 
-<link rel="stylesheet" type="text/css" href="css/themes/default.css">
+<link rel="stylesheet" href="css/themes/default.css">
 <link rel="stylesheet" href="css/common.css">
 <link rel="stylesheet" href="css/fa-icons.css">
 <link rel="stylesheet" href="css/dashboard-common.css">
@@ -24,13 +24,13 @@
 <div class="body">
     <div id="cloudWidget" class="hide" data-cloud-entry="myFiltersPane"></div>
 
-    <p class="vverbose"><span data-i18n="1pFormatHint"></span> <a class="fa info" href="https://github.com/gorhill/uBlock/wiki/Dashboard:-My-filters" target="_blank">&#xf05a;</a></p>
+    <p class="vverbose"><span data-i18n="1pFormatHint"></span> <a class="fa-icon info" href="https://github.com/gorhill/uBlock/wiki/Dashboard:-My-filters" target="_blank">question-circle</a></p>
     <p>
-        <button id="userFiltersApply" class="important iconifiable" type="button" disabled><span class="fa">&#xf00c;</span><span data-i18n="1pApplyChanges"></span></button>
-        <button id="userFiltersRevert" class="iconifiable" type="button" disabled><span class="fa">&#xf0e2;</span><span data-i18n="genericRevert"></span></button>
+        <button id="userFiltersApply" class="important iconifiable" type="button" disabled><span class="fa-icon">check</span><span data-i18n="1pApplyChanges"></span></button>
+        <button id="userFiltersRevert" class="iconifiable" type="button" disabled><span class="fa-icon">undo</span><span data-i18n="genericRevert"></span></button>
         &ensp;
-        <button id="importUserFiltersFromFile" class="iconifiable" type="button"><span class="fa">&#xf019;</span><span data-i18n="1pImport"></span></button>
-        <button id="exportUserFiltersToFile" class="iconifiable" type="button"><span class="fa">&#xf093;</span><span data-i18n="1pExport"></span></button>
+        <button id="importUserFiltersFromFile" class="iconifiable" type="button"><span class="fa-icon">download-alt</span><span data-i18n="1pImport"></span></button>
+        <button id="exportUserFiltersToFile" class="iconifiable" type="button"><span class="fa-icon">upload-alt</span><span data-i18n="1pExport"></span></button>
     </p>
 </div>
 <div id="userFilters" class="codeMirrorContainer codeMirrorBreakAll" spellcheck="false"></div>

@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="lib/codemirror/lib/codemirror.css">
 <link rel="stylesheet" href="lib/codemirror/addon/search/matchesonscrollbar.css">
 
-<link rel="stylesheet" type="text/css" href="css/themes/default.css">
+<link rel="stylesheet" href="css/themes/default.css">
 <link rel="stylesheet" href="css/common.css">
 <link rel="stylesheet" href="css/fa-icons.css">
 <link rel="stylesheet" href="css/dashboard-common.css">
@@ -22,14 +22,14 @@
 <div class="body">
     <div id="cloudWidget" class="hide" data-cloud-entry="whitelistPane"></div>
 
-    <p class="vverbose"><span data-i18n="whitelistPrompt"></span> <a class="fa info important" href="https://github.com/gorhill/uBlock/wiki/Dashboard:-Trusted-sites">&#xf05a;</a>
+    <p class="vverbose"><span data-i18n="whitelistPrompt"></span> <a class="fa-icon info important" href="https://github.com/gorhill/uBlock/wiki/Dashboard:-Trusted-sites">info-circle</a>
     </p>
     <p>
-        <button id="whitelistApply" class="important iconifiable" type="button" disabled><span class="fa">&#xf00c;</span><span data-i18n="whitelistApply"></span></button>
-        <button id="whitelistRevert" class="iconifiable" type="button" disabled><span class="fa">&#xf0e2;</span><span data-i18n="genericRevert"></span></button>
+        <button id="whitelistApply" class="important iconifiable" type="button" disabled><span class="fa-icon">check</span><span data-i18n="whitelistApply"></span></button>
+        <button id="whitelistRevert" class="iconifiable" type="button" disabled><span class="fa-icon">undo</span><span data-i18n="genericRevert"></span></button>
         &emsp;&emsp;
-        <button id="importWhitelistFromFile" class="iconifiable" type="button"><span class="fa">&#xf019;</span><span data-i18n="whitelistImport"></span></button>
-        <button id="exportWhitelistToFile" class="iconifiable" type="button"><span class="fa">&#xf093;</span><span data-i18n="whitelistExport"></span></button>
+        <button id="importWhitelistFromFile" class="iconifiable" type="button"><span class="fa-icon">download-alt</span><span data-i18n="whitelistImport"></span></button>
+        <button id="exportWhitelistToFile" class="iconifiable" type="button"><span class="fa-icon">upload-alt</span><span data-i18n="whitelistExport"></span></button>
     </p>
 </div>
 <div id="whitelist" class="codeMirrorContainer"></div>
