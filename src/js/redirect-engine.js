@@ -305,6 +305,7 @@ RedirectEngine.prototype.tokenToURL = function(
 /******************************************************************************/
 
 RedirectEngine.prototype.hasToken = function(token) {
+    if ( token === 'none' ) { return true; }
     const asDataURI = token.charCodeAt(0) === 0x25 /* '%' */;
     if ( asDataURI ) {
         token = token.slice(1);

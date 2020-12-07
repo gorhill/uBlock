@@ -4261,8 +4261,13 @@ FilterContainer.parseRedirectRequestValue = function(modifier) {
 };
 
 FilterContainer.compareRedirectRequests = function(a, b) {
-    if ( (a.bits & AllowAction) !== 0 ) { return -1; }
-    if ( (b.bits & AllowAction) !== 0 ) { return 1; }
+    const abits = a.bits, bbits = b.bits;
+    if ( abits !== bbits ) {
+        if ( (abits & Important) !== 0 ) { return 1; }
+        if ( (bbits & Important) !== 0 ) { return -1; }
+        if ( (abits & AllowAction) !== 0 ) { return -1; }
+        if ( (bbits & AllowAction) !== 0 ) { return 1; }
+    }
     const { token: atok, priority: aint } =
         FilterContainer.parseRedirectRequestValue(a.modifier);
     if ( µb.redirectEngine.hasToken(atok) === false ) { return -1; }
