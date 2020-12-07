@@ -98,7 +98,7 @@ let details = {};
 
 /******************************************************************************/
 
-uDom.nodeFromSelector('#theURL > p').textContent = details.url;
+uDom.nodeFromSelector('#theURL > p > span:first-of-type').textContent = details.url;
 uDom.nodeFromId('why').textContent = details.fs;
 
 /******************************************************************************/
@@ -179,11 +179,9 @@ uDom.nodeFromId('why').textContent = details.fs;
         return;
     }
 
-    const toggler = document.createElement('span');
-    toggler.className = 'fa';
-    uDom('#theURL > p').append(toggler);
+    const toggler = document.querySelector('#theURL > p > span:last-of-type');
 
-    uDom(toggler).on('click', function() {
+    toggler.addEventListener('click', ( ) => {
         const cl = uDom.nodeFromId('theURL').classList;
         cl.toggle('collapsed');
         vAPI.localStorage.setItem(
