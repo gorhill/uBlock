@@ -377,7 +377,9 @@ const PageStore = class {
     setFrameURL(frameId, frameURL) {
         let frameStore = this.frames.get(frameId);
         if ( frameStore !== undefined ) {
-            frameStore.init(frameURL);
+            if ( frameURL !== frameStore.rawURL ) {
+                frameStore.init(frameURL);
+            }
         } else {
             frameStore = FrameStore.factory(frameURL);
             this.frames.set(frameId, frameStore);
@@ -613,7 +615,7 @@ const PageStore = class {
             result = snfe.matchString(fctxt);
             if ( result !== 0 ) {
                 if ( loggerEnabled ) {
-                    fctxt.filter = snfe.toLogData();
+                    fctxt.setFilter(snfe.toLogData());
                 }
                 // https://github.com/uBlockOrigin/uBlock-issues/issues/943
                 //   Blanket-except blocked aliased canonical hostnames?
@@ -872,20 +874,16 @@ const PageStore = class {
                     ? frameStore.rawURL
                     : fctxt.getDocOrigin()
             );
-            if ( result === 2 ) {
-                exceptCname = µb.logger.enabled
-                    ? µb.staticNetFilteringEngine.toLogData()
-                    : true;
-            } else {
-                exceptCname = false;
-            }
+            exceptCname = result === 2
+                ? µb.staticNetFilteringEngine.toLogData()
+                : false;
             if ( frameStore instanceof Object ) {
                 frameStore.exceptCname = exceptCname;
             }
         }
         if ( exceptCname === false ) { return false; }
         if ( exceptCname instanceof Object ) {
-            fctxt.pushFilter(exceptCname);
+            fctxt.setFilter(exceptCname);
         }
         return true;
     }
