@@ -27,6 +27,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: |
-            uBlock/dist/build/uBlock0_${{ github.ref }}.chromium.zip
-            uBlock/dist/build/uBlock0_${{ github.ref }}.firefox.xpi
-            uBlock/dist/build/uBlock0_${{ github.ref }}.thunderbird.xpi
+            ./dist/build/uBlock0_${{ github.ref }}.chromium.zip
+            ./dist/build/uBlock0_${{ github.ref }}.firefox.xpi
+            ./dist/build/uBlock0_${{ github.ref }}.thunderbird.xpi
