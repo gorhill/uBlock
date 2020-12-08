@@ -1,0 +1,32 @@
+name: GitHub CI
+
+on:
+  create:
+    branches: master
+  workflow_dispatch:
+
+# I used as template to get started:
+# https://github.com/DNSCrypt/dnscrypt-proxy/blob/master/.github/workflows/releases.yml
+
+jobs:
+  build:
+    name: Build packages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build all
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          ./tools/make-chromium.sh ${{ github.ref }}
+          ./tools/make-firefox.sh ${{ github.ref }}
+          ./tools/make-thunderbird.sh ${{ github.ref }}
+
+      - name: Upload packages
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: |
+            uBlock/dist/build/uBlock0_${{ github.ref }}.chromium.zip
+            uBlock/dist/build/uBlock0_${{ github.ref }}.firefox.xpi
+            uBlock/dist/build/uBlock0_${{ github.ref }}.thunderbird.xpi
