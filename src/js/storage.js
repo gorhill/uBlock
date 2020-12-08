@@ -733,12 +733,18 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 µBlock.getCompiledFilterList = async function(assetKey) {
     const compiledPath = 'compiled/' + assetKey;
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1365
+    //   Verify that the list version matches that of the current compiled
+    //   format.
     if (
         this.compiledFormatChanged === false &&
         this.badLists.has(assetKey) === false
     ) {
         const compiledDetails = await this.assets.get(compiledPath);
-        if ( compiledDetails.content !== '' ) {
+        if (
+            parseInt(compiledDetails.content, 10) ===
+            this.systemSettings.compiledMagic
+        ) {
             compiledDetails.assetKey = assetKey;
             return compiledDetails;
         }
@@ -878,7 +884,13 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         staticNetFilteringEngine.compile(parser, writer);
     }
 
-    return writer.toString();
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1365
+    //   Embed version into compiled list itself: it is encoded in as the
+    //   first digits followed by a whitespace.
+    const compiledContent
+        = `${this.systemSettings.compiledMagic}\n` + writer.toString();
+
+    return compiledContent;
 };
 
 /******************************************************************************/
@@ -889,7 +901,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
 µBlock.applyCompiledFilters = function(rawText, firstparty) {
     if ( rawText === '' ) { return; }
-    let reader = new this.CompiledLineIO.Reader(rawText);
+    const reader = new this.CompiledLineIO.Reader(rawText);
     this.staticNetFilteringEngine.fromCompiledContent(reader);
     this.staticExtFilteringEngine.fromCompiledContent(reader, {
         skipGenericCosmetic: this.userSettings.ignoreGenericCosmeticFilters,

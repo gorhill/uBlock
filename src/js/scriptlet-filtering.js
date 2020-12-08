@@ -230,8 +230,7 @@
     };
 
     api.compile = function(parser, writer) {
-        // 1001 = scriptlet injection
-        writer.select(1001);
+        writer.select(µb.compiledScriptletSection);
 
         // Only exception filters are allowed to be global.
         const { raw, exception } = parser.result;
@@ -270,8 +269,7 @@
     //     4                -1
 
     api.fromCompiledContent = function(reader) {
-        // 1001 = scriptlet injection
-        reader.select(1001);
+        reader.select(µb.compiledScriptletSection);
 
         while ( reader.next() ) {
             acceptedCount += 1;

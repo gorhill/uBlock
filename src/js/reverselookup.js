@@ -64,7 +64,7 @@ if (
         for ( const assetKey in listEntries ) {
             const entry = listEntries[assetKey];
             if ( entry === undefined ) { continue; }
-            const content = extractBlocks(entry.content, 0, 1);
+            const content = extractBlocks(entry.content, 100, 101);
             let pos = 0;
             for (;;) {
                 pos = content.indexOf(compiledFilter, pos);
@@ -165,7 +165,7 @@ if (
         for ( const assetKey in listEntries ) {
             const entry = listEntries[assetKey];
             if ( entry === undefined ) { continue; }
-            let content = extractBlocks(entry.content, 1000, 2000),
+            let content = extractBlocks(entry.content, 200, 1000),
                 isProcedural,
                 found;
             let pos = 0;

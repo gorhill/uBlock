@@ -304,8 +304,7 @@
             return;
         }
 
-        // 1002 = html filtering
-        writer.select(1002);
+        writer.select(µb.compiledHTMLSection);
 
         // TODO: Mind negated hostnames, they are currently discarded.
 
@@ -327,8 +326,7 @@
         // Don't bother loading filters if stream filtering is not supported.
         if ( µb.canFilterResponseData === false ) { return; }
 
-        // 1002 = html filtering
-        reader.select(1002);
+        reader.select(µb.compiledHTMLSection);
 
         while ( reader.next() ) {
             acceptedCount += 1;

@@ -3639,9 +3639,11 @@ FilterContainer.prototype.compile = function(parser, writer) {
         return false;
     }
 
-    // 0 = network filters
-    // 1 = network filters: bad filters
-    writer.select(parsed.badFilter ? 1 : 0);
+    writer.select(
+        parsed.badFilter
+            ? µb.compiledNetworkSection + µb.compiledBadSubsection
+            : µb.compiledNetworkSection
+    );
 
     // Reminder:
     //   `redirect=` is a combination of a `redirect-rule` filter and a
@@ -3808,8 +3810,7 @@ FilterContainer.prototype.compileToAtomicFilter = function(
 /******************************************************************************/
 
 FilterContainer.prototype.fromCompiledContent = function(reader) {
-    // 0 = network filters
-    reader.select(0);
+    reader.select(µb.compiledNetworkSection);
     while ( reader.next() ) {
         this.acceptedCount += 1;
         if ( this.goodFilters.has(reader.line) ) {
@@ -3819,8 +3820,7 @@ FilterContainer.prototype.fromCompiledContent = function(reader) {
         }
     }
 
-    // 1 = network filters: bad filter directives
-    reader.select(1);
+    reader.select(µb.compiledNetworkSection + µb.compiledBadSubsection);
     while ( reader.next() ) {
         this.badFilters.add(reader.line);
     }

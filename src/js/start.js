@@ -190,7 +190,6 @@ const onUserSettingsReady = function(fetched) {
 
 const onCacheSettingsReady = async function(fetched) {
     if ( fetched.compiledMagic !== µb.systemSettings.compiledMagic ) {
-        await µb.assets.remove(/^compiled\//);
         µb.compiledFormatChanged = true;
         µb.selfieIsInvalid = true;
     }
@@ -302,10 +301,9 @@ try {
         }),
         µb.cacheStorage.get(
             { compiledMagic: 0, selfieMagic: 0 }
-        ).then(fetched =>
-            onCacheSettingsReady(fetched)
-        ).then(( ) => {
-            log.info(`Integrity of cached data processed ${Date.now()-vAPI.T0} ms after launch`);
+        ).then(fetched => {
+            log.info(`Cache magic numbers ready ${Date.now()-vAPI.T0} ms after launch`);
+            onCacheSettingsReady(fetched);
         }),
         vAPI.storage.get(createDefaultProps()).then(fetched => {
             log.info(`First fetch ready ${Date.now()-vAPI.T0} ms after launch`);

@@ -154,6 +154,13 @@ const µBlock = (( ) => { // jshint ignore:line
         compiledFormatChanged: false,
         selfieIsInvalid: false,
 
+        compiledNetworkSection: 100,
+        compiledCosmeticSection: 200,
+        compiledScriptletSection: 300,
+        compiledHTMLSection: 400,
+        compiledSentinelSection: 1000,
+        compiledBadSubsection: 1,
+
         restoreBackupSettings: {
             lastRestoreFile: '',
             lastRestoreTime: 0,
