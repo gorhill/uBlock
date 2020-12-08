@@ -182,7 +182,9 @@ const onMessage = function(request, sender, callback) {
     case 'uiStyles':
         response = {
             uiStyles: µb.hiddenSettings.uiStyles,
-            uiTheme: µb.hiddenSettings.uiTheme,
+            uiTheme: vAPI.webextFlavor.soup.has('devbuild')
+                ? µb.hiddenSettings.uiTheme
+                : 'unset',
         };
         break;
 
