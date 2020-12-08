@@ -1072,7 +1072,7 @@
     "description": "short for 'gigabytes'"
   },
   "clickToLoad": {
-    "message": "Click to load",
+    "message": "लोड करने के लिए क्लिक करें",
     "description": "Message used in frame placeholders"
   },
   "dummy": {
