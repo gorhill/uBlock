@@ -16,17 +16,18 @@ jobs:
       - name: Build all
         if: startsWith(github.ref, 'refs/tags/')
         run: |
-          ./tools/make-chromium.sh ${{ github.ref }}
-          ./tools/make-firefox.sh ${{ github.ref }}
-          ./tools/make-thunderbird.sh ${{ github.ref }}
+          /tools/make-chromium.sh $VERSION
+          /tools/make-firefox.sh $VERSION
+          /tools/make-thunderbird.sh $VERSION
 
       - name: Upload packages
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ format(github.ref, 'refs/tags/', '') }}
         with:
           files: |
-            ./dist/build/uBlock0_${{ github.ref }}.chromium.zip
-            ./dist/build/uBlock0_${{ github.ref }}.firefox.xpi
-            ./dist/build/uBlock0_${{ github.ref }}.thunderbird.xpi
+            /dist/build/uBlock0_$VERSION.chromium.zip
+            /dist/build/uBlock0_$VERSION.firefox.xpi
+            /dist/build/uBlock0_$VERSION.thunderbird.xpi
