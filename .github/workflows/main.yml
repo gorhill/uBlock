@@ -31,8 +31,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
-          tag_name: steps.release_info.outputs.VERSION
-          release_name: steps.release_info.outputs.VERSION
+          tag_name: ${{ steps.release_info.outputs.VERSION }}
+          release_name: ${{ steps.release_info.outputs.VERSION }}
           draft: true
           prerelease: true
       - name: Build all packages
