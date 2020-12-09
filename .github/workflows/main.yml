@@ -21,31 +21,32 @@ jobs:
           pushd ..
           git clone --depth 1 https://github.com/uBlockOrigin/uAssets.git
           popd
-      - name: Set version
+      - name: Get release information
+        id: release_info
         run: |
-            echo "VERSION=$(basename -- ${{ github.ref }})" >> $GITHUB_ENV
-      - name: Build all packages
-        run: |
-          tools/make-chromium.sh $VERSION
-          tools/make-firefox.sh $VERSION
-          tools/make-thunderbird.sh $VERSION
+          echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       - name: Create GitHub release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
-          tag_name: $VERSION
-          release_name: $VERSION
+          tag_name: steps.release_info.outputs.VERSION
+          release_name: steps.release_info.outputs.VERSION
           draft: true
+      - name: Build all packages
+        run: |
+          tools/make-chromium.sh ${{ steps.release_info.outputs.VERSION }}
+          tools/make-firefox.sh ${{ steps.release_info.outputs.VERSION }}
+          tools/make-thunderbird.sh ${{ steps.release_info.outputs.VERSION }}
       - name: Upload Chromium package
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/build/uBlock0_$VERSION.chromium.zip
-          asset_name: dist/build/uBlock0_$VERSION.chromium.zip
+          asset_path: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.chromium.zip
+          asset_name: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.chromium.zip
           asset_content_type: application/octet-stream
       - name: Upload Firefox package
         uses: actions/upload-release-asset@v1
@@ -53,8 +54,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/build/uBlock0_$VERSION.firefox.zip
-          asset_name: dist/build/uBlock0_$VERSION.firefox.zip
+          asset_path: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.firefox.zip
+          asset_name: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.firefox.zip
           asset_content_type: application/octet-stream
       - name: Upload Thunderbird package
         uses: actions/upload-release-asset@v1
@@ -62,6 +63,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/build/uBlock0_$VERSION.thunderbird.zip
-          asset_name: dist/build/uBlock0_$VERSION.thunderbird.zip
+          asset_path: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.thunderbird.zip
+          asset_name: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.thunderbird.zip
           asset_content_type: application/octet-stream
