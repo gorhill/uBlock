@@ -16,6 +16,11 @@ jobs:
     steps:
       - name: Clone repository
         uses: actions/checkout@v2
+      - name: Clone uAssets
+        run:
+          - pushd ..
+          - git clone --depth 1 https://github.com/uBlockOrigin/uAssets.git
+          - popd
       - name: Build all packages
         run: |
           tools/make-chromium.sh $VERSION
