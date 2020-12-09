@@ -3,22 +3,24 @@ name: GitHub CI
 on:
   create:
     branches: master
-  workflow_dispatch:
 
 # I used as template to get started:
 # https://github.com/DNSCrypt/dnscrypt-proxy/blob/master/.github/workflows/releases.yml
+# https://github.com/dessant/search-by-image/blob/master/.github/workflows/ci.yml
 
 jobs:
   build:
     name: Build packages
     runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
     steps:
-      - name: Build all
-        if: startsWith(github.ref, 'refs/tags/')
+      - name: Clone repository
+        uses: actions/checkout@v2
+      - name: Build all packages
         run: |
-          "$GITHUB_WORKSPACE/tools/make-chromium.sh $VERSION"
-          "$GITHUB_WORKSPACE/tools/make-firefox.sh $VERSION"
-          "$GITHUB_WORKSPACE/tools/make-thunderbird.sh $VERSION"
+          tools/make-chromium.sh $VERSION
+          tools/make-firefox.sh $VERSION
+          tools/make-thunderbird.sh $VERSION
 
       - name: Upload packages
         uses: softprops/action-gh-release@v1
@@ -28,6 +30,6 @@ jobs:
           VERSION: ${{ format(github.ref, 'refs/tags/', '') }}
         with:
           files: |
-            "$GITHUB_WORKSPACE/dist/build/uBlock0_$VERSION.chromium.zip"
-            "$GITHUB_WORKSPACE/dist/build/uBlock0_$VERSION.firefox.xpi"
-            "$GITHUB_WORKSPACE/dist/build/uBlock0_$VERSION.thunderbird.xpi"
+            dist/build/uBlock0_$VERSION.chromium.zip
+            dist/build/uBlock0_$VERSION.firefox.xpi
+            dist/build/uBlock0_$VERSION.thunderbird.xpi
