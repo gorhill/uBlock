@@ -16,9 +16,9 @@ jobs:
       - name: Build all
         if: startsWith(github.ref, 'refs/tags/')
         run: |
-          /tools/make-chromium.sh $VERSION
-          /tools/make-firefox.sh $VERSION
-          /tools/make-thunderbird.sh $VERSION
+          tools/make-chromium.sh $VERSION
+          tools/make-firefox.sh $VERSION
+          tools/make-thunderbird.sh $VERSION
 
       - name: Upload packages
         uses: softprops/action-gh-release@v1
@@ -28,6 +28,6 @@ jobs:
           VERSION: ${{ format(github.ref, 'refs/tags/', '') }}
         with:
           files: |
-            /dist/build/uBlock0_$VERSION.chromium.zip
-            /dist/build/uBlock0_$VERSION.firefox.xpi
-            /dist/build/uBlock0_$VERSION.thunderbird.xpi
+            dist/build/uBlock0_$VERSION.chromium.zip
+            dist/build/uBlock0_$VERSION.firefox.xpi
+            dist/build/uBlock0_$VERSION.thunderbird.xpi
