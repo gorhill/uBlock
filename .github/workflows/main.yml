@@ -21,6 +21,9 @@ jobs:
           pushd ..
           git clone --depth 1 https://github.com/uBlockOrigin/uAssets.git
           popd
+      - name: Set version
+        run: |
+            echo "VERSION=${{ format(github.ref, 'refs/tags/', '') }}" >> $GITHUB_ENV
       - name: Build all packages
         run: |
           tools/make-chromium.sh $VERSION
@@ -31,7 +34,6 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VERSION: ${{ format(github.ref, 'refs/tags/', '') }}
         with:
           files: |
             dist/build/uBlock0_$VERSION.chromium.zip
