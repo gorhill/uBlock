@@ -29,13 +29,30 @@ jobs:
           tools/make-chromium.sh $VERSION
           tools/make-firefox.sh $VERSION
           tools/make-thunderbird.sh $VERSION
-      - name: Upload packages
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
+      - name: Upload Chromium package
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: |
-            dist/build/uBlock0_$VERSION.chromium.zip
-            dist/build/uBlock0_$VERSION.firefox.xpi
-            dist/build/uBlock0_$VERSION.thunderbird.xpi
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/build/uBlock0_$VERSION.chromium.zip
+          asset_name: dist/build/uBlock0_$VERSION.chromium.zip
+          asset_content_type: application/octet-stream
+      - name: Upload Firefox package
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/build/uBlock0_$VERSION.firefox.zip
+          asset_name: dist/build/uBlock0_$VERSION.firefox.zip
+          asset_content_type: application/octet-stream
+      - name: Upload Thunderbird package
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/build/uBlock0_$VERSION.thunderbird.zip
+          asset_name: dist/build/uBlock0_$VERSION.thunderbird.zip
+          asset_content_type: application/octet-stream
