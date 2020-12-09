@@ -33,7 +33,6 @@ jobs:
         with:
           tag_name: ${{ steps.release_info.outputs.VERSION }}
           release_name: ${{ steps.release_info.outputs.VERSION }}
-          draft: true
           prerelease: true
       - name: Build all packages
         run: |
@@ -47,7 +46,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.chromium.zip
-          asset_name: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.chromium.zip
+          asset_name: uBlock0_${{ steps.release_info.outputs.VERSION }}.chromium.zip
           asset_content_type: application/octet-stream
       - name: Upload Firefox package
         uses: actions/upload-release-asset@v1
@@ -56,7 +55,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.firefox.xpi
-          asset_name: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.firefox.xpi
+          asset_name: uBlock0_${{ steps.release_info.outputs.VERSION }}.firefox.xpi
           asset_content_type: application/octet-stream
       - name: Upload Thunderbird package
         uses: actions/upload-release-asset@v1
@@ -65,5 +64,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.thunderbird.xpi
-          asset_name: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.thunderbird.xpi
+          asset_name: uBlock0_${{ steps.release_info.outputs.VERSION }}.thunderbird.xpi
           asset_content_type: application/octet-stream
