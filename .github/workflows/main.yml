@@ -29,7 +29,7 @@ jobs:
           tools/make-chromium.sh $VERSION
           tools/make-firefox.sh $VERSION
           tools/make-thunderbird.sh $VERSION
-     - name: Create GitHub release
+      - name: Create GitHub release
         id: create_release
         uses: actions/create-release@v1
         env:
