@@ -23,7 +23,7 @@ jobs:
           popd
       - name: Set version
         run: |
-            echo "VERSION=${{ format(github.ref, 'refs/tags/', '') }}" >> $GITHUB_ENV
+            echo "VERSION=$(basename -- ${{ github.ref }})" >> $GITHUB_ENV
       - name: Build all packages
         run: |
           tools/make-chromium.sh $VERSION
