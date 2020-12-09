@@ -377,16 +377,15 @@ const PageStore = class {
     setFrameURL(frameId, frameURL) {
         let frameStore = this.frames.get(frameId);
         if ( frameStore !== undefined ) {
-            if ( frameURL !== frameStore.rawURL ) {
-                frameStore.init(frameURL);
-            }
-        } else {
-            frameStore = FrameStore.factory(frameURL);
-            this.frames.set(frameId, frameStore);
-            this.frameAddCount += 1;
-            if ( (this.frameAddCount & 0b111111) === 0 ) {
-                this.pruneFrames();
-            }
+            return frameURL === frameStore.rawURL
+                ? frameStore
+                : frameStore.init(frameURL);
+        }
+        frameStore = FrameStore.factory(frameURL);
+        this.frames.set(frameId, frameStore);
+        this.frameAddCount += 1;
+        if ( (this.frameAddCount & 0b111111) === 0 ) {
+            this.pruneFrames();
         }
         return frameStore;
     }

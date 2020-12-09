@@ -121,7 +121,7 @@ const redirectableResources = new Map([
         data: 'text',
     } ],
     [ 'noop-0.1s.mp3', {
-        alias: 'noopmp3-0.1s',
+        alias: [ 'noopmp3-0.1s', 'abp-resource:blank-mp3' ],
         data: 'blob',
     } ],
     [ 'noop-1s.mp4', {
@@ -132,7 +132,7 @@ const redirectableResources = new Map([
         alias: 'noopframe',
     } ],
     [ 'noop.js', {
-        alias: 'noopjs',
+        alias: [ 'noopjs', 'abp-resource:blank-js' ],
         data: 'text',
     } ],
     [ 'noop.txt', {
@@ -461,7 +461,12 @@ RedirectEngine.prototype.loadBuiltinResources = function() {
             params: details.params,
         });
         this.resources.set(name, entry);
-        if ( details.alias !== undefined ) {
+        if ( details.alias === undefined ) { return; }
+        if ( Array.isArray(details.alias) ) {
+            for ( const alias of details.alias ) {
+                this.aliases.set(alias, name);
+            }
+        } else {
             this.aliases.set(details.alias, name);
         }
     };

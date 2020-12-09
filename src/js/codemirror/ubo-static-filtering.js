@@ -185,7 +185,7 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
         // Warn about unknown redirect tokens.
         if (
             string.charCodeAt(pos - 1) === 0x3D /* '=' */ &&
-            /[$,]redirect(-rule)?=$/.test(string.slice(0, pos))
+            /[$,](redirect(-rule)?|rewrite)=$/.test(string.slice(0, pos))
         ) {
             style = 'value';
             const end = parser.skipUntil(
@@ -418,6 +418,12 @@ const initHints = function() {
             return (item[1] & 0b01) !== 0;
         })
     );
+    const excludedHints = new Set([
+        'genericblock',
+        'object-subrequest',
+        'rewrite',
+        'webrtc',
+    ]);
 
     const pickBestHints = function(cursor, seedLeft, seedRight, hints) {
         const seed = (seedLeft + seedRight).trim();
@@ -471,6 +477,7 @@ const initHints = function() {
         const isException = parser.isException();
         const hints = [];
         for ( let [ text, bits ] of parser.netOptionTokenDescriptors ) {
+            if ( excludedHints.has(text) ) { continue; }
             if ( isNegated && (bits & parser.OPTCanNegate) === 0 ) { continue; }
             if ( isException ) {
                 if ( (bits & parser.OPTBlockOnly) !== 0 ) { continue; }
@@ -488,6 +495,7 @@ const initHints = function() {
     const getNetRedirectHints = function(cursor, seedLeft, seedRight) {
         const hints = [];
         for ( const text of redirectNames.keys() ) {
+            if ( text.startsWith('abp-resource:') ) { continue; }
             hints.push(text);
         }
         return pickBestHints(cursor, seedLeft, seedRight, hints);
@@ -495,7 +503,10 @@ const initHints = function() {
 
     const getNetHints = function(cursor, line) {
         const beg = cursor.ch;
-        if ( parser.optionsSpan.len === 0 ) {
+        if (
+            parser.optionsAnchorSpan.len === 0 &&
+            line.endsWith('$') === false
+        ) {
             if ( /[^\w\x80-\xF4#,.-]/.test(line) === false ) {
                 return getOriginHints(cursor, line);
             }
@@ -511,7 +522,7 @@ const initHints = function() {
         if ( assignPos === -1 ) {
             return getNetOptionHints(cursor, matchLeft[0], matchRight[0]);
         }
-        if ( /^redirect(-rule)?=/.test(matchLeft[0]) ) {
+        if ( /^(redirect(-rule)?|rewrite)=/.test(matchLeft[0]) ) {
             return getNetRedirectHints(
                 cursor,
                 matchLeft[0].slice(assignPos + 1),
