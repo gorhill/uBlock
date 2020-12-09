@@ -17,7 +17,7 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v2
       - name: Clone uAssets
-        run:
+        run: |
           pushd ..
           git clone --depth 1 https://github.com/uBlockOrigin/uAssets.git
           popd
@@ -26,7 +26,6 @@ jobs:
           tools/make-chromium.sh $VERSION
           tools/make-firefox.sh $VERSION
           tools/make-thunderbird.sh $VERSION
-
       - name: Upload packages
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
