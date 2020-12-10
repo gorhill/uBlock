@@ -4,8 +4,7 @@ on:
   create:
     branches: master
 
-# I used as template to get started:
-# https://github.com/DNSCrypt/dnscrypt-proxy/blob/master/.github/workflows/releases.yml
+# I used the following project as template to get started:
 # https://github.com/dessant/search-by-image/blob/master/.github/workflows/ci.yml
 
 jobs:
@@ -16,11 +15,14 @@ jobs:
     steps:
       - name: Clone repository
         uses: actions/checkout@v2
+        with:
+          persist-credentials: false
       - name: Clone uAssets
         run: |
           pushd ..
           git clone --depth 1 https://github.com/uBlockOrigin/uAssets.git
           popd
+      # https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
       - name: Get release information
         id: release_info
         run: |
