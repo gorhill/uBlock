@@ -867,6 +867,7 @@ vAPI.injectScriptlet = function(doc, text) {
             for ( const node of nodes ) {
                 node.setAttribute(this.masterToken, '');
                 node.setAttribute(styleToken, '');
+                this.styledNodes.add(node);
             }
         }
 
