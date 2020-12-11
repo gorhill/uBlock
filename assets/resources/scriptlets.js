@@ -589,6 +589,7 @@
     if ( arg1 === '{{1}}' ) { arg1 = ''; }
     const needles = [];
     for ( const condition of arg1.split(/\s+/) ) {
+        if ( condition === '' ) { continue; }
         const pos = condition.indexOf(':');
         let key, value;
         if ( pos !== -1 ) {
@@ -607,6 +608,7 @@
         }
         needles.push({ key, re: new RegExp(value) });
     }
+    const log = needles.length === 0 ? console.log.bind(console) : undefined;
     self.fetch = new Proxy(self.fetch, {
         apply: function(target, thisArg, args) {
             let proceed = true;
@@ -622,7 +624,13 @@
                         props.set( prop, init[prop]);
                     }
                 }
-                proceed = false;
+                if ( log !== undefined ) {
+                    const out = Array.from(props)
+                                     .map(a => `${a[0]}:${a[1]}`)
+                                     .join(' ');
+                    log(`uBO: fetch(${out})`);
+                }
+                proceed = needles.length === 0;
                 for ( const { key, re } of needles ) {
                     if (
                         props.has(key) === false ||
@@ -652,10 +660,7 @@
     if ( selector === '' || selector === '{{2}}' ) {
         selector = `[${tokens.join('],[')}]`;
     }
-    const rmattr = function(ev) {
-        if ( ev ) {
-            window.removeEventListener(ev.type, rmattr, true);
-        }
+    const rmattr = function() {
         try {
             const nodes = document.querySelectorAll(selector);
             for ( const node of nodes ) {
@@ -667,7 +672,7 @@
         }
     };
     if ( document.readyState === 'loading' ) {
-        window.addEventListener('DOMContentLoaded', rmattr, true);
+        window.addEventListener('DOMContentLoaded', rmattr, { once: true });
     } else {
         rmattr();
     }
