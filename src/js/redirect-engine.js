@@ -375,11 +375,11 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
 
         if ( line.startsWith('/// ') ) {
             if ( details === undefined ) {
-                details = {};
+                details = [];
             }
             const [ prop, value ] = line.slice(4).trim().split(/\s+/);
             if ( value !== undefined ) {
-                details[prop] = value;
+                details.push({ prop, value });
             }
             continue;
         }
@@ -401,8 +401,11 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
             RedirectEntry.fromContent(mime, content)
         );
 
-        if ( details instanceof Object && details.alias ) {
-            this.aliases.set(details.alias, name);
+        if ( Array.isArray(details) ) {
+            for ( const { prop, value } of details ) {
+                if ( prop !== 'alias' ) { continue; }
+                this.aliases.set(value, name);
+            }
         }
 
         fields = undefined;
