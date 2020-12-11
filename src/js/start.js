@@ -111,31 +111,14 @@ const onVersionReady = function(lastVersion) {
     µb.redirectEngine.invalidateResourcesSelfie();
 
     const lastVersionInt = vAPI.app.intFromVersion(lastVersion);
+    if ( lastVersionInt === 0 ) { return; }
 
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/494
-    //   Remove useless per-site switches.
-    if ( lastVersionInt <= 1019003007 ) {
-        µb.sessionSwitches.toggle('no-scripting', 'behind-the-scene', 0);
-        µb.permanentSwitches.toggle('no-scripting', 'behind-the-scene', 0);
+    // https://github.com/LiCybora/NanoDefenderFirefox/issues/196
+    //   Toggle on the blocking of CSP reports by default.
+    if ( lastVersionInt <= 1031003011 ) {
+        µb.sessionSwitches.toggle('no-csp-reports', '*', 1);
+        µb.permanentSwitches.toggle('no-csp-reports', '*', 1);
         µb.saveHostnameSwitches();
-    }
-
-    // Configure new popup panel according to classic popup panel
-    // configuration.
-    if ( lastVersionInt !== 0 ) {
-        if ( lastVersionInt <= 1026003014 ) {
-            µb.userSettings.popupPanelSections =
-                µb.userSettings.dynamicFilteringEnabled === true ? 0b11111 : 0b01111;
-            µb.userSettings.dynamicFilteringEnabled = undefined;
-            µb.saveUserSettings();
-        } else if (
-            lastVersionInt <= 1026003016 &&
-            (µb.userSettings.popupPanelSections & 1) !== 0
-        ) {
-            µb.userSettings.popupPanelSections =
-                (µb.userSettings.popupPanelSections << 1 | 1) & 0b111111;
-            µb.saveUserSettings();
-        }
     }
 
     vAPI.storage.set({ version: vAPI.app.version });
@@ -240,13 +223,14 @@ const fromFetch = function(to, fetched) {
 const createDefaultProps = function() {
     const fetchableProps = {
         'dynamicFilteringString': [
+            'no-csp-reports: * true',
             'behind-the-scene * * noop',
             'behind-the-scene * image noop',
             'behind-the-scene * 3p noop',
             'behind-the-scene * inline-script noop',
             'behind-the-scene * 1p-script noop',
             'behind-the-scene * 3p-script noop',
-            'behind-the-scene * 3p-frame noop'
+            'behind-the-scene * 3p-frame noop',
         ].join('\n'),
         'urlFilteringString': '',
         'hostnameSwitchesString': [
