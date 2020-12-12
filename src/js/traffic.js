@@ -358,7 +358,7 @@ const onBeforeBehindTheSceneRequest = function(fctxt) {
 //   way to know for sure which exact page triggered a tabless network
 //   request.
 
-onBeforeBehindTheSceneRequest.journalAddRequest = (( ) => {
+{
     let hostname = '';
     let pageStores = new Set();
     let pageStoresToken = 0;
@@ -376,7 +376,7 @@ onBeforeBehindTheSceneRequest.journalAddRequest = (( ) => {
         gcTimer = vAPI.setTimeout(gc, 30011);
     };
 
-    return function(fctxt, result) {
+    onBeforeBehindTheSceneRequest.journalAddRequest = (fctxt, result) => {
         const { docHostname } = fctxt;
         if (
             docHostname !== hostname ||
@@ -398,7 +398,7 @@ onBeforeBehindTheSceneRequest.journalAddRequest = (( ) => {
             pageStore.journalAddRequest(fctxt.hostname, result);
         }
     };
-})();
+}
 
 /******************************************************************************/
 
