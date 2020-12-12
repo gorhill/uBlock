@@ -205,7 +205,7 @@ const onBeforeRootFrameRequest = function(fctxt) {
         fctxt.type = 'main_frame';
     }
 
-    const pageStore = µb.bindTabToPageStats(fctxt.tabId, 'beforeRequest');
+    const pageStore = µb.bindTabToPageStore(fctxt.tabId, 'beforeRequest');
     if ( pageStore !== null ) {
         pageStore.journalAddRootFrame('uncommitted', requestURL);
         pageStore.journalAddRequest(requestHostname, result);
@@ -294,34 +294,14 @@ const toBlockDocResult = function(url, hostname, logData) {
 
 // Intercept and filter behind-the-scene requests.
 
-// https://github.com/gorhill/uBlock/issues/870
-// Finally, Chromium 49+ gained the ability to report network request of type
-// `beacon`, so now we can block them according to the state of the
-// "Disable hyperlink auditing/beacon" setting.
-
 const onBeforeBehindTheSceneRequest = function(fctxt) {
     const µb = µBlock;
     const pageStore = µb.pageStoreFromTabId(fctxt.tabId);
     if ( pageStore === null ) { return; }
 
-    // https://bugs.chromium.org/p/chromium/issues/detail?id=637577#c15
-    //   Do not filter behind-the-scene network request of type `beacon`: there
-    //   is no point. In any case, this will become a non-issue once
-    //   <https://bugs.chromium.org/p/chromium/issues/detail?id=522129> is
-    //   fixed.
-
-    // Blocking behind-the-scene requests can break a lot of stuff: prevent
-    // browser updates, prevent extension updates, prevent extensions from
-    // working properly, etc.
-    // So we filter if and only if the "advanced user" mode is selected.
     // https://github.com/gorhill/uBlock/issues/3150
     //   Ability to globally block CSP reports MUST also apply to
     //   behind-the-scene network requests.
-
-    // 2018-03-30:
-    //   Filter all behind-the-scene network requests like any other network
-    //   requests. Hopefully this will not break stuff as it used to be the
-    //   case.
 
     let result = 0;
 
@@ -341,8 +321,8 @@ const onBeforeBehindTheSceneRequest = function(fctxt) {
 
         // The "any-tab" scope is not whitelist-able, and in such case we must
         // use the origin URL as the scope. Most such requests aren't going to
-        // be blocked, so we further test for whitelisting and modify the
-        // result only when the request is being blocked.
+        // be blocked, so we test for whitelisting and modify the result only
+        // when the request is being blocked.
         if (
             result === 1 &&
             µb.getNetFilteringSwitch(fctxt.tabOrigin) === false
@@ -351,6 +331,9 @@ const onBeforeBehindTheSceneRequest = function(fctxt) {
             fctxt.filter = { engine: 'u', result: 2, raw: 'whitelisted' };
         }
     }
+
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1204
+    onBeforeBehindTheSceneRequest.journalAddRequest(fctxt, result);
 
     if ( µb.logger.enabled ) {
         fctxt.setRealm('network').toLogger();
@@ -368,6 +351,54 @@ const onBeforeBehindTheSceneRequest = function(fctxt) {
         return { cancel: true };
     }
 };
+
+// https://github.com/uBlockOrigin/uBlock-issues/issues/1204
+//   Report the tabless network requests to all page stores matching the
+//   document origin. This is an approximation, there is unfortunately no
+//   way to know for sure which exact page triggered a tabless network
+//   request.
+
+onBeforeBehindTheSceneRequest.journalAddRequest = (( ) => {
+    let hostname = '';
+    let pageStores = new Set();
+    let pageStoresToken = 0;
+    let gcTimer;
+
+    const reset = function() {
+        hostname = '';
+        pageStores = new Set();
+        pageStoresToken = 0;
+    };
+
+    const gc = ( ) => {
+        gcTimer = undefined;
+        if ( pageStoresToken !== µBlock.pageStoresToken ) { return reset(); }
+        gcTimer = vAPI.setTimeout(gc, 30011);
+    };
+
+    return function(fctxt, result) {
+        const { docHostname } = fctxt;
+        if (
+            docHostname !== hostname ||
+            pageStoresToken !== µBlock.pageStoresToken
+        ) {
+            hostname = docHostname;
+            pageStores = new Set();
+            for ( const pageStore of µBlock.pageStores.values() ) {
+                if ( pageStore.tabHostname !== docHostname ) { continue; }
+                pageStores.add(pageStore);
+            }
+            pageStoresToken = µBlock.pageStoresToken;
+            if ( gcTimer !== undefined ) {
+                clearTimeout(gcTimer);
+            }
+            gcTimer = vAPI.setTimeout(gc, 30011);
+        }
+        for ( const pageStore of pageStores ) {
+            pageStore.journalAddRequest(fctxt.hostname, result);
+        }
+    };
+})();
 
 /******************************************************************************/
 
@@ -394,7 +425,7 @@ const onHeadersReceived = function(details) {
     let pageStore = µb.pageStoreFromTabId(fctxt.tabId);
     if ( pageStore === null ) {
         if ( isRootDoc === false ) { return; }
-        pageStore = µb.bindTabToPageStats(fctxt.tabId, 'beforeRequest');
+        pageStore = µb.bindTabToPageStore(fctxt.tabId, 'beforeRequest');
     }
     if ( pageStore.getNetFilteringSwitch(fctxt) === false ) { return; }
 
