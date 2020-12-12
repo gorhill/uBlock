@@ -43,7 +43,7 @@ const µBlock = (( ) => { // jshint ignore:line
         autoUpdateDelayAfterLaunch: 180,
         autoUpdatePeriod: 7,
         benchmarkDatasetURL: 'unset',
-        blockingProfiles: '11111/#F00 11011/#C0F 11001/#00F 00001',
+        blockingProfiles: '11111/#F00 11010/#C0F 11001/#00F 00001',
         cacheStorageAPI: 'unset',
         cacheStorageCompression: true,
         cacheControlForFirefox1376932: 'no-cache, no-store, must-revalidate',

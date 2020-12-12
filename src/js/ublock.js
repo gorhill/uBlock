@@ -509,8 +509,18 @@ const matchBucket = function(url, hostname, bucket, start) {
     // https://github.com/chrisaljoudi/uBlock/issues/420
     this.cosmeticFilteringEngine.removeFromSelectorCache(srcHostname, 'net');
 
+    if ( details.tabId === undefined ) { return; }
+
     if ( requestType.startsWith('3p') ) {
         this.updateToolbarIcon(details.tabId, 0b100);
+    }
+
+    if ( requestType === '3p' && action === 3 ) {
+        vAPI.tabs.executeScript(details.tabId, {
+            file: '/js/scriptlets/load-3p-css.js',
+            allFrames: true,
+            runAt: 'document_idle',
+        });
     }
 };
 
