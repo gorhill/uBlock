@@ -26,13 +26,9 @@
 (( ) => {
     if ( typeof vAPI !== 'object' ) { return; }
 
-    if ( vAPI.load3rdPartyCSS ) { return; }
-    vAPI.load3rdPartyCSS = true;
-
-    const links = document.querySelectorAll('link[rel="stylesheet"]');
-    if ( links.length === 0 ) { return; }
-
-    const toLoadMaybe = new Map(Array.from(links).map(a => [ a.href, a ]));
+    if ( vAPI.dynamicReloadToken === undefined ) {
+        vAPI.dynamicReloadToken = vAPI.randomToken();
+    }
 
     for ( const sheet of Array.from(document.styleSheets) ) {
         let loaded = false;
@@ -41,10 +37,11 @@
         } catch(ex) {
         }
         if ( loaded ) { continue; }
-        const link = toLoadMaybe.get(sheet.href);
-        if ( link === undefined ) { continue; }
-        toLoadMaybe.delete(sheet.href);
+        const link = sheet.ownerNode || null;
+        if ( link === null || link.localName !== 'link' ) { continue; }
+        if ( link.hasAttribute(vAPI.dynamicReloadToken) ) { continue; }
         const clone = link.cloneNode(true);
+        clone.setAttribute(vAPI.dynamicReloadToken, '');
         link.replaceWith(clone);
     }
 })();
