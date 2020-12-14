@@ -1048,7 +1048,7 @@ const getLists = async function(callback) {
 // TODO: also return origin of embedded frames?
 const getOriginHints = function() {
     const punycode = self.punycode;
-    const out = [];
+    const out = new Set();
     for ( const tabId of µb.pageStores.keys() ) {
         if ( tabId === -1 ) { continue; }
         const tabContext = µb.tabContextManager.lookup(tabId);
@@ -1056,11 +1056,11 @@ const getOriginHints = function() {
         let { rootDomain, rootHostname } = tabContext;
         if ( rootDomain.endsWith('-scheme') ) { continue; }
         const isPunycode = rootHostname.includes('xn--');
-        out.push(isPunycode ? punycode.toUnicode(rootDomain) : rootDomain);
+        out.add(isPunycode ? punycode.toUnicode(rootDomain) : rootDomain);
         if ( rootHostname === rootDomain ) { continue; }
-        out.push(isPunycode ? punycode.toUnicode(rootHostname) : rootHostname);
+        out.add(isPunycode ? punycode.toUnicode(rootHostname) : rootHostname);
     }
-    return out;
+    return Array.from(out);
 };
 
 // My rules
