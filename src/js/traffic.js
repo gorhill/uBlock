@@ -377,7 +377,7 @@ const onBeforeBehindTheSceneRequest = function(fctxt) {
     };
 
     onBeforeBehindTheSceneRequest.journalAddRequest = (fctxt, result) => {
-        const { docHostname } = fctxt;
+        const docHostname = fctxt.getDocHostname();
         if (
             docHostname !== hostname ||
             pageStoresToken !== µBlock.pageStoresToken
@@ -395,7 +395,7 @@ const onBeforeBehindTheSceneRequest = function(fctxt) {
             gcTimer = vAPI.setTimeout(gc, 30011);
         }
         for ( const pageStore of pageStores ) {
-            pageStore.journalAddRequest(fctxt.hostname, result);
+            pageStore.journalAddRequest(fctxt.getHostname(), result);
         }
     };
 }
