@@ -77,3 +77,9 @@ Or, support us with a monthly donation and [become a backer!](https://opencollec
 <a href="https://opencollective.com/adnauseam/backer/27/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/27/avatar.svg"></a>
 <a href="https://opencollective.com/adnauseam/backer/28/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/28/avatar.svg"></a>
 <a href="https://opencollective.com/adnauseam/backer/29/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/29/avatar.svg"></a>
+
+<br>
+
+Special thanks to open-source support providers:
+
+https://pagekite.net/static/skin/i/pagekite-logo.png
