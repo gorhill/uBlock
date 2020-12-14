@@ -80,6 +80,6 @@ Or, support us with a monthly donation and [become a backer!](https://opencollec
 
 <br>
 
-Special thanks to open-source support providers:
+And special thanks to open-source support providers!
 
-https://pagekite.net/static/skin/i/pagekite-logo.png
+<img src="https://pagekite.net/static/skin/i/pagekite-logo.png"/>
