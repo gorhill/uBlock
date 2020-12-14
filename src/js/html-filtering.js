@@ -368,12 +368,14 @@
             hostname,
             [ plains, exceptions, procedurals, exceptions ]
         );
-        if ( details.entity !== '' ) {
-            filterDB.retrieve(
-                `${hostname.slice(0, -details.domain.length)}${details.entity}`,
-                [ plains, exceptions, procedurals, exceptions ]
-            );
-        }
+        const entity = details.entity !== ''
+            ? `${hostname.slice(0, -details.domain.length)}${details.entity}`
+            : '*';
+        filterDB.retrieve(
+            entity,
+            [ plains, exceptions, procedurals, exceptions ],
+            1
+        );
     
         if ( plains.size === 0 && procedurals.size === 0 ) { return; }
 

@@ -318,12 +318,10 @@
             sessionScriptletDB.retrieve([ null, $exceptions ]);
         }
         scriptletDB.retrieve(hostname, [ $scriptlets, $exceptions ]);
-        if ( request.entity !== '' ) {
-            scriptletDB.retrieve(
-                `${hostname.slice(0, -request.domain.length)}${request.entity}`,
-                [ $scriptlets, $exceptions ]
-            );
-        }
+        const entity = request.entity !== ''
+            ? `${hostname.slice(0, -request.domain.length)}${request.entity}`
+            : '*';
+        scriptletDB.retrieve(entity, [ $scriptlets, $exceptions ], 1);
         if ( $scriptlets.size === 0 ) { return; }
 
         const loggerEnabled = µb.logger.enabled;
