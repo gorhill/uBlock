@@ -84,7 +84,8 @@ const cmEditor = new CodeMirror(document.querySelector('.codeMirrorContainer'), 
 vAPI.messaging.send('dashboard', {
     what: 'getAutoCompleteDetails'
 }).then(response => {
-    if ( response instanceof Object === false ) { return; }
+    // For unknown reasons, `instanceof Object` does not work here in Firefox.
+    if ( typeof response !== 'object' ) { return; }
     const mode = cmEditor.getMode();
     if ( mode.setHints instanceof Function ) {
         mode.setHints(response);
