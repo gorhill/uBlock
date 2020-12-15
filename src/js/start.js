@@ -223,7 +223,6 @@ const fromFetch = function(to, fetched) {
 const createDefaultProps = function() {
     const fetchableProps = {
         'dynamicFilteringString': [
-            'no-csp-reports: * true',
             'behind-the-scene * * noop',
             'behind-the-scene * image noop',
             'behind-the-scene * 3p noop',
@@ -234,6 +233,7 @@ const createDefaultProps = function() {
         ].join('\n'),
         'urlFilteringString': '',
         'hostnameSwitchesString': [
+            'no-csp-reports: * true',
             'no-large-media: behind-the-scene false',
         ].join('\n'),
         'lastRestoreFile': '',
