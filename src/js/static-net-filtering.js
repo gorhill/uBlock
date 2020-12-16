@@ -4261,19 +4261,18 @@ FilterContainer.parseRedirectRequestValue = function(modifier) {
 };
 
 FilterContainer.compareRedirectRequests = function(a, b) {
-    const abits = a.bits, bbits = b.bits;
+    const { token: atok, priority: aint, bits: abits } =
+        FilterContainer.parseRedirectRequestValue(a.modifier);
+    if ( µb.redirectEngine.hasToken(atok) === false ) { return -1; }
+    const { token: btok, priority: bint, bits: bbits } =
+        FilterContainer.parseRedirectRequestValue(b.modifier);
+    if ( µb.redirectEngine.hasToken(btok) === false ) { return 1; }
     if ( abits !== bbits ) {
         if ( (abits & Important) !== 0 ) { return 1; }
         if ( (bbits & Important) !== 0 ) { return -1; }
         if ( (abits & AllowAction) !== 0 ) { return -1; }
         if ( (bbits & AllowAction) !== 0 ) { return 1; }
     }
-    const { token: atok, priority: aint } =
-        FilterContainer.parseRedirectRequestValue(a.modifier);
-    if ( µb.redirectEngine.hasToken(atok) === false ) { return -1; }
-    const { token: btok, priority: bint } =
-        FilterContainer.parseRedirectRequestValue(b.modifier);
-    if ( µb.redirectEngine.hasToken(btok) === false ) { return 1; }
     return aint - bint;
 };
 
