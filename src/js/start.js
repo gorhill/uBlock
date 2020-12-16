@@ -233,7 +233,6 @@ const createDefaultProps = function() {
         ].join('\n'),
         'urlFilteringString': '',
         'hostnameSwitchesString': [
-            'no-csp-reports: * true',
             'no-large-media: behind-the-scene false',
         ].join('\n'),
         'lastRestoreFile': '',
@@ -243,6 +242,10 @@ const createDefaultProps = function() {
         'netWhitelist': µb.netWhitelistDefault,
         'version': '0.0.0.0'
     };
+    // https://github.com/LiCybora/NanoDefenderFirefox/issues/196
+    if ( vAPI.webextFlavor.soup.has('firefox') ) {
+        fetchableProps.hostnameSwitchesString += '\nno-csp-reports: * true';
+    }
     toFetch(µb.localSettings, fetchableProps);
     toFetch(µb.userSettings, fetchableProps);
     toFetch(µb.restoreBackupSettings, fetchableProps);
