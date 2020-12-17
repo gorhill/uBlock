@@ -926,6 +926,16 @@ const backupUserData = async function() {
 const restoreUserData = async function(request) {
     const userData = request.userData;
 
+    // https://github.com/LiCybora/NanoDefenderFirefox/issues/196
+    //   Backup data could be from Chromium platform or from an older
+    //   Firefox version.
+    if (
+        vAPI.webextFlavor.soup.has('firefox') &&
+        vAPI.app.intFromVersion(userData.version) <= 1031003011
+    ) {
+        userData.hostnameSwitchesString += '\nno-csp-reports: * true';
+    }
+
     // https://github.com/chrisaljoudi/uBlock/issues/1102
     //   Ensure all currently cached assets are flushed from storage AND memory.
     µb.assets.rmrf();

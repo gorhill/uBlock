@@ -114,8 +114,11 @@ const onVersionReady = function(lastVersion) {
     if ( lastVersionInt === 0 ) { return; }
 
     // https://github.com/LiCybora/NanoDefenderFirefox/issues/196
-    //   Toggle on the blocking of CSP reports by default.
-    if ( lastVersionInt <= 1031003011 ) {
+    //   Toggle on the blocking of CSP reports by default for Firefox.
+    if (
+        vAPI.webextFlavor.soup.has('firefox') &&
+        lastVersionInt <= 1031003011
+    ) {
         µb.sessionSwitches.toggle('no-csp-reports', '*', 1);
         µb.permanentSwitches.toggle('no-csp-reports', '*', 1);
         µb.saveHostnameSwitches();
