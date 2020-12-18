@@ -868,7 +868,10 @@ vAPI.Tabs = class extends vAPI.Tabs {
     // properly setup if network requests are fired from within the tab.
     // Example: Chromium + case #6 at
     //          http://raymondhill.net/ublock/popup.html
-
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/688#issuecomment-748179731
+    //   For non-network URIs, defer scriptlet injection to content script. The
+    //   reason for this is that we need the effective URL and this information
+    //   is not available at this point.
     onNavigation(details) {
         super.onNavigation(details);
         const µb = µBlock;
@@ -879,8 +882,8 @@ vAPI.Tabs = class extends vAPI.Tabs {
                 pageStore.journalAddRootFrame('committed', details.url);
             }
         }
-        if ( µb.canInjectScriptletsNow ) {
-            let pageStore = µb.pageStoreFromTabId(details.tabId);
+        if ( µb.canInjectScriptletsNow && µb.URI.isNetworkURI(details.url) ) {
+            const pageStore = µb.pageStoreFromTabId(details.tabId);
             if ( pageStore !== null && pageStore.getNetFilteringSwitch() ) {
                 µb.scriptletFilteringEngine.injectNow(details);
             }

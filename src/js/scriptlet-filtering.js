@@ -377,7 +377,6 @@
 
     api.injectNow = function(details) {
         if ( typeof details.frameId !== 'number' ) { return; }
-        if ( µb.URI.isNetworkURI(details.url) === false ) { return; }
         const request = {
             tabId: details.tabId,
             frameId: details.frameId,
