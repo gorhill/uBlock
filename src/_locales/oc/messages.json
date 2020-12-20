@@ -188,7 +188,7 @@
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
-    "message": "Cosmetic filtering",
+    "message": "Filtres cosmetics",
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
@@ -232,7 +232,7 @@
     "description": ""
   },
   "popup3pAnyRulePrompt": {
-    "message": "3rd-party",
+    "message": "Tèrça partida",
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
@@ -360,7 +360,7 @@
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
-    "message": "Block remote fonts",
+    "message": "Blocar las poliças distantas",
     "description": ""
   },
   "settingsNoScriptingPrompt": {
@@ -372,11 +372,11 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsLastRestorePrompt": {
-    "message": "Last restore:",
+    "message": "Darrièra restauracion :",
     "description": "English: Last restore:"
   },
   "settingsLastBackupPrompt": {
-    "message": "Last backup:",
+    "message": "Darrièra salvagarda :",
     "description": "English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt": {
@@ -428,15 +428,15 @@
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
-    "message": "Ads",
+    "message": "Publicitats",
     "description": "English: Ads"
   },
   "3pGroupPrivacy": {
-    "message": "Privacy",
+    "message": "Confidencialitat",
     "description": "English: Privacy"
   },
   "3pGroupMalware": {
-    "message": "Malware domains",
+    "message": "Domenis malfasents",
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {
@@ -552,7 +552,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
-    "message": "Sort:",
+    "message": "Triar :",
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
@@ -560,11 +560,11 @@
     "description": "English: a sort option for list of rules."
   },
   "rulesSortBySource": {
-    "message": "Source",
+    "message": "Font",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortByDestination": {
-    "message": "Destination",
+    "message": "Destinacion",
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
@@ -576,7 +576,7 @@
     "description": "English: Import and append"
   },
   "whitelistExport": {
-    "message": "Export",
+    "message": "Exportar",
     "description": "English: Export"
   },
   "whitelistExportFilename": {
@@ -600,7 +600,7 @@
     "description": "English: URL"
   },
   "logRequestsHeaderFilter": {
-    "message": "Filter",
+    "message": "Filtre",
     "description": "English: Filter"
   },
   "logAll": {
@@ -692,7 +692,7 @@
     "description": "Label to identify a filter field"
   },
   "loggerEntryDetailsFilterList": {
-    "message": "Filter list",
+    "message": "Lista de filtre",
     "description": "Label to identify a filter list field"
   },
   "loggerEntryDetailsRule": {
@@ -820,11 +820,11 @@
     "description": "A label for the partyness column"
   },
   "loggerExportFormatList": {
-    "message": "List",
+    "message": "Lista",
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportFormatTable": {
-    "message": "Table",
+    "message": "Tablèu",
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportEncodePlain": {
@@ -844,15 +844,15 @@
     "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
-    "message": "Support",
+    "message": "Assisténcia",
     "description": "A link for where to get support"
   },
   "aboutIssues": {
-    "message": "Issue tracker",
+    "message": "Seguidor d’avarias",
     "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
-    "message": "Source code (GPLv3)",
+    "message": "Còdi font (GPLv3)",
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
@@ -860,11 +860,11 @@
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Source code",
+    "message": "Còdi font",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
-    "message": "Translations",
+    "message": "Traduccions",
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
@@ -916,27 +916,27 @@
     "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
-    "message": "a minute ago",
+    "message": "fa una minuta",
     "description": "English: a minute ago"
   },
   "elapsedManyMinutesAgo": {
-    "message": "{{value}} minutes ago",
+    "message": "fa {{value}} minutas",
     "description": "English: {{value}} minutes ago"
   },
   "elapsedOneHourAgo": {
-    "message": "an hour ago",
+    "message": "fa una ora",
     "description": "English: an hour ago"
   },
   "elapsedManyHoursAgo": {
-    "message": "{{value}} hours ago",
+    "message": "fa {{value}} oras",
     "description": "English: {{value}} hours ago"
   },
   "elapsedOneDayAgo": {
-    "message": "a day ago",
+    "message": "a un jorn",
     "description": "English: a day ago"
   },
   "elapsedManyDaysAgo": {
-    "message": "{{value}} days ago",
+    "message": "fa {{value}} jorns",
     "description": "English: {{value}} days ago"
   },
   "showDashboardButton": {
@@ -1012,7 +1012,7 @@
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {
-    "message": "Submit",
+    "message": "Mandar",
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
@@ -1036,7 +1036,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Type a shortcut",
+    "message": "Picar un acorchi",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
@@ -1044,7 +1044,7 @@
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
-    "message": "Copy to clipboard",
+    "message": "Copiar al quichapapièrs",
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "toggleBlockingProfile": {
@@ -1060,19 +1060,19 @@
     "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
   },
   "KB": {
-    "message": "KB",
+    "message": "Ko",
     "description": "short for 'kilobytes'"
   },
   "MB": {
-    "message": "MB",
+    "message": "Mo",
     "description": "short for 'megabytes'"
   },
   "GB": {
-    "message": "GB",
+    "message": "Go",
     "description": "short for 'gigabytes'"
   },
   "clickToLoad": {
-    "message": "Click to load",
+    "message": "Clicatz per cargar",
     "description": "Message used in frame placeholders"
   },
   "dummy": {

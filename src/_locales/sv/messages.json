@@ -44,7 +44,7 @@
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "Kortkommandon",
+    "message": "Genväg",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -1036,7 +1036,7 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Ange ett kortkommando",
+    "message": "Ange en genväg",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
