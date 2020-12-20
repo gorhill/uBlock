@@ -58,6 +58,7 @@ const redirectableResources = new Map([
     } ],
     [ 'amazon_ads.js', {
         alias: 'amazon-adsystem.com/aax2/amzn_ads.js',
+        data: 'text',
     } ],
     [ 'amazon_apstag.js', {
     } ],
@@ -72,30 +73,36 @@ const redirectableResources = new Map([
     } ],
     [ 'doubleclick_instream_ad_status.js', {
         alias: 'doubleclick.net/instream/ad_status.js',
+        data: 'text',
     } ],
     [ 'empty', {
         data: 'text',   // Important!
     } ],
     [ 'google-analytics_analytics.js', {
         alias: 'google-analytics.com/analytics.js',
+        data: 'text',
     } ],
     [ 'google-analytics_cx_api.js', {
         alias: 'google-analytics.com/cx/api.js',
     } ],
     [ 'google-analytics_ga.js', {
         alias: 'google-analytics.com/ga.js',
+        data: 'text',
     } ],
     [ 'google-analytics_inpage_linkid.js', {
         alias: 'google-analytics.com/inpage_linkid.js',
     } ],
     [ 'googlesyndication_adsbygoogle.js', {
         alias: 'googlesyndication.com/adsbygoogle.js',
+        data: 'text',
     } ],
     [ 'googletagmanager_gtm.js', {
         alias: 'googletagmanager.com/gtm.js',
+        data: 'text',
     } ],
     [ 'googletagservices_gpt.js', {
         alias: 'googletagservices.com/gpt.js',
+        data: 'text',
     } ],
     [ 'hd-main.js', {
     } ],
