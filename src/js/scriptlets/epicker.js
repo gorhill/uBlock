@@ -1223,11 +1223,21 @@ const pickerCSSStyle = [
     'width: 100%',
     'z-index: 2147483647',
     ''
-].join(' !important;');
+];
+
+// https://github.com/uBlockOrigin/uBlock-issues/issues/1408
+//   We need to reset Chromium-specific `color-scheme` property
+//   for our iframe widget.
+if (
+    CSS.supports instanceof Function &&
+    CSS.supports('color-scheme', 'initial')
+) {
+    pickerCSSStyle.push('color-scheme: initial');
+}
 
 const pickerCSS = `
 :root > [${vAPI.sessionId}] {
-    ${pickerCSSStyle}
+    ${pickerCSSStyle.join(' !important;')}
 }
 :root [${vAPI.sessionId}-clickblind] {
     pointer-events: none !important;
