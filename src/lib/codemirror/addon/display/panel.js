@@ -1,15 +1,15 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: https://codemirror.net/LICENSE
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror"], mod);
   else // Plain browser env
     mod(CodeMirror);
-})(function(CodeMirror) {
-  CodeMirror.defineExtension("addPanel", function(node, options) {
+})(function (CodeMirror) {
+  CodeMirror.defineExtension("addPanel", function (node, options) {
     options = options || {};
 
     if (!this.state.panels) initPanels(this);
@@ -25,8 +25,7 @@
       wrapper.insertBefore(node, options.before.node);
     } else if (replace) {
       wrapper.insertBefore(node, options.replace.node);
-      info.panels++;
-      options.replace.clear();
+      options.replace.clear(true);
     } else if (options.position == "bottom") {
       wrapper.appendChild(node);
     } else if (options.position == "before-bottom") {
@@ -38,14 +37,15 @@
     }
 
     var height = (options && options.height) || node.offsetHeight;
-    this._setSize(null, info.heightLeft -= height);
-    if (!replace) {
-      info.panels++;
-    }
-    if (options.stable && isAtTop(this, node))
-      this.scrollTo(null, this.getScrollInfo().top + height)
 
-    return new Panel(this, node, options, height);
+    var panel = new Panel(this, node, options, height);
+    info.panels.push(panel);
+
+    this.setSize();
+    if (options.stable && isAtTop(this, node))
+      this.scrollTo(null, this.getScrollInfo().top + height);
+
+    return panel;
   });
 
   function Panel(cm, node, options, height) {
@@ -56,22 +56,23 @@
     this.cleared = false;
   }
 
-  Panel.prototype.clear = function() {
+  /* when skipRemove is true, clear() was called from addPanel().
+   * Thus removePanels() should not be called (issue 5518) */
+  Panel.prototype.clear = function (skipRemove) {
     if (this.cleared) return;
     this.cleared = true;
     var info = this.cm.state.panels;
-    this.cm._setSize(null, info.heightLeft += this.height);
+    info.panels.splice(info.panels.indexOf(this), 1);
+    this.cm.setSize();
     if (this.options.stable && isAtTop(this.cm, this.node))
       this.cm.scrollTo(null, this.cm.getScrollInfo().top - this.height)
     info.wrapper.removeChild(this.node);
-    if (--info.panels == 0) removePanels(this.cm);
+    if (info.panels.length == 0 && !skipRemove) removePanels(this.cm);
   };
 
-  Panel.prototype.changed = function(height) {
-    var newHeight = height == null ? this.node.offsetHeight : height;
-    var info = this.cm.state.panels;
-    this.cm._setSize(null, info.heightLeft -= (newHeight - this.height));
-    this.height = newHeight;
+  Panel.prototype.changed = function () {
+    this.height = this.node.getBoundingClientRect().height;
+    this.cm.setSize();
   };
 
   function initPanels(cm) {
@@ -80,8 +81,7 @@
     var height = parseInt(style.height);
     var info = cm.state.panels = {
       setHeight: wrap.style.height,
-      heightLeft: height,
-      panels: 0,
+      panels: [],
       wrapper: document.createElement("div")
     };
     wrap.parentNode.insertBefore(info.wrapper, wrap);
@@ -90,8 +90,8 @@
     if (hasFocus) cm.focus();
 
     cm._setSize = cm.setSize;
-    if (height != null) cm.setSize = function(width, newHeight) {
-      if (newHeight == null) return this._setSize(width, newHeight);
+    if (height != null) cm.setSize = function (width, newHeight) {
+      if (!newHeight) newHeight = info.wrapper.offsetHeight;
       info.setHeight = newHeight;
       if (typeof newHeight != "number") {
         var px = /^(\d+\.?\d*)px$/.exec(newHeight);
@@ -100,10 +100,12 @@
         } else {
           info.wrapper.style.height = newHeight;
           newHeight = info.wrapper.offsetHeight;
-          info.wrapper.style.height = "";
         }
       }
-      cm._setSize(width, info.heightLeft += (newHeight - height));
+      var editorheight = newHeight - info.panels
+        .map(function (p) { return p.node.getBoundingClientRect().height; })
+        .reduce(function (a, b) { return a + b; }, 0);
+      cm._setSize(width, editorheight);
       height = newHeight;
     };
   }
