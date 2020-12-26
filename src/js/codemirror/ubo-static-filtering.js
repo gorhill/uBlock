@@ -274,7 +274,9 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
             if ( parser.patternIsRegex() ) {
                 stream.pos = parser.slices[parser.optionsAnchorSpan.i+1];
                 parserSlot = parser.optionsAnchorSpan.i;
-                return 'variable notice';
+                return parser.patternIsTokenizable()
+                    ? 'variable notice'
+                    : 'variable warning';
             }
             if ( (parser.slices[parserSlot] & (parser.BITAsterisk | parser.BITCaret)) !== 0 ) {
                 stream.pos += parser.slices[parserSlot+2];

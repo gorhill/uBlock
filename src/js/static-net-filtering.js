@@ -2622,15 +2622,9 @@ const FilterParser = class {
         if ( other !== undefined ) {
             return Object.assign(this, other);
         }
-        this.cantWebsocket = vAPI.cantWebsocket;
         this.noTokenHash = urlTokenizer.noTokenHash;
-        this.reIsolateHostname = /^(\*?\.)?([^\x00-\x24\x26-\x2C\x2F\x3A-\x5E\x60\x7B-\x7F]+)(.*)/;
         this.reBadCSP = /(?:=|;)\s*report-(?:to|uri)\b/;
         this.reToken = /[%0-9A-Za-z]+/g;
-        this.reRegexTokenAbort = /[\(\)\[\]]/;
-        this.reRegexBadPrefix = /(^|[^\\]\.|\\[%SDWsdw]|[^\\][()*+?[\\\]{}])$/;
-        this.reRegexBadSuffix = /^([^\\]\.|\\[%SDWsdw]|[()*+?[\]{}]|$)/;
-        this.reGoodToken = /[%0-9a-z]{1,}/g;
         this.domainOptList = [];
         this.tokenIdToNormalizedType = new Map([
             [ parser.OPTTokenCname, bitFromType('cname') ],
@@ -3175,32 +3169,22 @@ const FilterParser = class {
     //   not `bads`.
     extractTokenFromRegex() {
         this.reToken.lastIndex = 0;
-        const pattern = this.pattern;
+        const pattern =
+            vAPI.StaticFilteringParser.tokenizableStrFromRegex(this.pattern);
         let bestToken;
         let bestBadness = 0x7FFFFFFF;
         for (;;) {
             const matches = this.reToken.exec(pattern);
             if ( matches === null ) { break; }
-            let token = matches[0];
-            let prefix = pattern.slice(0, matches.index);
-            let suffix = pattern.slice(this.reToken.lastIndex);
-            if (
-                this.reRegexTokenAbort.test(prefix) &&
-                this.reRegexTokenAbort.test(suffix)
-            ) {
+            const { 0: token, index } = matches;
+            if ( index === 0 || pattern.charAt(index - 1) === '\x01' ) {
                 continue;
             }
-            if ( token.charCodeAt(0) === 0x62 /* 'b' */ ) {
-                const match = /\\+$/.exec(prefix);
-                if ( match !== null && (match[0].length & 1) !== 0 ) {
-                    prefix += 'b';
-                    token = token.slice(1);
-                }
-            }
+            const { lastIndex } = this.reToken;
             if (
-                this.reRegexBadPrefix.test(prefix) || (
-                    token.length < this.maxTokenLen &&
-                    this.reRegexBadSuffix.test(suffix)
+                token.length < this.maxTokenLen && (
+                    lastIndex === pattern.length ||
+                    pattern.charAt(lastIndex) === '\x01'
                 )
             ) {
                 continue;
