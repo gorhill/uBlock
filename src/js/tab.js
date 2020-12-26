@@ -343,7 +343,7 @@
                 fctxt.setURL(targetURL)
                      .setTabId(openerTabId)
                      .setTabOriginFromURL(rootOpenerURL)
-                     .setDocOriginFromURL(localOpenerURL);
+                     .setDocOriginFromURL(localOpenerURL || rootOpenerURL);
             } else {
                 fctxt.setURL(rootOpenerURL)
                      .setTabId(targetTabId)
