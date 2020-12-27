@@ -2782,7 +2782,7 @@ Parser.tokenizableStrFromRegex = (( ) => {
                 }
                 return s;
             }
-            case 2: /* T_ALTERNATION,'Alternation' */
+            case 2: /* T_ALTERNATION, 'Alternation' */
             case 8: /* T_CHARGROUP, 'CharacterGroup' */ {
                 let firstChar = 0;
                 let lastChar = 0;
