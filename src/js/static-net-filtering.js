@@ -3170,7 +3170,7 @@ const FilterParser = class {
     extractTokenFromRegex() {
         this.reToken.lastIndex = 0;
         const pattern =
-            vAPI.StaticFilteringParser.tokenizableStrFromRegex(this.pattern);
+            vAPI.StaticFilteringParser.regexUtils.toTokenizableStr(this.pattern);
         let bestToken;
         let bestBadness = 0x7FFFFFFF;
         for (;;) {

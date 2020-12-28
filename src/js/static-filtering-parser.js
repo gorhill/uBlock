@@ -114,6 +114,9 @@ const Parser = class {
         this.rePlainEntity = /^(?:[\w-]+\.)+\*$/;
         this.reEntity = /^[^*]+\.\*$/;
         this.punycoder = new URL(self.location);
+        // TODO: mind maxTokenLength
+        this.reGoodRegexToken
+            = /[^\x01%0-9A-Za-z][%0-9A-Za-z]{7,}|[^\x01%0-9A-Za-z][%0-9A-Za-z]{1,6}[^\x01%0-9A-Za-z]/;
         this.selectorCompiler = new this.SelectorCompiler(this);
         // TODO: reuse for network filtering analysis
         this.result = {
@@ -639,12 +642,8 @@ const Parser = class {
     }
 
     analyzeNetExtra() {
-        // Validate regex
         if ( this.patternIsRegex() ) {
-            try {
-                void new RegExp(this.getNetPattern());
-            }
-            catch (ex) {
+            if ( this.regexUtils.isValid(this.getNetPattern()) === false ) {
                 this.markSpan(this.patternSpan, BITError);
             }
         } else if (
@@ -1006,13 +1005,9 @@ const Parser = class {
     patternIsTokenizable() {
         // TODO: not necessarily true, this needs more work.
         if ( this.patternIsRegex === false ) { return true; }
-        const s = Parser.tokenizableStrFromRegex(this.getNetPattern());
-        try {
-            return /(?<![\x01%0-9A-Za-z]|^)[%0-9A-Za-z]{7,}/.test(s) ||
-                /(?<![\x01%0-9A-Za-z]|^)[%0-9A-Za-z]{1,6}(?![\x01%0-9A-Za-z]|$)/.test(s);
-        } catch(ex) {
-        }
-        return true;
+        return this.reGoodRegexToken.test(
+            this.regexUtils.toTokenizableStr(this.getNetPattern())
+        );
     }
 
     patternHasWildcard() {
@@ -2763,7 +2758,7 @@ const ExtOptionsIterator = class {
 // Depends on:
 // https://github.com/foo123/RegexAnalyzer
 
-Parser.tokenizableStrFromRegex = (( ) => {
+Parser.regexUtils = Parser.prototype.regexUtils = (( ) => {
 
     const firstCharCodeClass = s => {
         return /^[\x01%0-9A-Za-z]/.test(s) ? 1 : 0;
@@ -2773,12 +2768,12 @@ Parser.tokenizableStrFromRegex = (( ) => {
         return /[\x01%0-9A-Za-z]$/.test(s) ? 1 : 0;
     };
 
-    const toTokenizableString = node => {
+    const toTokenizableStr = node => {
         switch ( node.type ) {
             case 1: /* T_SEQUENCE, 'Sequence' */ {
                 let s = '';
                 for ( let i = 0; i < node.val.length; i++ ) {
-                    s += toTokenizableString(node.val[i]);
+                    s += toTokenizableStr(node.val[i]);
                 }
                 return s;
             }
@@ -2787,7 +2782,7 @@ Parser.tokenizableStrFromRegex = (( ) => {
                 let firstChar = 0;
                 let lastChar = 0;
                 for ( let i = 0; i < node.val.length; i++ ) {
-                    const s = toTokenizableString(node.val[i]);
+                    const s = toTokenizableStr(node.val[i]);
                     if ( firstChar === 0 && firstCharCodeClass(s) === 1 ) {
                         firstChar = 1;
                     }
@@ -2801,10 +2796,10 @@ Parser.tokenizableStrFromRegex = (( ) => {
             case 4: /* T_GROUP, 'Group' */ {
                 if ( node.flags.NegativeLookAhead === 1 ) { return '\x01'; }
                 if ( node.flags.NegativeLookBehind === 1 ) { return '\x01'; }
-                return toTokenizableString(node.val);
+                return toTokenizableStr(node.val);
             }
             case 16: /* T_QUANTIFIER, 'Quantifier' */ {
-                const s = toTokenizableString(node.val);
+                const s = toTokenizableStr(node.val);
                 const first = firstCharCodeClass(s);
                 const last = lastCharCodeClass(s);
                 if ( node.flags.min === 0 && first === 0 && last === 0 ) {
@@ -2817,10 +2812,18 @@ Parser.tokenizableStrFromRegex = (( ) => {
             }
             case 128: /* T_SPECIAL, 'Special' */ {
                 const flags = node.flags;
-                if ( flags.MatchEnd === 1 ) { return '\x00'; }
-                if ( flags.MatchStart === 1 ) { return '\x00'; }
-                if ( flags.MatchWordBoundary === 1 ) { return '\x00'; }
-                return '\x01';
+                if (
+                    flags.EndCharGroup === 1 || // dangling `]`
+                    flags.EndGroup === 1 ||     // dangling `)`
+                    flags.EndRepeats === 1      // dangling `}`
+                ) {
+                    throw new Error('Unmatched bracket');
+                }
+                return flags.MatchEnd === 1 ||
+                       flags.MatchStart === 1 ||
+                       flags.MatchWordBoundary === 1
+                    ? '\x00'
+                    : '\x01';
             }
             case 256: /* T_CHARS, 'Characters' */ {
                 for ( let i = 0; i < node.val.length; i++ ) {
@@ -2846,18 +2849,41 @@ Parser.tokenizableStrFromRegex = (( ) => {
         return '\x01';
     };
 
-    return function(reStr) {
-        if (
-            self.Regex instanceof Object === false ||
-            self.Regex.Analyzer instanceof Object === false
-        ) {
+    const Regex = self.Regex;
+    if (
+        Regex instanceof Object === false ||
+        Regex.Analyzer instanceof Object === false
+    ) {
+        return {
+            isValid: function(reStr)  {
+                try {
+                    void new RegExp(reStr);
+                } catch(ex) {
+                    return false;
+                }
+                return true;
+            },
+            toTokenizableStr: ( ) => '',
+        };
+    }
+
+    return {
+        isValid: function(reStr) {
+            try {
+                void new RegExp(reStr);
+                void toTokenizableStr(Regex.Analyzer(reStr, false).tree());
+            } catch(ex) {
+                return false;
+            }
+            return true;
+        },
+        toTokenizableStr: function(reStr) {
+            try {
+                return toTokenizableStr(Regex.Analyzer(reStr, false).tree());
+            } catch(ex) {
+            }
             return '';
-        }
-        try {
-            return toTokenizableString(self.Regex.Analyzer(reStr, false).tree());
-        } catch(ex) {
-        }
-        return '';
+        },
     };
 })();
 
