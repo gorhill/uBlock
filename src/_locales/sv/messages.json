@@ -100,7 +100,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "Blockerad sedan installation",
+    "message": "Blockerat sedan installation",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {

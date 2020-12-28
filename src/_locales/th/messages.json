@@ -120,7 +120,7 @@
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "เปิดบันทึกการทำงาน",
+    "message": "เปิดแอปโทรศัพท์",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
