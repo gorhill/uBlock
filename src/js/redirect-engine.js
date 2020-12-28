@@ -349,12 +349,14 @@ RedirectEngine.prototype.resourceContentFromName = function(name, mime) {
 //   Consider 'none' a reserved keyword, to be used to disable redirection.
 
 RedirectEngine.prototype.resourcesFromString = function(text) {
-    const lineIter = new µBlock.LineIterator(removeTopCommentBlock(text));
+    const lineIter = new µBlock.LineIterator(
+        removeTopCommentBlock(text) + '\n\n'
+    );
     const reNonEmptyLine = /\S/;
     let fields, encoded, details;
 
     while ( lineIter.eot() === false ) {
-        let line = lineIter.next();
+        const line = lineIter.next();
         if ( line.startsWith('#') ) { continue; }
         if ( line.startsWith('// ') ) { continue; }
 
@@ -396,18 +398,16 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
             continue;
         }
 
+        // No more data, add the resource.
         const name = this.aliases.get(fields[0]) || fields[0];
         const mime = fields[1];
         const content = µBlock.orphanizeString(
             fields.slice(2).join(encoded ? '' : '\n')
         );
-
-        // No more data, add the resource.
         this.resources.set(
             name,
             RedirectEntry.fromContent(mime, content)
         );
-
         if ( Array.isArray(details) ) {
             for ( const { prop, value } of details ) {
                 if ( prop !== 'alias' ) { continue; }
@@ -417,22 +417,6 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
 
         fields = undefined;
         details = undefined;
-    }
-
-    // Process pending resource data.
-    if ( fields !== undefined ) {
-        const name = fields[0];
-        const mime = fields[1];
-        const content = µBlock.orphanizeString(
-            fields.slice(2).join(encoded ? '' : '\n')
-        );
-        this.resources.set(
-            name,
-            RedirectEntry.fromContent(mime, content)
-        );
-        if ( details instanceof Object && details.alias ) {
-            this.aliases.set(details.alias, name);
-        }
     }
 
     this.modifyTime = Date.now();
