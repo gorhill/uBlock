@@ -343,10 +343,10 @@ RedirectEngine.prototype.resourceContentFromName = function(name, mime) {
 
 /******************************************************************************/
 
-// TODO: combine same key-redirect pairs into a single regex.
-
 // https://github.com/uBlockOrigin/uAssets/commit/deefe875551197d655f79cb540e62dfc17c95f42
 //   Consider 'none' a reserved keyword, to be used to disable redirection.
+// https://github.com/uBlockOrigin/uBlock-issues/issues/1419
+//   Append newlines to raw text to ensure processing of trailing resource.
 
 RedirectEngine.prototype.resourcesFromString = function(text) {
     const lineIter = new µBlock.LineIterator(
