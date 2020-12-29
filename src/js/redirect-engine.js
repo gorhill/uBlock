@@ -146,6 +146,10 @@ const redirectableResources = new Map([
         alias: 'nooptext',
         data: 'text',
     } ],
+    [ 'noop-vmap1.0.xml', {
+        alias: 'noopvmap-1.0',
+        data: 'text',
+    } ],
     [ 'outbrain-widget.js', {
         alias: 'widgets.outbrain.com/outbrain.js',
     } ],
@@ -173,6 +177,7 @@ const extToMimeMap = new Map([
     [  'mp4', 'video/mp4' ],
     [  'png', 'image/png' ],
     [  'txt', 'text/plain' ],
+    [  'xml', 'text/xml' ],
 ]);
 
 const typeToMimeMap = new Map([
