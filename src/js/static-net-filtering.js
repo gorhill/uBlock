@@ -3114,23 +3114,20 @@ const FilterParser = class {
 
     makeToken() {
         if ( this.pattern === '*' ) {
-            if (
-                this.modifyType !== this.parser.OPTTokenQueryprune ||
-                this.makePatternFromQuerypruneValue() === false
-            ) {
+            if ( this.modifyType !== this.parser.OPTTokenQueryprune ) {
                 return;
             }
+            return this.extractTokenFromQuerypruneValue();
         }
         if ( this.isRegex ) {
-            return this.extractTokenFromRegex();
+            return this.extractTokenFromRegex(this.pattern);
         }
-        this.extractTokenFromPattern();
+        this.extractTokenFromPattern(this.pattern);
     }
 
     // Note: a one-char token is better than a documented bad token.
-    extractTokenFromPattern() {
+    extractTokenFromPattern(pattern) {
         this.reToken.lastIndex = 0;
-        const pattern = this.pattern;
         let bestMatch = null;
         let bestBadness = 0x7FFFFFFF;
         for (;;) {
@@ -3167,10 +3164,9 @@ const FilterParser = class {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1145#issuecomment-657036902
     //   Mind `\b` directives: `/\bads\b/` should result in token being `ads`,
     //   not `bads`.
-    extractTokenFromRegex() {
+    extractTokenFromRegex(pattern) {
+        pattern = vAPI.StaticFilteringParser.regexUtils.toTokenizableStr(pattern);
         this.reToken.lastIndex = 0;
-        const pattern =
-            vAPI.StaticFilteringParser.regexUtils.toTokenizableStr(this.pattern);
         let bestToken;
         let bestBadness = 0x7FFFFFFF;
         for (;;) {
@@ -3204,23 +3200,19 @@ const FilterParser = class {
         }
     }
 
-    makePatternFromQuerypruneValue() {
-        let pattern = this.modifyValue;
+    extractTokenFromQuerypruneValue() {
+        const pattern = this.modifyValue;
         if ( pattern === '*' || pattern.charCodeAt(0) === 0x7E /* '~' */ ) {
-            return false;
+            return;
         }
         const match = /^\/(.+)\/i?$/.exec(pattern);
         if ( match !== null ) {
-            pattern = match[1];
-            this.isRegex = true;
-        } else if ( pattern.startsWith('|') ) {
-            pattern = '\\b' + pattern.slice(1);
-            this.isRegex = true;
-        } else {
-            pattern = encodeURIComponent(pattern).toLowerCase() + '=';
+            return this.extractTokenFromRegex(match[1]);
         }
-        this.pattern = pattern;
-        return true;
+        if ( pattern.startsWith('|') ) {
+            return this.extractTokenFromRegex('\\b' + pattern.slice(1));
+        }
+        this.extractTokenFromPattern(encodeURIComponent(pattern).toLowerCase());
     }
 
     hasNoOptionUnits() {
@@ -3246,14 +3238,14 @@ const FilterParser = class {
     }
 };
 
-FilterParser.prototype.DOMAIN_BIT             = 0b00000001;
-FilterParser.prototype.DENYALLOW_BIT          = 0b00000010;
-FilterParser.prototype.HEADER_BIT             = 0b00000100;
-FilterParser.prototype.STRICT_PARTY_BIT       = 0b00001000;
+FilterParser.prototype.DOMAIN_BIT       = 0b00000001;
+FilterParser.prototype.DENYALLOW_BIT    = 0b00000010;
+FilterParser.prototype.HEADER_BIT       = 0b00000100;
+FilterParser.prototype.STRICT_PARTY_BIT = 0b00001000;
 
-FilterParser.prototype.CSP_BIT                = 0b00010000;
-FilterParser.prototype.QUERYPRUNE_BIT         = 0b00100000;
-FilterParser.prototype.REDIRECT_BIT           = 0b01000000;
+FilterParser.prototype.CSP_BIT          = 0b00010000;
+FilterParser.prototype.QUERYPRUNE_BIT   = 0b00100000;
+FilterParser.prototype.REDIRECT_BIT     = 0b01000000;
 
 /******************************************************************************/
 
