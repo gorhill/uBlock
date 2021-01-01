@@ -552,7 +552,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
-    "message": "Sort:",
+    "message": "Razvrsti",
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
@@ -560,7 +560,7 @@
     "description": "English: a sort option for list of rules."
   },
   "rulesSortBySource": {
-    "message": "Source",
+    "message": "Vir",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortByDestination": {
