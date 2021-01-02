@@ -226,9 +226,9 @@ const PageStore = class {
     constructor(tabId, context) {
         this.extraData = new Map();
         this.journal = [];
-        this.journalTimer = null;
-        this.journalLastCommitted = this.journalLastUncommitted = undefined;
-        this.journalLastUncommittedURL = undefined;
+        this.journalTimer = undefined;
+        this.journalLastCommitted = this.journalLastUncommitted = -1;
+        this.journalLastUncommittedOrigin = undefined;
         this.netFilteringCache = NetFilteringResultCache.factory();
         this.init(tabId, context);
     }
@@ -351,12 +351,12 @@ const PageStore = class {
             this.largeMediaTimer = null;
         }
         this.disposeFrameStores();
-        if ( this.journalTimer !== null ) {
+        if ( this.journalTimer !== undefined ) {
             clearTimeout(this.journalTimer);
-            this.journalTimer = null;
+            this.journalTimer = undefined;
         }
         this.journal = [];
-        this.journalLastUncommittedURL = undefined;
+        this.journalLastUncommittedOrigin = undefined;
         if ( pageStoreJunkyard.length < pageStoreJunkyardMax ) {
             pageStoreJunkyard.push(this);
         }
@@ -463,7 +463,7 @@ const PageStore = class {
             hostname,
             result === 1 ? 0x00000001 : 0x00010000
         );
-        if ( this.journalTimer === null ) {
+        if ( this.journalTimer === undefined ) {
             this.journalTimer = vAPI.setTimeout(
                 ( ) => { this.journalProcess(true); },
                 µb.hiddenSettings.requestJournalProcessPeriod
@@ -475,18 +475,23 @@ const PageStore = class {
         if ( type === 'committed' ) {
             this.journalLastCommitted = this.journal.length;
             if (
-                this.journalLastUncommitted !== undefined &&
+                this.journalLastUncommitted !== -1 &&
                 this.journalLastUncommitted < this.journalLastCommitted &&
-                this.journalLastUncommittedURL === url
+                this.journalLastUncommittedOrigin === vAPI.hostnameFromURI(url)
             ) {
                 this.journalLastCommitted = this.journalLastUncommitted;
-                this.journalLastUncommitted = undefined;
             }
         } else if ( type === 'uncommitted' ) {
-            this.journalLastUncommitted = this.journal.length;
-            this.journalLastUncommittedURL = url;
+            const newOrigin = vAPI.hostnameFromURI(url);
+            if (
+                this.journalLastUncommitted === -1 ||
+                this.journalLastUncommittedOrigin !== newOrigin
+            ) {
+                this.journalLastUncommitted = this.journal.length;
+                this.journalLastUncommittedOrigin = newOrigin;
+            }
         }
-        if ( this.journalTimer !== null ) {
+        if ( this.journalTimer !== undefined ) {
             clearTimeout(this.journalTimer);
         }
         this.journalTimer = vAPI.setTimeout(
@@ -495,16 +500,14 @@ const PageStore = class {
         );
     }
 
-    journalProcess(fromTimer) {
-        if ( !fromTimer ) {
-            clearTimeout(this.journalTimer);
-        }
-        this.journalTimer = null;
+    journalProcess(fromTimer = false) {
+        if ( fromTimer === false ) { clearTimeout(this.journalTimer); }
+        this.journalTimer = undefined;
 
         const journal = this.journal;
+        const pivot = this.journalLastCommitted || 0;
         const now = Date.now();
         let aggregateCounts = 0;
-        let pivot = this.journalLastCommitted || 0;
 
         // Everything after pivot originates from current page.
         for ( let i = pivot; i < journal.length; i += 2 ) {
@@ -520,7 +523,7 @@ const PageStore = class {
         }
         this.perLoadBlockedRequestCount += aggregateCounts & 0xFFFF;
         this.perLoadAllowedRequestCount += aggregateCounts >>> 16 & 0xFFFF;
-        this.journalLastCommitted = undefined;
+        this.journalLastUncommitted = this.journalLastCommitted = -1;
 
         // https://github.com/chrisaljoudi/uBlock/issues/905#issuecomment-76543649
         //   No point updating the badge if it's not being displayed.
