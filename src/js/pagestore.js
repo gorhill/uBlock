@@ -357,6 +357,7 @@ const PageStore = class {
         }
         this.journal = [];
         this.journalLastUncommittedOrigin = undefined;
+        this.journalLastCommitted = this.journalLastUncommitted = -1;
         if ( pageStoreJunkyard.length < pageStoreJunkyardMax ) {
             pageStoreJunkyard.push(this);
         }
