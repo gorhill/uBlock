@@ -506,7 +506,7 @@ const PageStore = class {
         this.journalTimer = undefined;
 
         const journal = this.journal;
-        const pivot = this.journalLastCommitted || 0;
+        const pivot = Math.max(0, this.journalLastCommitted);
         const now = Date.now();
         let aggregateCounts = 0;
 
