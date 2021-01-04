@@ -3,9 +3,17 @@
   "type": "object",
   "properties": {
     "adminSettings": {
-      "title": "A valid JSON string compliant with uBO's backup format.",
+      "title": "A valid JSON string compliant with uBO's backup format",
       "description": "All entries present will overwrite local settings.",
       "type": "string"
+    },
+    "extraTrustedSiteDirectives": {
+      "title": "A list of trusted-site directives",
+      "description": "Trusted-site directives to always add at launch time.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     }
   }
 }

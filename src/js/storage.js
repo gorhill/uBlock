@@ -1224,7 +1224,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 µBlock.restoreAdminSettings = async function() {
     let data;
     try {
-        const json = await vAPI.adminStorage.getItem('adminSettings');
+        const json = await vAPI.adminStorage.get('adminSettings');
         if ( typeof json === 'string' && json !== '' ) {
             data = JSON.parse(json);
         } else if ( json instanceof Object ) {

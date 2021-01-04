@@ -133,10 +133,23 @@ const onVersionReady = function(lastVersion) {
 // Whitelist in memory.
 // Whitelist parser needs PSL to be ready.
 // gorhill 2014-12-15: not anymore
+//
+// https://github.com/uBlockOrigin/uBlock-issues/issues/1433
+//   Allow admins to add their own trusted-site directives.
 
-const onNetWhitelistReady = function(netWhitelistRaw) {
+const onNetWhitelistReady = function(netWhitelistRaw, adminExtra) {
     if ( typeof netWhitelistRaw === 'string' ) {
         netWhitelistRaw = netWhitelistRaw.split('\n');
+    }
+    // Append admin-controlled trusted-site directives
+    if (
+        Array.isArray(adminExtra.trustedSites) &&
+        adminExtra.trustedSites.length !== 0
+    ) {
+        for ( const directive of adminExtra.trustedSites ) {
+            µb.netWhitelistDefault.push(directive);
+            netWhitelistRaw.push(directive);
+        }
     }
     µb.netWhitelist = µb.whitelistFromArray(netWhitelistRaw);
     µb.netWhitelistModifyTime = Date.now();
@@ -190,7 +203,7 @@ const onCacheSettingsReady = async function(fetched) {
 
 /******************************************************************************/
 
-const onFirstFetchReady = function(fetched) {
+const onFirstFetchReady = function(fetched, adminExtra) {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/507
     //   Firefox-specific: somehow `fetched` is undefined under certain
     //   circumstances even though we asked to load with default values.
@@ -202,7 +215,7 @@ const onFirstFetchReady = function(fetched) {
     fromFetch(µb.localSettings, fetched);
     onUserSettingsReady(fetched);
     fromFetch(µb.restoreBackupSettings, fetched);
-    onNetWhitelistReady(fetched.netWhitelist);
+    onNetWhitelistReady(fetched.netWhitelist, adminExtra);
     onVersionReady(fetched.version);
 };
 
@@ -283,6 +296,11 @@ try {
     );
     log.info(`Backend storage for cache will be ${cacheBackend}`);
 
+    const adminExtra = {};
+    adminExtra.trustedSites =
+        await vAPI.adminStorage.get('extraTrustedSiteDirectives') || [];
+    log.info(`Extra admin settings ready ${Date.now()-vAPI.T0} ms after launch`);
+
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1365
     //   Wait for onCacheSettingsReady() to be fully ready.
     await Promise.all([
@@ -297,7 +315,7 @@ try {
         }),
         vAPI.storage.get(createDefaultProps()).then(fetched => {
             log.info(`First fetch ready ${Date.now()-vAPI.T0} ms after launch`);
-            onFirstFetchReady(fetched);
+            onFirstFetchReady(fetched, adminExtra);
         }),
         µb.loadPublicSuffixList().then(( ) => {
             log.info(`PSL ready ${Date.now()-vAPI.T0} ms after launch`);

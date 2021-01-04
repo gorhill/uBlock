@@ -70,7 +70,13 @@ CodeMirror.defineMode("ubo-whitelist-directives", function() {
                 }
                 return null;
             }
-            return reHostnameExtractor.test(line) ? null : 'error';
+            if ( reHostnameExtractor.test(line) === false ) {
+                return 'error';
+            }
+            if ( whitelistDefaultSet.has(line.trim()) ) {
+                return 'keyword';
+            }
+            return null;
         }
     };
 });
