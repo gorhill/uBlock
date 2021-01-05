@@ -91,6 +91,9 @@
     text-decoration: underline var(--sf-warning-ink);
     text-underline-position: under;
     }
+.cm-s-default .cm-readonly {
+    color: var(--sf-readonly-ink);
+    }
 
 /* Rules */
 .cm-s-default .cm-allowrule {

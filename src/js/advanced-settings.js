@@ -31,6 +31,7 @@
 /******************************************************************************/
 
 let defaultSettings = new Map();
+let adminSettings = new Map();
 let beforeHash = '';
 
 /******************************************************************************/
@@ -45,18 +46,22 @@ CodeMirror.defineMode('raw-settings', function() {
                 const match = stream.match(/\S+/);
                 if ( match !== null && defaultSettings.has(match[0]) ) {
                     lastSetting = match[0];
-                    return 'keyword';
+                    return adminSettings.has(match[0])
+                        ? 'readonly keyword'
+                        : 'keyword';
                 }
                 stream.skipToEnd();
                 return 'line-cm-error';
             }
             stream.eatSpace();
             const match = stream.match(/.*$/);
-            if (
-                match !== null &&
-                match[0].trim() !== defaultSettings.get(lastSetting)
-            ) {
-                return 'line-cm-strong';
+            if ( match !== null ) {
+                if ( match[0].trim() !== defaultSettings.get(lastSetting) ) {
+                    return 'line-cm-strong';
+                }
+                if ( adminSettings.has(lastSetting) ) {
+                    return 'readonly';
+                }
             }
             stream.skipToEnd();
             return null;
@@ -146,20 +151,33 @@ const renderAdvancedSettings = async function(first) {
         what: 'readHiddenSettings',
     });
     defaultSettings = new Map(arrayFromObject(details.default));
+    adminSettings = new Map(arrayFromObject(details.admin));
     beforeHash = hashFromAdvancedSettings(details.current);
     const pretty = [];
+    const roLines = [];
     const entries = arrayFromObject(details.current);
     let max = 0;
     for ( const [ k ] of entries ) {
         if ( k.length > max ) { max = k.length; }
     }
-    for ( const [ k, v ] of entries ) {
+    for ( let i = 0; i < entries.length; i++ ) {
+        const [ k, v ] = entries[i];
         pretty.push(' '.repeat(max - k.length) + `${k} ${v}`);
+        if ( adminSettings.has(k) ) {
+            roLines.push(i);
+        }
     }
     pretty.push('');
     cmEditor.setValue(pretty.join('\n'));
     if ( first ) {
         cmEditor.clearHistory();
+    }
+    for ( const line of roLines ) {
+        cmEditor.markText(
+            { line, ch: 0 },
+            { line: line + 1, ch: 0 },
+            { readOnly: true }
+        );
     }
     advancedSettingsChanged();
     cmEditor.focus();

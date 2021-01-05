@@ -89,28 +89,50 @@
 
 /******************************************************************************/
 
-µBlock.loadHiddenSettings = async function() {
-    const bin = await vAPI.storage.get('hiddenSettings');
-    if ( bin instanceof Object === false ) { return; }
+// Admin hidden settings have precedence over user hidden settings.
 
-    const hs = bin.hiddenSettings;
-    if ( hs instanceof Object ) {
-        const hsDefault = this.hiddenSettingsDefault;
-        for ( const key in hsDefault ) {
-            if (
-                hsDefault.hasOwnProperty(key) &&
-                hs.hasOwnProperty(key) &&
-                typeof hs[key] === typeof hsDefault[key]
-            ) {
-                this.hiddenSettings[key] = hs[key];
-            }
+µBlock.loadHiddenSettings = async function() {
+    const hsDefault = this.hiddenSettingsDefault;
+    const hsAdmin = this.hiddenSettingsAdmin;
+    const hsUser = this.hiddenSettings;
+
+    const results = await Promise.all([
+        vAPI.adminStorage.get('toSet'),
+        vAPI.storage.get('hiddenSettings'),
+    ]);
+
+    if (
+        results[0] instanceof Object &&
+        Array.isArray(results[0].hiddenSettings)
+    ) {
+        for ( const entry of results[0].hiddenSettings ) {
+            if ( entry.length < 1 ) { continue; }
+            const name = entry[0];
+            if ( hsDefault.hasOwnProperty(name) === false ) { continue; }
+            const value = entry.length < 2
+                ? hsDefault[name]
+                : this.hiddenSettingValueFromString(name, entry[1]);
+            if ( value === undefined ) { continue; }
+            hsDefault[name] = hsAdmin[name] = hsUser[name] = value;
         }
-        if ( typeof this.hiddenSettings.suspendTabsUntilReady === 'boolean' ) {
-            this.hiddenSettings.suspendTabsUntilReady =
-                this.hiddenSettings.suspendTabsUntilReady
-                    ? 'yes'
-                    : 'unset';
-        }
+    }
+
+    const hs = results[1] instanceof Object && results[1].hiddenSettings || {};
+    if ( Object.keys(hsAdmin).length === 0 && Object.keys(hs).length === 0 ) {
+        return;
+    }
+
+    for ( const key in hsDefault ) {
+        if ( hsDefault.hasOwnProperty(key) === false ) { continue; }
+        if ( hsAdmin.hasOwnProperty(name) ) { continue; }
+        if ( typeof hs[key] !== typeof hsDefault[key] ) { continue; }
+        this.hiddenSettings[key] = hs[key];
+    }
+    if ( typeof this.hiddenSettings.suspendTabsUntilReady === 'boolean' ) {
+        this.hiddenSettings.suspendTabsUntilReady =
+            this.hiddenSettings.suspendTabsUntilReady
+                ? 'yes'
+                : 'unset';
     }
     this.fireDOMEvent('hiddenSettingsChanged');
 };
@@ -162,29 +184,45 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         if ( matches === null || matches.length !== 3 ) { continue; }
         const name = matches[1];
         if ( out.hasOwnProperty(name) === false ) { continue; }
-        const value = matches[2];
-        switch ( typeof out[name] ) {
-        case 'boolean':
-            if ( value === 'true' ) {
-                out[name] = true;
-            } else if ( value === 'false' ) {
-                out[name] = false;
-            }
-            break;
-        case 'string':
-            out[name] = value.trim();
-            break;
-        case 'number':
-            out[name] = parseInt(value, 10);
-            if ( isNaN(out[name]) ) {
-                out[name] = this.hiddenSettingsDefault[name];
-            }
-            break;
-        default:
-            break;
+        if ( this.hiddenSettingsAdmin.hasOwnProperty(name) ) { continue; }
+        const value = this.hiddenSettingValueFromString(name, matches[2]);
+        if ( value !== undefined ) {
+            out[name] = value;
         }
     }
     return out;
+};
+
+µBlock.hiddenSettingValueFromString = function(name, value) {
+    if ( typeof name !== 'string' || typeof value !== 'string' ) { return; }
+    const hsDefault = this.hiddenSettingsDefault;
+    if ( hsDefault.hasOwnProperty(name) === false ) { return; }
+    let r;
+    switch ( typeof hsDefault[name] ) {
+    case 'boolean':
+        if ( value === 'true' ) {
+            r = true;
+        } else if ( value === 'false' ) {
+            r = false;
+        }
+        break;
+    case 'string':
+        r = value.trim();
+        break;
+    case 'number':
+        if ( value.startsWith('0b') ) {
+            r = parseInt(value.slice(2), 2);
+        } else if ( value.startsWith('0x') ) {
+            r = parseInt(value.slice(2), 16);
+        } else {
+            r = parseInt(value, 10);
+        }
+        if ( isNaN(r) ) { r = undefined; }
+        break;
+    default:
+        break;
+    }
+    return r;
 };
 
 µBlock.stringFromHiddenSettings = function() {
@@ -1222,9 +1260,17 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 // values are left to the user's choice.
 
 µBlock.restoreAdminSettings = async function() {
+    let toSet = {};
     let data;
     try {
-        const json = await vAPI.adminStorage.get('adminSettings');
+        const store = await vAPI.adminStorage.get([
+            'adminSettings',
+            'toSet',
+        ]) || {};
+        if ( store.toSet instanceof Object ) {
+            toSet = store.toSet;
+        }
+        const json = store.adminSettings;
         if ( typeof json === 'string' && json !== '' ) {
             data = JSON.parse(json);
         } else if ( json instanceof Object ) {
@@ -1234,7 +1280,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         console.error(ex);
     }
 
-    if ( data instanceof Object === false ) { return; }
+    if ( data instanceof Object === false ) { data = {}; }
 
     const bin = {};
     let binNotEmpty = false;
@@ -1269,7 +1315,11 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         binNotEmpty = true;
     }
 
-    if ( Array.isArray(data.whitelist) ) {
+    if ( Array.isArray(toSet.trustedSiteDirectives) ) {
+        µBlock.netWhitelistDefault = toSet.trustedSiteDirectives.slice();
+        bin.netWhitelist = toSet.trustedSiteDirectives.slice();
+        binNotEmpty = true;
+    } else if ( Array.isArray(data.whitelist) ) {
         bin.netWhitelist = data.whitelist;
         binNotEmpty = true;
     } else if ( typeof data.netWhitelist === 'string' ) {

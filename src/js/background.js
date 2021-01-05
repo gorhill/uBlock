@@ -108,6 +108,7 @@ const µBlock = (( ) => { // jshint ignore:line
         },
 
         hiddenSettingsDefault: hiddenSettingsDefault,
+        hiddenSettingsAdmin: {},
         hiddenSettings: Object.assign({}, hiddenSettingsDefault),
 
         // Features detection.

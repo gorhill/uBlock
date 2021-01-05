@@ -143,10 +143,10 @@ const onNetWhitelistReady = function(netWhitelistRaw, adminExtra) {
     }
     // Append admin-controlled trusted-site directives
     if (
-        Array.isArray(adminExtra.trustedSites) &&
-        adminExtra.trustedSites.length !== 0
+        adminExtra instanceof Object &&
+        Array.isArray(adminExtra.trustedSiteDirectives)
     ) {
-        for ( const directive of adminExtra.trustedSites ) {
+        for ( const directive of adminExtra.trustedSiteDirectives ) {
             µb.netWhitelistDefault.push(directive);
             netWhitelistRaw.push(directive);
         }
@@ -296,9 +296,7 @@ try {
     );
     log.info(`Backend storage for cache will be ${cacheBackend}`);
 
-    const adminExtra = {};
-    adminExtra.trustedSites =
-        await vAPI.adminStorage.get('extraTrustedSiteDirectives') || [];
+    const adminExtra = await vAPI.adminStorage.get('toAdd');
     log.info(`Extra admin settings ready ${Date.now()-vAPI.T0} ms after launch`);
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1365

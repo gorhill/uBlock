@@ -1429,9 +1429,10 @@ vAPI.adminStorage = (( ) => {
                 bin = await webext.storage.managed.get(key);
             } catch(ex) {
             }
-            if ( bin instanceof Object ) {
+            if ( typeof key === 'string' && bin instanceof Object ) {
                 return bin[key];
             }
+            return bin;
         }
     };
 })();

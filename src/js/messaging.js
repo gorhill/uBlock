@@ -1258,8 +1258,9 @@ const onMessage = function(request, sender, callback) {
 
     case 'readHiddenSettings':
         response = {
-            current: µb.hiddenSettings,
-            default: µb.hiddenSettingsDefault,
+            'default': µb.hiddenSettingsDefault,
+            'admin': µb.hiddenSettingsAdmin,
+            'current': µb.hiddenSettings,
         };
         break;
 

@@ -7,13 +7,37 @@
       "description": "All entries present will overwrite local settings.",
       "type": "string"
     },
-    "extraTrustedSiteDirectives": {
-      "title": "A list of trusted-site directives",
-      "description": "Trusted-site directives to always add at launch time.",
-      "type": "array",
-      "items": {
-        "type": "string"
+    "toSet": {
+      "title": "Settings to overwrite at launch time",
+      "type": "object",
+      "properties": {
+        "hiddenSettings": {
+          "title": "A list of [name,value] pairs to populate hidden settings",
+          "type": "array",
+          "items": {
+            "title": "A [name,value] pair",
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "trustedSiteDirectives": {
+          "title": "A list of trusted-site directives",
+          "type": "array",
+          "items": { "type": "string" }
+        }
       }
+    },
+    "toAdd": {
+      "title": "Settings to add at launch time",
+      "type": "object",
+      "properties": {
+        "trustedSiteDirectives": {
+          "title": "A list of trusted-site directives",
+          "description": "Trusted-site directives to always add at launch time.",
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
     }
   }
 }
