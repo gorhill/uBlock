@@ -2527,10 +2527,7 @@ const NetOptionsIterator = class {
         {
             const i = this.tokenPos[OPTTokenQueryprune];
             if ( i !== -1 ) {
-                if (
-                    this.parser.expertMode === false ||
-                    hasBits(allBits, OPTNonNetworkType)
-                ) {
+                if ( hasBits(allBits, OPTNonNetworkType) ) {
                     optSlices[i] = OPTTokenInvalid;
                     if ( this.interactive ) {
                         this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
@@ -2572,7 +2569,10 @@ const NetOptionsIterator = class {
         {
             const i = this.tokenPos[OPTTokenHeader];
             if ( i !== -1 ) {
-                if ( hasBits(allBits, OPTModifierType) ) {
+                if (
+                    this.parser.expertMode === false ||
+                    hasBits(allBits, OPTModifierType)
+                ) {
                     optSlices[i] = OPTTokenInvalid;
                     if ( this.interactive ) {
                         this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
