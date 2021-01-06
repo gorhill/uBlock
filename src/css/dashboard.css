@@ -72,6 +72,12 @@ iframe {
 body:not(.canUpdateShortcuts) .tabButton[data-pane="shortcuts.html"] {
     display: none;
     }
+body .tabButton[data-pane="no-dashboard.html"] {
+    display: none;
+    }
+body.noDashboard #dashboard-nav {
+    display: none;
+    }
 
 /* high dpi devices */
 :root.hidpi .tabButton {

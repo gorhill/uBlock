@@ -1214,8 +1214,11 @@ const onMessage = function(request, sender, callback) {
     let response;
 
     switch ( request.what ) {
-    case 'canUpdateShortcuts':
-        response = µb.canUpdateShortcuts;
+    case 'dashboardConfig':
+        response = {
+            canUpdateShortcuts: µb.canUpdateShortcuts,
+            noDashboard: µb.noDashboard,
+        };
         break;
 
     case 'getAutoCompleteDetails':

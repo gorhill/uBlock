@@ -84,7 +84,9 @@ const loadDashboardPanel = function(pane, first) {
         tabButton.classList.add('selected');
         tabButton.scrollIntoView();
         uDom.nodeFromId('iframe').setAttribute('src', pane);
-        vAPI.localStorage.setItem('dashboardLastVisitedPane', pane);
+        if ( pane !== 'no-dashboard.html' ) {
+            vAPI.localStorage.setItem('dashboardLastVisitedPane', pane);
+        }
     };
     if ( first ) {
         return loadPane();
@@ -104,25 +106,48 @@ const onTabClickHandler = function(ev) {
     loadDashboardPanel(ev.target.getAttribute('data-pane'));
 };
 
-// https://github.com/uBlockOrigin/uBlock-issues/issues/106
-vAPI.messaging.send('dashboard', {
-    what: 'canUpdateShortcuts',
-}).then(response => {
-    document.body.classList.toggle('canUpdateShortcuts', response === true);
-});
+if ( self.location.hash.slice(1) === 'no-dashboard.html' ) {
+    document.body.classList.add('noDashboard');
+}
 
-vAPI.localStorage.getItemAsync('dashboardLastVisitedPane').then(value => {
-    loadDashboardPanel(value !== null ? value : 'settings.html', true);
+(async ( ) => {
+    const results = await Promise.all([
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/106
+        vAPI.messaging.send('dashboard', { what: 'dashboardConfig' }),
+        vAPI.localStorage.getItemAsync('dashboardLastVisitedPane'),
+    ]);
 
-    uDom('.tabButton').on('click', onTabClickHandler);
+    {
+        const details = results[0];
+        document.body.classList.toggle(
+            'canUpdateShortcuts',
+            details.canUpdateShortcuts === true
+        );
+        if ( details.noDashboard ) {
+            self.location.hash = '#no-dashboard.html';
+            document.body.classList.add('noDashboard');
+        } else if ( self.location.hash === '#no-dashboard.html' ) {
+            self.location.hash = '';
+        }
+    }
 
-    // https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
-    window.addEventListener('beforeunload', ( ) => {
-        if ( discardUnsavedData(true) ) { return; }
-        event.preventDefault();
-        event.returnValue = '';
-    });
-});
+    {
+        let pane = results[1];
+        if ( self.location.hash !== '' ) {
+            pane = self.location.hash.slice(1) || null;
+        }
+        loadDashboardPanel(pane !== null ? pane : 'settings.html', true);
+
+        uDom('.tabButton').on('click', onTabClickHandler);
+
+        // https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
+        window.addEventListener('beforeunload', ( ) => {
+            if ( discardUnsavedData(true) ) { return; }
+            event.preventDefault();
+            event.returnValue = '';
+        });
+    }
+})();
 
 /******************************************************************************/
 

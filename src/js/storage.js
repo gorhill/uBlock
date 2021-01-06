@@ -97,23 +97,49 @@
     const hsUser = this.hiddenSettings;
 
     const results = await Promise.all([
-        vAPI.adminStorage.get('toSet'),
+        vAPI.adminStorage.get([
+            'advancedSettings',
+            'disableDashboard',
+            'disabledPopupPanelParts',
+        ]),
         vAPI.storage.get('hiddenSettings'),
     ]);
 
-    if (
-        results[0] instanceof Object &&
-        Array.isArray(results[0].hiddenSettings)
-    ) {
-        for ( const entry of results[0].hiddenSettings ) {
-            if ( entry.length < 1 ) { continue; }
-            const name = entry[0];
-            if ( hsDefault.hasOwnProperty(name) === false ) { continue; }
-            const value = entry.length < 2
-                ? hsDefault[name]
-                : this.hiddenSettingValueFromString(name, entry[1]);
-            if ( value === undefined ) { continue; }
-            hsDefault[name] = hsAdmin[name] = hsUser[name] = value;
+    if ( results[0] instanceof Object ) {
+        const {
+            advancedSettings,
+            disableDashboard,
+            disabledPopupPanelParts
+        } = results[0];
+        if ( Array.isArray(advancedSettings) ) {
+            for ( const entry of advancedSettings ) {
+                if ( entry.length < 1 ) { continue; }
+                const name = entry[0];
+                if ( hsDefault.hasOwnProperty(name) === false ) { continue; }
+                const value = entry.length < 2
+                    ? hsDefault[name]
+                    : this.hiddenSettingValueFromString(name, entry[1]);
+                if ( value === undefined ) { continue; }
+                hsDefault[name] = hsAdmin[name] = hsUser[name] = value;
+            }
+        }
+        µBlock.noDashboard = disableDashboard === true;
+        if ( Array.isArray(disabledPopupPanelParts) ) {
+            const partNameToBit = new Map([
+                [ 'globalStats', 0b00010 ],
+                [  'basicTools', 0b00100 ],
+                [  'extraTools', 0b01000 ],
+                [    'firewall', 0b10000 ],
+            ]);
+            let bits = hsDefault.popupPanelDisabledSections;
+            for ( const part of disabledPopupPanelParts ) {
+                const bit = partNameToBit.get(part);
+                if ( bit === undefined ) { continue; }
+                bits |= bit;
+            }
+            hsDefault.popupPanelDisabledSections =
+            hsAdmin.popupPanelDisabledSections =
+            hsUser.popupPanelDisabledSections = bits;
         }
     }
 
@@ -1260,15 +1286,15 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 // values are left to the user's choice.
 
 µBlock.restoreAdminSettings = async function() {
-    let toSet = {};
+    let toOverwrite = {};
     let data;
     try {
         const store = await vAPI.adminStorage.get([
             'adminSettings',
-            'toSet',
+            'toOverwrite',
         ]) || {};
-        if ( store.toSet instanceof Object ) {
-            toSet = store.toSet;
+        if ( store.toOverwrite instanceof Object ) {
+            toOverwrite = store.toOverwrite;
         }
         const json = store.adminSettings;
         if ( typeof json === 'string' && json !== '' ) {
@@ -1315,9 +1341,9 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         binNotEmpty = true;
     }
 
-    if ( Array.isArray(toSet.trustedSiteDirectives) ) {
-        µBlock.netWhitelistDefault = toSet.trustedSiteDirectives.slice();
-        bin.netWhitelist = toSet.trustedSiteDirectives.slice();
+    if ( Array.isArray(toOverwrite.trustedSiteDirectives) ) {
+        µBlock.netWhitelistDefault = toOverwrite.trustedSiteDirectives.slice();
+        bin.netWhitelist = toOverwrite.trustedSiteDirectives.slice();
         binNotEmpty = true;
     } else if ( Array.isArray(data.whitelist) ) {
         bin.netWhitelist = data.whitelist;

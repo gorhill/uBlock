@@ -111,6 +111,8 @@ const µBlock = (( ) => { // jshint ignore:line
         hiddenSettingsAdmin: {},
         hiddenSettings: Object.assign({}, hiddenSettingsDefault),
 
+        noDashboard: false,
+
         // Features detection.
         privacySettingsSupported: vAPI.browserSettings instanceof Object,
         cloudStorageSupported: vAPI.cloud instanceof Object,
