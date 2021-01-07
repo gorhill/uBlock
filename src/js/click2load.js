@@ -37,6 +37,8 @@ const frameURLElem = document.getElementById('frameURL');
 frameURLElem.children[0].textContent = frameURL;
 frameURLElem.children[1].href = frameURL;
 
+document.body.setAttribute('title', frameURL);
+
 const onWindowResize = function() {
     document.body.style.width = `${self.innerWidth}px`;
     document.body.style.height = `${self.innerHeight}px`;
