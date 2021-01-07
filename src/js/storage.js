@@ -126,10 +126,10 @@
         µBlock.noDashboard = disableDashboard === true;
         if ( Array.isArray(disabledPopupPanelParts) ) {
             const partNameToBit = new Map([
-                [ 'globalStats', 0b00010 ],
-                [  'basicTools', 0b00100 ],
-                [  'extraTools', 0b01000 ],
-                [    'firewall', 0b10000 ],
+                [  'globalStats', 0b00010 ],
+                [   'basicTools', 0b00100 ],
+                [   'extraTools', 0b01000 ],
+                [ 'overviewPane', 0b10000 ],
             ]);
             let bits = hsDefault.popupPanelDisabledSections;
             for ( const part of disabledPopupPanelParts ) {
