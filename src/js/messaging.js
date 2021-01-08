@@ -942,6 +942,11 @@ const restoreUserData = async function(request) {
         userData.hostnameSwitchesString += '\nno-csp-reports: * true';
     }
 
+    // List of external lists is meant to be an array.
+    if ( typeof userData.externalLists === 'string' ) {
+        userData.externalLists = userData.externalLists.trim().split(/[\n\r]+/);
+    }
+
     // https://github.com/chrisaljoudi/uBlock/issues/1102
     //   Ensure all currently cached assets are flushed from storage AND memory.
     µb.assets.rmrf();
@@ -1041,7 +1046,6 @@ const getLists = async function(callback) {
         cache: null,
         cosmeticFilterCount: µb.cosmeticFilteringEngine.getFilterCount(),
         current: µb.availableFilterLists,
-        externalLists: µb.userSettings.externalLists,
         ignoreGenericCosmeticFilters: µb.userSettings.ignoreGenericCosmeticFilters,
         isUpdating: µb.assets.isUpdating(),
         netFilterCount: µb.staticNetFilteringEngine.getFilterCount(),

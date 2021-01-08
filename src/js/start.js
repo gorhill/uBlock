@@ -162,6 +162,12 @@ const onNetWhitelistReady = function(netWhitelistRaw, adminExtra) {
 const onUserSettingsReady = function(fetched) {
     const userSettings = µb.userSettings;
 
+    // List of external lists is meant to be an array
+    if ( typeof fetched.externalLists === 'string' ) {
+        fetched.externalLists =
+            fetched.externalLists.trim().split(/[\n\r]+/);
+    }
+
     fromFetch(userSettings, fetched);
 
     if ( µb.privacySettingsSupported ) {

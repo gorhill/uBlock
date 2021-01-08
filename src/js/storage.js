@@ -335,7 +335,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
 µBlock.applyFilterListSelection = function(details) {
     let selectedListKeySet = new Set(this.selectedFilterLists);
-    let externalLists = this.userSettings.externalLists;
+    let externalLists = this.userSettings.externalLists.slice();
 
     // Filter lists to select
     if ( Array.isArray(details.toSelect) ) {
@@ -350,19 +350,13 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
     // Imported filter lists to remove
     if ( Array.isArray(details.toRemove) ) {
-        const removeURLFromHaystack = (haystack, needle) => {
-            return haystack.replace(
-                new RegExp(
-                    '(^|\\n)' +
-                    this.escapeRegex(needle) +
-                    '(\\n|$)', 'g'),
-                '\n'
-            ).trim();
-        };
         for ( let i = 0, n = details.toRemove.length; i < n; i++ ) {
             const assetKey = details.toRemove[i];
             selectedListKeySet.delete(assetKey);
-            externalLists = removeURLFromHaystack(externalLists, assetKey);
+            const pos = externalLists.indexOf(assetKey);
+            if ( pos !== -1 ) {
+                externalLists.splice(pos, 1);
+            }
             this.removeFilterList(assetKey);
         }
     }
@@ -404,11 +398,11 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
             }
             selectedListKeySet.add(assetKey);
         }
-        externalLists = Array.from(importedSet).sort().join('\n');
+        externalLists = Array.from(importedSet).sort();
     }
 
     const result = Array.from(selectedListKeySet);
-    if ( externalLists !== this.userSettings.externalLists ) {
+    if ( externalLists.join() !== this.userSettings.externalLists.join() ) {
         this.userSettings.externalLists = externalLists;
         vAPI.storage.set({ externalLists });
     }
@@ -418,16 +412,17 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 /******************************************************************************/
 
 µBlock.listKeysFromCustomFilterLists = function(raw) {
+    const urls = typeof raw === 'string'
+        ? raw.trim().split(/[\n\r]+/)
+        : raw;
     const out = new Set();
     const reIgnore = /^[!#]/;
     const reValid = /^[a-z-]+:\/\/\S+/;
-    const lineIter = new this.LineIterator(raw);
-    while ( lineIter.eot() === false ) {
-        const location = lineIter.next().trim();
-        if ( reIgnore.test(location) || !reValid.test(location) ) { continue; }
+    for ( const url of urls ) {
+        if ( reIgnore.test(url) || !reValid.test(url) ) { continue; }
         // Ignore really bad lists.
-        if ( this.badLists.get(location) === true ) { continue; }
-        out.add(location);
+        if ( this.badLists.get(url) === true ) { continue; }
+        out.add(url);
     }
     return Array.from(out);
 };
@@ -603,8 +598,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         newAvailableLists[listURL] = newEntry;
         this.assets.registerAssetSource(listURL, newEntry);
         importedListKeys.push(listURL);
-        this.userSettings.externalLists += '\n' + listURL;
-        this.userSettings.externalLists = this.userSettings.externalLists.trim();
+        this.userSettings.externalLists.push(listURL.trim());
         vAPI.storage.set({ externalLists: this.userSettings.externalLists });
         this.saveSelectedFilterLists([ listURL ], true);
     };
@@ -1322,26 +1316,47 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     }
 
     if ( typeof data.userSettings === 'object' ) {
-        for ( const name in this.userSettings ) {
-            if ( this.userSettings.hasOwnProperty(name) === false ) {
-                continue;
-            }
-            if ( data.userSettings.hasOwnProperty(name) === false ) {
-                continue;
-            }
-            bin[name] = data.userSettings[name];
+        const µbus = this.userSettings;
+        const adminus = data.userSettings;
+        // List of external lists is meant to be an array.
+        if ( typeof adminus.externalLists === 'string' ) {
+            adminus.externalLists =
+                adminus.externalLists.trim().split(/[\n\r]+/);
+        }
+        for ( const name in µbus ) {
+            if ( µbus.hasOwnProperty(name) === false ) { continue; }
+            if ( adminus.hasOwnProperty(name) === false ) { continue; }
+            bin[name] = adminus[name];
             binNotEmpty = true;
         }
     }
 
     // 'selectedFilterLists' is an array of filter list tokens. Each token
-    // is a reference to an asset in 'assets.json'.
-    if ( Array.isArray(data.selectedFilterLists) ) {
+    // is a reference to an asset in 'assets.json', or a URL for lists not
+    // present in 'assets.json'.
+    if (
+        Array.isArray(toOverwrite.filterLists) &&
+        toOverwrite.filterLists.length !== 0
+    ) {
+        const externalLists = [];
+        for ( const list of toOverwrite.filterLists ) {
+            if ( /^[a-z-]+:\/\//.test(list) === false ) { continue; }
+            externalLists.push(list);
+        }
+        if ( externalLists.length !== 0 ) {
+            bin.externalLists = externalLists;
+        }
+        bin.selectedFilterLists = toOverwrite.filterLists;
+        binNotEmpty = true;
+    } else if ( Array.isArray(data.selectedFilterLists) ) {
         bin.selectedFilterLists = data.selectedFilterLists;
         binNotEmpty = true;
     }
 
-    if ( Array.isArray(toOverwrite.trustedSiteDirectives) ) {
+    if (
+        Array.isArray(toOverwrite.trustedSiteDirectives) &&
+        toOverwrite.trustedSiteDirectives.length !== 0
+    ) {
         µBlock.netWhitelistDefault = toOverwrite.trustedSiteDirectives.slice();
         bin.netWhitelist = toOverwrite.trustedSiteDirectives.slice();
         binNotEmpty = true;

@@ -41,6 +41,12 @@
       "title": "Settings to overwrite at launch time",
       "type": "object",
       "properties": {
+        "filterLists": {
+          "title": "A collection of list identifiers and/or list URLs",
+          "description": "The set of filter lists to use at launch time.",
+          "type": "array",
+          "items": { "type": "string" }
+        },
         "trustedSiteDirectives": {
           "title": "A list of trusted-site directives",
           "type": "array",
