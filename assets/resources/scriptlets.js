@@ -707,9 +707,9 @@
         });
     };
     if ( document.readyState !== 'complete' && /\bcomplete\b/.test(behavior) ) {
-        document.addEventListener('load', start, { once: true });
+        self.addEventListener('load', start, { once: true });
     } else if ( document.readyState === 'loading' ) {
-        document.addEventListener('DOMContentLoaded', start, { once: true });
+        self.addEventListener('DOMContentLoaded', start, { once: true });
     } else {
         start();
     }
