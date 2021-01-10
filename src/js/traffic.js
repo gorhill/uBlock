@@ -113,7 +113,7 @@ const onBeforeRequest = function(details) {
         details.parentFrameId !== -1 &&
         details.aliasURL === undefined
     ) {
-        pageStore.setFrameURL(details.frameId, details.url);
+        pageStore.setFrameURL(details);
     }
 
     if ( result === 2 ) {

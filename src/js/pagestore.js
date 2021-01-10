@@ -181,12 +181,13 @@ const frameStoreJunkyard = [];
 const frameStoreJunkyardMax = 50;
 
 const FrameStore = class {
-    constructor(frameURL) {
-        this.init(frameURL);
+    constructor(frameURL, parentId) {
+        this.init(frameURL, parentId);
     }
 
-    init(frameURL) {
+    init(frameURL, parentId) {
         this.t0 = Date.now();
+        this.parentId = parentId;
         this.exceptCname = undefined;
         this.clickToLoad = false;
         this.rawURL = frameURL;
@@ -199,7 +200,6 @@ const FrameStore = class {
     }
 
     dispose() {
-        this.exceptCname = undefined;
         this.rawURL = this.hostname = this.domain = '';
         if ( frameStoreJunkyard.length < frameStoreJunkyardMax ) {
             frameStoreJunkyard.push(this);
@@ -207,12 +207,12 @@ const FrameStore = class {
         return null;
     }
 
-    static factory(frameURL) {
+    static factory(frameURL, parentId = -1) {
         const entry = frameStoreJunkyard.pop();
         if ( entry === undefined ) {
-            return new FrameStore(frameURL);
+            return new FrameStore(frameURL, parentId);
         }
-        return entry.init(frameURL);
+        return entry.init(frameURL, parentId);
     }
 };
 
@@ -277,7 +277,7 @@ const PageStore = class {
 
         this.frameAddCount = 0;
         this.frames = new Map();
-        this.setFrameURL(0, tabContext.rawURL);
+        this.setFrameURL({ url: tabContext.rawURL });
 
         // https://github.com/uBlockOrigin/uBlock-issues/issues/314
         const masterSwitch = tabContext.getNetFilteringSwitch();
@@ -324,7 +324,7 @@ const PageStore = class {
             // As part of https://github.com/chrisaljoudi/uBlock/issues/405
             // URL changed, force a re-evaluation of filtering switch
             this.rawURL = tabContext.rawURL;
-            this.setFrameURL(0, this.rawURL);
+            this.setFrameURL({ url: this.rawURL });
             return this;
         }
 
@@ -375,20 +375,40 @@ const PageStore = class {
         return this.frames.get(frameId) || null;
     }
 
-    setFrameURL(frameId, frameURL) {
+    setFrameURL(details) {
+        let { frameId, url, parentFrameId } = details;
+        if ( frameId === undefined ) { frameId = 0; }
+        if ( parentFrameId === undefined ) { parentFrameId = -1; }
         let frameStore = this.frames.get(frameId);
         if ( frameStore !== undefined ) {
-            return frameURL === frameStore.rawURL
-                ? frameStore
-                : frameStore.init(frameURL);
+            if ( url === frameStore.rawURL ) {
+                frameStore.parentId = parentFrameId;
+            } else {
+                frameStore.init(url, parentFrameId);
+            }
+            return frameStore;
         }
-        frameStore = FrameStore.factory(frameURL);
+        frameStore = FrameStore.factory(url, parentFrameId);
         this.frames.set(frameId, frameStore);
         this.frameAddCount += 1;
         if ( (this.frameAddCount & 0b111111) === 0 ) {
             this.pruneFrames();
         }
         return frameStore;
+    }
+
+    getEffectiveFrameURL(sender) {
+        let { frameId } = sender;
+        for (;;) {
+            const frameStore = this.getFrameStore(frameId);
+            if ( frameStore === null ) { break; }
+            if ( frameStore.rawURL.startsWith('about:') === false ) {
+                return frameStore.rawURL;
+            }
+            frameId = frameStore.parentId;
+            if ( frameId === -1 ) { break; }
+        }
+        return sender.frameURL;
     }
 
     // There is no event to tell us a specific subframe has been removed from
@@ -851,7 +871,7 @@ const PageStore = class {
     clickToLoad(frameId, frameURL) {
         let frameStore = this.getFrameStore(frameId);
         if ( frameStore === null ) {
-            frameStore = this.setFrameURL(frameId, frameURL);
+            frameStore = this.setFrameURL({ frameId, url: frameURL });
         }
         this.netFilteringCache.forgetResult(
             this.tabHostname,

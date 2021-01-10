@@ -557,6 +557,13 @@ const retrieveContentScriptParameters = function(sender, request) {
         return;
     }
 
+    // A content script may not always be able to successfully look up the
+    // effective context, hence in such case we try again to look up here
+    // using cached information about embedded frames.
+    if ( frameId !== 0 && request.url.startsWith('about:') ) {
+        request.url = pageStore.getEffectiveFrameURL(sender);
+    }
+
     const noCosmeticFiltering = pageStore.noCosmeticFiltering === true;
 
     const response = {

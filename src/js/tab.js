@@ -875,18 +875,23 @@ vAPI.Tabs = class extends vAPI.Tabs {
     onNavigation(details) {
         super.onNavigation(details);
         const µb = µBlock;
-        if ( details.frameId === 0 ) {
-            µb.tabContextManager.commit(details.tabId, details.url);
-            let pageStore = µb.bindTabToPageStore(details.tabId, 'tabCommitted');
-            if ( pageStore ) {
-                pageStore.journalAddRootFrame('committed', details.url);
+        const { frameId, tabId, url } = details;
+        if ( frameId === 0 ) {
+            µb.tabContextManager.commit(tabId, url);
+            const pageStore = µb.bindTabToPageStore(tabId, 'tabCommitted');
+            if ( pageStore !== null ) {
+                pageStore.journalAddRootFrame('committed', url);
             }
         }
-        if ( µb.canInjectScriptletsNow && µb.URI.isNetworkURI(details.url) ) {
-            const pageStore = µb.pageStoreFromTabId(details.tabId);
-            if ( pageStore !== null && pageStore.getNetFilteringSwitch() ) {
-                µb.scriptletFilteringEngine.injectNow(details);
-            }
+        const pageStore = µb.pageStoreFromTabId(tabId);
+        if ( pageStore === null ) { return; }
+        pageStore.setFrameURL(details);
+        if (
+            µb.canInjectScriptletsNow &&
+            µb.URI.isNetworkURI(url) &&
+            pageStore.getNetFilteringSwitch()
+        ) {
+            µb.scriptletFilteringEngine.injectNow(details);
         }
     }
 
