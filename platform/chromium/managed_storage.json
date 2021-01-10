@@ -41,6 +41,12 @@
       "title": "Settings to overwrite at launch time",
       "type": "object",
       "properties": {
+        "filters": {
+          "title": "A collection of filters",
+          "description": "The set of user filters to use at launch time -- where each entry is a distinct line.",
+          "type": "array",
+          "items": { "type": "string" }
+        },
         "filterLists": {
           "title": "A collection of list identifiers and/or list URLs",
           "description": "The set of filter lists to use at launch time.",

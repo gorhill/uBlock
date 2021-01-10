@@ -1387,7 +1387,12 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         vAPI.storage.set(bin);
     }
 
-    if ( typeof data.userFilters === 'string' ) {
+    if (
+        Array.isArray(toOverwrite.filters) &&
+        toOverwrite.filters.length !== 0
+    ) {
+        this.saveUserFilters(toOverwrite.filters.join('\n'));
+    } else if ( typeof data.userFilters === 'string' ) {
         this.saveUserFilters(data.userFilters);
     }
 };
