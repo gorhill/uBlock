@@ -4,7 +4,7 @@
    "updates": [
     {
      "version": "1.32.5.10",
-     "browser_specific_settings": { "gecko": { "strict_min_version": "55" } },
+     "browser_specific_settings": { "gecko": { "strict_min_version": "57" } },
      "update_link": "https://github.com/gorhill/uBlock/releases/download/1.32.5b10/uBlock0_1.32.5b10.firefox.signed.xpi"
     }
    ]
