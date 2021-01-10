@@ -15,7 +15,7 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "uBlock0@raymondhill.net",
-      "strict_min_version": "55.0"
+      "strict_min_version": "57.0"
     }
   },
   "commands": {

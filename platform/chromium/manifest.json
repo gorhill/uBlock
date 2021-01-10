@@ -70,7 +70,7 @@
   },
   "incognito": "split",
   "manifest_version": 2,
-  "minimum_chrome_version": "51.0",
+  "minimum_chrome_version": "55.0",
   "name": "uBlock Origin",
   "options_ui": {
     "page": "dashboard.html",
