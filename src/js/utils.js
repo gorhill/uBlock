@@ -684,3 +684,46 @@
         window.dispatchEvent(new CustomEvent(name));
     }
 };
+
+/******************************************************************************/
+
+µBlock.getModifiedSettings = function(edit, orig = {}) {
+    const out = {};
+    for ( const prop in edit ) {
+        if ( orig.hasOwnProperty(prop) && edit[prop] !== orig[prop] ) {
+            out[prop] = edit[prop];
+        }
+    }
+    return out;
+};
+
+µBlock.settingValueFromString = function(orig, name, s) {
+    if ( typeof name !== 'string' || typeof s !== 'string' ) { return; }
+    if ( orig.hasOwnProperty(name) === false ) { return; }
+    let r;
+    switch ( typeof orig[name] ) {
+    case 'boolean':
+        if ( s === 'true' ) {
+            r = true;
+        } else if ( s === 'false' ) {
+            r = false;
+        }
+        break;
+    case 'string':
+        r = s.trim();
+        break;
+    case 'number':
+        if ( s.startsWith('0b') ) {
+            r = parseInt(s.slice(2), 2);
+        } else if ( s.startsWith('0x') ) {
+            r = parseInt(s.slice(2), 16);
+        } else {
+            r = parseInt(s, 10);
+        }
+        if ( isNaN(r) ) { r = undefined; }
+        break;
+    default:
+        break;
+    }
+    return r;
+};

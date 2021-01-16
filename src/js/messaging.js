@@ -912,12 +912,12 @@ const backupUserData = async function() {
     const userData = {
         timeStamp: Date.now(),
         version: vAPI.app.version,
-        userSettings: µb.userSettings,
+        userSettings:
+            µb.getModifiedSettings(µb.userSettings, µb.userSettingsDefault),
         selectedFilterLists: µb.selectedFilterLists,
-        hiddenSettings: µb.getModifiedHiddenSettings(),
+        hiddenSettings:
+            µb.getModifiedSettings(µb.hiddenSettings, µb.hiddenSettingsDefault),
         whitelist: µb.arrayFromWhitelist(µb.netWhitelist),
-        // String representation eventually to be deprecated
-        netWhitelist: µb.stringFromWhitelist(µb.netWhitelist),
         dynamicFilteringString: µb.permanentFirewall.toString(),
         urlFilteringString: µb.permanentURLFiltering.toString(),
         hostnameSwitchesString: µb.permanentSwitches.toString(),

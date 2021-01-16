@@ -16,6 +16,15 @@
         "items": { "type": "string" }
       }
     },
+    "userSettings": {
+      "title": "A list of [name,value] pairs to populate user settings",
+      "type": "array",
+      "items": {
+        "title": "A [name,value] pair",
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    },
     "disableDashboard": {
       "title": "Set to true to prevent access to configuration options",
       "type": "boolean"

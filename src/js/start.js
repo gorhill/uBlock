@@ -160,30 +160,21 @@ const onNetWhitelistReady = function(netWhitelistRaw, adminExtra) {
 // User settings are in memory
 
 const onUserSettingsReady = function(fetched) {
-    const userSettings = µb.userSettings;
-
     // List of external lists is meant to be an array
     if ( typeof fetched.externalLists === 'string' ) {
         fetched.externalLists =
             fetched.externalLists.trim().split(/[\n\r]+/);
     }
 
-    fromFetch(userSettings, fetched);
+    fromFetch(µb.userSettings, fetched);
 
     if ( µb.privacySettingsSupported ) {
         vAPI.browserSettings.set({
-            'hyperlinkAuditing': !userSettings.hyperlinkAuditingDisabled,
-            'prefetching': !userSettings.prefetchingDisabled,
-            'webrtcIPAddress': !userSettings.webrtcIPAddressHidden
+            'hyperlinkAuditing': !µb.userSettings.hyperlinkAuditingDisabled,
+            'prefetching': !µb.userSettings.prefetchingDisabled,
+            'webrtcIPAddress': !µb.userSettings.webrtcIPAddressHidden
         });
     }
-
-    µb.permanentFirewall.fromString(fetched.dynamicFilteringString);
-    µb.sessionFirewall.assign(µb.permanentFirewall);
-    µb.permanentURLFiltering.fromString(fetched.urlFilteringString);
-    µb.sessionURLFiltering.assign(µb.permanentURLFiltering);
-    µb.permanentSwitches.fromString(fetched.hostnameSwitchesString);
-    µb.sessionSwitches.assign(µb.permanentSwitches);
 };
 
 /******************************************************************************/
@@ -219,8 +210,15 @@ const onFirstFetchReady = function(fetched, adminExtra) {
 
     // Order is important -- do not change:
     fromFetch(µb.localSettings, fetched);
-    onUserSettingsReady(fetched);
     fromFetch(µb.restoreBackupSettings, fetched);
+
+    µb.permanentFirewall.fromString(fetched.dynamicFilteringString);
+    µb.sessionFirewall.assign(µb.permanentFirewall);
+    µb.permanentURLFiltering.fromString(fetched.urlFilteringString);
+    µb.sessionURLFiltering.assign(µb.permanentURLFiltering);
+    µb.permanentSwitches.fromString(fetched.hostnameSwitchesString);
+    µb.sessionSwitches.assign(µb.permanentSwitches);
+
     onNetWhitelistReady(fetched.netWhitelist, adminExtra);
     onVersionReady(fetched.version);
 };
@@ -269,7 +267,6 @@ const createDefaultProps = function() {
         fetchableProps.hostnameSwitchesString += '\nno-csp-reports: * true';
     }
     toFetch(µb.localSettings, fetchableProps);
-    toFetch(µb.userSettings, fetchableProps);
     toFetch(µb.restoreBackupSettings, fetchableProps);
     return fetchableProps;
 };
@@ -320,6 +317,10 @@ try {
         vAPI.storage.get(createDefaultProps()).then(fetched => {
             log.info(`First fetch ready ${Date.now()-vAPI.T0} ms after launch`);
             onFirstFetchReady(fetched, adminExtra);
+        }),
+        µb.loadUserSettings().then(fetched => {
+            log.info(`User settings ready ${Date.now()-vAPI.T0} ms after launch`);
+            onUserSettingsReady(fetched);
         }),
         µb.loadPublicSuffixList().then(( ) => {
             log.info(`PSL ready ${Date.now()-vAPI.T0} ms after launch`);

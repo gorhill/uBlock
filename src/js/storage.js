@@ -83,8 +83,49 @@
 
 /******************************************************************************/
 
+µBlock.loadUserSettings = async function() {
+    const usDefault = this.userSettingsDefault;
+
+    const results = await Promise.all([
+        vAPI.storage.get(Object.assign(usDefault)),
+        vAPI.adminStorage.get('userSettings'),
+    ]);
+
+    const usUser = results[0] instanceof Object && results[0] ||
+                   Object.assign(usDefault);
+
+    if ( Array.isArray(results[1]) ) {
+        const adminSettings = results[1];
+        for ( const entry of adminSettings ) {
+            if ( entry.length < 1 ) { continue; }
+            const name = entry[0];
+            if ( usDefault.hasOwnProperty(name) === false ) { continue; }
+            const value = entry.length < 2
+                ? usDefault[name]
+                : this.settingValueFromString(usDefault, name, entry[1]);
+            if ( value === undefined ) { continue; }
+            usUser[name] = usDefault[name] = value;
+        }
+    }
+
+    return usUser;
+};
+
 µBlock.saveUserSettings = function() {
-    vAPI.storage.set(this.userSettings);
+    const toSave = this.getModifiedSettings(
+        this.userSettings,
+        this.userSettingsDefault
+    );
+    const toRemove = [];
+    for ( const key in this.userSettings ) {
+        if ( this.userSettings.hasOwnProperty(key) === false ) { continue; }
+        if ( toSave.hasOwnProperty(key) === false ) { continue; }
+        toRemove.push(key);
+    }
+    if ( toRemove.length !== 0 ) {
+        vAPI.storage.remove(toRemove);
+    }
+    vAPI.storage.set(toSave);
 };
 
 /******************************************************************************/
@@ -164,24 +205,16 @@
 };
 
 // Note: Save only the settings which values differ from the default ones.
-// This way the new default values in the future will properly apply for those
-// which were not modified by the user.
-
-µBlock.getModifiedHiddenSettings = function() {
-    const out = {};
-    for ( const prop in this.hiddenSettings ) {
-        if (
-            this.hiddenSettings.hasOwnProperty(prop) &&
-            this.hiddenSettings[prop] !== this.hiddenSettingsDefault[prop]
-        ) {
-            out[prop] = this.hiddenSettings[prop];
-        }
-    }
-    return out;
-};
+// This way the new default values in the future will properly apply for
+// those which were not modified by the user.
 
 µBlock.saveHiddenSettings = function() {
-    vAPI.storage.set({ hiddenSettings: this.getModifiedHiddenSettings() });
+    vAPI.storage.set({
+        hiddenSettings: this.getModifiedSettings(
+            this.hiddenSettings,
+            this.hiddenSettingsDefault
+        )
+    });
 };
 
 self.addEventListener('hiddenSettingsChanged', ( ) => {
@@ -404,7 +437,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     const result = Array.from(selectedListKeySet);
     if ( externalLists.join() !== this.userSettings.externalLists.join() ) {
         this.userSettings.externalLists = externalLists;
-        vAPI.storage.set({ externalLists });
+        this.saveUserSettings();
     }
     this.saveSelectedFilterLists(result);
 };
@@ -599,7 +632,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         this.assets.registerAssetSource(listURL, newEntry);
         importedListKeys.push(listURL);
         this.userSettings.externalLists.push(listURL.trim());
-        vAPI.storage.set({ externalLists: this.userSettings.externalLists });
+        this.saveUserSettings();
         this.saveSelectedFilterLists([ listURL ], true);
     };
 
