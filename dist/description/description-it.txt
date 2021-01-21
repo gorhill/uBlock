@@ -34,7 +34,7 @@ Senza queste liste di filtri, questa estensione non è niente. osì se vuoi cont
 
 ***
 
-Gratuito.
+Libero.
 Open source with public license (GPLv3)
 Fatto dagli utenti per gli utenti.
 
@@ -42,8 +42,6 @@ Collaboratori @ Github: https://github.com/gorhill/uBlock/graphs/contributors
 Collaboratori @ Crowdin: https://crowdin.net/project/ublock
 
 ***
-
-Questa è una versione preliminare, ricordalo quando scriverai una recensione.
 
 Per leggere le novità di ogni versione consulta questa pagina (In Inlgese):
 https://github.com/gorhill/uBlock/releases

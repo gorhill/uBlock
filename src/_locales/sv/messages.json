@@ -44,7 +44,7 @@
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "Genväg",
+    "message": "Genvägar",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -460,7 +460,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "En webbadress per rad. Ogiltiga webbadresser kommer inte att aviseras.",
+    "message": "En webbadress per rad. Ogiltiga webbadresser ignoreras tyst.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -896,7 +896,7 @@
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {
-    "message": "Datan kunde inte läsas eller är ogiltig",
+    "message": "Data kunde inte läsas eller är ogiltiga",
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {

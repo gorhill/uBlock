@@ -168,7 +168,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Click to no longer block remote fonts on this site",
+    "message": "คลิกเพื่อยกเลิกการบล็อกป๊อปอัปทั้งหมดในเว็บไซต์นี้",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {

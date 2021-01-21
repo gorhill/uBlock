@@ -4,19 +4,19 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "Վերջապես արդյունավետ արգելափակիչ։ Թեթև CPU֊ի ու հիշողության համար։",
+    "message": "Վերջապե՛ս, արդյունավետ արգելափակիչ։ Խնայում է մշակիչը և հիշողությունը։",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
-    "message": "uBlock₀ — Վահանակ",
+    "message": "uBlock₀ — Կառավահան",
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Warning! You have unsaved changes",
+    "message": "Ուշադրությո՛ւն։ Դուք ունեք չպահպանված փոփոխություններ։",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Stay",
+    "message": "Մնալ",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -28,23 +28,23 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Զտման ցանկեր",
+    "message": "Զտիչների ցանկեր",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
-    "message": "Իմ զտումները",
+    "message": "Իմ զտիչները",
     "description": "appears as tab name in dashboard"
   },
   "rulesPageName": {
-    "message": "My rules",
+    "message": "Իս կանոնները",
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Սպիտակ ցուցակ",
+    "message": "Վստահված կայքեր",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "Shortcuts",
+    "message": "Դյուրանցումներ",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -52,11 +52,11 @@
     "description": "Title for the logger window"
   },
   "aboutPageName": {
-    "message": "Մեր մասին",
+    "message": "Ընդլայնման մասին",
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
-    "message": "uBlock₀ — Asset viewer",
+    "message": "uBlock₀ — Ակտիվների դիտակ",
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
@@ -64,19 +64,19 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page.",
+    "message": "Կտտոց՝ անջատել/միացնել uBlock₀-ն այս կայքի համար։\n\nCtrl+կտտոց՝ անջատել uBlock₀-ը միայն այս էջում։",
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Click to disable uBlock₀ for this site.\n\nCtrl+click to disable uBlock₀ only on this page.",
+    "message": "Կտտացրեք՝ uBlock₀֊ն այս կայքի համար անջատելու համար։\n\nCtrl+կտտոց՝ uBlock₀֊ն միայն այս էջում անջատելու համար։",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Click to enable uBlock₀ for this site.",
+    "message": "կտտացրեք՝ uBlock₀֊ն այս կայքի համար միացնելու համար։",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
-    "message": "requests blocked",
+    "message": "արգելափակված հարցում",
     "description": "English: requests blocked"
   },
   "popupBlockedOnThisPagePrompt": {
@@ -84,11 +84,11 @@
     "description": "English: on this page"
   },
   "popupBlockedStats": {
-    "message": "{{count}} կամ {{percent}}%",
+    "message": "{{count}} ({{percent}}%)",
     "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
-    "message": "տեղադրումից առ այսօր",
+    "message": "տեղադրման պահից",
     "description": "English: since install"
   },
   "popupOr": {
@@ -96,27 +96,27 @@
     "description": "English: or"
   },
   "popupBlockedOnThisPage_v2": {
-    "message": "Արգելափակված այս էջում",
+    "message": "Արգելափակվել է այս էջում",
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "Արգելափակված տեղադրումից առ այսօր",
+    "message": "Արգելափակվել է տեղադրման պահից",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
-    "message": "Միացված դոմեյններ",
+    "message": "Միացվել է տիրույթներ",
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
-    "message": "Բացել վահանակը",
+    "message": "Բացել կառավահանը",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Enter element zapper mode",
+    "message": "Գործարկել տարրերի ջնջման ռեժիմը",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Enter element picker mode",
+    "message": "Գործարկել տարրերի ընտրության ռեժիմը",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
@@ -124,67 +124,67 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "Toggle the blocking of all popups for this site",
+    "message": "Միաց./Անջ. այս կայքի բոլոր ելնող լուսամուտների արգելափակումը",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
-    "message": "Click to block all popups on this site",
+    "message": "Կտտացրեք՝ այս կայքի բոլոր ելնող լուսամուտներն արգելափակելու",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "Click to no longer block all popups on this site",
+    "message": "Կտտացրեք՝ այս կայքի բոլոր ելնող լուսամուտների արգելափակումն անջատելու",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "Toggle the blocking of large media elements for this site",
+    "message": "Միաց./Անջ. այս կայքի խոշոր մեդիա տարրերի արգելափակումը",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "Click to block large media elements on this site",
+    "message": "Կտտացրեք՝ այս կայքի խոշոր մեդիա տարրերն արգելափակելու",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Click to no longer block large media elements on this site",
+    "message": "Կտտացրեք՝ այս կայքի խոշոր մեդիա տարրերի արգելափակումն անջատելու",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "Toggle cosmetic filtering for this site",
+    "message": "Միաց./Անջ. կոսմետիկ զտումն այս կայքի համար",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Click to disable cosmetic filtering on this site",
+    "message": "Կտտացրեք՝ այս կայքում կոսմետիկ զտումն անջատելու",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Click to enable cosmetic filtering on this site",
+    "message": "Կտտացրեք՝ այս կայքում կոսմետիկ զտումը միացնելու",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
-    "message": "Toggle the blocking of remote fonts for this site",
+    "message": "Միաց./Անջ. կողմնակի տառատեսակների արգելափակումն այս կայքի համար",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Click to block remote fonts on this site",
+    "message": "Կտտացրեք՝ կողմնակի տառատեսակներն այս կայքում արգելափակելու",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Click to no longer block remote fonts on this site",
+    "message": "Կտտացրեք՝ այս կայքի համար կողմնակի տառատեսակների արգելափակումն անջատելու",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Click to disable JavaScript on this site",
+    "message": "Կտտացրեք՝ JavaScript֊ն այս կայքում անջատելու",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Click to no longer disable JavaScript on this site",
+    "message": "Կտտացրեք՝ այս կայքում JavaScript֊ն այլևս չանջատելու համար",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
-    "message": "Pop-up windows",
+    "message": "Ելնող լուսամուտներ",
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
-    "message": "Մեծ մեդիա էլեմենտներ",
+    "message": "Խոշոր մեդիա տարրեր",
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
@@ -192,7 +192,7 @@
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
-    "message": "Remote fonts",
+    "message": "Կողմնակի տառատեսակներ",
     "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
@@ -208,23 +208,23 @@
     "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
-    "message": "Global rules: this column is for rules which apply to all sites.",
+    "message": "Համընդհանուր կանոններ. այս սյունակը նախատեսված է բոլոր կայքերի վրա տարածվող կանոնների համար։",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Local rules: this column is for rules which apply to the current site only.\nLocal rules override global rules.",
+    "message": "Տեղական կանոններ. այս սյունակը նախատեսված է միայն այս կայքի վրա տարածվող կանոնների համար։\nՏեղական կանոնները վերասահմանում են համընդհանուր կանոնները։",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
-    "message": "Click to make your changes permanent.",
+    "message": "Կտտացրեք՝ փոփոխությունները պահպանելու համար։",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Click to revert your changes.",
+    "message": "Կտտացրեք՝ փոփոխությունները հետարկելու համար։",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {
-    "message": "Ամենը",
+    "message": "բոլորը",
     "description": ""
   },
   "popupImageRulePrompt": {
@@ -232,35 +232,35 @@
     "description": ""
   },
   "popup3pAnyRulePrompt": {
-    "message": "3rd-party",
+    "message": "3-րդ կողմերի ռեսուրսներ",
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "3rd-party CSS/images",
+    "message": "3-րդ կողմերի CSS/պատկերներ",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
-    "message": "inline scripts",
+    "message": "ներտող սկրիպտներ",
     "description": ""
   },
   "popup1pScriptRulePrompt": {
-    "message": "1st-party scripts",
+    "message": "1-ին կողմի սկրիպտներ",
     "description": ""
   },
   "popup3pScriptRulePrompt": {
-    "message": "3rd-party scripts",
+    "message": "3-րդ կողմերի սկրիպտներ",
     "description": ""
   },
   "popup3pFrameRulePrompt": {
-    "message": "3rd-party frames",
+    "message": "3-րդ կողմերի շրջանակներ",
     "description": ""
   },
   "popupHitDomainCountPrompt": {
-    "message": "միացված դոմեյններ",
+    "message": "միացված տիրույթներ",
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
-    "message": "{{count}} հնարավոր {{total}}֊ից",
+    "message": "{{total}}֊ից {{count}}֊ը",
     "description": "appears in popup"
   },
   "popupVersion": {
@@ -284,7 +284,7 @@
     "description": "Element picker preview mode: will cause the elements matching the current filter to be removed from the page"
   },
   "pickerNetFilters": {
-    "message": "Ցանցի զտիչներ",
+    "message": "Ցանցային զտիչներ",
     "description": "English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters": {
@@ -292,7 +292,7 @@
     "description": "English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint": {
-    "message": "Click, Ctrl-click",
+    "message": "Կտտոց, Ctrl+կտտոց",
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
@@ -300,31 +300,31 @@
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
-    "message": "Hide placeholders of blocked elements",
+    "message": "Թաքցնել արգելափակված տարրերի տեղապահները",
     "description": "English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt": {
-    "message": "Show the number of blocked requests on the icon",
+    "message": "Ցուցադրել արգելափակված հայտերի քանակը պատկերակի վրա",
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "Disable tooltips",
+    "message": "Անջատել գործիքահուշերը",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
-    "message": "Make use of context menu where appropriate",
+    "message": "Օգտվեք համատեքստային ընտրացանկից, երբ դա տեղին է",
     "description": "English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt": {
-    "message": "Color-blind friendly",
+    "message": "Բարեհաճ գույներ գունակուրություն ունեցողների համար",
     "description": "English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt": {
-    "message": "Enable cloud storage support",
+    "message": "Միացնել ամպային պահեստի աջակցոմը",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "I am an advanced user (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>required reading</a>)",
+    "message": "Ես հմուտ օգտվող եմ (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'> կարդալը պարտադիր է</a>)",
     "description": ""
   },
   "settingsAdvancedUserSettings": {
@@ -332,15 +332,15 @@
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Disable pre-fetching (to prevent any connection for blocked network requests)",
+    "message": "Անջատել նախաբեռնումը՝ արգելափակված ցանցային հայտերի համար միացումները կանխելու",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
-    "message": "Disable hyperlink auditing",
+    "message": "Անջատել հիպերհղումների ստուգումը",
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
-    "message": "Prevent WebRTC from leaking local IP addresses",
+    "message": "Կանխել տեղական IP-հասցեների արտահոսքը WebRTC-ի միջոցով",
     "description": "English: "
   },
   "settingPerSiteSwitchGroup": {
@@ -348,7 +348,7 @@
     "description": ""
   },
   "settingPerSiteSwitchGroupSynopsis": {
-    "message": "These default behaviors can be overridden on a per-site basis",
+    "message": "Այս կարգավորումները կարող են նշված լինել յուրաքանչյուր կայքի համար ջոկ֊ջոկ",
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
@@ -356,11 +356,11 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Արգելափակել {{input}} ԿԲից մեծ մեդիա էլեմենտները",
+    "message": "Արգելափակել {{input}} ԿԲ-ից մեծ մեդիա տարրերը",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
-    "message": "Block remote fonts",
+    "message": "Արգելափակել կողմնակի տառատեսակները",
     "description": ""
   },
   "settingsNoScriptingPrompt": {
@@ -368,27 +368,27 @@
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
-    "message": "Block CSP reports",
+    "message": "Արգելափակել CSP հաշվետվությունները",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsLastRestorePrompt": {
-    "message": "Last restore:",
+    "message": "Վերջին վերականգնումը՝",
     "description": "English: Last restore:"
   },
   "settingsLastBackupPrompt": {
-    "message": "Last backup:",
+    "message": "Վերջին պահուստային պատճենը՝",
     "description": "English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt": {
-    "message": "{{netFilterCount}} network filters ＋ {{cosmeticFilterCount}} cosmetic filters from:",
+    "message": "{{netFilterCount}} ցանցային զտիչ ＋ {{cosmeticFilterCount}} կոսմետիկ զտիչ այստեղից՝",
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
-    "message": "{{used}} used out of {{total}}",
+    "message": "{{total}}֊ից օգտագործվում է {{used}}֊ը",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
-    "message": "Ինքնին թարմացնել ցանկերը",
+    "message": "Ինքնաշխատորեն թարմացնել զտիչների ցանկերը",
     "description": "A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow": {
@@ -396,23 +396,23 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll": {
-    "message": "Purge all caches",
+    "message": "Մաքրել բոլոր հիշապահեստները",
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
-    "message": "Parse and enforce cosmetic filters",
+    "message": "Վերլուծել և կիրառել կոսմետիկ զտիչներ",
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "Cosmetic filters serve to hide elements in a web page which are deemed to be a visual nuisance, and which can't be blocked by the network request-based filtering engines.",
+    "message": "Կոսմետիկ զտիչները ծառայում են կայքէջի այն տարրերը թաքցնելու համար, որոնք պատճառում են տեսողական անհանգստություն և որոնք չեն կարող արգելափակվել ցանցային հայտերի հիման վրա աշխատող զտման մեխանիզմներով։",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
-    "message": "Անտեսել ընդհանուր կոսմետիկ զտումները",
+    "message": "Անտեսել ընդհանուր կոսմետիկ զտիչները",
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "Generic cosmetic filters are those cosmetic filters which are meant to apply on all web sites. Enabling this option will eliminate the memory and CPU overhead added to web pages as a result of handling generic cosmetic filters.\n\nIt is recommended to enable this option on less powerful devices.",
+    "message": "Ընդհանուր կոսմետիկ զտիչներն այն կոսմետիկ զտիչներն են, որոնք նախատեսված են կիրառվել բոլոր կայքերում։ Այս ընտրանքը միացնելը կվերացնի հիշողության և մշակիչի բեռնվածությունը, որը կայքեջերի մոտ ավելանում է ընդհանուր կոսմետիկ զտիչների մշակման արդյունքում։\n\nԽորհուրդ է տրվում միացնել այս ընտրանքը ոչ բավականաչափ հզոր սարքերում։",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -424,35 +424,35 @@
     "description": "English: Apply changes"
   },
   "3pGroupDefault": {
-    "message": "Built-in",
+    "message": "Ներկառուցված",
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
-    "message": "Գովազդներ",
+    "message": "Ազդեր",
     "description": "English: Ads"
   },
   "3pGroupPrivacy": {
-    "message": "Privacy",
+    "message": "Գաղտնիություն",
     "description": "English: Privacy"
   },
   "3pGroupMalware": {
-    "message": "Malware domains",
+    "message": "Վնասակար տիրույթներ",
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {
-    "message": "Annoyances",
+    "message": "Ջղայնացնող տարրեր",
     "description": "The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose": {
-    "message": "Multipurpose",
+    "message": "Բազմանպատակային",
     "description": "English: Multipurpose"
   },
   "3pGroupRegions": {
-    "message": "Երկրներ, լեզուներ",
+    "message": "Տարածաշրջաններ, լեզուներ",
     "description": "English: Regions, languages"
   },
   "3pGroupCustom": {
-    "message": "Custom",
+    "message": "Օգտվողային",
     "description": "English: Custom"
   },
   "3pImport": {
@@ -460,27 +460,27 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "One URL per line. Invalid URLs will be silently ignored.",
+    "message": "Մեկ URL մեկ տողում։ Անվավեր URL֊ներն անտեսվելու են առանց նախազգուշացման։",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
-    "message": "Ժամկետանց",
+    "message": "Ժամկետանց։",
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pViewContent": {
-    "message": "view content",
+    "message": "տեսնել բովանդակությունը",
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
-    "message": "Last update: {{ago}}.\nClick to force an update.",
+    "message": "Վերջին թարմացումը՝ {{ago}}։\nԿտտացրեք՝ ստիպողական թարմացման համար։",
     "description": "used as a tooltip for the clock icon beside a list"
   },
   "3pUpdating": {
-    "message": "Թարմացնում եմ...",
+    "message": "Թարմացվում է...",
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
-    "message": "A network error prevented the resource from being updated.",
+    "message": "Ցանցի սխալի պատճառով թարմացումը տեղի չունեցավ։",
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
@@ -524,7 +524,7 @@
     "description": "Will enable manual-edit mode (textarea)"
   },
   "rulesEditSave": {
-    "message": "Պահել",
+    "message": "Պահպանել",
     "description": "Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard": {
@@ -532,11 +532,11 @@
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
-    "message": "Ներմուծել ֆայլից...",
+    "message": "Ներմուծել նիշքից...",
     "description": ""
   },
   "rulesExport": {
-    "message": "Արտահանել դեպի ֆայլ",
+    "message": "Արտահանել դեպի նիշք",
     "description": ""
   },
   "rulesDefaultFileName": {
@@ -728,7 +728,7 @@
     "description": "Label for the context selector"
   },
   "loggerURLFilteringTypeLabel": {
-    "message": "Տիպ.",
+    "message": "Տեսակ՝",
     "description": "Label for the type selector"
   },
   "loggerStaticFilteringHeader": {
@@ -940,7 +940,7 @@
     "description": "English: {{value}} days ago"
   },
   "showDashboardButton": {
-    "message": "Տեսնել վահանակը",
+    "message": "Ցույց տալ կառավահանը",
     "description": "Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
@@ -968,7 +968,7 @@
     "description": "English: List of filter list names follows"
   },
   "docblockedBack": {
-    "message": "Հետ գնալ",
+    "message": "Հետ",
     "description": "English: Go back"
   },
   "docblockedClose": {
@@ -992,7 +992,7 @@
     "description": "tooltip"
   },
   "cloudPull": {
-    "message": "Ներմուծել ամպի պահուստից",
+    "message": "Ներմուծել ամպային պահուստից",
     "description": "tooltip"
   },
   "cloudPullAndMerge": {
@@ -1024,7 +1024,7 @@
     "description": "for generic 'Revert' buttons"
   },
   "genericBytes": {
-    "message": "բայտ",
+    "message": "բայթ",
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
