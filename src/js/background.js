@@ -41,7 +41,7 @@ const µBlock = (( ) => { // jshint ignore:line
         autoCommentFilterTemplate: '{{date}} {{origin}}',
         autoUpdateAssetFetchPeriod: 120,
         autoUpdateDelayAfterLaunch: 180,
-        autoUpdatePeriod: 7,
+        autoUpdatePeriod: 4,
         benchmarkDatasetURL: 'unset',
         blockingProfiles: '11111/#F00 11010/#C0F 11001/#00F 00001',
         cacheStorageAPI: 'unset',

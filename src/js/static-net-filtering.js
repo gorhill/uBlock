@@ -3437,7 +3437,7 @@ FilterContainer.prototype.freeze = function() {
     this.optimizeTimerId = self.requestIdleCallback(( ) => {
         this.optimizeTimerId = undefined;
         this.optimize();
-    }, { timeout: 10000 });
+    }, { timeout: 5000 });
 
     log.info(`staticNetFilteringEngine.freeze() took ${Date.now()-t0} ms`);
 };
