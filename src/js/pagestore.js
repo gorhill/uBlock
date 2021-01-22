@@ -596,7 +596,9 @@ const PageStore = class {
             return 1;
         }
 
-        const cacheableResult = this.cacheableResults.has(fctxt.itype);
+        const cacheableResult =
+            this.cacheableResults.has(fctxt.itype) &&
+            fctxt.aliasURL === undefined;
 
         if ( cacheableResult ) {
             const entry = this.netFilteringCache.lookupResult(fctxt);
