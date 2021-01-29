@@ -216,11 +216,11 @@
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
-    "message": "Klik untuk membuat ubahan anda permanen.",
+    "message": "Klik untuk membuat ubahan Anda permanen.",
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Klik untuk membatalkan ubahan anda.",
+    "message": "Klik untuk membatalkan ubahan Anda.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {
@@ -544,7 +544,7 @@
     "description": "default file name to use"
   },
   "rulesHint": {
-    "message": "Daftar aturan filter dinamis anda.",
+    "message": "Daftar aturan filter dinamis Anda.",
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
@@ -892,7 +892,7 @@
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
-    "message": "Semua pengaturan anda akan ditimpa dengan data yang dicadangkan pada {{time}}, dan uBlock₀ akan memulai ulang.\n\nTimpa semua pengaturan yang ada dengan data cadangan?",
+    "message": "Semua pengaturan Anda akan ditimpa dengan data yang dicadangkan pada {{time}}, dan uBlock₀ akan memulai ulang.\n\nTimpa semua pengaturan yang ada dengan data cadangan?",
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {
@@ -900,7 +900,7 @@
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
-    "message": "Semua pengaturan anda akan dihapus, dan uBlock₀ akan memulai ulang.\n\nKembalikan uBlock₀ ke pengaturan bawaan?",
+    "message": "Semua pengaturan Anda akan dihapus, dan uBlock₀ akan memulai ulang.\n\nKembalikan uBlock₀ ke pengaturan bawaan?",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
@@ -908,7 +908,7 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "Tambah URL berikut ke ke daftar filter khusus anda?\n\nJudul: \"{{title}}\"\nURL: {{url}}",
+    "message": "Tambah URL berikut ke ke daftar filter khusus Anda?\n\nJudul: \"{{title}}\"\nURL: {{url}}",
     "description": "No longer used"
   },
   "subscribeButton": {
@@ -1008,7 +1008,7 @@
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
-    "message": "Peringatan! Ubah pengaturan lanjutan berikut dengan resiko anda sendiri.",
+    "message": "Peringatan! Ubah pengaturan lanjutan berikut dengan risiko Anda sendiri.",
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {

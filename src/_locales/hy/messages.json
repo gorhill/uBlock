@@ -48,7 +48,7 @@
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
-    "message": "uBlock₀ — Լոգգեր",
+    "message": "uBlock₀ — Մատյան",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
@@ -120,7 +120,7 @@
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "Բացել լոգգերը",
+    "message": "Բացել մատյանը",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
@@ -428,7 +428,7 @@
     "description": "Header for the uBlock filters section in 'Filter lists pane'"
   },
   "3pGroupAds": {
-    "message": "Ազդեր",
+    "message": "Գովազդ",
     "description": "English: Ads"
   },
   "3pGroupPrivacy": {
@@ -484,11 +484,11 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "One filter per line. A filter can be a plain hostname, or an EasyList-compatible filter. Lines prefixed with <code>!</code> will be ignored.",
+    "message": "Մեկ տողում մեկ զտիչ։ Որպես զտիչ կարող է լինել կայքի անուն կամ EasyList-համաեղելի զտիչ։ <code>! </code>-ով սկսվող տողերը կանտեսվեն։",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
-    "message": "Ներմուծել և կցել",
+    "message": "Ներմուծել և հավելել",
     "description": "English: Import and append"
   },
   "1pExport": {
@@ -504,19 +504,19 @@
     "description": "English: Apply changes"
   },
   "rulesPermanentHeader": {
-    "message": "Permanent rules",
+    "message": "Մշտական կանոններ",
     "description": "header"
   },
   "rulesTemporaryHeader": {
-    "message": "Temporary rules",
+    "message": "Ժամանակավոր կանոններ",
     "description": "header"
   },
   "rulesRevert": {
-    "message": "Revert",
+    "message": "Հետադարձել",
     "description": "This will remove all temporary rules"
   },
   "rulesCommit": {
-    "message": "Commit",
+    "message": "Հաստատել",
     "description": "This will persist temporary rules"
   },
   "rulesEdit": {
@@ -528,7 +528,7 @@
     "description": "Will save manually-edited content and exit manual-edit mode"
   },
   "rulesEditDiscard": {
-    "message": "Discard",
+    "message": "Չեղարկել",
     "description": "Will discard manually-edited content and exit manual-edit mode"
   },
   "rulesImport": {
@@ -544,35 +544,35 @@
     "description": "default file name to use"
   },
   "rulesHint": {
-    "message": "List of your dynamic filtering rules.",
+    "message": "Դինամիկական զտման կանոնների Ձեր ցուցակը։",
     "description": "English: List of your dynamic filtering rules."
   },
   "rulesFormatHint": {
-    "message": "Rule syntax: <code>source destination type action</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>full documentation</a>).",
+    "message": "Կանոնների շարահյուսություն՝ <code>աղբյուր նպատակակետ տեսակ գործողություն</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>բոլոր փաստաթղթերը</a>)։",
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
-    "message": "Sort:",
+    "message": "Տեսակավորել՝",
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
-    "message": "Rule type",
+    "message": "Կանոնի տեսակ",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortBySource": {
-    "message": "Source",
+    "message": "Աղբյուր",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortByDestination": {
-    "message": "Destination",
+    "message": "Նպատակակետ",
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
-    "message": "The trusted site directives dictate on which web pages uBlock Origin should be disabled. One entry per line. Invalid directives will be silently ignored and commented out.",
+    "message": "Վստահված կայքերի ցուցակը սահմանում է, թե որ կայքերում uBlock Origin-ը պիտի անջատված լինի։ Մեկ տողում մեկ գրառում։ Անճիշտ կանոններն առանց նախազգուշացման անտեսվելու և մեկնաբանվելու են։",
     "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
-    "message": "Ներմուծել և կցել",
+    "message": "Ներմուծել և հավելել",
     "description": "English: Import and append"
   },
   "whitelistExport": {
@@ -588,11 +588,11 @@
     "description": "English: Apply changes"
   },
   "logRequestsHeaderType": {
-    "message": "Տիպ",
+    "message": "Տեսակ",
     "description": "English: Type"
   },
   "logRequestsHeaderDomain": {
-    "message": "Դոմեյն",
+    "message": "Տիրույթ",
     "description": "English: Domain"
   },
   "logRequestsHeaderURL": {
@@ -600,63 +600,63 @@
     "description": "English: URL"
   },
   "logRequestsHeaderFilter": {
-    "message": "Զտել",
+    "message": "Զտիչ",
     "description": "English: Filter"
   },
   "logAll": {
-    "message": "All",
+    "message": "Բոլորը",
     "description": "Appears in the logger's tab selector"
   },
   "logBehindTheScene": {
-    "message": "Tabless",
+    "message": "Անդրկուլիսյան հարցումներ",
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
-    "message": "Current tab",
+    "message": "Ընթացիկ ներդիր",
     "description": "Appears in the logger's tab selector"
   },
   "loggerReloadTip": {
-    "message": "Reload the tab content",
+    "message": "Վերաբեռնել ներդիրի բովանդակությունը",
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
-    "message": "Toggle the DOM inspector",
+    "message": "Միաց./Անջատել DOM-տեսուչը",
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "Toggle the popup panel",
+    "message": "Միաց./Անջատել ելնող վահանակը",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
-    "message": "uBlock Origin wiki: The logger",
+    "message": "uBlock Origin վիքի. Մատյան",
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
-    "message": "Clear logger",
+    "message": "Մաքրել մատյանը",
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
-    "message": "Pause logger (discard all incoming data)",
+    "message": "Դադարեցնել մատյանավորումը (մերժել բոլոր մուտքային տվյալները)",
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {
-    "message": "Unpause logger",
+    "message": "Վերսկսել մատյանավորումը",
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "Toggle logger filtering",
+    "message": "Միաց./Անջ. մատյանի զտումը",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {
-    "message": "filter logger content",
+    "message": "մատյանի գրառումների զտում",
     "description": "Placeholder string for logger output filtering input field"
   },
   "loggerRowFiltererBuiltinTip": {
-    "message": "Logger filtering options",
+    "message": "Մատյանի զտման ընտրանքներ",
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {
-    "message": "Not",
+    "message": "Ոչ",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinEventful": {
@@ -676,11 +676,11 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
-    "message": "1st-party",
+    "message": "1-ին կողմ",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin3p": {
-    "message": "3rd-party",
+    "message": "3-րդ կողմ",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerEntryDetailsHeader": {
@@ -688,31 +688,31 @@
     "description": "Small header to identify the 'Details' pane for a specific logger entry"
   },
   "loggerEntryDetailsFilter": {
-    "message": "Զտել",
+    "message": "Զտիչ",
     "description": "Label to identify a filter field"
   },
   "loggerEntryDetailsFilterList": {
-    "message": "Զտման ցանկ",
+    "message": "Զտիչների ցանկ",
     "description": "Label to identify a filter list field"
   },
   "loggerEntryDetailsRule": {
-    "message": "Rule",
+    "message": "Կանոն",
     "description": "Label to identify a rule field"
   },
   "loggerEntryDetailsContext": {
-    "message": "Context",
+    "message": "Համատեքստ",
     "description": "Label to identify a context field (typically a hostname)"
   },
   "loggerEntryDetailsRootContext": {
-    "message": "Root context",
+    "message": "Արմատային համատեքստ",
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
-    "message": "Partyness",
+    "message": "Պատկանելություն",
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
-    "message": "Տիպ",
+    "message": "Տեսակ",
     "description": "Label to identify the type of an entry"
   },
   "loggerEntryDetailsURL": {
@@ -720,11 +720,11 @@
     "description": "Label to identify the URL of an entry"
   },
   "loggerURLFilteringHeader": {
-    "message": "URL rule",
+    "message": "URL-ի կանոն",
     "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
-    "message": "Context:",
+    "message": "Համատեքստ՝",
     "description": "Label for the context selector"
   },
   "loggerURLFilteringTypeLabel": {
@@ -732,11 +732,11 @@
     "description": "Label for the type selector"
   },
   "loggerStaticFilteringHeader": {
-    "message": "Static filter",
+    "message": "Ստատիկ զտիչ",
     "description": "Small header to identify the static filtering section"
   },
   "loggerStaticFilteringSentence": {
-    "message": "{{action}} network requests of {{type}} {{br}}which URL address matches {{url}} {{br}}and which originates {{origin}},{{br}}{{importance}} there is a matching exception filter.",
+    "message": "{{action}} {{type}} ցանցային հարցումները,{{br}}որոնց URL-հասցեներն համընկնում են {{url}} {{br}}և որոնք ծագում են {{origin}},{{br}}{{importance}} կա համապատասխան բացառության կանոն։",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartBlock": {
@@ -748,75 +748,75 @@
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartType": {
-    "message": "տիպ «{{type}}»",
+    "message": "«{{type}}» տեսակի",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyType": {
-    "message": "կամայական տիպ",
+    "message": "ցանկացած տեսակի",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartOrigin": {
-    "message": "from “{{origin}}”",
+    "message": "«{{origin}}»-ից",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartAnyOrigin": {
-    "message": "from anywhere",
+    "message": "ցանկացած տեղից",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartNotImportant": {
-    "message": "except when",
+    "message": "բացառությամբ այն դեպքերի, երբ",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringSentencePartImportant": {
-    "message": "նույնիսկ երբ",
+    "message": "նույնիսկ եթե",
     "description": "Used in the static filtering wizard"
   },
   "loggerStaticFilteringFinderSentence1": {
-    "message": "Static filter <code>{{filter}}</code> found in:",
+    "message": "<code>{{filter}}</code> ստատիկ զտիչը գտնվել է՝",
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Static filter could not be found in any of the currently enabled filter lists",
+    "message": "Ստատիկ զտիչն անհնար է գտնել ներկայումս միացված զտիչների ցանկերից որևէ մեկում",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
-    "message": "Logger entries which do not fulfill all three conditions below will be automatically discarded:",
+    "message": "Մատյանի գրառումները, որոնք չեն բավարարում ցածում նշված բոլոր երեք պայմաններին, ինքնաշխատ կմերժվեն։",
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
-    "message": "Preserve entries from the last {{input}} minutes",
+    "message": "Պահպանել վերջին {{input}} րոպեի գրառումները",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "Preserve at most {{input}} page loads per tab",
+    "message": "Պահպանել ոչ ավելի, քան {{input}} բեռնում ամեն մի ներդիրում",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
-    "message": "Preserve at most {{input}} entries per tab",
+    "message": "Պահպանել ոչ ավելի, քան {{input}} գրառում ամեն մի ներդիրում",
     "description": "A logger setting"
   },
   "loggerSettingPerEntryLineCount": {
-    "message": "Use {{input}} lines per entry in vertically expanded mode",
+    "message": "Ուղղահայացորեն ընդլայնված ռեժիմում օգտագործել {{input}} տող ամեն մի գրառման համար",
     "description": "A logger setting"
   },
   "loggerSettingHideColumnsPrompt": {
-    "message": "Hide columns:",
+    "message": "Թաքցնել սյունակները՝",
     "description": "Logger settings: a sentence to describe the purpose of the checkboxes below"
   },
   "loggerSettingHideColumnTime": {
-    "message": "{{input}} Time",
+    "message": "{{input}} Ժամանակ",
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
-    "message": "{{input}} Filter/rule",
+    "message": "{{input}} Զտիչ/կանոն",
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
-    "message": "{{input}} Context",
+    "message": "{{input}} Համատեքստ",
     "description": "A label for the context column"
   },
   "loggerSettingHideColumnPartyness": {
-    "message": "{{input}} Partyness",
+    "message": "{{input}} Պատկանելություն",
     "description": "A label for the partyness column"
   },
   "loggerExportFormatList": {
@@ -828,7 +828,7 @@
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportEncodePlain": {
-    "message": "Plain",
+    "message": "Պարզ",
     "description": "Label for radio-button to pick export text format"
   },
   "loggerExportEncodeMarkdown": {
@@ -836,11 +836,11 @@
     "description": "Label for radio-button to pick export text format"
   },
   "aboutChangelog": {
-    "message": "Changelog",
+    "message": "Փոփոխությունների մատյան",
     "description": ""
   },
   "aboutWiki": {
-    "message": "Վիկի",
+    "message": "Վիքի",
     "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
@@ -848,19 +848,19 @@
     "description": "A link for where to get support"
   },
   "aboutIssues": {
-    "message": "Issue tracker",
+    "message": "Խնդիրների հետագծում",
     "description": "Text for a link to official issue tracker"
   },
   "aboutCode": {
-    "message": "Source code (GPLv3)",
+    "message": "Աղբյուրի կոդ (GPLv3)",
     "description": "English: Source code (GPLv3)"
   },
   "aboutContributors": {
-    "message": "Contributors",
+    "message": "Աջակցողներ",
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Source code",
+    "message": "Աղբյուրի կոդ",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
@@ -868,47 +868,47 @@
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
-    "message": "Զտման ցանկեր",
+    "message": "Զտիչների ցանկեր",
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "External dependencies (GPLv3-compatible):",
+    "message": "Արտաքին կախվածություններ (GPLv3-համատեղելի)՝",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
-    "message": "Back up to file",
+    "message": "Պահուստավորել նիշքում...",
     "description": "Text for button to create a backup of all settings"
   },
   "aboutBackupFilename": {
-    "message": "my-ublock-backup_{{datetime}}.txt",
+    "message": "ublock-իմ-պահուստ_{{datetime}}.txt",
     "description": "English: my-ublock-backup_{{datetime}}.txt"
   },
   "aboutRestoreDataButton": {
-    "message": "Restore from file...",
+    "message": "Վերականգնել նիշքից...",
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "Reset to default settings...",
+    "message": "Վերականգնել լռելյայն կարգավորումները...",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
-    "message": "All your settings will be overwritten using data backed up on {{time}}, and uBlock₀ will restart.\n\nOverwrite all existing settings using backed up data?",
+    "message": "Ընթացիկ կարգավորումները կփոխարինվեն տվյալներով {{time}}-ին ստեղծված պահուստային պատճենից, և uBlock₀-ը կվերագործարկվի։\n\nՓոխարինե՞լ առկա բոլոր կարգավորումները պահուստավորված տվյալներով։",
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {
-    "message": "The data could not be read or is invalid",
+    "message": "Տվյալները չեն կարող ընթերցվել կամ անվավեր են",
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
-    "message": "All your settings will be removed, and uBlock₀ will restart.\n\nReset uBlock₀ to factory settings?",
+    "message": "Ձեր բոլոր կարգավորումները կջնջվեն, uBlock₀֊ը կվերագործարկվի։\n\nՎերականգնե՞լ լռելյայն կարգավորումները։",
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
-    "message": "Network error: {{msg}}",
+    "message": "Ցանցի սխալ՝ {{msg}}",
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "Add the following URL to your custom filter lists?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
+    "message": "Ավելացնե՞լ հետևյալ հասցեն զտիչների օգտվողային ցանկին։\n\nՎերնագիր՝ «{{title}}»\nURL՝ {{url}}",
     "description": "No longer used"
   },
   "subscribeButton": {
@@ -944,27 +944,27 @@
     "description": "Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
-    "message": "Տեսնել լոգգերը",
+    "message": "Ցույց տալ մատյանը",
     "description": "Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
-    "message": "off",
+    "message": "անջատված է",
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1": {
-    "message": "uBlock Origin has prevented the following page from loading:",
+    "message": "uBlock Origin֊ը կանխել է հետևյալ էջի բեռնումը՝",
     "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
-    "message": "Because of the following filter:",
+    "message": "Հետևյալ զտիչի պատճառով՝",
     "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
-    "message": "առանց պարամետր",
+    "message": "առանց չափանիշների",
     "description": "label to be used for the parameter-less URL: https://cloud.githubusercontent.com/assets/585534/9832014/bfb1b8f0-593b-11e5-8a27-fba472a5529a.png"
   },
   "docblockedFoundIn": {
-    "message": "Found in:",
+    "message": "Գտնվել է այստեղ՝",
     "description": "English: List of filter list names follows"
   },
   "docblockedBack": {
@@ -972,31 +972,31 @@
     "description": "English: Go back"
   },
   "docblockedClose": {
-    "message": "Փակել այս պատուհանը",
+    "message": "Փակել այս լուսամուտը",
     "description": "English: Close this window"
   },
   "docblockedProceed": {
-    "message": "Disable strict blocking for {{hostname}}",
+    "message": "Անջատեք խիստ արգելափակումը {{hostname}}-ի համար",
     "description": "English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary": {
-    "message": "Ժամանակավոր",
+    "message": "Առժամապես",
     "description": "English: Temporarily"
   },
   "docblockedDisablePermanent": {
-    "message": "Մշտական",
+    "message": "Մշտապես",
     "description": "English: Permanently"
   },
   "cloudPush": {
-    "message": "Արտահանել ամպի պահուստ",
+    "message": "Արտահանել առ ամպային պահեստ",
     "description": "tooltip"
   },
   "cloudPull": {
-    "message": "Ներմուծել ամպային պահուստից",
+    "message": "Ներմուծել ամպային պահեստից",
     "description": "tooltip"
   },
   "cloudPullAndMerge": {
-    "message": "Import from cloud storage and merge with current settings",
+    "message": "Ներմուծել ամպային պահեստից և միաձուլել ընթացիկ կարգավորումների հետ",
     "description": "tooltip"
   },
   "cloudNoData": {
@@ -1004,15 +1004,15 @@
     "description": ""
   },
   "cloudDeviceNamePrompt": {
-    "message": "This device name:",
+    "message": "Այս սարքի անունը՝",
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
-    "message": "Warning! Change these advanced settings at your own risk.",
+    "message": "Ուշադրությո՛ւն։ Փոխեք այս կարգավորումները Ձեր ռիսկով և պատասխանատվությամբ։",
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {
-    "message": "Submit",
+    "message": "Հաստատել",
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
@@ -1020,7 +1020,7 @@
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
-    "message": "Revert",
+    "message": "Հետադարձել",
     "description": "for generic 'Revert' buttons"
   },
   "genericBytes": {
@@ -1028,35 +1028,35 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "Block element in frame...",
+    "message": "Արգելափակել տարրը շրջանակում...",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
-    "message": "Ժամանակավորապես թույլ տալ մեծ մեդիա էլեմենտները",
+    "message": "Ժամանակավորապես թույլ տալ խոշոր մեդիա տարրերը",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Type a shortcut",
+    "message": "Մուտքագրեք դյուրանցում",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "Toggle locked scrolling",
+    "message": "Միաց./Անջատել ընդհանուր ոլորումը",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
-    "message": "Copy to clipboard",
+    "message": "Պատճենել առ սեղմատախտակ",
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "toggleBlockingProfile": {
-    "message": "Toggle blocking profile",
+    "message": "Արգելափակման պրոֆիլի փոխանջատում",
     "description": "Label for keyboard shortcut used to toggle blocking profile"
   },
   "relaxBlockingMode": {
-    "message": "Թուլացնել արգելափակման ռեժիմը",
+    "message": "Արգելափակման թուլացված ռեժիմ",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "storageUsed": {
-    "message": "Storage used: {{value}} {{unit}}",
+    "message": "Պահեստի չափը՝ {{value}} {{unit}}",
     "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
   },
   "KB": {
@@ -1072,7 +1072,7 @@
     "description": "short for 'gigabytes'"
   },
   "clickToLoad": {
-    "message": "Click to load",
+    "message": "Կտտացրեք՝ բեռնելու համար",
     "description": "Message used in frame placeholders"
   },
   "dummy": {
