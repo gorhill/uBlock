@@ -323,11 +323,16 @@ const onBeforeBehindTheSceneRequest = function(fctxt) {
         // use the origin URL as the scope. Most such requests aren't going to
         // be blocked, so we test for whitelisting and modify the result only
         // when the request is being blocked.
+        //
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/1478
+        //   Also remove potential redirection when request is to be
+        //   whitelisted.
         if (
             result === 1 &&
             µb.getNetFilteringSwitch(fctxt.tabOrigin) === false
         ) {
             result = 2;
+            fctxt.redirectURL = undefined;
             fctxt.filter = { engine: 'u', result: 2, raw: 'whitelisted' };
         }
     }
