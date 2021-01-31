@@ -687,6 +687,8 @@
 
 /******************************************************************************/
 
+// TODO: properly compare arrays
+
 µBlock.getModifiedSettings = function(edit, orig = {}) {
     const out = {};
     for ( const prop in edit ) {

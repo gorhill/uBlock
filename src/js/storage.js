@@ -116,10 +116,17 @@
         this.userSettings,
         this.userSettingsDefault
     );
+
+    // `externalLists` will be deprecated in some future, it is kept around
+    // for forward compatibility purpose, and should reflect the content of
+    // `importedLists`.
+    this.userSettings.externalLists =
+        this.userSettings.importedLists.join('\n');
+
     const toRemove = [];
     for ( const key in this.userSettings ) {
         if ( this.userSettings.hasOwnProperty(key) === false ) { continue; }
-        if ( toSave.hasOwnProperty(key) === false ) { continue; }
+        if ( toSave.hasOwnProperty(key) ) { continue; }
         toRemove.push(key);
     }
     if ( toRemove.length !== 0 ) {
@@ -368,7 +375,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
 µBlock.applyFilterListSelection = function(details) {
     let selectedListKeySet = new Set(this.selectedFilterLists);
-    let externalLists = this.userSettings.externalLists.slice();
+    let importedLists = this.userSettings.importedLists.slice();
 
     // Filter lists to select
     if ( Array.isArray(details.toSelect) ) {
@@ -386,9 +393,9 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         for ( let i = 0, n = details.toRemove.length; i < n; i++ ) {
             const assetKey = details.toRemove[i];
             selectedListKeySet.delete(assetKey);
-            const pos = externalLists.indexOf(assetKey);
+            const pos = importedLists.indexOf(assetKey);
             if ( pos !== -1 ) {
-                externalLists.splice(pos, 1);
+                importedLists.splice(pos, 1);
             }
             this.removeFilterList(assetKey);
         }
@@ -418,7 +425,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
             }
             return url;
         };
-        const importedSet = new Set(this.listKeysFromCustomFilterLists(externalLists));
+        const importedSet = new Set(this.listKeysFromCustomFilterLists(importedLists));
         const toImportSet = new Set(this.listKeysFromCustomFilterLists(details.toImport));
         for ( const urlKey of toImportSet ) {
             if ( importedSet.has(urlKey) ) {
@@ -431,12 +438,12 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
             }
             selectedListKeySet.add(assetKey);
         }
-        externalLists = Array.from(importedSet).sort();
+        importedLists = Array.from(importedSet).sort();
     }
 
     const result = Array.from(selectedListKeySet);
-    if ( externalLists.join() !== this.userSettings.externalLists.join() ) {
-        this.userSettings.externalLists = externalLists;
+    if ( importedLists.join() !== this.userSettings.importedLists.join() ) {
+        this.userSettings.importedLists = importedLists;
         this.saveUserSettings();
     }
     this.saveSelectedFilterLists(result);
@@ -597,7 +604,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
     // Custom filter lists.
     const importedListKeys = this.listKeysFromCustomFilterLists(
-        this.userSettings.externalLists
+        this.userSettings.importedLists
     );
     for ( const listKey of importedListKeys ) {
         const entry = {
@@ -631,7 +638,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         newAvailableLists[listURL] = newEntry;
         this.assets.registerAssetSource(listURL, newEntry);
         importedListKeys.push(listURL);
-        this.userSettings.externalLists.push(listURL.trim());
+        this.userSettings.importedLists.push(listURL.trim());
         this.saveUserSettings();
         this.saveSelectedFilterLists([ listURL ], true);
     };
@@ -1351,11 +1358,6 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     if ( typeof data.userSettings === 'object' ) {
         const µbus = this.userSettings;
         const adminus = data.userSettings;
-        // List of external lists is meant to be an array.
-        if ( typeof adminus.externalLists === 'string' ) {
-            adminus.externalLists =
-                adminus.externalLists.trim().split(/[\n\r]+/);
-        }
         for ( const name in µbus ) {
             if ( µbus.hasOwnProperty(name) === false ) { continue; }
             if ( adminus.hasOwnProperty(name) === false ) { continue; }
@@ -1371,13 +1373,14 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         Array.isArray(toOverwrite.filterLists) &&
         toOverwrite.filterLists.length !== 0
     ) {
-        const externalLists = [];
+        const importedLists = [];
         for ( const list of toOverwrite.filterLists ) {
             if ( /^[a-z-]+:\/\//.test(list) === false ) { continue; }
-            externalLists.push(list);
+            importedLists.push(list);
         }
-        if ( externalLists.length !== 0 ) {
-            bin.externalLists = externalLists;
+        if ( importedLists.length !== 0 ) {
+            bin.importedLists = importedLists;
+            bin.externalLists = importedLists.join('\n');
         }
         bin.selectedFilterLists = toOverwrite.filterLists;
         binNotEmpty = true;
