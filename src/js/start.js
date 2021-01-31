@@ -160,9 +160,18 @@ const onNetWhitelistReady = function(netWhitelistRaw, adminExtra) {
 // User settings are in memory
 
 const onUserSettingsReady = function(fetched) {
-    // List of external lists is meant to be an array
-    if ( typeof fetched.externalLists === 'string' ) {
-        fetched.externalLists =
+    // `externalLists` will be deprecated in some future, it is kept around
+    // for forward compatibility purpose, and should reflect the content of
+    // `importedLists`.
+    if ( Array.isArray(fetched.externalLists) ) {
+        fetched.externalLists = fetched.externalLists.join('\n');
+        vAPI.storage.set({ externalLists: fetched.externalLists });
+    }
+    if (
+        fetched.importedLists.length === 0 &&
+        fetched.externalLists !== ''
+    ) {
+        fetched.importedLists =
             fetched.externalLists.trim().split(/[\n\r]+/);
     }
 

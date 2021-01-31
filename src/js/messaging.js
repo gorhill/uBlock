@@ -949,9 +949,9 @@ const restoreUserData = async function(request) {
         userData.hostnameSwitchesString += '\nno-csp-reports: * true';
     }
 
-    // List of external lists is meant to be an array.
-    if ( typeof userData.externalLists === 'string' ) {
-        userData.externalLists = userData.externalLists.trim().split(/[\n\r]+/);
+    // List of external lists is meant to be a string.
+    if ( Array.isArray(userData.externalLists) ) {
+        userData.externalLists = userData.externalLists.join('\n');
     }
 
     // https://github.com/chrisaljoudi/uBlock/issues/1102
