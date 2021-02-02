@@ -285,20 +285,10 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "CHN: EasyList China (中文)",
+		"title": "CHN: AdGuard Chinese (中文)",
 		"lang": "zh",
-		"contentURL": "https://easylist-downloads.adblockplus.org/easylistchina.txt",
-		"supportURL": "http://abpchina.org/forum/forum.php"
-	},
-	"CHN-1": {
-		"content": "filters",
-		"group": "regions",
-		"off": true,
-		"title": "CHN: CJX's EasyList Lite",
-		"lang": "zh",
-		"contentURL": "https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt",
-		"supportURL": "https://github.com/cjx82630/cjxlist",
-		"instructionURL": "http://abpchina.org/forum/forum.php?mod=viewthread&tid=29667"
+		"contentURL": "https://filters.adtidy.org/extension/ublock/filters/224.txt",
+		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters"
 	},
 	"CZE-0": {
 		"content": "filters",
