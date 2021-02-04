@@ -28,7 +28,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Φίλτρα τρίτων",
+    "message": "Λίστες φίλτρων",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Λίστα επιτρεπόμενων",
+    "message": "Έμπιστες τοποθεσίες",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -144,7 +144,7 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "Κάντε κλικ για φραγή πλέον μεγάλων στοιχείων πολυμέσων σε αυτή την ιστοσελίδα",
+    "message": "Κάντε κλικ για αναίρεση φραγής των μεγάλων στοιχείων πολυμέσων σε αυτή την τοποθεσία",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -152,11 +152,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "Κάντε κλικ για να απενεργοποιήσετε το καλλυντικό φιλτράρισμα σε αυτή την σελίδα",
+    "message": "Κάντε κλικ για να απενεργοποιήσετε το καλλωπιστικό φιλτράρισμα σε αυτή την τοποθεσία",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "Κάντε κλικ για να ενεργοποιήσετε το καλλυντικό φιλτράρισμα σε αυτή την σελίδα",
+    "message": "Κάντε κλικ για να ενεργοποιήσετε το καλλωπιστικό φιλτράρισμα σε αυτή την τοποθεσία",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -176,7 +176,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Κάντε κλικ για να μην απενεργοποιείται πλέον το JavaScript σε αυτή την ιστοσελίδα",
+    "message": "Κάντε κλικ για να μην απενεργοποιείται πλέον η JavaScript σε αυτή την τοποθεσία",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
@@ -188,7 +188,7 @@
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
-    "message": "Κοσμητικά φίλτρα",
+    "message": "Καλλωπιστικά φίλτρα",
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
@@ -236,7 +236,7 @@
     "description": ""
   },
   "popup3pPassiveRulePrompt": {
-    "message": "3ου μέρους css/Εικόνες",
+    "message": "CSS/Εικόνες τρίτων",
     "description": ""
   },
   "popupInlineScriptRulePrompt": {
@@ -332,7 +332,7 @@
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Απενεργοποίηση πρόωρης φόρτωσης (για να αποτραπεί κάθε σύνδεση σε μπλοκαρισμένες αιτήσεις δικτύου)",
+    "message": "Απενεργοποίηση προ-φόρτωσης (για να αποτραπεί κάθε σύνδεση σε αποκλεισμένες αιτήσεις δικτύου)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
@@ -348,7 +348,7 @@
     "description": ""
   },
   "settingPerSiteSwitchGroupSynopsis": {
-    "message": "Αυτές οι προεπιλεγμένες συμπεριφορές μπορούν να παρακαμφθούν ανα-τοποθεσία",
+    "message": "Αυτές οι προεπιλεγμένες συμπεριφορές μπορούν να παρακαμφθούν ανά τοποθεσία",
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
@@ -364,7 +364,7 @@
     "description": ""
   },
   "settingsNoScriptingPrompt": {
-    "message": "Απενεργοποίηση του JavaScript",
+    "message": "Απενεργοποίηση της JavaScript",
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
@@ -404,7 +404,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Η επιλογή αυτή επιτρέπει την ανάλυση και επιβολή των συμβατών με τα <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">&ldquo;κρυμμένα στοιχεία&rdquo; του Adblock Plus φίλτρων</a>. Τα φίλτρα αυτά είναι ουσιαστικά κοσμητικά, χρησιμεύουν στην απόκρυψη στοιχείων από μια σελίδα στην οποία θεωρούνται οπτική όχληση και δεν μπορούν να αποκλειστούν με την, βασισμένη σε αιτήματα δικτύου, μηχανή φιλτραρίσματος.</p><p>Η ενεργοποίηση αυτής της λειτουργίας αυξάνει το αποτύπωμα μνήμης του <i>uBlock₀</i>.</p>",
+    "message": "Τα καλλωπιστικά φίλτρα χρησιμεύουν για να κρύβουν εκείνα τα στοιχεία σε μια ιστοσελίδα που οπτικά θεωρούνται ενοχλητικά, και τα οποία δεν μπορούν να αποκλειστούν με τις μηχανές φιλτραρίσματος που βασίζονται σε αιτήματα δικτύου.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -580,7 +580,7 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "λίστα-ublock-επιτρεπόμενων_{{datetime}}.txt",
+    "message": "ublock-έμπιστες-τοποθεσίες_{{datetime}}.txt",
     "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
@@ -776,7 +776,7 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Το στατικό φίλτρo <code>{{filter}}</code> δεν βρέθηκε σε καμία από τις λίστες φίλτρων που έχουν ενεργοποιηθεί αυτήν τη στιγμή",
+    "message": "Το στατικό φίλτρο δεν βρέθηκε σε καμία από τις λίστες φίλτρων που έχουν ενεργοποιηθεί αυτήν τη στιγμή",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
@@ -828,7 +828,7 @@
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportEncodePlain": {
-    "message": "Plain",
+    "message": "Απλό",
     "description": "Label for radio-button to pick export text format"
   },
   "loggerExportEncodeMarkdown": {
@@ -1028,7 +1028,7 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "Block element in frame...",
+    "message": "Στοιχείο μπλοκ στο πλαίσιο...",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
@@ -1040,7 +1040,7 @@
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "Toggle locked scrolling",
+    "message": "Εναλλαγή κλειδώματος ολίσθησης",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {

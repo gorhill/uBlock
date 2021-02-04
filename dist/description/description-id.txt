@@ -15,7 +15,7 @@ Langsung bekerja, daftar filter berikut ini dimuat dan dijalankan:
 - EasyPrivacy
 - Domain malware
 
-Jika anda ingin, masih banyak tersedia daftar lain untuk anda pilih:
+Jika Anda ingin, masih banyak tersedia daftar lain untuk Anda pilih:
 
 - Daftar Pelacakan Fanboy yang DItingkatkan
 - Berkas host Dan Pollock
@@ -30,7 +30,7 @@ Perlu diketahui juga bahwa memilih beberapa daftar ekstra juga berpeluang lebih 
 
 ***
 
-Tanpa daftar filter yang ada, ekstensi ini bukanlah apa-apa. Jadi, jika Anda benar-benar ingin berkontribusi sesuatu, berpikirlah tentang orang-orang yang bekerja keras mengelola daftar filter yang anda gunakan, yang dibuat dan tersedia untuk digunakan oleh semua dengan gratis.
+Tanpa daftar filter yang ada, ekstensi ini bukanlah apa-apa. Jadi, jika Anda benar-benar ingin berkontribusi sesuatu, berpikirlah tentang orang-orang yang bekerja keras mengelola daftar filter yang Anda gunakan, yang dibuat dan tersedia untuk digunakan oleh semua dengan gratis.
 
 ***
 
