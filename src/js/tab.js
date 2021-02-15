@@ -360,7 +360,7 @@
         // filtering pane.
         const pageStore = µb.pageStoreFromTabId(openerTabId);
         if ( pageStore ) {
-            pageStore.journalAddRequest(fctxt.getHostname(), result);
+            pageStore.journalAddRequest(fctxt, result);
             pageStore.popupBlockedCount += 1;
         }
 
@@ -1038,14 +1038,15 @@ vAPI.tabs = new vAPI.Tabs();
         let badge = '';
         let color = '#666';
 
-        let pageStore = µb.pageStoreFromTabId(tabId);
+        const pageStore = µb.pageStoreFromTabId(tabId);
         if ( pageStore !== null ) {
             state = pageStore.getNetFilteringSwitch() ? 1 : 0;
             if ( state === 1 ) {
-                if ( (parts & 0b0010) !== 0 && pageStore.perLoadBlockedRequestCount ) {
-                    badge = µb.formatCount(
-                        pageStore.perLoadBlockedRequestCount
-                    );
+                if ( (parts & 0b0010) !== 0 ) {
+                    const blockCount = pageStore.counts.blocked.any;
+                    if ( blockCount !== 0 ) {
+                        badge = µb.formatCount(blockCount);
+                    }
                 }
                 if ( (parts & 0b0100) !== 0 ) {
                     color = computeBadgeColor(
@@ -1071,7 +1072,7 @@ vAPI.tabs = new vAPI.Tabs();
     return function(tabId, newParts = 0b0111) {
         if ( typeof tabId !== 'number' ) { return; }
         if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
-        let currentParts = tabIdToDetails.get(tabId);
+        const currentParts = tabIdToDetails.get(tabId);
         if ( currentParts === newParts ) { return; }
         if ( currentParts === undefined ) {
             self.requestIdleCallback(

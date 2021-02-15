@@ -88,7 +88,7 @@ const onBeforeRequest = function(details) {
 
     const result = pageStore.filterRequest(fctxt);
 
-    pageStore.journalAddRequest(fctxt.getHostname(), result);
+    pageStore.journalAddRequest(fctxt, result);
 
     if ( µb.logger.enabled ) {
         fctxt.setRealm('network').toLogger();
@@ -208,7 +208,7 @@ const onBeforeRootFrameRequest = function(fctxt) {
     const pageStore = µb.bindTabToPageStore(fctxt.tabId, 'beforeRequest');
     if ( pageStore !== null ) {
         pageStore.journalAddRootFrame('uncommitted', requestURL);
-        pageStore.journalAddRequest(requestHostname, result);
+        pageStore.journalAddRequest(fctxt, result);
     }
 
     if ( loggerEnabled ) {
@@ -400,7 +400,7 @@ const onBeforeBehindTheSceneRequest = function(fctxt) {
             gcTimer = vAPI.setTimeout(gc, 30011);
         }
         for ( const pageStore of pageStores ) {
-            pageStore.journalAddRequest(fctxt.getHostname(), result);
+            pageStore.journalAddRequest(fctxt, result);
         }
     };
 }
@@ -451,7 +451,7 @@ const onHeadersReceived = function(details) {
                 fctxt.setRealm('network').toLogger();
             }
             if ( result === 1 ) {
-                pageStore.journalAddRequest(fctxt.getHostname(), 1);
+                pageStore.journalAddRequest(fctxt, 1);
                 return { cancel: true };
             }
         }

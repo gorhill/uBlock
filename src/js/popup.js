@@ -75,10 +75,7 @@ const domainsHitStr = vAPI.i18n('popupHitDomainCount');
 let popupData = {};
 let dfPaneBuilt = false;
 let dfHotspots = null;
-let allDomains = {};
-let allDomainCount = 0;
 let allHostnameRows = [];
-let touchedDomainCount = 0;
 let cachedPopupHash = '';
 
 // https://github.com/gorhill/uBlock/issues/2550
@@ -181,6 +178,10 @@ const hashFromPopupData = function(reset) {
 
 /******************************************************************************/
 
+const gtz = n => typeof n === 'number' && n > 0;
+
+/******************************************************************************/
+
 const formatNumber = function(count) {
     return typeof count === 'number' ? count.toLocaleString() : '';
 };
@@ -188,11 +189,11 @@ const formatNumber = function(count) {
 /******************************************************************************/
 
 const rulekeyCompare = function(a, b) {
-    let ha = a.slice(2, a.indexOf(' ', 2));
+    let ha = a;
     if ( !reIP.test(ha) ) {
         ha = hostnameToSortableTokenMap.get(ha) || ' ';
     }
-    let hb = b.slice(2, b.indexOf(' ', 2));
+    let hb = b;
     if ( !reIP.test(hb) ) {
         hb = hostnameToSortableTokenMap.get(hb) || ' ';
     }
@@ -206,69 +207,20 @@ const rulekeyCompare = function(a, b) {
 
 /******************************************************************************/
 
-const updateFirewallCell = function(scope, des, type, rule) {
-    const row = document.querySelector(
-        `#firewallContainer div[data-des="${des}"][data-type="${type}"]`
-    );
-    if ( row === null ) { return; }
-
-    const cells = row.querySelectorAll(`:scope > span[data-src="${scope}"]`);
-    if ( cells.length === 0 ) { return; }
-
-    if ( rule !== null ) {
-        cells.forEach(el => { el.setAttribute('class', rule.action + 'Rule'); });
-    } else {
-        cells.forEach(el => { el.removeAttribute('class'); });
-    }
-
-    // Use dark shade visual cue if the rule is specific to the cell.
-    if (
-        (rule !== null) &&
-        (rule.des !== '*' || rule.type === type) &&
-        (rule.des === des) &&
-        (rule.src === scopeToSrcHostnameMap[scope])
-        
-    ) {
-        cells.forEach(el => { el.classList.add('ownRule'); });
-    }
-
-    if ( scope !== '.' || des === '*' ) { return; }
-
-    // Remember this may be a cell from a reused row, we need to clear text
-    // content if we can't compute request counts.
-    if ( popupData.hostnameDict.hasOwnProperty(des) === false ) {
-        cells.forEach(el => {
-            el.removeAttribute('data-acount');
-            el.removeAttribute('data-bcount');
-        });
-        return;
-    }
-
-    const hnDetails = popupData.hostnameDict[des];
-    let cell = cells[0];
-    if ( hnDetails.allowCount !== 0 ) {
-        cell.setAttribute('data-acount', Math.min(Math.ceil(Math.log(hnDetails.allowCount + 1) / Math.LN10), 3));
+const updateFirewallCellCount = function(cell, allowed, blocked) {
+    if ( gtz(allowed) ) {
+        cell.setAttribute(
+            'data-acount',
+            Math.min(Math.ceil(Math.log(allowed + 1) / Math.LN10), 3)
+        );
     } else {
         cell.setAttribute('data-acount', '0');
     }
-    if ( hnDetails.blockCount !== 0 ) {
-        cell.setAttribute('data-bcount', Math.min(Math.ceil(Math.log(hnDetails.blockCount + 1) / Math.LN10), 3));
-    } else {
-        cell.setAttribute('data-bcount', '0');
-    }
-
-    if ( hnDetails.domain !== des ) {
-        return;
-    }
-
-    cell = cells[1];
-    if ( hnDetails.totalAllowCount !== 0 ) {
-        cell.setAttribute('data-acount', Math.min(Math.ceil(Math.log(hnDetails.totalAllowCount + 1) / Math.LN10), 3));
-    } else {
-        cell.setAttribute('data-acount', '0');
-    }
-    if ( hnDetails.totalBlockCount !== 0 ) {
-        cell.setAttribute('data-bcount', Math.min(Math.ceil(Math.log(hnDetails.totalBlockCount + 1) / Math.LN10), 3));
+    if ( gtz(blocked) ) {
+        cell.setAttribute(
+            'data-bcount',
+            Math.min(Math.ceil(Math.log(blocked + 1) / Math.LN10), 3)
+        );
     } else {
         cell.setAttribute('data-bcount', '0');
     }
@@ -276,16 +228,89 @@ const updateFirewallCell = function(scope, des, type, rule) {
 
 /******************************************************************************/
 
-const updateAllFirewallCells = function() {
-    const rules = popupData.firewallRules;
-    for ( const key in rules ) {
-        if ( rules.hasOwnProperty(key) === false ) { continue; }
-        updateFirewallCell(
-            key.charAt(0),
-            key.slice(2, key.indexOf(' ', 2)),
-            key.slice(key.lastIndexOf(' ') + 1),
-            rules[key]
+const updateFirewallCellRule = function(cell, scope, des, type, ruleParts) {
+    if ( cell instanceof HTMLElement === false ) { return; }
+
+    if ( ruleParts === undefined ) {
+        cell.removeAttribute('class');
+        return;
+    }
+
+    const action = updateFirewallCellRule.actionNames[ruleParts[3]];
+    cell.setAttribute('class', `${action}Rule`);
+
+    // Use dark shade visual cue if the rule is specific to the cell.
+    if (
+        (ruleParts[1] !== '*' || ruleParts[2] === type) &&
+        (ruleParts[1] === des) &&
+        (ruleParts[0] === scopeToSrcHostnameMap[scope])
+        
+    ) {
+        cell.classList.add('ownRule');
+    }
+};
+
+updateFirewallCellRule.actionNames = { '1': 'block', '2': 'allow', '3': 'noop' };
+
+/******************************************************************************/
+
+const updateFirewallCell = function(row, scope, des, type, doCounts) {
+    if ( row instanceof HTMLElement === false ) { return; }
+
+    const cells = row.querySelectorAll(`:scope > span[data-src="${scope}"]`);
+    if ( cells.length === 0 ) { return; }
+
+    const rule = popupData.firewallRules[`${scope} ${des} ${type}`];
+    const ruleParts = rule !== undefined ? rule.split(' ') : undefined;
+    for ( const cell of cells ) {
+        updateFirewallCellRule(cell, scope, des, type, ruleParts);
+    }
+
+    if ( scope !== '.' || des === '*' ) { return; }
+    if ( doCounts !== true ) { return; }
+
+    // Remember this may be a cell from a reused row, we need to clear text
+    // content if we can't compute request counts.
+    const hnDetails = popupData.hostnameDict[des];
+    if ( hnDetails === undefined ) {
+        cells.forEach(el => {
+            updateFirewallCellCount(el);
+        });
+        return;
+    }
+
+    updateFirewallCellCount(
+        cells[0],
+        hnDetails.counts.allowed.any,
+        hnDetails.counts.blocked.any
+    );
+
+    if ( hnDetails.domain !== des || hnDetails.totals === undefined ) {
+        updateFirewallCellCount(
+            cells[1],
+            hnDetails.counts.allowed.any,
+            hnDetails.counts.blocked.any
         );
+        return;
+    }
+
+    updateFirewallCellCount(
+        cells[1],
+        hnDetails.totals.allowed.any,
+        hnDetails.totals.blocked.any
+    );
+};
+
+/******************************************************************************/
+
+const updateAllFirewallCells = function(doCounts = true) {
+    const rows = document.querySelectorAll('#firewallContainer > [data-des][data-type]');
+
+    for ( const row of rows ) {
+        const des = row.getAttribute('data-des');
+        const type = row.getAttribute('data-type');
+        updateFirewallCell(row, '/', des, type, doCounts);
+        updateFirewallCell(row, '.', des, type, doCounts);
     }
 
     const dirty = popupData.matrixIsDirty === true;
@@ -297,6 +322,33 @@ const updateAllFirewallCells = function() {
 
 /******************************************************************************/
 
+// Compute statistics useful only to firewall entries -- we need to call
+// this only when overview pane needs to be rendered.
+
+const expandHostnameStats = ( ) => {
+    let dnDetails;
+    for ( const des of allHostnameRows ) {
+        const hnDetails = popupData.hostnameDict[des];
+        const { domain, counts } = hnDetails;
+        const isDomain = des === domain;
+        const { allowed: hnAllowed, blocked: hnBlocked } = counts;
+        if ( isDomain ) {
+            dnDetails = hnDetails;
+            dnDetails.totals = JSON.parse(JSON.stringify(dnDetails.counts));
+        } else {
+            const { allowed: dnAllowed, blocked: dnBlocked } = dnDetails.totals;
+            dnAllowed.any += hnAllowed.any;
+            dnBlocked.any += hnBlocked.any;
+        }
+        hnDetails.hasScript = hnAllowed.script !== 0 || hnBlocked.script !== 0;
+        dnDetails.hasScript = dnDetails.hasScript || hnDetails.hasScript;
+        hnDetails.hasFrame = hnAllowed.frame !== 0 || hnBlocked.frame !== 0;
+        dnDetails.hasFrame = dnDetails.hasFrame || hnDetails.hasFrame;
+    }
+};
+
+/******************************************************************************/
+
 const buildAllFirewallRows = function() {
     // Do this before removing the rows
     if ( dfHotspots === null ) {
@@ -304,6 +356,9 @@ const buildAllFirewallRows = function() {
             uDom('#actionSelector').on('click', 'span', setFirewallRuleHandler);
     }
     dfHotspots.remove();
+
+    // This must be called before we create the rows.
+    expandHostnameStats();
 
     // Update incrementally: reuse existing rows if possible.
     const rowContainer = document.getElementById('firewallContainer');
@@ -323,6 +378,8 @@ const buildAllFirewallRows = function() {
         const isDomain = des === hnDetails.domain;
         const prettyDomainName = punycode.toUnicode(des);
         const isPunycoded = prettyDomainName !== des;
+
+        const { allowed: hnAllowed, blocked: hnBlocked } = hnDetails.counts;
 
         const span = row.querySelector('span:first-of-type');
         span.querySelector('span').textContent = prettyDomainName;
@@ -344,11 +401,13 @@ const buildAllFirewallRows = function() {
         classList.toggle('isRootContext', des === popupData.pageHostname);
         classList.toggle('isDomain', isDomain);
         classList.toggle('isSubDomain', !isDomain);
-        classList.toggle('allowed', hnDetails.allowCount !== 0);
-        classList.toggle('blocked', hnDetails.blockCount !== 0);
-        classList.toggle('totalAllowed', hnDetails.totalAllowCount !== 0);
-        classList.toggle('totalBlocked', hnDetails.totalBlockCount !== 0);
+        classList.toggle('allowed', gtz(hnAllowed.any));
+        classList.toggle('blocked', gtz(hnBlocked.any));
         classList.toggle('expandException', expandExceptions.has(hnDetails.domain));
+
+        const { totals } = hnDetails;
+        classList.toggle('totalAllowed', gtz(totals && totals.allowed.any));
+        classList.toggle('totalBlocked', gtz(totals && totals.blocked.any));
 
         row = row.nextElementSibling;
     }
@@ -380,27 +439,29 @@ const buildAllFirewallRows = function() {
 /******************************************************************************/
 
 const renderPrivacyExposure = function() {
-    allDomains = {};
-    allDomainCount = touchedDomainCount = 0;
+    const allDomains = {};
+    let allDomainCount = 0;
+    let touchedDomainCount = 0;
+
     allHostnameRows = [];
 
     // Sort hostnames. First-party hostnames must always appear at the top
     // of the list.
     const desHostnameDone = {};
-    const keys = Object.keys(popupData.firewallRules)
-                     .sort(rulekeyCompare);
-    for ( const key of keys ) {
-        const des = key.slice(2, key.indexOf(' ', 2));
+    const keys = Object.keys(popupData.hostnameDict)
+                       .sort(rulekeyCompare);
+    for ( const des of keys ) {
         // Specific-type rules -- these are built-in
         if ( des === '*' || desHostnameDone.hasOwnProperty(des) ) { continue; }
-        const hnDetails = popupData.hostnameDict[des] || {};
-        if ( allDomains.hasOwnProperty(hnDetails.domain) === false ) {
-            allDomains[hnDetails.domain] = false;
+        const hnDetails = popupData.hostnameDict[des];
+        const { domain, counts } = hnDetails;
+        if ( allDomains.hasOwnProperty(domain) === false ) {
+            allDomains[domain] = false;
             allDomainCount += 1;
         }
-        if ( hnDetails.allowCount !== 0 ) {
-            if ( allDomains[hnDetails.domain] === false ) {
-                allDomains[hnDetails.domain] = true;
+        if ( gtz(counts.allowed.any) ) {
+            if ( allDomains[domain] === false ) {
+                allDomains[domain] = true;
                 touchedDomainCount += 1;
             }
         }
@@ -462,9 +523,16 @@ const renderPopup = function() {
     uDom.nodeFromId('gotoPick').classList.toggle('enabled', canElementPicker);
     uDom.nodeFromId('gotoZap').classList.toggle('enabled', canElementPicker);
 
-    let blocked = popupData.pageBlockedRequestCount,
-        total = popupData.pageAllowedRequestCount + blocked,
-        text;
+    let blocked, total;
+    if ( popupData.pageCounts !== undefined ) {
+        const counts = popupData.pageCounts;
+        blocked = counts.blocked.any;
+        total = blocked + counts.allowed.any;
+    } else {
+        blocked = 0;
+        total = 0;
+    }
+    let text;
     if ( total === 0 ) {
         text = formatNumber(0);
     } else {
@@ -855,7 +923,7 @@ const setFirewallRule = async function(src, des, type, action, persist) {
     }
 
     cachePopupData(response);
-    updateAllFirewallCells();
+    updateAllFirewallCells(false);
     hashFromPopupData();
 };
 
@@ -1046,7 +1114,7 @@ const revertFirewallRules = async function() {
         tabId: popupData.tabId,
     });
     cachePopupData(response);
-    updateAllFirewallCells();
+    updateAllFirewallCells(false);
     updateHnSwitches();
     hashFromPopupData();
 };
@@ -1077,8 +1145,9 @@ const toggleHostnameSwitch = async function(ev) {
     });
 
     cachePopupData(response);
-    updateAllFirewallCells();
     hashFromPopupData();
+
+    document.body.classList.toggle('needSave', popupData.matrixIsDirty === true);
 };
 
 /******************************************************************************/

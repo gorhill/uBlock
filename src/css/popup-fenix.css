@@ -262,7 +262,6 @@ body[data-more=""] #lessButton {
     min-width: var(--popup-firewall-min-width);
     padding: 0;
     overflow-y: auto;
-    text-align: right;
     }
 :root.desktop body.vMin #firewall {
     max-height: 100vh;
@@ -271,7 +270,6 @@ body[data-more=""] #lessButton {
     border: 0;
     direction: ltr;
     display: flex;
-    justify-content: flex-end;
     margin: 0;
     margin-top: 1px;
     padding: 0;
@@ -305,9 +303,44 @@ body[data-more=""] #lessButton {
     flex-grow: 1;
     justify-content: flex-end;
     padding-right: 2px;
+    text-align: right;
     white-space: normal;
     width: calc(100% - var(--popup-rule-cell-width));
     word-break: break-word;
+    }
+#firewall > div[data-des="*"] > span:first-of-type {
+    flex-direction: row;
+    }
+#firewall > div[data-des="*"] > span:first-of-type > span.filter {
+    flex-grow: 1;
+    padding-inline-start: 2px;
+      -webkit-padding-start: 2px;
+    text-align: left;
+    }
+#firewall:not(.has3pScript) > [data-type="3p-script"] .filter,
+#firewall:not(.has3pFrame) > [data-type="3p-frame"] .filter {
+    display: none;
+    }
+#firewall > [data-des="*"] .filter::after {
+    content: '\22EF';
+    }
+#firewall.show3pScript > [data-type="3p-script"] .filter::after,
+#firewall.show3pFrame > [data-type="3p-frame"] .filter::after {
+    content: '\2191';
+    }
+#firewall.hide3pScript > [data-type="3p-script"] .filter::after,
+#firewall.hide3pFrame > [data-type="3p-frame"] .filter::after {
+    content: '\2193';
+    }
+#firewall.show3pScript > div:not([data-des="*"]):not(.hasScript),
+#firewall.show3pScript > div:not([data-des="*"]):not(.is3p),
+#firewall.hide3pScript > div:not([data-des="*"]).is3p.hasScript,
+#firewall.show3pFrame > div:not([data-des="*"]):not(.hasFrame),
+#firewall.show3pFrame > div:not([data-des="*"]):not(.is3p),
+#firewall.hide3pFrame > div:not([data-des="*"]).is3p.hasFrame,
+#firewall.show3pScript.show3pFrame > div:not([data-des="*"]).hasScript:not(.hasFrame),
+#firewall.show3pScript.show3pFrame > div:not([data-des="*"]).hasFrame:not(.hasScript) {
+    opacity: 0.5;
     }
 #firewall > div.isCname > span:first-of-type {
     color: var(--fg-popup-cell-cname);
@@ -431,33 +464,33 @@ body.advancedUser #firewall > div > span:first-of-type ~ span {
     width: 7px;
     }
 #firewall > div.isRootContext > span:first-of-type::before {
-    background-color: var(--fg-0-50);
+    background: var(--fg-0-50);
     width: 14px !important;
     }
 #firewall > div.allowed > span:first-of-type::before,
 #firewall > div.isDomain.totalAllowed > span:first-of-type::before {
-    background-color: var(--bg-popup-cell-allow-own);
+    background: var(--bg-popup-cell-allow-own);
     }
 #firewall > div.blocked > span:first-of-type::before,
 #firewall > div.isDomain.totalBlocked > span:first-of-type::before {
-    background-color: var(--bg-popup-cell-block-own);
+    background: var(--bg-popup-cell-block-own);
     }
 #firewall > div.allowed.blocked > span:first-of-type::before,
 #firewall > div.isDomain.totalAllowed.totalBlocked > span:first-of-type::before {
-    background-color: var(--bg-popup-cell-label-mixed);
+    background: var(--bg-popup-cell-label-mixed);
     }
 /* Rule cells */
 body.advancedUser #firewall > div > span.allowRule,
 #actionSelector > #dynaAllow {
-    background-color: var(--bg-popup-cell-allow);
+    background: var(--bg-popup-cell-allow);
     }
 body.advancedUser #firewall > div > span.blockRule,
 #actionSelector > #dynaBlock {
-    background-color: var(--bg-popup-cell-block);
+    background: var(--bg-popup-cell-block);
     }
 body.advancedUser #firewall > div > span.noopRule,
 #actionSelector > #dynaNoop {
-    background-color: var(--bg-popup-cell-noop);
+    background: var(--bg-popup-cell-noop);
     }
 body.advancedUser #firewall > div > span.ownRule,
 #firewall > div > span.ownRule {
@@ -465,15 +498,15 @@ body.advancedUser #firewall > div > span.ownRule,
     }
 body.advancedUser #firewall > div > span.allowRule.ownRule,
 :root:not(.mobile) #actionSelector > #dynaAllow:hover {
-    background-color: var(--bg-popup-cell-allow-own);
+    background: var(--bg-popup-cell-allow-own);
     }
 body.advancedUser #firewall > div > span.blockRule.ownRule,
 :root:not(.mobile) #actionSelector > #dynaBlock:hover {
-    background-color: var(--bg-popup-cell-block-own);
+    background: var(--bg-popup-cell-block-own);
     }
 body.advancedUser #firewall > div > span.noopRule.ownRule,
 :root:not(.mobile) #actionSelector > #dynaNoop:hover {
-    background-color: var(--bg-popup-cell-noop-own);
+    background: var(--bg-popup-cell-noop-own);
     }
 
 #actionSelector {

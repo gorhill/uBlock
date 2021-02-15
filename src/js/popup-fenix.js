@@ -49,7 +49,6 @@ vAPI.localStorage.getItemAsync('popupPanelSections').then(bits => {
 /******************************************************************************/
 
 const messaging = vAPI.messaging;
-const reIP = /^\d+(?:\.\d+){1,3}$/;
 const scopeToSrcHostnameMap = {
     '/': '*',
     '.': ''
@@ -61,10 +60,7 @@ const domainsHitStr = vAPI.i18n('popupHitDomainCount');
 let popupData = {};
 let dfPaneBuilt = false;
 let dfHotspots = null;
-let allDomains = {};
-let allDomainCount = 0;
 let allHostnameRows = [];
-let touchedDomainCount = 0;
 let cachedPopupHash = '';
 
 // https://github.com/gorhill/uBlock/issues/2550
@@ -125,13 +121,8 @@ const hashFromPopupData = function(reset) {
     const rules = popupData.firewallRules;
     for ( const key in rules ) {
         const rule = rules[key];
-        if ( rule === null ) { continue; }
-        hasher.push(
-            rule.src + ' ' +
-            rule.des + ' ' +
-            rule.type + ' ' +
-            rule.action
-        );
+        if ( rule === undefined ) { continue; }
+        hasher.push(rule);
     }
     hasher.sort();
     hasher.push(uDom('body').hasClass('off'));
@@ -146,6 +137,12 @@ const hashFromPopupData = function(reset) {
     }
     document.body.classList.toggle('needReload', hash !== cachedPopupHash);
 };
+
+/******************************************************************************/
+
+// greater-than-zero test
+
+const gtz = n => typeof n === 'number' && n > 0;
 
 /******************************************************************************/
 
@@ -202,107 +199,149 @@ const safePunycodeToUnicode = function(hn) {
 
 /******************************************************************************/
 
-const rulekeyCompare = function(a, b) {
-    let ha = a.slice(2, a.indexOf(' ', 2));
-    if ( !reIP.test(ha) ) {
-        ha = hostnameToSortableTokenMap.get(ha) || ' ';
-    }
-    let hb = b.slice(2, b.indexOf(' ', 2));
-    if ( !reIP.test(hb) ) {
-        hb = hostnameToSortableTokenMap.get(hb) || ' ';
-    }
-    const ca = ha.charCodeAt(0);
-    const cb = hb.charCodeAt(0);
-    if ( ca !== cb ) {
-        return ca - cb;
-    }
-    return ha.localeCompare(hb);
-};
-
-/******************************************************************************/
-
-const updateFirewallCell = function(scope, des, type, rule) {
-    const row = document.querySelector(
-        `#firewall div[data-des="${des}"][data-type="${type}"]`
-    );
-    if ( row === null ) { return; }
-
-    const cells = row.querySelectorAll(`:scope > span[data-src="${scope}"]`);
-    if ( cells.length === 0 ) { return; }
-
-    if ( rule !== null ) {
-        cells.forEach(el => { el.setAttribute('class', rule.action + 'Rule'); });
-    } else {
-        cells.forEach(el => { el.removeAttribute('class'); });
-    }
-
-    // Use dark shade visual cue if the rule is specific to the cell.
-    if (
-        (rule !== null) &&
-        (rule.des !== '*' || rule.type === type) &&
-        (rule.des === des) &&
-        (rule.src === scopeToSrcHostnameMap[scope])
-        
-    ) {
-        cells.forEach(el => { el.classList.add('ownRule'); });
-    }
-
-    if ( scope !== '.' || des === '*' ) { return; }
-
-    // Remember this may be a cell from a reused row, we need to clear text
-    // content if we can't compute request counts.
-    if ( popupData.hostnameDict.hasOwnProperty(des) === false ) {
-        cells.forEach(el => {
-            el.removeAttribute('data-acount');
-            el.removeAttribute('data-bcount');
-        });
-        return;
-    }
-
-    const hnDetails = popupData.hostnameDict[des];
-    let cell = cells[0];
-    if ( hnDetails.allowCount !== 0 ) {
-        cell.setAttribute('data-acount', Math.min(Math.ceil(Math.log(hnDetails.allowCount + 1) / Math.LN10), 3));
-    } else {
-        cell.setAttribute('data-acount', '0');
-    }
-    if ( hnDetails.blockCount !== 0 ) {
-        cell.setAttribute('data-bcount', Math.min(Math.ceil(Math.log(hnDetails.blockCount + 1) / Math.LN10), 3));
-    } else {
-        cell.setAttribute('data-bcount', '0');
-    }
-
-    if ( hnDetails.domain !== des ) {
-        return;
-    }
-
-    cell = cells[1];
-    if ( hnDetails.totalAllowCount !== 0 ) {
-        cell.setAttribute('data-acount', Math.min(Math.ceil(Math.log(hnDetails.totalAllowCount + 1) / Math.LN10), 3));
-    } else {
-        cell.setAttribute('data-acount', '0');
-    }
-    if ( hnDetails.totalBlockCount !== 0 ) {
-        cell.setAttribute('data-bcount', Math.min(Math.ceil(Math.log(hnDetails.totalBlockCount + 1) / Math.LN10), 3));
-    } else {
-        cell.setAttribute('data-bcount', '0');
+const updateFirewallCellCount = function(cells, allowed, blocked) {
+    for ( const cell of cells ) {
+        if ( gtz(allowed) ) {
+            cell.setAttribute(
+                'data-acount',
+                Math.min(Math.ceil(Math.log(allowed + 1) / Math.LN10), 3)
+            );
+        } else {
+            cell.setAttribute('data-acount', '0');
+        }
+        if ( gtz(blocked) ) {
+            cell.setAttribute(
+                'data-bcount',
+                Math.min(Math.ceil(Math.log(blocked + 1) / Math.LN10), 3)
+            );
+        } else {
+            cell.setAttribute('data-bcount', '0');
+        }
     }
 };
 
 /******************************************************************************/
 
-const updateAllFirewallCells = function() {
-    const rules = popupData.firewallRules;
-    for ( const key in rules ) {
-        if ( rules.hasOwnProperty(key) === false ) { continue; }
-        updateFirewallCell(
-            key.charAt(0),
-            key.slice(2, key.indexOf(' ', 2)),
-            key.slice(key.lastIndexOf(' ') + 1),
-            rules[key]
-        );
+const updateFirewallCellRule = function(cells, scope, des, type, rule) {
+    const ruleParts = rule !== undefined ? rule.split(' ') : undefined;
+
+    for ( const cell of cells ) {
+        if ( ruleParts === undefined ) {
+            cell.removeAttribute('class');
+            continue;
+        }
+
+        const action = updateFirewallCellRule.actionNames[ruleParts[3]];
+        cell.setAttribute('class', `${action}Rule`);
+
+        // Use dark shade visual cue if the rule is specific to the cell.
+        if (
+            (ruleParts[1] !== '*' || ruleParts[2] === type) &&
+            (ruleParts[1] === des) &&
+            (ruleParts[0] === scopeToSrcHostnameMap[scope])
+            
+        ) {
+            cell.classList.add('ownRule');
+        }
     }
+};
+
+updateFirewallCellRule.actionNames = { '1': 'block', '2': 'allow', '3': 'noop' };
+
+/******************************************************************************/
+
+const updateAllFirewallCells = function(doRules = true, doCounts = true) {
+    const { pageDomain } = popupData;
+    const rowContainer = document.getElementById('firewall');
+    const rows = rowContainer.querySelectorAll('#firewall > [data-des][data-type]');
+
+    let a1pScript = 0, b1pScript = 0;
+    let a3pScript = 0, b3pScript = 0;
+    let a3pFrame = 0, b3pFrame = 0;
+
+    for ( const row of rows ) {
+        const des = row.getAttribute('data-des');
+        const type = row.getAttribute('data-type');
+        if ( doRules ) {
+            updateFirewallCellRule(
+                row.querySelectorAll(`:scope > span[data-src="/"]`),
+                '/',
+                des,
+                type,
+                popupData.firewallRules[`/ ${des} ${type}`]
+            );
+        }
+        const cells = row.querySelectorAll(`:scope > span[data-src="."]`);
+        if ( doRules ) {
+            updateFirewallCellRule(
+                cells,
+                '.',
+                des,
+                type,
+                popupData.firewallRules[`. ${des} ${type}`]
+            );
+        }
+        if ( des === '*' || type !== '*' ) { continue; }
+        if ( doCounts === false ) { continue; }
+        const hnDetails = popupData.hostnameDict[des];
+        if ( hnDetails === undefined ) {
+            updateFirewallCellCount(cells);
+            continue;
+        }
+        const { allowed, blocked } = hnDetails.counts;
+        updateFirewallCellCount([ cells[0] ], allowed.any, blocked.any);
+        const { totals } = hnDetails;
+        if ( totals !== undefined ) {
+            updateFirewallCellCount([ cells[1] ], totals.allowed.any, totals.blocked.any);
+        }
+        if ( hnDetails.domain === pageDomain ) {
+            a1pScript += allowed.script; b1pScript += blocked.script;
+        } else {
+            a3pScript += allowed.script; b3pScript += blocked.script;
+            a3pFrame += allowed.frame; b3pFrame += blocked.frame;
+        }
+    }
+
+    if ( doCounts ) {
+        const fromType = type =>
+            document.querySelectorAll(
+                `#firewall > [data-des="*"][data-type="${type}"] > [data-src="."]`
+            );
+        updateFirewallCellCount(fromType('1p-script'), a1pScript, b1pScript);
+        updateFirewallCellCount(fromType('3p-script'), a3pScript, b3pScript);
+        rowContainer.classList.toggle('has3pScript', a3pScript !== 0 || b3pScript !== 0);
+        updateFirewallCellCount(fromType('3p-frame'), a3pFrame, b3pFrame);
+        rowContainer.classList.toggle('has3pFrame', a3pFrame !== 0 || b3pFrame !== 0);
+    }
+
     document.body.classList.toggle('needSave', popupData.matrixIsDirty === true);
+};
+
+/******************************************************************************/
+
+// Compute statistics useful only to firewall entries -- we need to call
+// this only when overview pane needs to be rendered.
+
+const expandHostnameStats = ( ) => {
+    let dnDetails;
+    for ( const des of allHostnameRows ) {
+        const hnDetails = popupData.hostnameDict[des];
+        const { domain, counts } = hnDetails;
+        const isDomain = des === domain;
+        const { allowed: hnAllowed, blocked: hnBlocked } = counts;
+        if ( isDomain ) {
+            dnDetails = hnDetails;
+            dnDetails.totals = JSON.parse(JSON.stringify(dnDetails.counts));
+        } else {
+            const { allowed: dnAllowed, blocked: dnBlocked } = dnDetails.totals;
+            dnAllowed.any += hnAllowed.any;
+            dnBlocked.any += hnBlocked.any;
+        }
+        hnDetails.hasScript = hnAllowed.script !== 0 || hnBlocked.script !== 0;
+        dnDetails.hasScript = dnDetails.hasScript || hnDetails.hasScript;
+        hnDetails.hasFrame = hnAllowed.frame !== 0 || hnBlocked.frame !== 0;
+        dnDetails.hasFrame = dnDetails.hasFrame || hnDetails.hasFrame;
+    }
 };
 
 /******************************************************************************/
@@ -315,24 +354,38 @@ const buildAllFirewallRows = function() {
     }
     dfHotspots.remove();
 
+    // This must be called before we create the rows.
+    expandHostnameStats();
+
     // Update incrementally: reuse existing rows if possible.
     const rowContainer = document.getElementById('firewall');
     const toAppend = document.createDocumentFragment();
-    const rowTemplate = document.querySelector('#templates > div:nth-of-type(1)');
-    let row = rowContainer.querySelector('div:nth-of-type(7) + div');
+    const rowTemplate = document.querySelector(
+        '#templates > div[data-des=""][data-type="*"]'
+    );
+    const { cnameMap, hostnameDict, pageDomain, pageHostname } = popupData;
+
+    let row = rowContainer.querySelector(
+        'div[data-des="*"][data-type="3p-frame"] + div'
+    );
 
     for ( const des of allHostnameRows ) {
         if ( row === null ) {
             row = rowTemplate.cloneNode(true);
             toAppend.appendChild(row);
         }
-
         row.setAttribute('data-des', des);
 
-        const hnDetails = popupData.hostnameDict[des] || {};
+        const hnDetails = hostnameDict[des] || {};
         const isDomain = des === hnDetails.domain;
         const prettyDomainName = punycode.toUnicode(des);
         const isPunycoded = prettyDomainName !== des;
+
+        if ( isDomain && row.childElementCount < 4 ) {
+            row.append(row.children[2].cloneNode(true));
+        } else if ( isDomain === false && row.childElementCount === 4 ) {
+            row.children[3].remove();
+        }
 
         const span = row.querySelector('span:first-of-type');
         span.querySelector('span').textContent = prettyDomainName;
@@ -340,8 +393,8 @@ const buildAllFirewallRows = function() {
         const classList = row.classList;
 
         let desExtra = '';
-        if ( classList.toggle('isCname', popupData.cnameMap.has(des)) ) {
-            desExtra = punycode.toUnicode(popupData.cnameMap.get(des));
+        if ( classList.toggle('isCname', cnameMap.has(des)) ) {
+            desExtra = punycode.toUnicode(cnameMap.get(des));
         } else if (
             isDomain && isPunycoded &&
             reCyrillicAmbiguous.test(prettyDomainName) &&
@@ -351,13 +404,18 @@ const buildAllFirewallRows = function() {
         }
         span.querySelector('sub').textContent = desExtra;
 
-        classList.toggle('isRootContext', des === popupData.pageHostname);
+        classList.toggle('isRootContext', des === pageHostname);
+        classList.toggle('is3p', hnDetails.domain !== pageDomain);
         classList.toggle('isDomain', isDomain);
         classList.toggle('isSubDomain', !isDomain);
-        classList.toggle('allowed', hnDetails.allowCount !== 0);
-        classList.toggle('blocked', hnDetails.blockCount !== 0);
-        classList.toggle('totalAllowed', hnDetails.totalAllowCount !== 0);
-        classList.toggle('totalBlocked', hnDetails.totalBlockCount !== 0);
+        const { counts } = hnDetails;
+        classList.toggle('allowed', gtz(counts.allowed.any));
+        classList.toggle('blocked', gtz(counts.blocked.any));
+        const { totals } = hnDetails;
+        classList.toggle('totalAllowed', gtz(totals && totals.allowed.any));
+        classList.toggle('totalBlocked', gtz(totals && totals.blocked.any));
+        classList.toggle('hasScript', hnDetails.hasScript === true);
+        classList.toggle('hasFrame', hnDetails.hasFrame === true);
         classList.toggle('expandException', expandExceptions.has(hnDetails.domain));
 
         row = row.nextElementSibling;
@@ -366,14 +424,14 @@ const buildAllFirewallRows = function() {
     // Remove unused trailing rows
     if ( row !== null ) {
         while ( row.nextElementSibling !== null ) {
-            rowContainer.removeChild(row.nextElementSibling);
+            row.nextElementSibling.remove();
         }
-        rowContainer.removeChild(row);
+        row.remove();
     }
 
     // Add new rows all at once
     if ( toAppend.childElementCount !== 0 ) {
-        rowContainer.appendChild(toAppend);
+        rowContainer.append(toAppend);
     }
 
     if ( dfPaneBuilt !== true && popupData.advancedUserEnabled ) {
@@ -389,28 +447,48 @@ const buildAllFirewallRows = function() {
 
 /******************************************************************************/
 
+const hostnameCompare = function(a, b) {
+    let ha = a;
+    if ( !reIP.test(ha) ) {
+        ha = hostnameToSortableTokenMap.get(ha) || ' ';
+    }
+    let hb = b;
+    if ( !reIP.test(hb) ) {
+        hb = hostnameToSortableTokenMap.get(hb) || ' ';
+    }
+    const ca = ha.charCodeAt(0);
+    const cb = hb.charCodeAt(0);
+    return ca !== cb ? ca - cb : ha.localeCompare(hb);
+};
+
+const reIP = /(\d|\])$/;
+
+/******************************************************************************/
+
 const renderPrivacyExposure = function() {
-    allDomains = {};
-    allDomainCount = touchedDomainCount = 0;
+    const allDomains = {};
+    let allDomainCount = 0;
+    let touchedDomainCount = 0;
+
     allHostnameRows = [];
 
     // Sort hostnames. First-party hostnames must always appear at the top
     // of the list.
     const desHostnameDone = {};
-    const keys = Object.keys(popupData.firewallRules)
-                     .sort(rulekeyCompare);
-    for ( const key of keys ) {
-        const des = key.slice(2, key.indexOf(' ', 2));
+    const keys = Object.keys(popupData.hostnameDict)
+                       .sort(hostnameCompare);
+    for ( const des of keys ) {
         // Specific-type rules -- these are built-in
         if ( des === '*' || desHostnameDone.hasOwnProperty(des) ) { continue; }
-        const hnDetails = popupData.hostnameDict[des] || {};
-        if ( allDomains.hasOwnProperty(hnDetails.domain) === false ) {
-            allDomains[hnDetails.domain] = false;
+        const hnDetails = popupData.hostnameDict[des];
+        const { domain, counts } = hnDetails;
+        if ( allDomains.hasOwnProperty(domain) === false ) {
+            allDomains[domain] = false;
             allDomainCount += 1;
         }
-        if ( hnDetails.allowCount !== 0 ) {
-            if ( allDomains[hnDetails.domain] === false ) {
-                allDomains[hnDetails.domain] = true;
+        if ( gtz(counts.allowed.any) ) {
+            if ( allDomains[domain] === false ) {
+                allDomains[domain] = true;
                 touchedDomainCount += 1;
             }
         }
@@ -419,9 +497,11 @@ const renderPrivacyExposure = function() {
     }
 
     const summary = domainsHitStr
-                    .replace('{{count}}', touchedDomainCount.toLocaleString())
-                    .replace('{{total}}', allDomainCount.toLocaleString());
-    uDom.nodeFromSelector('[data-i18n^="popupDomainsConnected"] + span').textContent = summary;
+        .replace('{{count}}', touchedDomainCount.toLocaleString())
+        .replace('{{total}}', allDomainCount.toLocaleString());
+    uDom.nodeFromSelector(
+        '[data-i18n^="popupDomainsConnected"] + span'
+    ).textContent = summary;
 };
 
 /******************************************************************************/
@@ -481,8 +561,15 @@ const renderPopup = function() {
     uDom.nodeFromId('gotoPick').classList.toggle('enabled', canElementPicker);
     uDom.nodeFromId('gotoZap').classList.toggle('enabled', canElementPicker);
 
-    let blocked = popupData.pageBlockedRequestCount;
-    let total = popupData.pageAllowedRequestCount + blocked;
+    let blocked, total;
+    if ( popupData.pageCounts !== undefined ) {
+        const counts = popupData.pageCounts;
+        blocked = counts.blocked.any;
+        total = blocked + counts.allowed.any;
+    } else {
+        blocked = 0;
+        total = 0;
+    }
     let text;
     if ( total === 0 ) {
         text = formatNumber(0);
@@ -885,7 +972,7 @@ const setFirewallRule = async function(src, des, type, action, persist) {
     }
 
     cachePopupData(response);
-    updateAllFirewallCells();
+    updateAllFirewallCells(true, false);
     hashFromPopupData();
 };
 
@@ -1075,8 +1162,7 @@ const revertFirewallRules = async function() {
         tabId: popupData.tabId,
     });
     cachePopupData(response);
-    updateAllFirewallCells();
-    updateHnSwitches();
+    updateAllFirewallCells(true, false);
     hashFromPopupData();
 };
 
@@ -1106,8 +1192,9 @@ const toggleHostnameSwitch = async function(ev) {
     });
 
     cachePopupData(response);
-    updateAllFirewallCells();
     hashFromPopupData();
+
+    document.body.classList.toggle('needSave', popupData.matrixIsDirty === true);
 };
 
 /*******************************************************************************
@@ -1276,6 +1363,8 @@ const getPopupData = async function(tabId) {
     });
 }
 
+/******************************************************************************/
+
 uDom('#switch').on('click', toggleNetFilteringSwitch);
 uDom('#gotoZap').on('click', gotoZap);
 uDom('#gotoPick').on('click', gotoPick);
@@ -1283,6 +1372,36 @@ uDom('.hnSwitch').on('click', ev => { toggleHostnameSwitch(ev); });
 uDom('#saveRules').on('click', saveFirewallRules);
 uDom('#revertRules').on('click', ( ) => { revertFirewallRules(); });
 uDom('a[href]').on('click', gotoURL);
+
+// Toggle emphasis of rows with[out] 3rd-party scripts/frames
+{
+    const nextStep = (target, steps) => {
+        const firewall = document.getElementById('firewall');
+        const cl = firewall.classList;
+        if ( cl.contains(steps[0]) ) {
+            cl.remove(steps[0]);
+            if ( firewall.querySelector(target) !== null ) {
+                cl.add(steps[1]);
+            }
+            return;
+        }
+        if ( cl.contains(steps[1]) ) {
+            cl.remove(steps[1]);
+            return;
+        }
+        cl.add(steps[0]);
+    };
+    document.querySelector('#firewall > [data-type="3p-script"] .filter')
+        .addEventListener('click', ( ) => {
+            nextStep('.is3p.hasScript', [ 'show3pScript', 'hide3pScript' ]);
+        });
+
+    // Toggle visibility of rows with[out] 3rd-party frames
+    document.querySelector('#firewall > [data-type="3p-frame"] .filter')
+        .addEventListener('click', ( ) => {
+            nextStep('.is3p.hasFrame', [ 'show3pFrame', 'hide3pFrame' ]);
+        });
+}
 
 /******************************************************************************/
 

@@ -216,78 +216,78 @@ vAPI.messaging.setup(onMessage);
 
 const µb = µBlock;
 
-const getHostnameDict = function(hostnameToCountMap, out) {
+const createCounts = ( ) => {
+    return {
+        blocked: { any: 0, frame: 0, script: 0 },
+        allowed: { any: 0, frame: 0, script: 0 },
+    };
+};
+
+const getHostnameDict = function(hostnameDetailsMap, out) {
     const hnDict = Object.create(null);
     const cnMap = [];
-    for ( const [ hostname, hnCounts ] of hostnameToCountMap ) {
-        if ( hnDict[hostname] !== undefined ) { continue; }
-        const domain = vAPI.domainFromHostname(hostname) || hostname;
-        const dnCounts = hostnameToCountMap.get(domain) || 0;
-        let blockCount = dnCounts & 0xFFFF;
-        let allowCount = dnCounts >>> 16 & 0xFFFF;
-        if ( hnDict[domain] === undefined ) {
-            hnDict[domain] = {
-                domain,
-                blockCount,
-                allowCount,
-                totalBlockCount: blockCount,
-                totalAllowCount: allowCount,
-            };
-            const cname = vAPI.net.canonicalNameFromHostname(domain);
-            if ( cname !== undefined ) {
-                cnMap.push([ cname, domain ]);
-            }
-        }
-        const domainEntry = hnDict[domain];
-        blockCount = hnCounts & 0xFFFF;
-        allowCount = hnCounts >>> 16 & 0xFFFF;
-        domainEntry.totalBlockCount += blockCount;
-        domainEntry.totalAllowCount += allowCount;
-        if ( hostname === domain ) { continue; }
-        hnDict[hostname] = {
-            domain,
-            blockCount,
-            allowCount,
-            totalBlockCount: 0,
-            totalAllowCount: 0,
-        };
+
+    const createDictEntry = (domain, hostname, details) => {
         const cname = vAPI.net.canonicalNameFromHostname(hostname);
         if ( cname !== undefined ) {
             cnMap.push([ cname, hostname ]);
         }
+        hnDict[hostname] = { domain, counts: details.counts };
+    };
+
+    for ( const hnDetails of hostnameDetailsMap.values() ) {
+        const hostname = hnDetails.hostname;
+        if ( hnDict[hostname] !== undefined ) { continue; }
+        const domain = vAPI.domainFromHostname(hostname) || hostname;
+        const dnDetails =
+            hostnameDetailsMap.get(domain) || { counts: createCounts() };
+        if ( hnDict[domain] === undefined ) {
+            createDictEntry(domain, domain, dnDetails);
+        }
+        if ( hostname === domain ) { continue; }
+        createDictEntry(domain, hostname, hnDetails);
     }
+
     out.hostnameDict = hnDict;
     out.cnameMap = cnMap;
 };
 
-const getFirewallRules = function(srcHostname, desHostnames) {
-    const out = {};
+const firewallRuleTypes = [
+    '*',
+    'image',
+    '3p',
+    'inline-script',
+    '1p-script',
+    '3p-script',
+    '3p-frame',
+];
+
+const getFirewallRules = function(src, out) {
+    const { hostnameDict } = out;
+    const ruleset = {};
     const df = µb.sessionFirewall;
-    out['/ * *'] = df.lookupRuleData('*', '*', '*');
-    out['/ * image'] = df.lookupRuleData('*', '*', 'image');
-    out['/ * 3p'] = df.lookupRuleData('*', '*', '3p');
-    out['/ * inline-script'] = df.lookupRuleData('*', '*', 'inline-script');
-    out['/ * 1p-script'] = df.lookupRuleData('*', '*', '1p-script');
-    out['/ * 3p-script'] = df.lookupRuleData('*', '*', '3p-script');
-    out['/ * 3p-frame'] = df.lookupRuleData('*', '*', '3p-frame');
-    if ( typeof srcHostname !== 'string' ) { return out; }
 
-    out['. * *'] = df.lookupRuleData(srcHostname, '*', '*');
-    out['. * image'] = df.lookupRuleData(srcHostname, '*', 'image');
-    out['. * 3p'] = df.lookupRuleData(srcHostname, '*', '3p');
-    out['. * inline-script'] = df.lookupRuleData(srcHostname,
-        '*',
-        'inline-script'
-    );
-    out['. * 1p-script'] = df.lookupRuleData(srcHostname, '*', '1p-script');
-    out['. * 3p-script'] = df.lookupRuleData(srcHostname, '*', '3p-script');
-    out['. * 3p-frame'] = df.lookupRuleData(srcHostname, '*', '3p-frame');
-
-    for ( const desHostname in desHostnames ) {
-        out[`/ ${desHostname} *`] = df.lookupRuleData('*', desHostname, '*');
-        out[`. ${desHostname} *`] = df.lookupRuleData(srcHostname, desHostname, '*');
+    for ( const type of firewallRuleTypes ) {
+        let r = df.lookupRuleData('*', '*', type);
+        if ( r === undefined ) { continue; }
+        ruleset[`/ * ${type}`] = r;
     }
-    return out;
+    if ( typeof src !== 'string' ) { return out; }
+
+    for ( const type of firewallRuleTypes ) {
+        let r = df.lookupRuleData(src, '*', type);
+        if ( r === undefined ) { continue; }
+        ruleset[`. * ${type}`] = r;
+    }
+
+    for ( const des in hostnameDict ) {
+        let r = df.lookupRuleData('*', des, '*');
+        if ( r !== undefined ) { ruleset[`/ ${des} *`] = r; }
+        r = df.lookupRuleData(src, des, '*');
+        if ( r !== undefined ) { ruleset[`. ${des} *`] = r; }
+    }
+
+    out.firewallRules = ruleset;
 };
 
 const popupDataFromTabId = function(tabId, tabTitle) {
@@ -311,8 +311,6 @@ const popupDataFromTabId = function(tabId, tabTitle) {
         pageURL: tabContext.normalURL,
         pageHostname: rootHostname,
         pageDomain: tabContext.rootDomain,
-        pageAllowedRequestCount: 0,
-        pageBlockedRequestCount: 0,
         popupBlockedCount: 0,
         popupPanelSections: µbus.popupPanelSections,
         popupPanelDisabledSections: µbhs.popupPanelDisabledSections,
@@ -329,23 +327,11 @@ const popupDataFromTabId = function(tabId, tabTitle) {
 
     const pageStore = µb.pageStoreFromTabId(tabId);
     if ( pageStore ) {
-        // https://github.com/gorhill/uBlock/issues/2105
-        //   Be sure to always include the current page's hostname -- it
-        //   might not be present when the page itself is pulled from the
-        //   browser's short-term memory cache. This needs to be done
-        //   before calling getHostnameDict().
-        if (
-            pageStore.hostnameToCountMap.has(rootHostname) === false &&
-            µb.URI.isNetworkURI(tabContext.rawURL)
-        ) {
-            pageStore.hostnameToCountMap.set(rootHostname, 0);
-        }
-        r.pageBlockedRequestCount = pageStore.perLoadBlockedRequestCount;
-        r.pageAllowedRequestCount = pageStore.perLoadAllowedRequestCount;
+        r.pageCounts = pageStore.counts;
         r.netFilteringSwitch = pageStore.getNetFilteringSwitch();
-        getHostnameDict(pageStore.hostnameToCountMap, r);
+        getHostnameDict(pageStore.getAllHostnameDetails(), r);
         r.contentLastModified = pageStore.contentLastModified;
-        r.firewallRules = getFirewallRules(rootHostname, r.hostnameDict);
+        getFirewallRules(rootHostname, r);
         r.canElementPicker = µb.URI.isNetworkURI(r.rawURL);
         r.noPopups = µb.sessionSwitches.evaluateZ(
             'no-popups',

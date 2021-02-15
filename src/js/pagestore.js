@@ -176,10 +176,6 @@ NetFilteringResultCache.prototype.extensionOriginURL = vAPI.getURL('/');
 
 // Frame stores are used solely to associate a URL with a frame id.
 
-// To mitigate memory churning
-const frameStoreJunkyard = [];
-const frameStoreJunkyardMax = 50;
-
 const FrameStore = class {
     constructor(frameURL, parentId) {
         this.init(frameURL, parentId);
@@ -201,14 +197,14 @@ const FrameStore = class {
 
     dispose() {
         this.rawURL = this.hostname = this.domain = '';
-        if ( frameStoreJunkyard.length < frameStoreJunkyardMax ) {
-            frameStoreJunkyard.push(this);
+        if ( FrameStore.junkyard.length < FrameStore.junkyardMax ) {
+            FrameStore.junkyard.push(this);
         }
         return null;
     }
 
     static factory(frameURL, parentId = -1) {
-        const entry = frameStoreJunkyard.pop();
+        const entry = FrameStore.junkyard.pop();
         if ( entry === undefined ) {
             return new FrameStore(frameURL, parentId);
         }
@@ -216,11 +212,62 @@ const FrameStore = class {
     }
 };
 
+// To mitigate memory churning
+FrameStore.junkyard = [];
+FrameStore.junkyardMax = 50;
+
 /******************************************************************************/
 
-// To mitigate memory churning
-const pageStoreJunkyard = [];
-const pageStoreJunkyardMax = 10;
+const CountDetails = class {
+    constructor() {
+        this.allowed = { any: 0, frame: 0, script: 0 };
+        this.blocked = { any: 0, frame: 0, script: 0 };
+    }
+    reset() {
+        const { allowed, blocked } = this;
+        blocked.any = blocked.frame = blocked.script =
+        allowed.any = allowed.frame = allowed.script = 0;
+    }
+    inc(blocked, type = undefined) {
+        const stat = blocked ? this.blocked : this.allowed;
+        if ( type !== undefined ) { stat[type] += 1; }
+        stat.any += 1;
+    }
+};
+
+const HostnameDetails = class {
+    constructor(hostname) {
+        this.counts = new CountDetails();
+        this.init(hostname);
+    }
+    init(hostname) {
+        this.hostname = hostname;
+        this.counts.reset();
+    }
+    dispose() {
+        this.hostname = '';
+        if ( HostnameDetails.junkyard.length < HostnameDetails.junkyardMax ) {
+            HostnameDetails.junkyard.push(this);
+        }
+    }
+};
+
+HostnameDetails.junkyard = [];
+HostnameDetails.junkyardMax = 100;
+
+const HostnameDetailsMap = class extends Map {
+    reset() {
+        this.clear();
+    }
+    dispose() {
+        for ( const item of this.values() ) {
+            item.dispose();
+        }
+        this.reset();
+    }
+};
+
+/******************************************************************************/
 
 const PageStore = class {
     constructor(tabId, context) {
@@ -230,11 +277,13 @@ const PageStore = class {
         this.journalLastCommitted = this.journalLastUncommitted = -1;
         this.journalLastUncommittedOrigin = undefined;
         this.netFilteringCache = NetFilteringResultCache.factory();
+        this.hostnameDetailsMap = new HostnameDetailsMap();
+        this.counts = new CountDetails();
         this.init(tabId, context);
     }
 
     static factory(tabId, context) {
-        let entry = pageStoreJunkyard.pop();
+        let entry = PageStore.junkyard.pop();
         if ( entry === undefined ) {
             entry = new PageStore(tabId, context);
         } else {
@@ -263,11 +312,10 @@ const PageStore = class {
         this.tabHostname = tabContext.rootHostname;
         this.title = tabContext.rawURL;
         this.rawURL = tabContext.rawURL;
-        this.hostnameToCountMap = new Map();
+        this.hostnameDetailsMap.reset();
         this.contentLastModified = 0;
         this.logData = undefined;
-        this.perLoadBlockedRequestCount = 0;
-        this.perLoadAllowedRequestCount = 0;
+        this.counts.reset();
         this.remoteFontCount = 0;
         this.popupBlockedCount = 0;
         this.largeMediaCount = 0;
@@ -342,7 +390,7 @@ const PageStore = class {
         this.tabHostname = '';
         this.title = '';
         this.rawURL = '';
-        this.hostnameToCountMap = null;
+        this.hostnameDetailsMap.dispose();
         this.netFilteringCache.empty();
         this.allowLargeMediaElementsUntil = Date.now();
         this.allowLargeMediaElementsRegex = undefined;
@@ -358,8 +406,8 @@ const PageStore = class {
         this.journal = [];
         this.journalLastUncommittedOrigin = undefined;
         this.journalLastCommitted = this.journalLastUncommitted = -1;
-        if ( pageStoreJunkyard.length < pageStoreJunkyardMax ) {
-            pageStoreJunkyard.push(this);
+        if ( PageStore.junkyard.length < PageStore.junkyardMax ) {
+            PageStore.junkyard.push(this);
         }
         return null;
     }
@@ -454,6 +502,23 @@ const PageStore = class {
         this.netFilteringCache.empty();
     }
 
+    // https://github.com/gorhill/uBlock/issues/2105
+    //   Be sure to always include the current page's hostname -- it might not
+    //   be present when the page itself is pulled from the browser's
+    //   short-term memory cache.
+    getAllHostnameDetails() {
+        if (
+            this.hostnameDetailsMap.has(this.tabHostname) === false &&
+            µb.URI.isNetworkURI(this.rawURL)
+        ) {
+            this.hostnameDetailsMap.set(
+                this.tabHostname,
+                new HostnameDetails(this.tabHostname)
+            );
+        }
+        return this.hostnameDetailsMap;
+    }
+
     injectLargeMediaElementScriptlet() {
         vAPI.tabs.executeScript(this.tabId, {
             file: '/js/scriptlets/load-large-media-interactive.js',
@@ -478,18 +543,15 @@ const PageStore = class {
     // https://github.com/gorhill/uBlock/issues/2053
     //   There is no way around using journaling to ensure we deal properly with
     //   potentially out of order navigation events vs. network request events.
-    journalAddRequest(hostname, result) {
+    journalAddRequest(fctxt, result) {
+        const hostname = fctxt.getHostname();
         if ( hostname === '' ) { return; }
-        this.journal.push(
-            hostname,
-            result === 1 ? 0x00000001 : 0x00010000
+        this.journal.push(hostname, result, fctxt.itype);
+        if ( this.journalTimer !== undefined ) { return; }
+        this.journalTimer = vAPI.setTimeout(
+            ( ) => { this.journalProcess(true); },
+            µb.hiddenSettings.requestJournalProcessPeriod
         );
-        if ( this.journalTimer === undefined ) {
-            this.journalTimer = vAPI.setTimeout(
-                ( ) => { this.journalProcess(true); },
-                µb.hiddenSettings.requestJournalProcessPeriod
-            );
-        }
     }
 
     journalAddRootFrame(type, url) {
@@ -528,40 +590,57 @@ const PageStore = class {
         const journal = this.journal;
         const pivot = Math.max(0, this.journalLastCommitted);
         const now = Date.now();
-        let aggregateCounts = 0;
+        const { SCRIPT, SUB_FRAME } = µb.FilteringContext;
+        let aggregateAllowed = 0;
+        let aggregateBlocked = 0;
 
         // Everything after pivot originates from current page.
-        for ( let i = pivot; i < journal.length; i += 2 ) {
-            const hostname = journal[i];
-            let hostnameCounts = this.hostnameToCountMap.get(hostname);
-            if ( hostnameCounts === undefined ) {
-                hostnameCounts = 0;
+        for ( let i = pivot; i < journal.length; i += 3 ) {
+            const hostname = journal[i+0];
+            let hnDetails = this.hostnameDetailsMap.get(hostname);
+            if ( hnDetails === undefined ) {
+                hnDetails = new HostnameDetails(hostname);
+                this.hostnameDetailsMap.set(hostname, hnDetails);
                 this.contentLastModified = now;
             }
-            let count = journal[i+1];
-            this.hostnameToCountMap.set(hostname, hostnameCounts + count);
-            aggregateCounts += count;
+            const blocked = journal[i+1] === 1;
+            const itype = journal[i+2];
+            if ( itype === SCRIPT ) {
+                hnDetails.counts.inc(blocked, 'script');
+                this.counts.inc(blocked, 'script');
+            } else if ( itype === SUB_FRAME ) {
+                hnDetails.counts.inc(blocked, 'frame');
+                this.counts.inc(blocked, 'frame');
+            } else {
+                hnDetails.counts.inc(blocked);
+                this.counts.inc(blocked);
+            }
+            if ( blocked ) {
+                aggregateBlocked += 1;
+            } else {
+                aggregateAllowed += 1;
+            }
         }
-        this.perLoadBlockedRequestCount += aggregateCounts & 0xFFFF;
-        this.perLoadAllowedRequestCount += aggregateCounts >>> 16 & 0xFFFF;
         this.journalLastUncommitted = this.journalLastCommitted = -1;
 
         // https://github.com/chrisaljoudi/uBlock/issues/905#issuecomment-76543649
         //   No point updating the badge if it's not being displayed.
-        if ( (aggregateCounts & 0xFFFF) && µb.userSettings.showIconBadge ) {
+        if ( aggregateBlocked !== 0 && µb.userSettings.showIconBadge ) {
             µb.updateToolbarIcon(this.tabId, 0x02);
         }
 
         // Everything before pivot does not originate from current page -- we
         // still need to bump global blocked/allowed counts.
-        for ( let i = 0; i < pivot; i += 2 ) {
-            aggregateCounts += journal[i+1];
+        for ( let i = 0; i < pivot; i += 3 ) {
+            if ( journal[i+1] === 1 ) {
+                aggregateBlocked += 1;
+            } else {
+                aggregateAllowed += 1;
+            }
         }
-        if ( aggregateCounts !== 0 ) {
-            µb.localSettings.blockedRequestCount +=
-                aggregateCounts & 0xFFFF;
-            µb.localSettings.allowedRequestCount +=
-                aggregateCounts >>> 16 & 0xFFFF;
+        if ( aggregateAllowed !== 0 || aggregateBlocked !== 0 ) {
+            µb.localSettings.blockedRequestCount += aggregateBlocked;
+            µb.localSettings.allowedRequestCount += aggregateAllowed;
             µb.localSettingsLastModified = now;
         }
         journal.length = 0;
@@ -947,6 +1026,10 @@ PageStore.prototype.collapsibleResources = new Set([
     µb.FilteringContext.OBJECT,
     µb.FilteringContext.SUB_FRAME,
 ]);
+
+// To mitigate memory churning
+PageStore.junkyard = [];
+PageStore.junkyardMax = 10;
 
 µb.PageStore = PageStore;
 
