@@ -533,7 +533,7 @@ vAPI.messaging.listen({
 
 const µb = µBlock;
 
-const retrieveContentScriptParameters = function(sender, request) {
+const retrieveContentScriptParameters = async function(sender, request) {
     if ( µb.readyToFilter !== true ) { return; }
     const { tabId, frameId } = sender;
     if ( tabId === undefined || frameId === undefined ) { return; }
@@ -550,6 +550,7 @@ const retrieveContentScriptParameters = function(sender, request) {
         request.url = pageStore.getEffectiveFrameURL(sender);
     }
 
+    const loggerEnabled = µb.logger.enabled;
     const noCosmeticFiltering = pageStore.noCosmeticFiltering === true;
 
     const response = {
@@ -568,7 +569,7 @@ const retrieveContentScriptParameters = function(sender, request) {
                 request.url
             );
         response.noGenericCosmeticFiltering = genericHide === 2;
-        if ( genericHide !== 0 && µb.logger.enabled ) {
+        if ( loggerEnabled && genericHide !== 0 ) {
             µBlock.filteringContext
                 .duplicate()
                 .fromTabId(tabId)
@@ -595,7 +596,7 @@ const retrieveContentScriptParameters = function(sender, request) {
                 request.url
             );
         response.noSpecificCosmeticFiltering = specificHide === 2;
-        if ( specificHide !== 0 && µb.logger.enabled ) {
+        if ( loggerEnabled && specificHide !== 0 ) {
             µBlock.filteringContext
                 .duplicate()
                 .fromTabId(tabId)
@@ -620,6 +621,23 @@ const retrieveContentScriptParameters = function(sender, request) {
     response.specificCosmeticFilters =
         µb.cosmeticFilteringEngine.retrieveSpecificSelectors(request, response);
 
+    // The procedural filterer's code is loaded only when needed and must be
+    // present before returning response to caller.
+    if (
+        Array.isArray(response.specificCosmeticFilters.proceduralFilters) || (
+            loggerEnabled &&
+            response.specificCosmeticFilters.exceptedFilters.length !== 0
+        )
+    ) {
+        await vAPI.tabs.executeScript(tabId, {
+            allFrames: false,
+            file: '/js/contentscript-extra.js',
+            frameId,
+            matchAboutBlank: true,
+            runAt: 'document_start',
+        });
+    }
+
     // https://github.com/uBlockOrigin/uBlock-issues/issues/688#issuecomment-748179731
     //   For non-network URIs, scriptlet injection is deferred to here. The
     //   effective URL is available here in `request.url`.
@@ -630,8 +648,18 @@ const retrieveContentScriptParameters = function(sender, request) {
         response.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
     }
 
-    if ( µb.logger.enabled && response.noCosmeticFiltering !== true ) {
-        µb.logCosmeticFilters(tabId, frameId);
+    // https://github.com/NanoMeow/QuickReports/issues/6#issuecomment-414516623
+    //   Inject as early as possible to make the cosmetic logger code less
+    //   sensitive to the removal of DOM nodes which may match injected
+    //   cosmetic filters.
+    if ( loggerEnabled && response.noCosmeticFiltering !== true ) {
+        vAPI.tabs.executeScript(tabId, {
+            allFrames: false,
+            file: '/js/scriptlets/cosmetic-logger.js',
+            frameId,
+            matchAboutBlank: true,
+            runAt: 'document_start',
+        });
     }
 
     return response;
@@ -640,6 +668,13 @@ const retrieveContentScriptParameters = function(sender, request) {
 const onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
+    case 'retrieveContentScriptParameters':
+        return retrieveContentScriptParameters(
+            sender,
+            request
+        ).then(response => {
+            callback(response);
+        });
     default:
         break;
     }
@@ -686,10 +721,6 @@ const onMessage = function(request, sender, callback) {
         }
         break;
 
-    case 'retrieveContentScriptParameters':
-        response = retrieveContentScriptParameters(sender, request);
-        break;
-
     case 'retrieveGenericCosmeticSelectors':
         request.tabId = sender.tabId;
         request.frameId = sender.frameId;
@@ -728,6 +759,25 @@ const onMessage = function(request, sender, callback) {
 
     // Async
     switch ( request.what ) {
+    // The procedural filterer must be present in case the user wants to
+    // type-in custom filters.
+    case 'elementPickerArguments':
+        return vAPI.tabs.executeScript(sender.tabId, {
+            allFrames: false,
+            file: '/js/contentscript-extra.js',
+            frameId: sender.frameId,
+            matchAboutBlank: true,
+            runAt: 'document_start',
+        }).then(( ) => {
+            callback({
+                target: µb.epickerArgs.target,
+                mouse: µb.epickerArgs.mouse,
+                zap: µb.epickerArgs.zap,
+                eprom: µb.epickerArgs.eprom,
+                pickerURL: vAPI.getURL(`/web_accessible_resources/epicker-ui.html?secret=${vAPI.warSecret()}`),
+            });
+            µb.epickerArgs.target = '';
+        });
     default:
         break;
     }
@@ -736,16 +786,6 @@ const onMessage = function(request, sender, callback) {
     let response;
 
     switch ( request.what ) {
-    case 'elementPickerArguments':
-        response = {
-            target: µb.epickerArgs.target,
-            mouse: µb.epickerArgs.mouse,
-            zap: µb.epickerArgs.zap,
-            eprom: µb.epickerArgs.eprom,
-            pickerURL: vAPI.getURL(`/web_accessible_resources/epicker-ui.html?secret=${vAPI.warSecret()}`),
-        };
-        µb.epickerArgs.target = '';
-        break;
     case 'elementPickerEprom':
         µb.epickerArgs.eprom = request;
         break;
