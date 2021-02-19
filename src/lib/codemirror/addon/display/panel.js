@@ -76,7 +76,7 @@
   };
 
   function initPanels(cm) {
-    var wrap = cm.getWrapperElement();
+    var wrap = cm.getWrapperElement()
     var style = window.getComputedStyle ? window.getComputedStyle(wrap) : wrap.currentStyle;
     var height = parseInt(style.height);
     var info = cm.state.panels = {
@@ -84,9 +84,10 @@
       panels: [],
       wrapper: document.createElement("div")
     };
+    var hasFocus = cm.hasFocus(), scrollPos = cm.getScrollInfo()
     wrap.parentNode.insertBefore(info.wrapper, wrap);
-    var hasFocus = cm.hasFocus();
     info.wrapper.appendChild(wrap);
+    cm.scrollTo(scrollPos.left, scrollPos.top)
     if (hasFocus) cm.focus();
 
     cm._setSize = cm.setSize;
@@ -114,8 +115,11 @@
     var info = cm.state.panels;
     cm.state.panels = null;
 
-    var wrap = cm.getWrapperElement();
+    var wrap = cm.getWrapperElement()
+    var hasFocus = cm.hasFocus(), scrollPos = cm.getScrollInfo()
     info.wrapper.parentNode.replaceChild(wrap, info.wrapper);
+    cm.scrollTo(scrollPos.left, scrollPos.top)
+    if (hasFocus) cm.focus();
     wrap.style.height = info.setHeight;
     cm.setSize = cm._setSize;
     cm.setSize();

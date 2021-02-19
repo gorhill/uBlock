@@ -32,7 +32,7 @@
   var mac_geMountainLion = /Mac OS X 1\d\D([8-9]|\d\d)\D/.test(userAgent);
   var phantom = /PhantomJS/.test(userAgent);
 
-  var ios = !edge && /AppleWebKit/.test(userAgent) && (/Mobile\/\w+/.test(userAgent) || navigator.maxTouchPoints > 2);
+  var ios = safari && (/Mobile\/\w+/.test(userAgent) || navigator.maxTouchPoints > 2);
   var android = /Android/.test(userAgent);
   // This is woefully incomplete. Suggestions for alternative methods welcome.
   var mobile = ios || android || /webOS|BlackBerry|Opera Mini|Opera Mobi|IEMobile/i.test(userAgent);
@@ -5115,7 +5115,7 @@
       (cmp(sel.primary().head, doc.sel.primary().head) < 0 ? -1 : 1);
     setSelectionInner(doc, skipAtomicInSelection(doc, sel, bias, true));
 
-    if (!(options && options.scroll === false) && doc.cm)
+    if (!(options && options.scroll === false) && doc.cm && doc.cm.getOption("readOnly") != "nocursor")
       { ensureCursorVisible(doc.cm); }
   }
 
@@ -8675,10 +8675,13 @@
     function moveOnce(boundToLine) {
       var next;
       if (unit == "codepoint") {
-        var ch = lineObj.text.charCodeAt(pos.ch + (unit > 0 ? 0 : -1));
-        if (isNaN(ch)) { next = null; }
-        else { next = new Pos(pos.line, Math.max(0, Math.min(lineObj.text.length, pos.ch + dir * (ch >= 0xD800 && ch < 0xDC00 ? 2 : 1))),
-                            -dir); }
+        var ch = lineObj.text.charCodeAt(pos.ch + (dir > 0 ? 0 : -1));
+        if (isNaN(ch)) {
+          next = null;
+        } else {
+          var astral = dir > 0 ? ch >= 0xD800 && ch < 0xDC00 : ch >= 0xDC00 && ch < 0xDFFF;
+          next = new Pos(pos.line, Math.max(0, Math.min(lineObj.text.length, pos.ch + dir * (astral ? 2 : 1))), -dir);
+        }
       } else if (visually) {
         next = moveVisually(doc.cm, lineObj, pos, dir);
       } else {
@@ -9790,7 +9793,7 @@
 
   addLegacyProps(CodeMirror);
 
-  CodeMirror.version = "5.59.0";
+  CodeMirror.version = "5.59.2";
 
   return CodeMirror;
 

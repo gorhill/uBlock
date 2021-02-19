@@ -87,7 +87,7 @@
     cm.operation(function() {
       var linesep = cm.lineSeparator() || "\n";
       cm.replaceSelection(linesep + linesep, null);
-      cm.execCommand("goCharLeft");
+      moveSel(cm, -1)
       ranges = cm.listSelections();
       for (var i = 0; i < ranges.length; i++) {
         var line = ranges[i].head.line;
@@ -95,6 +95,17 @@
         cm.indentLine(line + 1, null, true);
       }
     });
+  }
+
+  function moveSel(cm, dir) {
+    var newRanges = [], ranges = cm.listSelections(), primary = 0
+    for (var i = 0; i < ranges.length; i++) {
+      var range = ranges[i]
+      if (range.head == cm.getCursor()) primary = i
+      var pos = range.head.ch || dir > 0 ? {line: range.head.line, ch: range.head.ch + dir} : {line: range.head.line - 1}
+      newRanges.push({anchor: pos, head: pos})
+    }
+    cm.setSelections(newRanges, primary)
   }
 
   function contractSelection(sel) {
@@ -153,10 +164,9 @@
     var right = pos % 2 ? ch : pairs.charAt(pos + 1);
     cm.operation(function() {
       if (type == "skip") {
-        cm.execCommand("goCharRight");
+        moveSel(cm, 1)
       } else if (type == "skipThree") {
-        for (var i = 0; i < 3; i++)
-          cm.execCommand("goCharRight");
+        moveSel(cm, 3)
       } else if (type == "surround") {
         var sels = cm.getSelections();
         for (var i = 0; i < sels.length; i++)
@@ -169,10 +179,10 @@
       } else if (type == "both") {
         cm.replaceSelection(left + right, null);
         cm.triggerElectric(left + right);
-        cm.execCommand("goCharLeft");
+        moveSel(cm, -1)
       } else if (type == "addFour") {
         cm.replaceSelection(left + left + left + left, "before");
-        cm.execCommand("goCharRight");
+        moveSel(cm, 1)
       }
     });
   }
