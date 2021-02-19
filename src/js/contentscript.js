@@ -30,8 +30,10 @@
               |                  +-- domSurveyor
               |                  |
               +--> domFilterer --+-- domLogger
-                                 |
-                                 +-- domInspector
+                        |        |
+                        |        +-- domInspector
+                        |
+             [domProceduralFilterer]
 
   domWatcher:
     Watches for changes in the DOM, and notify the other components about these
@@ -43,6 +45,10 @@
 
   domFilterer:
     Enforces the filtering of DOM elements, by feeding it cosmetic filters.
+
+  domProceduralFilterer:
+    Enforce the filtering of DOM elements through procedural cosmetic filters.
+    Loaded on demand, only when needed.
 
   domSurveyor:
     Surveys the DOM to find new cosmetic filters to apply to the current page.
