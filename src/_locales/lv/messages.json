@@ -16,7 +16,7 @@
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "Stay",
+    "message": "Palikt",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
@@ -44,7 +44,7 @@
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "Shortcuts",
+    "message": "Īsceļi",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -56,7 +56,7 @@
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
-    "message": "uBlock₀ — Asset viewer",
+    "message": "uBlock₀ — līdzekļu skatītājs",
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
@@ -72,7 +72,7 @@
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Noklikšķiniet, lai ieslēgtu uBlock₀ šajā vietnē.",
+    "message": "Noklikšķināt, lai ieslēgtu uBlock₀ šajā vietnē.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -104,7 +104,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
-    "message": "Domains connected",
+    "message": "Savienotie domēni",
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
@@ -172,15 +172,15 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Click to disable JavaScript on this site",
+    "message": "Klikšķināt, lai šajā lapā atspējotu JavaScript",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Click to no longer disable JavaScript on this site",
+    "message": "Klikšķināt, lai šajā vietnē vairs neatspējotu JavaScript",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
-    "message": "Pop-up windows",
+    "message": "Uznirstošie logi",
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
@@ -192,7 +192,7 @@
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
-    "message": "Remote fonts",
+    "message": "Attālinātie fonti",
     "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
@@ -364,7 +364,7 @@
     "description": ""
   },
   "settingsNoScriptingPrompt": {
-    "message": "Disable JavaScript",
+    "message": "Atspējot JavaScript",
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
@@ -468,7 +468,7 @@
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pViewContent": {
-    "message": "view content",
+    "message": "skatīt saturu",
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
@@ -552,15 +552,15 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
-    "message": "Sort:",
+    "message": "Kārtot:",
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
-    "message": "Rule type",
+    "message": "Nosacījuma veids",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortBySource": {
-    "message": "Source",
+    "message": "Avots",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortByDestination": {
@@ -616,7 +616,7 @@
     "description": "Appears in the logger's tab selector"
   },
   "loggerReloadTip": {
-    "message": "Reload the tab content",
+    "message": "Pārlādēt cilnes saturu",
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
@@ -628,11 +628,11 @@
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
-    "message": "uBlock Origin wiki: The logger",
+    "message": "uBlock Origin wiki: žurnāls",
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
-    "message": "Clear logger",
+    "message": "Iztīrīt žurnālus",
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
@@ -640,7 +640,7 @@
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {
-    "message": "Unpause logger",
+    "message": "Atsākt žurnālus",
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
@@ -656,7 +656,7 @@
     "description": "Tooltip for the button to bring up logger output filtering options"
   },
   "loggerRowFiltererBuiltinNot": {
-    "message": "Not",
+    "message": "Nav",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinEventful": {
@@ -664,27 +664,27 @@
     "description": "A keyword in the built-in row filtering expression: all items corresponding to uBO doing something (blocked, allowed, redirected, etc.)"
   },
   "loggerRowFiltererBuiltinBlocked": {
-    "message": "blocked",
+    "message": "aizturēts",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinAllowed": {
-    "message": "allowed",
+    "message": "atļauts",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinModified": {
-    "message": "modified",
+    "message": "mainīts",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
-    "message": "1st-party",
+    "message": "Pirmā puse",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin3p": {
-    "message": "3rd-party",
+    "message": "Trešā puse",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerEntryDetailsHeader": {
-    "message": "Details",
+    "message": "Izklāsts",
     "description": "Small header to identify the 'Details' pane for a specific logger entry"
   },
   "loggerEntryDetailsFilter": {
@@ -696,7 +696,7 @@
     "description": "Label to identify a filter list field"
   },
   "loggerEntryDetailsRule": {
-    "message": "Rule",
+    "message": "Nosacījums",
     "description": "Label to identify a rule field"
   },
   "loggerEntryDetailsContext": {
@@ -712,7 +712,7 @@
     "description": "Label to identify a field providing partyness information"
   },
   "loggerEntryDetailsType": {
-    "message": "Type",
+    "message": "Veids",
     "description": "Label to identify the type of an entry"
   },
   "loggerEntryDetailsURL": {
@@ -828,7 +828,7 @@
     "description": "Label for radio-button to pick export format"
   },
   "loggerExportEncodePlain": {
-    "message": "Plain",
+    "message": "Vienkāršs",
     "description": "Label for radio-button to pick export text format"
   },
   "loggerExportEncodeMarkdown": {
@@ -912,7 +912,7 @@
     "description": "No longer used"
   },
   "subscribeButton": {
-    "message": "Subscribe",
+    "message": "Abonēt",
     "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
@@ -1028,7 +1028,7 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "Block element in frame...",
+    "message": "Aizturēt elementu rāmī...",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
@@ -1036,11 +1036,11 @@
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Type a shortcut",
+    "message": "Ievadīt saīsni",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {
-    "message": "Toggle locked scrolling",
+    "message": "Pārslēgt slēgto ritināšanu",
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
@@ -1056,7 +1056,7 @@
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "storageUsed": {
-    "message": "Storage used: {{value}} {{unit}}",
+    "message": "Izmantotais krātuves lielums: {{value}} {{unit}}",
     "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
   },
   "KB": {
@@ -1072,7 +1072,7 @@
     "description": "short for 'gigabytes'"
   },
   "clickToLoad": {
-    "message": "Click to load",
+    "message": "Klikšķināt, lai ielādētu",
     "description": "Message used in frame placeholders"
   },
   "dummy": {

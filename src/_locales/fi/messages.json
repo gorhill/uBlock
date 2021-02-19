@@ -308,7 +308,7 @@
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "Poista käytöstä työkaluvinkit",
+    "message": "Poista työkaluvihjeet käytöstä",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
@@ -316,7 +316,7 @@
     "description": "English: Make use of context menu where appropriate"
   },
   "settingsColorBlindPrompt": {
-    "message": "Aktivoi vaihtoehtoiset värit puna-vihervärien sijaan",
+    "message": "Värisokeille sopiva tila",
     "description": "English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt": {
@@ -336,7 +336,7 @@
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
-    "message": "Estä linkkien seuranta",
+    "message": "Poista linkkien tarkastus käytöstä",
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
@@ -344,11 +344,11 @@
     "description": "English: "
   },
   "settingPerSiteSwitchGroup": {
-    "message": "Oletustoiminto",
+    "message": "Oletuskäytäntö",
     "description": ""
   },
   "settingPerSiteSwitchGroupSynopsis": {
-    "message": "Nämä oletustoiminnot voidaan ohittaa sivustokohtaisesti",
+    "message": "Nämä oletuskäytännöt voidaan ohittaa sivustokohtaisesti",
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
@@ -380,7 +380,7 @@
     "description": "English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt": {
-    "message": "{{netFilterCount}} verkkosuodatinta ja {{cosmeticFilterCount}} kosmeettista suodatinta kohteesta:",
+    "message": "{{netFilterCount}} verkkosuodatinta ja {{cosmeticFilterCount}} kosmeettista suodatinta lähteestä:",
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
@@ -400,19 +400,19 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
-    "message": "Jäsennä ja pakota käyttöön kosmeettiset suodattimet.",
+    "message": "Jäsennä ja pakota kosmeettiset suodattimet käyttöön.",
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Tämä asetus ottaa käyttöön <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">Adblock Plus-yhteensopivat &ldquo;elementtejä piilottavat&rdquo; suodattimet</a>. Nämä suodattimet ovat pääasiassa ehosteita. Ne piilottavat verkkosivuilta elementtejä, jotka ovat visuaalisesti häiritseviä eikä niitä voi estää verkkopyyntöihin pohjautuvalla suodatinmoottorilla. </p><p>Tämä ominaisuus nostaa <i>uBlock₀</i>in muistinkäyttöä.</p>",
+    "message": "Kosmeettisten suodattimien tehtävä on piilottaa sivujen elementtejä, jotka on luokiteltu visuaalisiksi ärsykkeiksi ja joiden esto ei ole mahdollista yhteyden estoon perustuvien suodatusjärjestelmien avulla.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
-    "message": "Jätä huomioitta yleiset kosmeettiset suodattimet",
+    "message": "Älä huomioi kosmeettisia yleissuodattimia",
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>Yleisten kosmeettisten suodattimien on tarkoitus päteä kaikkiin sivustoihin.<p>Vaikka uBlock₀ käsittelee ne tehokkaasti, voivat ne silti lisätä muisti- ja CPU-ylikuormitusta joillakin sivuilla, erityisesti suurilla ja pitkäikäisillä sivuilla.<p>Tämän valinnan salliminen karsii pois web-sivuille lisätyn muisti- ja CPU-ylikuormituksen joka aiheutuu yleisten kosmeettisten suotimien käsittelystä ja alentaa myös uBlock₀ sovelluksen muistijalanjälkeä.<p>On suositeltavaa sallia tämä vaihtoehto vähemmän tehokkailla laitteilla.",
+    "message": "Kosmeettiset yleissuodattimet ovat kosmeettisista suodattimista niitä, jotka on tarkoitettu käytettäväksi kaikilla verkkosivuilla. Tämä asetus poistaa näiden suodattimien aiheuttaman korkeamman keskusmuistin ja suorittimen kuormituksen.\n\nAsetuksen käyttö on suositeltavaa heikkotehoisissa laitteissa.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -704,7 +704,7 @@
     "description": "Label to identify a context field (typically a hostname)"
   },
   "loggerEntryDetailsRootContext": {
-    "message": "Juuritieto",
+    "message": "Juurikonteksti",
     "description": "Label to identify a root context field (typically a hostname)"
   },
   "loggerEntryDetailsPartyness": {
@@ -784,11 +784,11 @@
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
-    "message": "Säilytä pyynnöt viimeisen {{input}} minuutin ajalta",
+    "message": "Säilytä merkinnät viimeisten {{input}} minuutin ajalta",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxLoads": {
-    "message": "Säilytä yhdeltä välilehdeltä enintään {{input}} sivun latausta",
+    "message": "Säilytä enintään {{input}} sivun latausta välilehteä kohden",
     "description": "A logger setting"
   },
   "loggerSettingPerTabMaxEntries": {
@@ -956,7 +956,7 @@
     "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
-    "message": "Seuraavan suodattimen vuoksi",
+    "message": "Seuraavan suodattimen vuoksi:",
     "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
@@ -1020,7 +1020,7 @@
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
-    "message": "Kumoa",
+    "message": "Palauta",
     "description": "for generic 'Revert' buttons"
   },
   "genericBytes": {
@@ -1056,7 +1056,7 @@
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "storageUsed": {
-    "message": "Tallennustilaa käytössä: {{value}} {{unit}}",
+    "message": "Tallennustilaa käytetty: {{value}} {{unit}}",
     "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
   },
   "KB": {

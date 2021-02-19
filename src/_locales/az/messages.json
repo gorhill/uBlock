@@ -1072,7 +1072,7 @@
     "description": "short for 'gigabytes'"
   },
   "clickToLoad": {
-    "message": "Yükləmək üçün kliklə",
+    "message": "Yükləmək üçün düyməyə bas",
     "description": "Message used in frame placeholders"
   },
   "dummy": {
