@@ -4131,7 +4131,20 @@ FilterContainer.prototype.matchStringReverse = function(type, url) {
 // https://github.com/chrisaljoudi/uBlock/issues/519
 //   Use exact type match for anything beyond `other`. Also, be prepared to
 //   support unknown types.
+// https://github.com/uBlockOrigin/uBlock-issues/issues/1501
+//   Add support to evaluate allow realm before block realm.
 
+/**
+ * Matches a URL string using filtering context.
+ * @param {FilteringContext} fctxt - The filtering context
+ * @param {integer} [modifier=0] - A bit vector modifying the behavior of the
+ *   matching algorithm:
+ *   Bit 0: match exact type.
+ *   Bit 1: lookup allow realm regardless of whether there was a match in
+ *          block realm.
+ *
+ * @returns {integer} 0=no match, 1=block, 2=allow (exeption)
+ */
 FilterContainer.prototype.matchString = function(fctxt, modifiers = 0) {
     let typeValue = typeNameToTypeValue[fctxt.type];
     if ( modifiers === 0 ) {
@@ -4159,17 +4172,18 @@ FilterContainer.prototype.matchString = function(fctxt, modifiers = 0) {
     $docEntity.reset();
     $requestHostname = fctxt.getHostname();
 
-    // Important block filters.
+    // Important block realm.
     if ( this.realmMatchString(BlockImportant, typeValue, partyBits) ) {
         return 1;
     }
-    // Block filters
-    if ( this.realmMatchString(BlockAction, typeValue, partyBits) ) {
-        // Exception filters
+
+    // Evaluate block realm before allow realm.
+    const r = this.realmMatchString(BlockAction, typeValue, partyBits);
+    if ( r || (modifiers & 0b0010) !== 0 ) {
         if ( this.realmMatchString(AllowAction, typeValue, partyBits) ) {
             return 2;
         }
-        return 1;
+        if ( r ) { return 1; }
     }
     return 0;
 };

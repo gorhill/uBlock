@@ -1348,6 +1348,7 @@ vAPI.messaging.listen({
 
 const µb = µBlock;
 const extensionOriginURL = vAPI.getURL('');
+const documentBlockedURL = vAPI.getURL('document-blocked.html');
 
 const getLoggerData = async function(details, activeTabId, callback) {
     const response = {
@@ -1360,18 +1361,24 @@ const getLoggerData = async function(details, activeTabId, callback) {
     };
     if ( µb.pageStoresToken !== details.tabIdsToken ) {
         const tabIds = new Map();
-        for ( const entry of µb.pageStores ) {
-            const pageStore = entry[1];
-            if ( pageStore.rawURL.startsWith(extensionOriginURL) ) { continue; }
-            tabIds.set(entry[0], pageStore.title);
+        for ( const [ tabId, pageStore ] of µb.pageStores ) {
+            const { rawURL } = pageStore;
+            if (
+                rawURL.startsWith(extensionOriginURL) === false ||
+                rawURL.startsWith(documentBlockedURL)
+            ) {
+                tabIds.set(tabId, pageStore.title);
+            }
         }
         response.tabIds = Array.from(tabIds);
     }
     if ( activeTabId ) {
         const pageStore = µb.pageStoreFromTabId(activeTabId);
+        const rawURL = pageStore && pageStore.rawURL;
         if (
-            pageStore === null ||
-            pageStore.rawURL.startsWith(extensionOriginURL)
+            rawURL === null ||
+            rawURL.startsWith(extensionOriginURL) &&
+                rawURL.startsWith(documentBlockedURL) === false
         ) {
             response.activeTabId = undefined;
         }

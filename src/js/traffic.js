@@ -172,37 +172,9 @@ const onBeforeRootFrameRequest = function(fctxt) {
         }
     }
 
-    // Static filtering: We always need the long-form result here.
-    const snfe = µb.staticNetFilteringEngine;
-
-    // Check for specific block
+    // Static filtering
     if ( result === 0 ) {
-        result = snfe.matchString(fctxt, 0b0001);
-        if ( result !== 0 || loggerEnabled ) {
-            logData = snfe.toLogData();
-        }
-    }
-
-    // Check for generic block
-    if ( result === 0 ) {
-        fctxt.type = 'no_type';
-        result = snfe.matchString(fctxt, 0b0001);
-        if ( result !== 0 || loggerEnabled ) {
-            logData = snfe.toLogData();
-        }
-        // https://github.com/chrisaljoudi/uBlock/issues/1128
-        //   Do not block if the match begins after the hostname, except when
-        //   the filter is specifically of type `other`.
-        // https://github.com/gorhill/uBlock/issues/490
-        //   Removing this for the time being, will need a new, dedicated type.
-        if (
-            result === 1 &&
-            toBlockDocResult(requestURL, requestHostname, logData) === false
-        ) {
-            result = 0;
-            logData = undefined;
-        }
-        fctxt.type = 'main_frame';
+        ({ result, logData } = shouldStrictBlock(fctxt, loggerEnabled));
     }
 
     const pageStore = µb.bindTabToPageStore(fctxt.tabId, 'beforeRequest');
@@ -221,7 +193,7 @@ const onBeforeRootFrameRequest = function(fctxt) {
         result !== 1 &&
         trusted === false &&
         pageStore !== null &&
-        snfe.hasQuery(fctxt)
+        µb.staticNetFilteringEngine.hasQuery(fctxt)
     ) {
         pageStore.redirectNonBlockedRequest(fctxt);
     }
@@ -263,16 +235,109 @@ const onBeforeRootFrameRequest = function(fctxt) {
 
 /******************************************************************************/
 
+// Strict blocking through static filtering
+//
+// https://github.com/chrisaljoudi/uBlock/issues/1128
+//   Do not block if the match begins after the hostname,
+//   except when the filter is specifically of type `other`.
+// https://github.com/gorhill/uBlock/issues/490
+//   Removing this for the time being, will need a new, dedicated type.
+// https://github.com/uBlockOrigin/uBlock-issues/issues/1501
+//   Support explicit exception filters.
+//
+// Let result of match for specific `document` type be `rs`
+// Let result of match for no specific type be `rg` *after* going through
+//   confirmation necessary for implicit matches
+// Let `important` be `i`
+// Let final result be logical combination of `rs` and `rg` as follow:
+//
+//                  |                rs                 |
+//                  +--------+--------+--------+--------|
+//                  |   0    |   1    |   1i   |   2    |
+// --------+--------+--------+--------+--------+--------|
+//         |   0    |   rg   |   rs   |   rs   |   rs   |
+//    rg   |   1    |   rg   |   rs   |   rs   |   rs   |
+//         |   1i   |   rg   |   rg   |   rs   |   rg   |
+//         |   2    |   rg   |   rg   |   rs   |   rs   |
+// --------+--------+--------+--------+--------+--------+
+
+const shouldStrictBlock = function(fctxt, loggerEnabled) {
+    const µb = µBlock;
+    const snfe = µb.staticNetFilteringEngine;
+
+    // Explicit filtering: `document` option
+    const rs = snfe.matchString(fctxt, 0b0011);
+    const is = rs === 1 && snfe.isBlockImportant();
+    let lds;
+    if ( rs !== 0 && loggerEnabled ) {
+        lds = snfe.toLogData();
+    }
+
+    //                  |                rs                 |
+    //                  +--------+--------+--------+--------|
+    //                  |   0    |   1    |   1i   |   2    |
+    // --------+--------+--------+--------+--------+--------|
+    //         |   0    |   rg   |   rs   |   x    |   rs   |
+    //    rg   |   1    |   rg   |   rs   |   x    |   rs   |
+    //         |   1i   |   rg   |   rg   |   x    |   rg   |
+    //         |   2    |   rg   |   rg   |   x    |   rs   |
+    // --------+--------+--------+--------+--------+--------+
+    if ( rs === 1 && is ) {
+        return { result: rs, logData: lds };
+    }
+
+    // Implicit filtering: no `document` option
+    fctxt.type = 'no_type';
+    let rg = snfe.matchString(fctxt, 0b0011);
+    fctxt.type = 'main_frame';
+    const ig = rg === 1 && snfe.isBlockImportant();
+    let ldg;
+    if ( rg !== 0 || loggerEnabled ) {
+        ldg = snfe.toLogData();
+        if ( rg === 1 && validateStrictBlock(fctxt, ldg) === false ) {
+            rg = 0; ldg = undefined;
+        }
+    }
+
+    //                  |                rs                 |
+    //                  +--------+--------+--------+--------|
+    //                  |   0    |   1    |   1i   |   2    |
+    // --------+--------+--------+--------+--------+--------|
+    //         |   0    |   x    |   rs   |   -    |   rs   |
+    //    rg   |   1    |   x    |   rs   |   -    |   rs   |
+    //         |   1i   |   x    |   x    |   -    |   x    |
+    //         |   2    |   x    |   x    |   -    |   rs   |
+    // --------+--------+--------+--------+--------+--------+
+    if ( rs === 0 || rg === 1 && ig || rg === 2 && rs !== 2 ) {
+        return { result: rg, logData: ldg };
+    }
+
+    //                  |                rs                 |
+    //                  +--------+--------+--------+--------|
+    //                  |   0    |   1    |   1i   |   2    |
+    // --------+--------+--------+--------+--------+--------|
+    //         |   0    |   -    |   x    |   -    |   x    |
+    //    rg   |   1    |   -    |   x    |   -    |   x    |
+    //         |   1i   |   -    |   -    |   -    |   -    |
+    //         |   2    |   -    |   -    |   -    |   x    |
+    // --------+--------+--------+--------+--------+--------+
+    return { result: rs, logData: lds };
+};
+
+/******************************************************************************/
+
 // https://github.com/gorhill/uBlock/issues/3208
 //   Mind case insensitivity.
 // https://github.com/uBlockOrigin/uBlock-issues/issues/1147
 //   Do not strict-block if the filter pattern does not contain at least one
 //   token character.
-const toBlockDocResult = function(url, hostname, logData) {
+
+const validateStrictBlock = function(fctxt, logData) {
     if ( typeof logData.regex !== 'string' ) { return false; }
     if ( typeof logData.raw === 'string' && /\w/.test(logData.raw) === false ) {
         return false;
     }
+    const url = fctxt.url;
     const re = new RegExp(logData.regex, 'i');
     const match = re.exec(url.toLowerCase());
     if ( match === null ) { return false; }
@@ -283,6 +348,7 @@ const toBlockDocResult = function(url, hostname, logData) {
     //   hostname.
     // https://github.com/uBlockOrigin/uAssets/issues/7619#issuecomment-653010310
     //   Also match FQDN.
+    const hostname = fctxt.getHostname();
     const hnpos = url.indexOf(hostname);
     const hnlen = hostname.length;
     const end = match.index + match[0].length - hnpos - hnlen;
