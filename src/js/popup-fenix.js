@@ -1163,6 +1163,7 @@ const revertFirewallRules = async function() {
     });
     cachePopupData(response);
     updateAllFirewallCells(true, false);
+    updateHnSwitches();
     hashFromPopupData();
 };
 
