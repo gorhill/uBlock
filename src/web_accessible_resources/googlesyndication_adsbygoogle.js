@@ -21,16 +21,9 @@
 
 (function() {
     'use strict';
-    window.adsbygoogle = window.adsbygoogle || {
-        length: 0,
+    window.adsbygoogle = {
         loaded: true,
-        push: function Si() {
-            /*
-            client = client || google_ad_client || google_ad_client;
-            slotname = slotname || google_ad_slot;
-            tag_origin = tag_origin || google_tag_origin
-            */
-            this.length += 1;
+        push: function() {
         }
     };
     const phs = document.querySelectorAll('.adsbygoogle');
