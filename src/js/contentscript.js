@@ -29,9 +29,9 @@
   domWatcher--+
               |                  +-- domSurveyor
               |                  |
-              +--> domFilterer --+-- domLogger
+              +--> domFilterer --+-- [domLogger]
                         |        |
-                        |        +-- domInspector
+                        |        +-- [domInspector]
                         |
              [domProceduralFilterer]
 
