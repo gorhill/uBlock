@@ -263,31 +263,29 @@ const firewallRuleTypes = [
 ];
 
 const getFirewallRules = function(src, out) {
-    const { hostnameDict } = out;
-    const ruleset = {};
+    const ruleset = out.firewallRules = {};
     const df = µb.sessionFirewall;
 
     for ( const type of firewallRuleTypes ) {
-        let r = df.lookupRuleData('*', '*', type);
+        const r = df.lookupRuleData('*', '*', type);
         if ( r === undefined ) { continue; }
         ruleset[`/ * ${type}`] = r;
     }
-    if ( typeof src !== 'string' ) { return out; }
+    if ( typeof src !== 'string' ) { return; }
 
     for ( const type of firewallRuleTypes ) {
-        let r = df.lookupRuleData(src, '*', type);
+        const r = df.lookupRuleData(src, '*', type);
         if ( r === undefined ) { continue; }
         ruleset[`. * ${type}`] = r;
     }
 
+    const { hostnameDict } = out;
     for ( const des in hostnameDict ) {
         let r = df.lookupRuleData('*', des, '*');
         if ( r !== undefined ) { ruleset[`/ ${des} *`] = r; }
         r = df.lookupRuleData(src, des, '*');
         if ( r !== undefined ) { ruleset[`. ${des} *`] = r; }
     }
-
-    out.firewallRules = ruleset;
 };
 
 const popupDataFromTabId = function(tabId, tabTitle) {
@@ -358,7 +356,7 @@ const popupDataFromTabId = function(tabId, tabTitle) {
         );
     } else {
         r.hostnameDict = {};
-        r.firewallRules = getFirewallRules();
+        getFirewallRules(undefined, r);
     }
 
     r.matrixIsDirty = µb.sessionFirewall.hasSameRules(
