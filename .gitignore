@@ -8,5 +8,5 @@ artifacts
 /tmp/
 misc
 artifacts/*
-
+*.DS_Store
 assets/checksums/ublock0.txt
