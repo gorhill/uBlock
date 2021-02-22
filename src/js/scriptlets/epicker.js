@@ -176,7 +176,11 @@ const mergeStrings = function(urls) {
     merged = merged.replace(/^\*+$/, '')
                    .replace(/\*{2,}/g, '*')
                    .replace(/([^*]{1,3}\*)(?:[^*]{1,3}\*)+/g, '$1');
-    return merged;
+
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1494
+    let pos = merged.indexOf('/');
+    if ( pos === -1 ) { pos = merged.length; }
+    return merged.slice(0, pos).includes('*') ? urls[0] : merged;
 };
 
 /******************************************************************************/
