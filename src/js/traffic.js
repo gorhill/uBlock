@@ -269,7 +269,7 @@ const shouldStrictBlock = function(fctxt, loggerEnabled) {
     const rs = snfe.matchString(fctxt, 0b0011);
     const is = rs === 1 && snfe.isBlockImportant();
     let lds;
-    if ( rs !== 0 && loggerEnabled ) {
+    if ( rs !== 0 || loggerEnabled ) {
         lds = snfe.toLogData();
     }
 
