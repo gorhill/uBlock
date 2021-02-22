@@ -262,7 +262,7 @@ reuters.com#@#iframe[id^="google_ads_iframe"]
 reuters.com#@#div[id^="google_ads_iframe_"]
 reuters.com##.CanvasAd_container_sZDIL
 reuters.com##*[class^="AdSlot"]
-reuters.com##*[class^="Leaderboard__slot___VvllT"]
+reuters.com##*[class^="TwoColumnsLayout-leaderboard-26t3U"]
 ||dianomi.com^$third-party
 
 # wmoov.com
