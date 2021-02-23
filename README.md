@@ -81,7 +81,7 @@ Or, support us with a monthly donation and [become a backer!](https://opencollec
 
 ##### And special thanks to our open-source support contributors!
 
-[![](https://opencollective.com/adnauseam/contributors.svg?width=890&button=false)](https://github.com/dhowe/adnauseam/graphs/contributors)
+[![open-collective](https://opencollective.com/adnauseam/contributors.svg?width=890)](https://github.com/dhowe/adnauseam/graphs/contributors)
 
 <img src="https://pagekite.net/static/skin/i/pagekite-logo.png" width="100"/>
 
