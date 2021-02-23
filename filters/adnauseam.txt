@@ -632,6 +632,9 @@ ninjakiwi.com##.a1scktq
 # cnbc.com
 ||ads-pd.nbcuni.com^
 
+# forum2go.nl
+forum2go.nl##.adsbygoogle
+
 ##################### Exceptions below here ########################
 
 # Requests that influence visual ads
