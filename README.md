@@ -1,5 +1,5 @@
 <!-- [![Build Status](https://travis-ci.org/dhowe/AdNauseam.svg)](https://travis-ci.org/dhowe/AdNauseam) -->
-<a href="https://www.gnu.org/licenses/gpl-3.0.en.html"><img src="https://img.shields.io/badge/license-GPL-orange.svg" alt="gpl license"></a> [![Gitter](https://badges.gitter.im/dhowe/AdNauseam.svg)](https://gitter.im/dhowe/AdNauseam?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+<a href="https://www.gnu.org/licenses/gpl-3.0.en.html"><img src="https://img.shields.io/badge/license-GPL-orange.svg" alt="gpl license"></a> [![Gitter](https://badges.gitter.im/dhowe/AdNauseam.svg)](https://gitter.im/dhowe/AdNauseam?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) https://opencollective.com/adnauseam/tiers/badge.svg
 
 Install [AdNauseam](https://adnauseam.io) for [Firefox](https://addons.mozilla.org/en-US/firefox/addon/adnauseam), [Opera](https://addons.opera.com/en/extensions/details/adnauseam-2) or [Chrome](https://github.com/dhowe/AdNauseam/wiki/Install-AdNauseam-on-Chrome-Without-Google's-Permission)
 <div align="left">
