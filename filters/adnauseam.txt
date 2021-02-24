@@ -344,8 +344,11 @@ www.overclockers.ru###uhi > table > tbody > tr > td:nth-of-type(1)
 www.overclockers.ru###g-yap-R-139088-14 > .yap-adv
 www.overclockers.ru##img[src^="/images/HP_"]
 
+# yandex
 yandex.ru##.sticky_js_inited
 ##div[id^="yandex_ad"]
+yandex.ru##*[id^="fu-"]
+yandex.ru##*[class^="desktop_js_inited"]
 
 # gocurrycracker.com
 ##*[id^="amzn_assoc_ad"]
