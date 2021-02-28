@@ -350,6 +350,10 @@ yandex.ru##.sticky_js_inited
 yandex.ru##*[id^="fu-"]
 yandex.ru##*[class^="desktop_js_inited"]
 
+# yander email ads
+mail.yandex.ru##.mail-Layout-Content > div:has(div[style="width: 100%;"])
+mail.yandex.ru##.ns-view-left-box > div:has(div[style="width: 100%; height: 100%;"])
+
 # gocurrycracker.com
 ##*[id^="amzn_assoc_ad"]
 ##iframe[src*="amazon-adsystem.com"]
