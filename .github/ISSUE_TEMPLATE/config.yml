@@ -1,0 +1,17 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Bug report
+    url: https://github.com/uBlockOrigin/uBlock-issues
+    about: Bugs and feature requests are now in a separate repository
+  - name: Questions and support
+    url: https://old.reddit.com/r/uBlockOrigin/
+    about: Answers to questions and other kinds of help support is provided on the subreddit r/uBlockOrigin
+  - name: Filter issues/website is broken
+    url: https://github.com/uBlockOrigin/uAssets/issues
+    about: Please report any issues with specific websites to uAssets issue tracker
+  - name: New filter list
+    url: https://github.com/uBlockOrigin/uBlock-issues/blob/master/README.md#ublock-issues
+    about: Opening issues for adding new filter lists is now disallowed and such issues will be declined and closed
+  - name: Issues with Firefox 56 or older
+    url: https://github.com/gorhill/uBlock-for-firefox-legacy/issues
+    about: If you are using uBlock Origin for Firefox legacy, please write the issues to its issue tracker
