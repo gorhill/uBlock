@@ -371,6 +371,10 @@
     "message": "屏蔽 CSP 报告",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
+  "settingsUncloakCnamePrompt": {
+    "message": "隐含规范名称（CNAME）",
+    "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
+  },
   "settingsLastRestorePrompt": {
     "message": "上次恢复：",
     "description": "English: Last restore:"

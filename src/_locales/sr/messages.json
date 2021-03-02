@@ -371,6 +371,10 @@
     "message": "Блокирај CSP извештаје",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
+  "settingsUncloakCnamePrompt": {
+    "message": "Откриј канонска имена",
+    "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
+  },
   "settingsLastRestorePrompt": {
     "message": "Последње враћање:",
     "description": "English: Last restore:"

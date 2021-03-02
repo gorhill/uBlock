@@ -371,6 +371,10 @@
     "message": "Blockera CSP-rapporter",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
+  "settingsUncloakCnamePrompt": {
+    "message": "Visa CNAME-poster",
+    "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
+  },
   "settingsLastRestorePrompt": {
     "message": "Senast återställd:",
     "description": "English: Last restore:"

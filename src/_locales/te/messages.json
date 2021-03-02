@@ -371,6 +371,10 @@
     "message": "CSP నివేదికలను నిరోధించు",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
+  "settingsUncloakCnamePrompt": {
+    "message": "Uncloak canonical names",
+    "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
+  },
   "settingsLastRestorePrompt": {
     "message": "గత పునరుద్ధారణ:",
     "description": "English: Last restore:"

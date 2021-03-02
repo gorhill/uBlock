@@ -371,6 +371,10 @@
     "message": "Blocca i report CSP",
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
+  "settingsUncloakCnamePrompt": {
+    "message": "Rivela i nomi canonici",
+    "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
+  },
   "settingsLastRestorePrompt": {
     "message": "Ultimo ripristino:",
     "description": "English: Last restore:"
