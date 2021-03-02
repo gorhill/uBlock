@@ -179,6 +179,10 @@ label {
     border-color: var(--checkbox-checked-ink);
     stroke: var(--default-surface);
     }
+.checkbox[disabled],
+.checkbox[disabled] ~ span {
+    opacity: 0.5;
+    }
 
 select {
     padding: 2px;

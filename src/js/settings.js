@@ -240,16 +240,20 @@ const onPreventDefault = function(ev) {
 // TODO: use data-* to declare simple settings
 
 const onUserSettingsReceived = function(details) {
-    uDom('[data-setting-type="bool"]').forEach(function(uNode) {
-        uNode.prop('checked', details[uNode.attr('data-setting-name')] === true)
-             .on('change', function() {
-                    changeUserSettings(
-                        this.getAttribute('data-setting-name'),
-                        this.checked
-                    );
-                    synchronizeDOM();
-                });
-    });
+    const checkboxes = document.querySelectorAll('[data-setting-type="bool"]');
+    for ( const checkbox of checkboxes ) {
+        const name = checkbox.getAttribute('data-setting-name') || '';
+        if ( details[name] === undefined ) {
+            checkbox.closest('.checkbox').setAttribute('disabled', '');
+            checkbox.setAttribute('disabled', '');
+            continue;
+        }
+        checkbox.checked = details[name] === true;
+        checkbox.addEventListener('change', ( ) => {
+            changeUserSettings(name, checkbox.checked);
+            synchronizeDOM();
+        });
+    }
 
     uDom('[data-i18n="settingsNoLargeMediaPrompt"] > input[type="number"]')
         .attr('data-setting-name', 'largeMediaSize')

@@ -190,6 +190,9 @@ const onMessage = function(request, sender, callback) {
 
     case 'userSettings':
         response = µb.changeUserSettings(request.name, request.value);
+        if ( vAPI.net.canUncloakCnames !== true ) {
+            response.cnameUncloakEnabled = undefined;
+        }
         break;
 
     default:

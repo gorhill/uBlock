@@ -322,7 +322,7 @@ const matchBucket = function(url, hostname, bucket, start) {
     }
 
     // Change -- but only if the user setting actually exists.
-    let mustSave = us.hasOwnProperty(name) && value !== us[name];
+    const mustSave = us.hasOwnProperty(name) && value !== us[name];
     if ( mustSave ) {
         us[name] = value;
     }
@@ -336,6 +336,11 @@ const matchBucket = function(url, hostname, bucket, start) {
         break;
     case 'autoUpdate':
         this.scheduleAssetUpdater(value ? 7 * 60 * 1000 : 0);
+        break;
+    case 'cnameUncloakEnabled':
+        if ( vAPI.net.canUncloakCnames === true ) {
+            vAPI.net.setOptions({ cnameUncloakEnabled: value === true });
+        }
         break;
     case 'collapseBlocked':
         if ( value === false ) {

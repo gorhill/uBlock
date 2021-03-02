@@ -88,6 +88,7 @@ const µBlock = (( ) => { // jshint ignore:line
         alwaysDetachLogger: true,
         autoUpdate: true,
         cloudStorageEnabled: false,
+        cnameUncloakEnabled: true,
         collapseBlocked: true,
         colorBlindFriendly: false,
         contextMenuEnabled: true,

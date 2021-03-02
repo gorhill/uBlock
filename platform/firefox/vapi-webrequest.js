@@ -50,7 +50,7 @@
     const parsedURL = new URL('about:blank');
 
     // Canonical name-uncloaking feature.
-    let cnameUncloak = browser.dns instanceof Object;
+    let cnameUncloakEnabled = browser.dns instanceof Object;
     let cnameUncloakProxied = false;
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/911
@@ -59,7 +59,7 @@
     //   DNS leaks.
     const proxyDetector = function(details) {
         if ( details.proxyInfo instanceof Object ) {
-            cnameUncloak = false;
+            cnameUncloakEnabled = false;
             proxyDetectorTryCount = 0;
         }
         if ( proxyDetectorTryCount === 0 ) {
@@ -81,6 +81,7 @@
         constructor() {
             super();
             this.pendingRequests = [];
+            this.canUncloakCnames = browser.dns instanceof Object;
             this.cnames = new Map([ [ '', '' ] ]);
             this.cnameIgnoreList = null;
             this.cnameIgnore1stParty = true;
@@ -92,9 +93,10 @@
         }
         setOptions(options) {
             super.setOptions(options);
-            if ( 'cnameUncloak' in options ) {
-                cnameUncloak = browser.dns instanceof Object &&
-                               options.cnameUncloak !== false;
+            if ( 'cnameUncloakEnabled' in options ) {
+                cnameUncloakEnabled =
+                    this.canUncloakCnames &&
+                    options.cnameUncloakEnabled !== false;
             }
             if ( 'cnameUncloakProxied' in options ) {
                 cnameUncloakProxied = options.cnameUncloakProxied === true;
@@ -127,7 +129,7 @@
             //   Install/remove proxy detector.
             if ( vAPI.webextFlavor.major < 80 ) {
                 const wrohr = browser.webRequest.onHeadersReceived;
-                if ( cnameUncloak === false || cnameUncloakProxied ) {
+                if ( cnameUncloakEnabled === false || cnameUncloakProxied ) {
                     if ( wrohr.hasListener(proxyDetector) ) {
                         wrohr.removeListener(proxyDetector);
                     }
@@ -266,7 +268,7 @@
         }
         onBeforeSuspendableRequest(details) {
             const r = super.onBeforeSuspendableRequest(details);
-            if ( cnameUncloak === false ) { return r; }
+            if ( cnameUncloakEnabled === false ) { return r; }
             if ( r !== undefined ) {
                 if (
                     r.cancel === true ||

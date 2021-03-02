@@ -234,7 +234,6 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         cnameIgnoreRootDocument: µbhs.cnameIgnoreRootDocument,
         cnameMaxTTL: µbhs.cnameMaxTTL,
         cnameReplayFullURL: µbhs.cnameReplayFullURL,
-        cnameUncloak: µbhs.cnameUncloak,
         cnameUncloakProxied: µbhs.cnameUncloakProxied,
     });
 });
