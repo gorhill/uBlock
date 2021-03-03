@@ -649,6 +649,9 @@ forum2go.nl##.adsbygoogle
 ##*:has(> a[href*="runative-syndicate.com"])
 ##*:has(> a[href*="run-syndicate.com"])
 
+# streamtape.com
+||in-page-push.com/400/3395407$script,domain=streamtape.com,important
+
 # gmail fake ads
 ||mail-ads.google.com/mail/u/0/ads/*$xhr,domain=mail.google.com,important
 
