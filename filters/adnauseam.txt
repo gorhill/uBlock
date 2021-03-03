@@ -642,6 +642,13 @@ ninjakiwi.com##.a1scktq
 # forum2go.nl
 forum2go.nl##.adsbygoogle
 
+# multiple ad elements from runative-syndicate
+##iframe[src*="runative-syndicate.com"]
+##iframe[src*="syndication.exdynsrv.com"]
+##*[id^="rn_ad_native"]
+##*:has(> a[href*="runative-syndicate.com"])
+##*:has(> a[href*="run-syndicate.com"])
+
 # gmail fake ads
 ||mail-ads.google.com/mail/u/0/ads/*$xhr,domain=mail.google.com,important
 
