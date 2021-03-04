@@ -401,7 +401,7 @@ const cosmeticFilterFromElement = function(elem) {
     }
 
     // Tag name
-    const tagName = elem.localName;
+    const tagName = CSS.escape(elem.localName);
 
     // Use attributes if still no selector found.
     // https://github.com/gorhill/uBlock/issues/1901
