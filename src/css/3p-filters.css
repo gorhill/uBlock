@@ -105,17 +105,19 @@ body:not(.updating) .listEntry.checked.obsolete .obsolete {
 .listEntry  a.towiki {
     display: inline-block;
     }
-.listEntry  a.fa:hover, .listEntry a.fa-icon:hover {
+.listEntry  a.fa:hover, .listEntry a.fa-icon:hover, .listEntry span.fa-icon:hover {
     opacity: 1;
+    cursor: pointer;
 }
 .listEntry.support  a.support {
     display: inline-block;
 }
-.listEntry  a.remove,
-.listEntry  a.remove:visited {
-    color: darkred;
+.listEntry  .remove,
+.listEntry  .remove:visited {
+    fill: red;
+    color: red;
     }
-.listEntry.external  a.remove {
+.listEntry.external  .remove {
     display: inline-block;
     }
 .listEntry.mustread  a.mustread {
