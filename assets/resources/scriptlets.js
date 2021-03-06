@@ -643,7 +643,7 @@
                 if ( prevGetter !== undefined ) {
                     prevGetter();
                 }
-                return handler.getter();
+                return handler.getter(); // cValue
             },
             set(a) {
                 if ( prevSetter !== undefined ) {
