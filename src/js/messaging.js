@@ -61,10 +61,10 @@ const onMessage = function(request, sender, callback) {
     switch ( request.what ) {
     case 'getAssetContent':
         // https://github.com/chrisaljoudi/uBlock/issues/417
-        µb.assets.get(
-            request.url,
-            { dontCache: true, needSourceURL: true }
-        ).then(result => {
+        µb.assets.get(request.url, {
+            dontCache: true,
+            needSourceURL: true,
+        }).then(result => {
             callback(result);
         });
         return;
@@ -742,41 +742,6 @@ var µb = µBlock;
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
-    case 'elementPickerArguments':
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'epicker.html', true);
-        xhr.overrideMimeType('text/html;charset=utf-8');
-        xhr.responseType = 'text';
-        xhr.onload = function() {
-            this.onload = null;
-            const i18n = {
-                bidi_dir: document.body.getAttribute('dir'),
-                create: vAPI.i18n('pickerCreate'),
-                pick: vAPI.i18n('pickerPick'),
-                quit: vAPI.i18n('pickerQuit'),
-                preview: vAPI.i18n('pickerPreview'),
-                netFilters: vAPI.i18n('pickerNetFilters'),
-                cosmeticFilters: vAPI.i18n('pickerCosmeticFilters'),
-                cosmeticFiltersHint: vAPI.i18n('pickerCosmeticFiltersHint')
-            };
-            var reStrings = /\{\{(\w+)\}\}/g;
-            var replacer = function(a0, string) {
-                return i18n[string];
-            };
-
-            callback({
-                frameContent: this.responseText.replace(reStrings, replacer),
-                target: µb.epickerArgs.target,
-                mouse: µb.epickerArgs.mouse,
-                zap: µb.epickerArgs.zap,
-                eprom: µb.epickerArgs.eprom,
-            });
-
-            µb.epickerArgs.target = '';
-        };
-        xhr.send();
-        return;
-
     default:
         break;
     }
@@ -785,21 +750,16 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
-    case 'compileCosmeticFilterSelector': {
-        const parser = new vAPI.StaticFilteringParser();
-        parser.analyze(request.selector);
-        if ( (parser.flavorBits & parser.BITFlavorExtCosmetic) !== 0 ) {
-            response = parser.result.compiled;
-        }
+    case 'elementPickerArguments':
+        response = {
+            target: µb.epickerArgs.target,
+            mouse: µb.epickerArgs.mouse,
+            zap: µb.epickerArgs.zap,
+            eprom: µb.epickerArgs.eprom,
+            pickerURL: vAPI.getURL(`/web_accessible_resources/epicker-ui.html${vAPI.warSecret()}`),
+        };
+        µb.epickerArgs.target = '';
         break;
-    }
-
-    // https://github.com/gorhill/uBlock/issues/3497
-    //   This needs to be removed once issue is fixed.
-    case 'createUserFilter':
-        µb.createUserFilters(request);
-        break;
-
     case 'elementPickerEprom':
         µb.epickerArgs.eprom = request;
         break;
@@ -829,6 +789,33 @@ vAPI.messaging.listen({
 {
 // >>>>> start of local scope
 
+const fromBase64 = function(encoded) {
+    if ( typeof encoded !== 'string' ) {
+        return Promise.resolve(encoded);
+    }
+    let u8array;
+    try {
+        u8array = µBlock.denseBase64.decode(encoded);
+    } catch(ex) {
+    }
+    return Promise.resolve(u8array !== undefined ? u8array : encoded);
+};
+
+const toBase64 = function(data) {
+    const value = data instanceof Uint8Array
+        ? µBlock.denseBase64.encode(data)
+        : data;
+    return Promise.resolve(value);
+};
+
+const compress = function(json) {
+    return µBlock.lz4Codec.encode(json, toBase64);
+};
+
+const decompress = function(encoded) {
+    return µBlock.lz4Codec.decode(encoded, fromBase64);
+};
+
 const onMessage = function(request, sender, callback) {
     // Cloud storage support is optional.
     if ( µBlock.cloudStorageSupported !== true ) {
@@ -850,12 +837,21 @@ const onMessage = function(request, sender, callback) {
         return;
 
     case 'cloudPull':
-        return vAPI.cloud.pull(request.datakey).then(result => {
+        request.decode = decompress;
+        return vAPI.cloud.pull(request).then(result => {
             callback(result);
         });
 
     case 'cloudPush':
-        return vAPI.cloud.push(request.datakey, request.data).then(result => {
+        if ( µBlock.hiddenSettings.cloudStorageCompression ) {
+            request.encode = compress;
+        }
+        return vAPI.cloud.push(request).then(result => {
+            callback(result);
+        });
+
+    case 'cloudUsed':
+        return vAPI.cloud.used(request.datakey).then(result => {
             callback(result);
         });
 
@@ -1642,15 +1638,22 @@ const onMessage = function(request, sender, callback) {
     switch ( request.what ) {
     case 'applyFilterListSelection':
         response = µb.applyFilterListSelection(request);
+    case 'inlinescriptFound':
+        if ( µb.logger.enabled && pageStore !== null ) {
+            const fctxt = µb.filteringContext.duplicate();
+            fctxt.fromTabId(tabId)
+                .setType('inline-script')
+                .setURL(request.docURL)
+                .setDocOriginFromURL(request.docURL);
+            if ( pageStore.filterRequest(fctxt) === 0 ) {
+                fctxt.setRealm('network').toLogger();
+            }
+        }
         break;
 
     case 'logCosmeticFilteringData':
         logCosmeticFilters(tabId, request);
         break;
-
-    case 'reloadAllFilters':
-        µb.loadFilterLists();
-        return;
 
     case 'securityPolicyViolation':
         response = logCSPViolations(pageStore, request);
@@ -1662,10 +1665,16 @@ const onMessage = function(request, sender, callback) {
         }
         break;
 
-    case 'subscriberData':
-        response = {
-            confirmStr: vAPI.i18n('subscriberConfirm')
-        };
+    case 'subscribeTo':
+        const url = encodeURIComponent(request.location);
+        const title = encodeURIComponent(request.title);
+        const hash = µb.selectedFilterLists.indexOf(request.location) !== -1
+            ? '#subscribed'
+            : '';
+        vAPI.tabs.open({
+            url: `/asset-viewer.html?url=${url}&title=${title}&subscribe=1${hash}`,
+            select: true,
+        });
         break;
 
     default:

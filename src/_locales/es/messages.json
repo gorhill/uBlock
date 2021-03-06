@@ -112,11 +112,11 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "Activar el modo eliminación de elementos",
+    "message": "Entrar al modo eliminación de elementos",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
-    "message": "Activar el modo selección de elementos",
+    "message": "Entrar al modo selección de elementos",
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
@@ -460,7 +460,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "Una URL por línea. Las URL inválidas serán ignoradas.",
+    "message": "Una URL por línea. Las URL no válidas serán ignoradas.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -484,7 +484,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Un filtro por línea. El filtro puede ser un nombre de dominio, o un filtro compatible con Adblock Plus. Las líneas que comiencen con <code>!</code> serán ignoradas.",
+    "message": "Un filtro por línea. El filtro puede ser un nombre de dominio, o un filtro compatible con EasyList. Las líneas que comiencen con <code>!</code> serán ignoradas.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -550,6 +550,22 @@
   "rulesFormatHint": {
     "message": "Sintaxis de las reglas: <code>origen destino tipo acción</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>documentación completa</a>).",
     "description": "English: dynamic rule syntax and full documentation."
+  },
+  "rulesSort": {
+    "message": "Ordenar:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Tipo de regla",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Fuente",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Destino",
+    "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
     "message": "Sitios de confianza para los cuales se deshabilitará uBlock Origin. Una entrada por línea. Las entradas no válidas serán ignoradas.",
@@ -876,7 +892,7 @@
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {
-    "message": "Los datos no se pueden leer o son inválidos",
+    "message": "Los datos no se pueden leer o no son válidos",
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
@@ -888,8 +904,12 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: ¿Deseas añadir la siguiente URL a tus listas de filtros personalizados?\n\nTítulo: \"{{title}}\"\nURL: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "message": "¿Deseas añadir la siguiente URL a tus listas de filtros personalizados?\n\nTítulo: \"{{title}}\"\nURL: {{url}}",
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Suscribirse",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "hace un minuto",
@@ -929,11 +949,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBlock Origin impidió la carga de la página:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "Como resultado del siguiente filtro:",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "sin parámetros",

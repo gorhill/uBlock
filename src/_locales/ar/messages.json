@@ -551,6 +551,22 @@
     "message": "صياغة القواعد: <code>مصدر نوع وجهة العمل</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>تعليمات كاملة</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
+  "rulesSort": {
+    "message": "Sort:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Rule type",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Source",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Destination",
+    "description": "English: a sort option for list of rules."
+  },
   "whitelistPrompt": {
     "message": "القائمة الخاصه التي سوف يتم تجاهلها من قبل uBlock₀. رابط واحد كل سطر.\nالروابط الغير صحيحه سوف يتم تجاهلها.",
     "description": "The name of the trusted sites pane."
@@ -888,8 +904,12 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀ : إضافة الرابط التالي للقوائم الفلترات الخاصة لك؟\n\nعنوان : \"{{title}}\"\nرابط : {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "message": "µBlock : أضف الرابط التالي لقائمة الفلترة الخاصة بك؟\n\nعنوان : \"{{title}}\"\nرابط : {{url}}",
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Subscribe",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "منذ دقيقة",
@@ -929,11 +949,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBlock₀ منع الصفحة التالية من التحميل:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "بسبب الفلتر التالي",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "دون معلمات",

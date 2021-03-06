@@ -551,6 +551,22 @@
     "message": "শব্দবিন্যাসের নিয়ম: <code>source destination type action</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>সম্পূর্ণ নথিপত্র</a>)।",
     "description": "English: dynamic rule syntax and full documentation."
   },
+  "rulesSort": {
+    "message": "Sort:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Rule type",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Source",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Destination",
+    "description": "English: a sort option for list of rules."
+  },
   "whitelistPrompt": {
     "message": "আপনার হোস্টের তালিকা যাদের জন্য uBlock₀ নিষ্ক্রিয় করা হবে। লাইন প্রতি একটি ভুক্তি। অবৈধ হোস্ট নাম নিশব্দে উপেক্ষা করা হবে।",
     "description": "The name of the trusted sites pane."
@@ -889,7 +905,11 @@
   },
   "subscriberConfirm": {
     "message": "uBlock₀: আপনার নিজস্ব ফিল্টার তালিকায় নিম্নলিখিত URL যোগ করবেন?\n\nশিরোনাম: \"{{title}}\"\nURL: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Subscribe",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "এক মিনিট আগে",
@@ -929,11 +949,11 @@
   },
   "docblockedPrompt1": {
     "message": "uব্লক অরিজিন নিচের পৃষ্ঠা লোড করাকে প্রতিহত করেছে:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "নিম্নলিখিত ফিল্টারের কারণে",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "প্যারামিটার বিহীন",

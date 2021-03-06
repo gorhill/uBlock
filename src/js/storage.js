@@ -326,7 +326,10 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         const importedSet = new Set(this.listKeysFromCustomFilterLists(externalLists));
         const toImportSet = new Set(this.listKeysFromCustomFilterLists(details.toImport));
         for ( const urlKey of toImportSet ) {
-            if ( importedSet.has(urlKey) ) { continue; }
+            if ( importedSet.has(urlKey) ) {
+                selectedListKeySet.add(urlKey);
+                continue;
+            }
             const assetKey = assetKeyFromURL(urlKey);
             if ( assetKey === urlKey ) {
                 importedSet.add(urlKey);
@@ -339,7 +342,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     const result = Array.from(selectedListKeySet);
     if ( externalLists !== this.userSettings.externalLists ) {
         this.userSettings.externalLists = externalLists;
-        vAPI.storage.set({ externalLists: externalLists });
+        vAPI.storage.set({ externalLists });
     }
     this.saveSelectedFilterLists(result);
 };
@@ -354,6 +357,8 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     while ( lineIter.eot() === false ) {
         const location = lineIter.next().trim();
         if ( reIgnore.test(location) || !reValid.test(location) ) { continue; }
+        // Ignore really bad lists.
+        if ( this.badLists.get(location) === true ) { continue; }
         out.add(location);
     }
     return Array.from(out);
@@ -502,7 +507,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
             external: true,
             group: newGroup,
             submitter: 'user',
-            title: ''
+            title: '',
         };
         newAvailableLists[listKey] = entry;
         this.assets.registerAssetSource(listKey, entry);
@@ -534,12 +539,24 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         this.saveSelectedFilterLists([ listURL ], true);
     };
 
-    // Load previously saved available lists -- these contains data
-    // computed at run-time, we will reuse this data if possible.
-    const [ bin, entries ] = await Promise.all([
+    const promises = [
         vAPI.storage.get('availableFilterLists'),
         this.assets.metadata(),
-    ]);
+        this.badLists.size === 0 ? this.assets.get('ublock-badlists') : false,
+    ];
+
+    // Load previously saved available lists -- these contains data
+    // computed at run-time, we will reuse this data if possible.
+    const [ bin, entries, badlists ] = await Promise.all(promises);
+
+    if ( badlists instanceof Object ) {
+        for ( const line of badlists.content.split(/\s*[\n\r]+\s*/) ) {
+            if ( line === '' || line.startsWith('#') ) { continue; }
+            const fields = line.split(/\s+/);
+            const remove = fields.length === 2;
+            this.badLists.set(fields[0], remove);
+        }
+    }
 
     oldAvailableLists = bin && bin.availableFilterLists || {};
 
@@ -712,12 +729,20 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 µBlock.getCompiledFilterList = async function(assetKey) {
     const compiledPath = 'compiled/' + assetKey;
 
-    if ( this.compiledFormatChanged === false ) {
+    if (
+        this.compiledFormatChanged === false &&
+        this.badLists.has(assetKey) === false
+    ) {
         let compiledDetails = await this.assets.get(compiledPath);
         if ( compiledDetails.content !== '' ) {
             compiledDetails.assetKey = assetKey;
             return compiledDetails;
         }
+    }
+
+    // Skip downloading really bad lists.
+    if ( this.badLists.get(assetKey) ) {
+        return { assetKey, content: '' };
     }
 
     const rawDetails = await this.assets.get(assetKey);
@@ -728,6 +753,11 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     }
 
     this.extractFilterListMetadata(assetKey, rawDetails.content);
+
+    // Skip compiling bad lists.
+    if ( this.badLists.has(assetKey) ) {
+        return { assetKey, content: '' };
+    }
 
     // Fetching the raw content may cause the compiled content to be
     // generated somewhere else in uBO, hence we try one last time to
@@ -1001,14 +1031,23 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         [ 'cap_html_filtering', 'html_filtering' ],
         [ 'cap_user_stylesheet', 'user_stylesheet' ],
         [ 'false', 'false' ],
+        // Hoping ABP-only list maintainers can at least make use of it to
+        // help non-ABP content blockers better deal with filters benefiting
+        // only ABP.
+        [ 'ext_abp', 'false' ],
         // Compatibility with other blockers
         // https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters#adguard-specific
         [ 'adguard', 'adguard' ],
+        [ 'adguard_app_android', 'false' ],
+        [ 'adguard_app_ios', 'false' ],
+        [ 'adguard_app_mac', 'false' ],
         [ 'adguard_app_windows', 'false' ],
+        [ 'adguard_ext_android_cb', 'false' ],
         [ 'adguard_ext_chromium', 'chromium' ],
         [ 'adguard_ext_edge', 'edge' ],
         [ 'adguard_ext_firefox', 'firefox' ],
         [ 'adguard_ext_opera', 'chromium' ],
+        [ 'adguard_ext_safari', 'false' ],
     ]),
 };
 
@@ -1357,11 +1396,14 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
 µBlock.assetObserver = function(topic, details) {
     // Do not update filter list if not in use.
+    // Also, ignore really bad lists, i.e. those which should not even be
+    // fetched from a remote server.
     if ( topic === 'before-asset-updated' ) {
         if ( details.type === 'filters' ) {
             if (
                 this.availableFilterLists.hasOwnProperty(details.assetKey) === false ||
-                this.selectedFilterLists.indexOf(details.assetKey) === -1
+                this.selectedFilterLists.indexOf(details.assetKey) === -1 ||
+                this.badLists.get(details.assetKey)
             ) {
                 return;
             }
@@ -1382,14 +1424,15 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
                         details.assetKey,
                         details.content
                     );
-                    var compiled = this.compileFilters(details.content);
-                    this.assets.put(
-                        'compiled/' + details.assetKey,
-                        this.compileFilters(
-                            details.content,
-                            { assetKey: details.assetKey }
-                        )
-                    );
+                    if ( this.badLists.has(details.assetKey) === false ) {
+                        this.assets.put(
+                            'compiled/' + details.assetKey,
+                            this.compileFilters(
+                                details.content,
+                                { assetKey: details.assetKey }
+                            )
+                        );
+                    }
                     // ADN: Need to tell core that lists have updated
                     µBlock.adnauseam.onListUpdated(details.assetKey, {
                       title:details.assetKey,
@@ -1403,6 +1446,8 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
             if ( cached ) {
                 this.compilePublicSuffixList(details.content);
             }
+        } else if ( details.assetKey === 'ublock-badlists' ) {
+            this.badLists = new Map();
         }
         vAPI.messaging.broadcast({
             what: 'assetUpdated',

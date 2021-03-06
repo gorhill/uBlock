@@ -452,7 +452,7 @@
     "description": "English: Regions, languages"
   },
   "3pGroupCustom": {
-    "message": "Egna filter",
+    "message": "Anpassad",
     "description": "English: Custom"
   },
   "3pImport": {
@@ -484,7 +484,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Ett filter per rad. Ett filter kan vara ett vanligt värdnamn eller ett Adblock Plus-kompatibelt filter. Rader med prefixet <code>!</code> kommer att ignoreras.",
+    "message": "Ett filter per rad. Ett filter kan vara ett vanligt värdnamn eller ett EasyList-kompatibelt filter. Rader med prefixet <code>!</code> kommer att ignoreras.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -550,6 +550,22 @@
   "rulesFormatHint": {
     "message": "Regelsyntax: <code>källa mål typ åtgärd</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>full dokumentation</a>).",
     "description": "English: dynamic rule syntax and full documentation."
+  },
+  "rulesSort": {
+    "message": "Sortera:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Regeltyp",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Källa",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Mål",
+    "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
     "message": "De pålitliga webbplatsdirektiven dikterar på vilka webbplatser uBlock Origin bör inaktiveras. En post per rad. Ogiltiga direktiv ignoreras och kommenteras ut.",
@@ -888,8 +904,12 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: Lägg till följande webbadress till din skräddarsydda filterlista?\n\nTitel: \"{{title}}\"\nWebbadress: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "message": "Lägg till följande webbadress till din anpassade filterlista?\n\nTitel: \"{{title}}\"\nWebbadress: {{url}}",
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Prenumerera",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "en minut sedan",
@@ -929,11 +949,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBlock Origin har förhindrat följande sida från att läsas in:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "På grund av följande filter",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "utan parametrar",

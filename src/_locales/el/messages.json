@@ -551,6 +551,22 @@
     "message": "Συντακτικό κανόνων: <code>προέλευση προορισμός τύπος ενέργεια</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>πλήρης τεκμηρίωση</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
+  "rulesSort": {
+    "message": "Sort:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Rule type",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Source",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Destination",
+    "description": "English: a sort option for list of rules."
+  },
   "whitelistPrompt": {
     "message": "Η λίστα σας με τα ονόματα κόμβων (host names) στα οποία το uBlock θα είναι απενεργοποιημένο. Μια καταχώρηση ανά γραμμή. Άκυρα ονόματα κόμβων θα παρακάμπτονται σιωπηλά.",
     "description": "The name of the trusted sites pane."
@@ -889,7 +905,11 @@
   },
   "subscriberConfirm": {
     "message": "uBlock₀: Προσθήκη του παρακάτω URL στις προσαρμοσμένες λίστες φίλτρων σας;\n\nΤίτλος: \"{{title}}\"\nURL: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Subscribe",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "πριν από ένα λεπτό",
@@ -929,11 +949,11 @@
   },
   "docblockedPrompt1": {
     "message": "Το uBlock₀ έχει αποτρέψει τη φόρτωση της παρακάτω σελίδας:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "Εξαιτίας του ακόλουθου φίλτρου",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "χωρίς παραμέτρους",

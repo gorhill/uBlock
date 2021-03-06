@@ -47,6 +47,7 @@ const µBlock = (( ) => { // jshint ignore:line
         cacheStorageAPI: 'unset',
         cacheStorageCompression: true,
         cacheControlForFirefox1376932: 'no-cache, no-store, must-revalidate',
+        cloudStorageCompression: false,
         cnameIgnoreList: 'unset',
         cnameIgnore1stParty: true,
         cnameIgnoreExceptions: true,
@@ -160,8 +161,8 @@ const µBlock = (( ) => { // jshint ignore:line
 
         // Read-only
         systemSettings: {
-            compiledMagic: 28,  // Increase when compiled format changes
-            selfieMagic: 28,    // Increase when selfie format changes
+            compiledMagic: 29,  // Increase when compiled format changes
+            selfieMagic: 29,    // Increase when selfie format changes
         },
 
         // https://github.com/uBlockOrigin/uBlock-issues/issues/759#issuecomment-546654501
@@ -193,6 +194,7 @@ const µBlock = (( ) => { // jshint ignore:line
 
         selectedFilterLists: [],
         availableFilterLists: {},
+        badLists: new Map(),
 
         // https://github.com/uBlockOrigin/uBlock-issues/issues/974
         //   This can be used to defer filtering decision-making.

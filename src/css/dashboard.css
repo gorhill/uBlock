@@ -138,9 +138,13 @@ body:not(.canUpdateShortcuts) .tabButton[data-pane="shortcuts.html"] {
         border-bottom: 3px solid #BD10E0;
         background-color: #222;
     }
-
 }
 
+:root.hidpi .tabButton {
+    font-family: Metropolis, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
 
 @media (max-width: 400px) {
     #dashboard-nav-widgets span {

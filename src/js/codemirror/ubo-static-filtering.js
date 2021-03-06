@@ -277,7 +277,7 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
         token: function(stream) {
             if ( stream.sol() ) {
                 parser.analyze(stream.string);
-                parser.analyzeExtra(stream.string);
+                parser.analyzeExtra();
                 parserSlot = 0;
                 netOptionValueMode = false;
             }

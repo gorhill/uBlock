@@ -1206,18 +1206,13 @@ const getPopupData = async function(tabId) {
 /******************************************************************************/
 
 // Popup DOM is assumed to be loaded at this point -- because this script
-// is loaded after everything else..
+// is loaded after everything else.
 
 {
-    // If there's no tab id specified in the query string,
-    // it will default to current tab.
-    let tabId = null;
-
-    // Extract the tab id of the page this popup is for
-    const matches = self.location.search.match(/[\?&]tabId=([^&]+)/);
-    if ( matches && matches.length === 2 ) {
-        tabId = parseInt(matches[1], 10) || 0;
-    }
+    // Extract the tab id of the page for this popup. If there's no tab id
+    // specified in the query string, it will default to current tab.
+    const selfURL = new URL(self.location.href);
+    const tabId = parseInt(selfURL.searchParams.get('tabId'), 10) || null;
 
     const nextFrames = async n => {
         for ( let i = 0; i < n; i++ ) {
@@ -1240,16 +1235,22 @@ const getPopupData = async function(tabId) {
     // when testing against viewport width.
     const checkViewport = async function() {
         const root = document.querySelector(':root');
-        if ( root.classList.contains('desktop') ) {
+        if (
+            root.classList.contains('mobile') ||
+            selfURL.searchParams.get('portrait')
+        ) {
+            root.classList.add('portrait');
+        } else if ( root.classList.contains('desktop') ) {
             await nextFrames(4);
             const main = document.getElementById('main');
             const firewall = document.getElementById('firewall');
             const minWidth = (main.offsetWidth + firewall.offsetWidth) / 1.1;
-            if ( window.innerWidth < minWidth ) {
+            if (
+                selfURL.searchParams.get('portrait') ||
+                window.innerWidth < minWidth
+            ) {
                 root.classList.add('portrait');
             }
-        } else if ( root.classList.contains('mobile') ) {
-            root.classList.add('portrait');
         }
         if ( root.classList.contains('portrait') ) {
             const panes = document.getElementById('panes');

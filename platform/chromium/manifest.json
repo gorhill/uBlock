@@ -45,8 +45,12 @@
     },
     {
       "matches": [
-        "http://*/*",
-        "https://*/*"
+        "https://easylist.to/*",
+        "https://*.fanboy.co.nz/*",
+        "https://filterlists.com/*",
+        "https://forums.lanik.us/*",
+        "https://github.com/*",
+        "https://*.github.io/*"
       ],
       "js": [
         "/js/scriptlets/subscriber.js"

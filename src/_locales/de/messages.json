@@ -84,7 +84,7 @@
     "description": "English: on this page"
   },
   "popupBlockedStats": {
-    "message": "{{count}} oder {{percent}} %",
+    "message": "{{count}} ({{percent}}%)",
     "description": "Example: 15 (13%)"
   },
   "popupBlockedSinceInstallPrompt": {
@@ -180,7 +180,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
-    "message": "Pop-Up Fenster",
+    "message": "Pop-Up-Fenster",
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
@@ -296,7 +296,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Element blockieren",
+    "message": "Element blockieren...",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -356,7 +356,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Blockiere Medienelemente größer als {{input}} KB",
+    "message": "Medienelemente größer als {{input}} KB blockieren",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -550,6 +550,22 @@
   "rulesFormatHint": {
     "message": "Regel-Syntax: <code>Quelle Ziel Typ Action</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'> vollständige Dokumentation</a>).",
     "description": "English: dynamic rule syntax and full documentation."
+  },
+  "rulesSort": {
+    "message": "Sortieren:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Regeltyp",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Quelle",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Ziel",
+    "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
     "message": "Ausnahmeregeln bestimmen, auf welchen Webseiten uBlock₀ nicht aktiv sein soll. Ein Eintrag pro Zeile. Ungültige Regeln werden stillschweigend ignoriert und auskommentiert.",
@@ -888,8 +904,12 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: Die folgende URL deiner Auswahl an Filterlisten hinzufügen?\n\nTitel: \"{{title}}\"\nURL: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "message": "uBlock₀: Folgende Adresse Ihrer benutzerdefinierten Filterliste hinzufügen?\n\nTitel: »{{title}}«\nAdresse: {{url}}",
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Abonnieren",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "vor einer Minute",
@@ -929,11 +949,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBlock Origin hat das Laden der folgenden Seite verhindert:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "Aufgrund des folgenden Filters",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "ohne Parameter",
@@ -1024,7 +1044,7 @@
     "description": "Label for keyboard shortcut used to toggle blocking profile"
   },
   "relaxBlockingMode": {
-    "message": "Lockere Blockiermodus",
+    "message": "Blockiermodus lockern",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "storageUsed": {

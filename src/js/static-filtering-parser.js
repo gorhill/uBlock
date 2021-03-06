@@ -102,12 +102,16 @@ const Parser = class {
         this.netOptionsIterator = new NetOptionsIterator(this);
         this.extOptionsIterator = new ExtOptionsIterator(this);
         this.maxTokenLength = Number.MAX_SAFE_INTEGER;
-        this.reIsLocalhostRedirect = /(?:0\.0\.0\.0|(?:broadcast|local)host|local|ip6-\w+)\b/;
+        this.reIsLocalhostRedirect = /(?:0\.0\.0\.0|(?:broadcast|local)host|local|ip6-\w+)(?:[^\w.-]|$)/;
         this.reHostname = /^[^\x00-\x24\x26-\x29\x2B\x2C\x2F\x3A-\x40\x5B-\x5E\x60\x7B-\x7F]+/;
         this.reHostsSink = /^[\w-.:\[\]]+$/;
         this.reHostsSource = /^[^\x00-\x24\x26-\x29\x2B\x2C\x2F\x3A-\x40\x5B-\x5E\x60\x7B-\x7F]+$/;
         this.reUnicodeChar = /[^\x00-\x7F]/;
         this.reUnicodeChars = /[^\x00-\x7F]/g;
+        this.reHostnameLabel = /[^.]+/g;
+        this.rePlainHostname = /^(?:[\w-]+\.)*[a-z]+$/;
+        this.rePlainEntity = /^(?:[\w-]+\.)+\*$/;
+        this.reEntity = /^[^*]+\.\*$/;
         this.punycoder = new URL(self.location);
         this.selectorCompiler = new this.SelectorCompiler(this);
         // TODO: reuse for network filtering analysis
@@ -313,7 +317,7 @@ const Parser = class {
     analyzeExtExtra() {
         if ( this.hasOptions() ) {
             const { i, len } = this.optionsSpan;
-            this.analyzeDomainList(i, i + len, BITComma, 0b11);
+            this.analyzeDomainList(i, i + len, BITComma, 0b1110);
         }
         if ( hasBits(this.flavorBits, BITFlavorUnsupported) ) {
             this.markSpan(this.patternSpan, BITError);
@@ -668,66 +672,62 @@ const Parser = class {
         }
     }
 
-    // bits:
-    // 0: can use entity-based hostnames
-    // 1: can use single wildcard
-    analyzeDomain(from, to, optionBits) {
-        const { slices } = this;
-        let len = to - from;
-        if ( len === 0 ) { return false; }
-        const not = hasBits(slices[from], BITTilde);
-        if ( not ) {
-            if ( (optionBits & 0b01) === 0 || slices[from+2] > 1 ) { return false; }
-            from += 3;
-            len -= 3;
+    analyzeDomain(from, to, modeBits) {
+        if ( to === from ) { return false; }
+        return this.normalizeHostnameValue(
+            this.strFromSlices(from, to - 3),
+            modeBits
+        ) !== undefined;
+    }
+
+    // Ultimately, let the browser API do the hostname normalization, after
+    // making some other trivial checks.
+    //
+    // modeBits:
+    //   0: can use wildcard at any position
+    //   1: can use entity-based hostnames
+    //   2: can use single wildcard
+    //   3: can be negated
+    normalizeHostnameValue(s, modeBits = 0b0000) {
+        const not = s.charCodeAt(0) === 0x7E /* '~' */;
+        if ( not && (modeBits & 0b1000) === 0 ) { return; }
+        let hn = not === false ? s : s.slice(1);
+        if ( this.rePlainHostname.test(hn) ) { return s; }
+        const hasWildcard = hn.lastIndexOf('*') !== -1;
+        if ( hasWildcard ) {
+            if ( modeBits === 0 ) { return; }
+            if ( hn.length === 1 ) {
+                if ( not || (modeBits & 0b0100) === 0 ) { return; }
+                return s;
+            }
+            if ( (modeBits & 0b0010) !== 0 ) {
+                if ( this.rePlainEntity.test(hn) ) { return s; }
+                if ( this.reEntity.test(hn) === false ) { return; }
+            } else if ( (modeBits & 0b0001) === 0 ) {
+                return;
+            }
+            hn = hn.replace(/\*/g, '__asterisk__');
         }
-        if ( len === 0 ) { return false; }
-        // One slice only, check for single asterisk
+        this.punycoder.hostname = '_';
+        try {
+            this.punycoder.hostname = hn;
+            hn = this.punycoder.hostname;
+        } catch (_) {
+            return;
+        }
+        if ( hn === '_' || hn === '' ) { return; }
+        if ( hasWildcard ) {
+            hn = this.punycoder.hostname.replace(/__asterisk__/g, '*');
+        }
         if (
-            len === 3 &&
-            not === false &&
-            (optionBits & 0b10) !== 0 &&
-            hasBits(slices[from], BITAsterisk)
+            (modeBits & 0b0001) === 0 && (
+                hn.charCodeAt(0) === 0x2E /* '.' */ ||
+                hn.charCodeAt(hn.length - 1) === 0x2E /* '.' */
+            )
         ) {
-            return slices[from+2] === 1;
+            return;
         }
-        // First slice must be regex-equivalent of `\w`
-        if ( hasNoBits(slices[from], BITRegexWord | BITUnicode) ) { return false; }
-        // Last slice
-        if ( len > 3 ) {
-            const last = to - 3;
-            if ( hasBits(slices[last], BITAsterisk) ) {
-                if (
-                    (optionBits & 0b01) === 0 ||
-                    len < 9 ||
-                    slices[last+2] > 1 ||
-                    hasNoBits(slices[last-3], BITPeriod)
-                ) {
-                    return false;
-                }
-            } else if ( hasNoBits(slices[to-3], BITAlphaNum | BITUnicode) ) {
-                return false;
-            }
-        }
-        // Middle slices
-        if ( len > 6 ) {
-            for ( let i = from + 3; i < to - 3; i += 3 ) {
-                const bits = slices[i];
-                if ( hasNoBits(bits, BITHostname) ) { return false; }
-                if ( hasBits(bits, BITPeriod) && slices[i+2] > 1 ) {
-                    return false;
-                }
-                if (
-                    hasBits(bits, BITDash) && (
-                        hasNoBits(slices[i-3], BITRegexWord | BITUnicode) ||
-                        hasNoBits(slices[i+3], BITRegexWord | BITUnicode)
-                    )
-                ) {
-                    return false;
-                }
-            }
-        }
-        return true;
+        return not ? '~' + hn : hn;
     }
 
     slice(raw) {
@@ -1081,6 +1081,8 @@ const Parser = class {
     //   Be ready to deal with non-punycode-able Unicode characters.
     // https://github.com/uBlockOrigin/uBlock-issues/issues/772
     //   Encode Unicode characters beyond the hostname part.
+    // Prepend with '*' character to prevent the browser API from refusing to
+    // punycode -- this occurs when the extracted label starts with a dash.
     toASCII(dryrun = false) {
         if ( this.patternHasUnicode() === false ) { return true; }
         const { i, len } = this.patternSpan;
@@ -1090,16 +1092,14 @@ const Parser = class {
         // Punycode hostname part of the pattern.
         if ( patternIsRegex === false ) {
             const match = this.reHostname.exec(pattern);
-            if ( match === null ) { return true; }
-            try {
-                this.punycoder.hostname = match[0].replace(/\*/g, '__asterisk__');
-            } catch(ex) {
-                return false;
+            if ( match !== null ) {
+                const hn = match[0].replace(this.reHostnameLabel, s => {
+                    if ( this.reUnicodeChar.test(s) === false ) { return s; }
+                    if ( s.charCodeAt(0) === 0x2D /* '-' */ ) { s = '*' + s; }
+                    return this.normalizeHostnameValue(s, 0b0001) || s;
+                });
+                pattern = hn + pattern.slice(match.index + match[0].length);
             }
-            const hn = this.punycoder.hostname;
-            if ( hn === '' ) { return false; }
-            const punycoded = hn.replace(/__asterisk__/g, '*');
-            pattern = punycoded + pattern.slice(match.index + match[0].length);
         }
         // Percent-encode remaining Unicode characters.
         if ( this.reUnicodeChar.test(pattern) ) {
@@ -1177,7 +1177,7 @@ Parser.prototype.SelectorCompiler = class {
         ]);
         this.reSimpleSelector = /^[#.][A-Za-z_][\w-]*$/;
         this.div = document.createElement('div');
-        this.rePseudoClass = /:(?::?after|:?before|:-?[a-z][a-z-]*[a-z])$/;
+        this.rePseudoElement = /:(?::?after|:?before|:-?[a-z][a-z-]*[a-z])$/;
         this.reProceduralOperator = new RegExp([
             '^(?:',
                 Array.from(parser.proceduralOperatorTokens.keys()).join('|'),
@@ -1215,6 +1215,7 @@ Parser.prototype.SelectorCompiler = class {
         if ( hasBits(this.parser.flavorBits, BITFlavorExtStyle) ) {
             raw = this.translateAdguardCSSInjectionFilter(raw);
             if ( raw === '' ) { return false; }
+            this.parser.flavorBits &= ~BITFlavorExtStyle;
             out.raw = raw;
         }
 
@@ -1264,7 +1265,7 @@ Parser.prototype.SelectorCompiler = class {
     }
 
     translateAdguardCSSInjectionFilter(suffix) {
-        const matches = /^([^{]+)\{([^}]+)\}\s*$/.exec(suffix);
+        const matches = /^(.*)\s*\{([^}]+)\}\s*$/.exec(suffix);
         if ( matches === null ) { return ''; }
         const selector = matches[1].trim();
         const style = matches[2].trim();
@@ -1296,7 +1297,7 @@ Parser.prototype.SelectorCompiler = class {
     //   is fixed.
     cssSelectorType(s) {
         if ( this.reSimpleSelector.test(s) ) { return 1; }
-        const pos = this.cssPseudoSelector(s);
+        const pos = this.cssPseudoElement(s);
         if ( pos !== -1 ) {
             return this.cssSelectorType(s.slice(0, pos)) === 1 ? 3 : 0;
         }
@@ -1308,9 +1309,9 @@ Parser.prototype.SelectorCompiler = class {
         return 1;
     }
 
-    cssPseudoSelector(s) {
+    cssPseudoElement(s) {
         if ( s.lastIndexOf(':') === -1 ) { return -1; }
-        const match = this.rePseudoClass.exec(s);
+        const match = this.rePseudoElement.exec(s);
         return match !== null ? match.index : -1;
     }
 
@@ -1450,13 +1451,10 @@ Parser.prototype.SelectorCompiler = class {
     //   The normalized string version is what is reported in the logger,
     //   by design.
     decompileProcedural(compiled) {
-        const tasks = compiled.tasks;
-        if ( Array.isArray(tasks) === false ) {
-            return compiled.selector;
-        }
+        const tasks = compiled.tasks || [];
         const raw = [ compiled.selector ];
-        let value;
         for ( const task of tasks ) {
+            let value;
             switch ( task[0] ) {
             case ':has':
             case ':if':
@@ -1494,14 +1492,16 @@ Parser.prototype.SelectorCompiler = class {
                 raw.push(task[1]);
                 break;
             case ':min-text-length':
-            case ':remove':
-            case ':style':
             case ':upward':
             case ':watch-attr':
             case ':xpath':
                 raw.push(`${task[0]}(${task[1]})`);
                 break;
             }
+        }
+        if ( Array.isArray(compiled.action) ) {
+            const [ op, arg ] = compiled.action;
+            raw.push(`${op}(${arg})`);
         }
         return raw.join('');
     }
@@ -1578,10 +1578,12 @@ Parser.prototype.SelectorCompiler = class {
                 tasks.push([ ':spath', spath ]);
             }
             if ( action !== undefined ) { return; }
-            tasks.push([ operator, args ]);
+            const task = [ operator, args ];
             if ( this.actionOperators.has(operator) ) {
                 if ( root === false ) { return; }
-                action = operator.slice(1);
+                action = task;
+            } else {
+                tasks.push(task);
             }
             opPrefixBeg = i;
             if ( i === n ) { break; }
@@ -1589,7 +1591,7 @@ Parser.prototype.SelectorCompiler = class {
 
         // No task found: then we have a CSS selector.
         // At least one task found: nothing should be left to parse.
-        if ( tasks.length === 0 ) {
+        if ( tasks.length === 0 && action === undefined ) {
             prefix = raw;
         } else if ( opPrefixBeg < n ) {
             if ( action !== undefined ) { return; }
@@ -1626,21 +1628,17 @@ Parser.prototype.SelectorCompiler = class {
         }
 
         // Expose action to take in root descriptor.
-        //
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/961
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/382
-        //   For the time being, `style` action can't be used in a
-        //   procedural selector.
         if ( action !== undefined ) {
-            if ( tasks.length > 1 && action === 'style' ) { return; }
             out.action = action;
         }
 
-        // Pseudo-selectors are valid only when used in a root task list.
+        // Pseudo elements are valid only when used in a root task list AND
+        // only when there are no procedural operators: pseudo elements can't
+        // be querySelectorAll-ed.
         if ( prefix !== '' ) {
-            const pos = this.cssPseudoSelector(prefix);
+            const pos = this.cssPseudoElement(prefix);
             if ( pos !== -1 ) {
-                if ( root === false ) { return; }
+                if ( root === false || tasks.length !== 0 ) { return; }
                 out.pseudo = pos;
             }
         }
@@ -1757,7 +1755,6 @@ const BITError          = 1 << 31;
 
 const BITAll            = 0xFFFFFFFF;
 const BITAlphaNum       = BITNum | BITAlpha;
-const BITRegexWord      = BITAlphaNum | BITUnderscore;
 const BITHostname       = BITNum | BITAlpha | BITUppercase | BITDash | BITPeriod | BITUnderscore | BITUnicode;
 const BITPatternToken   = BITNum | BITAlpha | BITPercent;
 const BITLineComment    = BITExclamation | BITHash | BITSquareBracket;
@@ -2228,7 +2225,7 @@ const NetOptionsIterator = class {
                 if ( this.interactive && hasBits(descriptor, OPTDomainList) ) {
                     this.parser.analyzeDomainList(
                         lval + 3, i, BITPipe,
-                        (descriptor & 0xFF) === OPTTokenDomain ? 0b01 : 0b00
+                        (descriptor & 0xFF) === OPTTokenDomain ? 0b1010 : 0b0000
                     );
                 }
             } else {

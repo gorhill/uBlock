@@ -20,7 +20,7 @@
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Ignore",
+    "message": "Անտեսել",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
@@ -108,7 +108,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
-    "message": "Open the dashboard",
+    "message": "Բացել վահանակը",
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
@@ -184,11 +184,11 @@
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
-    "message": "Large media elements",
+    "message": "Մեծ մեդիա էլեմենտներ",
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
-    "message": "Cosmetic filtering",
+    "message": "Կոսմետիկ զտում",
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
@@ -352,7 +352,7 @@
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "Disable cosmetic filtering",
+    "message": "Անջատել կոսմետիկ զտումը",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
@@ -388,7 +388,7 @@
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
-    "message": "Auto-update filter lists",
+    "message": "Ինքնին թարմացնել ցանկերը",
     "description": "A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow": {
@@ -408,7 +408,7 @@
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
-    "message": "Ignore generic cosmetic filters",
+    "message": "Անտեսել ընդհանուր կոսմետիկ զտումները",
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
@@ -448,7 +448,7 @@
     "description": "English: Multipurpose"
   },
   "3pGroupRegions": {
-    "message": "Regions, languages",
+    "message": "Երկրներ, լեզուներ",
     "description": "English: Regions, languages"
   },
   "3pGroupCustom": {
@@ -484,11 +484,11 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with <code>!</code> will be ignored.",
+    "message": "One filter per line. A filter can be a plain hostname, or an EasyList-compatible filter. Lines prefixed with <code>!</code> will be ignored.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
-    "message": "Import and append",
+    "message": "Ներմուծել և կցել",
     "description": "English: Import and append"
   },
   "1pExport": {
@@ -550,6 +550,22 @@
   "rulesFormatHint": {
     "message": "Rule syntax: <code>source destination type action</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>full documentation</a>).",
     "description": "English: dynamic rule syntax and full documentation."
+  },
+  "rulesSort": {
+    "message": "Sort:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Rule type",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Source",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Destination",
+    "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
     "message": "The trusted site directives dictate on which web pages uBlock Origin should be disabled. One entry per line. Invalid directives will be silently ignored and commented out.",
@@ -820,7 +836,7 @@
     "description": ""
   },
   "aboutWiki": {
-    "message": "Wiki",
+    "message": "Վիկի",
     "description": "English: project' wiki on GitHub"
   },
   "aboutSupport": {
@@ -888,8 +904,12 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: Add the following URL to your custom filter lists?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "message": "Add the following URL to your custom filter lists?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Subscribe",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "րոպե առաջ",
@@ -929,11 +949,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBlock Origin has prevented the following page from loading:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
-    "message": "Because of the following filter",
-    "description": "English: Because of the following filter"
+    "message": "Because of the following filter:",
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "առանց պարամետր",

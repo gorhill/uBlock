@@ -41,6 +41,14 @@
 		],
 		"supportURL": "https://www.eff.org/dnt-policy"
 	},
+	"ublock-badlists": {
+		"content": "internal",
+		"updateAfter": 13,
+		"contentURL": [
+			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badlists.txt",
+			"assets/ublock/badlists.txt"
+		]
+	},
 	"ublock-filters": {
 		"content": "filters",
 		"group": "default",

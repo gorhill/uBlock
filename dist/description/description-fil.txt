@@ -1,0 +1,51 @@
+Isang episyenteng blocker: magaan sa memorya at CPU footprint, ngunit nakakapag-loload at nakakapag-enforce ng libo-libong mga filters kumpara sa mga ibang sikat na blockers.
+
+Isinalarawan pangkalahatang-ideya ng kahusayan ng uBlock:
+https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+
+Paggamit: Ang malaking button sa sa popup ay upang permanenteng huwag paganahin / paganahin ang uBlock para sa kasalukuyang web site. Nalalapat ito sa kasalukuyang web site lamang , hindi ito pangkalahatang button.
+
+***
+
+May kakayahang umangkop. Ito ay higit pa sa isang "ad blocker " : Maaari rin itong magtakda at lumikha ng mga filter mula sa mga host ng mga files.
+
+Ang mga listahang ito ng mga filter nag-loload at ipinapatupad :
+
+- EasyList
+- Peter Lowe’s Ad server list
+- EasyPrivacy
+- Malware domains
+
+Higit pang mga listahan ay magagamit para sa iyo upang piliin kung nanaisin:
+
+- Fanboy’s Enhanced Tracking List
+- Dan Pollock’s hosts file
+- hpHosts’s Ad and tracking servers
+- MVPS HOSTS
+- Spam404
+- At iba pa.
+
+Siyempre, mas maraming pinapaganang mga filter , mas mataas ang memory footprint. Ngunit , kahit ang pagdaragdag ng dalawang extra na mga listahan ng Fanboy , hpHosts’s Ad at tracking servers, ang uBlock₀ pa rin ay may mas mababang memory footprint kaysa sa iba pang mga sikat na blockers.
+
+Gayundin, magkaroon ng kamalayan na ang pagpili ng ilan sa mga dagdag na mga listahan ay maaaring humantong sa mas mataas na posibilidad ng pagkasira ng web site - lalo na ang mga listahan na palaging ginagamit na hosts file.
+
+***
+
+Kung walang mga preset na listahan na mga filters, ang extension na ito ay wala kwenta. Kaya kung sakaling nais mong tumulong, isipin ang mga tao nagsusumikap upang mapanatili ang mga listahan ng filter na ginagamit mo , na ginawang libre para sa lahat.
+
+***
+
+Libre.
+Open source with public license (GPLv3)
+Para sa users by users.
+
+Mga nag-aambag @ Github:
+https://github.com/gorhill/uBlock/graphs/contributors
+Mga nag-aambag @ Crowdin: https://crowdin.net/project/ublock
+
+***
+
+Kakalabas lang nito kaya't pag-isipan ang mga komentaryo bago magbigay ng review.
+
+Mga pagbabago sa proyekto:
+https://github.com/gorhill/uBlock/releases

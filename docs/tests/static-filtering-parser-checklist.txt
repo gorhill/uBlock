@@ -32,6 +32,14 @@ a*
 :: AB
 :: ab # comment
 
+! valid hosts file entries
+0.0.0.0 0.0.0.0.example.com
+0.0.0.0 localhost.example.com
+0.0.0.0 local-host.example.com
+0.0.0.0 local.com
+0.0.0.0 localhost.com
+0.0.0.0 local-host.com
+
 ! valid options
 $script,redirect=noop.js
 *$empty
@@ -45,6 +53,14 @@ $script,redirect=noop.js
 *$all,~popup
 *$all,~inline-script
 *$all,~inline-font
+
+! valid domain option values
+*$domain=toto.com|toto.*|~toto.com|~toto.*|tôtó.ça|tôtó.*|~tôtó.ça|[ff00::0]|1.1.1.1
+
+! valid denyallow option values
+*$denyallow=toto.com|tôtó.ça|[ff00::0]|1.1.1.1
+
+
 
 
 !--------------------
@@ -67,6 +83,11 @@ $
 :: ab/ # comment
 ::/ ab
 :: ab$
+
+! ignored hosts file entries
+0.0.0.0 0.0.0.0
+0.0.0.0 local
+0.0.0.0 localhost
 
 ! bad regex
 /(abc|def/$xhr
@@ -92,3 +113,10 @@ $
 *$~popup
 *$~inline-script
 *$~inline-font
+
+! invalidity of IP addresses is browser-dependent
+! invalid domain= option values
+*$domain=.toto.com|toto.com.|[ff00::00000]|1.1.1.1111
+
+! invalid denyallow= option values
+*$denyallow=.toto.com|toto.com.|toto.*|~toto.com|~toto.*|[ff00::00000]|1.1.1.1111

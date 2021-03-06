@@ -48,15 +48,22 @@ mergeView.leftOriginal().setOption('readOnly', 'nocursor');
 
 uBlockDashboard.patchCodeMirrorEditor(mergeView.editor());
 
-const unfilteredRules = {
-    orig: { doc: mergeView.leftOriginal(), rules: [] },
-    edit: { doc: mergeView.editor(), rules: [] }
+const thePanes = {
+    orig: {
+        doc: mergeView.leftOriginal(),
+        original: [],
+        modified: [],
+    },
+    edit: {
+        doc: mergeView.editor(),
+        original: [],
+        modified: [],
+    },
 };
 
 let cleanEditToken = 0;
 let cleanEditText = '';
-
-let differ;
+let isCollapsed = false;
 
 /******************************************************************************/
 
@@ -97,11 +104,21 @@ let differ;
 
 /******************************************************************************/
 
+const getDiffer = (( ) => {
+    let differ;
+    return ( ) => {
+        if ( differ === undefined ) { differ = new diff_match_patch(); }
+        return differ;
+    };
+})();
+
+/******************************************************************************/
+
 // Borrowed from...
 // https://github.com/codemirror/CodeMirror/blob/3e1bb5fff682f8f6cbfaef0e56c61d62403d4798/addon/search/search.js#L22
 // ... and modified as needed.
 
-const updateOverlay = (function() {
+const updateOverlay = (( ) => {
     let reFilter;
     const mode = {
         token: function(stream) {
@@ -135,18 +152,23 @@ const updateOverlay = (function() {
 // - Minimum amount of text updated
 
 const rulesToDoc = function(clearHistory) {
-    for ( const key in unfilteredRules ) {
-        if ( unfilteredRules.hasOwnProperty(key) === false ) { continue; }
-        const doc = unfilteredRules[key].doc;
+    const orig = thePanes.orig.doc;
+    const edit = thePanes.edit.doc;
+    orig.startOperation();
+    edit.startOperation();
+
+    for ( const key in thePanes ) {
+        if ( thePanes.hasOwnProperty(key) === false ) { continue; }
+        const doc = thePanes[key].doc;
         const rules = filterRules(key);
         if (
+            clearHistory ||
             doc.lineCount() === 1 && doc.getValue() === '' ||
             rules.length === 0
         ) {
             doc.setValue(rules.length !== 0 ? rules.join('\n') + '\n' : '');
             continue;
         }
-        if ( differ === undefined ) { differ = new diff_match_patch(); }
         // https://github.com/uBlockOrigin/uBlock-issues/issues/593
         //   Ensure the text content always ends with an empty line to avoid
         //   spurious diff entries.
@@ -156,80 +178,78 @@ const rulesToDoc = function(clearHistory) {
         let beforeText = doc.getValue();
         let afterText = rules.join('\n').trim();
         if ( afterText !== '' ) { afterText += '\n'; }
-        const diffs = differ.diff_main(beforeText, afterText);
-        doc.startOperation();
-        let i = diffs.length,
-            iedit = beforeText.length;
+        const diffs = getDiffer().diff_main(beforeText, afterText);
+        let i = diffs.length;
+        let iedit = beforeText.length;
         while ( i-- ) {
-            let diff = diffs[i];
+            const diff = diffs[i];
             if ( diff[0] === 0 ) {
                 iedit -= diff[1].length;
                 continue;
             }
-            let end = doc.posFromIndex(iedit);
+            const end = doc.posFromIndex(iedit);
             if ( diff[0] === 1 ) {
                 doc.replaceRange(diff[1], end, end);
                 continue;
             }
             /* diff[0] === -1 */
             iedit -= diff[1].length;
-            let beg = doc.posFromIndex(iedit);
+            const beg = doc.posFromIndex(iedit);
             doc.replaceRange('', beg, end);
         }
-        doc.endOperation();
     }
+
+    // Mark ellipses as read-only
+    const marks = edit.getAllMarks();
+    for ( const mark of marks ) {
+        if ( mark.uboEllipsis !== true ) { continue; }
+        mark.clear();
+    }
+    if ( isCollapsed ) {
+        for ( let iline = 0, n = edit.lineCount(); iline < n; iline++ ) {
+            if ( edit.getLine(iline) !== '...' ) { continue; }
+            const mark = edit.markText(
+                { line: iline, ch: 0 },
+                { line: iline + 1, ch: 0 },
+                { atomic: true, readOnly: true }
+            );
+            mark.uboEllipsis = true;
+        }
+    }
+
+    orig.endOperation();
+    edit.endOperation();
     cleanEditText = mergeView.editor().getValue().trim();
     cleanEditToken = mergeView.editor().changeGeneration();
-    if ( clearHistory ) {
-        mergeView.editor().clearHistory();
-    }
+
+    if ( clearHistory !== true ) { return; }
+
+    mergeView.editor().clearHistory();
+    const chunks = mergeView.leftChunks();
+    if ( chunks.length === 0 ) { return; }
+    const ldoc = thePanes.orig.doc;
+    const { clientHeight } = ldoc.getScrollInfo();
+    const line = Math.min(chunks[0].editFrom, chunks[0].origFrom);
+    ldoc.setCursor(line, 0);
+    ldoc.scrollIntoView(
+        { line, ch: 0 },
+        (clientHeight - ldoc.defaultTextHeight()) / 2
+    );
 };
 
 /******************************************************************************/
 
 const filterRules = function(key) {
     const filter = uDom.nodeFromSelector('#ruleFilter input').value;
-    let rules = unfilteredRules[key].rules;
-    if ( filter !== '' ) {
-        rules = rules.slice();
-        let i = rules.length;
-        while ( i-- ) {
-            if ( rules[i].indexOf(filter) === -1 ) {
-                rules.splice(i, 1);
-            }
-        }
+    const rules = thePanes[key].modified;
+    if ( filter === '' ) { return rules; }
+    const out = [];
+    for ( const rule of rules ) {
+        if ( rule.indexOf(filter) === -1 ) { continue; }
+        out.push(rule);
     }
-    return rules;
+    return out;
 };
-
-/******************************************************************************/
-
-const renderRules = (( ) => {
-    const reIsSwitchRule = /^[a-z-]+: /;
-    let firstVisit = true;
-
-    // Switches always listed at the top.
-    const customSort = (a, b) => {
-        const aIsSwitch = reIsSwitchRule.test(a);
-        if ( reIsSwitchRule.test(b) === aIsSwitch ) {
-            return a.localeCompare(b);
-        }
-        return aIsSwitch ? -1 : 1;
-    };
-
-    return function(details) {
-        details.permanentRules.sort(customSort);
-        details.sessionRules.sort(customSort);
-        unfilteredRules.orig.rules = details.permanentRules;
-        unfilteredRules.edit.rules = details.sessionRules;
-        rulesToDoc(firstVisit);
-        if ( firstVisit ) {
-            firstVisit = false;
-            mergeView.editor().execCommand('goNextDiff');
-        }
-        onTextChanged(true);
-    };
-})();
 
 /******************************************************************************/
 
@@ -240,7 +260,9 @@ const applyDiff = async function(permanent, toAdd, toRemove) {
         toAdd: toAdd,
         toRemove: toRemove,
     });
-    renderRules(details);
+    thePanes.orig.original = details.permanentRules;
+    thePanes.edit.original = details.sessionRules;
+    onPresentationChanged();
 };
 
 /******************************************************************************/
@@ -326,10 +348,10 @@ function exportUserRulesToFile() {
 
 /******************************************************************************/
 
-const onFilterChanged = (function() {
-    let timer,
-        overlay = null,
-        last = '';
+const onFilterChanged = (( ) => {
+    let timer;
+    let overlay = null;
+    let last = '';
 
     const process = function() {
         timer = undefined;
@@ -351,8 +373,116 @@ const onFilterChanged = (function() {
     };
 
     return function() {
-        if ( timer !== undefined ) { clearTimeout(timer); }
-        timer = vAPI.setTimeout(process, 773);
+        if ( timer !== undefined ) { self.cancelIdleCallback(timer); }
+        timer = self.requestIdleCallback(process, { timeout: 773 });
+    };
+})();
+
+/******************************************************************************/
+
+const onPresentationChanged = (( ) => {
+    let sortType = 1;
+
+    const reSwRule = /^([^/]+): ([^/ ]+) ([^ ]+)/;
+    const reRule   = /^([^ ]+) ([^/ ]+) ([^ ]+ [^ ]+)/;
+    const reUrlRule = /^([^ ]+) ([^ ]+) ([^ ]+ [^ ]+)/;
+
+    const reverseHn = function(hn) {
+        return hn.split('.').reverse().join('.');
+    };
+
+    const slotFromRule = rule => {
+        let type, srcHn, desHn, extra;
+        let match = reSwRule.exec(rule);
+        if ( match !== null ) {
+            type = ' ' + match[1];
+            srcHn = reverseHn(match[2]);
+            desHn = srcHn;
+            extra = match[3];
+        } else if ( (match = reRule.exec(rule)) !== null ) {
+            type = '\x10FFFE';
+            srcHn = reverseHn(match[1]);
+            desHn = reverseHn(match[2]);
+            extra = match[3];
+        } else if ( (match = reUrlRule.exec(rule)) !== null ) {
+            type = '\x10FFFF';
+            srcHn = reverseHn(match[1]);
+            desHn = reverseHn(vAPI.hostnameFromURI(match[2]));
+            extra = match[3];
+        }
+        if ( sortType === 0 ) {
+            return { rule, token: `${type} ${srcHn} ${desHn} ${extra}` };
+        }
+        if ( sortType === 1 ) {
+            return { rule, token: `${srcHn} ${type} ${desHn} ${extra}` };
+        }
+        return { rule, token: `${desHn} ${type} ${srcHn} ${extra}` };
+    };
+
+    const sort = rules => {
+        const slots = [];
+        for ( let i = 0; i < rules.length; i++ ) {
+            slots.push(slotFromRule(rules[i], 1));
+        }
+        slots.sort((a, b) => a.token.localeCompare(b.token));
+        for ( let i = 0; i < rules.length; i++ ) {
+            rules[i] = slots[i].rule;
+        }
+    };
+
+    const collapse = ( ) => {
+        if ( isCollapsed !== true ) { return; }
+        const diffs = getDiffer().diff_main(
+            thePanes.orig.modified.join('\n'),
+            thePanes.edit.modified.join('\n')
+        );
+        const ll = []; let il = 0, lellipsis = false;
+        const rr = []; let ir = 0, rellipsis = false;
+        for ( let i = 0; i < diffs.length; i++ ) {
+            const diff =  diffs[i];
+            if ( diff[0] === 0 ) {
+                lellipsis = rellipsis = true;
+                il += 1; ir += 1;
+                continue;
+            }
+            if ( diff[0] < 0 ) {
+                if ( lellipsis ) {
+                    ll.push('...');
+                    if ( rellipsis ) { rr.push('...'); }
+                    lellipsis = rellipsis = false;
+                }
+                ll.push(diff[1].trim());
+                il += 1;
+                continue;
+            }
+            /* diff[0] > 0 */
+            if ( rellipsis ) {
+                rr.push('...');
+                if ( lellipsis ) { ll.push('...'); }
+                lellipsis = rellipsis = false;
+            }
+            rr.push(diff[1].trim());
+            ir += 1;
+        }
+        if ( lellipsis ) { ll.push('...'); }
+        if ( rellipsis ) { rr.push('...'); }
+        thePanes.orig.modified = ll;
+        thePanes.edit.modified = rr;
+    };
+
+    return function(clearHistory) {
+        thePanes.orig.modified = thePanes.orig.original.slice();
+        thePanes.edit.modified = thePanes.edit.original.slice();
+        const select = document.querySelector('#ruleFilter select');
+        sortType = parseInt(select.value, 10);
+        if ( isNaN(sortType) ) { sortType = 1; }
+        thePanes.orig.doc.getMode().sortType = sortType;
+        thePanes.edit.doc.getMode().sortType = sortType;
+        sort(thePanes.orig.modified);
+        sort(thePanes.edit.modified);
+        collapse();
+        rulesToDoc(clearHistory);
+        onTextChanged(clearHistory);
     };
 })();
 
@@ -361,12 +491,12 @@ const onFilterChanged = (function() {
 const onTextChanged = (( ) => {
     let timer;
 
-    const process = now => {
+    const process = details => {
         timer = undefined;
         const diff = document.getElementById('diff');
         let isClean = mergeView.editor().isClean(cleanEditToken);
         if (
-            now &&
+            details === undefined &&
             isClean === false &&
             mergeView.editor().getValue().trim() === cleanEditText
         ) {
@@ -388,8 +518,8 @@ const onTextChanged = (( ) => {
     };
 
     return function(now) {
-        if ( timer !== undefined ) { clearTimeout(timer); }
-        timer = now ? process(now) : vAPI.setTimeout(process, 57);
+        if ( timer !== undefined ) { self.cancelIdleCallback(timer); }
+        timer = now ? process() : self.requestIdleCallback(process, { timeout: 57 });
     };
 })();
 
@@ -444,9 +574,8 @@ const editSaveHandler = function() {
         onTextChanged(true);
         return;
     }
-    if ( differ === undefined ) { differ = new diff_match_patch(); }
     const toAdd = [], toRemove = [];
-    const diffs = differ.diff_main(cleanEditText, editText);
+    const diffs = getDiffer().diff_main(cleanEditText, editText);
     for ( const diff of diffs ) {
         if ( diff[0] === 1 ) {
             toAdd.push(diff[1]);
@@ -483,7 +612,9 @@ self.hasUnsavedData = function() {
 vAPI.messaging.send('dashboard', {
     what: 'getRules',
 }).then(details => {
-    renderRules(details);
+    thePanes.orig.original = details.permanentRules;
+    thePanes.edit.original = details.sessionRules;
+    onPresentationChanged(true);
 });
 
 // Handle user interaction
@@ -494,9 +625,16 @@ uDom('#revertButton').on('click', revertAllHandler);
 uDom('#commitButton').on('click', commitAllHandler);
 uDom('#editSaveButton').on('click', editSaveHandler);
 uDom('#ruleFilter input').on('input', onFilterChanged);
+uDom('#ruleFilter select').on('input', ( ) => {
+    onPresentationChanged(true);
+});
+uDom('#ruleFilter #diffCollapse').on('click', ev => {
+    isCollapsed = ev.target.classList.toggle('active');
+    onPresentationChanged(true);
+});
 
 // https://groups.google.com/forum/#!topic/codemirror/UQkTrt078Vs
-mergeView.editor().on('updateDiff', function() { onTextChanged(); });
+mergeView.editor().on('updateDiff', ( ) => { onTextChanged(); });
 
 /******************************************************************************/
 

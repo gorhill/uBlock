@@ -551,6 +551,22 @@
     "message": "Taisyklės sintaksė: <code>šaltinis paskirtis tipas veiksmas</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>dokumentacija</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
+  "rulesSort": {
+    "message": "Sort:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Rule type",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Source",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Destination",
+    "description": "English: a sort option for list of rules."
+  },
   "whitelistPrompt": {
     "message": "Baltojo sąrašo direktyvos nurodo, kurioms svetainėms uBlock Origin turėtų būti išjungtas. Vienas įrašas eilutėje. Neteisingos direktyvos bus tyliai ignoruotos ir užkomentuotos.",
     "description": "The name of the trusted sites pane."
@@ -889,7 +905,11 @@
   },
   "subscriberConfirm": {
     "message": "uBlock₀: Pridėti šį URL į jūsų adaptuotų filtrų sąrašą?\n\nPavadinimas: „{{title}}“\nURL: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Subscribe",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "prieš minutę",
@@ -929,11 +949,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBlock Origin neleido įkelti šio puslapio:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "Dėl šio filtro",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "be parametrų",

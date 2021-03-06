@@ -101,7 +101,21 @@ const safeTextToDOM = function(text, parent) {
 
     // Fast path (most common).
     if ( text.indexOf('<') === -1 ) {
-        parent.appendChild(safeTextToTextNode(text));
+        const toInsert = safeTextToTextNode(text);
+        let toReplace = parent.childElementCount !== 0
+            ? parent.firstChild
+            : null;
+        while ( toReplace !== null ) {
+            if ( toReplace.nodeType === 3 && toReplace.nodeValue === '_' ) {
+                break;
+            }
+            toReplace = toReplace.nextSibling;
+        }
+        if ( toReplace !== null ) {
+            parent.replaceChild(toInsert, toReplace);
+        } else {
+            parent.appendChild(toInsert);
+        }
         return;
     }
     // Slow path.

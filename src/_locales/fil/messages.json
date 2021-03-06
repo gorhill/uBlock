@@ -56,7 +56,7 @@
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
-    "message": "uBlock₀ — Asset viewer",
+    "message": "uBlock₀ — Pang-tingin ng Asset\n",
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
@@ -104,7 +104,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
-    "message": "Domains connected",
+    "message": "Mga konektado na domain",
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
@@ -172,11 +172,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Click to disable JavaScript on this site",
+    "message": "Pindutin para hindi paganahin ang Javascript sa site na ito",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Click to no longer disable JavaScript on this site",
+    "message": "Pindutin upang paganahin na ang Javascript sa site na ito",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
@@ -372,11 +372,11 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsLastRestorePrompt": {
-    "message": "Last restore:",
+    "message": "Huling pag-restore:",
     "description": "English: Last restore:"
   },
   "settingsLastBackupPrompt": {
-    "message": "Last backup:",
+    "message": "Huling backup:",
     "description": "English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt": {
@@ -384,7 +384,7 @@
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
-    "message": "{{used}} used out of {{total}}",
+    "message": "{{used}} na ang nagamit sa {{total}}",
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
@@ -392,7 +392,7 @@
     "description": "A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow": {
-    "message": "Update now",
+    "message": "I-update ngayon",
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pPurgeAll": {
@@ -448,7 +448,7 @@
     "description": "English: Multipurpose"
   },
   "3pGroupRegions": {
-    "message": "Regions, languages",
+    "message": "Rehiyon, mga Lenggwahe",
     "description": "English: Regions, languages"
   },
   "3pGroupCustom": {
@@ -484,7 +484,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "One filter per line. A filter can be a plain hostname, or an Adblock Plus-compatible filter. Lines prefixed with <code>!</code> will be ignored.",
+    "message": "One filter per line. A filter can be a plain hostname, or an EasyList-compatible filter. Lines prefixed with <code>!</code> will be ignored.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -550,6 +550,22 @@
   "rulesFormatHint": {
     "message": "Rule syntax: <code>source destination type action</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>full documentation</a>).",
     "description": "English: dynamic rule syntax and full documentation."
+  },
+  "rulesSort": {
+    "message": "Sort:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Rule type",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Source",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Destination",
+    "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
     "message": "The trusted site directives dictate on which web pages uBlock Origin should be disabled. One entry per line. Invalid directives will be silently ignored and commented out.",
@@ -888,8 +904,12 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: Add the following URL to your custom filter lists?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "message": "Add the following URL to your custom filter lists?\n\nTitle: \"{{title}}\"\nURL: {{url}}",
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Subscribe",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "isang minuto ang nakalipas",
@@ -929,11 +949,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBlock Origin has prevented the following page from loading:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
-    "message": "Because of the following filter",
-    "description": "English: Because of the following filter"
+    "message": "Because of the following filter:",
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "without parameters",

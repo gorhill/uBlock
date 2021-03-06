@@ -551,6 +551,22 @@
     "message": "Sintassi per le regole: <code>sorgente destinazione tipo azione</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>documentazione completa</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
+  "rulesSort": {
+    "message": "Ordina:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Tipo regola",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Fonte",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Destinazione",
+    "description": "English: a sort option for list of rules."
+  },
   "whitelistPrompt": {
     "message": "Lista dei siti dove uBlock è disattivato. Un sito per ogni riga. Le voci non valide verranno silenziosamente ignorate.",
     "description": "The name of the trusted sites pane."
@@ -889,7 +905,11 @@
   },
   "subscriberConfirm": {
     "message": "uBlock₀: Aggiungere il seguente URL alla tua lista dei filtri personalizzata?\n\nTitolo: \"{{title}}\"\nURL: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Abbonati",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "un minuto fa",
@@ -929,11 +949,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBlock₀ ha impedito alla seguente pagina di caricarsi:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "A causa del seguente filtro",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "senza parametri",

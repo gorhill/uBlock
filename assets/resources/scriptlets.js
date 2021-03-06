@@ -191,6 +191,120 @@
 })();
 
 
+/// abort-on-stack-trace.js
+/// alias aost.js
+// Status is currently experimental
+(function() {
+    let chain = '{{1}}';
+    let needle = '{{2}}';
+    let logLevel = '{{3}}';
+    const reRegexEscape = /[.*+?^${}()|[\]\\]/g;
+    if ( needle === '' || needle === '{{2}}' ) {
+        needle = '^';
+    } else if ( /^\/.+\/$/.test(needle) ) {
+        needle = needle.slice(1,-1);
+    } else {
+        needle = needle.replace(reRegexEscape, '\\$&');
+    }
+    const reNeedle = new RegExp(needle);
+    const magic = String.fromCharCode(Math.random() * 26 + 97) +
+        Math.floor(
+            (0.25 + Math.random() * 0.75) * Number.MAX_SAFE_INTEGER
+        ).toString(36).slice(-8);
+    const log = console.log.bind(console);
+    const ErrorCtor = self.Error;
+    const mustAbort = function(err) {
+        let docURL = self.location.href;
+        const pos = docURL.indexOf('#');
+        if ( pos !== -1 ) {
+            docURL = docURL.slice(0, pos);
+        }
+        // Normalize stack trace
+        const lines = [];
+        for ( let line of err.stack.split(/[\n\r]+/) ) {
+            if ( line.includes(magic) ) { continue; }
+            line = line.trim();
+            let match = /(.*?@)?(\S+)(:\d+):\d+\)?$/.exec(line);
+            if ( match === null ) { continue; }
+            let url = match[2];
+            if ( url.startsWith('(') ) { url = url.slice(1); }
+            if ( url === docURL ) {
+                url = 'inlineScript';
+            } else if ( url.startsWith('<anonymous>') ) {
+                url = 'injectedScript';
+            }
+            let fn = match[1] !== undefined
+                ? match[1].slice(0, -1)
+                : line.slice(0, match.index).trim();
+            if ( fn.startsWith('at') ) { fn = fn.slice(2).trim(); }
+            let rowcol = match[3];
+            lines.push(' ' + `${fn} ${url}${rowcol}:1`.trim());
+        }
+        lines[0] = `stackDepth:${lines.length-1}`;
+        const stack = lines.join('\t');
+        const r = reNeedle.test(stack);
+        if (
+            logLevel === '1' ||
+            logLevel === '2' && r ||
+            logLevel === '3' && !r
+        ) {
+            log(stack.replace(/\t/g, '\n'));
+        }
+        return r;
+    };
+    const makeProxy = function(owner, chain) {
+        const pos = chain.indexOf('.');
+        if ( pos === -1 ) {
+            let v = owner[chain];
+            Object.defineProperty(owner, chain, {
+                get: function() {
+                    if ( mustAbort(new ErrorCtor(magic)) ) {
+                        throw new ReferenceError(magic);
+                    }
+                    return v;
+                },
+                set: function(a) {
+                    if ( mustAbort(new ErrorCtor(magic)) ) {
+                        throw new ReferenceError(magic);
+                    }
+                    v = a;
+                },
+            });
+            return;
+        }
+        const prop = chain.slice(0, pos);
+        let v = owner[prop];
+        chain = chain.slice(pos + 1);
+        if ( v ) {
+            makeProxy(v, chain);
+            return;
+        }
+        const desc = Object.getOwnPropertyDescriptor(owner, prop);
+        if ( desc && desc.set !== undefined ) { return; }
+        Object.defineProperty(owner, prop, {
+            get: function() { return v; },
+            set: function(a) {
+                v = a;
+                if ( a instanceof Object ) {
+                    makeProxy(a, chain);
+                }
+            }
+        });
+    };
+    const owner = window;
+    makeProxy(owner, chain);
+    const oe = window.onerror;
+    window.onerror = function(msg, src, line, col, error) {
+        if ( typeof msg === 'string' && msg.indexOf(magic) !== -1 ) {
+            return true;
+        }
+        if ( oe instanceof Function ) {
+            return oe(msg, src, line, col, error);
+        }
+    }.bind();
+})();
+
+
 /// addEventListener-defuser.js
 /// alias aeld.js
 (function() {
@@ -282,7 +396,9 @@
         let owner = root;
         let chain = path;
         for (;;) {
-            if ( owner instanceof Object === false ) { return false; }
+            if ( typeof owner !== 'object' || owner === null  ) {
+                return false;
+            }
             const pos = chain.indexOf('.');
             if ( pos === -1 ) {
                 const found = owner.hasOwnProperty(chain);
@@ -299,8 +415,8 @@
             ) {
                 const next = chain.slice(pos + 1);
                 let found = false;
-                for ( const item of owner.values() ) {
-                    found = findOwner(item, next, prune) || found;
+                for ( const key of Object.keys(owner) ) {
+                    found = findOwner(owner[key], next, prune) || found;
                 }
                 return found;
             }

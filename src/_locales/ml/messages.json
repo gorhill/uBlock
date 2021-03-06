@@ -20,7 +20,7 @@
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "Ignore",
+    "message": "അവഗണിക്കുക",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
@@ -551,6 +551,22 @@
     "message": "നിയമത്തിന്‍റെ സിന്‍റ്റാക്സ്‌: <code> സോര്‍സ് ഡെസ്റ്റിനേഷന്‍ ടൈപ്പ് ആക്ഷന്‍</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'> മുഴുനീള പ്രമാണം</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
+  "rulesSort": {
+    "message": "Sort:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Rule type",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Source",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Destination",
+    "description": "English: a sort option for list of rules."
+  },
   "whitelistPrompt": {
     "message": "യുബ്ലോക്ക്ഒ ഡിസേബിള്‍ ചെയ്യപ്പെടേണ്ട ഹോസ്റ്റ് നെയിമുകള്‍. ഒരു വരിയില്‍ ഒരു എന്‍ട്രി എന്ന രീതിയില്‍ ചേര്‍ക്കുക. ഇന്‍വാലിഡ്‌ ഹോസ്റ്റ് നെയിമുകള്‍ നിശബ്ദമായി ഇഗ്നോര്‍ ചെയ്യപെടും.",
     "description": "The name of the trusted sites pane."
@@ -889,7 +905,11 @@
   },
   "subscriberConfirm": {
     "message": "യുബ്ലോക്ക്ഒ: താഴെ പറയുന്ന യുആര്‍എല്‍ താങ്കളുടെ കസ്റ്റം ഫില്‍റ്ററില്‍ ചേര്‍ക്കട്ടേയോ?\n\nടൈറ്റില്‍: \"{{title}}\"\nയുആര്‍എല്‍: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Subscribe",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "ഒരു മിനിറ്റ് മുന്‍പ്",
@@ -929,11 +949,11 @@
   },
   "docblockedPrompt1": {
     "message": "താഴെ പറയുന്ന പേജ് ലോഡ് ചെയ്യുന്നത് യുബ്ലോക്ക് ഒറിജിന്‍ തടഞ്ഞിരിക്കുന്നു:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "ഈ ഫില്‍റ്റര്‍ കാരണം",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "പാരാമീറ്ററുകള്‍ ഇല്ലാതെ",

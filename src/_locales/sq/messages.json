@@ -551,6 +551,22 @@
     "message": "Rregullat e sintaksës: <code>burimi destinacioni lloji veprimi</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>dokumentimi i plotë</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
+  "rulesSort": {
+    "message": "Rendit:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Tipi i rregullit",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Burimi",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Destinacioni",
+    "description": "English: a sort option for list of rules."
+  },
   "whitelistPrompt": {
     "message": "Kjo listë paraqet faqet e besuara në të cilat uBlock Origin duhet çaktivizuar. Një element për rresht. Nuk do të merren parasysh udhëzimet e pasakta.",
     "description": "The name of the trusted sites pane."
@@ -889,7 +905,11 @@
   },
   "subscriberConfirm": {
     "message": "uBlock₀: Të shtohet adresa në listën e filtrave tuaj?\n\nTitulli: \"{{title}}\"\nURL: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Subscribe",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "një minutë më parë",
@@ -929,11 +949,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBlock Origin po pengon hapjen e faqes:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "Për shkak të filtrit",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "pa parametra",

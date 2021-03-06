@@ -56,6 +56,16 @@ window.addEventListener('webextFlavor', function() {
 
 /******************************************************************************/
 
+vAPI.randomToken = function() {
+    const n = Math.random();
+    return String.fromCharCode(n * 26 + 97) +
+        Math.floor(
+            (0.25 + n * 0.75) * Number.MAX_SAFE_INTEGER
+        ).toString(36).slice(-8);
+};
+
+/******************************************************************************/
+
 vAPI.app = {
     name: manifest.name.replace(/ dev\w+ build/, ''),
     version: (( ) => {
@@ -339,7 +349,10 @@ vAPI.Tabs = class {
         return tabs.length !== 0 ? tabs[0] : null;
     }
 
-    async insertCSS() {
+    async insertCSS(tabId, details) {
+        if ( vAPI.supportsUserStylesheets ) {
+            details.cssOrigin = 'user';
+        }
         try {
             await webext.tabs.insertCSS(...arguments);
         }
@@ -357,7 +370,10 @@ vAPI.Tabs = class {
         return Array.isArray(tabs) ? tabs : [];
     }
 
-    async removeCSS() {
+    async removeCSS(tabId, details) {
+        if ( vAPI.supportsUserStylesheets ) {
+            details.cssOrigin = 'user';
+        }
         try {
             await webext.tabs.removeCSS(...arguments);
         }
@@ -1009,9 +1025,6 @@ vAPI.messaging = {
                 frameId: sender.frameId,
                 matchAboutBlank: true
             };
-            if ( vAPI.supportsUserStylesheets ) {
-                details.cssOrigin = 'user';
-            }
             if ( msg.add ) {
                 details.runAt = 'document_start';
             }
@@ -1603,8 +1616,6 @@ vAPI.cloud = (( ) => {
         maxChunkSize = evalMaxChunkSize();
     }, { once: true });
 
-    const maxStorageSize = QUOTA_BYTES;
-
     const options = {
         defaultDeviceName: window.navigator.platform,
         deviceName: undefined,
@@ -1621,10 +1632,10 @@ vAPI.cloud = (( ) => {
     // good thing given chrome.storage.sync.MAX_WRITE_OPERATIONS_PER_MINUTE
     // and chrome.storage.sync.MAX_WRITE_OPERATIONS_PER_HOUR.
 
-    const getCoarseChunkCount = async function(dataKey) {
+    const getCoarseChunkCount = async function(datakey) {
         const keys = {};
         for ( let i = 0; i < maxChunkCountPerItem; i += 16 ) {
-            keys[dataKey + i.toString()] = '';
+            keys[datakey + i.toString()] = '';
         }
         let bin;
         try {
@@ -1634,92 +1645,88 @@ vAPI.cloud = (( ) => {
         }
         let chunkCount = 0;
         for ( let i = 0; i < maxChunkCountPerItem; i += 16 ) {
-            if ( bin[dataKey + i.toString()] === '' ) { break; }
+            if ( bin[datakey + i.toString()] === '' ) { break; }
             chunkCount = i + 16;
         }
         return chunkCount;
     };
 
-    const deleteChunks = function(dataKey, start) {
+    const deleteChunks = async function(datakey, start) {
         const keys = [];
 
-        // No point in deleting more than:
-        // - The max number of chunks per item
-        // - The max number of chunks per storage limit
-        const n = Math.min(
-            maxChunkCountPerItem,
-            Math.ceil(maxStorageSize / maxChunkSize)
-        );
-        for ( var i = start; i < n; i++ ) {
-            keys.push(dataKey + i.toString());
+        const n = await getCoarseChunkCount(datakey);
+        for ( let i = start; i < n; i++ ) {
+            keys.push(datakey + i.toString());
         }
         if ( keys.length !== 0 ) {
             webext.storage.sync.remove(keys);
         }
     };
 
-    const push = async function(dataKey, data) {
-        let bin = {
-            'source': options.deviceName || options.defaultDeviceName,
-            'tstamp': Date.now(),
-            'data': data,
-            'size': 0
+    const push = async function(details) {
+        const { datakey, data, encode } = details;
+        if (
+            data === undefined ||
+            typeof data === 'string' && data === ''
+        ) {
+            return deleteChunks(datakey, 0);
+        }
+        const item = {
+            source: options.deviceName || options.defaultDeviceName,
+            tstamp: Date.now(),
+            data,
         };
-        bin.size = JSON.stringify(bin).length;
-        const item = JSON.stringify(bin);
+        const json = JSON.stringify(item);
+        const encoded = encode instanceof Function
+            ? await encode(json)
+            : json;
 
         // Chunkify taking into account QUOTA_BYTES_PER_ITEM:
         //   https://developer.chrome.com/extensions/storage#property-sync
         //   "The maximum size (in bytes) of each individual item in sync
         //   "storage, as measured by the JSON stringification of its value
         //   "plus its key length."
-        bin = {};
-        var chunkCount = Math.ceil(item.length / maxChunkSize);
-        for ( var i = 0; i < chunkCount; i++ ) {
-            bin[dataKey + i.toString()] = item.substr(i * maxChunkSize, maxChunkSize);
+        const bin = {};
+        const chunkCount = Math.ceil(encoded.length / maxChunkSize);
+        for ( let i = 0; i < chunkCount; i++ ) {
+            bin[datakey + i.toString()]
+                = encoded.substr(i * maxChunkSize, maxChunkSize);
         }
-        bin[dataKey + i.toString()] = ''; // Sentinel
+        bin[datakey + chunkCount.toString()] = ''; // Sentinel
 
-        let result;
-        let errorStr;
+        // Remove potentially unused trailing chunks before storing the data,
+        // this will free storage space which could otherwise cause the push
+        // operation to fail.
         try {
-            result = await webext.storage.sync.set(bin);
+            await deleteChunks(datakey, chunkCount + 1);
         } catch (reason) {
-            errorStr = reason;
         }
 
-        // https://github.com/gorhill/uBlock/issues/3006#issuecomment-332597677
-        // - Delete all that was pushed in case of failure.
-        // - It's unknown whether such issue applies only to Firefox:
-        //   until such cases are reported for other browsers, we will
-        //   reset the (now corrupted) content of the cloud storage
-        //   only on Firefox.
-        if ( errorStr !== undefined && vAPI.webextFlavor.soup.has('firefox') ) {
-            chunkCount = 0;
+        // Push the data to browser-provided cloud storage.
+        try {
+            await webext.storage.sync.set(bin);
+        } catch (reason) {
+            return String(reason);
         }
-
-        // Remove potentially unused trailing chunks
-        deleteChunks(dataKey, chunkCount);
-
-        return errorStr;
     };
 
-    const pull = async function(dataKey) {
+    const pull = async function(details) {
+        const { datakey, decode } = details;
 
-        const result = await getCoarseChunkCount(dataKey);
+        const result = await getCoarseChunkCount(datakey);
         if ( typeof result !== 'number' ) {
             return result;
         }
         const chunkKeys = {};
         for ( let i = 0; i < result; i++ ) {
-            chunkKeys[dataKey + i.toString()] = '';
+            chunkKeys[datakey + i.toString()] = '';
         }
 
         let bin;
         try {
             bin = await webext.storage.sync.get(chunkKeys);
         } catch (reason) {
-            return reason;
+            return String(reason);
         }
 
         // Assemble chunks into a single string.
@@ -1728,20 +1735,46 @@ vAPI.cloud = (( ) => {
         //   happen when the number of chunks is a multiple of
         //   chunkCountPerFetch. Hence why we must also test against
         //   undefined.
-        let json = [], jsonSlice;
+        let encoded = [];
         let i = 0;
         for (;;) {
-            jsonSlice = bin[dataKey + i.toString()];
-            if ( jsonSlice === '' || jsonSlice === undefined ) { break; }
-            json.push(jsonSlice);
+            const slice = bin[datakey + i.toString()];
+            if ( slice === '' || slice === undefined ) { break; }
+            encoded.push(slice);
             i += 1;
         }
+        encoded = encoded.join('');
+        const json = decode instanceof Function
+            ? await decode(encoded)
+            : encoded;
         let entry = null;
         try {
-            entry = JSON.parse(json.join(''));
+            entry = JSON.parse(json);
         } catch(ex) {
         }
         return entry;
+    };
+
+    const used = async function(datakey) {
+        if ( webext.storage.sync.getBytesInUse instanceof Function === false ) {
+            return;
+        }
+        const coarseCount = await getCoarseChunkCount(datakey);
+        if ( typeof coarseCount !== 'number' ) { return; }
+        const keys = [];
+        for ( let i = 0; i < coarseCount; i++ ) {
+            keys.push(`${datakey}${i}`);
+        }
+        let results;
+        try {
+            results = await Promise.all([
+                webext.storage.sync.getBytesInUse(keys),
+                webext.storage.sync.getBytesInUse(null),
+            ]);
+        } catch(ex) {
+        }
+        if ( Array.isArray(results) === false ) { return; }
+        return { used: results[0], total: results[1], max: QUOTA_BYTES };
     };
 
     const getOptions = function(callback) {
@@ -1760,7 +1793,7 @@ vAPI.cloud = (( ) => {
         getOptions(callback);
     };
 
-    return { push, pull, getOptions, setOptions };
+    return { push, pull, used, getOptions, setOptions };
 })();
 
 /******************************************************************************/

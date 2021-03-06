@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Daftar putih",
+    "message": "Situs Terpercaya",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -64,7 +64,7 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "Klik: nonfungsi/fungsikan uBlock₀ untuk situs ini.\n\nCtrl+klik: nonfungsikan uBlock₀ hanya di halaman ini.",
+    "message": "Klik: nonaktif/aktifkan uBlock₀ untuk situs ini.\n\nCtrl+klik: nonaktifkan uBlock₀ hanya di laman ini.",
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
@@ -320,7 +320,7 @@
     "description": "English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt": {
-    "message": "Fungsikan dukungan penyimpanan awan",
+    "message": "Aktifkan dukungan penyimpanan awan",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
@@ -332,11 +332,11 @@
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Nonfungsikan pra-ambil (untuk mencegah sambungan apapun untuk permintaan jaringan yang diblokir)",
+    "message": "Nonaktifkan pra-ambil (untuk mencegah sambungan apapun untuk permintaan jaringan yang diblokir)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
-    "message": "Nonfungsikan pengauditan pranala",
+    "message": "Nonaktifkan pengauditan pranala",
     "description": "English: "
   },
   "settingsWebRTCIPAddressHiddenPrompt": {
@@ -484,7 +484,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Satu filter per baris. Filter dapat berupa nama host, atau filter yang kompatibel dengan Adblock Plus. Baris yang diawali dengan <code>!</code> akan diabaikan.",
+    "message": "Satu filter per baris. Filter dapat berupa nama hos, atau filter yang kompatibel dengan EasyList. Baris yang diawali dengan <code>!</code> akan diabaikan.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -551,8 +551,24 @@
     "message": "Aturan sintaksis: <code>sumber tujuan jenis tindakan</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>dokumentasi lengkap</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
+  "rulesSort": {
+    "message": "Urutkan:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Tipe aturan",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Sumber",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Tujuan",
+    "description": "English: a sort option for list of rules."
+  },
   "whitelistPrompt": {
-    "message": "Daftar putih domain atau halaman, uBlock Origin akan dinonaktifkan. Satu entri per baris. Entri yang tidak valid akan diabaikan dan dijadikan komentar.",
+    "message": "Berisi domain atau halaman situs terpercaya, uBlock Origin akan dinonaktifkan. Satu entri per baris. Entri yang tidak valid akan diabaikan dan dijadikan komentar.",
     "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
@@ -564,7 +580,7 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "my-ublock-whitelist_{{datetime}}.txt",
+    "message": "my-ublock-trusted-sites_{{datetime}}.txt",
     "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
@@ -888,8 +904,12 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: Tambahkan URL berikut ke daftar filter tersesuai anda?\n\nJudul: \"{{title}}\"\nURL: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "message": "Tambah URL berikut ke ke daftar filter khusus anda?\n\nJudul: \"{{title}}\"\nURL: {{url}}",
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Langganan",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "semenit yang lalu",
@@ -929,11 +949,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBlock Origin telah mencegah halaman berikut dimuat:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "Disebabkan oleh filter berikut",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "tanpa parameter",
@@ -952,7 +972,7 @@
     "description": "English: Close this window"
   },
   "docblockedProceed": {
-    "message": "Nonfungsikan pemblokiran ketat untuk {{hostname}}",
+    "message": "Nonaktifkan pemblokiran ketat untuk {{hostname}}",
     "description": "English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary": {

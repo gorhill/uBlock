@@ -551,6 +551,22 @@
     "message": "Синтаксис правил: <code>джерело призначення тип дія</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>повна документація</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
+  "rulesSort": {
+    "message": "Сортування:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Тип правила",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Джерело",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Призначення ",
+    "description": "English: a sort option for list of rules."
+  },
   "whitelistPrompt": {
     "message": "Ваш список адрес сайтів, для яких µBlock буде неактивним. Додайте по одному запису на рядок. Невірні адреси будуть проігноровані без попереджень та закоментовані.",
     "description": "The name of the trusted sites pane."
@@ -888,8 +904,12 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: Додати це посилання до списку ваших фільтрів?\n\nНазва: \"{{title}}\"\nПосилання: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "message": "µBlock: Додати це посилання до списку ваших фільтрів?\n\nНазва: \"{{title}}\"\nПосилання: {{url}}",
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Підписатись",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "хвилину тому",
@@ -929,11 +949,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBlock запобіг завантаженню наступної сторінки:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "Через наступний фільтр",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "без параметрів",
