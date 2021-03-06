@@ -533,7 +533,8 @@ const onHeadersReceived = function(details) {
         const contentType = headerValueFromName('content-type', responseHeaders);
         if ( reMediaContentTypes.test(contentType) ) {
             pageStore.allowLargeMediaElementsUntil = 0;
-            return;
+            // Fall-through: this could be an SVG document, which supports
+            // script tags.
         }
     }
 
