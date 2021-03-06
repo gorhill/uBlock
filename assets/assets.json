@@ -134,14 +134,6 @@
 		],
 		"supportURL": "https://forums.lanik.us/"
 	},
-	"fanboy-enhanced": {
-		"content": "filters",
-		"group": "privacy",
-		"off": true,
-		"title": "Fanboy’s Enhanced Tracking List",
-		"contentURL": "https://www.fanboy.co.nz/enhancedstats.txt",
-		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
-	},
 	"urlhaus-1": {
 		"content": "filters",
 		"group": "malware",
