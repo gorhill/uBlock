@@ -746,6 +746,7 @@
         const odesc = Object.getOwnPropertyDescriptor(owner, prop);
         let prevGetter, prevSetter;
         if ( odesc instanceof Object ) {
+            if ( odesc.configurable === false ) { return; }
             if ( odesc.get instanceof Function ) {
                 prevGetter = odesc.get;
             }
