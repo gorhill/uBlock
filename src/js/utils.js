@@ -819,6 +819,11 @@
                 }
                 if ( request instanceof Object === false ) { continue; }
                 if ( !request.frameUrl || !request.url ) { continue; }
+                if ( request.cpt === 'document' ) {
+                    request.cpt = 'main_frame';
+                } else if ( request.cpt === 'xhr' ) {
+                    request.cpt = 'xmlhttprequest';
+                }
                 requests.push(request);
             }
             return requests;

@@ -1125,7 +1125,9 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
     ) {
         out.injectedHideFilters = injectedHideFilters.join(',\n');
         details.code = out.injectedHideFilters + '\n{display:none!important;}';
-        vAPI.tabs.insertCSS(request.tabId, details);
+        if ( options.dontInject !== true ) {
+            vAPI.tabs.insertCSS(request.tabId, details);
+        }
     }
 
 
@@ -1135,7 +1137,9 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
         cacheEntry.retrieve('net', networkFilters);
         if ( networkFilters.length !== 0 ) {
             details.code = networkFilters.join('\n') + '\n{display:none!important;}';
-            vAPI.tabs.insertCSS(request.tabId, details);
+            if ( options.dontInject !== true ) {
+                vAPI.tabs.insertCSS(request.tabId, details);
+            }
         }
 
         if ( out.fake.length !== 0 ) {
@@ -1174,12 +1178,13 @@ FilterContainer.prototype.benchmark = async function() {
     const options = {
         noCosmeticFiltering: false,
         noGenericCosmeticFiltering: false,
+        dontInject: true,
     };
     let count = 0;
     const t0 = self.performance.now();
     for ( let i = 0; i < requests.length; i++ ) {
         const request = requests[i];
-        if ( request.cpt !== 'document' ) { continue; }
+        if ( request.cpt !== 'main_frame' ) { continue; }
         count += 1;
         details.hostname = µb.URI.hostnameFromURI(request.url);
         details.domain = µb.URI.domainFromHostname(details.hostname);

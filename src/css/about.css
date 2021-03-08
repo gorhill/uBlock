@@ -23,3 +23,24 @@ body {
 ul {
   margin-__MSG_@@bidi_start_edge__: 1em;
 }
+.entries {
+    margin: 0.5em 0;
+    margin-inline-start: 2em;
+    -webkit-margin-start: 2em;
+    }
+.entry {
+    margin: 0.5em 0;
+    }
+#dev {
+    align-items: flex-start;
+    display: none;
+    }
+#dev.enabled {
+    display: flex;
+    }
+#dev > * {
+    margin-inline-end: 1em;
+    }
+#dev > div {
+    white-space: pre;
+    }

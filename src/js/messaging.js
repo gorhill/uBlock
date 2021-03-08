@@ -93,6 +93,12 @@ const onMessage = function(request, sender, callback) {
         µb.scriptlets.inject(request.tabId, request.scriptlet, callback);
         return;
 
+    case 'sfneBenchmark':
+        µb.staticNetFilteringEngine.benchmark().then(result => {
+            callback(result);
+        });
+        return;
+
     default:
         break;
     }
@@ -135,7 +141,8 @@ const onMessage = function(request, sender, callback) {
     case 'getAppData':
         response = {
             name: browser.runtime.getManifest().name,
-            version: vAPI.app.version
+            version: vAPI.app.version,
+            canBenchmark: µb.hiddenSettings.benchmarkDatasetURL !== 'unset',
         };
         break;
 
