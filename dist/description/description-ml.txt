@@ -24,17 +24,17 @@
 -സ്പാം404
 -കൂടാതെ മറ്റ് അനവധി
 
-തീര്‍ച്ചയായും, കൂടുതല്‍ ഫില്‍ട്ടറുകള്‍ എനേബിള്‍ ചെയ്യുംതോറും മെമ്മറി ഉപഭോഗം കൂടുന്നതാണ്. Yet, even after adding Fanboy's two extra lists, hpHosts’s Ad and tracking servers, uBlock still has a lower memory footprint than other very popular blockers out there.
+തീര്‍ച്ചയായും, കൂടുതല്‍ ഫില്‍ട്ടറുകള്‍ എനേബിള്‍ ചെയ്യുംതോറും മെമ്മറി ഉപഭോഗം കൂടുന്നതാണ്. എന്നിട്ടും, ഫാൻ‌ബോയിയുടെ രണ്ട് അധിക ലിസ്റ്റുകളായ എച്ച്പി ഹോസ്റ്റുകളുടെ പരസ്യവും ട്രാക്കിംഗ് സെർ‌വറുകളും ചേർ‌ത്തിട്ടും, യു‌ബ്ലോക്കിന് അവിടെയുള്ള മറ്റ് ജനപ്രിയ ബ്ലോക്കറുകളേക്കാൾ കുറഞ്ഞ മെമ്മറി കാൽ‌നോട്ടമുണ്ട്.
 
-Also, be aware that selecting some of these extra lists may lead to higher likelihood of web site breakage -- especially those lists which are normally used as hosts file.
-
-***
-
-Without the preset lists of filters, this extension is nothing. So if ever you really do want to contribute something, think about the people working hard to maintain the filter lists you are using, which were made available to use by all for free.
+കൂടാതെ, ഈ അധിക ലിസ്റ്റുകളിൽ ചിലത് തിരഞ്ഞെടുക്കുന്നത് വെബ് സൈറ്റ് തകരാനുള്ള സാധ്യതയിലേക്ക് നയിച്ചേക്കാം - പ്രത്യേകിച്ചും ഹോസ്റ്റ് ഫയലായി സാധാരണയായി ഉപയോഗിക്കുന്ന ലിസ്റ്റുകൾ.
 
 ***
 
-Free.
+ഫിൽട്ടറുകളുടെ പ്രീസെറ്റ് ലിസ്റ്റുകൾ ഇല്ലാതെ, ഈ വിപുലീകരണം ഒന്നുമല്ല. അതിനാൽ നിങ്ങൾ എപ്പോഴെങ്കിലും എന്തെങ്കിലും സംഭാവന ചെയ്യാൻ ആഗ്രഹിക്കുന്നുവെങ്കിൽ, നിങ്ങൾ ഉപയോഗിക്കുന്ന ഫിൽട്ടർ ലിസ്റ്റുകൾ പരിപാലിക്കാൻ കഠിനമായി പരിശ്രമിക്കുന്ന ആളുകളെക്കുറിച്ച് ചിന്തിക്കുക, അവ എല്ലാവർക്കും സ use ജന്യമായി ഉപയോഗിക്കാൻ ലഭ്യമാക്കി.
+
+***
+
+സൗ ജന്യം
 ഓപ്പണ്‍‌സോഴ്സ് പബ്ലിക്‌ ലൈസന്‍സ് (ജിപിഎല്‍വി3)
 ഉഭയോക്താക്കള്‍ക്ക്‌ ഉഭയോക്താക്കളില്‍ നിന്നും.
 

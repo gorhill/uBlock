@@ -671,6 +671,10 @@
     "message": "թույլատրված",
     "description": "A keyword in the built-in row filtering expression"
   },
+  "loggerRowFiltererBuiltinModified": {
+    "message": "modified",
+    "description": "A keyword in the built-in row filtering expression"
+  },
   "loggerRowFiltererBuiltin1p": {
     "message": "1st-party",
     "description": "A keyword in the built-in row filtering expression"
@@ -1012,7 +1016,7 @@
     "description": "for generic 'Submit' buttons"
   },
   "genericApplyChanges": {
-    "message": "Apply changes",
+    "message": "Կիրառել",
     "description": "for generic 'Apply changes' buttons"
   },
   "genericRevert": {
@@ -1062,6 +1066,10 @@
   "GB": {
     "message": "ԳԲ",
     "description": "short for 'gigabytes'"
+  },
+  "clickToLoad": {
+    "message": "Click to load",
+    "description": "Message used in frame placeholders"
   },
   "dummy": {
     "message": "This entry must be the last one",

@@ -54,18 +54,21 @@ const NetFilteringResultCache = class {
         return this;
     }
 
+    // https://github.com/gorhill/uBlock/issues/3619
+    //   Don't collapse redirected resources
     rememberResult(fctxt, result) {
         if ( fctxt.tabId <= 0 ) { return; }
         if ( this.results.size === 0 ) {
             this.pruneAsync();
         }
-        const key = fctxt.getDocHostname() + ' ' + fctxt.type + ' ' + fctxt.url;
+        const key = `${fctxt.getDocHostname()} ${fctxt.type} ${fctxt.url}`;
         this.results.set(key, {
-            result: result,
+            result,
+            redirectURL: fctxt.redirectURL,
             logData: fctxt.filter,
             tstamp: Date.now()
         });
-        if ( result !== 1 ) { return; }
+        if ( result !== 1 || fctxt.redirectURL !== undefined ) { return; }
         const now = Date.now();
         this.blocked.set(key, now);
         this.hash = now;
@@ -76,12 +79,19 @@ const NetFilteringResultCache = class {
         if ( this.blocked.size === 0 ) {
             this.pruneAsync();
         }
+        if ( fctxt.redirectURL !== undefined ) { return; }
         const now = Date.now();
         this.blocked.set(
-            fctxt.getDocHostname() + ' ' + fctxt.type + ' ' + fctxt.url,
+            `${fctxt.getDocHostname()} ${fctxt.type} ${fctxt.url}`,
             now
         );
         this.hash = now;
+    }
+
+    forgetResult(docHostname, type, url) {
+        const key = `${docHostname} ${type} ${url}`;
+        this.results.delete(key);
+        this.blocked.delete(key);
     }
 
     empty() {
@@ -124,11 +134,23 @@ const NetFilteringResultCache = class {
     }
 
     lookupResult(fctxt) {
-        return this.results.get(
+        const entry = this.results.get(
             fctxt.getDocHostname() + ' ' +
             fctxt.type + ' ' +
             fctxt.url
         );
+        if ( entry === undefined ) { return; }
+        // We need to use a new WAR secret if one is present since WAR secrets
+        // can only be used once.
+        if (
+            entry.redirectURL !== undefined &&
+            entry.redirectURL.startsWith(this.extensionOriginURL)
+        ) {
+            const redirectURL = new URL(entry.redirectURL);
+            redirectURL.searchParams.set('secret', vAPI.warSecret());
+            entry.redirectURL = redirectURL.href;
+        }
+        return entry;
     }
 
     lookupAllBlocked(hostname) {
@@ -148,6 +170,7 @@ const NetFilteringResultCache = class {
 };
 
 NetFilteringResultCache.prototype.shelfLife = 15000;
+NetFilteringResultCache.prototype.extensionOriginURL = vAPI.getURL('/');
 
 /******************************************************************************/
 
@@ -165,6 +188,7 @@ const FrameStore = class {
     init(frameURL) {
         this.t0 = Date.now();
         this.exceptCname = undefined;
+        this.clickToLoad = false;
         this.rawURL = frameURL;
         if ( frameURL !== undefined ) {
             this.hostname = vAPI.hostnameFromURI(frameURL);
@@ -233,7 +257,7 @@ const PageStore = class {
             typeof this.allowLargeMediaElementsUntil !== 'number' ||
             tabContext.rootHostname !== this.tabHostname
         ) {
-            this.allowLargeMediaElementsUntil = 0;
+            this.allowLargeMediaElementsUntil = Date.now();
         }
 
         this.tabHostname = tabContext.rootHostname;
@@ -249,23 +273,12 @@ const PageStore = class {
         this.largeMediaCount = 0;
         this.largeMediaTimer = null;
         this.internalRedirectionCount = 0;
+        this.allowLargeMediaElementsRegex = undefined;
         this.extraData.clear();
 
         this.frameAddCount = 0;
         this.frames = new Map();
-        this.setFrame(0, tabContext.rawURL);
-
-        // The current filtering context is cloned because:
-        // - We may be called with or without the current context having been
-        //   initialized.
-        // - If it has been initialized, we do not want to change the state
-        //   of the current context.
-        const fctxt = µb.logger.enabled
-            ? µb.filteringContext
-                .duplicate()
-                .fromTabId(tabId)
-                .setURL(tabContext.rawURL)
-            : undefined;
+        this.setFrameURL(0, tabContext.rawURL);
 
         // https://github.com/uBlockOrigin/uBlock-issues/issues/314
         const masterSwitch = tabContext.getNetFilteringSwitch();
@@ -280,10 +293,14 @@ const PageStore = class {
             µb.logger.enabled &&
             context === 'tabCommitted'
         ) {
-            fctxt.setRealm('cosmetic')
-                 .setType('dom')
-                 .setFilter(µb.sessionSwitches.toLogData())
-                 .toLogger();
+            µb.filteringContext
+                .duplicate()
+                .fromTabId(tabId)
+                .setURL(tabContext.rawURL)
+                .setRealm('cosmetic')
+                .setType('dom')
+                .setFilter(µb.sessionSwitches.toLogData())
+                .toLogger();
         }
 
         return this;
@@ -308,7 +325,7 @@ const PageStore = class {
             // As part of https://github.com/chrisaljoudi/uBlock/issues/405
             // URL changed, force a re-evaluation of filtering switch
             this.rawURL = tabContext.rawURL;
-            this.setFrame(0, this.rawURL);
+            this.setFrameURL(0, this.rawURL);
             return this;
         }
 
@@ -328,7 +345,8 @@ const PageStore = class {
         this.rawURL = '';
         this.hostnameToCountMap = null;
         this.netFilteringCache.empty();
-        this.allowLargeMediaElementsUntil = 0;
+        this.allowLargeMediaElementsUntil = Date.now();
+        this.allowLargeMediaElementsRegex = undefined;
         if ( this.largeMediaTimer !== null ) {
             clearTimeout(this.largeMediaTimer);
             this.largeMediaTimer = null;
@@ -353,20 +371,23 @@ const PageStore = class {
         this.frames.clear();
     }
 
-    getFrame(frameId) {
+    getFrameStore(frameId) {
         return this.frames.get(frameId) || null;
     }
 
-    setFrame(frameId, frameURL) {
-        const frameStore = this.frames.get(frameId);
+    setFrameURL(frameId, frameURL) {
+        let frameStore = this.frames.get(frameId);
         if ( frameStore !== undefined ) {
             frameStore.init(frameURL);
-            return;
+        } else {
+            frameStore = FrameStore.factory(frameURL);
+            this.frames.set(frameId, frameStore);
+            this.frameAddCount += 1;
+            if ( (this.frameAddCount & 0b111111) === 0 ) {
+                this.pruneFrames();
+            }
         }
-        this.frames.set(frameId, FrameStore.factory(frameURL));
-        this.frameAddCount += 1;
-        if ( (this.frameAddCount & 0b111111) !== 0 ) { return; }
-        this.pruneFrames();
+        return frameStore;
     }
 
     // There is no event to tell us a specific subframe has been removed from
@@ -424,7 +445,12 @@ const PageStore = class {
     temporarilyAllowLargeMediaElements(state) {
         this.largeMediaCount = 0;
         µb.contextMenu.update(this.tabId);
-        this.allowLargeMediaElementsUntil = state ? Date.now() + 86400000 : 0;
+        if ( state ) {
+            this.allowLargeMediaElementsUntil = 0;
+            this.allowLargeMediaElementsRegex = undefined;
+        } else {
+            this.allowLargeMediaElementsUntil = Date.now();
+        }
         µb.scriptlets.injectDeep(this.tabId, 'load-large-media-all');
     }
 
@@ -519,40 +545,46 @@ const PageStore = class {
 
     filterRequest(fctxt) {
         fctxt.filter = undefined;
+        fctxt.redirectURL = undefined;
 
         if ( this.getNetFilteringSwitch(fctxt) === false ) {
             return 0;
         }
 
-        const requestType = fctxt.type;
-
         if (
-            requestType === 'csp_report' &&
+            fctxt.itype === fctxt.CSP_REPORT &&
             this.filterCSPReport(fctxt) === 1
         ) {
             return 1;
         }
 
-        if ( requestType.endsWith('font') && this.filterFont(fctxt) === 1 ) {
+        if (
+            (fctxt.itype & fctxt.FONT_ANY) !== 0 &&
+            this.filterFont(fctxt) === 1 )
+        {
             return 1;
         }
 
         if (
-            requestType === 'script' &&
+            fctxt.itype === fctxt.SCRIPT &&
             this.filterScripting(fctxt, true) === 1
         ) {
             return 1;
         }
 
-        const cacheableResult = this.cacheableResults.has(requestType);
+        const cacheableResult = this.cacheableResults.has(fctxt.itype);
 
         if ( cacheableResult ) {
             const entry = this.netFilteringCache.lookupResult(fctxt);
             if ( entry !== undefined ) {
+                fctxt.redirectURL = entry.redirectURL;
                 fctxt.filter = entry.logData;
                 return entry.result;
             }
         }
+
+        const requestType = fctxt.type;
+        const loggerEnabled = µb.logger.enabled;
 
         // Dynamic URL filtering.
         let result = µb.sessionURLFiltering.evaluateZ(
@@ -560,7 +592,7 @@ const PageStore = class {
             fctxt.url,
             requestType
         );
-        if ( result !== 0 && µb.logger.enabled ) {
+        if ( result !== 0 && loggerEnabled ) {
             fctxt.filter = µb.sessionURLFiltering.toLogData();
         }
 
@@ -581,18 +613,17 @@ const PageStore = class {
                 fctxt.getHostname(),
                 requestType
             );
-            if ( result !== 0 && result !== 3 && µb.logger.enabled ) {
+            if ( result !== 0 && result !== 3 && loggerEnabled ) {
                 fctxt.filter = µb.sessionFirewall.toLogData();
             }
         }
 
         // Static filtering has lowest precedence.
-        if ( result === 0 || result === 3 || result === 4) {
-            const snfe = µb.staticNetFilteringEngine;
-            const updatedResult = snfe.matchString(fctxt);
-            result = result === 4 ? 4 : updatedResult;
+        const snfe = µb.staticNetFilteringEngine;
+        if ( result === 0 || result === 3 ) {
+            result = snfe.matchString(fctxt);
             if ( result !== 0 ) {
-                if ( µb.logger.enabled ) {
+                if ( loggerEnabled ) {
                     fctxt.filter = snfe.toLogData();
                 }
                 // https://github.com/uBlockOrigin/uBlock-issues/issues/943
@@ -612,16 +643,69 @@ const PageStore = class {
             }
         }
 
+        // Click-to-load?
+        // When frameId is not -1, the resource is always sub_frame.
+        if ( result === 1 && fctxt.frameId !== -1 ) {
+            const frameStore = this.getFrameStore(fctxt.frameId);
+            if ( frameStore !== null && frameStore.clickToLoad ) {
+                result = 2;
+                if ( loggerEnabled ) {
+                    fctxt.pushFilter({
+                        result,
+                        source: 'network',
+                        raw: 'click-to-load',
+                    });
+                }
+            }
+        }
+
+        // Modifier(s)?
+        // A modifier is an action which transform the original network request.
+        // https://github.com/gorhill/uBlock/issues/949
+        //   Redirect blocked request?
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/760
+        //   Redirect non-blocked request?
+        if ( (fctxt.itype & fctxt.INLINE_ANY) === 0 ) {
+            if ( result === 1 ) {
+                this.redirectBlockedRequest(fctxt);
+            } else if ( snfe.hasQuery(fctxt) ) {
+                this.redirectNonBlockedRequest(fctxt);
+            }
+        }
+
         if ( cacheableResult ) {
             this.netFilteringCache.rememberResult(fctxt, result);
-        } else if (
-            result === 1 &&
-            this.collapsibleResources.has(requestType)
-        ) {
-            this.netFilteringCache.rememberBlock(fctxt, true);
+        } else if ( result === 1 && this.collapsibleResources.has(fctxt.itype) ) {
+            this.netFilteringCache.rememberBlock(fctxt);
         }
 
         return result;
+    }
+
+    redirectBlockedRequest(fctxt) {
+        if ( µb.hiddenSettings.ignoreRedirectFilters === true ) { return; }
+        const directive = µb.staticNetFilteringEngine.redirectRequest(fctxt);
+        if ( directive === undefined ) { return; }
+        this.internalRedirectionCount += 1;
+        if ( µb.logger.enabled !== true ) { return; }
+        fctxt.pushFilter(directive.logData());
+        if ( fctxt.redirectURL === undefined ) { return; }
+        fctxt.pushFilter({
+            source: 'redirect',
+            raw: µb.redirectEngine.resourceNameRegister
+        });
+    }
+
+    redirectNonBlockedRequest(fctxt) {
+        const directives = µb.staticNetFilteringEngine.filterQuery(fctxt);
+        if ( directives === undefined ) { return; }
+        if ( µb.logger.enabled !== true ) { return; }
+        fctxt.pushFilters(directives.map(a => a.logData()));
+        if ( fctxt.redirectURL === undefined ) { return; }
+        fctxt.pushFilter({
+            source: 'redirect',
+            raw: fctxt.redirectURL
+        });
     }
 
     filterCSPReport(fctxt) {
@@ -640,7 +724,7 @@ const PageStore = class {
     }
 
     filterFont(fctxt) {
-        if ( fctxt.type === 'font' ) {
+        if ( fctxt.itype === fctxt.FONT ) {
             this.remoteFontCount += 1;
         }
         if (
@@ -681,7 +765,23 @@ const PageStore = class {
     filterLargeMediaElement(fctxt, size) {
         fctxt.filter = undefined;
 
+        if ( this.allowLargeMediaElementsUntil === 0 ) {
+            return 0;
+        }
+        // Disregard large media elements previously allowed: for example, to
+        // seek inside a previously allowed audio/video.
+        if (
+            this.allowLargeMediaElementsRegex instanceof RegExp &&
+            this.allowLargeMediaElementsRegex.test(fctxt.url)
+        ) {
+            return 0;
+        }
         if ( Date.now() < this.allowLargeMediaElementsUntil ) {
+            const sources = this.allowLargeMediaElementsRegex instanceof RegExp
+                ? [ this.allowLargeMediaElementsRegex.source ]
+                : [];
+            sources.push('^' + µb.escapeRegex(fctxt.url));
+            this.allowLargeMediaElementsRegex = new RegExp(sources.join('|'));
             return 0;
         }
         if (
@@ -690,6 +790,7 @@ const PageStore = class {
                 fctxt.getTabHostname()
             ) !== true
         ) {
+            this.allowLargeMediaElementsUntil = 0;
             return 0;
         }
         if ( (size >>> 10) < µb.userSettings.largeMediaSize ) {
@@ -711,11 +812,24 @@ const PageStore = class {
         return 1;
     }
 
+    clickToLoad(frameId, frameURL) {
+        let frameStore = this.getFrameStore(frameId);
+        if ( frameStore === null ) {
+            frameStore = this.setFrameURL(frameId, frameURL);
+        }
+        this.netFilteringCache.forgetResult(
+            this.tabHostname,
+            'sub_frame',
+            frameURL
+        );
+        frameStore.clickToLoad = true;
+    }
+
     shouldExceptCname(fctxt) {
         let exceptCname;
         let frameStore;
         if ( fctxt.docId !== undefined ) {
-            frameStore = this.getFrame(fctxt.docId);
+            frameStore = this.getFrameStore(fctxt.docId);
             if ( frameStore instanceof Object ) {
                 exceptCname = frameStore.exceptCname;
             }
@@ -740,7 +854,7 @@ const PageStore = class {
         }
         if ( exceptCname === false ) { return false; }
         if ( exceptCname instanceof Object ) {
-            fctxt.setFilter(exceptCname);
+            fctxt.pushFilter(exceptCname);
         }
         return true;
     }
@@ -758,8 +872,7 @@ const PageStore = class {
         if ( Array.isArray(resources) && resources.length !== 0 ) {
             for ( const resource of resources ) {
                 this.filterRequest(
-                    fctxt.setType(resource.type)
-                         .setURL(resource.url)
+                    fctxt.setType(resource.type).setURL(resource.url)
                 );
             }
         }
@@ -771,14 +884,14 @@ const PageStore = class {
 };
 
 PageStore.prototype.cacheableResults = new Set([
-    'sub_frame',
+    µb.FilteringContext.SUB_FRAME,
 ]);
 
 PageStore.prototype.collapsibleResources = new Set([
-    'image',
-    'media',
-    'object',
-    'sub_frame',
+    µb.FilteringContext.IMAGE,
+    µb.FilteringContext.MEDIA,
+    µb.FilteringContext.OBJECT,
+    µb.FilteringContext.SUB_FRAME,
 ]);
 
 µb.PageStore = PageStore;

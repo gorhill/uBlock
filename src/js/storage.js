@@ -119,17 +119,21 @@
 // This way the new default values in the future will properly apply for those
 // which were not modified by the user.
 
-µBlock.saveHiddenSettings = function() {
-    const bin = { hiddenSettings: {} };
+µBlock.getModifiedHiddenSettings = function() {
+    const out = {};
     for ( const prop in this.hiddenSettings ) {
         if (
             this.hiddenSettings.hasOwnProperty(prop) &&
             this.hiddenSettings[prop] !== this.hiddenSettingsDefault[prop]
         ) {
-            bin.hiddenSettings[prop] = this.hiddenSettings[prop];
+            out[prop] = this.hiddenSettings[prop];
         }
     }
-    vAPI.storage.set(bin);
+    return out;
+};
+
+µBlock.saveHiddenSettings = function() {
+    vAPI.storage.set({ hiddenSettings: this.getModifiedHiddenSettings() });
 };
 
 self.addEventListener('hiddenSettingsChanged', ( ) => {
@@ -395,12 +399,15 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         // Date in YYYY-MM-DD format - https://stackoverflow.com/a/50130338
         const ISO8061Date = new Date(d.getTime() +
             (d.getTimezoneOffset()*60000)).toISOString().split('T')[0];
+        const url = new URL(options.docURL);
         comment =
             '! ' +
             this.hiddenSettings.autoCommentFilterTemplate
                 .replace('{{date}}', ISO8061Date)
                 .replace('{{time}}', d.toLocaleTimeString())
-                .replace('{{origin}}', options.origin);
+                .replace('{{hostname}}', url.hostname)
+                .replace('{{origin}}', url.origin)
+                .replace('{{url}}', url.href);
     }
 
     const details = await this.loadUserFilters();
@@ -409,10 +416,12 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     // The comment, if any, will be applied if and only if it is different
     // from the last comment found in the user filter list.
     if ( comment !== '' ) {
-        const pos = details.content.lastIndexOf(comment);
+        const beg = details.content.lastIndexOf(comment);
+        const end = beg === -1 ? -1 : beg + comment.length;
         if (
-            pos === -1 ||
-            details.content.indexOf('\n!', pos + 1) !== -1
+            end === -1 ||
+            details.content.startsWith('\n', end) === false ||
+            details.content.includes('\n!', end)
         ) {
             filters = '\n' + comment + '\n' + filters;
         }
@@ -424,10 +433,9 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     //   duplicates at this point may lead to more issues.
     await this.saveUserFilters(details.content.trim() + '\n' + filters);
 
-    const compiledFilters = this.compileFilters(
-        filters,
-        { assetKey: this.userFiltersPath }
-    );
+    const compiledFilters = this.compileFilters(filters, {
+        assetKey: this.userFiltersPath
+    });
     const snfe = this.staticNetFilteringEngine;
     const cfe = this.cosmeticFilteringEngine;
     const acceptedCount = snfe.acceptedCount + cfe.acceptedCount;
@@ -458,7 +466,10 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 µBlock.createUserFilters = function(details) {
     this.appendUserFilters(details.filters, details);
     // https://github.com/gorhill/uBlock/issues/1786
-    this.cosmeticFilteringEngine.removeFromSelectorCache(details.pageDomain);
+    if ( details.docURL === undefined ) { return; }
+    this.cosmeticFilteringEngine.removeFromSelectorCache(
+        vAPI.hostnameFromURI(details.docURL)
+    );
 };
 
 /******************************************************************************/
@@ -764,10 +775,9 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     // fetch the compiled content in case it has become available.
     const compiledDetails = await this.assets.get(compiledPath);
     if ( compiledDetails.content === '' ) {
-        compiledDetails.content = this.compileFilters(
-            rawDetails.content,
-            { assetKey: assetKey }
-        );
+        compiledDetails.content = this.compileFilters(rawDetails.content, {
+            assetKey
+        });
         this.assets.put(compiledPath, compiledDetails.content);
     }
 
@@ -826,26 +836,26 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
 /******************************************************************************/
 
-µBlock.compileFilters = function(rawText, details) {
+µBlock.compileFilters = function(rawText, details = {}) {
     const writer = new this.CompiledLineIO.Writer();
 
     // Populate the writer with information potentially useful to the
     // client compilers.
-    if ( details ) {
-        if ( details.assetKey ) {
-            writer.properties.set('assetKey', details.assetKey);
-        }
+    if ( details.assetKey ) {
+        writer.properties.set('assetKey', details.assetKey);
     }
-
+    const expertMode =
+        details.assetKey !== this.userFiltersPath ||
+        this.hiddenSettings.filterAuthorMode !== false;
     // Useful references:
     //    https://adblockplus.org/en/filter-cheatsheet
     //    https://adblockplus.org/en/filters
     const staticNetFilteringEngine = this.staticNetFilteringEngine;
     const staticExtFilteringEngine = this.staticExtFilteringEngine;
     const lineIter = new this.LineIterator(this.preparseDirectives.prune(rawText));
-    const parser = new vAPI.StaticFilteringParser();
+    const parser = new vAPI.StaticFilteringParser({ expertMode });
 
-    parser.setMaxTokenLength(this.urlTokenizer.MAX_TOKEN_LENGTH);
+    parser.setMaxTokenLength(staticNetFilteringEngine.MAX_TOKEN_LENGTH);
 
     while ( lineIter.eot() === false ) {
         let line = lineIter.next();
@@ -1427,10 +1437,9 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
                     if ( this.badLists.has(details.assetKey) === false ) {
                         this.assets.put(
                             'compiled/' + details.assetKey,
-                            this.compileFilters(
-                                details.content,
-                                { assetKey: details.assetKey }
-                            )
+                            this.compileFilters(details.content, {
+                                assetKey: details.assetKey
+                            })
                         );
                     }
                     // ADN: Need to tell core that lists have updated

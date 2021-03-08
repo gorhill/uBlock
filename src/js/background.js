@@ -47,7 +47,7 @@ const µBlock = (( ) => { // jshint ignore:line
         cacheStorageAPI: 'unset',
         cacheStorageCompression: true,
         cacheControlForFirefox1376932: 'no-cache, no-store, must-revalidate',
-        cloudStorageCompression: false,
+        cloudStorageCompression: true,
         cnameIgnoreList: 'unset',
         cnameIgnore1stParty: true,
         cnameIgnoreExceptions: true,
@@ -77,6 +77,7 @@ const µBlock = (( ) => { // jshint ignore:line
         uiPopupConfig: 'undocumented',
         uiFlavor: 'unset',
         uiStyles: 'unset',
+        uiTheme: 'unset',
         updateAssetBypassBrowserCache: false,
         userResourcesLocation: 'unset',
     };
@@ -161,8 +162,8 @@ const µBlock = (( ) => { // jshint ignore:line
 
         // Read-only
         systemSettings: {
-            compiledMagic: 29,  // Increase when compiled format changes
-            selfieMagic: 29,    // Increase when selfie format changes
+            compiledMagic: 34,  // Increase when compiled format changes
+            selfieMagic: 34,    // Increase when selfie format changes
         },
 
         // https://github.com/uBlockOrigin/uBlock-issues/issues/759#issuecomment-546654501

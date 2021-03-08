@@ -19,6 +19,8 @@
     Home: https://github.com/gorhill/uBlock
 */
 
+/* global CodeMirror */
+
 'use strict';
 
 /******************************************************************************/
@@ -36,7 +38,6 @@ const $storAll = selector => document.querySelectorAll(selector);
 
 const pickerRoot = document.documentElement;
 const dialog = $stor('aside');
-const taCandidate = $stor('textarea');
 let staticFilteringParser;
 
 const svgRoot = $stor('svg');
@@ -53,27 +54,65 @@ const epickerId = (( ) => {
 })();
 if ( epickerId === null ) { return; }
 
+const docURL = new URL(vAPI.getURL(''));
+
 let epickerConnectionId;
-let filterHostname = '';
-let filterOrigin = '';
 let resultsetOpt;
 
 let netFilterCandidates = [];
 let cosmeticFilterCandidates = [];
 let computedCandidateSlot = 0;
 let computedCandidate = '';
+const computedSpecificityCandidates = new Map();
 let needBody = false;
 
 /******************************************************************************/
 
+const cmEditor = new CodeMirror(document.querySelector('.codeMirrorContainer'), {
+    autoCloseBrackets: true,
+    autofocus: true,
+    extraKeys: {
+        'Ctrl-Space': 'autocomplete',
+    },
+    lineWrapping: true,
+    matchBrackets: true,
+    maxScanLines: 1,
+});
+
+vAPI.messaging.send('dashboard', {
+    what: 'getAutoCompleteDetails'
+}).then(response => {
+    if ( response instanceof Object === false ) { return; }
+    const mode = cmEditor.getMode();
+    if ( mode.setHints instanceof Function ) {
+        mode.setHints(response);
+    }
+});
+
+/******************************************************************************/
+
+const rawFilterFromTextarea = function() {
+    const text = cmEditor.getValue();
+    const pos = text.indexOf('\n');
+    return pos === -1 ? text : text.slice(0, pos);
+};
+
+/******************************************************************************/
+
 const filterFromTextarea = function() {
-    const s = taCandidate.value.trim();
-    if ( s === '' ) { return ''; }
-    const pos = s.indexOf('\n');
-    const filter = pos === -1 ? s.trim() : s.slice(0, pos).trim();
-    staticFilteringParser.analyze(filter);
-    staticFilteringParser.analyzeExtra();
-    return staticFilteringParser.shouldDiscard() ? '!' : filter;
+    const filter = rawFilterFromTextarea();
+    if ( filter === '' ) { return ''; }
+    const sfp = staticFilteringParser;
+    sfp.analyze(filter);
+    sfp.analyzeExtra();
+    if (
+        sfp.category !== sfp.CATStaticExtFilter &&
+        sfp.category !== sfp.CATStaticNetFilter ||
+        sfp.shouldDiscard()
+    ) {
+        return '!';
+    }
+    return filter;
 };
 
 /******************************************************************************/
@@ -102,9 +141,11 @@ const renderRange = function(id, value, invert = false) {
 const userFilterFromCandidate = function(filter) {
     if ( filter === '' || filter === '!' ) { return; }
 
+    const hn = vAPI.hostnameFromURI(docURL.href);
+
     // Cosmetic filter?
     if ( filter.startsWith('##') ) {
-        return filterHostname + filter;
+        return hn + filter;
     }
 
     // Assume net filter
@@ -112,7 +153,7 @@ const userFilterFromCandidate = function(filter) {
 
     // If no domain included in filter, we need domain option
     if ( filter.startsWith('||') === false ) {
-        opts.push(`domain=${filterHostname}`);
+        opts.push(`domain=${hn}`);
     }
 
     if ( resultsetOpt !== undefined ) {
@@ -154,7 +195,23 @@ const candidateFromFilterChoice = function(filterChoice) {
     $stor(`#cosmeticFilters li:nth-of-type(${slot+1})`)
         .classList.add('active');
 
-    const specificity = [
+    return cosmeticCandidatesFromFilterChoice(filterChoice);
+};
+
+/******************************************************************************/
+
+const cosmeticCandidatesFromFilterChoice = function(filterChoice) {
+    let { slot, filters } = filterChoice;
+
+    renderRange('resultsetDepth', slot, true);
+    renderRange('resultsetSpecificity');
+
+    if ( computedSpecificityCandidates.has(slot) ) {
+        onCandidatesOptimized({ slot });
+        return;
+    }
+
+    const specificities = [
         0b0000,  // remove hierarchy; remove id, nth-of-type, attribute values
         0b0010,  // remove hierarchy; remove id, nth-of-type
         0b0011,  // remove hierarchy
@@ -163,90 +220,103 @@ const candidateFromFilterChoice = function(filterChoice) {
         0b1100,  // remove id, nth-of-type, attribute values
         0b1110,  // remove id, nth-of-type
         0b1111,  // keep all = most specific
-    ][ parseInt($stor('#resultsetSpecificity input').value, 10) ];
+    ];
 
-    // Return path: the target element, then all siblings prepended
-    const paths = [];
-    for ( let i = slot; i < filters.length; i++ ) {
-        filter = filters[i].slice(2);
-        // Remove id, nth-of-type
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/162
-        //   Mind escaped periods: they do not denote a class identifier.
-        if ( (specificity & 0b0001) === 0 ) {
-            filter = filter.replace(/:nth-of-type\(\d+\)/, '');
-            if (
-                filter.charAt(0) === '#' && (
-                    (specificity & 0b1000) === 0 || i === slot
-                )
-            ) {
-                const pos = filter.search(/[^\\]\./);
-                if ( pos !== -1 ) {
-                    filter = filter.slice(pos + 1);
+    const candidates = [];
+
+    let filter = filters[slot];
+
+    for ( const specificity of specificities ) {
+        // Return path: the target element, then all siblings prepended
+        const paths = [];
+        for ( let i = slot; i < filters.length; i++ ) {
+            filter = filters[i].slice(2);
+            // Remove id, nth-of-type
+            // https://github.com/uBlockOrigin/uBlock-issues/issues/162
+            //   Mind escaped periods: they do not denote a class identifier.
+            if ( (specificity & 0b0001) === 0 ) {
+                filter = filter.replace(/:nth-of-type\(\d+\)/, '');
+                if (
+                    filter.charAt(0) === '#' && (
+                        (specificity & 0b1000) === 0 || i === slot
+                    )
+                ) {
+                    const pos = filter.search(/[^\\]\./);
+                    if ( pos !== -1 ) {
+                        filter = filter.slice(pos + 1);
+                    }
+                }
+            }
+            // Remove attribute values.
+            if ( (specificity & 0b0010) === 0 ) {
+                const match = /^\[([^^=]+)\^?=.+\]$/.exec(filter);
+                if ( match !== null ) {
+                    filter = `[${match[1]}]`;
+                }
+            }
+            // Remove all classes when an id exists.
+            // https://github.com/uBlockOrigin/uBlock-issues/issues/162
+            //   Mind escaped periods: they do not denote a class identifier.
+            if ( filter.charAt(0) === '#' ) {
+                filter = filter.replace(/([^\\])\..+$/, '$1');
+            }
+            if ( paths.length !== 0 ) {
+                filter += ' > ';
+            }
+            paths.unshift(filter);
+            // Stop at any element with an id: these are unique in a web page
+            if ( (specificity & 0b1000) === 0 || filter.startsWith('#') ) {
+                break;
+            }
+        }
+
+        // Trim hierarchy: remove generic elements from path
+        if ( (specificity & 0b1100) === 0b1000 ) {
+            let i = 0;
+            while ( i < paths.length - 1 ) {
+                if ( /^[a-z0-9]+ > $/.test(paths[i+1]) ) {
+                    if ( paths[i].endsWith(' > ') ) {
+                        paths[i] = paths[i].slice(0, -2);
+                    }
+                    paths.splice(i + 1, 1);
+                } else {
+                    i += 1;
                 }
             }
         }
-        // Remove attribute values.
-        if ( (specificity & 0b0010) === 0 ) {
-            const match = /^\[([^^=]+)\^?=.+\]$/.exec(filter);
-            if ( match !== null ) {
-                filter = `[${match[1]}]`;
-            }
+
+        if (
+            needBody &&
+            paths.length !== 0 &&
+            paths[0].startsWith('#') === false &&
+            paths[0].startsWith('body ') === false &&
+            (specificity & 0b1100) !== 0
+        ) {
+            paths.unshift('body > ');
         }
-        // Remove all classes when an id exists.
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/162
-        //   Mind escaped periods: they do not denote a class identifier.
-        if ( filter.charAt(0) === '#' ) {
-            filter = filter.replace(/([^\\])\..+$/, '$1');
-        }
-        if ( paths.length !== 0 ) {
-            filter += ' > ';
-        }
-        paths.unshift(filter);
-        // Stop at any element with an id: these are unique in a web page
-        if ( (specificity & 0b1000) === 0 || filter.startsWith('#') ) { break; }
+
+        candidates.push(paths);
     }
-
-    // Trim hierarchy: remove generic elements from path
-    if ( (specificity & 0b1100) === 0b1000 ) {
-        let i = 0;
-        while ( i < paths.length - 1 ) {
-            if ( /^[a-z0-9]+ > $/.test(paths[i+1]) ) {
-                if ( paths[i].endsWith(' > ') ) {
-                    paths[i] = paths[i].slice(0, -2);
-                }
-                paths.splice(i + 1, 1);
-            } else {
-                i += 1;
-            }
-        }
-    }
-
-    if (
-        needBody &&
-        paths.length !== 0 &&
-        paths[0].startsWith('#') === false &&
-        (specificity & 0b1100) !== 0
-    ) {
-        paths.unshift('body > ');
-    }
-
-    if ( paths.length === 0 ) { return ''; }
-
-    renderRange('resultsetDepth', slot, true);
-    renderRange('resultsetSpecificity');
 
     vAPI.MessagingConnection.sendTo(epickerConnectionId, {
-        what: 'optimizeCandidate',
-        paths,
+        what: 'optimizeCandidates',
+        candidates,
+        slot,
     });
 };
 
 /******************************************************************************/
 
-const onCandidateOptimized = function(details) {
+const onCandidatesOptimized = function(details) {
     $id('resultsetModifiers').classList.remove('hide');
-    computedCandidate = details.filter;
-    taCandidate.value = computedCandidate;
+    const i = parseInt($stor('#resultsetSpecificity input').value, 10);
+    if ( Array.isArray(details.candidates) ) {
+        computedSpecificityCandidates.set(details.slot, details.candidates);
+    }
+    const candidates = computedSpecificityCandidates.get(details.slot);
+    computedCandidate = candidates[i];
+    cmEditor.setValue(computedCandidate);
+    cmEditor.clearHistory();
     onCandidateChanged();
 };
 
@@ -383,9 +453,9 @@ const onCandidateChanged = function() {
         $id('resultsetCount').textContent = 'E';
         $id('create').setAttribute('disabled', '');
     }
+    const text = rawFilterFromTextarea();
     $id('resultsetModifiers').classList.toggle(
-        'hide',
-        taCandidate.value === '' || taCandidate.value !== computedCandidate
+        'hide', text === '' || text !== computedCandidate
     );
     vAPI.MessagingConnection.sendTo(epickerConnectionId, {
         what: 'dialogSetFilter',
@@ -416,8 +486,7 @@ const onCreateClicked = function() {
             what: 'createUserFilter',
             autoComment: true,
             filters: filter,
-            origin: filterOrigin,
-            pageDomain: filterHostname,
+            docURL: docURL.href,
             killCache: /^#[$?]?#/.test(candidate) === false,
         });
     }
@@ -453,20 +522,23 @@ const onDepthChanged = function() {
         slot: max - value,
     });
     if ( text === undefined ) { return; }
-    taCandidate.value = text;
+    cmEditor.setValue(text);
+    cmEditor.clearHistory();
     onCandidateChanged();
 };
 
 /******************************************************************************/
 
 const onSpecificityChanged = function() {
-    if ( taCandidate.value !== computedCandidate ) { return; }
-    const text = candidateFromFilterChoice({
-        filters: cosmeticFilterCandidates,
-        slot: computedCandidateSlot,
-    });
-    if ( text === undefined ) { return; }
-    taCandidate.value = text;
+    renderRange('resultsetSpecificity');
+    if ( rawFilterFromTextarea() !== computedCandidate ) { return; }
+    const depthInput = $stor('#resultsetDepth input');
+    const slot = parseInt(depthInput.max, 10) - parseInt(depthInput.value, 10);
+    const i = parseInt($stor('#resultsetSpecificity input').value, 10);
+    const candidates = computedSpecificityCandidates.get(slot);
+    computedCandidate = candidates[i];
+    cmEditor.setValue(computedCandidate);
+    cmEditor.clearHistory();
     onCandidateChanged();
 };
 
@@ -487,7 +559,8 @@ const onCandidateClicked = function(ev) {
     }
     const text = candidateFromFilterChoice(choice);
     if ( text === undefined ) { return; }
-    taCandidate.value = text;
+    cmEditor.setValue(text);
+    cmEditor.clearHistory();
     onCandidateChanged();
 };
 
@@ -555,7 +628,7 @@ const onStartMoving = (( ) => {
     };
 
     return function(ev) {
-        const target = dialog.querySelector('#toolbar');
+        const target = dialog.querySelector('#move');
         if ( ev.target !== target ) { return; }
         if ( dialog.classList.contains('moving') ) { return; }
         isTouch = ev.type.startsWith('touch');
@@ -672,16 +745,11 @@ const showDialog = function(details) {
     }
     cosmeticFilterCandidates = cosmeticFilters;
 
-    // https://github.com/gorhill/uBlock/issues/738
-    //   Trim dots.
-    filterHostname = details.hostname;
-    if ( filterHostname.slice(-1) === '.' ) {
-        filterHostname = filterHostname.slice(0, -1);
-    }
-    filterOrigin = details.origin;
+    docURL.href = details.url;
 
     populateCandidates(netFilters, '#netFilters');
     populateCandidates(cosmeticFilters, '#cosmeticFilters');
+    computedSpecificityCandidates.clear();
 
     const depthInput = $stor('#resultsetDepth input');
     depthInput.max = cosmeticFilters.length - 1;
@@ -700,7 +768,7 @@ const showDialog = function(details) {
     //   This is an issue which surfaced when the element picker code was
     //   revisited to isolate the picker dialog DOM from the page DOM.
     if ( typeof filter !== 'object' || filter === null ) {
-        taCandidate.value = '';
+        cmEditor.setValue('');
         return;
     }
 
@@ -711,7 +779,7 @@ const showDialog = function(details) {
 
     const text = candidateFromFilterChoice(filterChoice);
     if ( text === undefined ) { return; }
-    taCandidate.value = text;
+    cmEditor.setValue(text);
     onCandidateChanged();
 };
 
@@ -746,13 +814,14 @@ const startPicker = function() {
 
     if ( pickerRoot.classList.contains('zap') ) { return; }
 
-    taCandidate.addEventListener('input', onCandidateChanged);
+    cmEditor.on('changes', onCandidateChanged);
+
     $id('preview').addEventListener('click', onPreviewClicked);
     $id('create').addEventListener('click', onCreateClicked);
     $id('pick').addEventListener('click', onPickClicked);
     $id('quit').addEventListener('click', onQuitClicked);
-    $id('toolbar').addEventListener('mousedown', onStartMoving);
-    $id('toolbar').addEventListener('touchstart', onStartMoving);
+    $id('move').addEventListener('mousedown', onStartMoving);
+    $id('move').addEventListener('touchstart', onStartMoving);
     $id('candidateFilters').addEventListener('click', onCandidateClicked);
     $stor('#resultsetDepth input').addEventListener('input', onDepthChanged);
     $stor('#resultsetSpecificity input').addEventListener('input', onSpecificityChanged);
@@ -770,8 +839,8 @@ const quitPicker = function() {
 
 const onPickerMessage = function(msg) {
     switch ( msg.what ) {
-        case 'candidateOptimized':
-            onCandidateOptimized(msg);
+        case 'candidatesOptimized':
+            onCandidatesOptimized(msg);
             break;
         case 'showDialog':
             showDialog(msg);

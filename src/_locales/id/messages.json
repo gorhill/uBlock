@@ -671,6 +671,10 @@
     "message": "diizinkan",
     "description": "A keyword in the built-in row filtering expression"
   },
+  "loggerRowFiltererBuiltinModified": {
+    "message": "diubah",
+    "description": "A keyword in the built-in row filtering expression"
+  },
   "loggerRowFiltererBuiltin1p": {
     "message": "pihak ke-1",
     "description": "A keyword in the built-in row filtering expression"
@@ -1062,6 +1066,10 @@
   "GB": {
     "message": "GB",
     "description": "short for 'gigabytes'"
+  },
+  "clickToLoad": {
+    "message": "Klik untuk memuat",
+    "description": "Message used in frame placeholders"
   },
   "dummy": {
     "message": "Entri ini harus menjadi yang terakhir",

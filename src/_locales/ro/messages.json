@@ -671,6 +671,10 @@
     "message": "permis",
     "description": "A keyword in the built-in row filtering expression"
   },
+  "loggerRowFiltererBuiltinModified": {
+    "message": "modificat",
+    "description": "A keyword in the built-in row filtering expression"
+  },
   "loggerRowFiltererBuiltin1p": {
     "message": "primare",
     "description": "A keyword in the built-in row filtering expression"
@@ -1062,6 +1066,10 @@
   "GB": {
     "message": "GB",
     "description": "short for 'gigabytes'"
+  },
+  "clickToLoad": {
+    "message": "Apasă pentru a încărca",
+    "description": "Message used in frame placeholders"
   },
   "dummy": {
     "message": "Aceasta intrare trebuie sa fie ultima",

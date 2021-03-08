@@ -671,6 +671,10 @@
     "message": "tilladte",
     "description": "A keyword in the built-in row filtering expression"
   },
+  "loggerRowFiltererBuiltinModified": {
+    "message": "ændret",
+    "description": "A keyword in the built-in row filtering expression"
+  },
   "loggerRowFiltererBuiltin1p": {
     "message": "førsteparts",
     "description": "A keyword in the built-in row filtering expression"
@@ -1062,6 +1066,10 @@
   "GB": {
     "message": "GB",
     "description": "short for 'gigabytes'"
+  },
+  "clickToLoad": {
+    "message": "Klik for at indlæse",
+    "description": "Message used in frame placeholders"
   },
   "dummy": {
     "message": "Denne post skal være den sidste",

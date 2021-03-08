@@ -93,6 +93,7 @@ const webext = {
         get: promisifyNoFail(chrome.tabs, 'get', tab => tab instanceof Object ? tab : null),
         executeScript: promisifyNoFail(chrome.tabs, 'executeScript'),
         insertCSS: promisifyNoFail(chrome.tabs, 'insertCSS'),
+        removeCSS: promisifyNoFail(chrome.tabs, 'removeCSS'),
         query: promisifyNoFail(chrome.tabs, 'query', tabs => Array.isArray(tabs) ? tabs : []),
         reload: promisifyNoFail(chrome.tabs, 'reload'),
         remove: promisifyNoFail(chrome.tabs, 'remove'),

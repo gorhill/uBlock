@@ -671,6 +671,10 @@
     "message": "dopušteno",
     "description": "A keyword in the built-in row filtering expression"
   },
+  "loggerRowFiltererBuiltinModified": {
+    "message": "promijenjeno",
+    "description": "A keyword in the built-in row filtering expression"
+  },
   "loggerRowFiltererBuiltin1p": {
     "message": "Prve strane",
     "description": "A keyword in the built-in row filtering expression"
@@ -1062,6 +1066,10 @@
   "GB": {
     "message": "GB",
     "description": "short for 'gigabytes'"
+  },
+  "clickToLoad": {
+    "message": "Kliknite za pokretanje",
+    "description": "Message used in frame placeholders"
   },
   "dummy": {
     "message": "Ova stavka mora biti posljednja",

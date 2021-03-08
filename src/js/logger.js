@@ -62,10 +62,11 @@
         ownerId: undefined,
         writeOne: function(details) {
             if ( buffer === null ) { return; }
+            const box = boxEntry(details);
             if ( writePtr === buffer.length ) {
-                buffer.push(boxEntry(details));
+                buffer.push(box);
             } else {
-                buffer[writePtr] = boxEntry(details);
+                buffer[writePtr] = box;
             }
             writePtr += 1;
         },

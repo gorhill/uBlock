@@ -671,6 +671,10 @@
     "message": "allowed",
     "description": "A keyword in the built-in row filtering expression"
   },
+  "loggerRowFiltererBuiltinModified": {
+    "message": "модифицировано",
+    "description": "A keyword in the built-in row filtering expression"
+  },
   "loggerRowFiltererBuiltin1p": {
     "message": "1st-party",
     "description": "A keyword in the built-in row filtering expression"
@@ -1062,6 +1066,10 @@
   "GB": {
     "message": "ГБ",
     "description": "short for 'gigabytes'"
+  },
+  "clickToLoad": {
+    "message": "Нажмите, чтобы загрузить",
+    "description": "Message used in frame placeholders"
   },
   "dummy": {
     "message": "Эта запись должна быть последней",

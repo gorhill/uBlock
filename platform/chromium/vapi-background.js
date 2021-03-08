@@ -902,17 +902,28 @@ vAPI.messaging = {
         this.ports.delete(port.name);
     },
 
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/Port
+    //   port.sender is always present for onConnect() listeners.
     onPortConnect: function(port) {
-        port.onDisconnect.addListener(
-            port => this.onPortDisconnect(port)
+        port.onDisconnect.addListener(port =>
+            this.onPortDisconnect(port)
         );
-        port.onMessage.addListener(
-            (request, port) => this.onPortMessage(request, port)
+        port.onMessage.addListener((request, port) =>
+            this.onPortMessage(request, port)
         );
-        this.ports.set(port.name, {
-            port,
-            privileged: port.sender.url.startsWith(this.PRIVILEGED_URL)
-        });
+        const portDetails = { port };
+        const sender = port.sender;
+        const { tab, url } = sender;
+        portDetails.frameId = sender.frameId;
+        portDetails.frameURL = url;
+        portDetails.privileged = url.startsWith(this.PRIVILEGED_URL);
+        if ( tab ) {
+            portDetails.tabId = tab.id;
+            portDetails.tabURL = tab.url;
+        }
+        this.ports.set(port.name, portDetails);
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=1652925#c24
+        port.sender = undefined;
     },
 
     setup: function(defaultHandler) {
@@ -936,12 +947,9 @@ vAPI.messaging = {
             vAPI.webextFlavor.major < 61
         ) {
             browser.tabs.onRemoved.addListener(tabId => {
-                for ( const { port } of this.ports.values() ) {
-                    const tab = port.sender && port.sender.tab;
-                    if ( !tab ) { continue; }
-                    if ( tab.id === tabId ) {
-                        this.onPortDisconnect(port);
-                    }
+                for ( const { port, tabId: portTabId } of this.ports.values() ) {
+                    if ( portTabId !== tabId ) { continue; }
+                    this.onPortDisconnect(port);
                 }
             });
         }
@@ -963,10 +971,8 @@ vAPI.messaging = {
     },
 
     onFrameworkMessage: function(request, port, callback) {
-        const sender = port && port.sender;
-        if ( !sender ) { return; }
-        const fromDetails = this.ports.get(port.name) || {};
-        const tabId = sender.tab && sender.tab.id || undefined;
+        const portDetails = this.ports.get(port.name) || {};
+        const tabId = portDetails.tabId;
         const msg = request.msg;
         switch ( msg.what ) {
         case 'connectionAccepted':
@@ -1011,7 +1017,7 @@ vAPI.messaging = {
             });
             break;
         case 'localStorage': {
-            if ( fromDetails.privileged !== true ) { break; }
+            if ( portDetails.privileged !== true ) { break; }
             const args = msg.args || [];
             vAPI.localStorage[msg.fn](...args).then(result => {
                 callback(result);
@@ -1022,7 +1028,7 @@ vAPI.messaging = {
             if ( tabId === undefined ) { break; }
             const details = {
                 code: undefined,
-                frameId: sender.frameId,
+                frameId: portDetails.frameId,
                 matchAboutBlank: true
             };
             if ( msg.add ) {
@@ -1033,11 +1039,9 @@ vAPI.messaging = {
                 details.code = cssText;
                 promises.push(vAPI.tabs.insertCSS(tabId, details));
             }
-            if ( typeof webext.tabs.removeCSS === 'function' ) {
-                for ( const cssText of msg.remove ) {
-                    details.code = cssText;
-                    promises.push(vAPI.tabs.removeCSS(tabId, details));
-                }
+            for ( const cssText of msg.remove ) {
+                details.code = cssText;
+                promises.push(vAPI.tabs.removeCSS(tabId, details));
             }
             Promise.all(promises).then(( ) => {
                 callback();
@@ -1094,23 +1098,23 @@ vAPI.messaging = {
         }
 
         // Auxiliary process to main process: specific handler
-        const fromDetails = this.ports.get(port.name);
-        if ( fromDetails === undefined ) { return; }
+        const portDetails = this.ports.get(port.name);
+        if ( portDetails === undefined ) { return; }
 
         const listenerDetails = this.listeners.get(request.channel);
         let r = this.UNHANDLED;
         if (
             (listenerDetails !== undefined) &&
-            (listenerDetails.privileged === false || fromDetails.privileged)
-
+            (listenerDetails.privileged === false || portDetails.privileged)
+            
         ) {
-            r = listenerDetails.fn(request.msg, port.sender, callback);
+            r = listenerDetails.fn(request.msg, portDetails, callback);
         }
         if ( r !== this.UNHANDLED ) { return; }
 
         // Auxiliary process to main process: default handler
-        if ( fromDetails.privileged ) {
-            r = this.defaultHandler(request.msg, port.sender, callback);
+        if ( portDetails.privileged ) {
+            r = this.defaultHandler(request.msg, portDetails, callback);
             if ( r !== this.UNHANDLED ) { return; }
         }
 
@@ -1153,7 +1157,7 @@ vAPI.warSecret = (( ) => {
             url.lastIndexOf(`?secret=${secret}`) !== -1
         );
         if ( pos === -1 ) {
-            return { redirectUrl: root };
+            return { cancel: true };
         }
         secrets.splice(pos, 1);
     };
@@ -1177,7 +1181,7 @@ vAPI.warSecret = (( ) => {
         lastSecretTime = Date.now();
         const secret = generateSecret();
         secrets.push(secret);
-        return `?secret=${secret}`;
+        return secret;
     };
 })();
 
@@ -1518,27 +1522,10 @@ vAPI.localStorage = {
         if ( this.cache instanceof Promise ) { return this.cache; }
         if ( this.cache instanceof Object ) { return this.cache; }
         this.cache = webext.storage.local.get('localStorage').then(bin => {
-            this.cache = undefined;
-            try {
-                if (
-                    bin instanceof Object === false ||
-                    bin.localStorage instanceof Object === false
-                ) {
-                    this.cache = {};
-                    const ls = self.localStorage;
-                    for ( let i = 0; i < ls.length; i++ ) {
-                        const key = ls.key(i);
-                        this.cache[key] = ls.getItem(key);
-                    }
-                    webext.storage.local.set({ localStorage: this.cache });
-                } else {
-                    this.cache = bin.localStorage;
-                }
-            } catch(ex) {
-            }
-            if ( this.cache instanceof Object === false ) {
-                this.cache = {};
-            }
+            this.cache = bin instanceof Object &&
+                bin.localStorage instanceof Object
+                    ? bin.localStorage
+                    : {};
         });
         return this.cache;
     },

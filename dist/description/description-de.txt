@@ -1,4 +1,4 @@
-Ein effizienter Blocker: Geringer Speicherbedarf und niedrige CPU-Belastung - und dennoch werden Tausende an Filtern mehr angewendet als bei anderen populären Blockern.
+Ein effizienter Blocker: Geringer Speicherbedarf und niedrige CPU-Belastung - und dennoch werden tausende Filter mehr angewendet als bei anderen beliebten Blockern.
 
 Ein illustrierter Überblick über seine Effizienz: https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
 
@@ -30,7 +30,7 @@ Bedenke allerdings, dass durch die Wahl zusätzlicher Listen die Wahrscheinlichk
 
  
 
-  Wenn du etwas beitragen möchtest, dann denke an die Menschen, die hart dafür arbeiten, die von dir benutzten Filterlisten zu pflegen, und diese für uns alle frei verfügbar gemacht haben.
+  Wenn du etwas beitragen möchtest, dann denke an die Menschen, die hart dafür arbeiten, die von dir benutzten Filterlisten zu pflegen und diese für uns alle frei verfügbar gemacht haben.
 
  
 

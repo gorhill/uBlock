@@ -44,7 +44,6 @@ a*
 $script,redirect=noop.js
 *$empty
 *$xhr,empty
-*$redirect=empty
 *$xhr,redirect=empty
 
 *$csp=default-src 'none'
@@ -58,7 +57,7 @@ $script,redirect=noop.js
 *$domain=toto.com|toto.*|~toto.com|~toto.*|tôtó.ça|tôtó.*|~tôtó.ça|[ff00::0]|1.1.1.1
 
 ! valid denyallow option values
-*$denyallow=toto.com|tôtó.ça|[ff00::0]|1.1.1.1
+*$denyallow=toto.com|tôtó.ça|[ff00::0]|1.1.1.1,domain=toto.com
 
 
 
@@ -95,10 +94,11 @@ $
 ! can't redirect without type (except to `empty`)
 *$redirect=noop.js
 
-! can't redirect beacon, ping, websocket
+! non-redirectable types
 *$beacon,redirect-rule=empty
 *$ping,redirect-rule=empty
 *$websocket,redirect-rule=empty
+*$ghide,redirect=noop.js
 
 ! can't mix csp with other types or redirect directives
 *$csp=default-src 'none',empty
@@ -119,4 +119,7 @@ $
 *$domain=.toto.com|toto.com.|[ff00::00000]|1.1.1.1111
 
 ! invalid denyallow= option values
-*$denyallow=.toto.com|toto.com.|toto.*|~toto.com|~toto.*|[ff00::00000]|1.1.1.1111
+*$denyallow=.toto.com|toto.com.|toto.*|~toto.com|~toto.*|[ff00::00000]|1.1.1.1111,domain=toto.com
+
+! denyallow= requires a domain= option
+*$script,denyallow=toto.com

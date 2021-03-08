@@ -671,6 +671,10 @@
     "message": "izinli",
     "description": "A keyword in the built-in row filtering expression"
   },
+  "loggerRowFiltererBuiltinModified": {
+    "message": "düzenlendi",
+    "description": "A keyword in the built-in row filtering expression"
+  },
   "loggerRowFiltererBuiltin1p": {
     "message": "1. taraf",
     "description": "A keyword in the built-in row filtering expression"
@@ -1062,6 +1066,10 @@
   "GB": {
     "message": "GB",
     "description": "short for 'gigabytes'"
+  },
+  "clickToLoad": {
+    "message": "Yüklemek için tıkla",
+    "description": "Message used in frame placeholders"
   },
   "dummy": {
     "message": "Bu girdi en sonda olmalıdır",

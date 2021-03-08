@@ -671,6 +671,10 @@
     "message": "позволени",
     "description": "A keyword in the built-in row filtering expression"
   },
+  "loggerRowFiltererBuiltinModified": {
+    "message": "променен",
+    "description": "A keyword in the built-in row filtering expression"
+  },
   "loggerRowFiltererBuiltin1p": {
     "message": "1-ви страни",
     "description": "A keyword in the built-in row filtering expression"
@@ -1062,6 +1066,10 @@
   "GB": {
     "message": "ГБ",
     "description": "short for 'gigabytes'"
+  },
+  "clickToLoad": {
+    "message": "Щракнете, за да се зареди",
+    "description": "Message used in frame placeholders"
   },
   "dummy": {
     "message": "Това поле трябва да бъде последното",

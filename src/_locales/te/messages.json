@@ -671,6 +671,10 @@
     "message": "అనుమతించబడింది",
     "description": "A keyword in the built-in row filtering expression"
   },
+  "loggerRowFiltererBuiltinModified": {
+    "message": "సవరించబడింది",
+    "description": "A keyword in the built-in row filtering expression"
+  },
   "loggerRowFiltererBuiltin1p": {
     "message": "మొదటి పార్టీ",
     "description": "A keyword in the built-in row filtering expression"
@@ -1062,6 +1066,10 @@
   "GB": {
     "message": "జీబీ",
     "description": "short for 'gigabytes'"
+  },
+  "clickToLoad": {
+    "message": "లోడ్ చేయడానికి క్లిక్ చేయండి",
+    "description": "Message used in frame placeholders"
   },
   "dummy": {
     "message": "ఇది అంతిమంగా వుండాల్సిన నమోదు",

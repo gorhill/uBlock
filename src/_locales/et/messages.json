@@ -671,6 +671,10 @@
     "message": "lubatud",
     "description": "A keyword in the built-in row filtering expression"
   },
+  "loggerRowFiltererBuiltinModified": {
+    "message": "muudetud",
+    "description": "A keyword in the built-in row filtering expression"
+  },
   "loggerRowFiltererBuiltin1p": {
     "message": "1. osapool",
     "description": "A keyword in the built-in row filtering expression"
@@ -1062,6 +1066,10 @@
   "GB": {
     "message": "GB",
     "description": "short for 'gigabytes'"
+  },
+  "clickToLoad": {
+    "message": "Klõpsa laadimiseks",
+    "description": "Message used in frame placeholders"
   },
   "dummy": {
     "message": "See sisestus peab olema viimane",

@@ -1,7 +1,7 @@
 /*******************************************************************************
 
     uBlock Origin - a browser extension to block requests.
-    Copyright (C) 2015-2018 Raymond Hill
+    Copyright (C) 2014-present Raymond Hill
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,41 +22,43 @@
 'use strict';
 
 /******************************************************************************/
+/******************************************************************************/
 
 (( ) => {
 
 /******************************************************************************/
 
-if (
-    typeof vAPI !== 'object' ||
-    vAPI.loadAllLargeMedia instanceof Function === false
-) {
-    return;
-}
+if ( typeof vAPI !== 'object' ) { return; }
 
-vAPI.loadAllLargeMedia();
-vAPI.loadAllLargeMedia = undefined;
+const url = new URL(self.location.href);
+const frameURL = url.searchParams.get('url');
+const frameURLElem = document.getElementById('frameURL');
+
+frameURLElem.children[0].textContent = frameURL;
+frameURLElem.children[1].href = frameURL;
+
+const onWindowResize = function() {
+    document.body.style.width = `${self.innerWidth}px`;
+    document.body.style.height = `${self.innerHeight}px`;
+};
+
+onWindowResize();
+
+self.addEventListener('resize', onWindowResize);
+
+document.body.addEventListener('click', ev => {
+    if ( ev.isTrusted === false ) { return; }
+    if ( ev.target.closest('#frameURL') !== null ) { return; }
+    vAPI.messaging.send('default', {
+        what: 'clickToLoad',
+        frameURL,
+    }).then(ok => {
+        if ( ok ) {
+            self.location.replace(frameURL);
+        }
+    });
+});
 
 /******************************************************************************/
 
 })();
-
-
-
-
-
-
-
-
-/*******************************************************************************
-
-    DO NOT:
-    - Remove the following code
-    - Add code beyond the following code
-    Reason:
-    - https://github.com/gorhill/uBlock/pull/3721
-    - uBO never uses the return value from injected content scripts
-
-**/
-
-void 0;

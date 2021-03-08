@@ -1,7 +1,17 @@
 @keyframes spin {
-    0% { transform: rotate(0deg); -webkit-transform: rotate(0deg); }
-    100% { transform: rotate(360deg); -webkit-transform: rotate(360deg); }
-    }
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+body {
+    margin-bottom: 6rem;
+}
+#actions {
+    background-color: var(--default-surface);
+    padding: var(--default-gap-small) 0 var(--default-gap-xsmall) 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
 /*ADN*/
 #options .li:nth-child(2), #options .li:nth-child(3){
   display: none;

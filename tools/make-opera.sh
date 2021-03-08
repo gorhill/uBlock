@@ -19,20 +19,15 @@ echo "*** AdNauseam.opera: copying common files"
 bash ./tools/copy-common-files.sh  $DES
 
 # Opera-specific
-cp platform/opera/manifest.json $DES/  # adn: overwrites chromium manifest
-
-sed -i '' "s/\"{version}\"/${VERSION}/" $DES/manifest.json
-sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/popup.html
-sed -i '' "s/{UBLOCK_VERSION}/${UBLOCK}/" $DES/links.html
-
-# rm -r $DES/_locales/az
-# rm -r $DES/_locales/cv
-# rm -r $DES/_locales/hi
-# rm -r $DES/_locales/ka
-# rm -r $DES/_locales/kk
-# rm -r $DES/_locales/mr
-# rm -r $DES/_locales/ta
-# rm -r $DES/_locales/th
+cp platform/opera/manifest.json $DES/
+rm -r $DES/_locales/az
+rm -r $DES/_locales/cv
+rm -r $DES/_locales/hi
+rm -r $DES/_locales/hy
+rm -r $DES/_locales/ka
+rm -r $DES/_locales/kk
+rm -r $DES/_locales/mr
+rm -r $DES/_locales/th
 
 # Removing WASM modules until I receive an answer from Opera people: Opera's
 # uploader issue an error for hntrie.wasm and this prevents me from
