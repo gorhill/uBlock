@@ -41,7 +41,7 @@ const µBlock = (( ) => { // jshint ignore:line
         autoCommentFilterTemplate: '{{date}} {{origin}}',
         autoUpdateAssetFetchPeriod: 120,
         autoUpdateDelayAfterLaunch: 180,
-        autoUpdatePeriod: 7,
+        autoUpdatePeriod: 4,
         benchmarkDatasetURL: 'unset',
         blockingProfiles: '11111/#F00 11010/#C0F 11001/#00F 00001',
         cacheStorageAPI: 'unset',
@@ -83,55 +83,60 @@ const µBlock = (( ) => { // jshint ignore:line
         userResourcesLocation: 'unset',
     };
 
+    const userSettingsDefault = {
+        admap: {},          // ADN //////////////////
+        dntDomains: [],
+        parseTextAds: true,
+        eventLogging: false,
+
+        hidingAds: false,
+        clickingAds: false,
+        blockingMalware: false,
+        disableHidingForDNT: false,
+        disableClickingForDNT: false,
+        clickProbability: 1.0,
+        removeAdsInPrivate: true,
+        strictBlockingMode: false,
+
+        clickOnlyWhenIdleFor: 0,
+        noIncomingCookies: true,
+        noOutgoingCookies: false,
+        noOutgoingReferer: false,
+        noOutgoingUserAgent: false,
+        advancedUserEnabled: true,
+
+        ////////////////// end-ADN ////////////////////
+
+        alwaysDetachLogger: false,
+        autoUpdate: true,
+        cloudStorageEnabled: false,
+        collapseBlocked: true,
+        colorBlindFriendly: false,
+        contextMenuEnabled: true,
+        dynamicFilteringEnabled: false,
+        externalLists: [],
+        firewallPaneMinimized: true,
+        hyperlinkAuditingDisabled: true,
+        ignoreGenericCosmeticFilters: false, //ADN: original - vAPI.webextFlavor.soup.has('mobile')
+        largeMediaSize: 50,
+        parseAllABPHideFilters: true,
+        popupPanelSections: 0b111,
+        prefetchingDisabled: true,
+        requestLogMaxEntries: 1000,
+        showIconBadge: true,
+        tooltipsDisabled: false,
+        webrtcIPAddressHidden: false,
+    };
+
     return {
         firstInstall: true,
-        userSettings: {
-            admap: {},          // ADN //////////////////
-            dntDomains: [],
-            parseTextAds: true,
-            eventLogging: false,
-
-            hidingAds: false,
-            clickingAds: false,
-            blockingMalware: false,
-            disableHidingForDNT: false,
-            disableClickingForDNT: false,
-            clickProbability: 1.0,
-            removeAdsInPrivate: true,
-            strictBlockingMode: false,
-
-            clickOnlyWhenIdleFor: 0,
-            noIncomingCookies: true,
-            noOutgoingCookies: false,
-            noOutgoingReferer: false,
-            noOutgoingUserAgent: false,
-            advancedUserEnabled: true,
-
-            ////////////////// end-ADN ////////////////////
-
-            alwaysDetachLogger: false,
-            autoUpdate: true,
-            cloudStorageEnabled: false,
-            collapseBlocked: true,
-            colorBlindFriendly: false,
-            contextMenuEnabled: true,
-            dynamicFilteringEnabled: false,
-            externalLists: [],
-            firewallPaneMinimized: true,
-            hyperlinkAuditingDisabled: true,
-            ignoreGenericCosmeticFilters: false, //ADN: original - vAPI.webextFlavor.soup.has('mobile')
-            largeMediaSize: 50,
-            parseAllABPHideFilters: true,
-            popupPanelSections: 0b111,
-            prefetchingDisabled: true,
-            requestLogMaxEntries: 1000,
-            showIconBadge: true,
-            tooltipsDisabled: false,
-            webrtcIPAddressHidden: false,
-        },
-
+        userSettingsDefault: userSettingsDefault,
+        userSettings: Object.assign({}, userSettingsDefault),
         hiddenSettingsDefault: hiddenSettingsDefault,
+        hiddenSettingsAdmin: {},
         hiddenSettings: Object.assign({}, hiddenSettingsDefault),
+
+        noDashboard: false,
 
         // Features detection.
         privacySettingsSupported: vAPI.browserSettings instanceof Object,

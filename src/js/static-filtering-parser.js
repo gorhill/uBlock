@@ -114,6 +114,9 @@ const Parser = class {
         this.rePlainEntity = /^(?:[\w-]+\.)+\*$/;
         this.reEntity = /^[^*]+\.\*$/;
         this.punycoder = new URL(self.location);
+        // TODO: mind maxTokenLength
+        this.reGoodRegexToken
+            = /[^\x01%0-9A-Za-z][%0-9A-Za-z]{7,}|[^\x01%0-9A-Za-z][%0-9A-Za-z]{1,6}[^\x01%0-9A-Za-z]/;
         this.selectorCompiler = new this.SelectorCompiler(this);
         // TODO: reuse for network filtering analysis
         this.result = {
@@ -639,12 +642,8 @@ const Parser = class {
     }
 
     analyzeNetExtra() {
-        // Validate regex
         if ( this.patternIsRegex() ) {
-            try {
-                void new RegExp(this.getNetPattern());
-            }
-            catch (ex) {
+            if ( this.regexUtils.isValid(this.getNetPattern()) === false ) {
                 this.markSpan(this.patternSpan, BITError);
             }
         } else if (
@@ -1001,6 +1000,14 @@ const Parser = class {
 
     patternIsRegex() {
         return (this.flavorBits & BITFlavorNetRegex) !== 0;
+    }
+
+    patternIsTokenizable() {
+        // TODO: not necessarily true, this needs more work.
+        if ( this.patternIsRegex === false ) { return true; }
+        return this.reGoodRegexToken.test(
+            this.regexUtils.toTokenizableStr(this.getNetPattern())
+        );
     }
 
     patternHasWildcard() {
@@ -2520,10 +2527,7 @@ const NetOptionsIterator = class {
         {
             const i = this.tokenPos[OPTTokenQueryprune];
             if ( i !== -1 ) {
-                if (
-                    this.parser.expertMode === false ||
-                    hasBits(allBits, OPTNonNetworkType)
-                ) {
+                if ( hasBits(allBits, OPTNonNetworkType) ) {
                     optSlices[i] = OPTTokenInvalid;
                     if ( this.interactive ) {
                         this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
@@ -2565,7 +2569,10 @@ const NetOptionsIterator = class {
         {
             const i = this.tokenPos[OPTTokenHeader];
             if ( i !== -1 ) {
-                if ( hasBits(allBits, OPTModifierType) ) {
+                if (
+                    this.parser.expertMode === false ||
+                    hasBits(allBits, OPTModifierType)
+                ) {
                     optSlices[i] = OPTTokenInvalid;
                     if ( this.interactive ) {
                         this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
@@ -2745,6 +2752,140 @@ const ExtOptionsIterator = class {
         return this;
     }
 };
+
+/******************************************************************************/
+
+// Depends on:
+// https://github.com/foo123/RegexAnalyzer
+
+Parser.regexUtils = Parser.prototype.regexUtils = (( ) => {
+
+    const firstCharCodeClass = s => {
+        return /^[\x01%0-9A-Za-z]/.test(s) ? 1 : 0;
+    };
+
+    const lastCharCodeClass = s => {
+        return /[\x01%0-9A-Za-z]$/.test(s) ? 1 : 0;
+    };
+
+    const toTokenizableStr = node => {
+        switch ( node.type ) {
+            case 1: /* T_SEQUENCE, 'Sequence' */ {
+                let s = '';
+                for ( let i = 0; i < node.val.length; i++ ) {
+                    s += toTokenizableStr(node.val[i]);
+                }
+                return s;
+            }
+            case 2: /* T_ALTERNATION, 'Alternation' */
+            case 8: /* T_CHARGROUP, 'CharacterGroup' */ {
+                let firstChar = 0;
+                let lastChar = 0;
+                for ( let i = 0; i < node.val.length; i++ ) {
+                    const s = toTokenizableStr(node.val[i]);
+                    if ( firstChar === 0 && firstCharCodeClass(s) === 1 ) {
+                        firstChar = 1;
+                    }
+                    if ( lastChar === 0 && lastCharCodeClass(s) === 1 ) {
+                        lastChar = 1;
+                    }
+                    if ( firstChar === 1 && lastChar === 1 ) { break; }
+                }
+                return String.fromCharCode(firstChar, lastChar);
+            }
+            case 4: /* T_GROUP, 'Group' */ {
+                if ( node.flags.NegativeLookAhead === 1 ) { return '\x01'; }
+                if ( node.flags.NegativeLookBehind === 1 ) { return '\x01'; }
+                return toTokenizableStr(node.val);
+            }
+            case 16: /* T_QUANTIFIER, 'Quantifier' */ {
+                const s = toTokenizableStr(node.val);
+                const first = firstCharCodeClass(s);
+                const last = lastCharCodeClass(s);
+                if ( node.flags.min === 0 && first === 0 && last === 0 ) {
+                    return '';
+                }
+                return String.fromCharCode(first, last);
+            }
+            case 64: /* T_HEXCHAR, 'HexChar' */ {
+                return String.fromCharCode(parseInt(node.val.slice(1), 16));
+            }
+            case 128: /* T_SPECIAL, 'Special' */ {
+                const flags = node.flags;
+                if (
+                    flags.EndCharGroup === 1 || // dangling `]`
+                    flags.EndGroup === 1 ||     // dangling `)`
+                    flags.EndRepeats === 1      // dangling `}`
+                ) {
+                    throw new Error('Unmatched bracket');
+                }
+                return flags.MatchEnd === 1 ||
+                       flags.MatchStart === 1 ||
+                       flags.MatchWordBoundary === 1
+                    ? '\x00'
+                    : '\x01';
+            }
+            case 256: /* T_CHARS, 'Characters' */ {
+                for ( let i = 0; i < node.val.length; i++ ) {
+                    if ( firstCharCodeClass(node.val[i]) === 1 ) {
+                        return '\x01';
+                    }
+                }
+                return '\x00';
+            }
+            // Ranges are assumed to always involve token-related characters.
+            case 512: /* T_CHARRANGE, 'CharacterRange' */ {
+                return '\x01';
+            }
+            case 1024: /* T_STRING, 'String' */ {
+                return node.val;
+            }
+            case 2048: /* T_COMMENT, 'Comment' */ {
+                return '';
+            }
+            default:
+                break;
+        }
+        return '\x01';
+    };
+
+    const Regex = self.Regex;
+    if (
+        Regex instanceof Object === false ||
+        Regex.Analyzer instanceof Object === false
+    ) {
+        return {
+            isValid: function(reStr)  {
+                try {
+                    void new RegExp(reStr);
+                } catch(ex) {
+                    return false;
+                }
+                return true;
+            },
+            toTokenizableStr: ( ) => '',
+        };
+    }
+
+    return {
+        isValid: function(reStr) {
+            try {
+                void new RegExp(reStr);
+                void toTokenizableStr(Regex.Analyzer(reStr, false).tree());
+            } catch(ex) {
+                return false;
+            }
+            return true;
+        },
+        toTokenizableStr: function(reStr) {
+            try {
+                return toTokenizableStr(Regex.Analyzer(reStr, false).tree());
+            } catch(ex) {
+            }
+            return '';
+        },
+    };
+})();
 
 /******************************************************************************/
 

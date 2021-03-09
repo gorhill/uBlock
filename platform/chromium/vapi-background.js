@@ -1498,21 +1498,22 @@ vAPI.onLoadAllCompleted = function(tabId, frameId) { //ADN
 vAPI.adminStorage = (( ) => {
     if ( webext.storage.managed instanceof Object === false ) {
         return {
-            getItem: function() {
+            get: function() {
                 return Promise.resolve();
             },
         };
     }
     return {
-        getItem: async function(key) {
+        get: async function(key) {
             let bin;
             try {
                 bin = await webext.storage.managed.get(key);
             } catch(ex) {
             }
-            if ( bin instanceof Object ) {
+            if ( typeof key === 'string' && bin instanceof Object ) {
                 return bin[key];
             }
+            return bin;
         }
     };
 })();

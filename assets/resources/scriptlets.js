@@ -468,40 +468,40 @@
 //      to match all.
 // delayMatcher
 //      The delay matcher, an integer, defaults to 1000.
+//      Use `*` to match any delay.
 // boostRatio - The delay multiplier when there is a match, 0.5 speeds up by
 //      2 times and 2 slows down by 2 times, defaults to 0.05 or speed up
 //      20 times. Speed up and down both cap at 50 times.
 /// nano-setInterval-booster.js
 /// alias nano-sib.js
 (function() {
-    let needle = '{{1}}';
-    let delay = parseInt('{{2}}', 10);
-    let boost = parseFloat('{{3}}');
-    if ( needle === '' || needle === '{{1}}' ) {
-        needle = '.?';
-    } else if ( needle.charAt(0) === '/' && needle.slice(-1) === '/' ) {
-        needle = needle.slice(1, -1);
+    let needleArg = '{{1}}';
+    if ( needleArg === '{{1}}' ) { needleArg = ''; }
+    let delayArg = '{{2}}';
+    if ( delayArg === '{{2}}' ) { delayArg = ''; }
+    let boostArg = '{{3}}';
+    if ( boostArg === '{{3}}' ) { boostArg = ''; }
+    if ( needleArg === '' ) {
+        needleArg = '.?';
+    } else if ( needleArg.charAt(0) === '/' && needleArg.slice(-1) === '/' ) {
+        needleArg = needleArg.slice(1, -1);
     } else {
-        needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        needleArg = needleArg.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
-    needle = new RegExp(needle);
-    if ( isNaN(delay) || !isFinite(delay) ) {
-        delay = 1000;
-    }
-    if ( isNaN(boost) || !isFinite(boost) ) {
-        boost = 0.05;
-    }
-    if ( boost < 0.02 ) {
-        boost = 0.02;
-    }
-    if ( boost > 50 ) {
-        boost = 50;
-    }
-    window.setInterval = new Proxy(window.setInterval, {
+    const reNeedle = new RegExp(needleArg);
+    let delay = delayArg !== '*' ? parseInt(delayArg, 10) : -1;
+    if ( isNaN(delay) || isFinite(delay) === false ) { delay = 1000; }
+    let boost = parseFloat(boostArg);
+    boost = isNaN(boost) === false && isFinite(boost)
+        ? Math.min(Math.max(boost, 0.02), 50)
+        : 0.05;
+    self.setInterval = new Proxy(self.setInterval, {
         apply: function(target, thisArg, args) {
-            const a = args[0];
-            const b = args[1];
-            if ( b === delay && needle.test(a.toString()) ) {
+            const [ a, b ] = args;
+            if (
+                (delay === -1 || b === delay) &&
+                reNeedle.test(a.toString())
+            ) {
                 args[1] = b * boost;
             }
             return target.apply(thisArg, args);
@@ -519,40 +519,40 @@
 //      to match all.
 // delayMatcher
 //      The delay matcher, an integer, defaults to 1000.
+//      Use `*` to match any delay.
 // boostRatio - The delay multiplier when there is a match, 0.5 speeds up by
 //      2 times and 2 slows down by 2 times, defaults to 0.05 or speed up
 //      20 times. Speed up and down both cap at 50 times.
 /// nano-setTimeout-booster.js
 /// alias nano-stb.js
 (function() {
-    let needle = '{{1}}';
-    let delay = parseInt('{{2}}', 10);
-    let boost = parseFloat('{{3}}');
-    if ( needle === '' || needle === '{{1}}' ) {
-        needle = '.?';
-    } else if ( needle.startsWith('/') && needle.endsWith('/') ) {
-        needle = needle.slice(1, -1);
+    let needleArg = '{{1}}';
+    if ( needleArg === '{{1}}' ) { needleArg = ''; }
+    let delayArg = '{{2}}';
+    if ( delayArg === '{{2}}' ) { delayArg = ''; }
+    let boostArg = '{{3}}';
+    if ( boostArg === '{{3}}' ) { boostArg = ''; }
+    if ( needleArg === '' ) {
+        needleArg = '.?';
+    } else if ( needleArg.charAt(0) === '/' && needleArg.slice(-1) === '/' ) {
+        needleArg = needleArg.slice(1, -1);
     } else {
-        needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        needleArg = needleArg.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
-    needle = new RegExp(needle);
-    if ( isNaN(delay) || !isFinite(delay) ) {
-        delay = 1000;
-    }
-    if ( isNaN(boost) || !isFinite(boost) ) {
-        boost = 0.05;
-    }
-    if ( boost < 0.02 ) {
-        boost = 0.02;
-    }
-    if ( boost > 50 ) {
-        boost = 50;
-    }
-    window.setTimeout = new Proxy(window.setTimeout, {
+    const reNeedle = new RegExp(needleArg);
+    let delay = delayArg !== '*' ? parseInt(delayArg, 10) : -1;
+    if ( isNaN(delay) || isFinite(delay) === false ) { delay = 1000; }
+    let boost = parseFloat(boostArg);
+    boost = isNaN(boost) === false && isFinite(boost)
+        ? Math.min(Math.max(boost, 0.02), 50)
+        : 0.05;
+    self.setTimeout = new Proxy(self.setTimeout, {
         apply: function(target, thisArg, args) {
-            const a = args[0];
-            const b = args[1];
-            if ( b === delay && needle.test(a.toString()) ) {
+            const [ a, b ] = args;
+            if (
+                (delay === -1 || b === delay) &&
+                reNeedle.test(a.toString())
+            ) {
                 args[1] = b * boost;
             }
             return target.apply(thisArg, args);
@@ -665,7 +665,10 @@
     if ( selector === '' || selector === '{{2}}' ) {
         selector = `[${tokens.join('],[')}]`;
     }
-    const rmattr = function() {
+    let behavior = '{{3}}';
+    let timer;
+    const rmattr = ( ) => {
+        timer = undefined;
         try {
             const nodes = document.querySelectorAll(selector);
             for ( const node of nodes ) {
@@ -676,10 +679,39 @@
         } catch(ex) {
         }
     };
-    if ( document.readyState === 'loading' ) {
-        window.addEventListener('DOMContentLoaded', rmattr, { once: true });
-    } else {
+    const mutationHandler = mutations => {
+        if ( timer !== undefined ) { return; }
+        let skip = true;
+        for ( let i = 0; i < mutations.length && skip; i++ ) {
+            const { type, addedNodes, removedNodes } = mutations[i];
+            if ( type === 'attributes' ) { skip = false; }
+            for ( let j = 0; j < addedNodes.length && skip; j++ ) {
+                if ( addedNodes[j].nodeType === 1 ) { skip = false; break; }
+            }
+            for ( let j = 0; j < removedNodes.length && skip; j++ ) {
+                if ( removedNodes[j].nodeType === 1 ) { skip = false; break; }
+            }
+        }
+        if ( skip ) { return; }
+        timer = self.requestIdleCallback(rmattr, { timeout: 67 });
+    };
+    const start = ( ) => {
         rmattr();
+        if ( /\bstay\b/.test(behavior) === false ) { return; }
+        const observer = new MutationObserver(mutationHandler);
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: tokens,
+            childList: true,
+            subtree: true,
+        });
+    };
+    if ( document.readyState !== 'complete' && /\bcomplete\b/.test(behavior) ) {
+        self.addEventListener('load', start, { once: true });
+    } else if ( document.readyState === 'loading' ) {
+        self.addEventListener('DOMContentLoaded', start, { once: true });
+    } else {
+        start();
     }
 })();
 

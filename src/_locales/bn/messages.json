@@ -552,7 +552,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
-    "message": "Sort:",
+    "message": "সাজাও:",
     "description": "English: label for sort option."
   },
   "rulesSortByType": {

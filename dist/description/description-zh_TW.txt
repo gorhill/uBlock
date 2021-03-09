@@ -1,4 +1,4 @@
-一個高效率的阻擋器：使用不多的記憶體以及 CPU 資源，卻能比其他熱門的阻擋器多載入並執行數以千計的過濾規則。
+一個高效率的阻擋器：uBO 使用不多的記憶體 (RAM) 以及 CPU 資源，但卻能比其他熱門的阻擋器多載入並執行數以千計的過濾規則。
 
 效能比較示意圖：https://github.com/gorhill/uBlock/wiki/%C2%B5Block-vs.-ABP:-efficiency-compared
 

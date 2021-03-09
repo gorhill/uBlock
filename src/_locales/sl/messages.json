@@ -552,15 +552,15 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
-    "message": "Sort:",
+    "message": "Razvrsti",
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
-    "message": "Rule type",
+    "message": "Tip pravila",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortBySource": {
-    "message": "Source",
+    "message": "Vir",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortByDestination": {
@@ -1028,7 +1028,7 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "Block element in frame...",
+    "message": "Blokiraj element v okvirju",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {

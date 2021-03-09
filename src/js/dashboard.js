@@ -97,7 +97,9 @@ const loadDashboardPanel = function(pane, first) {
         tabButton.classList.add('selected');
         tabButton.scrollIntoView();
         uDom.nodeFromId('iframe').setAttribute('src', pane);
-        vAPI.localStorage.setItem('dashboardLastVisitedPane', pane);
+        if ( pane !== 'no-dashboard.html' ) {
+            vAPI.localStorage.setItem('dashboardLastVisitedPane', pane);
+        }
     };
     if ( first ) {
         return loadPane();
@@ -117,39 +119,48 @@ const onTabClickHandler = function(ev) {
     loadDashboardPanel(ev.target.getAttribute('data-pane'));
 };
 
-// https://github.com/uBlockOrigin/uBlock-issues/issues/106
-vAPI.messaging.send('dashboard', {
-    what: 'canUpdateShortcuts',
-}).then(response => {
-    document.body.classList.toggle('canUpdateShortcuts', response === true);
-});
+if ( self.location.hash.slice(1) === 'no-dashboard.html' ) {
+    document.body.classList.add('noDashboard');
+}
 
-vAPI.broadcastListener.add(request => {
-    switch (request.what) {
-    case 'notifications':
-      renderNotifications(request.notifications, "dashboard");
-      resizeFrame();
-      break;
+(async ( ) => {
+    const results = await Promise.all([
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/106
+        vAPI.messaging.send('dashboard', { what: 'dashboardConfig' }),
+        vAPI.localStorage.getItemAsync('dashboardLastVisitedPane'),
+    ]);
+
+    {
+        const details = results[0];
+        document.body.classList.toggle(
+            'canUpdateShortcuts',
+            details.canUpdateShortcuts === true
+        );
+        if ( details.noDashboard ) {
+            self.location.hash = '#no-dashboard.html';
+            document.body.classList.add('noDashboard');
+        } else if ( self.location.hash === '#no-dashboard.html' ) {
+            self.location.hash = '';
+        }
     }
-  });
 
-resizeFrame();
+    {
+        let pane = results[1];
+        if ( self.location.hash !== '' ) {
+            pane = self.location.hash.slice(1) || null;
+        }
+        loadDashboardPanel(pane !== null ? pane : 'settings.html', true);
 
-vAPI.localStorage.getItemAsync('dashboardLastVisitedPane').then(value => {
-    // first check current url, then local storage, then default
-    const location = window.location.hash ? window.location.hash.replace("#", "") : (value !== null ? value : 'options.html');
-    loadDashboardPanel(location, true);
+        uDom('.tabButton').on('click', onTabClickHandler);
 
-    uDom('.tabButton').on('click', onTabClickHandler);
-    uDom('#notifications').on('click', resizeFrame); //ADN
-
-    // https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
-    window.addEventListener('beforeunload', ( ) => {
-        if ( discardUnsavedData(true) ) { return; }
-        event.preventDefault();
-        event.returnValue = '';
-    });
-});
+        // https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
+        window.addEventListener('beforeunload', ( ) => {
+            if ( discardUnsavedData(true) ) { return; }
+            event.preventDefault();
+            event.returnValue = '';
+        });
+    }
+})();
 
 
 vAPI.messaging.send(

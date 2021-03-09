@@ -274,7 +274,9 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
             if ( parser.patternIsRegex() ) {
                 stream.pos = parser.slices[parser.optionsAnchorSpan.i+1];
                 parserSlot = parser.optionsAnchorSpan.i;
-                return 'variable notice';
+                return parser.patternIsTokenizable()
+                    ? 'variable notice'
+                    : 'variable warning';
             }
             if ( (parser.slices[parserSlot] & (parser.BITAsterisk | parser.BITCaret)) !== 0 ) {
                 stream.pos += parser.slices[parserSlot+2];
@@ -334,12 +336,20 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
             return 'comment';
         }
         if ( parser.category === parser.CATStaticExtFilter ) {
-            const style = colorExtSpan(stream);
-            return style ? `ext ${style}` : 'ext';
+            const style = colorExtSpan(stream) || '';
+            let flavor = '';
+            if ( (parser.flavorBits & parser.BITFlavorExtCosmetic) !== 0 ) {
+                flavor = 'line-cm-ext-dom';
+            } else if ( (parser.flavorBits & parser.BITFlavorExtScriptlet) !== 0 ) {
+                flavor = 'line-cm-ext-js';
+            } else if ( (parser.flavorBits & parser.BITFlavorExtHTML) !== 0 ) {
+                flavor = 'line-cm-ext-html';
+            }
+            return `${flavor} ${style}`.trim();
         }
         if ( parser.category === parser.CATStaticNetFilter ) {
             const style = colorNetSpan(stream);
-            return style ? `net ${style}` : 'net';
+            return style ? `line-cm-net ${style}` : 'line-cm-net';
         }
         stream.skipToEnd();
         return null;
@@ -677,25 +687,10 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
 // Enhanced word selection
 
 {
-    const Pass = CodeMirror.Pass;
-
     const selectWordAt = function(cm, pos) {
         const { line, ch } = pos;
-
-        // Leave current selection alone
-        if ( cm.somethingSelected() ) {
-            const from = cm.getCursor('from');
-            const to = cm.getCursor('to');
-            if (
-                (line > from.line || line === from.line && ch > from.ch) &&
-                (line < to.line || line === to.line && ch < to.ch)
-            ) {
-                return Pass;
-            }
-        }
-
         const s = cm.getLine(line);
-        const token = cm.getTokenTypeAt(pos);
+        const { type: token } = cm.getTokenAt(pos);
         let beg, end;
 
         // Select URL in comments
@@ -710,30 +705,34 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
             }
         }
 
-        // Better word selection for cosmetic filters
-        else if ( /\bext\b/.test(token) ) {
-            if ( /\bvalue\b/.test(token) ) {
-                const l = /[^,.]*$/i.exec(s.slice(0, ch));
-                const r = /^[^#,]*/i.exec(s.slice(ch));
-                if ( l && r ) {
-                    beg = l.index;
-                    end = ch + r[0].length;
-                }
-            } else if ( /\bvariable\b/.test(token) ) {
-                const l = /[#.][a-z0-9_-]+$/i.exec(s.slice(0, ch));
-                const r = /^[a-z0-9_-]+/i.exec(s.slice(ch));
-                if ( l && r ) {
-                    beg = l.index;
-                    end = ch + r[0].length;
-                    if ( /\bdef\b/.test(cm.getTokenTypeAt({ line, ch: beg + 1 })) ) {
-                        beg += 1;
-                    }
+        // Better word selection for extended filters: prefix
+        else if (
+            /\bline-cm-ext-(?:dom|html|js)\b/.test(token) &&
+            /\bvalue\b/.test(token)
+        ) {
+            const l = /[^,.]*$/i.exec(s.slice(0, ch));
+            const r = /^[^#,]*/i.exec(s.slice(ch));
+            if ( l && r ) {
+                beg = l.index;
+                end = ch + r[0].length;
+            }
+        }
+
+        // Better word selection for cosmetic and HTML filters: suffix
+        else if ( /\bline-cm-ext-(?:dom|html)\b/.test(token) ) {
+            const l = /[#.]?[a-z0-9_-]+$/i.exec(s.slice(0, ch));
+            const r = /^[a-z0-9_-]+/i.exec(s.slice(ch));
+            if ( l && r ) {
+                beg = l.index;
+                end = ch + r[0].length;
+                if ( /\bdef\b/.test(cm.getTokenTypeAt({ line, ch: beg + 1 })) ) {
+                    beg += 1;
                 }
             }
         }
 
         // Better word selection for network filters
-        else if ( /\bnet\b/.test(token) ) {
+        else if ( /\bline-cm-net\b/.test(token) ) {
             if ( /\bvalue\b/.test(token) ) {
                 const l = /[^ ,.=|]*$/i.exec(s.slice(0, ch));
                 const r = /^[^ #,|]*/i.exec(s.slice(ch));
@@ -751,16 +750,22 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
             }
         }
 
-        if ( beg === undefined ) { return Pass; }
-        cm.setSelection(
-            { line, ch: beg },
-            { line, ch: end }
-        );
+        if ( beg === undefined ) {
+            const { anchor, head } = cm.findWordAt(pos);
+            return { from: anchor, to: head };
+        }
+
+        return {
+            from: { line, ch: beg },
+            to: { line, ch: end },
+        };
     };
 
     CodeMirror.defineInitHook(cm => {
-        cm.addKeyMap({
-            'LeftDoubleClick': selectWordAt,
+        cm.setOption('configureMouse', function(cm, repeat) {
+            return {
+                unit: repeat === 'double' ? selectWordAt : null,
+            };
         });
     });
 }

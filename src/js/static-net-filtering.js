@@ -2622,15 +2622,9 @@ const FilterParser = class {
         if ( other !== undefined ) {
             return Object.assign(this, other);
         }
-        this.cantWebsocket = vAPI.cantWebsocket;
         this.noTokenHash = urlTokenizer.noTokenHash;
-        this.reIsolateHostname = /^(\*?\.)?([^\x00-\x24\x26-\x2C\x2F\x3A-\x5E\x60\x7B-\x7F]+)(.*)/;
         this.reBadCSP = /(?:=|;)\s*report-(?:to|uri)\b/;
         this.reToken = /[%0-9A-Za-z]+/g;
-        this.reRegexTokenAbort = /[\(\)\[\]]/;
-        this.reRegexBadPrefix = /(^|[^\\]\.|\\[%SDWsdw]|[^\\][()*+?[\\\]{}])$/;
-        this.reRegexBadSuffix = /^([^\\]\.|\\[%SDWsdw]|[()*+?[\]{}]|$)/;
-        this.reGoodToken = /[%0-9a-z]{1,}/g;
         this.domainOptList = [];
         this.tokenIdToNormalizedType = new Map([
             [ parser.OPTTokenCname, bitFromType('cname') ],
@@ -3120,23 +3114,20 @@ const FilterParser = class {
 
     makeToken() {
         if ( this.pattern === '*' ) {
-            if (
-                this.modifyType !== this.parser.OPTTokenQueryprune ||
-                this.makePatternFromQuerypruneValue() === false
-            ) {
+            if ( this.modifyType !== this.parser.OPTTokenQueryprune ) {
                 return;
             }
+            return this.extractTokenFromQuerypruneValue();
         }
         if ( this.isRegex ) {
-            return this.extractTokenFromRegex();
+            return this.extractTokenFromRegex(this.pattern);
         }
-        this.extractTokenFromPattern();
+        this.extractTokenFromPattern(this.pattern);
     }
 
     // Note: a one-char token is better than a documented bad token.
-    extractTokenFromPattern() {
+    extractTokenFromPattern(pattern) {
         this.reToken.lastIndex = 0;
-        const pattern = this.pattern;
         let bestMatch = null;
         let bestBadness = 0x7FFFFFFF;
         for (;;) {
@@ -3173,34 +3164,23 @@ const FilterParser = class {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1145#issuecomment-657036902
     //   Mind `\b` directives: `/\bads\b/` should result in token being `ads`,
     //   not `bads`.
-    extractTokenFromRegex() {
+    extractTokenFromRegex(pattern) {
+        pattern = vAPI.StaticFilteringParser.regexUtils.toTokenizableStr(pattern);
         this.reToken.lastIndex = 0;
-        const pattern = this.pattern;
         let bestToken;
         let bestBadness = 0x7FFFFFFF;
         for (;;) {
             const matches = this.reToken.exec(pattern);
             if ( matches === null ) { break; }
-            let token = matches[0];
-            let prefix = pattern.slice(0, matches.index);
-            let suffix = pattern.slice(this.reToken.lastIndex);
-            if (
-                this.reRegexTokenAbort.test(prefix) &&
-                this.reRegexTokenAbort.test(suffix)
-            ) {
+            const { 0: token, index } = matches;
+            if ( index === 0 || pattern.charAt(index - 1) === '\x01' ) {
                 continue;
             }
-            if ( token.charCodeAt(0) === 0x62 /* 'b' */ ) {
-                const match = /\\+$/.exec(prefix);
-                if ( match !== null && (match[0].length & 1) !== 0 ) {
-                    prefix += 'b';
-                    token = token.slice(1);
-                }
-            }
+            const { lastIndex } = this.reToken;
             if (
-                this.reRegexBadPrefix.test(prefix) || (
-                    token.length < this.maxTokenLen &&
-                    this.reRegexBadSuffix.test(suffix)
+                token.length < this.maxTokenLen && (
+                    lastIndex === pattern.length ||
+                    pattern.charAt(lastIndex) === '\x01'
                 )
             ) {
                 continue;
@@ -3220,23 +3200,19 @@ const FilterParser = class {
         }
     }
 
-    makePatternFromQuerypruneValue() {
-        let pattern = this.modifyValue;
+    extractTokenFromQuerypruneValue() {
+        const pattern = this.modifyValue;
         if ( pattern === '*' || pattern.charCodeAt(0) === 0x7E /* '~' */ ) {
-            return false;
+            return;
         }
         const match = /^\/(.+)\/i?$/.exec(pattern);
         if ( match !== null ) {
-            pattern = match[1];
-            this.isRegex = true;
-        } else if ( pattern.startsWith('|') ) {
-            pattern = '\\b' + pattern.slice(1);
-            this.isRegex = true;
-        } else {
-            pattern = encodeURIComponent(pattern).toLowerCase() + '=';
+            return this.extractTokenFromRegex(match[1]);
         }
-        this.pattern = pattern;
-        return true;
+        if ( pattern.startsWith('|') ) {
+            return this.extractTokenFromRegex('\\b' + pattern.slice(1));
+        }
+        this.extractTokenFromPattern(encodeURIComponent(pattern).toLowerCase());
     }
 
     hasNoOptionUnits() {
@@ -3262,14 +3238,14 @@ const FilterParser = class {
     }
 };
 
-FilterParser.prototype.DOMAIN_BIT             = 0b00000001;
-FilterParser.prototype.DENYALLOW_BIT          = 0b00000010;
-FilterParser.prototype.HEADER_BIT             = 0b00000100;
-FilterParser.prototype.STRICT_PARTY_BIT       = 0b00001000;
+FilterParser.prototype.DOMAIN_BIT       = 0b00000001;
+FilterParser.prototype.DENYALLOW_BIT    = 0b00000010;
+FilterParser.prototype.HEADER_BIT       = 0b00000100;
+FilterParser.prototype.STRICT_PARTY_BIT = 0b00001000;
 
-FilterParser.prototype.CSP_BIT                = 0b00010000;
-FilterParser.prototype.QUERYPRUNE_BIT         = 0b00100000;
-FilterParser.prototype.REDIRECT_BIT           = 0b01000000;
+FilterParser.prototype.CSP_BIT          = 0b00010000;
+FilterParser.prototype.QUERYPRUNE_BIT   = 0b00100000;
+FilterParser.prototype.REDIRECT_BIT     = 0b01000000;
 
 /******************************************************************************/
 
@@ -3461,7 +3437,7 @@ FilterContainer.prototype.freeze = function() {
     this.optimizeTimerId = self.requestIdleCallback(( ) => {
         this.optimizeTimerId = undefined;
         this.optimize();
-    }, { timeout: 10000 });
+    }, { timeout: 5000 });
 
     log.info(`staticNetFilteringEngine.freeze() took ${Date.now()-t0} ms`);
 };

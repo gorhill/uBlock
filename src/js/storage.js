@@ -83,57 +83,138 @@
 
 /******************************************************************************/
 
+µBlock.loadUserSettings = async function() {
+    const usDefault = this.userSettingsDefault;
+
+    const results = await Promise.all([
+        vAPI.storage.get(Object.assign(usDefault)),
+        vAPI.adminStorage.get('userSettings'),
+    ]);
+
+    const usUser = results[0] instanceof Object && results[0] ||
+                   Object.assign(usDefault);
+
+    if ( Array.isArray(results[1]) ) {
+        const adminSettings = results[1];
+        for ( const entry of adminSettings ) {
+            if ( entry.length < 1 ) { continue; }
+            const name = entry[0];
+            if ( usDefault.hasOwnProperty(name) === false ) { continue; }
+            const value = entry.length < 2
+                ? usDefault[name]
+                : this.settingValueFromString(usDefault, name, entry[1]);
+            if ( value === undefined ) { continue; }
+            usUser[name] = usDefault[name] = value;
+        }
+    }
+
+    return usUser;
+};
+
 µBlock.saveUserSettings = function() {
-    vAPI.storage.set(this.userSettings);
+    const toSave = this.getModifiedSettings(
+        this.userSettings,
+        this.userSettingsDefault
+    );
+    const toRemove = [];
+    for ( const key in this.userSettings ) {
+        if ( this.userSettings.hasOwnProperty(key) === false ) { continue; }
+        if ( toSave.hasOwnProperty(key) === false ) { continue; }
+        toRemove.push(key);
+    }
+    if ( toRemove.length !== 0 ) {
+        vAPI.storage.remove(toRemove);
+    }
+    vAPI.storage.set(toSave);
 };
 
 /******************************************************************************/
 
-µBlock.loadHiddenSettings = async function() {
-    const bin = await vAPI.storage.get('hiddenSettings');
-    if ( bin instanceof Object === false ) { return; }
+// Admin hidden settings have precedence over user hidden settings.
 
-    const hs = bin.hiddenSettings;
-    if ( hs instanceof Object ) {
-        const hsDefault = this.hiddenSettingsDefault;
-        for ( const key in hsDefault ) {
-            if (
-                hsDefault.hasOwnProperty(key) &&
-                hs.hasOwnProperty(key) &&
-                typeof hs[key] === typeof hsDefault[key]
-            ) {
-                this.hiddenSettings[key] = hs[key];
+µBlock.loadHiddenSettings = async function() {
+    const hsDefault = this.hiddenSettingsDefault;
+    const hsAdmin = this.hiddenSettingsAdmin;
+    const hsUser = this.hiddenSettings;
+
+    const results = await Promise.all([
+        vAPI.adminStorage.get([
+            'advancedSettings',
+            'disableDashboard',
+            'disabledPopupPanelParts',
+        ]),
+        vAPI.storage.get('hiddenSettings'),
+    ]);
+
+    if ( results[0] instanceof Object ) {
+        const {
+            advancedSettings,
+            disableDashboard,
+            disabledPopupPanelParts
+        } = results[0];
+        if ( Array.isArray(advancedSettings) ) {
+            for ( const entry of advancedSettings ) {
+                if ( entry.length < 1 ) { continue; }
+                const name = entry[0];
+                if ( hsDefault.hasOwnProperty(name) === false ) { continue; }
+                const value = entry.length < 2
+                    ? hsDefault[name]
+                    : this.hiddenSettingValueFromString(name, entry[1]);
+                if ( value === undefined ) { continue; }
+                hsDefault[name] = hsAdmin[name] = hsUser[name] = value;
             }
         }
-        if ( typeof this.hiddenSettings.suspendTabsUntilReady === 'boolean' ) {
-            this.hiddenSettings.suspendTabsUntilReady =
-                this.hiddenSettings.suspendTabsUntilReady
-                    ? 'yes'
-                    : 'unset';
+        µBlock.noDashboard = disableDashboard === true;
+        if ( Array.isArray(disabledPopupPanelParts) ) {
+            const partNameToBit = new Map([
+                [  'globalStats', 0b00010 ],
+                [   'basicTools', 0b00100 ],
+                [   'extraTools', 0b01000 ],
+                [ 'overviewPane', 0b10000 ],
+            ]);
+            let bits = hsDefault.popupPanelDisabledSections;
+            for ( const part of disabledPopupPanelParts ) {
+                const bit = partNameToBit.get(part);
+                if ( bit === undefined ) { continue; }
+                bits |= bit;
+            }
+            hsDefault.popupPanelDisabledSections =
+            hsAdmin.popupPanelDisabledSections =
+            hsUser.popupPanelDisabledSections = bits;
         }
+    }
+
+    const hs = results[1] instanceof Object && results[1].hiddenSettings || {};
+    if ( Object.keys(hsAdmin).length === 0 && Object.keys(hs).length === 0 ) {
+        return;
+    }
+
+    for ( const key in hsDefault ) {
+        if ( hsDefault.hasOwnProperty(key) === false ) { continue; }
+        if ( hsAdmin.hasOwnProperty(name) ) { continue; }
+        if ( typeof hs[key] !== typeof hsDefault[key] ) { continue; }
+        this.hiddenSettings[key] = hs[key];
+    }
+    if ( typeof this.hiddenSettings.suspendTabsUntilReady === 'boolean' ) {
+        this.hiddenSettings.suspendTabsUntilReady =
+            this.hiddenSettings.suspendTabsUntilReady
+                ? 'yes'
+                : 'unset';
     }
     this.fireDOMEvent('hiddenSettingsChanged');
 };
 
 // Note: Save only the settings which values differ from the default ones.
-// This way the new default values in the future will properly apply for those
-// which were not modified by the user.
-
-µBlock.getModifiedHiddenSettings = function() {
-    const out = {};
-    for ( const prop in this.hiddenSettings ) {
-        if (
-            this.hiddenSettings.hasOwnProperty(prop) &&
-            this.hiddenSettings[prop] !== this.hiddenSettingsDefault[prop]
-        ) {
-            out[prop] = this.hiddenSettings[prop];
-        }
-    }
-    return out;
-};
+// This way the new default values in the future will properly apply for
+// those which were not modified by the user.
 
 µBlock.saveHiddenSettings = function() {
-    vAPI.storage.set({ hiddenSettings: this.getModifiedHiddenSettings() });
+    vAPI.storage.set({
+        hiddenSettings: this.getModifiedSettings(
+            this.hiddenSettings,
+            this.hiddenSettingsDefault
+        )
+    });
 };
 
 self.addEventListener('hiddenSettingsChanged', ( ) => {
@@ -162,29 +243,45 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         if ( matches === null || matches.length !== 3 ) { continue; }
         const name = matches[1];
         if ( out.hasOwnProperty(name) === false ) { continue; }
-        const value = matches[2];
-        switch ( typeof out[name] ) {
-        case 'boolean':
-            if ( value === 'true' ) {
-                out[name] = true;
-            } else if ( value === 'false' ) {
-                out[name] = false;
-            }
-            break;
-        case 'string':
-            out[name] = value.trim();
-            break;
-        case 'number':
-            out[name] = parseInt(value, 10);
-            if ( isNaN(out[name]) ) {
-                out[name] = this.hiddenSettingsDefault[name];
-            }
-            break;
-        default:
-            break;
+        if ( this.hiddenSettingsAdmin.hasOwnProperty(name) ) { continue; }
+        const value = this.hiddenSettingValueFromString(name, matches[2]);
+        if ( value !== undefined ) {
+            out[name] = value;
         }
     }
     return out;
+};
+
+µBlock.hiddenSettingValueFromString = function(name, value) {
+    if ( typeof name !== 'string' || typeof value !== 'string' ) { return; }
+    const hsDefault = this.hiddenSettingsDefault;
+    if ( hsDefault.hasOwnProperty(name) === false ) { return; }
+    let r;
+    switch ( typeof hsDefault[name] ) {
+    case 'boolean':
+        if ( value === 'true' ) {
+            r = true;
+        } else if ( value === 'false' ) {
+            r = false;
+        }
+        break;
+    case 'string':
+        r = value.trim();
+        break;
+    case 'number':
+        if ( value.startsWith('0b') ) {
+            r = parseInt(value.slice(2), 2);
+        } else if ( value.startsWith('0x') ) {
+            r = parseInt(value.slice(2), 16);
+        } else {
+            r = parseInt(value, 10);
+        }
+        if ( isNaN(r) ) { r = undefined; }
+        break;
+    default:
+        break;
+    }
+    return r;
 };
 
 µBlock.stringFromHiddenSettings = function() {
@@ -271,7 +368,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
 µBlock.applyFilterListSelection = function(details) {
     let selectedListKeySet = new Set(this.selectedFilterLists);
-    let externalLists = this.userSettings.externalLists;
+    let externalLists = this.userSettings.externalLists.slice();
 
     // Filter lists to select
     if ( Array.isArray(details.toSelect) ) {
@@ -286,19 +383,13 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
     // Imported filter lists to remove
     if ( Array.isArray(details.toRemove) ) {
-        const removeURLFromHaystack = (haystack, needle) => {
-            return haystack.replace(
-                new RegExp(
-                    '(^|\\n)' +
-                    this.escapeRegex(needle) +
-                    '(\\n|$)', 'g'),
-                '\n'
-            ).trim();
-        };
         for ( let i = 0, n = details.toRemove.length; i < n; i++ ) {
             const assetKey = details.toRemove[i];
             selectedListKeySet.delete(assetKey);
-            externalLists = removeURLFromHaystack(externalLists, assetKey);
+            const pos = externalLists.indexOf(assetKey);
+            if ( pos !== -1 ) {
+                externalLists.splice(pos, 1);
+            }
             this.removeFilterList(assetKey);
         }
     }
@@ -340,13 +431,13 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
             }
             selectedListKeySet.add(assetKey);
         }
-        externalLists = Array.from(importedSet).sort().join('\n');
+        externalLists = Array.from(importedSet).sort();
     }
 
     const result = Array.from(selectedListKeySet);
-    if ( externalLists !== this.userSettings.externalLists ) {
+    if ( externalLists.join() !== this.userSettings.externalLists.join() ) {
         this.userSettings.externalLists = externalLists;
-        vAPI.storage.set({ externalLists });
+        this.saveUserSettings();
     }
     this.saveSelectedFilterLists(result);
 };
@@ -354,16 +445,17 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 /******************************************************************************/
 
 µBlock.listKeysFromCustomFilterLists = function(raw) {
+    const urls = typeof raw === 'string'
+        ? raw.trim().split(/[\n\r]+/)
+        : raw;
     const out = new Set();
     const reIgnore = /^[!#]/;
     const reValid = /^[a-z-]+:\/\/\S+/;
-    const lineIter = new this.LineIterator(raw);
-    while ( lineIter.eot() === false ) {
-        const location = lineIter.next().trim();
-        if ( reIgnore.test(location) || !reValid.test(location) ) { continue; }
+    for ( const url of urls ) {
+        if ( reIgnore.test(url) || !reValid.test(url) ) { continue; }
         // Ignore really bad lists.
-        if ( this.badLists.get(location) === true ) { continue; }
-        out.add(location);
+        if ( this.badLists.get(url) === true ) { continue; }
+        out.add(url);
     }
     return Array.from(out);
 };
@@ -544,9 +636,8 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         newAvailableLists[listURL] = newEntry;
         this.assets.registerAssetSource(listURL, newEntry);
         importedListKeys.push(listURL);
-        this.userSettings.externalLists += '\n' + listURL;
-        this.userSettings.externalLists = this.userSettings.externalLists.trim();
-        vAPI.storage.set({ externalLists: this.userSettings.externalLists });
+        this.userSettings.externalLists.push(listURL.trim());
+        this.saveUserSettings();
         this.saveSelectedFilterLists([ listURL ], true);
     };
 
@@ -1272,9 +1363,17 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 // values are left to the user's choice.
 
 µBlock.restoreAdminSettings = async function() {
+    let toOverwrite = {};
     let data;
     try {
-        const json = await vAPI.adminStorage.getItem('adminSettings');
+        const store = await vAPI.adminStorage.get([
+            'adminSettings',
+            'toOverwrite',
+        ]) || {};
+        if ( store.toOverwrite instanceof Object ) {
+            toOverwrite = store.toOverwrite;
+        }
+        const json = store.adminSettings;
         if ( typeof json === 'string' && json !== '' ) {
             data = JSON.parse(json);
         } else if ( json instanceof Object ) {
@@ -1284,7 +1383,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         console.error(ex);
     }
 
-    if ( data instanceof Object === false ) { return; }
+    if ( data instanceof Object === false ) { data = {}; }
 
     const bin = {};
     let binNotEmpty = false;
@@ -1300,26 +1399,51 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     }
 
     if ( typeof data.userSettings === 'object' ) {
-        for ( const name in this.userSettings ) {
-            if ( this.userSettings.hasOwnProperty(name) === false ) {
-                continue;
-            }
-            if ( data.userSettings.hasOwnProperty(name) === false ) {
-                continue;
-            }
-            bin[name] = data.userSettings[name];
+        const µbus = this.userSettings;
+        const adminus = data.userSettings;
+        // List of external lists is meant to be an array.
+        if ( typeof adminus.externalLists === 'string' ) {
+            adminus.externalLists =
+                adminus.externalLists.trim().split(/[\n\r]+/);
+        }
+        for ( const name in µbus ) {
+            if ( µbus.hasOwnProperty(name) === false ) { continue; }
+            if ( adminus.hasOwnProperty(name) === false ) { continue; }
+            bin[name] = adminus[name];
             binNotEmpty = true;
         }
     }
 
     // 'selectedFilterLists' is an array of filter list tokens. Each token
-    // is a reference to an asset in 'assets.json'.
-    if ( Array.isArray(data.selectedFilterLists) ) {
+    // is a reference to an asset in 'assets.json', or a URL for lists not
+    // present in 'assets.json'.
+    if (
+        Array.isArray(toOverwrite.filterLists) &&
+        toOverwrite.filterLists.length !== 0
+    ) {
+        const externalLists = [];
+        for ( const list of toOverwrite.filterLists ) {
+            if ( /^[a-z-]+:\/\//.test(list) === false ) { continue; }
+            externalLists.push(list);
+        }
+        if ( externalLists.length !== 0 ) {
+            bin.externalLists = externalLists;
+        }
+        bin.selectedFilterLists = toOverwrite.filterLists;
+        binNotEmpty = true;
+    } else if ( Array.isArray(data.selectedFilterLists) ) {
         bin.selectedFilterLists = data.selectedFilterLists;
         binNotEmpty = true;
     }
 
-    if ( Array.isArray(data.whitelist) ) {
+    if (
+        Array.isArray(toOverwrite.trustedSiteDirectives) &&
+        toOverwrite.trustedSiteDirectives.length !== 0
+    ) {
+        µBlock.netWhitelistDefault = toOverwrite.trustedSiteDirectives.slice();
+        bin.netWhitelist = toOverwrite.trustedSiteDirectives.slice();
+        binNotEmpty = true;
+    } else if ( Array.isArray(data.whitelist) ) {
         bin.netWhitelist = data.whitelist;
         binNotEmpty = true;
     } else if ( typeof data.netWhitelist === 'string' ) {
@@ -1346,7 +1470,12 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         vAPI.storage.set(bin);
     }
 
-    if ( typeof data.userFilters === 'string' ) {
+    if (
+        Array.isArray(toOverwrite.filters) &&
+        toOverwrite.filters.length !== 0
+    ) {
+        this.saveUserFilters(toOverwrite.filters.join('\n'));
+    } else if ( typeof data.userFilters === 'string' ) {
         this.saveUserFilters(data.userFilters);
     }
 };

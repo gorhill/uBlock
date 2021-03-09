@@ -31,11 +31,16 @@
 if ( typeof vAPI !== 'object' ) { return; }
 
 const url = new URL(self.location.href);
-const frameURL = url.searchParams.get('url');
+const actualURL = url.searchParams.get('url');
+const frameURL = url.searchParams.get('aliasURL') || actualURL;
 const frameURLElem = document.getElementById('frameURL');
 
-frameURLElem.children[0].textContent = frameURL;
+frameURLElem.children[0].textContent = actualURL;
+
 frameURLElem.children[1].href = frameURL;
+frameURLElem.children[1].title = frameURL;
+
+document.body.setAttribute('title', actualURL);
 
 const onWindowResize = function() {
     document.body.style.width = `${self.innerWidth}px`;

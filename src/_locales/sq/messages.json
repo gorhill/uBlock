@@ -404,7 +404,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "Filtrat kozmetikë shërbejnë për të fshehur nga ana vizive elementet e padëshirueshme të faqes, të cilat nuk bllokohen me metodën standarde të filtrimit sipas kërkesave.",
+    "message": "Filtrat kozmetikë shërbejnë për të fshehur nga ana vizive elementet e padëshirueshme të faqes, të cilat nuk bllokohen me metodën standarde të filtrimit sipas kërkesës.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -1028,7 +1028,7 @@
     "description": ""
   },
   "contextMenuBlockElementInFrame": {
-    "message": "Block element in frame...",
+    "message": "Bllokoj elementin në kuadër...",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {

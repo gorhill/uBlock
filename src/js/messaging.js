@@ -579,6 +579,13 @@ const retrieveContentScriptParameters = function(sender, request) {
         return;
     }
 
+    // A content script may not always be able to successfully look up the
+    // effective context, hence in such case we try again to look up here
+    // using cached information about embedded frames.
+    if ( frameId !== 0 && request.url.startsWith('about:') ) {
+        request.url = pageStore.getEffectiveFrameURL(sender);
+    }
+
     const noCosmeticFiltering = pageStore.noCosmeticFiltering === true;
 
     const response = {
@@ -930,12 +937,12 @@ const backupUserData = async function() {
     const userData = {
         timeStamp: Date.now(),
         version: vAPI.app.version,
-        userSettings: µb.userSettings,
+        userSettings:
+            µb.getModifiedSettings(µb.userSettings, µb.userSettingsDefault),
         selectedFilterLists: µb.selectedFilterLists,
-        hiddenSettings: µb.getModifiedHiddenSettings(),
+        hiddenSettings:
+            µb.getModifiedSettings(µb.hiddenSettings, µb.hiddenSettingsDefault),
         whitelist: µb.arrayFromWhitelist(µb.netWhitelist),
-        // String representation eventually to be deprecated
-        netWhitelist: µb.stringFromWhitelist(µb.netWhitelist),
         dynamicFilteringString: µb.permanentFirewall.toString(),
         urlFilteringString: µb.permanentURLFiltering.toString(),
         hostnameSwitchesString: µb.permanentSwitches.toString(),
@@ -965,6 +972,11 @@ const restoreUserData = async function(request) {
         vAPI.app.intFromVersion(userData.version) <= 1031003011
     ) {
         userData.hostnameSwitchesString += '\nno-csp-reports: * true';
+    }
+
+    // List of external lists is meant to be an array.
+    if ( typeof userData.externalLists === 'string' ) {
+        userData.externalLists = userData.externalLists.trim().split(/[\n\r]+/);
     }
 
     // https://github.com/chrisaljoudi/uBlock/issues/1102
@@ -1066,7 +1078,6 @@ const getLists = async function(callback) {
         cache: null,
         cosmeticFilterCount: µb.cosmeticFilteringEngine.getFilterCount(),
         current: µb.availableFilterLists,
-        externalLists: µb.userSettings.externalLists,
         ignoreGenericCosmeticFilters: µb.userSettings.ignoreGenericCosmeticFilters,
         isUpdating: µb.assets.isUpdating(),
         netFilterCount: µb.staticNetFilteringEngine.getFilterCount(),
@@ -1255,8 +1266,11 @@ const onMessage = function(request, sender, callback) {
     let response;
 
     switch ( request.what ) {
-    case 'canUpdateShortcuts':
-        response = µb.canUpdateShortcuts;
+    case 'dashboardConfig':
+        response = {
+            canUpdateShortcuts: µb.canUpdateShortcuts,
+            noDashboard: µb.noDashboard,
+        };
         break;
 
     case 'getAutoCompleteDetails':
@@ -1299,8 +1313,9 @@ const onMessage = function(request, sender, callback) {
 
     case 'readHiddenSettings':
         response = {
-            current: µb.hiddenSettings,
-            default: µb.hiddenSettingsDefault,
+            'default': µb.hiddenSettingsDefault,
+            'admin': µb.hiddenSettingsAdmin,
+            'current': µb.hiddenSettings,
         };
         break;
 

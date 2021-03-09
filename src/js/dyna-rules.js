@@ -618,7 +618,7 @@ const editSaveHandler = function() {
 /******************************************************************************/
 
 self.cloud.onPush = function() {
-    return mergeView.leftOriginal().getValue().trim();
+    return thePanes.orig.original.join('\n');
 };
 
 self.cloud.onPull = function(data, append) {

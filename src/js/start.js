@@ -134,10 +134,23 @@ const onVersionReady = function(lastVersion) {
 // Whitelist in memory.
 // Whitelist parser needs PSL to be ready.
 // gorhill 2014-12-15: not anymore
+//
+// https://github.com/uBlockOrigin/uBlock-issues/issues/1433
+//   Allow admins to add their own trusted-site directives.
 
-const onNetWhitelistReady = function(netWhitelistRaw) {
+const onNetWhitelistReady = function(netWhitelistRaw, adminExtra) {
     if ( typeof netWhitelistRaw === 'string' ) {
         netWhitelistRaw = netWhitelistRaw.split('\n');
+    }
+    // Append admin-controlled trusted-site directives
+    if (
+        adminExtra instanceof Object &&
+        Array.isArray(adminExtra.trustedSiteDirectives)
+    ) {
+        for ( const directive of adminExtra.trustedSiteDirectives ) {
+            µb.netWhitelistDefault.push(directive);
+            netWhitelistRaw.push(directive);
+        }
     }
     µb.netWhitelist = µb.whitelistFromArray(netWhitelistRaw);
     µb.netWhitelistModifyTime = Date.now();
@@ -148,26 +161,21 @@ const onNetWhitelistReady = function(netWhitelistRaw) {
 // User settings are in memory
 
 const onUserSettingsReady = function(fetched) {
-    const userSettings = µb.userSettings;
+    // List of external lists is meant to be an array
+    if ( typeof fetched.externalLists === 'string' ) {
+        fetched.externalLists =
+            fetched.externalLists.trim().split(/[\n\r]+/);
+    }
 
-    fromFetch(userSettings, fetched);
+    fromFetch(µb.userSettings, fetched);
 
     if ( µb.privacySettingsSupported ) {
         vAPI.browserSettings.set({
-            'hyperlinkAuditing': !userSettings.hyperlinkAuditingDisabled,
-            'prefetching': !userSettings.prefetchingDisabled,
-            'webrtcIPAddress': !userSettings.webrtcIPAddressHidden
+            'hyperlinkAuditing': !µb.userSettings.hyperlinkAuditingDisabled,
+            'prefetching': !µb.userSettings.prefetchingDisabled,
+            'webrtcIPAddress': !µb.userSettings.webrtcIPAddressHidden
         });
     }
-
-    µb.permanentFirewall.fromString(fetched.dynamicFilteringString);
-    µb.sessionFirewall.assign(µb.permanentFirewall);
-    µb.permanentURLFiltering.fromString(fetched.urlFilteringString);
-    µb.sessionURLFiltering.assign(µb.permanentURLFiltering);
-    µb.permanentSwitches.fromString(fetched.hostnameSwitchesString);
-    µb.sessionSwitches.assign(µb.permanentSwitches);
-
-
     // https://github.com/gorhill/uBlock/issues/1892
     // For first installation on a battery-powered device, disable generic
     // cosmetic filtering.
@@ -199,7 +207,7 @@ const onCacheSettingsReady = async function(fetched) {
 
 /******************************************************************************/
 
-const onFirstFetchReady = function(fetched) {
+const onFirstFetchReady = function(fetched, adminExtra) {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/507
     //   Firefox-specific: somehow `fetched` is undefined under certain
     //   circumstances even though we asked to load with default values.
@@ -212,9 +220,16 @@ const onFirstFetchReady = function(fetched) {
 
     // Order is important -- do not change:
     fromFetch(µb.localSettings, fetched);
-    onUserSettingsReady(fetched);
     fromFetch(µb.restoreBackupSettings, fetched);
-    onNetWhitelistReady(fetched.netWhitelist);
+
+    µb.permanentFirewall.fromString(fetched.dynamicFilteringString);
+    µb.sessionFirewall.assign(µb.permanentFirewall);
+    µb.permanentURLFiltering.fromString(fetched.urlFilteringString);
+    µb.sessionURLFiltering.assign(µb.permanentURLFiltering);
+    µb.permanentSwitches.fromString(fetched.hostnameSwitchesString);
+    µb.sessionSwitches.assign(µb.permanentSwitches);
+
+    onNetWhitelistReady(fetched.netWhitelist, adminExtra);
     onVersionReady(fetched.version);
 };
 
@@ -262,7 +277,6 @@ const createDefaultProps = function() {
         fetchableProps.hostnameSwitchesString += '\nno-csp-reports: * true';
     }
     toFetch(µb.localSettings, fetchableProps);
-    toFetch(µb.userSettings, fetchableProps);
     toFetch(µb.restoreBackupSettings, fetchableProps);
     return fetchableProps;
 };
@@ -295,6 +309,9 @@ try {
     );
     log.info(`Backend storage for cache will be ${cacheBackend}`);
 
+    const adminExtra = await vAPI.adminStorage.get('toAdd');
+    log.info(`Extra admin settings ready ${Date.now()-vAPI.T0} ms after launch`);
+
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1365
     //   Wait for onCacheSettingsReady() to be fully ready.
     await Promise.all([
@@ -309,7 +326,11 @@ try {
         }),
         vAPI.storage.get(createDefaultProps()).then(fetched => {
             log.info(`First fetch ready ${Date.now()-vAPI.T0} ms after launch`);
-            onFirstFetchReady(fetched);
+            onFirstFetchReady(fetched, adminExtra);
+        }),
+        µb.loadUserSettings().then(fetched => {
+            log.info(`User settings ready ${Date.now()-vAPI.T0} ms after launch`);
+            onUserSettingsReady(fetched);
         }),
         µb.loadPublicSuffixList().then(( ) => {
             log.info(`PSL ready ${Date.now()-vAPI.T0} ms after launch`);

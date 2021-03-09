@@ -1,0 +1,47 @@
+uBlock è un efficiente ad-blocker: occupa poca memoria e poca CPU, ma può usare migliaia di filtri in più rispetto ad altri software simili.
+
+Consulta questa pagina (in inglese) per verificare la sua efficacia https://github.com/gorhill/uBlock/wiki/uBlock-vs.-ABP:-efficiency-compared
+
+Uso: il pulsante power nel popup serve per disabilitare/abilitare permanentemente uBlock nel sito che stai visitando. e non serve per disabilitare/abilitare l'estensione.
+
+***
+
+Molto più che un ad-blocker: può anche creare filtri dal file host.
+
+Per default sono attivate queste liste:
+
+- EasyList
+- Peter Lowe’s Ad server list
+- EasyPrivacy
+- Malware domains
+
+Puoi anche attivare moltre altre liste:
+
+- Fanboy’s Enhanced Tracking List
+- Dan Pollock’s hosts file
+- hpHosts’s Ad and tracking servers
+- MVPS HOSTS
+- Spam404
+- Ecc.
+
+Ovviamente, più liste attivi, maggiore sarà l'impatto sulla memoria. Anche aggiungendo altre due liste di Fanboy, ad di hpHosts e tracking server, uBlock userà meno memoria di molti altri ad-blocker.
+
+Selezionando alcuni di questi filtri può portare ad una maggiore probabilità di problemi nel visualizzare alcuni siti web.
+
+***
+
+Senza queste liste di filtri, questa estensione non è niente. osì se vuoi contribuire, pensa alle persone che lavorano duramente per mantenere queste liste che stai usando, che sono disponibili gratuitamente.
+
+***
+
+Libero.
+Open source with public license (GPLv3)
+Fatto dagli utenti per gli utenti.
+
+Collaboratori @ Github: https://github.com/gorhill/uBlock/graphs/contributors
+Collaboratori @ Crowdin: https://crowdin.net/project/ublock
+
+***
+
+Per leggere le novità di ogni versione consulta questa pagina (In Inlgese):
+https://github.com/gorhill/uBlock/releases
