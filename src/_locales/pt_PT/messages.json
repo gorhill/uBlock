@@ -1027,6 +1027,10 @@
     "message": "bytes",
     "description": ""
   },
+  "contextMenuBlockElementInFrame": {
+    "message": "Bloquear elemento no frame...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Permitir temporariamente elementos multimédia grandes",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"

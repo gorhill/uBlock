@@ -49,18 +49,39 @@ const cmEditor = new CodeMirror(document.getElementById('userFilters'), {
 
 uBlockDashboard.patchCodeMirrorEditor(cmEditor);
 
-vAPI.messaging.send('dashboard', {
-    what: 'getAutoCompleteDetails'
-}).then(response => {
-    if ( response instanceof Object === false ) { return; }
-    const mode = cmEditor.getMode();
-    if ( mode.setHints instanceof Function ) {
-        mode.setHints(response);
-    }
-    mode.parser.expertMode = response.expertMode !== false;
-});
-
 let cachedUserFilters = '';
+
+/******************************************************************************/
+
+// Add auto-complete ability to the editor.
+
+{
+    let hintUpdateToken = 0;
+
+    const responseHandler = function(response) {
+        if ( response instanceof Object === false ) { return; }
+        if ( response.hintUpdateToken !== undefined ) {
+            const mode = cmEditor.getMode();
+            if ( mode.setHints instanceof Function ) {
+                mode.setHints(response);
+            }
+            if ( hintUpdateToken === 0 ) {
+                mode.parser.expertMode = response.expertMode !== false;
+            }
+            hintUpdateToken = response.hintUpdateToken;
+        }
+        vAPI.setTimeout(getHints, 2503);
+    };
+
+    const getHints = function() {
+        vAPI.messaging.send('dashboard', {
+            what: 'getAutoCompleteDetails',
+            hintUpdateToken
+        }).then(responseHandler);
+    };
+
+    getHints();
+}
 
 /******************************************************************************/
 

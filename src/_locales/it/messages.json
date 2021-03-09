@@ -72,7 +72,7 @@
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
-    "message": "Fare click per attivare uBlock₀ in questo sito.",
+    "message": "Clicca per attivare uBlock₀ in questo sito.",
     "description": "Message to be read by screen readers"
   },
   "popupBlockedRequestPrompt": {
@@ -104,7 +104,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
-    "message": "Domini contattati",
+    "message": "Domini connessi",
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
@@ -172,7 +172,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "Clicca per disabilitare completamente JavaScript su questo sito",
+    "message": "Clicca per disattivare JavaScript su questo sito",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
@@ -192,7 +192,7 @@
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
-    "message": "Tipi di carattere remoti",
+    "message": "Caratteri remoti",
     "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
@@ -256,7 +256,7 @@
     "description": ""
   },
   "popupHitDomainCountPrompt": {
-    "message": "domini contattati",
+    "message": "domini connessi",
     "description": "appears in popup"
   },
   "popupHitDomainCount": {
@@ -356,7 +356,7 @@
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
-    "message": "Blocca elementi multimediali di dimensioni maggiori di {{input:number}} kB",
+    "message": "Blocca elementi multimediali di dimensioni maggiori di {{input}} KB",
     "description": ""
   },
   "settingsNoRemoteFontsPrompt": {
@@ -404,7 +404,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>Questa opzione abilita i filtri di <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">Adblock Plus-compatible &ldquo;element hiding&rdquo; filters</a>. Questi filtri sono essenzialmente estetici, servono a nascondere elementi fastidiosi in una pagina web, e che non possono essere bloccati normalmente.</p><p>Questa funzione aumenta l'uso della memoria da parte di <i>uBlock</i>.</p>",
+    "message": "\nI filtri cosmetici servono a nascondere gli elementi in una pagina web che sono considerati un fastidio visivo, e che non possono essere bloccati dai motori di filtraggio basati sulla richiesta di rete.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -460,7 +460,7 @@
     "description": "The label for the checkbox used to import external filter lists"
   },
   "3pExternalListsHint": {
-    "message": "Un URL per ogni riga. Ogni riga che comincia con &lsquo;!&rsquo; verrà ignorata. URL non validi verranno silenziosamente ignorati.",
+    "message": "Un URL per riga. URL non validi verranno silenziosamente ignorati.",
     "description": "Short information about how to use the textarea to import external filter lists by URL"
   },
   "3pExternalListObsolete": {
@@ -580,7 +580,7 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "ublock-lista-bianca_{{datetime}}.txt",
+    "message": "ublock-whitelist_{{datetime}}.txt",
     "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
@@ -668,7 +668,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinAllowed": {
-    "message": "permesso",
+    "message": "Consentito",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinModified": {
@@ -676,7 +676,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
-    "message": "Dominio corrente",
+    "message": "Dominio attuale",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin3p": {
@@ -720,7 +720,7 @@
     "description": "Label to identify the URL of an entry"
   },
   "loggerURLFilteringHeader": {
-    "message": "Filtraggio dinamico dell'URL",
+    "message": "Regola dell'URL",
     "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
@@ -776,7 +776,7 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Non è stato possibile trovare il filtro statico <code>{{filter}}</code> in nessun filtro di terze parti attualmente abilitato",
+    "message": "Non è stato possibile trovare il filtro statico in nessuno degli elenchi di filtri attualmente abilitati",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
@@ -796,7 +796,7 @@
     "description": "A logger setting"
   },
   "loggerSettingPerEntryLineCount": {
-    "message": "Utilizza {{input}} righe per ogni voce con la modalità espansione verticale",
+    "message": "Usa {{input}} righe per voce in modalità espansa verticale",
     "description": "A logger setting"
   },
   "loggerSettingHideColumnsPrompt": {
@@ -836,7 +836,7 @@
     "description": "Label for radio-button to pick export text format"
   },
   "aboutChangelog": {
-    "message": "Change log",
+    "message": "Changelog",
     "description": ""
   },
   "aboutWiki": {
@@ -912,7 +912,7 @@
     "description": "No longer used"
   },
   "subscribeButton": {
-    "message": "Abbonati",
+    "message": "Sottoscrivi",
     "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
@@ -1026,6 +1026,10 @@
   "genericBytes": {
     "message": "byte",
     "description": ""
+  },
+  "contextMenuBlockElementInFrame": {
+    "message": "Blocca elemento in un frame",
+    "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Consenti temporaneamente elementi multimediali di grandi dimensioni",

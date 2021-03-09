@@ -1027,6 +1027,10 @@
     "message": "బైట్లు",
     "description": ""
   },
+  "contextMenuBlockElementInFrame": {
+    "message": "ఫ్రేమ్‌లో మూలకాన్ని బ్లాక్ చేయండి ...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "భారి దృశ్య/శ్రవణ అంశాలను తాత్కాలికంగా అనుమతించు",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"

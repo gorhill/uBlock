@@ -1027,6 +1027,10 @@
     "message": "bajtov",
     "description": ""
   },
+  "contextMenuBlockElementInFrame": {
+    "message": "Zablokovať prvok v ráme…",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Dočasne povoliť veľké multimediálne prvky",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"

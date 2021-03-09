@@ -230,8 +230,7 @@
     };
 
     api.compile = function(parser, writer) {
-        // 1001 = scriptlet injection
-        writer.select(1001);
+        writer.select(µb.compiledScriptletSection);
 
         // Only exception filters are allowed to be global.
         const { raw, exception } = parser.result;
@@ -270,8 +269,7 @@
     //     4                -1
 
     api.fromCompiledContent = function(reader) {
-        // 1001 = scriptlet injection
-        reader.select(1001);
+        reader.select(µb.compiledScriptletSection);
 
         while ( reader.next() ) {
             acceptedCount += 1;
@@ -320,12 +318,10 @@
             sessionScriptletDB.retrieve([ null, $exceptions ]);
         }
         scriptletDB.retrieve(hostname, [ $scriptlets, $exceptions ]);
-        if ( request.entity !== '' ) {
-            scriptletDB.retrieve(
-                `${hostname.slice(0, -request.domain.length)}${request.entity}`,
-                [ $scriptlets, $exceptions ]
-            );
-        }
+        const entity = request.entity !== ''
+            ? `${hostname.slice(0, -request.domain.length)}${request.entity}`
+            : '*';
+        scriptletDB.retrieve(entity, [ $scriptlets, $exceptions ], 1);
         if ( $scriptlets.size === 0 ) { return; }
 
         const loggerEnabled = µb.logger.enabled;
@@ -381,7 +377,6 @@
 
     api.injectNow = function(details) {
         if ( typeof details.frameId !== 'number' ) { return; }
-        if ( µb.URI.isNetworkURI(details.url) === false ) { return; }
         const request = {
             tabId: details.tabId,
             frameId: details.frameId,

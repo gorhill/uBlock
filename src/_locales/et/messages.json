@@ -1027,6 +1027,10 @@
     "message": "baiti",
     "description": ""
   },
+  "contextMenuBlockElementInFrame": {
+    "message": "Blokeeri raamis olev element...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Luba ajutiselt mahukad meediaelemendid",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"

@@ -153,6 +153,7 @@
             if ( this.block === undefined ) {
                 this.blocks.set(blockId, (this.block = []));
             }
+            return this;
         }
         toString() {
             let result = [];
@@ -179,7 +180,7 @@
             this.blocks = new Map();
             this.properties = new Map();
             let reBlockStart = new RegExp(
-                '^' + this.io.blockStartPrefix + '(\\d+)\\n',
+                `^${this.io.blockStartPrefix}(\\d+)\\n`,
                 'gm'
             );
             let match = reBlockStart.exec(raw);

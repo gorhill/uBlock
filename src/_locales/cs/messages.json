@@ -552,19 +552,19 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
-    "message": "Sort:",
+    "message": "Třídit:",
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
-    "message": "Rule type",
+    "message": "Typ pravidla",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortBySource": {
-    "message": "Source",
+    "message": "Zdroj",
     "description": "English: a sort option for list of rules."
   },
   "rulesSortByDestination": {
-    "message": "Destination",
+    "message": "Cíl",
     "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
@@ -672,7 +672,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinModified": {
-    "message": "modified",
+    "message": "upraveno",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
@@ -1027,6 +1027,10 @@
     "message": "bajtů",
     "description": ""
   },
+  "contextMenuBlockElementInFrame": {
+    "message": "Block element in frame...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Dočasně povolit velké multimediální prvky",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
@@ -1068,7 +1072,7 @@
     "description": "short for 'gigabytes'"
   },
   "clickToLoad": {
-    "message": "Click to load",
+    "message": "Klik pro načtení",
     "description": "Message used in frame placeholders"
   },
   "dummy": {

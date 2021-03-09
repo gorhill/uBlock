@@ -58,6 +58,7 @@ const redirectableResources = new Map([
     } ],
     [ 'amazon_ads.js', {
         alias: 'amazon-adsystem.com/aax2/amzn_ads.js',
+        data: 'text',
     } ],
     [ 'amazon_apstag.js', {
     } ],
@@ -72,30 +73,36 @@ const redirectableResources = new Map([
     } ],
     [ 'doubleclick_instream_ad_status.js', {
         alias: 'doubleclick.net/instream/ad_status.js',
+        data: 'text',
     } ],
     [ 'empty', {
         data: 'text',   // Important!
     } ],
     [ 'google-analytics_analytics.js', {
         alias: 'google-analytics.com/analytics.js',
+        data: 'text',
     } ],
     [ 'google-analytics_cx_api.js', {
         alias: 'google-analytics.com/cx/api.js',
     } ],
     [ 'google-analytics_ga.js', {
         alias: 'google-analytics.com/ga.js',
+        data: 'text',
     } ],
     [ 'google-analytics_inpage_linkid.js', {
         alias: 'google-analytics.com/inpage_linkid.js',
     } ],
     [ 'googlesyndication_adsbygoogle.js', {
         alias: 'googlesyndication.com/adsbygoogle.js',
+        data: 'text',
     } ],
     [ 'googletagmanager_gtm.js', {
         alias: 'googletagmanager.com/gtm.js',
+        data: 'text',
     } ],
     [ 'googletagservices_gpt.js', {
         alias: 'googletagservices.com/gpt.js',
+        data: 'text',
     } ],
     [ 'hd-main.js', {
     } ],
@@ -121,7 +128,7 @@ const redirectableResources = new Map([
         data: 'text',
     } ],
     [ 'noop-0.1s.mp3', {
-        alias: 'noopmp3-0.1s',
+        alias: [ 'noopmp3-0.1s', 'abp-resource:blank-mp3' ],
         data: 'blob',
     } ],
     [ 'noop-1s.mp4', {
@@ -132,7 +139,7 @@ const redirectableResources = new Map([
         alias: 'noopframe',
     } ],
     [ 'noop.js', {
-        alias: 'noopjs',
+        alias: [ 'noopjs', 'abp-resource:blank-js' ],
         data: 'text',
     } ],
     [ 'noop.txt', {
@@ -291,15 +298,26 @@ RedirectEngine.prototype.freeze = function() {
 
 /******************************************************************************/
 
-RedirectEngine.prototype.tokenToURL = function(fctxt, token) {
-    const asDataURI = token.charCodeAt(0) === 0x25 /* '%' */;
-    if ( asDataURI ) {
-        token = token.slice(1);
-    }
+RedirectEngine.prototype.tokenToURL = function(
+    fctxt,
+    token,
+    asDataURI = false
+) {
     const entry = this.resources.get(this.aliases.get(token) || token);
     if ( entry === undefined ) { return; }
     this.resourceNameRegister = token;
     return entry.toURL(fctxt, asDataURI);
+};
+
+/******************************************************************************/
+
+RedirectEngine.prototype.hasToken = function(token) {
+    if ( token === 'none' ) { return true; }
+    const asDataURI = token.charCodeAt(0) === 0x25 /* '%' */;
+    if ( asDataURI ) {
+        token = token.slice(1);
+    }
+    return this.resources.get(this.aliases.get(token) || token) !== undefined;
 };
 
 /******************************************************************************/
@@ -364,11 +382,11 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
 
         if ( line.startsWith('/// ') ) {
             if ( details === undefined ) {
-                details = {};
+                details = [];
             }
             const [ prop, value ] = line.slice(4).trim().split(/\s+/);
             if ( value !== undefined ) {
-                details[prop] = value;
+                details.push({ prop, value });
             }
             continue;
         }
@@ -390,8 +408,11 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
             RedirectEntry.fromContent(mime, content)
         );
 
-        if ( details instanceof Object && details.alias ) {
-            this.aliases.set(details.alias, name);
+        if ( Array.isArray(details) ) {
+            for ( const { prop, value } of details ) {
+                if ( prop !== 'alias' ) { continue; }
+                this.aliases.set(value, name);
+            }
         }
 
         fields = undefined;
@@ -450,7 +471,12 @@ RedirectEngine.prototype.loadBuiltinResources = function() {
             params: details.params,
         });
         this.resources.set(name, entry);
-        if ( details.alias !== undefined ) {
+        if ( details.alias === undefined ) { return; }
+        if ( Array.isArray(details.alias) ) {
+            for ( const alias of details.alias ) {
+                this.aliases.set(alias, name);
+            }
+        } else {
             this.aliases.set(details.alias, name);
         }
     };

@@ -1027,6 +1027,10 @@
     "message": "バイト",
     "description": ""
   },
+  "contextMenuBlockElementInFrame": {
+    "message": "フレーム内の要素をブロック...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "一時的に大きなメディア要素を許可",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"

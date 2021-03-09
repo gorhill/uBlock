@@ -1027,6 +1027,10 @@
     "message": "octets",
     "description": ""
   },
+  "contextMenuBlockElementInFrame": {
+    "message": "Bloquer un élément de cadre",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Autoriser temporairement le chargement d'éléments médias à taille plus importante",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"

@@ -912,7 +912,7 @@
     "description": "No longer used"
   },
   "subscribeButton": {
-    "message": "Langganan",
+    "message": "Berlangganan",
     "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
@@ -1026,6 +1026,10 @@
   "genericBytes": {
     "message": "byte",
     "description": ""
+  },
+  "contextMenuBlockElementInFrame": {
+    "message": "Blokir elemen di dalam frame...",
+    "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Sementara izinkan elemen media besar",

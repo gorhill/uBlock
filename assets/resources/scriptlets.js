@@ -583,6 +583,73 @@
 })();
 
 
+/// no-fetch-if.js
+(function() {
+    let arg1 = '{{1}}';
+    if ( arg1 === '{{1}}' ) { arg1 = ''; }
+    const needles = [];
+    for ( const condition of arg1.split(/\s+/) ) {
+        if ( condition === '' ) { continue; }
+        const pos = condition.indexOf(':');
+        let key, value;
+        if ( pos !== -1 ) {
+            key = condition.slice(0, pos);
+            value = condition.slice(pos + 1);
+        } else {
+            key = 'url';
+            value = condition;
+        }
+        if ( value === '' ) {
+            value = '^';
+        } else if ( value.startsWith('/') && value.endsWith('/') ) {
+            value = value.slice(1, -1);
+        } else {
+            value = value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+        needles.push({ key, re: new RegExp(value) });
+    }
+    const log = needles.length === 0 ? console.log.bind(console) : undefined;
+    self.fetch = new Proxy(self.fetch, {
+        apply: function(target, thisArg, args) {
+            let proceed = true;
+            try {
+                const url = args[0] instanceof self.Request
+                    ? args[0].url
+                    : args[0];
+                const props = new Map([ [ 'url', url ] ]);
+                const init = args[1];
+                if ( init instanceof Object ) {
+                    for ( const prop in init ) {
+                        if ( init.hasOwnProperty(prop) === false ) { continue; }
+                        props.set( prop, init[prop]);
+                    }
+                }
+                if ( log !== undefined ) {
+                    const out = Array.from(props)
+                                     .map(a => `${a[0]}:${a[1]}`)
+                                     .join(' ');
+                    log(`uBO: fetch(${out})`);
+                }
+                proceed = needles.length === 0;
+                for ( const { key, re } of needles ) {
+                    if (
+                        props.has(key) === false ||
+                        re.test(props.get(key)) === false
+                    ) {
+                        proceed = true;
+                        break;
+                    }
+                }
+            } catch(ex) {
+            }
+            return proceed
+                ? Reflect.apply(target, thisArg, args)
+                : Promise.resolve(new Response());
+        }
+    });
+})();
+
+
 /// remove-attr.js
 /// alias ra.js
 (function() {
@@ -593,10 +660,7 @@
     if ( selector === '' || selector === '{{2}}' ) {
         selector = `[${tokens.join('],[')}]`;
     }
-    const rmattr = function(ev) {
-        if ( ev ) {
-            window.removeEventListener(ev.type, rmattr, true);
-        }
+    const rmattr = function() {
         try {
             const nodes = document.querySelectorAll(selector);
             for ( const node of nodes ) {
@@ -608,7 +672,7 @@
         }
     };
     if ( document.readyState === 'loading' ) {
-        window.addEventListener('DOMContentLoaded', rmattr, true);
+        window.addEventListener('DOMContentLoaded', rmattr, { once: true });
     } else {
         rmattr();
     }
@@ -643,36 +707,6 @@
     } else {
         rmclass();
     }
-})();
-
-
-/// requestAnimationFrame-if.js
-/// alias raf-if.js
-// Deprecated, use "no-requestAnimationFrame-if.js"
-(function() {
-    let needle = '{{1}}';
-    const not = needle.charAt(0) === '!';
-    if ( not ) { needle = needle.slice(1); }
-    if ( needle === '' || needle === '{{1}}' ) {
-        needle = '.?';
-    } else if ( needle.startsWith('/') && needle.endsWith('/') ) {
-        needle = needle.slice(1,-1);
-    } else {
-        needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
-    const log = needle === '.?' && not === false ? console.log : undefined;
-    needle = new RegExp(needle);
-    window.requestAnimationFrame = new Proxy(window.requestAnimationFrame, {
-        apply: function(target, thisArg, args) {
-            const a = String(args[0]);
-            if ( log !== undefined ) {
-                log('uBO: requestAnimationFrame("%s")', a);
-            } else if ( needle.test(a) === not ) {
-                args[0] = function(){};
-            }
-            return target.apply(thisArg, args);
-        }
-    });
 })();
 
 
@@ -827,32 +861,6 @@
 })();
 
 
-/// setInterval-defuser.js
-/// alias sid.js
-(function() {
-    let needle = '{{1}}';
-    const delay = parseInt('{{2}}', 10);
-    if ( needle === '' || needle === '{{1}}' ) {
-        needle = '.?';
-    } else if ( needle.startsWith('/') && needle.endsWith('/') ) {
-        needle = needle.slice(1,-1);
-    } else {
-        needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
-    needle = new RegExp(needle);
-    window.setInterval = new Proxy(window.setInterval, {
-        apply: function(target, thisArg, args) {
-            const a = args[0];
-            const b = args[1];
-            if ( (isNaN(delay) || b === delay) && needle.test(a.toString()) ) {
-                args[0] = function(){};
-            }
-            return target.apply(thisArg, args);
-        }
-    });
-})();
-
-
 /// no-setInterval-if.js
 /// alias nosiif.js
 (function() {
@@ -902,34 +910,9 @@
 })();
 
 
-/// setTimeout-defuser.js
-/// alias std.js
-(function() {
-    let needle = '{{1}}';
-    const delay = parseInt('{{2}}', 10);
-    if ( needle === '' || needle === '{{1}}' ) {
-        needle = '.?';
-    } else if ( needle.startsWith('/') && needle.endsWith('/') ) {
-        needle = needle.slice(1,-1);
-    } else {
-        needle = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
-    needle = new RegExp(needle);
-    window.setTimeout = new Proxy(window.setTimeout, {
-        apply: function(target, thisArg, args) {
-            const a = args[0];
-            const b = args[1];
-            if ( (isNaN(delay) || b === delay) && needle.test(a.toString()) ) {
-                args[0] = function(){};
-            }
-            return target.apply(thisArg, args);
-        }
-    });
-})();
-
-
 /// no-setTimeout-if.js
 /// alias nostif.js
+/// alias setTimeout-defuser.js
 (function() {
     let needle = '{{1}}';
     const needleNot = needle.charAt(0) === '!';

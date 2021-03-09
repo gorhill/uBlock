@@ -44,7 +44,7 @@
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "Kortkommandon",
+    "message": "Genväg",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
@@ -100,7 +100,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "Blockerat sen installationen",
+    "message": "Blockerad sedan installation",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
@@ -1027,12 +1027,16 @@
     "message": "byte",
     "description": ""
   },
+  "contextMenuBlockElementInFrame": {
+    "message": "Blockera element i ramar...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Tillåt tillfälligt stora medieelement",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
   },
   "shortcutCapturePlaceholder": {
-    "message": "Ange ett kortkommando",
+    "message": "Ange en genväg",
     "description": "Placeholder string for input field used to capture a keyboard shortcut"
   },
   "genericMergeViewScrollLock": {

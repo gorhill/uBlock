@@ -1027,6 +1027,10 @@
     "message": "ബൈറ്റുകള്‍",
     "description": ""
   },
+  "contextMenuBlockElementInFrame": {
+    "message": "ഫ്രെയിമിലെ ഘടകം തടയുക ...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "താൽക്കാലികമായി വലിയ മീഡിയ അനുവദിക്കുക",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"

@@ -1027,6 +1027,10 @@
     "message": "байта",
     "description": ""
   },
+  "contextMenuBlockElementInFrame": {
+    "message": "Блокиране на елемента в рамката...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Временно разрешаване на големи мултимедийни елементи",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"

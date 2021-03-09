@@ -672,7 +672,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinModified": {
-    "message": "modified",
+    "message": "수정됨",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
@@ -1026,6 +1026,10 @@
   "genericBytes": {
     "message": "바이트",
     "description": ""
+  },
+  "contextMenuBlockElementInFrame": {
+    "message": "프레임 내 구성 요소 차단",
+    "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "이번만 대형 미디어 구성요소 허용",

@@ -346,6 +346,7 @@ const Parser = class {
     //     patternRightAnchorSpan: first slice to right-hand pattern anchor
     //     optionsAnchorSpan: first slice to options anchor
     //     optionsSpan: first slice to options
+    //     commentSpan: first slice to trailing comment
     analyzeNet() {
         let islice = this.leftSpaceSpan.len;
 
@@ -369,7 +370,7 @@ const Parser = class {
         }
 
         // Assume no options
-        this.optionsAnchorSpan.i = this.optionsSpan.i =  this.commentSpan.i;
+        this.optionsAnchorSpan.i = this.optionsSpan.i = this.commentSpan.i;
 
         // Assume all is part of pattern
         this.patternSpan.i = islice;
@@ -388,14 +389,24 @@ const Parser = class {
         }
 
         // If the pattern is not a regex, there might be options.
+        //
+        // The character `$` is deemed to be an option anchor if and only if
+        // all the following conditions are fulfilled:
+        // - `$` is not the last character in the filter
+        // - The character following `$` is either comma, alphanumeric, or `~`.
         if ( patternIsRegex === false ) {
             let optionsBits = 0;
-            let i = this.optionsAnchorSpan.i;
+            let i = this.optionsAnchorSpan.i - 3;
             for (;;) {
                 i -= 3;
                 if ( i < islice ) { break; }
                 const bits = this.slices[i];
-                if ( hasBits(bits, BITDollar) ) { break; }
+                if (
+                    hasBits(bits, BITDollar) &&
+                    hasBits(this.slices[i+3], BITAlphaNum | BITComma | BITTilde)
+                ) {
+                    break;
+                }
                 optionsBits |= bits;
             }
             if ( i >= islice ) {
@@ -1150,6 +1161,78 @@ const Parser = class {
             BITFlavorError | BITFlavorUnsupported | BITFlavorIgnore
         );
     }
+
+    static parseRedirectValue(arg) {
+        let token = arg.trim();
+        let priority = 0;
+        const asDataURI = token.charCodeAt(0) === 0x25 /* '%' */;
+        if ( asDataURI ) { token = token.slice(1); }
+        const match = /:-?\d+$/.exec(token);
+        if ( match !== null ) {
+            priority = parseInt(token.slice(match.index + 1), 10);
+            token = token.slice(0, match.index);
+        }
+        return { token, priority, asDataURI };
+    }
+
+    static parseQueryPruneValue(arg) {
+        let s = arg.trim();
+        if ( s === '' ) { return { all: true }; }
+        const out = { };
+        out.not = s.charCodeAt(0) === 0x7E /* '~' */;
+        if ( out.not ) {
+            s = s.slice(1);
+        }
+        const match = /^\/(.+)\/(i)?$/.exec(s);
+        if ( match !== null ) {
+            try {
+                out.re = new RegExp(match[1], match[2] || '');
+            }
+            catch(ex) {
+                out.bad = true;
+            }
+            return out;
+        }
+        // TODO: remove once no longer used in filter lists
+        if ( s.startsWith('|') ) {
+            try {
+                out.re = new RegExp('^' + s.slice(1), 'i');
+            } catch(ex) {
+                out.bad = true;
+            }
+            return out;
+        }
+        // Multiple values not supported (because very inefficient)
+        if ( s.includes('|') ) {
+            out.bad = true;
+            return out;
+        }
+        out.name = s;
+        return out;
+    }
+
+    static parseHeaderValue(arg) {
+        let s = arg.trim();
+        const out = { };
+        let pos = s.indexOf(':');
+        if ( pos === -1 ) { pos = s.length; }
+        out.name = s.slice(0, pos);
+        out.bad = out.name === '';
+        s = s.slice(pos + 1);
+        out.not = s.charCodeAt(0) === 0x7E /* '~' */;
+        if ( out.not ) { s = s.slice(1); }
+        out.value = s;
+        const match = /^\/(.+)\/(i)?$/.exec(s);
+        if ( match !== null ) {
+            try {
+                out.re = new RegExp(match[1], match[2] || '');
+            }
+            catch(ex) {
+                out.bad = true;
+            }
+        }
+        return out;
+    }
 };
 
 /******************************************************************************/
@@ -1900,41 +1983,46 @@ const BITFlavorNetAnchor         = BITFlavorNetLeftAnchor | BITFlavorNetRightAnc
 const OPTTokenMask               = 0x000000ff;
 const OPTTokenInvalid            =  0;
 const OPTToken1p                 =  1;
-const OPTToken3p                 =  2;
-const OPTTokenAll                =  3;
-const OPTTokenBadfilter          =  4;
-const OPTTokenCname              =  5;
-const OPTTokenCsp                =  6;
-const OPTTokenCss                =  7;
-const OPTTokenDenyAllow          =  8;
-const OPTTokenDoc                =  9;
-const OPTTokenDomain             = 10;
-const OPTTokenEhide              = 11;
-const OPTTokenEmpty              = 12;
-const OPTTokenFont               = 13;
-const OPTTokenFrame              = 14;
-const OPTTokenGenericblock       = 15;
-const OPTTokenGhide              = 16;
-const OPTTokenImage              = 17;
-const OPTTokenImportant          = 18;
-const OPTTokenInlineFont         = 19;
-const OPTTokenInlineScript       = 20;
-const OPTTokenMedia              = 21;
-const OPTTokenMp4                = 22;
-const OPTTokenObject             = 23;
-const OPTTokenOther              = 24;
-const OPTTokenPing               = 25;
-const OPTTokenPopunder           = 26;
-const OPTTokenPopup              = 27;
-const OPTTokenRedirect           = 28;
-const OPTTokenRedirectRule       = 29;
-const OPTTokenQueryprune         = 30;
-const OPTTokenScript             = 31;
-const OPTTokenShide              = 32;
-const OPTTokenXhr                = 33;
-const OPTTokenWebrtc             = 34;
-const OPTTokenWebsocket          = 35;
-const OPTTokenCount              = 36;
+const OPTToken1pStrict           =  2;
+const OPTToken3p                 =  3;
+const OPTToken3pStrict           =  4;
+const OPTTokenAll                =  5;
+const OPTTokenBadfilter          =  6;
+const OPTTokenCname              =  7;
+const OPTTokenCsp                =  8;
+const OPTTokenCss                =  9;
+const OPTTokenDenyAllow          = 10;
+const OPTTokenDoc                = 11;
+const OPTTokenDomain             = 12;
+const OPTTokenEhide              = 13;
+const OPTTokenEmpty              = 14;
+const OPTTokenFont               = 15;
+const OPTTokenFrame              = 16;
+const OPTTokenGenericblock       = 17;
+const OPTTokenGhide              = 18;
+const OPTTokenHeader             = 19;
+const OPTTokenImage              = 20;
+const OPTTokenImportant          = 21;
+const OPTTokenInlineFont         = 22;
+const OPTTokenInlineScript       = 23;
+const OPTTokenMatchCase          = 24;
+const OPTTokenMedia              = 25;
+const OPTTokenMp4                = 26;
+const OPTTokenNoop               = 27;
+const OPTTokenObject             = 28;
+const OPTTokenOther              = 29;
+const OPTTokenPing               = 30;
+const OPTTokenPopunder           = 31;
+const OPTTokenPopup              = 32;
+const OPTTokenRedirect           = 33;
+const OPTTokenRedirectRule       = 34;
+const OPTTokenQueryprune         = 35;
+const OPTTokenScript             = 36;
+const OPTTokenShide              = 37;
+const OPTTokenXhr                = 38;
+const OPTTokenWebrtc             = 39;
+const OPTTokenWebsocket          = 40;
+const OPTTokenCount              = 41;
 
 //const OPTPerOptionMask           = 0x0000ff00;
 const OPTCanNegate               = 1 <<  8;
@@ -1942,7 +2030,8 @@ const OPTBlockOnly               = 1 <<  9;
 const OPTAllowOnly               = 1 << 10;
 const OPTMustAssign              = 1 << 11;
 const OPTAllowMayAssign          = 1 << 12;
-const OPTDomainList              = 1 << 13;
+const OPTMayAssign               = 1 << 13;
+const OPTDomainList              = 1 << 14;
 
 //const OPTGlobalMask              = 0x0fff0000;
 const OPTNetworkType             = 1 << 16;
@@ -1974,9 +2063,11 @@ Parser.prototype.BITHostname = BITHostname;
 Parser.prototype.BITPeriod = BITPeriod;
 Parser.prototype.BITDash = BITDash;
 Parser.prototype.BITHash = BITHash;
+Parser.prototype.BITNum = BITNum;
 Parser.prototype.BITEqual = BITEqual;
 Parser.prototype.BITQuestion = BITQuestion;
 Parser.prototype.BITPercent = BITPercent;
+Parser.prototype.BITAlpha = BITAlpha;
 Parser.prototype.BITTilde = BITTilde;
 Parser.prototype.BITUnicode = BITUnicode;
 Parser.prototype.BITIgnore = BITIgnore;
@@ -1993,7 +2084,10 @@ Parser.prototype.BITFlavorIgnore = BITFlavorIgnore;
 Parser.prototype.BITFlavorUnsupported = BITFlavorUnsupported;
 Parser.prototype.BITFlavorError = BITFlavorError;
 
-Parser.prototype.OPTTokenInvalid = OPTTokenInvalid;
+Parser.prototype.OPTToken1p = OPTToken1p;
+Parser.prototype.OPTToken1pStrict = OPTToken1pStrict;
+Parser.prototype.OPTToken3p = OPTToken3p;
+Parser.prototype.OPTToken3pStrict = OPTToken3pStrict;
 Parser.prototype.OPTTokenAll = OPTTokenAll;
 Parser.prototype.OPTTokenBadfilter = OPTTokenBadfilter;
 Parser.prototype.OPTTokenCname = OPTTokenCname;
@@ -2003,16 +2097,19 @@ Parser.prototype.OPTTokenDoc = OPTTokenDoc;
 Parser.prototype.OPTTokenDomain = OPTTokenDomain;
 Parser.prototype.OPTTokenEhide = OPTTokenEhide;
 Parser.prototype.OPTTokenEmpty = OPTTokenEmpty;
-Parser.prototype.OPTToken1p = OPTToken1p;
 Parser.prototype.OPTTokenFont = OPTTokenFont;
 Parser.prototype.OPTTokenGenericblock = OPTTokenGenericblock;
 Parser.prototype.OPTTokenGhide = OPTTokenGhide;
+Parser.prototype.OPTTokenHeader = OPTTokenHeader;
 Parser.prototype.OPTTokenImage = OPTTokenImage;
 Parser.prototype.OPTTokenImportant = OPTTokenImportant;
 Parser.prototype.OPTTokenInlineFont = OPTTokenInlineFont;
 Parser.prototype.OPTTokenInlineScript = OPTTokenInlineScript;
+Parser.prototype.OPTTokenInvalid = OPTTokenInvalid;
+Parser.prototype.OPTTokenMatchCase = OPTTokenMatchCase;
 Parser.prototype.OPTTokenMedia = OPTTokenMedia;
 Parser.prototype.OPTTokenMp4 = OPTTokenMp4;
+Parser.prototype.OPTTokenNoop = OPTTokenNoop;
 Parser.prototype.OPTTokenObject = OPTTokenObject;
 Parser.prototype.OPTTokenOther = OPTTokenOther;
 Parser.prototype.OPTTokenPing = OPTTokenPing;
@@ -2025,7 +2122,6 @@ Parser.prototype.OPTTokenScript = OPTTokenScript;
 Parser.prototype.OPTTokenShide = OPTTokenShide;
 Parser.prototype.OPTTokenCss = OPTTokenCss;
 Parser.prototype.OPTTokenFrame = OPTTokenFrame;
-Parser.prototype.OPTToken3p = OPTToken3p;
 Parser.prototype.OPTTokenXhr = OPTTokenXhr;
 Parser.prototype.OPTTokenWebrtc = OPTTokenWebrtc;
 Parser.prototype.OPTTokenWebsocket = OPTTokenWebsocket;
@@ -2045,8 +2141,10 @@ Parser.prototype.OPTNotSupported = OPTNotSupported;
 const netOptionTokenDescriptors = new Map([
     [ '1p', OPTToken1p | OPTCanNegate ],
         [ 'first-party', OPTToken1p | OPTCanNegate ],
+    [ 'strict1p', OPTToken1pStrict ],
     [ '3p', OPTToken3p | OPTCanNegate ],
         [ 'third-party', OPTToken3p | OPTCanNegate ],
+    [ 'strict3p', OPTToken3pStrict ],
     [ 'all', OPTTokenAll | OPTNetworkType | OPTNonCspableType ],
     [ 'badfilter', OPTTokenBadfilter ],
     [ 'cname', OPTTokenCname | OPTAllowOnly | OPTModifierType ],
@@ -2066,12 +2164,15 @@ const netOptionTokenDescriptors = new Map([
     [ 'genericblock', OPTTokenGenericblock | OPTNotSupported ],
     [ 'ghide', OPTTokenGhide | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
         [ 'generichide', OPTTokenGhide | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
+    [ 'header', OPTTokenHeader | OPTMustAssign | OPTAllowMayAssign | OPTNonCspableType | OPTNonRedirectableType ],
     [ 'image', OPTTokenImage | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
     [ 'important', OPTTokenImportant | OPTBlockOnly ],
     [ 'inline-font', OPTTokenInlineFont | OPTNonNetworkType | OPTCanNegate | OPTNonCspableType | OPTNonRedirectableType ],
     [ 'inline-script', OPTTokenInlineScript | OPTNonNetworkType | OPTCanNegate | OPTNonCspableType | OPTNonRedirectableType ],
+    [ 'match-case', OPTTokenMatchCase ],
     [ 'media', OPTTokenMedia | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
     [ 'mp4', OPTTokenMp4 | OPTNetworkType | OPTBlockOnly |  OPTModifierType ],
+    [ '_', OPTTokenNoop ],
     [ 'object', OPTTokenObject | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
         [ 'object-subrequest', OPTTokenObject | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
     [ 'other', OPTTokenOther | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
@@ -2079,8 +2180,10 @@ const netOptionTokenDescriptors = new Map([
         [ 'beacon', OPTTokenPing | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTNonCspableType | OPTNonRedirectableType ],
     [ 'popunder', OPTTokenPopunder | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
     [ 'popup', OPTTokenPopup | OPTNonNetworkType | OPTCanNegate | OPTNonCspableType | OPTNonRedirectableType ],
-    [ 'queryprune', OPTTokenQueryprune | OPTMustAssign | OPTAllowMayAssign | OPTModifierType | OPTNonCspableType | OPTNonRedirectableType ],
+    [ 'queryprune', OPTTokenQueryprune | OPTMayAssign | OPTModifierType | OPTNonCspableType | OPTNonRedirectableType ],
+        [ 'removeparam', OPTTokenQueryprune | OPTMayAssign | OPTModifierType | OPTNonCspableType | OPTNonRedirectableType ],
     [ 'redirect', OPTTokenRedirect | OPTMustAssign | OPTAllowMayAssign | OPTModifierType ],
+        [ 'rewrite', OPTTokenRedirect | OPTMustAssign | OPTAllowMayAssign | OPTModifierType ],
     [ 'redirect-rule', OPTTokenRedirectRule | OPTMustAssign | OPTAllowMayAssign | OPTModifierType | OPTNonCspableType ],
     [ 'script', OPTTokenScript | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
     [ 'shide', OPTTokenShide | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
@@ -2097,8 +2200,10 @@ Parser.prototype.netOptionTokenDescriptors =
 Parser.netOptionTokenIds = new Map([
     [ '1p', OPTToken1p ],
         [ 'first-party', OPTToken1p ],
+    [ 'strict1p', OPTToken1pStrict ],
     [ '3p', OPTToken3p ],
         [ 'third-party', OPTToken3p ],
+    [ 'strict3p', OPTToken3pStrict ],
     [ 'all', OPTTokenAll ],
     [ 'badfilter', OPTTokenBadfilter ],
     [ 'cname', OPTTokenCname ],
@@ -2118,12 +2223,15 @@ Parser.netOptionTokenIds = new Map([
     [ 'genericblock', OPTTokenGenericblock ],
     [ 'ghide', OPTTokenGhide ],
         [ 'generichide', OPTTokenGhide ],
+    [ 'header', OPTTokenHeader ],
     [ 'image', OPTTokenImage ],
     [ 'important', OPTTokenImportant ],
     [ 'inline-font', OPTTokenInlineFont ],
     [ 'inline-script', OPTTokenInlineScript ],
+    [ 'match-case', OPTTokenMatchCase ],
     [ 'media', OPTTokenMedia ],
     [ 'mp4', OPTTokenMp4 ],
+    [ '_', OPTTokenNoop ],
     [ 'object', OPTTokenObject ],
         [ 'object-subrequest', OPTTokenObject ],
     [ 'other', OPTTokenOther ],
@@ -2132,7 +2240,9 @@ Parser.netOptionTokenIds = new Map([
     [ 'popunder', OPTTokenPopunder ],
     [ 'popup', OPTTokenPopup ],
     [ 'queryprune', OPTTokenQueryprune ],
+        [ 'removeparam', OPTTokenQueryprune ],
     [ 'redirect', OPTTokenRedirect ],
+        [ 'rewrite', OPTTokenRedirect ],
     [ 'redirect-rule', OPTTokenRedirectRule ],
     [ 'script', OPTTokenScript ],
     [ 'shide', OPTTokenShide ],
@@ -2145,7 +2255,9 @@ Parser.netOptionTokenIds = new Map([
 
 Parser.netOptionTokenNames = new Map([
     [ OPTToken1p, '1p' ],
+    [ OPTToken1pStrict, 'strict1p' ],
     [ OPTToken3p, '3p' ],
+    [ OPTToken3pStrict, 'strict3p' ],
     [ OPTTokenAll, 'all' ],
     [ OPTTokenBadfilter, 'badfilter' ],
     [ OPTTokenCname, 'cname' ],
@@ -2160,12 +2272,15 @@ Parser.netOptionTokenNames = new Map([
     [ OPTTokenFont, 'font' ],
     [ OPTTokenGenericblock, 'genericblock' ],
     [ OPTTokenGhide, 'generichide' ],
+    [ OPTTokenHeader, 'header' ],
     [ OPTTokenImage, 'image' ],
     [ OPTTokenImportant, 'important' ],
     [ OPTTokenInlineFont, 'inline-font' ],
     [ OPTTokenInlineScript, 'inline-script' ],
+    [ OPTTokenMatchCase, 'match-case' ],
     [ OPTTokenMedia, 'media' ],
     [ OPTTokenMp4, 'mp4' ],
+    [ OPTTokenNoop, '_' ],
     [ OPTTokenObject, 'object' ],
     [ OPTTokenOther, 'other' ],
     [ OPTTokenPing, 'ping' ],
@@ -2281,7 +2396,6 @@ const NetOptionsIterator = class {
             // Validate option according to context
             if (
                 descriptor === undefined ||
-                hasBits(descriptor, OPTNotSupported) ||
                 ltok !== lopt &&
                     hasNoBits(descriptor, OPTCanNegate) ||
                 this.exception &&
@@ -2289,7 +2403,7 @@ const NetOptionsIterator = class {
                 this.exception === false &&
                     hasBits(descriptor, OPTAllowOnly) ||
                 assigned &&
-                    hasNoBits(descriptor, OPTMustAssign) ||
+                    hasNoBits(descriptor, OPTMayAssign | OPTMustAssign) ||
                 assigned === false &&
                     hasBits(descriptor, OPTMustAssign) && (
                         this.exception === false ||
@@ -2300,6 +2414,8 @@ const NetOptionsIterator = class {
             }
             // Keep track of which options are present: any given option can
             // appear only once.
+            // TODO: might need to make an exception for `header=` option so as
+            //       to allow filters which need to match more than one header.
             const tokenId = descriptor & OPTTokenMask;
             if ( tokenId !== OPTTokenInvalid ) {
                 if ( this.tokenPos[tokenId] !== -1 ) {
@@ -2318,7 +2434,12 @@ const NetOptionsIterator = class {
             // Accumulate description bits
             allBits |= descriptor;
             // Mark slices in case of invalid filter option
-            if ( this.interactive && descriptor === OPTTokenInvalid ) {
+            if (
+                this.interactive && (
+                    descriptor === OPTTokenInvalid ||
+                    hasBits(descriptor, OPTNotSupported)
+                )
+            ) {
                 this.parser.errorSlices(lopt, i);
             }
             // Store indices to raw slices, this will be used during iteration
@@ -2361,18 +2482,13 @@ const NetOptionsIterator = class {
                 }
             }
         }
-        // `redirect=`: requires at least one single redirectable type
+        // `redirect=`: can't redirect non-redirectable types
         {
             let i = this.tokenPos[OPTTokenRedirect];
             if ( i === -1 ) {
                 i = this.tokenPos[OPTTokenRedirectRule];
             }
-            if (
-                i !== -1 && (
-                    hasNoBits(allBits, OPTRedirectableType) ||
-                    hasBits(allBits, OPTNonRedirectableType)
-                )
-            ) {
+            if ( i !== -1 && hasBits(allBits, OPTNonRedirectableType) ) {
                 optSlices[i] = OPTTokenInvalid;
                 if ( this.interactive ) {
                     this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
@@ -2412,10 +2528,20 @@ const NetOptionsIterator = class {
                     if ( this.interactive ) {
                         this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
                     }
-                } else if ( this.validateQueryPruneArg(i) === false ) {
-                    optSlices[i] = OPTTokenInvalid;
-                    if ( this.interactive ) {
-                        this.parser.errorSlices(optSlices[i+4], optSlices[i+5]);
+                } else {
+                    const val = this.parser.strFromSlices(
+                        optSlices[i+4],
+                        optSlices[i+5] - 3
+                    );
+                    const r = Parser.parseQueryPruneValue(val);
+                    if ( r.bad ) {
+                        optSlices[i] = OPTTokenInvalid;
+                        if ( this.interactive ) {
+                            this.parser.errorSlices(
+                                optSlices[i+4],
+                                optSlices[i+5]
+                            );
+                        }
                     }
                 }
             }
@@ -2429,6 +2555,43 @@ const NetOptionsIterator = class {
                     hasBits(allBits, OPTNonNetworkType)
                 )
             ) {
+                optSlices[i] = OPTTokenInvalid;
+                if ( this.interactive ) {
+                    this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
+                }
+            }
+        }
+        // `header`: can't be used with any modifier type
+        {
+            const i = this.tokenPos[OPTTokenHeader];
+            if ( i !== -1 ) {
+                if ( hasBits(allBits, OPTModifierType) ) {
+                    optSlices[i] = OPTTokenInvalid;
+                    if ( this.interactive ) {
+                        this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
+                    }
+                } else {
+                    const val = this.parser.strFromSlices(
+                        optSlices[i+4],
+                        optSlices[i+5] - 3
+                    );
+                    const r = Parser.parseHeaderValue(val);
+                    if ( r.bad ) {
+                        optSlices[i] = OPTTokenInvalid;
+                        if ( this.interactive ) {
+                            this.parser.errorSlices(
+                                optSlices[i+4],
+                                optSlices[i+5]
+                            );
+                        }
+                    }
+                }
+            }
+        }
+        // `match-case`: valid only for regex-based filters
+        {
+            const i = this.tokenPos[OPTTokenMatchCase];
+            if ( i !== -1 && this.parser.patternIsRegex() === false ) {
                 optSlices[i] = OPTTokenInvalid;
                 if ( this.interactive ) {
                     this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
@@ -2458,20 +2621,6 @@ const NetOptionsIterator = class {
         }
         this.readPtr = i + 6;
         return this;
-    }
-    validateQueryPruneArg(i) {
-        let val = this.parser.strFromSlices(
-            this.optSlices[i+4],
-            this.optSlices[i+5] - 3
-        );
-        if ( val.startsWith('|') ) { val = `^${val.slice(1)}`; }
-        if ( val.endsWith('|') ) { val = `${val.slice(0,-1)}$`; }
-        try {
-            void new RegExp(val);
-        } catch(ex) {
-            return false;
-        }
-        return true;
     }
 };
 

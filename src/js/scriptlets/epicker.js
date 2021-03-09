@@ -38,6 +38,8 @@ if ( pickerRoot !== null ) { return; }
 
 let pickerBootArgs;
 
+const reCosmeticAnchor = /^#[$?]?#/;
+
 const netFilterCandidates = [];
 const cosmeticFilterCandidates = [];
 
@@ -739,7 +741,7 @@ const filterToDOMInterface = (( ) => {
             return;
         }
         lastFilter = filter;
-        if ( filter.startsWith('##') === false ) {
+        if ( reCosmeticAnchor.test(filter) === false ) {
             lastResultset = fromNetworkFilter(filter);
             if ( previewing ) { apply(); }
             return lastResultset;
@@ -789,7 +791,7 @@ const filterToDOMInterface = (( ) => {
             return unapply();
         }
         if ( Array.isArray(lastResultset) === false ) { return; }
-        if ( permanent === false || lastFilter.startsWith('##') === false ) {
+        if ( permanent === false || reCosmeticAnchor.test(lastFilter) === false ) {
             return apply();
         }
         if ( vAPI.domFilterer instanceof Object === false ) { return; }
@@ -921,12 +923,12 @@ const zapElementAtPoint = function(mx, my, options) {
         return;
     }
 
-    let elem = targetElements.length !== 0 && targetElements[0] || null;
-    if ( elem === null && mx !== undefined ) {
-        elem = elementFromPoint(mx, my);
+    let elemToRemove = targetElements.length !== 0 && targetElements[0] || null;
+    if ( elemToRemove === null && mx !== undefined ) {
+        elemToRemove = elementFromPoint(mx, my);
     }
 
-    if ( elem instanceof Element === false ) { return; }
+    if ( elemToRemove instanceof Element === false ) { return; }
 
     const getStyleValue = function(elem, prop) {
         const style = window.getComputedStyle(elem);
@@ -934,23 +936,30 @@ const zapElementAtPoint = function(mx, my, options) {
     };
 
     // Heuristic to detect scroll-locking: remove such lock when detected.
-    if (
-        parseInt(getStyleValue(elem, 'zIndex'), 10) >= 1000 ||
-        getStyleValue(elem, 'position') === 'fixed'
-    ) {
+    let maybeScrollLocked = false;
+    let elem = elemToRemove;
+    do {
+        maybeScrollLocked =
+            parseInt(getStyleValue(elem, 'zIndex'), 10) >= 1000 ||
+            getStyleValue(elem, 'position') === 'fixed';
+        elem = elem.parentElement;
+    } while ( elem !== null && maybeScrollLocked === false );
+    if ( maybeScrollLocked ) {
         const doc = document;
         if ( getStyleValue(doc.body, 'overflowY') === 'hidden' ) {
             doc.body.style.setProperty('overflow', 'auto', 'important');
         }
         if ( getStyleValue(doc.body, 'position') === 'fixed' ) {
-            doc.body.style.setProperty('position', 'static', 'important');
+            doc.body.style.setProperty('position', 'initial', 'important');
+        }
+        if ( getStyleValue(doc.documentElement, 'position') === 'fixed' ) {
+            doc.documentElement.style.setProperty('position', 'initial', 'important');
         }
         if ( getStyleValue(doc.documentElement, 'overflowY') === 'hidden' ) {
             doc.documentElement.style.setProperty('overflow', 'auto', 'important');
         }
     }
-
-    elem.remove();
+    elemToRemove.remove();
     highlightElementAtPoint(mx, my);
 };
 
@@ -1214,11 +1223,21 @@ const pickerCSSStyle = [
     'width: 100%',
     'z-index: 2147483647',
     ''
-].join(' !important;');
+];
+
+// https://github.com/uBlockOrigin/uBlock-issues/issues/1408
+//   We need to reset Chromium-specific `color-scheme` property
+//   for our iframe widget.
+if (
+    CSS.supports instanceof Function &&
+    CSS.supports('color-scheme', 'initial')
+) {
+    pickerCSSStyle.push('color-scheme: initial');
+}
 
 const pickerCSS = `
 :root > [${vAPI.sessionId}] {
-    ${pickerCSSStyle}
+    ${pickerCSSStyle.join(' !important;')}
 }
 :root [${vAPI.sessionId}-clickblind] {
     pointer-events: none !important;

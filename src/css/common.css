@@ -976,7 +976,6 @@ button.preferred {
     background-color: var(--button-preferred-surface);
     color: var(--button-preferred-ink);
     }
-button.iconifiable > .fa,
 button.iconifiable > .fa-icon {
     padding-left: 0;
     padding-right: 0.4em;
@@ -984,7 +983,6 @@ button.iconifiable > .fa-icon {
 button.iconifiable > .fa-icon {
     font-size: 120%;
     }
-body[dir="rtl"] button.iconifiable > .fa,
 body[dir="rtl"] button.iconifiable > .fa-icon {
     padding-left: 0.5em;
     }
@@ -1076,8 +1074,6 @@ font-family: bebas_neue,sans-serif;
     -webkit-margin-start: 2em;
     }
 @media (max-width: 640px) {
-
-    button.iconifiable > .fa,
     button.iconifiable > .fa-icon {
         font-size: 1.2rem;
         padding: 0;

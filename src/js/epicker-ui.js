@@ -45,6 +45,8 @@ const svgOcean = svgRoot.children[0];
 const svgIslands = svgRoot.children[1];
 const NoPaths = 'M0 0';
 
+const reCosmeticAnchor = /^#[$?]?#/;
+
 const epickerId = (( ) => {
     const url = new URL(self.location.href);
     if ( url.searchParams.has('zap') ) {
@@ -82,7 +84,8 @@ const cmEditor = new CodeMirror(document.querySelector('.codeMirrorContainer'), 
 vAPI.messaging.send('dashboard', {
     what: 'getAutoCompleteDetails'
 }).then(response => {
-    if ( response instanceof Object === false ) { return; }
+    // For unknown reasons, `instanceof Object` does not work here in Firefox.
+    if ( typeof response !== 'object' ) { return; }
     const mode = cmEditor.getMode();
     if ( mode.setHints instanceof Function ) {
         mode.setHints(response);
@@ -144,7 +147,7 @@ const userFilterFromCandidate = function(filter) {
     const hn = vAPI.hostnameFromURI(docURL.href);
 
     // Cosmetic filter?
-    if ( filter.startsWith('##') ) {
+    if ( reCosmeticAnchor.test(filter) ) {
         return hn + filter;
     }
 
@@ -460,7 +463,7 @@ const onCandidateChanged = function() {
     vAPI.MessagingConnection.sendTo(epickerConnectionId, {
         what: 'dialogSetFilter',
         filter,
-        compiled: filter.startsWith('##')
+        compiled: reCosmeticAnchor.test(filter)
             ? staticFilteringParser.result.compiled
             : undefined,
     });
@@ -487,13 +490,13 @@ const onCreateClicked = function() {
             autoComment: true,
             filters: filter,
             docURL: docURL.href,
-            killCache: /^#[$?]?#/.test(candidate) === false,
+            killCache: reCosmeticAnchor.test(candidate) === false,
         });
     }
     vAPI.MessagingConnection.sendTo(epickerConnectionId, {
         what: 'dialogCreate',
         filter: candidate,
-        compiled: candidate.startsWith('##')
+        compiled: reCosmeticAnchor.test(candidate)
             ? staticFilteringParser.result.compiled
             : undefined,
     });
@@ -597,8 +600,8 @@ const onStartMoving = (( ) => {
 
     const move = ( ) => {
         timer = undefined;
-        const r1 = Math.min(Math.max(r0 - mx1 + mx0, 4), rMax);
-        const b1 = Math.min(Math.max(b0 - my1 + my0, 4), bMax);
+        const r1 = Math.min(Math.max(r0 - mx1 + mx0, 2), rMax);
+        const b1 = Math.min(Math.max(b0 - my1 + my0, 2), bMax);
         dialog.style.setProperty('right', `${r1}px`);
         dialog.style.setProperty('bottom', `${b1}px`);
     };
@@ -644,8 +647,8 @@ const onStartMoving = (( ) => {
         r0 = parseInt(style.right, 10);
         b0 = parseInt(style.bottom, 10);
         const rect = dialog.getBoundingClientRect();
-        rMax = pickerRoot.clientWidth - 4 - rect.width ;
-        bMax = pickerRoot.clientHeight - 4 - rect.height;
+        rMax = pickerRoot.clientWidth - 2 - rect.width ;
+        bMax = pickerRoot.clientHeight - 2 - rect.height;
         dialog.classList.add('moving');
         if ( isTouch ) {
             self.addEventListener('touchmove', moveAsync, { capture: true });

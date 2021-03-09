@@ -1027,6 +1027,10 @@
     "message": "बाइट्स",
     "description": ""
   },
+  "contextMenuBlockElementInFrame": {
+    "message": "Block element in frame...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "कुछ समय के लिए विशाल तत्वोंको चलने की अनुमति दे",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
@@ -1068,7 +1072,7 @@
     "description": "short for 'gigabytes'"
   },
   "clickToLoad": {
-    "message": "Click to load",
+    "message": "लोड करने के लिए क्लिक करें",
     "description": "Message used in frame placeholders"
   },
   "dummy": {

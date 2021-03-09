@@ -96,14 +96,18 @@ body.hideUnused #listsOfBlockedHostsPrompt:before {
 .listEntry.toRemove .listname {
     text-decoration: line-through;
     }
-.listEntry .fa, .listEntry .fa-icon, .listEntry .counts {
-    color: rgba(150,150,150, 0.9);
+.listEntry .fa-icon,
+.listEntry .counts {
+    color: var(--fg-0-50);
     display: none;
     fill: rgba(150,150,150, 0.9);
     margin: 0 0.2em 0 0;
-    opacity:0.5
-}
-.listEntry.checked.cached:not(.obsolete) .cache {
+    }
+.listEntry .fa-icon:hover {
+    color: inherit;
+    fill: inherit;
+    }
+.listEntry .content {
     display: inline-flex;
 }
 body:not(.updating) .listEntry.checked.obsolete .obsolete {

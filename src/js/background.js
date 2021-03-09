@@ -43,7 +43,7 @@ const µBlock = (( ) => { // jshint ignore:line
         autoUpdateDelayAfterLaunch: 180,
         autoUpdatePeriod: 7,
         benchmarkDatasetURL: 'unset',
-        blockingProfiles: '11111/#F00 11011/#C0F 11001/#00F 00001',
+        blockingProfiles: '11111/#F00 11010/#C0F 11001/#00F 00001',
         cacheStorageAPI: 'unset',
         cacheStorageCompression: true,
         cacheControlForFirefox1376932: 'no-cache, no-store, must-revalidate',
@@ -61,9 +61,10 @@ const µBlock = (( ) => { // jshint ignore:line
         debugScriptletInjector: false,
         disableWebAssembly: false,
         extensionUpdateForceReload: false,
+        filterAuthorMode: false,
+        filterOnHeaders: false,
         ignoreRedirectFilters: false,
         ignoreScriptInjectFilters: false,
-        filterAuthorMode: false,
         loggerPopupType: 'popup',
         manualUpdateAssetFetchPeriod: 500,
         popupFontSize: 'unset',
@@ -162,8 +163,8 @@ const µBlock = (( ) => { // jshint ignore:line
 
         // Read-only
         systemSettings: {
-            compiledMagic: 34,  // Increase when compiled format changes
-            selfieMagic: 34,    // Increase when selfie format changes
+            compiledMagic: 37,  // Increase when compiled format changes
+            selfieMagic: 37,    // Increase when selfie format changes
         },
 
         // https://github.com/uBlockOrigin/uBlock-issues/issues/759#issuecomment-546654501
@@ -175,6 +176,13 @@ const µBlock = (( ) => { // jshint ignore:line
         //   issue. It's just an attempt at hardening.
         compiledFormatChanged: false,
         selfieIsInvalid: false,
+
+        compiledNetworkSection: 100,
+        compiledCosmeticSection: 200,
+        compiledScriptletSection: 300,
+        compiledHTMLSection: 400,
+        compiledSentinelSection: 1000,
+        compiledBadSubsection: 1,
 
         restoreBackupSettings: {
             lastRestoreFile: '',

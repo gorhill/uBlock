@@ -1027,6 +1027,10 @@
     "message": "bajty",
     "description": ""
   },
+  "contextMenuBlockElementInFrame": {
+    "message": "Zablokuj element w ramce...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Tymczasowo zezwalaj na wyświetlanie dużych elementów multimedialnych",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"

@@ -672,7 +672,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinModified": {
-    "message": "modified",
+    "message": "módosított",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
@@ -1026,6 +1026,10 @@
   "genericBytes": {
     "message": "bájt",
     "description": ""
+  },
+  "contextMenuBlockElementInFrame": {
+    "message": "Elem blokkolása a keretben",
+    "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Nagyméretű média elemek ideiglenes engedélyezése",

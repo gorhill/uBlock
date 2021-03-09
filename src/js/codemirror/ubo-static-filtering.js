@@ -34,6 +34,8 @@ const redirectNames = new Map();
 const scriptletNames = new Map();
 const preparseDirectiveTokens = new Map();
 const preparseDirectiveHints = [];
+const originHints = [];
+let hintHelperRegistered = false;
 
 /******************************************************************************/
 
@@ -183,19 +185,20 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
         // Warn about unknown redirect tokens.
         if (
             string.charCodeAt(pos - 1) === 0x3D /* '=' */ &&
-            /[$,]redirect(-rule)?=$/.test(string.slice(0, pos))
+            /[$,](redirect(-rule)?|rewrite)=$/.test(string.slice(0, pos))
         ) {
             style = 'value';
-            let end = parser.skipUntil(
+            const end = parser.skipUntil(
                 parserSlot,
                 parser.commentSpan.i,
                 parser.BITComma
             );
-            const token = parser.strFromSlices(parserSlot, end - 3);
+            const raw = parser.strFromSlices(parserSlot, end - 3);
+            const { token } = StaticFilteringParser.parseRedirectValue(raw);
             if ( redirectNames.has(token) === false ) {
                 style += ' warning';
             }
-            stream.pos += token.length;
+            stream.pos += raw.length;
             parserSlot = end;
             return style;
         }
@@ -211,20 +214,33 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
 
     const colorNetOptionSpan = function(stream) {
         const bits = parser.slices[parserSlot];
-        let style;
         if ( (bits & parser.BITComma) !== 0  ) {
-            style = 'def strong';
             netOptionValueMode = false;
-        } else if ( netOptionValueMode ) {
-            return colorNetOptionValueSpan(stream, bits);
-        } else if ( (bits & parser.BITTilde) !== 0 ) {
-            style = 'keyword strong';
-        } else if ( (bits & parser.BITEqual) !== 0 ) {
-            netOptionValueMode = true;
+            stream.pos += parser.slices[parserSlot+2];
+            parserSlot += 3;
+            return 'def strong';
         }
-        stream.pos += parser.slices[parserSlot+2];
-        parserSlot += 3;
-        return style || 'def';
+        if ( netOptionValueMode ) {
+            return colorNetOptionValueSpan(stream, bits);
+        }
+        if ( (bits & parser.BITTilde) !== 0 ) {
+            stream.pos += parser.slices[parserSlot+2];
+            parserSlot += 3;
+            return 'keyword strong';
+        }
+        if ( (bits & parser.BITEqual) !== 0 ) {
+            netOptionValueMode = true;
+            stream.pos += parser.slices[parserSlot+2];
+            parserSlot += 3;
+            return 'def';
+        }
+        parserSlot = parser.skipUntil(
+            parserSlot,
+            parser.commentSpan.i,
+            parser.BITComma | parser.BITEqual
+        );
+        stream.pos = parser.slices[parserSlot+1];
+        return 'def';
     };
 
     const colorNetSpan = function(stream) {
@@ -258,7 +274,7 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
             if ( parser.patternIsRegex() ) {
                 stream.pos = parser.slices[parser.optionsAnchorSpan.i+1];
                 parserSlot = parser.optionsAnchorSpan.i;
-                return 'variable regex';
+                return 'variable notice';
             }
             if ( (parser.slices[parserSlot] & (parser.BITAsterisk | parser.BITCaret)) !== 0 ) {
                 stream.pos += parser.slices[parserSlot+2];
@@ -347,22 +363,37 @@ CodeMirror.defineMode('ubo-static-filtering', function() {
             return style !== '' ? style : null;
         },
         setHints: function(details) {
-            for ( const [ name, desc ] of details.redirectResources ) {
-                const displayText = desc.aliasOf !== ''
-                    ? `${name} (${desc.aliasOf})`
-                    : '';
-                if ( desc.canRedirect ) {
-                    redirectNames.set(name, displayText);
-                }
-                if ( desc.canInject && name.endsWith('.js') ) {
-                    scriptletNames.set(name.slice(0, -3), displayText);
+            if ( Array.isArray(details.redirectResources) ) {
+                for ( const [ name, desc ] of details.redirectResources ) {
+                    const displayText = desc.aliasOf !== ''
+                        ? `${name} (${desc.aliasOf})`
+                        : '';
+                    if ( desc.canRedirect ) {
+                        redirectNames.set(name, displayText);
+                    }
+                    if ( desc.canInject && name.endsWith('.js') ) {
+                        scriptletNames.set(name.slice(0, -3), displayText);
+                    }
                 }
             }
-            details.preparseDirectiveTokens.forEach(([ a, b ]) => {
-                preparseDirectiveTokens.set(a, b);
-            });
-            preparseDirectiveHints.push(...details.preparseDirectiveHints);
-            initHints();
+            if ( Array.isArray(details.preparseDirectiveTokens)) {
+                details.preparseDirectiveTokens.forEach(([ a, b ]) => {
+                    preparseDirectiveTokens.set(a, b);
+                });
+            }
+            if ( Array.isArray(details.preparseDirectiveHints)) {
+                preparseDirectiveHints.push(...details.preparseDirectiveHints);
+            }
+            if ( Array.isArray(details.originHints) ) {
+                originHints.length = 0;
+                for ( const hint of details.originHints ) {
+                    originHints.push(hint);
+                }
+            }
+            if ( hintHelperRegistered === false ) {
+                hintHelperRegistered = true;
+                initHints();
+            }
         },
         get parser() {
             return parser;
@@ -387,6 +418,12 @@ const initHints = function() {
             return (item[1] & 0b01) !== 0;
         })
     );
+    const excludedHints = new Set([
+        'genericblock',
+        'object-subrequest',
+        'rewrite',
+        'webrtc',
+    ]);
 
     const pickBestHints = function(cursor, seedLeft, seedRight, hints) {
         const seed = (seedLeft + seedRight).trim();
@@ -418,12 +455,39 @@ const initHints = function() {
         };
     };
 
-    const getNetOptionHints = function(cursor, isNegated, seedLeft, seedRight) {
+    const getOriginHints = function(cursor, line, suffix = '') {
+        const beg = cursor.ch;
+        const matchLeft = /[^,|=~]*$/.exec(line.slice(0, beg));
+        const matchRight = /^[^#,|]*/.exec(line.slice(beg));
+        if ( matchLeft === null || matchRight === null ) { return; }
+        const hints = [];
+        for ( const text of originHints ) {
+            hints.push(text + suffix);
+        }
+        return pickBestHints(cursor, matchLeft[0], matchRight[0], hints);
+    };
+
+    const getNetPatternHints = function(cursor, line) {
+        if ( /\|\|[\w.-]*$/.test(line.slice(0, cursor.ch)) ) {
+            return getOriginHints(cursor, line, '^');
+        }
+        // Maybe a static extended filter is meant to be crafted.
+        if ( /[^\w\x80-\xF4#,.-]/.test(line) === false ) {
+            return getOriginHints(cursor, line);
+        }
+    };
+
+    const getNetOptionHints = function(cursor, seedLeft, seedRight) {
+        const isNegated = seedLeft.startsWith('~');
+        if ( isNegated ) {
+            seedLeft = seedLeft.slice(1);
+        }
         const assignPos = seedRight.indexOf('=');
         if ( assignPos !== -1 ) { seedRight = seedRight.slice(0, assignPos); }
         const isException = parser.isException();
         const hints = [];
         for ( let [ text, bits ] of parser.netOptionTokenDescriptors ) {
+            if ( excludedHints.has(text) ) { continue; }
             if ( isNegated && (bits & parser.OPTCanNegate) === 0 ) { continue; }
             if ( isException ) {
                 if ( (bits & parser.OPTBlockOnly) !== 0 ) { continue; }
@@ -441,6 +505,7 @@ const initHints = function() {
     const getNetRedirectHints = function(cursor, seedLeft, seedRight) {
         const hints = [];
         for ( const text of redirectNames.keys() ) {
+            if ( text.startsWith('abp-resource:') ) { continue; }
             hints.push(text);
         }
         return pickBestHints(cursor, seedLeft, seedRight, hints);
@@ -448,26 +513,28 @@ const initHints = function() {
 
     const getNetHints = function(cursor, line) {
         const beg = cursor.ch;
-        if ( beg < parser.optionsSpan ) { return; }
+        if ( beg <= parser.slices[parser.optionsAnchorSpan.i+1] ) {
+            return getNetPatternHints(cursor, line);
+        }
         const lineBefore = line.slice(0, beg);
         const lineAfter = line.slice(beg);
-        let matchLeft = /~?([^$,~]*)$/.exec(lineBefore);
-        let matchRight = /^([^,]*)/.exec(lineAfter);
+        let matchLeft = /[^$,]*$/.exec(lineBefore);
+        let matchRight = /^[^,]*/.exec(lineAfter);
         if ( matchLeft === null || matchRight === null ) { return; }
-        let pos = matchLeft[1].indexOf('=');
-        if ( pos === -1 ) {
-            return getNetOptionHints(
+        const assignPos = matchLeft[0].indexOf('=');
+        if ( assignPos === -1 ) {
+            return getNetOptionHints(cursor, matchLeft[0], matchRight[0]);
+        }
+        if ( /^(redirect(-rule)?|rewrite)=/.test(matchLeft[0]) ) {
+            return getNetRedirectHints(
                 cursor,
-                matchLeft[0].startsWith('~'),
-                matchLeft[1],
-                matchRight[1]
+                matchLeft[0].slice(assignPos + 1),
+                matchRight[0]
             );
         }
-        return getNetRedirectHints(
-            cursor,
-            matchLeft[1].slice(pos + 1),
-            matchRight[1]
-        );
+        if ( matchLeft[0].startsWith('domain=') ) {
+            return getOriginHints(cursor, line);
+        }
     };
 
     const getExtSelectorHints = function(cursor, line) {
@@ -527,16 +594,24 @@ const initHints = function() {
         const line = cm.getLine(cursor.line);
         parser.analyze(line);
         if ( parser.category === parser.CATStaticExtFilter ) {
-            if ( parser.hasFlavor(parser.BITFlavorExtScriptlet) ) {
-                return getExtScriptletHints(cursor, line);
+            let hints;
+            if ( cursor.ch <= parser.slices[parser.optionsAnchorSpan.i+1] ) {
+                hints = getOriginHints(cursor, line);
+            } else {
+                hints = parser.hasFlavor(parser.BITFlavorExtScriptlet)
+                    ? getExtScriptletHints(cursor, line)
+                    : getExtSelectorHints(cursor, line);
             }
-            return getExtSelectorHints(cursor, line);
+            return hints;
         }
         if ( parser.category === parser.CATStaticNetFilter ) {
             return getNetHints(cursor, line);
         }
         if ( parser.category === parser.CATComment ) {
             return getCommentHints(cursor, line);
+        }
+        if ( parser.category === parser.CATNone ) {
+            return getOriginHints(cursor, line);
         }
     });
 };

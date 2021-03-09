@@ -1027,6 +1027,10 @@
     "message": "octeți",
     "description": ""
   },
+  "contextMenuBlockElementInFrame": {
+    "message": "Blochează element in cardu...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Permite temporar elementele media mari",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"

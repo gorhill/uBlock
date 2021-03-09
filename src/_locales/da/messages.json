@@ -1027,6 +1027,10 @@
     "message": "bytes",
     "description": ""
   },
+  "contextMenuBlockElementInFrame": {
+    "message": "Blokér element i ramme...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Tillad midlertidigt store medieelementer",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"

@@ -215,7 +215,7 @@ const LogEntry = function(details) {
             this[prop] = details[prop];
         }
     }
-    this.type = details.stype;
+    this.type = details.stype || details.type;
     if ( details.aliasURL !== undefined ) {
         this.aliased = true;
     }
@@ -663,7 +663,6 @@ const viewPort = (( ) => {
         const divcl = div.classList;
         let span;
 
-
         // Realm
         if ( details.realm !== undefined ) {
             divcl.add(details.realm + 'Realm');
@@ -703,6 +702,9 @@ const viewPort = (( ) => {
             }
             if ( filteringType === 'static' ) {
                 divcl.add('canLookup');
+                if ( filter.modifier === true ) {
+                    div.setAttribute('data-modifier', '');
+                }
             } else if ( filteringType === 'cosmetic' ) {
                 divcl.add('canLookup');
                 divcl.toggle('isException', filter.raw.startsWith('#@#'));
@@ -1694,6 +1696,9 @@ const reloadTab = function(ev) {
             const attr = tr.getAttribute('data-status') || '';
             if ( attr !== '' ) {
                 rows[7].setAttribute('data-status', attr);
+                if ( tr.hasAttribute('data-modifier') ) {
+                    rows[7].setAttribute('data-modifier', '');
+                }
             }
             rows[7].children[1].appendChild(trch[6].cloneNode(true));
         } else {

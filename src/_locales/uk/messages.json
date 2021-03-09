@@ -672,7 +672,7 @@
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinModified": {
-    "message": "modified",
+    "message": "модифікований",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
@@ -1026,6 +1026,10 @@
   "genericBytes": {
     "message": "байтів",
     "description": ""
+  },
+  "contextMenuBlockElementInFrame": {
+    "message": "Заблокувати елемент у фреймі",
+    "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Тимчасово дозволити великі медіа елементи",

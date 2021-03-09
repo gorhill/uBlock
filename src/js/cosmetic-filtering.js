@@ -361,8 +361,7 @@ FilterContainer.prototype.keyFromSelector = function(selector) {
 /******************************************************************************/
 
 FilterContainer.prototype.compile = function(parser, writer) {
-    // 1000 = cosmetic filtering
-    writer.select(1000);
+    writer.select(µb.compiledCosmeticSection);
 
     if ( parser.hasOptions() === false ) {
         this.compileGenericSelector(parser, writer);
@@ -572,8 +571,7 @@ FilterContainer.prototype.fromCompiledContent = function(reader, options) {
         return;
     }
 
-    // 1000 = cosmetic filtering
-    reader.select(1000);
+    reader.select(µb.compiledCosmeticSection);
 
     let db, bucket;
 
@@ -664,8 +662,7 @@ FilterContainer.prototype.fromCompiledContent = function(reader, options) {
 /******************************************************************************/
 
 FilterContainer.prototype.skipGenericCompiledContent = function(reader) {
-    // 1000 = cosmetic filtering
-    reader.select(1000);
+    reader.select(µb.compiledCosmeticSection);
 
     while ( reader.next() ) {
         this.acceptedCount += 1;
@@ -706,8 +703,7 @@ FilterContainer.prototype.skipGenericCompiledContent = function(reader) {
 /******************************************************************************/
 
 FilterContainer.prototype.skipCompiledContent = function(reader) {
-    // 1000 = cosmetic filtering
-    reader.select(1000);
+    reader.select(µb.compiledCosmeticSection);
 
     while ( reader.next() ) {
         this.acceptedCount += 1;

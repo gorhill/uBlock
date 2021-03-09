@@ -141,6 +141,9 @@ const HNTrieContainer = class {
         this.buf32[CHAR0_SLOT] = len >>> 1;
         this.buf32[CHAR1_SLOT] = this.buf32[CHAR0_SLOT];
         this.wasmMemory = null;
+
+        this.lastStored = '';
+        this.lastStoredLen = this.lastStoredIndex = 0;
     }
 
     //--------------------------------------------------------------------------
@@ -160,6 +163,9 @@ const HNTrieContainer = class {
         }
         this.buf32[TRIE1_SLOT] = this.buf32[TRIE0_SLOT];
         this.buf32[CHAR1_SLOT] = this.buf32[CHAR0_SLOT];
+
+        this.lastStored = '';
+        this.lastStoredLen = this.lastStoredIndex = 0;
     }
 
     setNeedle(needle) {
@@ -419,6 +425,11 @@ const HNTrieContainer = class {
             hn = hn.slice(-255);
             n = 255;
         }
+        if ( n === this.lastStoredLen && hn === this.lastStored ) {
+            return this.lastStoredIndex;
+        }
+        this.lastStored = hn;
+        this.lastStoredLen = n;
         if ( (this.buf.length - this.buf32[CHAR1_SLOT]) < n ) {
             this.growBuf(0, n);
         }
@@ -428,7 +439,7 @@ const HNTrieContainer = class {
         for ( let i = 0; i < n; i++ ) {
             buf8[offset+i] = hn.charCodeAt(i);
         }
-        return offset - this.buf32[CHAR0_SLOT];
+        return (this.lastStoredIndex = offset - this.buf32[CHAR0_SLOT]);
     }
 
     extractHostname(i, n) {

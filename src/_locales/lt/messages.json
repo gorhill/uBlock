@@ -12,7 +12,7 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "Warning! You have unsaved changes",
+    "message": "Dėmesio! Turite neišsaugotų pakeitimų",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -100,7 +100,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "Blocked since install",
+    "message": "Užblokuota nuo įdiegimo",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
@@ -180,7 +180,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
-    "message": "Pop-up windows",
+    "message": "Iškylantysis langas",
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
@@ -200,11 +200,11 @@
     "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
-    "message": "More",
+    "message": "Daugiau",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton_v2": {
-    "message": "Less",
+    "message": "Mažiau",
     "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
@@ -264,7 +264,7 @@
     "description": "appears in popup"
   },
   "popupVersion": {
-    "message": "Version",
+    "message": "Versija",
     "description": "Example of use: Version 1.26.4"
   },
   "pickerCreate": {
@@ -468,7 +468,7 @@
     "description": "used as a tooltip for the out-of-date icon beside a list"
   },
   "3pViewContent": {
-    "message": "view content",
+    "message": "peržiūrėti turinį",
     "description": "used as a tooltip for eye icon beside a list"
   },
   "3pLastUpdate": {
@@ -552,7 +552,7 @@
     "description": "English: dynamic rule syntax and full documentation."
   },
   "rulesSort": {
-    "message": "Sort:",
+    "message": "Rikiuoti pagal:",
     "description": "English: label for sort option."
   },
   "rulesSortByType": {
@@ -860,11 +860,11 @@
     "description": "English: Contributors"
   },
   "aboutSourceCode": {
-    "message": "Source code",
+    "message": "Programinis kodas",
     "description": "Link text to source code repo"
   },
   "aboutTranslations": {
-    "message": "Translations",
+    "message": "Vertimai",
     "description": "Link text to translations repo"
   },
   "aboutFilterLists": {
@@ -912,7 +912,7 @@
     "description": "No longer used"
   },
   "subscribeButton": {
-    "message": "Subscribe",
+    "message": "Prenumeruoti",
     "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
@@ -1026,6 +1026,10 @@
   "genericBytes": {
     "message": "baitai",
     "description": ""
+  },
+  "contextMenuBlockElementInFrame": {
+    "message": "Block element in frame...",
+    "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Laikinai leisti didelius medijos elementus",

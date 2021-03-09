@@ -74,9 +74,9 @@
 .cm-s-default .cm-keyword {
     color: var(--sf-keyword-ink);
     }
-.cm-s-default .cm-regex {
+.cm-s-default .cm-notice {
     text-underline-position: under;
-    text-decoration-color: var(--sf-regex-ink);
+    text-decoration-color: var(--sf-notice-ink);
     text-decoration-style: solid;
     text-decoration-line: underline;
     }

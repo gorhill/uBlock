@@ -1027,6 +1027,10 @@
     "message": "bajtovi",
     "description": ""
   },
+  "contextMenuBlockElementInFrame": {
+    "message": "Blokiraj element u okviru...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Privremeno dopusti velike medijske elemente",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"

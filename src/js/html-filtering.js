@@ -304,8 +304,7 @@
             return;
         }
 
-        // 1002 = html filtering
-        writer.select(1002);
+        writer.select(µb.compiledHTMLSection);
 
         // TODO: Mind negated hostnames, they are currently discarded.
 
@@ -327,8 +326,7 @@
         // Don't bother loading filters if stream filtering is not supported.
         if ( µb.canFilterResponseData === false ) { return; }
 
-        // 1002 = html filtering
-        reader.select(1002);
+        reader.select(µb.compiledHTMLSection);
 
         while ( reader.next() ) {
             acceptedCount += 1;
@@ -370,12 +368,14 @@
             hostname,
             [ plains, exceptions, procedurals, exceptions ]
         );
-        if ( details.entity !== '' ) {
-            filterDB.retrieve(
-                `${hostname.slice(0, -details.domain.length)}${details.entity}`,
-                [ plains, exceptions, procedurals, exceptions ]
-            );
-        }
+        const entity = details.entity !== ''
+            ? `${hostname.slice(0, -details.domain.length)}${details.entity}`
+            : '*';
+        filterDB.retrieve(
+            entity,
+            [ plains, exceptions, procedurals, exceptions ],
+            1
+        );
     
         if ( plains.size === 0 && procedurals.size === 0 ) { return; }
 

@@ -70,7 +70,7 @@ const initializeTabs = async function() {
             if ( tab.discarded === true ) { continue; }
             const { id, url } = tab;
             µb.tabContextManager.commit(id, url);
-            µb.bindTabToPageStats(id);
+            µb.bindTabToPageStore(id);
             // https://github.com/chrisaljoudi/uBlock/issues/129
             //   Find out whether content scripts need to be injected
             //   programmatically. This may be necessary for web pages which
@@ -112,31 +112,17 @@ const onVersionReady = function(lastVersion) {
     µb.redirectEngine.invalidateResourcesSelfie();
 
     const lastVersionInt = vAPI.app.intFromVersion(lastVersion);
+    if ( lastVersionInt === 0 ) { return; }
 
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/494
-    //   Remove useless per-site switches.
-    if ( lastVersionInt <= 1019003007 ) {
-        µb.sessionSwitches.toggle('no-scripting', 'behind-the-scene', 0);
-        µb.permanentSwitches.toggle('no-scripting', 'behind-the-scene', 0);
+    // https://github.com/LiCybora/NanoDefenderFirefox/issues/196
+    //   Toggle on the blocking of CSP reports by default for Firefox.
+    if (
+        vAPI.webextFlavor.soup.has('firefox') &&
+        lastVersionInt <= 1031003011
+    ) {
+        µb.sessionSwitches.toggle('no-csp-reports', '*', 1);
+        µb.permanentSwitches.toggle('no-csp-reports', '*', 1);
         µb.saveHostnameSwitches();
-    }
-
-    // Configure new popup panel according to classic popup panel
-    // configuration.
-    if ( lastVersionInt !== 0 ) {
-        if ( lastVersionInt <= 1026003014 ) {
-            µb.userSettings.popupPanelSections =
-                µb.userSettings.dynamicFilteringEnabled === true ? 0b11111 : 0b01111;
-            µb.userSettings.dynamicFilteringEnabled = undefined;
-            µb.saveUserSettings();
-        } else if (
-            lastVersionInt <= 1026003016 &&
-            (µb.userSettings.popupPanelSections & 1) !== 0
-        ) {
-            µb.userSettings.popupPanelSections =
-                (µb.userSettings.popupPanelSections << 1 | 1) & 0b111111;
-            µb.saveUserSettings();
-        }
     }
 
     vAPI.storage.set({ version: vAPI.app.version });
@@ -194,10 +180,11 @@ const onUserSettingsReady = function(fetched) {
 
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1588916
 //   Save magic format numbers into the cache storage itself.
+// https://github.com/uBlockOrigin/uBlock-issues/issues/1365
+//   Wait for removal of invalid cached data to be completed.
 
-const onCacheSettingsReady = function(fetched) {
+const onCacheSettingsReady = async function(fetched) {
     if ( fetched.compiledMagic !== µb.systemSettings.compiledMagic ) {
-        µb.assets.remove(/^compiled\//);
         µb.compiledFormatChanged = true;
         µb.selfieIsInvalid = true;
     }
@@ -257,7 +244,7 @@ const createDefaultProps = function() {
             'behind-the-scene * inline-script noop',
             'behind-the-scene * 1p-script noop',
             'behind-the-scene * 3p-script noop',
-            'behind-the-scene * 3p-frame noop'
+            'behind-the-scene * 3p-frame noop',
         ].join('\n'),
         'urlFilteringString': '',
         'hostnameSwitchesString': [
@@ -270,6 +257,10 @@ const createDefaultProps = function() {
         'netWhitelist': µb.netWhitelistDefault,
         'version': '0.0.0.0'
     };
+    // https://github.com/LiCybora/NanoDefenderFirefox/issues/196
+    if ( vAPI.webextFlavor.soup.has('firefox') ) {
+        fetchableProps.hostnameSwitchesString += '\nno-csp-reports: * true';
+    }
     toFetch(µb.localSettings, fetchableProps);
     toFetch(µb.userSettings, fetchableProps);
     toFetch(µb.restoreBackupSettings, fetchableProps);
@@ -304,6 +295,8 @@ try {
     );
     log.info(`Backend storage for cache will be ${cacheBackend}`);
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1365
+    //   Wait for onCacheSettingsReady() to be fully ready.
     await Promise.all([
         µb.loadSelectedFilterLists().then(( ) => {
             log.info(`List selection ready ${Date.now()-vAPI.T0} ms after launch`);

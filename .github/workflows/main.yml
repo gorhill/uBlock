@@ -1,0 +1,70 @@
+name: GitHub CI
+
+on:
+  create:
+    branches: master
+
+# I used the following project as template to get started:
+# https://github.com/dessant/search-by-image/blob/master/.github/workflows/ci.yml
+
+jobs:
+  build:
+    name: Build packages
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Clone uAssets
+        run: |
+          pushd ..
+          git clone --depth 1 https://github.com/uBlockOrigin/uAssets.git
+          popd
+      # https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
+      - name: Get release information
+        id: release_info
+        run: |
+          echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+      - name: Create GitHub release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          tag_name: ${{ steps.release_info.outputs.VERSION }}
+          release_name: ${{ steps.release_info.outputs.VERSION }}
+          prerelease: true
+      - name: Build all packages
+        run: |
+          tools/make-chromium.sh ${{ steps.release_info.outputs.VERSION }}
+          tools/make-firefox.sh ${{ steps.release_info.outputs.VERSION }}
+          tools/make-thunderbird.sh ${{ steps.release_info.outputs.VERSION }}
+      - name: Upload Chromium package
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.chromium.zip
+          asset_name: uBlock0_${{ steps.release_info.outputs.VERSION }}.chromium.zip
+          asset_content_type: application/octet-stream
+      - name: Upload Firefox package
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.firefox.xpi
+          asset_name: uBlock0_${{ steps.release_info.outputs.VERSION }}.firefox.xpi
+          asset_content_type: application/octet-stream
+      - name: Upload Thunderbird package
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/build/uBlock0_${{ steps.release_info.outputs.VERSION }}.thunderbird.xpi
+          asset_name: uBlock0_${{ steps.release_info.outputs.VERSION }}.thunderbird.xpi
+          asset_content_type: application/octet-stream

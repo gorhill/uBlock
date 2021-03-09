@@ -371,10 +371,10 @@
 
         // It is a popup, block and remove the tab.
         if ( popupType === 'popup' ) {
-            µb.unbindTabFromPageStats(targetTabId);
+            µb.unbindTabFromPageStore(targetTabId);
             vAPI.tabs.remove(targetTabId, false);
         } else {
-            µb.unbindTabFromPageStats(openerTabId);
+            µb.unbindTabFromPageStore(openerTabId);
             vAPI.tabs.remove(openerTabId, true);
         }
 
@@ -850,7 +850,7 @@ vAPI.Tabs = class extends vAPI.Tabs {
     onClosed(tabId) {
         super.onClosed(tabId);
         if ( vAPI.isBehindTheSceneTabId(tabId) ) { return; }
-        µBlock.unbindTabFromPageStats(tabId);
+        µBlock.unbindTabFromPageStore(tabId);
         µBlock.contextMenu.update();
     }
 
@@ -868,19 +868,22 @@ vAPI.Tabs = class extends vAPI.Tabs {
     // properly setup if network requests are fired from within the tab.
     // Example: Chromium + case #6 at
     //          http://raymondhill.net/ublock/popup.html
-
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/688#issuecomment-748179731
+    //   For non-network URIs, defer scriptlet injection to content script. The
+    //   reason for this is that we need the effective URL and this information
+    //   is not available at this point.
     onNavigation(details) {
         super.onNavigation(details);
         const µb = µBlock;
         if ( details.frameId === 0 ) {
             µb.tabContextManager.commit(details.tabId, details.url);
-            let pageStore = µb.bindTabToPageStats(details.tabId, 'tabCommitted');
+            let pageStore = µb.bindTabToPageStore(details.tabId, 'tabCommitted');
             if ( pageStore ) {
                 pageStore.journalAddRootFrame('committed', details.url);
             }
         }
-        if ( µb.canInjectScriptletsNow ) {
-            let pageStore = µb.pageStoreFromTabId(details.tabId);
+        if ( µb.canInjectScriptletsNow && µb.URI.isNetworkURI(details.url) ) {
+            const pageStore = µb.pageStoreFromTabId(details.tabId);
             if ( pageStore !== null && pageStore.getNetFilteringSwitch() ) {
                 µb.scriptletFilteringEngine.injectNow(details);
             }
@@ -896,7 +899,7 @@ vAPI.Tabs = class extends vAPI.Tabs {
         if ( !tab.url || tab.url === '' ) { return; }
         if ( !changeInfo.url ) { return; }
         µBlock.tabContextManager.commit(tabId, changeInfo.url);
-        µBlock.bindTabToPageStats(tabId, 'tabUpdated');
+        µBlock.bindTabToPageStore(tabId, 'tabUpdated');
     }
 };
 
@@ -907,12 +910,12 @@ vAPI.tabs = new vAPI.Tabs();
 
 // Create an entry for the tab if it doesn't exist.
 
-µBlock.bindTabToPageStats = function(tabId, context) {
-    µBlock.updateToolbarIcon(tabId);
+µBlock.bindTabToPageStore = function(tabId, context) {
+    this.updateToolbarIcon(tabId, 0b111);
 
     // Do not create a page store for URLs which are of no interests
     if ( this.tabContextManager.exists(tabId) === false ) {
-        this.unbindTabFromPageStats(tabId);
+        this.unbindTabFromPageStore(tabId);
         return null;
     }
 
@@ -954,8 +957,7 @@ vAPI.tabs = new vAPI.Tabs();
 
 /******************************************************************************/
 
-µBlock.unbindTabFromPageStats = function(tabId) {
-    //console.debug('µBlock> unbindTabFromPageStats(%d)', tabId);
+µBlock.unbindTabFromPageStore = function(tabId) {
     const pageStore = this.pageStores.get(tabId);
     if ( pageStore === undefined ) { return; }
     pageStore.dispose();
@@ -1156,7 +1158,7 @@ vAPI.tabs = new vAPI.Tabs();
     const checkTab = async tabId => {
         const tab = await vAPI.tabs.get(tabId);
         if ( tab instanceof Object && tab.discarded !== true ) { return; }
-        µBlock.unbindTabFromPageStats(tabId);
+        µBlock.unbindTabFromPageStore(tabId);
     };
 
     const pageStoreJanitor = function() {

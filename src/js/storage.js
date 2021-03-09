@@ -740,12 +740,18 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 µBlock.getCompiledFilterList = async function(assetKey) {
     const compiledPath = 'compiled/' + assetKey;
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1365
+    //   Verify that the list version matches that of the current compiled
+    //   format.
     if (
         this.compiledFormatChanged === false &&
         this.badLists.has(assetKey) === false
     ) {
-        let compiledDetails = await this.assets.get(compiledPath);
-        if ( compiledDetails.content !== '' ) {
+        const compiledDetails = await this.assets.get(compiledPath);
+        if (
+            parseInt(compiledDetails.content, 10) ===
+            this.systemSettings.compiledMagic
+        ) {
             compiledDetails.assetKey = assetKey;
             return compiledDetails;
         }
@@ -756,7 +762,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         return { assetKey, content: '' };
     }
 
-    const rawDetails = await this.assets.get(assetKey);
+    const rawDetails = await this.assets.get(assetKey, { silent: true });
     // Compiling an empty string results in an empty string.
     if ( rawDetails.content === '' ) {
         rawDetails.assetKey = assetKey;
@@ -770,25 +776,21 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         return { assetKey, content: '' };
     }
 
-    // Fetching the raw content may cause the compiled content to be
-    // generated somewhere else in uBO, hence we try one last time to
-    // fetch the compiled content in case it has become available.
-    const compiledDetails = await this.assets.get(compiledPath);
-    if ( compiledDetails.content === '' ) {
-        compiledDetails.content = this.compileFilters(rawDetails.content, {
-            assetKey
-        });
-        this.assets.put(compiledPath, compiledDetails.content);
-    }
+    const compiledContent =
+        this.compileFilters(rawDetails.content, { assetKey });
+    this.assets.put(compiledPath, compiledContent);
 
-    compiledDetails.assetKey = assetKey;
-    return compiledDetails;
+    return { assetKey, content: compiledContent };
 };
 
 /******************************************************************************/
 
 // https://github.com/gorhill/uBlock/issues/3406
 //   Lower minimum update period to 1 day.
+// https://bugs.chromium.org/p/v8/issues/detail?id=2869
+//   orphanizeString is to work around String.slice() potentially causing
+//   the whole raw filter list to be held in memory just because we cut out
+//   the title as a substring.
 
 µBlock.extractFilterListMetadata = function(assetKey, raw) {
     const listEntry = this.availableFilterLists[assetKey];
@@ -797,27 +799,32 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     const head = raw.slice(0, 1024);
     // https://github.com/gorhill/uBlock/issues/313
     // Always try to fetch the name if this is an external filter list.
-    if ( listEntry.title === '' || listEntry.group === 'custom' ) {
-        const matches = head.match(/(?:^|\n)(?:!|# )[\t ]*Title[\t ]*:([^\n]+)/i);
-        if ( matches !== null ) {
-            // https://bugs.chromium.org/p/v8/issues/detail?id=2869
-            //   orphanizeString is to work around String.slice()
-            //   potentially causing the whole raw filter list to be held in
-            //   memory just because we cut out the title as a substring.
-            listEntry.title = this.orphanizeString(matches[1].trim());
+    if ( listEntry.group === 'custom' ) {
+        let matches = head.match(/(?:^|\n)(?:!|# )[\t ]*Title[\t ]*:([^\n]+)/i);
+        const title = matches && matches[1].trim() || '';
+        if ( title !== '' && title !== listEntry.title ) {
+            listEntry.title = this.orphanizeString(title);
+            this.assets.registerAssetSource(assetKey, { title });
+        }
+        matches = head.match(/(?:^|\n)(?:!|# )[\t ]*Homepage[\t ]*:[\t ]*(https?:\/\/\S+)\s/i);
+        const supportURL = matches && matches[1] || '';
+        if ( supportURL !== '' && supportURL !== listEntry.supportURL ) {
+            listEntry.supportURL = this.orphanizeString(supportURL);
+            this.assets.registerAssetSource(assetKey, { supportURL });
         }
     }
     // Extract update frequency information
     const matches = head.match(/(?:^|\n)(?:!|# )[\t ]*Expires[\t ]*:[\t ]*(\d+)[\t ]*(h)?/i);
     if ( matches !== null ) {
-        let v = parseInt(matches[1], 10);
-        if ( isNaN(v) === false ) {
+        let updateAfter = parseInt(matches[1], 10);
+        if ( isNaN(updateAfter) === false ) {
             if ( matches[2] !== undefined ) {
-                v = Math.ceil(v / 24);
+                updateAfter = Math.ceil(updateAfter / 24);
             }
-            v = Math.max(v, 1);
-            if ( v !== listEntry.updateAfter ) {
-                this.assets.registerAssetSource(assetKey, { updateAfter: v });
+            updateAfter = Math.max(updateAfter, 1);
+            if ( updateAfter !== listEntry.updateAfter ) {
+                listEntry.updateAfter = updateAfter;
+                this.assets.registerAssetSource(assetKey, { updateAfter });
             }
         }
     }
@@ -884,7 +891,13 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         staticNetFilteringEngine.compile(parser, writer);
     }
 
-    return writer.toString();
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1365
+    //   Embed version into compiled list itself: it is encoded in as the
+    //   first digits followed by a whitespace.
+    const compiledContent
+        = `${this.systemSettings.compiledMagic}\n` + writer.toString();
+
+    return compiledContent;
 };
 /******************************************************************************/
 
@@ -938,7 +951,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
 µBlock.applyCompiledFilters = function(rawText, firstparty) {
     if ( rawText === '' ) { return; }
-    let reader = new this.CompiledLineIO.Reader(rawText);
+    const reader = new this.CompiledLineIO.Reader(rawText);
     this.staticNetFilteringEngine.fromCompiledContent(reader);
     this.staticExtFilteringEngine.fromCompiledContent(reader, {
         skipGenericCosmetic: this.userSettings.ignoreGenericCosmeticFilters,

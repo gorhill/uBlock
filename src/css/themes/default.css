@@ -191,7 +191,7 @@
     --sf-error-ink: #ff0000;
     --sf-error-surface: #ff000016;
     --sf-keyword-ink: var(--purple-60);
-    --sf-regex-ink: var(--light-gray-60);
+    --sf-notice-ink: var(--light-gray-60);
     --sf-tag-ink: #117700;
     --sf-value-ink: var(--orange-80);
     --sf-variable-ink: var(--default-ink);
@@ -202,6 +202,14 @@
     --df-block-ink: #ff0000;
     --df-noop-ink: var(--dark-gray-10);
     --df-key-ink: var(--violet-70);
+
+    /* logger */
+    --logger-blocked-surface: #c0000014;
+    --logger-modified-surface: #0000c010;
+    --logger-allowed-surface: #00a00014;
+    --logger-blocked-em-surface: #c0000036;
+    --logger-modified-em-surface: #0000c028;
+    --logger-allowed-em-surface: #00a00036;
 }
 
 /**

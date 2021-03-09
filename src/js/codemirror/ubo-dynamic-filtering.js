@@ -61,8 +61,9 @@ CodeMirror.defineMode('ubo-dynamic-filtering', ( ) => {
     const reBadHn = /[%]|^\.|\.$/;
     const slices = [];
     let sliceIndex = 0;
-    const tokens = [];
-    let tokenIndex = 0;
+    let sliceCount = 0;
+    let hostnameToDomainMap = new Map();
+    let psl;
 
     const isValidHostname = hnin => {
         if ( hnin === '*' ) { return true; }
@@ -76,125 +77,159 @@ CodeMirror.defineMode('ubo-dynamic-filtering', ( ) => {
         return hnout !== '_' && hnout !== '' && reBadHn.test(hnout) === false;
     };
 
-    const isSwitchRule = ( ) => {
-        const token = tokens[0];
-        return token.charCodeAt(token.length-1) === 0x3A /* ':' */;
+    const addSlice = (len, style = null) => {
+        let i = sliceCount;
+        if ( i === slices.length ) {
+            slices[i] = { len: 0, style: null };
+        }
+        const entry = slices[i];
+        entry.len = len;
+        entry.style = style;
+        sliceCount += 1;
     };
 
-    const isURLRule = ( ) => {
-        return tokens[1].indexOf('://') > 0;
+    const addMatchSlice = (match, style = null) => {
+        const len = match !== null ? match[0].length : 0;
+        addSlice(len, style);
+        return match !== null ? match.input.slice(len) : '';
     };
 
-    const skipToEnd = (stream, style = null) => {
-        stream.skipToEnd();
-        return style;
+    const addMatchHnSlices = (match, style = null) => {
+        const hn = match[0];
+        if ( hn === '*' ) {
+            return addMatchSlice(match, style);
+        }
+        let dn = hostnameToDomainMap.get(hn) || '';
+        if ( dn === '' && psl !== undefined ) {
+            dn = /(\d|\])$/.test(hn) ? hn : (psl.getDomain(hn) || hn);
+        }
+        const entityBeg = hn.length - dn.length;
+        if ( entityBeg !== 0 ) {
+            addSlice(entityBeg, style);
+        }
+        let entityEnd = dn.indexOf('.');
+        if ( entityEnd === -1 ) { entityEnd = dn.length; }
+        addSlice(entityEnd, style !== null ? `${style} strong` : 'strong');
+        if ( entityEnd < dn.length ) {
+            addSlice(dn.length - entityEnd, style);
+        }
+        return match.input.slice(hn.length);
+    };
+
+    const makeSlices = (stream, opts) => {
+        sliceIndex = 0;
+        sliceCount = 0;
+        let { string } = stream;
+        if ( string === '...' ) { return; }
+        const { sortType } = opts;
+        const reNotToken = /^\s+/;
+        const reToken = /^\S+/;
+        // leading whitespaces
+        let match = reNotToken.exec(string);
+        if ( match !== null ) {
+            string = addMatchSlice(match);
+        }
+        // first token
+        match = reToken.exec(string);
+        if ( match === null ) { return; }
+        // hostname or switch
+        const isSwitchRule = validSwitches.has(match[0]);
+        if ( isSwitchRule ) {
+            string = addMatchSlice(match, sortType === 0 ? 'sortkey' : null);
+        } else if ( isValidHostname(match[0]) ) {
+            if ( sortType === 1 ) {
+                string = addMatchHnSlices(match, 'sortkey');
+            } else {
+                string = addMatchHnSlices(match, null);
+            }
+        } else {
+            string = addMatchSlice(match, 'error');
+        }
+        // whitespaces before second token
+        match = reNotToken.exec(string);
+        if ( match === null ) { return; }
+        string = addMatchSlice(match);
+        // second token
+        match = reToken.exec(string);
+        if ( match === null ) { return; }
+        // hostname or url
+        const isURLRule = isSwitchRule === false && match[0].includes('://');
+        if ( isURLRule ) {
+            if ( isSwitchRule ) {
+                string = addMatchSlice(match, 'error');
+            } else {
+                string = addMatchSlice(match, sortType === 2 ? 'sortkey' : null);
+            }
+        } else if ( isValidHostname(match[0]) === false ) {
+            string = addMatchSlice(match, 'error');
+        } else if ( sortType === 1 && isSwitchRule || sortType === 2 ) {
+            string = addMatchHnSlices(match, 'sortkey');
+        } else {
+            string = addMatchHnSlices(match, null);
+        }
+        // whitespaces before third token
+        match = reNotToken.exec(string);
+        if ( match === null ) { return; }
+        string = addMatchSlice(match);
+        // third token
+        match = reToken.exec(string);
+        if ( match === null ) { return; }
+        // rule type or switch state
+        if ( isSwitchRule ) {
+            string = validSwitcheStates.has(match[0])
+                ? addMatchSlice(match, match[0] === 'true' ? 'blockrule' : 'allowrule')
+                : addMatchSlice(match, 'error');
+        } else if ( isURLRule ) {
+            string = invalidURLRuleTypes.has(match[0])
+                ? addMatchSlice(match, 'error')
+                : addMatchSlice(match);
+        } else {
+            string = validHnRuleTypes.has(match[0])
+                ? addMatchSlice(match)
+                : addMatchSlice(match, 'error');
+        }
+        // whitespaces before fourth token
+        match = reNotToken.exec(string);
+        if ( match === null ) { return; }
+        string = addMatchSlice(match);
+        // fourth token
+        match = reToken.exec(string);
+        if ( match === null ) { return; }
+        string = isSwitchRule || validActions.has(match[0]) === false
+            ? addMatchSlice(match, 'error')
+            : addMatchSlice(match, `${match[0]}rule`);
+        // whitespaces before end of line
+        match = reNotToken.exec(string);
+        if ( match === null ) { return; }
+        string = addMatchSlice(match);
+        // any token beyond fourth token is invalid
+        match = reToken.exec(string);
+        if ( match !== null ) {
+            string = addMatchSlice(null, 'error');
+        }
     };
 
     const token = function(stream) {
         if ( stream.sol() ) {
-            if ( stream.string === '...' ) {
-                return stream.skipToEnd(stream);
-            }
-            slices.length = 0;
-            tokens.length = 0;
-            const reTokens = /\S+/g;
-            for (;;) {
-                const lastIndex = reTokens.lastIndex;
-                const match = reTokens.exec(stream.string);
-                if ( match === null ) { break; }
-                const l = match.index;
-                const r = reTokens.lastIndex;
-                if ( l !== lastIndex ) {
-                    slices.push({ t: false, l: lastIndex, r: l });
-                }
-                slices.push({ t: true, l, r });
-                tokens.push(stream.string.slice(l, r));
-            }
-            sliceIndex = tokenIndex = 0;
+            makeSlices(stream, this);
         }
-        if ( sliceIndex >= slices.length ) {
-            return stream.skipToEnd(stream);
-        }
-        const slice = slices[sliceIndex++];
-        stream.pos = slice.r;
-        if ( slice.t !== true ) { return null; }
-        const token = tokens[tokenIndex++];
-        // Field 1: per-site switch or hostname
-        if ( tokenIndex === 1 ) {
-            if ( isSwitchRule(token) ) {
-                if ( validSwitches.has(token) === false ) {
-                    return skipToEnd(stream, 'error');
-                }
-                if ( this.sortType === 0 ) { return 'sortkey'; }
-                return null;
-            }
-            if ( isValidHostname(token) === false ) {
-                return skipToEnd(stream, 'error');
-            }
-            if ( this.sortType === 1 ) { return 'sortkey'; }
+        if ( sliceIndex >= sliceCount ) {
+            stream.skipToEnd(stream);
             return null;
         }
-        // Field 2: hostname or url
-        if ( tokenIndex === 2 ) {
-            if ( isSwitchRule(tokens[0]) ) {
-                if ( isValidHostname(token) === false  ) {
-                    return skipToEnd(stream, 'error');
-                }
-                if ( this.sortType === 1 ) { return 'sortkey'; }
-            }
-            if (
-                isValidHostname(token) === false &&
-                isURLRule(token) === false
-            ) {
-                return skipToEnd(stream, 'error');
-            }
-            if ( this.sortType === 2 ) { return 'sortkey'; }
-            return null;
+        const { len, style } = slices[sliceIndex++];
+        if ( len === 0 ) {
+            stream.skipToEnd();
+        } else {
+            stream.pos += len;
         }
-        // Field 3
-        if ( tokenIndex === 3 ) {
-            // Switch rule
-            if ( isSwitchRule(tokens[0]) ) {
-                if ( validSwitcheStates.has(token) === false ) {
-                    return skipToEnd(stream, 'error');
-                }
-                if ( token === 'true' ) { return 'blockrule'; }
-                if ( token === 'false' ) { return 'allowrule'; }
-                return null;
-            }
-            // Hostname rule
-            if ( isURLRule(tokens[1]) === false ) {
-                if (
-                    tokens[1] !== '*' && token !== '*' ||
-                    tokens[1] === '*' && validHnRuleTypes.has(token) === false
-                ) {
-                    return skipToEnd(stream, 'error');
-                }
-                return null;
-            }
-            // URL rule
-            if (
-                /[^a-z_-]/.test(token) && token !== '*' ||
-                invalidURLRuleTypes.has(token)
-            ) {
-                return skipToEnd(stream, 'error');
-            }
-            return null;
-        }
-        // Field 4
-        if ( tokenIndex === 4 ) {
-            if (
-                isSwitchRule(tokens[0]) ||
-                validActions.has(token) === false
-            ) {
-                return skipToEnd(stream, 'error');
-            }
-            if ( token === 'allow' ) { return 'allowrule'; }
-            if ( token === 'block' ) { return 'blockrule'; }
-            return 'nooprule';
-        }
-        return skipToEnd(stream);
+        return style;
     };
 
-    return { token, sortType: 1 };
+    return {
+        token,
+        sortType: 1,
+        setHostnameToDomainMap: a => { hostnameToDomainMap = a; },
+        setPSL: a => { psl = a; },
+    };
 });
