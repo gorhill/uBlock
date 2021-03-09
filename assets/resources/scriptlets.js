@@ -613,16 +613,21 @@
         apply: function(target, thisArg, args) {
             let proceed = true;
             try {
-                const url = args[0] instanceof self.Request
-                    ? args[0].url
-                    : args[0];
-                const props = new Map([ [ 'url', url ] ]);
-                const init = args[1];
-                if ( init instanceof Object ) {
-                    for ( const prop in init ) {
-                        if ( init.hasOwnProperty(prop) === false ) { continue; }
-                        props.set( prop, init[prop]);
+                let details;
+                if ( args[0] instanceof self.Request ) {
+                    details = args[0];
+                } else {
+                    details = Object.assign({ url: args[0] }, args[1]);
+                }
+                const props = new Map();
+                for ( const prop in details ) {
+                    let v = details[prop];
+                    if ( typeof v !== 'string' ) {
+                        try { v = JSON.stringify(v); }
+                        catch(ex) { }
                     }
+                    if ( typeof v !== 'string' ) { continue; }
+                    props.set(prop, v);
                 }
                 if ( log !== undefined ) {
                     const out = Array.from(props)

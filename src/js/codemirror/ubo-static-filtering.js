@@ -720,7 +720,7 @@ CodeMirror.registerHelper('fold', 'ubo-static-filtering', (( ) => {
                     end = ch + r[0].length;
                 }
             } else if ( /\bvariable\b/.test(token) ) {
-                const l = /[#.]?[a-z0-9_-]+$/i.exec(s.slice(0, ch));
+                const l = /[#.][a-z0-9_-]+$/i.exec(s.slice(0, ch));
                 const r = /^[a-z0-9_-]+/i.exec(s.slice(ch));
                 if ( l && r ) {
                     beg = l.index;
