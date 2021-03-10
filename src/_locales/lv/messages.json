@@ -68,7 +68,7 @@
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "Noklikšķiniet, lai atslēgtu uBlock₀ šajā vietnē.\n\nCtrl+klikšķis, lai atslēgtu uBlock₀ tikai šajā lapā.",
+    "message": "Noklikšķināt, lai atslēgtu uBlock₀ šajā vietnē.\n\nCtrl + klikšķis, lai atslēgtu uBlock₀ tikai šajā lapā.",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
@@ -120,7 +120,7 @@
     "description": "English: Enter element picker mode"
   },
   "popupTipLog": {
-    "message": "Doties uz pieprasījumu žurnālu",
+    "message": "Atvērt pieprasījumu žurnālu",
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
@@ -184,7 +184,7 @@
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
-    "message": "Large media elements",
+    "message": "Lielas informācijas nesēju daļas",
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
@@ -220,7 +220,7 @@
     "description": "Tooltip when hovering over the padlock in the dynamic filtering pane."
   },
   "popupTipRevertRules": {
-    "message": "Noklikšķināt šeit, lai atceltu izmaiņas.",
+    "message": "Klikšķināt, lai atceltu izmaiņas.",
     "description": "Tooltip when hovering over the eraser in the dynamic filtering pane."
   },
   "popupAnyRulePrompt": {
@@ -624,11 +624,11 @@
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
-    "message": "Toggle the DOM inspector",
+    "message": "Pārslēgt DOM pārlūku",
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "Toggle the popup panel",
+    "message": "Pārslēgt uznirstošo paneli",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
@@ -1052,7 +1052,7 @@
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "toggleBlockingProfile": {
-    "message": "Toggle blocking profile",
+    "message": "Pārslēgt aizturēšanas profilu",
     "description": "Label for keyboard shortcut used to toggle blocking profile"
   },
   "relaxBlockingMode": {
