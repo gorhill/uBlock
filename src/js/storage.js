@@ -1586,8 +1586,11 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
                     }
                     // ADN: Need to tell core that lists have updated
                     µBlock.adnauseam.onListUpdated(details.assetKey, {
-                      title:details.assetKey,
-                      content:compiled
+                        title: details.assetKey,
+                        content: this.compileFilters(
+                            details.content,
+                            { assetKey: details.assetKey }
+                        )
                     });
                 }
             } else {
