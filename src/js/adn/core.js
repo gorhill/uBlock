@@ -2242,9 +2242,9 @@ const verifyList = exports.verifyList = function (note, lists) {
     let frameId;
     const µb = µBlock;
 
-    if (sender && sender.tab) {
+    if (sender && sender.tabId) {
 
-      tabId = sender.tab.id;
+      tabId = sender.tabId;
       frameId = sender.frameId;
       pageStore = µb.pageStoreFromTabId(tabId);
     }
