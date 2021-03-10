@@ -379,7 +379,7 @@ const onBeforeRootFrameRequest = function(fctxt) {
     // Log
     fctxt.type = 'main_frame';
 
-    const pageStore = µb.bindTabToPageStats(fctxt.tabId, 'beforeRequest');
+    const pageStore = µb.bindTabToPageStore(fctxt.tabId, 'beforeRequest');
     if ( pageStore !== null ) {
         pageStore.journalAddRootFrame('uncommitted', requestURL);
         pageStore.journalAddRequest(requestHostname, result);
