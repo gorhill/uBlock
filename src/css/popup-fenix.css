@@ -317,6 +317,10 @@ body[data-more=""] #lessButton {
       -webkit-padding-start: 2px;
     text-align: left;
     }
+/* Remove for next dev build */
+#firewall > [data-type] .filter {
+    display: none;
+    }
 #firewall:not(.has3pScript) > [data-type="3p-script"] .filter,
 #firewall:not(.has3pFrame) > [data-type="3p-frame"] .filter {
     display: none;
