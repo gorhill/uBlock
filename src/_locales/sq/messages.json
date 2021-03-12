@@ -304,7 +304,7 @@
     "description": "English: Hide placeholders of blocked elements"
   },
   "settingsIconBadgePrompt": {
-    "message": "Tregoj te ikona numrin e kërkesave të refuzuara",
+    "message": "Shfaq te ikona numrin e kërkesave të refuzuara",
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
@@ -404,7 +404,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "Filtrat kozmetikë shërbejnë për të fshehur nga ana vizive elementet e padëshirueshme të faqes, të cilat nuk bllokohen me metodën standarde të filtrimit sipas kërkesave.",
+    "message": "Filtrat kozmetikë shërbejnë për të fshehur nga ana vizive elementet e padëshirueshme të faqes, të cilat nuk bllokohen me metodën standarde të filtrimit sipas kërkesës.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -484,7 +484,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Një filtër për rresht. Filtri mund të jetë thjesht emri i një hosti ose i ngjashëm me ata që përdor Adblock Plus. Nuk do të merren parasysh rreshtat që fillojnë me <code>!</code>.",
+    "message": "Një filtër për rresht. Filtri mund të jetë thjesht emri i një hosti ose i ngjashëm me ata që përdor EasyList. Nuk do të merren parasysh rreshtat që fillojnë me <code>!</code>.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -550,6 +550,22 @@
   "rulesFormatHint": {
     "message": "Rregullat e sintaksës: <code>burimi destinacioni lloji veprimi</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>dokumentimi i plotë</a>).",
     "description": "English: dynamic rule syntax and full documentation."
+  },
+  "rulesSort": {
+    "message": "Rendit:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Lloji i rregullit",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Burimi",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Destinacioni",
+    "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
     "message": "Kjo listë paraqet faqet e besuara në të cilat uBlock Origin duhet çaktivizuar. Një element për rresht. Nuk do të merren parasysh udhëzimet e pasakta.",
@@ -653,6 +669,10 @@
   },
   "loggerRowFiltererBuiltinAllowed": {
     "message": "të autorizuara",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinModified": {
+    "message": "e modifikuar",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
@@ -888,8 +908,12 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: Të shtohet adresa në listën e filtrave tuaj?\n\nTitulli: \"{{title}}\"\nURL: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "message": "Të shtohet adresa në listën e personalizuar të filtrave?\n\nTitulli: \"{{title}}\"\nURL: {{url}}",
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Abonohem",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "një minutë më parë",
@@ -929,11 +953,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBlock Origin po pengon hapjen e faqes:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "Për shkak të filtrit",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "pa parametra",
@@ -1003,6 +1027,10 @@
     "message": "bajt",
     "description": ""
   },
+  "contextMenuBlockElementInFrame": {
+    "message": "Bllokoj elementin në kuadër...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Autorizoj përkohësisht elementet e mëdha multimediale",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
@@ -1042,6 +1070,10 @@
   "GB": {
     "message": "GB",
     "description": "short for 'gigabytes'"
+  },
+  "clickToLoad": {
+    "message": "Klikoni për ta hapur",
+    "description": "Message used in frame placeholders"
   },
   "dummy": {
     "message": "This entry must be the last one",

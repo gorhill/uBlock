@@ -28,7 +28,6 @@ cp -R ../uAssets/filters/*                                       $DES/ublock/
 # Optional filter lists: do not include in package
 
 rm    $DES/ublock/annoyances.txt
-rm    $DES/ublock/resources.txt
 cp -R ./filters/adnauseam.txt                                    $DES/ublock/ # ADN
 
 echo "done."

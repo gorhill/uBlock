@@ -551,6 +551,22 @@
     "message": "Sintaxa pentru regulă: <code>sursă destinație tip acțiune</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>documentație</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
+  "rulesSort": {
+    "message": "Sortare:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Tipul regulei",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Sursa",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Destinaţia",
+    "description": "English: a sort option for list of rules."
+  },
   "whitelistPrompt": {
     "message": "Lista ta de nume de gazde unde uBlock va fi dezactivat. Fiecare adresă pe o singură linie. Adresele nevalide vor fi ignorate automat.",
     "description": "The name of the trusted sites pane."
@@ -653,6 +669,10 @@
   },
   "loggerRowFiltererBuiltinAllowed": {
     "message": "permis",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinModified": {
+    "message": "modificat",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
@@ -888,8 +908,12 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: Adaug următorul URL în lista ta de filtre personalizate?\n\nTitlu: \"{{title}}\"\nURL: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "message": "uBlock: Adaugă următorul URL în lista ta de filtre personalizate?\n\nTitlu: \"{{title}}\"\nURL: {{url}}",
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Abonează-te",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "acum un minut",
@@ -929,11 +953,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBlock Origin a prevenit încărcarea acestei pagini:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "Din cauza următorului filtru",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "fără parametri",
@@ -1003,6 +1027,10 @@
     "message": "octeți",
     "description": ""
   },
+  "contextMenuBlockElementInFrame": {
+    "message": "Blochează element in cardu...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Permite temporar elementele media mari",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
@@ -1042,6 +1070,10 @@
   "GB": {
     "message": "GB",
     "description": "short for 'gigabytes'"
+  },
+  "clickToLoad": {
+    "message": "Apasă pentru a încărca",
+    "description": "Message used in frame placeholders"
   },
   "dummy": {
     "message": "Aceasta intrare trebuie sa fie ultima",

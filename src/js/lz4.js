@@ -32,7 +32,8 @@
 
 **/
 
-µBlock.lz4Codec = (function() {         // >>>> Start of private namespace
+{
+// >>>> Start of private namespace
 
 /******************************************************************************/
 
@@ -96,28 +97,15 @@ const ttlManage = function(count) {
     ttlTimer = vAPI.setTimeout(destroy, ttlDelay);
 };
 
-const uint8ArrayFromBlob = function(key, data) {
-    if ( data instanceof Blob === false ) {
-        return Promise.resolve({ key, data });
-    }
-    return new Promise(resolve => {
-        let blobReader = new FileReader();
-        blobReader.onloadend = ev => {
-            resolve({ key, data: new Uint8Array(ev.target.result) });
-        };
-        blobReader.readAsArrayBuffer(data);
-    });
-};
-
-const encodeValue = function(key, value) {
+const encodeValue = function(dataIn) {
     if ( !lz4CodecInstance ) { return; }
     //let t0 = window.performance.now();
     if ( textEncoder === undefined ) {
         textEncoder = new TextEncoder();
     }
-    let inputArray = textEncoder.encode(value);
-    let inputSize = inputArray.byteLength;
-    let outputArray = lz4CodecInstance.encodeBlock(inputArray, 8);
+    const inputArray = textEncoder.encode(dataIn);
+    const inputSize = inputArray.byteLength;
+    const outputArray = lz4CodecInstance.encodeBlock(inputArray, 8);
     if ( outputArray instanceof Uint8Array === false ) { return; }
     outputArray[0] = 0x18;
     outputArray[1] = 0x4D;
@@ -129,7 +117,6 @@ const encodeValue = function(key, value) {
     outputArray[7] = (inputSize >>> 24) & 0xFF;
     //console.info(
     //    'uBO: [%s] compressed %d KB => %d KB (%s%%) in %s ms',
-    //    key,
     //    inputArray.byteLength >> 10,
     //    outputArray.byteLength >> 10,
     //    (outputArray.byteLength / inputArray.byteLength * 100).toFixed(0),
@@ -138,66 +125,71 @@ const encodeValue = function(key, value) {
     return outputArray;
 };
 
-const decodeValue = function(key, inputArray) {
+const decodeValue = function(inputArray) {
     if ( !lz4CodecInstance ) { return; }
     //let t0 = window.performance.now();
     if (
         inputArray[0] !== 0x18 || inputArray[1] !== 0x4D ||
         inputArray[2] !== 0x22 || inputArray[3] !== 0x04
     ) {
+        console.error('decodeValue: invalid input array');
         return;
     }
-    let outputSize = 
+    const outputSize = 
         (inputArray[4] <<  0) | (inputArray[5] <<  8) |
         (inputArray[6] << 16) | (inputArray[7] << 24);
-    let outputArray = lz4CodecInstance.decodeBlock(inputArray, 8, outputSize);
+    const outputArray = lz4CodecInstance.decodeBlock(inputArray, 8, outputSize);
     if ( outputArray instanceof Uint8Array === false ) { return; }
     if ( textDecoder === undefined ) {
         textDecoder = new TextDecoder();
     }
-    let value = textDecoder.decode(outputArray);
+    const s = textDecoder.decode(outputArray);
     //console.info(
     //    'uBO: [%s] decompressed %d KB => %d KB (%s%%) in %s ms',
-    //    key,
     //    inputArray.byteLength >>> 10,
     //    outputSize >>> 10,
     //    (inputArray.byteLength / outputSize * 100).toFixed(0),
     //    (window.performance.now() - t0).toFixed(1)
     //);
-    return value;
+    return s;
 };
 
-return {
-    encode: function(key, dataIn) {
+µBlock.lz4Codec = {
+    // Arguments:
+    //   dataIn: must be a string
+    // Returns:
+    //   A Uint8Array, or the input string as is if compression is not
+    //   possible.
+    encode: async function(dataIn, serialize = undefined) {
         if ( typeof dataIn !== 'string' || dataIn.length < 4096 ) {
-            return Promise.resolve({ key, data: dataIn });
+            return dataIn;
         }
         ttlManage(1);
-        return init().then(( ) => {
-            ttlManage(-1);
-            let dataOut = encodeValue(key, dataIn) || dataIn;
-            if ( dataOut instanceof Uint8Array ) {
-                dataOut = new Blob([ dataOut ]);
-            }
-            return { key, data: dataOut || dataIn };
-        });
+        await init();
+        let dataOut = encodeValue(dataIn);
+        ttlManage(-1);
+        if ( serialize instanceof Function ) {
+            dataOut = await serialize(dataOut);
+        }
+        return dataOut || dataIn;
     },
-    decode: function(key, dataIn) {
-        if ( dataIn instanceof Blob === false ) {
-            return Promise.resolve({ key, data: dataIn });
+    // Arguments:
+    //   dataIn: must be a Uint8Array
+    // Returns:
+    //   A string, or the input argument as is if decompression is not
+    //   possible.
+    decode: async function(dataIn, deserialize = undefined) {
+        if ( deserialize instanceof Function ) {
+            dataIn = await deserialize(dataIn);
+        }
+        if ( dataIn instanceof Uint8Array === false ) {
+            return dataIn;
         }
         ttlManage(1);
-        return Promise.all([
-            init(),
-            uint8ArrayFromBlob(key, dataIn)
-        ]).then(results => {
-            ttlManage(-1);
-            let result = results[1];
-            return {
-                key: result.key,
-                data: decodeValue(result.key, result.data) || result.data
-            };
-        });
+        await init();
+        const dataOut = decodeValue(dataIn);
+        ttlManage(-1);
+        return dataOut || dataIn;
     },
     relinquish: function() {
         ttlDelay = 1;
@@ -207,4 +199,5 @@ return {
 
 /******************************************************************************/
 
-})();                                   // <<<< End of private namespace
+// <<<< End of private namespace
+}

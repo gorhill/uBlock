@@ -3,9 +3,71 @@
   "type": "object",
   "properties": {
     "adminSettings": {
-      "title": "A valid JSON string compliant with uBO's backup format.",
+      "title": "A valid JSON string compliant with uBO's backup format",
       "description": "All entries present will overwrite local settings.",
       "type": "string"
+    },
+    "advancedSettings": {
+      "title": "A list of [name,value] pairs to populate advanced settings",
+      "type": "array",
+      "items": {
+        "title": "A [name,value] pair",
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    },
+    "userSettings": {
+      "title": "A list of [name,value] pairs to populate user settings",
+      "type": "array",
+      "items": {
+        "title": "A [name,value] pair",
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    },
+    "disableDashboard": {
+      "title": "Set to true to prevent access to configuration options",
+      "type": "boolean"
+    },
+    "disabledPopupPanelParts": {
+      "title": "An array of strings used to remove parts of the popup panel",
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "toAdd": {
+      "title": "Settings to add at launch time",
+      "type": "object",
+      "properties": {
+        "trustedSiteDirectives": {
+          "title": "A list of trusted-site directives",
+          "description": "Trusted-site directives to always add at launch time.",
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "toOverwrite": {
+      "title": "Settings to overwrite at launch time",
+      "type": "object",
+      "properties": {
+        "filters": {
+          "title": "A collection of filters",
+          "description": "The set of user filters to use at launch time -- where each entry is a distinct line.",
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "filterLists": {
+          "title": "A collection of list identifiers and/or list URLs",
+          "description": "The set of filter lists to use at launch time.",
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "trustedSiteDirectives": {
+          "title": "A list of trusted-site directives",
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
     }
   }
 }

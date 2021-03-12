@@ -12,10 +12,14 @@
 */
 :root {
     --blue-10: #80ebff;
+    --blue-40: #0090ed;
     --blue-50: #0060df;
     --blue-60: #0250bb;
+    --dark-gray-10: #52525e;
     --dark-gray-30: #42414d;
+    --dark-gray-40: #3a3944;
     --dark-gray-50: #32313c;
+    --dark-gray-70: #23222b;
     --dark-gray-80: #1c1b22;
     --dark-gray-90: #15141a;
     --ink-20: #312a65;
@@ -29,17 +33,23 @@
     --light-gray-10-a12: #f9f9fb1f;
     --light-gray-10-a16: #f9f9fb29;
     --light-gray-20: #f0f0f4;
+    --light-gray-25: #e8e8ed;
     --light-gray-30: #e0e0e6;
     --light-gray-30-a50: #e0e0e680;
     --light-gray-40: #cfcfd8;
     --light-gray-50: #bfbfc9;
     --light-gray-60: #afafba;
     --light-gray-70: #9f9fad;
+    --light-gray-80: #8f8f9e;
     --light-gray-90: #80808f;
+    --orange-80: #9e280b;
+    --purple-60: #952bb9;
     --red-60: #e22850;
     --violet-40: #ab71ff;
+    --violet-60: #7542e5;
     --violet-70: #592acb;
     --violet-80: #45278d;
+    --yellow-10: #ffff98;
     --yellow-30: #ffd567;
     --yellow-40: #ffbd4f;
     --yellow-50: #ffa436;
@@ -65,10 +75,13 @@
 :root {
     --font-size: 14px;
 
+    --ubo-red: #800000;
+
     --default-ink: var(--ink-80);
     --default-ink-a4: var(--ink-80-a4);
     --default-ink-a50: var(--ink-80-a50);
     --default-surface: var(--light-gray-10);
+    --default-surface-border: var(--light-gray-70);
     --default-surface-hover: var(--light-gray-30-a50);
 
     --bg-1: hsla(240, 20%, 98%, 1);
@@ -91,8 +104,6 @@
 
     --fieldset-header-surface: transparent;
     --fieldset-header-ink: var(--ink-20);
-
-    --hor-separator-color: var(--light-gray-30);
 
     --button-surface: var(--light-gray-30);
     --button-ink: #0076FF;  /* AdNauseam */
@@ -158,6 +169,48 @@
     --bg-popup-cell-block-own: hsla(0, 100%, 40%, 1);
     --bg-popup-cell-label-mixed: hsla(45, 100%, 38%, 1);
     --popup-icon-x-ink: var(--red-60);
+
+    /* horizontal line separator */
+    --hr-ink: var(--light-gray-30);
+
+    /* cloud widget */
+    --cloud-widget-surface: var(--light-gray-20);
+
+    /* codemirror */
+    --cm-gutter-border: var(--light-gray-40);
+    --cm-gutter-ink: var(--light-gray-90);
+    --cm-gutter-surface: var(--light-gray-25);
+    --cm-selection-surface: #d7d4f0;
+    --cm-selection-ink: var(--default-ink);
+    --cm-searching-surface: #ffff0066;
+
+    /* syntax highlight: static filtering */
+    --sf-comment-ink: var(--light-gray-90);
+    --sf-def-ink: #0000ff;
+    --sf-directive-ink: var(--dark-gray-40);
+    --sf-error-ink: #ff0000;
+    --sf-error-surface: #ff000016;
+    --sf-keyword-ink: var(--purple-60);
+    --sf-notice-ink: var(--light-gray-60);
+    --sf-readonly-ink: var(--light-gray-80);
+    --sf-tag-ink: #117700;
+    --sf-value-ink: var(--orange-80);
+    --sf-variable-ink: var(--default-ink);
+    --sf-warning-ink: var(--yellow-50);
+
+    /* syntax highlight: dynamic filtering */
+    --df-allow-ink: #117700;
+    --df-block-ink: #ff0000;
+    --df-noop-ink: var(--dark-gray-10);
+    --df-key-ink: var(--violet-70);
+
+    /* logger */
+    --logger-blocked-surface: #c0000014;
+    --logger-modified-surface: #0000c010;
+    --logger-allowed-surface: #00a00014;
+    --logger-blocked-em-surface: #c0000036;
+    --logger-modified-em-surface: #0000c028;
+    --logger-allowed-em-surface: #00a00036;
 }
 
 /**
@@ -201,6 +254,110 @@
 }
 
 :root.dark {
+    --default-ink: var(--light-gray-10);
+    --default-ink-a4: var(--light-gray-10-a4);
+    --default-ink-a50: var(--light-gray-30-a50);
+    --default-surface: var(--dark-gray-90);
+    --default-surface-hover: var(--dark-gray-50);
+    --bg-1: hsla(250, 13%, 9%, 1);
+    --bg-1-border: hsla(250, 13%, 16%, 1);
+    --bg-overlay-50: #0008;
+    --bg-code: hsla(0, 2%, 0%, 0.8);
+    --fg-0-80: hsla(0, 0%, 53%, 0.8);
+    --fg-0-70: hsla(0, 0%, 53%, 0.7);
+    --fg-0-60: hsla(0, 0%, 53%, 0.6);
+    --fg-0-50: hsla(0, 0%, 53%, 0.5);
+    --fg-0-40: hsla(0, 0%, 53%, 0.4);
+    --fg-0-30: hsla(0, 0%, 53%, 0.3);
+    --fg-0-20: hsla(0, 0%, 53%, 0.2);
+    --link-ink: #bb86fc;
+    --fieldset-header-surface: transparent;
+    --fieldset-header-ink: var(--light-gray-30);
+    --hr-ink: var(--dark-gray-50);
+    --button-surface: var(--light-gray-10-a12);
+    --button-ink: var(--default-ink);
+    --button-surface-hover: var(--light-gray-10-a12);
+    --button-active-surface: var(--light-gray-70);
+    --button-important-surface: var(--dark-gray-30);
+    --button-important-surface-hover: var(--light-gray-60);
+    --button-disabled-filter: opacity(38%);
+    --button-disabled-surface: var(--dark-gray-50);
+    --button-disabled-ink: var(--light-gray-30-a50);
+    --button-preferred-surface: var(--dark-gray-50);
+    --button-preferred-ink: var(--light-gray-70);
+    --checkbox-size: calc(var(--font-size) + 2px);
+    --checkbox-ink: var(--default-ink);
+    --checkbox-checked-ink: #bb86fc;
+  /*--select-surface:*/
+    --bg-transient-notice: var(--dark-gray-50);
+    --dashboard-bar-shadow: 0px 0px 0px 1px var(--default-ink-a4);
+    --dashboard-tab-active-ink: #bb86fc;
+    --dashboard-tab-surface-hover: var(--default-surface-hover);
+    --fg-icon-info-lvl-0-dimmed: #888;
+    --fg-icon-info-lvl-0: inherit;
+    --fg-icon-info-lvl-1-dimmed: hsla(258, 57%, 35%, 1);
+    --fg-icon-info-lvl-1: hsla(258, 66%, 48%, 1);
+    --info-lvl-2-ink: var(--yellow-50);
+    --info-lvl-2-ink-hover: var(--yellow-60);
+    --fg-icon-info-lvl-3-dimmed: hsla(16, 100%, 50%, 0.5);
+    --fg-icon-info-lvl-3: hsla(16, 100%, 50%, 1);
+    --fg-icon-info-lvl-4-dimmed: hsla(0, 100%, 35%, 0.5);
+    --fg-icon-info-lvl-4: hsla(0, 100%, 35%, 1);
+    --large-icon-info-lvl-2: hsla(41, 100%, 47%, 1);
+    --bg-tooltip: var(--dark-gray-50);
+    --fg-tooltip: var(--light-gray-30);
+    --bg-popup-cell-1: var(--dark-gray-50);
+    --popup-power-disabled-ink: var(--light-gray-60);
+    --popup-power-ink-hover: var(--dark-gray-30);
+    --bg-popup-cell-2: var(--dark-gray-50);
+    --bg-popup-cell-label-filter: opacity(40%);
+    --fg-popup-cell-cname: hsla(0, 0%, 53%, 0.3);
+    --bg-popup-cell-allow: hsla(120, 40%, 75%, 1);
+    --bg-popup-cell-allow-own: hsla(120, 100%, 30%, 1);
+    --bg-popup-cell-noop: hsla(0, 0%, 75%, 1);
+    --bg-popup-cell-noop-own: hsla(0, 0%, 45%, 1);
+    --bg-popup-cell-block: hsla(0, 50%, 80%, 1);
+    --bg-popup-cell-block-own: hsla(0, 100%, 40%, 1);
+    --bg-popup-cell-label-mixed: hsla(45, 100%, 38%, 1);
+    --popup-icon-x-ink: #e22850;
+
+ /* Need to set colors in forms.css for moz-field stuffz
+  -moz-FieldText: #888888 !important;  change from these names to either HEX value or variables.  default-ink
+  -moz-Field: #15141a !important;    var would be var(--dark-gray-90) hex value might be easiest though.
+ /* TO DO
+ 1. Epicker window box color Variables needed;
+  #ublock0-epicker aside
+  background-color: var(--dark-gray-90)
+  outer border: var(--dark-gray-90)
+  inner order: var (
+  color: #999999a0
+  html#ublock0-epicker, #ublock0-epicker body
+    background: transparent !important;
+    color: #777 !important;
+
+ 2. CodeMirror (my filters and Whitelist) ADVANCED SETTINGS (background and color need variables)
+      .CodeMirror background: (currenty set to white) need a var
+    my Rules tab
+    codemirror panes   CodeMirror-merge-pane CodeMirror-merge-left
+    CodeMirror-merge-pane CodeMirror-merge-editor CodeMirror-merge-pane-rightmost
+    ***** file used is codemirror.css *********
+
+ 3. #cloudWidget background (linked to img) background is hsl - would be better if we had a background color instead of hsl.
+    ***** file used is cloud-ui.css ********
+ 4. Logger UI screen.  .permatoolbar, modalOverlayContainer : background-color;
+    headers  background-color, color border-color
+    #netFilteringDialog > div.panes > .dynamic .entry background-color: border-bottom:  ;
+    #netFilteringDialog > div.panes > .dynamic .entry > .action > .allow .noop .block
+    background-color.
+    #modalOverlayClose stoke: background-color
+    ****** file used is logger-ui.css *******
+    *//*
+ 5. Seperator bar - element/selector is hr   in common.css a variable is assigned.  popup-fenix.css
+    border-top - assigned HEX of #e3e2e3 variable should be assinged like in common.css
+    var(--hor-separator-color)
+ 6. .rulesetTools border color needs a variable
+    **** popup-fenix.css *****
+*/
 }
 
 :root.dark.colorBlind {

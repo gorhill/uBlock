@@ -125,19 +125,21 @@
             this.cnameFlushTime = Date.now() + this.cnameMaxTTL * 60000;
             // https://github.com/uBlockOrigin/uBlock-issues/issues/911
             //   Install/remove proxy detector.
-            const wrohr = browser.webRequest.onHeadersReceived;
-            if ( cnameUncloak === false || cnameUncloakProxied ) {
-                if ( wrohr.hasListener(proxyDetector) ) {
-                    wrohr.removeListener(proxyDetector);
+            if ( vAPI.webextFlavor.major < 80 ) {
+                const wrohr = browser.webRequest.onHeadersReceived;
+                if ( cnameUncloak === false || cnameUncloakProxied ) {
+                    if ( wrohr.hasListener(proxyDetector) ) {
+                        wrohr.removeListener(proxyDetector);
+                    }
+                } else if ( wrohr.hasListener(proxyDetector) === false ) {
+                    wrohr.addListener(
+                        proxyDetector,
+                        { urls: [ '*://*/*' ] },
+                        [ 'blocking' ]
+                    );
                 }
-            } else if ( wrohr.hasListener(proxyDetector) === false ) {
-                wrohr.addListener(
-                    proxyDetector,
-                    { urls: [ '*://*/*' ] },
-                    [ 'blocking' ]
-                );
+                proxyDetectorTryCount = 32;
             }
-            proxyDetectorTryCount = 32;
         }
         normalizeDetails(details) {
             if ( mustPunycode && !reAsciiHostname.test(details.url) ) {

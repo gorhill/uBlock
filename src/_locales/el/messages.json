@@ -100,11 +100,11 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "Blocked since install",
+    "message": "Φραγμένο από εγκατάσταση",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
-    "message": "Domains connected",
+    "message": "Συνδεδεμένοι τομείς",
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
@@ -176,7 +176,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Κάντε κλικ για να μην εχετε το JavaScript απενεργοποιημένο για αυτήν την ιστοσελίδα",
+    "message": "Κάντε κλικ για να μην απενεργοποιείται πλέον το JavaScript σε αυτή την ιστοσελίδα",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
@@ -184,15 +184,15 @@
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
-    "message": "Large media elements",
+    "message": "Στοιχεία μεγάλων πολυμέσων",
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
-    "message": "Cosmetic filtering",
+    "message": "Κοσμητικά φίλτρα",
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
-    "message": "Remote fonts",
+    "message": "Απομακρυσμένες γραμματοσειρές",
     "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
@@ -296,7 +296,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "Αποκλεισμός στοιχείου",
+    "message": "Φραγή στοιχείου...",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -308,7 +308,7 @@
     "description": "English: Show the number of blocked requests on the icon"
   },
   "settingsTooltipsPrompt": {
-    "message": "Απενεργοποιήστε τις αιωρούμενες επεξηγήσεις",
+    "message": "Απενεργοποίηση υποδείξεων",
     "description": "A checkbox in the Settings pane"
   },
   "settingsContextMenuPrompt": {
@@ -551,6 +551,22 @@
     "message": "Συντακτικό κανόνων: <code>προέλευση προορισμός τύπος ενέργεια</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>πλήρης τεκμηρίωση</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
+  "rulesSort": {
+    "message": "Ταξινόμηση:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Τύπος κανόνα",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Πηγή",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Προορισμός",
+    "description": "English: a sort option for list of rules."
+  },
   "whitelistPrompt": {
     "message": "Η λίστα σας με τα ονόματα κόμβων (host names) στα οποία το uBlock θα είναι απενεργοποιημένο. Μια καταχώρηση ανά γραμμή. Άκυρα ονόματα κόμβων θα παρακάμπτονται σιωπηλά.",
     "description": "The name of the trusted sites pane."
@@ -655,12 +671,16 @@
     "message": "επιτρέπεται",
     "description": "A keyword in the built-in row filtering expression"
   },
+  "loggerRowFiltererBuiltinModified": {
+    "message": "επεξεργασμένο",
+    "description": "A keyword in the built-in row filtering expression"
+  },
   "loggerRowFiltererBuiltin1p": {
-    "message": "1st-party",
+    "message": "Πρωτομερής",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin3p": {
-    "message": "3rd-party",
+    "message": "Τριτομερής",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerEntryDetailsHeader": {
@@ -700,7 +720,7 @@
     "description": "Label to identify the URL of an entry"
   },
   "loggerURLFilteringHeader": {
-    "message": "Φιλτράρισμα δυναμικών συνδέσμων",
+    "message": "Κανόνας URL",
     "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
@@ -788,7 +808,7 @@
     "description": "A label for the time column"
   },
   "loggerSettingHideColumnFilter": {
-    "message": "{{input}} Φίτρο/Κανόνας",
+    "message": "{{input}} Φίλτρο/κανόνας",
     "description": "A label for the filter or rule column"
   },
   "loggerSettingHideColumnContext": {
@@ -852,7 +872,7 @@
     "description": "Link text to uBO's own filter lists repo"
   },
   "aboutDependencies": {
-    "message": "External dependencies (GPLv3-compatible):",
+    "message": "Εξωτερικές εξαρτήσεις (συμβατές με GPLv3):",
     "description": "Shown in the About pane"
   },
   "aboutBackupDataButton": {
@@ -884,12 +904,16 @@
     "description": "Message asking user to confirm reset"
   },
   "errorCantConnectTo": {
-    "message": "Αδυναμία σύνδεσης με {{url}}",
+    "message": "Σφάλμα δικτύου: {{msg}}",
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
     "message": "uBlock₀: Προσθήκη του παρακάτω URL στις προσαρμοσμένες λίστες φίλτρων σας;\n\nΤίτλος: \"{{title}}\"\nURL: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Εγγραφή",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "πριν από ένα λεπτό",
@@ -929,11 +953,11 @@
   },
   "docblockedPrompt1": {
     "message": "Το uBlock₀ έχει αποτρέψει τη φόρτωση της παρακάτω σελίδας:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "Εξαιτίας του ακόλουθου φίλτρου",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "χωρίς παραμέτρους",
@@ -952,7 +976,7 @@
     "description": "English: Close this window"
   },
   "docblockedProceed": {
-    "message": "Απενεργοποιήστε αυστηρό μπλοκάρισμα για {{hostname}}",
+    "message": "Απενεργοποίηση αυστηρής φραγής για το {{hostname}}",
     "description": "English: Disable strict blocking for {{hostname}} ..."
   },
   "docblockedDisableTemporary": {
@@ -1003,6 +1027,10 @@
     "message": "bytes",
     "description": ""
   },
+  "contextMenuBlockElementInFrame": {
+    "message": "Block element in frame...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Να επιτρέπονται προσωρινά μεγάλα στοιχεία πολυμέσων",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
@@ -1024,11 +1052,11 @@
     "description": "Label for keyboard shortcut used to toggle blocking profile"
   },
   "relaxBlockingMode": {
-    "message": "Relax blocking mode",
+    "message": "Χαλάρωση κατάστασης φραγής",
     "description": "Label for keyboard shortcut used to relax blocking mode (meant to replace 'Toggle blocking profile')"
   },
   "storageUsed": {
-    "message": "Storage used: {{value}} {{unit}}",
+    "message": "Χώρος σε χρήση: {{value}} {{unit}}",
     "description": " In Setting pane, renders as (example): Storage used: 13.2 MB"
   },
   "KB": {
@@ -1042,6 +1070,10 @@
   "GB": {
     "message": "GB",
     "description": "short for 'gigabytes'"
+  },
+  "clickToLoad": {
+    "message": "Κάντε κλικ για φόρτωση",
+    "description": "Message used in frame placeholders"
   },
   "dummy": {
     "message": "Αυτή η καταχώρηση θα πρέπει να είναι τελευταία",

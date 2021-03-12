@@ -88,6 +88,8 @@ const relaxBlockingMode = (( ) => {
         // TODO: Reset to original blocking profile?
         if ( newProfileBits === undefined ) { return; }
 
+        const noReload = (newProfileBits & 0b00000001) === 0;
+
         if (
             (curProfileBits & 0b00000010) !== 0 &&
             (newProfileBits & 0b00000010) === 0
@@ -104,6 +106,7 @@ const relaxBlockingMode = (( ) => {
                 (newProfileBits & 0b00000100) === 0
             ) {
                 µb.toggleFirewallRule({
+                    tabId: noReload ? tab.id : undefined,
                     srcHostname: hn,
                     desHostname: '*',
                     requestType: '3p',
@@ -135,7 +138,7 @@ const relaxBlockingMode = (( ) => {
         }
 
         // Reload the target tab?
-        if ( (newProfileBits & 0b00000001) === 0 ) { return; }
+        if ( noReload ) { return; }
 
         // Reload: use a timer to coalesce bursts of reload commands.
         let timer = reloadTimers.get(tab.id);
@@ -165,6 +168,7 @@ vAPI.commands.onCommand.addListener(async command => {
         µb.epickerArgs.mouse = false;
         µb.elementPickerExec(
             tab.id,
+            0,
             undefined,
             command === 'launch-element-zapper'
         );

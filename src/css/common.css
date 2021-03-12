@@ -583,7 +583,7 @@ code, .code {
     }
 hr {
     border: 0;
-    border-top: 1px solid var(--hor-separator-color);
+    border-top: 1px solid var(--hr-ink);
     margin: 1em 0;
     }
 .hiddenFileInput {
@@ -976,7 +976,6 @@ button.preferred {
     background-color: var(--button-preferred-surface);
     color: var(--button-preferred-ink);
     }
-button.iconifiable > .fa,
 button.iconifiable > .fa-icon {
     padding-left: 0;
     padding-right: 0.4em;
@@ -984,7 +983,6 @@ button.iconifiable > .fa-icon {
 button.iconifiable > .fa-icon {
     font-size: 120%;
     }
-body[dir="rtl"] button.iconifiable > .fa,
 body[dir="rtl"] button.iconifiable > .fa-icon {
     padding-left: 0.5em;
     }
@@ -1076,8 +1074,6 @@ font-family: bebas_neue,sans-serif;
     -webkit-margin-start: 2em;
     }
 @media (max-width: 640px) {
-
-    button.iconifiable > .fa,
     button.iconifiable > .fa-icon {
         font-size: 1.2rem;
         padding: 0;
@@ -1085,6 +1081,16 @@ font-family: bebas_neue,sans-serif;
     button.iconifiable > [data-i18n] {
         display: none;
         }
+    }
+
+.logo {
+    align-items: center;
+    display: inline-flex;
+    padding: 0 0.5em;
+    width: 1.25em;
+    }
+.logo > img {
+    width: 100%;
     }
 
 .ubo-icon {
@@ -1113,6 +1119,16 @@ font-family: bebas_neue,sans-serif;
 .ubo-icon > svg {
     height: 1em;
     width: 1em;
+    }
+
+/* high dpi devices */
+:root.hidpi button {
+    font-family: Metropolis, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    }
+:root.hidpi .fieldset-header {
+    font-family: Metropolis, sans-serif;
     }
 
 /* touch-screen devices */

@@ -1,7 +1,17 @@
 @keyframes spin {
-    0% { transform: rotate(0deg); -webkit-transform: rotate(0deg); }
-    100% { transform: rotate(360deg); -webkit-transform: rotate(360deg); }
-    }
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+body {
+    margin-bottom: 6rem;
+}
+#actions {
+    background-color: var(--default-surface);
+    padding: var(--default-gap-small) 0 var(--default-gap-xsmall) 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
 /*ADN*/
 #options .li:nth-child(2), #options .li:nth-child(3){
   display: none;
@@ -86,14 +96,18 @@ body.hideUnused #listsOfBlockedHostsPrompt:before {
 .listEntry.toRemove .listname {
     text-decoration: line-through;
     }
-.listEntry .fa, .listEntry .fa-icon, .listEntry .counts {
-    color: rgba(150,150,150, 0.9);
+.listEntry .fa-icon,
+.listEntry .counts {
+    color: var(--fg-0-50);
     display: none;
     fill: rgba(150,150,150, 0.9);
     margin: 0 0.2em 0 0;
-    opacity:0.5
-}
-.listEntry.checked.cached:not(.obsolete) .cache {
+    }
+.listEntry .fa-icon:hover {
+    color: inherit;
+    fill: inherit;
+    }
+.listEntry .content {
     display: inline-flex;
 }
 body:not(.updating) .listEntry.checked.obsolete .obsolete {
@@ -105,17 +119,19 @@ body:not(.updating) .listEntry.checked.obsolete .obsolete {
 .listEntry  a.towiki {
     display: inline-block;
     }
-.listEntry  a.fa:hover, .listEntry a.fa-icon:hover {
+.listEntry  a.fa:hover, .listEntry a.fa-icon:hover, .listEntry span.fa-icon:hover {
     opacity: 1;
+    cursor: pointer;
 }
 .listEntry.support  a.support {
     display: inline-block;
 }
-.listEntry  a.remove,
-.listEntry  a.remove:visited {
-    color: darkred;
+.listEntry  .remove,
+.listEntry  .remove:visited {
+    fill: red;
+    color: red;
     }
-.listEntry.external  a.remove {
+.listEntry.external  .remove {
     display: inline-block;
     }
 .listEntry.mustread  a.mustread {

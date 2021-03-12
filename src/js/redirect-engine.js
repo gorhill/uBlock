@@ -58,6 +58,7 @@ const redirectableResources = new Map([
     } ],
     [ 'amazon_ads.js', {
         alias: 'amazon-adsystem.com/aax2/amzn_ads.js',
+        data: 'text',
     } ],
     [ 'amazon_apstag.js', {
     } ],
@@ -67,32 +68,41 @@ const redirectableResources = new Map([
     [ 'chartbeat.js', {
         alias: 'static.chartbeat.com/chartbeat.js',
     } ],
+    [ 'click2load.html', {
+        params: [ 'aliasURL', 'url' ],
+    } ],
     [ 'doubleclick_instream_ad_status.js', {
         alias: 'doubleclick.net/instream/ad_status.js',
+        data: 'text',
     } ],
     [ 'empty', {
         data: 'text',   // Important!
     } ],
     [ 'google-analytics_analytics.js', {
         alias: 'google-analytics.com/analytics.js',
+        data: 'text',
     } ],
     [ 'google-analytics_cx_api.js', {
         alias: 'google-analytics.com/cx/api.js',
     } ],
     [ 'google-analytics_ga.js', {
         alias: 'google-analytics.com/ga.js',
+        data: 'text',
     } ],
     [ 'google-analytics_inpage_linkid.js', {
         alias: 'google-analytics.com/inpage_linkid.js',
     } ],
     [ 'googlesyndication_adsbygoogle.js', {
         alias: 'googlesyndication.com/adsbygoogle.js',
+        data: 'text',
     } ],
     [ 'googletagmanager_gtm.js', {
         alias: 'googletagmanager.com/gtm.js',
+        data: 'text',
     } ],
     [ 'googletagservices_gpt.js', {
         alias: 'googletagservices.com/gpt.js',
+        data: 'text',
     } ],
     [ 'hd-main.js', {
     } ],
@@ -118,7 +128,7 @@ const redirectableResources = new Map([
         data: 'text',
     } ],
     [ 'noop-0.1s.mp3', {
-        alias: 'noopmp3-0.1s',
+        alias: [ 'noopmp3-0.1s', 'abp-resource:blank-mp3' ],
         data: 'blob',
     } ],
     [ 'noop-1s.mp4', {
@@ -129,11 +139,15 @@ const redirectableResources = new Map([
         alias: 'noopframe',
     } ],
     [ 'noop.js', {
-        alias: 'noopjs',
+        alias: [ 'noopjs', 'abp-resource:blank-js' ],
         data: 'text',
     } ],
     [ 'noop.txt', {
         alias: 'nooptext',
+        data: 'text',
+    } ],
+    [ 'noop-vmap1.0.xml', {
+        alias: 'noopvmap-1.0',
         data: 'text',
     } ],
     [ 'outbrain-widget.js', {
@@ -163,6 +177,7 @@ const extToMimeMap = new Map([
     [  'mp4', 'video/mp4' ],
     [  'png', 'image/png' ],
     [  'txt', 'text/plain' ],
+    [  'xml', 'text/xml' ],
 ]);
 
 const typeToMimeMap = new Map([
@@ -191,6 +206,7 @@ const RedirectEntry = class {
         this.mime = '';
         this.data = '';
         this.warURL = undefined;
+        this.params = undefined;
     }
 
     // Prevent redirection to web accessible resources when the request is
@@ -208,7 +224,15 @@ const RedirectEntry = class {
             fctxt instanceof Object &&
             fctxt.type !== 'xmlhttprequest'
         ) {
-            return `${this.warURL}${vAPI.warSecret()}`;
+            let url = `${this.warURL}?secret=${vAPI.warSecret()}`;
+            if ( this.params !== undefined ) {
+                for ( const name of this.params ) {
+                    const value = fctxt[name];
+                    if ( value === undefined ) { continue; }
+                    url += `&${name}=${encodeURIComponent(value)}`;
+                }
+            }
+            return url;
         }
         if ( this.data === undefined ) { return; }
         // https://github.com/uBlockOrigin/uBlock-issues/issues/701
@@ -251,6 +275,7 @@ const RedirectEntry = class {
         r.mime = selfie.mime;
         r.data = selfie.data;
         r.warURL = selfie.warURL;
+        r.params = selfie.params;
         return r;
     }
 };
@@ -262,24 +287,13 @@ const RedirectEngine = function() {
     this.aliases = new Map();
     this.resources = new Map();
     this.reset();
+    this.modifyTime = Date.now();
     this.resourceNameRegister = '';
 };
 
 /******************************************************************************/
 
 RedirectEngine.prototype.reset = function() {
-    this.rules = new Map();
-    this.ruleSources = new Set();
-    this.ruleDestinations = new Set();
-    this.resetCache();
-    this.modifyTime = Date.now();
-};
-
-RedirectEngine.prototype.resetCache = function() {
-    this._src = '';
-    this._srcAll = [ '*' ];
-    this._des = '';
-    this._desAll = [ '*' ];
 };
 
 /******************************************************************************/
@@ -289,301 +303,36 @@ RedirectEngine.prototype.freeze = function() {
 
 /******************************************************************************/
 
-RedirectEngine.prototype.toBroaderHostname = function(hostname) {
-    const pos = hostname.indexOf('.');
-    if ( pos !== -1 ) {
-        return hostname.slice(pos + 1);
-    }
-    return hostname !== '*' ? '*' : '';
+RedirectEngine.prototype.tokenToURL = function(
+    fctxt,
+    token,
+    asDataURI = false
+) {
+    const entry = this.resources.get(this.aliases.get(token) || token);
+    if ( entry === undefined ) { return; }
+    this.resourceNameRegister = token;
+    return entry.toURL(fctxt, asDataURI);
 };
 
 /******************************************************************************/
 
-RedirectEngine.prototype.decomposeHostname = function(hn, dict, out) {
-    let i = 0;
-    for (;;) {
-        if ( dict.has(hn) ) {
-            out[i] = hn; i += 1;
-        }
-        hn = this.toBroaderHostname(hn);
-        if ( hn === '' ) { break; }
-    }
-    out.length = i;
-};
-
-/******************************************************************************/
-
-RedirectEngine.prototype.lookup = function(fctxt) {
-    const src = fctxt.getDocHostname();
-    const des = fctxt.getHostname();
-    const type = fctxt.type;
-    if ( src !== this._src ) {
-        this._src = src;
-        this.decomposeHostname(src, this.ruleSources, this._srcAll);
-    }
-    if ( this._srcAll.length === 0 ) { return; }
-    if ( des !== this._des ) {
-        this._des = des;
-        this.decomposeHostname(des, this.ruleDestinations, this._desAll);
-    }
-    if ( this._desAll.length === 0 ) { return; }
-    const reqURL = fctxt.url;
-    for ( const src of this._srcAll ) {
-        for ( const des of this._desAll ) {
-            let entries = this.rules.get(`${src} ${des} ${type}`);
-            if ( entries !== undefined ) {
-                const rule = this.lookupRule(entries, reqURL);
-                if ( rule !== undefined ) { return rule; }
-            }
-            entries = this.rules.get(`${src} ${des} *`);
-            if ( entries !== undefined ) {
-                const rule = this.lookupRule(entries, reqURL);
-                if ( rule !== undefined ) { return rule; }
-            }
-        }
-    }
-};
-
-RedirectEngine.prototype.lookupRule = function(entries, reqURL) {
-    for ( const entry of entries ) {
-        if ( entry.pat instanceof RegExp === false ) {
-            entry.pat = new RegExp(entry.pat, 'i');
-        }
-        if ( entry.pat.test(reqURL) ) {
-            return entry;
-        }
-    }
-};
-
-/******************************************************************************/
-
-RedirectEngine.prototype.toURL = function(fctxt) {
-    const rule = this.lookup(fctxt);
-    if ( rule === undefined ) { return; }
-    let token = this.resourceNameRegister = rule.tok;
+RedirectEngine.prototype.hasToken = function(token) {
+    if ( token === 'none' ) { return true; }
     const asDataURI = token.charCodeAt(0) === 0x25 /* '%' */;
     if ( asDataURI ) {
         token = token.slice(1);
     }
-    const entry = this.resources.get(this.aliases.get(token) || token);
-    if ( entry !== undefined ) {
-        return entry.toURL(fctxt, asDataURI);
-    }
+    return this.resources.get(this.aliases.get(token) || token) !== undefined;
 };
 
 /******************************************************************************/
 
-RedirectEngine.prototype.addRule = function(src, des, type, pattern, redirect) {
-    this.ruleSources.add(src);
-    this.ruleDestinations.add(des);
-    const key = `${src} ${des} ${type}`,
-        entries = this.rules.get(key);
-    if ( entries === undefined ) {
-        this.rules.set(key, [ { tok: redirect, pat: pattern } ]);
-        this.modifyTime = Date.now();
-        return;
-    }
-    let entry;
-    for ( var i = 0, n = entries.length; i < n; i++ ) {
-        entry = entries[i];
-        if ( redirect === entry.tok ) { break; }
-    }
-    if ( i === n ) {
-        entries.push({ tok: redirect, pat: pattern });
-        return;
-    }
-    let p = entry.pat;
-    if ( p instanceof RegExp ) {
-        p = p.source;
-    }
-    // Duplicate?
-    let pos = p.indexOf(pattern);
-    if ( pos !== -1 ) {
-        if ( pos === 0 || p.charAt(pos - 1) === '|' ) {
-            pos += pattern.length;
-            if ( pos === p.length || p.charAt(pos) === '|' ) { return; }
-        }
-    }
-    entry.pat = p + '|' + pattern;
+RedirectEngine.prototype.toSelfie = async function() {
 };
 
 /******************************************************************************/
 
-RedirectEngine.prototype.fromCompiledRule = function(line) {
-    const fields = line.split('\t');
-    if ( fields.length !== 5 ) { return; }
-    this.addRule(fields[0], fields[1], fields[2], fields[3], fields[4]);
-};
-
-/******************************************************************************/
-
-RedirectEngine.prototype.compileRuleFromStaticFilter = function(line) {
-    const matches = this.reFilterParser.exec(line);
-    if ( matches === null || matches.length !== 4 ) { return; }
-
-    const des = matches[1] || '';
-
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/572
-    //   Extract best possible hostname.
-    let deshn = des;
-    let pos = deshn.lastIndexOf('*');
-    if ( pos !== -1 ) {
-        deshn = deshn.slice(pos + 1);
-        pos = deshn.indexOf('.');
-        if ( pos !== -1 ) {
-            deshn = deshn.slice(pos + 1);
-        } else {
-            deshn = '';
-        }
-    }
-
-    const path = matches[2] || '';
-    let pattern =
-            des
-                .replace(/\*/g, '[\\w.%-]*')
-                .replace(/\./g, '\\.') +
-            path
-                .replace(/\|$/, '$')
-                .replace(/[.+?{}()|[\]\/\\]/g, '\\$&')
-                .replace(/\^/g, '[^\\w.%-]')
-                .replace(/\*/g, '.*?');
-    if ( pattern === '' ) {
-        pattern = '^';
-    }
-
-    let type,
-        redirect = '',
-        srchns = [];
-    for ( const option of matches[3].trim().split(/,/) ) {
-        if ( option.startsWith('redirect=') ) {
-            redirect = option.slice(9);
-            continue;
-        }
-        if ( option.startsWith('redirect-rule=') ) {
-            redirect = option.slice(14);
-            continue;
-        }
-        if ( option === 'empty' ) {
-            redirect = 'empty';
-            continue;
-        }
-        if ( option === 'mp4' ) {
-            redirect = 'noopmp4-1s';
-            continue;
-        }
-        if ( option.startsWith('domain=') ) {
-            srchns = option.slice(7).split('|');
-            continue;
-        }
-        if ( (option === 'first-party' || option === '1p') && deshn !== '' ) {
-            srchns.push(µBlock.URI.domainFromHostname(deshn) || deshn);
-            continue;
-        }
-        // One and only one type must be specified.
-        if ( this.supportedTypes.has(option) ) {
-            if ( type !== undefined ) { return; }
-            type = this.supportedTypes.get(option);
-            continue;
-        }
-    }
-
-    // Need a resource token.
-    if ( redirect === '' ) { return; }
-
-    // Need one single type -- not negated.
-    if ( type === undefined ) {
-        if ( redirect === 'empty' ) {
-            type = '*';
-        } else if ( redirect === 'noopmp4-1s' ) {
-            type = 'media';
-        } else {
-            return;
-        }
-    }
-
-    if ( deshn === '' ) {
-        deshn = '*';
-    }
-
-    if ( srchns.length === 0 ) {
-        srchns.push('*');
-    }
-
-    const out = [];
-    for ( const srchn of srchns ) {
-        if ( srchn === '' ) { continue; }
-        if ( srchn.startsWith('~') ) { continue; }
-        out.push(`${srchn}\t${deshn}\t${type}\t${pattern}\t${redirect}`);
-    }
-
-    if ( out.length === 0 ) { return; }
-
-    return out;
-};
-
-/******************************************************************************/
-
-RedirectEngine.prototype.reFilterParser = /^(?:\|\|([^\/:?#^]+)|\*?)([^$]+)?\$([^$]+)$/;
-
-RedirectEngine.prototype.supportedTypes = new Map([
-    [ 'css', 'stylesheet' ],
-    [ 'font', 'font' ],
-    [ 'image', 'image' ],
-    [ 'media', 'media' ],
-    [ 'object', 'object' ],
-    [ 'script', 'script' ],
-    [ 'stylesheet', 'stylesheet' ],
-    [ 'frame', 'sub_frame' ],
-    [ 'subdocument', 'sub_frame' ],
-    [ 'xhr', 'xmlhttprequest' ],
-    [ 'xmlhttprequest', 'xmlhttprequest' ],
-]);
-
-/******************************************************************************/
-
-RedirectEngine.prototype.toSelfie = function(path) {
-    // Because rules may contains RegExp instances, we need to manually
-    // convert it to a serializable format. The serialized format must be
-    // suitable to be used as an argument to the Map() constructor.
-    const rules = [];
-    for ( const item of this.rules ) {
-        const rule = [ item[0], [] ];
-        const entries = item[1];
-        let i = entries.length;
-        while ( i-- ) {
-            const entry = entries[i];
-            rule[1].push({
-                tok: entry.tok,
-                pat: entry.pat instanceof RegExp ? entry.pat.source : entry.pat
-            });
-        }
-        rules.push(rule);
-    }
-    return µBlock.assets.put(
-        `${path}/main`,
-        JSON.stringify({
-            rules: rules,
-            ruleSources: Array.from(this.ruleSources),
-            ruleDestinations: Array.from(this.ruleDestinations)
-        })
-    );
-};
-
-/******************************************************************************/
-
-RedirectEngine.prototype.fromSelfie = async function(path) {
-    const result = await µBlock.assets.get(`${path}/main`);
-    let selfie;
-    try {
-        selfie = JSON.parse(result.content);
-    } catch (ex) {
-    }
-    if ( selfie instanceof Object === false ) { return false; }
-    this.rules = new Map(selfie.rules);
-    this.ruleSources = new Set(selfie.ruleSources);
-    this.ruleDestinations = new Set(selfie.ruleDestinations);
-    this.resetCache();
-    this.modifyTime = Date.now();
+RedirectEngine.prototype.fromSelfie = async function() {
     return true;
 };
 
@@ -599,18 +348,20 @@ RedirectEngine.prototype.resourceContentFromName = function(name, mime) {
 
 /******************************************************************************/
 
-// TODO: combine same key-redirect pairs into a single regex.
-
 // https://github.com/uBlockOrigin/uAssets/commit/deefe875551197d655f79cb540e62dfc17c95f42
 //   Consider 'none' a reserved keyword, to be used to disable redirection.
+// https://github.com/uBlockOrigin/uBlock-issues/issues/1419
+//   Append newlines to raw text to ensure processing of trailing resource.
 
 RedirectEngine.prototype.resourcesFromString = function(text) {
-    const lineIter = new µBlock.LineIterator(removeTopCommentBlock(text));
+    const lineIter = new µBlock.LineIterator(
+        removeTopCommentBlock(text) + '\n\n'
+    );
     const reNonEmptyLine = /\S/;
     let fields, encoded, details;
 
     while ( lineIter.eot() === false ) {
-        let line = lineIter.next();
+        const line = lineIter.next();
         if ( line.startsWith('#') ) { continue; }
         if ( line.startsWith('// ') ) { continue; }
 
@@ -638,11 +389,11 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
 
         if ( line.startsWith('/// ') ) {
             if ( details === undefined ) {
-                details = {};
+                details = [];
             }
             const [ prop, value ] = line.slice(4).trim().split(/\s+/);
             if ( value !== undefined ) {
-                details[prop] = value;
+                details.push({ prop, value });
             }
             continue;
         }
@@ -652,40 +403,25 @@ RedirectEngine.prototype.resourcesFromString = function(text) {
             continue;
         }
 
+        // No more data, add the resource.
         const name = this.aliases.get(fields[0]) || fields[0];
         const mime = fields[1];
         const content = µBlock.orphanizeString(
             fields.slice(2).join(encoded ? '' : '\n')
         );
-
-        // No more data, add the resource.
         this.resources.set(
             name,
             RedirectEntry.fromContent(mime, content)
         );
-
-        if ( details instanceof Object && details.alias ) {
-            this.aliases.set(details.alias, name);
+        if ( Array.isArray(details) ) {
+            for ( const { prop, value } of details ) {
+                if ( prop !== 'alias' ) { continue; }
+                this.aliases.set(value, name);
+            }
         }
 
         fields = undefined;
         details = undefined;
-    }
-
-    // Process pending resource data.
-    if ( fields !== undefined ) {
-        const name = fields[0];
-        const mime = fields[1];
-        const content = µBlock.orphanizeString(
-            fields.slice(2).join(encoded ? '' : '\n')
-        );
-        this.resources.set(
-            name,
-            RedirectEntry.fromContent(mime, content)
-        );
-        if ( details instanceof Object && details.alias ) {
-            this.aliases.set(details.alias, name);
-        }
     }
 
     this.modifyTime = Date.now();
@@ -721,9 +457,15 @@ RedirectEngine.prototype.loadBuiltinResources = function() {
             mime: mimeFromName(name),
             data,
             warURL: vAPI.getURL(`/web_accessible_resources/${name}`),
+            params: details.params,
         });
         this.resources.set(name, entry);
-        if ( details.alias !== undefined ) {
+        if ( details.alias === undefined ) { return; }
+        if ( Array.isArray(details.alias) ) {
+            for ( const alias of details.alias ) {
+                this.aliases.set(alias, name);
+            }
+        } else {
             this.aliases.set(details.alias, name);
         }
     };
@@ -762,7 +504,7 @@ RedirectEngine.prototype.loadBuiltinResources = function() {
         }
         fetches.push(
             µBlock.assets.fetch(
-                `/web_accessible_resources/${name}${vAPI.warSecret()}`,
+                `/web_accessible_resources/${name}?secret=${vAPI.warSecret()}`,
                 { responseType: details.data }
             ).then(
                 result => process(result)
@@ -776,7 +518,9 @@ RedirectEngine.prototype.loadBuiltinResources = function() {
 /******************************************************************************/
 
 RedirectEngine.prototype.getResourceDetails = function() {
-    const out = new Map();
+    const out = new Map([
+        [ 'none', { canInject: false, canRedirect: true, aliasOf: '' } ],
+    ]);
     for ( const [ name, entry ] of this.resources ) {
         out.set(name, {
             canInject: typeof entry.data === 'string',
@@ -835,9 +579,6 @@ RedirectEngine.prototype.resourcesFromSelfie = async function() {
 
 RedirectEngine.prototype.invalidateResourcesSelfie = function() {
     µBlock.assets.remove('compiled/redirectEngine/resources');
-
-    // TODO: obsolete, remove eventually
-    µBlock.cacheStorage.remove('resourcesSelfie');
 };
 
 /******************************************************************************/

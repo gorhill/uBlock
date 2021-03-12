@@ -551,6 +551,22 @@
     "message": "Rigelsyntaks: <code>boarne bestimming type aksje</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>folsleine dokumintaasje</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
+  "rulesSort": {
+    "message": "Sortearje:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Rigeltype",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Boarne",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Bestimming",
+    "description": "English: a sort option for list of rules."
+  },
   "whitelistPrompt": {
     "message": "De whitelist-ynstruksjes skriuwe foar op hokker websiden uBlock Origin útskeakele wurde moat. Ien fermelding per rigel. Unjildige ynstruksjes wurde sûnder meidieling negearre en útskeakele.",
     "description": "The name of the trusted sites pane."
@@ -653,6 +669,10 @@
   },
   "loggerRowFiltererBuiltinAllowed": {
     "message": "tastien",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinModified": {
+    "message": "oanpast",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
@@ -889,7 +909,11 @@
   },
   "subscriberConfirm": {
     "message": "uBlock₀: De folgjende URL oan jo oanpaste filterlisten tafoegje?\n\nTitel: \"{{title}}\"\nURL: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Abonnearje",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "in minút lyn",
@@ -929,11 +953,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBlock Origin hat it laden fan de folgjende side opkeard:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "Fanwege it folgjende filter",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "sûnder parameters",
@@ -1003,6 +1027,10 @@
     "message": "bytes",
     "description": ""
   },
+  "contextMenuBlockElementInFrame": {
+    "message": "Block element in frame...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Grutte media-eleminten tydlik tastean",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
@@ -1042,6 +1070,10 @@
   "GB": {
     "message": "GB",
     "description": "short for 'gigabytes'"
+  },
+  "clickToLoad": {
+    "message": "Klik om te laden",
+    "description": "Message used in frame placeholders"
   },
   "dummy": {
     "message": "This entry must be the last one",

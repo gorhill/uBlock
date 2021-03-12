@@ -551,8 +551,24 @@
     "message": "Regras de sintaxe: <code>origem destino tipo ação</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>documentação completa</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
+  "rulesSort": {
+    "message": "Ordenar:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Tipo de regra",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Fonte",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Destinação",
+    "description": "English: a sort option for list of rules."
+  },
   "whitelistPrompt": {
-    "message": "As diretivas de sites confiáveis ditam em quais páginas da Web o uBlock Origin deve ser desativado. Uma entrada por linha. As diretivas inválidas serão silenciosamente ignoradas e comentadas.",
+    "message": "As diretivas de sites confiáveis ditam quais páginas da internet o uBlock Origin deve ser desativado. Você deve inserir uma entrada por linha. As diretivas inválidas serão silenciosamente ignoradas e comentadas.",
     "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
@@ -564,7 +580,7 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "minha-lista-de-sites-confiáveis_{{datetime}}.txt",
+    "message": "minha-lista-de-sites-confiaveis_{{datetime}}.txt",
     "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
@@ -653,6 +669,10 @@
   },
   "loggerRowFiltererBuiltinAllowed": {
     "message": "permitido",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinModified": {
+    "message": "modificado",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
@@ -888,8 +908,12 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: Adicionar a seguinte URL na sua lista de filtros personalizados?\n\nTítulo: \"{{title}}\"\nURL: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "message": "Deseja adicionar a seguinte URL em sua lista de filtros personalizados?\n\nTítulo: \"{{title}}\"\nURL: {{url}}",
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Inscrever",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "um minuto atrás",
@@ -929,11 +953,11 @@
   },
   "docblockedPrompt1": {
     "message": "O uBlock Origin impediu a seguinte página de ser carregada:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "Por causa do seguinte filtro",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "sem parâmetros",
@@ -1003,6 +1027,10 @@
     "message": "bytes",
     "description": ""
   },
+  "contextMenuBlockElementInFrame": {
+    "message": "Bloquear elemento no frame...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Permitir temporariamente grandes elementos de mídia",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
@@ -1042,6 +1070,10 @@
   "GB": {
     "message": "GB",
     "description": "short for 'gigabytes'"
+  },
+  "clickToLoad": {
+    "message": "Clique para carregar",
+    "description": "Message used in frame placeholders"
   },
   "dummy": {
     "message": "Esta entrada deve ser a última",

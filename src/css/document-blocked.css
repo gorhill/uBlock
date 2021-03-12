@@ -21,8 +21,6 @@
 body {
     display: flex;
     flex-direction: column;
-    font-size: 14px;
-    line-height: 20px;
     padding: 40px;
     text-align: center;
     }
@@ -56,33 +54,33 @@ a {
     position: relative;
     z-index: 10;
     }
-#theURL > p > span {
+#theURL > p > span:last-of-type {
     background-color: transparent;
     top: 100%;
     box-sizing: border-box;
     color: var(--fg-0-60);
     cursor: pointer;
     fill: var(--fg-0-60);
-    font-size: 1rem;
+    font-size: 1.2rem;
     padding: var(--default-gap-xxsmall);
     position: absolute;
     transform: translate(0, -50%);
     }
-body[dir="ltr"] #theURL > p > span {
+#theURL:not(.collapsed) > p > span:last-of-type > span:first-of-type {
+    display: none;
+    }
+#theURL.collapsed > p > span:last-of-type > span:last-of-type {
+    display: none;
+    }
+body[dir="ltr"] #theURL > p > span:last-of-type {
     right: 0;
     }
-body[dir="rtl"] #theURL > p > span {
+body[dir="rtl"] #theURL > p > span:last-of-type {
     left: 0;
     }
 #theURL > p:hover > span {
     color: var(--default-ink);
     fill: var(--default-ink);
-    }
-#theURL > p > span:before {
-    content: '\f010';
-    }
-#theURL.collapsed > p > span:before {
-    content: '\f00e';
     }
 #parsed {
     background-color: var(--bg-1);

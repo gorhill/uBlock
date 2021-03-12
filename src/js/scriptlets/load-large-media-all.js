@@ -19,49 +19,23 @@
     Home: https://github.com/gorhill/uBlock
 */
 
-/******************************************************************************/
-
-(function() {
-
 'use strict';
 
 /******************************************************************************/
 
-// For all media resources which have failed to load, trigger a reload.
+(( ) => {
 
-var elems, i, elem, src;
+/******************************************************************************/
 
-// <audio> and <video> elements.
-// https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement
-
-elems = document.querySelectorAll('audio,video');
-i = elems.length;
-while ( i-- ) {
-    elem = elems[i];
-    if ( elem.error !== null ) {
-        elem.load();
-    }
+if (
+    typeof vAPI !== 'object' ||
+    vAPI.loadAllLargeMedia instanceof Function === false
+) {
+    return;
 }
 
-// <img> elements.
-// https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement
-
-elems = document.querySelectorAll('img');
-i = elems.length;
-while ( i-- ) {
-    elem = elems[i];
-    if ( elem.naturalWidth !== 0 && elem.naturalHeight !== 0 ) {
-        continue;
-    }
-    if ( window.getComputedStyle(elem).getPropertyValue('display') === 'none' ) {
-        continue;
-    }
-    src = elem.getAttribute('src');
-    if ( src ) {
-        elem.removeAttribute('src');
-        elem.setAttribute('src', src);
-    }
-}
+vAPI.loadAllLargeMedia();
+vAPI.loadAllLargeMedia = undefined;
 
 /******************************************************************************/
 

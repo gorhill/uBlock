@@ -56,6 +56,16 @@ window.addEventListener('webextFlavor', function() {
 
 /******************************************************************************/
 
+vAPI.randomToken = function() {
+    const n = Math.random();
+    return String.fromCharCode(n * 26 + 97) +
+        Math.floor(
+            (0.25 + n * 0.75) * Number.MAX_SAFE_INTEGER
+        ).toString(36).slice(-8);
+};
+
+/******************************************************************************/
+
 vAPI.app = {
     name: manifest.name.replace(/ dev\w+ build/, ''),
     version: (( ) => {
@@ -339,7 +349,10 @@ vAPI.Tabs = class {
         return tabs.length !== 0 ? tabs[0] : null;
     }
 
-    async insertCSS() {
+    async insertCSS(tabId, details) {
+        if ( vAPI.supportsUserStylesheets ) {
+            details.cssOrigin = 'user';
+        }
         try {
             await webext.tabs.insertCSS(...arguments);
         }
@@ -357,7 +370,10 @@ vAPI.Tabs = class {
         return Array.isArray(tabs) ? tabs : [];
     }
 
-    async removeCSS() {
+    async removeCSS(tabId, details) {
+        if ( vAPI.supportsUserStylesheets ) {
+            details.cssOrigin = 'user';
+        }
         try {
             await webext.tabs.removeCSS(...arguments);
         }
@@ -886,17 +902,28 @@ vAPI.messaging = {
         this.ports.delete(port.name);
     },
 
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/Port
+    //   port.sender is always present for onConnect() listeners.
     onPortConnect: function(port) {
-        port.onDisconnect.addListener(
-            port => this.onPortDisconnect(port)
+        port.onDisconnect.addListener(port =>
+            this.onPortDisconnect(port)
         );
-        port.onMessage.addListener(
-            (request, port) => this.onPortMessage(request, port)
+        port.onMessage.addListener((request, port) =>
+            this.onPortMessage(request, port)
         );
-        this.ports.set(port.name, {
-            port,
-            privileged: port.sender.url.startsWith(this.PRIVILEGED_URL)
-        });
+        const portDetails = { port };
+        const sender = port.sender;
+        const { tab, url } = sender;
+        portDetails.frameId = sender.frameId;
+        portDetails.frameURL = url;
+        portDetails.privileged = url.startsWith(this.PRIVILEGED_URL);
+        if ( tab ) {
+            portDetails.tabId = tab.id;
+            portDetails.tabURL = tab.url;
+        }
+        this.ports.set(port.name, portDetails);
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=1652925#c24
+        port.sender = undefined;
     },
 
     setup: function(defaultHandler) {
@@ -920,12 +947,9 @@ vAPI.messaging = {
             vAPI.webextFlavor.major < 61
         ) {
             browser.tabs.onRemoved.addListener(tabId => {
-                for ( const { port } of this.ports.values() ) {
-                    const tab = port.sender && port.sender.tab;
-                    if ( !tab ) { continue; }
-                    if ( tab.id === tabId ) {
-                        this.onPortDisconnect(port);
-                    }
+                for ( const { port, tabId: portTabId } of this.ports.values() ) {
+                    if ( portTabId !== tabId ) { continue; }
+                    this.onPortDisconnect(port);
                 }
             });
         }
@@ -941,16 +965,14 @@ vAPI.messaging = {
             try {
                 port.postMessage(messageWrapper);
             } catch(ex) {
-                this.ports.delete(port.name);
+                this.onPortDisconnect(port);
             }
         }
     },
 
     onFrameworkMessage: function(request, port, callback) {
-        const sender = port && port.sender;
-        if ( !sender ) { return; }
-        const fromDetails = this.ports.get(port.name) || {};
-        const tabId = sender.tab && sender.tab.id || undefined;
+        const portDetails = this.ports.get(port.name) || {};
+        const tabId = portDetails.tabId;
         const msg = request.msg;
         switch ( msg.what ) {
         case 'connectionAccepted':
@@ -969,7 +991,11 @@ vAPI.messaging = {
             msg.tabId = tabId;
             for ( const { port: toPort } of this.ports.values() ) {
                 if ( toPort === port ) { continue; }
-                toPort.postMessage(request);
+                try {
+                    toPort.postMessage(request);
+                } catch (ex) {
+                    this.onPortDisconnect(toPort);
+                }
             }
             break;
         case 'connectionBroken':
@@ -990,12 +1016,13 @@ vAPI.messaging = {
         case 'extendClient':
             vAPI.tabs.executeScript(tabId, {
                 file: '/js/vapi-client-extra.js',
+                frameId: portDetails.frameId,
             }).then(( ) => {
                 callback();
             });
             break;
         case 'localStorage': {
-            if ( fromDetails.privileged !== true ) { break; }
+            if ( portDetails.privileged !== true ) { break; }
             const args = msg.args || [];
             vAPI.localStorage[msg.fn](...args).then(result => {
                 callback(result);
@@ -1004,23 +1031,25 @@ vAPI.messaging = {
         }
         case 'userCSS':
             if ( tabId === undefined ) { break; }
-            const details = {
-                code: undefined,
-                frameId: sender.frameId,
-                matchAboutBlank: true
-            };
-            if ( vAPI.supportsUserStylesheets ) {
-                details.cssOrigin = 'user';
-            }
-            if ( msg.add ) {
-                details.runAt = 'document_start';
-            }
             const promises = [];
-            for ( const cssText of msg.add ) {
-                details.code = cssText;
-                promises.push(vAPI.tabs.insertCSS(tabId, details));
+            if ( msg.add ) {
+                const details = {
+                    code: undefined,
+                    frameId: portDetails.frameId,
+                    matchAboutBlank: true,
+                    runAt: 'document_start',
+                };
+                for ( const cssText of msg.add ) {
+                    details.code = cssText;
+                    promises.push(vAPI.tabs.insertCSS(tabId, details));
+                }
             }
-            if ( typeof webext.tabs.removeCSS === 'function' ) {
+            if ( msg.remove ) {
+                const details = {
+                    code: undefined,
+                    frameId: portDetails.frameId,
+                    matchAboutBlank: true,
+                };
                 for ( const cssText of msg.remove ) {
                     details.code = cssText;
                     promises.push(vAPI.tabs.removeCSS(tabId, details));
@@ -1081,23 +1110,23 @@ vAPI.messaging = {
         }
 
         // Auxiliary process to main process: specific handler
-        const fromDetails = this.ports.get(port.name);
-        if ( fromDetails === undefined ) { return; }
+        const portDetails = this.ports.get(port.name);
+        if ( portDetails === undefined ) { return; }
 
         const listenerDetails = this.listeners.get(request.channel);
         let r = this.UNHANDLED;
         if (
             (listenerDetails !== undefined) &&
-            (listenerDetails.privileged === false || fromDetails.privileged)
-
+            (listenerDetails.privileged === false || portDetails.privileged)
+            
         ) {
-            r = listenerDetails.fn(request.msg, port.sender, callback);
+            r = listenerDetails.fn(request.msg, portDetails, callback);
         }
         if ( r !== this.UNHANDLED ) { return; }
 
         // Auxiliary process to main process: default handler
-        if ( fromDetails.privileged ) {
-            r = this.defaultHandler(request.msg, port.sender, callback);
+        if ( portDetails.privileged ) {
+            r = this.defaultHandler(request.msg, portDetails, callback);
             if ( r !== this.UNHANDLED ) { return; }
         }
 
@@ -1140,7 +1169,7 @@ vAPI.warSecret = (( ) => {
             url.lastIndexOf(`?secret=${secret}`) !== -1
         );
         if ( pos === -1 ) {
-            return { redirectUrl: root };
+            return { cancel: true };
         }
         secrets.splice(pos, 1);
     };
@@ -1164,7 +1193,7 @@ vAPI.warSecret = (( ) => {
         lastSecretTime = Date.now();
         const secret = generateSecret();
         secrets.push(secret);
-        return `?secret=${secret}`;
+        return secret;
     };
 })();
 
@@ -1412,7 +1441,7 @@ vAPI.onLoadAllCompleted = function(tabId, frameId) { //ADN
     var startInTab = function(tab, frameId) { // ADN
         var µb = µBlock;
         µb.tabContextManager.commit(tab.id, tab.url);
-        µb.bindTabToPageStats(tab.id);
+        µb.bindTabToPageStore(tab.id);
         // https://github.com/chrisaljoudi/uBlock/issues/129
         if ( /^https?:\/\//.test(tab.url) ) { // added in ub/1.10.0
           scriptStart(tab.id, frameId); //why scriptStart itself only take in one parameter?
@@ -1469,21 +1498,22 @@ vAPI.onLoadAllCompleted = function(tabId, frameId) { //ADN
 vAPI.adminStorage = (( ) => {
     if ( webext.storage.managed instanceof Object === false ) {
         return {
-            getItem: function() {
+            get: function() {
                 return Promise.resolve();
             },
         };
     }
     return {
-        getItem: async function(key) {
+        get: async function(key) {
             let bin;
             try {
                 bin = await webext.storage.managed.get(key);
             } catch(ex) {
             }
-            if ( bin instanceof Object ) {
+            if ( typeof key === 'string' && bin instanceof Object ) {
                 return bin[key];
             }
+            return bin;
         }
     };
 })();
@@ -1505,27 +1535,10 @@ vAPI.localStorage = {
         if ( this.cache instanceof Promise ) { return this.cache; }
         if ( this.cache instanceof Object ) { return this.cache; }
         this.cache = webext.storage.local.get('localStorage').then(bin => {
-            this.cache = undefined;
-            try {
-                if (
-                    bin instanceof Object === false ||
-                    bin.localStorage instanceof Object === false
-                ) {
-                    this.cache = {};
-                    const ls = self.localStorage;
-                    for ( let i = 0; i < ls.length; i++ ) {
-                        const key = ls.key(i);
-                        this.cache[key] = ls.getItem(key);
-                    }
-                    webext.storage.local.set({ localStorage: this.cache });
-                } else {
-                    this.cache = bin.localStorage;
-                }
-            } catch(ex) {
-            }
-            if ( this.cache instanceof Object === false ) {
-                this.cache = {};
-            }
+            this.cache = bin instanceof Object &&
+                bin.localStorage instanceof Object
+                    ? bin.localStorage
+                    : {};
         });
         return this.cache;
     },
@@ -1603,8 +1616,6 @@ vAPI.cloud = (( ) => {
         maxChunkSize = evalMaxChunkSize();
     }, { once: true });
 
-    const maxStorageSize = QUOTA_BYTES;
-
     const options = {
         defaultDeviceName: window.navigator.platform,
         deviceName: undefined,
@@ -1621,10 +1632,10 @@ vAPI.cloud = (( ) => {
     // good thing given chrome.storage.sync.MAX_WRITE_OPERATIONS_PER_MINUTE
     // and chrome.storage.sync.MAX_WRITE_OPERATIONS_PER_HOUR.
 
-    const getCoarseChunkCount = async function(dataKey) {
+    const getCoarseChunkCount = async function(datakey) {
         const keys = {};
         for ( let i = 0; i < maxChunkCountPerItem; i += 16 ) {
-            keys[dataKey + i.toString()] = '';
+            keys[datakey + i.toString()] = '';
         }
         let bin;
         try {
@@ -1634,92 +1645,88 @@ vAPI.cloud = (( ) => {
         }
         let chunkCount = 0;
         for ( let i = 0; i < maxChunkCountPerItem; i += 16 ) {
-            if ( bin[dataKey + i.toString()] === '' ) { break; }
+            if ( bin[datakey + i.toString()] === '' ) { break; }
             chunkCount = i + 16;
         }
         return chunkCount;
     };
 
-    const deleteChunks = function(dataKey, start) {
+    const deleteChunks = async function(datakey, start) {
         const keys = [];
 
-        // No point in deleting more than:
-        // - The max number of chunks per item
-        // - The max number of chunks per storage limit
-        const n = Math.min(
-            maxChunkCountPerItem,
-            Math.ceil(maxStorageSize / maxChunkSize)
-        );
-        for ( var i = start; i < n; i++ ) {
-            keys.push(dataKey + i.toString());
+        const n = await getCoarseChunkCount(datakey);
+        for ( let i = start; i < n; i++ ) {
+            keys.push(datakey + i.toString());
         }
         if ( keys.length !== 0 ) {
             webext.storage.sync.remove(keys);
         }
     };
 
-    const push = async function(dataKey, data) {
-        let bin = {
-            'source': options.deviceName || options.defaultDeviceName,
-            'tstamp': Date.now(),
-            'data': data,
-            'size': 0
+    const push = async function(details) {
+        const { datakey, data, encode } = details;
+        if (
+            data === undefined ||
+            typeof data === 'string' && data === ''
+        ) {
+            return deleteChunks(datakey, 0);
+        }
+        const item = {
+            source: options.deviceName || options.defaultDeviceName,
+            tstamp: Date.now(),
+            data,
         };
-        bin.size = JSON.stringify(bin).length;
-        const item = JSON.stringify(bin);
+        const json = JSON.stringify(item);
+        const encoded = encode instanceof Function
+            ? await encode(json)
+            : json;
 
         // Chunkify taking into account QUOTA_BYTES_PER_ITEM:
         //   https://developer.chrome.com/extensions/storage#property-sync
         //   "The maximum size (in bytes) of each individual item in sync
         //   "storage, as measured by the JSON stringification of its value
         //   "plus its key length."
-        bin = {};
-        var chunkCount = Math.ceil(item.length / maxChunkSize);
-        for ( var i = 0; i < chunkCount; i++ ) {
-            bin[dataKey + i.toString()] = item.substr(i * maxChunkSize, maxChunkSize);
+        const bin = {};
+        const chunkCount = Math.ceil(encoded.length / maxChunkSize);
+        for ( let i = 0; i < chunkCount; i++ ) {
+            bin[datakey + i.toString()]
+                = encoded.substr(i * maxChunkSize, maxChunkSize);
         }
-        bin[dataKey + i.toString()] = ''; // Sentinel
+        bin[datakey + chunkCount.toString()] = ''; // Sentinel
 
-        let result;
-        let errorStr;
+        // Remove potentially unused trailing chunks before storing the data,
+        // this will free storage space which could otherwise cause the push
+        // operation to fail.
         try {
-            result = await webext.storage.sync.set(bin);
+            await deleteChunks(datakey, chunkCount + 1);
         } catch (reason) {
-            errorStr = reason;
         }
 
-        // https://github.com/gorhill/uBlock/issues/3006#issuecomment-332597677
-        // - Delete all that was pushed in case of failure.
-        // - It's unknown whether such issue applies only to Firefox:
-        //   until such cases are reported for other browsers, we will
-        //   reset the (now corrupted) content of the cloud storage
-        //   only on Firefox.
-        if ( errorStr !== undefined && vAPI.webextFlavor.soup.has('firefox') ) {
-            chunkCount = 0;
+        // Push the data to browser-provided cloud storage.
+        try {
+            await webext.storage.sync.set(bin);
+        } catch (reason) {
+            return String(reason);
         }
-
-        // Remove potentially unused trailing chunks
-        deleteChunks(dataKey, chunkCount);
-
-        return errorStr;
     };
 
-    const pull = async function(dataKey) {
+    const pull = async function(details) {
+        const { datakey, decode } = details;
 
-        const result = await getCoarseChunkCount(dataKey);
+        const result = await getCoarseChunkCount(datakey);
         if ( typeof result !== 'number' ) {
             return result;
         }
         const chunkKeys = {};
         for ( let i = 0; i < result; i++ ) {
-            chunkKeys[dataKey + i.toString()] = '';
+            chunkKeys[datakey + i.toString()] = '';
         }
 
         let bin;
         try {
             bin = await webext.storage.sync.get(chunkKeys);
         } catch (reason) {
-            return reason;
+            return String(reason);
         }
 
         // Assemble chunks into a single string.
@@ -1728,20 +1735,46 @@ vAPI.cloud = (( ) => {
         //   happen when the number of chunks is a multiple of
         //   chunkCountPerFetch. Hence why we must also test against
         //   undefined.
-        let json = [], jsonSlice;
+        let encoded = [];
         let i = 0;
         for (;;) {
-            jsonSlice = bin[dataKey + i.toString()];
-            if ( jsonSlice === '' || jsonSlice === undefined ) { break; }
-            json.push(jsonSlice);
+            const slice = bin[datakey + i.toString()];
+            if ( slice === '' || slice === undefined ) { break; }
+            encoded.push(slice);
             i += 1;
         }
+        encoded = encoded.join('');
+        const json = decode instanceof Function
+            ? await decode(encoded)
+            : encoded;
         let entry = null;
         try {
-            entry = JSON.parse(json.join(''));
+            entry = JSON.parse(json);
         } catch(ex) {
         }
         return entry;
+    };
+
+    const used = async function(datakey) {
+        if ( webext.storage.sync.getBytesInUse instanceof Function === false ) {
+            return;
+        }
+        const coarseCount = await getCoarseChunkCount(datakey);
+        if ( typeof coarseCount !== 'number' ) { return; }
+        const keys = [];
+        for ( let i = 0; i < coarseCount; i++ ) {
+            keys.push(`${datakey}${i}`);
+        }
+        let results;
+        try {
+            results = await Promise.all([
+                webext.storage.sync.getBytesInUse(keys),
+                webext.storage.sync.getBytesInUse(null),
+            ]);
+        } catch(ex) {
+        }
+        if ( Array.isArray(results) === false ) { return; }
+        return { used: results[0], total: results[1], max: QUOTA_BYTES };
     };
 
     const getOptions = function(callback) {
@@ -1760,7 +1793,7 @@ vAPI.cloud = (( ) => {
         getOptions(callback);
     };
 
-    return { push, pull, getOptions, setOptions };
+    return { push, pull, used, getOptions, setOptions };
 })();
 
 /******************************************************************************/

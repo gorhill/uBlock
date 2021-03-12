@@ -42,7 +42,7 @@
     }
     if (!range || range.cleared || force === "unfold") return;
 
-    var myWidget = makeWidget(cm, options);
+    var myWidget = makeWidget(cm, options, range);
     CodeMirror.on(myWidget, "mousedown", function(e) {
       myRange.clear();
       CodeMirror.e_preventDefault(e);
@@ -58,8 +58,13 @@
     CodeMirror.signal(cm, "fold", cm, range.from, range.to);
   }
 
-  function makeWidget(cm, options) {
+  function makeWidget(cm, options, range) {
     var widget = getOption(cm, options, "widget");
+
+    if (typeof widget == "function") {
+      widget = widget(range.from, range.to);
+    }
+
     if (typeof widget == "string") {
       var text = document.createTextNode(widget);
       widget = document.createElement("span");

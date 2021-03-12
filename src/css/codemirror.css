@@ -5,10 +5,22 @@
     position: relative;
     }
 .CodeMirror {
+    background-color: var(--default-surface);
     box-sizing: border-box;
+    color: var(--default-ink);
     flex-grow: 1;
     height: 100%;
     width: 100%;
+    }
+.CodeMirror-lines {
+    padding-bottom: 6rem;
+    }
+.CodeMirror-gutters {
+    background-color: var(--cm-gutter-surface);
+    border-color: var(--cm-gutter-border);
+    }
+.CodeMirror-linenumber {
+    color: var(--cm-gutter-ink);
     }
 
 /* For when panels are used */
@@ -23,31 +35,82 @@
     }
 
 /* CodeMirror theme overrides */
-.cm-s-default .cm-def {color: #4d4dff;}
-.cm-s-default .cm-value { color: #e64d00; }
-.cm-s-default .cm-comment { color: #777; }
-.cm-s-default .cm-keyword { color: #d208ff; }
-.cm-s-default .cm-regex {
-    text-underline-position: under;
-    text-decoration-color: darkgray;
-    text-decoration-style: solid;
-    text-decoration-line: underline;
+.CodeMirror-focused .CodeMirror-selected {
+    background: var(--cm-selection-surface);
+    color: var(--cm-selection-ink);
+    }
+.CodeMirror-line::selection,
+.CodeMirror-line > span::selection,
+.CodeMirror-line > span > span::selection {
+    background: var(--cm-selection-surface);
+    color: var(--cm-selection-ink);
+    }
+
+.cm-s-default .cm-comment {
+    color: var(--sf-comment-ink);
+    }
+.cm-s-default .cm-def {
+    color: var(--sf-def-ink);
+    }
+.cm-s-default .cm-directive {
+    color: var(--sf-directive-ink);
+    font-weight: bold;
     }
 .cm-s-default .cm-error {
     color: inherit;
     }
 .cm-s-default .cm-error,
 .CodeMirror-linebackground.error {
-    background-color: #ff000016;
-    text-decoration: underline red;
+    background-color: var(--sf-error-surface);
+    text-decoration: underline var(--sf-error-ink);
     text-underline-position: under;
     }
+.cm-s-default .cm-link {
+    text-decoration: none;
+    }
+.cm-s-default .cm-link:hover {
+    color: var(--link-ink);
+    }
+.cm-s-default .cm-keyword {
+    color: var(--sf-keyword-ink);
+    }
+.cm-s-default .cm-notice {
+    text-underline-position: under;
+    text-decoration-color: var(--sf-notice-ink);
+    text-decoration-style: solid;
+    text-decoration-line: underline;
+    }
+.cm-s-default .cm-tag {
+    color: var(--sf-tag-ink);
+    }
+.cm-s-default .cm-value { color: var(--sf-value-ink); }
+.cm-s-default .cm-variable {
+    color: var(--sf-variable-ink);
+    }
+.cm-s-default .cm-warning {
+    text-decoration: underline var(--sf-warning-ink);
+    text-underline-position: under;
+    }
+.cm-s-default .cm-readonly {
+    color: var(--sf-readonly-ink);
+    }
 
-.cm-directive { color: #333; font-weight: bold; }
-.cm-staticext { color: #008; }
-.cm-staticnetBlock { color: #800; }
-.cm-staticnetAllow { color: #004f00; }
-.cm-staticOpt { background-color: #777; font-weight: bold; }
+/* Rules */
+.cm-s-default .cm-allowrule {
+    color: var(--df-allow-ink);
+    font-weight: bold;
+    }
+.cm-s-default .cm-blockrule {
+    color: var(--df-block-ink);
+    font-weight: bold;
+    }
+.cm-s-default .cm-nooprule {
+    color: var(--df-noop-ink);
+    font-weight: bold;
+    }
+.cm-s-default .cm-sortkey {
+    color: var(--sf-keyword-ink);
+    }
 
 div.CodeMirror span.CodeMirror-matchingbracket {
     color: unset;
@@ -60,7 +123,8 @@ div.CodeMirror span.CodeMirror-matchingbracket {
 
 .cm-search-widget {
     align-items: center;
-    background-color: var(--bg-code);
+    background-color: var(--cm-gutter-surface);
+    border-bottom: 1px solid var(--cm-gutter-border);
     cursor: default;
     direction: ltr;
     display: flex;
@@ -77,14 +141,14 @@ div.CodeMirror span.CodeMirror-matchingbracket {
     flex-grow: 1;
     }
 .cm-search-widget .fa-icon {
-    fill: #888;
+    fill: var(--cm-gutter-ink);
     font-size: 140%;
     }
 .cm-search-widget .fa-icon:not(.fa-icon-ro):hover {
     fill: #000;
     }
 .cm-search-widget-input input {
-    border: 1px solid gray;
+    border: 1px solid var(--cm-gutter-ink);
     display: inline-flex;
     flex-grow: 1;
     max-width: 16em;
@@ -107,20 +171,27 @@ div.CodeMirror span.CodeMirror-matchingbracket {
     display: none;
     }
 .cm-searching {
+    background-color: var(--cm-searching-surface) !important;
     border: 1px dotted black;
     }
 
+.CodeMirror-merge {
+    border-color: var(--cm-gutter-border);
+    }
 .CodeMirror-merge-l-deleted {
     background-image: none;
-    font-weight: bold;
     }
 .CodeMirror-merge-l-inserted {
     background-image: none;
-    font-weight: bold;
     }
 /* This probably needs to be added to CodeMirror repo */
 .CodeMirror-merge-gap {
+    background-color: var(--cm-gutter-surface);
+    border-color: var(--cm-gutter-border);
     vertical-align: top;
+    }
+.CodeMirror-merge-spacer {
+    background-color: var(--cm-gutter-surface);
     }
 
 .CodeMirror-hints {

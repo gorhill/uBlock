@@ -35,14 +35,6 @@ body {
 #diff .ruleActions .fieldset-header {
     margin: 0.5em 0;
     }
-#ruleFilter {
-    direction: ltr;
-    text-align: center;
-    }
-#ruleFilter .fa {
-    color: #ddd;
-    }
-
 #revertButton,
 #commitButton,
 body.editing #diff #exportButton,
@@ -64,6 +56,20 @@ body:not(.editing) #diff.dirty #commitButton {
 body:not(.editing) #diff.dirty #revertButton:hover,
 body:not(.editing) #diff.dirty #commitButton:hover {
     background-color: var(--button-surface-hover);
+    }
+
+#ruleFilter {
+    align-items: center;
+    direction: ltr;
+    display: flex;
+    justify-content: center;
+    }
+#ruleFilter #diffCollapse {
+    padding: 0 0.5em;
+    font-size: 150%;
+    }
+#ruleFilter #diffCollapse.active {
+    transform: scale(1, -1);
     }
 
 .codeMirrorContainer {

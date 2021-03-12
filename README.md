@@ -1,6 +1,6 @@
 <!-- [![Build Status](https://travis-ci.org/dhowe/AdNauseam.svg)](https://travis-ci.org/dhowe/AdNauseam) -->
-<a href="https://www.gnu.org/licenses/gpl-3.0.en.html"><img src="https://img.shields.io/badge/license-GPL-orange.svg" alt="gpl license"></a> [![Gitter](https://badges.gitter.im/dhowe/AdNauseam.svg)](https://gitter.im/dhowe/AdNauseam?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-
+![version](https://badgen.net/amo/v/adnauseam) ![stars](https://badgen.net/amo/stars/adnauseam) <a href="https://www.gnu.org/licenses/gpl-3.0.en.html"><img src="https://img.shields.io/badge/license-GPL-orange.svg" alt="gpl license"></a>  ![ratings](https://badgen.net/amo/rating/adnauseam) [![Gitter](https://badges.gitter.im/dhowe/AdNauseam.svg)](https://gitter.im/dhowe/AdNauseam?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) [![open-collective](https://opencollective.com/adnauseam/tiers/badge.svg)](https://opencollective.com/adnauseam#category-CONTRIBUTE)
+ 
 Install [AdNauseam](https://adnauseam.io) for [Firefox](https://addons.mozilla.org/en-US/firefox/addon/adnauseam), [Opera](https://addons.opera.com/en/extensions/details/adnauseam-2) or [Chrome](https://github.com/dhowe/AdNauseam/wiki/Install-AdNauseam-on-Chrome-Without-Google's-Permission)
 <div align="left">
   <a href="https://adnauseam.io">
@@ -8,9 +8,9 @@ Install [AdNauseam](https://adnauseam.io) for [Firefox](https://addons.mozilla.o
   </a>
 </div>
 
-[AdNauseam](https://adnauseam.io) is a lightweight browser extension that blends software tool and artware intervention to actively fight back against tracking by advertising networks. AdNauseam works like an ad-blocker (it is built atop [uBlock Origin](https://github.com/gorhill/uBlock)) to silently simulate clicks on each blocked ad, confusing trackers as to one's real interests. At the same time, AdNauseam serves as a means of amplifying discontent with advertising networks that disregard privacy and enable bulk surveillance.
+[AdNauseam](https://adnauseam.io) is a lightweight browser extension that blends software tool and artware intervention to actively fight back against tracking by advertising networks. AdNauseam works like an ad-blocker (it is built atop [uBlock Origin](https://github.com/gorhill/uBlock)) to silently simulate clicks on each blocked ad, confusing trackers as to one's real interests. At the same time, AdNauseam serves as a means of voicing your discontent with advertising networks that disregard privacy and engage in bulk surveillance.
 
-We conceptualize AdNauseam as a software system that serves ethical, political, and expressive ends. In light of the industry's failure to address the excesses of network tracking, AdNauseam allows individual users to take matters into their own hands, offering active defense against surveillance, profiling and potential discrimination. The software thus represents a similar approach to that of <a href="https://cs.nyu.edu/trackmenot" target="_blank">TrackMeNot</a>, relocating power in the hands of individual users, rather than vast commercial entities. For further information on this approach, please see <a href="https://cs.nyu.edu/trackmenot/resources/trackmenot2009.pdf" target="_blank">this paper</a>.
+In light of the industry's failure to address the excesses of network tracking, AdNauseam allows individual users to take matters into their own hands, offering active defense against surveillance, profiling and potential discrimination. The software thus represents a similar approach to that of <a href="https://cs.nyu.edu/trackmenot" target="_blank">TrackMeNot</a>, relocating power in the hands of individual users, rather than vast commercial entities. For further information on this approach, please see <a href="https://cs.nyu.edu/trackmenot/resources/trackmenot2009.pdf" target="_blank">this paper</a>.
 
 
 #### About the project
@@ -46,38 +46,9 @@ If you're not sure where to start, look at the issues labeled [HELP US CODE](htt
 <br>
 
 Or, support us with a monthly donation and [become a backer!](https://opencollective.com/adnauseam#backer)
+<br>
 
-<a href="https://opencollective.com/adnauseam/backer/0/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/0/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/1/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/1/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/2/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/2/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/3/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/3/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/4/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/4/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/5/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/5/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/6/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/6/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/7/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/7/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/8/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/8/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/9/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/9/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/10/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/10/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/11/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/11/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/12/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/12/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/13/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/13/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/14/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/14/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/15/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/15/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/16/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/16/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/17/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/17/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/18/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/18/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/19/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/19/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/20/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/20/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/21/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/21/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/22/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/22/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/23/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/23/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/24/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/24/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/25/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/25/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/26/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/26/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/27/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/27/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/28/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/28/avatar.svg"></a>
-<a href="https://opencollective.com/adnauseam/backer/29/website" target="_blank"><img src="https://opencollective.com/adnauseam/backer/29/avatar.svg"></a>
-
+[![open-collective](https://opencollective.com/adnauseam/contributors.svg?width=890)](https://github.com/dhowe/adnauseam/graphs/contributors)
 
 ##### And special thanks to our open-source support contributors!
 

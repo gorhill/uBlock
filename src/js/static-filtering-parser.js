@@ -28,13 +28,13 @@
 
     Roughly, this is how things work: each input string (passed to analyze())
     is decomposed into a minimal set of distinct slices. Each slice is a
-    triplet of integers consisiting of:
+    triplet of integers consisting of:
 
     - a bit vector describing the characters inside the slice
     - an index of where in the origin string the slice starts
     - a length for the number of character in the slice
 
-    Slice descriptor are all flatly stored in an array of integer so as to
+    Slice descriptors are all flatly stored in an array of integers so as to
     avoid the need for a secondary data structure. Example:
 
     raw string: toto.com
@@ -60,7 +60,7 @@
     The array used to hold the slices is reused across string analysis, in
     order to eliminate memory churning.
 
-    Above the slices, there are various span objects used to describe
+    Beyond the slices, there are various span objects used to describe
     consecutive sequences of slices and which are filled in as a result
     of parsing.
 
@@ -102,13 +102,21 @@ const Parser = class {
         this.netOptionsIterator = new NetOptionsIterator(this);
         this.extOptionsIterator = new ExtOptionsIterator(this);
         this.maxTokenLength = Number.MAX_SAFE_INTEGER;
-        this.reIsLocalhostRedirect = /(?:0\.0\.0\.0|(?:broadcast|local)host|local|ip6-\w+)\b/;
+        this.expertMode = options.expertMode !== false;
+        this.reIsLocalhostRedirect = /(?:0\.0\.0\.0|(?:broadcast|local)host|local|ip6-\w+)(?:[^\w.-]|$)/;
         this.reHostname = /^[^\x00-\x24\x26-\x29\x2B\x2C\x2F\x3A-\x40\x5B-\x5E\x60\x7B-\x7F]+/;
         this.reHostsSink = /^[\w-.:\[\]]+$/;
         this.reHostsSource = /^[^\x00-\x24\x26-\x29\x2B\x2C\x2F\x3A-\x40\x5B-\x5E\x60\x7B-\x7F]+$/;
         this.reUnicodeChar = /[^\x00-\x7F]/;
         this.reUnicodeChars = /[^\x00-\x7F]/g;
+        this.reHostnameLabel = /[^.]+/g;
+        this.rePlainHostname = /^(?:[\w-]+\.)*[a-z]+$/;
+        this.rePlainEntity = /^(?:[\w-]+\.)+\*$/;
+        this.reEntity = /^[^*]+\.\*$/;
         this.punycoder = new URL(self.location);
+        // TODO: mind maxTokenLength
+        this.reGoodRegexToken
+            = /[^\x01%0-9A-Za-z][%0-9A-Za-z]{7,}|[^\x01%0-9A-Za-z][%0-9A-Za-z]{1,6}[^\x01%0-9A-Za-z]/;
         this.selectorCompiler = new this.SelectorCompiler(this);
         // TODO: reuse for network filtering analysis
         this.result = {
@@ -313,7 +321,7 @@ const Parser = class {
     analyzeExtExtra() {
         if ( this.hasOptions() ) {
             const { i, len } = this.optionsSpan;
-            this.analyzeDomainList(i, i + len, BITComma, 0b11);
+            this.analyzeDomainList(i, i + len, BITComma, 0b1110);
         }
         if ( hasBits(this.flavorBits, BITFlavorUnsupported) ) {
             this.markSpan(this.patternSpan, BITError);
@@ -341,6 +349,7 @@ const Parser = class {
     //     patternRightAnchorSpan: first slice to right-hand pattern anchor
     //     optionsAnchorSpan: first slice to options anchor
     //     optionsSpan: first slice to options
+    //     commentSpan: first slice to trailing comment
     analyzeNet() {
         let islice = this.leftSpaceSpan.len;
 
@@ -364,7 +373,7 @@ const Parser = class {
         }
 
         // Assume no options
-        this.optionsAnchorSpan.i = this.optionsSpan.i =  this.commentSpan.i;
+        this.optionsAnchorSpan.i = this.optionsSpan.i = this.commentSpan.i;
 
         // Assume all is part of pattern
         this.patternSpan.i = islice;
@@ -383,14 +392,24 @@ const Parser = class {
         }
 
         // If the pattern is not a regex, there might be options.
+        //
+        // The character `$` is deemed to be an option anchor if and only if
+        // all the following conditions are fulfilled:
+        // - `$` is not the last character in the filter
+        // - The character following `$` is either comma, alphanumeric, or `~`.
         if ( patternIsRegex === false ) {
             let optionsBits = 0;
-            let i = this.optionsAnchorSpan.i;
+            let i = this.optionsAnchorSpan.i - 3;
             for (;;) {
                 i -= 3;
                 if ( i < islice ) { break; }
                 const bits = this.slices[i];
-                if ( hasBits(bits, BITDollar) ) { break; }
+                if (
+                    hasBits(bits, BITDollar) &&
+                    hasBits(this.slices[i+3], BITAlphaNum | BITComma | BITTilde)
+                ) {
+                    break;
+                }
                 optionsBits |= bits;
             }
             if ( i >= islice ) {
@@ -401,7 +420,7 @@ const Parser = class {
                     if ( this.findFirstOdd(0, BITHostname | BITComma | BITAsterisk) === i ) {
                         this.flavorBits |= BITFlavorError;
                         if ( this.interactive ) {
-                            this.markSlices(i, i+3, BITError);
+                            this.errorSlices(i, i+3);
                         }
                     } else {
                         this.splitSlot(i, len - 1);
@@ -623,22 +642,17 @@ const Parser = class {
     }
 
     analyzeNetExtra() {
-        // Validate regex
         if ( this.patternIsRegex() ) {
-            try {
-                void new RegExp(this.getNetPattern());
-            }
-            catch (ex) {
+            if ( this.regexUtils.isValid(this.getNetPattern()) === false ) {
                 this.markSpan(this.patternSpan, BITError);
             }
         } else if (
             this.patternIsDubious() === false &&
             this.toASCII(true) === false
         ) {
-            this.markSlices(
+            this.errorSlices(
                 this.patternLeftAnchorSpan.i,
-                this.optionsAnchorSpan.i,
-                BITError
+                this.optionsAnchorSpan.i
             );
         }
         this.netOptionsIterator.init();
@@ -649,85 +663,81 @@ const Parser = class {
         let beg = from;
         // Dangling leading separator?
         if ( hasBits(this.slices[beg], bitSeparator) ) {
-            this.markSlices(beg, beg + 3, BITError);
+            this.errorSlices(beg, beg + 3);
             beg += 3;
         }
         while ( beg < to ) {
             let end = this.skipUntil(beg, to, bitSeparator);
             if ( end < to && this.slices[end+2] !== 1 ) {
-                this.markSlices(end, end + 3, BITError);
+                this.errorSlices(end, end + 3);
             }
             if ( this.analyzeDomain(beg, end, optionBits) === false ) {
-                this.markSlices(beg, end, BITError);
+                this.errorSlices(beg, end);
             }
             beg = end + 3;
         }
         // Dangling trailing separator?
         if ( hasBits(this.slices[to-3], bitSeparator) ) {
-            this.markSlices(to - 3, to, BITError);
+            this.errorSlices(to - 3, to);
         }
     }
 
-    // bits:
-    // 0: can use entity-based hostnames
-    // 1: can use single wildcard
-    analyzeDomain(from, to, optionBits) {
-        const { slices } = this;
-        let len = to - from;
-        if ( len === 0 ) { return false; }
-        const not = hasBits(slices[from], BITTilde);
-        if ( not ) {
-            if ( (optionBits & 0b01) === 0 || slices[from+2] > 1 ) { return false; }
-            from += 3;
-            len -= 3;
+    analyzeDomain(from, to, modeBits) {
+        if ( to === from ) { return false; }
+        return this.normalizeHostnameValue(
+            this.strFromSlices(from, to - 3),
+            modeBits
+        ) !== undefined;
+    }
+
+    // Ultimately, let the browser API do the hostname normalization, after
+    // making some other trivial checks.
+    //
+    // modeBits:
+    //   0: can use wildcard at any position
+    //   1: can use entity-based hostnames
+    //   2: can use single wildcard
+    //   3: can be negated
+    normalizeHostnameValue(s, modeBits = 0b0000) {
+        const not = s.charCodeAt(0) === 0x7E /* '~' */;
+        if ( not && (modeBits & 0b1000) === 0 ) { return; }
+        let hn = not === false ? s : s.slice(1);
+        if ( this.rePlainHostname.test(hn) ) { return s; }
+        const hasWildcard = hn.lastIndexOf('*') !== -1;
+        if ( hasWildcard ) {
+            if ( modeBits === 0 ) { return; }
+            if ( hn.length === 1 ) {
+                if ( not || (modeBits & 0b0100) === 0 ) { return; }
+                return s;
+            }
+            if ( (modeBits & 0b0010) !== 0 ) {
+                if ( this.rePlainEntity.test(hn) ) { return s; }
+                if ( this.reEntity.test(hn) === false ) { return; }
+            } else if ( (modeBits & 0b0001) === 0 ) {
+                return;
+            }
+            hn = hn.replace(/\*/g, '__asterisk__');
         }
-        if ( len === 0 ) { return false; }
-        // One slice only, check for single asterisk
+        this.punycoder.hostname = '_';
+        try {
+            this.punycoder.hostname = hn;
+            hn = this.punycoder.hostname;
+        } catch (_) {
+            return;
+        }
+        if ( hn === '_' || hn === '' ) { return; }
+        if ( hasWildcard ) {
+            hn = this.punycoder.hostname.replace(/__asterisk__/g, '*');
+        }
         if (
-            len === 3 &&
-            not === false &&
-            (optionBits & 0b10) !== 0 &&
-            hasBits(slices[from], BITAsterisk)
+            (modeBits & 0b0001) === 0 && (
+                hn.charCodeAt(0) === 0x2E /* '.' */ ||
+                hn.charCodeAt(hn.length - 1) === 0x2E /* '.' */
+            )
         ) {
-            return slices[from+2] === 1;
+            return;
         }
-        // First slice must be regex-equivalent of `\w`
-        if ( hasNoBits(slices[from], BITRegexWord | BITUnicode) ) { return false; }
-        // Last slice
-        if ( len > 3 ) {
-            const last = to - 3;
-            if ( hasBits(slices[last], BITAsterisk) ) {
-                if (
-                    (optionBits & 0b01) === 0 ||
-                    len < 9 ||
-                    slices[last+2] > 1 ||
-                    hasNoBits(slices[last-3], BITPeriod)
-                ) {
-                    return false;
-                }
-            } else if ( hasNoBits(slices[to-3], BITAlphaNum | BITUnicode) ) {
-                return false;
-            }
-        }
-        // Middle slices
-        if ( len > 6 ) {
-            for ( let i = from + 3; i < to - 3; i += 3 ) {
-                const bits = slices[i];
-                if ( hasNoBits(bits, BITHostname) ) { return false; }
-                if ( hasBits(bits, BITPeriod) && slices[i+2] > 1 ) {
-                    return false;
-                }
-                if (
-                    hasBits(bits, BITDash) && (
-                        hasNoBits(slices[i-3], BITRegexWord | BITUnicode) ||
-                        hasNoBits(slices[i+3], BITRegexWord | BITUnicode)
-                    )
-                ) {
-                    return false;
-                }
-            }
-        }
-        return true;
+        return not ? '~' + hn : hn;
     }
 
     slice(raw) {
@@ -827,6 +837,10 @@ const Parser = class {
         }
     }
 
+    errorSlices(beg, end) {
+        this.markSlices(beg, end, BITError);
+    }
+
     findFirstMatch(from, bits) {
         let to = from;
         while ( to < this.sliceWritePtr ) {
@@ -863,6 +877,7 @@ const Parser = class {
         return i;
     }
 
+    // Important: the from-to indices are inclusive.
     strFromSlices(from, to) {
         return this.raw.slice(
             this.slices[from+1],
@@ -943,7 +958,7 @@ const Parser = class {
                 ? this.optionsAnchorSpan.i
                 : this.optionsSpan.i;
         }
-        this.markSlices(l, r, BITError);
+        this.errorSlices(l, r);
         return true;
     }
 
@@ -985,6 +1000,14 @@ const Parser = class {
 
     patternIsRegex() {
         return (this.flavorBits & BITFlavorNetRegex) !== 0;
+    }
+
+    patternIsTokenizable() {
+        // TODO: not necessarily true, this needs more work.
+        if ( this.patternIsRegex === false ) { return true; }
+        return this.reGoodRegexToken.test(
+            this.regexUtils.toTokenizableStr(this.getNetPattern())
+        );
     }
 
     patternHasWildcard() {
@@ -1081,6 +1104,8 @@ const Parser = class {
     //   Be ready to deal with non-punycode-able Unicode characters.
     // https://github.com/uBlockOrigin/uBlock-issues/issues/772
     //   Encode Unicode characters beyond the hostname part.
+    // Prepend with '*' character to prevent the browser API from refusing to
+    // punycode -- this occurs when the extracted label starts with a dash.
     toASCII(dryrun = false) {
         if ( this.patternHasUnicode() === false ) { return true; }
         const { i, len } = this.patternSpan;
@@ -1090,16 +1115,14 @@ const Parser = class {
         // Punycode hostname part of the pattern.
         if ( patternIsRegex === false ) {
             const match = this.reHostname.exec(pattern);
-            if ( match === null ) { return true; }
-            try {
-                this.punycoder.hostname = match[0].replace(/\*/g, '__asterisk__');
-            } catch(ex) {
-                return false;
+            if ( match !== null ) {
+                const hn = match[0].replace(this.reHostnameLabel, s => {
+                    if ( this.reUnicodeChar.test(s) === false ) { return s; }
+                    if ( s.charCodeAt(0) === 0x2D /* '-' */ ) { s = '*' + s; }
+                    return this.normalizeHostnameValue(s, 0b0001) || s;
+                });
+                pattern = hn + pattern.slice(match.index + match[0].length);
             }
-            const hn = this.punycoder.hostname;
-            if ( hn === '' ) { return false; }
-            const punycoded = hn.replace(/__asterisk__/g, '*');
-            pattern = punycoded + pattern.slice(match.index + match[0].length);
         }
         // Percent-encode remaining Unicode characters.
         if ( this.reUnicodeChar.test(pattern) ) {
@@ -1145,6 +1168,78 @@ const Parser = class {
             BITFlavorError | BITFlavorUnsupported | BITFlavorIgnore
         );
     }
+
+    static parseRedirectValue(arg) {
+        let token = arg.trim();
+        let priority = 0;
+        const asDataURI = token.charCodeAt(0) === 0x25 /* '%' */;
+        if ( asDataURI ) { token = token.slice(1); }
+        const match = /:-?\d+$/.exec(token);
+        if ( match !== null ) {
+            priority = parseInt(token.slice(match.index + 1), 10);
+            token = token.slice(0, match.index);
+        }
+        return { token, priority, asDataURI };
+    }
+
+    static parseQueryPruneValue(arg) {
+        let s = arg.trim();
+        if ( s === '' ) { return { all: true }; }
+        const out = { };
+        out.not = s.charCodeAt(0) === 0x7E /* '~' */;
+        if ( out.not ) {
+            s = s.slice(1);
+        }
+        const match = /^\/(.+)\/(i)?$/.exec(s);
+        if ( match !== null ) {
+            try {
+                out.re = new RegExp(match[1], match[2] || '');
+            }
+            catch(ex) {
+                out.bad = true;
+            }
+            return out;
+        }
+        // TODO: remove once no longer used in filter lists
+        if ( s.startsWith('|') ) {
+            try {
+                out.re = new RegExp('^' + s.slice(1), 'i');
+            } catch(ex) {
+                out.bad = true;
+            }
+            return out;
+        }
+        // Multiple values not supported (because very inefficient)
+        if ( s.includes('|') ) {
+            out.bad = true;
+            return out;
+        }
+        out.name = s;
+        return out;
+    }
+
+    static parseHeaderValue(arg) {
+        let s = arg.trim();
+        const out = { };
+        let pos = s.indexOf(':');
+        if ( pos === -1 ) { pos = s.length; }
+        out.name = s.slice(0, pos);
+        out.bad = out.name === '';
+        s = s.slice(pos + 1);
+        out.not = s.charCodeAt(0) === 0x7E /* '~' */;
+        if ( out.not ) { s = s.slice(1); }
+        out.value = s;
+        const match = /^\/(.+)\/(i)?$/.exec(s);
+        if ( match !== null ) {
+            try {
+                out.re = new RegExp(match[1], match[2] || '');
+            }
+            catch(ex) {
+                out.bad = true;
+            }
+        }
+        return out;
+    }
 };
 
 /******************************************************************************/
@@ -1177,7 +1272,7 @@ Parser.prototype.SelectorCompiler = class {
         ]);
         this.reSimpleSelector = /^[#.][A-Za-z_][\w-]*$/;
         this.div = document.createElement('div');
-        this.rePseudoClass = /:(?::?after|:?before|:-?[a-z][a-z-]*[a-z])$/;
+        this.rePseudoElement = /:(?::?after|:?before|:-?[a-z][a-z-]*[a-z])$/;
         this.reProceduralOperator = new RegExp([
             '^(?:',
                 Array.from(parser.proceduralOperatorTokens.keys()).join('|'),
@@ -1215,6 +1310,7 @@ Parser.prototype.SelectorCompiler = class {
         if ( hasBits(this.parser.flavorBits, BITFlavorExtStyle) ) {
             raw = this.translateAdguardCSSInjectionFilter(raw);
             if ( raw === '' ) { return false; }
+            this.parser.flavorBits &= ~BITFlavorExtStyle;
             out.raw = raw;
         }
 
@@ -1264,7 +1360,7 @@ Parser.prototype.SelectorCompiler = class {
     }
 
     translateAdguardCSSInjectionFilter(suffix) {
-        const matches = /^([^{]+)\{([^}]+)\}\s*$/.exec(suffix);
+        const matches = /^(.*)\s*\{([^}]+)\}\s*$/.exec(suffix);
         if ( matches === null ) { return ''; }
         const selector = matches[1].trim();
         const style = matches[2].trim();
@@ -1296,7 +1392,7 @@ Parser.prototype.SelectorCompiler = class {
     //   is fixed.
     cssSelectorType(s) {
         if ( this.reSimpleSelector.test(s) ) { return 1; }
-        const pos = this.cssPseudoSelector(s);
+        const pos = this.cssPseudoElement(s);
         if ( pos !== -1 ) {
             return this.cssSelectorType(s.slice(0, pos)) === 1 ? 3 : 0;
         }
@@ -1308,9 +1404,9 @@ Parser.prototype.SelectorCompiler = class {
         return 1;
     }
 
-    cssPseudoSelector(s) {
+    cssPseudoElement(s) {
         if ( s.lastIndexOf(':') === -1 ) { return -1; }
-        const match = this.rePseudoClass.exec(s);
+        const match = this.rePseudoElement.exec(s);
         return match !== null ? match.index : -1;
     }
 
@@ -1371,9 +1467,9 @@ Parser.prototype.SelectorCompiler = class {
         return { name: name, value: regexDetails };
     }
 
+    // https://github.com/AdguardTeam/ExtendedCss/issues/31#issuecomment-302391277
+    //   Prepend `:scope ` if needed.
     compileConditionalSelector(s) {
-        // https://github.com/AdguardTeam/ExtendedCss/issues/31#issuecomment-302391277
-        //   Prepend `:scope ` if needed.
         if ( this.reNeedScope.test(s) ) {
             s = `:scope ${s}`;
         }
@@ -1387,11 +1483,11 @@ Parser.prototype.SelectorCompiler = class {
         return n;
     }
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/341#issuecomment-447603588
+    //   Reject instances of :not() filters for which the argument is
+    //   a valid CSS selector, otherwise we would be adversely
+    //   changing the behavior of CSS4's :not().
     compileNotSelector(s) {
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/341#issuecomment-447603588
-        //   Reject instances of :not() filters for which the argument is
-        //   a valid CSS selector, otherwise we would be adversely
-        //   changing the behavior of CSS4's :not().
         if ( this.cssSelectorType(s) === 0 ) {
             return this.compileConditionalSelector(s);
         }
@@ -1407,8 +1503,10 @@ Parser.prototype.SelectorCompiler = class {
         if ( s === '' ) { return s; }
     }
 
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/382#issuecomment-703725346
+    //   Prepend `*` only when it can be deemed implicit.
     compileSpathExpression(s) {
-        if ( this.cssSelectorType('*' + s) === 1 ) {
+        if ( this.cssSelectorType(/^\s*[+:>~]/.test(s) ? '*' + s : s) === 1 ) {
             return s;
         }
     }
@@ -1450,13 +1548,10 @@ Parser.prototype.SelectorCompiler = class {
     //   The normalized string version is what is reported in the logger,
     //   by design.
     decompileProcedural(compiled) {
-        const tasks = compiled.tasks;
-        if ( Array.isArray(tasks) === false ) {
-            return compiled.selector;
-        }
+        const tasks = compiled.tasks || [];
         const raw = [ compiled.selector ];
-        let value;
         for ( const task of tasks ) {
+            let value;
             switch ( task[0] ) {
             case ':has':
             case ':if':
@@ -1494,14 +1589,16 @@ Parser.prototype.SelectorCompiler = class {
                 raw.push(task[1]);
                 break;
             case ':min-text-length':
-            case ':remove':
-            case ':style':
             case ':upward':
             case ':watch-attr':
             case ':xpath':
                 raw.push(`${task[0]}(${task[1]})`);
                 break;
             }
+        }
+        if ( Array.isArray(compiled.action) ) {
+            const [ op, arg ] = compiled.action;
+            raw.push(`${op}(${arg})`);
         }
         return raw.join('');
     }
@@ -1578,10 +1675,12 @@ Parser.prototype.SelectorCompiler = class {
                 tasks.push([ ':spath', spath ]);
             }
             if ( action !== undefined ) { return; }
-            tasks.push([ operator, args ]);
+            const task = [ operator, args ];
             if ( this.actionOperators.has(operator) ) {
                 if ( root === false ) { return; }
-                action = operator.slice(1);
+                action = task;
+            } else {
+                tasks.push(task);
             }
             opPrefixBeg = i;
             if ( i === n ) { break; }
@@ -1589,7 +1688,7 @@ Parser.prototype.SelectorCompiler = class {
 
         // No task found: then we have a CSS selector.
         // At least one task found: nothing should be left to parse.
-        if ( tasks.length === 0 ) {
+        if ( tasks.length === 0 && action === undefined ) {
             prefix = raw;
         } else if ( opPrefixBeg < n ) {
             if ( action !== undefined ) { return; }
@@ -1626,21 +1725,17 @@ Parser.prototype.SelectorCompiler = class {
         }
 
         // Expose action to take in root descriptor.
-        //
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/961
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/382
-        //   For the time being, `style` action can't be used in a
-        //   procedural selector.
         if ( action !== undefined ) {
-            if ( tasks.length > 1 && action === 'style' ) { return; }
             out.action = action;
         }
 
-        // Pseudo-selectors are valid only when used in a root task list.
+        // Pseudo elements are valid only when used in a root task list AND
+        // only when there are no procedural operators: pseudo elements can't
+        // be querySelectorAll-ed.
         if ( prefix !== '' ) {
-            const pos = this.cssPseudoSelector(prefix);
+            const pos = this.cssPseudoElement(prefix);
             if ( pos !== -1 ) {
-                if ( root === false ) { return; }
+                if ( root === false || tasks.length !== 0 ) { return; }
                 out.pseudo = pos;
             }
         }
@@ -1757,7 +1852,6 @@ const BITError          = 1 << 31;
 
 const BITAll            = 0xFFFFFFFF;
 const BITAlphaNum       = BITNum | BITAlpha;
-const BITRegexWord      = BITAlphaNum | BITUnderscore;
 const BITHostname       = BITNum | BITAlpha | BITUppercase | BITDash | BITPeriod | BITUnderscore | BITUnicode;
 const BITPatternToken   = BITNum | BITAlpha | BITPercent;
 const BITLineComment    = BITExclamation | BITHash | BITSquareBracket;
@@ -1893,53 +1987,69 @@ const BITFlavorNetRightAnchor    = BITFlavorNetRightURLAnchor | BITFlavorNetRigh
 const BITFlavorNetHnAnchor       = BITFlavorNetLeftHnAnchor | BITFlavorNetRightHnAnchor;
 const BITFlavorNetAnchor         = BITFlavorNetLeftAnchor | BITFlavorNetRightAnchor;
 
+const OPTTokenMask               = 0x000000ff;
 const OPTTokenInvalid            =  0;
 const OPTToken1p                 =  1;
-const OPTToken3p                 =  2;
-const OPTTokenAll                =  3;
-const OPTTokenBadfilter          =  4;
-const OPTTokenCname              =  5;
-const OPTTokenCsp                =  6;
-const OPTTokenCss                =  7;
-const OPTTokenDenyAllow          =  8;
-const OPTTokenDoc                =  9;
-const OPTTokenDomain             = 10;
-const OPTTokenEhide              = 11;
-const OPTTokenEmpty              = 12;
-const OPTTokenFont               = 13;
-const OPTTokenFrame              = 14;
-const OPTTokenGenericblock       = 15;
-const OPTTokenGhide              = 16;
-const OPTTokenImage              = 17;
-const OPTTokenImportant          = 18;
-const OPTTokenInlineFont         = 19;
-const OPTTokenInlineScript       = 20;
-const OPTTokenMedia              = 21;
-const OPTTokenMp4                = 22;
-const OPTTokenObject             = 23;
-const OPTTokenOther              = 24;
-const OPTTokenPing               = 25;
-const OPTTokenPopunder           = 26;
-const OPTTokenPopup              = 27;
-const OPTTokenRedirect           = 28;
-const OPTTokenRedirectRule       = 29;
-const OPTTokenScript             = 30;
-const OPTTokenShide              = 31;
-const OPTTokenXhr                = 32;
-const OPTTokenWebrtc             = 33;
-const OPTTokenWebsocket          = 34;
+const OPTToken1pStrict           =  2;
+const OPTToken3p                 =  3;
+const OPTToken3pStrict           =  4;
+const OPTTokenAll                =  5;
+const OPTTokenBadfilter          =  6;
+const OPTTokenCname              =  7;
+const OPTTokenCsp                =  8;
+const OPTTokenCss                =  9;
+const OPTTokenDenyAllow          = 10;
+const OPTTokenDoc                = 11;
+const OPTTokenDomain             = 12;
+const OPTTokenEhide              = 13;
+const OPTTokenEmpty              = 14;
+const OPTTokenFont               = 15;
+const OPTTokenFrame              = 16;
+const OPTTokenGenericblock       = 17;
+const OPTTokenGhide              = 18;
+const OPTTokenHeader             = 19;
+const OPTTokenImage              = 20;
+const OPTTokenImportant          = 21;
+const OPTTokenInlineFont         = 22;
+const OPTTokenInlineScript       = 23;
+const OPTTokenMatchCase          = 24;
+const OPTTokenMedia              = 25;
+const OPTTokenMp4                = 26;
+const OPTTokenNoop               = 27;
+const OPTTokenObject             = 28;
+const OPTTokenOther              = 29;
+const OPTTokenPing               = 30;
+const OPTTokenPopunder           = 31;
+const OPTTokenPopup              = 32;
+const OPTTokenRedirect           = 33;
+const OPTTokenRedirectRule       = 34;
+const OPTTokenQueryprune         = 35;
+const OPTTokenScript             = 36;
+const OPTTokenShide              = 37;
+const OPTTokenXhr                = 38;
+const OPTTokenWebrtc             = 39;
+const OPTTokenWebsocket          = 40;
+const OPTTokenCount              = 41;
 
+//const OPTPerOptionMask           = 0x0000ff00;
 const OPTCanNegate               = 1 <<  8;
 const OPTBlockOnly               = 1 <<  9;
 const OPTAllowOnly               = 1 << 10;
 const OPTMustAssign              = 1 << 11;
 const OPTAllowMayAssign          = 1 << 12;
-const OPTDomainList              = 1 << 13;
-const OPTType                    = 1 << 14;
-const OPTNetworkType             = 1 << 15;
-const OPTRedirectType            = 1 << 16;
-const OPTRedirectableType        = 1 << 17;
-const OPTNotSupported            = 1 << 18;
+const OPTMayAssign               = 1 << 13;
+const OPTDomainList              = 1 << 14;
+
+//const OPTGlobalMask              = 0x0fff0000;
+const OPTNetworkType             = 1 << 16;
+const OPTNonNetworkType          = 1 << 17;
+const OPTModifiableType          = 1 << 18;
+const OPTModifierType            = 1 << 19;
+const OPTRedirectableType        = 1 << 20;
+const OPTNonRedirectableType     = 1 << 21;
+const OPTNonCspableType          = 1 << 22;
+const OPTNeedDomainOpt           = 1 << 23;
+const OPTNotSupported            = 1 << 24;
 
 /******************************************************************************/
 
@@ -1960,9 +2070,11 @@ Parser.prototype.BITHostname = BITHostname;
 Parser.prototype.BITPeriod = BITPeriod;
 Parser.prototype.BITDash = BITDash;
 Parser.prototype.BITHash = BITHash;
+Parser.prototype.BITNum = BITNum;
 Parser.prototype.BITEqual = BITEqual;
 Parser.prototype.BITQuestion = BITQuestion;
 Parser.prototype.BITPercent = BITPercent;
+Parser.prototype.BITAlpha = BITAlpha;
 Parser.prototype.BITTilde = BITTilde;
 Parser.prototype.BITUnicode = BITUnicode;
 Parser.prototype.BITIgnore = BITIgnore;
@@ -1979,7 +2091,10 @@ Parser.prototype.BITFlavorIgnore = BITFlavorIgnore;
 Parser.prototype.BITFlavorUnsupported = BITFlavorUnsupported;
 Parser.prototype.BITFlavorError = BITFlavorError;
 
-Parser.prototype.OPTTokenInvalid = OPTTokenInvalid;
+Parser.prototype.OPTToken1p = OPTToken1p;
+Parser.prototype.OPTToken1pStrict = OPTToken1pStrict;
+Parser.prototype.OPTToken3p = OPTToken3p;
+Parser.prototype.OPTToken3pStrict = OPTToken3pStrict;
 Parser.prototype.OPTTokenAll = OPTTokenAll;
 Parser.prototype.OPTTokenBadfilter = OPTTokenBadfilter;
 Parser.prototype.OPTTokenCname = OPTTokenCname;
@@ -1989,28 +2104,31 @@ Parser.prototype.OPTTokenDoc = OPTTokenDoc;
 Parser.prototype.OPTTokenDomain = OPTTokenDomain;
 Parser.prototype.OPTTokenEhide = OPTTokenEhide;
 Parser.prototype.OPTTokenEmpty = OPTTokenEmpty;
-Parser.prototype.OPTToken1p = OPTToken1p;
 Parser.prototype.OPTTokenFont = OPTTokenFont;
 Parser.prototype.OPTTokenGenericblock = OPTTokenGenericblock;
 Parser.prototype.OPTTokenGhide = OPTTokenGhide;
+Parser.prototype.OPTTokenHeader = OPTTokenHeader;
 Parser.prototype.OPTTokenImage = OPTTokenImage;
 Parser.prototype.OPTTokenImportant = OPTTokenImportant;
 Parser.prototype.OPTTokenInlineFont = OPTTokenInlineFont;
 Parser.prototype.OPTTokenInlineScript = OPTTokenInlineScript;
+Parser.prototype.OPTTokenInvalid = OPTTokenInvalid;
+Parser.prototype.OPTTokenMatchCase = OPTTokenMatchCase;
 Parser.prototype.OPTTokenMedia = OPTTokenMedia;
 Parser.prototype.OPTTokenMp4 = OPTTokenMp4;
+Parser.prototype.OPTTokenNoop = OPTTokenNoop;
 Parser.prototype.OPTTokenObject = OPTTokenObject;
 Parser.prototype.OPTTokenOther = OPTTokenOther;
 Parser.prototype.OPTTokenPing = OPTTokenPing;
 Parser.prototype.OPTTokenPopunder = OPTTokenPopunder;
 Parser.prototype.OPTTokenPopup = OPTTokenPopup;
+Parser.prototype.OPTTokenQueryprune = OPTTokenQueryprune;
 Parser.prototype.OPTTokenRedirect = OPTTokenRedirect;
 Parser.prototype.OPTTokenRedirectRule = OPTTokenRedirectRule;
 Parser.prototype.OPTTokenScript = OPTTokenScript;
 Parser.prototype.OPTTokenShide = OPTTokenShide;
 Parser.prototype.OPTTokenCss = OPTTokenCss;
 Parser.prototype.OPTTokenFrame = OPTTokenFrame;
-Parser.prototype.OPTToken3p = OPTToken3p;
 Parser.prototype.OPTTokenXhr = OPTTokenXhr;
 Parser.prototype.OPTTokenWebrtc = OPTTokenWebrtc;
 Parser.prototype.OPTTokenWebsocket = OPTTokenWebsocket;
@@ -2021,63 +2139,169 @@ Parser.prototype.OPTAllowOnly = OPTAllowOnly;
 Parser.prototype.OPTMustAssign = OPTMustAssign;
 Parser.prototype.OPTAllowMayAssign = OPTAllowMayAssign;
 Parser.prototype.OPTDomainList = OPTDomainList;
-Parser.prototype.OPTType = OPTType;
 Parser.prototype.OPTNetworkType = OPTNetworkType;
-Parser.prototype.OPTRedirectType = OPTRedirectType;
-Parser.prototype.OPTRedirectableType = OPTRedirectableType;
+Parser.prototype.OPTModifiableType = OPTModifiableType;
 Parser.prototype.OPTNotSupported = OPTNotSupported;
 
 /******************************************************************************/
 
-const netOptionTokens = new Map([
+const netOptionTokenDescriptors = new Map([
     [ '1p', OPTToken1p | OPTCanNegate ],
         [ 'first-party', OPTToken1p | OPTCanNegate ],
+    [ 'strict1p', OPTToken1pStrict ],
     [ '3p', OPTToken3p | OPTCanNegate ],
         [ 'third-party', OPTToken3p | OPTCanNegate ],
-    [ 'all', OPTTokenAll | OPTType | OPTNetworkType ],
+    [ 'strict3p', OPTToken3pStrict ],
+    [ 'all', OPTTokenAll | OPTNetworkType | OPTNonCspableType ],
     [ 'badfilter', OPTTokenBadfilter ],
-    [ 'cname', OPTTokenCname | OPTAllowOnly | OPTType ],
-    [ 'csp', OPTTokenCsp | OPTMustAssign | OPTAllowMayAssign ],
-    [ 'css', OPTTokenCss | OPTCanNegate | OPTType | OPTNetworkType | OPTRedirectableType ],
-        [ 'stylesheet', OPTTokenCss | OPTCanNegate | OPTType | OPTNetworkType | OPTRedirectableType ],
-    [ 'denyallow', OPTTokenDenyAllow | OPTMustAssign | OPTDomainList ],
-    [ 'doc', OPTTokenDoc | OPTType | OPTNetworkType | OPTCanNegate ],
-        [ 'document', OPTTokenDoc | OPTType | OPTNetworkType | OPTCanNegate ],
+    [ 'cname', OPTTokenCname | OPTAllowOnly | OPTModifierType ],
+    [ 'csp', OPTTokenCsp | OPTMustAssign | OPTAllowMayAssign | OPTModifierType ],
+    [ 'css', OPTTokenCss | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
+        [ 'stylesheet', OPTTokenCss | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
+    [ 'denyallow', OPTTokenDenyAllow | OPTMustAssign | OPTDomainList | OPTNeedDomainOpt | OPTNonCspableType ],
+    [ 'doc', OPTTokenDoc | OPTNetworkType | OPTCanNegate | OPTModifiableType | OPTRedirectableType ],
+        [ 'document', OPTTokenDoc | OPTNetworkType | OPTCanNegate | OPTModifiableType | OPTRedirectableType ],
     [ 'domain', OPTTokenDomain | OPTMustAssign | OPTDomainList ],
-    [ 'ehide', OPTTokenEhide | OPTType ],
-        [ 'elemhide', OPTTokenEhide | OPTType ],
-    [ 'empty', OPTTokenEmpty | OPTBlockOnly | OPTRedirectType ],
-    [ 'frame', OPTTokenFrame | OPTCanNegate | OPTType | OPTNetworkType | OPTRedirectableType ],
-        [ 'subdocument', OPTTokenFrame | OPTCanNegate | OPTType | OPTNetworkType | OPTRedirectableType ],
-    [ 'font', OPTTokenFont | OPTCanNegate | OPTType | OPTNetworkType | OPTRedirectableType ],
+    [ 'ehide', OPTTokenEhide | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
+        [ 'elemhide', OPTTokenEhide | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
+    [ 'empty', OPTTokenEmpty | OPTBlockOnly | OPTModifierType ],
+    [ 'frame', OPTTokenFrame | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType ],
+        [ 'subdocument', OPTTokenFrame | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType ],
+    [ 'font', OPTTokenFont | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTNonCspableType ],
     [ 'genericblock', OPTTokenGenericblock | OPTNotSupported ],
-    [ 'ghide', OPTTokenGhide | OPTType ],
-        [ 'generichide', OPTTokenGhide | OPTType ],
-    [ 'image', OPTTokenImage | OPTCanNegate | OPTType | OPTNetworkType | OPTRedirectableType ],
+    [ 'ghide', OPTTokenGhide | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
+        [ 'generichide', OPTTokenGhide | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
+    [ 'header', OPTTokenHeader | OPTMustAssign | OPTAllowMayAssign | OPTNonCspableType | OPTNonRedirectableType ],
+    [ 'image', OPTTokenImage | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
     [ 'important', OPTTokenImportant | OPTBlockOnly ],
-    [ 'inline-font', OPTTokenInlineFont | OPTType | OPTCanNegate ],
-    [ 'inline-script', OPTTokenInlineScript | OPTType | OPTCanNegate ],
-    [ 'media', OPTTokenMedia | OPTCanNegate | OPTType | OPTNetworkType | OPTRedirectableType ],
-    [ 'mp4', OPTTokenMp4 | OPTType | OPTNetworkType | OPTBlockOnly | OPTRedirectType | OPTRedirectableType ],
-    [ 'object', OPTTokenObject | OPTCanNegate | OPTType | OPTNetworkType | OPTRedirectableType ],
-        [ 'object-subrequest', OPTTokenObject | OPTCanNegate | OPTType | OPTNetworkType ],
-    [ 'other', OPTTokenOther | OPTCanNegate | OPTType | OPTNetworkType | OPTRedirectableType ],
-    [ 'ping', OPTTokenPing | OPTCanNegate | OPTType | OPTNetworkType ],
-        [ 'beacon', OPTTokenPing | OPTCanNegate | OPTType | OPTNetworkType ],
-    [ 'popunder', OPTTokenPopunder | OPTType ],
-    [ 'popup', OPTTokenPopup | OPTType | OPTCanNegate ],
-    [ 'redirect', OPTTokenRedirect | OPTMustAssign | OPTBlockOnly | OPTRedirectType ],
-    [ 'redirect-rule', OPTTokenRedirectRule | OPTMustAssign | OPTBlockOnly | OPTRedirectType ],
-    [ 'script', OPTTokenScript | OPTCanNegate | OPTType | OPTNetworkType | OPTRedirectableType ],
-    [ 'shide', OPTTokenShide | OPTType ],
-        [ 'specifichide', OPTTokenShide | OPTType ],
-    [ 'xhr', OPTTokenXhr | OPTCanNegate| OPTType | OPTNetworkType | OPTRedirectableType ],
-        [ 'xmlhttprequest', OPTTokenXhr | OPTCanNegate | OPTType | OPTNetworkType | OPTRedirectableType ],
+    [ 'inline-font', OPTTokenInlineFont | OPTNonNetworkType | OPTCanNegate | OPTNonCspableType | OPTNonRedirectableType ],
+    [ 'inline-script', OPTTokenInlineScript | OPTNonNetworkType | OPTCanNegate | OPTNonCspableType | OPTNonRedirectableType ],
+    [ 'match-case', OPTTokenMatchCase ],
+    [ 'media', OPTTokenMedia | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
+    [ 'mp4', OPTTokenMp4 | OPTNetworkType | OPTBlockOnly |  OPTModifierType ],
+    [ '_', OPTTokenNoop ],
+    [ 'object', OPTTokenObject | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
+        [ 'object-subrequest', OPTTokenObject | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
+    [ 'other', OPTTokenOther | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
+    [ 'ping', OPTTokenPing | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTNonCspableType | OPTNonRedirectableType ],
+        [ 'beacon', OPTTokenPing | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTNonCspableType | OPTNonRedirectableType ],
+    [ 'popunder', OPTTokenPopunder | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
+    [ 'popup', OPTTokenPopup | OPTNonNetworkType | OPTCanNegate | OPTNonCspableType | OPTNonRedirectableType ],
+    [ 'queryprune', OPTTokenQueryprune | OPTMayAssign | OPTModifierType | OPTNonCspableType | OPTNonRedirectableType ],
+        [ 'removeparam', OPTTokenQueryprune | OPTMayAssign | OPTModifierType | OPTNonCspableType | OPTNonRedirectableType ],
+    [ 'redirect', OPTTokenRedirect | OPTMustAssign | OPTAllowMayAssign | OPTModifierType ],
+        [ 'rewrite', OPTTokenRedirect | OPTMustAssign | OPTAllowMayAssign | OPTModifierType ],
+    [ 'redirect-rule', OPTTokenRedirectRule | OPTMustAssign | OPTAllowMayAssign | OPTModifierType | OPTNonCspableType ],
+    [ 'script', OPTTokenScript | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
+    [ 'shide', OPTTokenShide | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
+        [ 'specifichide', OPTTokenShide | OPTNonNetworkType | OPTNonCspableType | OPTNonRedirectableType ],
+    [ 'xhr', OPTTokenXhr | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
+        [ 'xmlhttprequest', OPTTokenXhr | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTRedirectableType | OPTNonCspableType ],
     [ 'webrtc', OPTTokenWebrtc | OPTNotSupported ],
-    [ 'websocket', OPTTokenWebsocket | OPTCanNegate | OPTType | OPTNetworkType ],
+    [ 'websocket', OPTTokenWebsocket | OPTCanNegate | OPTNetworkType | OPTModifiableType | OPTNonCspableType | OPTNonRedirectableType ],
 ]);
 
-Parser.prototype.netOptionTokens = netOptionTokens;
+Parser.prototype.netOptionTokenDescriptors =
+    Parser.netOptionTokenDescriptors = netOptionTokenDescriptors;
+
+Parser.netOptionTokenIds = new Map([
+    [ '1p', OPTToken1p ],
+        [ 'first-party', OPTToken1p ],
+    [ 'strict1p', OPTToken1pStrict ],
+    [ '3p', OPTToken3p ],
+        [ 'third-party', OPTToken3p ],
+    [ 'strict3p', OPTToken3pStrict ],
+    [ 'all', OPTTokenAll ],
+    [ 'badfilter', OPTTokenBadfilter ],
+    [ 'cname', OPTTokenCname ],
+    [ 'csp', OPTTokenCsp ],
+    [ 'css', OPTTokenCss ],
+        [ 'stylesheet', OPTTokenCss ],
+    [ 'denyallow', OPTTokenDenyAllow ],
+    [ 'doc', OPTTokenDoc ],
+        [ 'document', OPTTokenDoc ],
+    [ 'domain', OPTTokenDomain ],
+    [ 'ehide', OPTTokenEhide ],
+        [ 'elemhide', OPTTokenEhide ],
+    [ 'empty', OPTTokenEmpty ],
+    [ 'frame', OPTTokenFrame ],
+        [ 'subdocument', OPTTokenFrame ],
+    [ 'font', OPTTokenFont ],
+    [ 'genericblock', OPTTokenGenericblock ],
+    [ 'ghide', OPTTokenGhide ],
+        [ 'generichide', OPTTokenGhide ],
+    [ 'header', OPTTokenHeader ],
+    [ 'image', OPTTokenImage ],
+    [ 'important', OPTTokenImportant ],
+    [ 'inline-font', OPTTokenInlineFont ],
+    [ 'inline-script', OPTTokenInlineScript ],
+    [ 'match-case', OPTTokenMatchCase ],
+    [ 'media', OPTTokenMedia ],
+    [ 'mp4', OPTTokenMp4 ],
+    [ '_', OPTTokenNoop ],
+    [ 'object', OPTTokenObject ],
+        [ 'object-subrequest', OPTTokenObject ],
+    [ 'other', OPTTokenOther ],
+    [ 'ping', OPTTokenPing ],
+        [ 'beacon', OPTTokenPing ],
+    [ 'popunder', OPTTokenPopunder ],
+    [ 'popup', OPTTokenPopup ],
+    [ 'queryprune', OPTTokenQueryprune ],
+        [ 'removeparam', OPTTokenQueryprune ],
+    [ 'redirect', OPTTokenRedirect ],
+        [ 'rewrite', OPTTokenRedirect ],
+    [ 'redirect-rule', OPTTokenRedirectRule ],
+    [ 'script', OPTTokenScript ],
+    [ 'shide', OPTTokenShide ],
+        [ 'specifichide', OPTTokenShide ],
+    [ 'xhr', OPTTokenXhr ],
+        [ 'xmlhttprequest', OPTTokenXhr ],
+    [ 'webrtc', OPTTokenWebrtc ],
+    [ 'websocket', OPTTokenWebsocket ],
+]);
+
+Parser.netOptionTokenNames = new Map([
+    [ OPTToken1p, '1p' ],
+    [ OPTToken1pStrict, 'strict1p' ],
+    [ OPTToken3p, '3p' ],
+    [ OPTToken3pStrict, 'strict3p' ],
+    [ OPTTokenAll, 'all' ],
+    [ OPTTokenBadfilter, 'badfilter' ],
+    [ OPTTokenCname, 'cname' ],
+    [ OPTTokenCsp, 'csp' ],
+    [ OPTTokenCss, 'stylesheet' ],
+    [ OPTTokenDenyAllow, 'denyallow' ],
+    [ OPTTokenDoc, 'document' ],
+    [ OPTTokenDomain, 'domain' ],
+    [ OPTTokenEhide, 'elemhide' ],
+    [ OPTTokenEmpty, 'empty' ],
+    [ OPTTokenFrame, 'subdocument' ],
+    [ OPTTokenFont, 'font' ],
+    [ OPTTokenGenericblock, 'genericblock' ],
+    [ OPTTokenGhide, 'generichide' ],
+    [ OPTTokenHeader, 'header' ],
+    [ OPTTokenImage, 'image' ],
+    [ OPTTokenImportant, 'important' ],
+    [ OPTTokenInlineFont, 'inline-font' ],
+    [ OPTTokenInlineScript, 'inline-script' ],
+    [ OPTTokenMatchCase, 'match-case' ],
+    [ OPTTokenMedia, 'media' ],
+    [ OPTTokenMp4, 'mp4' ],
+    [ OPTTokenNoop, '_' ],
+    [ OPTTokenObject, 'object' ],
+    [ OPTTokenOther, 'other' ],
+    [ OPTTokenPing, 'ping' ],
+    [ OPTTokenPopunder, 'popunder' ],
+    [ OPTTokenPopup, 'popup' ],
+    [ OPTTokenQueryprune, 'queryprune' ],
+    [ OPTTokenRedirect, 'redirect' ],
+    [ OPTTokenRedirectRule, 'redirect-rule' ],
+    [ OPTTokenScript, 'script' ],
+    [ OPTTokenShide, 'specifichide' ],
+    [ OPTTokenXhr, 'xmlhttprequest' ],
+    [ OPTTokenWebrtc, 'webrtc' ],
+    [ OPTTokenWebsocket, 'websocket' ],
+]);
 
 /******************************************************************************/
 
@@ -2100,6 +2324,11 @@ const NetOptionsIterator = class {
         this.optSlices = [];
         this.writePtr = 0;
         this.readPtr = 0;
+        this.tokenPos = (( ) => {
+            const out = [];
+            for ( let i = 0; i < OPTTokenCount; i++ ) { out[i] = -1; }
+            return out;
+        })();
         this.item = {
             id: OPTTokenInvalid,
             val: undefined,
@@ -2130,14 +2359,12 @@ const NetOptionsIterator = class {
         //
         // At index 0 is the option descriptor.
         // At indices 1-5 is a slice index.
+        this.tokenPos.fill(-1);
         const lopts =  this.parser.optionsSpan.i;
         const ropts =  lopts + this.parser.optionsSpan.len;
         const slices = this.parser.slices;
         const optSlices = this.optSlices;
-        let typeCount = 0;
-        let redirectableTypeCount = 0;
-        let redirectIndex = -1;
-        let cspIndex = -1;
+        let allBits = 0;
         let writePtr = 0;
         let lopt = lopts;
         while ( lopt < ropts ) {
@@ -2171,43 +2398,48 @@ const NetOptionsIterator = class {
             if ( good ) {
                 const rtok = lval === 0 ? i : lval;
                 const token = this.parser.raw.slice(slices[ltok+1], slices[rtok+1]);
-                descriptor = netOptionTokens.get(token);
+                descriptor = netOptionTokenDescriptors.get(token);
             }
             // Validate option according to context
             if (
                 descriptor === undefined ||
-                ltok !== lopt && hasNoBits(descriptor, OPTCanNegate) ||
-                this.exception && hasBits(descriptor, OPTBlockOnly) ||
-                this.exception === false && hasBits(descriptor, OPTAllowOnly) ||
-                assigned && hasNoBits(descriptor, OPTMustAssign) ||
-                assigned === false && hasBits(descriptor, OPTMustAssign) && (
-                    this.exception === false ||
-                    hasNoBits(descriptor, OPTAllowMayAssign)
-                )
+                ltok !== lopt &&
+                    hasNoBits(descriptor, OPTCanNegate) ||
+                this.exception &&
+                    hasBits(descriptor, OPTBlockOnly) ||
+                this.exception === false &&
+                    hasBits(descriptor, OPTAllowOnly) ||
+                assigned &&
+                    hasNoBits(descriptor, OPTMayAssign | OPTMustAssign) ||
+                assigned === false &&
+                    hasBits(descriptor, OPTMustAssign) && (
+                        this.exception === false ||
+                        hasNoBits(descriptor, OPTAllowMayAssign)
+                    )
             ) {
                 descriptor = OPTTokenInvalid;
             }
-            // Keep count of types
-            if ( hasBits(descriptor, OPTType) ) {
-                typeCount += 1;
-                if ( hasBits(descriptor, OPTRedirectableType) ) {
-                    redirectableTypeCount += 1;
+            // Keep track of which options are present: any given option can
+            // appear only once.
+            // TODO: might need to make an exception for `header=` option so as
+            //       to allow filters which need to match more than one header.
+            const tokenId = descriptor & OPTTokenMask;
+            if ( tokenId !== OPTTokenInvalid ) {
+                if ( this.tokenPos[tokenId] !== -1 ) {
+                    descriptor = OPTTokenInvalid;
+                } else {
+                    this.tokenPos[tokenId] = writePtr;
                 }
             }
-            // Only one `redirect` or `csp` can be present
-            if ( hasBits(descriptor, OPTRedirectType) ) {
-                if ( redirectIndex === -1 ) {
-                    redirectIndex = writePtr;
-                } else {
-                    descriptor = OPTTokenInvalid;
-                }
-            } else if ( (descriptor & 0xFF) === OPTTokenCsp ) {
-                if ( cspIndex === -1 ) {
-                    cspIndex = writePtr;
-                } else {
-                    descriptor = OPTTokenInvalid;
-                }
+            // Only one modifier can be present
+            if (
+                hasBits(descriptor, OPTModifierType) &&
+                hasBits(allBits, OPTModifierType)
+            ) {
+                descriptor = OPTTokenInvalid;
             }
+            // Accumulate description bits
+            allBits |= descriptor;
             // Mark slices in case of invalid filter option
             if (
                 this.interactive && (
@@ -2215,10 +2447,9 @@ const NetOptionsIterator = class {
                     hasBits(descriptor, OPTNotSupported)
                 )
             ) {
-                this.parser.markSlices(lopt, i, BITError);
+                this.parser.errorSlices(lopt, i);
             }
-            // Store indices to raw slices -- this will be used during
-            // iteration
+            // Store indices to raw slices, this will be used during iteration
             optSlices[writePtr+0] = descriptor;
             optSlices[writePtr+1] = lopt;
             optSlices[writePtr+2] = ltok;
@@ -2228,7 +2459,7 @@ const NetOptionsIterator = class {
                 if ( this.interactive && hasBits(descriptor, OPTDomainList) ) {
                     this.parser.analyzeDomainList(
                         lval + 3, i, BITPipe,
-                        (descriptor & 0xFF) === OPTTokenDomain ? 0b01 : 0b00
+                        tokenId === OPTTokenDomain ? 0b1010 : 0b0000
                     );
                 }
             } else {
@@ -2242,43 +2473,136 @@ const NetOptionsIterator = class {
         }
         this.writePtr = writePtr;
         // Dangling comma
-        if ( this.interactive && hasBits(this.parser.slices[ropts-3], BITComma) ) {
+        if (
+            this.interactive &&
+            hasBits(this.parser.slices[ropts-3], BITComma)
+        ) {
             this.parser.slices[ropts-3] |= BITError;
         }
-        // Invalid combinations of options
-        //
-        // `csp` can't be used with any other types or redirection
-        if ( cspIndex !== -1 && ( typeCount !== 0 || redirectIndex !== -1 ) ) {
-            optSlices[cspIndex] = OPTTokenInvalid;
-            if ( this.interactive ) {
-                this.parser.markSlices(
-                    optSlices[cspIndex+1],
-                    optSlices[cspIndex+5],
-                    BITError
-                );
+        // `denyallow=` option requires `domain=` option.
+        {
+            const i = this.tokenPos[OPTTokenDenyAllow];
+            if ( i !== -1 && this.tokenPos[OPTTokenDomain] === -1 ) {
+                optSlices[i] = OPTTokenInvalid;
+                if ( this.interactive ) {
+                    this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
+                }
             }
         }
-        // `redirect` requires one single redirectable type, EXCEPT for when we
-        // redirect to `empty`, in which case it is allowed to not have any
-        // network type specified.
-        if (
-            redirectIndex !== -1 &&
-            redirectableTypeCount !== 1 && (
-                redirectableTypeCount !== 0 ||
-                typeCount !== 0 ||
-                this.parser.raw.slice(
-                    this.parser.slices[optSlices[redirectIndex+0]+1],
-                    this.parser.slices[optSlices[redirectIndex+5]+1]
-                ).endsWith('empty') === false
-            )
-        ) {
-            optSlices[redirectIndex] = OPTTokenInvalid;
-            if ( this.interactive ) {
-                this.parser.markSlices(
-                    optSlices[redirectIndex+1],
-                    optSlices[redirectIndex+5],
-                    BITError
-                );
+        // `redirect=`: can't redirect non-redirectable types
+        {
+            let i = this.tokenPos[OPTTokenRedirect];
+            if ( i === -1 ) {
+                i = this.tokenPos[OPTTokenRedirectRule];
+            }
+            if ( i !== -1 && hasBits(allBits, OPTNonRedirectableType) ) {
+                optSlices[i] = OPTTokenInvalid;
+                if ( this.interactive ) {
+                    this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
+                }
+            }
+        }
+        // `empty`: can't apply to non-redirectable types
+        {
+            let i = this.tokenPos[OPTTokenEmpty];
+            if ( i !== -1 &&  hasBits(allBits, OPTNonRedirectableType) ) {
+                optSlices[i] = OPTTokenInvalid;
+                if ( this.interactive ) {
+                    this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
+                }
+            }
+        }
+        // `csp=`: only to "csp-able" types, which currently are only
+        // document types.
+        {
+            const i = this.tokenPos[OPTTokenCsp];
+            if ( i !== -1 &&  hasBits(allBits, OPTNonCspableType) ) {
+                optSlices[i] = OPTTokenInvalid;
+                if ( this.interactive ) {
+                    this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
+                }
+            }
+        }
+        // `queryprune=`:  only for network requests.
+        {
+            const i = this.tokenPos[OPTTokenQueryprune];
+            if ( i !== -1 ) {
+                if ( hasBits(allBits, OPTNonNetworkType) ) {
+                    optSlices[i] = OPTTokenInvalid;
+                    if ( this.interactive ) {
+                        this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
+                    }
+                } else {
+                    const val = this.parser.strFromSlices(
+                        optSlices[i+4],
+                        optSlices[i+5] - 3
+                    );
+                    const r = Parser.parseQueryPruneValue(val);
+                    if ( r.bad ) {
+                        optSlices[i] = OPTTokenInvalid;
+                        if ( this.interactive ) {
+                            this.parser.errorSlices(
+                                optSlices[i+4],
+                                optSlices[i+5]
+                            );
+                        }
+                    }
+                }
+            }
+        }
+        // `cname`: can't be used with any type
+        {
+            const i = this.tokenPos[OPTTokenCname];
+            if (
+                i !== -1 && (
+                    hasBits(allBits, OPTNetworkType) ||
+                    hasBits(allBits, OPTNonNetworkType)
+                )
+            ) {
+                optSlices[i] = OPTTokenInvalid;
+                if ( this.interactive ) {
+                    this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
+                }
+            }
+        }
+        // `header`: can't be used with any modifier type
+        {
+            const i = this.tokenPos[OPTTokenHeader];
+            if ( i !== -1 ) {
+                if (
+                    this.parser.expertMode === false ||
+                    hasBits(allBits, OPTModifierType)
+                ) {
+                    optSlices[i] = OPTTokenInvalid;
+                    if ( this.interactive ) {
+                        this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
+                    }
+                } else {
+                    const val = this.parser.strFromSlices(
+                        optSlices[i+4],
+                        optSlices[i+5] - 3
+                    );
+                    const r = Parser.parseHeaderValue(val);
+                    if ( r.bad ) {
+                        optSlices[i] = OPTTokenInvalid;
+                        if ( this.interactive ) {
+                            this.parser.errorSlices(
+                                optSlices[i+4],
+                                optSlices[i+5]
+                            );
+                        }
+                    }
+                }
+            }
+        }
+        // `match-case`: valid only for regex-based filters
+        {
+            const i = this.tokenPos[OPTTokenMatchCase];
+            if ( i !== -1 && this.parser.patternIsRegex() === false ) {
+                optSlices[i] = OPTTokenInvalid;
+                if ( this.interactive ) {
+                    this.parser.errorSlices(optSlices[i+1], optSlices[i+5]);
+                }
             }
         }
         return this;
@@ -2292,7 +2616,7 @@ const NetOptionsIterator = class {
         }
         const optSlices = this.optSlices;
         const descriptor = optSlices[i+0];
-        this.item.id = descriptor & 0xFF;
+        this.item.id = descriptor & OPTTokenMask;
         this.item.not = optSlices[i+2] !== optSlices[i+1];
         this.item.val = undefined;
         if ( optSlices[i+4] !== optSlices[i+5] ) {
@@ -2428,6 +2752,140 @@ const ExtOptionsIterator = class {
         return this;
     }
 };
+
+/******************************************************************************/
+
+// Depends on:
+// https://github.com/foo123/RegexAnalyzer
+
+Parser.regexUtils = Parser.prototype.regexUtils = (( ) => {
+
+    const firstCharCodeClass = s => {
+        return /^[\x01%0-9A-Za-z]/.test(s) ? 1 : 0;
+    };
+
+    const lastCharCodeClass = s => {
+        return /[\x01%0-9A-Za-z]$/.test(s) ? 1 : 0;
+    };
+
+    const toTokenizableStr = node => {
+        switch ( node.type ) {
+            case 1: /* T_SEQUENCE, 'Sequence' */ {
+                let s = '';
+                for ( let i = 0; i < node.val.length; i++ ) {
+                    s += toTokenizableStr(node.val[i]);
+                }
+                return s;
+            }
+            case 2: /* T_ALTERNATION, 'Alternation' */
+            case 8: /* T_CHARGROUP, 'CharacterGroup' */ {
+                let firstChar = 0;
+                let lastChar = 0;
+                for ( let i = 0; i < node.val.length; i++ ) {
+                    const s = toTokenizableStr(node.val[i]);
+                    if ( firstChar === 0 && firstCharCodeClass(s) === 1 ) {
+                        firstChar = 1;
+                    }
+                    if ( lastChar === 0 && lastCharCodeClass(s) === 1 ) {
+                        lastChar = 1;
+                    }
+                    if ( firstChar === 1 && lastChar === 1 ) { break; }
+                }
+                return String.fromCharCode(firstChar, lastChar);
+            }
+            case 4: /* T_GROUP, 'Group' */ {
+                if ( node.flags.NegativeLookAhead === 1 ) { return '\x01'; }
+                if ( node.flags.NegativeLookBehind === 1 ) { return '\x01'; }
+                return toTokenizableStr(node.val);
+            }
+            case 16: /* T_QUANTIFIER, 'Quantifier' */ {
+                const s = toTokenizableStr(node.val);
+                const first = firstCharCodeClass(s);
+                const last = lastCharCodeClass(s);
+                if ( node.flags.min === 0 && first === 0 && last === 0 ) {
+                    return '';
+                }
+                return String.fromCharCode(first, last);
+            }
+            case 64: /* T_HEXCHAR, 'HexChar' */ {
+                return String.fromCharCode(parseInt(node.val.slice(1), 16));
+            }
+            case 128: /* T_SPECIAL, 'Special' */ {
+                const flags = node.flags;
+                if (
+                    flags.EndCharGroup === 1 || // dangling `]`
+                    flags.EndGroup === 1 ||     // dangling `)`
+                    flags.EndRepeats === 1      // dangling `}`
+                ) {
+                    throw new Error('Unmatched bracket');
+                }
+                return flags.MatchEnd === 1 ||
+                       flags.MatchStart === 1 ||
+                       flags.MatchWordBoundary === 1
+                    ? '\x00'
+                    : '\x01';
+            }
+            case 256: /* T_CHARS, 'Characters' */ {
+                for ( let i = 0; i < node.val.length; i++ ) {
+                    if ( firstCharCodeClass(node.val[i]) === 1 ) {
+                        return '\x01';
+                    }
+                }
+                return '\x00';
+            }
+            // Ranges are assumed to always involve token-related characters.
+            case 512: /* T_CHARRANGE, 'CharacterRange' */ {
+                return '\x01';
+            }
+            case 1024: /* T_STRING, 'String' */ {
+                return node.val;
+            }
+            case 2048: /* T_COMMENT, 'Comment' */ {
+                return '';
+            }
+            default:
+                break;
+        }
+        return '\x01';
+    };
+
+    const Regex = self.Regex;
+    if (
+        Regex instanceof Object === false ||
+        Regex.Analyzer instanceof Object === false
+    ) {
+        return {
+            isValid: function(reStr)  {
+                try {
+                    void new RegExp(reStr);
+                } catch(ex) {
+                    return false;
+                }
+                return true;
+            },
+            toTokenizableStr: ( ) => '',
+        };
+    }
+
+    return {
+        isValid: function(reStr) {
+            try {
+                void new RegExp(reStr);
+                void toTokenizableStr(Regex.Analyzer(reStr, false).tree());
+            } catch(ex) {
+                return false;
+            }
+            return true;
+        },
+        toTokenizableStr: function(reStr) {
+            try {
+                return toTokenizableStr(Regex.Analyzer(reStr, false).tree());
+            } catch(ex) {
+            }
+            return '';
+        },
+    };
+})();
 
 /******************************************************************************/
 

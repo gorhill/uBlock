@@ -45,8 +45,12 @@
     },
     {
       "matches": [
-        "http://*/*",
-        "https://*/*"
+        "https://easylist.to/*",
+        "https://*.fanboy.co.nz/*",
+        "https://filterlists.com/*",
+        "https://forums.lanik.us/*",
+        "https://github.com/*",
+        "https://*.github.io/*"
       ],
       "js": [
         "/js/scriptlets/subscriber.js"
@@ -66,7 +70,7 @@
   },
   "incognito": "split",
   "manifest_version": 2,
-  "minimum_chrome_version": "51.0",
+  "minimum_chrome_version": "55.0",
   "name": "uBlock Origin",
   "options_ui": {
     "page": "dashboard.html",

@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "ホワイトリスト",
+    "message": "信頼されたサイト",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -200,11 +200,11 @@
     "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
-    "message": "詳細を表示",
+    "message": "表示量を増やす",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton_v2": {
-    "message": "詳細を非表示",
+    "message": "表示量を減らす",
     "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
@@ -551,6 +551,22 @@
     "message": "ルールの書き方: <code>source destination type action</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>詳しい説明</a>)",
     "description": "English: dynamic rule syntax and full documentation."
   },
+  "rulesSort": {
+    "message": "並べ替え",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "種類",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "発信源",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "通信先",
+    "description": "English: a sort option for list of rules."
+  },
   "whitelistPrompt": {
     "message": "uBlock₀が無効になるホスト名の一覧です。1行につき1つのエントリで、無効なホスト名は無視されます。",
     "description": "The name of the trusted sites pane."
@@ -564,7 +580,7 @@
     "description": "English: Export"
   },
   "whitelistExportFilename": {
-    "message": "my-ublock-whitelist_{{datetime}}.txt",
+    "message": "my-ublock-trusted-sites_{{datetime}}.txt",
     "description": "The default filename to use for import/export purpose"
   },
   "whitelistApply": {
@@ -648,11 +664,15 @@
     "description": "A keyword in the built-in row filtering expression: all items corresponding to uBO doing something (blocked, allowed, redirected, etc.)"
   },
   "loggerRowFiltererBuiltinBlocked": {
-    "message": "ブロック済み",
+    "message": "ブロックした",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltinAllowed": {
-    "message": "許可済み",
+    "message": "許可した",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinModified": {
+    "message": "変更した",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
@@ -756,7 +776,7 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "現在 有効にしているフィルターの中には、静的フィルター <code>{{filter}}</code> はありません",
+    "message": "現在 有効にしているフィルターの中には、静的フィルターが見つかりませんでした",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
@@ -888,8 +908,12 @@
     "description": "English: Network error: {{msg}}"
   },
   "subscriberConfirm": {
-    "message": "uBlock₀: 以下のURLをカスタムフィルターに追加しますか？\n\nタイトル: \"{{title}}\"\nURL: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "message": "以下のURLをカスタムフィルターに追加しますか？\n\nタイトル: \"{{title}}\"\nURL: {{url}}",
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "登録する",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "1分前",
@@ -929,11 +953,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBlock Origin は、このページの読み込みをブロックしました",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "該当するフィルター",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "パラメータを除いたURL",
@@ -1003,6 +1027,10 @@
     "message": "バイト",
     "description": ""
   },
+  "contextMenuBlockElementInFrame": {
+    "message": "フレーム内の要素をブロック...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "一時的に大きなメディア要素を許可",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
@@ -1042,6 +1070,10 @@
   "GB": {
     "message": "GB",
     "description": "short for 'gigabytes'"
+  },
+  "clickToLoad": {
+    "message": "クリックで、ロードする",
+    "description": "Message used in frame placeholders"
   },
   "dummy": {
     "message": "これは最後のエントリである必要があります",

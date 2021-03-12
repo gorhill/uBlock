@@ -40,20 +40,23 @@ var µb = µBlock;
 
 const µb = µBlock;
 
-var getDomainNames = function(targets) {
-    var out = [];
-    var µburi = µb.URI;
-    var target, domain;
-    for ( var i = 0; i < targets.length; i++ ) {
-        target = targets[i];
-        if ( target.indexOf('/') !== -1 ) {
-            domain = µburi.domainFromURI(target) || '';
-        } else {
-            domain = µburi.domainFromHostname(target) || target;
-        }
-        out.push(domain);
-    }
-    return out;
+const clickToLoad = function(request, sender) {
+    const { tabId, frameId } = sender;
+    if ( tabId === undefined || frameId === undefined ) { return false; }
+    const pageStore = µb.pageStoreFromTabId(tabId);
+    if ( pageStore === null ) { return false; }
+    pageStore.clickToLoad(frameId, request.frameURL);
+    return true;
+};
+
+const getDomainNames = function(targets) {
+    const µburi = µb.URI;
+    return targets.map(target => {
+        if ( typeof target !== 'string' ) { return ''; }
+        return target.indexOf('/') !== -1
+            ? µburi.domainFromURI(target) || ''
+            : µburi.domainFromHostname(target) || target;
+    });
 };
 
 const onMessage = function(request, sender, callback) {
@@ -61,10 +64,10 @@ const onMessage = function(request, sender, callback) {
     switch ( request.what ) {
     case 'getAssetContent':
         // https://github.com/chrisaljoudi/uBlock/issues/417
-        µb.assets.get(
-            request.url,
-            { dontCache: true, needSourceURL: true }
-        ).then(result => {
+        µb.assets.get(request.url, {
+            dontCache: true,
+            needSourceURL: true,
+        }).then(result => {
             callback(result);
         });
         return;
@@ -93,16 +96,26 @@ const onMessage = function(request, sender, callback) {
         µb.scriptlets.inject(request.tabId, request.scriptlet, callback);
         return;
 
+    case 'sfneBenchmark':
+        µb.staticNetFilteringEngine.benchmark().then(result => {
+            callback(result);
+        });
+        return;
+
     default:
         break;
     }
 
     // Sync
-    var response;
+    let response;
 
     switch ( request.what ) {
     case 'applyFilterListSelection':
         response = µb.applyFilterListSelection(request);
+        break;
+
+    case 'clickToLoad':
+        response = clickToLoad(request, sender);
         break;
 
     case 'createUserFilter':
@@ -135,7 +148,8 @@ const onMessage = function(request, sender, callback) {
     case 'getAppData':
         response = {
             name: browser.runtime.getManifest().name,
-            version: vAPI.app.version
+            version: vAPI.app.version,
+            canBenchmark: µb.hiddenSettings.benchmarkDatasetURL !== 'unset',
         };
         break;
 
@@ -155,7 +169,7 @@ const onMessage = function(request, sender, callback) {
     case 'launchElementPicker':
         // Launched from some auxiliary pages, clear context menu coords.
         µb.epickerArgs.mouse = false;
-        µb.elementPickerExec(request.tabId, request.targetURL, request.zap);
+        µb.elementPickerExec(request.tabId, 0, request.targetURL, request.zap);
         break;
 
     case 'gotoURL':
@@ -185,7 +199,12 @@ const onMessage = function(request, sender, callback) {
         break;
 
     case 'uiStyles':
-        response = µb.hiddenSettings.uiStyles;
+        response = {
+            uiStyles: µb.hiddenSettings.uiStyles,
+            uiTheme: vAPI.webextFlavor.soup.has('devbuild')
+                ? µb.hiddenSettings.uiTheme
+                : 'unset',
+        };
         break;
 
     case 'userSettings':
@@ -550,20 +569,21 @@ vAPI.messaging.listen({
 
 const µb = µBlock;
 
-const retrieveContentScriptParameters = function(senderDetails, request) {
+const retrieveContentScriptParameters = function(sender, request) {
     if ( µb.readyToFilter !== true ) { return; }
-    const { url: senderURL, tabId, frameId } = senderDetails;
-    if (
-        tabId === undefined ||
-        frameId === undefined ||
-        senderURL === undefined ||
-        senderURL !== request.url && senderURL.startsWith('about:') === false
-    ) {
-        return;
-    }
+    const { tabId, frameId } = sender;
+    if ( tabId === undefined || frameId === undefined ) { return; }
+
     const pageStore = µb.pageStoreFromTabId(tabId);
     if ( pageStore === null || pageStore.getNetFilteringSwitch() === false ) {
         return;
+    }
+
+    // A content script may not always be able to successfully look up the
+    // effective context, hence in such case we try again to look up here
+    // using cached information about embedded frames.
+    if ( frameId !== 0 && request.url.startsWith('about:') ) {
+        request.url = pageStore.getEffectiveFrameURL(sender);
     }
 
     const noCosmeticFiltering = pageStore.noCosmeticFiltering === true;
@@ -637,7 +657,13 @@ const retrieveContentScriptParameters = function(senderDetails, request) {
     response.specificCosmeticFilters =
         µb.cosmeticFilteringEngine.retrieveSpecificSelectors(request, response);
 
-    if ( µb.canInjectScriptletsNow === false ) {
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/688#issuecomment-748179731
+    //   For non-network URIs, scriptlet injection is deferred to here. The
+    //   effective URL is available here in `request.url`.
+    if (
+        µb.canInjectScriptletsNow === false ||
+        µb.URI.isNetworkURI(sender.frameURL) === false
+    ) {
         response.scriptlets = µb.scriptletFilteringEngine.retrieve(request);
     }
 
@@ -655,8 +681,7 @@ const onMessage = function(request, sender, callback) {
         break;
     }
 
-    const senderDetails = µb.getMessageSenderDetails(sender);
-    const pageStore = µb.pageStoreFromTabId(senderDetails.tabId);
+    const pageStore = µb.pageStoreFromTabId(sender.tabId);
 
     // Sync
     let response;
@@ -682,29 +707,29 @@ const onMessage = function(request, sender, callback) {
         break;
 
     case 'maybeGoodPopup':
-        µb.maybeGoodPopup.tabId = senderDetails.tabId;
+        µb.maybeGoodPopup.tabId = sender.tabId;
         µb.maybeGoodPopup.url = request.url;
         break;
 
     case 'shouldRenderNoscriptTags':
         if ( pageStore === null ) { break; }
-        const fctxt = µb.filteringContext.fromTabId(senderDetails.tabId);
+        const fctxt = µb.filteringContext.fromTabId(sender.tabId);
         if ( pageStore.filterScripting(fctxt, undefined) ) {
-            vAPI.tabs.executeScript(senderDetails.tabId, {
+            vAPI.tabs.executeScript(sender.tabId, {
                 file: '/js/scriptlets/noscript-spoof.js',
-                frameId: senderDetails.frameId,
+                frameId: sender.frameId,
                 runAt: 'document_end',
             });
         }
         break;
 
     case 'retrieveContentScriptParameters':
-        response = retrieveContentScriptParameters(senderDetails, request);
+        response = retrieveContentScriptParameters(sender, request);
         break;
 
     case 'retrieveGenericCosmeticSelectors':
-        request.tabId = senderDetails.tabId;
-        request.frameId = senderDetails.frameId;
+        request.tabId = sender.tabId;
+        request.frameId = sender.frameId;
         response = {
             result: µb.cosmeticFilteringEngine.retrieveGenericSelectors(request),
         };
@@ -742,41 +767,6 @@ var µb = µBlock;
 var onMessage = function(request, sender, callback) {
     // Async
     switch ( request.what ) {
-    case 'elementPickerArguments':
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'epicker.html', true);
-        xhr.overrideMimeType('text/html;charset=utf-8');
-        xhr.responseType = 'text';
-        xhr.onload = function() {
-            this.onload = null;
-            const i18n = {
-                bidi_dir: document.body.getAttribute('dir'),
-                create: vAPI.i18n('pickerCreate'),
-                pick: vAPI.i18n('pickerPick'),
-                quit: vAPI.i18n('pickerQuit'),
-                preview: vAPI.i18n('pickerPreview'),
-                netFilters: vAPI.i18n('pickerNetFilters'),
-                cosmeticFilters: vAPI.i18n('pickerCosmeticFilters'),
-                cosmeticFiltersHint: vAPI.i18n('pickerCosmeticFiltersHint')
-            };
-            var reStrings = /\{\{(\w+)\}\}/g;
-            var replacer = function(a0, string) {
-                return i18n[string];
-            };
-
-            callback({
-                frameContent: this.responseText.replace(reStrings, replacer),
-                target: µb.epickerArgs.target,
-                mouse: µb.epickerArgs.mouse,
-                zap: µb.epickerArgs.zap,
-                eprom: µb.epickerArgs.eprom,
-            });
-
-            µb.epickerArgs.target = '';
-        };
-        xhr.send();
-        return;
-
     default:
         break;
     }
@@ -785,21 +775,16 @@ var onMessage = function(request, sender, callback) {
     var response;
 
     switch ( request.what ) {
-    case 'compileCosmeticFilterSelector': {
-        const parser = new vAPI.StaticFilteringParser();
-        parser.analyze(request.selector);
-        if ( (parser.flavorBits & parser.BITFlavorExtCosmetic) !== 0 ) {
-            response = parser.result.compiled;
-        }
+    case 'elementPickerArguments':
+        response = {
+            target: µb.epickerArgs.target,
+            mouse: µb.epickerArgs.mouse,
+            zap: µb.epickerArgs.zap,
+            eprom: µb.epickerArgs.eprom,
+            pickerURL: vAPI.getURL(`/web_accessible_resources/epicker-ui.html?secret=${vAPI.warSecret()}`),
+        };
+        µb.epickerArgs.target = '';
         break;
-    }
-
-    // https://github.com/gorhill/uBlock/issues/3497
-    //   This needs to be removed once issue is fixed.
-    case 'createUserFilter':
-        µb.createUserFilters(request);
-        break;
-
     case 'elementPickerEprom':
         µb.epickerArgs.eprom = request;
         break;
@@ -829,6 +814,33 @@ vAPI.messaging.listen({
 {
 // >>>>> start of local scope
 
+const fromBase64 = function(encoded) {
+    if ( typeof encoded !== 'string' ) {
+        return Promise.resolve(encoded);
+    }
+    let u8array;
+    try {
+        u8array = µBlock.denseBase64.decode(encoded);
+    } catch(ex) {
+    }
+    return Promise.resolve(u8array !== undefined ? u8array : encoded);
+};
+
+const toBase64 = function(data) {
+    const value = data instanceof Uint8Array
+        ? µBlock.denseBase64.encode(data)
+        : data;
+    return Promise.resolve(value);
+};
+
+const compress = function(json) {
+    return µBlock.lz4Codec.encode(json, toBase64);
+};
+
+const decompress = function(encoded) {
+    return µBlock.lz4Codec.decode(encoded, fromBase64);
+};
+
 const onMessage = function(request, sender, callback) {
     // Cloud storage support is optional.
     if ( µBlock.cloudStorageSupported !== true ) {
@@ -850,12 +862,21 @@ const onMessage = function(request, sender, callback) {
         return;
 
     case 'cloudPull':
-        return vAPI.cloud.pull(request.datakey).then(result => {
+        request.decode = decompress;
+        return vAPI.cloud.pull(request).then(result => {
             callback(result);
         });
 
     case 'cloudPush':
-        return vAPI.cloud.push(request.datakey, request.data).then(result => {
+        if ( µBlock.hiddenSettings.cloudStorageCompression ) {
+            request.encode = compress;
+        }
+        return vAPI.cloud.push(request).then(result => {
+            callback(result);
+        });
+
+    case 'cloudUsed':
+        return vAPI.cloud.used(request.datakey).then(result => {
             callback(result);
         });
 
@@ -916,12 +937,12 @@ const backupUserData = async function() {
     const userData = {
         timeStamp: Date.now(),
         version: vAPI.app.version,
-        userSettings: µb.userSettings,
+        userSettings:
+            µb.getModifiedSettings(µb.userSettings, µb.userSettingsDefault),
         selectedFilterLists: µb.selectedFilterLists,
-        hiddenSettings: µb.hiddenSettings,
+        hiddenSettings:
+            µb.getModifiedSettings(µb.hiddenSettings, µb.hiddenSettingsDefault),
         whitelist: µb.arrayFromWhitelist(µb.netWhitelist),
-        // String representation eventually to be deprecated
-        netWhitelist: µb.stringFromWhitelist(µb.netWhitelist),
         dynamicFilteringString: µb.permanentFirewall.toString(),
         urlFilteringString: µb.permanentURLFiltering.toString(),
         hostnameSwitchesString: µb.permanentSwitches.toString(),
@@ -943,6 +964,21 @@ const backupUserData = async function() {
 const restoreUserData = async function(request) {
     const userData = request.userData;
 
+    // https://github.com/LiCybora/NanoDefenderFirefox/issues/196
+    //   Backup data could be from Chromium platform or from an older
+    //   Firefox version.
+    if (
+        vAPI.webextFlavor.soup.has('firefox') &&
+        vAPI.app.intFromVersion(userData.version) <= 1031003011
+    ) {
+        userData.hostnameSwitchesString += '\nno-csp-reports: * true';
+    }
+
+    // List of external lists is meant to be an array.
+    if ( typeof userData.externalLists === 'string' ) {
+        userData.externalLists = userData.externalLists.trim().split(/[\n\r]+/);
+    }
+
     // https://github.com/chrisaljoudi/uBlock/issues/1102
     //   Ensure all currently cached assets are flushed from storage AND memory.
     µb.assets.rmrf();
@@ -959,12 +995,24 @@ const restoreUserData = async function(request) {
 
     // Restore user data
     vAPI.storage.set(userData.userSettings);
+
+    // Restore advanced settings.
     let hiddenSettings = userData.hiddenSettings;
     if ( hiddenSettings instanceof Object === false ) {
         hiddenSettings = µBlock.hiddenSettingsFromString(
             userData.hiddenSettingsString || ''
         );
     }
+    // Discard unknown setting or setting with default value.
+    for ( const key in hiddenSettings ) {
+        if (
+            µb.hiddenSettingsDefault.hasOwnProperty(key) === false ||
+            hiddenSettings[key] === µb.hiddenSettingsDefault[key]
+        ) {
+            delete hiddenSettings[key];
+        }
+    }
+
     // Whitelist directives can be represented as an array or as a
     // (eventually to be deprecated) string.
     let whitelist = userData.whitelist;
@@ -976,7 +1024,7 @@ const restoreUserData = async function(request) {
         whitelist = userData.netWhitelist.split('\n');
     }
     vAPI.storage.set({
-        hiddenSettings: hiddenSettings,
+        hiddenSettings,
         netWhitelist: whitelist || [],
         dynamicFilteringString: userData.dynamicFilteringString || '',
         urlFilteringString: userData.urlFilteringString || '',
@@ -1007,7 +1055,7 @@ const resetUserData = async function() {
     vAPI.app.restart();
 };
 
-// 3rd-party filters
+// Filter lists
 const prepListEntries = function(entries) {
     const µburi = µb.URI;
     for ( const k in entries ) {
@@ -1030,7 +1078,6 @@ const getLists = async function(callback) {
         cache: null,
         cosmeticFilterCount: µb.cosmeticFilteringEngine.getFilterCount(),
         current: µb.availableFilterLists,
-        externalLists: µb.userSettings.externalLists,
         ignoreGenericCosmeticFilters: µb.userSettings.ignoreGenericCosmeticFilters,
         isUpdating: µb.assets.isUpdating(),
         netFilterCount: µb.staticNetFilteringEngine.getFilterCount(),
@@ -1064,6 +1111,26 @@ const getLists = async function(callback) {
     callback(r);
 };
 
+// My filters
+
+// TODO: also return origin of embedded frames?
+const getOriginHints = function() {
+    const punycode = self.punycode;
+    const out = new Set();
+    for ( const tabId of µb.pageStores.keys() ) {
+        if ( tabId === -1 ) { continue; }
+        const tabContext = µb.tabContextManager.lookup(tabId);
+        if ( tabContext === null ) { continue; }
+        let { rootDomain, rootHostname } = tabContext;
+        if ( rootDomain.endsWith('-scheme') ) { continue; }
+        const isPunycode = rootHostname.includes('xn--');
+        out.add(isPunycode ? punycode.toUnicode(rootDomain) : rootDomain);
+        if ( rootHostname === rootDomain ) { continue; }
+        out.add(isPunycode ? punycode.toUnicode(rootHostname) : rootHostname);
+    }
+    return Array.from(out);
+};
+
 // My rules
 const getRules = function() {
     return {
@@ -1076,7 +1143,8 @@ const getRules = function() {
             µb.sessionFirewall.toArray().concat(
                 µb.sessionSwitches.toArray(),
                 µb.sessionURLFiltering.toArray()
-            )
+            ),
+        pslSelfie: self.publicSuffixList.toSelfie(),
     };
 };
 
@@ -1198,16 +1266,25 @@ const onMessage = function(request, sender, callback) {
     let response;
 
     switch ( request.what ) {
-    case 'canUpdateShortcuts':
-        response = µb.canUpdateShortcuts;
+    case 'dashboardConfig':
+        response = {
+            canUpdateShortcuts: µb.canUpdateShortcuts,
+            noDashboard: µb.noDashboard,
+        };
         break;
 
     case 'getAutoCompleteDetails':
-        response = {
-            redirectResources: µb.redirectEngine.getResourceDetails(),
-            preparseDirectiveTokens: µb.preparseDirectives.getTokens(),
-            preparseDirectiveHints: µb.preparseDirectives.getHints(),
-        };
+        response = {};
+        if ( (request.hintUpdateToken || 0) === 0 ) {
+            response.redirectResources = µb.redirectEngine.getResourceDetails();
+            response.preparseDirectiveTokens = µb.preparseDirectives.getTokens();
+            response.preparseDirectiveHints = µb.preparseDirectives.getHints();
+            response.expertMode = µb.hiddenSettings.filterAuthorMode;
+        }
+        if ( request.hintUpdateToken !== µb.pageStoresToken ) {
+            response.originHints = getOriginHints();
+            response.hintUpdateToken = µb.pageStoresToken;
+        }
         break;
 
     case 'getRules':
@@ -1236,8 +1313,9 @@ const onMessage = function(request, sender, callback) {
 
     case 'readHiddenSettings':
         response = {
-            current: µb.hiddenSettings,
-            default: µb.hiddenSettingsDefault,
+            'default': µb.hiddenSettingsDefault,
+            'admin': µb.hiddenSettingsAdmin,
+            'current': µb.hiddenSettings,
         };
         break;
 
@@ -1475,8 +1553,8 @@ vAPI.messaging.listen({
 {
 // >>>>> start of local scope
 
-var onMessage = function(request, sender, callback) {
-    const tabId = sender && sender.tab ? sender.tab.id : 0;
+const onMessage = function(request, sender, callback) {
+    const tabId = sender.tabId || 0;
 
     // Async
     switch ( request.what ) {
@@ -1561,10 +1639,12 @@ const logCSPViolations = function(pageStore, request) {
         cspData = new Map();
 
         const staticDirectives =
-            µb.staticNetFilteringEngine.matchAndFetchData(fctxt, 'csp');
-        for ( const directive of staticDirectives ) {
-            if ( directive.result !== 1 ) { continue; }
-            cspData.set(directive.getData('csp'), directive.logData());
+            µb.staticNetFilteringEngine.matchAndFetchModifiers(fctxt, 'csp');
+        if ( staticDirectives !== undefined ) {
+            for ( const directive of staticDirectives ) {
+                if ( directive.result !== 1 ) { continue; }
+                cspData.set(directive.value, directive.logData());
+            }
         }
 
         fctxt.type = 'inline-script';
@@ -1602,6 +1682,9 @@ const logCSPViolations = function(pageStore, request) {
             if ( type === 'script' ) { type = 'inline-script'; }
             else if ( type === 'font' ) { type = 'inline-font'; }
         }
+        // The resource was blocked as a result of applying a CSP directive
+        // elsewhere rather than to the resource itself.
+        logData.modifier = undefined;
         fctxt.setURL(violation.url)
              .setType(type)
              .setFilter(logData)
@@ -1627,8 +1710,8 @@ logCSPViolations.policyDirectiveToTypeMap = new Map([
 ]);
 
 const onMessage = function(request, sender, callback) {
-    let tabId = sender && sender.tab ? sender.tab.id : 0;
-    let pageStore = µb.pageStoreFromTabId(tabId);
+    const tabId = sender.tabId || 0;
+    const pageStore = µb.pageStoreFromTabId(tabId);
 
     // Async
     switch ( request.what ) {
@@ -1642,15 +1725,22 @@ const onMessage = function(request, sender, callback) {
     switch ( request.what ) {
     case 'applyFilterListSelection':
         response = µb.applyFilterListSelection(request);
+    case 'inlinescriptFound':
+        if ( µb.logger.enabled && pageStore !== null ) {
+            const fctxt = µb.filteringContext.duplicate();
+            fctxt.fromTabId(tabId)
+                .setType('inline-script')
+                .setURL(request.docURL)
+                .setDocOriginFromURL(request.docURL);
+            if ( pageStore.filterRequest(fctxt) === 0 ) {
+                fctxt.setRealm('network').toLogger();
+            }
+        }
         break;
 
     case 'logCosmeticFilteringData':
         logCosmeticFilters(tabId, request);
         break;
-
-    case 'reloadAllFilters':
-        µb.loadFilterLists();
-        return;
 
     case 'securityPolicyViolation':
         response = logCSPViolations(pageStore, request);
@@ -1658,14 +1748,20 @@ const onMessage = function(request, sender, callback) {
 
     case 'temporarilyAllowLargeMediaElement':
         if ( pageStore !== null ) {
-            pageStore.allowLargeMediaElementsUntil = Date.now() + 2000;
+            pageStore.allowLargeMediaElementsUntil = Date.now() + 5000;
         }
         break;
 
-    case 'subscriberData':
-        response = {
-            confirmStr: vAPI.i18n('subscriberConfirm')
-        };
+    case 'subscribeTo':
+        const url = encodeURIComponent(request.location);
+        const title = encodeURIComponent(request.title);
+        const hash = µb.selectedFilterLists.indexOf(request.location) !== -1
+            ? '#subscribed'
+            : '';
+        vAPI.tabs.open({
+            url: `/asset-viewer.html?url=${url}&title=${title}&subscribe=1${hash}`,
+            select: true,
+        });
         break;
 
     default:

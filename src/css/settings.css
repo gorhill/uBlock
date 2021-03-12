@@ -5,11 +5,19 @@
 ul {
     padding-left: 1em;
     padding-right: 0;
-    }
+}
+    body {
+    margin-bottom: 6rem;
+}
+.synopsis {
+    font-size: 90%;
+}
+[href="advanced-settings.html"] {
+    display: none;
+}
 body[dir="rtl"] ul {
     padding-left: 0;
     padding-right: 1em;
-    }
 }
 
 ul#userSettings {

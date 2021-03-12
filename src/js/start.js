@@ -70,7 +70,7 @@ const initializeTabs = async function() {
             if ( tab.discarded === true ) { continue; }
             const { id, url } = tab;
             µb.tabContextManager.commit(id, url);
-            µb.bindTabToPageStats(id);
+            µb.bindTabToPageStore(id);
             // https://github.com/chrisaljoudi/uBlock/issues/129
             //   Find out whether content scripts need to be injected
             //   programmatically. This may be necessary for web pages which
@@ -112,31 +112,17 @@ const onVersionReady = function(lastVersion) {
     µb.redirectEngine.invalidateResourcesSelfie();
 
     const lastVersionInt = vAPI.app.intFromVersion(lastVersion);
+    if ( lastVersionInt === 0 ) { return; }
 
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/494
-    //   Remove useless per-site switches.
-    if ( lastVersionInt <= 1019003007 ) {
-        µb.sessionSwitches.toggle('no-scripting', 'behind-the-scene', 0);
-        µb.permanentSwitches.toggle('no-scripting', 'behind-the-scene', 0);
+    // https://github.com/LiCybora/NanoDefenderFirefox/issues/196
+    //   Toggle on the blocking of CSP reports by default for Firefox.
+    if (
+        vAPI.webextFlavor.soup.has('firefox') &&
+        lastVersionInt <= 1031003011
+    ) {
+        µb.sessionSwitches.toggle('no-csp-reports', '*', 1);
+        µb.permanentSwitches.toggle('no-csp-reports', '*', 1);
         µb.saveHostnameSwitches();
-    }
-
-    // Configure new popup panel according to classic popup panel
-    // configuration.
-    if ( lastVersionInt !== 0 ) {
-        if ( lastVersionInt <= 1026003014 ) {
-            µb.userSettings.popupPanelSections =
-                µb.userSettings.dynamicFilteringEnabled === true ? 0b11111 : 0b01111;
-            µb.userSettings.dynamicFilteringEnabled = undefined;
-            µb.saveUserSettings();
-        } else if (
-            lastVersionInt <= 1026003016 &&
-            (µb.userSettings.popupPanelSections & 1) !== 0
-        ) {
-            µb.userSettings.popupPanelSections =
-                (µb.userSettings.popupPanelSections << 1 | 1) & 0b111111;
-            µb.saveUserSettings();
-        }
     }
 
     vAPI.storage.set({ version: vAPI.app.version });
@@ -148,10 +134,23 @@ const onVersionReady = function(lastVersion) {
 // Whitelist in memory.
 // Whitelist parser needs PSL to be ready.
 // gorhill 2014-12-15: not anymore
+//
+// https://github.com/uBlockOrigin/uBlock-issues/issues/1433
+//   Allow admins to add their own trusted-site directives.
 
-const onNetWhitelistReady = function(netWhitelistRaw) {
+const onNetWhitelistReady = function(netWhitelistRaw, adminExtra) {
     if ( typeof netWhitelistRaw === 'string' ) {
         netWhitelistRaw = netWhitelistRaw.split('\n');
+    }
+    // Append admin-controlled trusted-site directives
+    if (
+        adminExtra instanceof Object &&
+        Array.isArray(adminExtra.trustedSiteDirectives)
+    ) {
+        for ( const directive of adminExtra.trustedSiteDirectives ) {
+            µb.netWhitelistDefault.push(directive);
+            netWhitelistRaw.push(directive);
+        }
     }
     µb.netWhitelist = µb.whitelistFromArray(netWhitelistRaw);
     µb.netWhitelistModifyTime = Date.now();
@@ -162,26 +161,21 @@ const onNetWhitelistReady = function(netWhitelistRaw) {
 // User settings are in memory
 
 const onUserSettingsReady = function(fetched) {
-    const userSettings = µb.userSettings;
+    // List of external lists is meant to be an array
+    if ( typeof fetched.externalLists === 'string' ) {
+        fetched.externalLists =
+            fetched.externalLists.trim().split(/[\n\r]+/);
+    }
 
-    fromFetch(userSettings, fetched);
+    fromFetch(µb.userSettings, fetched);
 
     if ( µb.privacySettingsSupported ) {
         vAPI.browserSettings.set({
-            'hyperlinkAuditing': !userSettings.hyperlinkAuditingDisabled,
-            'prefetching': !userSettings.prefetchingDisabled,
-            'webrtcIPAddress': !userSettings.webrtcIPAddressHidden
+            'hyperlinkAuditing': !µb.userSettings.hyperlinkAuditingDisabled,
+            'prefetching': !µb.userSettings.prefetchingDisabled,
+            'webrtcIPAddress': !µb.userSettings.webrtcIPAddressHidden
         });
     }
-
-    µb.permanentFirewall.fromString(fetched.dynamicFilteringString);
-    µb.sessionFirewall.assign(µb.permanentFirewall);
-    µb.permanentURLFiltering.fromString(fetched.urlFilteringString);
-    µb.sessionURLFiltering.assign(µb.permanentURLFiltering);
-    µb.permanentSwitches.fromString(fetched.hostnameSwitchesString);
-    µb.sessionSwitches.assign(µb.permanentSwitches);
-
-
     // https://github.com/gorhill/uBlock/issues/1892
     // For first installation on a battery-powered device, disable generic
     // cosmetic filtering.
@@ -194,10 +188,11 @@ const onUserSettingsReady = function(fetched) {
 
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1588916
 //   Save magic format numbers into the cache storage itself.
+// https://github.com/uBlockOrigin/uBlock-issues/issues/1365
+//   Wait for removal of invalid cached data to be completed.
 
-const onCacheSettingsReady = function(fetched) {
+const onCacheSettingsReady = async function(fetched) {
     if ( fetched.compiledMagic !== µb.systemSettings.compiledMagic ) {
-        µb.assets.remove(/^compiled\//);
         µb.compiledFormatChanged = true;
         µb.selfieIsInvalid = true;
     }
@@ -212,7 +207,7 @@ const onCacheSettingsReady = function(fetched) {
 
 /******************************************************************************/
 
-const onFirstFetchReady = function(fetched) {
+const onFirstFetchReady = function(fetched, adminExtra) {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/507
     //   Firefox-specific: somehow `fetched` is undefined under certain
     //   circumstances even though we asked to load with default values.
@@ -225,9 +220,16 @@ const onFirstFetchReady = function(fetched) {
 
     // Order is important -- do not change:
     fromFetch(µb.localSettings, fetched);
-    onUserSettingsReady(fetched);
     fromFetch(µb.restoreBackupSettings, fetched);
-    onNetWhitelistReady(fetched.netWhitelist);
+
+    µb.permanentFirewall.fromString(fetched.dynamicFilteringString);
+    µb.sessionFirewall.assign(µb.permanentFirewall);
+    µb.permanentURLFiltering.fromString(fetched.urlFilteringString);
+    µb.sessionURLFiltering.assign(µb.permanentURLFiltering);
+    µb.permanentSwitches.fromString(fetched.hostnameSwitchesString);
+    µb.sessionSwitches.assign(µb.permanentSwitches);
+
+    onNetWhitelistReady(fetched.netWhitelist, adminExtra);
     onVersionReady(fetched.version);
 };
 
@@ -257,7 +259,7 @@ const createDefaultProps = function() {
             'behind-the-scene * inline-script noop',
             'behind-the-scene * 1p-script noop',
             'behind-the-scene * 3p-script noop',
-            'behind-the-scene * 3p-frame noop'
+            'behind-the-scene * 3p-frame noop',
         ].join('\n'),
         'urlFilteringString': '',
         'hostnameSwitchesString': [
@@ -270,8 +272,11 @@ const createDefaultProps = function() {
         'netWhitelist': µb.netWhitelistDefault,
         'version': '0.0.0.0'
     };
+    // https://github.com/LiCybora/NanoDefenderFirefox/issues/196
+    if ( vAPI.webextFlavor.soup.has('firefox') ) {
+        fetchableProps.hostnameSwitchesString += '\nno-csp-reports: * true';
+    }
     toFetch(µb.localSettings, fetchableProps);
-    toFetch(µb.userSettings, fetchableProps);
     toFetch(µb.restoreBackupSettings, fetchableProps);
     return fetchableProps;
 };
@@ -304,6 +309,11 @@ try {
     );
     log.info(`Backend storage for cache will be ${cacheBackend}`);
 
+    const adminExtra = await vAPI.adminStorage.get('toAdd');
+    log.info(`Extra admin settings ready ${Date.now()-vAPI.T0} ms after launch`);
+
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1365
+    //   Wait for onCacheSettingsReady() to be fully ready.
     await Promise.all([
         µb.loadSelectedFilterLists().then(( ) => {
             log.info(`List selection ready ${Date.now()-vAPI.T0} ms after launch`);
@@ -316,7 +326,11 @@ try {
         }),
         vAPI.storage.get(createDefaultProps()).then(fetched => {
             log.info(`First fetch ready ${Date.now()-vAPI.T0} ms after launch`);
-            onFirstFetchReady(fetched);
+            onFirstFetchReady(fetched, adminExtra);
+        }),
+        µb.loadUserSettings().then(fetched => {
+            log.info(`User settings ready ${Date.now()-vAPI.T0} ms after launch`);
+            onUserSettingsReady(fetched);
         }),
         µb.loadPublicSuffixList().then(( ) => {
             log.info(`PSL ready ${Date.now()-vAPI.T0} ms after launch`);

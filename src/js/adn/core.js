@@ -1073,7 +1073,9 @@
     let c;
     const writer = new µb.CompiledLineIO.Writer();
     const parser = new vAPI.StaticFilteringParser();
-    parser.setMaxTokenLength(µb.urlTokenizer.MAX_TOKEN_LENGTH);
+    // urlTokenizer property doesn't exist anymore, MAX_TOKEN_LENGTH can now be found on 'staticNetFilteringEngine'
+    // parser.setMaxTokenLength(µb.urlTokenizer.MAX_TOKEN_LENGTH);
+    parser.setMaxTokenLength(µb.staticNetFilteringEngine.MAX_TOKEN_LENGTH);
     parser.analyze(filter.raw);
 
     if ( µb.staticNetFilteringEngine.compile(parser, writer) === false ) {
@@ -1174,11 +1176,13 @@
       return true;
     }
 
+    /*
     // always allow redirect blocks from lists (?)
     if (µb.redirectEngine.toURL(context)) {
       logNetBlock('*Redirect*', context.docDomain + ' => ' + context.url, context);
       return true;
     }
+    */
 
     const snfe = µb.staticNetFilteringEngine, snfeData = snfe.toLogData();
     /*
@@ -2242,9 +2246,9 @@ const verifyList = exports.verifyList = function (note, lists) {
     let frameId;
     const µb = µBlock;
 
-    if (sender && sender.tab) {
+    if (sender && sender.tabId) {
 
-      tabId = sender.tab.id;
+      tabId = sender.tabId;
       frameId = sender.frameId;
       pageStore = µb.pageStoreFromTabId(tabId);
     }

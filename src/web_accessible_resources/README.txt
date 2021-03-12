@@ -1,7 +1,7 @@
 IMPORTANT
 
 Content of this folder cannot be accessed without the internal secret token
-created each time uBlock Origin is launched.
+created for each request to any of the "web accessible resources".
 
 Any fetch operation made without uBlock Origin's internal secret will result
 in failure. This means that despite the content of the folder here declared as

@@ -15,7 +15,7 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "adnauseam@rednoise.org",
-      "strict_min_version": "55.0"
+      "strict_min_version": "57.0"
     }
   },
   "commands": {
@@ -57,8 +57,12 @@
     },
     {
       "matches": [
-        "http://*/*",
-        "https://*/*"
+        "https://easylist.to/*",
+        "https://*.fanboy.co.nz/*",
+        "https://filterlists.com/*",
+        "https://forums.lanik.us/*",
+        "https://github.com/*",
+        "https://*.github.io/*"
       ],
       "js": [
         "/js/scriptlets/subscriber.js"

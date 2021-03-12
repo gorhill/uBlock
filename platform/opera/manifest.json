@@ -21,36 +21,55 @@
     "page": "background.html"
   },
   "commands": {
-      "launch-element-zapper": {
-          "description": "__MSG_popupTipZapper__"
-      },
-      "launch-element-picker": {
-          "description": "__MSG_popupTipPicker__"
-      },
-      "launch-logger": {
-          "description": "__MSG_popupTipLog__"
-      },
-      "open-dashboard": {
-        "description": "__MSG_popupTipDashboard__"
-      },
-      "relax-blocking-mode": {
-        "description": "__MSG_relaxBlockingMode__"
-      }
+    "launch-element-zapper": {
+        "description": "__MSG_popupTipZapper__"
+    },
+    "launch-element-picker": {
+        "description": "__MSG_popupTipPicker__"
+    },
+    "launch-logger": {
+        "description": "__MSG_popupTipLog__"
+    },
+    "open-dashboard": {
+      "description": "__MSG_popupTipDashboard__"
+    },
+    "relax-blocking-mode": {
+      "description": "__MSG_relaxBlockingMode__"
+    }
   },
-  "content_scripts": [{
-    "matches": ["http://*/*", "https://*/*"],
-    "js": ["js/vapi.js","js/vapi-client.js", "js/adn/textads.js", "js/adn/parser.js", "js/contentscript.js"],
-    "run_at": "document_start",
-    "match_about_blank": true,
-    "all_frames": true
-  }, {
-    "matches": ["http://*/*", "https://*/*"],
-    "js": ["js/scriptlets/subscriber.js"],
-    "run_at": "document_idle",
-    "all_frames": false
-  }],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "js/vapi.js",
+        "js/vapi-client.js",
+        "js/contentscript.js"
+      ],
+      "all_frames": true,
+      "match_about_blank": true,
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://easylist.to/*",
+        "https://*.fanboy.co.nz/*",
+        "https://filterlists.com/*",
+        "https://forums.lanik.us/*",
+        "https://github.com/*",
+        "https://*.github.io/*"
+      ],
+      "js": [
+        "/js/scriptlets/subscriber.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "minimum_opera_version": "42.0",
   "incognito": "spanning",
-  "minimum_opera_version": "40.0",
   "options_page": "dashboard.html",
   "permissions": [
     "contextMenus",
