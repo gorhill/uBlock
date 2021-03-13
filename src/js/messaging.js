@@ -1440,21 +1440,14 @@ const getURLFilteringData = function(details) {
 const compileTemporaryException = function(filter) {
     const parser = new vAPI.StaticFilteringParser();
     parser.analyze(filter);
-    if ( parser.shouldDiscard() ) { return {}; }
-    let selector = parser.result.compiled;
-    let session;
-    if ( (parser.flavorBits & parser.BITFlavorExtScriptlet) !== 0 ) {
-        session = µb.scriptletFilteringEngine.getSession();
-    } else if ( (parser.flavorBits & parser.BITFlavorExtHTML) !== 0 ) {
-        session = µb.htmlFilteringEngine.getSession();
-    } else {
-        session = µb.cosmeticFilteringEngine.getSession();
-    }
-    return { session, selector };
+    if ( parser.shouldDiscard() ) { return; }
+    return µb.staticExtFilteringEngine.compileTemporary(parser);
 };
 
 const toggleTemporaryException = function(details) {
-    const { session, selector } = compileTemporaryException(details.filter);
+    const result = compileTemporaryException(details.filter);
+    if ( result === undefined ) { return false; }
+    const { session, selector } = result;
     if ( session.has(1, selector) ) {
         session.remove(1, selector);
         return false;
@@ -1464,7 +1457,9 @@ const toggleTemporaryException = function(details) {
 };
 
 const hasTemporaryException = function(details) {
-    const { session, selector } = compileTemporaryException(details.filter);
+    const result = compileTemporaryException(details.filter);
+    if ( result === undefined ) { return false; }
+    const { session, selector } = result;
     return session && session.has(1, selector);
 };
 

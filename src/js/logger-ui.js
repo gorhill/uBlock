@@ -29,6 +29,9 @@
 
 /******************************************************************************/
 
+// TODO: fix the inconsistencies re. realm vs. filter source which have
+//       accumulated over time.
+
 const messaging = vAPI.messaging;
 const logger = self.logger = { ownerId: Date.now() };
 const logDate = new Date();
@@ -341,6 +344,11 @@ const processLoggerEntries = function(response) {
 /******************************************************************************/
 
 const parseLogEntry = function(details) {
+    // Patch realm until changed all over codebase to make this unecessary
+    if ( details.realm === 'cosmetic' ) {
+        details.realm = 'extended';
+    }
+
     const entry = new LogEntry(details);
 
     // Assemble the text content, i.e. the pre-built string which will be
@@ -440,6 +448,8 @@ const viewPort = (( ) => {
     const vwLineSizer = document.getElementById('vwLineSizer');
     const vwLogEntryTemplate = document.querySelector('#logEntryTemplate > div');
     const vwEntries = [];
+
+    const detailableRealms = new Set([ 'network', 'extended' ]);
 
     let vwHeight = 0;
     let lineHeight = 0;
@@ -672,7 +682,7 @@ const viewPort = (( ) => {
             return div;
         }
 
-        if ( details.realm === 'network' || details.realm === 'cosmetic' ) {
+        if ( detailableRealms.has(details.realm) ) {
             divcl.add('canDetails');
         }
 
@@ -685,12 +695,12 @@ const viewPort = (( ) => {
             }
             if ( filteringType === 'static' ) {
                 divcl.add('canLookup');
-                if ( filter.modifier === true ) {
-                    div.setAttribute('data-modifier', '');
-                }
-            } else if ( filteringType === 'cosmetic' ) {
+            } else if ( details.realm === 'extended' ) {
                 divcl.add('canLookup');
                 divcl.toggle('isException', filter.raw.startsWith('#@#'));
+            }
+            if ( filter.modifier === true ) {
+                div.setAttribute('data-modifier', '');
             }
         }
         span = div.children[1];
@@ -1575,7 +1585,7 @@ const reloadTab = function(ev) {
                 rawFilter: rawFilter,
             });
             handleResponse(response);
-        } else if ( targetRow.classList.contains('cosmeticRealm') ) {
+        } else if ( targetRow.classList.contains('extendedRealm') ) {
             const response = await messaging.send('loggerUI', {
                 what: 'listsFromCosmeticFilter',
                 url: targetRow.children[6].textContent,
@@ -1583,7 +1593,7 @@ const reloadTab = function(ev) {
             });
             handleResponse(response);
         }
-    } ;
+    };
 
     const fillSummaryPane = function() {
         const rows = dialog.querySelectorAll('.pane.details > div');
@@ -1595,7 +1605,7 @@ const reloadTab = function(ev) {
         text = filterFromTargetRow();
         if (
             (text !== '') &&
-            (trcl.contains('cosmeticRealm') || trcl.contains('networkRealm'))
+            (trcl.contains('extendedRealm') || trcl.contains('networkRealm'))
         ) {
             toSummaryPaneFilterNode(rows[0], text);
         } else {
@@ -1607,7 +1617,7 @@ const reloadTab = function(ev) {
             (
                 trcl.contains('dynamicHost') ||
                 trcl.contains('dynamicUrl') ||
-                trcl.contains('switch')
+                trcl.contains('switchRealm')
             )
         ) {
             rows[2].children[1].textContent = text;
@@ -1677,7 +1687,9 @@ const reloadTab = function(ev) {
 
     // Fill dynamic URL filtering pane
     const fillDynamicPane = function() {
-        if ( targetRow.classList.contains('cosmeticRealm') ) { return; }
+        if ( targetRow.classList.contains('extendedRealm') ) {
+            return;
+        }
 
         // https://github.com/uBlockOrigin/uBlock-issues/issues/662#issuecomment-509220702
         if ( targetType === 'doc' ) { return; }
@@ -1712,8 +1724,6 @@ const reloadTab = function(ev) {
         }
 
         colorize();
-
-        uDom('#modalOverlayContainer [data-pane="dynamic"]').removeClass('hide');
     };
 
     const fillOriginSelect = function(select, hostname, domain) {
@@ -1733,7 +1743,9 @@ const reloadTab = function(ev) {
 
     // Fill static filtering pane
     const fillStaticPane = function() {
-        if ( targetRow.classList.contains('cosmeticRealm') ) { return; }
+        if ( targetRow.classList.contains('extendedRealm') ) {
+            return;
+        }
 
         const template = vAPI.i18n('loggerStaticFilteringSentence');
         const rePlaceholder = /\{\{[^}]+?\}\}/g;
@@ -1842,8 +1854,8 @@ const reloadTab = function(ev) {
             }
         );
         dialog.classList.toggle(
-            'cosmeticRealm',
-            targetRow.classList.contains('cosmeticRealm')
+            'extendedRealm',
+            targetRow.classList.contains('extendedRealm')
         );
         targetDomain = domains[0];
         targetPageDomain = domains[1];
@@ -2403,10 +2415,10 @@ const popupManager = (( ) => {
 // Filter hit stats' MVP ("minimum viable product")
 //
 const loggerStats = (( ) => {
+    const enabled = false;
     const filterHits = new Map();
     let dialog;
     let timer;
-
     const makeRow = function() {
         const div = document.createElement('div');
         div.appendChild(document.createElement('span'));
@@ -2470,6 +2482,7 @@ const loggerStats = (( ) => {
 
     return {
         processFilter: function(filter) {
+            if ( enabled !== true ) { return; }
             if ( filter.source !== 'static' && filter.source !== 'cosmetic' ) {
                 return;
             }

@@ -237,12 +237,12 @@
         µBlock.filteringContext
             .duplicate()
             .fromTabId(details.tabId)
-            .setRealm('cosmetic')
+            .setRealm('extended')
             .setType('dom')
             .setURL(details.url)
             .setDocOriginFromURL(details.url)
             .setFilter({
-                source: 'cosmetic',
+                source: 'extended',
                 raw: `${exception === 0 ? '##' : '#@#'}^${selector}`
             })
             .toLogger();
@@ -322,6 +322,13 @@
         }
     };
 
+    api.compileTemporary = function(parser) {
+        return {
+            session: sessionFilterDB,
+            selector: parser.result.compiled,
+        };
+    };
+
     api.fromCompiledContent = function(reader) {
         // Don't bother loading filters if stream filtering is not supported.
         if ( µb.canFilterResponseData === false ) { return; }
@@ -348,15 +355,6 @@
     api.retrieve = function(details) {
         const hostname = details.hostname;
 
-        // https://github.com/gorhill/uBlock/issues/2835
-        //   Do not filter if the site is under an `allow` rule.
-        if (
-            µb.userSettings.advancedUserEnabled &&
-            µb.sessionFirewall.evaluateCellZY(hostname, hostname, '*') === 2
-        ) {
-            return;
-        }
-
         const plains = new Set();
         const procedurals = new Set();
         const exceptions = new Set();
@@ -378,6 +376,15 @@
         );
     
         if ( plains.size === 0 && procedurals.size === 0 ) { return; }
+
+        // https://github.com/gorhill/uBlock/issues/2835
+        //   Do not filter if the site is under an `allow` rule.
+        if (
+            µb.userSettings.advancedUserEnabled &&
+            µb.sessionFirewall.evaluateCellZY(hostname, hostname, '*') === 2
+        ) {
+            return;
+        }
 
         const out = { plains, procedurals };
 

@@ -260,11 +260,11 @@ body.colorBlind #netFilteringDialog > .panes > .details > div[data-status="2"] {
 #vwRenderer .logEntry > div[data-tabid="-1"] {
     text-shadow: 0 0.2em 0.4em #aaa;
     }
-#vwRenderer .logEntry > div.cosmeticRealm,
+#vwRenderer .logEntry > div.extendedRealm,
 #vwRenderer .logEntry > div.redirect {
     background-color: rgba(255, 255, 0, 0.1);
     }
-body.colorBlind #vwRenderer .logEntry > div.cosmeticRealm,
+body.colorBlind #vwRenderer .logEntry > div.extendedRealm,
 body.colorBlind #vwRenderer .logEntry > div.redirect {
     background-color: rgba(0, 19, 110, 0.1);
     }
@@ -324,13 +324,13 @@ body[dir="rtl"] #vwRenderer .logEntry > div > span:first-child {
 #vwRenderer .logEntry > div.messageRealm[data-type="tabLoad"] > span:nth-of-type(2) {
     text-align: center;
     }
-#vwRenderer .logEntry > div.cosmeticRealm > span:nth-of-type(2) > span:first-of-type {
+#vwRenderer .logEntry > div.extendedRealm > span:nth-of-type(2) > span:first-of-type {
     display: none;
     }
-#vwRenderer .logEntry > div.cosmeticRealm > span:nth-of-type(2) > span:last-of-type {
+#vwRenderer .logEntry > div.extendedRealm > span:nth-of-type(2) > span:last-of-type {
     pointer-events: none;
     }
-#vwRenderer .logEntry > div.cosmeticRealm.isException > span:nth-of-type(2) > span:last-of-type {
+#vwRenderer .logEntry > div.extendedRealm.isException > span:nth-of-type(2) > span:last-of-type {
     text-decoration: line-through rgba(0,0,255,0.7);
     }
 #vwRenderer .logEntry > div > span:nth-of-type(3) {
@@ -615,12 +615,12 @@ body[dir="rtl"] #netFilteringDialog > .headers > .tools {
 #netFilteringDialog > .headers > .tools > span:hover {
     background-color: #eee;
     }
-#netFilteringDialog.cosmeticRealm > .headers > .dynamic,
-#netFilteringDialog.cosmeticRealm > .panes > .dynamic {
+#netFilteringDialog.extendedRealm > .headers > .dynamic,
+#netFilteringDialog.extendedRealm > .panes > .dynamic {
     display: none;
     }
-#netFilteringDialog.cosmeticRealm > .headers > .static,
-#netFilteringDialog.cosmeticRealm > .panes > .static {
+#netFilteringDialog.extendedRealm > .headers > .static,
+#netFilteringDialog.extendedRealm > .panes > .static {
     display: none;
     }
 #netFilteringDialog > div.panes {

@@ -540,6 +540,15 @@ FilterContainer.prototype.compileSpecificSelector = function(
 
 /******************************************************************************/
 
+FilterContainer.prototype.compileTemporary = function(parser) {
+    return {
+        session: this.sessionFilterDB,
+        selector: parser.result.compiled,
+    };
+};
+
+/******************************************************************************/
+
 FilterContainer.prototype.fromCompiledContent = function(reader, options) {
     if ( options.skipCosmetic ) {
         this.skipCompiledContent(reader);

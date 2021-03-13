@@ -304,6 +304,20 @@ const Parser = class {
         }
         // ##^...
         if ( hasBits(this.slices[i], BITCaret) ) {
+            // ##^responseheader(...)
+            if (
+                selector.startsWith('^responseheader(') &&
+                selector.endsWith(')')
+            ) {
+                this.flavorBits |= BITFlavorExtResponseHeader;
+                this.result.raw = selector.slice(1);
+                const headerName = selector.slice(16, -1).trim().toLowerCase();
+                this.result.compiled = `responseheader(${headerName})`;
+                if ( this.removableHTTPHeaders.has(headerName) === false ) {
+                    this.flavorBits |= BITFlavorUnsupported;
+                }
+                return;
+            }
             this.flavorBits |= BITFlavorExtHTML;
             selector = selector.slice(1);
         }
@@ -1244,6 +1258,16 @@ const Parser = class {
 
 /******************************************************************************/
 
+Parser.removableHTTPHeaders = Parser.prototype.removableHTTPHeaders = new Set([
+    '',
+    'location',
+    'report-to',
+    'refresh',
+    'set-cookie',
+]);
+
+/******************************************************************************/
+
 // https://github.com/chrisaljoudi/uBlock/issues/1004
 //   Detect and report invalid CSS selectors.
 
@@ -1978,6 +2002,7 @@ const BITFlavorExtStrong         = 1 <<  8;
 const BITFlavorExtCosmetic       = 1 <<  9;
 const BITFlavorExtScriptlet      = 1 << 10;
 const BITFlavorExtHTML           = 1 << 11;
+const BITFlavorExtResponseHeader = 1 << 12;
 const BITFlavorIgnore            = 1 << 29;
 const BITFlavorUnsupported       = 1 << 30;
 const BITFlavorError             = 1 << 31;
@@ -2087,6 +2112,7 @@ Parser.prototype.BITFlavorExtStrong = BITFlavorExtStrong;
 Parser.prototype.BITFlavorExtCosmetic = BITFlavorExtCosmetic;
 Parser.prototype.BITFlavorExtScriptlet = BITFlavorExtScriptlet;
 Parser.prototype.BITFlavorExtHTML = BITFlavorExtHTML;
+Parser.prototype.BITFlavorExtResponseHeader = BITFlavorExtResponseHeader;
 Parser.prototype.BITFlavorIgnore = BITFlavorIgnore;
 Parser.prototype.BITFlavorUnsupported = BITFlavorUnsupported;
 Parser.prototype.BITFlavorError = BITFlavorError;

@@ -221,6 +221,7 @@ if (
                 // Generic exception
                 case 8:
                 // HTML filtering
+                // Response header filtering
                 case 64:
                     if ( exception !== ((fargs[2] & 0b001) !== 0) ) { break; }
                     isProcedural = (fargs[2] & 0b010) !== 0;

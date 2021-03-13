@@ -549,6 +549,23 @@ const initHints = function() {
 
     const getExtSelectorHints = function(cursor, line) {
         const beg = cursor.ch;
+        // Special selector case: `^responseheader`
+        {
+            const match = /#\^([a-z]+)$/.exec(line.slice(0, beg));
+            if (
+                match !== null &&
+                'responseheader'.startsWith(match[1]) &&
+                line.slice(beg) === ''
+            ) {
+                return pickBestHints(
+                    cursor,
+                    match[1],
+                    '',
+                    [ 'responseheader()' ]
+                );
+            }
+        }
+        // Procedural operators
         const matchLeft = /#\^?.*:([^:]*)$/.exec(line.slice(0, beg));
         const matchRight = /^([a-z-]*)\(?/.exec(line.slice(beg));
         if ( matchLeft === null || matchRight === null ) { return; }
@@ -557,6 +574,18 @@ const initHints = function() {
         for ( let [ text, bits ] of proceduralOperatorNames ) {
             if ( isStaticDOM && (bits & 0b10) !== 0 ) { continue; }
             hints.push(text);
+        }
+        return pickBestHints(cursor, matchLeft[1], matchRight[1], hints);
+    };
+
+    const getExtHeaderHints = function(cursor, line) {
+        const beg = cursor.ch;
+        const matchLeft = /#\^responseheader\((.*)$/.exec(line.slice(0, beg));
+        const matchRight = /^([^)]*)/.exec(line.slice(beg));
+        if ( matchLeft === null || matchRight === null ) { return; }
+        const hints = [];
+        for ( const hint of parser.removableHTTPHeaders ) {
+            hints.push(hint);
         }
         return pickBestHints(cursor, matchLeft[1], matchRight[1], hints);
     };
@@ -607,10 +636,12 @@ const initHints = function() {
             let hints;
             if ( cursor.ch <= parser.slices[parser.optionsAnchorSpan.i+1] ) {
                 hints = getOriginHints(cursor, line);
+            } else if ( parser.hasFlavor(parser.BITFlavorExtScriptlet) ) {
+                hints = getExtScriptletHints(cursor, line);
+            } else if ( parser.hasFlavor(parser.BITFlavorExtResponseHeader) ) {
+                hints = getExtHeaderHints(cursor, line);
             } else {
-                hints = parser.hasFlavor(parser.BITFlavorExtScriptlet)
-                    ? getExtScriptletHints(cursor, line)
-                    : getExtSelectorHints(cursor, line);
+                hints = getExtSelectorHints(cursor, line);
             }
             return hints;
         }

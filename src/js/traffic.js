@@ -508,7 +508,8 @@ const onHeadersReceived = function(details) {
     // Keep in mind response headers will be modified in-place if needed, so
     // `details.responseHeaders` will always point to the modified response
     // headers.
-    const responseHeaders = details.responseHeaders;
+    const { responseHeaders } = details;
+    if ( Array.isArray(responseHeaders) === false ) { return; }
 
     if ( isRootDoc === false && µb.hiddenSettings.filterOnHeaders === true ) {
         const result = pageStore.filterOnHeaders(fctxt, responseHeaders);
@@ -539,11 +540,17 @@ const onHeadersReceived = function(details) {
     }
 
     // At this point we have a HTML document.
+    
+    const filteredHTML =
+        µb.canFilterResponseData && filterDocument(fctxt, details) === true;
 
-    const filteredHTML = µb.canFilterResponseData &&
-                         filterDocument(pageStore, fctxt, details) === true;
-
-    let modifiedHeaders = injectCSP(fctxt, pageStore, responseHeaders) === true;
+    let modifiedHeaders = false;
+    if ( µb.httpheaderFilteringEngine.apply(fctxt, responseHeaders) === true ) {
+        modifiedHeaders = true;
+    }
+    if ( injectCSP(fctxt, pageStore, responseHeaders) === true ) {
+        modifiedHeaders = true;
+    }
 
     // https://bugzilla.mozilla.org/show_bug.cgi?id=1376932
     //   Prevent document from being cached by the browser if we modified it,
@@ -552,7 +559,7 @@ const onHeadersReceived = function(details) {
     //   Use `no-cache` instead of `no-cache, no-store, must-revalidate`, this
     //   allows Firefox's offline mode to work as expected.
     if ( (filteredHTML || modifiedHeaders) && dontCacheResponseHeaders ) {
-        let cacheControl = µb.hiddenSettings.cacheControlForFirefox1376932;
+        const cacheControl = µb.hiddenSettings.cacheControlForFirefox1376932;
         if ( cacheControl !== 'unset' ) {
             let i = headerIndexFromName('cache-control', responseHeaders);
             if ( i !== -1 ) {
@@ -565,7 +572,7 @@ const onHeadersReceived = function(details) {
     }
 
     if ( modifiedHeaders ) {
-        return { responseHeaders: responseHeaders };
+        return { responseHeaders };
     }
 };
 
@@ -614,7 +621,7 @@ const normalizeBehindTheSceneResponseHeaders = function(details) {
 
 **/
 
-const filterDocument = (function() {
+const filterDocument = (( ) => {
     const µb = µBlock;
     const filterers = new Map();
     let domParser, xmlSerializer,
@@ -805,7 +812,7 @@ const filterDocument = (function() {
         filterers.delete(this);
     };
 
-    return function(pageStore, fctxt, extras) {
+    return function(fctxt, extras) {
         // https://github.com/gorhill/uBlock/issues/3478
         const statusCode = extras.statusCode || 0;
         if ( statusCode !== 0 && (statusCode < 200 || statusCode >= 300) ) {

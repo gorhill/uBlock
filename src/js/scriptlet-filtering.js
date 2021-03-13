@@ -206,12 +206,12 @@
         µBlock.filteringContext
             .duplicate()
             .fromTabId(details.tabId)
-            .setRealm('cosmetic')
+            .setRealm('extended')
             .setType('dom')
             .setURL(details.url)
             .setDocOriginFromURL(details.url)
             .setFilter({
-                source: 'cosmetic',
+                source: 'extended',
                 raw: (isException ? '#@#' : '##') + `+js(${token})`
             })
             .toLogger();
@@ -263,10 +263,17 @@
         }
     };
 
+    api.compileTemporary = function(parser) {
+        return {
+            session: sessionScriptletDB,
+            selector: parser.result.compiled,
+        };
+    };
+
     // 01234567890123456789
     // +js(token[, arg[, ...]])
-    //     ^                 ^
-    //     4                -1
+    //     ^                  ^
+    //     4                 -1
 
     api.fromCompiledContent = function(reader) {
         reader.select(µb.compiledScriptletSection);
@@ -302,15 +309,6 @@
 
         const hostname = request.hostname;
 
-        // https://github.com/gorhill/uBlock/issues/2835
-        //   Do not inject scriptlets if the site is under an `allow` rule.
-        if (
-            µb.userSettings.advancedUserEnabled &&
-            µb.sessionFirewall.evaluateCellZY(hostname, hostname, '*') === 2
-        ) {
-            return;
-        }
-
         $scriptlets.clear();
         $exceptions.clear();
 
@@ -323,6 +321,15 @@
             : '*';
         scriptletDB.retrieve(entity, [ $scriptlets, $exceptions ], 1);
         if ( $scriptlets.size === 0 ) { return; }
+
+        // https://github.com/gorhill/uBlock/issues/2835
+        //   Do not inject scriptlets if the site is under an `allow` rule.
+        if (
+            µb.userSettings.advancedUserEnabled &&
+            µb.sessionFirewall.evaluateCellZY(hostname, hostname, '*') === 2
+        ) {
+            return;
+        }
 
         const loggerEnabled = µb.logger.enabled;
 
