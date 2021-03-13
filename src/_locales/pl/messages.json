@@ -372,7 +372,7 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsUncloakCnamePrompt": {
-    "message": "Pokaż rzeczywistą nazwę domeny",
+    "message": "Zdemaskuj nazwy kanoniczne",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsLastRestorePrompt": {
