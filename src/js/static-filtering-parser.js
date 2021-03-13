@@ -1261,8 +1261,8 @@ const Parser = class {
 Parser.removableHTTPHeaders = Parser.prototype.removableHTTPHeaders = new Set([
     '',
     'location',
-    'report-to',
     'refresh',
+    'report-to',
     'set-cookie',
 ]);
 
