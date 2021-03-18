@@ -195,7 +195,7 @@
     --sf-readonly-ink: var(--light-gray-80);
     --sf-tag-ink: #117700;
     --sf-value-ink: var(--orange-80);
-    --sf-variable-ink: var(--white);
+    --sf-variable-ink: var(--violet-60);
     --sf-warning-ink: var(--yellow-50);
 
     /* syntax highlight: dynamic filtering */
