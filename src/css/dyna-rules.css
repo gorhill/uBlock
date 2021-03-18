@@ -14,6 +14,9 @@ body {
 .body {
     flex-shrink: 0;
     }
+#ruleFilter .fa-icon {
+    fill: white;
+}
 #diff {
     border: 0;
     border-top: 1px solid #eee;

@@ -600,7 +600,7 @@ hr {
 textarea {
     font-size: 90%;
 }
-input {
+input, select {
       background: #333;
       color: #ccc;
       border: solid 1px #999;
