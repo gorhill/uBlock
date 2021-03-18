@@ -233,6 +233,7 @@ button {
   background: none;
   box-shadow: none;
   color: #0076FF;
+  fill: #0076FF;
   font-size: 20px;
   height: 30px;
   padding-top: 1px;
@@ -241,16 +242,19 @@ button {
 button:hover:enabled{
   background: #0076FF;
   color: #000;
+  fill: #000;
 }
 
 button.danger {
   border-color: #ff3300;
   color: #ff3300;
+  fill: #ff3300;
 }
 
 button.danger:hover{
   background: #ff3300;
   color: #000;
+  fill: #000;
 }
 
 button.large {
@@ -276,6 +280,7 @@ button.custom {
     background: none;
     box-shadow: none;
     color: #0076FF;
+    fill: #0076FF;
     font-size: 20px;
     height: 30px;
     padding-top: 2px;
@@ -290,6 +295,7 @@ button.custom[disabled],
 button.large.disabled {
     border-color: #999;
     color: #999;
+    fill: #999;
     opacity: 0.6;
     pointer-events: none;
     }

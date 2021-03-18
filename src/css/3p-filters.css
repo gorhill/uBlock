@@ -6,7 +6,7 @@ body {
     margin-bottom: 6rem;
 }
 #actions {
-    background-color: var(--default-surface);
+    background-color: transparent; /*ADN*/
     padding: var(--default-gap-small) 0 var(--default-gap-xsmall) 0;
     position: sticky;
     top: 0;
@@ -98,14 +98,15 @@ body.hideUnused #listsOfBlockedHostsPrompt:before {
     }
 .listEntry .fa-icon,
 .listEntry .counts {
-    color: var(--fg-0-50);
+    fill: rgba(150,150,150, 0.9);
+    opacity: 0.5;
+    color: rgba(150,150,150, 0.9);
     display: none;
     fill: rgba(150,150,150, 0.9);
     margin: 0 0.2em 0 0;
     }
 .listEntry .fa-icon:hover {
-    color: inherit;
-    fill: inherit;
+    opacity: 1;
     }
 .listEntry .content {
     display: inline-flex;
