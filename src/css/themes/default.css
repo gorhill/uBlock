@@ -189,13 +189,13 @@
     --sf-def-ink: #0000ff;
     --sf-directive-ink: var(--dark-gray-40);
     --sf-error-ink: #ff0000;
-    --sf-error-surface: #ff000016;
+    --sf-error-surface: #ff0000a9;
     --sf-keyword-ink: var(--purple-60);
     --sf-notice-ink: var(--light-gray-60);
     --sf-readonly-ink: var(--light-gray-80);
     --sf-tag-ink: #117700;
     --sf-value-ink: var(--orange-80);
-    --sf-variable-ink: var(--default-ink);
+    --sf-variable-ink: var(--white);
     --sf-warning-ink: var(--yellow-50);
 
     /* syntax highlight: dynamic filtering */
