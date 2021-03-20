@@ -363,7 +363,11 @@
 		"off": true,
 		"title": "IRN: Adblock-Iran",
 		"lang": "fa",
-		"contentURL": "https://gitcdn.xyz/repo/farrokhi/adblock-iran/master/filter.txt",
+		"contentURL": [
+			"https://gitcdn.xyz/repo/farrokhi/adblock-iran/master/filter.txt",
+			"https://combinatronics.com/farrokhi/adblock-iran/master/filter.txt",
+			"https://cdn.statically.io/gh/farrokhi/adblock-iran/master/filter.txt"
+		],
 		"supportURL": "https://github.com/farrokhi/adblock-iran"
 	},
 	"ISL-0": {
