@@ -81,15 +81,14 @@
 
     updateMenuState();
 
-    ads = json && json.data;
+    if (typeof json !== 'undefined') ads = json.data;
 
-    setCounts(ads, json && json.data && json.total, json.recent);
+    if (ads) setCounts(ads, json.total, json.recent);
 
     const $items = uDom('#ad-list-items');
-
     $items.removeClass().empty();
 
-    layoutAds(json);
+    if (typeof json !== 'undefined') layoutAds(json);
 
     vAPI.messaging.send(
       'adnauseam', {
