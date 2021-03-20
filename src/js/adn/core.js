@@ -5,15 +5,15 @@
 
   // for debugging only
   let // all visits will fail
-      failAllVisits = 0,
-      // start with zero ads
-      clearAdsOnInit = 0,
-      // reset all ad visit data
-      clearVisitData = 0,
-      // testing ['selenium' or 'sessbench']
-      automatedMode = 0,
-      // don't wait for user to be idle
-      disableIdler = 0;
+    failAllVisits = 0,
+    // start with zero ads
+    clearAdsOnInit = 0,
+    // reset all ad visit data
+    clearVisitData = 0,
+    // testing ['selenium' or 'sessbench']
+    automatedMode = 0,
+    // don't wait for user to be idle
+    disableIdler = 0;
 
   const µb = µBlock;
   const production = 1;
@@ -49,12 +49,12 @@
     'AdGuard Annoyances', 'AdGuard Tracking Protection'
   ];
 
-  const removableBlockLists = [ 'hphosts', 'mvps-0', 'plowe-0' ];
+  const removableBlockLists = ['hphosts', 'mvps-0', 'plowe-0'];
 
   // targets on these domains are never internal (may need to be regex)
   const internalLinkDomains = ['google.com', 'asiaxpat.com', 'nytimes.com',
-    'columbiagreenemedia.com','163.com', 'sohu.com','zol.com.cn','baidu.com',
-    'yahoo.com','facebook.com','youtube.com'
+    'columbiagreenemedia.com', '163.com', 'sohu.com', 'zol.com.cn', 'baidu.com',
+    'yahoo.com', 'facebook.com', 'youtube.com'
   ];
 
   // mark ad visits as failure if any of these are included in title
@@ -108,11 +108,11 @@
 
         if (request.what === 'getAdCount') {
           const url = request.pageURL,
-                count = currentCount(),
-                json = {
-                  url: url,
-                  count: count
-                };
+            count = currentCount(),
+            json = {
+              url: url,
+              count: count
+            };
 
           console.log('TEST-FOUND: ', JSON.stringify(json));
 
@@ -161,7 +161,7 @@
     log('[INIT] Initialized with ' + ads.length + ' ads');
   }
 
-  const validMD5 = function(s) {
+  const validMD5 = function (s) {
 
     return remd5.test(s);
   };
@@ -217,7 +217,7 @@
       */
       const repairHashes = function () {
 
-        orphans.forEach(function(ad) {
+        orphans.forEach(function (ad) {
           createAdmapEntry(ad, admap)
         });
 
@@ -285,12 +285,12 @@
         next != undefined && visitAd(next);
       }
       else if (idleMs) {
-        log('[IDLER] '+(millis() - lastUserActivity)+'ms, waiting until '+ idleMs +'ms...'); // TMP
+        log('[IDLER] ' + (millis() - lastUserActivity) + 'ms, waiting until ' + idleMs + 'ms...'); // TMP
       }
     }
     // next poll
     //setTimeout(pollQueue, Math.max(1, interval - (millis() - lastActivity)));
-    setTimeout(pollQueue, Math.max(interval/2, interval - (millis() - lastActivity)));
+    setTimeout(pollQueue, Math.max(interval / 2, interval - (millis() - lastActivity)));
   }
 
   const markActivity = function () {
@@ -370,13 +370,13 @@
   };
 
   /* send to vault/menu/dashboard if open */
-  const sendNotifications = function(notes) {
+  const sendNotifications = function (notes) {
 
     vAPI.messaging.broadcast({
-       what: 'notifications',
-       notifications: notes
-       // TODO: do we need to make these cloneable ? see #1163
-     });
+      what: 'notifications',
+      notifications: notes
+      // TODO: do we need to make these cloneable ? see #1163
+    });
   };
 
   const parseTitle = function (xhr) {
@@ -505,7 +505,7 @@
 
     const status = this.status || 200, html = this.responseText;
 
-    if (failAllVisits || status < 200 || status >= 300 ) {
+    if (failAllVisits || status < 200 || status >= 300) {
       return onVisitError.call(this, {
         status: status,
         responseText: html
@@ -612,12 +612,12 @@
 
   const storeAdData = function (immediate) {
     // always update store as long as adsetSize is less than 1000
-    if(adsetSize < 1000) immediate = true;
+    if (adsetSize < 1000) immediate = true;
 
     const now = millis();
     // defer if we've recently written and !immediate
-    if(immediate || (!immediate &&  now - lastStorageUpdate > updateStorageInterval)) {
-      vAPI.storage.set({admap:admap});
+    if (immediate || (!immediate && now - lastStorageUpdate > updateStorageInterval)) {
+      vAPI.storage.set({ admap: admap });
       lastStorageUpdate = millis();
       log("--Storage Ad Data--")
     }
@@ -661,7 +661,7 @@
 
     const idx = url.indexOf(ad.targetDomain) + ad.targetDomain.length;
     if (idx < url.length - 1 && url.charAt(idx) != "/") {
-      ad.targetUrl = url.substring(0,idx) + "/" + url.substring(idx, url.length);
+      ad.targetUrl = url.substring(0, idx) + "/" + url.substring(idx, url.length);
     }
 
     return true;
@@ -860,7 +860,7 @@
       return warn('Unable to delete: ', ad);
     }
 
-    adsetSize --;
+    adsetSize--;
     storeAdData();
   }
 
@@ -1078,8 +1078,8 @@
     parser.setMaxTokenLength(µb.staticNetFilteringEngine.MAX_TOKEN_LENGTH);
     parser.analyze(filter.raw);
 
-    if ( µb.staticNetFilteringEngine.compile(parser, writer) === false ) {
-        return;
+    if (µb.staticNetFilteringEngine.compile(parser, writer) === false) {
+      return;
     }
     const compiledFilter = writer.last();
 
@@ -1119,13 +1119,15 @@
   };
 
   const isStrictBlock = function (result, context) {
-    // if 4 -> strict block
-    // console.log("Strict Blocking", result, context);
+    // if result === 4 -> strict block
     return µb.userSettings.strictBlockingMode || result === 4;
   }
-  const isBlockableDomain = function (context) {
 
-    //console.log('isBlockableDomain',context.docDomain, context);
+  const isRedirectRule = function (context) {
+    return (context.itype & context.INLINE_ANY) === 0;
+  }
+
+  const isBlockableDomain = function (context) {
     const domain = context.docDomain, host = context.getHostname();
     for (let i = 0; i < allowAnyBlockOnDomains.length; i++) {
       const dom = allowAnyBlockOnDomains[i];
@@ -1148,8 +1150,8 @@
    *  3) whether *any* block on the domain is valid (domain in allowAnyBlockOnDomains)
    *  		if so, return true;
    *
-   *  4)whether the request is strictBlocked
-   *     if so, return true;
+   *  4) whether the request is strictBlocked
+   *      if so, return true;
    *
    *  4) if any list that it was found on allows blocks
    *  		if so, return true;
@@ -1162,7 +1164,7 @@
     }
 
     if (!listsLoaded) {
-      logNetAllow('Loading', context.docDomain  + ' => ' + context.url);
+      logNetAllow('Loading', context.docDomain + ' => ' + context.url);
       return false;
     }
 
@@ -1176,59 +1178,61 @@
       return true;
     }
 
-    /*
-    // always allow redirect blocks from lists (?)
-    if (µb.redirectEngine.toURL(context)) {
+    // Do we allow blocks for 'redirect=' rules ? See discussion in #1771
+    if (isRedirectRule(context)) {
       logNetBlock('*Redirect*', context.docDomain + ' => ' + context.url, context);
       return true;
     }
-    */
+    /*Previous code:
+      if (µb.redirectEngine.toURL(context)) {
+        logNetBlock('*Redirect*', context.docDomain + ' => ' + context.url, context);
+        return true;
+      }*/
 
+    ///////////////////////////////////////////////////////////////////////
     const snfe = µb.staticNetFilteringEngine, snfeData = snfe.toLogData();
-    /*
-      Check active rule(s) to see if we should block or allow
 
+    /*
+      Now check active rule(s) to see if we should block or allow
       Cases:
         A) user list:      block
         B) exception hit:  allow
         C) block hit:      block
-        D) no valid hits:  allow, but no cookies later
+        D) no valid hits:  allow, but no cookies later (where?)
      */
     const lists = listsForFilter(snfeData);
 
-    if (Object.keys(lists).length === 0) {                                // case A
-      snfeData && logNetBlock('User List', snfeData.raw); // always block
+    if (Object.keys(lists).length === 0) {                               // case A
+      snfeData && logNetBlock('UserList', snfeData.raw); // always block
       return true;
     }
 
     let misses = [];
-
     for (let name in lists) {
 
-    if (activeBlockList(name)) {
+      if (activeBlockList(name)) {
 
-      if (lists[name].indexOf('@@') === 0) {                       // case B
+        if (lists[name].indexOf('@@') === 0) {                           // case B
+          logNetAllow(name, lists[name] + ': ' + snfeData.raw, context.url);
+          return false;
+        }
 
-        logNetAllow(name, lists[name] + ': ' + snfeData.raw, context.url);
-        return false;
+        logNetBlock(name, lists[name] + ': ' + snfeData.raw, context.url);  // case C
+        return true; // blocked, no need to continue
       }
-
-      logNetBlock(name, lists[name] + ': ' + snfeData.raw, context.url);                  // case C
-      return true; // blocked, no need to continue
+      else {
+        if (!misses.contains(name)) misses.push(name);
+      }
     }
-    else {
-      if (!misses.contains(name)) misses.push(name);
-    }
-  }
 
-  return allowRequest(misses.join(','), snfeData.raw, context.url)
+    return allowRequest(misses.join(','), snfeData.raw, context.url)
   };
 
   const adCount = function () {
     return adlist().length;
   }
 
-  const dntAllowsRequest = function(url, hostname) {
+  const dntAllowsRequest = function (url, hostname) {
 
     const us = µb.userSettings, dntHides = us.hidingAds && us.disableHidingForDNT,
       dntClicks = us.clickingAds && us.disableClickingForDNT;
@@ -1347,11 +1351,11 @@
     }, 1000);
   };
 
-  const admapToJSON = function(sanitize) {
+  const admapToJSON = function (sanitize) {
 
     const // deep clone
-          map = JSON.parse(JSON.stringify(admap)),
-          pages = Object.keys(map);
+      map = JSON.parse(JSON.stringify(admap)),
+      pages = Object.keys(map);
 
     for (let i = 0; i < pages.length; i++) {
 
@@ -1380,8 +1384,8 @@
     return JSON.stringify(map, null, 2);
   };
 
-  const removePrivateAds = function() {
-    if (!µb.userSettings.removeAdsInPrivate) {return;}
+  const removePrivateAds = function () {
+    if (!µb.userSettings.removeAdsInPrivate) { return; }
     let removed = [];
     const pages = Object.keys(admap);
     for (let i = 0; admap && i < pages.length; i++) {
@@ -1447,7 +1451,7 @@
   initUserSettings();//
 
   //browser.windows not supported for firefox android
-  browser.windows && browser.windows.onRemoved.addListener(function(windowId){
+  browser.windows && browser.windows.onRemoved.addListener(function (windowId) {
     removePrivateAds();
   });
 
@@ -1457,7 +1461,7 @@
 
   exports.removeBlockingLists = function (lists) {
 
-    removableBlockLists.forEach(function(l) {
+    removableBlockLists.forEach(function (l) {
       delete lists[l];
     });
   };
@@ -1466,8 +1470,10 @@
     return adsForUI();
   };
 
+  // return true if we must allow a request in order to extract ads
   exports.mustAllowRequest = function (result, context) {
-    return result !== 0 && !isBlockableRequest(result, context);
+    let blockable = isBlockableRequest(result, context);
+    return result !== 0 && !blockable;
   };
 
   exports.itemInspected = function (request, pageStore, tabId) {
@@ -1533,21 +1539,21 @@
 
   exports.onListsLoaded = async function (firstRun) {
 
-      const entries = await µb.staticFilteringReverseLookup.initWorker();
-      listEntries = [];
-      entries.forEach((value, key) => {
-        listEntries[key] = value;
-      });
+    const entries = await µb.staticFilteringReverseLookup.initWorker();
+    listEntries = [];
+    entries.forEach((value, key) => {
+      listEntries[key] = value;
+    });
 
-      log("[LOAD] Compiled " + entries.size +
-        " 3rd-party lists in " + (+new Date() - profiler) + "ms");
-      listsLoaded = true;
+    log("[LOAD] Compiled " + entries.size +
+      " 3rd-party lists in " + (+new Date() - profiler) + "ms");
+    listsLoaded = true;
 
-      verifyAdBlockers();
-      verifySettings();
-      verifyLists();
+    verifyAdBlockers();
+    verifySettings();
+    verifyLists();
 
-      µb.adnauseam.dnt.updateFilters();
+    µb.adnauseam.dnt.updateFilters();
 
     if (firstRun && !isAutomated()) {
 
@@ -1629,7 +1635,7 @@
     if (!validate(ad)) return warn(ad);
 
     if (!internalLinkDomains.contains(ad.pageDomain) && internalTarget(ad)) {
-      return warn('[INTERN] Ignoring Ad on '+ad.pageDomain+', target: '+ad.targetUrl);
+      return warn('[INTERN] Ignoring Ad on ' + ad.pageDomain + ', target: ' + ad.targetUrl);
     }
 
     pageHash = YaMD5.hashStr(ad.pageUrl);
@@ -1663,7 +1669,7 @@
     // this will overwrite an older ad with the same key
     // admap[pageStore.rawURL][adhash] = ad;
     admap[pageHash][adhash] = ad;
-    adsetSize ++;
+    adsetSize++;
 
     postRegister(ad, tabId);
   };
@@ -1710,7 +1716,7 @@
     let hostname;
     const us = µb.userSettings;
 
-    const cookieAttr = function(cookie, name) {
+    const cookieAttr = function (cookie, name) {
 
       const parts = cookie.split(';');
       for (let i = 0; i < parts.length; i++) {
@@ -1722,7 +1728,7 @@
     };
 
     dbug && console.log('[HEADERS] (Incoming' +
-      (requestUrl===originalUrl ? ')' : '-redirect)'), requestUrl);
+      (requestUrl === originalUrl ? ')' : '-redirect)'), requestUrl);
 
     const originalHostname = µb.URI.hostnameFromURI(originalUrl);
 
@@ -1739,7 +1745,7 @@
 
       const name = headers[i].name.toLowerCase();
 
-      dbug && console.log(i + ') '+name, headers[i].value);
+      dbug && console.log(i + ') ' + name, headers[i].value);
 
       if (name === 'set-cookie' || name === 'set-cookie2') {
         const cval = headers[i].value.trim();
@@ -1748,16 +1754,16 @@
         if (1) { // don't block incoming cookies for 3rd party-requests coming from DNT-pages? [needs checking]
 
           if (domain && us.dntDomains.contains(domain)) {
-            log('[DNT] (AllowCookie3p) \'', cval + '\' dnt-domain: '+domain);
+            log('[DNT] (AllowCookie3p) \'', cval + '\' dnt-domain: ' + domain);
             continue;
           }
         }
 
         const requestHostname = requestUrl && µb.URI.hostnameFromURI(requestUrl);
 
-        log('[COOKIE] (Block)', headers[i].value, "1pDomain: "+ originalHostname +
-            (requestHostname && requestHostname !== originalHostname ? ' / ' + requestHostname: ''),
-            (domain ? " 3pDomain: " + domain : ''));
+        log('[COOKIE] (Block)', headers[i].value, "1pDomain: " + originalHostname +
+          (requestHostname && requestHostname !== originalHostname ? ' / ' + requestHostname : ''),
+          (domain ? " 3pDomain: " + domain : ''));
 
         headers.splice(i, 1);
         modified = true;
@@ -1806,7 +1812,7 @@
   const adlist = exports.adlist = function (pageUrl, currentOnly, isUI) {
     admap = admap;
     const result = [], pages = pageUrl ?
-      [ YaMD5.hashStr(pageUrl) ] : Object.keys(admap);
+      [YaMD5.hashStr(pageUrl)] : Object.keys(admap);
     for (let i = 0; admap && i < pages.length; i++) {
       if (admap[pages[i]]) {
         const hashes = Object.keys(admap[pages[i]]);
@@ -1837,7 +1843,7 @@
    *
    * TODO: Shall be handled differently on different browser (?)
    */
-const verifyAdBlockers = exports.verifyAdBlockers = function () {
+  const verifyAdBlockers = exports.verifyAdBlockers = function () {
     const notes = notifications;
     let modified = false;
 
@@ -1865,61 +1871,61 @@ const verifyAdBlockers = exports.verifyAdBlockers = function () {
   };
 
   const verifyOperaSetting = exports.verifyOperaSetting = function (request) {
-   const isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+    const isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
 
-   if (isOpera) {
-     // only check for google, bing & duckduckgo, other search engines seem to be fine at the moment
-     // search? only
-     const searchEngineRegex = /^.*\.bing\.com|^(.*\.)?duckduckgo\.com|^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i;
-     const domain = parseDomain(request.url);
-     const isSearch = searchEngineRegex.test(domain);
+    if (isOpera) {
+      // only check for google, bing & duckduckgo, other search engines seem to be fine at the moment
+      // search? only
+      const searchEngineRegex = /^.*\.bing\.com|^(.*\.)?duckduckgo\.com|^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i;
+      const domain = parseDomain(request.url);
+      const isSearch = searchEngineRegex.test(domain);
 
-     if (!isSearch) return;
+      if (!isSearch) return;
 
-     let thisPageStore = null;
-     for (let [key, pageStore] of µb.pageStores.entries()) {
-       if (pageStore.rawURL === request.url){
-         thisPageStore = pageStore;
-         break;
-       }
-     }
+      let thisPageStore = null;
+      for (let [key, pageStore] of µb.pageStores.entries()) {
+        if (pageStore.rawURL === request.url) {
+          thisPageStore = pageStore;
+          break;
+        }
+      }
 
-     // check the url in pageStore
-     // if perLoadAllowedRequestCount: 0 && contentLastModified : 0
-     // adnauseam is not running on this page
+      // check the url in pageStore
+      // if perLoadAllowedRequestCount: 0 && contentLastModified : 0
+      // adnauseam is not running on this page
 
-     if (thisPageStore) {
-       const notes = notifications;
-       let modified = false;
-       if (thisPageStore.perLoadAllowedRequestCount == 0 && thisPageStore.contentLastModified == 0) {
-         console.log("addNotification")
-         modified = addNotification(notes, OperaSetting);
-       } else {
-         modified = removeNotification(notes, OperaSetting);
-       }
-       modified && sendNotifications(notes);
-     }
-   }
- }
-
-  const verifyFirefoxSetting = exports.verifyFirefoxSetting = function () {
-      const tpmFunction = browser.privacy.websites.trackingProtectionMode;
-      if (typeof tpmFunction === 'undefined') return; // if not firefox
-      const trackingProtectionMode = tpmFunction.get({});
-
-      trackingProtectionMode.then((got) => {
-        // console.log("FF:", got.value);
+      if (thisPageStore) {
         const notes = notifications;
-
         let modified = false;
-
-        if (got.value == "always") {
-          modified = addNotification(notes, FirefoxSetting);
-        } else{
-          modified = removeNotification(notes, FirefoxSetting);
+        if (thisPageStore.perLoadAllowedRequestCount == 0 && thisPageStore.contentLastModified == 0) {
+          console.log("addNotification")
+          modified = addNotification(notes, OperaSetting);
+        } else {
+          modified = removeNotification(notes, OperaSetting);
         }
         modified && sendNotifications(notes);
-      });
+      }
+    }
+  }
+
+  const verifyFirefoxSetting = exports.verifyFirefoxSetting = function () {
+    const tpmFunction = browser.privacy.websites.trackingProtectionMode;
+    if (typeof tpmFunction === 'undefined') return; // if not firefox
+    const trackingProtectionMode = tpmFunction.get({});
+
+    trackingProtectionMode.then((got) => {
+      // console.log("FF:", got.value);
+      const notes = notifications;
+
+      let modified = false;
+
+      if (got.value == "always") {
+        modified = addNotification(notes, FirefoxSetting);
+      } else {
+        modified = removeNotification(notes, FirefoxSetting);
+      }
+      modified && sendNotifications(notes);
+    });
   }
 
   const verifySettings = exports.verifySettings = function () {
@@ -1935,7 +1941,7 @@ const verifyAdBlockers = exports.verifyAdBlockers = function () {
     verifyList(AdNauseamTxt, lists);
   };
 
-const verifyList = exports.verifyList = function (note, lists) {
+  const verifyList = exports.verifyList = function (note, lists) {
     const notes = notifications;
     let modified = false;
     let path;
@@ -1943,10 +1949,10 @@ const verifyList = exports.verifyList = function (note, lists) {
 
     for (let i = 0; i < lists.length; i++) {
       if (lists[i] === note.listName) {
-          entry = lists[i];
+        entry = lists[i];
       } else if (note.listName === "easylist" && lists[i] === "fanboy-ultimate") {
-          //Fanboy's Ultimate Merged List
-          entry = note.listName;
+        //Fanboy's Ultimate Merged List
+        entry = note.listName;
       }
     }
 
@@ -2043,12 +2049,12 @@ const verifyList = exports.verifyList = function (note, lists) {
     return adlist(url, true).length || adlist(url).length;
   };
 
-  const  getIconState = exports.getIconState = function(state, pageDomain, isClick) {
+  const getIconState = exports.getIconState = function (state, pageDomain, isClick) {
     const isDNT = µb.userSettings.dntDomains.contains(pageDomain);
     let iconStatus = state ? (isDNT ? 'dnt' : 'on') : 'off'; // ADN
 
     if (iconStatus !== 'off') {
-        iconStatus += (isClick ? 'active' : '');
+      iconStatus += (isClick ? 'active' : '');
     }
 
     //replace state with adn's own definitation
@@ -2202,11 +2208,11 @@ const verifyList = exports.verifyList = function (note, lists) {
       µb.pageStoreFromTabId(request.tabId) || pageStore;
 
     if (!reqPageStore) {
-        warn('No pageStore', request, pageStore, tabId);
-        return;
+      warn('No pageStore', request, pageStore, tabId);
+      return;
     } else if (!reqPageStore.hasOwnProperty('rawURL')) {
-        warn('No rawURL', reqPageStore, request, tabId);
-        return;
+      warn('No rawURL', reqPageStore, request, tabId);
+      return;
     }
 
     const allAds = adlist();
@@ -2234,7 +2240,7 @@ const verifyList = exports.verifyList = function (note, lists) {
 
   'use strict';
 
-  const onMessage = function(request, sender, callback) {
+  const onMessage = function (request, sender, callback) {
     //console.log("adnauseam.MSG: "+request.what, sender.frameId);
 
     switch (request.what) {
@@ -2266,8 +2272,8 @@ const verifyList = exports.verifyList = function (note, lists) {
   }
 
   vAPI.messaging.listen({
-        name: 'adnauseam',
-        listener: onMessage
+    name: 'adnauseam',
+    listener: onMessage
   })
 
 })();
