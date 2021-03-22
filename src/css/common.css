@@ -1127,7 +1127,9 @@ font-family: bebas_neue,sans-serif;
     width: 1em;
     }
 
-/* high dpi devices */
+/*ADN - fixing https://github.com/dhowe/AdNauseam/issues/1768 */ 
+
+/* high dpi devices 
 :root.hidpi button {
     font-family: Metropolis, sans-serif;
     font-weight: 600;
@@ -1136,8 +1138,9 @@ font-family: bebas_neue,sans-serif;
 :root.hidpi .fieldset-header {
     font-family: Metropolis, sans-serif;
     }
-
-/* touch-screen devices */
+*/
+/* touch-screen devices 
 :root.mobile label {
     flex-grow: 1
     }
+*/
