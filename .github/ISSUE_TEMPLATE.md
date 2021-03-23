@@ -1,6 +1,6 @@
 ### Describe the issue
 
-NOTE: if you are having a problem where ads are not collected, please first try to create a new new Firefox profile as described [here](https://support.mozilla.org/en-US/kb/profile-manager-create-remove-switch-firefox-profiles#w_creating-a-profile). A corrupt Firefox profile is the most common cause of this issue.
+*NOTE: if you are having a problem where ads are not collected, please first try to create a new new Firefox profile as described [here](https://support.mozilla.org/en-US/kb/profile-manager-create-remove-switch-firefox-profiles#w_creating-a-profile). A corrupt Firefox profile is the most common cause of this issue.*
 
 
 ### Screenshot in which the issue can be seen
