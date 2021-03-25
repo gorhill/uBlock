@@ -269,6 +269,9 @@ reuters.com##*[class^="TwoColumnsLayout-leaderboard-26t3U"]
 www.dimsumdaily.hk##.ps_instream
 www.dimsumdaily.hk##.adsbyvli
 
+# https://g1.globo.com
+g1.globo.com##.publicidade
+
 # wmoov.com
 ##a[href*='adsfactor']
 ##a[href*='adnxs']
