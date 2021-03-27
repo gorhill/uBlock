@@ -12,7 +12,7 @@
 		"updateAfter": 19,
 		"contentURL": [
 			"https://publicsuffix.org/list/public_suffix_list.dat",
-			"https://gitcdn.link/repo/publicsuffix/list/master/public_suffix_list.dat",
+			"https://gitcdn.xyz/repo/publicsuffix/list/master/public_suffix_list.dat",
 			"assets/thirdparties/publicsuffix.org/list/effective_tld_names.dat"
 		]
 	},
@@ -33,7 +33,7 @@
 			"assets/ublock/filters.txt"
 		],
 		"cdnURLs": [
-			"https://gitcdn.link/repo/uBlockOrigin/uAssets/master/filters/filters.txt",
+			"https://gitcdn.xyz/repo/uBlockOrigin/uAssets/master/filters/filters.txt",
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssets@master/filters/filters.txt",
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssets/master/filters/filters.txt"
 		],
@@ -77,7 +77,7 @@
 			"assets/ublock/unbreak.txt"
 		],
 		"cdnURLs": [
-			"https://gitcdn.link/repo/uBlockOrigin/uAssets/master/filters/unbreak.txt",
+			"https://gitcdn.xyz/repo/uBlockOrigin/uAssets/master/filters/unbreak.txt",
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssets@master/filters/unbreak.txt",
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssets/master/filters/unbreak.txt"
 		]
@@ -145,7 +145,7 @@
 		],
 		"cdnURLs": [
 			"https://cdn.statically.io/gl/curben/urlhaus-filter/master/urlhaus-filter-online.txt",
-			"https://gitcdn.link/repo/curbengh/urlhaus-filter/master/urlhaus-filter-online.txt",
+			"https://gitcdn.xyz/repo/curbengh/urlhaus-filter/master/urlhaus-filter-online.txt",
 			"https://cdn.jsdelivr.net/gh/curbengh/urlhaus-filter/urlhaus-filter-online.txt",
 			"https://raw.githubusercontent.com/curbengh/urlhaus-filter/master/urlhaus-filter-online.txt",
 			"https://curben.gitlab.io/malware-filter/urlhaus-filter-online.txt"
@@ -220,7 +220,7 @@
 		"off": true,
 		"contentURL": "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/annoyances.txt",
 		"cdnURLs": [
-			"https://gitcdn.link/repo/uBlockOrigin/uAssets/master/filters/annoyances.txt",
+			"https://gitcdn.xyz/repo/uBlockOrigin/uAssets/master/filters/annoyances.txt",
 			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssets@master/filters/annoyances.txt",
 			"https://cdn.statically.io/gh/uBlockOrigin/uAssets/master/filters/annoyances.txt"
 		]
@@ -364,7 +364,7 @@
 		"title": "IRN: Adblock-Iran",
 		"lang": "fa",
 		"contentURL": [
-			"https://gitcdn.link/repo/farrokhi/adblock-iran/master/filter.txt",
+			"https://gitcdn.xyz/repo/farrokhi/adblock-iran/master/filter.txt",
 			"https://combinatronics.com/farrokhi/adblock-iran/master/filter.txt",
 			"https://cdn.statically.io/gh/farrokhi/adblock-iran/master/filter.txt"
 		],
