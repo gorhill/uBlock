@@ -252,7 +252,7 @@ const cosmeticCandidatesFromFilterChoice = function(filterChoice) {
             }
             // Remove attribute values.
             if ( (specificity & 0b0010) === 0 ) {
-                const match = /^\[([^^=]+)\^?=.+\]$/.exec(filter);
+                const match = /^\[([^^*$=]+)[\^*$]?=.+\]$/.exec(filter);
                 if ( match !== null ) {
                     filter = `[${match[1]}]`;
                 }
