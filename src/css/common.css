@@ -838,7 +838,7 @@ body[dir=rtl] #lists {
     margin: 0 auto 0 auto;
     margin-right: 0em;
     text-indent: -2em;
-    height: 1.85em;
+    height: 1.85em; /* ADN make listEntry hieght equal */
     }
 body[dir=rtl] .li.listEntry {
     margin-left: 0em;
