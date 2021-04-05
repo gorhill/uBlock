@@ -594,7 +594,6 @@
     xhr = new XMLHttpRequest();
 
     try {
-
       xhr.open('get', target, true);
       xhr.withCredentials = true;
       xhr.delegate = ad;
@@ -605,7 +604,6 @@
       xhr.responseType = ''; // 'document'?;
       xhr.send();
     } catch (e) {
-
       onVisitError.call(xhr, e);
     }
   }
@@ -619,9 +617,8 @@
     if (immediate || (!immediate && now - lastStorageUpdate > updateStorageInterval)) {
       vAPI.storage.set({ admap: admap });
       lastStorageUpdate = millis();
-      log("--Storage Ad Data--")
+      //log("--Storage Ad Data--")
     }
-
   }
 
   const validateTarget = function (ad) {
@@ -865,8 +862,9 @@
   }
 
   const log = function () {
-    if (µb.userSettings.eventLogging)
+    if (µb.userSettings.eventLogging) {
       console.log.apply(console, arguments);
+    }
     return true;
   }
 
@@ -1119,7 +1117,7 @@
   };
 
   const isStrictBlock = function (result, context) {
-    // if result === 4 -> strict block
+    // ADN: if result === 4 -> strict block
     return µb.userSettings.strictBlockingMode || result === 4;
   }
 
