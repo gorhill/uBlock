@@ -367,6 +367,10 @@
 //  When no "prune paths" argument is provided, the scriptlet is
 //  used for logging purpose and the "needle paths" argument is
 //  used to filter logging output.
+//
+//  https://github.com/uBlockOrigin/uBlock-issues/issues/1545
+//  - Add support for "remove everything if needle matches" case
+//
 (function() {
     const rawPrunePaths = '{{1}}';
     const rawNeedlePaths = '{{2}}';
@@ -401,9 +405,15 @@
             }
             const pos = chain.indexOf('.');
             if ( pos === -1 ) {
-                const found = owner.hasOwnProperty(chain);
-                if ( found === false ) { return false; }
-                if ( prune ) {
+                if ( prune === false ) {
+                    return owner.hasOwnProperty(chain);
+                }
+                if ( chain === '*' ) {
+                    for ( const key in owner ) {
+                        if ( owner.hasOwnProperty(key) === false ) { continue; }
+                        delete owner[key];
+                    }
+                } else if ( owner.hasOwnProperty(chain) ) {
                     delete owner[chain];
                 }
                 return true;
