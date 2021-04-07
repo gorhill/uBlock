@@ -369,6 +369,21 @@ button.important {
   position: relative;
   overflow: hidden;
 }
+
+/* ADN */
+.notification #notify-text {
+  max-width: calc(100% - 20px);
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ADN */
+.notification #notify-link {
+  vertical-align: super;
+}
+
 .notification button{
   background-image: none !important;
   font-size: 18px;
