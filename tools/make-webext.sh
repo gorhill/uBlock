@@ -11,7 +11,7 @@ DES=dist/build/uBlock0.webext
 rm -rf $DES
 mkdir -p $DES
 
-echo "*** uBlock0.webext: copying common files"
+echo "*** uBlock0.webext: Copying common files"
 bash ./tools/copy-common-files.sh  $DES
 
 cp -R $DES/_locales/nb                  $DES/_locales/no

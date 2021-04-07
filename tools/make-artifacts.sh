@@ -2,7 +2,7 @@
 
 DO_FIREFOX=true
 DO_CHROME=true
-DO_OPERA=true
+DO_OPERA=true # build is currently failing
 DO_EDGE=true
 
 CHROME=/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
