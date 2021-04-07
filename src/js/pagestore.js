@@ -567,6 +567,14 @@ const PageStore = class {
         journal.length = 0;
     }
 
+    /*
+     * Returns 
+     *   0 -> allow
+     *   1 -> block (including redirects)
+     *   2 -> exception-for-cname-on-block ?? [allow]
+     *   3 -> ?
+     *   4 -> adn-allowed
+     */
     filterRequest(fctxt) {
         fctxt.filter = undefined;
         fctxt.redirectURL = undefined;
@@ -618,17 +626,20 @@ const PageStore = class {
             fctxt.url,
             requestType
         );
-        if ( result !== 0 && loggerEnabled ) {
+        if ( result !== 0 && true || loggerEnabled ) { // TODO: TMP-REMOVE
             fctxt.filter = µb.sessionURLFiltering.toLogData();
         }
 
         // ADN: now check our firewall (top precedence) if DNT enabled
         if ( result === 0 && µb.adnauseam.dnt.enabled() ) {
             if ( µb.adnauseam.dnt.mustAllow(fctxt) ) {
-                  result = 2;
+
+                  result = 2; // TODO: why don't we return here ???
+
                   if ( µb.logger.enabled ) { // logger
                       this.logData = µb.adnauseam.dnt.firewall.toLogData();
                   }
+                  if (!cacheableResult) return result;
             }
         }
 
@@ -664,8 +675,11 @@ const PageStore = class {
                 }
             }
             if ( result !== 2 && µb.adnauseam.mustAllowRequest(result, fctxt)) {
-                result = 4; // ADN: adnauseamAllowed
+                result = 4; // ADN: adnauseamAllowed, 
+                // TODO: why don't we return here ???
                 if (fctxt.filter) fctxt.filter.result = 4;
+                
+                if (!cacheableResult) return result;
             }
         }
 

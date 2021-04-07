@@ -369,6 +369,7 @@ const parseLogEntry = function(details) {
         entry.textContent = textContent.join('\t');
         return entry;
     }
+
     // Cell 1, 2
     if ( entry.filter !== undefined ) {
 
@@ -380,17 +381,17 @@ const parseLogEntry = function(details) {
         } else if ( entry.filter.result === 3 ) {
             textContent.push('**');
         } else if ( entry.filter.result === 4 ) {
-            textContent.push('~~');
-            //adn allow
+            textContent.push('~~'); //ADN: allow
         } else if ( entry.filter.source === 'redirect' ) {
             textContent.push('<<');
         } else {
             textContent.push('');
         }
+
     } else {
         if (isDNTDomain(entry.domain)) {
           textContent.push("*" + entry.domain + "*allow");
-          textContent.push('@@');
+          textContent.push('@@');  //ADN: DNT
         }
         else textContent.push('', '');
     }

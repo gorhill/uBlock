@@ -125,7 +125,7 @@ const hashFromPopupData = function(reset) {
     const rules = popupData.firewallRules;
     for ( const key in rules ) {
         const rule = rules[key];
-        if ( rule === null ) { continue; }
+        if ( !rule || rule === null ) { continue; } // ADN, add undefined check
         hasher.push(
             rule.src + ' ' +
             rule.des + ' ' +

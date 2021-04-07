@@ -15,13 +15,15 @@
     // don't wait for user to be idle
     disableIdler = 0;
 
-  const µb = µBlock;
-  const production = 1;
   let lastActivity = 0;
   let lastUserActivity = 0;
   let listsLoaded = false;
   let lastStorageUpdate = 0;
   let adsetSize = 0;
+  let xhr, idgen, admap, inspected, listEntries;
+
+  const µb = µBlock;
+  const production = 1;
   const updateStorageInterval = 1000 * 60 * 30; // 30min
   const notifications = [];
   const allowedExceptions = [];
@@ -31,7 +33,6 @@
   const pollQueueInterval = 5000;
   const redactMarker = '********';
   const repeatVisitInterval = Number.MAX_VALUE;
-  let xhr, idgen, admap, inspected, listEntries;
   const visitedURLs = new Set();
 
   // blocks requests to/from these domains even if the list is not in enabledBlockLists
@@ -1116,16 +1117,25 @@
     return lists;
   };
 
+  const isAdnAllow = function (result, context) {
+    return result === 4;
+  }
+
   const isStrictBlock = function (result, context) {
-    // ADN: if result === 4 -> strict block
+    return false; // TODO: @cqx931
+    // TODO: Shouldn't this be AND instead of OR?
     return µb.userSettings.strictBlockingMode || result === 4;
   }
 
-  const isRedirectRule = function (context) {
-    return (context.itype & context.INLINE_ANY) === 0;
+  const isRedirectRule = function (result, context) {
+    // NOTE: this code comes from pagestore.js::line-694
+    return ((context.itype & context.INLINE_ANY) === 0)
+      && (result === 1 || µb.staticNetFilteringEngine.hasQuery(context));
+   /*  if (isredirect) console.log(`***REDIRECT*** result=1, itype=${context.itype}, INLINE_ANY=${context.INLINE_ANY}, redirectURL=${context.redirectURL}`, context);
+    return isredirect; */
   }
 
-  const isBlockableDomain = function (context) {
+  const isBlockableDomain = function (result, context) {
     const domain = context.docDomain, host = context.getHostname();
     for (let i = 0; i < allowAnyBlockOnDomains.length; i++) {
       const dom = allowAnyBlockOnDomains[i];
@@ -1148,7 +1158,7 @@
    *  3) whether *any* block on the domain is valid (domain in allowAnyBlockOnDomains)
    *  		if so, return true;
    *
-   *  4) whether the request is strictBlocked
+   *  4) whether the request is strictBlocked (only if strictBlocking is enabled?)
    *      if so, return true;
    *
    *  4) if any list that it was found on allows blocks
@@ -1166,26 +1176,15 @@
       return false;
     }
 
-    if (isBlockableDomain(context)) {
+    if (isBlockableDomain(result, context)) {
       logNetBlock('Domains', context.docDomain + ' => ' + context.url);
       return true;
     }
 
-    if (isStrictBlock(result, context)) {
+    if (isStrictBlock(result, context)) { // DISABLED
       logNetBlock('StrictBlock', context.docDomain + ' => ' + context.url);
       return true;
     }
-
-    // Do we allow blocks for 'redirect=' rules ? See discussion in #1771
-    if (isRedirectRule(context)) {
-      logNetBlock('*Redirect*', context.docDomain + ' => ' + context.url, context);
-      return true;
-    }
-    /*Previous code:
-      if (µb.redirectEngine.toURL(context)) {
-        logNetBlock('*Redirect*', context.docDomain + ' => ' + context.url, context);
-        return true;
-      }*/
 
     ///////////////////////////////////////////////////////////////////////
     const snfe = µb.staticNetFilteringEngine, snfeData = snfe.toLogData();
@@ -1200,22 +1199,27 @@
      */
     const lists = listsForFilter(snfeData);
 
-    if (Object.keys(lists).length === 0) {                               // case A
+    if (Object.keys(lists).length === 0) {                                  // case A
       snfeData && logNetBlock('UserList', snfeData.raw); // always block
       return true;
     }
 
     let misses = [];
     for (let name in lists) {
-
       if (activeBlockList(name)) {
-
-        if (lists[name].indexOf('@@') === 0) {                           // case B
+        //console.log(`ACTIVE: name=${name} lists[name]=${lists[name]} snfeData.raw=${snfeData.raw} context.url=${context.url}`); // TMP-DEL
+        if (lists[name].indexOf('@@') === 0) {                              // case B
           logNetAllow(name, lists[name] + ': ' + snfeData.raw, context.url);
           return false;
         }
 
         logNetBlock(name, lists[name] + ': ' + snfeData.raw, context.url);  // case C
+
+        // Blocks for 'redirect=' rules ? See discussion in #1771
+        if (isRedirectRule(result, context)) {
+          logNetBlock('*Redirect*', context.docDomain + ' => ' + context.url, snfeData.raw, context.url, context);
+        }
+
         return true; // blocked, no need to continue
       }
       else {
@@ -1223,7 +1227,7 @@
       }
     }
 
-    return allowRequest(misses.join(','), snfeData.raw, context.url)
+    return adnAllowRequest(misses.join(','), snfeData.raw, context.url); // case D
   };
 
   const adCount = function () {
@@ -1239,13 +1243,13 @@
     return ((dntHides || dntClicks) && us.dntDomains.contains(hostname));
   };
 
-  const allowRequest = function (msg, raw, url) {
+  const adnAllowRequest = function (msg, raw, url) {
 
     // Note: need to store allowed requests here so that we can
     // block any incoming cookies later (see #301)
     allowedExceptions[url] = +new Date();
 
-    if (true || msg !== 'EasyList') {  // avoid excessive logging
+    if (true || msg !== 'EasyList') {  // avoid excessive logging (TODO: remove 'true')
       logNetEvent('[ALLOW!]', msg, raw + ': ', url);
     }
 
@@ -1470,8 +1474,7 @@
 
   // return true if we must allow a request in order to extract ads
   exports.mustAllowRequest = function (result, context) {
-    let blockable = isBlockableRequest(result, context);
-    return result !== 0 && !blockable;
+    return result !== 0 && !isBlockableRequest(result, context);
   };
 
   exports.itemInspected = function (request, pageStore, tabId) {

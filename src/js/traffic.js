@@ -74,7 +74,7 @@ const onBeforeSendHeaders = function (details) {
     //if (ad) console.log('ADN=VISIfT: '+details.url, 'DNT? '+hasDNT(headers), ad);
   }
 
-  // ADN: if this was an adn-allowed request, do we block cookies, etc.? TODO
+  // ADN: if this was an adn-allowed request, do we block cookies, etc.? TODO:
   return { requestHeaders: headers };
 };
 
