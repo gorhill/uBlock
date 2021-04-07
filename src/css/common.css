@@ -372,7 +372,7 @@ button.important {
 
 /* ADN */
 .notification #notify-text {
-  max-width: calc(100% - 85px);
+  max-width: calc(100% - 20px);
   display: inline-block;
   white-space: nowrap;
   overflow: hidden;
