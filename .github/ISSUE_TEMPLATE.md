@@ -1,5 +1,7 @@
 ### Describe the issue
 
+*NOTE: if you are having a problem where ads are not collected, please FIRST TRY to create a new new Firefox profile as described [here](https://support.mozilla.org/en-US/kb/profile-manager-create-remove-switch-firefox-profiles#w_creating-a-profile). A corrupt Firefox profile is the most common cause of this issue.*
+
 
 ### Screenshot in which the issue can be seen
 
@@ -22,4 +24,4 @@
 ### Your location/country
 (If the issue is website specific, knowing your approximate location will help us to reproduce it)
 
-** For adult and potential offensive sites/advertisements, please add a [Content Warning] tag in the title to warn developers that there may be offfensive material in the ticket.
+** For adult or potentially offensive sites/ads, please add a [Content-Warning] tag in the title to warn developers the ticket may contain such material.
