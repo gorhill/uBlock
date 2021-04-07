@@ -216,7 +216,7 @@ const onFirstFetchReady = function(fetched, adminExtra) {
     }
 
     // ADN
-    µb.firstInstall = fetched.version === '0.0.0.0';
+    µb.firstInstall = (fetched.version === '0.0.0.0');
 
     // Order is important -- do not change:
     fromFetch(µb.localSettings, fetched);

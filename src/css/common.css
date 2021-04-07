@@ -820,6 +820,9 @@ body[dir=rtl] #lists {
     padding: 0;
     list-style-type: none;
     }
+#lists > .groupEntry {
+    margin-top: 0.5em;  /* ADN add more spacing */
+    }
 #lists > .groupEntry .geName {
     cursor: pointer;
     font-size: 120%;
@@ -840,7 +843,7 @@ body[dir=rtl] #lists {
     content: '+  ';
     }
 #lists > .groupEntry > .listEntries {
-    margin: 0.25em 0 0 0;
+    margin: 0.25em 0 0 10px; /* ADN add more spacing */
     }
 #lists > .groupEntry.collapsed > .listEntries {
     display: none;
@@ -850,6 +853,7 @@ body[dir=rtl] #lists {
     margin: 0 auto 0 auto;
     margin-right: 0em;
     text-indent: -2em;
+    height: 1.85em; /* ADN make listEntry hieght equal */
     }
 body[dir=rtl] .li.listEntry {
     margin-left: 0em;
