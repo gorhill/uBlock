@@ -273,7 +273,7 @@ const Matrix = class {
             this.z = shn;
             let v = this.rules.get(shn + ' ' + desHostname);
             if ( v !== undefined ) {
-                v = v >>> bitOffset & 3;
+                v = v >>> bitOffset & 7; //ADN: 3 bits
                 if ( v !== 0 ) {
                     this.r = v;
                     return v;
