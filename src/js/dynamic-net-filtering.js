@@ -375,7 +375,7 @@ const Matrix = class {
         let r = this.evaluateCellZY(src, des, type);
         if ( r === 0 ) { return; }
         /////////// ADN ////////////
-        console.debug("**** lookupRuleData: "+r);
+        console.log("**** lookupRuleData: "+r);
         return `${this.z} ${this.y} ${this.type} ${r}`;
     }
 

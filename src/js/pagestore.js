@@ -633,9 +633,7 @@ const PageStore = class {
         // ADN: now check our firewall (top precedence) if DNT enabled
         if ( result === 0 && µb.adnauseam.dnt.enabled() ) {
             if ( µb.adnauseam.dnt.mustAllow(fctxt) ) {
-
-                  result = 2; // TODO: why don't we return here ???
-
+                  result = 2;
                   if ( µb.logger.enabled ) { // logger
                       this.logData = µb.adnauseam.dnt.firewall.toLogData();
                   }
@@ -675,10 +673,8 @@ const PageStore = class {
                 }
             }
             if ( result !== 2 && µb.adnauseam.mustAllowRequest(result, fctxt)) {
-                result = 4; // ADN: adnauseamAllowed, 
-                // TODO: why don't we return here ???
-                if (fctxt.filter) fctxt.filter.result = 4;
-                
+                result = 4; // ADN: adnauseamAllowed 
+                if (fctxt.filter) fctxt.filter.result = 4;                
                 if (!cacheableResult) return result;
             }
         }

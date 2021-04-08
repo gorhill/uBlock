@@ -1147,7 +1147,9 @@
   };
 
   /**
-   *  This is called AFTER our DNT rules, and checks the following cases:
+   *  This is called AFTER our DNT rules, and checks the following cases.
+   *
+   *  If this function returns true, then the request will be marked as ADN-allowed
    *
    *  1) whether we are blocking at all (blockingMalware == false)
    *  		if not, return false
@@ -1158,7 +1160,7 @@
    *  3) whether *any* block on the domain is valid (domain in allowAnyBlockOnDomains)
    *  		if so, return true;
    *
-   *  4) whether the request is strictBlocked (only if strictBlocking is enabled?)
+   *  4) whether the request is strictBlocked (iff strictBlocking is enabled)
    *      if so, return true;
    *
    *  4) if any list that it was found on allows blocks
@@ -1473,6 +1475,7 @@
   };
 
   // return true if we must allow a request in order to extract ads
+  // (the request will then be logged as adn-allowed)
   exports.mustAllowRequest = function (result, context) {
     return result !== 0 && !isBlockableRequest(result, context);
   };
