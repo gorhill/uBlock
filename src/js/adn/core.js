@@ -24,16 +24,17 @@
 
   const µb = µBlock;
   const production = 1;
-  const updateStorageInterval = 1000 * 60 * 30; // 30min
   const notifications = [];
   const allowedExceptions = [];
+  const visitedURLs = new Set();
   const maxAttemptsPerAd = 3;
   const visitTimeout = 20000;
   const profiler = +new Date();
   const pollQueueInterval = 5000;
   const redactMarker = '********';
   const repeatVisitInterval = Number.MAX_VALUE;
-  const visitedURLs = new Set();
+  const updateStorageInterval = 1000 * 60 * 30; // 30min
+
 
   // blocks requests to/from these domains even if the list is not in enabledBlockLists
   const allowAnyBlockOnDomains = ['youtube.com', 'funnyordie.com']; // no dnt in here
@@ -115,7 +116,7 @@
               count: count
             };
 
-          console.log('TEST-FOUND: ', JSON.stringify(json));
+          console.debug('TEST-FOUND: ', JSON.stringify(json));
 
           sendResponse({
             what: 'setPageCount',
@@ -381,6 +382,7 @@
   };
 
   const parseTitle = function (xhr) {
+
     const html = xhr.responseText;
     let title = html.match(/<title[^>]*>([^<]+)<\/title>/i);
 
@@ -407,7 +409,6 @@
     }
 
     const shtml = html.length > 100 ? html.substring(0, 100) + '...' : html;
-    //console.log('shtml: ' + shtml);
     warn('[VISIT] No title for ' + xhr.requestUrl, 'Html:\n' + shtml);
 
     return false;
@@ -650,8 +651,6 @@
       return warn("Invalid domain: " + url);
     }
 
-    //console.log(dInfo.domain, isValidDomain(dInfo.domain));
-
     ad.targetHostname = dInfo.hostname;
     ad.targetDomain = dInfo.domain;
 
@@ -864,7 +863,7 @@
 
   const log = function () {
     if (µb.userSettings.eventLogging) {
-      console.log.apply(console, arguments);
+      console.debug.apply(console, arguments);
     }
     return true;
   }
@@ -1041,7 +1040,6 @@
 
       vAPI.messaging.broadcast(json);
     }
-    // else console.log('[FOUND] !Broadcast: no menu or vault');
 
     if (µb.userSettings.showIconBadge)
       µb.updateToolbarIcon(tabId);
@@ -1117,23 +1115,22 @@
     return lists;
   };
 
-  const isAdnAllow = function (result, context) {
-    return result === 4;
-  }
+  /*   const isAdnAllow = function (result, context) {
+      return result === 4;
+    } */
 
+  // TODO: need to handle domain-specific blocks
   const isStrictBlock = function (result, context) {
-    return false; // TODO: @cqx931
-    // TODO: Shouldn't this be AND instead of OR?
-    return µb.userSettings.strictBlockingMode || result === 4;
+    return µb.userSettings.strictBlockingMode;// || result === 4;
   }
 
-  const isRedirectRule = function (result, context) {
-    // NOTE: this code comes from pagestore.js::line-694
-    return ((context.itype & context.INLINE_ANY) === 0)
-      && (result === 1 || µb.staticNetFilteringEngine.hasQuery(context));
-   /*  if (isredirect) console.log(`***REDIRECT*** result=1, itype=${context.itype}, INLINE_ANY=${context.INLINE_ANY}, redirectURL=${context.redirectURL}`, context);
-    return isredirect; */
-  }
+  /*   const isRedirectRule = function (result, context) {
+      // NOTE: this code comes from pagestore.js::line-694
+      return ((context.itype & context.INLINE_ANY) === 0)
+        && (result === 1 || µb.staticNetFilteringEngine.hasQuery(context));
+     /*  if (isredirect) console.log(`***REDIRECT*** result=1, itype=${context.itype}, INLINE_ANY=${context.INLINE_ANY}, redirectURL=${context.redirectURL}`, context);
+      return isredirect;
+    } */
 
   const isBlockableDomain = function (result, context) {
     const domain = context.docDomain, host = context.getHostname();
@@ -1148,6 +1145,8 @@
 
   /**
    *  This is called AFTER our DNT rules, and checks the following cases.
+   *
+   *  TODO: what should we be logging here ???
    *
    *  If this function returns true, then the request will be marked as ADN-allowed
    *
@@ -1169,22 +1168,22 @@
   const isBlockableRequest = function (result, context) {
 
     if (µb.userSettings.blockingMalware === false) {
-      logNetAllow('NoBlock', context.docDomain + ' => ' + context.url);
+      logNetAllow('NoBlock', context.docDomain + ' :: ' + context.url);
       return false;
     }
 
     if (!listsLoaded) {
-      logNetAllow('Loading', context.docDomain + ' => ' + context.url);
+      logNetAllow('Loading', context.docDomain + ' :: ' + context.url);
       return false;
     }
 
     if (isBlockableDomain(result, context)) {
-      logNetBlock('Domains', context.docDomain + ' => ' + context.url);
+      logNetBlock('Domains', context.docDomain + ' :: ' + context.url);
       return true;
     }
 
     if (isStrictBlock(result, context)) { // DISABLED
-      logNetBlock('StrictBlock', context.docDomain + ' => ' + context.url);
+      logNetBlock('StrictBlock', context.docDomain + ' :: ' + context.url);
       return true;
     }
 
@@ -1209,18 +1208,19 @@
     let misses = [];
     for (let name in lists) {
       if (activeBlockList(name)) {
-        //console.log(`ACTIVE: name=${name} lists[name]=${lists[name]} snfeData.raw=${snfeData.raw} context.url=${context.url}`); // TMP-DEL
+        //console.debug(`ACTIVE: name=${name}, context=${context}, snfe=${snfeData}); // TMP-DEL
         if (lists[name].indexOf('@@') === 0) {                              // case B
-          logNetAllow(name, lists[name] + ': ' + snfeData.raw, context.url);
+          logNetAllow(name, snfeData.raw, context.url);
           return false;
         }
 
-        logNetBlock(name, lists[name] + ': ' + snfeData.raw, context.url);  // case C
+        logNetBlock(name, snfeData.raw, context.url);                        // case C
 
         // Blocks for 'redirect=' rules ? See discussion in #1771
-        if (isRedirectRule(result, context)) {
-          logNetBlock('*Redirect*', context.docDomain + ' => ' + context.url, snfeData.raw, context.url, context);
-        }
+        /* if (isRedirectRule(result, context)) {
+         logNetBlock('*Redirect*', context.docDomain + ' => ' 
+           + context.url, snfeData.raw, context.url, context);
+       } */
 
         return true; // blocked, no need to continue
       }
@@ -1424,7 +1424,7 @@
       }
     }
     if (removed.length > 0) {
-      console.log("remove privateAds", removed);
+      //log("Removing private ad", removed); 
       adsetSize -= removed;
       storeAdData(true);
     }
@@ -1461,7 +1461,7 @@
 
   /********************************** API *************************************/
 
-  const exports = { log: log };
+  const exports = { log };
 
   exports.removeBlockingLists = function (lists) {
 
@@ -1492,7 +1492,6 @@
 
     // preferences relevant to our ui/content-scripts
     const us = µb.userSettings, showDnt = (us.disableHidingForDNT && us.dntDomains.contains(hostname));
-    //console.log('contentPrefs: '+hostname, "VISIBLE: "+showDnt);
     return {
       hidingDisabled: !us.hidingAds || showDnt,
       clickingDisabled: !us.clickingAds,
@@ -1520,7 +1519,7 @@
 
     const ads = adlist(requestURL); // all ads for url
 
-    //console.log('PAGE: ', requestURL, ads.length);
+    log('[PAGE]', requestURL, '(' + ads.length + ' existing ads)');
     visitedURLs.add(requestURL);
 
     ads.forEach(function (ad) { ad.current = false; });
@@ -1571,12 +1570,18 @@
     }
   };
 
+  exports.logRedirect = function (fctxt, msg) {
+
+    fctxt && log('[REDIRECT] ' + fctxt.url + ' => '
+      + fctxt.redirectURL + (msg ? ' (' + msg + ')' : ''));
+  };
+
   const markUserAction = exports.markUserAction = function () {
 
     return (lastUserActivity = millis());
   }
 
-  const logNetAllow = exports.logNetAllow = function () {
+  const logNetAllow = exports.logNetAllow = function () { // local only
 
     const args = Array.prototype.slice.call(arguments);
     args.unshift('[ALLOW]')
@@ -1590,16 +1595,9 @@
     logNetEvent.apply(this, args);
   };
 
-  const logRedirect = exports.logRedirect = function (from, to) {
-
-    if (µb.userSettings.eventLogging && arguments.length)
-      log('[REDIRECT] ' + from + ' => ' + to);
-  };
-
   const logNetEvent = exports.logNetEvent = function () {
 
     if (µb.userSettings.eventLogging && arguments.length) {
-
       const args = Array.prototype.slice.call(arguments);
       const action = args.shift();
       args[0] = action + ' (' + args[0] + ')';
@@ -1613,7 +1611,7 @@
     for (let i = 0; i < ads.length; i++) {
 
       if (ads[i].attemptedTs) {
-        //console.log('check: '+ads[i].requestId+'/'+ads[i].targetUrl+' ?= '+requestId+'/'+url);
+        //console.debug('check: '+ads[i].requestId+'/'+ads[i].targetUrl+' ?= '+requestId+'/'+url);
         if (ads[i].requestId === requestId || ads[i].targetUrl === url) {
           return ads[i];
         }
@@ -1634,7 +1632,7 @@
     ad.pageDomain = µb.URI.domainFromHostname(pageStore.tabHostname); // DCH: 8/10
     ad.version = vAPI.app.version;
 
-    //console.log('registerAd: '+pageStore.tabHostname+' -> '+ad.pageDomain);
+    //console.debug('registerAd: '+pageStore.tabHostname+' -> '+ad.pageDomain);
 
     if (!validate(ad)) return warn(ad);
 
@@ -1693,7 +1691,7 @@
   };
 
   exports.injectContentScripts = function (request, pageStore, tabId, frameId) {
-    console.log('[INJECT] IFrame: ' + request.parentUrl, frameId + '/' + tabId);
+    log('[INJECT] IFrame: ' + request.parentUrl, frameId + '/' + tabId);
     vAPI.onLoadAllCompleted(tabId, frameId);
   };
 
@@ -1715,24 +1713,22 @@
   };
 
   const blockIncomingCookies = exports.blockIncomingCookies = function (headers, requestUrl, originalUrl) {
+
     let modified = false;
-    const dbug = 0;
-    let hostname;
-    const us = µb.userSettings;
 
     const cookieAttr = function (cookie, name) {
 
       const parts = cookie.split(';');
       for (let i = 0; i < parts.length; i++) {
         const keyval = parts[i].trim().split('=');
-        const key = keyval[0];
-        if (keyval[0].toLowerCase() === name)
-          return keyval[1];
+        if (keyval[0].toLowerCase() === name) { }
+        return keyval[1];
       }
-    };
+    }
 
-    dbug && console.log('[HEADERS] (Incoming' +
-      (requestUrl === originalUrl ? ')' : '-redirect)'), requestUrl);
+
+    //console.log('[HEADERS] (Incoming' +
+    //(requestUrl === originalUrl ? ')' : '-redirect)'), requestUrl);
 
     const originalHostname = µb.URI.hostnameFromURI(originalUrl);
 
@@ -1749,7 +1745,7 @@
 
       const name = headers[i].name.toLowerCase();
 
-      dbug && console.log(i + ') ' + name, headers[i].value);
+      //console.log(i + ') ' + name, headers[i].value);
 
       if (name === 'set-cookie' || name === 'set-cookie2') {
         const cval = headers[i].value.trim();
@@ -1757,7 +1753,7 @@
 
         if (1) { // don't block incoming cookies for 3rd party-requests coming from DNT-pages? [needs checking]
 
-          if (domain && us.dntDomains.contains(domain)) {
+          if (domain && µb.userSettings.dntDomains.contains(domain)) {
             log('[DNT] (AllowCookie3p) \'', cval + '\' dnt-domain: ' + domain);
             continue;
           }
@@ -1783,10 +1779,7 @@
   };
 
   exports.deleteAdSet = function (request, pageStore, tabId) {
-
-    request.ids.forEach(function (id) {
-      deleteAd(id);
-    });
+    request.ids.forEach(deleteAd);
   };
 
   exports.logAdSet = function (request, pageStore, tabId) {
@@ -1848,19 +1841,18 @@
    * TODO: Shall be handled differently on different browser (?)
    */
   const verifyAdBlockers = exports.verifyAdBlockers = function () {
-    const notes = notifications;
-    let modified = false;
 
+    let modified = false;
     vAPI.getAddonInfo(function (conflict) {
 
       if (conflict != false) {
-        modified = addNotification(notes, AdBlockerEnabled);
+        modified = addNotification(notifications, AdBlockerEnabled);
       }
       else {
-        modified = removeNotification(notes, AdBlockerEnabled);
+        modified = removeNotification(notifications, AdBlockerEnabled);
       }
 
-      modified && sendNotifications(notes);
+      modified && sendNotifications(notifications);
     });
 
     return notifications.indexOf(AdBlockerEnabled) > -1 ? [AdBlockerEnabled] : [];
@@ -1875,10 +1867,13 @@
   };
 
   const verifyOperaSetting = exports.verifyOperaSetting = function (request) {
-    const isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+
+    const isOpera = (!!window.opr && !!opr.addons)
+      || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
 
     if (isOpera) {
-      // only check for google, bing & duckduckgo, other search engines seem to be fine at the moment
+      // only check for google, bing & duckduckgo
+      // other search engines seem to be fine at the moment
       // search? only
       const searchEngineRegex = /^.*\.bing\.com|^(.*\.)?duckduckgo\.com|^(www\.)*google\.((com\.|co\.|it\.)?([a-z]{2})|com)$/i;
       const domain = parseDomain(request.url);
@@ -1897,38 +1892,33 @@
       // check the url in pageStore
       // if perLoadAllowedRequestCount: 0 && contentLastModified : 0
       // adnauseam is not running on this page
-
       if (thisPageStore) {
-        const notes = notifications;
+
         let modified = false;
         if (thisPageStore.perLoadAllowedRequestCount == 0 && thisPageStore.contentLastModified == 0) {
-          console.log("addNotification")
-          modified = addNotification(notes, OperaSetting);
+          modified = addNotification(notifications, OperaSetting);
         } else {
-          modified = removeNotification(notes, OperaSetting);
+          modified = removeNotification(notifications, OperaSetting);
         }
-        modified && sendNotifications(notes);
+        modified && sendNotifications(notifications);
       }
     }
   }
 
   const verifyFirefoxSetting = exports.verifyFirefoxSetting = function () {
     const tpmFunction = browser.privacy.websites.trackingProtectionMode;
+
     if (typeof tpmFunction === 'undefined') return; // if not firefox
     const trackingProtectionMode = tpmFunction.get({});
 
     trackingProtectionMode.then((got) => {
-      // console.log("FF:", got.value);
-      const notes = notifications;
-
       let modified = false;
-
       if (got.value == "always") {
-        modified = addNotification(notes, FirefoxSetting);
+        modified = addNotification(notifications, FirefoxSetting);
       } else {
-        modified = removeNotification(notes, FirefoxSetting);
+        modified = removeNotification(notifications, FirefoxSetting);
       }
-      modified && sendNotifications(notes);
+      modified && sendNotifications(notifications);
     });
   }
 
@@ -1940,18 +1930,16 @@
   };
 
   const verifyLists = exports.verifyLists = function () {
-    const lists = µb.selectedFilterLists;
-    verifyList(EasyList, lists);
-    verifyList(AdNauseamTxt, lists);
+
+    verifyList(EasyList, µb.selectedFilterLists);
+    verifyList(AdNauseamTxt, µb.selectedFilterLists);
   };
 
   const verifyList = exports.verifyList = function (note, lists) {
-    const notes = notifications;
-    let modified = false;
-    let path;
-    let entry;
 
+    let modified = false, entry;
     for (let i = 0; i < lists.length; i++) {
+
       if (lists[i] === note.listName) {
         entry = lists[i];
       } else if (note.listName === "easylist" && lists[i] === "fanboy-ultimate") {
@@ -1961,18 +1949,20 @@
     }
 
     if (entry) {
-      modified = removeNotification(notes, note);
+      modified = removeNotification(notifications, note);
     }
     else {
-      modified = addNotification(notes, note);
+      modified = addNotification(notifications, note);
     }
 
-    if (modified) sendNotifications(notes);
+    if (modified) sendNotifications(notifications);
   };
 
-  const verifyDNT = exports.verifyDNT = function (request) {
+  const verifyDNT = function (request) {
 
-    const notes = notifications, prefs = µb.userSettings, domain = µb.URI.domainFromHostname(µb.URI.hostnameFromURI(request.url)), target = hasDNTNotification(notifications);
+    const prefs = µb.userSettings;
+    const domain = µb.URI.domainFromHostname(µb.URI.hostnameFromURI(request.url));
+    const target = hasDNTNotification(notifications);
 
     //console.log("verifyDNT: " + domain, request.url, prefs.dntDomains);
 
@@ -1991,15 +1981,22 @@
 
     // continue if the domain is in EFF DNT list
 
-    const disableClicking = (prefs.clickingAds && prefs.disableClickingForDNT), disableHiding = (prefs.hidingAds && prefs.disableHidingForDNT);
+    const disableClicking = (prefs.clickingAds && prefs.disableClickingForDNT);
+    const disableHiding = (prefs.hidingAds && prefs.disableHidingForDNT);
 
     let note = DNTNotify; // neither clicking nor hiding
-    if ((disableClicking && disableHiding) || (!prefs.clickingAds && disableHiding) || (!prefs.hidingAds && disableClicking))
+    if (
+      (disableClicking && disableHiding) ||
+      (!prefs.clickingAds && disableHiding) ||
+      (!prefs.hidingAds && disableClicking)) {
       note = DNTAllowed;
-    else if (disableClicking && prefs.hidingAds && !prefs.disableHidingForDNT)
+    }
+    else if (disableClicking && prefs.hidingAds && !prefs.disableHidingForDNT) {
       note = DNTHideNotClick;
-    else if (prefs.clickingAds && !prefs.disableClickingForDNT && disableHiding)
+    }
+    else if (prefs.clickingAds && !prefs.disableClickingForDNT && disableHiding) {
       note = DNTClickNotHide;
+    }
 
     if (!notifications.contains(note)) {
 
@@ -2017,32 +2014,31 @@
   const verifySetting = exports.verifySetting = function (note, state) {
     //console.log('verifySetting', note, state, notifications);
 
-    const notes = notifications;
-
     let modified = false;
 
-    if (state && !notes.contains(note)) {
+    if (state && !notifications.contains(note)) {
 
-      modified = addNotification(notes, note);
+      modified = addNotification(notifications, note);
     }
     else if (!state) {
 
-      modified = removeNotification(notes, note);
+      modified = removeNotification(notifications, note);
     }
 
     if (modified) {
 
-      // check whether DNT list state needs updating
+      // ADN/TODO: need a new way to check this (broken in merge1.13.2)************************
+      /* check whether DNT list state needs updating (TODO:)
+  
       if (note === ClickingDisabled || note === HidingDisabled) {
-
+  
         //console.log('clicking: ', state, µb.userSettings.clickingAds || µb.userSettings.clickingAds);
         const off = !(µb.userSettings.clickingAds || µb.userSettings.hidingAds);
-
-        // ADN/TODO: need a new way to check this (broken in merge1.13.2)************************
+  
         // µb.selectFilterLists({ location: µb.adnauseam.dnt.effList, off: off })
-      }
+      }*/
 
-      sendNotifications(notes);
+      sendNotifications(notifications);
     }
   };
 
@@ -2181,19 +2177,19 @@
   };
 
   /*var downloadAds = exports.downloadAds = function (request) {
-
+  
     var count = adCount(),
       jsonData = admapToJSON(request.sanitize);
-
+  
     if (!production && request.includeImages) saveVaultImages();
-
+  
     log('[EXPORT] ' + count + ' ads');
-
+  
     console.log('core.downloadAds', jsonData);
-
+  
     var filename = getExportFileName(),
       url = URL.createObjectURL(new Blob([ jsonData ], { type: "text/plain" }));
-
+  
     chrome.downloads.download({
       url : url,
       filename : filename

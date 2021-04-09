@@ -98,7 +98,7 @@
 
       while (checkNode && checkNode.nodeType ===1) {
 
-        //checkNode && console.log('CHECKING: '+checkNode.tagName, checkNode);
+        //checkNode && console.debug('CHECKING: '+checkNode.tagName, checkNode);
         if (checkNode.tagName === 'A' || checkNode.hasAttribute('onclick')) {
           return checkNode;
         }
@@ -241,7 +241,7 @@
       ad = createAd(document.domain, targetUrl, { src: src, width: iw, height: ih });
 
       if (ad) {
-        if (vAPI.prefs.logEvents) console.log('[PARSED] IMG-AD', ad);
+        if (vAPI.prefs.logEvents) console.debug('[PARSED] IMG-AD', ad);
         notifyAddon(ad);
         return true;
 
@@ -279,7 +279,7 @@
         $attr(adndiv, 'id', 'adnauseam-count');
         const body = document.getElementsByTagName("body");
         body.length && body[0].appendChild(adndiv);
-        //console.log("Injected: #adnauseam-count");
+        //console.debug("Injected: #adnauseam-count");
       }
 
       $attr(adndiv, 'count', count);
@@ -299,7 +299,7 @@
       if (vAPI.prefs.logEvents) {
         const args = Array.prototype.slice.call(arguments);
         args.unshift('[PARSER]');
-        console.log.apply(console, args);
+        console.debug.apply(console, args);
       }
     }
 
@@ -321,7 +321,7 @@
         elem.tagName === 'IFRAME' && elem.hasAttribute('src')
           ? elem.getAttribute('src') : elem);
 
-      //console.log("PARSER.process", vAPI.prefs.logEvents);
+      //console.debug("PARSER.process", vAPI.prefs.logEvents);
 
       switch (elem.tagName) {
 
@@ -388,7 +388,7 @@
         } else if(link && !link.hasAttribute("href")){
           const clickableElement = img;
           // clickableElement.addEventListener("mousedown", function(){
-          //   console.log("Clicked by adnauseam!")
+          //   console.debug("Clicked by adnauseam!")
           // })
           // if no href, fake click event
           if (document.createEvent) {
@@ -420,7 +420,7 @@
 
           if (ad) {
 
-            if (vAPI.prefs.logEvents) console.log('[PARSED] Responsive Text Ad', ad);
+            if (vAPI.prefs.logEvents) console.debug('[PARSED] Responsive Text Ad', ad);
             notifyAddon(ad);
             return true;
 

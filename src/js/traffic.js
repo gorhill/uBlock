@@ -55,8 +55,9 @@ const onBeforeSendHeaders = function (details) {
     // add it only if the browser is not sending it already
     if (pageStore.getNetFilteringSwitch() && !hasDNT(headers)) {
 
-      if (details.type === 'main_frame') // minimize logging
+      if (details.type === 'main_frame') {// minimize logging
         adn.logNetEvent('[HEADER]', 'Append', 'DNT:1', details.url);
+      }
 
       addHeader(headers, 'DNT', '1');
     }
@@ -71,7 +72,7 @@ const onBeforeSendHeaders = function (details) {
     // if so, handle the headers (cookies, ua, referer, dnt)
     ad && beforeAdVisit(details, headers, prefs, ad, respectDNT);
 
-    //if (ad) console.log('ADN=VISIfT: '+details.url, 'DNT? '+hasDNT(headers), ad);
+    //if (ad) console.log('ADN-VISIT: '+details.url, 'DNT? '+hasDNT(headers), ad);
   }
 
   // ADN: if this was an adn-allowed request, do we block cookies, etc.? TODO:
@@ -262,6 +263,7 @@ const onBeforeRequest = function(details) {
     // Redirected
 
     if ( fctxt.redirectURL !== undefined ) {
+        µb.adnauseam.logRedirect(fctxt, 'beforeRequest'); // ADN: redirect
         return { redirectUrl: fctxt.redirectURL };
     }
 
@@ -269,6 +271,8 @@ const onBeforeRequest = function(details) {
 
     // Blocked
     if ( result === 1 ) {
+        // ADN: logged from core.js
+        //µb.adnauseam.logNetBlock(fctxt.type, fctxt.url, '(beforeRequest)'); 
         return { cancel: true };
     }
 
@@ -397,6 +401,7 @@ const onBeforeRootFrameRequest = function(fctxt) {
         pageStore !== null &&
         snfe.hasQuery(fctxt)
     ) {
+        µb.adnauseam.logRedirect(fctxt, 'beforeRequest.non-blocked'); // ADN: redirect unblocked
         pageStore.redirectNonBlockedRequest(fctxt);
     }
 
@@ -407,6 +412,7 @@ const onBeforeRootFrameRequest = function(fctxt) {
     // Redirected
 
     if ( fctxt.redirectURL !== undefined ) {
+        µb.adnauseam.logRedirect(fctxt, 'beforeRequest'); // ADN: redirect blocked 
         return { redirectUrl: fctxt.redirectURL };
     }
 
@@ -518,14 +524,14 @@ const onBeforeBehindTheSceneRequest = function(fctxt) {
     // Redirected
 
     if ( fctxt.redirectURL !== undefined ) {
+        µb.adnauseam.logRedirect(fctxt, 'XHR'); // ADN: redirect xhr
         return { redirectUrl: fctxt.redirectURL };
     }
 
     // Blocked?
 
     if ( result === 1 ) {
-        // ADN: Blocked xhr
-        µb.adnauseam.logNetBlock(fctxt.type, fctxt.url);
+        µb.adnauseam.logNetBlock(fctxt.type, fctxt.url, '(XHR)'); // ADN: Blocked xhr
         return { cancel: true };
     }
 
@@ -582,7 +588,6 @@ const onBeforeBehindTheSceneRequest = function(fctxt) {
 /******************************************************************************/
 const handleIncomingCookiesForAdVisits = function(details) {
   let ad, modified; //ADN
-  const dbug = 0; //ADN
   const µb = µBlock;
   const tabId = details.tabId;
 
@@ -591,16 +596,17 @@ const handleIncomingCookiesForAdVisits = function(details) {
     // ADN: handle incoming cookies for our visits
     if (µb.userSettings.noIncomingCookies) {
 
-        dbug && console.log('onHeadersReceived: ', details.url, details.responseHeaders);
+        // console.log('onHeadersReceived: ', details.url, details.responseHeaders);
         // ADN
         ad = µb.adnauseam.lookupAd(details.url, details.requestId);
         if (ad) {
           // this is an ADN request
-          modified = µb.adnauseam.blockIncomingCookies(details.responseHeaders, details.url, ad.targetUrl);
+          modified = µb.adnauseam.blockIncomingCookies
+            (details.responseHeaders, details.url, ad.targetUrl);
         }
-        else if (dbug && vAPI.chrome) {
+        /* else if (vAPI.chrome) {
           console.log('Ignoring non-ADN response', details.url);
-        }
+        } */
     }
     // don't return an empty headers array
     return modified && modified.length ? modified : null;
@@ -625,20 +631,21 @@ const adnOnHeadersRecieved = function(details) {
   }
 
   if (headers == undefined) {
-    // ublock doesn't modified it
+    // ublock hasn't modified it
     headers = details.responseHeaders;
   }
 
-  // 3: Check for AdNauseam allowed
+  // 3: Check for AdNauseam-allowed rule (if so, block incoming cookies)
   const fctxt = µb.filteringContext.fromWebrequestDetails(details);
   const pageStore = µb.pageStoreFromTabId(fctxt.tabId);
-  const modifiedHeadersForAdNauseamAllowed = pageStore && µBlock.adnauseam.checkAllowedException
-          (headers, details.url, pageStore.rawURL);
+  const modifiedHeadersForAdNauseamAllowed = pageStore && 
+    µBlock.adnauseam.checkAllowedException(headers, details.url, pageStore.rawURL);
 
   if (typeof modifiedHeadersForAdNauseamAllowed != "boolean") {
-    return {responseHeaders: modifiedHeadersForAdNauseamAllowed}
+    return { responseHeaders: modifiedHeadersForAdNauseamAllowed };
   }
 }
+
 const onHeadersReceived = function(details) {
     // https://github.com/uBlockOrigin/uBlock-issues/issues/610
     // Process behind-the-scene requests in a special way.
@@ -679,6 +686,7 @@ const onHeadersReceived = function(details) {
             }
             if ( result === 1 ) {
                 pageStore.journalAddRequest(fctxt.getHostname(), 1);
+                µb.adnauseam.logNetBlock(fctxt.type, fctxt.url, '(HEADERS)'); // ADN: block 
                 return { cancel: true };
             }
         }
