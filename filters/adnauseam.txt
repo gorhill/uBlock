@@ -466,6 +466,10 @@ bitcoin.treasurebits.net##iframe[src="about:blank"]
 
 horriblesubs.info##img[src*="play-asia"]
 horriblesubs.info##img[src*="images/b/"]
+
+# Washington Post
+www.washingtonpost.com##div[data-qa="article-body-ad"]
+
 ##################### Blocking rules ########################
 # found on wpri.com
 gfp_video_ads/
