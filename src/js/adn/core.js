@@ -20,7 +20,7 @@
   let listsLoaded = false;
   let lastStorageUpdate = 0;
   let adsetSize = 0;
-  let xhr, idgen, admap, inspected, listEntries;
+  let xhr, idgen, admap, inspected, listEntries, devbuild;
 
   const µb = µBlock;
   const production = 1;
@@ -29,12 +29,14 @@
   const visitedURLs = new Set();
   const maxAttemptsPerAd = 3;
   const visitTimeout = 20000;
-  const profiler = +new Date();
   const pollQueueInterval = 5000;
   const redactMarker = '********';
   const repeatVisitInterval = Number.MAX_VALUE;
   const updateStorageInterval = 1000 * 60 * 30; // 30min
-
+  
+  // properties set to true for a devbuild (if version-num contains a letter)
+  const devProps = ["hidingAds", "clickingAds", "blockingMalware",
+    "eventLogging", "disableClickingForDNT", "disableHidingForDNT"]
 
   // blocks requests to/from these domains even if the list is not in enabledBlockLists
   const allowAnyBlockOnDomains = ['youtube.com', 'funnyordie.com']; // no dnt in here
@@ -80,6 +82,8 @@
     };
 
     initializeState(ads);
+
+    log("INITIALIZE", browser.runtime.getManifest());
 
     setTimeout(pollQueue, pollQueueInterval * 2);
   };
@@ -1115,22 +1119,10 @@
     return lists;
   };
 
-  /*   const isAdnAllow = function (result, context) {
-      return result === 4;
-    } */
-
   // TODO: need to handle domain-specific blocks
   const isStrictBlock = function (result, context) {
-    return µb.userSettings.strictBlockingMode;// || result === 4;
+    return µb.userSettings.strictBlockingMode || result === 4; // see https://github.com/dhowe/AdNauseam/issues/1801#issuecomment-816271511
   }
-
-  /*   const isRedirectRule = function (result, context) {
-      // NOTE: this code comes from pagestore.js::line-694
-      return ((context.itype & context.INLINE_ANY) === 0)
-        && (result === 1 || µb.staticNetFilteringEngine.hasQuery(context));
-     /*  if (isredirect) console.log(`***REDIRECT*** result=1, itype=${context.itype}, INLINE_ANY=${context.INLINE_ANY}, redirectURL=${context.redirectURL}`, context);
-      return isredirect;
-    } */
 
   const isBlockableDomain = function (result, context) {
     const domain = context.docDomain, host = context.getHostname();
@@ -1182,10 +1174,10 @@
       return true;
     }
 
-    if (isStrictBlock(result, context)) { // DISABLED
+    /* if (isStrictBlock(result, context)) {
       logNetBlock('StrictBlock', context.docDomain + ' :: ' + context.url);
       return true;
-    }
+    } */
 
     ///////////////////////////////////////////////////////////////////////
     const snfe = µb.staticNetFilteringEngine, snfeData = snfe.toLogData();
@@ -1196,7 +1188,7 @@
         A) user list:      block
         B) exception hit:  allow
         C) block hit:      block
-        D) no valid hits:  allow, but no cookies later (where?)
+        D) no valid hits:  allow, but no cookies later (see checkAllowedException)
      */
     const lists = listsForFilter(snfeData);
 
@@ -1208,20 +1200,15 @@
     let misses = [];
     for (let name in lists) {
       if (activeBlockList(name)) {
-        //console.debug(`ACTIVE: name=${name}, context=${context}, snfe=${snfeData}); // TMP-DEL
+
+//console.debug(`ACTIVE: name=${name}, context=${result}, context=${context}, snfe=${snfeData}`); // TMP-DEL
+
         if (lists[name].indexOf('@@') === 0) {                              // case B
           logNetAllow(name, snfeData.raw, context.url);
           return false;
         }
 
         logNetBlock(name, snfeData.raw, context.url);                        // case C
-
-        // Blocks for 'redirect=' rules ? See discussion in #1771
-        /* if (isRedirectRule(result, context)) {
-         logNetBlock('*Redirect*', context.docDomain + ' => ' 
-           + context.url, snfeData.raw, context.url, context);
-       } */
-
         return true; // blocked, no need to continue
       }
       else {
@@ -1542,14 +1529,11 @@
 
   exports.onListsLoaded = async function (firstRun) {
 
+    listEntries = {};
     const entries = await µb.staticFilteringReverseLookup.initWorker();
-    listEntries = [];
-    entries.forEach((value, key) => {
-      listEntries[key] = value;
-    });
+    entries.forEach((value, key) => listEntries[key] = value);
 
-    log("[LOAD] Compiled " + entries.size +
-      " 3rd-party lists in " + (+new Date() - profiler) + "ms");
+    devbuild = vAPI.webextFlavor.soup.has('devbuild');
     listsLoaded = true;
 
     verifyAdBlockers();
@@ -1558,15 +1542,28 @@
 
     µb.adnauseam.dnt.updateFilters();
 
-    if (firstRun && !isAutomated()) {
+    if (firstRun) {
 
-      vAPI.tabs.open({
-        url: 'firstrun.html',
-        index: -1
-      });
+      listsLoaded = true;
+      let url = 'firstrun.html';
+
+      if (devbuild) {
+
+        // use default settings for dev-builds
+        url = 'dashboard.html#options.html';
+        devProps.forEach(p => µb.changeUserSettings(p, true));
+      }
+
+      // open firstrun or settings page (if devbuild)
+      vAPI.tabs.open({ url, index: -1 });
 
       // collapses 'languages' group in dashboard:3rd-party
       vAPI.localStorage.setItem('collapseGroup5', 'y');
+
+      if (console.clear) console.clear();
+
+      log("[INIT] AdNauseam loaded (" + entries.size + " 3p lists)"
+        + (devbuild ? ' [DEV]' : ''));
     }
   };
 

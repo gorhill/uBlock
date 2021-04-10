@@ -73,7 +73,7 @@
     "webRequestBlocking",
     "<all_urls>"
   ],
-  "short_name": "uBlock₀",
+  "short_name": "AdNauseam",
   "version": "1.9.15.101",
   "web_accessible_resources": [
     "/web_accessible_resources/*"

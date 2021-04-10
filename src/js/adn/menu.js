@@ -81,9 +81,10 @@
 
     updateMenuState();
 
-    if (typeof json !== 'undefined') ads = json.data;
-
-    if (ads) setCounts(ads, json.total, json.recent);
+    if (typeof json == 'undefined') {
+      ads = json.data;
+      setCounts(ads, json.total, json.recent);
+    }
 
     const $items = uDom('#ad-list-items');
     $items.removeClass().empty();

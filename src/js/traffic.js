@@ -263,7 +263,7 @@ const onBeforeRequest = function(details) {
     // Redirected
 
     if ( fctxt.redirectURL !== undefined ) {
-        µb.adnauseam.logRedirect(fctxt, 'beforeRequest'); // ADN: redirect
+        µb.adnauseam.logRedirect(fctxt); // ADN:redirect
         return { redirectUrl: fctxt.redirectURL };
     }
 
@@ -271,8 +271,8 @@ const onBeforeRequest = function(details) {
 
     // Blocked
     if ( result === 1 ) {
-        // ADN: logged from core.js
-        //µb.adnauseam.logNetBlock(fctxt.type, fctxt.url, '(beforeRequest)'); 
+        // ADN: already logged from core.js
+        //µb.adnauseam.logNetBlock(fctxt.type, fctxt.url); 
         return { cancel: true };
     }
 

@@ -1,5 +1,9 @@
 {
   "author": "Daniel C. Howe",
+  "developer": {
+    "name": "Daniel C. Howe",
+    "url": "https://rednoise.org/daniel"
+  },
   "background": {
     "page": "background.html"
   },
@@ -19,8 +23,7 @@
     }
   },
   "commands": {
-    "_execute_browser_action": {
-    },
+    "_execute_browser_action": {},
     "launch-element-zapper": {
       "description": "__MSG_popupTipZapper__"
     },
@@ -96,7 +99,7 @@
     "management",
     "<all_urls>"
   ],
-  "short_name": "uBlock₀",
+  "short_name": "AdNauseam",
   "sidebar_action": {
     "default_title": "__MSG_statsPageName__",
     "default_panel": "logger-ui.html",
