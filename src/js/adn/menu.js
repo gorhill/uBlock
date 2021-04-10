@@ -230,7 +230,7 @@
 
   const verify = function (ad) { // uses global ads
 
-    if (!ads) console.error("NO GLOBAL ADS!!!");
+    if (!ads) console.error("[WARN] no global ads!");
 
     if (ad) {
 

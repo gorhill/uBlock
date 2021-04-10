@@ -618,7 +618,7 @@ const PageStore = class {
         }
 
         const requestType = fctxt.type;
-        const loggerEnabled = µb.logger.enabled;
+        const loggerEnabled = µb.logger.enabled ||  µb.userSettings.eventLogging;
 
         // Dynamic URL filtering.
         let result = µb.sessionURLFiltering.evaluateZ(
@@ -626,7 +626,7 @@ const PageStore = class {
             fctxt.url,
             requestType
         );
-        if ( result !== 0 && true || loggerEnabled ) { // TODO: TMP-REMOVE
+        if ( result !== 0 || loggerEnabled ) {
             fctxt.filter = µb.sessionURLFiltering.toLogData();
         }
 
@@ -650,12 +650,14 @@ const PageStore = class {
             );
             if ( result !== 0 && result !== 3 && loggerEnabled ) {
                 fctxt.filter = µb.sessionFirewall.toLogData();
+                // ADN: local strict blocks hit here (result==4)
             }
         }
 
         // Static filtering has lowest precedence.
         const snfe = µb.staticNetFilteringEngine;
-        if ( result === 0 || result === 3 ) {
+        if ( result === 0 || result === 3) { 
+
             result = snfe.matchString(fctxt);
             if ( result !== 0 ) {
                 if ( loggerEnabled ) {

@@ -33,7 +33,7 @@
   const redactMarker = '********';
   const repeatVisitInterval = Number.MAX_VALUE;
   const updateStorageInterval = 1000 * 60 * 30; // 30min
-  
+
   // properties set to true for a devbuild (if version-num contains a letter)
   const devProps = ["hidingAds", "clickingAds", "blockingMalware",
     "eventLogging", "disableClickingForDNT", "disableHidingForDNT"]
@@ -120,7 +120,7 @@
               count: count
             };
 
-          console.debug('TEST-FOUND: ', JSON.stringify(json));
+          console.debug('[ADN] TESTING: ', JSON.stringify(json));
 
           sendResponse({
             what: 'setPageCount',
@@ -1121,7 +1121,16 @@
 
   // TODO: need to handle domain-specific blocks
   const isStrictBlock = function (result, context) {
-    return µb.userSettings.strictBlockingMode || result === 4; // see https://github.com/dhowe/AdNauseam/issues/1801#issuecomment-816271511
+
+    // see https://github.com/dhowe/AdNauseam/issues/1801#issuecomment-816271511
+    if (µb.userSettings.strictBlockingMode) {
+      logNetBlock('GlobalStrict', context.docDomain + ' :: ' + context.url);
+      return true;
+    }
+    else if (result === 4) { // never gets here
+      logNetBlock('LocalStrict', context.docDomain + ' :: ' + context.url);
+      return true;
+    }
   }
 
   const isBlockableDomain = function (result, context) {
@@ -1174,10 +1183,9 @@
       return true;
     }
 
-    /* if (isStrictBlock(result, context)) {
-      logNetBlock('StrictBlock', context.docDomain + ' :: ' + context.url);
+    if (isStrictBlock(result, context)) {
       return true;
-    } */
+    }
 
     ///////////////////////////////////////////////////////////////////////
     const snfe = µb.staticNetFilteringEngine, snfeData = snfe.toLogData();
@@ -1201,14 +1209,14 @@
     for (let name in lists) {
       if (activeBlockList(name)) {
 
-//console.debug(`ACTIVE: name=${name}, context=${result}, context=${context}, snfe=${snfeData}`); // TMP-DEL
+        //console.debug(`ACTIVE: name=${name}, result=${result} context=`, context, " snfe=", snfeData); // TMP-DEL
 
         if (lists[name].indexOf('@@') === 0) {                              // case B
           logNetAllow(name, snfeData.raw, context.url);
           return false;
         }
 
-        logNetBlock(name, snfeData.raw, context.url);                        // case C
+        logNetBlock(name, snfeData.raw, context.url);                       // case C
         return true; // blocked, no need to continue
       }
       else {
@@ -1216,7 +1224,7 @@
       }
     }
 
-    return adnAllowRequest(misses.join(','), snfeData.raw, context.url); // case D
+    return adnAllowRequest(misses.join(','), snfeData.raw, context.url);    // case D
   };
 
   const adCount = function () {

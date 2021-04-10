@@ -270,10 +270,17 @@ const onBeforeRequest = function(details) {
     // Not redirected
 
     // Blocked
-    if ( result === 1 ) {
-        // ADN: already logged from core.js
-        //µb.adnauseam.logNetBlock(fctxt.type, fctxt.url); 
-        return { cancel: true };
+    if ( result === 1 || result === 4) {  // AND 1=block, 4=strictBlock
+        
+        // ADN: already logs this from core.js if result == 1
+        //µb.adnauseam.logNetBlock(fctxt); 
+
+        if (result === 4) { // ADN: local strictBlock
+            µb.adnauseam.logNetBlock('LocalStrict', 
+            fctxt.url, '{' + fctxt.filter.raw + '}', `[${fctxt.type}]`);
+        }
+
+        return { cancel: true }; // block
     }
 
     // Not blocked
@@ -524,14 +531,14 @@ const onBeforeBehindTheSceneRequest = function(fctxt) {
     // Redirected
 
     if ( fctxt.redirectURL !== undefined ) {
-        µb.adnauseam.logRedirect(fctxt, 'XHR'); // ADN: redirect xhr
+        µb.adnauseam.logRedirect(fctxt, `[BehindTheScene: ${fctxt.type}]`); // ADN: redirect xhr
         return { redirectUrl: fctxt.redirectURL };
     }
 
     // Blocked?
 
     if ( result === 1 ) {
-        µb.adnauseam.logNetBlock(fctxt.type, fctxt.url, '(XHR)'); // ADN: Blocked xhr
+        µb.adnauseam.logNetBlock('BehindTheScene', fctxt.url, `(${fctxt.type})`); // ADN: Blocked xhr
         return { cancel: true };
     }
 
@@ -686,7 +693,7 @@ const onHeadersReceived = function(details) {
             }
             if ( result === 1 ) {
                 pageStore.journalAddRequest(fctxt.getHostname(), 1);
-                µb.adnauseam.logNetBlock(fctxt.type, fctxt.url, '(HEADERS)'); // ADN: block 
+                µb.adnauseam.logNetBlock('Headers', fctxt.url); // ADN: block 
                 return { cancel: true };
             }
         }
