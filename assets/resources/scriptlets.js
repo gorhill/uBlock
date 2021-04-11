@@ -665,6 +665,18 @@
 })();
 
 
+/// no-floc.js
+//  https://github.com/uBlockOrigin/uBlock-issues/issues/1553
+(function() {
+    if ( document.interestCohort instanceof Function === false ) { return; }
+    document.interestCohort = new Proxy(document.interestCohort, {
+        apply: function() {
+            return Promise.reject();
+        }
+    });
+})();
+
+
 /// remove-attr.js
 /// alias ra.js
 (function() {
