@@ -382,6 +382,10 @@
         return out.join('\n');
     };
 
+    api.hasScriptlet = function(hostname, exceptionBit, scriptlet) {
+        return scriptletDB.hasStr(hostname, exceptionBit, scriptlet);
+    };
+
     api.injectNow = function(details) {
         if ( typeof details.frameId !== 'number' ) { return; }
         const request = {

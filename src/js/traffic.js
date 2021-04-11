@@ -53,6 +53,9 @@ window.addEventListener('webextFlavor', function() {
         vAPI.webextFlavor.major < 59;
 }, { once: true });
 
+// https://github.com/uBlockOrigin/uBlock-issues/issues/1553
+const supportsFloc = document.interestCohort instanceof Function;
+
 /******************************************************************************/
 
 // Intercept and filter web requests.
@@ -540,7 +543,7 @@ const onHeadersReceived = function(details) {
     }
 
     // At this point we have a HTML document.
-    
+
     const filteredHTML =
         µb.canFilterResponseData && filterDocument(fctxt, details) === true;
 
@@ -549,6 +552,9 @@ const onHeadersReceived = function(details) {
         modifiedHeaders = true;
     }
     if ( injectCSP(fctxt, pageStore, responseHeaders) === true ) {
+        modifiedHeaders = true;
+    }
+    if ( supportsFloc && foilFloc(fctxt, responseHeaders) ) {
         modifiedHeaders = true;
     }
 
@@ -1007,6 +1013,23 @@ const injectCSP = function(fctxt, pageStore, responseHeaders) {
         value: cspSubsets.join(', ')
     });
 
+    return true;
+};
+
+/******************************************************************************/
+
+// https://github.com/uBlockOrigin/uBlock-issues/issues/1553
+// https://github.com/WICG/floc#opting-out-of-computation
+
+const foilFloc = function(fctxt, responseHeaders) {
+    const hn = fctxt.getHostname();
+    if ( µBlock.scriptletFilteringEngine.hasScriptlet(hn, 1, 'no-floc') === false ) {
+        return false;
+    }
+    responseHeaders.push({
+        name: 'Permissions-Policy',
+        value: 'interest-cohort=()' }
+    );
     return true;
 };
 

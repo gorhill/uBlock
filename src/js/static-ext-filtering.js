@@ -173,6 +173,35 @@
             }
         }
 
+        hasStr(hostname, exceptionBit, value) {
+            let found = false;
+            for (;;) {
+                let iHn = this.hostnameToSlotIdMap.get(hostname);
+                if ( iHn !== undefined ) {
+                    do {
+                        const strId = this.hostnameSlots[iHn+0];
+                        if ( this.strSlots[strId >>> this.nBits] === value ) {
+                            if ( (strId & exceptionBit) !== 0 ) {
+                                return false;
+                            }
+                            found = true;
+                        }
+                        iHn = this.hostnameSlots[iHn+1];
+                    } while ( iHn !== 0 );
+                }
+                if ( hostname === '' ) { break; }
+                const pos = hostname.indexOf('.');
+                if ( pos !== -1 ) {
+                    hostname = hostname.slice(pos + 1);
+                } else if ( hostname !== '*' ) {
+                    hostname = '*';
+                } else {
+                    hostname = '';
+                }
+            }
+            return found;
+        }
+
         toSelfie() {
             return {
                 hostnameToSlotIdMap: Array.from(this.hostnameToSlotIdMap),
