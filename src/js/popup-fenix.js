@@ -1374,35 +1374,19 @@ uDom('#saveRules').on('click', saveFirewallRules);
 uDom('#revertRules').on('click', ( ) => { revertFirewallRules(); });
 uDom('a[href]').on('click', gotoURL);
 
-// Toggle emphasis of rows with[out] 3rd-party scripts/frames
-{
-    const nextStep = (target, steps) => {
-        const firewall = document.getElementById('firewall');
-        const cl = firewall.classList;
-        if ( cl.contains(steps[0]) ) {
-            cl.remove(steps[0]);
-            if ( firewall.querySelector(target) !== null ) {
-                cl.add(steps[1]);
-            }
-            return;
-        }
-        if ( cl.contains(steps[1]) ) {
-            cl.remove(steps[1]);
-            return;
-        }
-        cl.add(steps[0]);
-    };
-    document.querySelector('#firewall > [data-type="3p-script"] .filter')
-        .addEventListener('click', ( ) => {
-            nextStep('.is3p.hasScript', [ 'show3pScript', 'hide3pScript' ]);
-        });
+/******************************************************************************/
 
-    // Toggle visibility of rows with[out] 3rd-party frames
-    document.querySelector('#firewall > [data-type="3p-frame"] .filter')
-        .addEventListener('click', ( ) => {
-            nextStep('.is3p.hasFrame', [ 'show3pFrame', 'hide3pFrame' ]);
-        });
-}
+// Toggle emphasis of rows with[out] 3rd-party scripts/frames
+document.querySelector('#firewall > [data-type="3p-script"] .filter')
+    .addEventListener('click', ( ) => {
+        document.getElementById('firewall').classList.toggle('show3pScript');
+    });
+
+// Toggle visibility of rows with[out] 3rd-party frames
+document.querySelector('#firewall > [data-type="3p-frame"] .filter')
+    .addEventListener('click', ( ) => {
+        document.getElementById('firewall').classList.toggle('show3pFrame');
+    });
 
 /******************************************************************************/
 
