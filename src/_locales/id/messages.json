@@ -267,6 +267,14 @@
     "message": "Versi",
     "description": "Example of use: Version 1.26.4"
   },
+  "popup3pScriptFilterTip": {
+    "message": "↑: Menampilkan baris yang memiliki skrip pihak ke-3",
+    "description": "Tooltip shown when hovering small filtering widget in '3rd-party scripts' cell"
+  },
+  "popup3pFrameFilterTip": {
+    "message": "↑: Menampilkan baris yang memiliki frame pihak ke-3",
+    "description": "Tooltip shown when hovering small filtering widget in '3rd-party frames' cell"
+  },
   "pickerCreate": {
     "message": "Buat",
     "description": "English: Create"

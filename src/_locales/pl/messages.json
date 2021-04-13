@@ -267,6 +267,14 @@
     "message": "Wersja",
     "description": "Example of use: Version 1.26.4"
   },
+  "popup3pScriptFilterTip": {
+    "message": "Wyróżnij wiersze zawierające skrypty innych firm",
+    "description": "Tooltip shown when hovering small filtering widget in '3rd-party scripts' cell"
+  },
+  "popup3pFrameFilterTip": {
+    "message": "Wyróżnij wiersze zawierające ramki innych firm",
+    "description": "Tooltip shown when hovering small filtering widget in '3rd-party frames' cell"
+  },
   "pickerCreate": {
     "message": "Utwórz",
     "description": "English: Create"

@@ -267,6 +267,14 @@
     "message": "Versioni",
     "description": "Example of use: Version 1.26.4"
   },
+  "popup3pScriptFilterTip": {
+    "message": "Theksoni rreshtat që kanë skriptet e palëve të treta",
+    "description": "Tooltip shown when hovering small filtering widget in '3rd-party scripts' cell"
+  },
+  "popup3pFrameFilterTip": {
+    "message": "Theksoni rreshtat që kanë kuadrot e palëve të treta",
+    "description": "Tooltip shown when hovering small filtering widget in '3rd-party frames' cell"
+  },
   "pickerCreate": {
     "message": "Krijoj",
     "description": "English: Create"

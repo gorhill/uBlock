@@ -267,6 +267,14 @@
     "message": "Verzia",
     "description": "Example of use: Version 1.26.4"
   },
+  "popup3pScriptFilterTip": {
+    "message": "↑: Zvýrazniť riadky, ktoré majú skripty z tretej strany",
+    "description": "Tooltip shown when hovering small filtering widget in '3rd-party scripts' cell"
+  },
+  "popup3pFrameFilterTip": {
+    "message": "↑: Zvýrazniť riadky, ktoré majú rámy z tretej strany",
+    "description": "Tooltip shown when hovering small filtering widget in '3rd-party frames' cell"
+  },
   "pickerCreate": {
     "message": "Vytvoriť",
     "description": "English: Create"
