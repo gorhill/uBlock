@@ -63,7 +63,6 @@ const µBlock = (( ) => { // jshint ignore:line
         extensionUpdateForceReload: false,
         filterAuthorMode: false,
         filterOnHeaders: false,
-        ignoreRedirectFilters: false,
         ignoreScriptInjectFilters: false,
         loggerPopupType: 'popup',
         manualUpdateAssetFetchPeriod: 500,

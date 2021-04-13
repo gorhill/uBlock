@@ -821,7 +821,6 @@ const PageStore = class {
     }
 
     redirectBlockedRequest(fctxt) {
-        if ( µb.hiddenSettings.ignoreRedirectFilters === true ) { return; }
         const directives = µb.staticNetFilteringEngine.redirectRequest(fctxt);
         if ( directives === undefined ) { return; }
         if ( µb.logger.enabled !== true ) { return; }
