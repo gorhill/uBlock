@@ -81,7 +81,7 @@
 
     updateMenuState();
 
-    if (typeof json == 'undefined') {
+    if (typeof json !== 'undefined') {
       ads = json.data;
       setCounts(ads, json.total, json.recent);
     }
