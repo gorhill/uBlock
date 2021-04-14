@@ -484,7 +484,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "一行一条过滤规则。每条规则可以是一个普通的主机名或者是一条 Adblock Plus 兼容的过滤规则。以 <code>!</code> 开头的行将被忽略。",
+    "message": "一行一条过滤规则。每条规则可以是一个普通的主机名或者是一条与 EasyList 兼容的过滤规则。以 <code>!</code> 开头的行将被忽略。",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -550,6 +550,22 @@
   "rulesFormatHint": {
     "message": "规则语法：<code>来源主机名称 目标主机名称 连接请求类型 操作</code>（<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>完整说明</a>）。",
     "description": "English: dynamic rule syntax and full documentation."
+  },
+  "rulesSort": {
+    "message": "排列：",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "规则类型",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "来源",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "目标",
+    "description": "English: a sort option for list of rules."
   },
   "whitelistPrompt": {
     "message": "您的列表中针对 µBlock 的主机名将被禁用。每行一条规则。无效的主机名将直接被忽略。",
@@ -653,6 +669,10 @@
   },
   "loggerRowFiltererBuiltinAllowed": {
     "message": "已允许",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinModified": {
+    "message": "已修改",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
@@ -889,7 +909,11 @@
   },
   "subscriberConfirm": {
     "message": "uBlock₀：添加下列 URL 到您的自定义规则列表吗？\n\n标题： “{{title}}”\nURL： {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "订阅",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "1 分钟前",
@@ -929,11 +953,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBlock₀ 阻止了下列页面加载：",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
-    "message": "因为下列过滤规则",
-    "description": "English: Because of the following filter"
+    "message": "因为下列过滤规则：",
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "不带参数",
@@ -1003,6 +1027,10 @@
     "message": "字节",
     "description": ""
   },
+  "contextMenuBlockElementInFrame": {
+    "message": "屏蔽框架中的内容…",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "临时允许较大媒体元素",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
@@ -1042,6 +1070,10 @@
   "GB": {
     "message": "GB",
     "description": "short for 'gigabytes'"
+  },
+  "clickToLoad": {
+    "message": "单击以加载",
+    "description": "Message used in frame placeholders"
   },
   "dummy": {
     "message": "此条目必须是最后一个",

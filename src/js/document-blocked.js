@@ -60,19 +60,17 @@ let details = {};
 
     const parent = uDom.nodeFromSelector('#whyex > span:nth-of-type(2)');
     for ( const list of lists ) {
-        const elem = document.querySelector('#templates .filterList')
-                             .cloneNode(true);
-        const source = elem.querySelector('.filterListSource');
-        source.href += encodeURIComponent(list.assetKey);
-        source.textContent = list.title;
-        if (
-            typeof list.supportURL === 'string' &&
-            list.supportURL !== ''
-        ) {
-            elem.querySelector('.filterListSupport')
-                .setAttribute('href', list.supportURL);
+        const listElem = document.querySelector('#templates .filterList')
+                                 .cloneNode(true);
+        const sourceElem = listElem.querySelector('.filterListSource');
+        sourceElem.href += encodeURIComponent(list.assetKey);
+        sourceElem.textContent = list.title;
+        if ( typeof list.supportURL === 'string' && list.supportURL !== '' ) {
+            const supportElem = listElem.querySelector('.filterListSupport');
+            supportElem.setAttribute('href', list.supportURL);
+            supportElem.classList.remove('hidden');
         }
-        parent.appendChild(elem);
+        parent.appendChild(listElem);
     }
     uDom.nodeFromId('whyex').style.removeProperty('display');
 })();
@@ -82,22 +80,25 @@ let details = {};
 (( ) => {
     const matches = /^(.*)\{\{hostname\}\}(.*)$/.exec(vAPI.i18n('docblockedProceed'));
     if ( matches === null ) { return; }
-    const proceed = uDom('#templates .proceed').clone();
-    proceed.descendants('span:nth-of-type(1)').text(matches[1]);
-    proceed.descendants('span:nth-of-type(3)').text(matches[2]);
+    const proceed = document.querySelector('#templates .proceed').cloneNode(true);
+    proceed.children[0].textContent = matches[1];
+    proceed.children[2].textContent = matches[2];
+    const hnOption = proceed.querySelector('.hn');
     if ( details.hn !== details.dn ) {
-        proceed.descendants('.hn').text(details.hn).attr('value', details.hn);
+        hnOption.textContent = details.hn;
+        hnOption.setAttribute('value', details.hn);
     } else {
-        proceed.descendants('.hn').remove();
+        hnOption.remove();
     }
-    proceed.descendants('.dn').text(details.dn).attr('value', details.dn);
-
-    uDom('#proceed').append(proceed);
+    const dnOption = proceed.querySelector('.dn');
+    dnOption.textContent = details.dn;
+    dnOption.setAttribute('value', details.dn);
+    document.getElementById('proceed').append(proceed);
 })();
 
 /******************************************************************************/
 
-uDom.nodeFromSelector('#theURL > p').textContent = details.url;
+uDom.nodeFromSelector('#theURL > p > span:first-of-type').textContent = details.url;
 uDom.nodeFromId('why').textContent = details.fs;
 
 /******************************************************************************/
@@ -178,11 +179,9 @@ uDom.nodeFromId('why').textContent = details.fs;
         return;
     }
 
-    const toggler = document.createElement('span');
-    toggler.className = 'fa';
-    uDom('#theURL > p').append(toggler);
+    const toggler = document.querySelector('#theURL > p > span:last-of-type');
 
-    uDom(toggler).on('click', function() {
+    toggler.addEventListener('click', ( ) => {
         const cl = uDom.nodeFromId('theURL').classList;
         cl.toggle('collapsed');
         vAPI.localStorage.setItem(

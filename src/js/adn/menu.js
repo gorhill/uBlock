@@ -81,15 +81,15 @@
 
     updateMenuState();
 
-    ads = json && json.data;
-
-    setCounts(ads, json && json.data && json.total, json.recent);
+    if (typeof json == 'undefined') {
+      ads = json.data;
+      setCounts(ads, json.total, json.recent);
+    }
 
     const $items = uDom('#ad-list-items');
-
     $items.removeClass().empty();
 
-    layoutAds(json);
+    if (typeof json !== 'undefined') layoutAds(json);
 
     vAPI.messaging.send(
       'adnauseam', {
@@ -230,7 +230,7 @@
 
   const verify = function (ad) { // uses global ads
 
-    if (!ads) console.error("NO GLOBAL ADS!!!");
+    if (!ads) console.error("[WARN] no global ads!");
 
     if (ad) {
 

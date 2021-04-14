@@ -233,6 +233,7 @@ button {
   background: none;
   box-shadow: none;
   color: #0076FF;
+  fill: #0076FF;
   font-size: 20px;
   height: 30px;
   padding-top: 1px;
@@ -241,16 +242,19 @@ button {
 button:hover:enabled{
   background: #0076FF;
   color: #000;
+  fill: #000;
 }
 
 button.danger {
   border-color: #ff3300;
   color: #ff3300;
+  fill: #ff3300;
 }
 
 button.danger:hover{
   background: #ff3300;
   color: #000;
+  fill: #000;
 }
 
 button.large {
@@ -276,6 +280,7 @@ button.custom {
     background: none;
     box-shadow: none;
     color: #0076FF;
+    fill: #0076FF;
     font-size: 20px;
     height: 30px;
     padding-top: 2px;
@@ -290,6 +295,7 @@ button.custom[disabled],
 button.large.disabled {
     border-color: #999;
     color: #999;
+    fill: #999;
     opacity: 0.6;
     pointer-events: none;
     }
@@ -363,6 +369,21 @@ button.important {
   position: relative;
   overflow: hidden;
 }
+
+/* ADN */
+.notification #notify-text {
+  max-width: calc(100% - 20px);
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ADN */
+.notification #notify-link {
+  vertical-align: super;
+}
+
 .notification button{
   background-image: none !important;
   font-size: 18px;
@@ -583,7 +604,7 @@ code, .code {
     }
 hr {
     border: 0;
-    border-top: 1px solid var(--hor-separator-color);
+    border-top: 1px solid var(--hr-ink);
     margin: 1em 0;
     }
 .hiddenFileInput {
@@ -594,7 +615,7 @@ hr {
 textarea {
     font-size: 90%;
 }
-input {
+input, select {
       background: #333;
       color: #ccc;
       border: solid 1px #999;
@@ -799,6 +820,9 @@ body[dir=rtl] #lists {
     padding: 0;
     list-style-type: none;
     }
+#lists > .groupEntry {
+    margin-top: 0.5em;  /* ADN add more spacing */
+    }
 #lists > .groupEntry .geName {
     cursor: pointer;
     font-size: 120%;
@@ -819,7 +843,7 @@ body[dir=rtl] #lists {
     content: '+  ';
     }
 #lists > .groupEntry > .listEntries {
-    margin: 0.25em 0 0 0;
+    margin: 0.25em 0 0 10px; /* ADN add more spacing */
     }
 #lists > .groupEntry.collapsed > .listEntries {
     display: none;
@@ -829,6 +853,7 @@ body[dir=rtl] #lists {
     margin: 0 auto 0 auto;
     margin-right: 0em;
     text-indent: -2em;
+    height: 1.85em; /* ADN make listEntry hieght equal */
     }
 body[dir=rtl] .li.listEntry {
     margin-left: 0em;
@@ -976,7 +1001,6 @@ button.preferred {
     background-color: var(--button-preferred-surface);
     color: var(--button-preferred-ink);
     }
-button.iconifiable > .fa,
 button.iconifiable > .fa-icon {
     padding-left: 0;
     padding-right: 0.4em;
@@ -984,7 +1008,6 @@ button.iconifiable > .fa-icon {
 button.iconifiable > .fa-icon {
     font-size: 120%;
     }
-body[dir="rtl"] button.iconifiable > .fa,
 body[dir="rtl"] button.iconifiable > .fa-icon {
     padding-left: 0.5em;
     }
@@ -1076,8 +1099,6 @@ font-family: bebas_neue,sans-serif;
     -webkit-margin-start: 2em;
     }
 @media (max-width: 640px) {
-
-    button.iconifiable > .fa,
     button.iconifiable > .fa-icon {
         font-size: 1.2rem;
         padding: 0;
@@ -1085,6 +1106,16 @@ font-family: bebas_neue,sans-serif;
     button.iconifiable > [data-i18n] {
         display: none;
         }
+    }
+
+.logo {
+    align-items: center;
+    display: inline-flex;
+    padding: 0 0.5em;
+    width: 1.25em;
+    }
+.logo > img {
+    width: 100%;
     }
 
 .ubo-icon {
@@ -1115,7 +1146,20 @@ font-family: bebas_neue,sans-serif;
     width: 1em;
     }
 
-/* touch-screen devices */
+/*ADN - fixing https://github.com/dhowe/AdNauseam/issues/1768 */ 
+
+/* high dpi devices 
+:root.hidpi button {
+    font-family: Metropolis, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    }
+:root.hidpi .fieldset-header {
+    font-family: Metropolis, sans-serif;
+    }
+*/
+/* touch-screen devices 
 :root.mobile label {
     flex-grow: 1
     }
+*/

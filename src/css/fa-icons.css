@@ -34,7 +34,10 @@
     position: absolute;
     visibility: visible;
     }
-.fa-icon.fa-icon-vflipped {
+.fa-icon.fa-icon-hflipped > svg {
+    transform: scale(-1, 1);
+    }
+.fa-icon.fa-icon-vflipped > svg {
     transform: scale(1, -1);
     }
 
@@ -69,10 +72,14 @@
 .fa-icon > .fa-icon_list-alt {
     width: calc(1em * 1792 / 1792);
     }
+.fa-icon > .fa-icon_download-alt,
 .fa-icon > .fa-icon_font,
 .fa-icon > .fa-icon_search,
 .fa-icon > .fa-icon_spinner,
-.fa-icon > .fa-icon_unlink {
+.fa-icon > .fa-icon_unlink,
+.fa-icon > .fa-icon_upload-alt,
+.fa-icon > .fa-icon_zoom-in,
+.fa-icon > .fa-icon_zoom-out {
     width: calc(1em * 1664 / 1792);
     }
 .fa-icon > .fa-icon_home {
@@ -90,8 +97,13 @@
 .fa-icon > .fa-icon_power-off,
 .fa-icon > .fa-icon_question-circle,
 .fa-icon > .fa-icon_refresh,
-.fa-icon > .fa-icon_sliders {
+.fa-icon > .fa-icon_save,
+.fa-icon > .fa-icon_sliders,
+.fa-icon > .fa-icon_undo {
     width: calc(1em * 1536 / 1792);
+    }
+.fa-icon > .fa-icon_arrow-right {
+    width: calc(1em * 1472 / 1792);
     }
 .fa-icon > .fa-icon_filter {
     width: calc(1em * 1410 / 1792);

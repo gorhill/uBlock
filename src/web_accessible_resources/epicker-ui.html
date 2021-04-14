@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html id="ublock0-epicker">
+    
+<head>
+<meta charset="utf-8">
+<title>uBlock Origin Element Picker</title>
+<link rel="stylesheet" href="../lib/codemirror/lib/codemirror.css">
+<link rel="stylesheet" href="../lib/codemirror/addon/hint/show-hint.css">
+
+<link rel="stylesheet" href="../css/themes/default.css">
+<link rel="stylesheet" href="../css/epicker-ui.css">
+<link rel="stylesheet" href="../css/codemirror.css">
+</head>
+
+<body>
+<aside>
+<section>
+    <div>
+        <div class="codeMirrorContainer codeMirrorBreakAll"></div>
+        <div class="resultsetWidgets">
+            <span id="resultsetModifiers">
+                <span id="resultsetDepth" class="resultsetModifier">
+                    <span><span></span><span></span><span></span></span>
+                    <input type="range" min="0" max="7" value="7">
+                </span>
+                <span id="resultsetSpecificity" class="resultsetModifier">
+                    <span><span></span><span></span><span></span></span>
+                    <input type="range" min="0" max="7" value="6">
+                </span>
+            </span>
+            <span id="resultsetCount"></span>
+        </div>
+    </div>
+    <div id="toolbar">
+        <div>
+            <button id="preview" type="button" data-i18n="pickerPreview"></button>
+        </div>
+        <div id="move"></div>
+        <div>
+            <button id="create" type="button" disabled data-i18n="pickerCreate"></button>
+            <button id="pick" type="button" data-i18n="pickerPick"></button>
+            <button id="quit" type="button" data-i18n="pickerQuit"></button>
+        </div>
+    </div>
+</section>
+<ul id="candidateFilters">
+    <li id="netFilters">
+        <span data-i18n="pickerNetFilters"></span>
+        <ul lang="en" class="changeFilter"></ul>
+    </li>
+    <li id="cosmeticFilters" data-specificity="3">
+        <span data-i18n="pickerCosmeticFilters"></span>
+        <ul lang="en" class="changeFilter"></ul>
+    </li>
+</ul>
+</aside>
+<svg><path d></path><path d></path></svg>
+
+<script src="../lib/codemirror/lib/codemirror.js"></script>
+<script src="../lib/codemirror/addon/edit/closebrackets.js"></script>
+<script src="../lib/codemirror/addon/edit/matchbrackets.js"></script>
+<script src="../lib/codemirror/addon/hint/show-hint.js"></script>
+
+<script src="../js/codemirror/ubo-static-filtering.js"></script>
+
+<script src="../js/vapi.js"></script>
+<script src="../js/vapi-common.js"></script>
+<script src="../js/vapi-client.js"></script>
+<script src="../js/vapi-client-extra.js"></script>
+<script src="../js/i18n.js"></script>
+<script src="../js/static-filtering-parser.js"></script>
+<script src="../js/epicker-ui.js"></script>
+
+</body>
+</html>

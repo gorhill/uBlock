@@ -1,0 +1,288 @@
+html#ublock0-epicker,
+#ublock0-epicker body {
+    background: transparent;
+    color: var(--default-ink);
+    cursor: not-allowed;
+    font: 12px sans-serif;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    width: 100vw;
+}
+#ublock0-epicker :focus {
+    outline: none;
+}
+#ublock0-epicker aside {
+    background-color: var(--default-surface);
+    border: 1px solid var(--default-surface-border);
+    bottom: 2px;
+    box-sizing: border-box;
+    cursor: default;
+    display: none;
+    max-height: calc(100vh - 4px);
+    max-width: 36rem;
+    min-width: 24rem;
+    overflow-y: auto;
+    padding: 4px;
+    position: fixed;
+    right: 2px;
+    width: calc(40% - 2px);
+}
+#ublock0-epicker.paused:not(.zap) aside {
+    display: block;
+}
+#ublock0-epicker #toolbar {
+    cursor: grab;
+    display: flex;
+}
+#ublock0-epicker ul {
+    margin: 0.25em 0 0 0;
+}
+#ublock0-epicker button {
+    background-color: var(--button-surface);
+    border: 0;
+    border-radius: 3px;
+    box-sizing: border-box;
+    box-shadow: none;
+    color: var(--button-ink);
+    cursor: pointer;
+    padding: 0.4em 0.8em;
+}
+#ublock0-epicker button:disabled {
+    color: var(--button-disabled-ink);
+    background-color: var(--button-disabled-surface);
+}
+#ublock0-epicker button:not(:disabled):hover {
+    background-color: var(--button-surface-hover);
+}
+#ublock0-epicker #create:not(:disabled) {
+    background-color: var(--button-important-surface);
+}
+#ublock0-epicker #create:not(:disabled):hover {
+    background-color: var(--button-important-surface-hover);
+}
+#ublock0-epicker.preview #preview {
+    background-color: var(--button-preferred-surface);
+    color: var(--button-preferred-ink);
+}
+#ublock0-epicker #move {
+    cursor: grab;
+    flex-grow: 1;
+    }
+#ublock0-epicker aside.moving #move {
+    cursor: grabbing;
+}
+#ublock0-epicker section {
+    border: 0;
+    box-sizing: border-box;
+    display: inline-block;
+    width: 100%;
+}
+#ublock0-epicker section > div:first-child {
+    border: 1px solid var(--default-surface-border);
+    margin: 0;
+    position: relative;
+}
+#ublock0-epicker section.invalidFilter > div:first-child {
+    border-color: red;
+}
+#ublock0-epicker section .codeMirrorContainer {
+    border: none;
+    box-sizing: border-box;
+    font: 11px monospace;
+    height: 8em;
+    max-height: 50vh;
+    min-height: 1em;
+    padding: 2px;
+    width: 100%;
+    }
+.CodeMirror-lines,
+.CodeMirror pre {
+    padding: 0;
+    }
+
+#ublock0-epicker section .resultsetWidgets {
+    display: flex;
+}
+#resultsetModifiers {
+    align-items: flex-end;
+    display: inline-flex;
+    flex-grow: 1;
+    justify-content: space-evenly;
+    }
+#resultsetModifiers.hide > * {
+    visibility: hidden;
+    }
+.resultsetModifier {
+    border: 0;
+    pointer-events: auto;
+    position: relative;
+    width: 40%;
+    }
+.resultsetModifier > span {
+    align-items: flex-end;
+    display: flex;
+    height: 100%;
+    pointer-events: none;
+    width: 100%;
+    }
+.resultsetModifier > span > span {
+    margin: 2px 0;
+    }
+.resultsetModifier  > span > span:nth-of-type(1) {
+    background-color: var(--checkbox-checked-ink);
+    border-inline-end: 1px solid #aaa;
+    display: inline-block;
+    flex-shrink: 0;
+    height: 6px;
+    }
+.resultsetModifier  > span > span:nth-of-type(2) {
+    background-color: var(--checkbox-checked-ink);
+    clip-path: polygon(
+        calc(50% - 2px) 0%,
+        0% calc(100% - 6px),
+        0% 100%,
+        100% 100%,
+        100% calc(100% - 6px),
+        calc(50% + 2px) 0%
+    );
+    display: inline-block;
+    flex-shrink: 0;
+    height: 16px;
+    width: 16px;
+    }
+.resultsetModifier  > span > span:nth-of-type(3) {
+    background-color: var(--checkbox-ink);
+    border-inline-start: 1px solid #aaa;
+    display: inline-block;
+    flex-grow: 1;
+    height: 6px;
+    }
+.resultsetModifier input {
+    border: 0;
+    height: 100%;
+    left: 0;
+    margin: 0;
+    opacity: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    }
+#resultsetCount {
+    align-items: center;
+    background-color: #aaa;
+    color: white;
+    display: inline-flex;
+    justify-content: center;
+    min-width: 2.2em;
+    }
+#ublock0-epicker section.invalidFilter #resultsetCount {
+    background-color: red;
+}
+#ublock0-epicker section > div:first-child + div {
+    direction: ltr;
+    margin: 2px 0;
+    text-align: right;
+}
+#ublock0-epicker ul {
+    padding: 0;
+    list-style-type: none;
+    text-align: left;
+    overflow: hidden;
+}
+#ublock0-epicker #candidateFilters {
+    max-height: 14em;
+    overflow-y: auto;
+}
+#ublock0-epicker #candidateFilters > li:first-of-type {
+    margin-bottom: 0.5em;
+}
+#ublock0-epicker .changeFilter > li > span:nth-of-type(1) {
+    font-weight: bold;
+}
+#ublock0-epicker .changeFilter > li > span:nth-of-type(2) {
+    font-size: smaller;
+    color: gray;
+}
+#ublock0-epicker #candidateFilters .changeFilter {
+    list-style-type: none;
+    margin: 0 0 0 1em;
+    overflow: hidden;
+    text-align: left;
+}
+#ublock0-epicker #candidateFilters .changeFilter li {
+    border: 1px solid transparent;
+    cursor: pointer;
+    direction: ltr;
+    font: 11px monospace;
+    white-space: nowrap;
+}
+#ublock0-epicker #candidateFilters .changeFilter li.active {
+    border: 1px dotted var(--blue-50);
+    }
+#ublock0-epicker #candidateFilters .changeFilter li:hover {
+    background-color: var(--default-surface-hover);
+}
+
+/**
+    https://github.com/gorhill/uBlock/issues/3449
+    https://github.com/uBlockOrigin/uBlock-issues/issues/55
+**/
+@keyframes startDialog {
+  0% { opacity: 1.0; }
+  60% { opacity: 1.0; }
+  100% { opacity: 0.1; }
+}
+#ublock0-epicker.paused aside {
+    opacity: 0.1;
+    visibility: visible;
+    z-index: 100;
+}
+#ublock0-epicker.paused:not(.show):not(.hide) aside:not(:hover) {
+    animation-duration: 1.6s;
+    animation-name: startDialog;
+    animation-timing-function: linear;
+}
+#ublock0-epicker.paused aside:hover {
+    opacity: 1;
+}
+#ublock0-epicker.paused.show aside {
+    opacity: 1;
+}
+#ublock0-epicker.paused.hide aside {
+    opacity: 0.1;
+}
+
+#ublock0-epicker svg {
+    cursor: crosshair;
+    box-sizing: border-box;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+#ublock0-epicker.paused svg {
+    cursor: not-allowed;
+}
+#ublock0-epicker svg > path:first-child {
+    fill: rgba(0,0,0,0.5);
+    fill-rule: evenodd;
+}
+#ublock0-epicker svg > path + path {
+    stroke: #F00;
+    stroke-width: 0.5px;
+    fill: rgba(255,63,63,0.20);
+}
+#ublock0-epicker.zap svg > path + path {
+    stroke: #FF0;
+    stroke-width: 0.5px;
+    fill: rgba(255,255,63,0.20);
+}
+#ublock0-epicker.preview svg > path {
+    fill: rgba(0,0,0,0.10);
+}
+#ublock0-epicker.preview svg > path + path {
+    stroke: none;
+}

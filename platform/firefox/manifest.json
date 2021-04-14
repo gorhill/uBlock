@@ -1,5 +1,9 @@
 {
   "author": "Daniel C. Howe",
+  "developer": {
+    "name": "Daniel C. Howe",
+    "url": "https://rednoise.org/daniel"
+  },
   "background": {
     "page": "background.html"
   },
@@ -15,12 +19,11 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "adnauseam@rednoise.org",
-      "strict_min_version": "55.0"
+      "strict_min_version": "57.0"
     }
   },
   "commands": {
-    "_execute_browser_action": {
-    },
+    "_execute_browser_action": {},
     "launch-element-zapper": {
       "description": "__MSG_popupTipZapper__"
     },
@@ -57,8 +60,12 @@
     },
     {
       "matches": [
-        "http://*/*",
-        "https://*/*"
+        "https://easylist.to/*",
+        "https://*.fanboy.co.nz/*",
+        "https://filterlists.com/*",
+        "https://forums.lanik.us/*",
+        "https://github.com/*",
+        "https://*.github.io/*"
       ],
       "js": [
         "/js/scriptlets/subscriber.js"
@@ -92,7 +99,7 @@
     "management",
     "<all_urls>"
   ],
-  "short_name": "uBlock₀",
+  "short_name": "AdNauseam",
   "sidebar_action": {
     "default_title": "__MSG_statsPageName__",
     "default_panel": "logger-ui.html",

@@ -133,8 +133,7 @@
 
   exports.mustAllow = function (context) {
 
-    let action, requestHostname, requestDomain, result = '';
-    // root-page , request-url
+    let requestHostname, requestDomain, result = '';
 
     firewall.evaluateCellZY(context.getTabHostname(), context.getHostname(), context.type);
 

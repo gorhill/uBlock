@@ -41,6 +41,14 @@
 		],
 		"supportURL": "https://www.eff.org/dnt-policy"
 	},
+	"ublock-badlists": {
+		"content": "internal",
+		"updateAfter": 13,
+		"contentURL": [
+			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badlists.txt",
+			"assets/ublock/badlists.txt"
+		]
+	},
 	"ublock-filters": {
 		"content": "filters",
 		"group": "default",
@@ -164,7 +172,8 @@
 		"group": "malware",
 		"title": "Online Malicious URL Blocklist",
 		"contentURL": [
-			"https://gitlab.com/curben/urlhaus-filter/raw/master/urlhaus-filter-online.txt",
+			"https://curben.gitlab.io/malware-filter/urlhaus-filter-online.txt",
+			"https://raw.githubusercontent.com/curbengh/urlhaus-filter/master/urlhaus-filter-online.txt",
 			"assets/thirdparties/urlhaus-filter/urlhaus-filter-online.txt"
 		],
 		"cdnURLs": [
@@ -172,7 +181,7 @@
 			"https://gitcdn.xyz/repo/curbengh/urlhaus-filter/master/urlhaus-filter-online.txt",
 			"https://cdn.jsdelivr.net/gh/curbengh/urlhaus-filter/urlhaus-filter-online.txt",
 			"https://raw.githubusercontent.com/curbengh/urlhaus-filter/master/urlhaus-filter-online.txt",
-			"https://gitlab.com/curben/urlhaus-filter/raw/master/urlhaus-filter-online.txt"
+			"https://curben.gitlab.io/malware-filter/urlhaus-filter-online.txt"
 		],
 		"supportURL": "https://gitlab.com/curben/urlhaus-filter#urlhaus-malicious-url-blocklist"
 	},
@@ -207,7 +216,7 @@
 		"group": "social",
 		"off": true,
 		"title": "Anti-Facebook",
-		"contentURL": "https://fanboy.co.nz/fanboy-antifacebook.txt",
+		"contentURL": "https://secure.fanboy.co.nz/fanboy-antifacebook.txt",
 		"supportURL": "https://github.com/ryanbr/fanboy-adblock/issues"
 	},
 	"fanboy-annoyance": {
@@ -215,10 +224,7 @@
 		"group": "social",
 		"off": true,
 		"title": "Fanboy’s Annoyance",
-		"contentURL": [
-			"https://easylist.to/easylist/fanboy-annoyance.txt",
-			"https://fanboy.co.nz/fanboy-annoyance.txt"
-		],
+		"contentURL": "https://secure.fanboy.co.nz/fanboy-annoyance.txt",
 		"supportURL": "https://forums.lanik.us/"
 	},
 	"fanboy-cookiemonster": {
@@ -226,7 +232,7 @@
 		"group": "social",
 		"off": true,
 		"title": "EasyList Cookie",
-		"contentURL": "https://easylist-downloads.adblockplus.org/easylist-cookie.txt",
+		"contentURL": "https://secure.fanboy.co.nz/fanboy-cookiemonster.txt",
 		"supportURL": "https://github.com/easylist/easylist/issues"
 	},
 	"fanboy-social": {
@@ -236,7 +242,7 @@
 		"title": "Fanboy’s Social",
 		"contentURL": [
 			"https://easylist.to/easylist/fanboy-social.txt",
-			"https://fanboy.co.nz/fanboy-social.txt"
+			"https://secure.fanboy.co.nz/fanboy-social.txt"
 		],
 		"supportURL": "https://forums.lanik.us/"
 	},
@@ -393,7 +399,7 @@
 		"off": true,
 		"title": "HUN: hufilter",
 		"lang": "hu",
-		"contentURL": "https://raw.githubusercontent.com/hufilter/hufilter/master/hufilter.txt",
+		"contentURL": "https://raw.githubusercontent.com/hufilter/hufilter/master/hufilter-ublock.txt",
 		"supportURL": "https://github.com/hufilter/hufilter"
 	},
 	"IDN-0": {

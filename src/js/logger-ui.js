@@ -215,6 +215,7 @@ const LogEntry = function(details) {
             this[prop] = details[prop];
         }
     }
+    this.type = details.stype || details.type;
     if ( details.aliasURL !== undefined ) {
         this.aliased = true;
     }
@@ -302,7 +303,13 @@ const processLoggerEntries = function(response) {
             if ( autoDeleteVoidedRows ) { continue; }
             parsed.voided = true;
         }
-        if ( parsed.type === 'main_frame' && parsed.aliased === false ) {
+        if (
+            parsed.type === 'main_frame' &&
+            parsed.aliased === false && (
+                parsed.filter === undefined ||
+                parsed.filter.source !== 'redirect'
+            )
+        ) {
             const separator = createLogSeparator(parsed, unboxed.url);
             loggerEntries.unshift(separator);
             if ( rowFilterer.filterOne(separator) ) {
@@ -362,6 +369,7 @@ const parseLogEntry = function(details) {
         entry.textContent = textContent.join('\t');
         return entry;
     }
+
     // Cell 1, 2
     if ( entry.filter !== undefined ) {
 
@@ -373,17 +381,17 @@ const parseLogEntry = function(details) {
         } else if ( entry.filter.result === 3 ) {
             textContent.push('**');
         } else if ( entry.filter.result === 4 ) {
-            textContent.push('~~');
-            //adn allow
+            textContent.push('~~'); //ADN: allow
         } else if ( entry.filter.source === 'redirect' ) {
             textContent.push('<<');
         } else {
             textContent.push('');
         }
+
     } else {
         if (isDNTDomain(entry.domain)) {
           textContent.push("*" + entry.domain + "*allow");
-          textContent.push('@@');
+          textContent.push('@@');  //ADN: DNT
         }
         else textContent.push('', '');
     }
@@ -656,7 +664,6 @@ const viewPort = (( ) => {
         const divcl = div.classList;
         let span;
 
-
         // Realm
         if ( details.realm !== undefined ) {
             divcl.add(details.realm + 'Realm');
@@ -696,6 +703,9 @@ const viewPort = (( ) => {
             }
             if ( filteringType === 'static' ) {
                 divcl.add('canLookup');
+                if ( filter.modifier === true ) {
+                    div.setAttribute('data-modifier', '');
+                }
             } else if ( filteringType === 'cosmetic' ) {
                 divcl.add('canLookup');
                 divcl.toggle('isException', filter.raw.startsWith('#@#'));
@@ -1289,13 +1299,16 @@ const reloadTab = function(ev) {
             // Avoid duplicates
             if ( createdStaticFilters.hasOwnProperty(value) ) { return; }
             createdStaticFilters[value] = true;
+            // https://github.com/uBlockOrigin/uBlock-issues/issues/1281#issuecomment-704217175
+            // TODO:
+            //   Figure a way to use the actual document URL. Currently using
+            //   a synthetic URL derived from the document hostname.
             if ( value !== '' ) {
                 messaging.send('loggerUI', {
                     what: 'createUserFilter',
                     autoComment: true,
                     filters: value,
-                    origin: targetPageDomain,
-                    pageDomain: targetPageDomain,
+                    docURL: `https://${targetFrameHostname}/`,
                 });
             }
             updateWidgets();
@@ -1684,6 +1697,9 @@ const reloadTab = function(ev) {
             const attr = tr.getAttribute('data-status') || '';
             if ( attr !== '' ) {
                 rows[7].setAttribute('data-status', attr);
+                if ( tr.hasAttribute('data-modifier') ) {
+                    rows[7].setAttribute('data-modifier', '');
+                }
             }
             rows[7].children[1].appendChild(trch[6].cloneNode(true));
         } else {
@@ -1914,8 +1930,6 @@ const reloadTab = function(ev) {
         ev => { toggleOn(ev); }
     );
 })();
-
-// https://www.youtube.com/watch?v=XyNYrmmdUd4
 
 /******************************************************************************/
 /******************************************************************************/
@@ -2366,7 +2380,7 @@ const popupManager = (( ) => {
 
     const setTabId = function(tabId) {
         if ( popup === null ) { return; }
-        popup.setAttribute('src', 'popup.html?tabId=' + tabId);
+        popup.setAttribute('src', 'popup-fenix.html?portrait=1&tabId=' + tabId);
     };
 
     const onTabIdChanged = function() {

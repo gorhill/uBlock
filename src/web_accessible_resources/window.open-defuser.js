@@ -27,7 +27,7 @@
     if ( arg2 === '{{2}}' ) { arg2 = ''; }
     let arg3 = '{{3}}';
     if ( arg3 === '{{3}}' ) { arg3 = ''; }
-    const log = arg3 !== ''
+    const log = /\blog\b/.test(arg3)
         ? console.log.bind(console)
         : ( ) => { };
     const newSyntax = /^[01]?$/.test(arg1) === false;
@@ -58,6 +58,17 @@
         pattern = pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
     const rePattern = new RegExp(pattern);
+    const createDecoy = function(tag, urlProp, url) {
+        const decoy = document.createElement(tag);
+        decoy[urlProp] = url;
+        decoy.style.setProperty('height','1px', 'important');
+        decoy.style.setProperty('position','fixed', 'important');
+        decoy.style.setProperty('top','-1px', 'important');
+        decoy.style.setProperty('width','1px', 'important');
+        document.body.appendChild(decoy);
+        setTimeout(( ) => decoy.remove(), autoRemoveAfter * 1000);
+        return decoy;
+    };
     window.open = new Proxy(window.open, {
         apply: function(target, thisArg, args) {
             log('window.open:', ...args);
@@ -66,24 +77,39 @@
                 return target.apply(thisArg, args);
             }
             if ( autoRemoveAfter < 0 ) { return null; }
-            const iframe = document.createElement('iframe');
-            iframe.src = url;
-            iframe.style.setProperty('display','none', 'important');
-            iframe.style.setProperty('height','1px', 'important');
-            iframe.style.setProperty('width','1px', 'important');
-            document.body.appendChild(iframe);
-            setTimeout(( ) => iframe.remove(), autoRemoveAfter * 1000);
-            if ( arg3 === '' ) { return iframe.contentWindow; }
-            return new Proxy(iframe.contentWindow, {
-                get: function(target, prop) {
-                    log('window.open / get', prop, '===', target[prop]);
-                    return target[prop];
-                },
-                set: function(target, prop, value) {
-                    log('window.open / set', prop, '=', value);
-                    target[prop] = value;
-                },
-            });
+            const decoy = /\bobj\b/.test(arg3)
+                ? createDecoy('object', 'data', url)
+                : createDecoy('iframe', 'src', url);
+            let popup = decoy.contentWindow;
+            if ( typeof popup === 'object' && popup !== null ) {
+                Object.defineProperty(popup, 'closed', { value: false });
+            } else {
+                const noopFunc = (function(){}).bind(self);
+                popup = new Proxy(self, {
+                    get: function(target, prop) {
+                        if ( prop === 'closed' ) { return false; }
+                        const r = Reflect.get(...arguments);
+                        if ( typeof r === 'function' ) { return noopFunc; }
+                        return target[prop];
+                    },
+                    set: function() {
+                        return Reflect.set(...arguments);
+                    },
+                });
+            }
+            if ( /\blog\b/.test(arg3) ) {
+                popup = new Proxy(popup, {
+                    get: function(target, prop) {
+                        log('window.open / get', prop, '===', target[prop]);
+                        return Reflect.get(...arguments);
+                    },
+                    set: function(target, prop, value) {
+                        log('window.open / set', prop, '=', value);
+                        return Reflect.set(...arguments);
+                    },
+                });
+            }
+            return popup;
         }
     });
 })();

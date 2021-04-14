@@ -31,23 +31,25 @@ h3 {
 }
 a {
     text-decoration: none;
-}
-a.info {
+    }
+.fa-icon.info { /*ADN color*/
     color: white;
+    fill: white;
     opacity: 0.8;
-}
-a.info:hover {
-    opacity: 1
-}
-a.info.important {
+    }
+.fa-icon.info:hover {
+    opacity: 1;
+    }
+.fa-icon.info.important { /*ADN color*/
     color: #9F6000;
-}
-button {
-    /*padding: 0.33em;*/
-}
-div > p:first-child {
-    margin-top: 0;
-}
+    fill: #9F6000;
+    }
+    /*ADN no need for this
+.fa-icon.info.important:hover {
+    color: var(--fg-icon-info-lvl-3);
+    fill: var(--fg-icon-info-lvl-3);
+    }
+    */
 input[type="number"] {
     width: 5em;
 }

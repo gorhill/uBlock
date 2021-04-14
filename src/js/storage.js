@@ -83,53 +83,138 @@
 
 /******************************************************************************/
 
+µBlock.loadUserSettings = async function() {
+    const usDefault = this.userSettingsDefault;
+
+    const results = await Promise.all([
+        vAPI.storage.get(Object.assign(usDefault)),
+        vAPI.adminStorage.get('userSettings'),
+    ]);
+
+    const usUser = results[0] instanceof Object && results[0] ||
+                   Object.assign(usDefault);
+
+    if ( Array.isArray(results[1]) ) {
+        const adminSettings = results[1];
+        for ( const entry of adminSettings ) {
+            if ( entry.length < 1 ) { continue; }
+            const name = entry[0];
+            if ( usDefault.hasOwnProperty(name) === false ) { continue; }
+            const value = entry.length < 2
+                ? usDefault[name]
+                : this.settingValueFromString(usDefault, name, entry[1]);
+            if ( value === undefined ) { continue; }
+            usUser[name] = usDefault[name] = value;
+        }
+    }
+
+    return usUser;
+};
+
 µBlock.saveUserSettings = function() {
-    vAPI.storage.set(this.userSettings);
+    const toSave = this.getModifiedSettings(
+        this.userSettings,
+        this.userSettingsDefault
+    );
+    const toRemove = [];
+    for ( const key in this.userSettings ) {
+        if ( this.userSettings.hasOwnProperty(key) === false ) { continue; }
+        if ( toSave.hasOwnProperty(key) === false ) { continue; }
+        toRemove.push(key);
+    }
+    if ( toRemove.length !== 0 ) {
+        vAPI.storage.remove(toRemove);
+    }
+    vAPI.storage.set(toSave);
 };
 
 /******************************************************************************/
 
-µBlock.loadHiddenSettings = async function() {
-    const bin = await vAPI.storage.get('hiddenSettings');
-    if ( bin instanceof Object === false ) { return; }
+// Admin hidden settings have precedence over user hidden settings.
 
-    const hs = bin.hiddenSettings;
-    if ( hs instanceof Object ) {
-        const hsDefault = this.hiddenSettingsDefault;
-        for ( const key in hsDefault ) {
-            if (
-                hsDefault.hasOwnProperty(key) &&
-                hs.hasOwnProperty(key) &&
-                typeof hs[key] === typeof hsDefault[key]
-            ) {
-                this.hiddenSettings[key] = hs[key];
+µBlock.loadHiddenSettings = async function() {
+    const hsDefault = this.hiddenSettingsDefault;
+    const hsAdmin = this.hiddenSettingsAdmin;
+    const hsUser = this.hiddenSettings;
+
+    const results = await Promise.all([
+        vAPI.adminStorage.get([
+            'advancedSettings',
+            'disableDashboard',
+            'disabledPopupPanelParts',
+        ]),
+        vAPI.storage.get('hiddenSettings'),
+    ]);
+
+    if ( results[0] instanceof Object ) {
+        const {
+            advancedSettings,
+            disableDashboard,
+            disabledPopupPanelParts
+        } = results[0];
+        if ( Array.isArray(advancedSettings) ) {
+            for ( const entry of advancedSettings ) {
+                if ( entry.length < 1 ) { continue; }
+                const name = entry[0];
+                if ( hsDefault.hasOwnProperty(name) === false ) { continue; }
+                const value = entry.length < 2
+                    ? hsDefault[name]
+                    : this.hiddenSettingValueFromString(name, entry[1]);
+                if ( value === undefined ) { continue; }
+                hsDefault[name] = hsAdmin[name] = hsUser[name] = value;
             }
         }
-        if ( typeof this.hiddenSettings.suspendTabsUntilReady === 'boolean' ) {
-            this.hiddenSettings.suspendTabsUntilReady =
-                this.hiddenSettings.suspendTabsUntilReady
-                    ? 'yes'
-                    : 'unset';
+        µBlock.noDashboard = disableDashboard === true;
+        if ( Array.isArray(disabledPopupPanelParts) ) {
+            const partNameToBit = new Map([
+                [  'globalStats', 0b00010 ],
+                [   'basicTools', 0b00100 ],
+                [   'extraTools', 0b01000 ],
+                [ 'overviewPane', 0b10000 ],
+            ]);
+            let bits = hsDefault.popupPanelDisabledSections;
+            for ( const part of disabledPopupPanelParts ) {
+                const bit = partNameToBit.get(part);
+                if ( bit === undefined ) { continue; }
+                bits |= bit;
+            }
+            hsDefault.popupPanelDisabledSections =
+            hsAdmin.popupPanelDisabledSections =
+            hsUser.popupPanelDisabledSections = bits;
         }
+    }
+
+    const hs = results[1] instanceof Object && results[1].hiddenSettings || {};
+    if ( Object.keys(hsAdmin).length === 0 && Object.keys(hs).length === 0 ) {
+        return;
+    }
+
+    for ( const key in hsDefault ) {
+        if ( hsDefault.hasOwnProperty(key) === false ) { continue; }
+        if ( hsAdmin.hasOwnProperty(name) ) { continue; }
+        if ( typeof hs[key] !== typeof hsDefault[key] ) { continue; }
+        this.hiddenSettings[key] = hs[key];
+    }
+    if ( typeof this.hiddenSettings.suspendTabsUntilReady === 'boolean' ) {
+        this.hiddenSettings.suspendTabsUntilReady =
+            this.hiddenSettings.suspendTabsUntilReady
+                ? 'yes'
+                : 'unset';
     }
     this.fireDOMEvent('hiddenSettingsChanged');
 };
 
 // Note: Save only the settings which values differ from the default ones.
-// This way the new default values in the future will properly apply for those
-// which were not modified by the user.
+// This way the new default values in the future will properly apply for
+// those which were not modified by the user.
 
 µBlock.saveHiddenSettings = function() {
-    const bin = { hiddenSettings: {} };
-    for ( const prop in this.hiddenSettings ) {
-        if (
-            this.hiddenSettings.hasOwnProperty(prop) &&
-            this.hiddenSettings[prop] !== this.hiddenSettingsDefault[prop]
-        ) {
-            bin.hiddenSettings[prop] = this.hiddenSettings[prop];
-        }
-    }
-    vAPI.storage.set(bin);
+    vAPI.storage.set({
+        hiddenSettings: this.getModifiedSettings(
+            this.hiddenSettings,
+            this.hiddenSettingsDefault
+        )
+    });
 };
 
 self.addEventListener('hiddenSettingsChanged', ( ) => {
@@ -158,29 +243,45 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         if ( matches === null || matches.length !== 3 ) { continue; }
         const name = matches[1];
         if ( out.hasOwnProperty(name) === false ) { continue; }
-        const value = matches[2];
-        switch ( typeof out[name] ) {
-        case 'boolean':
-            if ( value === 'true' ) {
-                out[name] = true;
-            } else if ( value === 'false' ) {
-                out[name] = false;
-            }
-            break;
-        case 'string':
-            out[name] = value.trim();
-            break;
-        case 'number':
-            out[name] = parseInt(value, 10);
-            if ( isNaN(out[name]) ) {
-                out[name] = this.hiddenSettingsDefault[name];
-            }
-            break;
-        default:
-            break;
+        if ( this.hiddenSettingsAdmin.hasOwnProperty(name) ) { continue; }
+        const value = this.hiddenSettingValueFromString(name, matches[2]);
+        if ( value !== undefined ) {
+            out[name] = value;
         }
     }
     return out;
+};
+
+µBlock.hiddenSettingValueFromString = function(name, value) {
+    if ( typeof name !== 'string' || typeof value !== 'string' ) { return; }
+    const hsDefault = this.hiddenSettingsDefault;
+    if ( hsDefault.hasOwnProperty(name) === false ) { return; }
+    let r;
+    switch ( typeof hsDefault[name] ) {
+    case 'boolean':
+        if ( value === 'true' ) {
+            r = true;
+        } else if ( value === 'false' ) {
+            r = false;
+        }
+        break;
+    case 'string':
+        r = value.trim();
+        break;
+    case 'number':
+        if ( value.startsWith('0b') ) {
+            r = parseInt(value.slice(2), 2);
+        } else if ( value.startsWith('0x') ) {
+            r = parseInt(value.slice(2), 16);
+        } else {
+            r = parseInt(value, 10);
+        }
+        if ( isNaN(r) ) { r = undefined; }
+        break;
+    default:
+        break;
+    }
+    return r;
 };
 
 µBlock.stringFromHiddenSettings = function() {
@@ -267,7 +368,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
 µBlock.applyFilterListSelection = function(details) {
     let selectedListKeySet = new Set(this.selectedFilterLists);
-    let externalLists = this.userSettings.externalLists;
+    let externalLists = this.userSettings.externalLists.slice();
 
     // Filter lists to select
     if ( Array.isArray(details.toSelect) ) {
@@ -282,19 +383,13 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
     // Imported filter lists to remove
     if ( Array.isArray(details.toRemove) ) {
-        const removeURLFromHaystack = (haystack, needle) => {
-            return haystack.replace(
-                new RegExp(
-                    '(^|\\n)' +
-                    this.escapeRegex(needle) +
-                    '(\\n|$)', 'g'),
-                '\n'
-            ).trim();
-        };
         for ( let i = 0, n = details.toRemove.length; i < n; i++ ) {
             const assetKey = details.toRemove[i];
             selectedListKeySet.delete(assetKey);
-            externalLists = removeURLFromHaystack(externalLists, assetKey);
+            const pos = externalLists.indexOf(assetKey);
+            if ( pos !== -1 ) {
+                externalLists.splice(pos, 1);
+            }
             this.removeFilterList(assetKey);
         }
     }
@@ -326,20 +421,23 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         const importedSet = new Set(this.listKeysFromCustomFilterLists(externalLists));
         const toImportSet = new Set(this.listKeysFromCustomFilterLists(details.toImport));
         for ( const urlKey of toImportSet ) {
-            if ( importedSet.has(urlKey) ) { continue; }
+            if ( importedSet.has(urlKey) ) {
+                selectedListKeySet.add(urlKey);
+                continue;
+            }
             const assetKey = assetKeyFromURL(urlKey);
             if ( assetKey === urlKey ) {
                 importedSet.add(urlKey);
             }
             selectedListKeySet.add(assetKey);
         }
-        externalLists = Array.from(importedSet).sort().join('\n');
+        externalLists = Array.from(importedSet).sort();
     }
 
     const result = Array.from(selectedListKeySet);
-    if ( externalLists !== this.userSettings.externalLists ) {
+    if ( externalLists.join() !== this.userSettings.externalLists.join() ) {
         this.userSettings.externalLists = externalLists;
-        vAPI.storage.set({ externalLists: externalLists });
+        this.saveUserSettings();
     }
     this.saveSelectedFilterLists(result);
 };
@@ -347,14 +445,17 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 /******************************************************************************/
 
 µBlock.listKeysFromCustomFilterLists = function(raw) {
+    const urls = typeof raw === 'string'
+        ? raw.trim().split(/[\n\r]+/)
+        : raw;
     const out = new Set();
     const reIgnore = /^[!#]/;
     const reValid = /^[a-z-]+:\/\/\S+/;
-    const lineIter = new this.LineIterator(raw);
-    while ( lineIter.eot() === false ) {
-        const location = lineIter.next().trim();
-        if ( reIgnore.test(location) || !reValid.test(location) ) { continue; }
-        out.add(location);
+    for ( const url of urls ) {
+        if ( reIgnore.test(url) || !reValid.test(url) ) { continue; }
+        // Ignore really bad lists.
+        if ( this.badLists.get(url) === true ) { continue; }
+        out.add(url);
     }
     return Array.from(out);
 };
@@ -390,12 +491,15 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         // Date in YYYY-MM-DD format - https://stackoverflow.com/a/50130338
         const ISO8061Date = new Date(d.getTime() +
             (d.getTimezoneOffset()*60000)).toISOString().split('T')[0];
+        const url = new URL(options.docURL);
         comment =
             '! ' +
             this.hiddenSettings.autoCommentFilterTemplate
                 .replace('{{date}}', ISO8061Date)
                 .replace('{{time}}', d.toLocaleTimeString())
-                .replace('{{origin}}', options.origin);
+                .replace('{{hostname}}', url.hostname)
+                .replace('{{origin}}', url.origin)
+                .replace('{{url}}', url.href);
     }
 
     const details = await this.loadUserFilters();
@@ -404,10 +508,12 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     // The comment, if any, will be applied if and only if it is different
     // from the last comment found in the user filter list.
     if ( comment !== '' ) {
-        const pos = details.content.lastIndexOf(comment);
+        const beg = details.content.lastIndexOf(comment);
+        const end = beg === -1 ? -1 : beg + comment.length;
         if (
-            pos === -1 ||
-            details.content.indexOf('\n!', pos + 1) !== -1
+            end === -1 ||
+            details.content.startsWith('\n', end) === false ||
+            details.content.includes('\n!', end)
         ) {
             filters = '\n' + comment + '\n' + filters;
         }
@@ -419,10 +525,9 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     //   duplicates at this point may lead to more issues.
     await this.saveUserFilters(details.content.trim() + '\n' + filters);
 
-    const compiledFilters = this.compileFilters(
-        filters,
-        { assetKey: this.userFiltersPath }
-    );
+    const compiledFilters = this.compileFilters(filters, {
+        assetKey: this.userFiltersPath
+    });
     const snfe = this.staticNetFilteringEngine;
     const cfe = this.cosmeticFilteringEngine;
     const acceptedCount = snfe.acceptedCount + cfe.acceptedCount;
@@ -453,7 +558,10 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 µBlock.createUserFilters = function(details) {
     this.appendUserFilters(details.filters, details);
     // https://github.com/gorhill/uBlock/issues/1786
-    this.cosmeticFilteringEngine.removeFromSelectorCache(details.pageDomain);
+    if ( details.docURL === undefined ) { return; }
+    this.cosmeticFilteringEngine.removeFromSelectorCache(
+        vAPI.hostnameFromURI(details.docURL)
+    );
 };
 
 /******************************************************************************/
@@ -502,7 +610,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
             external: true,
             group: newGroup,
             submitter: 'user',
-            title: ''
+            title: '',
         };
         newAvailableLists[listKey] = entry;
         this.assets.registerAssetSource(listKey, entry);
@@ -528,18 +636,29 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         newAvailableLists[listURL] = newEntry;
         this.assets.registerAssetSource(listURL, newEntry);
         importedListKeys.push(listURL);
-        this.userSettings.externalLists += '\n' + listURL;
-        this.userSettings.externalLists = this.userSettings.externalLists.trim();
-        vAPI.storage.set({ externalLists: this.userSettings.externalLists });
+        this.userSettings.externalLists.push(listURL.trim());
+        this.saveUserSettings();
         this.saveSelectedFilterLists([ listURL ], true);
     };
 
-    // Load previously saved available lists -- these contains data
-    // computed at run-time, we will reuse this data if possible.
-    const [ bin, entries ] = await Promise.all([
+    const promises = [
         vAPI.storage.get('availableFilterLists'),
         this.assets.metadata(),
-    ]);
+        this.badLists.size === 0 ? this.assets.get('ublock-badlists') : false,
+    ];
+
+    // Load previously saved available lists -- these contains data
+    // computed at run-time, we will reuse this data if possible.
+    const [ bin, entries, badlists ] = await Promise.all(promises);
+
+    if ( badlists instanceof Object ) {
+        for ( const line of badlists.content.split(/\s*[\n\r]+\s*/) ) {
+            if ( line === '' || line.startsWith('#') ) { continue; }
+            const fields = line.split(/\s+/);
+            const remove = fields.length === 2;
+            this.badLists.set(fields[0], remove);
+        }
+    }
 
     oldAvailableLists = bin && bin.availableFilterLists || {};
 
@@ -712,15 +831,29 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 µBlock.getCompiledFilterList = async function(assetKey) {
     const compiledPath = 'compiled/' + assetKey;
 
-    if ( this.compiledFormatChanged === false ) {
-        let compiledDetails = await this.assets.get(compiledPath);
-        if ( compiledDetails.content !== '' ) {
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1365
+    //   Verify that the list version matches that of the current compiled
+    //   format.
+    if (
+        this.compiledFormatChanged === false &&
+        this.badLists.has(assetKey) === false
+    ) {
+        const compiledDetails = await this.assets.get(compiledPath);
+        if (
+            parseInt(compiledDetails.content, 10) ===
+            this.systemSettings.compiledMagic
+        ) {
             compiledDetails.assetKey = assetKey;
             return compiledDetails;
         }
     }
 
-    const rawDetails = await this.assets.get(assetKey);
+    // Skip downloading really bad lists.
+    if ( this.badLists.get(assetKey) ) {
+        return { assetKey, content: '' };
+    }
+
+    const rawDetails = await this.assets.get(assetKey, { silent: true });
     // Compiling an empty string results in an empty string.
     if ( rawDetails.content === '' ) {
         rawDetails.assetKey = assetKey;
@@ -729,26 +862,26 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
     this.extractFilterListMetadata(assetKey, rawDetails.content);
 
-    // Fetching the raw content may cause the compiled content to be
-    // generated somewhere else in uBO, hence we try one last time to
-    // fetch the compiled content in case it has become available.
-    const compiledDetails = await this.assets.get(compiledPath);
-    if ( compiledDetails.content === '' ) {
-        compiledDetails.content = this.compileFilters(
-            rawDetails.content,
-            { assetKey: assetKey }
-        );
-        this.assets.put(compiledPath, compiledDetails.content);
+    // Skip compiling bad lists.
+    if ( this.badLists.has(assetKey) ) {
+        return { assetKey, content: '' };
     }
 
-    compiledDetails.assetKey = assetKey;
-    return compiledDetails;
+    const compiledContent =
+        this.compileFilters(rawDetails.content, { assetKey });
+    this.assets.put(compiledPath, compiledContent);
+
+    return { assetKey, content: compiledContent };
 };
 
 /******************************************************************************/
 
 // https://github.com/gorhill/uBlock/issues/3406
 //   Lower minimum update period to 1 day.
+// https://bugs.chromium.org/p/v8/issues/detail?id=2869
+//   orphanizeString is to work around String.slice() potentially causing
+//   the whole raw filter list to be held in memory just because we cut out
+//   the title as a substring.
 
 µBlock.extractFilterListMetadata = function(assetKey, raw) {
     const listEntry = this.availableFilterLists[assetKey];
@@ -757,27 +890,32 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     const head = raw.slice(0, 1024);
     // https://github.com/gorhill/uBlock/issues/313
     // Always try to fetch the name if this is an external filter list.
-    if ( listEntry.title === '' || listEntry.group === 'custom' ) {
-        const matches = head.match(/(?:^|\n)(?:!|# )[\t ]*Title[\t ]*:([^\n]+)/i);
-        if ( matches !== null ) {
-            // https://bugs.chromium.org/p/v8/issues/detail?id=2869
-            //   orphanizeString is to work around String.slice()
-            //   potentially causing the whole raw filter list to be held in
-            //   memory just because we cut out the title as a substring.
-            listEntry.title = this.orphanizeString(matches[1].trim());
+    if ( listEntry.group === 'custom' ) {
+        let matches = head.match(/(?:^|\n)(?:!|# )[\t ]*Title[\t ]*:([^\n]+)/i);
+        const title = matches && matches[1].trim() || '';
+        if ( title !== '' && title !== listEntry.title ) {
+            listEntry.title = this.orphanizeString(title);
+            this.assets.registerAssetSource(assetKey, { title });
+        }
+        matches = head.match(/(?:^|\n)(?:!|# )[\t ]*Homepage[\t ]*:[\t ]*(https?:\/\/\S+)\s/i);
+        const supportURL = matches && matches[1] || '';
+        if ( supportURL !== '' && supportURL !== listEntry.supportURL ) {
+            listEntry.supportURL = this.orphanizeString(supportURL);
+            this.assets.registerAssetSource(assetKey, { supportURL });
         }
     }
     // Extract update frequency information
     const matches = head.match(/(?:^|\n)(?:!|# )[\t ]*Expires[\t ]*:[\t ]*(\d+)[\t ]*(h)?/i);
     if ( matches !== null ) {
-        let v = parseInt(matches[1], 10);
-        if ( isNaN(v) === false ) {
+        let updateAfter = parseInt(matches[1], 10);
+        if ( isNaN(updateAfter) === false ) {
             if ( matches[2] !== undefined ) {
-                v = Math.ceil(v / 24);
+                updateAfter = Math.ceil(updateAfter / 24);
             }
-            v = Math.max(v, 1);
-            if ( v !== listEntry.updateAfter ) {
-                this.assets.registerAssetSource(assetKey, { updateAfter: v });
+            updateAfter = Math.max(updateAfter, 1);
+            if ( updateAfter !== listEntry.updateAfter ) {
+                listEntry.updateAfter = updateAfter;
+                this.assets.registerAssetSource(assetKey, { updateAfter });
             }
         }
     }
@@ -796,26 +934,26 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
 /******************************************************************************/
 
-µBlock.compileFilters = function(rawText, details) {
+µBlock.compileFilters = function(rawText, details = {}) {
     const writer = new this.CompiledLineIO.Writer();
 
     // Populate the writer with information potentially useful to the
     // client compilers.
-    if ( details ) {
-        if ( details.assetKey ) {
-            writer.properties.set('assetKey', details.assetKey);
-        }
+    if ( details.assetKey ) {
+        writer.properties.set('assetKey', details.assetKey);
     }
-
+    const expertMode =
+        details.assetKey !== this.userFiltersPath ||
+        this.hiddenSettings.filterAuthorMode !== false;
     // Useful references:
     //    https://adblockplus.org/en/filter-cheatsheet
     //    https://adblockplus.org/en/filters
     const staticNetFilteringEngine = this.staticNetFilteringEngine;
     const staticExtFilteringEngine = this.staticExtFilteringEngine;
     const lineIter = new this.LineIterator(this.preparseDirectives.prune(rawText));
-    const parser = new vAPI.StaticFilteringParser();
+    const parser = new vAPI.StaticFilteringParser({ expertMode });
 
-    parser.setMaxTokenLength(this.urlTokenizer.MAX_TOKEN_LENGTH);
+    parser.setMaxTokenLength(staticNetFilteringEngine.MAX_TOKEN_LENGTH);
 
     while ( lineIter.eot() === false ) {
         let line = lineIter.next();
@@ -844,7 +982,13 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         staticNetFilteringEngine.compile(parser, writer);
     }
 
-    return writer.toString();
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1365
+    //   Embed version into compiled list itself: it is encoded in as the
+    //   first digits followed by a whitespace.
+    const compiledContent
+        = `${this.systemSettings.compiledMagic}\n` + writer.toString();
+
+    return compiledContent;
 };
 /******************************************************************************/
 
@@ -898,7 +1042,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
 µBlock.applyCompiledFilters = function(rawText, firstparty) {
     if ( rawText === '' ) { return; }
-    let reader = new this.CompiledLineIO.Reader(rawText);
+    const reader = new this.CompiledLineIO.Reader(rawText);
     this.staticNetFilteringEngine.fromCompiledContent(reader);
     this.staticExtFilteringEngine.fromCompiledContent(reader, {
         skipGenericCosmetic: this.userSettings.ignoreGenericCosmeticFilters,
@@ -1001,14 +1145,23 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         [ 'cap_html_filtering', 'html_filtering' ],
         [ 'cap_user_stylesheet', 'user_stylesheet' ],
         [ 'false', 'false' ],
+        // Hoping ABP-only list maintainers can at least make use of it to
+        // help non-ABP content blockers better deal with filters benefiting
+        // only ABP.
+        [ 'ext_abp', 'false' ],
         // Compatibility with other blockers
         // https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters#adguard-specific
         [ 'adguard', 'adguard' ],
+        [ 'adguard_app_android', 'false' ],
+        [ 'adguard_app_ios', 'false' ],
+        [ 'adguard_app_mac', 'false' ],
         [ 'adguard_app_windows', 'false' ],
+        [ 'adguard_ext_android_cb', 'false' ],
         [ 'adguard_ext_chromium', 'chromium' ],
         [ 'adguard_ext_edge', 'edge' ],
         [ 'adguard_ext_firefox', 'firefox' ],
         [ 'adguard_ext_opera', 'chromium' ],
+        [ 'adguard_ext_safari', 'false' ],
     ]),
 };
 
@@ -1210,9 +1363,17 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 // values are left to the user's choice.
 
 µBlock.restoreAdminSettings = async function() {
+    let toOverwrite = {};
     let data;
     try {
-        const json = await vAPI.adminStorage.getItem('adminSettings');
+        const store = await vAPI.adminStorage.get([
+            'adminSettings',
+            'toOverwrite',
+        ]) || {};
+        if ( store.toOverwrite instanceof Object ) {
+            toOverwrite = store.toOverwrite;
+        }
+        const json = store.adminSettings;
         if ( typeof json === 'string' && json !== '' ) {
             data = JSON.parse(json);
         } else if ( json instanceof Object ) {
@@ -1222,7 +1383,7 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         console.error(ex);
     }
 
-    if ( data instanceof Object === false ) { return; }
+    if ( data instanceof Object === false ) { data = {}; }
 
     const bin = {};
     let binNotEmpty = false;
@@ -1238,26 +1399,51 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
     }
 
     if ( typeof data.userSettings === 'object' ) {
-        for ( const name in this.userSettings ) {
-            if ( this.userSettings.hasOwnProperty(name) === false ) {
-                continue;
-            }
-            if ( data.userSettings.hasOwnProperty(name) === false ) {
-                continue;
-            }
-            bin[name] = data.userSettings[name];
+        const µbus = this.userSettings;
+        const adminus = data.userSettings;
+        // List of external lists is meant to be an array.
+        if ( typeof adminus.externalLists === 'string' ) {
+            adminus.externalLists =
+                adminus.externalLists.trim().split(/[\n\r]+/);
+        }
+        for ( const name in µbus ) {
+            if ( µbus.hasOwnProperty(name) === false ) { continue; }
+            if ( adminus.hasOwnProperty(name) === false ) { continue; }
+            bin[name] = adminus[name];
             binNotEmpty = true;
         }
     }
 
     // 'selectedFilterLists' is an array of filter list tokens. Each token
-    // is a reference to an asset in 'assets.json'.
-    if ( Array.isArray(data.selectedFilterLists) ) {
+    // is a reference to an asset in 'assets.json', or a URL for lists not
+    // present in 'assets.json'.
+    if (
+        Array.isArray(toOverwrite.filterLists) &&
+        toOverwrite.filterLists.length !== 0
+    ) {
+        const externalLists = [];
+        for ( const list of toOverwrite.filterLists ) {
+            if ( /^[a-z-]+:\/\//.test(list) === false ) { continue; }
+            externalLists.push(list);
+        }
+        if ( externalLists.length !== 0 ) {
+            bin.externalLists = externalLists;
+        }
+        bin.selectedFilterLists = toOverwrite.filterLists;
+        binNotEmpty = true;
+    } else if ( Array.isArray(data.selectedFilterLists) ) {
         bin.selectedFilterLists = data.selectedFilterLists;
         binNotEmpty = true;
     }
 
-    if ( Array.isArray(data.whitelist) ) {
+    if (
+        Array.isArray(toOverwrite.trustedSiteDirectives) &&
+        toOverwrite.trustedSiteDirectives.length !== 0
+    ) {
+        µBlock.netWhitelistDefault = toOverwrite.trustedSiteDirectives.slice();
+        bin.netWhitelist = toOverwrite.trustedSiteDirectives.slice();
+        binNotEmpty = true;
+    } else if ( Array.isArray(data.whitelist) ) {
         bin.netWhitelist = data.whitelist;
         binNotEmpty = true;
     } else if ( typeof data.netWhitelist === 'string' ) {
@@ -1284,7 +1470,12 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
         vAPI.storage.set(bin);
     }
 
-    if ( typeof data.userFilters === 'string' ) {
+    if (
+        Array.isArray(toOverwrite.filters) &&
+        toOverwrite.filters.length !== 0
+    ) {
+        this.saveUserFilters(toOverwrite.filters.join('\n'));
+    } else if ( typeof data.userFilters === 'string' ) {
         this.saveUserFilters(data.userFilters);
     }
 };
@@ -1357,11 +1548,14 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
 
 µBlock.assetObserver = function(topic, details) {
     // Do not update filter list if not in use.
+    // Also, ignore really bad lists, i.e. those which should not even be
+    // fetched from a remote server.
     if ( topic === 'before-asset-updated' ) {
         if ( details.type === 'filters' ) {
             if (
                 this.availableFilterLists.hasOwnProperty(details.assetKey) === false ||
-                this.selectedFilterLists.indexOf(details.assetKey) === -1
+                this.selectedFilterLists.indexOf(details.assetKey) === -1 ||
+                this.badLists.get(details.assetKey)
             ) {
                 return;
             }
@@ -1382,18 +1576,21 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
                         details.assetKey,
                         details.content
                     );
-                    var compiled = this.compileFilters(details.content);
-                    this.assets.put(
-                        'compiled/' + details.assetKey,
-                        this.compileFilters(
+                    if ( this.badLists.has(details.assetKey) === false ) {
+                        this.assets.put(
+                            'compiled/' + details.assetKey,
+                            this.compileFilters(details.content, {
+                                assetKey: details.assetKey
+                            })
+                        );
+                    }
+                    // ADN: Need to tell core that lists have updated
+                    µBlock.adnauseam.onListUpdated(details.assetKey, {
+                        title: details.assetKey,
+                        content: this.compileFilters(
                             details.content,
                             { assetKey: details.assetKey }
                         )
-                    );
-                    // ADN: Need to tell core that lists have updated
-                    µBlock.adnauseam.onListUpdated(details.assetKey, {
-                      title:details.assetKey,
-                      content:compiled
                     });
                 }
             } else {
@@ -1403,6 +1600,8 @@ self.addEventListener('hiddenSettingsChanged', ( ) => {
             if ( cached ) {
                 this.compilePublicSuffixList(details.content);
             }
+        } else if ( details.assetKey === 'ublock-badlists' ) {
+            this.badLists = new Map();
         }
         vAPI.messaging.broadcast({
             what: 'assetUpdated',

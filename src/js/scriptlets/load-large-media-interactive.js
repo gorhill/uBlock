@@ -28,7 +28,7 @@
 /******************************************************************************/
 
 // This can happen
-if ( typeof vAPI !== 'object' || vAPI.loadLargeMediaInteractive === true ) {
+if ( typeof vAPI !== 'object' || vAPI.loadAllLargeMedia instanceof Function ) {
     return;
 }
 
@@ -36,21 +36,25 @@ if ( typeof vAPI !== 'object' || vAPI.loadLargeMediaInteractive === true ) {
 
 const largeMediaElementAttribute = 'data-' + vAPI.sessionId;
 const largeMediaElementSelector =
-    ':root audio[' + largeMediaElementAttribute + '],\n' +
-    ':root   img[' + largeMediaElementAttribute + '],\n' +
-    ':root video[' + largeMediaElementAttribute + ']';
+    ':root   audio[' + largeMediaElementAttribute + '],\n' +
+    ':root     img[' + largeMediaElementAttribute + '],\n' +
+    ':root picture[' + largeMediaElementAttribute + '],\n' +
+    ':root   video[' + largeMediaElementAttribute + ']';
 
 /******************************************************************************/
 
 const mediaNotLoaded = function(elem) {
-    const src = elem.getAttribute('src') || '';
-    if ( src === '' ) { return false; }
-
     switch ( elem.localName ) {
     case 'audio':
-    case 'video':
-        return elem.error !== null;
-    case 'img':
+    case 'video': {
+        const src = elem.src || '';
+        if ( src.startsWith('blob:') ) {
+            elem.autoplay = false;
+            elem.pause();
+        }
+        return elem.readyState === 0 || elem.error !== null;
+    }
+    case 'img': {
         if ( elem.naturalWidth !== 0 || elem.naturalHeight !== 0 ) {
             break;
         }
@@ -59,6 +63,7 @@ const mediaNotLoaded = function(elem) {
         return style !== null ?
             style.getPropertyValue('display') !== 'none' :
             elem.offsetHeight !== 0 && elem.offsetWidth !== 0;
+    }
     default:
         break;
     }
@@ -71,113 +76,121 @@ const mediaNotLoaded = function(elem) {
 
 // <audio> and <video> elements.
 // https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement
-// https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement
 
 const surveyMissingMediaElements = function() {
-    var largeMediaElementCount = 0;
-    var elems = document.querySelectorAll('audio,img,video');
-    var i = elems.length, elem;
-    while ( i-- ) {
-        elem = elems[i];
-        if ( mediaNotLoaded(elem) ) {
-            elem.setAttribute(largeMediaElementAttribute, '');
-            largeMediaElementCount += 1;
+    let largeMediaElementCount = 0;
+    for ( const elem of document.querySelectorAll('audio,img,video') ) {
+        if ( mediaNotLoaded(elem) === false ) { continue; }
+        elem.setAttribute(largeMediaElementAttribute, '');
+        largeMediaElementCount += 1;
+        switch ( elem.localName ) {
+        case 'img': {
+            const picture = elem.closest('picture');
+            if ( picture !== null ) {
+                picture.setAttribute(largeMediaElementAttribute, '');
+            }
+        } break;
+        default:
+            break;
         }
     }
     return largeMediaElementCount;
 };
 
-if ( surveyMissingMediaElements() === 0 ) {
-    return;
+if ( surveyMissingMediaElements() === 0 ) { return; }
+
+// Insert CSS to highlight blocked media elements.
+if ( vAPI.largeMediaElementStyleSheet === undefined ) {
+    vAPI.largeMediaElementStyleSheet = [
+        largeMediaElementSelector + ' {',
+            'border: 2px dotted red !important;',
+            'box-sizing: border-box !important;',
+            'cursor: zoom-in !important;',
+            'display: inline-block;',
+            'filter: none !important;',
+            'font-size: 1rem !important;',
+            'min-height: 1em !important;',
+            'min-width: 1em !important;',
+            'opacity: 1 !important;',
+            'outline: none !important;',
+            'transform: none !important;',
+            'visibility: visible !important;',
+            'z-index: 2147483647',
+        '}',
+    ].join('\n');
+    vAPI.userStylesheet.add(vAPI.largeMediaElementStyleSheet);
+    vAPI.userStylesheet.apply();
 }
 
-vAPI.loadLargeMediaInteractive = true;
-
-// Insert custom style tag.
-let styleTag = document.createElement('style');
-styleTag.setAttribute('type', 'text/css');
-styleTag.textContent = [
-    largeMediaElementSelector + ' {',
-        'border: 1px dotted red !important;',
-        'box-sizing: border-box !important;',
-        'cursor: zoom-in !important;',
-        'display: inline-block;',
-        'font-size: 1em !important;',
-        'min-height: 1em !important;',
-        'min-width: 1em !important;',
-        'opacity: 1 !important;',
-        'outline: none !important;',
-    '}'
-].join('\n');
-document.head.appendChild(styleTag);
-
 /******************************************************************************/
 
-const stayOrLeave = (( ) => {
-    let timer = null;
-
-    const timeoutHandler = function(leaveNow) {
-        timer = null;
-        if ( leaveNow !== true ) {
-            if ( 
-                document.querySelector(largeMediaElementSelector) !== null ||
-                surveyMissingMediaElements() !== 0
-            ) {
-                return;
-            }
-        }
-        // Leave
-        if ( styleTag !== null ) {
-            styleTag.parentNode.removeChild(styleTag);
-            styleTag = null;
-        }
-        vAPI.loadLargeMediaInteractive = false;
-        document.removeEventListener('error', onLoadError, true);
-        document.removeEventListener('click', onMouseClick, true);
-    };
-
-    return function(leaveNow) {
-        if ( timer !== null ) {
-            clearTimeout(timer);
-        }
-        if ( leaveNow ) {
-            timeoutHandler(true);
-        } else {
-            timer = vAPI.setTimeout(timeoutHandler, 5000);
-        }
-    };
-})();
-
-/******************************************************************************/
-
-const loadImage = async function(elem) {
-    const src = elem.getAttribute('src');
+const loadMedia = async function(elem) {
+    const src = elem.getAttribute('src') || '';
     elem.removeAttribute('src');
 
     await vAPI.messaging.send('scriptlets', {
         what: 'temporarilyAllowLargeMediaElement',
     });
 
-    elem.setAttribute('src', src);
-    elem.removeAttribute(largeMediaElementAttribute);
-    stayOrLeave();
+    if ( src !== '' ) {
+        elem.setAttribute('src', src);
+    }
+    elem.load();
+};
+
+/******************************************************************************/
+
+const loadImage = async function(elem) {
+    const src = elem.getAttribute('src') || '';
+    elem.removeAttribute('src');
+
+    await vAPI.messaging.send('scriptlets', {
+        what: 'temporarilyAllowLargeMediaElement',
+    });
+
+    if ( src !== '' ) {
+        elem.setAttribute('src', src);
+    }
+};
+
+/******************************************************************************/
+
+const loadMany = function(elems) {
+    for ( const elem of elems ) {
+        switch ( elem.localName ) {
+        case 'audio':
+        case 'video':
+            loadMedia(elem);
+            break;
+        case 'img':
+            loadImage(elem);
+            break;
+        default:
+            break;
+        }
+    }
 };
 
 /******************************************************************************/
 
 const onMouseClick = function(ev) {
-    if ( ev.button !== 0 ) { return; }
+    if ( ev.button !== 0 || ev.isTrusted === false ) { return; }
 
-    const elem = ev.target;
-    if ( elem.matches(largeMediaElementSelector) === false ) { return; }
-
-    if ( mediaNotLoaded(elem) === false ) {
+    const toLoad = [];
+    const elems = document.elementsFromPoint instanceof Function
+        ? document.elementsFromPoint(ev.clientX, ev.clientY)
+        : [ ev.target ];
+    for ( const elem of elems ) {
+        if ( elem.matches(largeMediaElementSelector) === false ) { continue; }
         elem.removeAttribute(largeMediaElementAttribute);
-        stayOrLeave();
-        return;
+        if ( mediaNotLoaded(elem) ) {
+            toLoad.push(elem);
+        }
     }
 
-    loadImage(elem);
+    if ( toLoad.length === 0 ) { return; }
+
+    loadMany(toLoad);
 
     ev.preventDefault();
     ev.stopPropagation();
@@ -187,12 +200,25 @@ document.addEventListener('click', onMouseClick, true);
 
 /******************************************************************************/
 
-const onLoad = function(ev) {
-    const elem = ev.target;
-    if ( elem.hasAttribute(largeMediaElementAttribute) ) {
-        elem.removeAttribute(largeMediaElementAttribute);
-        stayOrLeave();
+const onLoadedData = function(ev) {
+    const media = ev.target;
+    if ( media.localName !== 'audio' && media.localName !== 'video' ) {
+        return;
     }
+    const src = media.src;
+    if ( typeof src === 'string' && src.startsWith('blob:') === false ) {
+        return;
+    }
+    media.autoplay = false;
+    media.pause();
+};
+
+document.addEventListener('loadeddata', onLoadedData);
+
+/******************************************************************************/
+
+const onLoad = function(ev) {
+    ev.target.removeAttribute(largeMediaElementAttribute);
 };
 
 document.addEventListener('load', onLoad, true);
@@ -210,9 +236,21 @@ document.addEventListener('error', onLoadError, true);
 
 /******************************************************************************/
 
-vAPI.shutdown.add(function() {
-    stayOrLeave(true);
-});
+vAPI.loadAllLargeMedia = function() {
+    document.removeEventListener('click', onMouseClick, true);
+    document.removeEventListener('loadeddata', onLoadedData, true);
+    document.removeEventListener('load', onLoad, true);
+    document.removeEventListener('error', onLoadError, true);
+
+    const toLoad = [];
+    for ( const elem of document.querySelectorAll(largeMediaElementSelector) ) {
+        elem.removeAttribute(largeMediaElementAttribute);
+        if ( mediaNotLoaded(elem) ) {
+            toLoad.push(elem);
+        }
+    }
+    loadMany(toLoad);
+};
 
 /******************************************************************************/
 

@@ -39,9 +39,11 @@ if (
 /******************************************************************************/
 
 vAPI.randomToken = function() {
-    const now = Date.now();
-    return String.fromCharCode(now % 26 + 97) +
-           Math.floor((1 + Math.random()) * now).toString(36);
+    const n = Math.random();
+    return String.fromCharCode(n * 26 + 97) +
+        Math.floor(
+            (0.25 + n * 0.75) * Number.MAX_SAFE_INTEGER
+        ).toString(36).slice(-8);
 };
 
 vAPI.sessionId = vAPI.randomToken();
@@ -102,8 +104,14 @@ vAPI.messaging = {
     },
     disconnectListenerBound: null,
 
+    // 2020-09-01:
+    //   In Firefox, `details instanceof Object` resolves to `false` despite
+    //   `details` being a valid object. Consequently, falling back to use
+    //   `typeof details`.
+    //   This is an issue which surfaced when the element picker code was
+    //   revisited to isolate the picker dialog DOM from the page DOM.
     messageListener: function(details) {
-        if ( details instanceof Object === false ) { return; }
+        if ( typeof details !== 'object' || details === null ) { return; }
 
         // Response to specific message previously sent
         if ( details.msgId !== undefined ) {

@@ -1,96 +1,100 @@
 {
-    "manifest_version": 2,
-    "name": "AdNauseam",
-    "version": "{version}",
-    "browser_specific_settings": {
-        "gecko": {
-           "id": "adnauseam@rednoise.org",
-           "strict_min_version":"55.0"
-        }
-     },
-    "default_locale": "en",
-    "description": "__MSG_extShortDesc__",
-    "icons": {
-        "48": "img/icon-48.png",
-        "96": "img/icon-96.png"
+  "manifest_version": 2,
+  "name": "AdNauseam",
+  "version": "{version}",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "adnauseam@rednoise.org",
+      "strict_min_version":"55.0"
+    }
+  },
+  "default_locale": "en",
+  "description": "__MSG_extShortDesc__",
+  "icons": {
+    "48": "img/icon-48.png",
+    "96": "img/icon-96.png"
+  },
+  "browser_action": {
+    "browser_style": false,
+    "default_icon": {
+      "19": "img/browsericons/icon19.png",
+      "38": "img/browsericons/icon38.png"
     },
-    "browser_action": {
-        "browser_style": false,
-        "default_icon": {
-            "19": "img/browsericons/icon19.png",
-            "38": "img/browsericons/icon38.png"
-        },
-        "default_title": "AdNauseam",
-        "default_popup": "menu.html"
+    "default_title": "AdNauseam",
+    "default_popup": "menu.html"
+  },
+  "author": "Daniel C. Howe",
+  "background": {
+      "page": "background.html"
+  },
+  "content_scripts":[
+    {
+      "matches":[
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js":[
+        "js/vapi.js",
+        "js/vapi-client.js",
+        "js/contentscript.js",
+        "js/adn/textads.js",
+        "js/adn/parser.js"
+      ],
+      "run_at":"document_start",
+      "all_frames":true
     },
-    "author": "Daniel C. Howe",
-    "background": {
-        "page": "background.html"
+    {
+      "matches":[
+        "https://easylist.to/*",
+        "https://*.fanboy.co.nz/*",
+        "https://filterlists.com/*",
+        "https://forums.lanik.us/*",
+        "https://github.com/*",
+        "https://*.github.io/*"
+      ],
+      "js":[
+          "js/scriptlets/subscriber.js"
+      ],
+      "run_at":"document_idle",
+      "all_frames":false
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "tabs",
+    "unlimitedStorage",
+    "webNavigation",
+    "webRequest",
+    "webRequestBlocking",
+    "<all_urls>",
+    "management",
+    "downloads",
+    "privacy"
+  ],
+  "incognito": "split",
+  "minimum_chrome_version": "51.0",
+  "optional_permissions": [
+    "file:///*"
+  ],
+  "sidebar_action": {
+    "default_title": "__MSG_statsPageName__",
+    "default_panel": "logger-ui.html",
+    "default_icon": {
+      "16": "img/icon-16.png",
+      "48": "img/icon-48.png"
     },
-    "content_scripts":[
-       {
-          "matches":[
-             "http://*/*",
-             "https://*/*"
-          ],
-          "js":[
-             "js/vapi.js",
-             "js/vapi-client.js",
-             "js/contentscript.js",
-             "js/adn/textads.js",
-             "js/adn/parser.js"
-          ],
-          "run_at":"document_start",
-          "all_frames":true
-       },
-       {
-          "matches":[
-             "http://*/*",
-             "https://*/*"
-          ],
-          "js":[
-             "js/scriptlets/subscriber.js"
-          ],
-          "run_at":"document_idle",
-          "all_frames":false
-       }
-    ],
-    "options_ui": {
-        "page": "options.html",
-        "open_in_tab": true
-    },
-    "permissions": [
-        "contextMenus",
-        "storage",
-        "tabs",
-        "unlimitedStorage",
-        "webNavigation",
-        "webRequest",
-        "webRequestBlocking",
-        "<all_urls>",
-        "management",
-        "downloads",
-        "privacy"
-    ],
-    "incognito": "split",
-    "minimum_chrome_version": "51.0",
-    "optional_permissions": [
-      "file:///*"
-    ],
-    "sidebar_action": {
-      "default_title": "__MSG_statsPageName__",
-      "default_panel": "logger-ui.html",
-      "default_icon": {
-        "16": "img/icon-16.png",
-        "48": "img/icon-48.png"
-      },
-      "open_at_install": false
-    },
-    "storage": {
-      "managed_schema": "managed_storage.json"
-    },
-    "short_name": "AdNauseam",
+    "open_at_install": false
+  },
+  "storage": {
+    "managed_schema": "managed_storage.json"
+  },
+  "short_name": "AdNauseam",
   "web_accessible_resources": [
-     "/web_accessible_resources/*"
+    "/web_accessible_resources/*"
   ]
 }

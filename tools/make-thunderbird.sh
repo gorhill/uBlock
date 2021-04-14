@@ -9,7 +9,7 @@ DES="$BLDIR"/uBlock0.thunderbird
 rm -rf $DES
 mkdir -p $DES
 
-echo "*** uBlock0.thunderbird: copying common files"
+echo "*** uBlock0.thunderbird: Copying common files"
 bash ./tools/copy-common-files.sh  $DES
 
 cp -R $DES/_locales/nb                 $DES/_locales/no

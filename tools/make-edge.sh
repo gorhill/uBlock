@@ -24,3 +24,4 @@ echo "*** AdNauseam.edge: Modify manifest for edge"
 sed -i '' -e '/^  "update_url"/d' $DES/manifest.json
 
 echo "*** AdNauseam.edge: Package done."
+echo

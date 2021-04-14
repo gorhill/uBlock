@@ -1,4 +1,5 @@
 npm-debug.log
+.vscode
 artifacts
 *.bak
 *-bak

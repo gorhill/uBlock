@@ -58,8 +58,6 @@ On Linux, the settings are saved in a SQlite file located at `~/.mozilla/firefox
 
 On Windows, the settings are saved in a SQlite file located at `%APPDATA%\Mozilla\Firefox\Profiles\[profile name]\extension-data\ublock0.sqlite`.
 
-If you want to automatically receive updates for this version, you can also install [uBlock Origin Updater](https://github.com/JustOff/ublock0-updater).
-
 ### Build instructions (for developers)
 
 - Clone [uBlock](https://github.com/gorhill/uBlock) and [uAssets](https://github.com/uBlockOrigin/uAssets) repositories in the same parent directory

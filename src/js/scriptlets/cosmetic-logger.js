@@ -278,7 +278,11 @@ const handlers = {
                     continue;
                 }
                 const details = JSON.parse(selector);
-                if ( details.action === 'style' ) {
+                if (
+                    details.action !== undefined &&
+                    details.tasks === undefined &&
+                    details.action[0] === ':style'
+                ) {
                     exceptionDict.set(details.selector, details.raw);
                     continue;
                 }

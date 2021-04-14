@@ -23,12 +23,11 @@ cp -R ../uAssets/thirdparties/urlhaus-filter                     $DES/thirdparti
 
 cp -R ./thirdparties/www.eff.org                                 $DES/thirdparties/ # ADN
 
-mkdir $DES/ublock
+mkdir -p $DES/ublock
 cp -R ../uAssets/filters/*                                       $DES/ublock/
 # Optional filter lists: do not include in package
 
 rm    $DES/ublock/annoyances.txt
-rm    $DES/ublock/resources.txt
 cp -R ./filters/adnauseam.txt                                    $DES/ublock/ # ADN
 
 echo "done."

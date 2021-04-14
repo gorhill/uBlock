@@ -40,7 +40,7 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "Danh sách trắng",
+    "message": "Trang tin cậy",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
@@ -100,7 +100,7 @@
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "Đã chặn từ khi cài đặt",
+    "message": "Bị chặn kể từ khi cài đặt",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
@@ -164,11 +164,11 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "Nhấp để chặn font từ xa trên trang này",
+    "message": "Bấm để chặn phông từ xa trên trang này",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "Nhấp để hủy chặn font từ xa trên trang này",
+    "message": "Bấm để không chặn phông từ xa trên trang này",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
@@ -176,7 +176,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "Nhấp để ngừng vô hiệu hóa JavaScript trên trang này",
+    "message": "Nhấn vào đây để không còn vô hiệu hóa JavaScript trên trang web này",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
@@ -440,7 +440,7 @@
     "description": "English: Malware domains"
   },
   "3pGroupAnnoyances": {
-    "message": "Khó chịu",
+    "message": "Phiền toái",
     "description": "The header identifying the filter lists in the category 'annoyances'"
   },
   "3pGroupMultipurpose": {
@@ -480,11 +480,11 @@
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
-    "message": "Một lỗi mạng khiến cho tài nguyên không thể cập nhật.",
+    "message": "Lỗi mạng ngăn tài nguyên được cập nhật.",
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Một bộ lọc trên mỗi dòng. Một bộ lọc có thể là một tên máy chủ đơn thuần, hoặc một bộ lọc tương thích với Adblock Plus. Những dòng bắt đầu với <code>!</code> sẽ bị bỏ qua.",
+    "message": "Một bộ lọc cho mỗi dòng. Bộ lọc có thể là tên máy chủ thuần hoặc bộ lọc tương thích với EasyList. Các dòng có tiền tố <code>!</code> sẽ bị bỏ qua.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -551,6 +551,22 @@
     "message": "Quy tắc cú pháp: <code>nguồn đích loại hành động</code> (<a href='https://github.com/gorhill/uBlock/wiki/Dynamic-filtering:-rule-syntax'>tài liệu đầy đủ</a>).",
     "description": "English: dynamic rule syntax and full documentation."
   },
+  "rulesSort": {
+    "message": "Sắp xếp:",
+    "description": "English: label for sort option."
+  },
+  "rulesSortByType": {
+    "message": "Loại quy tắc",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortBySource": {
+    "message": "Nguồn",
+    "description": "English: a sort option for list of rules."
+  },
+  "rulesSortByDestination": {
+    "message": "Đích",
+    "description": "English: a sort option for list of rules."
+  },
   "whitelistPrompt": {
     "message": "Danh sách tên các máy chủ mà uBlock Origin sẽ bị chặn. Một mục nhập trên mỗi dòng. Tên máy chủ không hợp lệ sẽ được tự động bỏ qua.",
     "description": "The name of the trusted sites pane."
@@ -596,7 +612,7 @@
     "description": "Pretty name for behind-the-scene network requests"
   },
   "loggerCurrentTab": {
-    "message": "Tab hiện tại",
+    "message": "Thẻ hiện tại",
     "description": "Appears in the logger's tab selector"
   },
   "loggerReloadTip": {
@@ -612,7 +628,7 @@
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
-    "message": "uBlock Origin wiki: Tác vụ log",
+    "message": "uBlock Origin wiki: Các logger",
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
@@ -653,6 +669,10 @@
   },
   "loggerRowFiltererBuiltinAllowed": {
     "message": "được phép",
+    "description": "A keyword in the built-in row filtering expression"
+  },
+  "loggerRowFiltererBuiltinModified": {
+    "message": "sửa đổi",
     "description": "A keyword in the built-in row filtering expression"
   },
   "loggerRowFiltererBuiltin1p": {
@@ -756,11 +776,11 @@
     "description": "Below this sentence, the filter list(s) in which the filter was found"
   },
   "loggerStaticFilteringFinderSentence2": {
-    "message": "Bộ lọc tĩnh <code>{{filter}}</code> không thể tìm thấy trong bất kỳ danh sách bộ lọc hiện được bật nào",
+    "message": "Không tìm thấy bộ lọc tĩnh trong bất kỳ danh sách bộ lọc hiện đang được bật",
     "description": "Message to show when a filter cannot be found in any filter lists"
   },
   "loggerSettingDiscardPrompt": {
-    "message": "Các mục log không đáp ứng cả ba điều kiện dưới đây sẽ tự động bị loại bỏ:",
+    "message": "Các mục Logger mà không đáp ứng tất cả ba điều kiện dưới đây sẽ được tự động loại bỏ:",
     "description": "Logger setting: A sentence to describe the purpose of the settings below"
   },
   "loggerSettingPerEntryMaxAge": {
@@ -812,7 +832,7 @@
     "description": "Label for radio-button to pick export text format"
   },
   "loggerExportEncodeMarkdown": {
-    "message": "Markdown",
+    "message": "Đánh dấu",
     "description": "Label for radio-button to pick export text format"
   },
   "aboutChangelog": {
@@ -889,7 +909,11 @@
   },
   "subscriberConfirm": {
     "message": "uBlock₀: Thêm URL dưới đây vào bộ lọc tuỳ biến của bạn?\n\nTên: \"{{title}}\"\nURL: {{url}}",
-    "description": "English: The message seen by the user to confirm subscription to a ABP filter list"
+    "description": "No longer used"
+  },
+  "subscribeButton": {
+    "message": "Đăng ký",
+    "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
     "message": "một phút trước",
@@ -929,11 +953,11 @@
   },
   "docblockedPrompt1": {
     "message": "uBloc Origin đã chặn tải trang sau:",
-    "description": "English: uBlock₀ has prevented the following page from loading:"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
     "message": "Vì bộ lọc sau",
-    "description": "English: Because of the following filter"
+    "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
     "message": "không có thông số",
@@ -1003,6 +1027,10 @@
     "message": "byte",
     "description": ""
   },
+  "contextMenuBlockElementInFrame": {
+    "message": "Chặn phần tử trong khung ...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Tạm thời cho phép yếu tố đa phương tiện lớn",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
@@ -1042,6 +1070,10 @@
   "GB": {
     "message": "GB",
     "description": "short for 'gigabytes'"
+  },
+  "clickToLoad": {
+    "message": "Bấm để tải",
+    "description": "Message used in frame placeholders"
   },
   "dummy": {
     "message": "Đây là mục cuối",

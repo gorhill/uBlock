@@ -14,7 +14,7 @@ rm -rf $DES
 mkdir -p $DES
 
 
-echo "*** AdNauseam.chromium: copying common files"
+echo "*** AdNauseam.chromium: Copying common files"
 bash ./tools/copy-common-files.sh  $DES
 
 # Chrome store-specific

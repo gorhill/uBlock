@@ -112,6 +112,12 @@ iframe {
 body:not(.canUpdateShortcuts) .tabButton[data-pane="shortcuts.html"] {
     display: none;
     }
+body .tabButton[data-pane="no-dashboard.html"] {
+    display: none;
+    }
+body.noDashboard #dashboard-nav {
+    display: none;
+    }
 
 @media (max-width: 640px) {
     #dashboard-nav-widgets {
@@ -138,15 +144,19 @@ body:not(.canUpdateShortcuts) .tabButton[data-pane="shortcuts.html"] {
         border-bottom: 3px solid #BD10E0;
         background-color: #222;
     }
-
 }
-
-
+/*ADN - fixing https://github.com/dhowe/AdNauseam/issues/1768 
+:root.hidpi .tabButton {
+    font-family: Metropolis, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+*/
 @media (max-width: 400px) {
     #dashboard-nav-widgets span {
         display: none;
     }
-}
+} 
 
 /* touch-screen devices */
 :root.mobile #dashboard-nav {

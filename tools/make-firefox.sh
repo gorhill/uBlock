@@ -10,7 +10,7 @@ mkdir -p $DES/webextension
 
 VERSION=`jq .version manifest.json` # top-level adnauseam manifest
 
-echo "*** AdNauseam.firefox: copying common files"
+echo "*** AdNauseam.firefox: Copying common files"
 bash ./tools/copy-common-files.sh  $DES
 
 cp platform/firefox/manifest.json      $DES/

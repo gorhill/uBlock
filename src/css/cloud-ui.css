@@ -1,41 +1,46 @@
 #cloudWidget {
-    background: url("../img/cloud.png") hsl(216, 100%, 93%);
-    border-radius: 3px;
+    background-color: var(--cloud-widget-surface);
     margin: 0.5em 0;
-    overflow: auto;
-    padding: 0.5em;
+    min-width: max-content;
     position: relative;
     }
 #cloudWidget.hide {
     display: none;
     }
-#cloudWidget > button {
-    font-size: 180%;
+#cloudWidget div {
+    display: flex;
+    }
+#cloudToolbar {
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    }
+#cloudToolbar > div:first-of-type {
+    margin: 0.5em;
+    }
+#cloudToolbar button {
     padding: 0 0.25em;
     position: relative;
     }
-#cloudWidget {
-    align-items: center;
-    display: flex;
-    flex-wrap: nowrap;
+#cloudToolbar button .fa-icon {
+    font-size: 180%;
     }
-#cloudWidget button[disabled] {
+#cloudToolbar button[disabled] {
     visibility: hidden;
     }
-#cloudWidget button.error {
+#cloudToolbar button.error {
     color: var(--fg-icon-info-lvl-4);
     }
 #cloudPullAndMerge {
     margin-left: 0.25em;
     }
 #cloudPullAndMerge > span:nth-of-type(2) {
-    font-size: 50%;
+    font-size: 90%;
     position: absolute;
     right: 0;
     top: 0;
     }
 #cloudInfo {
-    color: var(--fg-0-60);
     flex-shrink: 0;
     font-size: 90%;
     margin: 0 1em;
@@ -43,37 +48,58 @@
     padding: 0;
     white-space: pre-line;
     }
+#cloudCapacity {
+    background-color: var(--light-gray-30);
+    height: 4px;
+    }
+#cloudCapacity > div {
+    background-color: var(--light-gray-60);
+    }
+#cloudCapacity > div > div {
+    background-color: var(--violet-60);
+    }
 #cloudError {
     color: var(--fg-icon-info-lvl-4);
     flex-grow: 1;
     flex-shrink: 2;
-    font-size: x-small;
-    margin: 0 1em;
+    font-size: small;
+    margin: 0 0.5em 0.5em 0.5em;
     }
-#cloudWidget #cloudCog {
+#cloudError:empty {
+    display: none;
+    }
+#cloudCog {
     color: var(--fg-0-50);
     cursor: pointer;
     fill: var(--fg-0-50);
     font-size: 110%;
+    justify-content: flex-end;
     padding: 0.4em;
     }
-#cloudWidget #cloudCog:hover {
+#cloudCog:hover {
     color: inherit;
     fill: inherit;
     }
 #cloudWidget #cloudOptions {
+    align-items: center;
     background-color: var(--default-surface);
     border: 1px solid var(--bg-1-border);
-    bottom: 0;
+    bottom: 2px;
     display: none;
-    margin: 0.4em;
-    padding: 0.4em;
+    font-size: small;
+    padding: 0.5em;
     position: absolute;
-    right: 0;
+    right: 2px;
     text-align: center;
-    top: 0;
+    top: 2px;
     z-index: 10;
     }
+#cloudWidget #cloudOptions label {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    }
 #cloudWidget #cloudOptions.show {
-    display: block;
+    display: flex;
+    white-space: nowrap;
     }

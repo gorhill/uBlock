@@ -4,18 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=yes">
 <title></title>
-<link rel="stylesheet" type="text/css" href="css/themes/default.css">
-<link rel="stylesheet" href="css/common.css" type="text/css">
-<link rel="stylesheet" href="css/fa-icons.css" type="text/css">
-<link rel="stylesheet" type="text/css" href="css/document-blocked.css">
+<link rel="stylesheet" href="css/themes/default.css">
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/fa-icons.css">
+<link rel="stylesheet" href="css/document-blocked.css">
 </head>
 <body>
-<div id="warningSign"><a class="fa-icon" href="https://github.com/gorhill/uBlock/wiki/Strict-blocking" target="_blank">exclamation-triangle</a></div>
+<div id="warningSign"><a class="fa-icon" href="https://github.com/gorhill/uBlock/wiki/Strict-blocking" target="_blank" rel="noopener noreferrer">exclamation-triangle</a></div>
 
 <div>
     <p data-i18n="docblockedPrompt1"></p>
     <div id="theURL" class="collapsed">
-        <p class="code"></p>
+        <p class="code"><span></span><span><span class="fa-icon">zoom-in</span><span class="fa-icon">zoom-out</span></span></p>
         <ul id="parsed"></ul>
     </div>
 </div>
@@ -51,7 +51,7 @@
     <span class="filterList">
         <span class="filterListSeparator">&#x2022;</span>
         <a class="filterListSource" href="asset-viewer.html?url=" target="_blank"></a>&nbsp;<!--
-     --><a class="fa filterListSupport" href="#" target="_blank">&#xf015;</a>
+     --><a class="fa-icon filterListSupport hidden" href="#" target="_blank" rel="noopener noreferrer">home</a>
     </span>
 </div>
 
