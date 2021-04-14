@@ -22,12 +22,23 @@ CHROME_OPTS=--pack-extension=${DES}/adnauseam.chromium
 OPERA_OPTS=--pack-extension=${DES}/adnauseam.opera
 VERSION=`jq .version manifest.json | tr -d '"'`
 
-
 # CLEAN
 rm -rf ${ARTS}
 mkdir ${ARTS}
 rm -rf ${DES}/*
 
+
+if [[ $DO_EDGE = false && $DO_CHROME = false && $DO_OPERA = false && $DO_FIREFOX = false ]]; 
+then
+    echo "FATAL: No actions specified \\n"
+    exit 
+fi
+
+if [[ $DO_EDGE = true && $DO_CHROME = false ]]; 
+then
+    echo "FATAL: Edge build requires Chromium as well\\n"
+    exit 
+fi
 
 # CHROME (ZIP/CRX)
 if [ $DO_CHROME = true ]
@@ -45,11 +56,10 @@ then
     echo "WARN: NO .pem key found for Chrome build\\n"
   fi
   #cp ${DES}/adnauseam.chromium.crx ${ARTS}/adnauseam-${VERSION}.chromium.crx
-  cd ${DES}
+  cd ${DES} > /dev/null 2>&1
   zip -9 -r -q --exclude=*.DS_Store* ../../artifacts/adnauseam-${VERSION}.chromium.zip adnauseam.chromium
-  cd -
+  cd - > /dev/null 2>&1
 fi
-
 
 # OPERA (CRX)
 if [ $DO_OPERA = true ]
@@ -59,7 +69,7 @@ then
   
   if [ $OPERA_CRX = true ]
   then
-    "${OPERA}" "${OPERA_OPTS}" # &> /dev/null
+    "${OPERA}" "${OPERA_OPTS}"  &> /dev/null
     mv ${DES}/adnauseam.opera.crx ${ARTS}/adnauseam-${VERSION}.opera.crx
   else
     cd ${DES}
@@ -73,7 +83,7 @@ fi
 # EDGE (ZIP)
 if [ $DO_EDGE = true ]
 then
-  printf '%s' "*** Target -> Edge"
+  printf "\n*** Target -> Edge\n"
   ./tools/make-edge.sh
   web-ext build -s ${DES}/adnauseam.edge -a ${ARTS}
   mv ${ARTS}/adnauseam-${VERSION}.zip ${ARTS}/adnauseam-${VERSION}.edge.zip
@@ -83,7 +93,7 @@ fi
 # FIREFOX (ZIP)
 if [ $DO_FIREFOX = true ]
 then
-  printf '%s' "*** Target -> "
+  printf '\n%s' "*** Target -> "
   command "${FIREFOX}" -v || { echo >&2 "Firefox is not installed."; exit 1; }
   ./tools/make-firefox.sh all
   web-ext build -s ${DES}/adnauseam.firefox -a ${ARTS}
