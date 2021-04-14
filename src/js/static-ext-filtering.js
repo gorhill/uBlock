@@ -180,12 +180,11 @@
                 if ( iHn !== undefined ) {
                     do {
                         const strId = this.hostnameSlots[iHn+0];
-                        if ( this.strSlots[strId >>> this.nBits] === value ) {
-                            if ( (strId & exceptionBit) !== 0 ) {
-                                return false;
-                            }
-                            found = true;
+                        const str = this.strSlots[strId >>> this.nBits];
+                        if ( (strId & exceptionBit) !== 0 ) {
+                            if ( str === value || str === '' ) { return false; }
                         }
+                        if ( str === value ) { found = true; }
                         iHn = this.hostnameSlots[iHn+1];
                     } while ( iHn !== 0 );
                 }

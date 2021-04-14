@@ -302,7 +302,6 @@
 
     api.retrieve = function(request) {
         if ( scriptletDB.size === 0 ) { return; }
-        if ( µb.hiddenSettings.ignoreScriptInjectFilters ) { return; }
 
         const reng = µb.redirectEngine;
         if ( !reng ) { return; }
