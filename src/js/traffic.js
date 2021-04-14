@@ -277,7 +277,7 @@ const onBeforeRequest = function(details) {
 
         if (result === 4) { // ADN: local strictBlock
             µb.adnauseam.logNetBlock('LocalStrict', 
-            fctxt.url, '{' + fctxt.filter.raw + '}', `[${fctxt.type}]`);
+            fctxt.url, '{' + (fctxt.filter ? fctxt.filter.raw:'') + '}', `[${fctxt.type}]`);
         }
 
         return { cancel: true }; // block
