@@ -224,7 +224,7 @@ const Matrix = class {
         const bitOffset = typeBitOffsets[type];
         const k = srcHostname + ' ' + desHostname;
         const oldBitmap = this.rules.get(k) || 0;
-        const newBitmap = oldBitmap & ~(3 << bitOffset) | (state << bitOffset);
+        const newBitmap = oldBitmap & ~(7 << bitOffset) | (state << bitOffset); //ADN: 7 << bitOffset
         if ( newBitmap === oldBitmap ) {
             return false;
         }
