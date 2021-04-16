@@ -568,7 +568,7 @@ const PageStore = class {
     }
 
     /*
-     * Returns 
+     * Returns
      *   0 -> allow
      *   1 -> block (including redirects)
      *   2 -> exception-for-cname-on-block ?? [allow]
@@ -656,9 +656,13 @@ const PageStore = class {
 
         // Static filtering has lowest precedence.
         const snfe = µb.staticNetFilteringEngine;
-        if ( result === 0 || result === 3) { 
+        if ( result === 0 || result === 3 || result === 4) { // ADN: added result === 4 scenario
 
-            result = snfe.matchString(fctxt);
+           const snfe = µb.staticNetFilteringEngine;
+           const updatedResult = snfe.matchString(fctxt);
+           result = result === 4 ? 4 : updatedResult;
+           // End of ADN: keep result === 4 so that static filtering info can be added later
+
             if ( result !== 0 ) {
                 if ( loggerEnabled ) {
                     fctxt.setFilter(snfe.toLogData());
@@ -675,8 +679,8 @@ const PageStore = class {
                 }
             }
             if ( result !== 2 && µb.adnauseam.mustAllowRequest(result, fctxt)) {
-                result = 4; // ADN: adnauseamAllowed 
-                if (fctxt.filter) fctxt.filter.result = 4;                
+                result = 4; // ADN: adnauseamAllowed
+                if (fctxt.filter) fctxt.filter.result = 4;
                 if (!cacheableResult) return result;
             }
         }
