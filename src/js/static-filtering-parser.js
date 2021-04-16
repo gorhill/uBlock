@@ -2319,7 +2319,7 @@ Parser.netOptionTokenNames = new Map([
     [ OPTTokenPing, 'ping' ],
     [ OPTTokenPopunder, 'popunder' ],
     [ OPTTokenPopup, 'popup' ],
-    [ OPTTokenQueryprune, 'queryprune' ],
+    [ OPTTokenQueryprune, 'removeparam' ],
     [ OPTTokenRedirect, 'redirect' ],
     [ OPTTokenRedirectRule, 'redirect-rule' ],
     [ OPTTokenScript, 'script' ],
