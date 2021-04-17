@@ -270,7 +270,7 @@ const onBeforeRequest = function(details) {
     // Not redirected
 
     // Blocked
-    if ( result === 1) {  // AND 1=block,
+    if ( result === 1) {  // ADN 1=block,
         // ADN: already logs this from core.js if result == 1
         //µb.adnauseam.logNetBlock(fctxt);
         return { cancel: true }; // block
