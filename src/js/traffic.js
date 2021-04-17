@@ -270,16 +270,9 @@ const onBeforeRequest = function(details) {
     // Not redirected
 
     // Blocked
-    if ( result === 1 || result === 4) {  // AND 1=block, 4=strictBlock
-        
+    if ( result === 1) {  // ADN 1=block,
         // ADN: already logs this from core.js if result == 1
-        //µb.adnauseam.logNetBlock(fctxt); 
-
-        if (result === 4) { // ADN: local strictBlock
-            µb.adnauseam.logNetBlock('LocalStrict', 
-            fctxt.url, '{' + (fctxt.filter ? fctxt.filter.raw:'') + '}', `[${fctxt.type}]`);
-        }
-
+        //µb.adnauseam.logNetBlock(fctxt);
         return { cancel: true }; // block
     }
 
@@ -419,7 +412,7 @@ const onBeforeRootFrameRequest = function(fctxt) {
     // Redirected
 
     if ( fctxt.redirectURL !== undefined ) {
-        µb.adnauseam.logRedirect(fctxt, 'beforeRequest'); // ADN: redirect blocked 
+        µb.adnauseam.logRedirect(fctxt, 'beforeRequest'); // ADN: redirect blocked
         return { redirectUrl: fctxt.redirectURL };
     }
 
@@ -645,7 +638,7 @@ const adnOnHeadersRecieved = function(details) {
   // 3: Check for AdNauseam-allowed rule (if so, block incoming cookies)
   const fctxt = µb.filteringContext.fromWebrequestDetails(details);
   const pageStore = µb.pageStoreFromTabId(fctxt.tabId);
-  const modifiedHeadersForAdNauseamAllowed = pageStore && 
+  const modifiedHeadersForAdNauseamAllowed = pageStore &&
     µBlock.adnauseam.checkAllowedException(headers, details.url, pageStore.rawURL);
 
   if (typeof modifiedHeadersForAdNauseamAllowed != "boolean") {
@@ -693,7 +686,7 @@ const onHeadersReceived = function(details) {
             }
             if ( result === 1 ) {
                 pageStore.journalAddRequest(fctxt.getHostname(), 1);
-                µb.adnauseam.logNetBlock('Headers', fctxt.url); // ADN: block 
+                µb.adnauseam.logNetBlock('Headers', fctxt.url); // ADN: block
                 return { cancel: true };
             }
         }
