@@ -105,13 +105,13 @@ const HidingDisabled = new Notification({
 });
 HidingDisabled.func = reactivateSetting.bind(HidingDisabled);
 
-
 const ClickingDisabled = new Notification({
   name: 'ClickingDisabled',
   text: 'adnNotificationActivateClicking',
   prop: 'clickingAds',
   link: 'https://github.com/dhowe/AdNauseam/wiki/FAQ#how-does-adnauseam-click-ads'
 });
+ClickingDisabled.func = reactivateSetting.bind(ClickingDisabled);
 
 const BlockingDisabled = new Notification({
   name: 'BlockingDisabled',
@@ -120,6 +120,7 @@ const BlockingDisabled = new Notification({
   link: 'https://github.com/dhowe/AdNauseam/wiki/FAQ#how-does-adnauseam-block-malicious-ads',
   type: ERROR
 });
+BlockingDisabled.func = reactivateSetting.bind(BlockingDisabled);
 
 const EasyList = new Notification({
   name: 'EasyListDisabled',
@@ -144,7 +145,6 @@ const AdBlockerEnabled = new Notification({
   link: 'https://github.com/dhowe/AdNauseam/wiki/FAQ#can-i-combine-adnauseam-with-another-blocker',
   firstrun: true
 });
-
 AdBlockerEnabled.func = openExtPage.bind(AdBlockerEnabled);
 
 const FirefoxSetting = new Notification({
@@ -170,7 +170,6 @@ const PrivacyMode = new Notification({
   link: 'https://github.com/dhowe/AdNauseam/wiki/FAQ#does-adnauseam-respect-the-browsers-private-browsingincognito-modes',
   firstrun: true
 });
-
 PrivacyMode.func = openAdnPage.bind(PrivacyMode);
 
 /***************************************************************************/
