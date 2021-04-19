@@ -30,23 +30,23 @@
 
     switch (request.what) {
 
-    case 'adAttempt':
-      setAttempting(request.ad);
-      break;
+      case 'adAttempt':
+        setAttempting(request.ad);
+        break;
 
-    case 'adDetected':
-      // for now, just re-render
-      renderPage(request);
-      break;
+      case 'adDetected':
+        // for now, just re-render
+        renderPage(request);
+        break;
 
-    case 'adVisited':
-      updateAd(request.ad);
-      break;
+      case 'adVisited':
+        updateAd(request.ad);
+        break;
 
-    case 'notifications':
-      renderNotifications(request.notifications);
-      adjustBlockHeight();
-      break;
+      case 'notifications':
+        renderNotifications(request.notifications);
+        adjustBlockHeight();
+        break;
     }
   });
 
@@ -66,8 +66,7 @@
       // disable pause & resume buttons for options, vault, about/chrome
       if (page === vAPI.getURL("vault.html") ||
         page.indexOf(vAPI.getURL("dashboard.html")) === 0 ||
-        page.indexOf("chrome") === 0 || page.indexOf("about:") === 0)
-      {
+        page.indexOf("chrome") === 0 || page.indexOf("about:") === 0) {
         disableMenu();
       }
     }
@@ -93,17 +92,14 @@
 
     vAPI.messaging.send(
       'adnauseam', {
-        what: 'verifyAdBlockersAndDNT',
-        url: page
-      }).then(details => {
-        vAPI.messaging.send(
-          'adnauseam', {
-            what: 'getNotifications'
-          }).then(notifications => {
-              renderNotifications(notifications);
-          })
-      })
-
+      what: 'verifyAdBlockersAndDNT',
+      url: page
+    }).then(details => {
+      vAPI.messaging.send(
+        'adnauseam', {
+        what: 'getNotifications'
+      }).then(renderNotifications);
+    });
   }
 
   const updateMenuState = function () {
@@ -133,7 +129,7 @@
 
   }
 
-  const adjustStatCSS = function() {
+  const adjustStatCSS = function () {
     // adjust css if too wide
     if (uDom('.wrapper').nodes[0].clientHeight > 20) {
       uDom('.wrapper').css("float", "right");
@@ -252,7 +248,7 @@
   }
 
   const appendAd = function ($items, ad) {
-    if(ad.private && ad.adNetwork != null) return; // skip private ads after removal of content
+    if (ad.private && ad.adNetwork != null) return; // skip private ads after removal of content
 
     if (ad.contentType === 'img') {
 
@@ -320,7 +316,7 @@
     $span = uDom(document.createElement('span')).addClass('thumb');
     $span.appendTo($a);
 
-    appendAdStatus(ad,$a);
+    appendAdStatus(ad, $a);
 
     $img = uDom(document.createElement('img'))
       .attr('src', (ad.contentData.src || ad.contentData))
@@ -355,9 +351,9 @@
     $li.appendTo($items);
   }
 
-  const appendAdStatus = function(ad, parent) {
+  const appendAdStatus = function (ad, parent) {
     const $status = uDom(document.createElement('span'))
-        .addClass('adStatus').text(vAPI.i18n("adnAdClickingStatus" + adStatus(ad)));
+      .addClass('adStatus').text(vAPI.i18n("adnAdClickingStatus" + adStatus(ad)));
     $status.appendTo(parent);
 
   }
@@ -372,7 +368,7 @@
       }
     } else if (status != "SkippedDisabled") {
       if (ad.clickedByUser) status = "SkippedUser";
-      else status = "Skipped" +  (ad.dntAllowed ? "DNT" : "Frequency");
+      else status = "Skipped" + (ad.dntAllowed ? "DNT" : "Frequency");
     }
     return status;
   }
@@ -390,7 +386,7 @@
       .addClass('thumb')
       .text('Text Ad').appendTo($li);
 
-    appendAdStatus(ad,$li);
+    appendAdStatus(ad, $li);
 
     $h3 = uDom(document.createElement('h3'));
 
@@ -401,7 +397,7 @@
       .text(decodeEntities(ad.title)).appendTo($h3);
 
     $h3.appendTo($li);
-    if(ad.contentData.site) {
+    if (ad.contentData.site) {
       $cite = uDom(document.createElement('cite')).text(ad.contentData.site);
       $cite.text($cite.text() + ' (#' + ad.id + ')'); // testing-only
       $cite.appendTo($li);
@@ -433,20 +429,20 @@
       cachePopupData(response);
       vAPI.messaging.send(
         'adnauseam', {
-          what: 'adsForPage',
-          tabId: popupData.tabId
-        }).then(details => {
-            renderPage(details);
-        })
+        what: 'adsForPage',
+        tabId: popupData.tabId
+      }).then(details => {
+        renderPage(details);
+      })
     };
 
     vAPI.messaging.send(
       'popupPanel', {
-        what: 'getPopupData',
-        tabId: tabId
-      }).then(details => {
-          onPopupData(details);
-      })
+      what: 'getPopupData',
+      tabId: tabId
+    }).then(details => {
+      onPopupData(details);
+    })
   };
 
   const dval = function () {
@@ -503,13 +499,13 @@
 
     vAPI.messaging.send(
       'default', {
-        what: 'gotoURL',
-        details: {
-          url: "vault.html",
-          select: true,
-          index: -1
-        }
+      what: 'gotoURL',
+      details: {
+        url: "vault.html",
+        select: true,
+        index: -1
       }
+    }
     )
 
     vAPI.closePopup();
@@ -519,13 +515,13 @@
 
     vAPI.messaging.send(
       'default', {
-        what: 'gotoURL',
-        details: {
-          url: "dashboard.html#options.html",
-          select: true,
-          index: -1
-        }
+      what: 'gotoURL',
+      details: {
+        url: "dashboard.html#options.html",
+        select: true,
+        index: -1
       }
+    }
     );
 
     vAPI.closePopup();
@@ -533,8 +529,8 @@
 
   uDom('#help-button').on('click', function () {
 
-  vAPI.messaging.send(
-    'default', {
+    vAPI.messaging.send(
+      'default', {
       what: 'gotoURL',
       details: {
         url: "https://github.com/dhowe/AdNauseam/wiki/FAQ",
@@ -542,10 +538,10 @@
         index: -1
       }
     }
-  );
+    );
 
-  vAPI.closePopup();
-});
+    vAPI.closePopup();
+  });
 
   uDom('#settings-close').on('click', function () {
 
@@ -609,19 +605,19 @@
   const toggleEnabled = function (ev) {
 
     if (!popupData || !popupData.pageURL || (popupData.pageHostname ===
-        'behind-the-scene' && !popupData.advancedUserEnabled)) {
+      'behind-the-scene' && !popupData.advancedUserEnabled)) {
 
       return;
     }
 
     vAPI.messaging.send(
       'adnauseam', {
-        what: 'toggleEnabled',
-        url: popupData.pageURL,
-        scope: ev.altKey || ev.metaKey ? 'page' : '',
-        state: !uDom('#main').toggleClass('disabled').hasClass('disabled'),
-        tabId: popupData.tabId
-      });
+      what: 'toggleEnabled',
+      url: popupData.pageURL,
+      scope: ev.altKey || ev.metaKey ? 'page' : '',
+      state: !uDom('#main').toggleClass('disabled').hasClass('disabled'),
+      tabId: popupData.tabId
+    });
 
     updateMenuState();
     // hashFromPopupData();
@@ -640,7 +636,7 @@
     let height = document.getElementById('ad-list').offsetHeight;
     let top = parseInt(uDom('#paused-menu').css('top'));
 
-    const unit = 39;
+    const unit = 39; // ?
     height += unit;
     top -= unit;
 
@@ -669,8 +665,8 @@
 
     // tmp Russian fix
     if (uDom('#vault-button').text() === " Просмотр хранилища рекламы") {
-      uDom('#vault-button').css("font-size","14px");
-      uDom('#stats').css("font-size","16px");
+      uDom('#vault-button').css("font-size", "14px");
+      uDom('#stats').css("font-size", "16px");
     }
 
     // Mobile device?
@@ -679,11 +675,11 @@
     //   corresponding device's screen dimension, assume uBO's popup panel sits in
     //   its own tab.
     if (
-        /[\?&]mobile=1/.test(window.location.search) ||
-        window.innerWidth >= window.screen.availWidth ||
-        window.innerHeight >= window.screen.availHeight
+      /[\?&]mobile=1/.test(window.location.search) ||
+      window.innerWidth >= window.screen.availWidth ||
+      window.innerHeight >= window.screen.availHeight
     ) {
-        document.body.classList.add('mobile');
+      document.body.classList.add('mobile');
     }
 
 

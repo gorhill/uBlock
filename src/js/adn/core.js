@@ -1486,7 +1486,9 @@
   const contentPrefs = exports.contentPrefs = function (hostname) {
 
     // preferences relevant to our ui/content-scripts
-    const us = µb.userSettings, showDnt = (us.disableHidingForDNT && us.dntDomains.contains(hostname));
+    const us = µb.userSettings;
+    const showDnt = (us.disableHidingForDNT && us.dntDomains.contains(hostname));
+
     return {
       hidingDisabled: !us.hidingAds || showDnt,
       clickingDisabled: !us.clickingAds,
@@ -2032,7 +2034,7 @@
 
     if (modified) {
 
-      // ADN/TODO: need a new way to check this (broken in merge1.13.2)************************
+      // ADN/TODO: need a new way to check this (broken in merge1.13.2) ************************
       /* check whether DNT list state needs updating (TODO:)
   
       if (note === ClickingDisabled || note === HidingDisabled) {
@@ -2054,7 +2056,7 @@
     return adlist(url, true).length || adlist(url).length;
   };
 
-  const getIconState = exports.getIconState = function (state, pageDomain, isClick) {
+  exports.getIconState = function (state, pageDomain, isClick) {
     const isDNT = µb.userSettings.dntDomains.contains(pageDomain);
     let iconStatus = state ? (isDNT ? 'dnt' : 'on') : 'off'; // ADN
 
@@ -2100,6 +2102,7 @@
   };
 
   exports.importAds = function (request) {
+
     // try to parse imported ads in current format
     let importedCount = 0;
 
@@ -2220,8 +2223,7 @@
       return;
     }
 
-    const allAds = adlist();
-    const json = adsForUI(reqPageStore.rawURL);
+    const allAds = adlist(), json = adsForUI(reqPageStore.rawURL);
     json.total = allAds.length;
 
     // #1657: if data length is too long, get the first 6
@@ -2252,10 +2254,7 @@
       default: break;
     } // Async
 
-    let pageStore;
-    let tabId;
-    let frameId;
-    const µb = µBlock;
+    let pageStore, tabId, frameId, µb = µBlock;
 
     if (sender && sender.tabId) {
 
@@ -2272,6 +2271,7 @@
 
     } else {
 
+      console.warn(`[ADN] No listener for ${request.what} message`);
       return vAPI.messaging.UNHANDLED;
     }
   }

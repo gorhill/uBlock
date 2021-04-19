@@ -3,7 +3,7 @@
   'use strict';
 
   const µb = µBlock, adn = µb.adnauseam, log = adn.log;
-  const effList = 'eff-dnt-whitelist';
+  //const effList = 'eff-dnt-whitelist';
 
   let exports = {};
 
@@ -66,8 +66,9 @@
 
       updateFilters();
     }
-    else
+    else {
       log("[DNT] No new domains, ignoring...");
+    }
   }
 
   exports.isDoNotTrackUrl = function (url) {
@@ -84,14 +85,14 @@
     return false;
   }
 
-  const enabled = exports.enabled = function () {
+  exports.enabled = function () {
 
     const prefs = µb.userSettings;
     return (prefs.hidingAds && prefs.disableHidingForDNT)
       || (prefs.clickingAds && prefs.disableClickingForDNT);
   };
 
-  const disableCosmeticFiltersFor = function (hostname, state) { // not used ?
+  /*const disableCosmeticFiltersFor = function (hostname, state) { // not used ?
 
     µb.toggleHostnameSwitch({
 
@@ -99,7 +100,7 @@
       hostname: hostname,
       state: state
     });
-  };
+  };*/
 
   const updateFilters = exports.updateFilters = function () {
 
@@ -116,12 +117,10 @@
 
       const firewallRules = []; // dynamic filters
       for (let i = 0; i < dnts.length; i++) {
-
         firewallRules.push("* " + dnts[i] + " * allow");
       }
 
       firewall.fromString(firewallRules.join('\n'), false);
-
       log('[DNT] Firewall enabled with ' + firewall.rules.size + ' rules');
 
     } else {

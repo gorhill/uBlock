@@ -127,7 +127,8 @@ const onMessage = function(request, sender, callback) {
         break;*/
 
     case 'isDNTVisible':
-        response = µb.userSettings.dntDomains.indexOf(request.domain) > -1 && µb.userSettings.disableHidingForDNT;
+        response = µb.userSettings.dntDomains.indexOf(request.domain) > -1
+           && µb.userSettings.disableHidingForDNT;
         break;
 
     case 'forceUpdateAssets':

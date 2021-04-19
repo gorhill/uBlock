@@ -417,7 +417,7 @@ const matchBucket = function(url, hostname, bucket, start) {
     case 'disableClickingForDNT':
       adn.dnt.updateFilters();
       break;
-    case 'noThirdPartyCookies':
+    case 'noThirdPartyCookies': // WHY IS THIS HERE ?
         //vAPI.browserSettings.set({ 'thirdPartyCookiesAllowed': !value });
         break;
 

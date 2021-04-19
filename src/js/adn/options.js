@@ -27,143 +27,142 @@
 
   /******************************************************************************/
 
-  const onLocalDataReceived = function(details) {
+  const onLocalDataReceived = function (details) {
     let v, unit;
-    if ( typeof details.storageUsed === 'number' ) {
-        v = details.storageUsed;
-        if ( v < 1e3 ) {
-            unit = 'genericBytes';
-        } else if ( v < 1e6 ) {
-            v /= 1e3;
-            unit = 'KB';
-        } else if ( v < 1e9 ) {
-            v /= 1e6;
-            unit = 'MB';
-        } else {
-            v /= 1e9;
-            unit = 'GB';
-        }
+    if (typeof details.storageUsed === 'number') {
+      v = details.storageUsed;
+      if (v < 1e3) {
+        unit = 'genericBytes';
+      } else if (v < 1e6) {
+        v /= 1e3;
+        unit = 'KB';
+      } else if (v < 1e9) {
+        v /= 1e6;
+        unit = 'MB';
+      } else {
+        v /= 1e9;
+        unit = 'GB';
+      }
     } else {
-        v = '?';
-        unit = '';
+      v = '?';
+      unit = '';
     }
 
-      uDom('#localData > ul > li:nth-of-type(1)').text(
-        vAPI.i18n('storageUsed')
-            .replace('{{value}}', v.toLocaleString(undefined, { maximumSignificantDigits: 3 }))
-            .replace('{{unit}}', unit && vAPI.i18n(unit) || '')
-            .replace(/uBlock₀/g, 'AdNauseam')
-      );
+    uDom('#localData > ul > li:nth-of-type(1)').text(
+      vAPI.i18n('storageUsed')
+        .replace('{{value}}', v.toLocaleString(undefined, { maximumSignificantDigits: 3 }))
+        .replace('{{unit}}', unit && vAPI.i18n(unit) || '')
+        .replace(/uBlock₀/g, 'AdNauseam')
+    );
 
-      const timeOptions = {
-          weekday: 'long',
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          hour: 'numeric',
-          minute: 'numeric',
-          timeZoneName: 'short'
-      };
+    const timeOptions = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      timeZoneName: 'short'
+    };
 
-      const lastBackupFile = details.lastBackupFile || '';
-      if ( lastBackupFile !== '' ) {
-          const dt = new Date(details.lastBackupTime);
-          uDom('#localData > ul > li:nth-of-type(2) > ul > li:nth-of-type(1)').text(dt.toLocaleString('fullwide', timeOptions));
-          //uDom('#localData > ul > li:nth-of-type(2) > ul > li:nth-of-type(2)').text(lastBackupFile);
-          uDom('#localData > ul > li:nth-of-type(2)').css('display', '');
-      }
+    const lastBackupFile = details.lastBackupFile || '';
+    if (lastBackupFile !== '') {
+      const dt = new Date(details.lastBackupTime);
+      uDom('#localData > ul > li:nth-of-type(2) > ul > li:nth-of-type(1)').text(dt.toLocaleString('fullwide', timeOptions));
+      //uDom('#localData > ul > li:nth-of-type(2) > ul > li:nth-of-type(2)').text(lastBackupFile);
+      uDom('#localData > ul > li:nth-of-type(2)').css('display', '');
+    }
 
-      const lastRestoreFile = details.lastRestoreFile || '';
-      uDom('#localData > p:nth-of-type(3)');
-      if ( lastRestoreFile !== '' ) {
-          const dt = new Date(details.lastRestoreTime);
-          uDom('#localData > ul > li:nth-of-type(3) > ul > li:nth-of-type(1)').text(dt.toLocaleString('fullwide', timeOptions));
-          uDom('#localData > ul > li:nth-of-type(3) > ul > li:nth-of-type(2)').text(lastRestoreFile);
-          uDom('#localData > ul > li:nth-of-type(3)').css('display', '');
-      }
+    const lastRestoreFile = details.lastRestoreFile || '';
+    uDom('#localData > p:nth-of-type(3)');
+    if (lastRestoreFile !== '') {
+      const dt = new Date(details.lastRestoreTime);
+      uDom('#localData > ul > li:nth-of-type(3) > ul > li:nth-of-type(1)').text(dt.toLocaleString('fullwide', timeOptions));
+      uDom('#localData > ul > li:nth-of-type(3) > ul > li:nth-of-type(2)').text(lastRestoreFile);
+      uDom('#localData > ul > li:nth-of-type(3)').css('display', '');
+    }
 
-      if ( details.cloudStorageSupported === false ) {
-          uDom('#cloud-storage-enabled').attr('disabled', '');
-      }
+    if (details.cloudStorageSupported === false) {
+      uDom('#cloud-storage-enabled').attr('disabled', '');
+    }
 
-      if ( details.privacySettingsSupported === false ) {
-          uDom('#prefetching-disabled').attr('disabled', '');
-          uDom('#hyperlink-auditing-disabled').attr('disabled', '');
-          uDom('#webrtc-ipaddress-hidden').attr('disabled', '');
-      }
+    if (details.privacySettingsSupported === false) {
+      uDom('#prefetching-disabled').attr('disabled', '');
+      uDom('#hyperlink-auditing-disabled').attr('disabled', '');
+      uDom('#webrtc-ipaddress-hidden').attr('disabled', '');
+    }
   };
 
   /******************************************************************************/
 
-  const resetUserData = function() {
-      const msg = vAPI.i18n('adnAboutResetDataConfirm'); // ADN
-      const proceed = window.confirm(msg); // ADN: changed from vAPI.confirm merge1.14.12
-      if ( proceed ) {
-          vAPI.messaging.send('dashboard', { what: 'resetUserData' });
-      }
+  const resetUserData = function () {
+    const msg = vAPI.i18n('adnAboutResetDataConfirm'); // ADN
+    const proceed = window.confirm(msg); // ADN: changed from vAPI.confirm merge1.14.12
+    if (proceed) {
+      vAPI.messaging.send('dashboard', { what: 'resetUserData' });
+    }
   };
 
   /******************************************************************************/
 
-  const synchronizeDOM = function() {
-      document.body.classList.toggle(
-          'advancedUser',
-          uDom.nodeFromId('advanced-user-enabled').checked === true
-      );
+  const synchronizeDOM = function () {
+    document.body.classList.toggle(
+      'advancedUser',
+      uDom.nodeFromId('advanced-user-enabled').checked === true
+    );
   };
 
   /******************************************************************************/
 
-  const changeUserSettings = function(name, value) {
+  const changeUserSettings = function (name, value) {
     Promise.all([
-        vAPI.messaging.send('dashboard', {
-            what: 'userSettings',
-            name,
-            value,
-        }),
-    ]).then(() => {
-        updateGroupState();
-    });
-
-  };
-
-  /******************************************************************************/
-  // ADN
-  const ClickProbabilityChanged = function() {
-      const selection = uDom('input[id="slider"]');
-      const slideVal = selection.nodes[0].value;
-
-      selection.val(slideVal);
       vAPI.messaging.send('dashboard', {
-          what: 'userSettings',
-          name: 'clickProbability',
-          value: Number(slideVal)
-      })
+        what: 'userSettings',
+        name,
+        value,
+      }),
+    ]).then(() => {
+      updateGroupState();
+    });
+  };
+
+  /******************************************************************************/
+
+  const ClickProbabilityChanged = function () {   // ADN
+    const selection = uDom('input[id="slider"]');
+    const slideVal = selection.nodes[0].value;
+
+    selection.val(slideVal);
+    vAPI.messaging.send('dashboard', {
+      what: 'userSettings',
+      name: 'clickProbability',
+      value: Number(slideVal)
+    })
 
   };
 
   /******************************************************************************/
 
-  const onInputChanged = function(ev) {
-      const input = ev.target;
-      const name = this.getAttribute('data-setting-name');
-      let value = input.value;
-      if ( name === 'largeMediaSize' ) {
-          value = Math.min(Math.max(Math.floor(parseInt(value, 10) || 0), 0), 1000000);
-      }
-      if ( value !== input.value ) {
-          input.value = value;
-      }
-      changeUserSettings(name, value);
+  const onInputChanged = function (ev) {
+    const input = ev.target;
+    const name = this.getAttribute('data-setting-name');
+    let value = input.value;
+    if (name === 'largeMediaSize') {
+      value = Math.min(Math.max(Math.floor(parseInt(value, 10) || 0), 0), 1000000);
+    }
+    if (value !== input.value) {
+      input.value = value;
+    }
+    changeUserSettings(name, value);
   };
   /******************************************************************************/
 
   // Workaround for:
   // https://github.com/gorhill/uBlock/issues/1448
 
-  const onPreventDefault = function(ev) {
-      ev.target.focus();
-      ev.preventDefault();
+  const onPreventDefault = function (ev) {
+    ev.target.focus();
+    ev.preventDefault();
   };
   /******************************************************************************/
 
@@ -175,23 +174,21 @@
     uDom('.blockingMalware-child').prop('disabled', !uDom('#blockingMalware').prop('checked'));
   }
 
-   /******************************************************************************/
+  /******************************************************************************/
 
-    const exportDialog = function() {
-       uDom('#export-dialog').removeClass("hide");
-     };
+  const exportDialog = function () {
+    uDom('#export-dialog').removeClass("hide");
+  };
 
-    const exportTo = function() {
-        const action = uDom('#export-dialog input:checked').nodes[0].id;
-        exportToFile(action)
-        closeDialog();
-    };
+  const exportTo = function () {
+    const action = uDom('#export-dialog input:checked').nodes[0].id;
+    exportToFile(action)
+    closeDialog();
+  };
 
-    const closeDialog = function() {
-       uDom('#export-dialog').addClass("hide");
-    }
-
-
+  const closeDialog = function () {
+    uDom('#export-dialog').addClass("hide");
+  }
 
   /******************************************************************************/
 
@@ -199,44 +196,40 @@
 
   const onUserSettingsReceived = function (details) {
 
-    // console.log('onUserSettingsReceived', details);
+    //console.log('onUserSettingsReceived', details);
 
-    if (isMobile()) { // ADN
-      uDom('.dntOption').css('display', 'none');
-    }
+    if (isMobile()) uDom('.dntOption').css('display', 'none');  // ADN
 
-    // ADN
-    const selection = uDom('input[id="slider"]');
-    selection.val(details.clickProbability);
+    uDom('input[id="slider"]').val(details.clickProbability);          // ADN
+    uDom('input[type="range"]').on('change', ClickProbabilityChanged); // ADN
 
-    uDom('input[type="range"]').on('change', ClickProbabilityChanged); //ADN
-
-    uDom('[data-setting-type="bool"]').forEach(function(uNode) {
-        uNode.prop('checked', details[uNode.attr('data-setting-name')] === true)
-             .on('change', function() {
-                    changeUserSettings(
-                        this.getAttribute('data-setting-name'),
-                        this.checked
-                    );
-                    synchronizeDOM();
-                });
+    uDom('[data-setting-type="bool"]').forEach(function (uNode) {
+      uNode.prop('checked', details[uNode.attr('data-setting-name')] === true)
+        .on('change', function () {
+          changeUserSettings(
+            this.getAttribute('data-setting-name'),
+            this.checked
+          );
+          synchronizeDOM();
+        });
     });
 
     uDom('[data-setting-name="noLargeMedia"] ~ label:first-of-type > input[type="number"]')
-        .attr('data-setting-name', 'largeMediaSize')
-        .attr('data-setting-type', 'input');
+      .attr('data-setting-name', 'largeMediaSize')
+      .attr('data-setting-type', 'input');
 
-    uDom('[data-setting-type="input"]').forEach(function(uNode) {
-        uNode.val(details[uNode.attr('data-setting-name')])
-             .on('change', onInputChanged)
-             .on('click', onPreventDefault);
+    uDom('[data-setting-type="input"]').forEach(function (uNode) {
+      uNode.val(details[uNode.attr('data-setting-name')])
+        .on('change', onInputChanged)
+        .on('click', onPreventDefault);
     });
 
     // Minor text fixes
-    if (uDom('#exportDialog').text() === "Back up to file")
+    if (uDom('#exportDialog').text() === "Back up to file") {
       uDom('#exportDialog').text("Backup to file");
-    uDom('#import').text(uDom('#import').text().replace('...',''));
-    uDom('#resetOptions').text(uDom('#resetOptions').text().replace('...',''));
+    }
+    uDom('#import').text(uDom('#import').text().replace('...', ''));
+    uDom('#resetOptions').text(uDom('#resetOptions').text().replace('...', ''));
 
     // On click events
     uDom('#reset').on('click', clearAds);
@@ -256,21 +249,41 @@
 
   /******************************************************************************/
 
-  Promise.all([
-      vAPI.messaging.send('dashboard', { what: 'userSettings' }),
-      vAPI.messaging.send('dashboard', { what: 'getLocalData' }),
+  // DO THINGS THE UBLOCK WAY UNLESS WE ARE FORCED TO DO OTHERWISE
+
+  /* Promise.all([
+    vAPI.messaging.send('dashboard', { what: 'userSettings' }),
+    vAPI.messaging.send('dashboard', { what: 'getLocalData' }),
   ]).then(results => {
-      // no need to return ad data 
-      onUserSettingsReceived(results[0]);
-      onLocalDataReceived(results[1]);
+    // no need to return ad data 
+    onUserSettingsReceived(results[0]);
+    onLocalDataReceived(results[1]);
+  }); */
+
+  vAPI.messaging.send('dashboard', { what: 'userSettings' }).then(result => {
+    onUserSettingsReceived(result);
   });
+
+  vAPI.messaging.send('dashboard', { what: 'getLocalData' }).then(result => {
+    onLocalDataReceived(result);
+  });
+
+  /*   vAPI.broadcastListener.add(msg => {
+      switch (msg.what) {
+        case 'userSettingsChanged':
+          onUserSettingsReceived();
+          break;
+        default:
+          break;
+      }
+    }); */
 
   // https://github.com/uBlockOrigin/uBlock-issues/issues/591
   document.querySelector(
-      '[data-i18n-title="settingsAdvancedUserSettings"]'
+    '[data-i18n-title="settingsAdvancedUserSettings"]'
   ).addEventListener(
-      'click',
-      self.uBlockDashboard.openOrSelectPage
+    'click',
+    self.uBlockDashboard.openOrSelectPage
   );
   /******************************************************************************/
 

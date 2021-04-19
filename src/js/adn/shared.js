@@ -103,6 +103,8 @@ const HidingDisabled = new Notification({
   prop: 'hidingAds',
   link: 'https://github.com/dhowe/AdNauseam/wiki/FAQ#how-does-adnauseam-hide-ads'
 });
+HidingDisabled.func = reactivateSetting.bind(HidingDisabled);
+
 
 const ClickingDisabled = new Notification({
   name: 'ClickingDisabled',
@@ -202,7 +204,7 @@ function Notification(m) {
 
 const makeCloneable = function (notes) {
 
-  notes && notes.forEach(function(n){ delete n.func }); // remove func to allow clone
+  notes && notes.forEach(function (n) { delete n.func }); // remove func to allow clone
   // see https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm
 };
 
@@ -231,15 +233,17 @@ const renderNotifications = function (visibleNotes, thePage) {
   const page = thePage || 'menu';
   let notifications = Notifications;
 
-  if (page !== "menu")
+  if (page !== "menu") {
     notifications = notifications.filter(function (n) {
       return !n.isDNT
     });
+  }
 
-  if (page === "firstrun")
+  if (page === "firstrun") {
     notifications = notifications.filter(function (n) {
       return n.firstrun
     });
+  }
 
   const template = uDom('#notify-template');
 
@@ -275,9 +279,9 @@ const renderNotifications = function (visibleNotes, thePage) {
   }
 };
 
-const hasNotification = function(notes, note){
+const hasNotification = function (notes, note) {
 
-   for (let i = 0; i < notes.length; i++) {
+  for (let i = 0; i < notes.length; i++) {
     if (notes[i].name === note.name) {
       return note;
     }
@@ -285,7 +289,7 @@ const hasNotification = function(notes, note){
   return false;
 };
 
-const hasDNTNotification = function(notes) {
+const hasDNTNotification = function (notes) {
 
   for (let i = 0; i < notes.length; i++) {
     if (notes[i].isDNT)
@@ -324,67 +328,70 @@ const appendNotifyDiv = function (notify, template) {
   // vAPI.i18n.render();
 }
 
-
 const modifyDNTNotifications = function () {
 
-   const text = document.querySelectorAll('div[id^="DNT"] #notify-text'), link = uDom('div[id^="DNT"] #notify-link').nodes, newlink = uDom('span>#notify-link').nodes;
+  const text = document.querySelectorAll('div[id^="DNT"] #notify-text');
+  const link = uDom('div[id^="DNT"] #notify-link').nodes;
+  const newlink = uDom('span>#notify-link').nodes;
 
-   if (text.length > 0 && link.length > 0 && newlink.length === 0) {
-     const sections = text[0].innerText.indexOf(",") > 0 ? text[0].innerText.split(',') : text[0].innerText.split('，'), newText = sections[0] + link[0].outerHTML + "," + sections[1];
-
-     text[0].innerHTML = newText;
-     uDom('div[id^="DNT"]>#notify-link').css('display', 'none');
-   }
+  if (text.length > 0 && link.length > 0 && newlink.length === 0) {
+    const sections = text[0].innerText.includes(",") > 0 ?
+      text[0].innerText.split(',') :
+      text[0].innerText.split('，');
+    text[0].innerHTML = sections[0] + link[0].outerHTML + "," + sections[1];
+    uDom('div[id^="DNT"]>#notify-link').css('display', 'none');
+  }
 };
-
-
-function reactivateSetting() {
-  Promise.resolve(
-     vAPI.messaging.send('dashboard', {
-       what: 'userSettings',
-       name: this.prop,
-       value: this.expected
-     }),
-     ).then(() => {
-       reloadPane();
- });
-
-}
 
 function onSelectionDone() {
   Promise.resolve(
-     vAPI.messaging.send('dashboard', {
-       what: 'reloadAllFilters'
-     }),
-     ).then(() => {
-       reloadPane();
- });
+    vAPI.messaging.send('dashboard', {
+      what: 'reloadAllFilters'
+    }),
+  ).then(() => {
+    reloadPane();
+  });
 };
 
-function reactivateList() {
-   Promise.resolve(
-      vAPI.messaging.send('dashboard', {
-        what: 'reactivateList',
-        list: this.listName
-      }),
-      ).then(() => {
-        vAPI.messaging.send('adnauseam', { what: 'verifyLists' });
-        vAPI.messaging.send('dashboard', { what: 'reloadAllFilters' });
-        reloadPane();
+function reactivateSetting() {
+
+  console.debug('reactivateSetting', this.prop + "=>" + this.expected);
+
+  Promise.resolve(
+    vAPI.messaging.send('dashboard', {
+      what: 'userSettings',
+      name: this.prop,
+      value: this.expected
+    }),
+  ).then(() => {
+    reloadOptions();
+    reloadPane();
   });
 }
 
-function openPage(url){
-    vAPI.messaging.send(
+function reactivateList() {
+  Promise.resolve(
+    vAPI.messaging.send('dashboard', {
+      what: 'reactivateList',
+      list: this.listName
+    }),
+  ).then(() => {
+    vAPI.messaging.send('adnauseam', { what: 'verifyLists' });
+    vAPI.messaging.send('dashboard', { what: 'reloadAllFilters' });
+    reloadPane();
+  });
+}
+
+function openPage(url) {
+  vAPI.messaging.send(
     'default', {
-      what: 'gotoURL',
-      details: {
-        url: url,
-        select: true,
-        index: -1
-      }
+    what: 'gotoURL',
+    details: {
+      url: url,
+      select: true,
+      index: -1
     }
-  );
+  });
 }
 
 function isFirefox() { // hack for webextensions incompatibilities
@@ -393,7 +400,6 @@ function isFirefox() { // hack for webextensions incompatibilities
     navigator.userAgent.includes('Firefox/');
 }
 
-
 function isMobile() {
 
   return typeof window.NativeWindow !== 'undefined';
@@ -401,30 +407,38 @@ function isMobile() {
 
 function openExtPage() {
 
-  openPage(isFirefox()? 'about:addons':'chrome://extensions/');
+  openPage(isFirefox() ? 'about:addons' : 'chrome://extensions/');
 }
 
 function openAdnPage() {
-  openPage(isFirefox()? 'about:addons':'chrome://extensions/?id=pnjfhlmmeapfclcplcihceboadiigekg');
+  openPage(isFirefox() ? 'about:addons' :
+    'chrome://extensions/?id=pnjfhlmmeapfclcplcihceboadiigekg');
 }
 
 function openSettings() {
   openPage('/dashboard.html#options.html');
 }
 
-function reloadPane() {
+function reloadOptions() {
+  browser.tabs.query({})
+    .then(tabs => 
+      tabs.filter(t => t.url.endsWith('options.html'))
+        .forEach(t => browser.tabs.reload(t.id)));
+}
 
+function reloadPane() {
   if (window && window.location) {
     const pane = window.location.href;
-    if (pane.indexOf('dashboard.html') > -1)
+    if (pane.indexOf('dashboard.html') > -1) {
       window.location.reload();
+    }
   }
 }
 
 /****************************************************************************/
 
 // from: http://stackoverflow.com/questions/16245767/creating-a-blob-from-a-base64-string-in-javascript
-const b64toBlob = function(b64Data, contentType, sliceSize) {
+const b64toBlob = function (b64Data, contentType, sliceSize) {
 
   contentType = contentType || '';
   sliceSize = sliceSize || 512;
@@ -442,10 +456,10 @@ const b64toBlob = function(b64Data, contentType, sliceSize) {
     byteArrays.push(new Uint8Array(byteNumbers));
   }
 
-  return new Blob(byteArrays, { type: contentType } );
+  return new Blob(byteArrays, { type: contentType });
 };
 
-const toBase64Image = function(img) {
+const toBase64Image = function (img) {
 
   const canvas = document.createElement("canvas");
   canvas.width = img.width;
@@ -553,10 +567,10 @@ const computeHash = function (ad, privateAd) {
   }
 
   let // change from pageUrl (4/3/16) ***
-  hash = ad.pageDomain || ad.pageUrl;
+    hash = ad.pageDomain || ad.pageUrl;
 
   const // fall back to pageUrl if no pageDomain, for backward compatibility
-  keys = Object.keys(ad.contentData).sort();
+    keys = Object.keys(ad.contentData).sort();
 
   for (let i = 0; i < keys.length; i++) {
     // fix to #445  (10/7/16)
@@ -601,11 +615,11 @@ const parseDomain = function (url, useLast) { // dup in parser.js
   const domains = decodeURIComponent(url).match(/https?:\/\/[^?\/]+/g);
 
   return (domains && domains.length > 0) ? new URL(
-      useLast ? domains[domains.length - 1] : domains[0])
+    useLast ? domains[domains.length - 1] : domains[0])
     .hostname : undefined;
 };
 
-const isValidDomain = function(v) { // dup in parser.js
+const isValidDomain = function (v) { // dup in parser.js
 
   // from: https://github.com/miguelmota/is-valid-domain/blob/master/is-valid-domain.js
   const re = /^(?!:\/\/)([a-zA-Z0-9-]+\.){0,5}[a-zA-Z0-9-][a-zA-Z0-9-]+\.[a-zA-Z]{2,64}?$/gi;
@@ -631,10 +645,10 @@ const exportToFile = function (action) {
 
   const outputData = function (jsonData, fileType) {
     let filename = getExportFileName();
-    const url = URL.createObjectURL(new Blob([ jsonData ], { type: "text/plain" }));
+    const url = URL.createObjectURL(new Blob([jsonData], { type: "text/plain" }));
 
     if (fileType === undefined) fileType = "Ads";
-    filename = "AdNauseam_" + fileType + filename.substr(9,filename.length);
+    filename = "AdNauseam_" + fileType + filename.substr(9, filename.length);
 
     vAPI.download({
       'url': url,
@@ -642,100 +656,100 @@ const exportToFile = function (action) {
     });
   };
 
-  switch(action){
+  switch (action) {
     case 'backupUserData':
-        Promise.resolve(
-           vAPI.messaging.send('dashboard', {
-             what: 'backupUserData'
-           }),
-         ).then(response => {
-             outputData(JSON.stringify(response.userData, null, '  '), "Settings_and_Ads");
-       });
+      Promise.resolve(
+        vAPI.messaging.send('dashboard', {
+          what: 'backupUserData'
+        }),
+      ).then(response => {
+        outputData(JSON.stringify(response.userData, null, '  '), "Settings_and_Ads");
+      });
       break;
     case 'exportSettings':
-        Promise.resolve(
-           vAPI.messaging.send('dashboard', {
-             what: 'backupUserData'
-           }),
-         ).then(response => {
-           delete response.userData.userSettings.admap
-           outputData(JSON.stringify(response.userData, null, '  '),"Settings");
-       });
+      Promise.resolve(
+        vAPI.messaging.send('dashboard', {
+          what: 'backupUserData'
+        }),
+      ).then(response => {
+        delete response.userData.userSettings.admap
+        outputData(JSON.stringify(response.userData, null, '  '), "Settings");
+      });
       break;
     default:
-       vAPI.messaging.send('adnauseam', {
-         what: "exportAds",
-         includeImages: false
-       }).then(data => {
-          outputData(data);
-       })
+      vAPI.messaging.send('adnauseam', {
+        what: "exportAds",
+        includeImages: false
+      }).then(data => {
+        outputData(data);
+      })
 
   }
 
 };
 
 
-const handleImportFilePicker = function() {
+const handleImportFilePicker = function () {
 
-    const file = this.files[0];
-    if ( file === undefined || file.name === '' ) {
+  const file = this.files[0];
+  if (file === undefined || file.name === '') {
+    return;
+  }
+  // if ( file.type.indexOf('text') !== 0 ) {
+  //     return;
+  // }
+  const filename = file.name;
+
+  const fileReaderOnLoadHandler = function () {
+    let userData;
+    try {
+      userData = JSON.parse(this.result);
+      if (typeof userData !== 'object') {
+        throw 'Invalid';
+      }
+      if (typeof userData.userSettings !== 'object') {
+        //adnauseam admap
+        adsOnLoadHandler(userData);
         return;
+      }
+
     }
-    // if ( file.type.indexOf('text') !== 0 ) {
-    //     return;
-    // }
-    const filename = file.name;
+    catch (e) {
+      userData = undefined;
+    }
+    if (userData === undefined) {
+      window.alert(vAPI.i18n('aboutRestoreDataError').replace(/uBlock₀/g, 'AdNauseam'));
+      return;
+    }
+    const time = new Date(userData.timeStamp);
+    const msg = vAPI.i18n('aboutRestoreDataConfirm')
+      .replace('{{time}}', time.toLocaleString()).replace(/uBlock₀/g, 'AdNauseam');
+    const proceed = window.confirm(msg);
+    if (proceed) {
+      vAPI.messaging.send(
+        'dashboard',
+        {
+          what: 'restoreUserData',
+          userData: userData,
+          file: filename
+        }
+      );
+    }
+  };
 
-    const fileReaderOnLoadHandler = function() {
-        let userData;
-        try {
-            userData = JSON.parse(this.result);
-            if ( typeof userData !== 'object' ) {
-                throw 'Invalid';
-            }
-            if (typeof userData.userSettings !== 'object') {
-                  //adnauseam admap
-                  adsOnLoadHandler(userData);
-                  return;
-            }
-
-        }
-        catch (e) {
-            userData = undefined;
-        }
-        if ( userData === undefined ) {
-            window.alert(vAPI.i18n('aboutRestoreDataError').replace(/uBlock₀/g, 'AdNauseam'));
-            return;
-        }
-        const time = new Date(userData.timeStamp);
-        const msg = vAPI.i18n('aboutRestoreDataConfirm')
-                      .replace('{{time}}', time.toLocaleString()).replace(/uBlock₀/g, 'AdNauseam');
-        const proceed = window.confirm(msg);
-        if ( proceed ) {
-            vAPI.messaging.send(
-                'dashboard',
-                {
-                    what: 'restoreUserData',
-                    userData: userData,
-                    file: filename
-                }
-            );
-        }
-    };
-
-    const fr = new FileReader();
-    fr.onload = fileReaderOnLoadHandler;
-    fr.readAsText(file);
+  const fr = new FileReader();
+  fr.onload = fileReaderOnLoadHandler;
+  fr.readAsText(file);
 };
 
-const adsOnLoadHandler = function(adData, file) {
-    vAPI.messaging.send('adnauseam', {
-      what: 'importAds',
-      data: adData,
-      file: file
-    }).then(data => {
-       postImportAlert(data);
-    })
+const adsOnLoadHandler = function (adData, file) {
+  vAPI.messaging.send('adnauseam', {
+    what: 'importAds',
+    data: adData,
+    file: file
+  }).then(data => {
+    postImportAlert(data);
+  })
 }
 
 function handleImportAds(evt) {
@@ -744,29 +758,29 @@ function handleImportAds(evt) {
 
   const reader = new FileReader();
 
-  reader.onload = function(e) {
+  reader.onload = function (e) {
 
-     let adData;
-     try {
-       const data = JSON.parse(e.target.result);
-       adData = data.userSettings ? data.userSettings.admap : data;
+    let adData;
+    try {
+      const data = JSON.parse(e.target.result);
+      adData = data.userSettings ? data.userSettings.admap : data;
 
-       if (adData === undefined && data.userSettings && data.timeStamp) {
-          window.alert(vAPI.i18n('adnImportAlertFormat'));
-          return;
-       }
+      if (adData === undefined && data.userSettings && data.timeStamp) {
+        window.alert(vAPI.i18n('adnImportAlertFormat'));
+        return;
+      }
 
-     } catch (e) {
-       postImportAlert({
-         count: -1,
-         error: e
-       });
-       return;
-     }
+    } catch (e) {
+      postImportAlert({
+        count: -1,
+        error: e
+      });
+      return;
+    }
 
-     adsOnLoadHandler(adData, files[0].name);
+    adsOnLoadHandler(adData, files[0].name);
 
-   }
+  }
 
   reader.readAsText(files[0]);
 }
@@ -793,18 +807,18 @@ const clearAds = function () {
   const msg = vAPI.i18n('adnClearConfirm');
   const proceed = window.confirm(msg); // changed from vAPI.confirm merge1.14.12
   if (proceed) {
-    vAPI.messaging.send('adnauseam', {what: 'clearAds'});
+    vAPI.messaging.send('adnauseam', { what: 'clearAds' });
   }
 };
 
 /********* decode html entities in ads titles in vault and menu *********/
 
-const decodeEntities = (function() {
+const decodeEntities = (function () {
   //from here: http://stackoverflow.com/a/9609450
   // this prevents any overhead from creating the object each time
   const element = document.createElement('div');
-  function decodeHTMLEntities (str) {
-    if(str && typeof str === 'string') {
+  function decodeHTMLEntities(str) {
+    if (str && typeof str === 'string') {
       // strip script/html tags
       str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
       str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
