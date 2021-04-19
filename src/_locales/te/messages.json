@@ -268,11 +268,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilterTip": {
-    "message": "↑: Emphasize rows which have 3rd-party scripts",
+    "message": "↑: 3 వ పార్టీ స్క్రిప్ట్స్ కలిగి ఉన్న వరుసలను నొక్కి చెప్పండి",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party scripts' cell"
   },
   "popup3pFrameFilterTip": {
-    "message": "↑: Emphasize rows which have 3rd-party frames",
+    "message": "↑: 3 వ పార్టీ ఫ్రేమ్లను కలిగి ఉన్న వరుసలను నొక్కి చెప్పండి",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party frames' cell"
   },
   "pickerCreate": {
