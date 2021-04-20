@@ -384,6 +384,10 @@ button.important {
   vertical-align: super;
 }
 
+#notify-text #notify-link {
+  vertical-align: initial; /* fix for when notify link is inside notify text */
+}
+
 .notification button{
   background-image: none !important;
   font-size: 18px;
