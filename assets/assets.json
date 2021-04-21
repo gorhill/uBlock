@@ -446,10 +446,10 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "NLD: EasyList Dutch",
+		"title": "NLD: EasyDutch",
 		"lang": "af fy nl",
-		"contentURL": "https://easylist-downloads.adblockplus.org/easylistdutch.txt",
-		"supportURL": "https://forums.lanik.us/viewforum.php?f=100"
+		"contentURL": "https://raw.githubusercontent.com/BPower0036/AdBlockFilters/main/easydutch",
+		"supportURL": "https://github.com/BPower0036/AdBlockFilters"
 	},
 	"NOR-0": {
 		"content": "filters",
