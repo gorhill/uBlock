@@ -13,7 +13,7 @@ rm -rf $DES
 mkdir -p $DES
 
 VERSION=`jq .version manifest.json` # top-level adnauseam manifest
-UBLOCK=`jq .version platform/chromium/manifest.json | tr -d '"'` # ublock-version no quotes
+#UBLOCK=`jq .version platform/chromium/manifest.json | tr -d '"'` # ublock-version no quotes
 
 echo "*** AdNauseam.opera: Copying common files"
 bash ./tools/copy-common-files.sh  $DES
