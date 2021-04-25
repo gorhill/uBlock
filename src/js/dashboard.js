@@ -123,6 +123,16 @@ if ( self.location.hash.slice(1) === 'no-dashboard.html' ) {
     document.body.classList.add('noDashboard');
 }
 
+/// ADN notification to appear on dashboard
+vAPI.broadcastListener.add(request => {
+    switch (request.what) {
+    case 'notifications':
+      renderNotifications(request.notifications, "dashboard");
+      resizeFrame();
+      break;
+    }
+  });
+
 (async ( ) => {
     const results = await Promise.all([
         // https://github.com/uBlockOrigin/uBlock-issues/issues/106
