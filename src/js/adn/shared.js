@@ -354,7 +354,7 @@ function onSelectionDone() {
 
 function reactivateSetting() {
 
-  console.debug('reactivateSetting', this.prop + "=>" + this.expected);
+  console.log('reactivateSetting', this.prop + "=>" + this.expected);
 
   Promise.resolve(
     vAPI.messaging.send('dashboard', {

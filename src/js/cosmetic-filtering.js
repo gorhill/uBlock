@@ -838,7 +838,7 @@ FilterContainer.prototype.pruneSelectorCacheAsync = function() {
         let hostname = hostnames[i];
         let entry = cache.get(hostname);
         if ( entry.lastAccessTime > obsolete ) { break; }
-        // console.debug('pruneSelectorCacheAsync: flushing "%s"', hostname);
+        // console.log('pruneSelectorCacheAsync: flushing "%s"', hostname);
         entry.dispose();
         cache.delete(hostname);
     }
