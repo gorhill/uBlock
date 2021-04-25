@@ -120,7 +120,7 @@
               count: count
             };
 
-          console.debug('[ADN] TESTING: ', JSON.stringify(json));
+          console.log('[ADN] TESTING: ', JSON.stringify(json));
 
           sendResponse({
             what: 'setPageCount',
@@ -867,7 +867,7 @@
 
   const log = function () {
     if (µb.userSettings.eventLogging) {
-      console.debug.apply(console, arguments);
+      console.log.apply(console, arguments);
     }
     return true;
   }
@@ -1209,7 +1209,7 @@
     for (let name in lists) {
       if (activeBlockList(name)) {
 
-        //console.debug(`ACTIVE: name=${name}, result=${result} context=`, context, " snfe=", snfeData); // TMP-DEL
+        //console.log(`ACTIVE: name=${name}, result=${result} context=`, context, " snfe=", snfeData); // TMP-DEL
 
         if (lists[name].indexOf('@@') === 0) {                              // case B
           logNetAllow(name, snfeData.raw, context.url);
@@ -1618,7 +1618,7 @@
     for (let i = 0; i < ads.length; i++) {
 
       if (ads[i].attemptedTs) {
-        //console.debug('check: '+ads[i].requestId+'/'+ads[i].targetUrl+' ?= '+requestId+'/'+url);
+        //console.log('check: '+ads[i].requestId+'/'+ads[i].targetUrl+' ?= '+requestId+'/'+url);
         if (ads[i].requestId === requestId || ads[i].targetUrl === url) {
           return ads[i];
         }
@@ -1639,7 +1639,7 @@
     ad.pageDomain = µb.URI.domainFromHostname(pageStore.tabHostname); // DCH: 8/10
     ad.version = vAPI.app.version;
 
-    //console.debug('registerAd: '+pageStore.tabHostname+' -> '+ad.pageDomain);
+    //console.log('registerAd: '+pageStore.tabHostname+' -> '+ad.pageDomain);
 
     if (!validate(ad)) return warn(ad);
 

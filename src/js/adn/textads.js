@@ -24,12 +24,12 @@
   'use strict';
 
   if (window.location === null || typeof vAPI !== 'object') {
-    //console.debug('textads.js > window.location===null || vAPI not found');
+    //console.log('textads.js > window.location===null || vAPI not found');
     return;
   }
 
   if ( vAPI.textAdParser ) {
-      //console.debug('textads.js > already injected');
+      //console.log('textads.js > already injected');
       return;
   }
 
