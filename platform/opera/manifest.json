@@ -46,6 +46,9 @@
       "js": [
         "js/vapi.js",
         "js/vapi-client.js",
+        "js/contentscript.js",
+        "js/adn/textads.js", 
+        "js/adn/parser.js", 
         "js/contentscript.js"
       ],
       "all_frames": true,
