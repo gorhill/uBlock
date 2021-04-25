@@ -1,5 +1,5 @@
 {
-  "author": "Raymond Hill & contributors",
+  "author": "Daniel C. Howe",
   "background": {
     "page": "background.html"
   },
@@ -8,7 +8,7 @@
       "16": "img/icon_16.png",
       "32": "img/icon_32.png"
     },
-    "default_title": "uBlock Origin",
+    "default_title": "AdNauseam",
     "default_popup": "popup-fenix.html"
   },
   "commands": {
