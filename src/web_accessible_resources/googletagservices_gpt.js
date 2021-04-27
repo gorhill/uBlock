@@ -108,6 +108,7 @@
     p.getAttributeKeys = nooparrayfn;
     p.getCategoryExclusions = nooparrayfn;
     p.getDomId = noopstrfn;
+    p.getResponseInformation = noopnullfn;
     p.getSlotElementId = noopstrfn;
     p.getSlotId = noopthisfn;
     p.getTargeting = nooparrayfn;
