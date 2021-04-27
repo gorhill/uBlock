@@ -22,6 +22,11 @@
 		"contentURL": [
 			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badlists.txt",
 			"assets/ublock/badlists.txt"
+		],
+		"cdnURLs": [
+			"https://gitcdn.xyz/repo/uBlockOrigin/uAssets/master/filters/badlists.txt",
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssets@master/filters/badlists.txt",
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssets/master/filters/badlists.txt"
 		]
 	},
 	"ublock-filters": {
@@ -47,6 +52,11 @@
 			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badware.txt",
 			"assets/ublock/badware.txt"
 		],
+		"cdnURLs": [
+			"https://gitcdn.xyz/repo/uBlockOrigin/uAssets/master/filters/badware.txt",
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssets@master/filters/badware.txt",
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssets/master/filters/badware.txt"
+		],
 		"supportURL": "https://github.com/gorhill/uBlock/wiki/Badware-risks",
 		"instructionURL": "https://github.com/gorhill/uBlock/wiki/Badware-risks"
 	},
@@ -57,6 +67,11 @@
 		"contentURL": [
 			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/privacy.txt",
 			"assets/ublock/privacy.txt"
+		],
+		"cdnURLs": [
+			"https://gitcdn.xyz/repo/uBlockOrigin/uAssets/master/filters/privacy.txt",
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssets@master/filters/privacy.txt",
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssets/master/filters/privacy.txt"
 		]
 	},
 	"ublock-abuse": {
@@ -66,6 +81,11 @@
 		"contentURL": [
 			"https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/resource-abuse.txt",
 			"assets/ublock/resource-abuse.txt"
+		],
+		"cdnURLs": [
+			"https://gitcdn.xyz/repo/uBlockOrigin/uAssets/master/filters/resource-abuse.txt",
+			"https://cdn.jsdelivr.net/gh/uBlockOrigin/uAssets@master/filters/resource-abuse.txt",
+			"https://cdn.statically.io/gh/uBlockOrigin/uAssets/master/filters/resource-abuse.txt"
 		]
 	},
 	"ublock-unbreak": {

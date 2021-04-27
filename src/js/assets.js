@@ -730,14 +730,20 @@ api.get = async function(assetKey, options = {}) {
 
     const assetRegistry = await getAssetSourceRegistry();
     assetDetails = assetRegistry[assetKey] || {};
-    let contentURLs = [];
+    const contentURLs = [];
     if ( typeof assetDetails.contentURL === 'string' ) {
-        contentURLs = [ assetDetails.contentURL ];
+        contentURLs.push(assetDetails.contentURL);
     } else if ( Array.isArray(assetDetails.contentURL) ) {
-        contentURLs = assetDetails.contentURL.slice(0);
+        contentURLs.push(...assetDetails.contentURL);
     } else if ( reIsExternalPath.test(assetKey) ) {
         assetDetails.content = 'filters';
-        contentURLs = [ assetKey ];
+        contentURLs.push(assetKey);
+    }
+
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1566#issuecomment-826473517
+    //   Use CDN URLs as fall back URLs.
+    if ( Array.isArray(assetDetails.cdnURLs) ) {
+        contentURLs.push(...assetDetails.cdnURLs);
     }
 
     for ( const contentURL of contentURLs ) {
@@ -776,24 +782,31 @@ const getRemote = async function(assetKey) {
         return details;
     };
 
-    let contentURLs = [];
+    const contentURLs = [];
     if ( typeof assetDetails.contentURL === 'string' ) {
-        contentURLs = [ assetDetails.contentURL ];
+        contentURLs.push(assetDetails.contentURL);
     } else if ( Array.isArray(assetDetails.contentURL) ) {
-        contentURLs = assetDetails.contentURL.slice(0);
+        contentURLs.push(...assetDetails.contentURL);
     }
 
     // If asked to be gentle on remote servers, favour using dedicated CDN
     // servers. If more than one CDN server is present, randomly shuffle the
     // set of servers so as to spread the bandwidth burden.
-    if ( remoteServerFriendly && Array.isArray(assetDetails.cdnURLs) ) {
+    //
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1566#issuecomment-826473517
+    //   In case of manual update, use CDNs URLs as fall back URLs.
+    if ( Array.isArray(assetDetails.cdnURLs) ) {
         const cdnURLs = assetDetails.cdnURLs.slice();
         for ( let i = 0, n = cdnURLs.length; i < n; i++ ) {
             const j = Math.floor(Math.random() * n);
             if ( j === i ) { continue; }
             [ cdnURLs[j], cdnURLs[i] ] = [ cdnURLs[i], cdnURLs[j] ];
         }
-        contentURLs.unshift(...cdnURLs);
+        if ( remoteServerFriendly ) {
+            contentURLs.unshift(...cdnURLs);
+        } else {
+            contentURLs.push(...cdnURLs);
+        }
     }
 
     for ( const contentURL of contentURLs ) {
