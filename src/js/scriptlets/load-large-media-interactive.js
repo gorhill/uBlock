@@ -213,6 +213,19 @@ const onLoadedData = function(ev) {
     media.pause();
 };
 
+// https://www.reddit.com/r/uBlockOrigin/comments/mxgpmc/
+//   Support cases where the media source is not yet set.
+for ( const media of document.querySelectorAll('audio,video') ) {
+    const src = media.src;
+    if (
+        (typeof src === 'string') &&
+        (src === '' || src.startsWith('blob:'))
+    ) {
+        media.autoplay = false;
+        media.pause();
+    }
+}
+
 document.addEventListener('loadeddata', onLoadedData);
 
 /******************************************************************************/
