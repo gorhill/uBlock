@@ -245,6 +245,8 @@ api.fetchFilterList = async function(mainlistURL) {
     const sublistURLs = new Set();
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1113
+    //   Process only `!#include` directives which are not excluded by an
+    //   `!#if` directive.
     const processIncludeDirectives = function(results) {
         const out = [];
         const reInclude = /^!#include +(\S+)/gm;
@@ -297,10 +299,19 @@ api.fetchFilterList = async function(mainlistURL) {
     let allParts = [
         this.fetchText(mainlistURL)
     ];
-    for (;;) {
-        allParts = processIncludeDirectives(await Promise.all(allParts));
-        if ( allParts.every(v => typeof v === 'string') ) { break; }
-    }
+    // Abort processing `include` directives if at least one included sublist
+    // can't be fetched.
+    do {
+        allParts = await Promise.all(allParts);
+        const part = allParts.find(part => {
+            return typeof part === 'object' && part.error !== undefined;
+        });
+        if ( part !== undefined ) {
+            return { url: mainlistURL, content: '', error: part.error };
+        }
+        allParts = processIncludeDirectives(allParts);
+    } while ( allParts.some(part => typeof part !== 'string') );
+    // If we reach this point, this means all fetches were successful.
     return {
         url: mainlistURL,
         content: allParts.length === 1
