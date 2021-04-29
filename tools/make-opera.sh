@@ -29,6 +29,9 @@ rm -rf $DES/_locales/kk
 rm -rf $DES/_locales/mr
 rm -rf $DES/_locales/th
 
+# Causees failed upload in opera store
+rm -rf $DES/assets/update-git.sh
+
 # Removing WASM modules until I receive an answer from Opera people: Opera's
 # uploader issue an error for hntrie.wasm and this prevents me from
 # updating uBO in the Opera store. The modules are unused anyway for
