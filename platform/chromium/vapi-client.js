@@ -230,14 +230,16 @@ vAPI.messaging = {
     },
 
     // Dynamically extend capabilities.
+    //
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1571
+    //   Don't use `self` to access `vAPI`.
     extend: function() {
         if ( this.extended === undefined ) {
             this.extended = vAPI.messaging.send('vapi', {
                 what: 'extendClient'
-            }).then(( ) => {
-                return self.vAPI instanceof Object &&
-                       this.extensions.length !== 0;
-            }).catch(( ) => {
+            }).then(( ) =>
+                typeof vAPI === 'object' && this.extensions.length !== 0
+            ).catch(( ) => {
             });
         }
         return this.extended;
