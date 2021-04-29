@@ -12,7 +12,7 @@
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "హెచ్చరిక! మీకు సేవ్ చేయని మార్పులు ఉన్నాయి",
+    "message": "హెచ్చరిక! మీరు భద్రపరచని మార్పులు ఉన్నాయి",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
@@ -96,15 +96,15 @@
     "description": "English: or"
   },
   "popupBlockedOnThisPage_v2": {
-    "message": "ఈ పేజిలో రద్దు చేయబడ్డవి",
+    "message": "ఈ పేజిలో నిరోధించినవి",
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
-    "message": "ఇన్‌స్టాల్ చేసినప్పటి నుండి నిరోధించబడింది",
+    "message": "స్థాపించినప్పటి నుండి నిరోధించినవి",
     "description": "For the new mobile-friendly popup design"
   },
   "popupDomainsConnected_v2": {
-    "message": "డొమైన్లు కనెక్ట్ చేయబడ్డాయి",
+    "message": "అనుసందానమైన డొమైన్లు",
     "description": "For the new mobile-friendly popup design"
   },
   "popupTipDashboard": {
@@ -172,7 +172,7 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "ఈ సైట్‌లో జావాస్క్రిప్ట్‌ను నిలిపివేయడానికి క్లిక్ చేయండి",
+    "message": "ఈ సైటులో జావాస్క్రిప్టును అచేతనం చేయయానికి నొక్కండి",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
@@ -180,7 +180,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
-    "message": "పాప్-అప్ విండోస్",
+    "message": "పాప్-అప్ విండోలు",
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
@@ -200,7 +200,7 @@
     "description": "Caption for the no-scripting per-site switch"
   },
   "popupMoreButton_v2": {
-    "message": "మరిన్ని",
+    "message": "ఎక్కువ",
     "description": "Label to be used to show popup panel sections"
   },
   "popupLessButton_v2": {
