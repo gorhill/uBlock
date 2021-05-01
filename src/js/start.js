@@ -179,7 +179,7 @@ const onUserSettingsReady = function(fetched) {
     // https://github.com/gorhill/uBlock/issues/1892
     // For first installation on a battery-powered device, disable generic
     // cosmetic filtering.
-    if (false && µb.firstInstall && vAPI.battery ) { // ADN: we need these
+    if (false && µb.userSettings.firstInstall && vAPI.battery ) { // ADN: we need these
         userSettings.ignoreGenericCosmeticFilters = true;
     }
 };
@@ -216,7 +216,7 @@ const onFirstFetchReady = function(fetched, adminExtra) {
     }
 
     // ADN
-    µb.firstInstall = (fetched.version === '0.0.0.0');
+    µb.userSettings.firstInstall = (fetched.version === '0.0.0.0');
 
     // Order is important -- do not change:
     fromFetch(µb.localSettings, fetched);
@@ -395,8 +395,14 @@ initializeTabs();
 // Force an update of the context menu according to the currently
 // active tab.
 µb.contextMenu.update();
-µb.adnauseam.onListsLoaded(µb.firstInstall && µb.restoreBackupSettings.lastRestoreFile === ""); // ADN
-µb.firstInstall = false;
+
+
+// ADN lists and first run (see #1826)
+µb.adnauseam.onListsLoaded(µb.userSettings.firstInstall
+  && µb.restoreBackupSettings.lastRestoreFile === "");
+µb.userSettings.firstInstall = false;
+µb.saveUserSettings();
+
 
 // Maybe install non-default popup document, or automatically select
 // default UI according to platform.

@@ -1570,7 +1570,7 @@
       // collapses 'languages' group in dashboard:3rd-party
       vAPI.localStorage.setItem('collapseGroup5', 'y');
 
-      if (console.clear) console.clear();
+      //if (console.clear) console.clear();
 
       log("[INIT] AdNauseam loaded (" + entries.size + " 3p lists)"
         + (devbuild ? ' [DEV]' : ''));

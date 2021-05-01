@@ -104,11 +104,12 @@
 
   const updateFilters = exports.updateFilters = function () {
 
-    const ruleCount = Object.keys(firewall.rules).length, enabled = µb.adnauseam.dnt.enabled(), dnts = µb.userSettings.dntDomains;
+    const ruleCount = Object.keys(firewall.rules).length;
+    const enabled = µb.adnauseam.dnt.enabled();
+    const dnts = µb.userSettings.dntDomains;
 
     // Only clear and possibly update if we actually find a change
     if ((enabled && ruleCount > 0) || (!enabled && ruleCount < 1)  ) {
-
       //log("[DNT] Ignoring update, enabled = "+enabled+" "+dnts.length);
       return;
     }

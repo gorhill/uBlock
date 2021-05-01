@@ -83,11 +83,16 @@ const µBlock = (( ) => { // jshint ignore:line
         userResourcesLocation: 'unset',
     };
 
+
     const userSettingsDefault = {
-        admap: {},          // ADN //////////////////
+
+        ////////////////// ADN //////////////////
+
+        admap: {},          
         dntDomains: [],
         parseTextAds: true,
         eventLogging: false,
+        firstInstall: true,
 
         hidingAds: false,
         clickingAds: false,
@@ -129,7 +134,6 @@ const µBlock = (( ) => { // jshint ignore:line
     };
 
     return {
-        firstInstall: true,
         userSettingsDefault: userSettingsDefault,
         userSettings: Object.assign({}, userSettingsDefault),
         hiddenSettingsDefault: hiddenSettingsDefault,
