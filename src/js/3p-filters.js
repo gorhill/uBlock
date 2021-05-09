@@ -25,11 +25,13 @@
 
 /******************************************************************************/
 
-(( ) => {
+{
+// >>>>> start of local scope
 
 /******************************************************************************/
 
 const lastUpdateTemplateString = vAPI.i18n('3pLastUpdate');
+const obsoleteTemplateString = vAPI.i18n('3pExternalListObsolete');
 const reValidExternalList = /^[a-z-]+:\/\/(?:\S+\/\S*|\/\S+)/m;
 
 let listDetails = {};
@@ -141,14 +143,22 @@ const renderFilterLists = function(soft) {
         );
         li.classList.toggle('failed', asset.error !== undefined);
         li.classList.toggle('obsolete', asset.obsolete === true);
+        const lastUpdateString = lastUpdateTemplateString.replace(
+            '{{ago}}',
+            renderElapsedTimeToString(asset.writeTime || 0)
+        );
+        if ( asset.obsolete === true ) {
+            let title = obsoleteTemplateString;
+            if ( asset.cached && asset.writeTime !== 0 ) {
+                title += '\n' + lastUpdateString;
+            }
+            li.querySelector('.status.obsolete').setAttribute('title', title);
+        }
         if ( asset.cached === true ) {
             li.classList.add('cached');
             li.querySelector('.status.cache').setAttribute(
                 'title',
-                lastUpdateTemplateString.replace(
-                    '{{ago}}',
-                    renderElapsedTimeToString(asset.writeTime)
-                )
+                lastUpdateString
             );
         } else {
             li.classList.remove('cached');
@@ -696,5 +706,6 @@ renderFilterLists();
 
 /******************************************************************************/
 
-})();
+// <<<<< end of local scope
+}
 
