@@ -28,7 +28,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "فیلتر های خارجی",
+    "message": "لیست‌های فیلتر",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -304,7 +304,7 @@
     "description": "English: Click, Ctrl-click"
   },
   "pickerContextMenuEntry": {
-    "message": "بلاک کردن این شیء",
+    "message": "بلاک کردن این اِلمان‌",
     "description": "An entry in the browser's contextual menu"
   },
   "settingsCollapseBlockedPrompt": {
@@ -924,7 +924,7 @@
     "description": "No longer used"
   },
   "subscribeButton": {
-    "message": "مشترک شدن",
+    "message": "آبونه شدن",
     "description": "For the button used to subscribe to a filter list"
   },
   "elapsedOneMinuteAgo": {
