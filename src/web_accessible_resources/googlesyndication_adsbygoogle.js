@@ -29,7 +29,7 @@
     const phs = document.querySelectorAll('.adsbygoogle');
     const css = 'height:1px!important;max-height:1px!important;max-width:1px!important;width:1px!important;';
     for ( let i = 0; i < phs.length; i++ ) {
-        const id = `aswift_${(i+1)}`;
+        const id = `aswift_${i}`;
         if ( document.querySelector(`iframe#${id}`) !== null ) { continue; }
         const fr = document.createElement('iframe');
         fr.id = id;
