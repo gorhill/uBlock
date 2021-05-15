@@ -72,6 +72,32 @@ const onBlockElementInFrame = function(details, tab) {
 
 /******************************************************************************/
 
+const onSubscribeToList = function(details) {
+    let parsedURL;
+    try {
+        parsedURL = new URL(details.linkUrl);
+    }
+    catch(ex) {
+    }
+    if ( parsedURL instanceof URL === false ) { return; }
+    const url = parsedURL.searchParams.get('location');
+    if ( url === null ) { return; }
+    const title = parsedURL.searchParams.get('title') || '?';
+    const hash = µBlock.selectedFilterLists.indexOf(parsedURL) !== -1
+        ? '#subscribed'
+        : '';
+    vAPI.tabs.open({
+        url:
+            `/asset-viewer.html` +
+            `?url=${encodeURIComponent(url)}` +
+            `&title=${encodeURIComponent(title)}` + 
+            `&subscribe=1${hash}`,
+        select: true,
+    });
+};
+
+/******************************************************************************/
+
 const onTemporarilyAllowLargeMediaElements = function(details, tab) {
     if ( tab === undefined ) { return; }
     let pageStore = µBlock.pageStoreFromTabId(tab.id);
@@ -87,6 +113,9 @@ const onEntryClicked = function(details, tab) {
     }
     if ( details.menuItemId === 'uBlock0-blockElementInFrame' ) {
         return onBlockElementInFrame(details, tab);
+    }
+    if ( details.menuItemId === 'uBlock0-subscribeToList' ) {
+        return onSubscribeToList(details);
     }
     if ( details.menuItemId === 'uBlock0-temporarilyAllowLargeMediaElements' ) {
         return onTemporarilyAllowLargeMediaElements(details, tab);
@@ -105,6 +134,12 @@ const menuEntries = {
         id: 'uBlock0-blockElementInFrame',
         title: vAPI.i18n('contextMenuBlockElementInFrame'),
         contexts: ['frame'],
+    },
+    subscribeToList: {
+        id: 'uBlock0-subscribeToList',
+        title: vAPI.i18n('contextMenuSubscribeToList'),
+        contexts: ['link'],
+        targetUrlPatterns: [ 'abp:*' ],
     },
     temporarilyAllowLargeMediaElements: {
         id: 'uBlock0-temporarilyAllowLargeMediaElements',
@@ -134,6 +169,7 @@ const update = function(tabId = undefined) {
     if ( newBits & 0x01 ) {
         usedEntries.push(menuEntries.blockElement);
         usedEntries.push(menuEntries.blockElementInFrame);
+        usedEntries.push(menuEntries.subscribeToList);
     }
     if ( newBits & 0x02 ) {
         usedEntries.push(menuEntries.temporarilyAllowLargeMediaElements);
