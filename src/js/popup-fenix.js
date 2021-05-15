@@ -1032,8 +1032,8 @@ const reloadTab = function(ev) {
     //   if there were changes or not.
     popupData.contentLastModified = -1;
 
-    // No need to wait to remove this.
-    document.body.classList.remove('needReload');
+    // Reset popup state hash to current state.
+    hashFromPopupData(true);
 };
 
 uDom('#refresh').on('click', reloadTab);
@@ -1277,7 +1277,7 @@ const pollForContentChange = (( ) => {
 
 /******************************************************************************/
 
-const getPopupData = async function(tabId) {
+const getPopupData = async function(tabId, first = false) {
     const response = await messaging.send('popupPanel', {
         what: 'getPopupData',
         tabId,
@@ -1287,7 +1287,7 @@ const getPopupData = async function(tabId) {
     renderOnce();
     renderPopup();
     renderPopupLazy(); // low priority rendering
-    hashFromPopupData(true);
+    hashFromPopupData(first);
     pollForContentChange();
 };
 
@@ -1355,7 +1355,7 @@ const getPopupData = async function(tabId) {
         document.body.classList.remove('loading');
     };
 
-    getPopupData(tabId).then(( ) => {
+    getPopupData(tabId, true).then(( ) => {
         if ( document.readyState !== 'complete' ) {
             self.addEventListener('load', ( ) => { checkViewport(); }, { once: true });
         } else {
