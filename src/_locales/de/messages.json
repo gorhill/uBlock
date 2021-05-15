@@ -1043,6 +1043,10 @@
     "message": "Elemente in Frame sperren …",
     "description": "An entry in the browser's contextual menu"
   },
+  "contextMenuSubscribeToList": {
+    "message": "Subscribe to filter list...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Vorübergehend große Medienelemente erlauben",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"

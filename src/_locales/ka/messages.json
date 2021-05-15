@@ -1043,6 +1043,10 @@
     "message": "ელემენტის შეზღუდვა ჩარჩოში...",
     "description": "An entry in the browser's contextual menu"
   },
+  "contextMenuSubscribeToList": {
+    "message": "Subscribe to filter list...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "დიდი მედია-ელემენტების დროებით დაშვება",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"

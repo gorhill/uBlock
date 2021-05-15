@@ -1043,6 +1043,10 @@
     "message": "Blokir elemen di dalam frame...",
     "description": "An entry in the browser's contextual menu"
   },
+  "contextMenuSubscribeToList": {
+    "message": "Subscribe to filter list...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "Sementara izinkan elemen media besar",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"

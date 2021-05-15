@@ -1043,6 +1043,10 @@
     "message": "프레임 내 구성 요소 차단",
     "description": "An entry in the browser's contextual menu"
   },
+  "contextMenuSubscribeToList": {
+    "message": "Subscribe to filter list...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "이번만 대형 미디어 구성요소 허용",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"

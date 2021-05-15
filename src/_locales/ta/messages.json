@@ -1043,6 +1043,10 @@
     "message": "சட்டத்தில் தொகுதி உறுப்பு ...",
     "description": "An entry in the browser's contextual menu"
   },
+  "contextMenuSubscribeToList": {
+    "message": "Subscribe to filter list...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "தற்காலிகமாகப் பெரிய ஒலி‍-ஒளி-படத்தொகுப்புகளின் கூறுகளை அனுமதி",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"

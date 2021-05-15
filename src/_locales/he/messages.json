@@ -1043,6 +1043,10 @@
     "message": "חסום אלמנט בתוך מסגרת...",
     "description": "An entry in the browser's contextual menu"
   },
+  "contextMenuSubscribeToList": {
+    "message": "Subscribe to filter list...",
+    "description": "An entry in the browser's contextual menu"
+  },
   "contextMenuTemporarilyAllowLargeMediaElements": {
     "message": "זמנית אפשר אלמנטי מדיה גדולים",
     "description": "A context menu entry, present when large media elements have been blocked on the current site"
