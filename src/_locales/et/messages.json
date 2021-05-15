@@ -28,7 +28,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "Filtri loendid",
+    "message": "Filtriloendid",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -400,7 +400,7 @@
     "description": "Appears aside each filter list in the _3rd-party filters_ pane"
   },
   "3pAutoUpdatePrompt1": {
-    "message": "Uuenda filtrite loendeid automaatselt.",
+    "message": "Uuenda filtriloendeid automaatselt.",
     "description": "A checkbox in the _3rd-party filters_ pane"
   },
   "3pUpdateNow": {
@@ -704,7 +704,7 @@
     "description": "Label to identify a filter field"
   },
   "loggerEntryDetailsFilterList": {
-    "message": "Filtri loend",
+    "message": "Filtriloend",
     "description": "Label to identify a filter list field"
   },
   "loggerEntryDetailsRule": {
@@ -1044,7 +1044,7 @@
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Subscribe to filter list...",
+    "message": "Telli filtriloend...",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
