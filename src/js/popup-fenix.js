@@ -110,7 +110,7 @@ const cachePopupData = function(data) {
 
 /******************************************************************************/
 
-const hashFromPopupData = function(reset) {
+const hashFromPopupData = function(reset = false) {
     // It makes no sense to offer to refresh the behind-the-scene scope
     if ( popupData.pageHostname === 'behind-the-scene' ) {
         document.body.classList.remove('needReload');
