@@ -74,8 +74,17 @@
     w[gaName] = ga;
     // https://github.com/gorhill/uBlock/issues/3075
     const dl = w.dataLayer;
-    if ( dl instanceof Object && dl.hide instanceof Object && typeof dl.hide.end === 'function' ) {
-        dl.hide.end();
+    if ( dl instanceof Object ) {
+        if ( dl.hide instanceof Object && typeof dl.hide.end === 'function' ) {
+            dl.hide.end();
+        }
+        if ( typeof dl.push === 'function' ) {
+            dl.push = function(o) {
+                if ( o instanceof Object && typeof o.eventCallback === 'function' ) {
+                    setTimeout(o.eventCallback, 1);
+                }
+            };
+        }
     }
     // empty ga queue
     if ( gaQueue instanceof Function && Array.isArray(gaQueue.q) ) {
