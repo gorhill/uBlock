@@ -473,10 +473,10 @@
 		"content": "filters",
 		"group": "regions",
 		"off": true,
-		"title": "NLD: EasyDutch",
+		"title": "NLD: EasyList Dutch",
 		"lang": "af fy nl",
-		"contentURL": "https://raw.githubusercontent.com/BPower0036/AdBlockFilters/main/easydutch",
-		"supportURL": "https://github.com/BPower0036/AdBlockFilters"
+		"contentURL": "https://easylist-downloads.adblockplus.org/easylistdutch.txt",
+		"supportURL": "https://forums.lanik.us/viewforum.php?f=100"
 	},
 	"NOR-0": {
 		"content": "filters",
