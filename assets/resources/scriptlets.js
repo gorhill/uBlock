@@ -81,13 +81,13 @@
         get: function() {
             validate();
             return desc instanceof Object
-                ? desc.get()
+                ? desc.get.call(owner)
                 : value;
         },
         set: function(a) {
             validate();
             if ( desc instanceof Object ) {
-                desc.set(a);
+                desc.set.call(owner, a);
             } else {
                 value = a;
             }
