@@ -1044,7 +1044,7 @@
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Ein Eintrag im Kontextmenü des Browsers",
+    "message": "Filterliste abonnieren …",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
