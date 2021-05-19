@@ -120,6 +120,7 @@ const renderFilterLists = function(soft) {
             } else {
                 li.classList.remove('mustread');
             }
+            li.classList.toggle('isDefault', entry.isDefault === true);
             li.classList.toggle('unused', hideUnused && !on);
         }
         // https://github.com/gorhill/uBlock/issues/1429

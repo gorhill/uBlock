@@ -873,6 +873,15 @@ api.metadata = async function() {
     for ( const assetKey in assetDict ) {
         const assetEntry = assetDict[assetKey];
         const cacheEntry = cacheDict[assetKey];
+        if (
+            assetEntry.content === 'filters' &&
+            assetEntry.external !== true
+        ) {
+            assetEntry.isDefault =
+                assetEntry.off === undefined ||
+                assetEntry.off === true &&
+                    µBlock.listMatchesEnvironment(assetEntry);
+        }
         if ( cacheEntry ) {
             assetEntry.cached = true;
             assetEntry.writeTime = cacheEntry.writeTime;

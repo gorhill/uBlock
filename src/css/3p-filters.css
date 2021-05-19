@@ -57,7 +57,7 @@ body.hideUnused #listsOfBlockedHostsPrompt::before,
     margin-inline-start: 0.6em;
     -webkit-margin-start: 0.6em;
     }
-.groupEntry:not([data-groupkey="user"]) .listEntry.unused {
+.groupEntry:not([data-groupkey="user"]) .listEntry:not(.isDefault).unused {
     display: none;
     }
 .listEntry > * {
