@@ -60,7 +60,7 @@
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
-    "message": "დამატებითი პარამეტრები",
+    "message": "გაფართოებული პარამეტრები",
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
@@ -148,15 +148,15 @@
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
-    "message": "ხილული ელემენტების ფილტრაციის ჩართვა/გამორთვა ამ საიტზე",
+    "message": "გარეგნული ელემენტების ფილტრაციის ჩართვა/გამორთვა ამ საიტზე",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "დააწკაპეთ ხილული ელემენტების ფილტრაციის გასაუქმებლად ამ საიტზე",
+    "message": "დააწკაპეთ გარეგნული ელემენტების ფილტრაციის გასაუქმებლად ამ საიტზე",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "დააწკაპეთ ხილული ელემენტების გასაფილტრად ამ საიტზე",
+    "message": "დააწკაპეთ გარეგნული ელემენტების გასაფილტრად ამ საიტზე",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -188,7 +188,7 @@
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
-    "message": "ხილული ელემენტების გაფილტვრა",
+    "message": "გარეგნული ელემენტების გაფილტვრა",
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
@@ -296,7 +296,7 @@
     "description": "English: header for a type of filter in the element picker dialog"
   },
   "pickerCosmeticFilters": {
-    "message": "ხილული ელემენტების ფილტრები",
+    "message": "გარეგნული ელემენტების ფილტრები",
     "description": "English: Cosmetic filters"
   },
   "pickerCosmeticFiltersHint": {
@@ -336,7 +336,7 @@
     "description": ""
   },
   "settingsAdvancedUserSettings": {
-    "message": "დამატებითი პარამეტრები",
+    "message": "გაფართოებული პარამეტრები",
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt": {
@@ -360,7 +360,7 @@
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "ხილული ელემენტების ფილტრაციის გამორთვა",
+    "message": "გარეგნული ელემენტების ფილტრაციის გამორთვა",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
@@ -392,7 +392,7 @@
     "description": "English: Last backup:"
   },
   "3pListsOfBlockedHostsPrompt": {
-    "message": "{{netFilterCount}} ქსელის ფილტრი + {{cosmeticFilterCount}} ხილული ელემენტების ფილტრი:",
+    "message": "{{netFilterCount}} ქსელის ფილტრი + {{cosmeticFilterCount}} გარეგნული ელემენტების ფილტრი:",
     "description": "Appears at the top of the _3rd-party filters_ pane"
   },
   "3pListsOfBlockedHostsPerListStats": {
@@ -412,19 +412,19 @@
     "description": "A button in the in the _3rd-party filters_ pane"
   },
   "3pParseAllABPHideFiltersPrompt1": {
-    "message": "ხილული ელემენტების ფილტრების დამუშავება და გამოყენება",
+    "message": "გარეგნული ელემენტების ფილტრების დამუშავება და გამოყენება",
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "<p>ეს პარამეტრი <a href=\"https://adblockplus.org/en/faq_internal#elemhide\">Adblock Plus-სთან თავსებადი &ldquo;ელემენტის დასამალი&rdquo; ფილტრების</a> დამუშავებისა და გამოყენების შესაძლებლობას იძლევა. ეს ფილტრები, ძირითადად, იმ ხილული ელემენტების დასამალად გამოიყენება ვებგვერდზე, რომელსაც ქსელის მოთხოვნაზე დაფუძნებული ფილტრაციის საშუალებები ვერ ზღუდავს.</p><p>ამ შესაძლებლობის ჩართვის შედეგად გაიზრდება uBlock₀-ის მიერ მეხსიერების მოხმარება.</p>",
+    "message": "გარეგნული ფილტრები, ძირითადად, იმ ხილული ელემენტების დასამალად გამოიყენება ვებგვერდზე, რომელთაც ქსელის მოთხოვნაზე დაფუძნებული ფილტრები ვერ ზღუდავს.",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
-    "message": "ხილული ელემენტების საერთო ფილტრების უგულებელყოფა",
+    "message": "გარეგნული ელემენტების საერთო ფილტრების უგულებელყოფა",
     "description": "This will cause uBO to ignore all generic cosmetic filters."
   },
   "3pIgnoreGenericCosmeticFiltersInfo": {
-    "message": "<p>ხილული ელემენტების საერთო ფილტრებია ის, რომელიც ყველა ვებსაიტს ესადაგება.<p>მიუხედავად uBlock₀-ის მიერ სიმსუბუქის შენარჩუნების შესაძლებლობისა, ხილული ელემენტების საერთო ფილტრებმა, შესაძლოა მაინც დატვირთოს მეხსიერება და პროცესორი ზოგიერთ ვებსაიტზე, განსაკუთრებით დიდსა და მოძველებულზე.<p>ამ პარამეტრის ჩართვით კი თავიდან აიცილებთ ხილული ელემენტების საერთო ფილტრების შედეგად მეხსიერებისა და პროცესორის და ასევე უშუალოდ uBlock₀-ის დატვირთვას.<p>ამ პარამეტრის ჩართვა სასურველია სუსტ მოწყობილობებზე.",
+    "message": "გარეგნული საერთო ფილტრები ისეთი ფილტრებია, რომლებიც ყველა ვებსაიტზე მოქმედებს. ამ პარამეტრის ჩართვით კი თავიდან აიცილებთ გარეგნული ელემენტების საერთო ფილტრების შედეგად მეხსიერებისა და პროცესორის ზედმეტ დატვირთვას.\n\nამ პარამეტრის ჩართვა სასურველია სუსტ მოწყობილობებზე.",
     "description": "Describes the purpose of the 'Ignore generic cosmetic filters' feature."
   },
   "3pListsOfBlockedHostsHeader": {
@@ -1020,7 +1020,7 @@
     "description": "used as a prompt for the user to provide a custom device name"
   },
   "advancedSettingsWarning": {
-    "message": "გაფრთხილება! დამატებითი პარამეტრების ცვლილების შედეგებზე, თავად იქნებით პასუხისმგებელი.",
+    "message": "გაფრთხილება! გაფართოებული პარამეტრების ცვლილების შედეგებზე, თავად იქნებით პასუხისმგებელი.",
     "description": "A warning to users at the top of 'Advanced settings' page"
   },
   "genericSubmit": {
