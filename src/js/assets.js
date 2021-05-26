@@ -199,6 +199,14 @@ api.fetchText = async function(url) {
         if ( text.startsWith('<') && text.endsWith('>') ) {
             details.content = '';
         }
+
+        // Important: Non empty text resource must always end with a newline
+        if (
+            details.content.length !== 0 &&
+            details.content.endsWith('\n') === false
+        ) {
+            details.content += '\n';
+        }
     } catch(ex) {
         details = ex;
     }
@@ -218,7 +226,7 @@ api.fetchText = async function(url) {
 api.fetchFilterList = async function(mainlistURL) {
     const toParsedURL = url => {
         try {
-            return new URL(url);
+            return new URL(url.trim());
         } catch (ex) {
         }
     };
@@ -249,7 +257,7 @@ api.fetchFilterList = async function(mainlistURL) {
     //   `!#if` directive.
     const processIncludeDirectives = function(results) {
         const out = [];
-        const reInclude = /^!#include +(\S+)/gm;
+        const reInclude = /^!#include +(\S+)[^\n\r]*(?:[\n\r]+|$)/gm;
         for ( const result of results ) {
             if ( typeof result === 'string' ) {
                 out.push(result);
@@ -274,14 +282,14 @@ api.fetchFilterList = async function(mainlistURL) {
                     // Compute nested list path relative to parent list path
                     const pos = result.url.lastIndexOf('/');
                     if ( pos === -1 ) { continue; }
-                    const subURL = result.url.slice(0, pos + 1) + match[1];
+                    const subURL = result.url.slice(0, pos + 1) + match[1].trim();
                     if ( sublistURLs.has(subURL) ) { continue; }
                     sublistURLs.add(subURL);
                     out.push(
                         slice.slice(lastIndex, match.index + match[0].length),
-                        `! >>>>>>>> ${subURL}`,
+                        `! >>>>>>>> ${subURL}\n`,
                         api.fetchText(subURL),
-                        `! <<<<<<<< ${subURL}`
+                        `! <<<<<<<< ${subURL}\n`
                     );
                     lastIndex = reInclude.lastIndex;
                 }
@@ -316,7 +324,7 @@ api.fetchFilterList = async function(mainlistURL) {
         url: mainlistURL,
         content: allParts.length === 1
             ? allParts[0]
-            : allParts.map(s => s.trim()).filter(s => s !== '').join('\n') + '\n'
+            : allParts.join('') + '\n'
     };
 };
 
