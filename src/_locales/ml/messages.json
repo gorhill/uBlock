@@ -847,6 +847,10 @@
     "message": "മാർക്ക്ഡ .ൺ",
     "description": "Label for radio-button to pick export text format"
   },
+  "aboutPrivacyPolicy": {
+    "message": "Privacy policy",
+    "description": "Link to privacy policy on GitHub (English)"
+  },
   "aboutChangelog": {
     "message": "മാറ്റങ്ങളുടെ ലോഗ്",
     "description": ""

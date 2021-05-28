@@ -847,6 +847,10 @@
     "message": "मार्कडाउन",
     "description": "Label for radio-button to pick export text format"
   },
+  "aboutPrivacyPolicy": {
+    "message": "Privacy policy",
+    "description": "Link to privacy policy on GitHub (English)"
+  },
   "aboutChangelog": {
     "message": "परिवर्तन सूची",
     "description": ""
