@@ -831,6 +831,12 @@
         cValue = true;
     } else if ( cValue === 'null' ) {
         cValue = null;
+    } else if ( cValue === "''" ) {
+        cValue = '';
+    } else if ( cValue === '[]' ) {
+        cValue = [];
+    } else if ( cValue === '{}' ) {
+        cValue = {};
     } else if ( cValue === 'noopFunc' ) {
         cValue = function(){};
     } else if ( cValue === 'trueFunc' ) {
@@ -841,8 +847,6 @@
         cValue = parseFloat(cValue);
         if ( isNaN(cValue) ) { return; }
         if ( Math.abs(cValue) > 0x7FFF ) { return; }
-    } else if ( cValue === "''" ) {
-        cValue = '';
     } else {
         return;
     }
