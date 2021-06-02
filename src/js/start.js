@@ -111,13 +111,13 @@ const onVersionReady = function(lastVersion) {
     µb.redirectEngine.invalidateResourcesSelfie();
 
     const lastVersionInt = vAPI.app.intFromVersion(lastVersion);
-    if ( lastVersionInt === 0 ) { return; }
 
     // https://github.com/LiCybora/NanoDefenderFirefox/issues/196
     //   Toggle on the blocking of CSP reports by default for Firefox.
     if (
-        vAPI.webextFlavor.soup.has('firefox') &&
-        lastVersionInt <= 1031003011
+        lastVersionInt !== 0 &&
+        lastVersionInt <= 1031003011 &&
+        vAPI.webextFlavor.soup.has('firefox')
     ) {
         µb.sessionSwitches.toggle('no-csp-reports', '*', 1);
         µb.permanentSwitches.toggle('no-csp-reports', '*', 1);
