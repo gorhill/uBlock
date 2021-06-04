@@ -496,7 +496,7 @@
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
-    "message": "Un filtru pe linie. Un filtru poate fi un simplu nume de gazdă sau un filtru compatibil Adblock Plus. Liniile precedate de <code>!</code> vor fi ignorate.",
+    "message": "Un filtru pe linie. Un filtru poate fi un simplu nume de gazdă sau un filtru compatibil EasyList. Liniile precedate de <code>!</code> vor fi ignorate.",
     "description": "Short information about how to create custom filters"
   },
   "1pImport": {
@@ -848,7 +848,7 @@
     "description": "Label for radio-button to pick export text format"
   },
   "aboutPrivacyPolicy": {
-    "message": "Politica de confidențialitate",
+    "message": "Politică de confidențialitate",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {
