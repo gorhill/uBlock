@@ -600,7 +600,7 @@
 		"off": true,
 		"title": "VIE: ABPVN List",
 		"lang": "vi",
-		"contentURL": "https://raw.githubusercontent.com/abpvn/abpvn/master/filter/abpvn.txt",
+		"contentURL": "https://raw.githubusercontent.com/abpvn/abpvn/master/filter/abpvn_ublock.txt",
 		"supportURL": "https://abpvn.com/"
 	}
 }
