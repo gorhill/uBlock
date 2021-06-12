@@ -106,16 +106,18 @@ const initializeTabs = async function() {
 const onVersionReady = function(lastVersion) {
     if ( lastVersion === vAPI.app.version ) { return; }
 
+    vAPI.storage.set({ version: vAPI.app.version });
+
+    const lastVersionInt = vAPI.app.intFromVersion(lastVersion);
+    if ( lastVersionInt === 0 ) { return; }
+
     // Since built-in resources may have changed since last version, we
     // force a reload of all resources.
     µb.redirectEngine.invalidateResourcesSelfie();
 
-    const lastVersionInt = vAPI.app.intFromVersion(lastVersion);
-
     // https://github.com/LiCybora/NanoDefenderFirefox/issues/196
     //   Toggle on the blocking of CSP reports by default for Firefox.
     if (
-        lastVersionInt !== 0 &&
         lastVersionInt <= 1031003011 &&
         vAPI.webextFlavor.soup.has('firefox')
     ) {
@@ -123,8 +125,6 @@ const onVersionReady = function(lastVersion) {
         µb.permanentSwitches.toggle('no-csp-reports', '*', 1);
         µb.saveHostnameSwitches();
     }
-
-    vAPI.storage.set({ version: vAPI.app.version });
 };
 
 /******************************************************************************/
@@ -332,7 +332,7 @@ try {
 
     // https://github.com/uBlockOrigin/uBlock-issues/issues/1365
     //   Wait for onCacheSettingsReady() to be fully ready.
-    await Promise.all([
+    const [ , , lastVersion ] = await Promise.all([
         µb.loadSelectedFilterLists().then(( ) => {
             log.info(`List selection ready ${Date.now()-vAPI.T0} ms after launch`);
         }),
@@ -345,6 +345,7 @@ try {
         vAPI.storage.get(createDefaultProps()).then(fetched => {
             log.info(`First fetch ready ${Date.now()-vAPI.T0} ms after launch`);
             onFirstFetchReady(fetched, adminExtra);
+            return fetched.version;
         }),
         µb.loadUserSettings().then(fetched => {
             log.info(`User settings ready ${Date.now()-vAPI.T0} ms after launch`);
@@ -354,6 +355,12 @@ try {
             log.info(`PSL ready ${Date.now()-vAPI.T0} ms after launch`);
         }),
     ]);
+
+    // https://github.com/uBlockOrigin/uBlock-issues/issues/1547
+    if ( lastVersion === '0.0.0.0' && vAPI.webextFlavor.soup.has('chromium') ) {
+        vAPI.app.restart();
+        return;
+    }
 } catch (ex) {
     console.trace(ex);
 }
