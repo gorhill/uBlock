@@ -4268,6 +4268,9 @@ FilterContainer.compareRedirectRequests = function(a, b) {
 
 /******************************************************************************/
 
+// https://github.com/uBlockOrigin/uBlock-issues/issues/1626
+//   Do not redirect when the number of query parameters does not change.
+
 FilterContainer.prototype.filterQuery = function(fctxt) {
     const directives = this.matchAndFetchModifiers(fctxt, 'queryprune');
     if ( directives === undefined ) { return; }
@@ -4277,6 +4280,7 @@ FilterContainer.prototype.filterQuery = function(fctxt) {
     let hpos = url.indexOf('#', qpos + 1);
     if ( hpos === -1 ) { hpos = url.length; }
     const params = new Map(new self.URLSearchParams(url.slice(qpos + 1, hpos)));
+    const inParamCount = params.size;
     const out = [];
     for ( const directive of directives ) {
         if ( params.size === 0 ) { break; }
@@ -4322,14 +4326,16 @@ FilterContainer.prototype.filterQuery = function(fctxt) {
         }
     }
     if ( out.length === 0 ) { return; }
-    fctxt.redirectURL = url.slice(0, qpos);
-    if ( params.size !== 0 ) {
-        fctxt.redirectURL += '?' + Array.from(params).map(a =>
-            a[1] === '' ? a[0] : `${a[0]}=${encodeURIComponent(a[1])}`
-        ).join('&');
-    }
-    if ( hpos !== url.length ) {
-        fctxt.redirectURL += url.slice(hpos);
+    if ( params.size !== inParamCount ) {
+        fctxt.redirectURL = url.slice(0, qpos);
+        if ( params.size !== 0 ) {
+            fctxt.redirectURL += '?' + Array.from(params).map(a =>
+                a[1] === '' ? a[0] : `${a[0]}=${encodeURIComponent(a[1])}`
+            ).join('&');
+        }
+        if ( hpos !== url.length ) {
+            fctxt.redirectURL += url.slice(hpos);
+        }
     }
     return out;
 };
