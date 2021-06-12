@@ -208,11 +208,11 @@
     "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
-    "message": "Peraturan global: kolumn ini adalah untuk peraturan yang dikuatkuasakan untuk semua laman.",
+    "message": "Peraturan global: lajur ini adalah untuk peraturan yang dikuatkuasakan untuk semua laman.",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "Peraturan tempatan: kolumn ini adalah untuk peraturan yang dikuatkuasakan untuk laman semasa sahaja.\nPeraturan tempatan mengatasikan peraturan global.",
+    "message": "Peraturan tempatan: lajur ini adalah untuk peraturan yang dikuatkuasakan untuk laman semasa sahaja.\nPeraturan tempatan menolak peraturan global.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -336,11 +336,11 @@
     "description": ""
   },
   "settingsAdvancedUserSettings": {
-    "message": "Tetapan lanjutan",
+    "message": "tetapan lanjutan",
     "description": "For the tooltip of a link which gives access to advanced settings"
   },
   "settingsPrefetchingDisabledPrompt": {
-    "message": "Nyahaktifkan pra-ambilan (untuk mengelakkan apa-apa sambungan untuk permintaan rangkaian yang disekat)",
+    "message": "Lumpuhkan pra-ambilan (untuk mengelakkan apa-apa sambungan untuk permintaan rangkaian yang disekat)",
     "description": "English: "
   },
   "settingsHyperlinkAuditingDisabledPrompt": {
@@ -360,7 +360,7 @@
     "description": ""
   },
   "settingsNoCosmeticFilteringPrompt": {
-    "message": "Nyahaktifkan tapisan kosmetik",
+    "message": "Lumpuhkan tapisan kosmetik",
     "description": ""
   },
   "settingsNoLargeMediaPrompt": {
@@ -372,7 +372,7 @@
     "description": ""
   },
   "settingsNoScriptingPrompt": {
-    "message": "Sekat JavaScript",
+    "message": "Lumpuhkan JavaScript",
     "description": "The default state for the per-site no-scripting switch"
   },
   "settingsNoCSPReportsPrompt": {
@@ -848,7 +848,7 @@
     "description": "Label for radio-button to pick export text format"
   },
   "aboutPrivacyPolicy": {
-    "message": "Privacy policy",
+    "message": "Dasar privasi",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {
@@ -1048,7 +1048,7 @@
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Subscribe to filter list...",
+    "message": "Langgan ke senarai tapisan...",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
