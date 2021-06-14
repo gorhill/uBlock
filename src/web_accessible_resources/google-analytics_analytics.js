@@ -79,11 +79,17 @@
             dl.hide.end();
         }
         if ( typeof dl.push === 'function' ) {
-            dl.push = function(o) {
-                if ( o instanceof Object && typeof o.eventCallback === 'function' ) {
-                    setTimeout(o.eventCallback, 1);
-                }
+            const doCallback = function(item) {
+                if ( item instanceof Object === false ) { return; }
+                if ( typeof item.eventCallback !== 'function' ) { return; }
+                setTimeout(item.eventCallback, 1);
             };
+            if ( Array.isArray(dl) ) {
+                for ( const item of dl ) {
+                    doCallback(item);
+                }
+            }
+            dl.push = item => doCallback(item);
         }
     }
     // empty ga queue
