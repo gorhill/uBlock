@@ -268,11 +268,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilterTip": {
-    "message": "↑: Emphasize rows which have 3rd-party scripts",
+    "message": "↑: Ընդգծել 3-րդ կողմի սկրիպտներ ունեցող տողերը",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party scripts' cell"
   },
   "popup3pFrameFilterTip": {
-    "message": "↑: Emphasize rows which have 3rd-party frames",
+    "message": "↑: Ընդգծել 3-րդ կողմի շրջանակներ ունեցող տողերը",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party frames' cell"
   },
   "pickerCreate": {
@@ -380,7 +380,7 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsUncloakCnamePrompt": {
-    "message": "Uncloak canonical names",
+    "message": "Բանալ կանոնական անունները",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsLastRestorePrompt": {
@@ -848,7 +848,7 @@
     "description": "Label for radio-button to pick export text format"
   },
   "aboutPrivacyPolicy": {
-    "message": "Privacy policy",
+    "message": "Գաղտնիության քաղաքականություն",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {
@@ -1048,7 +1048,7 @@
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Subscribe to filter list...",
+    "message": "Բաժնեգրվել զտիչների ցանկի...",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
