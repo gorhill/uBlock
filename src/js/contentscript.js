@@ -935,7 +935,7 @@ vAPI.DOMFilterer = class {
                 if ( node.localName === 'iframe' ) {
                     addIFrame(node);
                 }
-                if ( node.childElementCount === 0 ) { continue; }
+                if ( node.firstElementChild === null ) { continue; }
                 const iframes = node.getElementsByTagName('iframe');
                 if ( iframes.length !== 0 ) {
                     addIFrames(iframes);
@@ -1175,7 +1175,7 @@ vAPI.DOMFilterer = class {
             while ( i-- ) {
                 const node = addedNodes[i];
                 pendingNodes.add([ node ]);
-                if ( node.childElementCount === 0 ) { continue; }
+                if ( node.firstElementChild === null ) { continue; }
                 pendingNodes.add(node.querySelectorAll('[id],[class]'));
             }
             if ( pendingNodes.hasNodes() ) {
