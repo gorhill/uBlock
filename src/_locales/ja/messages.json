@@ -848,7 +848,7 @@
     "description": "Label for radio-button to pick export text format"
   },
   "aboutPrivacyPolicy": {
-    "message": "Privacy policy",
+    "message": "プライバシーポリシー",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {
