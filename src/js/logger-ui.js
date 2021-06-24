@@ -1143,6 +1143,7 @@ const reloadTab = function(ev) {
         'css': 'stylesheet',
         'frame': 'subdocument',
         'object_subrequest': 'object',
+        'csp_report': 'other',
     };
     const createdStaticFilters = {};
 
@@ -1778,12 +1779,13 @@ const reloadTab = function(ev) {
                 nodes.push(select);
                 break;
 
-            case '{{type}}':
+            case '{{type}}': {
+                const filterType = staticFilterTypes[targetType] || targetType;
                 select = document.createElement('select');
                 select.className = 'static type';
                 option = document.createElement('option');
-                option.setAttribute('value', targetType);
-                option.textContent = vAPI.i18n('loggerStaticFilteringSentencePartType').replace('{{type}}', targetType);
+                option.setAttribute('value', filterType);
+                option.textContent = vAPI.i18n('loggerStaticFilteringSentencePartType').replace('{{type}}', filterType);
                 select.appendChild(option);
                 option = document.createElement('option');
                 option.setAttribute('value', '');
@@ -1791,7 +1793,7 @@ const reloadTab = function(ev) {
                 select.appendChild(option);
                 nodes.push(select);
                 break;
-
+            }
             case '{{url}}':
                 select = document.createElement('select');
                 select.className = 'static url';
