@@ -103,9 +103,9 @@ const Parser = class {
         this.extOptionsIterator = new ExtOptionsIterator(this);
         this.maxTokenLength = Number.MAX_SAFE_INTEGER;
         this.expertMode = options.expertMode !== false;
-        this.reIsLocalhostRedirect = /(?:0\.0\.0\.0|(?:broadcast|local)host|local|ip6-\w+)(?:[^\w.-]|$)/;
+        this.reIsLocalhostRedirect = /(?:0\.0\.0\.0|broadcasthost|local|localhost(?:\.localdomain)?|ip6-\w+)(?:[^\w.-]|$)/;
         this.reHostname = /^[^\x00-\x24\x26-\x29\x2B\x2C\x2F\x3A-\x40\x5B-\x5E\x60\x7B-\x7F]+/;
-        this.reHostsSink = /^[\w-.:\[\]]+$/;
+        this.reHostsSink = /^[\w%.:\[\]-]+$/;
         this.reHostsSource = /^[^\x00-\x24\x26-\x29\x2B\x2C\x2F\x3A-\x40\x5B-\x5E\x60\x7B-\x7F]+$/;
         this.reUnicodeChar = /[^\x00-\x7F]/;
         this.reUnicodeChars = /[^\x00-\x7F]/g;
