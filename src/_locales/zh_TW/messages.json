@@ -416,7 +416,7 @@
     "description": "English: Parse and enforce Adblock+ element hiding filters."
   },
   "3pParseAllABPHideFiltersInfo": {
-    "message": "「元素隱藏過濾規則」是用來隱藏網頁中礙眼，且不能被以網路請求為基礎之過濾引擎所阻擋的元素。",
+    "message": "「元素隱藏過濾規則」用於隱藏網頁中礙眼，且不能被以網路請求為基礎之過濾引擎所阻擋的元素。",
     "description": "Describes the purpose of the 'Parse and enforce cosmetic filters' feature."
   },
   "3pIgnoreGenericCosmeticFilters": {
@@ -632,11 +632,11 @@
     "description": "Tooltip for the reload button in the logger page"
   },
   "loggerDomInspectorTip": {
-    "message": "開閉 DOM 檢視器",
+    "message": "切換是否啟用 DOM 檢視器",
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "開閉彈出式面板",
+    "message": "切換是否啟用彈出式面板",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
@@ -656,7 +656,7 @@
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
-    "message": "開閉記錄篩選",
+    "message": "切換是否啟用記錄篩選",
     "description": "Tooltip for the row filterer button in the logger page"
   },
   "logFilterPrompt": {

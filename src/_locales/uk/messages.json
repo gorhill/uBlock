@@ -180,7 +180,7 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
-    "message": "Спливні вікна",
+    "message": "Діалогові вікна",
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
