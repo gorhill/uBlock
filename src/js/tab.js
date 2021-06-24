@@ -108,11 +108,21 @@
         targetURL,
         popupType = 'popup'
     ) {
+        // https://github.com/chrisaljoudi/uBlock/issues/323
+        // https://github.com/chrisaljoudi/uBlock/issues/1142
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/1616
+        //   Don't block if uBO is turned off in popup's context
+        if (
+            µb.getNetFilteringSwitch(targetURL) === false ||
+            µb.getNetFilteringSwitch(µb.normalizePageURL(0, targetURL)) === false
+        ) {
+            return 0;
+        }
+
         fctxt.setTabOriginFromURL(rootOpenerURL)
              .setDocOriginFromURL(localOpenerURL || rootOpenerURL)
              .setURL(targetURL)
              .setType('popup');
-        let result;
 
         // https://github.com/gorhill/uBlock/issues/1735
         //   Do not bail out on `data:` URI, they are commonly used for popups.
@@ -153,7 +163,7 @@
             // https://github.com/gorhill/uBlock/issues/581
             //   Take into account popup-specific rules in dynamic URL
             //   filtering, OR generic allow rules.
-            result = µb.sessionURLFiltering.evaluateZ(
+            let result = µb.sessionURLFiltering.evaluateZ(
                 fctxt.getTabHostname(),
                 targetURL,
                 popupType
@@ -181,16 +191,11 @@
             }
         }
 
-        // https://github.com/chrisaljoudi/uBlock/issues/323
-        // https://github.com/chrisaljoudi/uBlock/issues/1142
-        //   Don't block if uBlock is turned off in popup's context
-        if ( µb.getNetFilteringSwitch(targetURL) ) {
-            fctxt.type = popupType;
-            result = µb.staticNetFilteringEngine.matchString(fctxt, 0b0001);
-            if ( result !== 0 ) {
-                fctxt.filter = µb.staticNetFilteringEngine.toLogData();
-                return result;
-            }
+        fctxt.type = popupType;
+        const result = µb.staticNetFilteringEngine.matchString(fctxt, 0b0001);
+        if ( result !== 0 ) {
+            fctxt.filter = µb.staticNetFilteringEngine.toLogData();
+            return result;
         }
 
         return 0;
