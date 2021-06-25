@@ -37,7 +37,7 @@
         what: 'getAppData',
     });
 
-    uDom('#aboutNameVer').text(appData.name + ' v' + appData.version);
+    uDom('#aboutNameVer').text(appData.name + ' ' + appData.version);
 
     if ( appData.canBenchmark !== true ) { return; }
 
