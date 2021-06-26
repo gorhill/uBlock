@@ -113,6 +113,9 @@ const Parser = class {
         this.rePlainHostname = /^(?:[\w-]+\.)*[a-z]+$/;
         this.rePlainEntity = /^(?:[\w-]+\.)+\*$/;
         this.reEntity = /^[^*]+\.\*$/;
+        // https://github.com/uBlockOrigin/uBlock-issues/issues/1146
+        //   From https://codemirror.net/doc/manual.html#option_specialChars
+        this.reInvalidCharacters = /[\x00-\x1F\x7F-\x9F\xAD\u061C\u200B-\u200F\u2028\u2029\uFEFF\uFFF9-\uFFFC]/;
         this.punycoder = new URL(self.location);
         // TODO: mind maxTokenLength
         this.reGoodRegexToken
@@ -1126,6 +1129,7 @@ const Parser = class {
         if ( len === 0 ) { return true; }
         const patternIsRegex = this.patternIsRegex();
         let pattern = this.getNetPattern();
+        if ( this.reInvalidCharacters.test(pattern) ) { return false; }
         // Punycode hostname part of the pattern.
         if ( patternIsRegex === false ) {
             const match = this.reHostname.exec(pattern);
