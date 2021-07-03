@@ -4,23 +4,23 @@
     "description": "extension name."
   },
   "extShortDesc": {
-    "message": "অবশেষে, একটি দক্ষ বিজ্ঞাপন রোধক। সিপিইউ এবং মেমরি সহায়ক।",
+    "message": "অবশেষে, একটি সাশ্রয়ী বিজ্ঞাপন রোধক। সিপিইউ এবং মেমরিতে নমনীয়।",
     "description": "this will be in the Chrome web store: must be 132 characters or less"
   },
   "dashboardName": {
-    "message": "ইউব্লক₀ — ড্যাশবোর্ড",
+    "message": "uBlock₀ — ড্যাশবোর্ড",
     "description": "English: uBlock₀ — Dashboard"
   },
   "dashboardUnsavedWarning": {
-    "message": "সতর্ক হন! আপনার পরিবর্তনগুলো সংরক্ষণ করা হয়নি।",
+    "message": "সতর্কীকরণ! আপনার পরিবর্তনগুলো সংরক্ষণ করা হয়নি।",
     "description": "A warning in the dashboard when navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningStay": {
-    "message": "অবস্থান করে পরিবর্তন বা সংরক্ষণ করুন।",
+    "message": "থাকুন",
     "description": "Label for button to prevent navigating away from unsaved changes"
   },
   "dashboardUnsavedWarningIgnore": {
-    "message": "অবজ্ঞা করুন।",
+    "message": "অবজ্ঞা করুন",
     "description": "Label for button to ignore unsaved changes"
   },
   "settingsPageName": {
@@ -40,15 +40,15 @@
     "description": "appears as tab name in dashboard"
   },
   "whitelistPageName": {
-    "message": "পরিচ্ছন্ন তালিকা",
+    "message": "বিশ্বস্ত তালিকা",
     "description": "appears as tab name in dashboard"
   },
   "shortcutsPageName": {
-    "message": "শর্টকাট",
+    "message": "শর্টকাটগুলি",
     "description": "appears as tab name in dashboard"
   },
   "statsPageName": {
-    "message": "ইউব্লক₀ — ঘটনাবলী",
+    "message": "uBlock₀ —  ঘটনাবলী",
     "description": "Title for the logger window"
   },
   "aboutPageName": {
@@ -56,7 +56,7 @@
     "description": "appears as tab name in dashboard"
   },
   "assetViewerPageName": {
-    "message": "ইউব্লক₀ —  তথ্য নিরিক্ষক ",
+    "message": "uBlock₀ —  তথ্য নিরিক্ষক",
     "description": "Title for the asset viewer page"
   },
   "advancedSettingsPageName": {
@@ -64,11 +64,11 @@
     "description": "Title for the advanced settings page"
   },
   "popupPowerSwitchInfo": {
-    "message": "ক্লিক: এই সাইটের জন্য ইউব্লক₀ নিষ্ক্রিয়/সক্রিয় করবে।\n\nCtrl+ক্লিক: শুধু এই পাতার জন্য ইউব্লক₀ নিষ্ক্রিয় করবে।",
+    "message": "ক্লিক: এই সাইটের জন্য uBlock₀ সক্রিয়/নিষ্ক্রিয় করুন\n\nCtrl+ক্লিক: শুধু এই পেজে uBlock₀ নিষ্ক্রিয় করুন",
     "description": "English: Click: disable/enable uBlock₀ for this site.\n\nCtrl+click: disable uBlock₀ only on this page."
   },
   "popupPowerSwitchInfo1": {
-    "message": "এই সাইটের জন্য ইউব্লক₀ নিষ্ক্রিয় করতে ক্লিক করুন।\n\nCtrl+ক্লিক করলে শুধু এই পাতার জন্য ইউব্লক₀ নিষ্ক্রিয় হবে।",
+    "message": "এই সাইটে uBlock₀ নিষ্ক্রিয় করুন\n\nCtrl+ক্লিক: শুধু এই পেজে uBlock₀ নিষ্ক্রিয় করুন",
     "description": "Message to be read by screen readers"
   },
   "popupPowerSwitchInfo2": {
@@ -124,7 +124,7 @@
     "description": "Tooltip used for the logger icon in the panel"
   },
   "popupTipNoPopups": {
-    "message": "এই সাইটের জন্য সব পপআপ প্রতিরোধ চালু/বন্ধ করুন",
+    "message": "এই সাইটের সব পপআপ ব্লকিং চালু/বন্ধ করুন",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups1": {
@@ -180,11 +180,11 @@
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
-    "message": "পপ-আপ উইন্ডো",
+    "message": "পপ-আপ উইন্ডোগুলি",
     "description": "Caption for the no-popups per-site switch"
   },
   "popupNoLargeMedia_v2": {
-    "message": "বড় আয়তনের উপাদান",
+    "message": "বড় মিডিয়া এলিমেন্টগুলি",
     "description": "Caption for the no-large-media per-site switch"
   },
   "popupNoCosmeticFiltering_v2": {
@@ -192,7 +192,7 @@
     "description": "Caption for the no-cosmetic-filtering per-site switch"
   },
   "popupNoRemoteFonts_v2": {
-    "message": "দুরস্থিত ফন্ট",
+    "message": "রিমোট ফন্টগুলি",
     "description": "Caption for the no-remote-fonts per-site switch"
   },
   "popupNoScripting_v2": {
@@ -268,11 +268,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilterTip": {
-    "message": "↑: Emphasize rows which have 3rd-party scripts",
+    "message": "↑: থার্ড-পার্টি স্ক্রিপ্ট থাকা সারিগুলোতে গুরুত্ব দেয়া",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party scripts' cell"
   },
   "popup3pFrameFilterTip": {
-    "message": "↑: Emphasize rows which have 3rd-party frames",
+    "message": "↑: থার্ড-পার্টি ফ্রেম থাকা সারিগুলোতে গুরুত্ব দেয়া",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party frames' cell"
   },
   "pickerCreate": {
@@ -380,7 +380,7 @@
     "description": "background information: https://github.com/gorhill/uBlock/issues/3150"
   },
   "settingsUncloakCnamePrompt": {
-    "message": "Uncloak canonical names",
+    "message": "Canonical Name এর উন্মোচন",
     "description": "background information: https://github.com/uBlockOrigin/uBlock-issues/issues/1513"
   },
   "settingsLastRestorePrompt": {
@@ -848,7 +848,7 @@
     "description": "Label for radio-button to pick export text format"
   },
   "aboutPrivacyPolicy": {
-    "message": "Privacy policy",
+    "message": "গোপনীয়তার নীতি",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {
@@ -1048,7 +1048,7 @@
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Subscribe to filter list...",
+    "message": "ফিল্টার তালিকায় সাবস্ক্রাইব করুন...",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {

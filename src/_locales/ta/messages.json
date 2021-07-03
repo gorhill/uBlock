@@ -28,7 +28,7 @@
     "description": "appears as tab name in dashboard"
   },
   "3pPageName": {
-    "message": "மூன்றாம் தரப்பு வடிகட்டிகள்",
+    "message": "வடிகட்டி பட்டியல்கள்",
     "description": "appears as tab name in dashboard"
   },
   "1pPageName": {
@@ -96,7 +96,7 @@
     "description": "English: or"
   },
   "popupBlockedOnThisPage_v2": {
-    "message": "இந்த பக்கத்தில் தடுக்கப்பட்டது",
+    "message": "இப்பக்கத்தில் தடுக்கப்பட்டது",
     "description": "For the new mobile-friendly popup design"
   },
   "popupBlockedSinceInstall_v2": {
@@ -112,7 +112,7 @@
     "description": "English: Click to open the dashboard"
   },
   "popupTipZapper": {
-    "message": "பகுதி தெரிவு முறைமை உள்ளிடவும்",
+    "message": "பகுதி தெரிவு முறைமைக்கு நுழை",
     "description": "Tooltip for the element-zapper icon in the popup panel"
   },
   "popupTipPicker": {
@@ -132,19 +132,19 @@
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoPopups2": {
-    "message": "இந்த தளத்தில் உள்ள அனைத்து பாப்அப்களையும் இனி தடுக்க கிளிக் செய்க",
+    "message": "இத்தளத்தில் உள்ள எல்லா பாப்அப்களையும் இனி தடுக்காமலிருக்க சொடுக்குக",
     "description": "Tooltip for the no-popups per-site switch"
   },
   "popupTipNoLargeMedia": {
-    "message": "இந்த தளத்திற்கான பெரிய ஊடக கூறுகளைத் தடுப்பதை நிலைமாற்று",
+    "message": "இத்தளத்திற்கான பெரிய ஊடக கூறுகளைத் தடுப்பதை நிலைமாற்று",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia1": {
-    "message": "இந்த தளத்தில் பெரிய ஊடக கூறுகளைத் தடுக்க கிளிக் செய்க",
+    "message": "இத்தளத்தில் பெரிய ஊடக கூறுகளைத் தடுக்க சொடுக்குக",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoLargeMedia2": {
-    "message": "இந்த தளத்தில் பெரிய ஊடக கூறுகளை இனி தடுக்க கிளிக் செய்க",
+    "message": "இத்தளத்தில் பெரிய ஊடக கூறுகளை இனி தடுக்காமலிருக்க சொடுக்குக",
     "description": "Tooltip for the no-large-media per-site switch"
   },
   "popupTipNoCosmeticFiltering": {
@@ -152,11 +152,11 @@
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering1": {
-    "message": "இந்த தளத்தில் ஒப்பனை வடிகட்டலை முடக்க கிளிக் செய்க",
+    "message": "இத்தளத்தில் ஒப்பனை வடிகட்டலை முடக்க சொடுக்குக",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoCosmeticFiltering2": {
-    "message": "இந்த தளத்தில் ஒப்பனை வடிகட்டலை இயக்க கிளிக் செய்க",
+    "message": "இத்தளத்தில் ஒப்பனை வடிகட்டலை இயக்க சொடுக்குக",
     "description": "Tooltip for the no-cosmetic-filtering per-site switch"
   },
   "popupTipNoRemoteFonts": {
@@ -164,19 +164,19 @@
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts1": {
-    "message": "இந்த தளத்தில் தொலை எழுத்துருக்களைத் தடுக்க கிளிக் செய்க",
+    "message": "இத்தளத்தில் தொலை எழுத்துருக்களைத் தடுக்க சொடுக்குக",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoRemoteFonts2": {
-    "message": "இந்த தளத்தில் தொலை எழுத்துருக்களை இனி தடுக்க கிளிக் செய்க",
+    "message": "இத்தளத்தில் தொலை எழுத்துருக்களை இனி தடுக்காமலிருக்க சொடுக்குக",
     "description": "Tooltip for the no-remote-fonts per-site switch"
   },
   "popupTipNoScripting1": {
-    "message": "இந்த தளத்தில் ஜாவாஸ்கிரிப்டை முடக்க கிளிக் செய்க",
+    "message": "இத்தளத்தில் ஜாவாஸ்கிரிப்டை முடக்க சொடுக்குக",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupTipNoScripting2": {
-    "message": "இந்த தளத்தில் ஜாவாஸ்கிரிப்டை இனி முடக்க கிளிக் செய்க",
+    "message": "இத்தளத்தில் ஜாவாஸ்கிரிப்டை இனி முடக்காமலிருக்க சொடுக்குக",
     "description": "Tooltip for the no-scripting per-site switch"
   },
   "popupNoPopups_v2": {
@@ -208,11 +208,11 @@
     "description": "Label to be used to hide popup panel sections"
   },
   "popupTipGlobalRules": {
-    "message": "உலகளாவிய விதிகள்: இந்த நெடுவரிசை அனைத்து தளங்களுக்கும் பொருந்தும் விதிகளுக்கானது.",
+    "message": "உலகளாவிய விதிகள்: இந்நெடுவரிசை அனைத்து தளங்களுக்கும் பொருந்தும் விதிகளுக்கானது.",
     "description": "Tooltip when hovering the top-most cell of the global-rules column."
   },
   "popupTipLocalRules": {
-    "message": "உள்ளூர் விதிகள்: இந்த நெடுவரிசை தற்போதைய தளத்திற்கு மட்டுமே பொருந்தும் விதிகளுக்கானது.உள்ளூர் விதிகள் உலகளாவிய விதிகளை மீறுகின்றன.",
+    "message": "அக விதிகள்: இந்நெடுவரிசை தற்போதைய தளத்திற்கு மட்டுமே பொருந்தும் விதிகளுக்கானது.அக விதிகள் உலகளாவிய விதிகளை மீறுகின்றன.",
     "description": "Tooltip when hovering the top-most cell of the local-rules column."
   },
   "popupTipSaveRules": {
@@ -268,11 +268,11 @@
     "description": "Example of use: Version 1.26.4"
   },
   "popup3pScriptFilterTip": {
-    "message": "↑: 3 வது-கட்சி ஸ்கிரிப்டுகளைக் கொண்ட வரிசைகளை வலியுறுத்துக",
+    "message": "↑: மூன்றாம் தரப்பு ஸ்கிரிப்டுகளைக் கொண்ட வரிசைகளை வலியுறுத்து",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party scripts' cell"
   },
   "popup3pFrameFilterTip": {
-    "message": "↑: 3 வது கட்சி பிரேம்கள் கொண்டிருக்கும் வரிசைகளை வலியுறுத்துகின்றன",
+    "message": "↑: மூன்றாம் தரப்பு பிரேம்கள் கொண்டிருக்கும் வரிசைகளை வலியுறுத்து",
     "description": "Tooltip shown when hovering small filtering widget in '3rd-party frames' cell"
   },
   "pickerCreate": {
@@ -284,7 +284,7 @@
     "description": "English: Pick"
   },
   "pickerQuit": {
-    "message": "முற்றிலும் வெளியேறு",
+    "message": "வெளியேறு",
     "description": "English: Quit"
   },
   "pickerPreview": {
@@ -328,11 +328,11 @@
     "description": "English: Color-blind friendly"
   },
   "settingsCloudStorageEnabledPrompt": {
-    "message": "கிளவுட் சேமிப்பு ஆதரவு இயக்கு",
+    "message": "மேகக்கணி சேமிப்பக ஆதரவு இயக்கு",
     "description": ""
   },
   "settingsAdvancedUserPrompt": {
-    "message": "நான் ஒரு மேம்பட்ட பயனர் (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>அவசியம் படிக்க வேண்டியவை</a>)",
+    "message": "நான் ஒரு மேம்பட்ட பயனர் (<a href='https://github.com/gorhill/uBlock/wiki/Advanced-user-features'>வாசித்தல் தேவை</a>)",
     "description": ""
   },
   "settingsAdvancedUserSettings": {
@@ -492,7 +492,7 @@
     "description": "used as a tooltip for the spinner icon beside a list"
   },
   "3pNetworkError": {
-    "message": "நெட்வொர்க் பிழை வளத்தைப் புதுப்பிப்பதைத் தடுத்தது.",
+    "message": "ஒரு பிணைய பிழை வளத்தைப் புதுப்பிப்பதைத் தடுத்தது.",
     "description": "used as a tooltip for error icon beside a list"
   },
   "1pFormatHint": {
@@ -584,7 +584,7 @@
     "description": "The name of the trusted sites pane."
   },
   "whitelistImport": {
-    "message": "இறக்குமதி செய்து சேர்க்கவும்",
+    "message": "இறக்குமதி செய்து சேர்",
     "description": "English: Import and append"
   },
   "whitelistExport": {
@@ -636,11 +636,11 @@
     "description": "Tooltip for the DOM inspector button in the logger page"
   },
   "loggerPopupPanelTip": {
-    "message": "பாப்அப் பேனலை நிலைமாற்று",
+    "message": "பாப்அப் பலகையை நிலைமாற்று",
     "description": "Tooltip for the popup panel button in the logger page"
   },
   "loggerInfoTip": {
-    "message": "uBlock தோற்றம் விக்கி: லாக்கர்",
+    "message": "uBlock தோற்றம் விக்கி: லாகர்",
     "description": "Tooltip for the top-right info label in the logger page"
   },
   "loggerClearTip": {
@@ -648,11 +648,11 @@
     "description": "Tooltip for the eraser in the logger page; used to blank the content of the logger"
   },
   "loggerPauseTip": {
-    "message": "லாகரை இடைநிறுத்து (உள்வரும் எல்லா தரவையும் நிராகரிக்கவும்)",
+    "message": "லாகரை இடைநிறுத்து (உள்வரும் எல்லா தரவையும் நிராகரி)",
     "description": "Tooltip for the pause button in the logger page"
   },
   "loggerUnpauseTip": {
-    "message": "லாகரை இடைநிறுத்து",
+    "message": "லாகர் இடைநிறுத்தம் தவிர்",
     "description": "Tooltip for the play button in the logger page"
   },
   "loggerRowFiltererButtonTip": {
@@ -732,7 +732,7 @@
     "description": "Label to identify the URL of an entry"
   },
   "loggerURLFilteringHeader": {
-    "message": "மாறுநிலை உரலி வடிகட்டல்",
+    "message": "உரலி விதி",
     "description": "Small header to identify the dynamic URL filtering section"
   },
   "loggerURLFilteringContextLabel": {
@@ -848,11 +848,11 @@
     "description": "Label for radio-button to pick export text format"
   },
   "aboutPrivacyPolicy": {
-    "message": "Privacy policy",
+    "message": "தனியுரிமை கொள்கை",
     "description": "Link to privacy policy on GitHub (English)"
   },
   "aboutChangelog": {
-    "message": "நிரல் மாற்றம் மற்றும் வெளியீடுகளின் பதிவு",
+    "message": "மாற்றப்பதிவு",
     "description": ""
   },
   "aboutWiki": {
@@ -904,7 +904,7 @@
     "description": "English: Restore from file..."
   },
   "aboutResetDataButton": {
-    "message": "இயல்புநிலை அமைப்புகளை மீட்டெடு...",
+    "message": "இயல்புநிலை அமைப்புகளுக்கு அகரமாக்கு...",
     "description": "English: Reset to default settings..."
   },
   "aboutRestoreDataConfirm": {
@@ -912,7 +912,7 @@
     "description": "Message asking user to confirm restore"
   },
   "aboutRestoreDataError": {
-    "message": "தகவலை படிக்க முடியவில்லை அல்லது தவறானது",
+    "message": "தரவை வாசிக்க முடியவில்லை அ செல்லாதது",
     "description": "Message to display when an error occurred during restore"
   },
   "aboutResetDataConfirm": {
@@ -944,7 +944,7 @@
     "description": "English: an hour ago"
   },
   "elapsedManyHoursAgo": {
-    "message": "{{value}} மணி நேரம் முன்பு",
+    "message": "{{value}} மணிநேரம் முன்பு",
     "description": "English: {{value}} hours ago"
   },
   "elapsedOneDayAgo": {
@@ -960,11 +960,11 @@
     "description": "Firefox/Fennec-specific: Show Dashboard"
   },
   "showNetworkLogButton": {
-    "message": "பதிவேட்டைக் காண்பிக்கவும்",
+    "message": "பதிவேட்டைக் காண்பி",
     "description": "Firefox/Fennec-specific: Show Logger"
   },
   "fennecMenuItemBlockingOff": {
-    "message": "அணைந்து விட்டது",
+    "message": "முடக்கத்தில்",
     "description": "Firefox-specific: appears as 'uBlock₀ (off)'"
   },
   "docblockedPrompt1": {
@@ -972,7 +972,7 @@
     "description": "Used in the strict-blocking page"
   },
   "docblockedPrompt2": {
-    "message": "ஏனெனில் பின்வரும் வடிகட்டி",
+    "message": "பின்வரும் வடிகட்டியினால்:",
     "description": "Used in the strict-blocking page"
   },
   "docblockedNoParamsPrompt": {
@@ -988,7 +988,7 @@
     "description": "English: Go back"
   },
   "docblockedClose": {
-    "message": "இந்த சாளரத்தை மூடவும்",
+    "message": "இச்சாளரத்தை மூடு",
     "description": "English: Close this window"
   },
   "docblockedProceed": {
@@ -1048,7 +1048,7 @@
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuSubscribeToList": {
-    "message": "Subscribe to filter list...",
+    "message": "வடிகட்டி பட்டியலுக்கு குழுசேர்...",
     "description": "An entry in the browser's contextual menu"
   },
   "contextMenuTemporarilyAllowLargeMediaElements": {
@@ -1064,7 +1064,7 @@
     "description": "Tooltip for the button used to lock scrolling between the views in the 'My rules' pane"
   },
   "genericCopyToClipboard": {
-    "message": "இடைநிலைப் பலகைக்கு நகலெடுக்கவும்",
+    "message": "நினைவிக்கு நகலெடு",
     "description": "Label for buttons used to copy something to the clipboard"
   },
   "toggleBlockingProfile": {
