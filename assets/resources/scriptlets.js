@@ -731,7 +731,7 @@
             }
         }
         if ( skip ) { return; }
-        timer = self.requestIdleCallback(rmattr, { timeout: 67 });
+        timer = self.requestIdleCallback(rmattr, { timeout: 17 });
     };
     const start = ( ) => {
         rmattr();
@@ -746,10 +746,10 @@
     };
     if ( document.readyState !== 'complete' && /\bcomplete\b/.test(behavior) ) {
         self.addEventListener('load', start, { once: true });
-    } else if ( document.readyState === 'loading' ) {
-        self.addEventListener('DOMContentLoaded', start, { once: true });
-    } else {
+    } else if ( document.readyState !== 'loading' || /\basap\b/.test(behavior) ) {
         start();
+    } else {
+        self.addEventListener('DOMContentLoaded', start, { once: true });
     }
 })();
 
@@ -1507,7 +1507,6 @@
     removeCookie();
     window.addEventListener('beforeunload', removeCookie);
 })();
-
 
 
 
