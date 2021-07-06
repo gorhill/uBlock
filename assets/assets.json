@@ -165,6 +165,14 @@
 		"supportURL": "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
 		"instructionURL": "https://kb.adguard.com/en/general/adguard-ad-filters"
 	},
+	"block-lan": {
+		"content": "filters",
+		"group": "privacy",
+		"off": true,
+		"title": "Block access to LAN",
+		"contentURL": "https://raw.githubusercontent.com/gwarser/filter-lists/master/lan-block.txt",
+		"supportURL": "https://github.com/gwarser/filter-lists"
+	},
 	"easyprivacy": {
 		"content": "filters",
 		"group": "privacy",
