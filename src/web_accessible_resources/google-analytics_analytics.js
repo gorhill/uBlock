@@ -24,9 +24,6 @@
     // https://developers.google.com/analytics/devguides/collection/analyticsjs/
     const noopfn = function() {
     };
-    const noopnullfn = function() {
-        return null;
-    };
     //
     const Tracker = function() {
     };
@@ -64,7 +61,9 @@
     ga.create = function() {
         return new Tracker();
     };
-    ga.getByName = noopnullfn;
+    ga.getByName = function() {
+        return new Tracker();
+    };
     ga.getAll = function() {
         return [];
     };
