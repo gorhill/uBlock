@@ -107,7 +107,8 @@ const allTypesBits =
     1 << (typeNameToTypeValue['main_frame'] >>> TypeBitsOffset) - 1 |
     1 << (typeNameToTypeValue['inline-font'] >>> TypeBitsOffset) - 1 |
     1 << (typeNameToTypeValue['inline-script'] >>> TypeBitsOffset) - 1;
-
+const documentTypeBit = 
+    1 << (typeNameToTypeValue['main_frame'] >>> TypeBitsOffset) - 1;
 const unsupportedTypeBit =
     1 << (typeNameToTypeValue['unsupported'] >>> TypeBitsOffset) - 1;
 
@@ -2788,7 +2789,7 @@ const FilterParser = class {
         this.tokenHash = this.noTokenHash;
         this.tokenBeg = 0;
         this.typeBits = 0;
-        this.notTypes = 0;
+        this.notTypeBits = 0;
         this.firstWildcardPos = -1;
         this.secondWildcardPos = -1;
         this.firstCaretPos = -1;
@@ -2818,7 +2819,7 @@ const FilterParser = class {
             ? this.tokenIdToNormalizedType.get(id)
             : allTypesBits;
         if ( not ) {
-            this.notTypes |= typeBit;
+            this.notTypeBits |= typeBit;
         } else {
             this.typeBits |= typeBit;
         }
@@ -2988,11 +2989,20 @@ const FilterParser = class {
         }
         // Negated network types? Toggle on all network type bits.
         // Negated non-network types can only toggle themselves.
-        if ( (this.notTypes & allNetworkTypesBits) !== 0 ) {
-            this.typeBits |= allNetworkTypesBits;
-        }
-        if ( this.notTypes !== 0 ) {
-            this.typeBits &= ~this.notTypes;
+        //
+        // https://github.com/gorhill/uBlock/issues/2385
+        //   Toggle on all network types if:
+        //   - at least one network type is negated; or
+        //   - no network type is present -- i.e. all network types are
+        //     implicitly toggled on
+        if ( this.notTypeBits !== 0 ) {
+            if (
+                (this.notTypeBits & allNetworkTypesBits) !== 0 ||
+                (this.typeBits & allNetworkTypesBits) === 0
+            ) {
+                this.typeBits |= allNetworkTypesBits;
+            }
+            this.typeBits &= ~this.notTypeBits;
             if ( this.typeBits === 0 ) { return false; }
         }
         // CSP directives implicitly apply only to document/subdocument.
@@ -3754,16 +3764,18 @@ FilterContainer.prototype.compileToAtomicFilter = function(
     writer
 ) {
     const catBits = parsed.action | parsed.party;
-    let typeBits = parsed.typeBits;
+    let { typeBits } = parsed;
 
     // Typeless
     if ( typeBits === 0 ) {
         writer.push([ catBits, parsed.tokenHash, fdata ]);
         return;
     }
-
     // If all network types are set, create a typeless filter
-    if ( (typeBits & allNetworkTypesBits) === allNetworkTypesBits ) {
+    if (
+        (typeBits & allNetworkTypesBits) === allNetworkTypesBits &&
+        (parsed.notTypeBits & documentTypeBit) === 0
+    ) {
         writer.push([ catBits, parsed.tokenHash, fdata ]);
         typeBits &= ~allNetworkTypesBits;
     }
