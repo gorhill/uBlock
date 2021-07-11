@@ -139,6 +139,8 @@ const typeValueToTypeName = [
 
 //const typeValueFromCatBits = catBits => (catBits >>> TypeBitsOffset) & 0b11111;
 
+const MAX_TOKEN_LENGTH = 7;
+
 /******************************************************************************/
 
 // See the following as short-lived registers, used during evaluation. They are
@@ -574,6 +576,12 @@ const FilterPatternPlain = class {
         const s = bidiTrie.extractString(this.i, this.n);
         details.pattern.push(s);
         details.regex.push(restrFromPlainPattern(s));
+        // https://github.com/gorhill/uBlock/issues/3037
+        //   Make sure the logger reflects accurately internal match, taking
+        //   into account MAX_TOKEN_LENGTH.
+        if ( /^[0-9a-z%]{1,6}$/i.exec(s.slice(this.tokenBeg)) !== null ) {
+            details.regex.push('(?![0-9A-Za-z%])');
+        }
     }
 
     toSelfie() {
@@ -2474,7 +2482,7 @@ const urlTokenizer = new (class {
 
         this.knownTokens = new Uint8Array(65536);
         this.resetKnownTokens();
-        this.MAX_TOKEN_LENGTH = 7;
+        this.MAX_TOKEN_LENGTH = MAX_TOKEN_LENGTH;
     }
 
     setURL(url) {
@@ -2536,7 +2544,7 @@ const urlTokenizer = new (class {
         if ( l === 0 ) { return this.emptyTokenHash; }
         const vtc = this._validTokenChars;
         let th = vtc[s.charCodeAt(0)];
-        for ( let i = 1; i !== 7 && i !== l; i++ ) {
+        for ( let i = 1; i !== 7 /* MAX_TOKEN_LENGTH */ && i !== l; i++ ) {
             th = th << 4 ^ vtc[s.charCodeAt(i)];
         }
         return th;
@@ -2599,7 +2607,7 @@ const urlTokenizer = new (class {
                         if ( cc === 0x3F /* '?' */ ) { hasq = i; }
                         break;
                     }
-                    if ( n === 7 ) { continue; }
+                    if ( n === 7 /* MAX_TOKEN_LENGTH */ ) { continue; }
                     th = th << 4 ^ v;
                     n += 1;
                 }
