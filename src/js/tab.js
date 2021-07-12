@@ -996,7 +996,7 @@ vAPI.tabs = new vAPI.Tabs();
 {
     const NoPageStore = class extends µBlock.PageStore {
         getNetFilteringSwitch(fctxt) {
-            if ( fctxt && fctxt.docId === 0 ) {
+            if ( fctxt ) {
                 const docOrigin = fctxt.getDocOrigin();
                 if ( docOrigin ) {
                     return µBlock.getNetFilteringSwitch(docOrigin);
