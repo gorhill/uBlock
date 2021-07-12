@@ -1052,9 +1052,11 @@ const startPicker = function() {
     const elems = document.getElementsByTagName(tagName);
     for ( const elem of elems  ) {
         if ( elem === pickerRoot ) { continue; }
-        const src = elem[attr];
-        if ( typeof src !== 'string' ) { continue; }
-        if ( (src !== url) && (src !== '' || url !== 'about:blank') ) {
+        const srcs = resourceURLsFromElement(elem);
+        if (
+            (srcs.length !== 0 && srcs.includes(url) === false) ||
+            (srcs.length === 0 && url !== 'about:blank')
+        ) {
             continue;
         }
         filtersFrom(elem);
@@ -1062,7 +1064,13 @@ const startPicker = function() {
             netFilterCandidates.length !== 0 ||
             cosmeticFilterCandidates.length !== 0
         ) {
-            elem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if ( pickerBootArgs.mouse !== true ) {
+                elem.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center',
+                    inline: 'center'
+                });
+            }
             showDialog({ broad: true });
         }
         return;
