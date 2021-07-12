@@ -696,7 +696,7 @@ const viewPort = (( ) => {
             if ( filteringType === 'static' ) {
                 divcl.add('canLookup');
             } else if ( details.realm === 'extended' ) {
-                divcl.add('canLookup');
+                divcl.toggle('canLookup', /^#@?#/.test(filter.raw));
                 divcl.toggle('isException', filter.raw.startsWith('#@#'));
             }
             if ( filter.modifier === true ) {

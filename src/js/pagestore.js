@@ -192,6 +192,10 @@ const FrameStore = class {
             this.domain =
                 vAPI.domainFromHostname(this.hostname) || this.hostname;
         }
+        // Evaluated on-demand
+        // - 0b01: specific cosmetic filtering
+        // - 0b10: generic cosmetic filtering
+        this._cosmeticFilteringBits = undefined;
         return this;
     }
 
@@ -201,6 +205,60 @@ const FrameStore = class {
             FrameStore.junkyard.push(this);
         }
         return null;
+    }
+
+    getCosmeticFilteringBits(tabId) {
+        if ( this._cosmeticFilteringBits !== undefined ) {
+            return this._cosmeticFilteringBits;
+        }
+        this._cosmeticFilteringBits = 0b11;
+        {
+            const result = µb.staticNetFilteringEngine.matchStringReverse(
+                'specifichide',
+                this.rawURL
+            );
+            if ( result !== 0 && µb.logger.enabled ) {
+                µBlock.filteringContext
+                    .duplicate()
+                    .fromTabId(tabId)
+                    .setURL(this.rawURL)
+                    .setRealm('network')
+                    .setType('specifichide')
+                    .setFilter(µb.staticNetFilteringEngine.toLogData())
+                    .toLogger();
+            }
+            if ( result === 2 ) {
+                this._cosmeticFilteringBits &= ~0b01;
+            }
+        }
+        {
+            const result = µb.staticNetFilteringEngine.matchStringReverse(
+                'generichide',
+                this.rawURL
+            );
+            if ( result !== 0 && µb.logger.enabled ) {
+                µBlock.filteringContext
+                    .duplicate()
+                    .fromTabId(tabId)
+                    .setURL(this.rawURL)
+                    .setRealm('network')
+                    .setType('generichide')
+                    .setFilter(µb.staticNetFilteringEngine.toLogData())
+                    .toLogger();
+            }
+            if ( result === 2 ) {
+                this._cosmeticFilteringBits &= ~0b10;
+            }
+        }
+        return this._cosmeticFilteringBits;
+    }
+
+    shouldApplySpecificCosmeticFilters(tabId) {
+        return (this.getCosmeticFilteringBits(tabId) & 0b01) !== 0;
+    }
+
+    shouldApplyGenericCosmeticFilters(tabId) {
+        return (this.getCosmeticFilteringBits(tabId) & 0b10) !== 0;
     }
 
     static factory(frameURL, parentId = -1) {
@@ -296,7 +354,7 @@ const PageStore = class {
     //   The context is used to determine whether we report behavior change
     //   to the logger.
 
-    init(tabId, context) {
+    init(tabId) {
         const tabContext = µb.tabContextManager.mustLookup(tabId);
         this.tabId = tabId;
 
@@ -327,28 +385,8 @@ const PageStore = class {
         this.frames = new Map();
         this.setFrameURL({ url: tabContext.rawURL });
 
-        // https://github.com/uBlockOrigin/uBlock-issues/issues/314
-        const masterSwitch = tabContext.getNetFilteringSwitch();
-
-        this.noCosmeticFiltering = µb.sessionSwitches.evaluateZ(
-            'no-cosmetic-filtering',
-            tabContext.rootHostname
-        ) === true;
-        if (
-            masterSwitch &&
-            this.noCosmeticFiltering &&
-            µb.logger.enabled &&
-            context === 'tabCommitted'
-        ) {
-            µb.filteringContext
-                .duplicate()
-                .fromTabId(tabId)
-                .setURL(tabContext.rawURL)
-                .setRealm('cosmetic')
-                .setType('dom')
-                .setFilter(µb.sessionSwitches.toLogData())
-                .toLogger();
-        }
+        // Evaluated on-demand
+        this._noCosmeticFiltering = undefined;
 
         return this;
     }
@@ -493,13 +531,51 @@ const PageStore = class {
                  .getNetFilteringSwitch();
     }
 
-    getSpecificCosmeticFilteringSwitch() {
-        return this.noCosmeticFiltering !== true;
-    }
-
     toggleNetFilteringSwitch(url, scope, state) {
         µb.toggleNetFilteringSwitch(url, scope, state);
         this.netFilteringCache.empty();
+    }
+
+    shouldApplyCosmeticFilters(frameId = 0) {
+        if ( this._noCosmeticFiltering === undefined ) {
+            this._noCosmeticFiltering = this.getNetFilteringSwitch() === false;
+            if ( this._noCosmeticFiltering === false ) {
+                this._noCosmeticFiltering = µb.sessionSwitches.evaluateZ(
+                    'no-cosmetic-filtering',
+                    this.tabHostname
+                ) === true;
+                if ( this._noCosmeticFiltering && µb.logger.enabled ) {
+                    µb.filteringContext
+                        .duplicate()
+                        .fromTabId(this.tabId)
+                        .setURL(this.rawURL)
+                        .setRealm('cosmetic')
+                        .setType('dom')
+                        .setFilter(µb.sessionSwitches.toLogData())
+                        .toLogger();
+                }
+            }
+        }
+        if ( this._noCosmeticFiltering ) { return false; }
+        if ( frameId === -1 ) { return true; }
+        // Cosmetic filtering can be effectively disabled when both specific
+        // and generic cosmetic filters are disabled.
+        return this.shouldApplySpecificCosmeticFilters(frameId) ||
+               this.shouldApplyGenericCosmeticFilters(frameId);
+    }
+
+    shouldApplySpecificCosmeticFilters(frameId) {
+        if ( this.shouldApplyCosmeticFilters(-1) === false ) { return false; }
+        const frameStore = this.getFrameStore(frameId);
+        if ( frameStore === null ) { return false; }
+        return frameStore.shouldApplySpecificCosmeticFilters(this.tabId);
+    }
+
+    shouldApplyGenericCosmeticFilters(frameId) {
+        if ( this.shouldApplyCosmeticFilters(-1) === false ) { return false; }
+        const frameStore = this.getFrameStore(frameId);
+        if ( frameStore === null ) { return false; }
+        return frameStore.shouldApplyGenericCosmeticFilters(this.tabId);
     }
 
     // https://github.com/gorhill/uBlock/issues/2105

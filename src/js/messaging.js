@@ -555,72 +555,22 @@ const retrieveContentScriptParameters = async function(sender, request) {
     }
 
     const loggerEnabled = µb.logger.enabled;
-    const noCosmeticFiltering = pageStore.noCosmeticFiltering === true;
+    const noSpecificCosmeticFiltering =
+        pageStore.shouldApplySpecificCosmeticFilters(frameId) === false;
+    const noGenericCosmeticFiltering =
+        pageStore.shouldApplyGenericCosmeticFilters(frameId) === false;
 
     const response = {
         collapseBlocked: µb.userSettings.collapseBlocked,
-        noCosmeticFiltering,
-        noGenericCosmeticFiltering: noCosmeticFiltering,
-        noSpecificCosmeticFiltering: noCosmeticFiltering,
+        noGenericCosmeticFiltering,
+        noSpecificCosmeticFiltering,
     };
-
-    // https://github.com/uBlockOrigin/uAssets/issues/5704
-    //   `generichide` must be evaluated in the frame context.
-    if ( noCosmeticFiltering === false ) {
-        const genericHide =
-            µb.staticNetFilteringEngine.matchStringReverse(
-                'generichide',
-                request.url
-            );
-        response.noGenericCosmeticFiltering = genericHide === 2;
-        if ( loggerEnabled && genericHide !== 0 ) {
-            µBlock.filteringContext
-                .duplicate()
-                .fromTabId(tabId)
-                .setURL(request.url)
-                .setRealm('network')
-                .setType('generichide')
-                .setFilter(µb.staticNetFilteringEngine.toLogData())
-                .toLogger();
-        }
-    }
 
     request.tabId = tabId;
     request.frameId = frameId;
     request.hostname = µb.URI.hostnameFromURI(request.url);
     request.domain = µb.URI.domainFromHostname(request.hostname);
     request.entity = µb.URI.entityFromDomain(request.domain);
-
-    // https://www.reddit.com/r/uBlockOrigin/comments/d6vxzj/
-    //   Add support for `specifichide`.
-    if ( noCosmeticFiltering === false ) {
-        const specificHide =
-            µb.staticNetFilteringEngine.matchStringReverse(
-                'specifichide',
-                request.url
-            );
-        response.noSpecificCosmeticFiltering = specificHide === 2;
-        if ( loggerEnabled && specificHide !== 0 ) {
-            µBlock.filteringContext
-                .duplicate()
-                .fromTabId(tabId)
-                .setURL(request.url)
-                .setRealm('network')
-                .setType('specifichide')
-                .setFilter(µb.staticNetFilteringEngine.toLogData())
-                .toLogger();
-        }
-    }
-
-    // Cosmetic filtering can be effectively disabled when both specific and
-    // generic cosmetic filtering are disabled.
-    if (
-        noCosmeticFiltering === false &&
-        response.noGenericCosmeticFiltering &&
-        response.noSpecificCosmeticFiltering
-    ) {
-        response.noCosmeticFiltering = true;
-    }
 
     response.specificCosmeticFilters =
         µb.cosmeticFilteringEngine.retrieveSpecificSelectors(request, response);
@@ -656,14 +606,19 @@ const retrieveContentScriptParameters = async function(sender, request) {
     //   Inject as early as possible to make the cosmetic logger code less
     //   sensitive to the removal of DOM nodes which may match injected
     //   cosmetic filters.
-    if ( loggerEnabled && response.noCosmeticFiltering !== true ) {
-        vAPI.tabs.executeScript(tabId, {
-            allFrames: false,
-            file: '/js/scriptlets/cosmetic-logger.js',
-            frameId,
-            matchAboutBlank: true,
-            runAt: 'document_start',
-        });
+    if ( loggerEnabled ) {
+        if (
+            noSpecificCosmeticFiltering === false ||
+            noGenericCosmeticFiltering === false
+        ) {
+            vAPI.tabs.executeScript(tabId, {
+                allFrames: false,
+                file: '/js/scriptlets/cosmetic-logger.js',
+                frameId,
+                matchAboutBlank: true,
+                runAt: 'document_start',
+            });
+        }
     }
 
     return response;

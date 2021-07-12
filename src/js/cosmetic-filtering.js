@@ -966,7 +966,10 @@ FilterContainer.prototype.retrieveSpecificSelectors = function(
     };
     const injectedCSS = [];
 
-    if ( options.noCosmeticFiltering !== true ) {
+    if (
+        options.noSpecificCosmeticFiltering !== true ||
+        options.noGenericCosmeticFiltering !== true
+    ) {
         const injectedHideFilters = [];
         const specificSet = this.$specificSet;
         const proceduralSet = this.$proceduralSet;
@@ -1161,7 +1164,7 @@ FilterContainer.prototype.benchmark = async function() {
         entity: '',
     };
     const options = {
-        noCosmeticFiltering: false,
+        noSpecificCosmeticFiltering: false,
         noGenericCosmeticFiltering: false,
     };
     let count = 0;
