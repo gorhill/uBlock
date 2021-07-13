@@ -109,6 +109,8 @@ const redirectableResources = new Map([
     [ 'ligatus_angular-tag.js', {
         alias: 'ligatus.com/*/angular-tag.js',
     } ],
+    [ 'mxpnl_mixpanel.js', {
+    } ],
     [ 'monkeybroker.js', {
         alias: 'd3pkae9owd2lcf.cloudfront.net/mb105.js',
     } ],
