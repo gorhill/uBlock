@@ -545,6 +545,7 @@ housekeep itself.
             if (
                 Array.isArray(openerDetails) === false ||
                 openerDetails.length !== 2 ||
+                openerDetails[1] === null ||
                 openerDetails[1].url === 'about:newtab'
             ) {
                 return;

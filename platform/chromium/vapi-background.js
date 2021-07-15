@@ -271,52 +271,26 @@ const toTabId = function(tabId) {
 vAPI.Tabs = class {
     constructor() {
         browser.webNavigation.onCreatedNavigationTarget.addListener(details => {
-            if ( typeof details.url !== 'string' ) {
-                details.url = '';
-            }
-            if ( /^https?:\/\//.test(details.url) === false ) {
-                details.frameId = 0;
-                details.url = this.sanitizeURL(details.url);
-                this.onNavigation(details);
-            }
-            this.onCreated(details);
+            this.onCreatedNavigationTargetHandler(details);
         });
-
         browser.webNavigation.onCommitted.addListener(details => {
-            details.url = this.sanitizeURL(details.url);
-            this.onNavigation(details);
+            this.onCommittedHandler(details);
         });
-
-        // https://github.com/gorhill/uBlock/issues/3073
-        //   Fall back to `tab.url` when `changeInfo.url` is not set.
         browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-            if ( typeof changeInfo.url !== 'string' ) {
-                changeInfo.url = tab && tab.url;
-            }
-            if ( changeInfo.url ) {
-                changeInfo.url = this.sanitizeURL(changeInfo.url);
-            }
-            this.onUpdated(tabId, changeInfo, tab);
+            this.onUpdatedHandler(tabId, changeInfo, tab);
         });
-
         browser.tabs.onActivated.addListener(details => {
             this.onActivated(details);
         });
-
         // https://github.com/uBlockOrigin/uBlock-issues/issues/151
         // https://github.com/uBlockOrigin/uBlock-issues/issues/680#issuecomment-515215220
         if ( browser.windows instanceof Object ) {
-            browser.windows.onFocusChanged.addListener(async windowId => {
-                if ( windowId === browser.windows.WINDOW_ID_NONE ) { return; }
-                const tabs = await vAPI.tabs.query({ active: true, windowId });
-                if ( tabs.length === 0 ) { return; }
-                const tab = tabs[0];
-                this.onActivated({ tabId: tab.id, windowId: tab.windowId });
+            browser.windows.onFocusChanged.addListener(windowId => {
+                this.onFocusChangedHandler(windowId);
             });
         }
-
         browser.tabs.onRemoved.addListener((tabId, details) => {
-            this.onClosed(tabId, details);
+            this.onRemovedHandler(tabId, details);
         });
      }
 
@@ -608,6 +582,48 @@ vAPI.Tabs = class {
         return s.replace(/\s+/, '') + url.slice(pos);
     }
 
+    onCreatedNavigationTargetHandler(details) {
+        if ( typeof details.url !== 'string' ) {
+            details.url = '';
+        }
+        if ( /^https?:\/\//.test(details.url) === false ) {
+            details.frameId = 0;
+            details.url = this.sanitizeURL(details.url);
+            this.onNavigation(details);
+        }
+        this.onCreated(details);
+    }
+
+    onCommittedHandler(details) {
+        details.url = this.sanitizeURL(details.url);
+        this.onNavigation(details);
+    }
+
+    onUpdatedHandler(tabId, changeInfo, tab) {
+        // https://github.com/gorhill/uBlock/issues/3073
+        //   Fall back to `tab.url` when `changeInfo.url` is not set.
+        if ( typeof changeInfo.url !== 'string' ) {
+            changeInfo.url = tab && tab.url;
+        }
+        if ( changeInfo.url ) {
+            changeInfo.url = this.sanitizeURL(changeInfo.url);
+        }
+        this.onUpdated(tabId, changeInfo, tab);
+    }
+
+    onRemovedHandler(tabId, details) {
+        this.onClosed(tabId, details);
+    }
+
+    onFocusChangedHandler(windowId) {
+        if ( windowId === browser.windows.WINDOW_ID_NONE ) { return; }
+        vAPI.tabs.query({ active: true, windowId }).then(tabs => {
+            if ( tabs.length === 0 ) { return; }
+            const tab = tabs[0];
+            this.onActivated({ tabId: tab.id, windowId: tab.windowId });
+        });
+    }
+
     onActivated(/* details */) {
     }
 
@@ -623,6 +639,50 @@ vAPI.Tabs = class {
     onUpdated(/* tabId, changeInfo, tab */) {
     }
 };
+
+// https://github.com/uBlockOrigin/uBlock-issues/issues/1659
+//   Chromium fails to dispatch onCreatedNavigationTarget() events sometimes,
+//   so we synthetize these missing events when this happens.
+if ( vAPI.webextFlavor.soup.has('chromium') ) {
+    vAPI.Tabs = class extends vAPI.Tabs {
+        constructor() {
+            super();
+            this.tabIds = new Set();
+            browser.tabs.onCreated.addListener(tab => {
+                this.onCreatedHandler(tab);
+            });
+        }
+        onCreatedHandler(tab) {
+            if ( typeof tab.openerTabId === 'number' ) { return; }
+            if ( tab.index !== 0 ) { return; }
+            if ( tab.url !== '' ) { return; }
+            this.tabIds.add(tab.id);
+        }
+        onCreatedNavigationTargetHandler(details) {
+            this.tabIds.delete(details.tabId);
+            super.onCreatedNavigationTargetHandler(details);
+        }
+        onCommittedHandler(details) {
+            if ( details.frameId === 0 && this.tabIds.has(details.tabId) ) {
+                this.tabIds.delete(details.tabId);
+                webext.tabs.get(details.tabId).then(tab => {
+                    if ( tab === null ) { return; }
+                    this.onCreatedNavigationTargetHandler({
+                        tabId: tab.id,
+                        sourceTabId: tab.id,
+                        sourceFrameId: 0,
+                        url: tab.url,
+                    });
+                });
+            }
+            super.onCommittedHandler(details);
+        }
+        onRemovedHandler(tabId, details) {
+            this.tabIds.delete(tabId);
+            super.onRemovedHandler(tabId, details);
+        }
+    };
+}
 
 /******************************************************************************/
 /******************************************************************************/
