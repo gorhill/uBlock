@@ -73,6 +73,7 @@ const webext = {
         },
         onClicked: chrome.contextMenus.onClicked,
         remove: promisifyNoFail(chrome.contextMenus, 'remove'),
+        removeAll: promisifyNoFail(chrome.contextMenus, 'removeAll'),
     },
     // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/privacy
     privacy: {

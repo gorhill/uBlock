@@ -1415,35 +1415,20 @@ vAPI.Net = class {
 
 vAPI.contextMenu = webext.menus && {
     _callback: null,
-    _entries: [],
-    _createEntry: function(entry) {
-        webext.menus.create(JSON.parse(JSON.stringify(entry)));
-    },
+    _hash: '',
     onMustUpdate: function() {},
     setEntries: function(entries, callback) {
         entries = entries || [];
-        let n = Math.max(this._entries.length, entries.length);
-        for ( let i = 0; i < n; i++ ) {
-            const oldEntryId = this._entries[i];
-            const newEntry = entries[i];
-            if ( oldEntryId && newEntry ) {
-                if ( newEntry.id !== oldEntryId ) {
-                    webext.menus.remove(oldEntryId);
-                    this._createEntry(newEntry);
-                    this._entries[i] = newEntry.id;
-                }
-            } else if ( oldEntryId && !newEntry ) {
-                webext.menus.remove(oldEntryId);
-            } else if ( !oldEntryId && newEntry ) {
-                this._createEntry(newEntry);
-                this._entries[i] = newEntry.id;
-            }
+        const hash = entries.map(v => v.id).join();
+        if ( hash === this._hash ) { return; }
+        this._hash = hash;
+        webext.menus.removeAll();
+        for ( const entry of entries ) {
+            webext.menus.create(JSON.parse(JSON.stringify(entry)));
         }
-        n = this._entries.length = entries.length;
+        const n = entries.length;
         callback = callback || null;
-        if ( callback === this._callback ) {
-            return;
-        }
+        if ( callback === this._callback ) { return; }
         if ( n !== 0 && callback !== null ) {
             webext.menus.onClicked.addListener(callback);
             this._callback = callback;
