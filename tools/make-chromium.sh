@@ -8,8 +8,14 @@ DES=dist/build/uBlock0.chromium
 rm -rf $DES
 mkdir -p $DES
 
-echo "*** uBlock0.chromium: copying common files"
+echo "*** uBlock0.chromium: Copying common files"
 bash ./tools/copy-common-files.sh  $DES
+
+# Chromium-specific
+echo "*** uBlock0.chromium: Copying chromium-specific files"
+cp platform/chromium/*.js          $DES/js/
+cp platform/chromium/*.html        $DES/
+cp platform/chromium/*.json        $DES/
 
 # Chrome store-specific
 cp -R $DES/_locales/nb $DES/_locales/no

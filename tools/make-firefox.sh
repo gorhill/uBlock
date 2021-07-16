@@ -9,14 +9,16 @@ DES="$BLDIR"/uBlock0.firefox
 rm -rf $DES
 mkdir -p $DES
 
-echo "*** uBlock0.firefox: copying common files"
+echo "*** uBlock0.firefox: Copying common files"
 bash ./tools/copy-common-files.sh  $DES
 
-cp -R $DES/_locales/nb                 $DES/_locales/no
+# Firefox-specific
+echo "*** uBlock0.firefox: Copying firefox-specific files"
+cp platform/firefox/*.json         $DES/
+cp platform/firefox/*.js           $DES/js/
 
-cp platform/firefox/manifest.json      $DES/
-cp platform/firefox/webext.js          $DES/js/
-cp platform/firefox/vapi-webrequest.js $DES/js/
+# Firefox store-specific
+cp -R $DES/_locales/nb             $DES/_locales/no
 
 # Firefox/webext-specific
 rm $DES/img/icon_128.png

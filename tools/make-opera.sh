@@ -8,11 +8,18 @@ DES=dist/build/uBlock0.opera
 rm -rf $DES
 mkdir -p $DES
 
-echo "*** uBlock0.opera: copying common files"
+echo "*** uBlock0.opera: Copying common files"
 bash ./tools/copy-common-files.sh  $DES
 
+# Chromium-specific
+echo "*** uBlock0.opera: Copying chromium-specific files"
+cp platform/chromium/*.js          $DES/js/
+cp platform/chromium/*.html        $DES/
+
 # Opera-specific
-cp platform/opera/manifest.json $DES/
+echo "*** uBlock0.opera: Copying opera-specific files"
+cp platform/opera/manifest.json    $DES/
+
 rm -r $DES/_locales/az
 rm -r $DES/_locales/cv
 rm -r $DES/_locales/hi

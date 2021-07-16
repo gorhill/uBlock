@@ -14,7 +14,6 @@ cp -R src/web_accessible_resources $DES/
 cp -R src/_locales                 $DES/
 
 cp src/*.html                      $DES/
-cp platform/chromium/*.js          $DES/js/
-cp platform/chromium/*.html        $DES/
-cp platform/chromium/*.json        $DES/
+cp platform/common/*.js            $DES/js/
+cp platform/common/*.json          $DES/
 cp LICENSE.txt                     $DES/
