@@ -37,34 +37,46 @@ vAPI.Tabs = class extends vAPI.Tabs {
             this.onCreatedHandler(tab);
         });
     }
+
     onCreatedHandler(tab) {
         if ( typeof tab.openerTabId === 'number' ) { return; }
         if ( tab.index !== 0 ) { return; }
         if ( tab.url !== '' ) { return; }
         this.tabIds.add(tab.id);
     }
+
     onCreatedNavigationTargetHandler(details) {
         this.tabIds.delete(details.tabId);
         super.onCreatedNavigationTargetHandler(details);
     }
+
     onCommittedHandler(details) {
-        if ( details.frameId === 0 && this.tabIds.has(details.tabId) ) {
-            this.tabIds.delete(details.tabId);
-            webext.tabs.get(details.tabId).then(tab => {
-                if ( tab === null ) { return; }
-                this.onCreatedNavigationTargetHandler({
-                    tabId: tab.id,
-                    sourceTabId: tab.id,
-                    sourceFrameId: 0,
-                    url: tab.url,
-                });
-            });
+        if ( details.frameId === 0 ) {
+            this.synthesizeNavigationTargetEvent(details);
         }
         super.onCommittedHandler(details);
     }
+
     onRemovedHandler(tabId, details) {
         this.tabIds.delete(tabId);
         super.onRemovedHandler(tabId, details);
+    }
+
+    synthesizeNavigationTargetEvent(details) {
+        if ( this.tabIds.has(details.tabId) === false ) { return; }
+        this.tabIds.delete(details.tabId);
+        if (
+            Array.isArray(details.transitionQualifiers) === false ||
+            details.transitionQualifiers.includes('client_redirect') === false
+        ) {
+            return;
+        }
+        this.onCreatedNavigationTargetHandler({
+            tabId: details.tabId,
+            sourceTabId: details.tabId,
+            sourceFrameId: 0,
+            url: details.url,
+        });
     }
 };
 
@@ -96,6 +108,7 @@ vAPI.Tabs = class extends vAPI.Tabs {
             super();
             this.suspendedTabIds = new Set();
         }
+
         normalizeDetails(details) {
             // Chromium 63+ supports the `initiator` property, which contains
             // the URL of the origin from which the network request was made.
@@ -142,6 +155,7 @@ vAPI.Tabs = class extends vAPI.Tabs {
                 }
             }
         }
+
         // https://www.reddit.com/r/uBlockOrigin/comments/9vcrk3/
         //   Some types can be mapped from 'other', thus include 'other' if and
         //   only if the caller is interested in at least one of those types.
@@ -165,10 +179,12 @@ vAPI.Tabs = class extends vAPI.Tabs {
             }
             return Array.from(out);
         }
+
         suspendOneRequest(details) {
             this.suspendedTabIds.add(details.tabId);
             return { cancel: true };
         }
+
         unsuspendAllRequests() {
             for ( const tabId of this.suspendedTabIds ) {
                 vAPI.tabs.reload(tabId);

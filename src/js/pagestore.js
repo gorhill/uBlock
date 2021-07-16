@@ -455,11 +455,14 @@ const PageStore = class {
     }
 
     titleFromDetails(details) {
-        if ( details instanceof Object && details.title !== undefined ) {
-            this.title = details.title;
-            return true;
+        if (
+            details instanceof Object === false ||
+            details.title === undefined
+        ) {
+            return false;
         }
-        return false;
+        this.title = µb.orphanizeString(details.title.slice(0, 128));
+        return true;
     }
 
     disposeFrameStores() {
