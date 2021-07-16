@@ -25,10 +25,52 @@
 
 /******************************************************************************/
 
-(( ) => {
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/407
-    if ( vAPI.webextFlavor.soup.has('chromium') === false ) { return; }
+// https://github.com/uBlockOrigin/uBlock-issues/issues/1659
+//   Chromium fails to dispatch onCreatedNavigationTarget() events sometimes,
+//   so we synthetize these missing events when this happens.
 
+vAPI.Tabs = class extends vAPI.Tabs {
+    constructor() {
+        super();
+        this.tabIds = new Set();
+        browser.tabs.onCreated.addListener(tab => {
+            this.onCreatedHandler(tab);
+        });
+    }
+    onCreatedHandler(tab) {
+        if ( typeof tab.openerTabId === 'number' ) { return; }
+        if ( tab.index !== 0 ) { return; }
+        if ( tab.url !== '' ) { return; }
+        this.tabIds.add(tab.id);
+    }
+    onCreatedNavigationTargetHandler(details) {
+        this.tabIds.delete(details.tabId);
+        super.onCreatedNavigationTargetHandler(details);
+    }
+    onCommittedHandler(details) {
+        if ( details.frameId === 0 && this.tabIds.has(details.tabId) ) {
+            this.tabIds.delete(details.tabId);
+            webext.tabs.get(details.tabId).then(tab => {
+                if ( tab === null ) { return; }
+                this.onCreatedNavigationTargetHandler({
+                    tabId: tab.id,
+                    sourceTabId: tab.id,
+                    sourceFrameId: 0,
+                    url: tab.url,
+                });
+            });
+        }
+        super.onCommittedHandler(details);
+    }
+    onRemovedHandler(tabId, details) {
+        this.tabIds.delete(tabId);
+        super.onRemovedHandler(tabId, details);
+    }
+};
+
+/******************************************************************************/
+
+{
     const extToTypeMap = new Map([
         ['eot','font'],['otf','font'],['svg','font'],['ttf','font'],['woff','font'],['woff2','font'],
         ['mp3','media'],['mp4','media'],['webm','media'],
@@ -134,7 +176,7 @@
             this.suspendedTabIds.clear();
         }
     };
-})();
+}
 
 /******************************************************************************/
 
@@ -143,9 +185,6 @@
 //   setting "Predict network actions to improve page load performance".
 
 vAPI.prefetching = (( ) => {
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/407
-    if ( vAPI.webextFlavor.soup.has('chromium') === false ) { return; }
-
     let listening = false;
 
     const onHeadersReceived = function(details) {
